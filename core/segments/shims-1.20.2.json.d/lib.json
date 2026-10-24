@@ -1,9 +1,15 @@
 {
- "_lib_basis": "slib library front of step 1 (1.20.1 -> 1.20.2; core/segments/damage-lib/1.20.1__1.20.2.tsv, read against 1.20.1's own libraries): authlib 4.0.43 -> 5.0.47 core (rt/v1_20_2/CbLibAuthlib, facade/v1_20_2/AuthlibAgent); 4.0.43's semantics read off its bytecode",
+ "_lib_basis": "slib library front of step 1 (1.20.1 -> 1.20.2; core/segments/damage-lib/1.20.1__1.20.2.tsv, read against 1.20.1's own libraries): authlib 4.0.43 -> 5.0.47 core (rt/v1_20_2/CbLibAuthlib, facade/v1_20_2/AuthlibAgent); 4.0.43's semantics read off its bytecode; LWJGL 3.3.1 -> 3.3.2 outside JNI (rt/v1_20_2/CbLibLwjgl): liburing 2.1 -> 2.4-dev struct setters / padding / array overloads, IOURingRSRCRegister resv -> flags (liburing renamed the must-be-zero field; 0 still means no flags), UIO.preadv2/pwritev2 through libffi, LibCStdio.sprintf, SHADERC_SPVC_LIBRARY_NAME, ALCapabilities.OpenAL_SOFT_bformat_ex (always false in 3.3.1); OSHI 6.2.2 -> 6.4.5 (rt/v1_20_2/CbLibOshi)",
  "methodRenames": {
   "com/mojang/authlib/properties/Property.getName()Ljava/lang/String;": "name",
   "com/mojang/authlib/properties/Property.getValue()Ljava/lang/String;": "value",
-  "com/mojang/authlib/properties/Property.getSignature()Ljava/lang/String;": "signature"
+  "com/mojang/authlib/properties/Property.getSignature()Ljava/lang/String;": "signature",
+  "org/lwjgl/system/linux/liburing/IOURingRSRCRegister.resv()I": "flags",
+  "org/lwjgl/system/linux/liburing/IOURingRSRCRegister.resv(I)Lorg/lwjgl/system/linux/liburing/IOURingRSRCRegister;": "flags",
+  "org/lwjgl/system/linux/liburing/IOURingRSRCRegister.nresv(J)I": "nflags",
+  "org/lwjgl/system/linux/liburing/IOURingRSRCRegister.nresv(JI)V": "nflags",
+  "org/lwjgl/system/linux/liburing/IOURingRSRCRegister$Buffer.resv()I": "flags",
+  "org/lwjgl/system/linux/liburing/IOURingRSRCRegister$Buffer.resv(I)Lorg/lwjgl/system/linux/liburing/IOURingRSRCRegister$Buffer;": "flags"
  },
  "classRenames": {
   "com/mojang/authlib/Agent": "top/dext/centurybridge/facade/v1_20_2/AuthlibAgent",
@@ -120,10 +126,40 @@
  "staticRedirects": {
   "com/mojang/authlib/Environment.create(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/mojang/authlib/Environment;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
   "com/mojang/util/UUIDTypeAdapter.fromUUID(Ljava/util/UUID;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
-  "com/mojang/util/UUIDTypeAdapter.fromString(Ljava/lang/String;)Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib"
+  "com/mojang/util/UUIDTypeAdapter.fromString(Ljava/lang/String;)Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "org/lwjgl/system/linux/liburing/IOURing.npad(J)Ljava/nio/IntBuffer;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/IOURing.npad(JI)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/IOURing.npad(JII)V": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/IOURing.npad(JLjava/nio/IntBuffer;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_accept(Lorg/lwjgl/system/linux/liburing/IOURingSQE;ILorg/lwjgl/system/linux/Sockaddr;[II)V": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_accept_direct(Lorg/lwjgl/system/linux/liburing/IOURingSQE;ILorg/lwjgl/system/linux/Sockaddr;[III)V": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_files_update(Lorg/lwjgl/system/linux/liburing/IOURingSQE;[II)V": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_register_buffers_tags(Lorg/lwjgl/system/linux/liburing/IOURing;Lorg/lwjgl/system/linux/IOVec$Buffer;[J)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_register_buffers_update_tag(Lorg/lwjgl/system/linux/liburing/IOURing;ILorg/lwjgl/system/linux/IOVec$Buffer;[J)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_register_files(Lorg/lwjgl/system/linux/liburing/IOURing;[I)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_register_files_tags(Lorg/lwjgl/system/linux/liburing/IOURing;[I[J)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_register_files_update(Lorg/lwjgl/system/linux/liburing/IOURing;I[I)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_register_files_update_tag(Lorg/lwjgl/system/linux/liburing/IOURing;I[I[J)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_register_iowq_max_workers(Lorg/lwjgl/system/linux/liburing/IOURing;[I)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_accept(JIJ[II)V": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_accept_direct(JIJ[III)V": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_files_update(J[III)V": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_buffers_tags(JJ[JI)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_buffers_update_tag(JIJ[JI)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_files(J[II)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_files_tags(J[I[JI)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_files_update(JI[II)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_files_update_tag(JI[I[JI)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_iowq_max_workers(J[I)I": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/UIO.npreadv2(IJIJI)J": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/UIO.npwritev2(IJIJI)J": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/UIO.preadv2(ILorg/lwjgl/system/linux/IOVec;IJI)J": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/UIO.pwritev2(ILorg/lwjgl/system/linux/IOVec;IJI)J": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl"
  },
  "fieldGetters": {
-  "com/mojang/authlib/EnvironmentParser.PROP_AUTH_HOST:Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib"
+  "com/mojang/authlib/EnvironmentParser.PROP_AUTH_HOST:Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "org/lwjgl/system/libc/LibCStdio.sprintf:J": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/Configuration.SHADERC_SPVC_LIBRARY_NAME:Lorg/lwjgl/system/Configuration;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl"
  },
  "instanceRedirects": {
   "com/mojang/authlib/GameProfile.getId()Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
@@ -149,7 +185,11 @@
   "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
   "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.hasJoinedServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
   "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.fillProfileProperties(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
-  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.fillGameProfile(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib"
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.fillGameProfile(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "org/lwjgl/system/linux/liburing/IOURing.set(Lorg/lwjgl/system/linux/liburing/IOURingSQ;Lorg/lwjgl/system/linux/liburing/IOURingCQ;III)Lorg/lwjgl/system/linux/liburing/IOURing;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/IOURingSQ.set(Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Lorg/lwjgl/system/linux/liburing/IOURingSQE;IILjava/nio/ByteBuffer;)Lorg/lwjgl/system/linux/liburing/IOURingSQ;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/IOURingCQ.set(Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Lorg/lwjgl/system/linux/liburing/IOURingCQE;Ljava/nio/ByteBuffer;)Lorg/lwjgl/system/linux/liburing/IOURingCQ;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
+  "org/lwjgl/system/linux/liburing/IOURingCQE.set(JII)Lorg/lwjgl/system/linux/liburing/IOURingCQE;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl"
  },
  "superRedirects": {
   "com/mojang/authlib/HttpAuthenticationService.createUrlConnection(Ljava/net/URL;)Ljava/net/HttpURLConnection;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
@@ -163,7 +203,11 @@
   "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.hasJoinedServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
   "com/mojang/authlib/yggdrasil/YggdrasilGameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#superFindProfilesByNames",
   "com/mojang/authlib/GameProfile.isComplete()Z": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
-  "com/mojang/authlib/GameProfile.isLegacy()Z": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib"
+  "com/mojang/authlib/GameProfile.isLegacy()Z": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "org/lwjgl/system/linux/liburing/IOURing.set(Lorg/lwjgl/system/linux/liburing/IOURingSQ;Lorg/lwjgl/system/linux/liburing/IOURingCQ;III)Lorg/lwjgl/system/linux/liburing/IOURing;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl#set",
+  "org/lwjgl/system/linux/liburing/IOURingSQ.set(Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Lorg/lwjgl/system/linux/liburing/IOURingSQE;IILjava/nio/ByteBuffer;)Lorg/lwjgl/system/linux/liburing/IOURingSQ;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl#set",
+  "org/lwjgl/system/linux/liburing/IOURingCQ.set(Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Lorg/lwjgl/system/linux/liburing/IOURingCQE;Ljava/nio/ByteBuffer;)Lorg/lwjgl/system/linux/liburing/IOURingCQ;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl#set",
+  "org/lwjgl/system/linux/liburing/IOURingCQE.set(JII)Lorg/lwjgl/system/linux/liburing/IOURingCQE;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl#set"
  },
  "overrideHooks": [
   {
@@ -264,7 +308,8 @@
  },
  "instanceFieldGetters": {
   "oshi/util/platform/windows/WmiQueryHandler.wmiTimeout:I": "top/dext/centurybridge/rt/v1_20_2/CbLibOshi",
-  "oshi/util/platform/windows/WmiQueryHandler.failedWmiClassNames:Ljava/util/Set;": "top/dext/centurybridge/rt/v1_20_2/CbLibOshi"
+  "oshi/util/platform/windows/WmiQueryHandler.failedWmiClassNames:Ljava/util/Set;": "top/dext/centurybridge/rt/v1_20_2/CbLibOshi",
+  "org/lwjgl/openal/ALCapabilities.OpenAL_SOFT_bformat_ex:Z": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl"
  },
  "instanceFieldSetters": {
   "oshi/util/platform/windows/WmiQueryHandler.wmiTimeout:I": "top/dext/centurybridge/rt/v1_20_2/CbLibOshi"
@@ -342,5 +387,8 @@
    "call": "top/dext/centurybridge/rt/v1_20_2/CbLibOshi.thr_self(Loshi/jna/platform/unix/SolarisLibc;)I",
    "basis": "6.4.5's libc binding declares the call; a 6.2.2-era implementation of the binding answers what the platform's own binding (INSTANCE) answers"
   }
- ]
+ ],
+ "fieldRenames": {
+  "org/lwjgl/system/linux/liburing/IOURingRSRCRegister.RESV:I": "FLAGS"
+ }
 }
