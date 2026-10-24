@@ -71,7 +71,9 @@ if [ "${1:-}" != __remote ] && [ "${1:-}" != __inner ]; then
     for v in CB_CLIMB CB_FAPI CB_REUSE_LAYERS CB_SHOTS CB_READY CB_WAIT CB_WORLD CB_GREP CB_CLIENTS CB_CLIENT_RT CB_ASSETS CB_JAVA; do
         [ -n "${!v:-}" ] && ENV="$ENV $v=$(printf '%q' "${!v}")"
     done
-    retry $SSH "cd ~/cbwork && env$ENV setsid nohup bash ~/$AG/core/tools/boot_client_remote.sh __remote $NAME $T $TAG > ~/$RUN/run.out 2>&1 < /dev/null & echo started remote run pid \$!"
+    # started/ is made before the launch (mkdir is atomic): an ssh drop after the launch must not make
+    # the retry start a second run in the same directories
+    retry $SSH "cd ~/cbwork && if mkdir ~/$RUN/started 2>/dev/null; then env$ENV setsid nohup bash ~/$AG/core/tools/boot_client_remote.sh __remote $NAME $T $TAG > ~/$RUN/run.out 2>&1 < /dev/null & echo \$! > ~/$RUN/started/pid; echo started remote run; else echo remote run already started; fi"
     SEEN=0
     while :; do
         sleep 20
