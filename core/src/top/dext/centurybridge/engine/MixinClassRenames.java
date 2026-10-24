@@ -149,6 +149,84 @@ final class MixinClassRenames {
         };
     }
 
+    /**
+     * Mixins whose target the step's class renames move into a class W adds in its place
+     * ({@link Chain#mixinFollow}): their @Mixin target and their annotations' and refmap tables' class
+     * names renamed that way before MixinBridge, repair and triage judge them, so they are judged on the
+     * class the converted mixin lands on. Only the annotations and refmap values: the code keeps V's
+     * names for the class rewrite, whose wiring is keyed on them. Returns the mixins moved.
+     */
+    static java.util.List<String> followTargets(Map<String, byte[]> entries, Map<String, String> follow) {
+        java.util.List<String> moved = new java.util.ArrayList<>();
+        if (follow.isEmpty()) {
+            return moved;
+        }
+        java.util.Set<String> movedSet = new java.util.HashSet<>();
+        for (Map.Entry<String, byte[]> e : new java.util.ArrayList<>(entries.entrySet())) {
+            if (!e.getKey().endsWith(".class")) {
+                continue;
+            }
+            org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+            try {
+                new org.objectweb.asm.ClassReader(e.getValue()).accept(cn, org.objectweb.asm.ClassReader.SKIP_CODE);
+            } catch (RuntimeException ex) {
+                continue;
+            }
+            java.util.List<String> ts = MixinRepair.mixinTargets(cn, null);
+            if (ts.isEmpty() || ts.stream().noneMatch(t -> follow.containsKey(t.replace('.', '/')))) {
+                continue;
+            }
+            org.objectweb.asm.ClassReader r = new org.objectweb.asm.ClassReader(e.getValue());
+            org.objectweb.asm.ClassWriter w = new org.objectweb.asm.ClassWriter(0);
+            r.accept(annotations(mixinTypes(w, follow), follow, c -> false), 0);
+            entries.put(e.getKey(), w.toByteArray());
+            String cls = e.getKey().substring(0, e.getKey().length() - ".class".length());
+            moved.add(cls);
+            movedSet.add(cls);
+        }
+        if (moved.isEmpty()) {
+            return moved;
+        }
+        for (Map.Entry<String, byte[]> e : new java.util.ArrayList<>(entries.entrySet())) {
+            if (e.getKey().endsWith(".json") && e.getKey().contains("refmap")) {
+                byte[] rew = refmap(e.getValue(), Map.of(), m -> movedSet.contains(m) ? follow : Map.of());
+                if (rew != null) {
+                    entries.put(e.getKey(), rew);
+                }
+            }
+        }
+        return moved;
+    }
+
+    /** the class literals of a class's @Mixin renamed (the rest of the class passed on as it is) */
+    private static ClassVisitor mixinTypes(ClassVisitor next, Map<String, String> renames) {
+        return new ClassVisitor(Opcodes.ASM9, next) {
+            @Override
+            public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+                AnnotationVisitor av = super.visitAnnotation(desc, visible);
+                return av == null || !MIXIN.equals(desc) ? av : types(av, renames);
+            }
+        };
+    }
+
+    private static AnnotationVisitor types(AnnotationVisitor av, Map<String, String> renames) {
+        return new AnnotationVisitor(Opcodes.ASM9, av) {
+            @Override
+            public void visit(String name, Object value) {
+                if (value instanceof Type t && t.getSort() == Type.OBJECT && renames.containsKey(t.getInternalName())) {
+                    value = Type.getObjectType(renames.get(t.getInternalName()));
+                }
+                super.visit(name, value);
+            }
+
+            @Override
+            public AnnotationVisitor visitArray(String name) {
+                AnnotationVisitor n = super.visitArray(name);
+                return n == null ? null : types(n, renames);
+            }
+        };
+    }
+
     /** reads a @Mixin's value classes and targets strings into out, passing everything on */
     private static AnnotationVisitor targets(AnnotationVisitor av, java.util.List<String> out) {
         return new AnnotationVisitor(Opcodes.ASM9, av) {

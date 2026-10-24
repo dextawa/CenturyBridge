@@ -958,6 +958,47 @@ public final class Chain {
     public MixinRepair bridgeCode;
 
     /**
+     * The class renames a mixin's target follows before anything judges the mixin (from -> to): the
+     * step renames V's class to a vanilla class W adds in its place (Boat -> AbstractBoat at 1.21.2), so
+     * V's instances of the class are W's instances of the new one -- the step's own premise for mods'
+     * code -- and a mixin of V's class belongs on it. Not followed: a rename into one of
+     * CenturyBridge's classes (a facade), into a class V already had (ElytraItem -> Item: V's Item
+     * instances are not V's ElytraItem instances), or into a class two V classes are renamed to.
+     * Null until {@link #mixinFollow()} computes it from the two code models.
+     */
+    private java.util.Map<String, String> mixinFollow;
+
+    public java.util.Map<String, String> mixinFollow() {
+        if (mixinFollow != null) {
+            return mixinFollow;
+        }
+        MixinRepair w = bridgeCode != null ? bridgeCode : mixinRepair;
+        java.util.Map<String, String> out = new java.util.HashMap<>();
+        if (w != null && sourceCode != null) {
+            java.util.Map<String, Integer> into = new java.util.HashMap<>();
+            classRenames.values().forEach(t -> into.merge(t, 1, Integer::sum));
+            classRenames.forEach((from, to) -> {
+                if (minecraftOwned(from) && minecraftOwned(to) && into.get(to) == 1
+                        && w.declares(to) && !sourceCode.declares(to) && sourceCode.declares(from)) {
+                    out.put(from, to);
+                }
+            });
+            sourceCode.aliases(out);
+        }
+        mixinFollow = out;
+        // their private members, re-declared under new ids in the new class, as the wiring of the step
+        int inferred = 0;
+        for (java.util.Map.Entry<String, String> e : out.entrySet()) {
+            inferred += MixinBridge.inferPrivateRenames(this, e.getKey(), e.getValue());
+        }
+        if (!out.isEmpty()) {
+            System.out.println("mixins follow " + out.size() + " class renames into classes " + to + " adds; "
+                + inferred + " private member renames read off their bodies");
+        }
+        return out;
+    }
+
+    /**
      * Past the wall the mods' injectors are judged one by one against the target's real bodies once the
      * jar has its real names (JarProcessor.repairPastWall): triage then leaves injector target / anchor
      * findings to that pass, as it does to {@link #mixinRepair} on every other step, instead of

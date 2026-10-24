@@ -2402,6 +2402,10 @@ public final class JarProcessor {
         // repair and triage judge the retargeted mixin (MixinBridge; every step but the wall --
         // across it the refmaps take their names later, see repairPastWall)
         MixinBridge.Result bridged = null;
+        // a mixin of a class the step renames into a class W adds in its place goes there first (Chain.mixinFollow)
+        for (String moved : MixinClassRenames.followTargets(entries, chain.mixinFollow())) {
+            rpt.notes.add(tag + "mixin follows its target's class rename: " + shortName(moved));
+        }
         if (MixinBridge.applies(chain)) {
             bridged = MixinBridge.run(entries, chain,
                 "centurybridge/gen/MixinBridges_" + jarTag + "_" + chain.to.replace('.', '_')
