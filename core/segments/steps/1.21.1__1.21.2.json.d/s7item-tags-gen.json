@@ -16,9 +16,7 @@
  "instanceRedirects": {
   "net/minecraft/class_3503.method_33176(Lnet/minecraft/class_3300;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags",
   "net/minecraft/class_6864$class_5748.method_56531()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags",
-  "net/minecraft/class_6864$class_5748.method_56532(Lnet/minecraft/class_2378;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags"
- },
- "interfaceCallRedirects": {
+  "net/minecraft/class_6864$class_5748.method_56532(Lnet/minecraft/class_2378;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags",
   "net/minecraft/class_3497$class_7474.method_43948(Lnet/minecraft/class_2960;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags"
  },
  "superRedirects": {

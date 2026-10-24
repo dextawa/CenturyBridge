@@ -50,6 +50,11 @@ SHAPES = [
      "Lnet/minecraft/class_5321;", [RECIPE]),
     ("net/minecraft/class_4553$class_4557", "method_35315", "Lnet/minecraft/class_2960;Z", "Lnet/minecraft/class_4553$class_4557;",
      "Lnet/minecraft/class_5321;Z", [RECIPE, "keep"]),
+    # EntityLootSubProvider.killedByFrog() / killedByFrogVariant(variant): 1.21.2 builds the frog predicate through the
+    # entity-type getter (EntityPredicate.Builder.of(getter, FROG)); javap, otherwise the same body
+    ("net/minecraft/class_7789", "method_46034", "", "Lnet/minecraft/class_5341$class_210;", HG, [TYPES]),
+    ("net/minecraft/class_7789", "method_46030", "Lnet/minecraft/class_5321;", "Lnet/minecraft/class_5341$class_210;",
+     HG + "Lnet/minecraft/class_5321;", [TYPES, "keep"]),
 ]
 # builder methods a 1.21.1 subclass may override: 1.21.2's shape forwards to the override (wrap key -> id)
 OVERRIDES = [
