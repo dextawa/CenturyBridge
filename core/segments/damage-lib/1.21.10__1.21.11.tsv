@@ -782,7 +782,6 @@ com/github/stephenc/jcip/jcip-annotations	client,server	CLASS	net/jcip/annotatio
 com/github/stephenc/jcip/jcip-annotations	client,server	CLASS	net/jcip/annotations/NotThreadSafe	artifact gone
 com/github/stephenc/jcip/jcip-annotations	client,server	CLASS	net/jcip/annotations/ThreadSafe	artifact gone
 com/google/code/gson/gson	client,server	METHOD	com/google/gson/internal/$Gson$Types.requiresOwnerType(Ljava/lang/reflect/Type;)Z	
-com/google/guava/guava	client,server	ABSTRACT	com/google/common/base/Supplier.equals(Ljava/lang/Object;)Z	implementations must now provide it
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/MFDataModel$Annotation	
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/MFDataModel$FunctionAnnotation	
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFDataModel$FunctionExpression.<init>(Lcom/ibm/icu/message2/MFDataModel$FunctionAnnotation;Ljava/util/List;)V	

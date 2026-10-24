@@ -332,12 +332,17 @@ public final class LibDiff {
         collectAbstract(nc, keys);
         List<String> out = new ArrayList<>();
         for (String key : keys) {
+            if (resolvesInJdkObject(key)) continue; // an interface's redeclared equals/hashCode/toString: Object answers it
             Hit now = resolve(newS, nc, key);
             if (now == null || (now.access() & Opcodes.ACC_ABSTRACT) == 0) continue;
             Hit was = resolve(oldS, oc, key);
             if (was == null || (was.access() & Opcodes.ACC_ABSTRACT) == 0) out.add(key);
         }
         return out;
+    }
+
+    private static boolean resolvesInJdkObject(String key) {
+        return Set.of("equals(Ljava/lang/Object;)Z", "hashCode()I", "toString()Ljava/lang/String;").contains(key);
     }
 
     private static void collectAbstract(ClassNode c, Set<String> keys) {
