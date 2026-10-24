@@ -191,6 +191,7 @@ public class GearTestMod implements ModInitializer {
             combiners(server);
             world(server);
             fapi(server);
+            datagen(server);
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -805,6 +806,42 @@ public class GearTestMod implements ModInitializer {
         check(encodes, "InstrumentItem.create with the stand-in's holder: the stack saves (the world's holder)");
         check("cbs7gear".equals(((net.fabricmc.fabric.api.item.v1.FabricItem) CHEST).getCreatorNamespace(new class_1799(CHEST))) && "minecraft".equals(((net.fabricmc.fabric.api.item.v1.FabricItemStack) (Object) new class_1799(class_1802.field_8620)).getCreatorNamespace()),
             "FabricItem / FabricItemStack.getCreatorNamespace");
+    }
+
+
+    /** a 1.21.1 recipe provider: two vanilla helpers and a shaped builder */
+    public static class TestRecipes extends net.minecraft.class_2446 {
+        public TestRecipes(net.minecraft.class_7784 output, java.util.concurrent.CompletableFuture<net.minecraft.class_7225.class_7874> registries) {
+            super(output, registries);
+        }
+
+        @Override
+        protected void method_10419(net.minecraft.class_8790 output) {
+            method_24475(output, class_1802.field_8118, net.minecraft.class_3489.field_15545, 4);
+            net.minecraft.class_2447.method_10436(net.minecraft.class_7800.field_40642, class_1802.field_8600, 4)
+                .method_10434('#', class_1802.field_8118).method_10439("#").method_10439("#")
+                .method_10429("has_planks", method_10426(class_1802.field_8118))
+                .method_17972(output, class_2960.method_60655("cbs7gear", "sticks"));
+        }
+    }
+
+    /** 1.21.1's RecipeProvider run on 1.21.2: the recipes it writes */
+    static void datagen(MinecraftServer server) throws Exception {
+        java.nio.file.Path dir = java.nio.file.Files.createTempDirectory("cbs7gear-datagen");
+        java.util.Map<java.nio.file.Path, byte[]> written = new java.util.concurrent.ConcurrentHashMap<>();
+        net.minecraft.class_7403 cache = (path, bytes, hash) -> written.put(path, bytes);
+        TestRecipes provider = new TestRecipes(new net.minecraft.class_7784(dir),
+            java.util.concurrent.CompletableFuture.completedFuture(server.method_30611()));
+        provider.method_10319(cache).join();
+        java.nio.file.Path planks = dir.resolve("data/minecraft/recipe/oak_planks.json");
+        java.nio.file.Path sticks = dir.resolve("data/cbs7gear/recipe/sticks.json");
+        check(written.containsKey(planks) && new String(written.get(planks)).contains("oak_logs"),
+            "RecipeProvider helper planksFromLog wrote recipe/oak_planks.json: " + written.keySet());
+        check(written.containsKey(sticks) && new String(written.get(sticks)).contains("minecraft:crafting_shaped"),
+            "a shaped builder saved by id wrote recipe/sticks.json");
+        check(written.keySet().stream().anyMatch(p -> p.toString().replace(java.io.File.separatorChar, '/').contains("advancement/recipes/")),
+            "the recipes' advancements were written");
+        check("Recipes".equals(provider.method_10321()), "RecipeProvider.getName()");
     }
 
 }

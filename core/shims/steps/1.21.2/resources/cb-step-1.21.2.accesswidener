@@ -147,3 +147,6 @@ accessible method net/minecraft/class_1011 method_4305 (III)V
 accessible method net/minecraft/class_1011 method_4315 (II)I
 accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
 # ---- END GENERATED (s7render) ----
+# ---- s7item: 1.21.1's builder constructors (dev-time datagen; rt/CbItemDatagen) ----
+accessible method net/minecraft/class_2447 <init> (Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)V
+accessible method net/minecraft/class_2450 <init> (Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)V
