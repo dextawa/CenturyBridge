@@ -3569,5 +3569,4073 @@
    ],
    "basis": "type witness: 1.21.2 only re-typed the renderer stack by render state here ((Lnet/minecraft/class_3883<TT;Lnet/minecraft/class_591<TT;>;>;Lnet/minecraft/class_5599;)V -> (Lnet/minecraft/class_3883<Lnet/minecraft/class_10055;Lnet/minecraft/class_591;>;Lnet/minecraft/class_5599;)V); the renderer / layer / model passed is the same object (a 1.21.1 mod's is a 1.21.2 one of its superclass's state), its entity-typed 1.21.1 members reached from 1.21.2's state calls through the state hooks (gen_s7render.py family 9)"
   }
+ },
+ "mixinTargets": {
+  "net/minecraft/class_3968.method_17791(Lnet/minecraft/class_1588;FFFFF)V": {
+   "to": "method_17791(Lnet/minecraft/class_10086;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_3968.method_17087(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_17791(Lnet/minecraft/class_10086;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_3968.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17791(Lnet/minecraft/class_10086;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4041.method_18332(Lnet/minecraft/class_4019;FFFFF)V": {
+   "to": "method_18332(Lnet/minecraft/class_10027;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4041.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_18332(Lnet/minecraft/class_10027;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4495.method_22112(Lnet/minecraft/class_4466;FFFFF)V": {
+   "to": "method_22112(Lnet/minecraft/class_10002;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4495.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_22112(Lnet/minecraft/class_10002;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4791.method_24461(Lnet/minecraft/class_1308;FFFFF)V": {
+   "to": "method_24461(Lnet/minecraft/class_10032;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4791.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_24461(Lnet/minecraft/class_10032;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4840.method_24803(Lnet/minecraft/class_1308;FFFFF)V": {
+   "to": "method_24803(Lnet/minecraft/class_10054;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4840.method_17087(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_24803(Lnet/minecraft/class_10054;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4840.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_24803(Lnet/minecraft/class_10054;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4997.method_26414(Lnet/minecraft/class_4985;FFFFF)V": {
+   "to": "method_26414(Lnet/minecraft/class_10070;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4997.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_26414(Lnet/minecraft/class_10070;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_548.method_17066(Lnet/minecraft/class_1531;FFFFF)V": {
+   "to": "method_17066(Lnet/minecraft/class_9998;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_548.method_17087(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_17066(Lnet/minecraft/class_9998;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_548.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17066(Lnet/minecraft/class_9998;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_549.method_17085(Lnet/minecraft/class_1496;FFFFF)V": {
+   "to": "method_17085(Lnet/minecraft/class_10019;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_549.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17085(Lnet/minecraft/class_10019;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_551.method_17066(Lnet/minecraft/class_1531;FFFFF)V": {
+   "to": "method_17066(Lnet/minecraft/class_9998;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_551.method_17087(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_17066(Lnet/minecraft/class_9998;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_551.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17066(Lnet/minecraft/class_9998;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_553.method_17069(Lnet/minecraft/class_1420;FFFFF)V": {
+   "to": "method_17069(Lnet/minecraft/class_10001;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_553.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17069(Lnet/minecraft/class_10001;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_555.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62065(Lnet/minecraft/class_10042;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_558.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62073(Lnet/minecraft/class_10009;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_561.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62074(Lnet/minecraft/class_10042;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_562.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62075(Lnet/minecraft/class_10010;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_563.method_17079(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_17079(Lnet/minecraft/class_10034;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_563.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17079(Lnet/minecraft/class_10034;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_564.method_17134(Lnet/minecraft/class_1642;FFFFF)V": {
+   "to": "method_17791(Lnet/minecraft/class_10086;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_564.method_17791(Lnet/minecraft/class_1588;FFFFF)V": {
+   "to": "method_17791(Lnet/minecraft/class_10086;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_564.method_17087(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_17791(Lnet/minecraft/class_10086;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_564.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17791(Lnet/minecraft/class_10086;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_565.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_2819(Lnet/minecraft/class_10017;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_566.method_17087(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_62085(Lnet/minecraft/class_10016;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_566.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62085(Lnet/minecraft/class_10016;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_567.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62088(Lnet/minecraft/class_10029;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_568.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62086(Lnet/minecraft/class_10020;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_570.method_17083(Lnet/minecraft/class_1577;FFFFF)V": {
+   "to": "method_17083(Lnet/minecraft/class_10031;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_570.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17083(Lnet/minecraft/class_10031;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_571.method_17091(Lnet/minecraft/class_1584;FFFFF)V": {
+   "to": "method_17091(Lnet/minecraft/class_10060;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_571.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17091(Lnet/minecraft/class_10060;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_572.method_17087(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_17087(Lnet/minecraft/class_10034;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_572.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17087(Lnet/minecraft/class_10034;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_574.method_17097(Lnet/minecraft/class_1439;FFFFF)V": {
+   "to": "method_17097(Lnet/minecraft/class_10037;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_574.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17097(Lnet/minecraft/class_10037;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_575.method_17094(Lnet/minecraft/class_1543;FFFFF)V": {
+   "to": "method_17094(Lnet/minecraft/class_10035;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_575.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17094(Lnet/minecraft/class_10035;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_576.method_22958(Lnet/minecraft/class_1621;FFFFF)V": {
+   "to": "method_22958(Lnet/minecraft/class_10067;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_576.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_22958(Lnet/minecraft/class_10067;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_5772.method_33293(Lnet/minecraft/class_5762;FFFFF)V": {
+   "to": "method_33293(Lnet/minecraft/class_10000;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_5772.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_33293(Lnet/minecraft/class_10000;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_578.method_22962(Lnet/minecraft/class_1492;FFFFF)V": {
+   "to": "method_22962(Lnet/minecraft/class_10043;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_578.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_22962(Lnet/minecraft/class_10043;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_582.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62087(Lnet/minecraft/class_10024;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_583.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_2819(Lnet/minecraft/class_10017;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_584.method_17112(Lnet/minecraft/class_1453;FFFFF)V": {
+   "to": "method_17112(Lnet/minecraft/class_10051;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_584.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17112(Lnet/minecraft/class_10051;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_586.method_17103(Lnet/minecraft/class_1440;FFFFF)V": {
+   "to": "method_17103(Lnet/minecraft/class_10050;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_586.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17103(Lnet/minecraft/class_10050;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_588.method_33686(Lnet/minecraft/class_1593;FFFFF)V": {
+   "to": "method_33686(Lnet/minecraft/class_10052;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_588.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_33686(Lnet/minecraft/class_10052;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_590.method_17114(Lnet/minecraft/class_1456;FFFFF)V": {
+   "to": "method_17114(Lnet/minecraft/class_10057;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_590.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17114(Lnet/minecraft/class_10057;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_591.method_17087(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_62110(Lnet/minecraft/class_10055;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_591.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62110(Lnet/minecraft/class_10055;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_592.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_2819(Lnet/minecraft/class_10017;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_594.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_2819(Lnet/minecraft/class_10017;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_595.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_2819(Lnet/minecraft/class_10017;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_596.method_17117(Lnet/minecraft/class_1463;FFFFF)V": {
+   "to": "method_17117(Lnet/minecraft/class_10059;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_596.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17117(Lnet/minecraft/class_10059;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_597.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62089(Lnet/minecraft/class_10042;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_598.method_17119(Lnet/minecraft/class_1472;FFFFF)V": {
+   "to": "method_17119(Lnet/minecraft/class_10063;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_598.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17119(Lnet/minecraft/class_10063;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_599.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62113(Lnet/minecraft/class_10062;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_601.method_17121(Lnet/minecraft/class_1472;FFFFF)V": {
+   "to": "method_17121(Lnet/minecraft/class_10063;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_601.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17121(Lnet/minecraft/class_10063;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_602.method_17122(Lnet/minecraft/class_1606;FFFFF)V": {
+   "to": "method_17122(Lnet/minecraft/class_10065;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_602.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17122(Lnet/minecraft/class_10065;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_603.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62114(Lnet/minecraft/class_10064;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_604.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_2819(Lnet/minecraft/class_10017;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_606.method_19690(Lnet/minecraft/class_1308;FFFFF)V": {
+   "to": "method_19690(Lnet/minecraft/class_10066;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_606.method_17087(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_19690(Lnet/minecraft/class_10066;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_606.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_19690(Lnet/minecraft/class_10066;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_608.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62118(Lnet/minecraft/class_10042;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_610.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62120(Lnet/minecraft/class_10069;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_611.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62119(Lnet/minecraft/class_10042;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_612.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62121(Lnet/minecraft/class_10076;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_614.method_17125(Lnet/minecraft/class_1481;FFFFF)V": {
+   "to": "method_17125(Lnet/minecraft/class_10077;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_614.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17125(Lnet/minecraft/class_10077;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_615.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62122(Lnet/minecraft/class_10076;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_617.method_17127(Lnet/minecraft/class_1634;FFFFF)V": {
+   "to": "method_17127(Lnet/minecraft/class_10078;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_617.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17127(Lnet/minecraft/class_10078;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_619.method_17135(Lnet/minecraft/class_1642;FFFFF)V": {
+   "to": "method_17135(Lnet/minecraft/class_10087;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_619.method_17087(Lnet/minecraft/class_1309;FFFFF)V": {
+   "to": "method_17135(Lnet/minecraft/class_10087;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_619.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17135(Lnet/minecraft/class_10087;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_620.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62123(Lnet/minecraft/class_10080;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_621.method_17130(Lnet/minecraft/class_1528;FFFFF)V": {
+   "to": "method_17130(Lnet/minecraft/class_10083;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_621.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17130(Lnet/minecraft/class_10083;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_622.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62124(Lnet/minecraft/class_10082;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_6227.method_35741(Lnet/minecraft/class_6053;FFFFF)V": {
+   "to": "method_35741(Lnet/minecraft/class_10030;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_6227.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_35741(Lnet/minecraft/class_10030;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_624.method_17133(Lnet/minecraft/class_1493;FFFFF)V": {
+   "to": "method_17133(Lnet/minecraft/class_10085;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_624.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_17133(Lnet/minecraft/class_10085;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7198.method_41907(Lnet/minecraft/class_7102;FFFFF)V": {
+   "to": "method_41907(Lnet/minecraft/class_10028;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7198.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_41907(Lnet/minecraft/class_10028;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7201.method_41916(Lnet/minecraft/class_7110;FFFFF)V": {
+   "to": "method_41916(Lnet/minecraft/class_10042;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7201.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_41916(Lnet/minecraft/class_10042;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7280.method_42580(Lnet/minecraft/class_7260;FFFFF)V": {
+   "to": "method_42580(Lnet/minecraft/class_10081;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7280.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_42580(Lnet/minecraft/class_10081;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7308.method_42732(Lnet/minecraft/class_7298;FFFFF)V": {
+   "to": "method_42732(Lnet/minecraft/class_9996;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7308.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_42732(Lnet/minecraft/class_9996;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7751.method_45706(Lnet/minecraft/class_7689;FFFFF)V": {
+   "to": "method_45706(Lnet/minecraft/class_10007;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7751.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_45706(Lnet/minecraft/class_10007;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8185.method_49302(Lnet/minecraft/class_8153;FFFFF)V": {
+   "to": "method_49302(Lnet/minecraft/class_10068;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8185.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_49302(Lnet/minecraft/class_10068;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_889.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_62076(Lnet/minecraft/class_10012;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8973.method_55232(Lnet/minecraft/class_8949;FFFFF)V": {
+   "to": "method_55232(Lnet/minecraft/class_10006;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8973.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_55232(Lnet/minecraft/class_10006;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8974.method_55239(Lnet/minecraft/class_9236;FFFFF)V": {
+   "to": "method_2819(Lnet/minecraft/class_10017;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8974.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_2819(Lnet/minecraft/class_10017;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_9082.method_55817(Lnet/minecraft/class_9069;FFFFF)V": {
+   "to": "method_55817(Lnet/minecraft/class_9997;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_9082.method_2819(Lnet/minecraft/class_1297;FFFFF)V": {
+   "to": "method_55817(Lnet/minecraft/class_9997;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 setupAnim(entity, ...) -> setupAnim(state): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4041.method_18330(Lnet/minecraft/class_4019;FFF)V": {
+   "to": "method_18332(Lnet/minecraft/class_10027;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4041.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_18332(Lnet/minecraft/class_10027;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4495.method_22111(Lnet/minecraft/class_4466;FFF)V": {
+   "to": "method_22112(Lnet/minecraft/class_10002;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4495.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_22112(Lnet/minecraft/class_10002;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_549.method_17084(Lnet/minecraft/class_1496;FFF)V": {
+   "to": "method_17085(Lnet/minecraft/class_10019;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_549.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17085(Lnet/minecraft/class_10019;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_551.method_24223(Lnet/minecraft/class_1531;FFF)V": {
+   "to": "method_17066(Lnet/minecraft/class_9998;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_551.method_17086(Lnet/minecraft/class_1309;FFF)V": {
+   "to": "method_17066(Lnet/minecraft/class_9998;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_551.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17066(Lnet/minecraft/class_9998;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_564.method_17077(Lnet/minecraft/class_1642;FFF)V": {
+   "to": "method_17791(Lnet/minecraft/class_10086;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_564.method_17086(Lnet/minecraft/class_1309;FFF)V": {
+   "to": "method_17791(Lnet/minecraft/class_10086;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_564.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17791(Lnet/minecraft/class_10086;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_571.method_17089(Lnet/minecraft/class_1584;FFF)V": {
+   "to": "method_17091(Lnet/minecraft/class_10060;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_571.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17091(Lnet/minecraft/class_10060;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_572.method_17086(Lnet/minecraft/class_1309;FFF)V": {
+   "to": "method_17087(Lnet/minecraft/class_10034;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_572.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17087(Lnet/minecraft/class_10034;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_574.method_17095(Lnet/minecraft/class_1439;FFF)V": {
+   "to": "method_17097(Lnet/minecraft/class_10037;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_574.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17097(Lnet/minecraft/class_10037;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_576.method_17098(Lnet/minecraft/class_1621;FFF)V": {
+   "to": "method_22958(Lnet/minecraft/class_10067;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_576.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_22958(Lnet/minecraft/class_10067;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_582.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_62087(Lnet/minecraft/class_10024;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_583.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_2819(Lnet/minecraft/class_10017;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_584.method_17108(Lnet/minecraft/class_1453;FFF)V": {
+   "to": "method_17112(Lnet/minecraft/class_10051;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_584.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17112(Lnet/minecraft/class_10051;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_586.method_17102(Lnet/minecraft/class_1440;FFF)V": {
+   "to": "method_17103(Lnet/minecraft/class_10050;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_586.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17103(Lnet/minecraft/class_10050;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_596.method_17115(Lnet/minecraft/class_1463;FFF)V": {
+   "to": "method_17117(Lnet/minecraft/class_10059;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_596.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17117(Lnet/minecraft/class_10059;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_598.method_17118(Lnet/minecraft/class_1472;FFF)V": {
+   "to": "method_17119(Lnet/minecraft/class_10063;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_598.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17119(Lnet/minecraft/class_10063;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_601.method_17120(Lnet/minecraft/class_1472;FFF)V": {
+   "to": "method_17121(Lnet/minecraft/class_10063;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_601.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17121(Lnet/minecraft/class_10063;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_606.method_19689(Lnet/minecraft/class_1308;FFF)V": {
+   "to": "method_19690(Lnet/minecraft/class_10066;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_606.method_17086(Lnet/minecraft/class_1309;FFF)V": {
+   "to": "method_19690(Lnet/minecraft/class_10066;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_606.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_19690(Lnet/minecraft/class_10066;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_621.method_17128(Lnet/minecraft/class_1528;FFF)V": {
+   "to": "method_17130(Lnet/minecraft/class_10083;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_621.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17130(Lnet/minecraft/class_10083;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_624.method_17131(Lnet/minecraft/class_1493;FFF)V": {
+   "to": "method_17133(Lnet/minecraft/class_10085;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_624.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_17133(Lnet/minecraft/class_10085;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_9321.method_57792(Lnet/minecraft/class_9254;FFF)V": {
+   "to": "method_62068(Lnet/minecraft/class_10005;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_9321.method_19689(Lnet/minecraft/class_1308;FFF)V": {
+   "to": "method_62068(Lnet/minecraft/class_10005;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_9321.method_17086(Lnet/minecraft/class_1309;FFF)V": {
+   "to": "method_62068(Lnet/minecraft/class_10005;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_9321.method_2816(Lnet/minecraft/class_1297;FFF)V": {
+   "to": "method_62068(Lnet/minecraft/class_10005;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 prepareMobModel(entity, ...) -> setupAnim(state), which does its work: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8138.method_49051(Lnet/minecraft/class_8113;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_49051(Lnet/minecraft/class_10011;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8138.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_49051(Lnet/minecraft/class_10011;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_876.method_3875(Lnet/minecraft/class_1665;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3875(Lnet/minecraft/class_9999;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_876.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3875(Lnet/minecraft/class_9999;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_891.method_3906(Lnet/minecraft/class_1670;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3936(Lnet/minecraft/class_10017;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_891.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3936(Lnet/minecraft/class_10017;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_892.method_3908(Lnet/minecraft/class_1511;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3908(Lnet/minecraft/class_10014;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_892.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3908(Lnet/minecraft/class_10014;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_895.method_3918(Lnet/minecraft/class_1510;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3918(Lnet/minecraft/class_10015;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_895.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3918(Lnet/minecraft/class_10015;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_897.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3936(Lnet/minecraft/class_10017;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8986.method_55829(Lnet/minecraft/class_8949;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_55829(Lnet/minecraft/class_10006;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8986.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_55829(Lnet/minecraft/class_10006;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8986.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_55829(Lnet/minecraft/class_10006;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8987.method_55270(Lnet/minecraft/class_9236;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3936(Lnet/minecraft/class_10017;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8987.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3936(Lnet/minecraft/class_10017;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_900.method_3962(Lnet/minecraft/class_1669;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3962(Lnet/minecraft/class_10020;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_900.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3962(Lnet/minecraft/class_10020;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_901.method_3965(Lnet/minecraft/class_1540;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3965(Lnet/minecraft/class_10023;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_901.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3965(Lnet/minecraft/class_10023;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_902.method_3966(Lnet/minecraft/class_1303;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3966(Lnet/minecraft/class_10022;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_902.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3966(Lnet/minecraft/class_10022;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_903.method_3968(Lnet/minecraft/class_1671;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3968(Lnet/minecraft/class_10025;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_903.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3968(Lnet/minecraft/class_10025;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_906.method_3974(Lnet/minecraft/class_1536;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3974(Lnet/minecraft/class_10026;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_906.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3974(Lnet/minecraft/class_10026;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_907.method_3977(Lnet/minecraft/class_1577;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3977(Lnet/minecraft/class_10031;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_907.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3977(Lnet/minecraft/class_10031;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_907.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3977(Lnet/minecraft/class_10031;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_914.method_3991(Lnet/minecraft/class_1581;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3991(Lnet/minecraft/class_10036;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_914.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3991(Lnet/minecraft/class_10036;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_914.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3991(Lnet/minecraft/class_10036;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_915.method_3994(Lnet/minecraft/class_1533;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3994(Lnet/minecraft/class_10040;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_915.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3994(Lnet/minecraft/class_10040;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_916.method_3996(Lnet/minecraft/class_1542;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3996(Lnet/minecraft/class_10039;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_916.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3996(Lnet/minecraft/class_10039;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_917.method_48302(Lnet/minecraft/class_1589;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_48302(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_917.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_48302(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_917.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_48302(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_919.method_4034(Lnet/minecraft/class_1538;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4034(Lnet/minecraft/class_10041;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_919.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4034(Lnet/minecraft/class_10041;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_920.method_4035(Lnet/minecraft/class_1532;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3936(Lnet/minecraft/class_10017;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_920.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_3936(Lnet/minecraft/class_10017;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_922.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4054(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_922.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4054(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_923.method_4061(Lnet/minecraft/class_1673;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4061(Lnet/minecraft/class_10044;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_923.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4061(Lnet/minecraft/class_10044;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_925.method_4063(Lnet/minecraft/class_1688;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4063(Lnet/minecraft/class_10045;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_925.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4063(Lnet/minecraft/class_10045;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_928.method_4075(Lnet/minecraft/class_1534;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4075(Lnet/minecraft/class_10049;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_928.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4075(Lnet/minecraft/class_10049;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_936.method_4094(Lnet/minecraft/class_1454;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4094(Lnet/minecraft/class_10058;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_936.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4094(Lnet/minecraft/class_10058;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_936.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4094(Lnet/minecraft/class_10058;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_940.method_4103(Lnet/minecraft/class_1678;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4103(Lnet/minecraft/class_10064;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_940.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4103(Lnet/minecraft/class_10064;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_945.method_4117(Lnet/minecraft/class_1621;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4117(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_945.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4117(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_945.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4117(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_9483.method_58753(Lnet/minecraft/class_9461;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_9483.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_953.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_62550(Lnet/minecraft/class_10072;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_955.method_4133(Lnet/minecraft/class_1685;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4133(Lnet/minecraft/class_10073;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_955.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4133(Lnet/minecraft/class_10073;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_956.method_4135(Lnet/minecraft/class_1541;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4135(Lnet/minecraft/class_10075;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_956.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4135(Lnet/minecraft/class_10075;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_959.method_4140(Lnet/minecraft/class_1474;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4140(Lnet/minecraft/class_10076;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_959.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4140(Lnet/minecraft/class_10076;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_959.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4140(Lnet/minecraft/class_10076;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_966.method_4159(Lnet/minecraft/class_1687;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4159(Lnet/minecraft/class_10084;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_966.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4159(Lnet/minecraft/class_10084;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_1001.method_4205(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1474;FFFFFF)V": {
+   "to": "method_4205(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10076;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_1001.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4205(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10076;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_1002.method_23204(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1308;FFFFFF)V": {
+   "to": "method_23204(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10066;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_1002.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_23204(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10066;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_1005.method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_62599(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10082;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_1005.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_62599(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10082;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_1006.method_4209(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1493;FFFFFF)V": {
+   "to": "method_4209(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10085;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_1006.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4209(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10085;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_3684.method_16047(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1451;FFFFFF)V": {
+   "to": "method_16047(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10008;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_3684.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_16047(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10008;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_3885.method_17151(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_17151(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_3885.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_17151(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_3887.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10017;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4004.method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4004.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4043.method_18335(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_4019;FFFFFF)V": {
+   "to": "method_18335(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10027;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4043.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_18335(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10027;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4073.method_18658(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1498;FFFFFF)V": {
+   "to": "method_18658(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10033;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4073.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_18658(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10033;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4507.method_22132(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_22132(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4507.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_22132(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4606.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10017;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4607.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10017;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4691.method_23623(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1439;FFFFFF)V": {
+   "to": "method_23623(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10037;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_4691.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_23623(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10037;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_5167.method_27152(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1498;FFFFFF)V": {
+   "to": "method_27152(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10033;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_5167.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_27152(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10033;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7288.method_42613(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_7260;FFFFFF)V": {
+   "to": "method_42613(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_7288.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_42613(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8988.method_55272(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_8949;FFFFFF)V": {
+   "to": "method_55272(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10006;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8988.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_55272(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10006;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8989.method_55275(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_8949;FFFFFF)V": {
+   "to": "method_55275(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10006;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_8989.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_55275(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10006;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_899$1.method_23170(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1617;FFFFFF)V": {
+   "to": "method_23170(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10021;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_899$1.method_17162(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_23170(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10021;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_899$1.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_23170(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10021;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_9085.method_55837(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1493;FFFFFF)V": {
+   "to": "method_55837(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10085;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_9085.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_55837(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10085;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_914$1.method_17149(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1581;FFFFFF)V": {
+   "to": "method_17149(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10036;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_914$1.method_17162(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_17149(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10036;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_914$1.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_17149(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10036;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_962$1.method_17156(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1632;FFFFFF)V": {
+   "to": "method_17156(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10035;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_962$1.method_17162(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_17156(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10035;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_962$1.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_17156(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10035;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_970.method_17157(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_17157(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10034;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_970.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_17157(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10034;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_972.method_4177(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;FFFFFF)V": {
+   "to": "method_4177(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_972.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4177(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_975.method_4179(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1560;FFFFFF)V": {
+   "to": "method_4179(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10016;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_975.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4179(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10016;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_976.method_17159(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_17159(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_976.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_17159(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_977.method_17160(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1433;FFFFFF)V": {
+   "to": "method_17160(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10012;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_977.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_17160(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10012;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_978.method_4181(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;FFFFFF)V": {
+   "to": "method_4181(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_978.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4181(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_979.method_17161(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_17161(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10034;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_979.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_17161(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10034;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_980.method_4182(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1551;FFFFFF)V": {
+   "to": "method_4182(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10086;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_980.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4182(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10086;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_983.method_4185(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1657;FFFFFF)V": {
+   "to": "method_4185(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_983.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4185(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_986.method_4188(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1439;FFFFFF)V": {
+   "to": "method_4188(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10037;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_986.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4188(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10037;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_988.method_4191(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1501;FFFFFF)V": {
+   "to": "method_4191(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10043;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_988.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4191(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10043;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_989.method_17162(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_17162(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_989.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_17162(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_990.method_4194(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1440;FFFFFF)V": {
+   "to": "method_4194(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10050;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_990.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4194(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10050;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_991.method_4195(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1438;FFFFFF)V": {
+   "to": "method_4195(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10047;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_991.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4195(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10047;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_992.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_62595(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_994.method_4198(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1472;FFFFFF)V": {
+   "to": "method_4198(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10063;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_994.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4198(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10063;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_996.method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1473;FFFFFF)V": {
+   "to": "method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_996.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_997.method_23200(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_23200(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10067;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_997.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_23200(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10067;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_998.method_4203(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": {
+   "to": "method_4203(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  },
+  "net/minecraft/class_998.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": {
+   "to": "method_4203(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "1.21.1 render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot): 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer keeps for mods' calls); gen_s7render.py family 9"
+  }
  }
 }

@@ -1580,6 +1580,69 @@ def family_generic(V, W):
     return out
 
 
+# ---------------------------------------------------------------------------------------------------------------------
+# Family 9 -- where a mixin's 1.21.1 target now runs (mixinTargets).
+# A mixin of a 1.21.1 mod names a vanilla class's setupAnim(entity, ...) / prepareMobModel(entity, ...) (a model),
+# render(entity, yaw, partialTick, poseStack, buffers, light) (an entity renderer) or render(poseStack, buffers, light,
+# entity, limbSwing, ..., netHeadYaw, headPitch) (a render layer). The layer puts those 1.21.1 shapes back (families
+# 4 / 5) for mods' calls, but vanilla never calls them: 1.21.2 runs the same work in setupAnim(state) /
+# render(state, poseStack, buffers, light) / render(poseStack, buffers, light, state, yRot, xRot) -- the model's
+# setupAnim(state) also does what prepareMobModel did. For every class 1.21.1 declared one of those shapes on (every
+# erasure of the root, javac's bridges included) and 1.21.2 declares the new root's implementation on the same
+# class, one mixinTargets entry sends the mixin to that implementation; args carry each 1.21.1 argument 1.21.2 still
+# passes (the pose stack, buffers, light; a layer's head yaw / pitch as its yRot / xRot) and -1 for the entity and the
+# numbers 1.21.2 reads from the state (so a handler that takes those does not follow).
+# ---------------------------------------------------------------------------------------------------------------------
+LAYER = MC + "class_3887"
+MIXIN_ROOTS = [
+    # (V base, V root, W root, args, what)
+    (ENTITY_MODEL, SETUP, W_SETUP, [-1] * 6, "setupAnim(entity, ...) -> setupAnim(state)"),
+    (ENTITY_MODEL, PREPARE, W_SETUP, [-1] * 4, "prepareMobModel(entity, ...) -> setupAnim(state), which does its work"),
+    (RENDERER, ("method_3936", f"(L{ENTITY};FFL{MC}class_4587;L{MC}class_4597;I)V"),
+     ("method_3936", f"(L{STATE};L{MC}class_4587;L{MC}class_4597;I)V"), [-1, -1, -1, 1, 2, 3],
+     "render(entity, yaw, partialTick, poseStack, buffers, light) -> render(state, poseStack, buffers, light)"),
+    (LAYER, ("method_4199", f"(L{MC}class_4587;L{MC}class_4597;IL{ENTITY};FFFFFF)V"),
+     ("method_4199", f"(L{MC}class_4587;L{MC}class_4597;IL{STATE};FF)V"), [0, 1, 2, -1, -1, -1, -1, -1, 4, 5],
+     "render(poseStack, buffers, light, entity, ..., netHeadYaw, headPitch) -> render(poseStack, buffers, light, state, yRot, xRot)"),
+]
+
+
+def family_mixin_targets(V, W, vtargets, wtargets):
+    def fam(c, root, J, targets):
+        f = {root}
+        grew = True
+        while grew:
+            grew = False
+            for cc in chain(c, J):
+                for b, t in targets.get(cc, {}).items():
+                    if b in f and t not in f:
+                        f.add(t)
+                        grew = True
+        return f
+
+    out = {}
+    for base, vroot, wroot, args, what in MIXIN_ROOTS:
+        for c, ci in sorted(V.items()):
+            if base not in chain(c, V) or c not in W:
+                continue
+            vf = fam(c, vroot, V, vtargets)
+            declared = [(m.name, m.desc) for m in ci.methods if (m.name, m.desc) in vf]
+            if not declared:
+                continue
+            wdecl = {(m.name, m.desc): m for m in W[c].methods}
+            wf = fam(c, wroot, W, wtargets)
+            impl = [k for k in wf if k in wdecl and not wdecl[k].access & (ACC_BRIDGE | ACC_SYNTH)]
+            if len(impl) != 1:
+                continue
+            for name, desc in declared:
+                out[f"{c}.{name}{desc}"] = {
+                    "to": impl[0][0] + impl[0][1], "args": args,
+                    "basis": f"1.21.1 {what}: 1.21.2 runs the same work there (vanilla no longer calls the 1.21.1 shape, which the layer "
+                             f"keeps for mods' calls); gen_s7render.py family 9"}
+    print(f"mixin targets: {len(out)}")
+    return out
+
+
 def write_mixin_config(generated):
     """the generated CbRenderTex<n>Mixin names in the client list, replacing the previous generation's"""
     cfg = json.load(open(MIXIN_CONFIG, encoding="utf-8"))
@@ -1709,8 +1772,9 @@ def main():
     covers += pt_covers
     shaders = family_shaders()
     shaders.update(family_moved())
+    wtargets = bridge_targets(os.path.join(DATA, "jars/client-1.21.2-intermediary-code.jar"))
     frag = {"overrideHooks": hooks, "abstractFills": fills, "staticRedirects": shaders, "covers": sorted(covers),
-            "genericWitnesses": family_generic(V, W)}
+            "genericWitnesses": family_generic(V, W), "mixinTargets": family_mixin_targets(V, W, targets, wtargets)}
     open(FRAGMENT, "w", encoding="utf-8", newline="\n").write(json.dumps(frag, indent=1, ensure_ascii=False) + "\n")
     write_mixin_config(mixins)
 
