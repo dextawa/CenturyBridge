@@ -1202,6 +1202,33 @@ public final class Chain {
     }
 
     /** field form of {@link #declaredOnTarget}: true unless a known target-stub class lacks name:desc. */
+    /**
+     * A member descriptor as the converted jar will spell it: every class the step's classRenames moves
+     * replaced by its new name (the jar's ClassRemapper does the same to the mod's own members later,
+     * mixin shadows / accessors / invokers included), so a mixin member is judged by the shape Mixin
+     * will see. Null stays null.
+     */
+    public String renamedDesc(String desc) {
+        if (desc == null || classRenames.isEmpty() || desc.indexOf('L') < 0) {
+            return desc;
+        }
+        StringBuilder b = new StringBuilder();
+        int i = 0;
+        while (i < desc.length()) {
+            char c = desc.charAt(i);
+            if (c == 'L') {
+                int e = desc.indexOf(';', i);
+                String cls = desc.substring(i + 1, e);
+                b.append('L').append(classRenames.getOrDefault(cls, cls)).append(';');
+                i = e + 1;
+            } else {
+                b.append(c);
+                i++;
+            }
+        }
+        return b.toString();
+    }
+
     public boolean fieldDeclaredOnTarget(String owner, String name, String desc) {
         java.util.Set<String> decl = targetDecls.get(owner);
         if (decl == null) {

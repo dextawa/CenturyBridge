@@ -75,6 +75,11 @@ public final class MixinRepair {
     private final Map<String, ClassNode> cache = new HashMap<>();
     /** the step's source release (V) code, for ordinal-remap; null: ordinals are not remapped */
     public MixinRepair source;
+    /**
+     * a descriptor as the converted jar will spell it (the step's classRenames, Chain.renamedDesc): a
+     * selector written with a class the step renames names the W method of the renamed shape
+     */
+    public java.util.function.UnaryOperator<String> renamed = d -> d;
 
     /** disabled: injectors switched to require=0 because their anchor is gone -- a KNOWN loss, reported */
     public record Outcome(Set<String> fatal, Map<String, String> fatalWhy, List<String> repairs, List<String> disabled) {}
@@ -300,6 +305,9 @@ public final class MixinRepair {
                         ClassNode tc = target(owner);
                         if (tc == null) { live = true; break; } // not a class we hold code for: can't judge
                         List<MethodNode> cands = s.match(tc);
+                        if (cands.isEmpty() && s.desc != null && !renamed.apply(s.desc).equals(s.desc)) {
+                            cands = new Sel(s.owner, s.name, renamed.apply(s.desc), s.wildcard).match(tc);
+                        }
                         if (cands.isEmpty()) cands = restored(restoredByTarget, owner, s); // an override MixinBridge put back
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
@@ -476,14 +484,24 @@ public final class MixinRepair {
             for (MethodNode c : places) {
                 List<AbstractInsnNode> wo = SiteMatch.occurrences(c, in -> matchesAnchor(in, a));
                 if (wo.isEmpty()) continue;
-                int j = SiteMatch.match(vm, vo, c, wo)[sites.get(k)];
+                // another method than V's own: a context of 3 or more, no alignment (audit: a 1-wide
+                // context matched index 0 of another statement's argument array)
+                int j = c == wm ? SiteMatch.match(vm, vo, c, wo)[sites.get(k)] : SiteMatch.match(vm, vo, c, wo, 3, false)[sites.get(k)];
+                if (j >= 0 && c != wm && ownSite(vc, c, wo.get(j), a)) {
+                    j = -1; // V's own copy of that callee already held this site: it is not where the target's went
+                }
                 if (j >= 0) {
                     hits++;
                     found = c;
                     fj = j;
                 }
             }
-            if (hits == 0) return null; // no counterpart found anywhere: not evidence of a move
+            if (hits == 0) {
+                // V's site has no counterpart in the target or what it calls: the looser descend (any
+                // occurrence of the anchor in one callee) would be a guess
+                why.add("V's site has no counterpart in the target or the methods it calls");
+                return null;
+            }
             if (found == wm) return null; // still in the target itself: not a descend
             if (hits > 1) {
                 why.add("V's site matches in " + hits + " methods");
@@ -537,6 +555,22 @@ public final class MixinRepair {
             ordinal = -1;
         }
         return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic);
+    }
+
+    /**
+     * Whether W's site in callee c is the counterpart of an occurrence of the anchor in V's own copy of
+     * c (same name and descriptor in V's class): then it stood in that method already in V.
+     */
+    private static boolean ownSite(ClassNode vc, MethodNode c, AbstractInsnNode site, Anchor a) {
+        MethodNode vcm = null;
+        for (MethodNode m : vc.methods) if (m.name.equals(c.name) && m.desc.equals(c.desc)) vcm = m;
+        if (vcm == null) return false;
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vcm, in -> matchesAnchor(in, a));
+        if (vo.isEmpty()) return false;
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(c, in -> matchesAnchor(in, a));
+        int at = wo.indexOf(site);
+        for (int j : SiteMatch.match(vcm, vo, c, wo)) if (j == at) return true;
+        return false;
     }
 
     /** calls of m within its class, method references (invokedynamic handles) included */

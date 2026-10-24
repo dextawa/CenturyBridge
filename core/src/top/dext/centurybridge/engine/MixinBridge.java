@@ -1500,6 +1500,10 @@ final class MixinBridge {
                     return null;
                 }
                 List<MethodNode> wm = s.match(wt);
+                if (wm.isEmpty() && s.desc() != null && !chain.renamedDesc(s.desc()).equals(s.desc())) {
+                    // the descriptor as the ClassRemapper leaves it (classRenames): nothing moved under it
+                    wm = new MixinRepair.Sel(s.owner(), s.name(), chain.renamedDesc(s.desc()), s.wildcard()).match(wt);
+                }
                 if (!wm.isEmpty()) {
                     return new Selection(h, an, vt == null ? List.of() : s.match(vt), wm);
                 }
@@ -1522,8 +1526,8 @@ final class MixinBridge {
                     // no wiring for it, or wiring for mods' overrides that cannot carry an injector: where W keeps its code
                     List<String> bwhy = new ArrayList<>();
                     fate = bodyFate(vt, wt, vmeth, bwhy);
-                    if (fate == null && why.isEmpty()) {
-                        why.addAll(bwhy);
+                    if (fate == null && (why.isEmpty() || !bwhy.isEmpty() && bwhy.get(0).contains("split across"))) {
+                        why.addAll(0, bwhy); // a split is the more precise reason than the wiring's
                     }
                 }
                 if (fate == null) {
@@ -2258,12 +2262,14 @@ final class MixinBridge {
         MethodNode best = null;
         double bs = -1;
         double second = -1;
+        List<MethodNode> cands = new ArrayList<>();
         for (MethodNode m : wt.methods) {
             if (vkeys.contains(m.name + m.desc) || (m.access & Opcodes.ACC_SYNTHETIC) != 0
                     || ((m.access ^ vm.access) & Opcodes.ACC_STATIC) != 0 || m.name.equals("<init>") != vm.name.equals("<init>")
                     || m.name.equals("<clinit>")) {
                 continue;
             }
+            cands.add(m);
             double sim = SiteMatch.similarity(vs, SiteMatch.sig(m));
             if (sim > bs) {
                 second = bs;
@@ -2279,6 +2285,12 @@ final class MixinBridge {
         if (bs < 0.75 || bs - second < 0.15) {
             why.add(String.format(Locale.ROOT, "no wiring; the closest W method by code is %s%s at %.2f (next %.2f), short of evidence",
                 best.name, best.desc, bs, Math.max(second, 0)));
+            return null;
+        }
+        String split = split(vs, best, cands);
+        if (split != null) {
+            why.add("no wiring; its code is split across W methods: " + best.name + best.desc + " and " + split
+                + " (an injector cannot follow it into one of them)");
             return null;
         }
         Type[] wa = Type.getArgumentTypes(best.desc);
@@ -2297,6 +2309,47 @@ final class MixinBridge {
         return new Fate(best.name, best.desc, known ? from : null, new String[va.length][], new boolean[va.length], known,
             String.format(Locale.ROOT, "W keeps its code there (similarity %.2f, next %.2f)%s", bs, Math.max(second, 0),
                 known ? "" : "; its arguments are not V's one for one"));
+    }
+
+    /**
+     * Another W method holding a share of V's code the best match does not (1.20.5 split Block.use into
+     * useItemOn and useWithoutItem): by the alignment of V's significant instructions against each body,
+     * a candidate that aligns at least a sixth of V's instructions the best match leaves unaligned,
+     * with at least 4 of them, and is itself mostly V's code (60% of its own instructions aligned).
+     * Null when no candidate does.
+     */
+    private static String split(List<String> vs, MethodNode best, List<MethodNode> cands) {
+        if (vs.size() < 4) {
+            return null;
+        }
+        int[] b = SiteMatch.align(vs, SiteMatch.sig(best));
+        if (b == null) {
+            return null;
+        }
+        for (MethodNode c : cands) {
+            if (c == best) {
+                continue;
+            }
+            List<String> cs = SiteMatch.sig(c);
+            int[] a = SiteMatch.align(vs, cs);
+            if (a == null || cs.isEmpty()) {
+                continue;
+            }
+            int extra = 0;
+            int own = 0;
+            for (int i = 0; i < vs.size(); i++) {
+                if (a[i] >= 0) {
+                    own++;
+                    if (b[i] < 0) {
+                        extra++;
+                    }
+                }
+            }
+            if (extra >= 4 && extra * 6 >= vs.size() && own * 10 >= cs.size() * 6) {
+                return c.name + c.desc;
+            }
+        }
+        return null;
     }
 
     /** W argument j of a reshape's "keep" ops is V argument i; drops, conversions and supplies give none */

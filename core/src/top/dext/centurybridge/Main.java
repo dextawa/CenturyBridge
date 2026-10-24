@@ -212,6 +212,7 @@ public final class Main {
             }
             if (codeJar != null && Files.exists(codeJar)) {
                 chain.mixinRepair = new top.dext.centurybridge.engine.MixinRepair(codeJar);
+                chain.mixinRepair.renamed = chain::renamedDesc;
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");

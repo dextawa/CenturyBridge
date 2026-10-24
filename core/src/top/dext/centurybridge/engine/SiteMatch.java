@@ -48,12 +48,21 @@ public final class SiteMatch {
 
     /** for each V occurrence, the index of its W counterpart in {@code wo}, or -1 */
     public static int[] match(MethodNode vm, List<AbstractInsnNode> vo, MethodNode wm, List<AbstractInsnNode> wo) {
+        return match(vm, vo, wm, wo, 1, true);
+    }
+
+    /**
+     * As {@link #match(MethodNode, List, MethodNode, List)}, with contexts no narrower than minK and the
+     * alignment fallback only when asked: for a W method other than V's own (descend), where order
+     * protects nothing and a narrow context can be another statement of the same shape.
+     */
+    public static int[] match(MethodNode vm, List<AbstractInsnNode> vo, MethodNode wm, List<AbstractInsnNode> wo, int minK, boolean alignment) {
         int[] map = new int[vo.size()];
         Arrays.fill(map, -1);
         boolean[] taken = new boolean[wo.size()];
         List<String> vs = sig(vm), ws = sig(wm);
         List<Integer> vi = sigIndex(vm, vo), wi = sigIndex(wm, wo);
-        for (int k = 4; k >= 1; k--) {
+        for (int k = 4; k >= minK; k--) {
             Map<String, List<Integer>> wctx = new HashMap<>();
             for (int j = 0; j < wo.size(); j++) {
                 if (!taken[j]) wctx.computeIfAbsent(ctx(ws, wi.get(j), k), x -> new ArrayList<>()).add(j);
@@ -72,7 +81,7 @@ public final class SiteMatch {
         }
         // what context alone leaves: the two bodies' alignment (longest common subsequence of their
         // significant instructions), where the occurrence and both its neighbours are aligned in a row
-        int[] aligned = align(vs, ws);
+        int[] aligned = alignment ? align(vs, ws) : null;
         if (aligned != null) {
             for (int i = 0; i < vo.size(); i++) {
                 if (map[i] >= 0) continue;
@@ -193,7 +202,7 @@ public final class SiteMatch {
      * For each position of a, the position of b it is aligned with by a longest common subsequence
      * (-1: not aligned), ties broken the same way every time; null when the bodies are too long.
      */
-    static int[] align(List<String> a, List<String> b) {
+    public static int[] align(List<String> a, List<String> b) {
         int n = a.size(), m = b.size();
         if ((long) n * m > 4_000_000L) return null;
         int[][] t = new int[n + 1][m + 1];

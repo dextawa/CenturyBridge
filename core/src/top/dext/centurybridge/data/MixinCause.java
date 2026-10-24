@@ -196,6 +196,11 @@ public final class MixinCause {
                         String why = said.get(String.join("\t", r.usage(), r.owner(), r.target(), r.anchor(), String.valueOf(r.ordinal())));
                         if (why != null) vd = new Verdict(vd.cause() + ": " + whyKind(why), why);
                     }
+                    if (vd.cause().startsWith("target-private-") || vd.cause().equals("target-api")) {
+                        // body follow found V's code split across W methods: not "gone", a judgment for the step
+                        String why = said.get(String.join("\t", r.usage(), r.owner(), r.target(), r.anchor(), String.valueOf(r.ordinal())));
+                        if (why != null && why.contains("is split across W methods")) vd = new Verdict("target-split", why);
+                    }
                     if (vd.cause().startsWith("anchor-into-")) {
                         // what descend-site said about it
                         String why = said.get(String.join("\t", r.usage(), r.owner(), r.target(), r.anchor(), String.valueOf(r.ordinal())));
@@ -252,6 +257,7 @@ public final class MixinCause {
             return "stripped";
         }
         if (l.startsWith("- disabled injector")) return l.contains("target gone") ? "disabled, target gone" : "disabled, anchor gone";
+        if (l.contains("is split across W methods")) return "code split across W methods";
         if (l.contains("short of evidence")) return "no W method holds its code";
         if (l.contains("W keeps its code there") && l.contains("no longer stands")) return "follows by code, anchor gone in the new method";
         if (l.contains("W keeps its code there")) return "follows by code, handler cannot take it";
