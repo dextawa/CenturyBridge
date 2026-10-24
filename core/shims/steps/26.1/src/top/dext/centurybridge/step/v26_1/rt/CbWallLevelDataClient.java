@@ -44,4 +44,13 @@ public final class CbWallLevelDataClient {
         }
         return level.getOverworldClockTime();
     }
+
+    /** the current client level's overworld clock (1.21.11's day time) */
+    static long overworldClockTime() {
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level == null) {
+            throw new IllegalStateException("1.21.11 day time read with no server and no client level");
+        }
+        return level.getOverworldClockTime();
+    }
 }
