@@ -114,7 +114,18 @@
   "net/minecraft/class_3002.method_12959()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#getTextId",
   "net/minecraft/class_10515.method_65694(Ljava/lang/Object;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers#callSubmit",
   "net/minecraft/class_10508.method_65699(Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers#callSubmitNoData",
-  "net/minecraft/class_10508.method_65705(Ljava/lang/Void;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers#callSubmitVoid"
+  "net/minecraft/class_10508.method_65705(Ljava/lang/Void;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers#callSubmitVoid",
+  "net/minecraft/class_8234.method_49798(Lnet/minecraft/class_1937;Lnet/minecraft/class_2625;ZLnet/minecraft/class_1657;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallDyes#tryApplyToSign",
+  "net/minecraft/class_8234.method_49801(Lnet/minecraft/class_8242;Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallDyes#canApplyToSign",
+  "net/minecraft/class_1826.method_8018(Lnet/minecraft/class_1799;Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#spawnsEntity",
+  "net/minecraft/class_1826.method_8015(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#getType",
+  "net/minecraft/class_1826.method_24793(Lnet/minecraft/class_1657;Lnet/minecraft/class_1308;Lnet/minecraft/class_1299;Lnet/minecraft/class_3218;Lnet/minecraft/class_243;Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#spawnOffspringFromSpawnEgg",
+  "net/minecraft/class_10823.comp_3779()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#ambientSound",
+  "net/minecraft/class_10823.comp_3780()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#deathSound",
+  "net/minecraft/class_10823.comp_3781()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#growlSound",
+  "net/minecraft/class_10823.comp_3782()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#hurtSound",
+  "net/minecraft/class_10823.comp_3783()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#pantSound",
+  "net/minecraft/class_10823.comp_3784()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#whineSound"
  },
  "overrideHooks": [
   {
@@ -429,6 +440,13 @@
    "onlyUnder": "net/minecraft/class_10223",
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyPlacementInfo",
    "basis": "26.1's NormalCraftingRecipe made method_61671 final (a 1.21.11 TransmuteRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_45322()Lnet/minecraft/class_7699;",
+   "new": "cb$legacyRequiredFeatures",
+   "onlyUnder": "net/minecraft/class_1826",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs$LegacyRequiredFeatures",
+   "basis": "26.1's Item made requiredFeatures() final (a 1.21.11 spawn egg subclass's override would fail to load): renamed, answering through the final member (CbWallItemFeaturesMixin); its super call reaches 26.1's body"
   }
  ],
  "classRenames": {
@@ -458,7 +476,9 @@
   "net/minecraft/class_1867$class_1868": "top/dext/centurybridge/step/v26_1/facade/ShapelessRecipeSerializer",
   "net/minecraft/class_10223$class_10224": "top/dext/centurybridge/step/v26_1/facade/TransmuteRecipeSerializer",
   "net/minecraft/class_8060$class_8061": "top/dext/centurybridge/step/v26_1/facade/SmithingTransformRecipeSerializer",
-  "net/minecraft/class_8062$class_8063": "top/dext/centurybridge/step/v26_1/facade/SmithingTrimRecipeSerializer"
+  "net/minecraft/class_8062$class_8063": "top/dext/centurybridge/step/v26_1/facade/SmithingTrimRecipeSerializer",
+  "net/minecraft/class_5620$class_8821": "top/dext/centurybridge/step/v26_1/facade/CauldronInteractionMap",
+  "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/facade/EitherHolder"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -466,7 +486,8 @@
   "net/minecraft/class_775.<init>(Lnet/minecraft/class_11701;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newLiquidBlockRenderer",
   "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#newSnippet",
   "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#newBrain",
-  "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#newPanorama"
+  "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#newPanorama",
+  "net/minecraft/class_10823.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#create"
  },
  "adapterHooks": [
   {
@@ -820,7 +841,19 @@
   "net/minecraft/class_4095.method_28313(Ljava/util/Collection;Ljava/util/Collection;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#codec",
   "net/minecraft/class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lnet/minecraft/class_1940;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#parse",
   "net/minecraft/class_3002.method_12966(Lnet/minecraft/class_2960;Lnet/minecraft/class_3002$class_10765;)Lnet/minecraft/class_3002;": "top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#load",
-  "net/minecraft/class_7761$class_10381.method_65244(Lnet/minecraft/class_2680;)Lnet/minecraft/class_7761$class_10381;": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer#attachmentByBlockState"
+  "net/minecraft/class_7761$class_10381.method_65244(Lnet/minecraft/class_2680;)Lnet/minecraft/class_7761$class_10381;": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer#attachmentByBlockState",
+  "net/minecraft/class_1769.method_7803(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1769;": "top/dext/centurybridge/step/v26_1/rt/CbWallDyes#byColor",
+  "net/minecraft/class_1826.method_8019(Lnet/minecraft/class_1299;)Lnet/minecraft/class_1826;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#byId",
+  "net/minecraft/class_1826.method_8017()Ljava/lang/Iterable;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#eggs",
+  "net/minecraft/class_5620.method_32206(Ljava/lang/String;)Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#newInteractionMap",
+  "net/minecraft/class_5620.method_32212()V": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#bootStrap",
+  "net/minecraft/class_5620.method_34850(Ljava/util/Map;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#addDefaultInteractions",
+  "net/minecraft/class_5620.method_32210(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Ljava/util/function/Predicate;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#fillBucket",
+  "net/minecraft/class_5620.method_32207(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#emptyBucket",
+  "net/minecraft/class_5537.method_61642(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#hasSelectedItem",
+  "net/minecraft/class_5537.method_61644(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getSelectedItem",
+  "net/minecraft/class_5537.method_64975()Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getAllBundleItemColors",
+  "net/minecraft/class_5537.method_64277(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getByColor"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -1124,6 +1157,55 @@
     "keep:3"
    ],
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_1769.<init>(Lnet/minecraft/class_1767;Lnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v26_1/rt/CbWallDyes#withDye(Lnet/minecraft/class_1767;Lnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallDyes#constructed(Lnet/minecraft/class_1769;Lnet/minecraft/class_1767;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "26.1's dye keeps its color as its default DYE component (Items registers each dye so); 1.21.11's constructor took it and recorded the item for byColor (CbWallDyes)"
+  },
+  "net/minecraft/class_2275.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_5620$class_8821;)V": {
+   "desc": "(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#dispatcher(Lnet/minecraft/class_5620$class_8821;)Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;"
+   ],
+   "basis": "26.1's cauldron blocks take the dispatcher a 1.21.11 interaction map stands for (CbWallCauldrons)"
+  },
+  "net/minecraft/class_5556.<init>(Lnet/minecraft/class_1959$class_1963;Lnet/minecraft/class_5620$class_8821;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_1959$class_1963;Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#dispatcher(Lnet/minecraft/class_5620$class_8821;)Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;",
+    "keep:2"
+   ],
+   "basis": "26.1's cauldron blocks take the dispatcher a 1.21.11 interaction map stands for (CbWallCauldrons)"
+  },
+  "net/minecraft/class_9792.<init>(Lnet/minecraft/class_9791;)V": {
+   "desc": "(Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#holder(Lnet/minecraft/class_9791;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
+  },
+  "net/minecraft/class_10710.<init>(Lnet/minecraft/class_9791;)V": {
+   "desc": "(Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#holder(Lnet/minecraft/class_9791;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
+  },
+  "net/minecraft/class_10711.<init>(Lnet/minecraft/class_9791;)V": {
+   "desc": "(Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#holder(Lnet/minecraft/class_9791;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
   }
  },
  "fieldGetters": {
@@ -1158,7 +1240,15 @@
   "net/minecraft/class_31.field_31843:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
   "net/minecraft/class_31.field_36349:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
   "net/minecraft/class_1799.field_51397:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemCodecs",
-  "net/minecraft/class_1799.field_51398:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemCodecs"
+  "net/minecraft/class_1799.field_51398:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemCodecs",
+  "net/minecraft/class_5620.field_46589:Ljava/util/Map;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_5620.field_46590:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_5620.field_27775:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_5620.field_27776:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_5620.field_27777:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_5620.field_28011:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_6053.field_30400:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallGoats",
+  "net/minecraft/class_6053.field_30401:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallGoats"
  },
  "abstractFills": [
   {
@@ -1236,7 +1326,10 @@
   "net/minecraft/class_8944.method_54962(Lnet/minecraft/class_5258;Ljava/lang/String;)V",
   "net/minecraft/class_8944.method_54961(Lnet/minecraft/class_5258;Lnet/minecraft/class_176;Ljava/lang/String;)V",
   "net/minecraft/class_8944.method_54964(Ljava/util/List;Lnet/minecraft/class_176;Ljava/lang/String;)V",
-  "net/minecraft/class_58.method_22568(Lnet/minecraft/class_176;)Lnet/minecraft/class_58;"
+  "net/minecraft/class_58.method_22568(Lnet/minecraft/class_176;)Lnet/minecraft/class_58;",
+  "net/minecraft/class_1769.method_7802()Lnet/minecraft/class_1767;",
+  "net/minecraft/class_6053.method_43541()V",
+  "net/minecraft/class_6053.method_43542()V"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -1267,9 +1360,28 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#stack(Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_1799;",
    "basis": "26.1's SingleItemRecipe.result() answers the result's template, 1.21.11's its stack: the template's stack"
+  },
+  "net/minecraft/class_9792.comp_2833()Lnet/minecraft/class_9791;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#either(Lnet/minecraft/class_6880;)Lnet/minecraft/class_9791;",
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
+  },
+  "net/minecraft/class_10710.comp_3598()Lnet/minecraft/class_9791;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#either(Lnet/minecraft/class_6880;)Lnet/minecraft/class_9791;",
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
+  },
+  "net/minecraft/class_10711.comp_3599()Lnet/minecraft/class_9791;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#either(Lnet/minecraft/class_6880;)Lnet/minecraft/class_9791;",
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
   }
  },
  "instanceFieldGetters": {
-  "net/minecraft/class_757.field_60579:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#guiCubeMap"
+  "net/minecraft/class_757.field_60579:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#guiCubeMap",
+  "net/minecraft/class_2275.field_27084:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#interactions"
  }
 }

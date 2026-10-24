@@ -116,6 +116,9 @@ public class SwallTestMod implements ModInitializer {
             check("worldData.getGameRules", rules == server.method_30002().method_64395(), rules);
 
             recipes(server);
+            items();
+            cauldrons();
+            goats(server);
             interactions(server);
             levelData(server);
         } catch (Throwable t) {
@@ -275,5 +278,46 @@ public class SwallTestMod implements ModInitializer {
         TestShapeless shapeless = new TestShapeless();
         check("recipe.finalGroupOverride", "g!".equals(shapeless.method_8112()) && shapeless.method_45441() == net.minecraft.class_7710.field_40251,
             shapeless.method_8112());
+    }
+
+    private static void items() {
+        net.minecraft.class_1769 red = net.minecraft.class_1769.method_7803(net.minecraft.class_1767.field_7964);
+        check("dye.byColorAndColor", red == net.minecraft.class_1802.field_8264 && red.method_7802() == net.minecraft.class_1767.field_7964, red);
+        net.minecraft.class_1826 pigEgg = net.minecraft.class_1826.method_8019(net.minecraft.class_1299.field_6093);
+        net.minecraft.class_1799 eggStack = new net.minecraft.class_1799(net.minecraft.class_1802.field_8493);
+        boolean listed = false;
+        for (net.minecraft.class_1826 egg : net.minecraft.class_1826.method_8017()) {
+            listed |= egg == pigEgg;
+        }
+        check("spawnEgg.byIdTypeEggs", pigEgg == net.minecraft.class_1802.field_8493 && listed
+            && pigEgg.method_8015(eggStack) == net.minecraft.class_1299.field_6093 && pigEgg.method_8018(eggStack, net.minecraft.class_1299.field_6093), pigEgg);
+    }
+
+    private static void cauldrons() {
+        net.minecraft.class_5620 stick = (state, level, pos, player, hand, stack) -> net.minecraft.class_1269.field_5812;
+        java.util.Map<net.minecraft.class_1792, net.minecraft.class_5620> water = net.minecraft.class_5620.field_27776.comp_1982();
+        water.put(net.minecraft.class_1802.field_8600, stick);
+        check("cauldron.putGet", water.get(net.minecraft.class_1802.field_8600) == stick, water.get(net.minecraft.class_1802.field_8600));
+        check("cauldron.vanillaEntries", net.minecraft.class_5620.field_27775.comp_1982().containsKey(net.minecraft.class_1802.field_8705)
+            && water.containsKey(net.minecraft.class_1802.field_8539) && "water".equals(net.minecraft.class_5620.field_27776.comp_1981()), water.size());
+    }
+
+    /** a 1.21.11 goat class asking its brain provider (protected) */
+    static class TestGoat extends net.minecraft.class_6053 {
+        TestGoat(net.minecraft.class_1937 level) {
+            super(net.minecraft.class_1299.field_30052, level);
+        }
+
+        Object provider() {
+            return method_28306();
+        }
+    }
+
+    private static void goats(MinecraftServer server) {
+        TestGoat goat = new TestGoat(server.method_30002());
+        goat.method_43542();
+        boolean removed = !goat.method_43538() && !goat.method_43539();
+        goat.method_43541();
+        check("goat.hornsAndBrainProvider", removed && goat.method_43538() && goat.method_43539() && goat.provider() != null, removed);
     }
 }
