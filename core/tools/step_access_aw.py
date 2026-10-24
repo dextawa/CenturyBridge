@@ -241,9 +241,12 @@ def main():
             continue
         rows.append(r)
     out, skipped, unresolved = [], 0, []
+    # a class the step renames (a facade, or the class's native successor) takes every reference to its members:
+    # W's own class of that name is never reached by a converted mod
+    renamed = set(w.get("classRenames", {}).keys())
     for r in rows:
         key = r[1] + "." + r[2] + (r[3] if r[3].startswith("(") else ":" + r[3])
-        if key in handled:
+        if key in handled or r[1] in renamed:
             skipped += 1
             continue
         if table:

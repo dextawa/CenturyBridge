@@ -58,7 +58,7 @@ import net.minecraft.server.MinecraftServer;
  *
  * <p>Build against 1.21.1:
  * <pre>
- *   javac --release 21 -cp "client-1.21.1-intermediary.jar;fabric-loader.jar;&lt;1.21.1 libraries&gt;" -d out \
+ *   javac --release 21 -cp "client-1.21.1-intermediary.jar;fabric-loader.jar;fabric-events-interaction-v0.jar;&lt;1.21.1 libraries&gt;" -d out \
  *         core/testmods/cb-s7gear/src/cb/s7gear/*.java
  *   cp core/testmods/cb-s7gear/res/fabric.mod.json out/ &amp;&amp; (cd out &amp;&amp; jar cf cb-s7gear.jar .)
  * </pre>
@@ -177,6 +177,8 @@ public class GearTestMod implements ModInitializer {
             serializers(server);
             cookingBytes(server);
             recipeManager(server);
+            menus(server);
+            combiners(server);
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -534,4 +536,125 @@ public class GearTestMod implements ModInitializer {
         check(check.method_42303(cobble, level).isPresent() && check.method_42303(cobble, level).isPresent(), "createCheck(SMELTING).getRecipeFor twice");
         check(rm.method_8128(net.minecraft.class_3956.field_17546, cobble, level).size() == 1, "getRemainingItemsFor: one slot");
     }
+
+    static int gridCount(net.minecraft.class_1714 cm, class_1792 item) {
+        int n = 0;
+        for (int i = 1; i <= 9; i++) {
+            class_1799 s = cm.method_7611(i).method_7677();
+            if (s.method_31574(item)) {
+                n += s.method_7947();
+            }
+        }
+        return n;
+    }
+
+    /** 1.21.1's RecipeBookMenu members, handlePlacement, ServerPlaceRecipe and RecipeBook */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    static void menus(MinecraftServer server) {
+        // Fabric API's fake player: its connection drops packets (the placement updates the client's slots)
+        class_3222 player = net.fabricmc.fabric.api.entity.FakePlayer.get(server.method_30002(),
+            new GameProfile(UUID.randomUUID(), "cbgearmenus"));
+        net.minecraft.class_1661 inv = player.method_31548();
+        net.minecraft.class_1714 cm = new net.minecraft.class_1714(1, inv);
+        check(cm.method_7653() == 3 && cm.method_7656() == 3, "CraftingMenu grid 3x3: " + cm.method_7653() + "x" + cm.method_7656());
+        check(cm.method_7658() == 10 && cm.method_7655() == 0, "CraftingMenu size 10, result slot 0");
+        check(!cm.method_32339(0) && cm.method_32339(1), "CraftingMenu shouldMoveToInventory: not the result, a grid slot");
+        net.minecraft.class_1723 im = player.field_7498;
+        check(im.method_7653() == 2 && im.method_7656() == 2 && im.method_7658() == 5, "InventoryMenu grid 2x2, size 5");
+        net.minecraft.class_3858 fm = new net.minecraft.class_3858(2, inv);
+        check(fm.method_7655() == 2 && fm.method_7658() == 3 && fm.method_7653() == 1, "FurnaceMenu result 2, size 3, width 1");
+        check(!fm.method_32339(1) && fm.method_32339(0) && fm.method_32339(2), "FurnaceMenu shouldMoveToInventory: all but the fuel slot");
+
+        net.minecraft.class_1863 rm = server.method_3772();
+        class_8786 table = rm.method_8130(class_2960.method_60656("crafting_table")).orElseThrow();
+        net.minecraft.class_3441 book = player.method_14253();
+        check(!book.method_14878(table), "RecipeBook.contains: a new player's book lacks crafting_table");
+        book.method_14876(table);
+        check(book.method_14878(table) && book.method_22845(table.comp_1932()), "RecipeBook.add then contains (holder and id)");
+        book.method_14885(table);
+        check(book.method_14883(table), "RecipeBook.addHighlight then willHighlight");
+        book.method_14886(table);
+        check(!book.method_14883(table), "RecipeBook.removeHighlight");
+
+        inv.method_5447(0, new class_1799(class_1802.field_8118, 4));
+        cm.method_17697(false, table, player);
+        check(gridCount(cm, class_1802.field_8118) == 4 && inv.method_5438(0).method_7960(),
+            "handlePlacement moved the 4 planks into the grid: " + gridCount(cm, class_1802.field_8118));
+        check(cm.method_7652(table), "recipeMatches(crafting_table) on the placed grid");
+        net.minecraft.class_1662 contents = new net.minecraft.class_1662();
+        cm.method_7654(contents);
+        check(contents.field_7550.get(net.minecraft.class_1662.method_7408(new class_1799(class_1802.field_8118))) == 4,
+            "fillCraftSlotsStackedContents counts the 4 planks");
+        cm.method_7657();
+        check(gridCount(cm, class_1802.field_8118) == 0, "clearCraftingContent empties the grid");
+
+        inv.method_5447(0, new class_1799(class_1802.field_8118, 4));
+        new net.minecraft.class_2955(cm).method_12826(player, table, false);
+        check(gridCount(cm, class_1802.field_8118) == 4 && inv.method_5438(0).method_7960(),
+            "new ServerPlaceRecipe(menu).recipeClicked places the recipe");
+        cm.method_7657();
+
+        book.method_14893(table);
+        check(!book.method_14878(table), "RecipeBook.remove");
+        inv.method_5447(0, new class_1799(class_1802.field_8118, 4));
+        cm.method_17697(false, table, player);
+        check(gridCount(cm, class_1802.field_8118) == 0 && inv.method_5438(0).method_7947() == 4,
+            "handlePlacement of a recipe not in the book places nothing");
+        inv.method_5447(0, class_1799.field_8037);
+    }
+
+    /** a 1.21.1 ItemCombinerMenu: one input slot, its own definitions and quick-move slot */
+    public static class TestCombiner extends net.minecraft.class_4861 {
+        public TestCombiner(int id, net.minecraft.class_1661 inv) {
+            super(net.minecraft.class_3917.field_17329, id, inv, net.minecraft.class_3914.field_17304);
+        }
+
+        @Override
+        protected net.minecraft.class_8047 method_48352() {
+            return net.minecraft.class_8047.method_48364().method_48374(0, 10, 10, s -> s.method_31574(class_1802.field_8620))
+                .method_48373(1, 50, 10).method_48372();
+        }
+
+        @Override
+        public int method_48357(class_1799 stack) {
+            return 0;
+        }
+
+        @Override
+        protected boolean method_24927(net.minecraft.class_1657 player, boolean present) {
+            return true;
+        }
+
+        @Override
+        protected void method_24923(net.minecraft.class_1657 player, class_1799 stack) {
+        }
+
+        @Override
+        protected boolean method_24925(net.minecraft.class_2680 state) {
+            return true;
+        }
+
+        @Override
+        public void method_24928() {
+        }
+    }
+
+    /** 1.21.1's ItemCombinerMenu definitions (vanilla anvil, a mod subclass) and getSlotToQuickMoveTo */
+    static void combiners(MinecraftServer server) {
+        class_3222 player = player(server);
+        net.minecraft.class_1661 inv = player.method_31548();
+        net.minecraft.class_1706 anvil = new net.minecraft.class_1706(3, inv);
+        check(anvil.field_7761.size() == 39, "anvil: 2 inputs + result + 36 inventory slots: " + anvil.field_7761.size());
+        check(anvil.method_48357(new class_1799(class_1802.field_8620)) == 0, "anvil getSlotToQuickMoveTo = 0 (inputs empty)");
+        TestCombiner tc = new TestCombiner(4, inv);
+        check(tc.field_7761.size() == 38, "mod ItemCombinerMenu built from its own createInputSlotDefinitions: " + tc.field_7761.size());
+        check(tc.method_7611(0).method_7680(new class_1799(class_1802.field_8620))
+                && !tc.method_7611(0).method_7680(new class_1799(class_1802.field_8118)),
+            "its input slot takes what its definition says (iron, not planks)");
+        inv.method_5447(9, new class_1799(class_1802.field_8620, 3));
+        tc.method_7601(player, 2);
+        check(tc.method_7611(0).method_7677().method_31574(class_1802.field_8620), "quickMoveStack moves iron into the input slot");
+        inv.method_5447(9, class_1799.field_8037);
+    }
+
 }
