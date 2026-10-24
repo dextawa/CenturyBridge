@@ -2328,5 +2328,118 @@
   "net/minecraft/class_7751.field_52883:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$CamelModel#BABY_TRANSFORMER",
   "net/minecraft/class_8185.field_52938:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$SnifferModel#BABY_TRANSFORMER",
   "net/minecraft/class_9082.field_52867:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ArmadilloModel#BABY_TRANSFORMER"
+ },
+ "mixinTargets": {
+  "net/minecraft/class_2564.method_10881(Lnet/minecraft/class_2168;Lnet/minecraft/class_2561;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;": {
+   "to": "resolve(Lnet/minecraft/network/chat/ResolutionContext;Lnet/minecraft/class_2561;I)Lnet/minecraft/class_5250;",
+   "args": [
+    -1,
+    1,
+    -1,
+    2
+   ],
+   "basis": "swall: 1.21.11 ComponentUtils.updateForEntity(source, component, entity, depth) and 26.1 resolve(context, component, depth) are the same body (copy, contents resolved, siblings recursed, style resolved) with source and entity folded into the ResolutionContext; 26.1 callers of the old one call this"
+  },
+  "net/minecraft/class_2564.method_36330(Lnet/minecraft/class_2168;Ljava/util/Optional;Lnet/minecraft/class_1297;I)Ljava/util/Optional;": {
+   "to": "resolve(Lnet/minecraft/network/chat/ResolutionContext;Ljava/util/Optional;I)Ljava/util/Optional;",
+   "args": [
+    -1,
+    1,
+    -1,
+    2
+   ],
+   "basis": "swall: the Optional overload of updateForEntity, mapping over the same resolve; source and entity are the ResolutionContext now"
+  },
+  "net/minecraft/class_3002.method_12959()Lnet/minecraft/class_2960;": {
+   "to": "customId()Lnet/minecraft/class_2960;",
+   "args": [],
+   "basis": "swall: CustomBossEvent.getTextId() and 26.1 customId() both return the event id field"
+  },
+  "net/minecraft/class_3002.method_12966(Lnet/minecraft/class_2960;Lnet/minecraft/class_3002$class_10765;)Lnet/minecraft/class_3002;": {
+   "to": "method_12966(Ljava/util/UUID;Lnet/minecraft/class_2960;Lnet/minecraft/class_3002$class_10765;Ljava/lang/Runnable;)Lnet/minecraft/class_3002;",
+   "args": [
+    1,
+    2
+   ],
+   "basis": "swall: CustomBossEvent.load(id, packed) and 26.1 load(uuid, id, packed, onDirty): the same body (construct from the packed name, then visible, value, max, color, overlay, darken, music, fog, players), 26.1 adds the uuid and a dirty callback"
+  },
+  "net/minecraft/class_332.method_73199()V": {
+   "to": "extractDeferredElements(IIF)V",
+   "args": [],
+   "basis": "swall: GuiGraphics.renderDeferredElements() and GuiGraphicsExtractor.extractDeferredElements(mouseX, mouseY, partialTick): the same sequence (hover effect of the hovered text style, pointing cursor for the clickable style, next stratum, deferred tooltip run and cleared); 26.1 inserts the preedit overlay"
+  },
+  "net/minecraft/class_4722.method_24062(Lnet/minecraft/class_11959$class_11960;Lnet/minecraft/class_2745;)Lnet/minecraft/class_4730;": {
+   "to": "chooseSprite(Lnet/minecraft/class_11959$class_11960;Lnet/minecraft/class_2745;)Lnet/minecraft/class_4730;",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "swall: Sheets.chooseMaterial(materialType, chestType) renamed chooseSprite with the same arguments, return type (Material is SpriteId through the wall) and role"
+  },
+  "net/minecraft/class_4970$class_4971.method_41520()Lnet/minecraft/class_6880;": {
+   "to": "typeHolder()Lnet/minecraft/class_6880;",
+   "args": [],
+   "basis": "swall: BlockStateBase.getBlockHolder() and 26.1 typeHolder() both return the block holder of the state"
+  },
+  "net/minecraft/class_4970$class_4971.method_26232(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z": {
+   "to": "getPostProcessPos(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2338;",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "swall: BlockStateBase.hasPostProcess(level, pos) asked the state post-process predicate; 26.1 getPostProcessPos(level, pos) asks the PostProcess that replaced it (null for none), from the same callers. The return type changed: handlers reading or setting the value stay behind (MixinBridge)"
+  },
+  "net/minecraft/class_1163.method_4961(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": {
+   "to": "method_4961(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;)I",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "swall: BiomeColors.getAverageWaterColor(level, pos), same name and body in 26.1; only the level type moved to the client BlockAndTintGetter"
+  },
+  "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": {
+   "to": "method_4962(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;)I",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "swall: BiomeColors.getAverageGrassColor(level, pos), same name and body in 26.1; only the level type moved to the client BlockAndTintGetter"
+  },
+  "net/minecraft/class_1163.method_4966(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": {
+   "to": "method_4966(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;)I",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "swall: BiomeColors.getAverageFoliageColor(level, pos), same name and body in 26.1; only the level type moved to the client BlockAndTintGetter"
+  },
+  "net/minecraft/class_1163.method_68163(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": {
+   "to": "method_68163(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;)I",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "swall: BiomeColors.getAverageDryFoliageColor(level, pos), same name and body in 26.1; only the level type moved to the client BlockAndTintGetter"
+  },
+  "net/minecraft/class_4095.method_24530(Lnet/minecraft/class_4168;Lcom/google/common/collect/ImmutableList;Ljava/util/Set;Ljava/util/Set;)V": {
+   "to": "addActivity(Lnet/minecraft/class_4168;Lcom/google/common/collect/ImmutableList;Ljava/util/Set;Ljava/util/Set;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "swall: Brain.addActivityAndRemoveMemoriesWhenStopped(activity, behaviors, requirements, memoriesToErase) became the four-argument addActivity: the same body (requirements put, memories to erase put when non-empty, behaviours filed by priority), 26.1 also registers their required memories"
+  },
+  "com/mojang/blaze3d/opengl/GlStateManager._colorMask(ZZZZ)V": {
+   "to": "_colorMask(I)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "swall: GlStateManager._colorMask(red, green, blue, alpha) became _colorMask(mask), the same GL state call from the same command encoder; the four flags are one bit mask now"
+  }
  }
 }
