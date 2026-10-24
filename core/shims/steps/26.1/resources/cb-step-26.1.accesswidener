@@ -161,3 +161,20 @@ mutable field net/minecraft/world/level/levelgen/structure/templatesystem/Liquid
 # ---- END GENERATED (swall) ----
 # 1.21.11 SetOminousBottleAmplifierFunction.amplifier() was public; 26.1 keeps the field private with no accessor (swall, rt/CbWallRecordViews)
 accessible	field	net/minecraft/world/level/storage/loot/functions/SetOminousBottleAmplifierFunction	amplifier	Lnet/minecraft/world/level/storage/loot/providers/number/NumberProvider;
+# 1.21.11 NbtContents, ClientboundSetEntityMotionPacket, FileToIdConverter and HugeMushroomFeatureConfiguration were
+# open classes, 26.1's are final records: a 1.21.11 subclass extends the record, and may override what Object gave
+# NbtContents, final on the record (swall; NbtContents' and HugeMushroomFeatureConfiguration's constructors reshaped)
+extendable	class	net/minecraft/network/chat/contents/NbtContents
+extendable	method	net/minecraft/network/chat/contents/NbtContents	equals	(Ljava/lang/Object;)Z
+extendable	method	net/minecraft/network/chat/contents/NbtContents	hashCode	()I
+extendable	method	net/minecraft/network/chat/contents/NbtContents	toString	()Ljava/lang/String;
+extendable	class	net/minecraft/network/protocol/game/ClientboundSetEntityMotionPacket
+extendable	class	net/minecraft/resources/FileToIdConverter
+extendable	class	net/minecraft/world/level/levelgen/feature/configurations/HugeMushroomFeatureConfiguration
+# 1.21.11 Item.requiredFeatures() was overridable; 26.1's is final: a 1.21.11 item's override stands (swall)
+extendable	method	net/minecraft/world/item/Item	requiredFeatures	()Lnet/minecraft/world/flag/FeatureFlagSet;
+# 1.21.11 PerlinNoise.getValue(x, y, z, yScale, yMax, useFixedY): its fixed-y body over 26.1's octaves (swall, rt/CbWallNoise)
+accessible	field	net/minecraft/world/level/levelgen/synth/PerlinNoise	noiseLevels	[Lnet/minecraft/world/level/levelgen/synth/ImprovedNoise;
+accessible	field	net/minecraft/world/level/levelgen/synth/PerlinNoise	amplitudes	Lit/unimi/dsi/fastutil/doubles/DoubleList;
+accessible	field	net/minecraft/world/level/levelgen/synth/PerlinNoise	lowestFreqValueFactor	D
+accessible	field	net/minecraft/world/level/levelgen/synth/PerlinNoise	lowestFreqInputFactor	D

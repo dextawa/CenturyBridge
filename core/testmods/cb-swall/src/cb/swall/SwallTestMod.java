@@ -544,6 +544,23 @@ public class SwallTestMod implements ModInitializer {
             && !a.equals(net.minecraft.class_3532.method_15394()), a);
     }
 
+    /** 1.21.11 noise, mushroom configuration and NBT statics */
+    private static void worldgenStatics(MinecraftServer server) {
+        net.minecraft.class_3537 noise = net.minecraft.class_3537.method_39126(net.minecraft.class_5819.method_43049(42L), -3,
+            it.unimi.dsi.fastutil.doubles.DoubleList.of(1.0, 1.0, 1.0));
+        double six = noise.method_16453(0.3, 0.7, 1.1, 0.0, 0.0, false);
+        double three = noise.method_15416(0.3, 0.7, 1.1);
+        double fixed = noise.method_16453(0.3, 0.7, 1.1, 0.0, 0.0, true);
+        double fixedOtherY = noise.method_16453(0.3, 99.7, 1.1, 0.0, 0.0, true);
+        check("noise.getValue6", six == three && fixed == fixedOtherY && Double.isFinite(fixed), six + " " + three + " " + fixed + " " + fixedOtherY);
+        net.minecraft.class_4635 mushroom = new net.minecraft.class_4635(net.minecraft.class_4651.method_38432(net.minecraft.class_2246.field_10340),
+            net.minecraft.class_4651.method_38432(net.minecraft.class_2246.field_10340), 2);
+        check("mushroom.config", mushroom.field_21232 == 2 && mushroom.field_21230 != null, mushroom);
+        com.mojang.serialization.Dynamic<net.minecraft.class_2520> dyn = new com.mojang.serialization.Dynamic<>(net.minecraft.class_2509.field_11560, new net.minecraft.class_2487());
+        int current = net.minecraft.class_155.method_16673().comp_4026().comp_4038();
+        check("nbt.addCurrentDataVersion", net.minecraft.class_2512.method_73082(dyn).get("DataVersion").asInt(0) == current, "");
+    }
+
     /** a 1.21.11 subclass of the structure index */
     static class CountingIndex extends net.minecraft.class_3440 {
         int starts;
@@ -794,6 +811,7 @@ public class SwallTestMod implements ModInitializer {
             legacyRegionStorage(server);
             legacyStructureData(server);
             recordViews(server);
+            worldgenStatics(server);
             interactPacket(server);
             timerQueue();
             extendFinal();
