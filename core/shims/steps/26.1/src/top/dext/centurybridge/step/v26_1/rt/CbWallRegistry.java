@@ -60,4 +60,43 @@ public final class CbWallRegistry {
     public static Holder.Reference registerForHolder(Registry registry, Identifier id, Object value) {
         return Registry.registerForHolder(registry, id, registered(value));
     }
+
+    // The registry's lookups by value: a value this layer gives back as a Wrapper is looked up as what 26.1
+    // registered for it (CbWallRegistryValues hands registry values out as the wrapper again).
+
+    /** Registry.getKey(T) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static Identifier getKey(Registry registry, Object value) {
+        return registry.getKey(registered(value));
+    }
+
+    /** Registry.getResourceKey(T) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static java.util.Optional getResourceKey(Registry registry, Object value) {
+        return registry.getResourceKey(registered(value));
+    }
+
+    /** Registry.getId(T) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static int getId(Registry registry, Object value) {
+        return registry.getId(registered(value));
+    }
+
+    /** Registry.wrapAsHolder(T): the holder of what 26.1 registered */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static Holder wrapAsHolder(Registry registry, Object value) {
+        return registry.wrapAsHolder(registered(value));
+    }
+
+    /** IdMap.getId(T) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static int getId(net.minecraft.core.IdMap map, Object value) {
+        return map.getId(registered(value));
+    }
+
+    /** IdMap.getIdOrThrow(T) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static int getIdOrThrow(net.minecraft.core.IdMap map, Object value) {
+        return map.getIdOrThrow(registered(value));
+    }
 }

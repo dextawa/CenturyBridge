@@ -144,7 +144,13 @@
   "net/minecraft/class_9276.method_61668()I": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#getSelectedItem",
   "net/minecraft/class_9276.method_61669()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#hasSelectedItem",
   "net/minecraft/class_7417.method_10890(Lnet/minecraft/class_2168;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#callResolve",
-  "net/minecraft/class_2574.method_10920()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#getNbtPath"
+  "net/minecraft/class_2574.method_10920()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#getNbtPath",
+  "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getKey",
+  "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getResourceKey",
+  "net/minecraft/class_2378.method_10206(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getId",
+  "net/minecraft/class_2378.method_47983(Ljava/lang/Object;)Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#wrapAsHolder",
+  "net/minecraft/class_2359.method_10206(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getId",
+  "net/minecraft/class_2359.method_56158(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getIdOrThrow"
  },
  "overrideHooks": [
   {
@@ -1462,6 +1468,47 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallGeneric#features(Ljava/util/stream/Stream;)Ljava/util/stream/Stream;",
    "basis": "PlacedFeature.getFeatures(): 26.1 streams the holders of its feature and its sub features, 1.21.11 the features; each holder's feature"
+  },
+  "net/minecraft/class_47.method_35508(Lnet/minecraft/class_169;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#contextValue(Ljava/lang/Object;)Ljava/lang/Object;",
+   "basis": "26.1's LootContextParams.TOOL is a key of ItemInstance and vanilla puts an ItemStackTemplate there where it has no stack (Block.getDrops / LootCommand / triggers take an ItemInstance); 1.21.11's held an ItemStack: a template read back is its stack, every other value as it is"
+  },
+  "net/minecraft/class_47.method_65013(Lnet/minecraft/class_169;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#contextValue(Ljava/lang/Object;)Ljava/lang/Object;",
+   "basis": "26.1's LootContextParams.TOOL is a key of ItemInstance and vanilla puts an ItemStackTemplate there where it has no stack (Block.getDrops / LootCommand / triggers take an ItemInstance); 1.21.11's held an ItemStack: a template read back is its stack, every other value as it is"
+  },
+  "net/minecraft/class_10352.method_64967(Lnet/minecraft/class_169;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#contextValue(Ljava/lang/Object;)Ljava/lang/Object;",
+   "basis": "26.1's LootContextParams.TOOL is a key of ItemInstance and vanilla puts an ItemStackTemplate there where it has no stack (Block.getDrops / LootCommand / triggers take an ItemInstance); 1.21.11's held an ItemStack: a template read back is its stack, every other value as it is"
+  },
+  "net/minecraft/class_10352.method_64968(Lnet/minecraft/class_169;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#contextValue(Ljava/lang/Object;)Ljava/lang/Object;",
+   "basis": "26.1's LootContextParams.TOOL is a key of ItemInstance and vanilla puts an ItemStackTemplate there where it has no stack (Block.getDrops / LootCommand / triggers take an ItemInstance); 1.21.11's held an ItemStack: a template read back is its stack, every other value as it is"
+  },
+  "net/minecraft/class_10352.method_64966(Lnet/minecraft/class_169;Ljava/lang/Object;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_169;Ljava/lang/Object;)Ljava/lang/Object;",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#contextValue(Ljava/lang/Object;)Ljava/lang/Object;",
+   "basis": "26.1's LootContextParams.TOOL is a key of ItemInstance and vanilla puts an ItemStackTemplate there where it has no stack (Block.getDrops / LootCommand / triggers take an ItemInstance); 1.21.11's held an ItemStack: a template read back is its stack, every other value as it is"
   }
  },
  "instanceFieldGetters": {
@@ -1484,5 +1531,151 @@
    "ret": "top/dext/centurybridge/step/v26_1/rt/CbWallGeneric#featureHolders(Ljava/util/stream/Stream;)Ljava/util/stream/Stream;",
    "basis": "a 1.21.11 configuration's override streams its sub features; 26.1 reads holders (biome feature lists, flower features) -- a feature 1.21.11 code holds has no registry entry it names, so a direct holder"
   }
- ]
+ ],
+ "checkCastRedirects": {
+  "net/minecraft/class_5339": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castFunctionType",
+  "net/minecraft/class_5342": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castConditionType",
+  "net/minecraft/class_5338": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castEntryType",
+  "net/minecraft/class_5657": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castNumberProviderType",
+  "net/minecraft/class_5650": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castNbtProviderType",
+  "net/minecraft/class_5669": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castScoreProviderType"
+ },
+ "instanceOfRedirects": {
+  "net/minecraft/class_5339": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isFunctionType",
+  "net/minecraft/class_5342": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isConditionType",
+  "net/minecraft/class_5338": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isEntryType",
+  "net/minecraft/class_5657": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isNumberProviderType",
+  "net/minecraft/class_5650": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isNbtProviderType",
+  "net/minecraft/class_5669": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isScoreProviderType"
+ },
+ "genericWitnesses": {
+  "net/minecraft/class_7923.field_41133:Lnet/minecraft/class_2378;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5338"
+   ],
+   "basis": "BuiltInRegistries.LOOT_POOL_ENTRY_TYPE: the registry passes unchanged; 26.1 holds the MapCodec where 1.21.11 held the LootPoolEntryType record around it. Values go in as codecs (Registry.register / registerForHolder through CbWallRegistry unwrap the facade), lookups by value unwrap it (getKey / getResourceKey / getId / wrapAsHolder), and every value read back meets 1.21.11 code at a cast to LootPoolEntryType -- explicit, or the one LambdaMetafactory makes -- where checkCastRedirects / instanceOfRedirects turn a codec registered there into the facade's canonical instance (CbWallRegistryValues)"
+  },
+  "net/minecraft/class_7924.field_41202:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5338"
+   ],
+   "basis": "phantom key: Registries.LOOT_POOL_ENTRY_TYPE names the same registry in both releases; its values reach 1.21.11 code converted as for BuiltInRegistries.LOOT_POOL_ENTRY_TYPE (a registry looked up under this key is that same registry object)"
+  },
+  "net/minecraft/class_7923.field_41134:Lnet/minecraft/class_2378;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5339"
+   ],
+   "basis": "BuiltInRegistries.LOOT_FUNCTION_TYPE: the registry passes unchanged; 26.1 holds the MapCodec where 1.21.11 held the LootItemFunctionType record around it. Values go in as codecs (Registry.register / registerForHolder through CbWallRegistry unwrap the facade), lookups by value unwrap it (getKey / getResourceKey / getId / wrapAsHolder), and every value read back meets 1.21.11 code at a cast to LootItemFunctionType -- explicit, or the one LambdaMetafactory makes -- where checkCastRedirects / instanceOfRedirects turn a codec registered there into the facade's canonical instance (CbWallRegistryValues)"
+  },
+  "net/minecraft/class_7924.field_41199:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5339"
+   ],
+   "basis": "phantom key: Registries.LOOT_FUNCTION_TYPE names the same registry in both releases; its values reach 1.21.11 code converted as for BuiltInRegistries.LOOT_FUNCTION_TYPE (a registry looked up under this key is that same registry object)"
+  },
+  "net/minecraft/class_7923.field_41135:Lnet/minecraft/class_2378;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5342"
+   ],
+   "basis": "BuiltInRegistries.LOOT_CONDITION_TYPE: the registry passes unchanged; 26.1 holds the MapCodec where 1.21.11 held the LootItemConditionType record around it. Values go in as codecs (Registry.register / registerForHolder through CbWallRegistry unwrap the facade), lookups by value unwrap it (getKey / getResourceKey / getId / wrapAsHolder), and every value read back meets 1.21.11 code at a cast to LootItemConditionType -- explicit, or the one LambdaMetafactory makes -- where checkCastRedirects / instanceOfRedirects turn a codec registered there into the facade's canonical instance (CbWallRegistryValues)"
+  },
+  "net/minecraft/class_7924.field_41198:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5342"
+   ],
+   "basis": "phantom key: Registries.LOOT_CONDITION_TYPE names the same registry in both releases; its values reach 1.21.11 code converted as for BuiltInRegistries.LOOT_CONDITION_TYPE (a registry looked up under this key is that same registry object)"
+  },
+  "net/minecraft/class_7923.field_41136:Lnet/minecraft/class_2378;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5657"
+   ],
+   "basis": "BuiltInRegistries.LOOT_NUMBER_PROVIDER_TYPE: the registry passes unchanged; 26.1 holds the MapCodec where 1.21.11 held the LootNumberProviderType record around it. Values go in as codecs (Registry.register / registerForHolder through CbWallRegistry unwrap the facade), lookups by value unwrap it (getKey / getResourceKey / getId / wrapAsHolder), and every value read back meets 1.21.11 code at a cast to LootNumberProviderType -- explicit, or the one LambdaMetafactory makes -- where checkCastRedirects / instanceOfRedirects turn a codec registered there into the facade's canonical instance (CbWallRegistryValues)"
+  },
+  "net/minecraft/class_7924.field_41201:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5657"
+   ],
+   "basis": "phantom key: Registries.LOOT_NUMBER_PROVIDER_TYPE names the same registry in both releases; its values reach 1.21.11 code converted as for BuiltInRegistries.LOOT_NUMBER_PROVIDER_TYPE (a registry looked up under this key is that same registry object)"
+  },
+  "net/minecraft/class_7923.field_41137:Lnet/minecraft/class_2378;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5650"
+   ],
+   "basis": "BuiltInRegistries.LOOT_NBT_PROVIDER_TYPE: the registry passes unchanged; 26.1 holds the MapCodec where 1.21.11 held the LootNbtProviderType record around it. Values go in as codecs (Registry.register / registerForHolder through CbWallRegistry unwrap the facade), lookups by value unwrap it (getKey / getResourceKey / getId / wrapAsHolder), and every value read back meets 1.21.11 code at a cast to LootNbtProviderType -- explicit, or the one LambdaMetafactory makes -- where checkCastRedirects / instanceOfRedirects turn a codec registered there into the facade's canonical instance (CbWallRegistryValues)"
+  },
+  "net/minecraft/class_7924.field_41200:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5650"
+   ],
+   "basis": "phantom key: Registries.LOOT_NBT_PROVIDER_TYPE names the same registry in both releases; its values reach 1.21.11 code converted as for BuiltInRegistries.LOOT_NBT_PROVIDER_TYPE (a registry looked up under this key is that same registry object)"
+  },
+  "net/minecraft/class_7923.field_41138:Lnet/minecraft/class_2378;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5669"
+   ],
+   "basis": "BuiltInRegistries.LOOT_SCORE_PROVIDER_TYPE: the registry passes unchanged; 26.1 holds the MapCodec where 1.21.11 held the LootScoreProviderType record around it. Values go in as codecs (Registry.register / registerForHolder through CbWallRegistry unwrap the facade), lookups by value unwrap it (getKey / getResourceKey / getId / wrapAsHolder), and every value read back meets 1.21.11 code at a cast to LootScoreProviderType -- explicit, or the one LambdaMetafactory makes -- where checkCastRedirects / instanceOfRedirects turn a codec registered there into the facade's canonical instance (CbWallRegistryValues)"
+  },
+  "net/minecraft/class_7924.field_41203:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_2378.method_29113(Ljava/lang/Object;)Ljava/util/Optional;",
+    "net/minecraft/class_5669"
+   ],
+   "basis": "phantom key: Registries.LOOT_SCORE_PROVIDER_TYPE names the same registry in both releases; its values reach 1.21.11 code converted as for BuiltInRegistries.LOOT_SCORE_PROVIDER_TYPE (a registry looked up under this key is that same registry object)"
+  },
+  "net/minecraft/class_181.field_1229:Lnet/minecraft/class_169;": {
+   "by": [
+    "net/minecraft/class_47.method_35508(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+    "net/minecraft/class_47.method_65013(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+    "net/minecraft/class_10352.method_64967(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+    "net/minecraft/class_10352.method_64968(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+    "net/minecraft/class_10352.method_64966(Lnet/minecraft/class_169;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "phantom key: LootContextParams.TOOL passes unchanged (ContextKey<ItemStack> became ContextKey<ItemInstance>); a value 1.21.11 code puts under it is an ItemStack, an ItemInstance in 26.1, and what it reads back goes through LootContext / ContextMap's getters, which read a 26.1 ItemStackTemplate as its stack (CbWallRegistryValues.contextValue)"
+  },
+  "net/minecraft/class_12283$class_12284.method_76222(Ljava/util/function/Function;)Lnet/minecraft/class_12283$class_12284;": {
+   "by": [
+    "net/minecraft/class_47.method_35508(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+    "net/minecraft/class_47.method_65013(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+    "net/minecraft/class_10352.method_64967(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+    "net/minecraft/class_10352.method_64968(Lnet/minecraft/class_169;)Ljava/lang/Object;",
+    "net/minecraft/class_10352.method_64966(Lnet/minecraft/class_169;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "phantom key: LootContextArg.ArgCodecBuilder.anyItemStack(function of a tool key): the keys handed to the mod's function are 26.1's item keys (TOOL) and pass unchanged; a value the mod's LootContextArg reads under them comes through LootContext's getters, a template read as its stack"
+  }
+ }
 }

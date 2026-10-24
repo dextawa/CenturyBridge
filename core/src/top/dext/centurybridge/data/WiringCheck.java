@@ -620,11 +620,27 @@ public final class WiringCheck {
                 if (!stub.isEmpty()) checkReshapeTarget(e.getKey(), o.get("desc").getAsString(), superRen);
                 checkReshapeOps("superCtorReshapes " + e.getKey(), e.getKey(), o.getAsJsonArray("ops"));
                 if (o.has("post")) {
-                    // the descriptor itself is held to the key when the wiring loads (Chain.CtorReshape)
+                    // the descriptor is held to the key by the rule Main.convert enforces when the wiring
+                    // loads (Chain.CtorReshape.setPost): (Lowner;<the postArgs' old argument types>)V
                     String post = o.get("post").getAsString().trim();
                     int paren = post.indexOf('(');
+                    String key = e.getKey();
+                    String want = null;
+                    if (paren >= 0 && key.contains(".<init>(")) {
+                        org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(key.substring(key.indexOf('(')));
+                        StringBuilder w = new StringBuilder("(L").append(key, 0, key.indexOf(".<init>")).append(';');
+                        if (o.has("postArgs")) {
+                            for (var a : o.getAsJsonArray("postArgs")) {
+                                int i = a.getAsInt();
+                                w.append(i >= 0 && i < old.length ? old[i].getDescriptor() : "?" + i);
+                            }
+                        }
+                        want = w.append(")V").toString();
+                    }
                     if (paren < 0) {
-                        problems.add("superCtorReshapes " + e.getKey() + ": malformed post '" + post + "'");
+                        problems.add("superCtorReshapes " + key + ": malformed post '" + post + "'");
+                    } else if (want != null && !post.substring(paren).equals(want)) {
+                        problems.add("superCtorReshapes " + key + ": post '" + post + "' must have the descriptor " + want);
                     } else {
                         wantMethod("superCtorReshapes " + e.getKey() + " post", post.substring(0, paren), null,
                             methodDesc(post.substring(paren)));

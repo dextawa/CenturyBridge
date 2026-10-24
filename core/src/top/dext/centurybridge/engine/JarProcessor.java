@@ -1327,6 +1327,188 @@ public final class JarProcessor {
         return cw.toByteArray();
     }
 
+    /**
+     * {@link Chain#checkCastRedirects} for the cast a lambda makes without a CHECKCAST of its own: a lambda or
+     * method reference whose instantiated method type takes a redirected type (a 1.21.11 mod's
+     * {@code registry.forEach((LootItemFunctionType t) -> ..)}, {@code stream.map(LootItemFunctionType::codec)})
+     * has LambdaMetafactory cast the erased argument to it. Such a lambda is pointed at a forwarder taking the
+     * erased type there, whose explicit CHECKCAST the call pass then redirects like any other, and which calls
+     * the implementation. Serializable lambdas and constructor references are reported and left as they were.
+     */
+    private static byte[] rewriteCastLambdas(byte[] bytes, Chain chain, Report rpt, String tag) {
+        String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+        if (!raw.contains("java/lang/invoke/LambdaMetafactory")) {
+            return bytes;
+        }
+        boolean any = false;
+        for (String t : chain.checkCastRedirects.keySet()) {
+            if (raw.contains("L" + t + ";")) {
+                any = true;
+                break;
+            }
+        }
+        if (!any) {
+            return bytes;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        new ClassReader(bytes).accept(cn, 0);
+        boolean itf = (cn.access & Opcodes.ACC_INTERFACE) != 0;
+        Set<String> names = new HashSet<>();
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            names.add(m.name);
+        }
+        Map<String, org.objectweb.asm.tree.MethodNode> forwarders = new LinkedHashMap<>();
+        int rewrites = 0;
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if (m.instructions == null) {
+                continue;
+            }
+            for (org.objectweb.asm.tree.AbstractInsnNode in = m.instructions.getFirst(); in != null; in = in.getNext()) {
+                if (!(in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode idin)
+                        || !idin.bsm.getOwner().equals("java/lang/invoke/LambdaMetafactory") || idin.bsmArgs.length < 3
+                        || !(idin.bsmArgs[0] instanceof org.objectweb.asm.Type sam)
+                        || !(idin.bsmArgs[1] instanceof org.objectweb.asm.Handle impl)
+                        || !(idin.bsmArgs[2] instanceof org.objectweb.asm.Type inst)) {
+                    continue;
+                }
+                org.objectweb.asm.Type[] instArgs = inst.getArgumentTypes();
+                org.objectweb.asm.Type[] samArgs = sam.getArgumentTypes();
+                boolean[] redirected = new boolean[instArgs.length];
+                String type = null;
+                for (int i = 0; i < instArgs.length; i++) {
+                    if (instArgs[i].getSort() == org.objectweb.asm.Type.OBJECT
+                            && chain.checkCastRedirects.containsKey(instArgs[i].getInternalName())
+                            && i < samArgs.length && !samArgs[i].equals(instArgs[i])) {
+                        redirected[i] = true;
+                        type = instArgs[i].getInternalName();
+                    }
+                }
+                if (type == null) {
+                    continue;
+                }
+                String why = castLambdaBlocker(idin, impl, inst);
+                if (why != null) {
+                    rpt.issues.add(tag + "lambda taking a cast-redirected type left as it was (" + why + "): " + type + " in " + cn.name);
+                    top.dext.centurybridge.data.FullAudit.record("checkcast " + type, "LAMBDA-CAST-NOT-REDIRECTED " + why);
+                    continue;
+                }
+                org.objectweb.asm.Type[] newArgs = instArgs.clone();
+                for (int i = 0; i < instArgs.length; i++) {
+                    if (redirected[i]) {
+                        newArgs[i] = samArgs[i];
+                    }
+                }
+                org.objectweb.asm.Type newInst = org.objectweb.asm.Type.getMethodType(inst.getReturnType(), newArgs);
+                String fk = impl + " " + idin.desc + " " + inst.getDescriptor();
+                org.objectweb.asm.tree.MethodNode f = forwarders.get(fk);
+                if (f == null) {
+                    String name = "cb$cast$" + impl.getName().replace('<', '_').replace('>', '_');
+                    for (int i = 1; names.contains(name); i++) {
+                        name = "cb$cast$" + impl.getName() + "$" + i;
+                    }
+                    names.add(name);
+                    f = castLambdaForwarder(name, idin.desc, inst, newInst, impl);
+                    forwarders.put(fk, f);
+                }
+                idin.bsmArgs[1] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, cn.name, f.name, f.desc, itf);
+                idin.bsmArgs[2] = newInst;
+                rewrites++;
+                top.dext.centurybridge.data.FullAudit.record("checkcast " + type, "checkcast-redirect-lambda");
+            }
+        }
+        if (rewrites == 0) {
+            return bytes;
+        }
+        cn.methods.addAll(forwarders.values());
+        rpt.notes.add(tag + "lambdas taking cast-redirected types forwarded: " + rewrites + " in " + cn.name);
+        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        cn.accept(cw);
+        return cw.toByteArray();
+    }
+
+    /** why {@link #rewriteCastLambdas} cannot forward this lambda, or null */
+    private static String castLambdaBlocker(org.objectweb.asm.tree.InvokeDynamicInsnNode idin, org.objectweb.asm.Handle impl,
+                                            org.objectweb.asm.Type inst) {
+        if (idin.bsm.getName().equals("altMetafactory") && idin.bsmArgs.length > 3
+                && idin.bsmArgs[3] instanceof Integer flags && (flags & 1) != 0) {
+            return "serializable";
+        }
+        int kind = impl.getTag();
+        if (kind != Opcodes.H_INVOKESTATIC && kind != Opcodes.H_INVOKEVIRTUAL && kind != Opcodes.H_INVOKEINTERFACE
+                && kind != Opcodes.H_INVOKESPECIAL) {
+            return "constructor reference";
+        }
+        org.objectweb.asm.Type[] cap = org.objectweb.asm.Type.getArgumentTypes(idin.desc);
+        org.objectweb.asm.Type[] samArgs = inst.getArgumentTypes();
+        org.objectweb.asm.Type[] implTypes = implInvocationTypes(impl);
+        if (cap.length + samArgs.length != implTypes.length) {
+            return "arity";
+        }
+        for (int j = 0; j < implTypes.length; j++) {
+            org.objectweb.asm.Type from = j < cap.length ? cap[j] : samArgs[j - cap.length];
+            if (!from.equals(implTypes[j]) && (isPrimitive(from) || isPrimitive(implTypes[j]))) {
+                return "primitive adaptation";
+            }
+        }
+        org.objectweb.asm.Type ir = org.objectweb.asm.Type.getReturnType(impl.getDesc());
+        org.objectweb.asm.Type sr = inst.getReturnType();
+        if (sr.getSort() != org.objectweb.asm.Type.VOID && !sr.equals(ir) && (isPrimitive(sr) || isPrimitive(ir))) {
+            return "primitive adaptation";
+        }
+        return null;
+    }
+
+    /**
+     * the forwarder {@link #rewriteCastLambdas} points a lambda at: the captured values and the arguments as
+     * LambdaMetafactory now passes them, each cast to what the implementation takes (a redirected type by a
+     * CHECKCAST the call pass redirects), then the implementation's call
+     */
+    private static org.objectweb.asm.tree.MethodNode castLambdaForwarder(String name, String indyDesc, org.objectweb.asm.Type inst,
+                                                                         org.objectweb.asm.Type newInst, org.objectweb.asm.Handle impl) {
+        org.objectweb.asm.Type[] cap = org.objectweb.asm.Type.getArgumentTypes(indyDesc);
+        org.objectweb.asm.Type[] args = newInst.getArgumentTypes();
+        org.objectweb.asm.Type[] wanted = inst.getArgumentTypes();
+        org.objectweb.asm.Type samRet = inst.getReturnType();
+        org.objectweb.asm.Type[] all = new org.objectweb.asm.Type[cap.length + args.length];
+        System.arraycopy(cap, 0, all, 0, cap.length);
+        System.arraycopy(args, 0, all, cap.length, args.length);
+        org.objectweb.asm.tree.MethodNode f = new org.objectweb.asm.tree.MethodNode(
+            Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, name,
+            org.objectweb.asm.Type.getMethodDescriptor(samRet, all), null, null);
+        org.objectweb.asm.tree.InsnList in = f.instructions;
+        org.objectweb.asm.Type[] implTypes = implInvocationTypes(impl);
+        int slot = 0;
+        for (int j = 0; j < all.length; j++) {
+            in.add(new org.objectweb.asm.tree.VarInsnNode(all[j].getOpcode(Opcodes.ILOAD), slot));
+            slot += all[j].getSize();
+            org.objectweb.asm.Type have = all[j];
+            if (j >= cap.length && !all[j].equals(wanted[j - cap.length])) {
+                castTo(in, have, wanted[j - cap.length]); // the redirected cast LambdaMetafactory made
+                have = wanted[j - cap.length];
+            }
+            castTo(in, have, implTypes[j]);
+        }
+        int op = switch (impl.getTag()) {
+            case Opcodes.H_INVOKESTATIC -> Opcodes.INVOKESTATIC;
+            case Opcodes.H_INVOKEINTERFACE -> Opcodes.INVOKEINTERFACE;
+            case Opcodes.H_INVOKESPECIAL -> Opcodes.INVOKESPECIAL;
+            default -> Opcodes.INVOKEVIRTUAL;
+        };
+        in.add(new org.objectweb.asm.tree.MethodInsnNode(op, impl.getOwner(), impl.getName(), impl.getDesc(), impl.isInterface()));
+        org.objectweb.asm.Type implRet = org.objectweb.asm.Type.getReturnType(impl.getDesc());
+        if (samRet.getSort() == org.objectweb.asm.Type.VOID) {
+            if (implRet.getSort() != org.objectweb.asm.Type.VOID) {
+                in.add(new org.objectweb.asm.tree.InsnNode(implRet.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP));
+            }
+        } else {
+            castTo(in, implRet, samRet);
+        }
+        in.add(new org.objectweb.asm.tree.InsnNode(samRet.getOpcode(Opcodes.IRETURN)));
+        f.maxLocals = slot;
+        f.maxStack = slot + 2;
+        return f;
+    }
+
     /** the parameter types LambdaMetafactory passes the implementation, the receiver first for an instance method */
     private static org.objectweb.asm.Type[] implInvocationTypes(org.objectweb.asm.Handle impl) {
         org.objectweb.asm.Type[] p = org.objectweb.asm.Type.getArgumentTypes(impl.getDesc());
@@ -2751,6 +2933,12 @@ public final class JarProcessor {
             byte[] b7 = rewriteConvertHookLambdas(bytes, chain, layer, rpt, tag);
             ctorChanged |= b7 != bytes;
             bytes = b7;
+        }
+        if (!chain.checkCastRedirects.isEmpty()) {
+            // the cast LambdaMetafactory makes on a lambda's argument is a checkcast site too
+            byte[] b8 = rewriteCastLambdas(bytes, chain, rpt, tag);
+            ctorChanged |= b8 != bytes;
+            bytes = b8;
         }
         if (!chain.callReshapes.isEmpty()) {
             // method references first: their forwarders are call sites for the call pass
