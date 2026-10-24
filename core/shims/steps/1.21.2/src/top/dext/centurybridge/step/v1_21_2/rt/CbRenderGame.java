@@ -40,17 +40,4 @@ public final class CbRenderGame {
     public static void setBlitShader(net.minecraft.class_757 renderer, net.minecraft.class_5944 shader) {
         ((Blit) renderer).cb$setBlitShader(shader);
     }
-
-    /** GameRenderer's private getFov(camera, partialTick, useFovSetting): 1.21.1 answered a double, 1.21.2 a float */
-    public static double fovDouble(float fov) {
-        return fov;
-    }
-
-    /**
-     * ItemFrameRenderer's private getFrameModelResourceLoc / getLightVal: 1.21.1 took the frame and tested
-     * frame.getType() == EntityType.GLOW_ITEM_FRAME, 1.21.2 takes that test's answer (the render state's isGlowFrame)
-     */
-    public static boolean glowFrame(net.minecraft.class_1533 frame) {
-        return frame.method_5864() == net.minecraft.class_1299.field_28401;
-    }
 }
