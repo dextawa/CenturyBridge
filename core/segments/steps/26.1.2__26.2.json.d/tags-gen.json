@@ -1,0 +1,5 @@
+{
+ "fieldGetters": {
+  "net/minecraft/tags/BlockTags.CONCRETE_POWDER:Lnet/minecraft/tags/TagKey;": "top/dext/centurybridge/step/v26_2/rt/CbTagCompat#BlockTags_CONCRETE_POWDER"
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3481.field_33713:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_5/rt/CbTagCompat#BlockTags_field_33713",
+  "net/minecraft/class_3481.field_33714:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_5/rt/CbTagCompat#BlockTags_field_33714",
+  "net/minecraft/class_3481.field_35443:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_5/rt/CbTagCompat#BlockTags_field_35443",
+  "net/minecraft/class_3481.field_38694:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_5/rt/CbTagCompat#BlockTags_field_38694",
+  "net/minecraft/class_3481.field_44469:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_5/rt/CbTagCompat#BlockTags_field_44469",
+  "net/minecraft/class_6908.field_36501:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_5/rt/CbTagCompat#BiomeTags_field_36501",
+  "net/minecraft/class_7369.field_38695:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_5/rt/CbTagCompat#CatVariantTags_field_38695",
+  "net/minecraft/class_7369.field_38696:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_5/rt/CbTagCompat#CatVariantTags_field_38696",
+  "net/minecraft/class_8103.field_43116:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_5/rt/CbTagCompat#DamageTypeTags_field_43116"
+ }
+}

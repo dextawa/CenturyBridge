@@ -1,0 +1,6 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3481.field_15490:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_9/rt/CbTagCompat#BlockTags_field_15490",
+  "net/minecraft/class_6908.field_37395:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_9/rt/CbTagCompat#BiomeTags_field_37395"
+ }
+}

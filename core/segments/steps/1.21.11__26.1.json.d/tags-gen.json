@@ -1,0 +1,9 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3481.field_15497:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbTagCompat#BlockTags_field_15497",
+  "net/minecraft/class_3481.field_25739:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbTagCompat#BlockTags_field_25739",
+  "net/minecraft/class_3481.field_33641:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbTagCompat#BlockTags_field_33641",
+  "net/minecraft/class_3481.field_44589:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbTagCompat#BlockTags_field_44589",
+  "net/minecraft/class_3489.field_36269:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbTagCompat#ItemTags_field_36269"
+ }
+}

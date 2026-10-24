@@ -1,0 +1,6 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3489.field_49936:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_2/rt/CbTagCompat#ItemTags_field_49936",
+  "net/minecraft/class_7440.field_39097:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_2/rt/CbTagCompat#BannerPatternTags_field_39097"
+ }
+}
