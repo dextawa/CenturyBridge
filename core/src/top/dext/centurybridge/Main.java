@@ -151,6 +151,11 @@ public final class Main {
         // (Chain.libSuperOf); the same modules, so a missing directory has already been refused above
         chain.loadLibraryHierarchy(Path.of("data/runtime/client-" + args[2] + "/.fabric/processedMods"));
         System.out.println("library hierarchy: " + chain.libSuperOf.size() + " classes in " + args[2] + "'s Fabric API");
+        // and the game's own libraries (authlib, DFU, brigadier...): wiring keyed on a library type serves a mod
+        // class under a library subclass too (a mod's YggdrasilMinecraftSessionService subclass is a
+        // MinecraftSessionService). Absent: nothing is read
+        chain.loadLibraryHierarchy(Path.of("data/runtime/client-" + args[2] + "/libraries"));
+        System.out.println("library hierarchy: " + chain.libSuperOf.size() + " classes with " + args[2] + "'s game libraries");
         Path outDir = Path.of(args[4]);
         top.dext.centurybridge.data.FullAudit.enabled = true;
         top.dext.centurybridge.data.FullAudit.reset();
