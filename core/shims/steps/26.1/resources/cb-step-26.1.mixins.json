@@ -122,7 +122,15 @@
     "CbWallRenderPipelinesAccess",
     "CbWallSectionRenderDispatcherAccess",
     "CbWallWindowAccess",
-    "CbWallWorldOpenFlowsAccess"
+    "CbWallWorldOpenFlowsAccess",
+    "CbWallCustomFeatureRendererSplitMixin",
+    "CbWallItemFeatureRendererSplitMixin",
+    "CbWallModelFeatureRendererSplitMixin",
+    "CbWallModelPartFeatureRendererSplitMixin",
+    "CbWallParticleFeatureRendererSplitMixin",
+    "CbWallScreenEffectMixin",
+    "CbWallMinecartContentsMixin",
+    "CbWallTntMinecartContentsMixin"
   ],
   "server": [],
   "injectors": {

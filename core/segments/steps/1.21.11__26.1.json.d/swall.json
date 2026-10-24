@@ -687,6 +687,27 @@
    "onlyUnder": "net/minecraft/class_1826",
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs$LegacyRequiredFeatures",
    "basis": "26.1's Item made requiredFeatures() final (a 1.21.11 spawn egg subclass's override would fail to load): renamed, answering through the final member (CbWallItemFeaturesMixin); its super call reaches 26.1's body"
+  },
+  {
+   "old": "method_73017(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V",
+   "new": "renderTranslucent",
+   "onlyUnder": "net/minecraft/class_11691",
+   "superCalls": "rename",
+   "basis": "1.21.11's TextFeatureRenderer.render drew all its submits; 26.1 draws them all in renderTranslucent (it has no solid half), same arguments"
+  },
+  {
+   "old": "method_73015(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V",
+   "new": "renderTranslucent",
+   "onlyUnder": "net/minecraft/class_11690",
+   "superCalls": "rename",
+   "basis": "1.21.11's ShadowFeatureRenderer.render drew all its submits; 26.1 draws them all in renderTranslucent (it has no solid half), same arguments"
+  },
+  {
+   "old": "method_73014(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_327;)V",
+   "new": "renderTranslucent",
+   "onlyUnder": "net/minecraft/class_11689",
+   "superCalls": "rename",
+   "basis": "1.21.11's NameTagFeatureRenderer.render drew all its submits; 26.1 draws them all in renderTranslucent (it has no solid half), same arguments"
   }
  ],
  "classRenames": {
@@ -1188,7 +1209,8 @@
   "net/minecraft/class_7655.method_56515(Lnet/minecraft/class_3300;Ljava/util/List;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#load",
   "net/minecraft/class_7655.method_56519(Ljava/util/Map;Lnet/minecraft/class_5912;Ljava/util/List;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#load",
   "net/minecraft/class_2688.method_28494(Lcom/mojang/serialization/Codec;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallStates#codec",
-  "com/mojang/blaze3d/vertex/VertexFormatElement.register(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;I)Lcom/mojang/blaze3d/vertex/VertexFormatElement;": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#register"
+  "com/mojang/blaze3d/vertex/VertexFormatElement.register(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;I)Lcom/mojang/blaze3d/vertex/VertexFormatElement;": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#register",
+  "net/minecraft/class_957.method_23190(Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#submitWhiteSolidBlock"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -2182,7 +2204,16 @@
   "net/minecraft/class_1277.method_5488(Lnet/minecraft/class_1265;)V",
   "net/minecraft/class_338.method_44811(Lnet/minecraft/class_2561;Lnet/minecraft/class_7469;Lnet/minecraft/class_7591;)V",
   "net/minecraft/class_329.method_44354(Z)V",
-  "net/minecraft/class_329.method_44353()Z"
+  "net/minecraft/class_329.method_44353()Z",
+  "net/minecraft/class_11682.method_72999(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V",
+  "net/minecraft/class_11687.method_73010(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4618;)V",
+  "net/minecraft/class_11683.method_73001(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4618;Lnet/minecraft/class_4597$class_4598;)V",
+  "net/minecraft/class_11793.method_73543(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4618;Lnet/minecraft/class_4597$class_4598;)V",
+  "net/minecraft/class_11977.method_74407(Lnet/minecraft/class_11788;)V",
+  "net/minecraft/class_4603.method_23067(ZFLnet/minecraft/class_11659;)V",
+  "net/minecraft/class_3988.method_19170(Lnet/minecraft/class_3218;Lnet/minecraft/class_1916;[Lnet/minecraft/class_3853$class_1652;I)V",
+  "net/minecraft/class_925.method_4064(Lnet/minecraft/class_10045;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V",
+  "net/minecraft/class_957.method_4137(Lnet/minecraft/class_10046;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -2408,7 +2439,8 @@
   "net/minecraft/class_2574.field_11779:Lnet/minecraft/class_2203$class_2209;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#compiledNbtPath",
   "net/minecraft/class_4643.field_29279:Lnet/minecraft/class_4651;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#dirtProvider",
   "net/minecraft/class_4643.field_29281:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#forceDirt",
-  "net/minecraft/class_2688.field_24740:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_1/rt/CbWallStates#propertiesCodec"
+  "net/minecraft/class_2688.field_24740:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_1/rt/CbWallStates#propertiesCodec",
+  "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#displayBlockState"
  },
  "convertHooks": [
   {
@@ -2848,5 +2880,13 @@
    "iface": "top/dext/centurybridge/step/v26_1/rt/CbWallStates$LegacyFactory",
    "adapt": "top/dext/centurybridge/step/v26_1/rt/CbWallStates#adapt(Ltop/dext/centurybridge/step/v26_1/rt/CbWallStates$LegacyFactory;)Lnet/minecraft/class_2689$class_2691;"
   }
+ },
+ "methodRenames": {
+  "net/minecraft/class_11691.method_73017(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V": "renderTranslucent",
+  "net/minecraft/class_11690.method_73015(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V": "renderTranslucent",
+  "net/minecraft/class_11689.method_73014(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_327;)V": "renderTranslucent"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#setDisplayBlockState"
  }
 }
