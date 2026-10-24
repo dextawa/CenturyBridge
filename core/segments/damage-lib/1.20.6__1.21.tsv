@@ -5,4 +5,3 @@
 artifact	sides	kind	symbol	note
 com/mojang/datafixerupper	client,server	METHOD	com/mojang/datafixers/DataFixerBuilder.buildOptimized(Ljava/util/Set;Ljava/util/concurrent/Executor;)Lcom/mojang/datafixers/DataFixer;	
 com/mojang/datafixerupper	client,server	METHOD	com/mojang/datafixers/DataFixerBuilder.buildUnoptimized()Lcom/mojang/datafixers/DataFixer;	
-com/mojang/datafixerupper	client,server	ABSTRACT	com/mojang/serialization/DataResult.hasResultOrPartial()Z	implementations must now provide it
