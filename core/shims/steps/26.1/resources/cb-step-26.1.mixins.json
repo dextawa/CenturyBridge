@@ -76,7 +76,8 @@
     "CbWallBrainProviderArmadilloMixin",
     "CbWallFeatureRegisterMixin",
     "CbWallRecipeKindsMixin",
-    "CbWallBannerDuplicateMixin"
+    "CbWallBannerDuplicateMixin",
+    "CbWallAbstractVillagerOffersMixin"
   ],
   "client": [
     "CbFapiBlockColorsMixin",

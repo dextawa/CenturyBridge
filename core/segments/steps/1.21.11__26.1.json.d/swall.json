@@ -771,7 +771,8 @@
   "net/minecraft/class_11905.<init>(II)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#characterEvent",
   "net/minecraft/class_557$class_11650.<init>(FFFF)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#bookState",
   "net/minecraft/class_10809.<init>(ZLnet/minecraft/class_1058;Lnet/minecraft/class_809;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#modelRenderProperties",
-  "com/mojang/blaze3d/vertex/VertexFormatElement.<init>(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#element"
+  "com/mojang/blaze3d/vertex/VertexFormatElement.<init>(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#element",
+  "net/minecraft/class_3990.<init>(Lnet/minecraft/class_5268;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#newSpawner"
  },
  "adapterHooks": [
   {
@@ -1948,6 +1949,13 @@
     "drop"
    ],
    "basis": "26.1's layer submits its block model through the submit collector and no longer takes the BlockRenderDispatcher"
+  },
+  "net/minecraft/class_3990.<init>(Lnet/minecraft/class_5268;)V": {
+   "desc": "(Lnet/minecraft/class_26;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallTrades#spawnerStorage(Lnet/minecraft/class_5268;)Lnet/minecraft/class_26;"
+   ],
+   "basis": "26.1's spawner keeps its delay and chance in the server's WanderingTraderData (which 1.21.11 level data reads and writes, CbWallLevelData); a dimension's derived data had none, so its spawner keeps 1.21.11's defaults in memory (CbWallTrades)"
   }
  },
  "fieldGetters": {
@@ -2021,7 +2029,8 @@
   "net/minecraft/class_5602.field_55120:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#striderBabySaddle",
   "net/minecraft/class_5602.field_63560:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#undeadHorseBabyArmor",
   "net/minecraft/class_5602.field_53005:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#wolfBabyArmor",
-  "net/minecraft/class_5602.field_56090:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#zombieHorseBabySaddle"
+  "net/minecraft/class_5602.field_56090:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#zombieHorseBabySaddle",
+  "net/minecraft/class_3988.field_30599:I": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#villagerSlotOffset"
  },
  "abstractFills": [
   {
