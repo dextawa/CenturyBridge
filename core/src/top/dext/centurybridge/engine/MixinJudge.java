@@ -54,7 +54,11 @@ import org.objectweb.asm.tree.TypeInsnNode;
  *                    member of the mixin is judged as that member
  * An injector repair drops leaves the handler without its annotation: judged as "disabled".
  *
- *   mixin-judge <code jar> <probe jar> <index.tsv> <out.tsv> [--layer <jar>]... [--keys <damage.tsv>]
+ * With --source (V's code; the converted probe only, never the raw damage judging) an anchor pinned to
+ * an ordinal that W holds another number of times than V passes when its occurrence is the counterpart
+ * of V's (SiteMatch: matched by surrounding instructions), and fails as shifted / site lost otherwise.
+ *
+ *   mixin-judge <code jar> <probe jar> <index.tsv> <out.tsv> [--layer <jar>]... [--keys <damage.tsv>] [--source <V code jar>]
  * out.tsv: usage owner target anchor ordinal vcount fate -- one row per member that does not survive
  * (with --keys only the members whose key is in that table, i.e. the step's open damage rows).
  */
@@ -87,6 +91,17 @@ public final class MixinJudge {
         return i > 0 ? m.substring(0, i) : m;
     }
 
+    /** the converted jar's restored overrides (MixinBridge.restoreOverride), by target: built on first use */
+    private Map<String, List<MethodNode>> restoredByTarget;
+
+    /** V's code (--source): an ordinal-pinned anchor is judged by whether it names V's site's counterpart */
+    private MixinRepair source;
+    /** the probe row being judged, as V had it (index columns owner, target, anchor, ordinal) */
+    private String rowOwner;
+    private String rowTarget;
+    private String rowAnchor;
+    private int rowOrdinal = -1;
+
     private MixinJudge(Path codeJar) throws IOException {
         this.code = new MixinRepair(codeJar);
     }
@@ -100,6 +115,8 @@ public final class MixinJudge {
         for (int i = 5; i < args.length; i++) {
             if (args[i].equals("--layer")) {
                 j.loadExtra(Path.of(args[++i]));
+            } else if (args[i].equals("--source")) {
+                j.source = new MixinRepair(Path.of(args[++i]));
             } else if (args[i].equals("--keys")) {
                 keys = new HashSet<>();
                 List<String> lines = Files.readAllLines(Path.of(args[++i]), StandardCharsets.UTF_8);
@@ -139,6 +156,10 @@ public final class MixinJudge {
                         String name = r[1].substring(0, r[1].indexOf('('));
                         // the mixin's own target as it stands now (a class rename moves it), else V's owner
                         List<String> ts = MixinRepair.mixinTargets(mx, j.refmap(mx));
+                        j.rowOwner = r[3];
+                        j.rowTarget = r[4];
+                        j.rowAnchor = r[5];
+                        j.rowOrdinal = Integer.parseInt(r[6]);
                         why = j.judgeMember(mx, ts.size() == 1 ? ts.get(0) : r[3], name, Integer.parseInt(r[7]), new HashSet<>());
                     }
                     if (why != null) {
@@ -324,7 +345,7 @@ public final class MixinJudge {
                 }
                 default -> {
                     if (MixinRepair.values(an).containsKey("method")) {
-                        return judgeInjector(tc, m, an, vcount, refmap(mx));
+                        return judgeInjector(mx, tc, m, an, vcount, refmap(mx));
                     }
                 }
             }
@@ -336,7 +357,7 @@ public final class MixinJudge {
         return judgeBody(mx, target, m, seen);
     }
 
-    private String judgeInjector(ClassNode tc, MethodNode h, AnnotationNode an, int vcount, com.google.gson.JsonObject rm) {
+    private String judgeInjector(ClassNode mx, ClassNode tc, MethodNode h, AnnotationNode an, int vcount, com.google.gson.JsonObject rm) {
         Map<String, Object> v = MixinRepair.values(an);
         List<String> sels = MixinRepair.strings(v.get("method"));
         boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
@@ -350,6 +371,12 @@ public final class MixinJudge {
                 continue;
             }
             List<MethodNode> cands = s.match(oc);
+            if (cands.isEmpty() && oc == tc) {
+                if (restoredByTarget == null) {
+                    restoredByTarget = MixinRepair.restoredOverrides(jar);
+                }
+                cands = MixinRepair.restored(restoredByTarget, tc.name, s); // an override the converter put back (a super call)
+            }
             if (cands.isEmpty()) {
                 first = first != null ? first : methodFate(oc, s.name(), s.desc(), st, "target");
                 continue;
@@ -401,6 +428,12 @@ public final class MixinJudge {
         if (anchors == null) {
             return null; // not evaluable statically: not judged (MixinRepair leaves it alone too)
         }
+        if (source != null && anchors.size() > 1 && rowOrdinal < 0) {
+            String split = sites(anchors, wm);
+            if (split != null) {
+                return split.isEmpty() ? null : split;
+            }
+        }
         for (MixinRepair.Anchor a : anchors) {
             if (a.kind().equals("LOCAL")) {
                 continue;
@@ -416,6 +449,15 @@ public final class MixinJudge {
             if (c == 0) {
                 return "anchor gone";
             }
+            if (source != null && a.ordinal() >= 0 && a.ordinal() < c && anchors.size() == 1 && vcount > 0 && c != vcount) {
+                String pinned = pinned(a, wm, c);
+                if ("".equals(pinned)) {
+                    continue;
+                }
+                if (pinned != null) {
+                    return pinned;
+                }
+            }
             if (c <= a.ordinal()) {
                 return "anchor ordinal gone (" + vcount + " -> " + c + ")";
             }
@@ -424,6 +466,138 @@ public final class MixinJudge {
             }
         }
         return null;
+    }
+
+    /**
+     * An anchor pinned to occurrence #a.ordinal of W's body, which holds it another number of times than
+     * V held the row's anchor: "" when that occurrence stands where the row's V site stood (the same
+     * anchor: its counterpart by SiteMatch.match; another one, retargeted: the instruction standing in
+     * the V site's place, SiteMatch.counterpart), a fate when it stands elsewhere, null when the row's
+     * V site is not one site to compare (left to the count rule).
+     */
+    private String pinned(MixinRepair.Anchor a, MethodNode wm, int c) {
+        ClassNode vc = source.target(rowOwner);
+        int p = rowTarget.indexOf('(');
+        MethodNode vm = null;
+        if (vc != null && p > 0) {
+            for (MethodNode m : vc.methods) {
+                if (m.name.equals(rowTarget.substring(0, p)) && m.desc.equals(rowTarget.substring(p))) {
+                    vm = m;
+                }
+            }
+        }
+        MixinRepair.Anchor va = indexAnchor(rowAnchor);
+        if (vm == null || va == null) {
+            return null;
+        }
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> MixinRepair.matchesAnchor(in, va));
+        if (rowOrdinal < 0 ? vo.size() != 1 : rowOrdinal >= vo.size()) {
+            return null;
+        }
+        int vi = Math.max(rowOrdinal, 0);
+        AbstractInsnNode site = vo.get(vi);
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, a));
+        if (wo.size() > 0 && MixinRepair.matchesAnchor(wo.get(0), va)) {
+            int j = SiteMatch.match(vm, vo, wm, wo)[vi];
+            if (j == a.ordinal()) {
+                return "";
+            }
+            return j < 0 ? "anchor ordinal site lost (V #" + vi + " of " + vo.size() + ", W " + c + ")"
+                : "anchor ordinal shifted (V #" + vi + " is W #" + j + ", pinned to #" + a.ordinal() + ")";
+        }
+        AbstractInsnNode cp = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in));
+        return cp != null && wo.indexOf(cp) == a.ordinal() ? "" : null;
+    }
+
+    /**
+     * One anchor named once per site (MixinRepair sites-split: one @At per ordinal): "" when the ordinals
+     * are exactly the W counterparts of the row's V occurrences (SiteMatch.match), a fate when they are
+     * not, null when these are not one anchor at several ordinals standing for the row's anchor.
+     */
+    private String sites(List<MixinRepair.Anchor> anchors, MethodNode wm) {
+        MixinRepair.Anchor a = anchors.get(0);
+        Set<Integer> ords = new HashSet<>();
+        for (MixinRepair.Anchor x : anchors) {
+            if (!x.role().equals("main") || x.ordinal() < 0 || !x.kind().equals(a.kind()) || !java.util.Objects.equals(x.owner(), a.owner())
+                    || !java.util.Objects.equals(x.name(), a.name()) || !java.util.Objects.equals(x.desc(), a.desc())
+                    || !java.util.Objects.equals(x.constant(), a.constant())) {
+                return null;
+            }
+            ords.add(x.ordinal());
+        }
+        MixinRepair.Anchor va = indexAnchor(rowAnchor);
+        ClassNode vc = source.target(rowOwner);
+        int p = rowTarget.indexOf('(');
+        if (va == null || vc == null || p < 0 || !va.kind().equals(a.kind()) || !java.util.Objects.equals(va.owner(), a.owner())
+                || !java.util.Objects.equals(va.name(), a.name()) || !java.util.Objects.equals(va.desc(), a.desc())
+                || !java.util.Objects.equals(va.constant(), a.constant())) {
+            return null;
+        }
+        MethodNode vm = null;
+        for (MethodNode m : vc.methods) {
+            if (m.name.equals(rowTarget.substring(0, p)) && m.desc.equals(rowTarget.substring(p))) {
+                vm = m;
+            }
+        }
+        if (vm == null) {
+            return null;
+        }
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> MixinRepair.matchesAnchor(in, va));
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, a));
+        Set<Integer> want = new HashSet<>();
+        for (int j : SiteMatch.match(vm, vo, wm, wo)) {
+            if (j < 0) {
+                return "anchor sites: a V occurrence has no counterpart in W";
+            }
+            want.add(j);
+        }
+        return want.equals(ords) ? "" : "anchor sites differ (pinned " + ords + ", V's counterparts " + want + ")";
+    }
+
+    /** an anchor as the probe index writes it: INVOKE Lo;n(d)r, FIELD Lo;n:d, NEW o, CONSTANT xValue=v */
+    static MixinRepair.Anchor indexAnchor(String s) {
+        int sp = s.indexOf(' ');
+        if (sp < 0) {
+            return null;
+        }
+        String kind = s.substring(0, sp);
+        String rest = s.substring(sp + 1);
+        try {
+            switch (kind) {
+                case "INVOKE" -> {
+                    int semi = rest.indexOf(';');
+                    int par = rest.indexOf('(');
+                    return new MixinRepair.Anchor(kind, rest.substring(1, semi), rest.substring(semi + 1, par), rest.substring(par), null, -1);
+                }
+                case "FIELD" -> {
+                    int semi = rest.indexOf(';');
+                    int col = rest.indexOf(':', semi);
+                    return new MixinRepair.Anchor(kind, rest.substring(1, semi), rest.substring(semi + 1, col), rest.substring(col + 1), null, -1);
+                }
+                case "NEW" -> {
+                    return new MixinRepair.Anchor(kind, rest, null, null, null, -1);
+                }
+                case "CONSTANT" -> {
+                    int eq = rest.indexOf('=');
+                    String k = rest.substring(0, eq);
+                    String v = rest.substring(eq + 1);
+                    Object c = switch (k) {
+                        case "intValue" -> Integer.valueOf(v);
+                        case "floatValue" -> Float.valueOf(v);
+                        case "longValue" -> Long.valueOf(v);
+                        case "doubleValue" -> Double.valueOf(v);
+                        case "stringValue" -> v;
+                        default -> null;
+                    };
+                    return c == null ? null : new MixinRepair.Anchor(kind, null, null, null, c, -1);
+                }
+                default -> {
+                    return null;
+                }
+            }
+        } catch (RuntimeException ex) {
+            return null;
+        }
     }
 
     private String judgeShadowField(FieldNode f, String target) {

@@ -1,0 +1,149 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_6761.method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#save",
+  "net/minecraft/class_4296.method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#save",
+  "net/minecraft/class_1806.method_7757(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#getUpdatePacket",
+  "net/minecraft/class_1745.method_7703()Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#getDisplayName"
+ },
+ "superRedirects": {
+  "net/minecraft/class_4296.method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#superSave",
+  "net/minecraft/class_1806.method_7757(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#superGetUpdatePacket",
+  "net/minecraft/class_1745.method_7703()Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#superGetDisplayName"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_4296.method_39398(Lnet/minecraft/class_2499;Ljava/util/function/Function;Lnet/minecraft/class_1923;)Lnet/minecraft/class_4296;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#load",
+  "net/minecraft/class_6759.method_39406(Lnet/minecraft/class_2499;Ljava/util/function/Function;Lnet/minecraft/class_1923;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#loadTickList",
+  "net/minecraft/class_6759.method_39401(Lnet/minecraft/class_6760;Ljava/util/function/Function;J)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#saveTick",
+  "net/minecraft/class_8052.method_48418(Lnet/minecraft/class_5321;[Lnet/minecraft/class_7696;)Lnet/minecraft/class_8052;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmithingTemplates#createArmorTrimTemplate",
+  "net/minecraft/class_8052.method_48419(Lnet/minecraft/class_2960;[Lnet/minecraft/class_7696;)Lnet/minecraft/class_8052;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmithingTemplates#createArmorTrimTemplate",
+  "net/minecraft/class_8052.method_48420()Lnet/minecraft/class_8052;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmithingTemplates#createNetheriteUpgradeTemplate",
+  "net/minecraft/class_1842.method_8051(Ljava/util/Optional;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions#getName"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_6761",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks$LegacySave",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "requires": [
+    "method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520;"
+   ],
+   "synth": [
+    {
+     "new": "method_61898(J)Ljava/util/List;",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks.pack(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemTicks$LegacySave;J)Ljava/util/List;"
+    }
+   ],
+   "basis": "a 1.21.1 tick container saved itself as NBT: 1.21.2's pack(gameTime) is its own save read back (CbItemTicks.pack); the guard lets its super.save reach 1.21.2's pack"
+  },
+  {
+   "under": "net/minecraft/class_1806",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall$Legacy_getUpdatePacket",
+   "requires": [
+    "method_7757(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2596;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 MapItem subclass's getUpdatePacket answers its calls and the server's inventory synchronisation (CbItemComplexMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1745",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall$Legacy_getDisplayName",
+   "requires": [
+    "method_7703()Lnet/minecraft/class_5250;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 BannerPatternItem subclass's getDisplayName answers its calls"
+  }
+ ],
+ "overrideHooks": [],
+ "lambdaAdapters": {
+  "net/minecraft/class_6761.method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks$LegacySave",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#lambda(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemTicks$LegacySave;)Lnet/minecraft/class_6761;",
+   "basis": "a 1.21.1 SerializableTickContainer lambda answers 1.21.2's pack(gameTime) with what it saves"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_6757.<init>(Ljava/util/function/LongPredicate;Ljava/util/function/Supplier;)V": {
+   "desc": "(Ljava/util/function/LongPredicate;)V",
+   "ops": [
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#keepProfiler(Lnet/minecraft/class_6757;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "1.21.2's LevelTicks profiles on the thread's profiler; the 1.21.1 constructor's supplier is kept and used for its tick (CbItemLevelTicksMixin)"
+  },
+  "net/minecraft/class_5537.<init>(Lnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#bundleOpenFront()Lnet/minecraft/class_2960;",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#bundleOpenBack()Lnet/minecraft/class_2960;",
+    "keep"
+   ],
+   "basis": "1.21.2's BundleItem takes the models of its open state (new in 1.21.2): a 1.21.1 bundle gets the plain bundle's"
+  },
+  "net/minecraft/class_8052.<init>(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/util/List;[Lnet/minecraft/class_7696;)V": {
+   "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/util/List;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "conv:7 top/dext/centurybridge/step/v1_21_2/rt/CbItemSmithingTemplates#properties([Lnet/minecraft/class_7696;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmithingTemplates#keepUpgrade(Lnet/minecraft/class_8052;Lnet/minecraft/class_2561;)V",
+   "postArgs": [
+    2
+   ],
+   "basis": "1.21.2's SmithingTemplateItem takes Item.Properties (1.21.1 built them from the feature flags) and no upgrade description; the template keeps it for its tooltip (CbItemSmithingTemplateMixin)"
+  },
+  "net/minecraft/class_1842.<init>([Lnet/minecraft/class_1293;)V": {
+   "desc": "(Ljava/lang/String;[Lnet/minecraft/class_1293;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions#unnamed()Ljava/lang/String;",
+    "keep"
+   ],
+   "basis": "1.21.1's Potion(effects) had no name (named by its registry path, CbItemPotionNameMixin)"
+  },
+  "net/minecraft/class_1844.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/List;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/List;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions#noCustomName()Ljava/util/Optional;"
+   ],
+   "basis": "1.21.2's PotionContents adds a custom name; 1.21.1's had none"
+  },
+  "net/minecraft/class_2390.<init>(Lorg/joml/Vector3f;F)V": {
+   "desc": "(IF)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions#rgb(Lorg/joml/Vector3f;)I",
+    "keep"
+   ],
+   "basis": "1.21.2's DustParticleOptions takes its colour packed RGB (CbItemPotions.rgb)"
+  },
+  "net/minecraft/class_5743.<init>(Lorg/joml/Vector3f;Lorg/joml/Vector3f;F)V": {
+   "desc": "(IIF)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions#rgb(Lorg/joml/Vector3f;)I",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions#rgb(Lorg/joml/Vector3f;)I",
+    "keep"
+   ],
+   "basis": "1.21.2's DustColorTransitionOptions takes its colours packed RGB (CbItemPotions.rgb)"
+  }
+ },
+ "fieldGetters": {
+  "net/minecraft/class_2390.field_28272:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions",
+  "net/minecraft/class_5743.field_28267:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions"
+ },
+ "classRenames": {
+  "net/minecraft/class_1762": "top/dext/centurybridge/step/v1_21_2/facade/ComplexItem",
+  "net/minecraft/class_1751": "top/dext/centurybridge/step/v1_21_2/facade/BookItem",
+  "net/minecraft/class_1798": "top/dext/centurybridge/step/v1_21_2/facade/ItemNameBlockItem"
+ }
+}

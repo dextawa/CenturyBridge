@@ -252,9 +252,9 @@
   "net/minecraft/class_4516.method_36021()Lnet/minecraft/class_1657;": {
    "desc": "(Lnet/minecraft/class_1934;)Lnet/minecraft/class_1657;",
    "ops": [
-    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#survival()Lnet/minecraft/class_1934;"
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#mockPlayerGameType()Lnet/minecraft/class_1934;"
    ],
-   "basis": "GameTestHelper.makeMockPlayer gained the game type; 1.20.4's mock player was neither creative nor spectator: SURVIVAL"
+   "basis": "GameTestHelper.makeMockPlayer gained the game type; 1.20.4's mock player (GameTestHelper$2) answered isCreative() true, isSpectator() false and isLocalPlayer() true, as 1.20.5's of CREATIVE does (s4fin corrected: was SURVIVAL)"
   },
   "net/minecraft/class_3767.method_16540(Lnet/minecraft/class_3222;)Lnet/minecraft/class_3765;": {
    "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_2338;)Lnet/minecraft/class_3765;",
@@ -921,7 +921,7 @@
    "3": "zero: 1.20.4's post passes sampled their input at the render target's GL_NEAREST, useLinearFilter false"
   },
   "method_36021()Lnet/minecraft/class_1657;": {
-   "0": "top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#survival()Lnet/minecraft/class_1934;"
+   "0": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#mockPlayerGameType()Lnet/minecraft/class_1934;"
   },
   "method_16540(Lnet/minecraft/class_3222;)Lnet/minecraft/class_3765;": {
    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#raidPos(Ljava/lang/Object;Lnet/minecraft/class_3222;)Lnet/minecraft/class_2338;"

@@ -57,7 +57,8 @@
   "net/minecraft/class_1914.method_8251()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading",
   "net/minecraft/class_1916.method_8268()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading",
   "net/minecraft/class_1916.method_8270(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading",
-  "net/minecraft/class_6538.method_38070(Lnet/minecraft/class_1799;Lnet/minecraft/class_2378;Lnet/minecraft/class_2694;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc"
+  "net/minecraft/class_6538.method_38070(Lnet/minecraft/class_1799;Lnet/minecraft/class_2378;Lnet/minecraft/class_2694;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc",
+  "net/minecraft/class_5620.interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron"
  },
  "classRenames": {
   "net/minecraft/class_1781$class_1782": "net/minecraft/class_9283$class_1782",
@@ -742,9 +743,6 @@
    "basis": "s4fin generic drift: a 1.20.4 RecipeCache subclass's get answers the recipe; 1.20.5 reads a holder"
   }
  ],
- "interfaceCallRedirects": {
-  "net/minecraft/class_5620.interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron"
- },
  "lambdaAdapters": {
   "net/minecraft/class_5620.interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1269;": {
    "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron$Legacy",

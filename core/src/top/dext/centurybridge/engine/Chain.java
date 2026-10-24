@@ -115,6 +115,18 @@ public final class Chain {
     public final java.util.Map<String, String> methodRenames = new java.util.HashMap<>();
 
     /**
+     * Where a V method's code lives on W for mixins ("mixinTargets"), judged by an area agent from both
+     * bodies: key "owner.name(desc)" (V), value {"to": "name(desc)" of the same class on W, "args":
+     * [for each V argument the W argument index it arrives as, or -1], "basis": why}. MixinBridge moves
+     * an injector selecting the V method there (handlers taking the target's arguments get a W-shaped
+     * handler mapping them back through "args"; an argument at -1 leaves only handlers that take none),
+     * before anything it would infer itself. Mods' plain calls are not touched (that is callReshapes').
+     */
+    public record MixinTarget(String name, String desc, int[] args, String basis) {}
+
+    public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
+
+    /**
      * The class or interface a {@link #methodRenames} key is on for a site naming {@code owner}, in JVM
      * resolution order: the owner and its superclasses, then (an instance member only: an interface's
      * static is not inherited) their superinterfaces breadth first, injected ones included. A vanilla
@@ -937,6 +949,14 @@ public final class Chain {
     public MixinRepair bridgeCode;
 
     /**
+     * Past the wall the mods' injectors are judged one by one against the target's real bodies once the
+     * jar has its real names (JarProcessor.repairPastWall): triage then leaves injector target / anchor
+     * findings to that pass, as it does to {@link #mixinRepair} on every other step, instead of
+     * stripping a whole mixin for one injector. Set by Main when the wall's code jar is at hand.
+     */
+    public boolean injectorsJudgedPastWall;
+
+    /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,
      * its superclasses, their interfaces. TRUE found, FALSE definitely absent (every class
      * on the way is a target-stub class and none declares it), null when the answer leaves
@@ -1202,6 +1222,33 @@ public final class Chain {
     }
 
     /** field form of {@link #declaredOnTarget}: true unless a known target-stub class lacks name:desc. */
+    /**
+     * A member descriptor as the converted jar will spell it: every class the step's classRenames moves
+     * replaced by its new name (the jar's ClassRemapper does the same to the mod's own members later,
+     * mixin shadows / accessors / invokers included), so a mixin member is judged by the shape Mixin
+     * will see. Null stays null.
+     */
+    public String renamedDesc(String desc) {
+        if (desc == null || classRenames.isEmpty() || desc.indexOf('L') < 0) {
+            return desc;
+        }
+        StringBuilder b = new StringBuilder();
+        int i = 0;
+        while (i < desc.length()) {
+            char c = desc.charAt(i);
+            if (c == 'L') {
+                int e = desc.indexOf(';', i);
+                String cls = desc.substring(i + 1, e);
+                b.append('L').append(classRenames.getOrDefault(cls, cls)).append(';');
+                i = e + 1;
+            } else {
+                b.append(c);
+                i++;
+            }
+        }
+        return b.toString();
+    }
+
     public boolean fieldDeclaredOnTarget(String owner, String name, String desc) {
         java.util.Set<String> decl = targetDecls.get(owner);
         if (decl == null) {
@@ -2522,6 +2569,24 @@ public final class Chain {
                 var fr = root.getAsJsonObject("fieldRenames");
                 for (String k : fr.keySet()) {
                     c.fieldRenames.put(k, fr.get(k).getAsString());
+                }
+            }
+            if (root.has("mixinTargets")) {
+                var mt = root.getAsJsonObject("mixinTargets");
+                for (String k : mt.keySet()) {
+                    var o = mt.getAsJsonObject(k);
+                    String mtTo = o.get("to").getAsString();
+                    int mtP = mtTo.indexOf('(');
+                    int[] mtArgs = null;
+                    if (o.has("args")) {
+                        var mtA = o.getAsJsonArray("args");
+                        mtArgs = new int[mtA.size()];
+                        for (int i = 0; i < mtArgs.length; i++) {
+                            mtArgs[i] = mtA.get(i).getAsInt();
+                        }
+                    }
+                    c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs,
+                        o.has("basis") ? o.get("basis").getAsString() : ""));
                 }
             }
             if (root.has("methodRenames")) {

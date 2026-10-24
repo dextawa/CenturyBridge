@@ -47,6 +47,7 @@ public final class Main {
             // mixin-probe <V code jar> <out.jar>; mixin-judge <code jar> <probe jar> <index.tsv> <out.tsv> [--layer <jar>]... [--keys <tsv>]
             case "mixin-probe" -> top.dext.centurybridge.data.MixinProbe.run(args);
             case "mixin-judge" -> top.dext.centurybridge.engine.MixinJudge.run(args);
+            case "mixin-cause" -> top.dext.centurybridge.data.MixinCause.run(args);
             // access-diff <oldStub> <newStub> [<wall.tsv>] [<shims-ver.json>] <out.aw>
             case "access-diff" -> top.dext.centurybridge.data.AccessDiff.run(args);
             case "gen-renames" -> {
@@ -211,6 +212,7 @@ public final class Main {
             }
             if (codeJar != null && Files.exists(codeJar)) {
                 chain.mixinRepair = new top.dext.centurybridge.engine.MixinRepair(codeJar);
+                chain.mixinRepair.renamed = chain::renamedDesc;
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");
@@ -221,6 +223,10 @@ public final class Main {
             Path srcCode = sc != null ? Path.of(sc) : codeOf(args[2]);
             if (Files.exists(srcCode)) {
                 chain.sourceCode = new top.dext.centurybridge.engine.MixinRepair(srcCode);
+                // and an ordinal-pinned anchor is moved to its V site's counterpart in W (MixinRepair ordinal-remap)
+                if (chain.mixinRepair != null) {
+                    chain.mixinRepair.source = chain.sourceCode;
+                }
             }
         }
         // past the wall the anchors are checked once the jar has its real names, against
@@ -231,6 +237,7 @@ public final class Main {
                                                                 : Path.of("data/jars/client-" + args[3] + ".jar");
             if (Files.exists(code)) {
                 wallRepair = new top.dext.centurybridge.engine.MixinRepair(code);
+                chain.injectorsJudgedPastWall = true;
                 System.out.println("mixin anchors past the wall: checked against " + code);
             } else {
                 System.out.println("mixin anchors past the wall: NOT checked (no " + code + "; set CB_TARGET_CODE)");

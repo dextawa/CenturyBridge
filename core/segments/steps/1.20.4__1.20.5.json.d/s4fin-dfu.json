@@ -1,0 +1,53 @@
+{
+ "_s4fin_dfu_basis": "s4fin DFU (library front, Main lib-diff 1.20.4 -> 1.20.5: DFU 6.0.8 -> 7.0.14): rt/CbFinDfu, facade/DfuPartialResult; DFU 6.0.8's semantics read off its bytecode",
+ "interfaceized": [
+  "com/mojang/serialization/DataResult"
+ ],
+ "instanceRedirects": {
+  "com/mojang/serialization/DataResult.getOrThrow(ZLjava/util/function/Consumer;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu",
+  "com/mojang/serialization/DataResult.get()Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu",
+  "com/mojang/serialization/DataResult.error()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu"
+ },
+ "classRenames": {
+  "com/mojang/serialization/DataResult$PartialResult": "top/dext/centurybridge/step/v1_20_5/facade/DfuPartialResult"
+ },
+ "staticRedirects": {
+  "com/mojang/serialization/Codec.optionalField(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu",
+  "com/mojang/serialization/codecs/KeyDispatchCodec.unsafe(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/Function;Ljava/util/function/Function;)Lcom/mojang/serialization/codecs/KeyDispatchCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu"
+ },
+ "ctorRedirects": {
+  "com/mojang/serialization/codecs/OptionalFieldCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu#optionalFieldCodec",
+  "com/mojang/serialization/codecs/ListCodec.<init>(Lcom/mojang/serialization/Codec;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu#listCodec",
+  "com/mojang/serialization/codecs/KeyDispatchCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/Function;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu#keyDispatch"
+ },
+ "superCtorReshapes": {
+  "com/mojang/serialization/codecs/OptionalFieldCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Ljava/lang/String;Lcom/mojang/serialization/Codec;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu#lenient()Z"
+   ],
+   "basis": "s4fin DFU (library front, Main lib-diff 1.20.4 -> 1.20.5: DFU 6.0.8 -> 7.0.14): DFU 6's optional field was lenient (a value failing to parse reads as absent)"
+  },
+  "com/mojang/serialization/codecs/ListCodec.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Lcom/mojang/serialization/Codec;II)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu#noMinimum()I",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu#noMaximum()I"
+   ],
+   "basis": "s4fin DFU (library front, Main lib-diff 1.20.4 -> 1.20.5: DFU 6.0.8 -> 7.0.14): DFU 6's list had no size bounds"
+  },
+  "com/mojang/serialization/codecs/KeyDispatchCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/Function;)V": {
+   "desc": "(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/Function;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v1_20_5/rt/CbFinDfu#valueCodecs(Ljava/util/function/Function;)Ljava/util/function/Function;"
+   ],
+   "basis": "s4fin DFU (library front, Main lib-diff 1.20.4 -> 1.20.5: DFU 6.0.8 -> 7.0.14): DFU 6's codec function answered plain codecs (a MapCodecCodec's map codec, else the value under \"value\"); DFU 7's answers map codecs"
+  }
+ }
+}

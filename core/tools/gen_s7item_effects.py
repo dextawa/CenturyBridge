@@ -1,7 +1,8 @@
 """Wiring for 1.21.1's MobEffect hooks called without a level and FoodData's dropped members, on 1.21.2
 (s7item, step 1.21.1 -> 1.21.2; semantics in rt/CbItemEffects and mixin/CbItemFoodDataMixin).
 
-  MobEffect   applyEffectTick / applyInstantenousEffect / onMobRemoved / onMobHurt calls: the entity's ServerLevel
+  MobEffect   applyEffectTick / applyInstantenousEffect / onMobRemoved / onMobHurt calls, and MobEffectInstance's
+              onMobRemoved / onMobHurt: the entity's ServerLevel
               passed (1.21.2 runs them server-side only; mechanical.json's frames hooks reconnect overrides)
   FoodData    getLastFoodLevel / getExhaustionLevel / setExhaustion / tick(Player): declared again by the mixin (covers)
 
@@ -22,6 +23,8 @@ def main():
             EFFECT + ".method_5564(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;ID)V": RT,
             EFFECT + ".method_58617(Lnet/minecraft/class_1309;ILnet/minecraft/class_1297$class_5529;)V": RT,
             EFFECT + ".method_58614(Lnet/minecraft/class_1309;ILnet/minecraft/class_1282;F)V": RT,
+            "net/minecraft/class_1293.method_58622(Lnet/minecraft/class_1309;Lnet/minecraft/class_1297$class_5529;)V": RT,
+            "net/minecraft/class_1293.method_58621(Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;F)V": RT,
         },
         "covers": [
             FOOD + ".method_35217()I",

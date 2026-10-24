@@ -1,0 +1,252 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_10223.method_64298(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_1867.method_17729(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_1869.method_17727(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_3972.method_59998(Lnet/minecraft/class_9696;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9696;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_8060.method_60000(Lnet/minecraft/class_9697;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9697;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_8062.method_60002(Lnet/minecraft/class_9697;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9697;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_1848.method_17702(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_1850.method_17705(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_1851.method_17708(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_1853.method_17712(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_1854.method_17710(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_1861.method_17727(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_1872.method_17731(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_4317.method_20807(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  },
+  "net/minecraft/class_8164.method_49187(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.1's assemble takes no registries; 1.21.11's vanilla body only handed them to its result's copy, which 26.1 makes without them"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_64298(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_64298(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_10223",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_17729(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17729(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1867",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_17727(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17727(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1869",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_59998(Lnet/minecraft/class_9696;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_59998(Lnet/minecraft/class_9696;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_3972",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleSingle",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleSingle(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleSingle;Lnet/minecraft/class_9696;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_60000(Lnet/minecraft/class_9697;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_60000(Lnet/minecraft/class_9697;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_8060",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleSmithing",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleSmithing(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleSmithing;Lnet/minecraft/class_9697;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_60002(Lnet/minecraft/class_9697;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_60002(Lnet/minecraft/class_9697;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_8062",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleSmithing",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleSmithing(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleSmithing;Lnet/minecraft/class_9697;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_17702(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17702(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1848",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_17705(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17705(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1850",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_17708(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17708(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1851",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_17712(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17712(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1853",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_17710(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17710(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1854",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_17731(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17731(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1872",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_20807(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_20807(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_4317",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  },
+  {
+   "old": "method_49187(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_49187(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_8164",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped assemble's registries: a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access), as for Recipe.assemble"
+  }
+ ]
+}
