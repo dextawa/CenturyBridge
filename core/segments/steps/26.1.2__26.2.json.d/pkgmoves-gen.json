@@ -197,6 +197,7 @@
   "net/minecraft/client/renderer/rendertype/RenderSetup$TextureAndSampler": "net/minecraft/client/renderer/rendertype/PreparedRenderType$Texture",
   "net/minecraft/commands/arguments/ColorArgument": "net/minecraft/commands/arguments/TeamColorArgument",
   "net/minecraft/util/CubicSpline$1Point": "net/minecraft/util/CubicSpline$Multipoint$Point",
+  "net/minecraft/world/effect/InstantenousMobEffect": "net/minecraft/world/effect/InstantaneousMobEffect",
   "net/minecraft/world/entity/animal/Bucketable": "net/minecraft/world/entity/Bucketable",
   "net/minecraft/world/entity/monster/MagmaCube": "net/minecraft/world/entity/monster/cubemob/MagmaCube",
   "net/minecraft/world/entity/monster/Slime": "net/minecraft/world/entity/monster/cubemob/Slime",
@@ -536,7 +537,7 @@
    "renamed": [
     "textureFormat()Lcom/mojang/blaze3d/textures/TextureFormat; -> gpuFormat"
    ],
-   "basis": "members 5.0/6 vs 6 (dice 0.83, 2nd 0.60), body votes 0/0"
+   "basis": "members 5.0/6 vs 6 (dice 0.83, 2nd 0.50), body votes 0/0"
   },
   "com/mojang/blaze3d/platform/ScreenManager": {
    "to": "com/mojang/blaze3d/platform/MonitorManager",
@@ -748,7 +749,7 @@
   "net/minecraft/advancements/criterion/ContextAwarePredicate": {
    "to": "net/minecraft/advancements/predicates/ContextAwarePredicate",
    "kept": 5,
-   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.09), body votes 0/0"
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.14), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/CuredZombieVillagerTrigger": {
    "to": "net/minecraft/advancements/triggers/CuredZombieVillagerTrigger",
@@ -1038,7 +1039,7 @@
   "net/minecraft/advancements/criterion/ItemPredicate": {
    "to": "net/minecraft/advancements/predicates/ItemPredicate",
    "kept": 9,
-   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.30), body votes 6/7"
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.11), body votes 6/7"
   },
   "net/minecraft/advancements/criterion/ItemPredicate$Builder": {
    "to": "net/minecraft/advancements/predicates/ItemPredicate$Builder",
@@ -1117,7 +1118,7 @@
   "net/minecraft/advancements/criterion/LocationPredicate": {
    "to": "net/minecraft/advancements/predicates/LocationPredicate",
    "kept": 15,
-   "basis": "members 19.0/19 vs 19 (dice 1.00, 2nd 0.08), body votes 0/0"
+   "basis": "members 19.0/19 vs 19 (dice 1.00, 2nd 0.09), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/LocationPredicate$Builder": {
    "to": "net/minecraft/advancements/predicates/LocationPredicate$Builder",
@@ -1571,7 +1572,7 @@
   "net/minecraft/client/renderer/SubmitNodeStorage$LeashSubmit": {
    "to": "net/minecraft/client/renderer/feature/LeashFeatureRenderer$Submit",
    "kept": 6,
-   "basis": "members 4.0/4 vs 5 (dice 0.89, 2nd 0.22), body votes 0/0"
+   "basis": "members 4.0/4 vs 5 (dice 0.89, 2nd 0.25), body votes 0/0"
   },
   "net/minecraft/client/renderer/SubmitNodeStorage$ModelSubmit": {
    "to": "net/minecraft/client/renderer/feature/ModelFeatureRenderer$Submit",
@@ -1635,6 +1636,14 @@
    "kept": 7,
    "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.25), body votes 0/0"
   },
+  "net/minecraft/world/effect/InstantenousMobEffect": {
+   "to": "net/minecraft/world/effect/InstantaneousMobEffect",
+   "kept": 2,
+   "missing": [
+    "isInstantenous()Z"
+   ],
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
   "net/minecraft/world/entity/animal/Bucketable": {
    "to": "net/minecraft/world/entity/Bucketable",
    "kept": 9,
@@ -1680,7 +1689,7 @@
    "missing": [
     "<init>(Lnet/minecraft/world/entity/monster/Slime;)V"
    ],
-   "basis": "members 6.0/7 vs 6 (dice 0.92, 2nd 0.20), body votes 0/0"
+   "basis": "members 6.0/7 vs 6 (dice 0.92, 2nd 0.50), body votes 0/0"
   },
   "net/minecraft/world/entity/monster/Slime$SlimeRandomDirectionGoal": {
    "to": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobRandomDirectionGoal",
@@ -1693,7 +1702,7 @@
   "net/minecraft/world/level/block/state/properties/DripstoneThickness": {
    "to": "net/minecraft/world/level/block/state/properties/SpeleothemThickness",
    "kept": 9,
-   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.31), body votes 0/0"
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.36), body votes 0/0"
   },
   "net/minecraft/world/level/levelgen/DensityFunctions$BlendDensity": {
    "to": "net/minecraft/world/level/levelgen/NoiseChunk$BlendDensity",
