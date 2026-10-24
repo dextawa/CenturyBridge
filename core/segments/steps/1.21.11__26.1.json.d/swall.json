@@ -231,7 +231,8 @@
   "net/minecraft/class_5614$class_5615.comp_4537()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderContexts#itemRenderer",
   "net/minecraft/class_11785.method_73480(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#submitItem",
   "net/minecraft/class_11661$class_11668.comp_4641()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#renderType",
-  "net/minecraft/class_10444.method_65603(Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#pickParticleIcon"
+  "net/minecraft/class_10444.method_65603(Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#pickParticleIcon",
+  "net/minecraft/class_846.method_22752(Lnet/minecraft/class_638;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallChunks#setLevel"
  },
  "overrideHooks": [
   {
@@ -728,6 +729,20 @@
    "onlyUnder": "net/minecraft/class_11689",
    "superCalls": "rename",
    "basis": "1.21.11's NameTagFeatureRenderer.render drew all its submits; 26.1 draws them all in renderTranslucent (it has no solid half), same arguments"
+  },
+  {
+   "old": "method_22761()V",
+   "new": "uploadGlobalGeomBuffersToGPU",
+   "onlyUnder": "net/minecraft/class_846",
+   "superCalls": "rename",
+   "basis": "1.21.11's SectionRenderDispatcher.uploadAllPendingUploads (the compiled sections' buffers to the GPU, called by LevelRenderer before drawing sections) is 26.1's uploadGlobalGeomBuffersToGPU, called at the same point of LevelRenderer"
+  },
+  {
+   "old": "method_38722()Ljava/lang/String;",
+   "new": "currentDeviceName",
+   "onlyUnder": "net/minecraft/class_4225",
+   "superCalls": "rename",
+   "basis": "1.21.11's Library.getCurrentDeviceName (the opened device's OpenAL specifier) is 26.1's currentDeviceName, the same specifier queried when the device is opened"
   }
  ],
  "classRenames": {
@@ -1233,7 +1248,8 @@
   "com/mojang/blaze3d/vertex/VertexFormatElement.register(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;I)Lcom/mojang/blaze3d/vertex/VertexFormatElement;": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#register",
   "net/minecraft/class_957.method_23190(Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#submitWhiteSolidBlock",
   "net/minecraft/class_823.method_23802(Lnet/minecraft/class_11701;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_3879;Ljava/lang/Object;Lnet/minecraft/class_4730;ZLnet/minecraft/class_1767;Lnet/minecraft/class_9307;ZLnet/minecraft/class_11683$class_11792;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockEntitySubmits#submitPatterns",
-  "net/minecraft/class_836.method_72958(Lnet/minecraft/class_2350;FFLnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_5598;Lnet/minecraft/class_1921;ILnet/minecraft/class_11683$class_11792;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockEntitySubmits#submitSkull"
+  "net/minecraft/class_836.method_72958(Lnet/minecraft/class_2350;FFLnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_5598;Lnet/minecraft/class_1921;ILnet/minecraft/class_11683$class_11792;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockEntitySubmits#submitSkull",
+  "net/minecraft/class_4225.method_38500()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallAudio#getDefaultDeviceName"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -2027,6 +2043,29 @@
     "keep:5"
    ],
    "basis": "26.1's LevelRenderer takes the game render state around the level state: the game's own for the game's level state, otherwise one holding the given level state beside the game's other states (CbWallRenderStates)"
+  },
+  "net/minecraft/class_846.<init>(Lnet/minecraft/class_638;Lnet/minecraft/class_761;Lnet/minecraft/class_10207;Lnet/minecraft/class_4599;Lnet/minecraft/class_776;Lnet/minecraft/class_824;)V": {
+   "desc": "(Lnet/minecraft/class_638;Lnet/minecraft/class_761;Lnet/minecraft/class_10207;Lnet/minecraft/class_4599;Lnet/minecraft/class_9810;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4,5 top/dext/centurybridge/step/v26_1/rt/CbWallChunks#sectionCompiler(Lnet/minecraft/class_776;Lnet/minecraft/class_824;)Lnet/minecraft/class_9810;"
+   ],
+   "basis": "1.21.11's SectionRenderDispatcher built its SectionCompiler from the two dispatchers; 26.1's takes one, built as 26.1's LevelRenderer builds it (CbWallChunks)"
+  },
+  "net/minecraft/class_9810.<init>(Lnet/minecraft/class_776;Lnet/minecraft/class_824;)V": {
+   "desc": "(ZZLnet/minecraft/client/renderer/block/BlockStateModelSet;Lnet/minecraft/client/renderer/block/FluidStateModelSet;Lnet/minecraft/class_324;Lnet/minecraft/class_824;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallChunks#ambientOcclusion()Z",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallChunks#cutoutLeaves()Z",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunks#blockStateModels(Lnet/minecraft/class_776;)Lnet/minecraft/client/renderer/block/BlockStateModelSet;",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunks#fluidStateModels(Lnet/minecraft/class_776;)Lnet/minecraft/client/renderer/block/FluidStateModelSet;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallChunks#blockColors()Lnet/minecraft/class_324;",
+    "keep:1"
+   ],
+   "basis": "26.1's SectionCompiler takes the block / fluid model sets (the given dispatcher's model manager), the game's block colours and the ambient occlusion / cutout leaves options' values, which 1.21.11's read while compiling (CbWallChunks)"
   }
  },
  "fieldGetters": {
@@ -2101,7 +2140,9 @@
   "net/minecraft/class_5602.field_63560:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#undeadHorseBabyArmor",
   "net/minecraft/class_5602.field_53005:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#wolfBabyArmor",
   "net/minecraft/class_5602.field_56090:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#zombieHorseBabySaddle",
-  "net/minecraft/class_3988.field_30599:I": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#villagerSlotOffset"
+  "net/minecraft/class_3988.field_30599:I": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#villagerSlotOffset",
+  "net/minecraft/class_11515.field_60927:Lnet/minecraft/class_11515;": "top/dext/centurybridge/step/v26_1/rt/CbWallChunks#tripwireLayer",
+  "net/minecraft/class_11531.field_61024:Lnet/minecraft/class_11531;": "top/dext/centurybridge/step/v26_1/rt/CbWallChunks#tripwireGroup"
  },
  "abstractFills": [
   {
@@ -2286,7 +2327,10 @@
   "net/minecraft/class_957.method_4137(Lnet/minecraft/class_10046;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V",
   "net/minecraft/class_10444$class_10446.method_67992(Lnet/minecraft/class_1921;)V",
   "net/minecraft/class_10444$class_10446.method_67994(Lnet/minecraft/class_1058;)V",
-  "net/minecraft/class_10444$class_10446.method_65613(I)[I"
+  "net/minecraft/class_10444$class_10446.method_65613(I)[I",
+  "net/minecraft/class_4225.method_19661(Ljava/lang/String;Z)V",
+  "net/minecraft/class_4225.method_38723()Z",
+  "net/minecraft/class_4225.method_38502()Ljava/util/List;"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -2504,6 +2548,14 @@
     "keep"
    ],
    "basis": "26.1 Font.drawInBatch takes the pose as a Matrix4fc, which a 1.21.11 Matrix4f is (CbWallClientRecords)"
+  },
+  "net/minecraft/class_6850.method_39969(Lnet/minecraft/class_1937;J)Lnet/minecraft/class_853;": {
+   "desc": "(Lnet/minecraft/class_638;J)Lnet/minecraft/class_853;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunks#clientLevel(Lnet/minecraft/class_1937;)Lnet/minecraft/class_638;",
+    "keep:1"
+   ],
+   "basis": "26.1's RenderRegionCache builds regions of a client level (section rendering runs on one only)"
   }
  },
  "instanceFieldGetters": {
@@ -2957,7 +3009,9 @@
  "methodRenames": {
   "net/minecraft/class_11691.method_73017(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V": "renderTranslucent",
   "net/minecraft/class_11690.method_73015(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V": "renderTranslucent",
-  "net/minecraft/class_11689.method_73014(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_327;)V": "renderTranslucent"
+  "net/minecraft/class_11689.method_73014(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_327;)V": "renderTranslucent",
+  "net/minecraft/class_846.method_22761()V": "uploadGlobalGeomBuffersToGPU",
+  "net/minecraft/class_4225.method_38722()Ljava/lang/String;": "currentDeviceName"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#setDisplayBlockState"

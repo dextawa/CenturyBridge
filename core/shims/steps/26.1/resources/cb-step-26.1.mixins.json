@@ -131,7 +131,8 @@
     "CbWallScreenEffectMixin",
     "CbWallMinecartContentsMixin",
     "CbWallTntMinecartContentsMixin",
-    "CbWallItemLayerMixin"
+    "CbWallItemLayerMixin",
+    "CbWallAudioLibraryMixin"
   ],
   "server": [],
   "injectors": {

@@ -191,3 +191,5 @@ mutable	field	net/minecraft/client/renderer/state/GameRenderState	lightmapRender
 mutable	field	net/minecraft/client/renderer/state/GameRenderState	guiRenderState	Lnet/minecraft/client/renderer/state/gui/GuiRenderState;
 mutable	field	net/minecraft/client/renderer/state/GameRenderState	optionsRenderState	Lnet/minecraft/client/renderer/state/OptionsRenderState;
 mutable	field	net/minecraft/client/renderer/state/GameRenderState	windowRenderState	Lnet/minecraft/client/renderer/state/WindowRenderState;
+# 1.21.11 SectionRenderDispatcher.setLevel(level) keeps the dispatcher's compiler (swall, rt/CbWallChunks)
+accessible	field	net/minecraft/client/renderer/chunk/SectionRenderDispatcher	sectionCompiler	Lnet/minecraft/client/renderer/chunk/SectionCompiler;
