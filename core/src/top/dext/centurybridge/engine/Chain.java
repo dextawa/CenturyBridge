@@ -78,6 +78,15 @@ public final class Chain {
      * tint sources...): converted resources may name them only where the runtime has them
      */
     public final java.util.Set<String> resourceTypes = new java.util.HashSet<>();
+    /**
+     * "&lt;registry&gt; minecraft:&lt;tag&gt;" -&gt; {"to": id, "mirror": bool}: a vanilla tag whose members the step's W
+     * changed under the same id, and the tag the step layer ships with V's members (core/tools/gen_tag_compat.py).
+     * A converted mod's data naming the vanilla tag names that one instead; with mirror, the mod's own file for the
+     * vanilla tag is copied into it too (engine/res/LegacyTags).
+     */
+    public final java.util.Map<String, String> tagMap = new java.util.HashMap<>();
+    /** the tagMap keys with "mirror" */
+    public final java.util.Set<String> tagMirror = new java.util.HashSet<>();
     /** dead vanilla classes renamed to facade classes shipped in the runtime bridge */
     public final java.util.Map<String, String> classRenames = new java.util.HashMap<>();
     /**
@@ -1900,6 +1909,8 @@ public final class Chain {
      */
     public final java.util.Map<String, String> libSuperOf = new java.util.HashMap<>();
     public final java.util.Map<String, java.util.List<String>> libInterfacesOf = new java.util.HashMap<>();
+    /** the methods ("name(desc)") each library class of {@link #libSuperOf} declares */
+    public final java.util.Map<String, java.util.Set<String>> libDecls = new java.util.HashMap<>();
 
     /**
      * Read the class headers of a release's Fabric API modules (its processedMods: the jars the loader
@@ -1930,6 +1941,18 @@ public final class Chain {
                     String[] itfs = cr.getInterfaces();
                     if (itfs.length > 0) {
                         libInterfacesOf.putIfAbsent(name, java.util.List.of(itfs));
+                    }
+                    if (!libDecls.containsKey(name)) {
+                        java.util.Set<String> decls = new java.util.HashSet<>();
+                        cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                            @Override
+                            public org.objectweb.asm.MethodVisitor visitMethod(int acc, String mn, String md, String sg, String[] ex) {
+                                decls.add(mn + md);
+                                return null;
+                            }
+                        }, org.objectweb.asm.ClassReader.SKIP_CODE | org.objectweb.asm.ClassReader.SKIP_DEBUG
+                            | org.objectweb.asm.ClassReader.SKIP_FRAMES);
+                        libDecls.put(name, decls);
                     }
                 }
             }
@@ -2212,6 +2235,15 @@ public final class Chain {
             if (root.has("resourceTypes")) {
                 for (var t : root.getAsJsonArray("resourceTypes")) {
                     c.resourceTypes.add(t.getAsString());
+                }
+            }
+            if (root.has("tagMap")) {
+                for (var tm : root.getAsJsonObject("tagMap").entrySet()) {
+                    var v = tm.getValue().getAsJsonObject();
+                    c.tagMap.put(tm.getKey(), v.get("to").getAsString());
+                    if (v.has("mirror") && v.get("mirror").getAsBoolean()) {
+                        c.tagMirror.add(tm.getKey());
+                    }
                 }
             }
             if (root.has("fieldGetters")) {

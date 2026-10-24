@@ -181,9 +181,40 @@ public final class CbItemFapi {
 
     // ---- biome modification carvers ----
 
+    /**
+     * a 1.21.1 GenerationSettingsContext implementation: its addCarver / removeCarver(step, carver) (adapterHooks; the
+     * mod's own methods implement this). 0.106 calls the step-less shapes, synthesized to {@link #addCarverAir} and
+     * {@link #removeCarverAll}.
+     */
+    public interface LegacyCarvers {
+        void addCarver(GenerationStepCarving step, class_5321<class_2922<?>> carver);
+
+        boolean removeCarver(GenerationStepCarving step, class_5321<class_2922<?>> carver);
+    }
+
+    /** 0.106's addCarver(carver) on a 1.21.1 implementation: its air step, 1.21.2's one step */
+    public static void addCarverAir(LegacyCarvers context, class_5321<class_2922<?>> carver) {
+        context.addCarver(GenerationStepCarving.AIR, carver);
+    }
+
+    /** 0.106's removeCarver(carver) on a 1.21.1 implementation: 0.116's default -- removed from every step */
+    public static boolean removeCarverAll(LegacyCarvers context, class_5321<class_2922<?>> carver) {
+        boolean any = false;
+        for (GenerationStepCarving step : GenerationStepCarving.values()) {
+            if (context.removeCarver(step, carver)) {
+                any = true;
+            }
+        }
+        return any;
+    }
+
     /** context.addCarver(step, carver) */
     public static void addCarver(BiomeModificationContext.GenerationSettingsContext context, GenerationStepCarving step,
             class_5321<class_2922<?>> carver) {
+        if (context instanceof LegacyCarvers legacy) {
+            legacy.addCarver(step, carver);
+            return;
+        }
         if (step == GenerationStepCarving.AIR) {
             context.addCarver(carver);
             return;
@@ -201,6 +232,9 @@ public final class CbItemFapi {
     /** context.removeCarver(step, carver): whether the step had it */
     public static boolean removeCarver(BiomeModificationContext.GenerationSettingsContext context, GenerationStepCarving step,
             class_5321<class_2922<?>> carver) {
+        if (context instanceof LegacyCarvers legacy) {
+            return legacy.removeCarver(step, carver);
+        }
         if (step == GenerationStepCarving.AIR) {
             return context.removeCarver(carver);
         }

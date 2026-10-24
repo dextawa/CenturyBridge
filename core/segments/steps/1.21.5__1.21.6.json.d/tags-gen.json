@@ -1,0 +1,12 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3481.field_56419:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_6/rt/CbTagCompat#BlockTags_field_56419",
+  "net/minecraft/class_3489.field_49938:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_6/rt/CbTagCompat#ItemTags_field_49938"
+ },
+ "tagMap": {
+  "item minecraft:horse_food": {
+   "to": "centurybridge:compat/1_21_5/horse_food",
+   "mirror": true
+  }
+ }
+}

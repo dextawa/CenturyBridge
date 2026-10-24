@@ -1,0 +1,17 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3483.field_56243:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_11/rt/CbTagCompat#EntityTypeTags_field_56243",
+  "net/minecraft/class_3489.field_48304:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_11/rt/CbTagCompat#ItemTags_field_48304",
+  "net/minecraft/class_6908.field_37377:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_11/rt/CbTagCompat#BiomeTags_field_37377",
+  "net/minecraft/class_6908.field_37378:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_11/rt/CbTagCompat#BiomeTags_field_37378",
+  "net/minecraft/class_6908.field_37382:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_11/rt/CbTagCompat#BiomeTags_field_37382",
+  "net/minecraft/class_6908.field_41752:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_11/rt/CbTagCompat#BiomeTags_field_41752",
+  "net/minecraft/class_6908.field_41753:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_11/rt/CbTagCompat#BiomeTags_field_41753"
+ },
+ "tagMap": {
+  "entity_type minecraft:can_wear_horse_armor": {
+   "to": "centurybridge:compat/1_21_10/can_wear_horse_armor",
+   "mirror": true
+  }
+ }
+}

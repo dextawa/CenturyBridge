@@ -175,27 +175,36 @@ public class GearTestMod implements ModInitializer {
         t.start();
     }
 
-    static void run(MinecraftServer server) {
+    interface Section {
+        void run() throws Exception;
+    }
+
+    /** each section on its own: one failing does not hide the others */
+    static void section(String name, Section s) {
         try {
-            armor(server);
-            tools();
-            food(server);
-            ingredients();
-            types();
-            recipes(server);
-            recipeClasses(server);
-            serializers(server);
-            cookingBytes(server);
-            recipeManager(server);
-            menus(server);
-            combiners(server);
-            world(server);
-            fapi(server);
-            datagen(server);
+            s.run();
         } catch (Throwable e) {
             e.printStackTrace();
-            check(false, "no exception: " + e);
+            check(false, name + ": no exception: " + e);
         }
+    }
+
+    static void run(MinecraftServer server) {
+        section("armor", () -> armor(server));
+        section("tools", GearTestMod::tools);
+        section("food", () -> food(server));
+        section("ingredients", GearTestMod::ingredients);
+        section("types", GearTestMod::types);
+        section("recipes", () -> recipes(server));
+        section("recipeClasses", () -> recipeClasses(server));
+        section("serializers", () -> serializers(server));
+        section("cookingBytes", () -> cookingBytes(server));
+        section("recipeManager", () -> recipeManager(server));
+        section("menus", () -> menus(server));
+        section("combiners", () -> combiners(server));
+        section("world", () -> world(server));
+        section("fapi", () -> fapi(server));
+        section("datagen", () -> datagen(server));
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -842,6 +851,82 @@ public class GearTestMod implements ModInitializer {
         check(written.keySet().stream().anyMatch(p -> p.toString().replace(java.io.File.separatorChar, '/').contains("advancement/recipes/")),
             "the recipes' advancements were written");
         check("Recipes".equals(provider.method_10321()), "RecipeProvider.getName()");
+        fabricDatagen(server);
+    }
+
+    /** Fabric API 0.116's FabricRecipeProvider: buildRecipes, its namespace and conditions */
+    public static class TestFabricRecipes extends net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider {
+        public TestFabricRecipes(net.fabricmc.fabric.api.datagen.v1.FabricDataOutput output,
+                java.util.concurrent.CompletableFuture<net.minecraft.class_7225.class_7874> registries) {
+            super(output, registries);
+        }
+
+        @Override
+        public void method_10419(net.minecraft.class_8790 exporter) {
+            net.minecraft.class_2447.method_10436(net.minecraft.class_7800.field_40642, class_1802.field_8600, 2)
+                .method_10434('#', class_1802.field_8118).method_10439("#")
+                .method_10429("has_planks", method_10426(class_1802.field_8118))
+                .method_17972(exporter, class_2960.method_60656("cbfab_sticks"));
+            net.minecraft.class_2450.method_10447(net.minecraft.class_7800.field_40642, class_1802.field_8600)
+                .method_10454(class_1802.field_8118)
+                .method_10442("has_planks", method_10426(class_1802.field_8118))
+                .method_17972(withConditions(exporter, net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions.alwaysTrue()),
+                    class_2960.method_60656("cbfab_cond"));
+        }
+    }
+
+    static class_6862<class_1792> itemTag(String path) {
+        return class_6862.method_40092(net.minecraft.class_7924.field_41197, class_2960.method_60655("cb_s7gear", path));
+    }
+
+    static class_1792 item(String path) {
+        return class_7923.field_41178.method_10223(class_2960.method_60656(path));
+    }
+
+    /** Fabric API 0.116's FabricTagBuilder removal and FabricProvidedTagBuilder */
+    public static class TestFabricTags extends net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.ItemTagProvider {
+        public TestFabricTags(net.fabricmc.fabric.api.datagen.v1.FabricDataOutput output,
+                java.util.concurrent.CompletableFuture<net.minecraft.class_7225.class_7874> registries) {
+            super(output, registries);
+        }
+
+        @Override
+        protected void method_10514(net.minecraft.class_7225.class_7874 lookup) {
+            getOrCreateTagBuilder(itemTag("removing")).add(item("dirt")).remove(item("stone"))
+                .removeTag(class_6862.method_40092(net.minecraft.class_7924.field_41197, class_2960.method_60656("logs")));
+            net.fabricmc.fabric.api.datagen.v1.provider.FabricProvidedTagBuilder<class_1792> provided = getOrCreateTagBuilder(itemTag("provided"));
+            provided.setReplace(true).removeAll(java.util.List.of(
+                net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41197, class_2960.method_60656("gravel"))));
+        }
+    }
+
+    static void fabricDatagen(MinecraftServer server) throws Exception {
+        java.nio.file.Path dir = java.nio.file.Files.createTempDirectory("cbs7gear-fabricdatagen");
+        java.util.Map<String, String> written = new java.util.concurrent.ConcurrentHashMap<>();
+        net.minecraft.class_7403 cache = (path, bytes, hash) ->
+            written.put(dir.relativize(path).toString().replace(java.io.File.separatorChar, '/'), new String(bytes));
+        net.fabricmc.fabric.api.datagen.v1.FabricDataOutput out = new net.fabricmc.fabric.api.datagen.v1.FabricDataOutput(
+            FabricLoader.getInstance().getModContainer("cb_s7gear").orElseThrow(), dir, false);
+        java.util.concurrent.CompletableFuture<net.minecraft.class_7225.class_7874> registries =
+            java.util.concurrent.CompletableFuture.completedFuture(server.method_30611());
+        TestFabricRecipes recipes = new TestFabricRecipes(out, registries);
+        recipes.method_10319(cache).join();
+        check(written.containsKey("data/cb_s7gear/recipe/cbfab_sticks.json"),
+            "FabricRecipeProvider saved under the mod's namespace (getRecipeIdentifier): " + written.keySet());
+        check(written.containsKey("data/cb_s7gear/advancement/recipes/misc/cbfab_sticks.json"),
+            "its advancement under the mod's namespace");
+        String cond = written.getOrDefault("data/cb_s7gear/recipe/cbfab_cond.json", "");
+        check(cond.contains("fabric:load_conditions") && cond.contains("fabric:true"),
+            "withConditions: the recipe carries its load conditions, in the mod's namespace: " + cond);
+        check("Recipes".equals(recipes.method_10321()), "FabricRecipeProvider.getName()");
+        written.clear();
+        new TestFabricTags(out, registries).method_10319(cache).join();
+        String removing = written.getOrDefault("data/cb_s7gear/tags/item/removing.json", "");
+        check(removing.contains("fabric:remove") && removing.contains("minecraft:stone") && removing.contains("#minecraft:logs")
+            && removing.contains("minecraft:dirt"), "FabricTagBuilder.remove / removeTag wrote fabric:remove: " + removing + " " + written.keySet());
+        String provided = written.getOrDefault("data/cb_s7gear/tags/item/provided.json", "");
+        check(provided.contains("\"replace\": true") && provided.contains("minecraft:gravel"),
+            "FabricProvidedTagBuilder.setReplace / removeAll: " + provided);
     }
 
 }

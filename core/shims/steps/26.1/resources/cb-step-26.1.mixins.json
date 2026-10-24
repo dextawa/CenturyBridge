@@ -108,6 +108,7 @@
     "CbWallInteractGameModeMixin",
     "CbWallItemFeatureRendererAccess",
     "CbWallItemStackRenderStateMixin",
+    "CbWallLayerDefinitionsMixin",
     "CbWallMinecraftAccess",
     "CbWallMinecraftMixin",
     "CbWallModelBlockRendererAccess",

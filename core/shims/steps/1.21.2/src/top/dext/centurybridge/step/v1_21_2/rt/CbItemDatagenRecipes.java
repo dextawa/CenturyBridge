@@ -139,6 +139,30 @@ public class CbItemDatagenRecipes extends net.minecraft.class_2446 {
         return java.util.concurrent.CompletableFuture.allOf(writes.toArray(java.util.concurrent.CompletableFuture[]::new));
     }
 
+    /**
+     * A 1.21.2 RecipeProvider whose buildRecipes is a 1.21.1 one (Fabric API 0.106's createRecipeProvider of a 0.116
+     * FabricRecipeProvider): the 1.21.1 body runs on the output with this provider answering the static helpers
+     */
+    public static net.minecraft.class_2446 delegating(class_7225.class_7874 registries, class_8790 output,
+            java.util.function.Consumer<class_8790> buildRecipes) {
+        return new CbItemDatagenRecipes(registries, output) {
+            @Override
+            public void method_10419() {
+                CbItemDatagenRecipes before = CURRENT.get();
+                CURRENT.set(this);
+                try {
+                    buildRecipes.accept(output);
+                } finally {
+                    if (before != null) {
+                        CURRENT.set(before);
+                    } else {
+                        CURRENT.remove();
+                    }
+                }
+            }
+        };
+    }
+
     /** 1.21.1 VanillaRecipeProvider.buildRecipes(output): a 1.21.2 VanillaRecipeProvider bound to the output builds them */
     public static void vanillaRecipes(class_8790 output) {
         new net.minecraft.class_7803(runningRegistries(), output).method_10419();

@@ -34,14 +34,6 @@ public final class CbRestConstants {
     private CbRestConstants() {
     }
 
-    /** BlockTags.TALL_FLOWERS */
-    public static final class_6862<class_2248> field_20338 = class_6862.method_40092(class_7924.field_41254, class_2960.method_60656("tall_flowers"));
-    /** ItemTags.TALL_FLOWERS */
-    public static final class_6862<class_1792> field_20343 = class_6862.method_40092(class_7924.field_41197, class_2960.method_60656("tall_flowers"));
-    /** ItemTags.FLOWERS */
-    public static final class_6862<class_1792> field_20344 = class_6862.method_40092(class_7924.field_41197, class_2960.method_60656("flowers"));
-    /** ItemTags.TRIM_TEMPLATES */
-    public static final class_6862<class_1792> field_41892 = class_6862.method_40092(class_7924.field_41197, class_2960.method_60656("trim_templates"));
     /** InventoryMenu.BLOCK_ATLAS */
     public static final class_2960 field_21668 = class_2960.method_60656("textures/atlas/blocks.png");
     /** AbstractFurnaceBlockEntity.UNKNOWN_LIT_DURATION */

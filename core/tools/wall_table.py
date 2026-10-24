@@ -30,7 +30,22 @@ This decides, from bytecode only, where each 1.21.11 class and member lives in t
            is listed (member-collision-ambiguous), never guessed. Every collision is in the report.
            A static constant whose name is gone maps to the one static field of the same erased type
            and generic signature naming the class (26.1's loot entries and functions: MapCodec<LootItem>
-           CODEC -> MAP_CODEC), when it is the one such constant on both sides.
+           CODEC -> MAP_CODEC), when it is the one such constant on both sides; or to the one target
+           constant no V field answers by name that is computed by the very same initializer, string
+           constants included, the pair unique both ways (EnderDragonRenderer.DRAGON_LOCATION ->
+           DRAGON_TEXTURE_LOCATION, Identifier "textures/entity/enderdragon/dragon.png" in both).
+           Fields are also found by their uses: a body that kept its name (and descriptor) names them
+           -- when it is the same code with one reference matched as it is (the member around it is
+           decided by its name: UniformFloat.sample reads min and max around Mth.randomBetween), and
+           when it is not, where a stretch of it is the same code around an instance field's use:
+           growing outward from the use, the stretch between its first and last anchor holds two
+           references or constants matched as they are, one of them a constant or a game member, and
+           reads that way only once in each body (LecternRenderer's constructor stores
+           Context.sprites() into sprites where 1.21.11 stored it into materials; 26.1's
+           CustomFeatureRenderer$Storage clears a solid and a translucent map alike, so 1.21.11's one
+           map is neither). These field votes need the same generic signature on both sides; a target
+           field two V fields of one class would take goes to neither (EnderDragonRenderer RENDER_TYPE
+           and DECAL vs one DYING_RENDER_TYPE).
 
 Matching is a fixed point: a class found moved makes descriptors comparable, which finds members, whose
 bodies vote for more classes. Undecided candidates are listed in the report, never emitted.
@@ -286,6 +301,153 @@ class Table:
                 anchors += 1
         self.last_anchors = anchors
         return True, votes
+
+    # ---------------------------------------------------------------- uses in aligned code
+    def reached(self, w):
+        """the field names of target class w some V field answers to by its own (translated) name"""
+        c = self.claimed.get(w)
+        if c is None or c not in self.V:
+            return frozenset()
+        return frozenset(self.mname(c, x.name) for x in self.V[c].fields)
+
+    def free_field(self, a):
+        """a V field reference whose (translated) name its target owner does not declare"""
+        _, kind, owner, name, desc = a
+        if kind != "F" or owner not in self.V or not (self.identity or TOKEN.match(name)):
+            return False
+        tow = self.tcls(owner)
+        return not isinstance(tow, Wild) and not self.w_has(tow, "F", self.mname(owner, name), self.tdesc(desc), [])
+
+    def tdesc_str(self, d):
+        """a descriptor translated, or a token that equals nothing in the target while a class is undecided"""
+        out = []
+        for t in self.tdesc(d):
+            if isinstance(t, str):
+                out.append(t)
+            elif isinstance(t[1], Wild):
+                return ("wild", d)
+            else:
+                out.append("L" + t[1] + ";")
+        return "".join(out)
+
+    def akey(self, op, a, side, reached):
+        """an instruction as a comparable key, V's translated into the target's names; a member name
+        neither side answers by name is a wildcard (what the aligned code then says it is)"""
+        if not isinstance(a, tuple) or not a:
+            return (op, a)
+        t = a[0]
+        if t == "ref":
+            _, kind, owner, name, desc = a
+            if side == "V":
+                tow = self.tcls(owner)
+                if kind == "F" and self.free_field(a):
+                    name = "?"
+                else:
+                    name = self.mname(owner, name)
+                return (op, kind, tow, name, self.tdesc_str(desc))
+            if kind == "F" and name not in reached(owner):
+                name = "?"
+            return (op, kind, owner, name, desc)
+        if t == "class":
+            return (op, "class", self.tcls(a[1]) if side == "V" else a[1])
+        if t in ("str", "int", "float", "long", "double"):
+            return (op, a)
+        return (op, "opaque")
+
+    def aligned_field_votes(self, c, m, x):
+        """fields V's body m uses where the target's body x of the same member uses another field, in a
+        stretch of code that is otherwise the same (each instruction equal once names are translated)
+        with at least two references or constants in it that matched as they are. A body reworked around
+        a field still uses it in the same surroundings (26.1 LecternRenderer's constructor stores
+        Context.sprites() into sprites where 1.21.11 stored the same call's answer into materials).
+        -> [("F", V owner, V name, W name, anchors, why)]"""
+        if m.insns is None or x.insns is None:
+            return []
+        if not any(op in (0xb4, 0xb5) and self.free_field(a) for op, a in m.insns):
+            return []
+        cache = {}
+
+        def reached(o):
+            if o not in cache:
+                cache[o] = self.reached(o)
+            return cache[o]
+        vk = [self.akey(op, a, "V", reached) for op, a in m.insns]
+        wk = [self.akey(op, a, "W", reached) for op, a in x.insns]
+        sm = difflib.SequenceMatcher(None, vk, wk, autojunk=False)
+
+        def loose(k):
+            # local slots aside: a second copy of a stretch keeps its values in other locals
+            op = k[0]
+            if 0x15 <= op <= 0x2d:
+                return "load"
+            if 0x36 <= op <= 0x4e:
+                return "store"
+            if op == 0x84:
+                return "iinc"
+            return k
+        vl, wl = [loose(k) for k in vk], [loose(k) for k in wk]
+
+        def once(keys, s, n):
+            """the stretch keys[s:s+n] reads that way nowhere else in its body"""
+            pat = keys[s:s + n]
+            return not any(keys[q:q + n] == pat for q in range(len(keys) - n + 1) if q != s)
+        out = []
+        for i, j, n in sm.get_matching_blocks():
+            # per instruction of the block: matched?, its votes, anchor (matched as it is), telling anchor
+            # (a constant, or a game member or class: "new HashMap()" is every map's)
+            st = []
+            for t in range(n):
+                (op, a), (wop, wa) = m.insns[i + t], x.insns[j + t]
+                v = []
+                ok = op == wop and self.norm_operand(a, v, wa)
+                anc = ok and not v and (isinstance(a, tuple) or op == 0x12)
+                tel = anc and (op == 0x12 or (a[0] == "ref" and a[2] in self.V) or (a[0] == "class" and a[1] in self.V))
+                st.append((ok, v, anc, tel, op))
+            t = 0
+            while t < n:
+                if not st[t][0]:
+                    t += 1
+                    continue
+                s = t
+                while t < n and st[t][0]:
+                    t += 1
+                run = range(s, t)
+                if any(e[0] == "C" for q in run for e in st[q][1]):
+                    continue  # the stretch is the same code only by assuming a class move
+                for p in run:
+                    if st[p][4] not in (0xb4, 0xb5):
+                        continue
+                    for e in st[p][1]:
+                        if e[0] != "F" or not self.same_field_type(e[1], e[2], e[4]):
+                            continue
+                        # the use is pinned by the code around it: growing outward from it, the stretch from
+                        # its first to its last anchor holds two anchors, one of them telling, and reads that
+                        # way only once in each body (26.1's CustomFeatureRenderer$Storage clears its solid
+                        # and its translucent map alike: 1.21.11's one map is neither; 1.21.11's
+                        # SheepWoolUndercoatLayer bakes two models alike, told apart by the layer it bakes)
+                        lo = hi = p
+                        found = False
+                        while True:
+                            ap = [q for q in range(lo, hi + 1) if st[q][2]]
+                            if len(ap) >= 2 and any(st[q][3] for q in ap):
+                                a0, a1 = min(ap[0], p), max(ap[-1], p)
+                                if once(vl, i + a0, a1 - a0 + 1) and once(wl, j + a0, a1 - a0 + 1):
+                                    found = True
+                                    break
+                            if lo == s and hi == t - 1:
+                                break
+                            lo, hi = max(s, lo - 1), min(t - 1, hi + 1)
+                        if not found:
+                            continue
+                        anc = len(ap)
+                        out.append(("F", e[1], e[2], e[4], anc,
+                                    f"used where the same code uses it ({anc} references matched as they are "
+                                    f"around it, in {c}.{m.name})"))
+        # (Not static fields: a stretch of a list of constants -- a bootstrap fetching
+        # VegetationFeatures.PATCH_* one after another, the tails of RenderPipelines' builder chains --
+        # aligns any slot with any other; a static constant is judged by its own initializer,
+        # same_init_constants.)
+        return out
 
     def tsig(self, s):
         """a generic signature with its V classes translated, or None while one is undecided"""
@@ -587,6 +749,93 @@ class Table:
                                            "more than one target member is the same code as V's body")
         return out
 
+    def kept_body_votes(self, c, m, x):
+        """the renames a V body m implies whose member kept its name on the target as x: when x is the
+        same code, the members it names (two references or more matched as they are; for a field one is
+        enough, the member around it being decided by its name -- 1.21.11 UniformFloat.sample reads the
+        two bounds around one Mth.randomBetween call as 26.1's does, min and max); when it is not, the
+        fields it uses in stretches that are the same code (aligned_field_votes)"""
+        ok, bv = self.same_code(m, x)
+        if not ok:
+            return self.aligned_field_votes(c, m, x)
+        a = self.last_anchors
+        why = "named in a kept body that is the same code"
+        out = [("M" if e[0] == "M" else "F", e[1], e[2], e[4], a, why) for e in bv if e[0] in ("M", "F") and a >= 2]
+        if a == 1:
+            out.extend(("F", e[1], e[2], e[4], a, why + " (one reference matched as it is, its member kept)")
+                       for e in bv if e[0] == "F" and self.same_field_type(e[1], e[2], e[4]))
+        return out
+
+    def same_field_type(self, o, vname, wname):
+        """V field o.vname and its target namesake wname (on o's target class or a supertype) have the same
+        generic signature once V's classes are translated (no signature on either side: the erased types
+        already unified; a signature on one side only, or a V class in it not decided yet, is not shown
+        the same). A field not found on either side says nothing here (True)."""
+        f = next((x for x in self.V[o].fields if x.name == vname), None) if o in self.V else None
+        w = self.cm.get(o)
+        if f is None or w is None:
+            return True
+        y = None
+        for s in self.wsupers(w):
+            k = self.W.get(s)
+            y = next((x for x in k.fields if x.name == wname), None) if k else None
+            if y is not None:
+                break
+        if y is None:
+            return True
+        if not f.signature and not y.signature:
+            return True
+        if not f.signature or not y.signature:
+            return False
+        sig = self.tsig(f.signature)
+        return sig is not None and sig == y.signature
+
+    def same_init_constants(self, c, w):
+        """static constants whose name is gone, computed by the very code (string constants included) that
+        computes one target constant no V field answers by name -- the one such pair both ways, and an
+        initializer that says something (a constant, or a member of a game class: "new ArrayList()" is
+        every list). 26.1's EnderDragonRenderer.DRAGON_TEXTURE_LOCATION is
+        Identifier.withDefaultNamespace("textures/entity/enderdragon/dragon.png"), 1.21.11's DRAGON_LOCATION.
+        -> {V field: (W field, why)}"""
+        vk, wk = self.V[c], self.W[w]
+        if not any(m.name == "<clinit>" for m in wk.methods):
+            return {}
+        reached = self.reached(w)
+
+        def says_something(seg):
+            return any(op == 0x12 or (isinstance(a, tuple) and a and a[0] == "ref" and a[2] in self.V) for op, a in seg)
+        vst = []
+        for f in vk.fields:
+            if not f.access & bytecode.ACC_STATIC or f.access & bytecode.ACC_SYNTHETIC or f.name in self.ren:
+                continue
+            if not (self.identity or TOKEN.match(f.name)):
+                continue
+            if self.w_has(w, "F", self.mname(c, f.name), self.tdesc(f.desc), []):
+                continue
+            seg = self.init_seg("V", c, f.name)
+            if seg and says_something(seg):
+                vst.append(f)
+        if not vst:
+            return {}
+        wst = [y for y in wk.fields if y.access & bytecode.ACC_STATIC and not y.access & bytecode.ACC_SYNTHETIC
+               and y.name not in reached and self.init_seg("W", w, y.name)]
+        pairs = collections.defaultdict(list)
+        for f in vst:
+            dt = self.tdesc(f.desc)
+            for y in wst:
+                if not unify_desc(dt, y.desc, []):
+                    continue
+                if (f.signature or y.signature) and (not f.signature or not y.signature or self.tsig(f.signature) != y.signature):
+                    continue
+                if self.init_diff(c, f.name, w, y.name) == 0:
+                    pairs[f.name].append(y.name)
+        back = collections.Counter(n for ys in pairs.values() for n in ys)
+        out = {}
+        for fname, ys in pairs.items():
+            if len(ys) == 1 and back[ys[0]] == 1:
+                out[fname] = (ys[0], f"the same initializer as {w}.{ys[0]} ({self.mname(c, fname)} gone)")
+        return out
+
     def match_members(self, c, w, commit):
         """members of V class c found on W class w: (score parts, rename votes, class votes)"""
         vk, wk = self.V[c], self.W[w]
@@ -618,11 +867,8 @@ class Table:
                     continue
                 for x in wk.methods:
                     if x.name == m.name and x.insns is not None and unify_desc(self.tdesc(m.desc), x.desc, []):
-                        ok, bv = self.same_code(m, x)
-                        if ok and self.last_anchors >= 2:
-                            renames.extend(("M" if e[0] == "M" else "F", e[1], e[2], e[4], self.last_anchors,
-                                            "named in a kept body that is the same code") for e in bv if e[0] in ("M", "F"))
-                            break
+                        renames.extend(self.kept_body_votes(c, m, x))
+                        break
         for m in vk.methods:
             if m.access & bytecode.ACC_SYNTHETIC or m.name in GENERIC:
                 continue
@@ -649,10 +895,7 @@ class Table:
                 # MapCodec constant MAP_CODEC where 1.21.11 said CODEC, the class initializer that
                 # builds it otherwise unchanged)
                 if commit and m.insns is not None and hit.insns is not None:
-                    ok, bv = self.same_code(m, hit)
-                    if ok and self.last_anchors >= 2:
-                        renames.extend(("M" if e[0] == "M" else "F", e[1], e[2], e[4], self.last_anchors,
-                                        "named in a kept body that is the same code") for e in bv if e[0] in ("M", "F"))
+                    renames.extend(self.kept_body_votes(c, m, hit))
                 continue
             if self.w_has(w, "M", n, dt, []):
                 matched += 0.5  # inherited on W: an override every subclass of the parent may have
@@ -681,6 +924,9 @@ class Table:
                 renames.extend(("M" if e[0] == "M" else "F", e[1], e[2], e[4], anchors, "named in a body that is the same code")
                                for e in v if e[0] in ("M", "F"))
         fmoved = self.field_reuse(c, w) if commit else {}
+        if commit:
+            for k, v in self.same_init_constants(c, w).items():
+                fmoved.setdefault(k, v)
         for f in vk.fields:
             if f.access & bytecode.ACC_SYNTHETIC or f.name in GENERIC:
                 continue
@@ -790,6 +1036,7 @@ class Table:
                         self.weak[c] = (w, d, m, t, nw)
             # (b) member renames inside decided pairs, and the class pairs their bodies imply
             fam = collections.defaultdict(lambda: collections.defaultdict(list))
+            fkeys = set()
             cvote = collections.defaultdict(collections.Counter)
             self.reuse_amb = {}       # what the names known now leave ambiguous (a later round may decide)
             for c, w in list(self.cm.items()):
@@ -797,8 +1044,24 @@ class Table:
                 for kind, owner, vname, wname, st, why in rens:
                     key = (owner + "." + vname) if self.identity else vname
                     fam[key][wname].append((owner, st, why))
+                    if kind == "F":
+                        fkeys.add(key)
                 for e in cv:
                     cvote[e[1]][e[2]] += 1
+            # a target field two V fields of one class would both take: neither (26.1's EnderDragonRenderer
+            # has one DYING_RENDER_TYPE where 1.21.11 had RENDER_TYPE and DECAL)
+            fwant = collections.defaultdict(set)
+            for key in fkeys:
+                opts = fam[key]
+                if key not in self.ren and len(opts) == 1:
+                    (wname, ev), = opts.items()
+                    for o in {e[0] for e in ev}:
+                        fwant[(o, wname)].add(key)
+            shared = {}
+            for (o, wname), keys in fwant.items():
+                if len(keys) > 1:
+                    for key in keys:
+                        shared[key] = f"conflict: {len(keys)} fields of {o} would take {wname}"
             for key, opts in fam.items():
                 if key in self.ren:
                     continue
@@ -821,6 +1084,9 @@ class Table:
                 taken = next((o for o, _, _ in ev if taken_in(o)), None)
                 if taken:
                     self.ren_basis[key] = f"conflict: {wname} is another member of {taken}"
+                    continue
+                if key in shared:
+                    self.ren_basis[key] = shared[key]
                     continue
                 # a body with nothing in it that matched as it is (an empty setter, "return 0", a getter
                 # of a field only assumed renamed) is the same code as any other such body: no

@@ -498,6 +498,53 @@ public class SwallTestMod implements ModInitializer {
         stand.method_31472();
     }
 
+    /** a 1.21.11 ChunkPos subclass (26.1's ChunkPos is a final record) */
+    static final class TaggedChunk extends net.minecraft.class_1923 {
+        final String tag;
+
+        TaggedChunk(net.minecraft.class_2338 pos, String tag) {
+            super(pos);
+            this.tag = tag;
+        }
+
+        TaggedChunk(long packed, String tag) {
+            super(packed);
+            this.tag = tag;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return super.equals(o) && (!(o instanceof TaggedChunk t) || t.tag.equals(tag));
+        }
+    }
+
+    /** a 1.21.11 ItemInput subclass (26.1's ItemInput is a final record) */
+    static final class NamedInput extends net.minecraft.class_2290 {
+        NamedInput() {
+            super(net.minecraft.class_1802.field_8477.method_40131(), net.minecraft.class_9326.field_49588);
+        }
+
+        @Override
+        public String toString() {
+            return "named:" + method_9785();
+        }
+    }
+
+    /** subclasses of classes 26.1 made final records */
+    private static void extendFinal() throws Exception {
+        TaggedChunk byBlock = new TaggedChunk(new net.minecraft.class_2338(33, 70, -17), "a");
+        long packed = ((long) -7 << 32) | (5L & 0xFFFFFFFFL);
+        TaggedChunk byLong = new TaggedChunk(packed, "b");
+        check("extendFinal.chunkPos", byBlock.field_9181 == 2 && byBlock.field_9180 == -2 && byLong.field_9181 == 5
+            && byLong.field_9180 == -7 && byBlock.equals(new net.minecraft.class_1923(2, -2))
+            && !byBlock.equals(new TaggedChunk(new net.minecraft.class_2338(33, 0, -17), "c")),
+            byBlock.field_9181 + "," + byBlock.field_9180 + " " + byLong.field_9181 + "," + byLong.field_9180);
+        NamedInput input = new NamedInput();
+        net.minecraft.class_1799 stack = input.method_9781(3, false);
+        check("extendFinal.itemInput", input.toString().startsWith("named:") && stack.method_7947() == 3
+            && stack.method_31574(net.minecraft.class_1802.field_8477), input + " " + stack);
+    }
+
     /** 1.21.11's TimerQueue subclass writing itself through store() */
     static final class StoringQueue extends net.minecraft.class_236<MinecraftServer> {
         int stores;
@@ -602,6 +649,7 @@ public class SwallTestMod implements ModInitializer {
             legacyRegionStorage(server);
             interactPacket(server);
             timerQueue();
+            extendFinal();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);

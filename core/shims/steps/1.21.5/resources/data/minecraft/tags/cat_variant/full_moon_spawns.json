@@ -1,0 +1,49 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:all_black",
+      "required": false
+    },
+    {
+      "id": "minecraft:black",
+      "required": false
+    },
+    {
+      "id": "minecraft:british_shorthair",
+      "required": false
+    },
+    {
+      "id": "minecraft:calico",
+      "required": false
+    },
+    {
+      "id": "minecraft:jellie",
+      "required": false
+    },
+    {
+      "id": "minecraft:persian",
+      "required": false
+    },
+    {
+      "id": "minecraft:ragdoll",
+      "required": false
+    },
+    {
+      "id": "minecraft:red",
+      "required": false
+    },
+    {
+      "id": "minecraft:siamese",
+      "required": false
+    },
+    {
+      "id": "minecraft:tabby",
+      "required": false
+    },
+    {
+      "id": "minecraft:white",
+      "required": false
+    }
+  ]
+}
