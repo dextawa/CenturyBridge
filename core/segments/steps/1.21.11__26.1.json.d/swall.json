@@ -142,7 +142,9 @@
   "net/minecraft/class_9276.method_59708()Ljava/lang/Iterable;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#itemsCopy",
   "net/minecraft/class_9276.method_57428()Lorg/apache/commons/lang3/math/Fraction;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#weight",
   "net/minecraft/class_9276.method_61668()I": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#getSelectedItem",
-  "net/minecraft/class_9276.method_61669()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#hasSelectedItem"
+  "net/minecraft/class_9276.method_61669()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#hasSelectedItem",
+  "net/minecraft/class_7417.method_10890(Lnet/minecraft/class_2168;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#callResolve",
+  "net/minecraft/class_2574.method_10920()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#getNbtPath"
  },
  "overrideHooks": [
   {
@@ -279,6 +281,15 @@
    "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors.template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "a 1.21.11 single-item recipe subclass's result() answered its stack; 26.1 asks for the template: the template of the override's stack"
+  },
+  {
+   "old": "method_10890(Lnet/minecraft/class_2168;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;",
+   "new": "method_10890(Lnet/minecraft/network/chat/ResolutionContext;I)Lnet/minecraft/class_5250;",
+   "onlyUnder": "net/minecraft/class_7417",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents$LegacyResolve",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents.resolve(Ltop/dext/centurybridge/step/v26_1/rt/CbWallComponents$LegacyResolve;Lnet/minecraft/network/chat/ResolutionContext;I)Lnet/minecraft/class_5250;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1's ComponentContents.resolve takes a resolution context of the source and the entity 1.21.11 passed: a 1.21.11 contents class answers with its own resolve; its super call reaches the implementation above it through the guard (CbWallComponents)"
   }
  ],
  "frameDefaults": {
@@ -1227,6 +1238,17 @@
     "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#holder(Lnet/minecraft/class_9791;)Lnet/minecraft/class_6880;"
    ],
    "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
+  },
+  "net/minecraft/class_2574.<init>(Ljava/lang/String;ZLjava/util/Optional;Lnet/minecraft/class_7419;)V": {
+   "desc": "(Lnet/minecraft/util/CompilableString;ZZLjava/util/Optional;Lnet/minecraft/class_7419;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallComponents#nbtPath(Ljava/lang/String;)Lnet/minecraft/util/CompilableString;",
+    "keep:1",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallComponents#notPlain()Z",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "26.1 keeps the NBT path compiled with its text and adds a plain flag 1.21.11 lacked (CbWallComponents)"
   }
  },
  "fieldGetters": {
@@ -1405,6 +1427,7 @@
  },
  "instanceFieldGetters": {
   "net/minecraft/class_757.field_60579:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#guiCubeMap",
-  "net/minecraft/class_2275.field_27084:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#interactions"
+  "net/minecraft/class_2275.field_27084:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#interactions",
+  "net/minecraft/class_2574.field_11779:Lnet/minecraft/class_2203$class_2209;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#compiledNbtPath"
  }
 }

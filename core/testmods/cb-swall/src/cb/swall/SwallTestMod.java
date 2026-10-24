@@ -120,6 +120,7 @@ public class SwallTestMod implements ModInitializer {
             cauldrons();
             goats(server);
             misc();
+            components(server);
             interactions(server);
             levelData(server);
         } catch (Throwable t) {
@@ -333,5 +334,16 @@ public class SwallTestMod implements ModInitializer {
         container.method_5489(c -> changes[0]++);
         container.method_5447(0, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600));
         check("simpleContainer.listener", changes[0] == 1, changes[0]);
+    }
+
+    private static void components(MinecraftServer server) throws Exception {
+        net.minecraft.class_2168 source = server.method_3739();
+        net.minecraft.class_5250 resolved = net.minecraft.class_2561.method_43471("cb.key").method_10851().method_10890(source, null, 0);
+        check("component.resolveTranslatable", "cb.key".equals(resolved.getString()), resolved.getString());
+        net.minecraft.class_4616 storage = new net.minecraft.class_4616(net.minecraft.class_2960.method_60655("cbswall", "none"));
+        net.minecraft.class_2574 good = new net.minecraft.class_2574("a.b", false, Optional.empty(), storage);
+        net.minecraft.class_2574 bad = new net.minecraft.class_2574("[[[", false, Optional.empty(), storage);
+        check("component.nbtContents", "a.b".equals(good.method_10920()) && "[[[".equals(bad.method_10920())
+            && bad.method_10890(source, null, 0).getString().isEmpty(), good.method_10920());
     }
 }
