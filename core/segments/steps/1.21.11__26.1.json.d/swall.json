@@ -191,7 +191,13 @@
   "net/minecraft/class_1876.method_8119()Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#getSerializer",
   "net/minecraft/class_3977.method_17907(Lnet/minecraft/class_2487;ILnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#upgradeChunkTag",
   "net/minecraft/class_3977.method_75898(Lnet/minecraft/class_1923;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#markChunkDone",
-  "net/minecraft/class_26.method_17923(Ljava/lang/String;Lnet/minecraft/class_4284;I)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#readTagFromDisk"
+  "net/minecraft/class_26.method_17923(Ljava/lang/String;Lnet/minecraft/class_4284;I)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#readTagFromDisk",
+  "net/minecraft/class_2824.method_12248(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#getTarget",
+  "net/minecraft/class_2824.method_30007()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#isUsingSecondaryAction",
+  "net/minecraft/class_2824.method_76681(Lnet/minecraft/class_3222;Lnet/minecraft/class_238;D)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#isWithinRange",
+  "net/minecraft/class_2824.method_34209(Lnet/minecraft/class_2824$class_5908;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#dispatch",
+  "net/minecraft/class_2824.method_12251(Lnet/minecraft/class_2792;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#handle",
+  "net/minecraft/class_2792.method_12062(Lnet/minecraft/class_2824;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#handleInteract"
  },
  "overrideHooks": [
   {
@@ -627,7 +633,9 @@
   "net/minecraft/class_1849": "top/dext/centurybridge/step/v26_1/facade/ArmorDyeRecipe",
   "net/minecraft/class_1855": "top/dext/centurybridge/step/v26_1/facade/MapCloningRecipe",
   "net/minecraft/class_1876": "top/dext/centurybridge/step/v26_1/facade/TippedArrowRecipe",
-  "net/minecraft/class_12242": "top/dext/centurybridge/step/v26_1/facade/LegacyTagFixer"
+  "net/minecraft/class_12242": "top/dext/centurybridge/step/v26_1/facade/LegacyTagFixer",
+  "net/minecraft/class_2824": "net/minecraft/network/protocol/Packet",
+  "net/minecraft/class_2824$class_5908": "top/dext/centurybridge/step/v26_1/facade/ServerboundInteractPacketHandler"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -1031,7 +1039,10 @@
   "net/minecraft/class_5863.method_33916(FF)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatCodec",
   "net/minecraft/class_7400.method_43314(Lnet/minecraft/class_4651;)Lnet/minecraft/class_7400;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#simple",
   "net/minecraft/class_7400.method_43312(Lnet/minecraft/class_2248;)Lnet/minecraft/class_7400;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#simple",
-  "net/minecraft/class_5141.method_27400(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#setDirtAt"
+  "net/minecraft/class_5141.method_27400(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#setDirtAt",
+  "net/minecraft/class_2824.method_34206(Lnet/minecraft/class_1297;Z)Lnet/minecraft/class_2824;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#attack",
+  "net/minecraft/class_2824.method_34207(Lnet/minecraft/class_1297;ZLnet/minecraft/class_1268;)Lnet/minecraft/class_2824;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#interaction",
+  "net/minecraft/class_2824.method_34208(Lnet/minecraft/class_1297;ZLnet/minecraft/class_1268;Lnet/minecraft/class_243;)Lnet/minecraft/class_2824;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#interaction"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -1949,7 +1960,8 @@
   "net/minecraft/class_6862": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#castTagKey",
   "net/minecraft/class_6018": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#castIntType",
   "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#castFloatType",
-  "net/minecraft/class_1865": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castRecipeSerializer"
+  "net/minecraft/class_1865": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castRecipeSerializer",
+  "net/minecraft/class_2824": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#cast"
  },
  "instanceOfRedirects": {
   "net/minecraft/class_5339": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isFunctionType",
@@ -1963,7 +1975,8 @@
   "net/minecraft/class_6862": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#isTagKey",
   "net/minecraft/class_6018": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#isIntType",
   "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#isFloatType",
-  "net/minecraft/class_1865": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isRecipeSerializer"
+  "net/minecraft/class_1865": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isRecipeSerializer",
+  "net/minecraft/class_2824": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#is"
  },
  "genericWitnesses": {
   "net/minecraft/class_7923.field_41133:Lnet/minecraft/class_2378;": {
