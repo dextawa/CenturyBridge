@@ -3,22 +3,3 @@
 # scope = the artifacts V ships (artifacts.tsv: version JSON = client, server bundler list = server); sides column from it.
 # regenerate: Main lib-diff <oldLibs> <newLibs> <out.tsv> core/segments/damage-lib/artifacts.tsv <V> <W>
 artifact	sides	kind	symbol	note
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute.read(Lorg/objectweb/asm/Attribute;Lorg/objectweb/asm/ClassReader;II[CI[Lorg/objectweb/asm/Label;)Lorg/objectweb/asm/Attribute;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute.readLabel(Lorg/objectweb/asm/ClassReader;I[Lorg/objectweb/asm/Label;)Lorg/objectweb/asm/Label;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute.write(Lorg/objectweb/asm/Attribute;Lorg/objectweb/asm/ClassWriter;[BIII)[B	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute$ErrorAttribute.read(Lorg/objectweb/asm/Attribute;Lorg/objectweb/asm/ClassReader;II[CI[Lorg/objectweb/asm/Label;)Lorg/objectweb/asm/Attribute;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute$ErrorAttribute.readLabel(Lorg/objectweb/asm/ClassReader;I[Lorg/objectweb/asm/Label;)Lorg/objectweb/asm/Label;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute$ErrorAttribute.write(Lorg/objectweb/asm/Attribute;Lorg/objectweb/asm/ClassWriter;[BIII)[B	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute$PassAttribute.read(Lorg/objectweb/asm/Attribute;Lorg/objectweb/asm/ClassReader;II[CI[Lorg/objectweb/asm/Label;)Lorg/objectweb/asm/Attribute;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute$PassAttribute.readLabel(Lorg/objectweb/asm/ClassReader;I[Lorg/objectweb/asm/Label;)Lorg/objectweb/asm/Label;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute$PassAttribute.write(Lorg/objectweb/asm/Attribute;Lorg/objectweb/asm/ClassWriter;[BIII)[B	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute$StripAttribute.read(Lorg/objectweb/asm/Attribute;Lorg/objectweb/asm/ClassReader;II[CI[Lorg/objectweb/asm/Label;)Lorg/objectweb/asm/Attribute;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute$StripAttribute.readLabel(Lorg/objectweb/asm/ClassReader;I[Lorg/objectweb/asm/Label;)Lorg/objectweb/asm/Label;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/NewAttribute$StripAttribute.write(Lorg/objectweb/asm/Attribute;Lorg/objectweb/asm/ClassWriter;[BIII)[B	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/Pack200ClassReader.readBytecodeInstructionOffset(I)V	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/Pack200ClassReader.readBytes(II)[B	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/Segment.getDelegate()Lorg/objectweb/asm/ClassVisitor;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/Segment$ArrayVisitor.getDelegate()Lorg/objectweb/asm/AnnotationVisitor;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/Segment$SegmentAnnotationVisitor.getDelegate()Lorg/objectweb/asm/AnnotationVisitor;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/Segment$SegmentFieldVisitor.getDelegate()Lorg/objectweb/asm/FieldVisitor;	
-org/apache/commons/commons-compress	client	METHOD	org/apache/commons/compress/harmony/pack200/Segment$SegmentMethodVisitor.getDelegate()Lorg/objectweb/asm/MethodVisitor;	

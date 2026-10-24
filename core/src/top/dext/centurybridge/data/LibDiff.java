@@ -36,7 +36,8 @@ import org.objectweb.asm.tree.MethodNode;
  * they stay on the class path of both sides: a Fabric runtime always has them, so a class
  * the game dropped that the loader still brings (asm after 1.21.11) still links. Artifacts
  * are matched by maven coordinates (group/artifact); when a dir holds several versions of
- * one, the release's own version is used. Natives jars are skipped.
+ * one, the release's own version is used, unless a newer one sits beside it: that is the
+ * loader's copy (Fabric's ASM), the one on the runtime class path. Natives jars are skipped.
  *
  * <p>Resolution. Every reference is resolved on both sides exactly as the JVM does
  * (JVMS 5.4.3.2 fields: declared, then superinterfaces, then superclasses; 5.4.3.3 class
@@ -357,8 +358,10 @@ public final class LibDiff {
         for (String coord : coords) {
             Map<String, Map<String, ClassNode>> versions = dir.get(coord);
             String want = set != null && set.containsKey(coord) ? set.get(coord)[0] : null;
-            String pick = want != null && versions.containsKey(want) ? want
-                : versions.keySet().stream().max(LibDiff::compareVersions).orElseThrow();
+            String highest = versions.keySet().stream().max(LibDiff::compareVersions).orElseThrow();
+            // a newer copy of a game artifact beside the game's own is the loader's (Fabric brings its ASM, which
+            // the game listed too from 1.21.2 on), and the loader's is the one on the runtime class path
+            String pick = want != null && versions.containsKey(want) && compareVersions(highest, want) <= 0 ? want : highest;
             versions.get(pick).forEach((n, c) -> {
                 if (s.classes.putIfAbsent(n, c) == null) s.home.put(n, coord);
             });
