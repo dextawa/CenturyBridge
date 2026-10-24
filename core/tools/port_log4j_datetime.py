@@ -16,6 +16,9 @@ for name, cb in NAMES.items():
                   f"// log4j-core 2.19.0's org.apache.logging.log4j.core.util.datetime.{name} (2.22.1 dropped it), renamed by\n"
                   "// core/tools/port_log4j_datetime.py; otherwise 2.19.0's source.\n\n"
                   "import org.apache.logging.log4j.core.util.datetime.FastDateFormat;", 1)
+    # the class names in code, not in 2.19.0's strings (toString answers "FastDateParser[pattern,locale,zone]")
+    s = s.replace('"FastDateParser[', "\1")
     s = s.replace("FastDateParser", "\0F").replace("DateParser", NAMES["DateParser"]).replace("\0F", NAMES["FastDateParser"])
+    s = s.replace("\1", '"FastDateParser[')
     open(f"{out}/{cb}.java", "w", encoding="utf-8", newline="\n").write(s)
     print(cb)

@@ -330,7 +330,7 @@ public class CbLibLog4jFastDateParser implements CbLibLog4jDateParser, Serializa
      */
     @Override
     public String toString() {
-        return "CbLibLog4jFastDateParser[" + pattern + "," + locale + "," + timeZone.getID() + "]";
+        return "FastDateParser[" + pattern + "," + locale + "," + timeZone.getID() + "]";
     }
 
     // Serializing
