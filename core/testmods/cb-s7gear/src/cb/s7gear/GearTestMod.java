@@ -146,6 +146,7 @@ public class GearTestMod implements ModInitializer {
         PICK = reg(class_7923.field_41178, "pick", new class_1810(class_1834.field_8923, new class_1792.class_1793()));
         FOOD_PROPS = new class_4174.class_4175().method_19238(3).method_19237(0.5F).method_19241()
             .method_19239(new class_1293(class_1294.field_5904, 100, 0), 1.0F).method_19240().method_19242();
+        net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer.register(IRON_SERIALIZER);
         FOOD = reg(class_7923.field_41178, "food", new class_1792(new class_1792.class_1793().method_19265(FOOD_PROPS)));
         BUNDLE = reg(class_7923.field_41178, "bundle", new net.minecraft.class_5537(new class_1792.class_1793()));
         BOOK = reg(class_7923.field_41178, "book", new net.minecraft.class_1751(new class_1792.class_1793()));
@@ -185,6 +186,7 @@ public class GearTestMod implements ModInitializer {
             menus(server);
             combiners(server);
             world(server);
+            fapi(server);
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -722,6 +724,61 @@ public class GearTestMod implements ModInitializer {
         net.minecraft.class_3971 cutter = new net.minecraft.class_3971(5, player(server).method_31548());
         cutter.field_17629.method_5447(0, new class_1799(class_1802.field_20412));
         check(cutter.method_17863().size() == 3, "StonecutterMenu.getRecipes() for cobblestone: slab, stairs, wall: " + cutter.method_17863().size());
+    }
+
+
+    /** a 1.21.1 Fabric API custom ingredient: iron ingots only */
+    public static class IronIngredient implements net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient {
+        @Override
+        public boolean test(class_1799 stack) {
+            return stack.method_31574(class_1802.field_8620);
+        }
+
+        @Override
+        public List<class_1799> getMatchingStacks() {
+            return List.of(new class_1799(class_1802.field_8620));
+        }
+
+        @Override
+        public boolean requiresTesting() {
+            return true;
+        }
+
+        @Override
+        public net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer<?> getSerializer() {
+            return IRON_SERIALIZER;
+        }
+    }
+
+    static final net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer<IronIngredient> IRON_SERIALIZER =
+        new net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer<>() {
+            @Override
+            public class_2960 getIdentifier() {
+                return class_2960.method_60655("cbs7gear", "iron");
+            }
+
+            @Override
+            public com.mojang.serialization.MapCodec<IronIngredient> getCodec(boolean allowEmpty) {
+                return com.mojang.serialization.MapCodec.unit(new IronIngredient());
+            }
+
+            @Override
+            public net.minecraft.class_9139<net.minecraft.class_9129, IronIngredient> getPacketCodec() {
+                return net.minecraft.class_9139.method_56431(new IronIngredient());
+            }
+        };
+
+    /** Fabric API 0.116 members: a custom ingredient, getCreatorNamespace */
+    static void fapi(MinecraftServer server) {
+        IronIngredient iron = new IronIngredient();
+        class_1856 vanilla = iron.toVanilla();
+        check(vanilla.method_8093(new class_1799(class_1802.field_8620)) && !vanilla.method_8093(new class_1799(class_1802.field_8118)),
+            "CustomIngredient.toVanilla(): tests iron, not planks");
+        class_1799[] items = vanilla.method_8105();
+        check(items.length == 1 && items[0].method_31574(class_1802.field_8620), "its getItems(): the iron its 1.21.1 getMatchingStacks gave");
+        check(IRON_SERIALIZER.getCodec(false) != null, "CustomIngredientSerializer.getCodec(false)");
+        check("cbs7gear".equals(((net.fabricmc.fabric.api.item.v1.FabricItem) CHEST).getCreatorNamespace(new class_1799(CHEST))) && "minecraft".equals(((net.fabricmc.fabric.api.item.v1.FabricItemStack) (Object) new class_1799(class_1802.field_8620)).getCreatorNamespace()),
+            "FabricItem / FabricItemStack.getCreatorNamespace");
     }
 
 }

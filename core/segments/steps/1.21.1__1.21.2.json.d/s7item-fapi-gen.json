@@ -1,0 +1,69 @@
+{
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient.getMatchingStacks()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#getMatchingStacks",
+  "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer.getCodec(Z)Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#getCodec",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getCreatorNamespace(Lnet/minecraft/class_1799;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#getCreatorNamespace",
+  "net/fabricmc/fabric/api/item/v1/FabricItemStack.getCreatorNamespace()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#getCreatorNamespace",
+  "net/fabricmc/fabric/api/item/v1/FabricTooltipType.shouldDisplayAllInformation()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#shouldDisplayAllInformation",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext.addCarver(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#addCarver",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext.removeCarver(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#removeCarver"
+ },
+ "staticRedirects": {
+  "net/fabricmc/fabric/api/biome/v1/BiomeModifications.addCarver(Ljava/util/function/Predicate;Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#addCarver"
+ },
+ "superRedirects": {
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getCreatorNamespace(Lnet/minecraft/class_1799;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#superGetCreatorNamespace",
+  "net/fabricmc/fabric/api/item/v1/FabricItemStack.getCreatorNamespace()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#superGetCreatorNamespace"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi$LegacyIngredient",
+   "requires": [
+    "getMatchingStacks()Ljava/util/List;"
+   ],
+   "synth": [
+    {
+     "new": "getMatchingItems()Ljava/util/List;",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi.matchingItems(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemFapi$LegacyIngredient;)Ljava/util/List;"
+    }
+   ],
+   "basis": "a 1.21.1 CustomIngredient answers 0.106's getMatchingItems() with its stacks' items (CbItemFapi)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi$LegacySerializer",
+   "requires": [
+    "getCodec(Z)Lcom/mojang/serialization/MapCodec;"
+   ],
+   "synth": [
+    {
+     "new": "getCodec()Lcom/mojang/serialization/MapCodec;",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi.codec(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemFapi$LegacySerializer;)Lcom/mojang/serialization/MapCodec;"
+    }
+   ],
+   "basis": "a 1.21.1 CustomIngredientSerializer answers 0.106's getCodec() with its non-empty codec (1.21.2's ingredients are never empty)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/item/v1/FabricItem",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi$LegacyCreator",
+   "requires": [
+    "getCreatorNamespace(Lnet/minecraft/class_1799;)Ljava/lang/String;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item's FabricItem.getCreatorNamespace override answers the calls (CbItemFapi)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/item/v1/FabricItemStack",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi$LegacyStackCreator",
+   "requires": [
+    "getCreatorNamespace()Ljava/lang/String;"
+   ],
+   "synth": [],
+   "basis": "a class declaring FabricItemStack.getCreatorNamespace() answers the calls (CbItemFapi)"
+  }
+ ],
+ "classRenames": {
+  "net/fabricmc/fabric/api/item/v1/FabricTooltipType": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricTooltipType"
+ }
+}
