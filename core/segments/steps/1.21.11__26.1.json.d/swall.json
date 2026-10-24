@@ -1461,7 +1461,8 @@
   "net/minecraft/class_2743.field_47981:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v26_1/rt/CbWallStreamCodecs",
   "net/minecraft/class_2824.field_48195:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v26_1/rt/CbWallStreamCodecs",
   "net/minecraft/class_2761.field_47991:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v26_1/rt/CbWallStreamCodecs",
-  "net/minecraft/class_3481.field_29822:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTagDrift"
+  "net/minecraft/class_3481.field_29822:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTagDrift",
+  "net/minecraft/class_3489.field_36269:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTagDrift"
  },
  "abstractFills": [
   {

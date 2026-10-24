@@ -389,6 +389,8 @@ public class SwallTestMod implements ModInitializer {
         check("tagDrift.dirt", net.minecraft.class_2246.field_10219.method_9564().method_26164(net.minecraft.class_3481.field_29822)
             && net.minecraft.class_2246.field_10566.method_9564().method_26164(net.minecraft.class_3481.field_29822)
             && !net.minecraft.class_2246.field_10340.method_9564().method_26164(net.minecraft.class_3481.field_29822), "");
+        check("tagDrift.itemDirt", new net.minecraft.class_1799(net.minecraft.class_1802.field_8270).method_31573(net.minecraft.class_3489.field_36269)
+            && !new net.minecraft.class_1799(net.minecraft.class_1802.field_20391).method_31573(net.minecraft.class_3489.field_36269), "");
         net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
         net.minecraft.class_2743.field_47981.encode(buf, new net.minecraft.class_2743(42, new net.minecraft.class_243(0.5, 0.25, -1.0)));
         net.minecraft.class_2743 back = net.minecraft.class_2743.field_47981.decode(buf);
