@@ -19,7 +19,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FFI = {"B": "ffi_type_sint8", "S": "ffi_type_sint16", "C": "ffi_type_uint16", "Z": "ffi_type_uint8", "I": "ffi_type_sint32",
-       "F": "ffi_type_float", "D": "ffi_type_double", "J": "ffi_type_sint64", "P": "ffi_type_pointer", "V": "ffi_type_void"}
+       "F": "ffi_type_float", "D": "ffi_type_double", "J": "ffi_type_sint64", "P": "ffi_type_pointer", "V": "ffi_type_void",
+       "US": "ffi_type_uint16", "UB": "ffi_type_uint8"}
 SIZE = {"B": 1, "S": 2, "C": 2, "I": 4, "J": 8, "F": 4, "D": 8}
 BUF = {"B": "memByteBuffer", "S": "memShortBuffer", "C": "memCharBuffer", "I": "memIntBuffer", "J": "memLongBuffer",
        "F": "memFloatBuffer", "D": "memDoubleBuffer"}
@@ -48,12 +49,25 @@ def main():
         jlong_kinds = list(letters[:-1])
         ret_letter = letters[-1]
         ret = desc[desc.index(")") + 1:]
-        if len([a for a in args if a == "J" or a.startswith("[")]) != len(jlong_kinds) + 1:
-            sys.exit(f"{m}: name letters do not match the long and array arguments")
+        # LWJGL 3.3.3 also names its unsigned narrow arguments: C an unsigned 16-bit (a jshort), U an unsigned 8-bit (a jbyte)
         kinds = []  # C kind per argument except the function address; an array is a pointer to its elements
-        js = iter(jlong_kinds)
+        pos = 0
         for a in args[:-1]:
-            kinds.append(next(js) if a == "J" or a.startswith("[") else a)
+            if a == "J" or a.startswith("["):
+                if pos >= len(jlong_kinds) or jlong_kinds[pos] not in "PJ":
+                    sys.exit(f"{m}: name letters do not match the arguments")
+                kinds.append(jlong_kinds[pos])
+                pos += 1
+            elif a == "S" and pos < len(jlong_kinds) and jlong_kinds[pos] == "C":
+                kinds.append("US")
+                pos += 1
+            elif a == "B" and pos < len(jlong_kinds) and jlong_kinds[pos] == "U":
+                kinds.append("UB")
+                pos += 1
+            else:
+                kinds.append(a)
+        if pos != len(jlong_kinds):
+            sys.exit(f"{m}: name letters do not match the arguments")
         params = ", ".join(f"{JT[a] if len(a) == 1 else JT[a[1]] + '[]'} a{i}" for i, a in enumerate(args[:-1])) + (", " if len(args) > 1 else "") + "long fn"
         key = ret_letter + ":" + "".join(kinds)
         body = [f"        long cif = cif(\"{key}\", LibFFI.{FFI[ret_letter]}" + "".join(f", LibFFI.{FFI[k]}" for k in kinds) + ");",
