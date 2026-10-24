@@ -31,7 +31,17 @@ extendable class net/minecraft/class_807
 extendable method net/minecraft/class_807 equals (Ljava/lang/Object;)Z
 extendable method net/minecraft/class_807 hashCode ()I
 extendable method net/minecraft/class_807 toString ()Ljava/lang/String;
+# s7render: ModelDiscovery.getModel(id), 1.21.1 Fabric API's getOrLoadModel during discovery (rt/CbFapiModels)
+accessible method net/minecraft/class_10097 method_62638 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
 # s7render: RenderType.create, to build 1.21.1's entityTranslucentCull / entityGlintDirect render types 1.21.2 deleted (rt/CbRenderTypes)
+# s7render: LivingEntityRenderer's layers, to give 1.21.1's head scales to the head layer HumanoidMobRenderer adds (rt/CbRenderHeads)
+accessible field net/minecraft/class_922 field_4738 Ljava/util/List;
+# s7render: AgeableMobRenderer's adult and baby models, for 1.21.1's PiglinRenderer noRightEar (rt/CbRenderCtors)
+accessible field net/minecraft/class_9990 field_53177 Lnet/minecraft/class_583;
+accessible field net/minecraft/class_9990 field_53178 Lnet/minecraft/class_583;
+mutable field net/minecraft/class_9990 field_53177 Lnet/minecraft/class_583;
+mutable field net/minecraft/class_9990 field_53178 Lnet/minecraft/class_583;
+accessible field net/minecraft/class_922 field_4737 Lnet/minecraft/class_583;
 accessible class net/minecraft/class_1921$class_4688
 accessible class net/minecraft/class_1921$class_4687
 accessible method net/minecraft/class_1921 method_24048 (Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;ILnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
