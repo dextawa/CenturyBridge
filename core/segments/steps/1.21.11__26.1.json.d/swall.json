@@ -1449,6 +1449,132 @@
     "conv:5,9 top/dext/centurybridge/step/v26_1/rt/CbWallTrees#belowTrunk(Lnet/minecraft/class_4651;Z)Lnet/minecraft/class_4651;"
    ],
    "basis": "a 1.21.11 TreeConfiguration subclass's super(.., dirtProvider, minimumSize, decorators, ignoreVines, forceDirt): 26.1 takes one below-trunk provider; the dirt pair as it (CbWallTrees.belowTrunk)"
+  },
+  "net/minecraft/class_1848.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#banners()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#whiteBanner()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1848;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's BannerDuplicateRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it -- one recipe for every banner colour, duplicating as 1.21.11 did (mixin/CbWallBannerDuplicateMixin)"
+  },
+  "net/minecraft/class_1850.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#writtenBook()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#bookCloningTarget()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#bookGenerations()Lnet/minecraft/class_2096$class_2100;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#writtenBookResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1850;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's BookCloningRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_8164.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#potIngredient()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#decoratedPot()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_8164;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's DecoratedPotRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_1851.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#paper()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#gunpowder()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStar()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#threeRockets()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1851;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's FireworkRocketRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_1854.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStar()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#dyes()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStarResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1854;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's FireworkStarFadeRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_1853.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Ljava/util/Map;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#starShapes()Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#diamond()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#glowstoneDust()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#gunpowder()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#dyes()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStarResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1853;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's FireworkStarRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_1861.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#filledMap()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#paper()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#filledMapResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1861;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's MapExtendingRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_4317.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_4317;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's RepairItemRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_1872.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#banners()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#shield()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#shieldResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1872;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's ShieldDecorationRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
   }
  },
  "fieldGetters": {
