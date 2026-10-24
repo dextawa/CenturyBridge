@@ -17,6 +17,7 @@
     "CbFapiTradeServerMixin",
     "CbFapiVillagerTradesMixin",
     "CbFapiWanderingTraderTradesMixin",
+    "CbWallBoneMealFlowersMixin",
     "CbWallBossEventMixin",
     "CbWallBossEventsAccess",
     "CbWallBossEventsMixin",
@@ -69,7 +70,8 @@
     "CbWallBrainProviderCamelMixin",
     "CbWallBrainProviderSnifferMixin",
     "CbWallBrainProviderBreezeMixin",
-    "CbWallBrainProviderArmadilloMixin"
+    "CbWallBrainProviderArmadilloMixin",
+    "CbWallFeatureRegisterMixin"
   ],
   "client": [
     "CbFapiBlockColorsMixin",

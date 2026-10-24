@@ -50,9 +50,13 @@ public final class CbWallStatics {
         return state.is(BlockTags.BASE_STONE_OVERWORLD);
     }
 
-    /** Feature.isDirt(state) */
+    /**
+     * Feature.isDirt(state): 1.21.11's body is state.is(BlockTags.DIRT), whose 1.21.11 tag held dirt, grass,
+     * podzol, mycelium, moss, mud and rooted dirt; 26.1 narrowed minecraft:dirt to dirt, coarse and rooted dirt
+     * and names the old set substrate_overworld (#dirt, #mud, #moss_blocks, #grass_blocks: the same blocks)
+     */
     public static boolean isDirt(BlockState state) {
-        return state.is(BlockTags.DIRT);
+        return state.is(BlockTags.SUBSTRATE_OVERWORLD);
     }
 
     /** Feature.isGrassOrDirt(level, pos) */

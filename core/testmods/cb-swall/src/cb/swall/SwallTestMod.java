@@ -337,6 +337,53 @@ public class SwallTestMod implements ModInitializer {
         check("placement.reusedId", a == 2 && b == 3 && c == 1 && thrice.method_14452(random, origin) == 3, a + " " + b + " " + c);
     }
 
+    /** features 26.1 removed: registered under 1.21.11's ids and placing as 1.21.11 did */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void removedFeatures(MinecraftServer server) {
+        net.minecraft.class_2378<net.minecraft.class_3031<?>> features = net.minecraft.class_7923.field_41144;
+        check("feature.ids", "minecraft:random_patch".equals(String.valueOf(features.method_10221(net.minecraft.class_3031.field_21220)))
+            && "minecraft:flower".equals(String.valueOf(features.method_10221(net.minecraft.class_3031.field_21219)))
+            && "minecraft:ice_spike".equals(String.valueOf(features.method_10221(net.minecraft.class_3031.field_13562)))
+            && "minecraft:forest_rock".equals(String.valueOf(features.method_10221(net.minecraft.class_3031.field_13584))), "");
+        net.minecraft.class_3218 level = server.method_30002();
+        net.minecraft.class_2794 generator = level.method_14178().method_12129();
+        net.minecraft.class_5819 random = net.minecraft.class_5819.method_43049(3L);
+        net.minecraft.class_2338 snow = new net.minecraft.class_2338(8, 250, 8);
+        level.method_8501(snow, net.minecraft.class_2246.field_10491.method_9564());
+        boolean spike = new net.minecraft.class_2975(net.minecraft.class_3031.field_13562, net.minecraft.class_3111.field_24894)
+            .method_12862(level, generator, random, snow.method_10084());
+        check("feature.iceSpike", spike && level.method_8320(snow).method_27852(net.minecraft.class_2246.field_10225), level.method_8320(snow));
+        net.minecraft.class_2338 stone = new net.minecraft.class_2338(40, 250, 40);
+        level.method_8501(stone, net.minecraft.class_2246.field_10340.method_9564());
+        boolean rock = new net.minecraft.class_2975(net.minecraft.class_3031.field_13584,
+            new net.minecraft.class_2963(net.minecraft.class_2246.field_9989.method_9564())).method_12862(level, generator, random, stone.method_10086(3));
+        check("feature.forestRock", rock && level.method_8320(stone.method_10084()).method_27852(net.minecraft.class_2246.field_9989), level.method_8320(stone.method_10084()));
+        com.google.gson.JsonElement cfg = net.minecraft.class_4638.field_24902.encodeStart(JsonOps.INSTANCE,
+            new net.minecraft.class_4638(10, 2, 1, server.method_30611().method_30530(net.minecraft.class_7924.field_41245).method_10220()
+                .findFirst().map(p -> server.method_30611().method_30530(net.minecraft.class_7924.field_41245).method_47983(p)).get())).getOrThrow();
+        check("feature.randomPatchConfig", cfg.toString().contains("\"tries\":10") && net.minecraft.class_4638.field_24902.parse(JsonOps.INSTANCE, cfg)
+            .getOrThrow().comp_149() == 10, cfg);
+    }
+
+    /** tree dirt, rule-based providers and disks: 1.21.11 shapes over 26.1's */
+    private static void worldgenConfigs() {
+        net.minecraft.class_4643.class_4644 builder = new net.minecraft.class_4643.class_4644(
+            net.minecraft.class_4651.method_38432(net.minecraft.class_2246.field_10431), new net.minecraft.class_5140(4, 2, 0),
+            net.minecraft.class_4651.method_38432(net.minecraft.class_2246.field_10503),
+            new net.minecraft.class_4646(net.minecraft.class_6016.method_34998(2), net.minecraft.class_6016.method_34998(0), 3),
+            Optional.empty(), new net.minecraft.class_5204(1, 0, 1));
+        net.minecraft.class_4643 plain = builder.method_23445();
+        net.minecraft.class_4651 stone = net.minecraft.class_4651.method_38432(net.minecraft.class_2246.field_10340);
+        net.minecraft.class_4643 forced = builder.method_34346(stone).method_34347().method_23445();
+        check("worldgen.treeDirt", !plain.field_29281 && plain.field_29279 instanceof net.minecraft.class_4656
+            && forced.field_29281 && forced.field_29279 == stone, plain.field_29279 + " " + forced.field_29279);
+        net.minecraft.class_7400 rules = net.minecraft.class_7400.method_43312(net.minecraft.class_2246.field_10340);
+        net.minecraft.class_6577 disk = new net.minecraft.class_6577(rules, net.minecraft.class_6646.method_39011(),
+            net.minecraft.class_6016.method_34998(2), 1);
+        check("worldgen.ruleBasedDisk", rules.comp_725() != null && rules.comp_726().isEmpty() && disk.comp_715() == rules
+            && net.minecraft.class_7400.field_38870 != null, disk);
+    }
+
     /** generic drift at the wall read on a running server */
     private static void generic(MinecraftServer server) {
         Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
@@ -390,6 +437,8 @@ public class SwallTestMod implements ModInitializer {
             itemContainers(server);
             valueProviders(server);
             placements();
+            removedFeatures(server);
+            worldgenConfigs();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);

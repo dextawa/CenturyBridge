@@ -172,7 +172,14 @@
   "net/minecraft/class_5862.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
   "net/minecraft/class_5866.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
   "net/minecraft/class_5861.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
-  "net/minecraft/class_5865.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType"
+  "net/minecraft/class_5865.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
+  "net/minecraft/class_4628.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#place",
+  "net/minecraft/class_3070.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#place",
+  "net/minecraft/class_2950.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#place",
+  "net/minecraft/class_7400.comp_725()Lnet/minecraft/class_4651;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#fallback",
+  "net/minecraft/class_7400.comp_726()Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#rules",
+  "net/minecraft/class_4643$class_4644.method_34346(Lnet/minecraft/class_4651;)Lnet/minecraft/class_4643$class_4644;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#dirt",
+  "net/minecraft/class_4643$class_4644.method_34347()Lnet/minecraft/class_4643$class_4644;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#forceDirt"
  },
  "overrideHooks": [
   {
@@ -571,7 +578,13 @@
   "net/minecraft/class_1265": "top/dext/centurybridge/step/v26_1/facade/ContainerListener",
   "net/minecraft/class_10104": "net/minecraft/util/CompilableString",
   "net/minecraft/class_6018": "top/dext/centurybridge/step/v26_1/facade/IntProviderType",
-  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/facade/FloatProviderType"
+  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/facade/FloatProviderType",
+  "net/minecraft/class_4638": "top/dext/centurybridge/step/v26_1/facade/RandomPatchConfiguration",
+  "net/minecraft/class_4628": "top/dext/centurybridge/step/v26_1/facade/RandomPatchFeature",
+  "net/minecraft/class_3070": "top/dext/centurybridge/step/v26_1/facade/IceSpikeFeature",
+  "net/minecraft/class_2950": "top/dext/centurybridge/step/v26_1/facade/BlockBlobFeature",
+  "net/minecraft/class_7400": "net/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider",
+  "net/minecraft/class_7400$class_7401": "net/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider$Rule"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -895,7 +908,10 @@
   "net/minecraft/class_1869$class_1870.method_8165(Lnet/minecraft/class_9129;Lnet/minecraft/class_1869;)V": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
   "net/minecraft/class_1867$class_1868.field_46104:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
   "net/minecraft/class_10223$class_10224.field_54326:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
-  "net/minecraft/class_8060$class_8061.field_46108:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104"
+  "net/minecraft/class_8060$class_8061.field_46108:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
+  "net/minecraft/class_4628.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming RandomPatchFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)",
+  "net/minecraft/class_3070.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming IceSpikeFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)",
+  "net/minecraft/class_2950.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming BlockBlobFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -963,7 +979,10 @@
   "net/minecraft/class_10104.method_62667(Ljava/lang/String;)Lcom/mojang/serialization/DataResult;": "top/dext/centurybridge/step/v26_1/rt/CbWallSelectors#parse",
   "net/minecraft/class_6017.method_35004(II)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#intCodec",
   "net/minecraft/class_6017.method_49103(IILcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#validateCodec",
-  "net/minecraft/class_5863.method_33916(FF)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatCodec"
+  "net/minecraft/class_5863.method_33916(FF)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatCodec",
+  "net/minecraft/class_7400.method_43314(Lnet/minecraft/class_4651;)Lnet/minecraft/class_7400;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#simple",
+  "net/minecraft/class_7400.method_43312(Lnet/minecraft/class_2248;)Lnet/minecraft/class_7400;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#simple",
+  "net/minecraft/class_5141.method_27400(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#setDirtAt"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -1347,6 +1366,44 @@
     "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallGeneric#templates(Ljava/util/List;)Ljava/util/List;"
    ],
    "basis": "new BundleContents(items): 26.1 takes the items' templates where 1.21.11 took the stacks; each non-empty stack's template (26.1's bundle, like 1.21.11's codec and Mutable, holds no empty stacks)"
+  },
+  "net/minecraft/class_6577.<init>(Lnet/minecraft/class_7400;Lnet/minecraft/class_6646;Lnet/minecraft/class_6017;I)V": {
+   "desc": "(Lnet/minecraft/class_4651;Lnet/minecraft/class_6646;Lnet/minecraft/class_6017;I)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#provider(Lnet/minecraft/class_7400;)Lnet/minecraft/class_4651;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "new DiskConfiguration(stateProvider, target, radius, halfHeight): 26.1 takes any BlockStateProvider where 1.21.11 took a RuleBasedBlockStateProvider, which is 26.1's RuleBasedStateProvider (a provider): passed as it is"
+  },
+  "net/minecraft/class_4643$class_4644.<init>(Lnet/minecraft/class_4651;Lnet/minecraft/class_5141;Lnet/minecraft/class_4651;Lnet/minecraft/class_4647;Ljava/util/Optional;Lnet/minecraft/class_5201;)V": {
+   "desc": "(Lnet/minecraft/class_4651;Lnet/minecraft/class_5141;Lnet/minecraft/class_4651;Lnet/minecraft/class_4647;Ljava/util/Optional;Lnet/minecraft/class_5201;Lnet/minecraft/class_4651;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallTrees#defaultBelowTrunk()Lnet/minecraft/class_4651;"
+   ],
+   "basis": "new TreeConfigurationBuilder(trunk, trunkPlacer, foliage, foliagePlacer, rootPlacer, minimumSize): 26.1 takes the below-trunk provider too; 1.21.11's builder started with dirt, not forced, which is 26.1's default PLACE_BELOW_OVERWORLD_TRUNKS (CbWallTrees)"
+  },
+  "net/minecraft/class_4643.<init>(Lnet/minecraft/class_4651;Lnet/minecraft/class_5141;Lnet/minecraft/class_4651;Lnet/minecraft/class_4647;Ljava/util/Optional;Lnet/minecraft/class_4651;Lnet/minecraft/class_5201;Ljava/util/List;ZZ)V": {
+   "desc": "(Lnet/minecraft/class_4651;Lnet/minecraft/class_5141;Lnet/minecraft/class_4651;Lnet/minecraft/class_4647;Ljava/util/Optional;Lnet/minecraft/class_5201;Ljava/util/List;ZLnet/minecraft/class_4651;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "conv:5,9 top/dext/centurybridge/step/v26_1/rt/CbWallTrees#belowTrunk(Lnet/minecraft/class_4651;Z)Lnet/minecraft/class_4651;"
+   ],
+   "basis": "a 1.21.11 TreeConfiguration subclass's super(.., dirtProvider, minimumSize, decorators, ignoreVines, forceDirt): 26.1 takes one below-trunk provider; the dirt pair as it (CbWallTrees.belowTrunk)"
   }
  },
  "fieldGetters": {
@@ -1394,7 +1451,13 @@
   "net/minecraft/class_6017.field_29946:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
   "net/minecraft/class_6017.field_33450:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
   "net/minecraft/class_6017.field_33451:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
-  "net/minecraft/class_5863.field_29007:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders"
+  "net/minecraft/class_5863.field_29007:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
+  "net/minecraft/class_3031.field_21219:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
+  "net/minecraft/class_3031.field_26361:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
+  "net/minecraft/class_3031.field_21220:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
+  "net/minecraft/class_3031.field_13562:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
+  "net/minecraft/class_3031.field_13584:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
+  "net/minecraft/class_7400.field_38870:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders"
  },
  "abstractFills": [
   {
@@ -1441,7 +1504,12 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasConstant",
   "net/minecraft/class_2881.method_12530()Lnet/minecraft/class_2881$class_8576;": "top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#superSaveData",
   "net/minecraft/class_6334.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#clampedType",
-  "net/minecraft/class_6642.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#weightedListType"
+  "net/minecraft/class_6642.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#weightedListType",
+  "net/minecraft/class_4628.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#superPlace",
+  "net/minecraft/class_3070.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#superPlace",
+  "net/minecraft/class_2950.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#superPlace",
+  "net/minecraft/class_4643$class_4644.method_34346(Lnet/minecraft/class_4651;)Lnet/minecraft/class_4643$class_4644;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#dirt",
+  "net/minecraft/class_4643$class_4644.method_34347()Lnet/minecraft/class_4643$class_4644;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#forceDirt"
  },
  "covers": [
   "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
@@ -1618,12 +1686,20 @@
     "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallGeneric#dyeColors(Ljava/util/List;)Ljava/util/List;"
    ],
    "basis": "DyedItemColor.applyDyes(stack, dyes): 26.1 takes the dye colors where 1.21.11 took the dye items; 1.21.11's body read each item's getDyeColor(), which 26.1 keeps as the dye's DYE component (CbWallDyes.dyeColor)"
+  },
+  "net/minecraft/class_6577.comp_715()Lnet/minecraft/class_7400;": {
+   "desc": "()Lnet/minecraft/class_4651;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#ruleBased(Lnet/minecraft/class_4651;)Lnet/minecraft/class_7400;",
+   "basis": "DiskConfiguration.stateProvider(): 26.1 answers any provider (its data can name one); a rule-based one as it is, another as a rule-based provider with no rules (the same states)"
   }
  },
  "instanceFieldGetters": {
   "net/minecraft/class_757.field_60579:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#guiCubeMap",
   "net/minecraft/class_2275.field_27084:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#interactions",
-  "net/minecraft/class_2574.field_11779:Lnet/minecraft/class_2203$class_2209;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#compiledNbtPath"
+  "net/minecraft/class_2574.field_11779:Lnet/minecraft/class_2203$class_2209;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#compiledNbtPath",
+  "net/minecraft/class_4643.field_29279:Lnet/minecraft/class_4651;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#dirtProvider",
+  "net/minecraft/class_4643.field_29281:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#forceDirt"
  },
  "convertHooks": [
   {
@@ -1897,6 +1973,12 @@
     "net/minecraft/class_5864"
    ],
    "basis": "phantom key: Registries.FLOAT_PROVIDER_TYPE names the same registry in both releases; its values reach 1.21.11 code converted as for BuiltInRegistries.FLOAT_PROVIDER_TYPE"
+  },
+  "net/minecraft/class_2950.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "by": [
+    "net/minecraft/class_2950"
+   ],
+   "basis": "1.21.11's BlockBlobFeature (BlockStateConfiguration, blobs on dirt or stone) is this layer's facade (classRenames): 1.21.11 code constructing or extending it takes the Codec<BlockStateConfiguration> it passed; 26.1's BlockBlobFeature of a BlockBlobConfiguration is a different feature (forest_rock's 26.1 data) no 1.21.11 code names"
   }
  },
  "superRenames": {
