@@ -206,7 +206,12 @@
   "net/minecraft/class_1095.field_21863:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_21863",
   "net/minecraft/class_1095.field_5425:Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5425",
   "net/minecraft/class_1095.field_5426:Lnet/minecraft/class_809;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5426",
-  "net/minecraft/class_1095.field_5428:Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5428"
+  "net/minecraft/class_1095.field_5428:Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5428",
+  "net/minecraft/class_761.field_25274:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25274",
+  "net/minecraft/class_761.field_25275:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25275",
+  "net/minecraft/class_761.field_25276:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25276",
+  "net/minecraft/class_761.field_25277:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25277",
+  "net/minecraft/class_761.field_25278:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25278"
  },
  "superCtorReshapes": {
   "net/minecraft/class_583.<init>()V": {
@@ -1300,6 +1305,26 @@
     4
    ],
    "basis": "1.21.1 renderInner(display, subState, poseStack, buffers, light, interpolationProgress) is 1.21.2's renderInner(state, poseStack, buffers, light, interpolationProgress): the sub-state is the state's field extraction copied, the last argument the same value (javap both)"
+  },
+  "net/minecraft/class_757.method_3168(Lnet/minecraft/class_2960;)V": {
+   "to": "method_62904(Lnet/minecraft/class_2960;)V",
+   "args": [
+    0
+   ],
+   "basis": "GameRenderer.loadEffect(location) -> setPostEffect(id) (javap both bodies): both make the given post effect the active one (1.21.1 built the PostChain there and set effectActive; 1.21.2 records the id, sets effectActive, and ShaderManager builds the chain when it runs). The argument names the same effect, spelled <ns>:shaders/post/<name>.json in 1.21.1 and <ns>:<name> in 1.21.2"
+  },
+  "net/minecraft/class_584.method_17111(Lnet/minecraft/class_584$class_585;IFFFFF)V": {
+   "to": "method_17112(Lnet/minecraft/class_10051;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "ParrotModel's private setupAnim(State, tickCount, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch) -> setupAnim(ParrotRenderState) (javap both bodies: the same head-look, state switch and per-state poses, now reading pose / ages from the render state, run for the mob and, through ParrotOnShoulderLayer's state, on the shoulder; 1.21.2 first runs resetPose and prepare(pose)). Every value comes from the state, so only handlers taking no target arguments follow"
   }
  },
  "fieldRenames": {
@@ -1313,7 +1338,8 @@
   "net/minecraft/class_382$class_328.field_2007:F": "comp_3308",
   "net/minecraft/class_382$class_328.field_2006:F": "comp_3309",
   "net/minecraft/class_382$class_328.field_2005:F": "comp_3310",
-  "net/minecraft/class_382$class_328.field_20911:F": "comp_3311"
+  "net/minecraft/class_382$class_328.field_20911:F": "comp_3311",
+  "net/minecraft/class_761.field_4101:Lnet/minecraft/class_276;": "field_53080"
  },
  "mixinLedger": {
   "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_40570:Lnet/minecraft/class_7654;": "ModelBakery statics 1.21.2 dropped (its counterparts are MissingBlockModel's / the layer's fieldGetters): 1.21.2's ModelBakery <clinit> assigns no such field",
@@ -1523,7 +1549,13 @@
   "net/minecraft/class_761.method_3273(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V @ FIELD Lnet/minecraft/class_310;field_1724:Lnet/minecraft/class_746;": "1.21.2 LevelRenderer.setupRender repositions the view area from the camera position (Vec3.x() / y() / z() of camera.getPosition()) instead of the local player's getX / getY / getZ (javap both bodies); V's minecraft.player reads and position calls are gone",
   "net/minecraft/class_761.method_3273(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V @ INVOKE Lnet/minecraft/class_746;method_23317()D": "1.21.2 LevelRenderer.setupRender repositions the view area from the camera position (Vec3.x() / y() / z() of camera.getPosition()) instead of the local player's getX / getY / getZ (javap both bodies); V's minecraft.player reads and position calls are gone",
   "net/minecraft/class_761.method_3273(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V @ INVOKE Lnet/minecraft/class_746;method_23318()D": "1.21.2 LevelRenderer.setupRender repositions the view area from the camera position (Vec3.x() / y() / z() of camera.getPosition()) instead of the local player's getX / getY / getZ (javap both bodies); V's minecraft.player reads and position calls are gone",
-  "net/minecraft/class_761.method_3273(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V @ INVOKE Lnet/minecraft/class_746;method_23321()D": "1.21.2 LevelRenderer.setupRender repositions the view area from the camera position (Vec3.x() / y() / z() of camera.getPosition()) instead of the local player's getX / getY / getZ (javap both bodies); V's minecraft.player reads and position calls are gone"
+  "net/minecraft/class_761.method_3273(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V @ INVOKE Lnet/minecraft/class_746;method_23321()D": "1.21.2 LevelRenderer.setupRender repositions the view area from the camera position (Vec3.x() / y() / z() of camera.getPosition()) instead of the local player's getX / getY / getZ (javap both bodies); V's minecraft.player reads and position calls are gone",
+  "net/minecraft/class_761.method_3277()V": "createLightSky: 1.21.2 moved LevelRenderer's sky buffer set-up into SkyRenderer (class_9975): its constructor builds the light sky, dark sky and star buffers in private methods of that class (method_62301 / 62311 / 62313); LevelRenderer keeps no method holding this code (javap both classes), so a mixin would need SkyRenderer as its target. The rename candidate method_64059()V is an unrelated list clear",
+  "net/minecraft/class_761.method_3293()V": "createStars: 1.21.2 moved LevelRenderer's sky buffer set-up into SkyRenderer (class_9975): its constructor builds the light sky, dark sky and star buffers in private methods of that class (method_62301 / 62311 / 62313); LevelRenderer keeps no method holding this code (javap both classes), so a mixin would need SkyRenderer as its target. The rename candidate method_64059()V is an unrelated list clear",
+  "net/minecraft/class_761.method_3265()V": "createDarkSky: 1.21.2 moved LevelRenderer's sky buffer set-up into SkyRenderer (class_9975): its constructor builds the light sky, dark sky and star buffers in private methods of that class (method_62301 / 62311 / 62313); LevelRenderer keeps no method holding this code (javap both classes), so a mixin would need SkyRenderer as its target. The rename candidate method_64059()V is an unrelated list clear",
+  "net/minecraft/class_761.method_29365()V": "initTransparency: 1.21.2 has no Fabulous transparency set-up on LevelRenderer: the translucent/item_entity/particles/weather/clouds targets and the transparency post chain are frame-graph resources (LevelTargetBundle, PostChain from ShaderManager by id) allocated per frame; V's init/deinit pair and its RenderTarget fields have no W method (javap both bodies). The rename candidate method_64059()V is an unrelated list clear",
+  "net/minecraft/class_761.method_29701()V": "deinitTransparency: 1.21.2 has no Fabulous transparency set-up on LevelRenderer: the translucent/item_entity/particles/weather/clouds targets and the transparency post chain are frame-graph resources (LevelTargetBundle, PostChain from ShaderManager by id) allocated per frame; V's init/deinit pair and its RenderTarget fields have no W method (javap both bodies). The rename candidate method_64059()V is an unrelated list clear",
+  "net/minecraft/class_761.method_3243(Lnet/minecraft/class_4184;)V": "renderWorldBorder(Camera): 1.21.2 moved the world-border drawing into WorldBorderRenderer.render (class_9978), called from the frame pass with the border, camera position and render distance; LevelRenderer keeps no method holding it (javap both classes), so a mixin would need WorldBorderRenderer as its target. The rename candidate method_62209(Camera) is tickRain, unrelated code"
  },
  "callReshapes": {
   "net/minecraft/class_5772.method_33297(F)V": {
@@ -1549,6 +1581,68 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderAxolotlPoses#fullWeight()F"
    ],
    "basis": "the mirror-legs helper () -> (weight): AxolotlModel's private pose helper takes its state's weight in 1.21.2 (added last; returns early below 1e-5) and adds that share of the same pose 1.21.1 applied whole (javap both bodies); a 1.21.1 call asks for the whole pose: weight 1 (CbRenderAxolotlPoses)"
+  },
+  "net/minecraft/class_846$class_851.method_3651(Lnet/minecraft/class_2338;)Z": {
+   "desc": "(J)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#sectionNode(Lnet/minecraft/class_2338;)J"
+   ],
+   "basis": "RenderSection.doesChunkExistAt: 1.21.1 took a block position and reduced it to section x/z itself, 1.21.2 takes the SectionPos node and reads its x/z (javap both bodies); SectionPos.asLong(pos) is that node"
+  },
+  "net/minecraft/class_8679.method_52832(Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Z": {
+   "desc": "(JJ)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#sectionNode(Lnet/minecraft/class_2338;)J",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#sectionNode(Lnet/minecraft/class_2338;)J"
+   ],
+   "basis": "SectionOcclusionGraph.isInViewDistance: 1.21.1 took two block positions and reduced each to section x/z, 1.21.2 takes two SectionPos nodes and reads their x/z (javap both bodies)"
+  },
+  "net/minecraft/class_8679.method_52831(Lnet/minecraft/class_2338;Lnet/minecraft/class_846$class_851;Lnet/minecraft/class_2350;)Lnet/minecraft/class_846$class_851;": {
+   "desc": "(JLnet/minecraft/class_846$class_851;Lnet/minecraft/class_2350;)Lnet/minecraft/class_846$class_851;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#sectionNode(Lnet/minecraft/class_2338;)J",
+    "keep",
+    "keep"
+   ],
+   "ret": "keep",
+   "basis": "SectionOcclusionGraph.getRelativeFrom: the camera position, a block position reduced to sections in 1.21.1, is the camera's SectionPos node in 1.21.2 (javap both bodies: the same view-distance and |dy| tests, on section coordinates)"
+  },
+  "net/minecraft/class_757.method_3196(Lnet/minecraft/class_4184;FZ)D": {
+   "desc": "(Lnet/minecraft/class_4184;FZ)F",
+   "ops": [
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderGame#fovDouble(F)D",
+   "basis": "GameRenderer.getFov answers a float in 1.21.2 (same computation, javap both bodies); widened back to 1.21.1's double"
+  },
+  "net/minecraft/class_915.method_33434(Lnet/minecraft/class_1533;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1091;": {
+   "desc": "(ZLnet/minecraft/class_1799;)Lnet/minecraft/class_1091;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderGame#glowFrame(Lnet/minecraft/class_1533;)Z",
+    "keep"
+   ],
+   "ret": "keep",
+   "basis": "ItemFrameRenderer.getFrameModelResourceLoc: 1.21.1 tested frame.getType() == GLOW_ITEM_FRAME, 1.21.2 takes that answer (javap both bodies; the map test reads the stack in both)"
+  },
+  "net/minecraft/class_915.method_33433(Lnet/minecraft/class_1533;II)I": {
+   "desc": "(ZII)I",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderGame#glowFrame(Lnet/minecraft/class_1533;)Z",
+    "keep",
+    "keep"
+   ],
+   "basis": "ItemFrameRenderer.getLightVal: 1.21.1 tested frame.getType() == GLOW_ITEM_FRAME, 1.21.2 takes that answer (javap both bodies)"
+  },
+  "net/minecraft/class_1921.method_56848(Z)Lnet/minecraft/class_1921$class_4687;": {
+   "desc": "(ZZ)Lnet/minecraft/class_1921$class_4687;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes#cloudsCull()Z"
+   ],
+   "ret": "keep",
+   "basis": "RenderType's clouds builder gained a cull flag in 1.21.2 (true: CULL, false: NO_CULL; javap both bodies); 1.21.1's built NO_CULL, so false. 1.21.2's clouds draw no texture, so 1.21.1's clouds.png shard has no counterpart"
   }
  }
 }

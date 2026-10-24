@@ -104,4 +104,12 @@ public final class CbRenderTypes extends net.minecraft.class_4668 {
         }
         return entityGlintDirect;
     }
+
+    /**
+     * RenderType's private clouds builder: 1.21.1's createClouds(colorOnly) drew with NO_CULL; 1.21.2's takes a second
+     * flag that picks CULL when true (its outside-cloud types) and NO_CULL when false, so 1.21.1's builder is false
+     */
+    public static boolean cloudsCull() {
+        return false;
+    }
 }

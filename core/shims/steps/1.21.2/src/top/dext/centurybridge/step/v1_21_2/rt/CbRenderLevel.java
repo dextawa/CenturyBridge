@@ -113,4 +113,30 @@ public final class CbRenderLevel {
         renderer.method_22710(((CbRenderFrames.ResourcePool) gameRenderer).cb$resourcePool(), deltaTracker, renderBlockOutline, camera, gameRenderer,
             lightTexture, frustumMatrix, projectionMatrix);
     }
+
+    /*
+     * 1.21.1's private Fabulous render-target fields of LevelRenderer (read by mods' accessors). 1.21.2 keeps these
+     * targets in the frame's LevelTargetBundle; its public getters (the same getTranslucentTarget / getItemEntityTarget /
+     * ... 1.21.1 had, which returned exactly these fields) answer them, so the fields read as the getters do.
+     */
+
+    public static net.minecraft.class_276 field_25274(net.minecraft.class_761 renderer) {
+        return renderer.method_29360();
+    }
+
+    public static net.minecraft.class_276 field_25275(net.minecraft.class_761 renderer) {
+        return renderer.method_29361();
+    }
+
+    public static net.minecraft.class_276 field_25276(net.minecraft.class_761 renderer) {
+        return renderer.method_29362();
+    }
+
+    public static net.minecraft.class_276 field_25277(net.minecraft.class_761 renderer) {
+        return renderer.method_29363();
+    }
+
+    public static net.minecraft.class_276 field_25278(net.minecraft.class_761 renderer) {
+        return renderer.method_29364();
+    }
 }
