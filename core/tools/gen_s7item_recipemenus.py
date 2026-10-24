@@ -59,9 +59,9 @@ def sup(name):
     return "super" + name[0].upper() + name[1:]
 
 
-def main():
-    out = {"instanceRedirects": {}, "superRedirects": {}, "staticRedirects": {}, "adapterHooks": [],
-           "overrideHooks": []}
+def recipe_book_menus(out):
+    """RecipeBookMenu family -- integrated as s7rest's (the integration dropped these from this fragment); kept
+    for the record, not emitted: CbItemRecipeMenus' statics remain for s7rest's facade to call"""
     for shape, name, per_owner in MEMBERS:
         out["instanceRedirects"][RBM + "." + shape] = RT + "#" + name
         out["adapterHooks"].append({
@@ -115,7 +115,6 @@ def main():
                 "old": old, "new": new, "onlyUnder": owner, "guard": GUARD,
                 "basis": "1.21.1 RecipeBookMenu." + what + " of a crafting menu is 1.21.2's AbstractCraftingMenu."
                          + what + " (same use: the recipe placement's grid): the mod's override answers it"})
-    out["superCtorReshapes"] = {}
     for tail in ["", "Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;"]:
         old = ("(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;"
                + tail + ")V")
@@ -130,10 +129,12 @@ def main():
             "basis": "1.21.2's AbstractFurnaceMenu takes the recipe property set of its inputs: 1.21.2's own for the "
                      "vanilla cooking types, else canSmelt is 1.21.1's lookup (CbItemRecipeMenus.furnaceInputs, "
                      "CbItemFurnaceMenuMixin)"}
-    out["classRenames"] = {
-        "net/minecraft/class_2952": "top/dext/centurybridge/step/v1_21_2/facade/PlaceRecipe",
-        "net/minecraft/class_2955": "top/dext/centurybridge/step/v1_21_2/facade/ServerPlaceRecipe",
-    }
+
+
+def main():
+    out = {"instanceRedirects": {}, "superRedirects": {}, "staticRedirects": {}, "adapterHooks": [],
+           "overrideHooks": [], "superCtorReshapes": {}}
+    out["classRenames"] = {"net/minecraft/class_2955": "top/dext/centurybridge/step/v1_21_2/facade/ServerPlaceRecipe"}
     combiner(out)
     recipe_book(out)
     holders(out)

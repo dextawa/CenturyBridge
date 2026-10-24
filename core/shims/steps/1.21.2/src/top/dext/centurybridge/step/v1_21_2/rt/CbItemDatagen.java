@@ -89,4 +89,49 @@ public final class CbItemDatagen {
         return false;
     }
 
+
+    // ---- loot sub-provider helpers (dev-time datagen) ----
+
+    /**
+     * BlockLootSubProvider.HAS_SHEARS (1.21.1's static field_40604): MatchTool of an item predicate of shears, items
+     * resolved in the built-in registry -- 1.21.2 builds the same condition per provider (hasShears())
+     */
+    public static net.minecraft.class_5341.class_210 field_40604() {
+        return net.minecraft.class_223.method_945(net.minecraft.class_2073.class_2074.method_8973()
+            .method_8977(class_7923.field_41178, net.minecraft.class_1802.field_8868));
+    }
+
+    /** BlockLootSubProvider.createShearsOnlyDrop(item), static in 1.21.1: one roll of the item, only with shears */
+    public static net.minecraft.class_52.class_53 method_45995(class_1935 item) {
+        return net.minecraft.class_52.method_324().method_336(net.minecraft.class_55.method_347()
+            .method_352(net.minecraft.class_44.method_32448(1.0F)).method_356(field_40604())
+            .method_351(net.minecraft.class_77.method_411(item)));
+    }
+
+    /**
+     * EntityLootSubProvider.createSheepTable(wool), static in 1.21.1: a roll of the wool, then a roll of the sheep's
+     * default loot table (1.21.2 dispatches sheep loot by colour instead)
+     */
+    public static net.minecraft.class_52.class_53 method_46031(class_1935 wool) {
+        return net.minecraft.class_52.method_324()
+            .method_336(net.minecraft.class_55.method_347().method_352(net.minecraft.class_44.method_32448(1.0F))
+                .method_351(net.minecraft.class_77.method_411(wool)))
+            .method_336(net.minecraft.class_55.method_347().method_352(net.minecraft.class_44.method_32448(1.0F))
+                .method_351(net.minecraft.class_83.method_428(net.minecraft.class_1299.field_6115.method_16351().orElseThrow())));
+    }
+
+    /** BiomeDefaultFeatures.addDefaultSeagrass(builder) (1.21.1): the seagrass_simple placed feature at VEGETAL_DECORATION */
+    @SuppressWarnings("unchecked")
+    public static void method_16992(net.minecraft.class_5485.class_5495 builder) {
+        builder.method_30992(net.minecraft.class_2893.class_2895.field_13178,
+            (class_5321<net.minecraft.class_6796>) field_35975());
+    }
+
+
+    /** new VanillaRecipeProvider(output, registries) (1.21.1): the layer's 1.21.1 provider */
+    public static net.minecraft.class_7803 newVanillaRecipeProvider(net.minecraft.class_7784 output,
+            java.util.concurrent.CompletableFuture<net.minecraft.class_7225.class_7874> registries) {
+        return new top.dext.centurybridge.step.v1_21_2.facade.VanillaRecipeProvider(output, registries);
+    }
+
 }
