@@ -106,13 +106,16 @@ public final class MixinRepair {
             }
         }
         Set<String> out = new LinkedHashSet<>();
-        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(c));
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(aliasOf.getOrDefault(c, c)));
         while (!todo.isEmpty()) {
             for (String k : subIndex.getOrDefault(todo.pop(), List.of())) {
                 if (out.add(k)) todo.push(k);
             }
         }
-        return out;
+        if (aliasRenames.isEmpty()) return out;
+        Set<String> named = new LinkedHashSet<>();
+        for (String k : out) named.add(aliasRenames.getOrDefault(k, k));
+        return named;
     }
 
     /** does the code jar declare the class (its entry only, nothing parsed) */
@@ -120,11 +123,37 @@ public final class MixinRepair {
         return cache.get(owner) != null || code.getEntry(owner + ".class") != null;
     }
 
+    /**
+     * V's classes under the names a step's class renames give them where W adds that class in their
+     * place (Chain.mixinFollow, read back: new name -> V name): a mixin following its target there
+     * reads V's body as the converted mod will name it. Empty on every code model but V's.
+     */
+    private Map<String, String> aliasOf = Map.of();
+    private Map<String, String> aliasRenames = Map.of();
+
+    /** take V's class {@code from} as {@code renames.get(from)}, its references renamed the same way */
+    public void aliases(Map<String, String> renames) {
+        Map<String, String> back = new HashMap<>();
+        renames.forEach((from, to) -> back.put(to, from));
+        this.aliasOf = back;
+        this.aliasRenames = Map.copyOf(renames);
+        cache.keySet().removeIf(back::containsKey);
+    }
+
     public ClassNode target(String owner) {
         return cache.computeIfAbsent(owner, o -> {
             try {
                 ZipEntry e = code.getEntry(o + ".class");
-                if (e == null) return null;
+                if (e == null) {
+                    String v = aliasOf.get(o);
+                    ZipEntry ve = v == null ? null : code.getEntry(v + ".class");
+                    if (ve == null) return null;
+                    ClassNode cn = new ClassNode();
+                    new ClassReader(code.getInputStream(ve).readAllBytes()).accept(
+                        new org.objectweb.asm.commons.ClassRemapper(cn, new org.objectweb.asm.commons.SimpleRemapper(aliasRenames)),
+                        ClassReader.SKIP_FRAMES);
+                    return cn;
+                }
                 ClassNode cn = new ClassNode();
                 new ClassReader(code.getInputStream(e).readAllBytes()).accept(cn, ClassReader.SKIP_FRAMES);
                 return cn;

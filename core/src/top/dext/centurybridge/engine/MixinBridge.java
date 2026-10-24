@@ -400,6 +400,142 @@ final class MixinBridge {
 
     // ------------------------------------------------------------------ what W has
 
+    private Map<String, String> followBack;
+
+    /**
+     * The private members of a class a mixin follows into a class W adds ({@link Chain#mixinFollow}):
+     * W declares them again under new intermediary ids (AbstractBoat's status field is field_54433, V
+     * Boat's field_7702). Read off the two classes' same-named methods: the significant instructions
+     * aligned (longest common subsequence), each gap between aligned instructions of the same length on
+     * both sides paired in order; a V member of the class declared private, not declared by W's class,
+     * maps to the W member of the class (same kind, same descriptor as the converted jar spells it, not
+     * declared by V) standing in its place -- every time, and no other V member mapping there. Written
+     * into the step's fieldRenames / methodRenames under V's names where the wiring says nothing (only
+     * mixins reach a private member, so nothing else reads these keys). Returns the number written.
+     */
+    static int inferPrivateRenames(Chain chain, String from, String to) {
+        MixinRepair w = wcode(chain);
+        ClassNode vc = chain.sourceCode == null ? null : chain.sourceCode.target(to); // V's class, named as W's
+        ClassNode wc = w == null ? null : w.target(to);
+        if (vc == null || wc == null) {
+            return 0;
+        }
+        Map<String, String> back = new HashMap<>();
+        chain.mixinFollow().forEach((a, b) -> back.put(b, a));
+        org.objectweb.asm.commons.SimpleRemapper toV = new org.objectweb.asm.commons.SimpleRemapper(back);
+        Map<String, Set<String>> votes = new HashMap<>();
+        for (MethodNode vm : vc.methods) {
+            MethodNode wm = method(wc, vm.name, vm.desc);
+            if (wm == null || vm.instructions == null || wm.instructions == null) {
+                continue;
+            }
+            List<AbstractInsnNode> vi = memberInsns(vm), wi = memberInsns(wm);
+            List<String> vs = new ArrayList<>(), ws = new ArrayList<>();
+            vi.forEach(in -> vs.add(SiteMatch.sigOf(in)));
+            wi.forEach(in -> ws.add(SiteMatch.sigOf(in)));
+            int[] al = SiteMatch.align(vs, ws);
+            if (al == null) {
+                continue;
+            }
+            int pi = -1, pj = -1;
+            for (int i = 0; i <= vs.size(); i++) {
+                if (i < vs.size() && al[i] < 0) {
+                    continue;
+                }
+                int j = i < vs.size() ? al[i] : ws.size();
+                if (i - pi == j - pj) {
+                    for (int d = 1; d < i - pi; d++) {
+                        vote(votes, vi.get(pi + d), wi.get(pj + d), to, vc, wc, chain);
+                    }
+                }
+                pi = i;
+                pj = j;
+            }
+        }
+        Map<String, String> into = new HashMap<>();
+        Map<String, String> picked = new HashMap<>();
+        votes.forEach((vk, ws) -> {
+            if (ws.size() == 1) {
+                String wn = ws.iterator().next();
+                if (into.putIfAbsent(wn, vk) == null) {
+                    picked.put(vk, wn);
+                } else {
+                    picked.remove(into.get(wn));
+                }
+            }
+        });
+        int n = 0;
+        for (Map.Entry<String, String> e : picked.entrySet()) {
+            if (into.get(e.getValue()) == null || !into.get(e.getValue()).equals(e.getKey())) {
+                continue;
+            }
+            boolean field = e.getKey().contains(":");
+            String vname = e.getKey().substring(0, e.getKey().indexOf(field ? ':' : '('));
+            String vdesc = e.getKey().substring(vname.length() + (field ? 1 : 0));
+            String wname = e.getValue().substring(0, e.getValue().indexOf(field ? ':' : '('));
+            String key = from + "." + vname + (field ? ":" + toV.mapDesc(vdesc) : toV.mapMethodDesc(vdesc));
+            Map<String, String> m = field ? chain.fieldRenames : chain.methodRenames;
+            if (m.putIfAbsent(key, wname) == null) {
+                System.out.println("  mixin follow, private member read off the bodies: " + key + " -> " + to + "." + wname);
+                n++;
+            }
+        }
+        return n;
+    }
+
+    private static List<AbstractInsnNode> memberInsns(MethodNode m) {
+        List<AbstractInsnNode> out = new ArrayList<>();
+        for (AbstractInsnNode in : m.instructions) {
+            if (SiteMatch.sigOf(in) != null) {
+                out.add(in);
+            }
+        }
+        return out;
+    }
+
+    private static void vote(Map<String, Set<String>> votes, AbstractInsnNode v, AbstractInsnNode w, String owner,
+                             ClassNode vc, ClassNode wc, Chain chain) {
+        String vkey, wkey;
+        if (v instanceof FieldInsnNode a && w instanceof FieldInsnNode b && a.getOpcode() == b.getOpcode()
+                && a.owner.equals(owner) && b.owner.equals(owner) && !a.name.equals(b.name)
+                && chain.renamedDesc(a.desc).equals(b.desc)) {
+            FieldNode vf = vc.fields.stream().filter(f -> f.name.equals(a.name) && f.desc.equals(a.desc)).findFirst().orElse(null);
+            boolean wHasV = wc.fields.stream().anyMatch(f -> f.name.equals(a.name));
+            boolean vHasW = vc.fields.stream().anyMatch(f -> f.name.equals(b.name));
+            boolean wDecl = wc.fields.stream().anyMatch(f -> f.name.equals(b.name) && f.desc.equals(b.desc));
+            if (vf == null || (vf.access & Opcodes.ACC_PRIVATE) == 0 || wHasV || vHasW || !wDecl) {
+                return;
+            }
+            vkey = a.name + ":" + a.desc;
+            wkey = b.name + ":" + b.desc;
+        } else if (v instanceof MethodInsnNode a && w instanceof MethodInsnNode b && a.getOpcode() == b.getOpcode()
+                && a.owner.equals(owner) && b.owner.equals(owner) && !a.name.equals(b.name) && !a.name.startsWith("<")
+                && chain.renamedDesc(a.desc).equals(b.desc)) {
+            MethodNode vmn = method(vc, a.name, a.desc);
+            if (vmn == null || (vmn.access & Opcodes.ACC_PRIVATE) == 0 || method(wc, a.name, b.desc) != null
+                    || vc.methods.stream().anyMatch(x -> x.name.equals(b.name)) || method(wc, b.name, b.desc) == null) {
+                return;
+            }
+            vkey = a.name + a.desc;
+            wkey = b.name + b.desc;
+        } else {
+            return;
+        }
+        votes.computeIfAbsent(vkey, k -> new HashSet<>()).add(wkey);
+    }
+
+    /**
+     * The name the step's wiring knows a mixin target by: a target that followed its class rename into
+     * a class W adds (Chain.mixinFollow) is V's class to the wiring, whose keys are V's members.
+     */
+    private String vk(String owner) {
+        if (followBack == null) {
+            followBack = new HashMap<>();
+            chain.mixinFollow().forEach((from, to) -> followBack.put(to, from));
+        }
+        return followBack.getOrDefault(owner, owner);
+    }
+
     /** W's class with its real bodies (the step's code jar), or null */
     private ClassNode w(String owner) {
         MixinRepair c = wcode(chain);
@@ -582,21 +718,21 @@ final class MixinBridge {
             }
             return new CallFate("call reshape", name, r.newDesc, r, null, null, at);
         }
-        if (chain.coveredAnywhere(owner, nd)) {
+        if (chain.coveredAnywhere(vk(owner), nd)) {
             return new CallFate("restored by the step layer", name, desc, null, null, null, null);
         }
         if (isStatic) {
-            String rt = chain.redirectAnywhere(chain.staticRedirects, owner, nd);
+            String rt = chain.redirectAnywhere(chain.staticRedirects, vk(owner), nd);
             if (rt != null) {
                 return new CallFate("static redirect", name, desc, null, rt, null, null);
             }
         } else {
-            String ih = chain.instanceRedirectHome(chain.instanceRedirects, owner, nd);
+            String ih = chain.instanceRedirectHome(chain.instanceRedirects, vk(owner), nd);
             if (ih != null) {
                 return new CallFate("instance redirect", name, desc, null, chain.instanceRedirects.get(ih + "." + nd), ih, null);
             }
         }
-        String mrn = chain.methodRenames.get(owner + "." + nd);
+        String mrn = chain.methodRenames.get(vk(owner) + "." + nd);
         if (mrn != null) {
             Found at = wResolveMethod(owner, mrn, desc);
             if (at == null) {
@@ -619,8 +755,8 @@ final class MixinBridge {
      * was rejected).
      */
     private String fieldFate(String owner, String name, String desc, boolean isStatic, Refs refs, List<String> why) {
-        String key = owner + "." + name + ":" + desc;
-        if (chain.coveredAnywhere(owner, name + ":" + desc)) {
+        String key = vk(owner) + "." + name + ":" + desc;
+        if (chain.coveredAnywhere(vk(owner), name + ":" + desc)) {
             return "restored by the step layer";
         }
         if (isStatic) {
@@ -980,7 +1116,7 @@ final class MixinBridge {
             boolean isStatic = (f.access & Opcodes.ACC_STATIC) != 0;
             String what = "shadow field " + sn + "." + f.name + ":" + f.desc;
             Refs r = refs(f.name, f.desc, true);
-            String rn = chain.fieldRenames.get(target + "." + f.name + ":" + f.desc);
+            String rn = chain.fieldRenames.get(vk(target) + "." + f.name + ":" + f.desc);
             if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, f.desc))) {
                 for (FieldInsnNode fi : r.fieldInsns) {
                     fi.name = rn;
@@ -1014,7 +1150,7 @@ final class MixinBridge {
                 return;
             }
             // a write a static field setter takes does not store into W's field: its finality does not matter
-            if (r.puts > 0 && !(isStatic && chain.staticFieldSetters.containsKey(target + "." + f.name + ":" + f.desc))) {
+            if (r.puts > 0 && !(isStatic && chain.staticFieldSetters.containsKey(vk(target) + "." + f.name + ":" + f.desc))) {
                 boolean mutable = has(f.visibleAnnotations, f.invisibleAnnotations, MUTABLE);
                 Found at = wResolveField(target, rn != null ? rn : f.name, f.desc);
                 if (mutable || at != null && (at.access() & Opcodes.ACC_FINAL) != 0) {
@@ -1234,7 +1370,7 @@ final class MixinBridge {
                 return;
             }
             String what = "constructor invoker " + sn + "." + m.name + m.desc;
-            String key = target + ".<init>" + ctor;
+            String key = vk(target) + ".<init>" + ctor;
             String factory = chain.ctorRedirects.get(key);
             if (factory != null) {
                 InsnList in = concrete(m, an);
@@ -1361,7 +1497,7 @@ final class MixinBridge {
                 return;
             }
             String what = "accessor " + sn + "." + m.name + m.desc;
-            String fkey = target + "." + name + ":" + fdesc;
+            String fkey = vk(target) + "." + name + ":" + fdesc;
             String rn = chain.fieldRenames.get(fkey);
             if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, fdesc))) {
                 pin(an, key, respell(mapped, rn, spec.contains(":") ? fdesc : null));
@@ -1403,7 +1539,7 @@ final class MixinBridge {
             } else {
                 String fname = rn != null ? rn : name;
                 Found at = wResolveField(target, fname, fdesc);
-                boolean covered = rn == null && chain.coveredAnywhere(target, name + ":" + fdesc);
+                boolean covered = rn == null && chain.coveredAnywhere(vk(target), name + ":" + fdesc);
                 if (at == null && !covered) {
                     if (rn != null) {
                         left.add(what + ": renamed to " + rn + ", which does not resolve on " + shortName(target) + " in " + chain.to);
@@ -1448,7 +1584,7 @@ final class MixinBridge {
                 return;
             }
             String what = "overwrite " + sn + "." + m.name + m.desc;
-            String rn = chain.methodRenames.get(target + "." + m.name + m.desc);
+            String rn = chain.methodRenames.get(vk(target) + "." + m.name + m.desc);
             if (rn != null && Boolean.TRUE.equals(wDeclares(target, rn, m.desc))) {
                 Refs r = refs(m.name, m.desc, false);
                 if (!r.handles.isEmpty()) {
@@ -1537,7 +1673,7 @@ final class MixinBridge {
                 MethodNode vmeth = vm.get(0);
                 String where = "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "." + vmeth.name + vmeth.desc;
                 List<String> why = new ArrayList<>();
-                Fate fate = selectorFate(target, vmeth.name, vmeth.desc, why);
+                Fate fate = selectorFate(vk(target), vmeth.name, vmeth.desc, why);
                 if (fate == null && method(wt, vmeth.name, vmeth.desc) == null) {
                     // no wiring for it, or wiring for mods' overrides that cannot carry an injector: where W keeps its code
                     List<String> bwhy = new ArrayList<>();
@@ -2000,7 +2136,10 @@ final class MixinBridge {
             }
             switch (value) {
                 case "INVOKE", "FIELD" -> {
-                    String nt = "L" + na.owner() + ";" + na.name() + (value.equals("FIELD") ? ":" : "") + na.desc();
+                    if (!na.kind().equals(value)) {
+                        setValue(at, "value", na.kind()); // a positional @Inject's call re-described as a field read, or back
+                    }
+                    String nt = "L" + na.owner() + ";" + na.name() + (na.kind().equals("FIELD") ? ":" : "") + na.desc();
                     if (t != null && ownKey(t)) {
                         MixinRepair.refmapPut(table, t, nt);
                         refmapDirty = true;
@@ -2073,7 +2212,10 @@ final class MixinBridge {
             List<AbstractInsnNode> sites = a.ordinal() >= 0 ? List.of(vo.get(a.ordinal())) : vo;
             List<AbstractInsnNode> found = new ArrayList<>();
             for (AbstractInsnNode site : sites) {
-                AbstractInsnNode c = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in));
+                // a positional @Inject marks a place: a value read there (a getter call re-described as a field
+                // read of a render state) stands as well as a call of the same kind; operand-taking ones need the kind
+                AbstractInsnNode c = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in)
+                    || !operands && SiteMatch.valueRead(site) && SiteMatch.valueRead(in));
                 if (c == null) {
                     why.add("W's body has no single instruction of its kind between the same neighbours ("
                         + (sites.size() == 1 ? "the site" : found.size() + " of " + sites.size() + " sites found") + ")");

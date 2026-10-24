@@ -329,6 +329,14 @@ public final class SiteMatch {
         return c != null && d != null && !(c instanceof Type) && c.getClass() == d.getClass();
     }
 
+    /** a read of a value: a call returning one (no constructor), or a GETFIELD / GETSTATIC */
+    public static boolean valueRead(AbstractInsnNode in) {
+        if (in instanceof MethodInsnNode mi) {
+            return !mi.name.equals("<init>") && Type.getReturnType(mi.desc).getSort() != Type.VOID;
+        }
+        return in instanceof FieldInsnNode && (in.getOpcode() == Opcodes.GETFIELD || in.getOpcode() == Opcodes.GETSTATIC);
+    }
+
     /** some neighbour within k is a call, field access, type instruction, constant or invokedynamic */
     private static boolean informative(List<String> s, int at, int k) {
         for (int d = -k; d <= k; d++) {
