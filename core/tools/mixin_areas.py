@@ -2,13 +2,15 @@
 Mojang name (the last release that had the class, data/mappings/inter-to-mojang-classes.tsv; 26.x owners
 are already Mojang names).
 
-  python mixin_areas.py <open-mixin.tsv | cause-mixin.tsv> [--out <dir>] [--area NAME=REGEX ...]
+  python mixin_areas.py <open-mixin.tsv | cause-mixin.tsv> [--out <dir>] [--area NAME=REGEX ...] [--wiring <step wiring.json>]
 
 With no --area, the default table below is used, first match wins and every row lands in exactly one area
 ("other" catches the rest). With --area (repeatable) only those areas are reported, each filtered by its
 regex exactly as step_check filters (an agent's own area regex gives that agent's rows). Prints rows,
 distinct targets and the top causes per area (cause-mixin.tsv carries a cause column; open-mixin.tsv
-its "now" fate); --out writes <dir>/<area>.tsv with the input's header and the area's rows.
+its "now" fate); --out writes <dir>/<area>.tsv with the input's header and the area's rows. --wiring
+leaves out the rows the step's mixinLedger (base file and fragments, gen_mixin_ledger.py) already writes
+down as having no hook point in W: what remains is the area's work list.
 """
 import collections
 import os
@@ -48,10 +50,14 @@ def main():
     src = args[0]
     out = None
     areas = []
+    wiring = None
     i = 1
     while i < len(args):
         if args[i] == "--out":
             out = args[i + 1]
+            i += 2
+        elif args[i] == "--wiring":
+            wiring = args[i + 1]
             i += 2
         elif args[i] == "--area":
             n, r = args[i + 1].split("=", 1)
@@ -74,6 +80,15 @@ def main():
         col = {n: k for k, n in enumerate(head.split("\t"))}
         rows = [l.rstrip("\n").split("\t") for l in f]
     why = "cause" if "cause" in col else "now"
+    led = {}
+    if wiring:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from gen_mixin_ledger import ledger_of
+        led = ledger_of(wiring)
+        before = len(rows)
+        rows = [r for r in rows if not (r[col["owner"]] in led or f"{r[col['owner']]}.{r[col['target']]}" in led
+                                       or f"{r[col['owner']]}.{r[col['target']]} @ {r[col['anchor']]}" in led)]
+        print(f"{before - len(rows)} ledgered rows left out (mixinLedger of {wiring})")
     by = collections.OrderedDict((n, []) for n, _ in areas)
     for r in rows:
         m = r[col["mojang"]] if "mojang" in col else moj(r[col["owner"]])
