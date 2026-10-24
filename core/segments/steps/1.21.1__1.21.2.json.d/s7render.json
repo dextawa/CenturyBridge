@@ -916,6 +916,42 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands.left(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderHands$LegacyLeft;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;Z)V",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 PlayerRenderer.render(Right|Left)Hand(.., player), 1.21.2's (.., skin, sleeveVisible): a mod renderer's override answers 1.21.2's calls with the local player (CbRenderHands)"
+  },
+  {
+   "old": "method_49052(Lnet/minecraft/class_8113;Ljava/lang/Object;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "new": "method_49052(Lnet/minecraft/class_10011;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "onlyUnder": "net/minecraft/class_8138",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays.renderInner(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays$Legacy;Lnet/minecraft/class_10011;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 DisplayRenderer.renderInner(display, subState, ...), 1.21.2's renderInner(state, ...): a mod renderer's override answers 1.21.2's calls with the display of the state and getSubState(display), as 1.21.1's render passed them (CbRenderDisplays)"
+  },
+  {
+   "old": "method_49054(Lnet/minecraft/class_8113$class_8115;Lnet/minecraft/class_8113$class_8115$class_8225;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "new": "method_49054(Lnet/minecraft/class_10003;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "onlyUnder": "net/minecraft/class_8138$class_8139",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays$LegacyBlock",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays.renderBlock(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays$LegacyBlock;Lnet/minecraft/class_10003;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 class_8139.renderInner(display, subState, ...), 1.21.2's renderInner(state, ...): a mod renderer's override answers 1.21.2's calls (CbRenderDisplays)"
+  },
+  {
+   "old": "method_49055(Lnet/minecraft/class_8113$class_8122;Lnet/minecraft/class_8113$class_8122$class_8226;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "new": "method_49055(Lnet/minecraft/class_10038;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "onlyUnder": "net/minecraft/class_8138$class_8140",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays$LegacyItem",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays.renderItem(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays$LegacyItem;Lnet/minecraft/class_10038;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 class_8140.renderInner(display, subState, ...), 1.21.2's renderInner(state, ...): a mod renderer's override answers 1.21.2's calls (CbRenderDisplays)"
+  },
+  {
+   "old": "method_49056(Lnet/minecraft/class_8113$class_8123;Lnet/minecraft/class_8113$class_8123$class_8230;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "new": "method_49056(Lnet/minecraft/class_10071;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "onlyUnder": "net/minecraft/class_8138$class_8141",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays$LegacyText",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays.renderText(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays$LegacyText;Lnet/minecraft/class_10071;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 class_8141.renderInner(display, subState, ...), 1.21.2's renderInner(state, ...): a mod renderer's override answers 1.21.2's calls (CbRenderDisplays)"
   }
  ],
  "covers": [
@@ -1033,7 +1069,18 @@
   "net/minecraft/class_761.method_60889(Lnet/minecraft/class_2338;)V",
   "net/minecraft/class_769.method_3330(DD)V",
   "net/minecraft/class_591.method_2824(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;II)V",
-  "net/minecraft/class_591.method_2823(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;II)V"
+  "net/minecraft/class_591.method_2823(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;II)V",
+  "net/minecraft/class_8138.method_49921(Lnet/minecraft/class_8113;)Ljava/lang/Object;",
+  "net/minecraft/class_8138.method_49052(Lnet/minecraft/class_8113;Ljava/lang/Object;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+  "net/minecraft/class_8138$class_8139.method_49922(Lnet/minecraft/class_8113$class_8115;)Lnet/minecraft/class_8113$class_8115$class_8225;",
+  "net/minecraft/class_8138$class_8139.method_49921(Lnet/minecraft/class_8113;)Ljava/lang/Object;",
+  "net/minecraft/class_8138$class_8139.method_49054(Lnet/minecraft/class_8113$class_8115;Lnet/minecraft/class_8113$class_8115$class_8225;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+  "net/minecraft/class_8138$class_8140.method_49923(Lnet/minecraft/class_8113$class_8122;)Lnet/minecraft/class_8113$class_8122$class_8226;",
+  "net/minecraft/class_8138$class_8140.method_49921(Lnet/minecraft/class_8113;)Ljava/lang/Object;",
+  "net/minecraft/class_8138$class_8140.method_49055(Lnet/minecraft/class_8113$class_8122;Lnet/minecraft/class_8113$class_8122$class_8226;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+  "net/minecraft/class_8138$class_8141.method_49924(Lnet/minecraft/class_8113$class_8123;)Lnet/minecraft/class_8113$class_8123$class_8230;",
+  "net/minecraft/class_8138$class_8141.method_49921(Lnet/minecraft/class_8113;)Ljava/lang/Object;",
+  "net/minecraft/class_8138$class_8141.method_49056(Lnet/minecraft/class_8113$class_8123;Lnet/minecraft/class_8113$class_8123$class_8230;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V"
  ],
  "ledger": {
   "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;": "getVertexProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
@@ -1217,6 +1264,42 @@
     -1
    ],
    "basis": "1.21.1 LevelRenderer.renderClouds is 1.21.2's clouds pass body method_62205 (it hands the CloudRenderer what 1.21.1's renderClouds drew from: colour, option, height, the frustum and projection matrices, camera position, ticks)"
+  },
+  "net/minecraft/class_8138$class_8139.method_49054(Lnet/minecraft/class_8113$class_8115;Lnet/minecraft/class_8113$class_8115$class_8225;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V": {
+   "to": "method_49054(Lnet/minecraft/class_10003;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "args": [
+    -1,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "1.21.1 renderInner(display, subState, poseStack, buffers, light, interpolationProgress) is 1.21.2's renderInner(state, poseStack, buffers, light, interpolationProgress): the sub-state is the state's field extraction copied, the last argument the same value (javap both)"
+  },
+  "net/minecraft/class_8138$class_8140.method_49055(Lnet/minecraft/class_8113$class_8122;Lnet/minecraft/class_8113$class_8122$class_8226;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V": {
+   "to": "method_49055(Lnet/minecraft/class_10038;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "args": [
+    -1,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "1.21.1 renderInner(display, subState, poseStack, buffers, light, interpolationProgress) is 1.21.2's renderInner(state, poseStack, buffers, light, interpolationProgress): the sub-state is the state's field extraction copied, the last argument the same value (javap both)"
+  },
+  "net/minecraft/class_8138$class_8141.method_49056(Lnet/minecraft/class_8113$class_8123;Lnet/minecraft/class_8113$class_8123$class_8230;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V": {
+   "to": "method_49056(Lnet/minecraft/class_10071;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "args": [
+    -1,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "1.21.1 renderInner(display, subState, poseStack, buffers, light, interpolationProgress) is 1.21.2's renderInner(state, poseStack, buffers, light, interpolationProgress): the sub-state is the state's field extraction copied, the last argument the same value (javap both)"
   }
  },
  "fieldRenames": {
@@ -1253,6 +1336,8 @@
   "net/minecraft/class_758.method_3211(Lnet/minecraft/class_4184;Lnet/minecraft/class_758$class_4596;FZF)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V": "1.21.2 sets the fog as one FogParameters value (RenderSystem.setShaderFog / getShaderFog only): FogRenderer computes and returns it and no 1.21.2 body calls a per-field fog setter (javap: RenderSystem, FogRenderer 1.21.2)",
   "net/minecraft/class_758.method_3212()V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogColor(FFF)V": "1.21.2 sets the fog as one FogParameters value (RenderSystem.setShaderFog / getShaderFog only): FogRenderer computes and returns it and no 1.21.2 body calls a per-field fog setter (javap: RenderSystem, FogRenderer 1.21.2)",
   "net/minecraft/class_761.method_22710(Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;applyModelViewMatrix()V": "1.21.2's RenderSystem has no applyModelViewMatrix: shaders read the model-view stack itself (getModelViewMatrix), so no 1.21.2 body has the apply step this anchor stood at (javap: RenderSystem 1.21.2)",
-  "net/minecraft/class_554.method_45703(Lnet/minecraft/class_5610;)V": "1.21.2's BoatModel.createChildren is 1.21.1's minus its last part, water_patch (1.21.2 builds it in createWaterPatch, a layer of its own; the layer adds it back for mods' calls), and minus the five constants 1.21.1 stored in unused locals at entry (bipush 32/6/20/4/28): every site the matcher lost is one of those (javap, both bodies); the remaining sites are matched"
+  "net/minecraft/class_554.method_45703(Lnet/minecraft/class_5610;)V": "1.21.2's BoatModel.createChildren is 1.21.1's minus its last part, water_patch (1.21.2 builds it in createWaterPatch, a layer of its own; the layer adds it back for mods' calls), and minus the five constants 1.21.1 stored in unused locals at entry (bipush 32/6/20/4/28): every site the matcher lost is one of those (javap, both bodies); the remaining sites are matched",
+  "net/minecraft/class_549.method_32010(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "AbstractEquineModel.createBodyMesh: 1.21.2's is 1.21.1's without the four baby-leg parts (left/right hind/front_baby_leg; 1.21.2 builds babies from the baby layer instead): javap shows the same part names in the same order with those four removed, and the matcher lost exactly their sites (part definitions 23 -> 19)",
+  "net/minecraft/class_549.<init>(Lnet/minecraft/class_630;)V": "AbstractEquineModel(root): 1.21.2's constructor no longer fetches the four baby-leg parts (getChild 18 -> 14) and no longer passes AgeableListModel's young-scaling flag (the leading iconst_1: 1.21.2's model is not an AgeableListModel, the baby scaling is the layer's BABY_TRANSFORMER): the lost sites are those (javap, both bodies)"
  }
 }
