@@ -1659,6 +1659,13 @@ final class MixinBridge {
                 if (!wm.isEmpty()) {
                     return new Selection(h, an, vt == null ? List.of() : s.match(vt), wm);
                 }
+                // a member the layer restores on the W class (LayerMembers): the selector names a method that
+                // exists at runtime, nothing moves under it (MixinJudge counts it by the vanilla read path)
+                if (s.desc() != null && !chain.layerMembers.match(target, s).isEmpty()) {
+                    injected("@" + kind + " " + sn + "." + h.name, "@" + kind + " " + sn + "." + h.name + " -> "
+                        + shortName(target) + "." + s.name() + s.desc() + ": the layer's restored member");
+                    return null;
+                }
             }
             if (vt == null || itf) {
                 return null; // which V method was meant cannot be read / an interface mixin's injectors: not carried
