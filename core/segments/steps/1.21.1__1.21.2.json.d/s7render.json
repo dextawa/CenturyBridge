@@ -46,7 +46,8 @@
   "net/minecraft/class_883": "top/dext/centurybridge/step/v1_21_2/facade/ChestedHorseRenderer",
   "net/minecraft/class_7755": "top/dext/centurybridge/step/v1_21_2/facade/WaterPatchModel",
   "net/minecraft/class_944": "top/dext/centurybridge/step/v1_21_2/facade/ShulkerHeadLayer",
-  "net/minecraft/class_793$class_6246": "top/dext/centurybridge/step/v1_21_2/facade/BlockModelLoopException"
+  "net/minecraft/class_793$class_6246": "top/dext/centurybridge/step/v1_21_2/facade/BlockModelLoopException",
+  "net/minecraft/class_9824$class_7777": "top/dext/centurybridge/step/v1_21_2/facade/BlockStateLoadedJson"
  },
  "facadeGaps": {
   "net/minecraft/class_790$class_791.field_4243:Lcom/google/gson/Gson;": "1.21.1 BlockModelDefinition.Context's own state, unreachable to a mod (protected in a final class; a mod's access widener never applies to a CenturyBridge class): the facade keeps the definition behind its getter and setter, and parses through 1.21.2's BlockModelDefinition.GSON, whose multipart is the selectors the layer builds 1.21.1's MultiPart from (CbRenderBlockDefs)",
@@ -186,11 +187,14 @@
   "net/minecraft/class_6367.<init>(IIZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets#textureTarget",
   "net/minecraft/class_284.<init>(Ljava/lang/String;IILnet/minecraft/class_3679;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost#uniform",
   "net/minecraft/class_330.<init>(Lnet/minecraft/class_1060;Lnet/minecraft/class_9443;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost#mapRenderer",
-  "net/minecraft/class_382$class_328.<init>(FFFFFFFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#glyphEffect"
+  "net/minecraft/class_382$class_328.<init>(FFFFFFFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#glyphEffect",
+  "net/minecraft/class_9824.<init>(Ljava/util/Map;Lnet/minecraft/class_3695;Lnet/minecraft/class_1100;Lnet/minecraft/class_324;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockStates#create",
+  "net/minecraft/class_1088.<init>(Lnet/minecraft/class_324;Lnet/minecraft/class_3695;Ljava/util/Map;Ljava/util/Map;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBakery#create"
  },
  "fieldRedirects": {
   "net/minecraft/class_5944.field_32778:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders",
-  "net/minecraft/class_998.field_32946:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes"
+  "net/minecraft/class_998.field_32946:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
+  "net/minecraft/class_9824.field_52260:Lnet/minecraft/class_7654;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockStates"
  },
  "fieldGetters": {
   "net/minecraft/class_1088.field_5374:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
@@ -891,6 +895,31 @@
     6
    ],
    "basis": "1.21.1 QuadrupedModel(root, scaleHead, babyYHeadOffset, babyZHeadOffset, babyHeadScale, babyBodyScale, bodyYOffset) was an AgeableListModel scaling a young entity's head and body parts; 1.21.2's QuadrupedModel(root) bakes babies from another layer: the root goes to 1.21.2's constructor, the six values to the model, which draws as 1.21.1's AgeableListModel did (CbRenderQuadruped)"
+  },
+  "net/minecraft/class_9824.<init>(Ljava/util/Map;Lnet/minecraft/class_3695;Lnet/minecraft/class_1100;Lnet/minecraft/class_324;Ljava/util/function/BiConsumer;)V": {
+   "desc": "(Lnet/minecraft/class_1100;)V",
+   "ops": [
+    "keep:2"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockStates#legacy(Lnet/minecraft/class_9824;Ljava/util/Map;Lnet/minecraft/class_3695;Lnet/minecraft/class_324;Ljava/util/function/BiConsumer;)V",
+   "postArgs": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "basis": "1.21.1 BlockStateModelLoader(blockStates, profiler, missingModel, blockColors, output); 1.21.2's takes the missing model: the other arguments go to the loader, whose 1.21.1 loadAllBlockStates / getModelGroups run over them (CbRenderBlockStates)"
+  },
+  "net/minecraft/class_1088.<init>(Lnet/minecraft/class_324;Lnet/minecraft/class_3695;Ljava/util/Map;Ljava/util/Map;)V": {
+   "desc": "(Ljava/util/Map;Ljava/util/Map;Lnet/minecraft/class_1100;)V",
+   "ops": [
+    "conv:0,1,2,3 top/dext/centurybridge/step/v1_21_2/rt/CbRenderBakery#topModels(Lnet/minecraft/class_324;Lnet/minecraft/class_3695;Ljava/util/Map;Ljava/util/Map;)Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderBakery#referencedModels()Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderBakery#missingModel()Lnet/minecraft/class_1100;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBakery#setup(Lnet/minecraft/class_1088;)V",
+   "postArgs": [],
+   "basis": "1.21.1 ModelBakery(blockColors, profiler, modelResources, blockStateResources) discovered every model itself; 1.21.2's takes the discovery's top and referenced models and the missing model: 1.21.1's arguments run 1.21.2's discovery order once (CbRenderBakery)"
   }
  },
  "overrideHooks": [
@@ -1288,7 +1317,10 @@
   "net/minecraft/class_799.method_3472()Lnet/minecraft/class_2960;",
   "net/minecraft/class_799$class_5826.method_33693()F",
   "net/minecraft/class_799.method_33690()Ljava/util/stream/Stream;",
-  "net/minecraft/class_799$class_5826.method_33692()Lnet/minecraft/class_2960;"
+  "net/minecraft/class_799$class_5826.method_33692()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_9824.method_61051()V",
+  "net/minecraft/class_9824.method_61069()Lit/unimi/dsi/fastutil/objects/Object2IntMap;",
+  "net/minecraft/class_1088.method_21605()Lit/unimi/dsi/fastutil/objects/Object2IntMap;"
  ],
  "ledger": {
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires OnLoad while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)",
@@ -1821,6 +1853,57 @@
     7
    ],
    "basis": "renderArmWithItem(entity, stack, context, arm, ..) -> 1.21.2's (state, bakedModel, stack, context, arm, ..), the method vanilla's layer render calls (javap both: the same hand transform, rotations and offset); the entity is the state's, so only handlers not taking it follow"
+  },
+  "net/minecraft/class_7751.method_45705(Lnet/minecraft/class_7689;FFF)V": {
+   "to": "method_45705(Lnet/minecraft/class_10007;FF)V",
+   "args": [
+    -1,
+    1,
+    2,
+    -1
+   ],
+   "basis": "CamelModel.applyHeadRotation(camel, netHeadYaw, headPitch, ageInTicks) -> (state, yRot, xRot): the same clamps and rotations (javap both), the jump cooldown and age read off the state"
+  },
+  "net/minecraft/class_7280.method_42736(Lnet/minecraft/class_7260;FF)V": {
+   "to": "method_42736(Lnet/minecraft/class_10081;F)V",
+   "args": [
+    -1,
+    1,
+    -1
+   ],
+   "basis": "WardenModel.animateTendrils(warden, ageInTicks, partialTick) -> (state, ageInTicks): the same tendril swing (javap both), the tendril animation read off the state instead of warden.getTendrilAnimation(partialTick)"
+  },
+  "net/minecraft/class_825.method_3558(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_630;Lnet/minecraft/class_2350;Lnet/minecraft/class_4730;IIZ)V": {
+   "to": "method_3558(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_3879;Lnet/minecraft/class_2350;Lnet/minecraft/class_4730;IIZ)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "BedRenderer.renderPiece(poseStack, buffers, part, direction, material, light, overlay, foot): 1.21.2 takes the head/foot Model where 1.21.1 took its ModelPart, the rest the same"
+  },
+  "net/minecraft/class_1092.method_45883(Lnet/minecraft/class_3695;Ljava/util/Map;Lnet/minecraft/class_1088;)Lnet/minecraft/class_1092$class_7779;": {
+   "to": "method_45883(Lnet/minecraft/class_3695;Ljava/util/Map;Lnet/minecraft/class_1088;Lit/unimi/dsi/fastutil/objects/Object2IntMap;)Lnet/minecraft/class_1092$class_7779;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "ModelManager.loadModels(profiler, atlases, bakery): 1.21.2 also takes the model groups 1.21.1 read from the bakery (bakery.getModelGroups()); the same bake and reload state"
+  },
+  "net/minecraft/class_4915.method_48519(Lnet/minecraft/class_2960;Ljava/util/Map;Lnet/minecraft/class_6880;)Lcom/google/gson/JsonObject;": {
+   "to": "method_48519(Lnet/minecraft/class_2960;Ljava/util/Map;Lnet/minecraft/class_2960;)Lcom/google/gson/JsonObject;",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "ItemModelGenerators.generateBaseArmorTrimTemplate(id, textures, armor material holder) -> (id, textures, material id): the same trim override json, the material named by its id"
   }
  },
  "fieldRenames": {
@@ -2051,7 +2134,32 @@
   "net/minecraft/class_761.method_3265()V": "createDarkSky: 1.21.2 moved LevelRenderer's sky buffer set-up into SkyRenderer (class_9975): its constructor builds the light sky, dark sky and star buffers in private methods of that class (method_62301 / 62311 / 62313); LevelRenderer keeps no method holding this code (javap both classes), so a mixin would need SkyRenderer as its target. The rename candidate method_64059()V is an unrelated list clear",
   "net/minecraft/class_761.method_29365()V": "initTransparency: 1.21.2 has no Fabulous transparency set-up on LevelRenderer: the translucent/item_entity/particles/weather/clouds targets and the transparency post chain are frame-graph resources (LevelTargetBundle, PostChain from ShaderManager by id) allocated per frame; V's init/deinit pair and its RenderTarget fields have no W method (javap both bodies). The rename candidate method_64059()V is an unrelated list clear",
   "net/minecraft/class_761.method_29701()V": "deinitTransparency: 1.21.2 has no Fabulous transparency set-up on LevelRenderer: the translucent/item_entity/particles/weather/clouds targets and the transparency post chain are frame-graph resources (LevelTargetBundle, PostChain from ShaderManager by id) allocated per frame; V's init/deinit pair and its RenderTarget fields have no W method (javap both bodies). The rename candidate method_64059()V is an unrelated list clear",
-  "net/minecraft/class_761.method_3243(Lnet/minecraft/class_4184;)V": "renderWorldBorder(Camera): 1.21.2 moved the world-border drawing into WorldBorderRenderer.render (class_9978), called from the frame pass with the border, camera position and render distance; LevelRenderer keeps no method holding it (javap both classes), so a mixin would need WorldBorderRenderer as its target. The rename candidate method_62209(Camera) is tickRain, unrelated code"
+  "net/minecraft/class_761.method_3243(Lnet/minecraft/class_4184;)V": "renderWorldBorder(Camera): 1.21.2 moved the world-border drawing into WorldBorderRenderer.render (class_9978), called from the frame pass with the border, camera position and render distance; LevelRenderer keeps no method holding it (javap both classes), so a mixin would need WorldBorderRenderer as its target. The rename candidate method_62209(Camera) is tickRain, unrelated code",
+  "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_5371:Ljava/lang/String;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_5374:Lnet/minecraft/class_2960;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_5389:Lnet/minecraft/class_793;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_5400:Lnet/minecraft/class_793;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Ljava/lang/String;replace(CC)Ljava/lang/String;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Ljava/util/Map;of(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_1047;method_4539()Lnet/minecraft/class_2960;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_1091;<init>(Lnet/minecraft/class_2960;Ljava/lang/String;)V": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_156;method_654(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_2960;method_12832()Ljava/lang/String;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_7654;method_45114(Ljava/lang/String;)Lnet/minecraft/class_7654;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_793;method_3430(Ljava/lang/String;)Lnet/minecraft/class_793;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ NEW net/minecraft/class_1091": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ FIELD Lnet/minecraft/class_293;field_1600:I": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ FIELD Lnet/minecraft/class_293;field_1602:Ljava/util/List;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;<init>(Ljava/lang/String;)V": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;append(C)Ljava/lang/StringBuilder;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;append(I)Ljava/lang/StringBuilder;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;append(Ljava/lang/Object;)Ljava/lang/StringBuilder;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;toString()Ljava/lang/String;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/util/List;get(I)Ljava/lang/Object;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/util/List;size()I": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Lnet/minecraft/class_293;method_60835(Lnet/minecraft/class_296;)I": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ NEW java/lang/StringBuilder": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it"
  },
  "callReshapes": {
   "net/minecraft/class_5772.method_33297(F)V": {

@@ -226,6 +226,8 @@
     "CbRenderQuadrupedMixin",
     "CbRenderItemOverrideMixin",
     "CbRenderItemOverridePredicateMixin",
+    "CbRenderBlockStateLoaderMixin",
+    "CbRenderBakeryMixin",
     "CbRenderGlyphMixin",
     "CbRenderHeadLayerMixin",
     "CbRenderHumanoidArm564Mixin",

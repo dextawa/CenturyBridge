@@ -187,3 +187,5 @@ extendable class net/minecraft/class_799$class_5826
 extendable method net/minecraft/class_799$class_5826 equals (Ljava/lang/Object;)Z
 extendable method net/minecraft/class_799$class_5826 hashCode ()I
 extendable method net/minecraft/class_799$class_5826 toString ()Ljava/lang/String;
+# s7render: 1.21.2 ModelManager.buildModelGroups, the grouping 1.21.1 BlockStateModelLoader.getModelGroups answered (CbRenderBlockStates)
+accessible method net/minecraft/class_1092 method_62654 (Lnet/minecraft/class_324;Lnet/minecraft/class_9824$class_10095;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;
