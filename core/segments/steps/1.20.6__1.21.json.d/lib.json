@@ -1,0 +1,11 @@
+{
+ "_lib_basis": "slib library front: DFU 7.0.14 (1.20.6) -> 8.0.16 (1.21), core/segments/damage-lib/1.20.6__1.21.tsv; rt/CbLibDfu",
+ "instanceRedirects": {
+  "com/mojang/datafixers/DataFixerBuilder.buildUnoptimized()Lcom/mojang/datafixers/DataFixer;": "top/dext/centurybridge/step/v1_21/rt/CbLibDfu",
+  "com/mojang/datafixers/DataFixerBuilder.buildOptimized(Ljava/util/Set;Ljava/util/concurrent/Executor;)Lcom/mojang/datafixers/DataFixer;": "top/dext/centurybridge/step/v1_21/rt/CbLibDfu"
+ },
+ "superRedirects": {
+  "com/mojang/datafixers/DataFixerBuilder.buildUnoptimized()Lcom/mojang/datafixers/DataFixer;": "top/dext/centurybridge/step/v1_21/rt/CbLibDfu",
+  "com/mojang/datafixers/DataFixerBuilder.buildOptimized(Ljava/util/Set;Ljava/util/concurrent/Executor;)Lcom/mojang/datafixers/DataFixer;": "top/dext/centurybridge/step/v1_21/rt/CbLibDfu"
+ }
+}

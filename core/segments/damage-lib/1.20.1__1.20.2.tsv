@@ -1,0 +1,489 @@
+# library damage 1.20.1__1.20.2 (Main lib-diff, JVM-style resolution on both sides; calibrated: V vs V = 0 rows, unchanged jars = 0)
+# old/new = client-<V>/client-<W> runtime libraries on beta2 (1.20.1: ~/cbtest/client-1.20.1, the runtime dir holds 1.20.2 libraries);
+# scope = the artifacts V ships (artifacts.tsv: version JSON = client, server bundler list = server); sides column from it.
+# regenerate: Main lib-diff <oldLibs> <newLibs> <out.tsv> core/segments/damage-lib/artifacts.tsv <V> <W>
+artifact	sides	kind	symbol	note
+com/github/oshi/oshi-core	client,server	METHOD	oshi/driver/windows/LogicalProcessorInformation.getLogicalProcessorInformation()Loshi/util/tuples/Pair;	
+com/github/oshi/oshi-core	client,server	METHOD	oshi/driver/windows/LogicalProcessorInformation.getLogicalProcessorInformationEx()Loshi/util/tuples/Pair;	
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/hardware/CentralProcessor.getProcessorCaches()Ljava/util/List;	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/hardware/common/AbstractCentralProcessor.initProcessorCounts()Loshi/util/tuples/Triplet;	implementations must now provide it
+com/github/oshi/oshi-core	client,server	METHOD	oshi/hardware/common/AbstractCentralProcessor.initProcessorCounts()Loshi/util/tuples/Pair;	
+com/github/oshi/oshi-core	client,server	METHOD	oshi/hardware/platform/unix/openbsd/OpenBsdCentralProcessor.initProcessorCounts()Loshi/util/tuples/Pair;	
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/linux/LinuxLibc.gettid()I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/linux/LinuxLibc.syscall(Lcom/sun/jna/NativeLong;[Ljava/lang/Object;)Lcom/sun/jna/NativeLong;	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/unix/AixLibc.thread_self()I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/unix/FreeBsdLibc.thr_self(Lcom/sun/jna/ptr/NativeLongByReference;)I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/unix/OpenBsdLibc.getthrid()I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/unix/SolarisLibc.thr_self()I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	CLASS	oshi/jna/platform/windows/WinNT	
+com/github/oshi/oshi-core	client,server	CLASS	oshi/jna/platform/windows/WinNT$TOKEN_ELEVATION	
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/common/AbstractFileSystem.getMaxFileDescriptorsPerProcess()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/common/AbstractOSProcess.getHardOpenFileLimit()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/common/AbstractOSProcess.getSoftOpenFileLimit()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/common/AbstractOperatingSystem.getCurrentThread()Loshi/software/os/OSThread;	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/common/AbstractOperatingSystem.getThreadId()I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/os/FileSystem.getMaxFileDescriptorsPerProcess()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/os/OSProcess.getHardOpenFileLimit()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/os/OSProcess.getSoftOpenFileLimit()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/os/OperatingSystem.getCurrentThread()Loshi/software/os/OSThread;	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/os/OperatingSystem.getThreadId()I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	METHOD	oshi/software/os/linux/LinuxOSProcess.<init>(I)V	
+com/github/oshi/oshi-core	client,server	METHOD	oshi/software/os/mac/MacOSProcess.<init>(III)V	
+com/github/oshi/oshi-core	client,server	METHOD	oshi/software/os/unix/aix/AixOSProcess.<init>(ILoshi/util/tuples/Pair;Ljava/util/function/Supplier;)V	
+com/github/oshi/oshi-core	client,server	METHOD	oshi/software/os/unix/freebsd/FreeBsdOSProcess.<init>(ILjava/util/Map;)V	
+com/github/oshi/oshi-core	client,server	METHOD	oshi/software/os/unix/openbsd/OpenBsdOSProcess.<init>(ILjava/util/Map;)V	
+com/github/oshi/oshi-core	client,server	METHOD	oshi/software/os/unix/solaris/SolarisOSProcess.<init>(I)V	
+com/github/oshi/oshi-core	client,server	ACCESS	oshi/util/platform/windows/WmiQueryHandler.<init>()V	narrowed
+com/github/oshi/oshi-core	client,server	ACCESS	oshi/util/platform/windows/WmiQueryHandler.failedWmiClassNames:Ljava/util/Set;	narrowed
+com/github/oshi/oshi-core	client,server	ACCESS	oshi/util/platform/windows/WmiQueryHandler.wmiTimeout:I	narrowed
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/units/UnitPreferences.getPreferencesFor(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)[Lcom/ibm/icu/impl/units/UnitPreferences$UnitPreference;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/units/UnitsData.getPreferencesFor(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)[Lcom/ibm/icu/impl/units/UnitPreferences$UnitPreference;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/units/UnitsRouter.<init>(Lcom/ibm/icu/impl/units/MeasureUnitImpl;Ljava/lang/String;Ljava/lang/String;)V	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/units/UnitsRouter.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/number/FormattedNumber.getNounClass()Lcom/ibm/icu/util/NounClass;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/text/PluralRules.getDecimalSamples(Ljava/lang/String;Lcom/ibm/icu/text/PluralRules$SampleType;)Lcom/ibm/icu/text/PluralRules$FixedDecimalSamples;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/text/PluralRules$FixedDecimal.<init>(Ljava/lang/String;)V	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/text/PluralRules$FixedDecimal.getShiftedValue()J	
+com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/text/PluralRules$FixedDecimalRange	
+com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/text/PluralRules$FixedDecimalSamples	
+com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/text/PluralSamples	
+com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/util/NounClass	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/Agent	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/AuthenticationService.createUserAuthentication(Lcom/mojang/authlib/Agent;)Lcom/mojang/authlib/UserAuthentication;	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/BaseAuthenticationService	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/BaseUserAuthentication	
+com/mojang/authlib	client,server	KIND	com/mojang/authlib/Environment	interface -> class
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.asString()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.create(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/mojang/authlib/Environment;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.getAccountsHost()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.getAuthHost()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.getName()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.getServicesHost()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.getSessionHost()Ljava/lang/String;	
+com/mojang/authlib	client,server	FIELD	com/mojang/authlib/EnvironmentParser.PROP_AUTH_HOST:Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/GameProfile.isComplete()Z	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/GameProfile.isLegacy()Z	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/GameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/ProfileLookupCallback;)V	implementations must now provide it
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/GameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/HttpAuthenticationService.createUrlConnection(Ljava/net/URL;)Ljava/net/HttpURLConnection;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/HttpAuthenticationService.createUserAuthentication(Lcom/mojang/authlib/Agent;)Lcom/mojang/authlib/UserAuthentication;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;)Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;Ljava/lang/String;)Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/HttpAuthenticationService.performPostRequest(Ljava/net/URL;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/HttpUserAuthentication	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/ProfileLookupCallback.onProfileLookupFailed(Ljava/lang/String;Ljava/lang/Exception;)V	implementations must now provide it
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/ProfileLookupCallback.onProfileLookupFailed(Lcom/mojang/authlib/GameProfile;Ljava/lang/Exception;)V	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/UserAuthentication	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/UserType	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/exceptions/UserMigratedException	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/legacy/LegacyAuthenticationService	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/legacy/LegacyMinecraftSessionService	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/legacy/LegacyUserAuthentication	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/minecraft/BaseMinecraftSessionService	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/minecraft/HttpMinecraftSessionService	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/MinecraftSessionService.fetchProfile(Ljava/util/UUID;Z)Lcom/mojang/authlib/yggdrasil/ProfileResult;	implementations must now provide it
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/MinecraftSessionService.hasJoinedServer(Ljava/lang/String;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/yggdrasil/ProfileResult;	implementations must now provide it
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/MinecraftSessionService.joinServer(Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;)V	implementations must now provide it
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/MinecraftSessionService.fillProfileProperties(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/MinecraftSessionService.hasJoinedServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/GameProfile;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/MinecraftSessionService.joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/minecraft/report/AbuseReport	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/report/AbuseReport.<init>(Ljava/lang/String;Ljava/lang/String;Lcom/mojang/authlib/minecraft/report/ReportEvidence;Lcom/mojang/authlib/minecraft/report/ReportedEntity;Ljava/time/Instant;)V	
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/AbuseReport.createdTime:Ljava/time/Instant;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/AbuseReport.evidence:Lcom/mojang/authlib/minecraft/report/ReportEvidence;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/AbuseReport.opinionComments:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/AbuseReport.reason:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/AbuseReport.reportedEntity:Lcom/mojang/authlib/minecraft/report/ReportedEntity;	narrowed
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/minecraft/report/ReportChatMessage	class made final
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportChatMessage.index:I	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportChatMessage.lastSeen:Ljava/util/List;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportChatMessage.message:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportChatMessage.messageReported:Z	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportChatMessage.profileId:Ljava/util/UUID;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportChatMessage.salt:J	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportChatMessage.sessionId:Ljava/util/UUID;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportChatMessage.signature:Ljava/nio/ByteBuffer;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportChatMessage.timestamp:Ljava/time/Instant;	narrowed
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/minecraft/report/ReportEvidence	class made final
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportEvidence.messages:Ljava/util/List;	narrowed
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/minecraft/report/ReportedEntity	class made final
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/minecraft/report/ReportedEntity.profileId:Ljava/util/UUID;	narrowed
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/properties/Property	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/properties/Property.getName()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/properties/Property.getSignature()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/properties/Property.getValue()Ljava/lang/String;	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/yggdrasil/ProfileIncompleteException	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.<init>(Ljava/net/Proxy;Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.<init>(Ljava/net/Proxy;Ljava/lang/String;Lcom/mojang/authlib/Environment;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.createUrlConnection(Ljava/net/URL;)Ljava/net/HttpURLConnection;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.createUserAuthentication(Lcom/mojang/authlib/Agent;)Lcom/mojang/authlib/UserAuthentication;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.makeRequest(Ljava/net/URL;Ljava/lang/Object;Ljava/lang/Class;)Lcom/mojang/authlib/yggdrasil/response/Response;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.makeRequest(Ljava/net/URL;Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;)Lcom/mojang/authlib/yggdrasil/response/Response;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.performGetRequest(Ljava/net/URL;)Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.performGetRequest(Ljava/net/URL;Ljava/lang/String;)Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.performPostRequest(Ljava/net/URL;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilGameProfileRepository.<init>(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;Lcom/mojang/authlib/Environment;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilGameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.<init>(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;Lcom/mojang/authlib/Environment;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.fillGameProfile(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.fillProfileProperties(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.getAuthenticationService()Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.hasJoinedServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/GameProfile;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilServicesKeyInfo.get(Ljava/net/URL;Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;)Lcom/mojang/authlib/yggdrasil/ServicesKeySet;	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/yggdrasil/YggdrasilUserAuthentication	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/request/AbuseReportRequest	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/request/AbuseReportRequest.<init>(ILjava/util/UUID;Lcom/mojang/authlib/minecraft/report/AbuseReport;Lcom/mojang/authlib/yggdrasil/request/AbuseReportRequest$ClientInfo;Lcom/mojang/authlib/yggdrasil/request/AbuseReportRequest$ThirdPartyServerInfo;Lcom/mojang/authlib/yggdrasil/request/AbuseReportRequest$RealmInfo;)V	
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest.clientInfo:Lcom/mojang/authlib/yggdrasil/request/AbuseReportRequest$ClientInfo;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest.id:Ljava/util/UUID;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest.realmInfo:Lcom/mojang/authlib/yggdrasil/request/AbuseReportRequest$RealmInfo;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest.report:Lcom/mojang/authlib/minecraft/report/AbuseReport;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest.thirdPartyServerInfo:Lcom/mojang/authlib/yggdrasil/request/AbuseReportRequest$ThirdPartyServerInfo;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest.version:I	narrowed
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/request/AbuseReportRequest$ClientInfo	class made final
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest$ClientInfo.clientVersion:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest$ClientInfo.locale:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/request/AbuseReportRequest$RealmInfo	class made final
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest$RealmInfo.realmId:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest$RealmInfo.slotId:I	narrowed
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/request/AbuseReportRequest$ThirdPartyServerInfo	class made final
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/AbuseReportRequest$ThirdPartyServerInfo.address:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/yggdrasil/request/AuthenticationRequest	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/request/JoinMinecraftServerRequest	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/request/JoinMinecraftServerRequest.<init>()V	
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/JoinMinecraftServerRequest.accessToken:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/JoinMinecraftServerRequest.selectedProfile:Ljava/util/UUID;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/JoinMinecraftServerRequest.serverId:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/yggdrasil/request/RefreshRequest	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/request/TelemetryEventsRequest	class made final
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/TelemetryEventsRequest.events:Ljava/util/List;	narrowed
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/request/TelemetryEventsRequest$Event	class made final
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/TelemetryEventsRequest$Event.data:Lcom/google/gson/JsonObject;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/TelemetryEventsRequest$Event.name:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/TelemetryEventsRequest$Event.source:Ljava/lang/String;	narrowed
+com/mojang/authlib	client,server	ACCESS	com/mojang/authlib/yggdrasil/request/TelemetryEventsRequest$Event.timestamp:J	narrowed
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/yggdrasil/request/ValidateRequest	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/yggdrasil/response/AuthenticationResponse	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/BlockListResponse	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/BlockListResponse.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/BlockListResponse.getBlockedProfiles()Ljava/util/Set;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/BlockListResponse.getCause()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/BlockListResponse.getError()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/BlockListResponse.getErrorMessage()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/BlockListResponse.setCause(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/BlockListResponse.setError(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/BlockListResponse.setErrorMessage(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/ErrorResponse	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ErrorResponse.getDetails()Ljava/util/Map;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ErrorResponse.getError()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ErrorResponse.getErrorMessage()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ErrorResponse.getPath()Ljava/lang/String;	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/ErrorResponse.toString()Ljava/lang/String;	method made final
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/HasJoinedMinecraftServerResponse	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/HasJoinedMinecraftServerResponse.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/HasJoinedMinecraftServerResponse.getCause()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/HasJoinedMinecraftServerResponse.getError()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/HasJoinedMinecraftServerResponse.getErrorMessage()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/HasJoinedMinecraftServerResponse.getId()Ljava/util/UUID;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/HasJoinedMinecraftServerResponse.getProperties()Lcom/mojang/authlib/properties/PropertyMap;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/HasJoinedMinecraftServerResponse.setCause(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/HasJoinedMinecraftServerResponse.setError(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/HasJoinedMinecraftServerResponse.setErrorMessage(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/KeyPairResponse	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.getCause()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.getError()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.getErrorMessage()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.getExpiresAt()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.getPrivateKey()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.getPublicKey()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.getPublicKeySignature()Ljava/nio/ByteBuffer;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.getRefreshedAfter()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.setCause(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.setError(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/KeyPairResponse.setErrorMessage(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.getCause()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.getError()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.getErrorMessage()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.getId()Ljava/util/UUID;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.getName()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.getProperties()Lcom/mojang/authlib/properties/PropertyMap;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.setCause(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.setError(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.setErrorMessage(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/MinecraftTexturesPayload	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftTexturesPayload.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftTexturesPayload.getProfileId()Ljava/util/UUID;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftTexturesPayload.getProfileName()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftTexturesPayload.getTextures()Ljava/util/Map;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftTexturesPayload.getTimestamp()J	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/ProfileSearchResultsResponse	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ProfileSearchResultsResponse.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ProfileSearchResultsResponse.getCause()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ProfileSearchResultsResponse.getError()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ProfileSearchResultsResponse.getErrorMessage()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ProfileSearchResultsResponse.getProfiles()[Lcom/mojang/authlib/GameProfile;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ProfileSearchResultsResponse.setCause(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ProfileSearchResultsResponse.setError(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/ProfileSearchResultsResponse.setErrorMessage(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/yggdrasil/response/RefreshResponse	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/yggdrasil/response/Response	
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/yggdrasil/response/User	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/UserAttributesResponse	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.getBanStatus()Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.getCause()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.getError()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.getErrorMessage()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.getPrivileges()Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.getProfanityFilterPreferences()Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$ProfanityFilterPreferences;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.setCause(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.setError(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.setErrorMessage(Ljava/lang/String;)V	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus.getBannedScopes()Ljava/util/Map;	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus$BannedScope	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus$BannedScope.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus$BannedScope.getBanId()Ljava/util/UUID;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus$BannedScope.getExpires()Ljava/time/Instant;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus$BannedScope.getReason()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus$BannedScope.getReasonMessage()Ljava/lang/String;	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges.<init>()V	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges$Privilege	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges$Privilege.<init>(Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges;)V	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$ProfanityFilterPreferences	class made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$ProfanityFilterPreferences.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$ProfanityFilterPreferences.isEnabled()Z	
+com/mojang/authlib	client,server	METHOD	com/mojang/util/UUIDTypeAdapter.fromString(Ljava/lang/String;)Ljava/util/UUID;	
+com/mojang/authlib	client,server	METHOD	com/mojang/util/UUIDTypeAdapter.fromUUID(Ljava/util/UUID;)Ljava/lang/String;	
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Kernel32.VirtualLock(Lcom/sun/jna/Pointer;Lcom/sun/jna/platform/win32/BaseTSD$SIZE_T;)Z	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Kernel32.VirtualUnlock(Lcom/sun/jna/Pointer;Lcom/sun/jna/platform/win32/BaseTSD$SIZE_T;)Z	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/OleAuto.VariantTimeToSystemTime(DLcom/sun/jna/platform/win32/WinBase$SYSTEMTIME;)I	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Psapi.QueryWorkingSetEx(Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/Pointer;I)Z	implementations must now provide it
+org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Configuration.SHADERC_SPVC_LIBRARY_NAME:Lorg/lwjgl/system/Configuration;	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPJS(JJSSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPI(JBJJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPI(JSJJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPI(JBJJJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPI(JSJJJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPI(JJBJJJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPI(JJSJJJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPI(JJBJJJJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPI(JJSJJJJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPPPPPS(JSJSJJJJJJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPPPS(JJSJSJSJSJSJSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPPPS(JSJSJJJJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPS(JJJSJSJSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPS(JJSJSJSJSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPS(JSJJJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPS(JSJSJJSJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPS(JSSSJSSJJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPS(JSSSSJSJJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPPS(SJSJJJSJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPS(JJSJSJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPS(JJSJSJSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPS(JJSJSJSSSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPS(JSJJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPS(JSJSJSJSSSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPS(JSSJJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPPS(JSSJSJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPS(JJSJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPS(JSJSJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPS(JSSJIJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPPS(SJSSJSJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPS(JJSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPS(JSJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPS(JSSJIJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPS(SJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPS(JSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPS(SJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPS(SJSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPV(JISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(BBBBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(BBBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(BJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(IBBBBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(IISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(ISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(ISSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(ISSSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(ISSSSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(SJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(SSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(SSSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callV(SSSSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeI(ISJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeJP(SSSBIJJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeJPS(SSSZIJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeJPS(SSZSIJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeJPS(SZSIJJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeJS(IIJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeJS(IZSIJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeJS(SSIJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeJZ(SZSIJJ)Z	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeP(SJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePB(BJJ)B	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePB(B[IJ)B	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePI(JSJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePI(SJBJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePI(SJJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePI(S[FBJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePI(S[IBJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePI(S[IJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePI(S[SBJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePI([FSJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePJJJPI(JJJJIJJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePJPS(JJBJJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePP(ISJJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePP(JBJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePP(JIBIZZJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePP(JSZJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePP(SJJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPI(JJSJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPI(J[FSJ)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPP(JJBJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPP(JJIBJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPP(JSSSSJJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPPP(JBJJJ)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPPPV(JJSJJJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPPPZ(JJJBJJ)Z	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPPV(JJIJSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPPV(JJSIJJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPS(JJSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(JBJIIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(JBJIISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(JSJSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(JS[DSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(JS[FSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(JS[ISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(JS[JSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(JS[SSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(SJJJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(SSBJJJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePPV(S[F[FJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePS(BJZJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePS(B[SZJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePS(IJSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePS(JISJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePS(JJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePS(JSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePS(JSSIIJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePS(JSSSSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePS(SJSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePS(S[SSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(BJIIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(BJIISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(BJJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(B[FJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JBSBIIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JBSIIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JBSIISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JBSIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JBSSIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSIIIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSIIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSISSSBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSSBSSSSBSSSSSSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSSIBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSSIIIBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSSSIBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSSSSSBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSSSSSIBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSSSZZSIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(JSZJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SBSSSSSSJJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SIJJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SJIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SJJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SJSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SSBBSSSSJSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SSBJJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SSBSSSSJSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SSJJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SSSSJSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(SS[SJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(S[DSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(S[FSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(S[ISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(S[JSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePV(S[SSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokePZ(BJJ)Z	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeS(IJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeS(ISJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeS(J)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeS(SBJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeS(SSSSJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeS(SSZJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeS(SZJ)S	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(BIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(BJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(BSBIIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(BSIIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(BSIISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(BSIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(BSSIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(BZJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(ISJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SIIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSBSSSSBSSSSSSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSFBBBBBBBBBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSIBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSIFBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSIIIBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSSIBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSSIJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSSSSBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSSSSIBJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SSSSSJ)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.invokeV(SZJ)V	
+org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/libc/LibCStdio.sprintf:J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/UIO.npreadv2(IJIJI)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/UIO.npwritev2(IJIJI)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/UIO.preadv2(ILorg/lwjgl/system/linux/IOVec;IJI)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/UIO.pwritev2(ILorg/lwjgl/system/linux/IOVec;IJI)J	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURing.npad(J)Ljava/nio/IntBuffer;	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURing.npad(JI)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURing.npad(JII)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURing.npad(JLjava/nio/IntBuffer;)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURing.set(Lorg/lwjgl/system/linux/liburing/IOURingSQ;Lorg/lwjgl/system/linux/liburing/IOURingCQ;III)Lorg/lwjgl/system/linux/liburing/IOURing;	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURingCQ.set(Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Lorg/lwjgl/system/linux/liburing/IOURingCQE;Ljava/nio/ByteBuffer;)Lorg/lwjgl/system/linux/liburing/IOURingCQ;	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURingCQE.set(JII)Lorg/lwjgl/system/linux/liburing/IOURingCQE;	
+org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/linux/liburing/IOURingRSRCRegister.RESV:I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURingRSRCRegister.nresv(J)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURingRSRCRegister.nresv(JI)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURingRSRCRegister.resv()I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURingRSRCRegister.resv(I)Lorg/lwjgl/system/linux/liburing/IOURingRSRCRegister;	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURingRSRCRegister$Buffer.resv()I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURingRSRCRegister$Buffer.resv(I)Lorg/lwjgl/system/linux/liburing/IOURingRSRCRegister$Buffer;	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/IOURingSQ.set(Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Lorg/lwjgl/system/linux/liburing/IOURingSQE;IILjava/nio/ByteBuffer;)Lorg/lwjgl/system/linux/liburing/IOURingSQ;	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_accept(Lorg/lwjgl/system/linux/liburing/IOURingSQE;ILorg/lwjgl/system/linux/Sockaddr;[II)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_accept_direct(Lorg/lwjgl/system/linux/liburing/IOURingSQE;ILorg/lwjgl/system/linux/Sockaddr;[III)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_files_update(Lorg/lwjgl/system/linux/liburing/IOURingSQE;[II)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.io_uring_register_buffers_tags(Lorg/lwjgl/system/linux/liburing/IOURing;Lorg/lwjgl/system/linux/IOVec$Buffer;[J)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.io_uring_register_buffers_update_tag(Lorg/lwjgl/system/linux/liburing/IOURing;ILorg/lwjgl/system/linux/IOVec$Buffer;[J)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.io_uring_register_files(Lorg/lwjgl/system/linux/liburing/IOURing;[I)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.io_uring_register_files_tags(Lorg/lwjgl/system/linux/liburing/IOURing;[I[J)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.io_uring_register_files_update(Lorg/lwjgl/system/linux/liburing/IOURing;I[I)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.io_uring_register_files_update_tag(Lorg/lwjgl/system/linux/liburing/IOURing;I[I[J)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.io_uring_register_iowq_max_workers(Lorg/lwjgl/system/linux/liburing/IOURing;[I)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_accept(JIJ[II)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_accept_direct(JIJ[III)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_files_update(J[III)V	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_buffers_tags(JJ[JI)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_buffers_update_tag(JIJ[JI)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_files(J[II)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_files_tags(J[I[JI)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_files_update(JI[II)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_files_update_tag(JI[I[JI)I	
+org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/linux/liburing/LibURing.nio_uring_register_iowq_max_workers(J[I)I	
+org/lwjgl/lwjgl-openal	client	FIELD	org/lwjgl/openal/ALCapabilities.OpenAL_SOFT_bformat_ex:Z	

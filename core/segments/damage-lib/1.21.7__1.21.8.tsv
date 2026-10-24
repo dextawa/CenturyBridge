@@ -1,0 +1,5 @@
+# library damage 1.21.7__1.21.8 (Main lib-diff, JVM-style resolution on both sides; calibrated: V vs V = 0 rows, unchanged jars = 0)
+# old/new = client-<V>/client-<W> runtime libraries on beta2 (1.20.1: ~/cbtest/client-1.20.1, the runtime dir holds 1.20.2 libraries);
+# scope = the artifacts V ships (artifacts.tsv: version JSON = client, server bundler list = server); sides column from it.
+# regenerate: Main lib-diff <oldLibs> <newLibs> <out.tsv> core/segments/damage-lib/artifacts.tsv <V> <W>
+artifact	sides	kind	symbol	note

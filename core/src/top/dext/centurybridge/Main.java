@@ -40,8 +40,9 @@ public final class Main {
                 }
                 top.dext.centurybridge.data.ApplyAw.run(Path.of(args[1]), Path.of(args[2]), aws);
             }
-            // lib-diff <oldLibrariesDir> <newLibrariesDir> <out.tsv>
-            case "lib-diff" -> top.dext.centurybridge.data.LibDiff.run(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
+            // lib-diff <oldLibrariesDir> <newLibrariesDir> <out.tsv> [<artifacts.tsv> <V> <W>]
+            case "lib-diff" -> top.dext.centurybridge.data.LibDiff.run(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]),
+                args.length > 6 ? Path.of(args[4]) : null, args.length > 6 ? args[5] : null, args.length > 6 ? args[6] : null);
             case "api-probe" -> top.dext.centurybridge.data.ApiProbe.run(args);
             case "anchor-diff" -> top.dext.centurybridge.data.AnchorDiff.run(args);
             // mixin-probe <V code jar> <out.jar>; mixin-judge <code jar> <probe jar> <index.tsv> <out.tsv> [--layer <jar>]... [--keys <tsv>]
@@ -151,6 +152,11 @@ public final class Main {
         // (Chain.libSuperOf); the same modules, so a missing directory has already been refused above
         chain.loadLibraryHierarchy(Path.of("data/runtime/client-" + args[2] + "/.fabric/processedMods"));
         System.out.println("library hierarchy: " + chain.libSuperOf.size() + " classes in " + args[2] + "'s Fabric API");
+        // and the game's own libraries (authlib, DFU, brigadier...): wiring keyed on a library type serves a mod
+        // class under a library subclass too (a mod's YggdrasilMinecraftSessionService subclass is a
+        // MinecraftSessionService). Absent: nothing is read
+        chain.loadLibraryHierarchy(Path.of("data/runtime/client-" + args[2] + "/libraries"));
+        System.out.println("library hierarchy: " + chain.libSuperOf.size() + " classes with " + args[2] + "'s game libraries");
         Path outDir = Path.of(args[4]);
         top.dext.centurybridge.data.FullAudit.enabled = true;
         top.dext.centurybridge.data.FullAudit.reset();

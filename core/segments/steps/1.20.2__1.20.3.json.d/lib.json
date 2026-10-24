@@ -1,0 +1,60 @@
+{
+ "_lib_basis": "slib library front: authlib 5.0.47 (1.20.2) -> 6.0.52 (1.20.3), core/segments/damage-lib/1.20.2__1.20.3.tsv; 5.0.47's semantics read off its bytecode (rt/CbLibAuthlib)",
+ "ctorRedirects": {
+  "com/mojang/authlib/Environment.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib#environment",
+  "com/mojang/authlib/minecraft/InsecurePublicKeyException$MissingException.<init>()V": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib#missingException"
+ },
+ "superCtorReshapes": {
+  "com/mojang/authlib/minecraft/InsecurePublicKeyException$MissingException.<init>()V": {
+   "desc": "(Ljava/lang/String;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib#missingPublicKey()Ljava/lang/String;"
+   ],
+   "basis": "5.0.47's MissingException() passed \"No public key information found\" to InsecurePublicKeyException(String)"
+  }
+ },
+ "fieldGetters": {
+  "com/mojang/authlib/EnvironmentParser.PROP_ACCOUNT_HOST:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib"
+ },
+ "instanceRedirects": {
+  "com/mojang/authlib/Environment.accountsHost()Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib",
+  "com/mojang/authlib/minecraft/MinecraftSessionService.getTextures(Lcom/mojang/authlib/GameProfile;Z)Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.getTextures(Lcom/mojang/authlib/GameProfile;Z)Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib",
+  "com/mojang/authlib/minecraft/UserApiService.properties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilUserApiService.properties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib"
+ },
+ "superRedirects": {
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.getTextures(Lcom/mojang/authlib/GameProfile;Z)Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib#superGetTextures",
+  "com/mojang/authlib/yggdrasil/YggdrasilUserApiService.properties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib"
+ },
+ "overrideHooks": [
+  {
+   "old": "properties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;",
+   "new": "fetchProperties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;",
+   "onlyUnder": "com/mojang/authlib/minecraft/UserApiService",
+   "guard": "top/dext/centurybridge/step/v1_20_3/rt/Guard",
+   "basis": "authlib 6.0.52's Minecraft asks fetchProperties(); a 5.0.47 implementation answered properties(). Guarded: a subclass's super.properties() reaches 6.0.52's fetch"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "com/mojang/authlib/minecraft/MinecraftSessionService",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbLibSessionOld",
+   "guard": "top/dext/centurybridge/step/v1_20_3/rt/Guard",
+   "requires": [
+    "getTextures(Lcom/mojang/authlib/GameProfile;Z)Ljava/util/Map;"
+   ],
+   "synth": [
+    {
+     "new": "getPackedTextures(Lcom/mojang/authlib/GameProfile;)Lcom/mojang/authlib/properties/Property;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib.packedTextures(Ltop/dext/centurybridge/step/v1_20_3/rt/CbLibSessionOld;Lcom/mojang/authlib/GameProfile;)Lcom/mojang/authlib/properties/Property;"
+    },
+    {
+     "new": "unpackTextures(Lcom/mojang/authlib/properties/Property;)Lcom/mojang/authlib/minecraft/MinecraftProfileTextures;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbLibAuthlib.unpackTextures(Ltop/dext/centurybridge/step/v1_20_3/rt/CbLibSessionOld;Lcom/mojang/authlib/properties/Property;)Lcom/mojang/authlib/minecraft/MinecraftProfileTextures;"
+    }
+   ],
+   "basis": "authlib 6.0.52's skin manager calls getPackedTextures then unpackTextures; a 5.0.47 session service answered getTextures(profile, requireSecure) (rt/CbLibAuthlib.packedTextures / unpackTextures)"
+  }
+ ]
+}
