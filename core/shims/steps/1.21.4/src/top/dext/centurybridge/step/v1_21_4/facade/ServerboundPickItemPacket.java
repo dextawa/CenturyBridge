@@ -58,6 +58,11 @@ public class ServerboundPickItemPacket implements class_2596<class_2792> {
         this.method_12292(listener);
     }
 
+    /** Packet.handle(listener) under 1.21.3's name, which a call through this class names (the bridge of handle(T)) */
+    public void method_11054(net.minecraft.class_2547 listener) {
+        this.method_12292((class_2792) listener);
+    }
+
     /** getSlot() */
     public int method_12293() {
         return this.field_12908;

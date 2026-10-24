@@ -18,7 +18,12 @@ public class WinterDropRecipeProvider extends class_2446 {
 
    @Override
    public void method_10419() {
-      this.method_46207(class_7699.method_45398(top.dext.centurybridge.step.v1_21_4.rt.CbRestConstants.field_54592));
+      // 1.21.3: generateForEnabledBlockFamilies({WINTER_DROP}) -- of the block families that generate recipes, only the variants
+      // the Winter Drop flag enabled, i.e. the pale oak family's. Every 1.21.4 block is under the vanilla flag, so the same call
+      // would write every family's recipes; the pale oak family is generated alone, under the flags this provider runs with.
+      if (class_5793.field_54877.method_33478()) {
+         this.method_33535(class_5793.field_54877, class_7699.method_45398(top.dext.centurybridge.step.v1_21_4.rt.CbRestConstants.field_54592));
+      }
       this.method_46208(class_1802.field_54623, class_2246.field_54716);
       this.method_24475(class_2246.field_54735, class_3489.field_54555, 4);
       this.method_24476(class_2246.field_54734, class_2246.field_54715);
