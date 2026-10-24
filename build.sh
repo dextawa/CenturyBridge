@@ -253,6 +253,11 @@ java $SRC_STUBS -Dcb.libs="$LIBS" -cp "core/build/classes$SEP$CP" top.dext.centu
 cp -r "$SHIM"/resources/. "$CLASSES"/
 # A layer that gives back whole libraries its release dropped nests them verbatim (nested-libraries.tsv: the
 # artifacts, checked against the source release's version-JSON sha1; core/tools/nest_libraries.py).
+# Native libraries CenturyBridge builds itself (core/natives/<lib>/build.sh, reproducible; sha256s in its SHA256SUMS) live
+# under the layer's natives/ at the classpath path LWJGL's Library loader looks for ({os}/{arch}/...).
+if [ -d "$SHIM/natives" ]; then
+    cp -r "$SHIM"/natives/. "$CLASSES"/
+fi
 if [ -f "$SHIM/resources/nested-libraries.tsv" ]; then
     python3 core/tools/nest_libraries.py "$SHIM/resources" "$DATA/runtime" "$CLASSES"         || { echo "build aborted: nested libraries"; exit 1; }
 fi
