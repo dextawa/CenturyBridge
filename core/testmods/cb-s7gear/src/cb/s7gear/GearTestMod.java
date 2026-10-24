@@ -176,6 +176,7 @@ public class GearTestMod implements ModInitializer {
             recipeClasses(server);
             serializers(server);
             cookingBytes(server);
+            recipeManager(server);
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -511,5 +512,26 @@ public class GearTestMod implements ModInitializer {
         }
         net.minecraft.class_3957<TestCooking> own = new net.minecraft.class_3957<>((g, c, i, r, x, t) -> new TestCooking(), 100);
         roundTrip(server, "mod cooking", own.method_56104(), new TestCooking(), false);
+    }
+
+    /** 1.21.1's RecipeManager members */
+    static void recipeManager(MinecraftServer server) {
+        net.minecraft.class_1863 rm = server.method_3772();
+        net.minecraft.class_3218 level = server.method_30002();
+        List<class_8786<net.minecraft.class_3861>> smelting = rm.method_30027(net.minecraft.class_3956.field_17546);
+        check(!smelting.isEmpty(), "getAllRecipesFor(SMELTING): " + smelting.size());
+        class_2960 id = smelting.get(0).comp_1932();
+        check(rm.method_8130(id).isPresent(), "byKey(id) of a smelting recipe");
+        check(rm.method_8127().count() == rm.method_59822().size() && rm.method_8127().anyMatch(id::equals), "getRecipeIds = getOrderedRecipes ids");
+        check(!rm.method_35227(), "hasErrors false");
+        net.minecraft.class_9696 cobble = new net.minecraft.class_9696(new class_1799(class_1802.field_20412));
+        List<class_8786<net.minecraft.class_3861>> found = rm.method_17877(net.minecraft.class_3956.field_17546, cobble, level);
+        check(found.size() == 1 && found.get(0).comp_1933().method_8110(server.method_30611()).method_31574(class_1802.field_20391),
+            "getRecipesFor(SMELTING, cobblestone) = the stone recipe");
+        check(rm.method_42299(net.minecraft.class_3956.field_17546, cobble, level, found.get(0).comp_1932()).isPresent(),
+            "getRecipeFor(.., last id)");
+        net.minecraft.class_1863.class_7266<net.minecraft.class_9696, net.minecraft.class_3861> check = net.minecraft.class_1863.method_42302(net.minecraft.class_3956.field_17546);
+        check(check.method_42303(cobble, level).isPresent() && check.method_42303(cobble, level).isPresent(), "createCheck(SMELTING).getRecipeFor twice");
+        check(rm.method_8128(net.minecraft.class_3956.field_17546, cobble, level).size() == 1, "getRemainingItemsFor: one slot");
     }
 }
