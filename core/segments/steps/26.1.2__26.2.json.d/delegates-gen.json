@@ -20,7 +20,16 @@
   "net/minecraft/client/gui/Gui.setSubtitle(Lnet/minecraft/network/chat/Component;)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_setSubtitle",
   "net/minecraft/client/gui/Gui.setTimes(III)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_setTimes",
   "net/minecraft/client/gui/Gui.setTitle(Lnet/minecraft/network/chat/Component;)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_setTitle",
-  "net/minecraft/client/gui/Gui.tick(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_tick"
+  "net/minecraft/client/gui/Gui.tick(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_tick",
+  "net/minecraft/client/renderer/LevelRenderer.extractLevel(Lnet/minecraft/client/DeltaTracker;Lnet/minecraft/client/Camera;F)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#LevelRenderer_extractLevel",
+  "net/minecraft/client/renderer/LevelRenderer.getEntityStatistics()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#LevelRenderer_getEntityStatistics",
+  "net/minecraft/client/renderer/LevelRenderer.getLastViewDistance()D": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#LevelRenderer_getLastViewDistance",
+  "net/minecraft/client/renderer/LevelRenderer.getSectionStatistics()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#LevelRenderer_getSectionStatistics",
+  "net/minecraft/client/renderer/LevelRenderer.setBlockDirty(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#LevelRenderer_setBlockDirty",
+  "net/minecraft/client/renderer/LevelRenderer.setBlocksDirty(IIIIII)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#LevelRenderer_setBlocksDirty",
+  "net/minecraft/client/renderer/LevelRenderer.setSectionDirty(III)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#LevelRenderer_setSectionDirty",
+  "net/minecraft/client/renderer/LevelRenderer.setSectionDirtyWithNeighbors(III)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#LevelRenderer_setSectionDirtyWithNeighbors",
+  "net/minecraft/client/renderer/LevelRenderer.setSectionRangeDirty(IIIIII)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#LevelRenderer_setSectionRangeDirty"
  },
  "_delegates_basis": {
   "net/minecraft/client/Minecraft.renderBuffers()Lnet/minecraft/client/renderer/RenderBuffers;": "Minecraft.renderBuffers is GameRenderer.renderBuffers (same code), reached as self.gameRenderer",
@@ -42,6 +51,15 @@
   "net/minecraft/client/gui/Gui.setSubtitle(Lnet/minecraft/network/chat/Component;)V": "Gui.setSubtitle is Hud.setSubtitle (same code), reached as self.hud",
   "net/minecraft/client/gui/Gui.setTimes(III)V": "Gui.setTimes is Hud.setTimes (same code), reached as self.hud",
   "net/minecraft/client/gui/Gui.setTitle(Lnet/minecraft/network/chat/Component;)V": "Gui.setTitle is Hud.setTitle (same code), reached as self.hud",
-  "net/minecraft/client/gui/Gui.tick(Z)V": "Gui.tick is Hud.tick (same code), reached as self.hud"
+  "net/minecraft/client/gui/Gui.tick(Z)V": "Gui.tick is Hud.tick (same code), reached as self.hud",
+  "net/minecraft/client/renderer/LevelRenderer.extractLevel(Lnet/minecraft/client/DeltaTracker;Lnet/minecraft/client/Camera;F)V": "LevelRenderer.extractLevel is LevelExtractor.extract (called where V called it: net/minecraft/client/renderer/GameRenderer.extract), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.getEntityStatistics()Ljava/lang/String;": "LevelRenderer.getEntityStatistics is LevelExtractor.entityStatistics (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.getLastViewDistance()D": "LevelRenderer.getLastViewDistance is LevelExtractor.lastViewDistance (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.getSectionStatistics()Ljava/lang/String;": "LevelRenderer.getSectionStatistics is LevelExtractor.sectionStatistics (called where V called it: net/minecraft/client/gui/components/debug/DebugEntryChunkRenderStats.display), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.setBlockDirty(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;)V": "LevelRenderer.setBlockDirty is LevelExtractor.setBlockDirty (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.setBlocksDirty(IIIIII)V": "LevelRenderer.setBlocksDirty is LevelExtractor.setBlocksDirty (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.setSectionDirty(III)V": "LevelRenderer.setSectionDirty is LevelExtractor.setSectionDirty (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.setSectionDirtyWithNeighbors(III)V": "LevelRenderer.setSectionDirtyWithNeighbors is LevelExtractor.setSectionDirtyWithNeighbors (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.setSectionRangeDirty(IIIIII)V": "LevelRenderer.setSectionRangeDirty is LevelExtractor.setSectionRangeDirty (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer"
  }
 }
