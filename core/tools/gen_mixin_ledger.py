@@ -7,16 +7,20 @@ bytecode (mixin_step.sh runs it after every measurement: <step>/cause-mixin.tsv)
 without a ledger entry are the step's real mixin work list.
 
 Ledgered (each reason is what mixin-cause verified; nothing else is):
-  class-gone               the target class is gone from W and no classRenames sends it to a vanilla class
+  class-gone               the target class (an intermediary name: stable across releases) is gone from W and no
+                           classRenames sends it to a vanilla class (a mojang-named class W lacks may only have
+                           been renamed: class-missing-unwired, left open)
   class-renamed-to-layer   gone from W; classRenames sends mods' references to a layer class vanilla never runs
   target-private-gone      a private / package member gone from W; no member of the class holds its code
                            (methods: MixinBridge.bodyFate found none; fields: no field with the same uses)
   target-wired: ... no W method holds its code / disabled, target gone
                            gone from W; the step's wiring rebuilds it for mods' calls in layer code (redirects),
                            vanilla no longer runs it, and no W method holds its code
-  anchor-unused-here / anchor-member-gone / anchor-private-gone / anchor-api-gone / constant-gone
+  anchor-unused-here / anchor-member-gone / anchor-private-gone / constant-gone   (positional @Inject rows only)
                            the anchor no longer stands in the target, in what the target calls (depth 2) or in
-                           the lambdas it makes, and no single instruction stands in its place
+                           the lambdas it makes, and no single instruction of its kind stands between the same
+                           neighbours (MixinBridge's stand-in search); an anchor on an API member W dropped is
+                           the API side's work, and call-handling injectors were never searched for a stand-in
   target-moved-up-anchor   W dropped the override (MixinBridge restores it as a super call for HEAD / RETURN);
                            an anchor of V's override body has no code to stand in
 Left open (mechanisms or a step agent's judgment): the API side still open (target-api), members moved up,
@@ -35,10 +39,12 @@ import json
 import os
 import sys
 
-ANCHOR_GONE = {"anchor-unused-here", "anchor-member-gone", "anchor-private-gone", "anchor-api-gone", "constant-gone"}
+# anchors whose own member is not API (an API member gone is the step's API work: wired, MixinBridge carries
+# the anchor), judged only for positional @Inject rows -- the only injectors MixinBridge looks for a stand-in for
+ANCHOR_GONE = {"anchor-unused-here", "anchor-member-gone", "anchor-private-gone", "constant-gone"}
 
 
-def reason(cause, mojang, target, anchor, evidence):
+def reason(cause, mojang, target, anchor, evidence, usage):
     if cause == "class-gone":
         return "class", "class gone from W, no classRenames to a vanilla class"
     if cause == "class-renamed-to-layer":
@@ -51,8 +57,8 @@ def reason(cause, mojang, target, anchor, evidence):
         return "member", f"gone from W; rebuilt for mods' calls only ({how}); no W method holds its code"
     if cause == "target-moved-up-anchor":
         return "anchor", "W dropped this override (the class inherits it now): the anchor was in the override's own body, which no longer exists"
-    if cause in ANCHOR_GONE:
-        return "anchor", "anchor gone: not in the target, its callees (depth 2) or lambdas; nothing stands in its place"
+    if cause in ANCHOR_GONE and usage.startswith("inject-"):
+        return "anchor", "anchor gone: not in the target, its callees (depth 2) or lambdas; no instruction of its kind between the same neighbours"
     return None, None
 
 
@@ -68,7 +74,7 @@ def generate(cause_tsv, out):
         ix = {n: i for i, n in enumerate(head)}
         for line in f:
             r = line.rstrip("\n").split("\t")
-            kind, why = reason(r[ix["cause"]], r[ix["mojang"]], r[ix["target"]], r[ix["anchor"]], r[ix["evidence"]])
+            kind, why = reason(r[ix["cause"]], r[ix["mojang"]], r[ix["target"]], r[ix["anchor"]], r[ix["evidence"]], r[ix["usage"]])
             if kind is None:
                 continue
             led.setdefault(key_of(kind, r[ix["owner"]], r[ix["target"]], r[ix["anchor"]]), why)

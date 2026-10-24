@@ -310,7 +310,9 @@ public final class MixinCause {
             if (to != null) {
                 return new Verdict(to.startsWith("top/dext/") ? "class-renamed-to-layer" : "class-renamed-vanilla", r.owner() + " -> " + to);
             }
-            return new Verdict("class-gone", r.owner());
+            // intermediary names are stable across releases: a class W lacks is gone; a mojang name may only
+            // have been renamed (a classRenames entry the step lacks)
+            return new Verdict(r.owner().matches("net/minecraft/class_\\d+(\\$.*)?") ? "class-gone" : "class-missing-unwired", r.owner());
         }
         if (vc == null) return new Verdict("triage-no-v-class", r.owner());
         if (fieldUse) {
