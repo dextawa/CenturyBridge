@@ -1,5 +1,5 @@
 {
- "_mixinTargets_basis": "gen_s7item_mixintargets.py over Main gen-mixin-targets (V/W bytecode); regenerate, never hand-edit",
+ "_s7item_mixinTargets_basis": "gen_s7item_mixintargets.py over Main gen-mixin-targets (V/W bytecode); regenerate, never hand-edit",
  "mixinTargets": {
   "net/minecraft/class_1792$class_1793.method_58406()Lnet/minecraft/class_9323;": {
    "to": "method_58406(Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;)Lnet/minecraft/class_9323;",

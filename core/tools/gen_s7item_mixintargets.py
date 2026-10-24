@@ -51,7 +51,7 @@ def main():
         owner = k[:k.rindex(".", 0, k.index("("))]
         if AREA.search(moj(owner)) and k not in EXCLUDE:
             keep[k] = v
-    root = {"_mixinTargets_basis": "gen_s7item_mixintargets.py over Main gen-mixin-targets (V/W bytecode); regenerate, "
+    root = {"_s7item_mixinTargets_basis": "gen_s7item_mixintargets.py over Main gen-mixin-targets (V/W bytecode); regenerate, "
                                    "never hand-edit", "mixinTargets": keep}
     json.dump(root, open(out, "w", encoding="utf-8", newline="\n"), indent=1)
     print(len(keep), "of", len(mt), "entries in the s7item area ->", out)
