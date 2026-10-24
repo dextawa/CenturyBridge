@@ -782,6 +782,7 @@ com/github/stephenc/jcip/jcip-annotations	client,server	CLASS	net/jcip/annotatio
 com/github/stephenc/jcip/jcip-annotations	client,server	CLASS	net/jcip/annotations/NotThreadSafe	artifact gone
 com/github/stephenc/jcip/jcip-annotations	client,server	CLASS	net/jcip/annotations/ThreadSafe	artifact gone
 com/google/code/gson/gson	client,server	METHOD	com/google/gson/internal/$Gson$Types.requiresOwnerType(Ljava/lang/reflect/Type;)Z	
+com/google/guava/guava	client,server	ABSTRACT	com/google/common/base/Supplier.equals(Ljava/lang/Object;)Z	implementations must now provide it
 com/google/guava/guava	client,server	FINAL	com/google/common/collect/TreeBasedTable.rowComparator()Ljava/util/Comparator;	method made final
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/MFDataModel$Annotation	
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/MFDataModel$FunctionAnnotation	
@@ -1662,6 +1663,12 @@ io/netty/netty-codec	client,server	CLASS	io/netty/handler/codec/protobuf/Protobu
 io/netty/netty-codec	client,server	CLASS	io/netty/handler/codec/xml/XmlFrameDecoder	artifact gone
 io/netty/netty-common	client,server	METHOD	io/netty/util/internal/PlatformDependent.getIntVolatile(J)I	
 io/netty/netty-common	client,server	METHOD	io/netty/util/internal/PlatformDependent.putIntOrdered(JI)V	
+io/netty/netty-common	client,server	ABSTRACT	io/netty/util/internal/ReferenceCountUpdater.casRawRefCnt(Lio/netty/util/ReferenceCounted;II)Z	implementations must now provide it
+io/netty/netty-common	client,server	ABSTRACT	io/netty/util/internal/ReferenceCountUpdater.getAcquireRawRefCnt(Lio/netty/util/ReferenceCounted;)I	implementations must now provide it
+io/netty/netty-common	client,server	ABSTRACT	io/netty/util/internal/ReferenceCountUpdater.getAndAddRawRefCnt(Lio/netty/util/ReferenceCounted;I)I	implementations must now provide it
+io/netty/netty-common	client,server	ABSTRACT	io/netty/util/internal/ReferenceCountUpdater.getRawRefCnt(Lio/netty/util/ReferenceCounted;)I	implementations must now provide it
+io/netty/netty-common	client,server	ABSTRACT	io/netty/util/internal/ReferenceCountUpdater.safeInitializeRawRefCnt(Lio/netty/util/ReferenceCounted;I)V	implementations must now provide it
+io/netty/netty-common	client,server	ABSTRACT	io/netty/util/internal/ReferenceCountUpdater.setReleaseRawRefCnt(Lio/netty/util/ReferenceCounted;I)V	implementations must now provide it
 io/netty/netty-common	client,server	FINAL	io/netty/util/internal/ReferenceCountUpdater.setInitialValue(Lio/netty/util/ReferenceCounted;)V	method made final
 io/netty/netty-common	client,server	METHOD	io/netty/util/internal/ReferenceCountUpdater.unsafeOffset()J	
 io/netty/netty-common	client,server	METHOD	io/netty/util/internal/ReferenceCountUpdater.updater()Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;	
@@ -1687,6 +1694,10 @@ io/netty/netty-transport-classes-epoll	client,server	FINAL	io/netty/channel/epol
 io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/EpollServerDomainSocketChannel.flags:I	
 io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/EpollServerSocketChannel.flags:I	
 io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/EpollSocketChannel.flags:I	
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/User32.RegisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/platform/win32/Guid$GUID;I)Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/User32.UnregisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;)Lcom/sun/jna/platform/win32/WinDef$BOOL;	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/WinUser.RegisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/platform/win32/Guid$GUID;I)Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/WinUser.UnregisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;)Lcom/sun/jna/platform/win32/WinDef$BOOL;	implementations must now provide it
 net/minidev/accessors-smart	client,server	CLASS	net/minidev/asm/ASMUtil	artifact gone
 net/minidev/accessors-smart	client,server	CLASS	net/minidev/asm/Accessor	artifact gone
 net/minidev/accessors-smart	client,server	CLASS	net/minidev/asm/BasicFiledFilter	artifact gone

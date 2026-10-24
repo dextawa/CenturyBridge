@@ -54,6 +54,8 @@ public final class WiringCheck {
      */
     private Map<String, List<String>> injected = Map.of();
     private final Map<String, ClassNode> lib = new HashMap<>();
+    /** the target's game libraries (-Dcb.libs), class headers only: subtype judgments of library-keyed wiring */
+    private final Map<String, ClassNode> gameLibs = new HashMap<>();
     private final List<String> problems = new ArrayList<>();
     private Remapper facade = new SimpleRemapper(Map.of());
     private Remapper wall;
@@ -146,6 +148,27 @@ public final class WiringCheck {
                 ClassNode cn = new ClassNode();
                 new ClassReader(Files.readAllBytes(p)).accept(cn, ClassReader.SKIP_CODE);
                 w.classes.put(cn.name, cn);
+            }
+        }
+        // the target's game libraries (-Dcb.libs=<its libraries dir>: authlib, JOML, fastutil...): class headers only, for
+        // the subtype judgments of wiring keyed on a library type (JOML's Vector3f passed as a Vector3fc)
+        String libs = System.getProperty("cb.libs");
+        if (libs != null && !libs.isEmpty() && Files.isDirectory(Path.of(libs))) {
+            List<Path> jars;
+            try (var s = Files.walk(Path.of(libs))) {
+                jars = s.filter(f -> f.toString().endsWith(".jar") && !f.getFileName().toString().contains("-natives-")).sorted().toList();
+            }
+            for (Path jar : jars) {
+                try (var z = new java.util.zip.ZipFile(jar.toFile())) {
+                    for (var en : java.util.Collections.list(z.entries())) {
+                        String n = en.getName();
+                        if (!n.endsWith(".class") || n.startsWith("META-INF/") || n.startsWith("net/minecraft/")) continue;
+                        ClassNode cn = new ClassNode();
+                        new ClassReader(z.getInputStream(en).readAllBytes()).accept(cn,
+                            ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                        w.gameLibs.putIfAbsent(cn.name, cn);
+                    }
+                }
             }
         }
         var root = top.dext.centurybridge.engine.Wiring.read(shimsJson);
@@ -1053,10 +1076,10 @@ public final class WiringCheck {
             // facade is one, and the stub (Minecraft only) does not carry it
             return;
         }
-        ClassNode kn = stub.get(kt);
-        if (kn == null && !top.dext.centurybridge.engine.Chain.minecraftOwned(kt) && !lib.containsKey(kt)) {
-            // a game library's class (authlib's PropertyMap): the stub (Minecraft only) does not carry it, so
-            // only the subtype half is judged, through the facade's own compiled supertypes
+        ClassNode kn = stub.containsKey(kt) ? stub.get(kt) : gameLibs.get(kt);
+        if (kn == null && gameLibs.isEmpty() && !top.dext.centurybridge.engine.Chain.minecraftOwned(kt) && !lib.containsKey(kt)) {
+            // a game library's class (authlib's PropertyMap) with no -Dcb.libs: the stub (Minecraft only) does not
+            // carry it, so only the subtype half is judged, through the facade's own compiled supertypes
             if (classes.containsKey(fac) && !isSubtype(fac, kt)) {
                 problems.add("superRename " + key + " -> " + fac + ": not a subtype of the library class " + kt
                     + " -- a mod instance reaching a " + kt + "-typed slot fails verification");
@@ -1226,7 +1249,7 @@ public final class WiringCheck {
             String c = todo.pop();
             if (c.equals(sup)) return true;
             if (!seen.add(c)) continue;
-            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.containsKey(c) ? stub.get(c) : gameLibs.get(c);
             if (n == null) {
                 // a JDK type (java.util.List where a reshape passes it as a Collection) is
                 // judged by the JDK itself; the game stub does not carry it

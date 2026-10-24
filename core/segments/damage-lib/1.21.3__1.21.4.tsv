@@ -3,7 +3,9 @@
 # scope = the artifacts V ships (artifacts.tsv: version JSON = client, server bundler list = server); sides column from it.
 # regenerate: Main lib-diff <oldLibs> <newLibs> <out.tsv> core/segments/damage-lib/artifacts.tsv <V> <W>
 artifact	sides	kind	symbol	note
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/hardware/CentralProcessor.getFeatureFlags()Ljava/util/List;	implementations must now provide it
 com/github/oshi/oshi-core	client,server	METHOD	oshi/hardware/PhysicalMemory.<init>(Ljava/lang/String;JJLjava/lang/String;Ljava/lang/String;)V	
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/hardware/common/AbstractCentralProcessor.initProcessorCounts()Loshi/util/tuples/Quartet;	implementations must now provide it
 com/github/oshi/oshi-core	client,server	METHOD	oshi/hardware/common/AbstractCentralProcessor.initProcessorCounts()Loshi/util/tuples/Triplet;	
 com/github/oshi/oshi-core	client,server	METHOD	oshi/hardware/platform/unix/openbsd/OpenBsdCentralProcessor.initProcessorCounts()Loshi/util/tuples/Triplet;	
 com/github/oshi/oshi-core	client,server	FIELD	oshi/util/Constants.SYSFS_SERIAL_PATH:Ljava/lang/String;	
@@ -45,6 +47,7 @@ com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/impl/UCharacterProperty.SCRIPT_LOW_MA
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/UCharacterProperty.mergeScriptCodeOrIndex(I)I	
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/impl/locale/XLikelySubtags	
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/impl/locale/XLikelySubtags$Data	
+com/ibm/icu/icu4j	client	ABSTRACT	com/ibm/icu/impl/number/Modifier.strictEquals(Lcom/ibm/icu/impl/number/Modifier;)Z	implementations must now provide it
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/personname/PersonNameFormatterImpl.<init>(Ljava/util/Locale;[Ljava/lang/String;)V	
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/units/ConversionRates$ConversionRateInfo.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V	
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MessageFormatter.getDataModel()Lcom/ibm/icu/message2/Mf2DataModel;	
@@ -74,6 +77,7 @@ com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/Mf2Parser$Symbol
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/Mf2Parser$Terminal	
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/Mf2Parser$TopDownTreeBuilder	
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/Mf2Serializer$Variant$Builder	
+com/ibm/icu/icu4j	client	ABSTRACT	com/ibm/icu/message2/Selector.matches(Ljava/lang/Object;Ljava/util/List;Ljava/util/Map;)Ljava/util/List;	implementations must now provide it
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/Selector.matches(Ljava/lang/Object;Ljava/lang/String;Ljava/util/Map;)Z	
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/text/PersonNameFormatter.<init>(Ljava/util/Locale;[Ljava/lang/String;)V	
 com/microsoft/azure/msal4j	client,server	METHOD	com/microsoft/aad/msal4j/ManagedIdentityParameters.environmentVariables()Lcom/microsoft/aad/msal4j/IEnvironmentVariables;	
@@ -88,22 +92,49 @@ com/nimbusds/nimbus-jose-jwt	client,server	CLASS	com/nimbusds/jose/shaded/gson/i
 com/nimbusds/nimbus-jose-jwt	client,server	METHOD	com/nimbusds/jose/shaded/gson/internal/bind/DefaultDateTypeAdapter$DateType.createAdapterFactory(I)Lcom/nimbusds/jose/shaded/gson/TypeAdapterFactory;	
 com/nimbusds/nimbus-jose-jwt	client,server	METHOD	com/nimbusds/jose/shaded/gson/internal/bind/DefaultDateTypeAdapter$DateType.createDefaultsAdapterFactory()Lcom/nimbusds/jose/shaded/gson/TypeAdapterFactory;	
 com/nimbusds/nimbus-jose-jwt	client,server	ACCESS	com/nimbusds/jose/shaded/gson/internal/bind/util/ISO8601Utils.<init>()V	narrowed
-com/nimbusds/oauth2-oidc-sdk	client,server	ACCESS	com/nimbusds/oauth2/sdk/AbstractOptionallyAuthenticatedRequest.<init>(Ljava/net/URI;Lcom/nimbusds/oauth2/sdk/auth/ClientAuthentication;)V	narrowed
+com/nimbusds/oauth2-oidc-sdk	client,server	ABSTRACT	com/nimbusds/openid/connect/sdk/AuthenticationResponse.getIssuer()Lcom/nimbusds/oauth2/sdk/id/Issuer;	implementations must now provide it
+com/nimbusds/oauth2-oidc-sdk	client,server	ABSTRACT	com/nimbusds/openid/connect/sdk/AuthenticationResponse.getJWTResponse()Lcom/nimbusds/jwt/JWT;	implementations must now provide it
+com/nimbusds/oauth2-oidc-sdk	client,server	ABSTRACT	com/nimbusds/openid/connect/sdk/AuthenticationResponse.getResponseMode()Lcom/nimbusds/oauth2/sdk/ResponseMode;	implementations must now provide it
+com/nimbusds/oauth2-oidc-sdk	client,server	ABSTRACT	com/nimbusds/openid/connect/sdk/AuthenticationResponse.impliedResponseMode()Lcom/nimbusds/oauth2/sdk/ResponseMode;	implementations must now provide it
+com/nimbusds/oauth2-oidc-sdk	client,server	ABSTRACT	com/nimbusds/openid/connect/sdk/op/ReadOnlyOIDCProviderMetadata.supportsNativeSSO()Z	implementations must now provide it
 io/netty/netty-common	client,server	METHOD	io/netty/util/internal/shaded/org/jctools/queues/IndexedQueueSizeUtil.size(Lio/netty/util/internal/shaded/org/jctools/queues/IndexedQueueSizeUtil$IndexedQueue;)I	
 it/unimi/dsi/fastutil	client,server	METHOD	it/unimi/dsi/fastutil/objects/ObjectSortedSets.emptySet()Lit/unimi/dsi/fastutil/objects/ObjectSet;	
 it/unimi/dsi/fastutil	client,server	METHOD	it/unimi/dsi/fastutil/objects/ReferenceSortedSets.emptySet()Lit/unimi/dsi/fastutil/objects/ReferenceSet;	
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/unix/X11.XLowerWindow(Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;)I	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/unix/X11.XMoveResizeWindow(Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;IIII)I	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/unix/X11.XMoveWindow(Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;II)I	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/unix/X11.XRaiseWindow(Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;)I	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/unix/X11.XResizeWindow(Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;II)I	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Kernel32.IsProcessorFeaturePresent(I)Z	implementations must now provide it
 org/apache/logging/log4j/log4j-api	client,server	METHOD	org/apache/logging/log4j/util/ServiceLoaderUtil.loadServices(Ljava/lang/Class;Ljava/lang/invoke/MethodHandles$Lookup;)Ljava/util/stream/Stream;	
 org/apache/logging/log4j/log4j-api	client,server	METHOD	org/apache/logging/log4j/util/ServiceLoaderUtil.loadServices(Ljava/lang/Class;Ljava/lang/invoke/MethodHandles$Lookup;Z)Ljava/util/stream/Stream;	
 org/apache/logging/log4j/log4j-core	client,server	ACCESS	org/apache/logging/log4j/core/jackson/JsonConstants.<init>()V	narrowed
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix2dc.getTransposedToAddress(J)Lorg/joml/Matrix2dc;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix2fc.getTransposedToAddress(J)Lorg/joml/Matrix2fc;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix3dc.getEulerAnglesYXZ(Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix3dc.getTransposedToAddress(J)Lorg/joml/Matrix3dc;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix3fc.getEulerAnglesYXZ(Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix3fc.getTransposedToAddress(J)Lorg/joml/Matrix3fc;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix3x2dc.getTransposedToAddress(J)Lorg/joml/Matrix3x2dc;	implementations must now provide it
 org/joml/joml	client,server	METHOD	org/joml/Matrix3x2f.transform(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	
 org/joml/joml	client,server	METHOD	org/joml/Matrix3x2fStack.transform(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix3x2fc.getTransposedToAddress(J)Lorg/joml/Matrix3x2fc;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix3x2fc.transform(Lorg/joml/Vector3fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
 org/joml/joml	client,server	METHOD	org/joml/Matrix3x2fc.transform(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	
 org/joml/joml	client,server	METHOD	org/joml/Matrix4d.mul(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4d;	
 org/joml/joml	client,server	METHOD	org/joml/Matrix4dStack.mul(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4d;	
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix4dc.getEulerAnglesYXZ(Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix4dc.getTransposedToAddress(J)Lorg/joml/Matrix4dc;	implementations must now provide it
 org/joml/joml	client,server	METHOD	org/joml/Matrix4f.set3x3(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;	
 org/joml/joml	client,server	METHOD	org/joml/Matrix4f.set4x3(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;	
 org/joml/joml	client,server	METHOD	org/joml/Matrix4fStack.set3x3(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;	
 org/joml/joml	client,server	METHOD	org/joml/Matrix4fStack.set4x3(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;	
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix4fc.getEulerAnglesYXZ(Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix4fc.getTransposedToAddress(J)Lorg/joml/Matrix4fc;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix4x3dc.getEulerAnglesYXZ(Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix4x3dc.getTransposedToAddress(J)Lorg/joml/Matrix4x3dc;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix4x3fc.getEulerAnglesYXZ(Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Matrix4x3fc.getTransposedToAddress(J)Lorg/joml/Matrix4x3fc;	implementations must now provide it
 org/joml/joml	client,server	METHOD	org/joml/MemUtil$MemUtilNIO.copy(Lorg/joml/Matrix2d;Lorg/joml/Matrix2d;)V	
 org/joml/joml	client,server	METHOD	org/joml/MemUtil$MemUtilNIO.copy(Lorg/joml/Matrix2d;Lorg/joml/Matrix3d;)V	
 org/joml/joml	client,server	METHOD	org/joml/MemUtil$MemUtilNIO.copy(Lorg/joml/Matrix2d;Lorg/joml/Matrix3x2d;)V	
@@ -186,12 +217,80 @@ org/joml/joml	client,server	METHOD	org/joml/MemUtil$MemUtilUnsafe.copy4x4(Lorg/j
 org/joml/joml	client,server	METHOD	org/joml/MemUtil$MemUtilUnsafe.copy4x4(Lorg/joml/Matrix4x3d;[FI)V	
 org/joml/joml	client,server	METHOD	org/joml/MemUtil$MemUtilUnsafe.copy4x4(Lorg/joml/Matrix4x3f;[FI)V	
 org/joml/joml	client,server	METHOD	org/joml/MemUtil$MemUtilUnsafe.putTransposed(Lorg/joml/Matrix3x2f;ILjava/nio/ByteBuffer;)V	
+org/joml/joml	client,server	ABSTRACT	org/joml/Quaterniondc.div(DLorg/joml/Quaterniond;)Lorg/joml/Quaterniond;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Quaterniondc.sub(DDDDLorg/joml/Quaterniond;)Lorg/joml/Quaterniond;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Quaterniondc.sub(Lorg/joml/Quaterniondc;Lorg/joml/Quaterniond;)Lorg/joml/Quaterniond;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Quaternionfc.div(FLorg/joml/Quaternionf;)Lorg/joml/Quaternionf;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Quaternionfc.sub(FFFFLorg/joml/Quaternionf;)Lorg/joml/Quaternionf;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Quaternionfc.sub(Lorg/joml/Quaternionfc;Lorg/joml/Quaternionf;)Lorg/joml/Quaternionf;	implementations must now provide it
 org/joml/joml	client,server	METHOD	org/joml/Vector2d.div(Lorg/joml/Vector2d;)Lorg/joml/Vector2d;	
 org/joml/joml	client,server	METHOD	org/joml/Vector3d.div(Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulPositionGeneric(Lorg/joml/Matrix4dc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulPositionGeneric(Lorg/joml/Matrix4fc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulPositionGeneric(Lorg/joml/Matrix4x3dc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulPositionGeneric(Lorg/joml/Matrix4x3fc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulPositionTranslation(Lorg/joml/Matrix4dc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulPositionTranslation(Lorg/joml/Matrix4fc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulPositionTranslation(Lorg/joml/Matrix4x3dc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulPositionTranslation(Lorg/joml/Matrix4x3fc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulProjectAffine(Lorg/joml/Matrix4dc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulProjectAffine(Lorg/joml/Matrix4fc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulProjectGeneric(Lorg/joml/Matrix4dc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulProjectGeneric(Lorg/joml/Matrix4fc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulProjectTranslation(Lorg/joml/Matrix4dc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3dc.mulProjectTranslation(Lorg/joml/Matrix4fc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mul(Lorg/joml/Matrix3x2dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulDirection(Lorg/joml/Matrix4x3dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulPosition(Lorg/joml/Matrix4dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulPosition(Lorg/joml/Matrix4x3dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulPositionGeneric(Lorg/joml/Matrix4dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulPositionGeneric(Lorg/joml/Matrix4fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulPositionTranslation(Lorg/joml/Matrix4dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulPositionTranslation(Lorg/joml/Matrix4fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulPositionTranslation(Lorg/joml/Matrix4x3dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulPositionTranslation(Lorg/joml/Matrix4x3fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulPositionW(Lorg/joml/Matrix4dc;Lorg/joml/Vector3f;)F	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulProjectAffine(Lorg/joml/Matrix4dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulProjectAffine(Lorg/joml/Matrix4fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulProjectGeneric(Lorg/joml/Matrix4dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulProjectGeneric(Lorg/joml/Matrix4fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulProjectTranslation(Lorg/joml/Matrix4dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulProjectTranslation(Lorg/joml/Matrix4fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector3fc.mulTransposePosition(Lorg/joml/Matrix4dc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulAffine(Lorg/joml/Matrix4fc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulGeneric(Lorg/joml/Matrix4dc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulGeneric(Lorg/joml/Matrix4fc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulGeneric(Lorg/joml/Matrix4x3dc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulGeneric(Lorg/joml/Matrix4x3fc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulGenericTranspose(Lorg/joml/Matrix4dc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulProjectAffine(Lorg/joml/Matrix4dc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulProjectAffine(Lorg/joml/Matrix4dc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulProjectGeneric(Lorg/joml/Matrix4dc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulProjectGeneric(Lorg/joml/Matrix4dc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulProjectTranslation(Lorg/joml/Matrix4dc;Lorg/joml/Vector3d;)Lorg/joml/Vector3d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulProjectTranslation(Lorg/joml/Matrix4dc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulTranslation(Lorg/joml/Matrix4dc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulTranslation(Lorg/joml/Matrix4fc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulTranslation(Lorg/joml/Matrix4x3dc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4dc.mulTranslation(Lorg/joml/Matrix4x3fc;Lorg/joml/Vector4d;)Lorg/joml/Vector4d;	implementations must now provide it
 org/joml/joml	client,server	METHOD	org/joml/Vector4f.rotateAbout(FFFF)Lorg/joml/Vector4f;	
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulGeneric(Lorg/joml/Matrix4fc;Lorg/joml/Vector4f;)Lorg/joml/Vector4f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulGeneric(Lorg/joml/Matrix4x3fc;Lorg/joml/Vector4f;)Lorg/joml/Vector4f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulGenericTranspose(Lorg/joml/Matrix4fc;Lorg/joml/Vector4f;)Lorg/joml/Vector4f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulProjectAffine(Lorg/joml/Matrix4fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulProjectAffine(Lorg/joml/Matrix4fc;Lorg/joml/Vector4f;)Lorg/joml/Vector4f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulProjectGeneric(Lorg/joml/Matrix4fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulProjectGeneric(Lorg/joml/Matrix4fc;Lorg/joml/Vector4f;)Lorg/joml/Vector4f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulProjectTranslation(Lorg/joml/Matrix4fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulProjectTranslation(Lorg/joml/Matrix4fc;Lorg/joml/Vector4f;)Lorg/joml/Vector4f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulTranslation(Lorg/joml/Matrix4fc;Lorg/joml/Vector4f;)Lorg/joml/Vector4f;	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4fc.mulTranslation(Lorg/joml/Matrix4x3fc;Lorg/joml/Vector4f;)Lorg/joml/Vector4f;	implementations must now provide it
 org/joml/joml	client,server	METHOD	org/joml/Vector4i.distanceSquared(IIII)I	
 org/joml/joml	client,server	METHOD	org/joml/Vector4i.distanceSquared(Lorg/joml/Vector4ic;)I	
 org/joml/joml	client,server	METHOD	org/joml/Vector4i.dot(Lorg/joml/Vector4ic;)I	
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4ic.distanceSquared(IIII)J	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4ic.distanceSquared(Lorg/joml/Vector4ic;)J	implementations must now provide it
+org/joml/joml	client,server	ABSTRACT	org/joml/Vector4ic.dot(Lorg/joml/Vector4ic;)J	implementations must now provide it
 org/joml/joml	client,server	METHOD	org/joml/Vector4ic.distanceSquared(IIII)I	
 org/joml/joml	client,server	METHOD	org/joml/Vector4ic.distanceSquared(Lorg/joml/Vector4ic;)I	
 org/joml/joml	client,server	METHOD	org/joml/Vector4ic.dot(Lorg/joml/Vector4ic;)I	

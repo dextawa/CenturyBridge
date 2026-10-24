@@ -7,7 +7,10 @@ com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.<init>(Lj
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.accountsHost()Ljava/lang/String;	
 com/mojang/authlib	client,server	FIELD	com/mojang/authlib/EnvironmentParser.PROP_ACCOUNT_HOST:Ljava/lang/String;	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/InsecurePublicKeyException$MissingException.<init>()V	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/MinecraftSessionService.getPackedTextures(Lcom/mojang/authlib/GameProfile;)Lcom/mojang/authlib/properties/Property;	implementations must now provide it
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/MinecraftSessionService.unpackTextures(Lcom/mojang/authlib/properties/Property;)Lcom/mojang/authlib/minecraft/MinecraftProfileTextures;	implementations must now provide it
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/MinecraftSessionService.getTextures(Lcom/mojang/authlib/GameProfile;Z)Ljava/util/Map;	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/UserApiService.fetchProperties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;	implementations must now provide it
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/UserApiService.properties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.getTextures(Lcom/mojang/authlib/GameProfile;Z)Ljava/util/Map;	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilUserApiService.properties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;	

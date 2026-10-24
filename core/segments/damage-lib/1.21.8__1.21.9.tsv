@@ -12,6 +12,7 @@ com/mojang/authlib	client,server	METHOD	com/mojang/authlib/GameProfile.getProper
 com/mojang/authlib	client,server	FINAL	com/mojang/authlib/GameProfile.hashCode()I	method made final
 com/mojang/authlib	client,server	FINAL	com/mojang/authlib/GameProfile.toString()Ljava/lang/String;	method made final
 com/mojang/authlib	client,server	CLASS	com/mojang/authlib/GameProfile$Serializer	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/ProfileLookupCallback.onProfileLookupSucceeded(Ljava/lang/String;Ljava/util/UUID;)V	implementations must now provide it
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/ProfileLookupCallback.onProfileLookupSucceeded(Lcom/mojang/authlib/GameProfile;)V	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/properties/PropertyMap.<init>()V	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.toProfile()Lcom/mojang/authlib/GameProfile;	

@@ -18,6 +18,7 @@ org/lwjgl/lwjgl	client	FIELD	org/lwjgl/PointerBuffer.BUFFER_MARK:J
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/PointerBuffer.BUFFER_POSITION:J	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/PointerBuffer.UNSAFE:Lsun/misc/Unsafe;	
 org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/Callback.<init>(Lorg/lwjgl/system/libffi/FFICIF;)V	
+org/lwjgl/lwjgl	client	ABSTRACT	org/lwjgl/system/CallbackI.getDescriptor()Lorg/lwjgl/system/Callback$Descriptor;	implementations must now provide it
 org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/CallbackI.getCallInterface()Lorg/lwjgl/system/libffi/FFICIF;	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Configuration.CUDA_API_PER_THREAD_DEFAULT_STREAM:Lorg/lwjgl/system/Configuration;	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Configuration.CUDA_LIBRARY_NAME:Lorg/lwjgl/system/Configuration;	
@@ -26,6 +27,7 @@ org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Configuration.CUDA_NVRTC_LIBRARY_N
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Configuration.CUDA_TOOLKIT_PATH:Lorg/lwjgl/system/Configuration;	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Configuration.CUDA_TOOLKIT_VERSION:Lorg/lwjgl/system/Configuration;	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Configuration.OPENVR_LIBRARY_NAME:Lorg/lwjgl/system/Configuration;	
+org/lwjgl/lwjgl	client	ABSTRACT	org/lwjgl/system/CustomBuffer.create(JLjava/nio/ByteBuffer;IIII)Lorg/lwjgl/system/CustomBuffer;	implementations must now provide it
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/CustomBuffer.ADDRESS:J	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/CustomBuffer.BUFFER_CAPACITY:J	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/CustomBuffer.BUFFER_CONTAINER:J	
@@ -184,6 +186,7 @@ org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Struct.BUFFER_LIMIT:J
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Struct.BUFFER_MARK:J	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Struct.BUFFER_POSITION:J	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Struct.UNSAFE:Lsun/misc/Unsafe;	
+org/lwjgl/lwjgl	client	ABSTRACT	org/lwjgl/system/StructBuffer.create(JLjava/nio/ByteBuffer;IIII)Lorg/lwjgl/system/CustomBuffer;	implementations must now provide it
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/StructBuffer.ADDRESS:J	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/StructBuffer.BUFFER_CAPACITY:J	
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/StructBuffer.BUFFER_CONTAINER:J	
@@ -3887,9 +3890,11 @@ org/lwjgl/lwjgl-jemalloc	client	FIELD	org/lwjgl/system/jemalloc/MallocMessageCal
 org/lwjgl/lwjgl-jemalloc	client	METHOD	org/lwjgl/system/jemalloc/MallocMessageCallback.getCallInterface()Lorg/lwjgl/system/libffi/FFICIF;	
 org/lwjgl/lwjgl-jemalloc	client	FIELD	org/lwjgl/system/jemalloc/MallocMessageCallbackI.CIF:Lorg/lwjgl/system/libffi/FFICIF;	
 org/lwjgl/lwjgl-jemalloc	client	METHOD	org/lwjgl/system/jemalloc/MallocMessageCallbackI.getCallInterface()Lorg/lwjgl/system/libffi/FFICIF;	
+org/lwjgl/lwjgl-openal	client	ABSTRACT	org/lwjgl/openal/SOFTCallbackBufferType.invoke(JJI)I	implementations must now provide it
 org/lwjgl/lwjgl-openal	client	FIELD	org/lwjgl/openal/SOFTCallbackBufferType.CIF:Lorg/lwjgl/system/libffi/FFICIF;	
 org/lwjgl/lwjgl-openal	client	METHOD	org/lwjgl/openal/SOFTCallbackBufferType.getCallInterface()Lorg/lwjgl/system/libffi/FFICIF;	
 org/lwjgl/lwjgl-openal	client	METHOD	org/lwjgl/openal/SOFTCallbackBufferType.invoke(JJI)J	
+org/lwjgl/lwjgl-openal	client	ABSTRACT	org/lwjgl/openal/SOFTCallbackBufferTypeI.invoke(JJI)I	implementations must now provide it
 org/lwjgl/lwjgl-openal	client	FIELD	org/lwjgl/openal/SOFTCallbackBufferTypeI.CIF:Lorg/lwjgl/system/libffi/FFICIF;	
 org/lwjgl/lwjgl-openal	client	METHOD	org/lwjgl/openal/SOFTCallbackBufferTypeI.getCallInterface()Lorg/lwjgl/system/libffi/FFICIF;	
 org/lwjgl/lwjgl-openal	client	METHOD	org/lwjgl/openal/SOFTCallbackBufferTypeI.invoke(JJI)J	

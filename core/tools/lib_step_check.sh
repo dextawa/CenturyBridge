@@ -63,9 +63,14 @@ def artifact(owner):
 control = {r[0] for r in rows(out + "/control-report.tsv")}
 total = sum(1 for l in open(out + "/" + [f for f in __import__("os").listdir(out) if f.endswith(".index.tsv")][0], encoding="utf-8")) - 1
 opened = [r for r in rows(out + "/report.tsv") if r[0] not in control]
-# a ledgered site: its member key (owner.name desc) or, for a class-level site, its class is in the wiring's ledger
+# a ledgered site: its member key (owner.name desc) or its class is in the wiring's ledger (a class judged as a whole:
+# gone, or not mod-reachable API)
+# a site whose every dangling reference is ledgered (an implementation lacking only ledgered methods) is too
 def ledgered(r):
-    return (r[2] + "." + r[3] + r[4]) in ledger or (not r[3] and r[2] in ledger)
+    if (r[2] + "." + r[3] + r[4]) in ledger or (r[2] + "." + r[3] + ":" + r[4]) in ledger or r[2] in ledger:
+        return True
+    refs = [x.strip() for x in r[7].split("|")] if len(r) > 7 and r[7] else []
+    return bool(refs) and all(x in ledger for x in refs)
 led = [r for r in opened if ledgered(r)]
 opened = [r for r in opened if not ledgered(r)]
 print(f"library probe {out.split('/')[-1]}: {len(opened)} of {total} sites open, {len(led)} ledgered ({len(control)} sites fail on V itself, not counted)")

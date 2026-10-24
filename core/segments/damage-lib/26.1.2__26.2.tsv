@@ -3,6 +3,10 @@
 # scope = the artifacts V ships (artifacts.tsv: version JSON = client, server bundler list = server); sides column from it.
 # regenerate: Main lib-diff <oldLibs> <newLibs> <out.tsv> core/segments/damage-lib/artifacts.tsv <V> <W>
 artifact	sides	kind	symbol	note
+com/google/guava/guava	client,server	ABSTRACT	com/google/common/graph/Graph.asNetwork()Lcom/google/common/graph/Network;	implementations must now provide it
+com/google/guava/guava	client,server	ABSTRACT	com/google/common/graph/MutableGraph.asNetwork()Lcom/google/common/graph/Network;	implementations must now provide it
+com/google/guava/guava	client,server	ABSTRACT	com/google/common/graph/MutableValueGraph.asNetwork()Lcom/google/common/graph/Network;	implementations must now provide it
+com/google/guava/guava	client,server	ABSTRACT	com/google/common/graph/ValueGraph.asNetwork()Lcom/google/common/graph/Network;	implementations must now provide it
 com/google/guava/guava	client,server	FINAL	com/google/common/util/concurrent/ClosingFuture$Combiner.call(Lcom/google/common/util/concurrent/ClosingFuture$Combiner$CombiningCallable;Ljava/util/concurrent/Executor;)Lcom/google/common/util/concurrent/ClosingFuture;	method made final
 com/google/guava/guava	client,server	FINAL	com/google/common/util/concurrent/ClosingFuture$Combiner.callAsync(Lcom/google/common/util/concurrent/ClosingFuture$Combiner$AsyncCombiningCallable;Ljava/util/concurrent/Executor;)Lcom/google/common/util/concurrent/ClosingFuture;	method made final
 com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
@@ -55,6 +59,8 @@ com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/util/Currency.PORTION_PER_1E9:Lcom/ib
 com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/util/MeasureUnit.PORTION_PER_1E9:Lcom/ibm/icu/util/MeasureUnit;	
 com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/util/TimeUnit.PORTION_PER_1E9:Lcom/ibm/icu/util/MeasureUnit;	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.<init>(Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges;Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$ProfanityFilterPreferences;Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus;)V	
+com/mojang/datafixerupper	client,server	ABSTRACT	com/mojang/serialization/DynamicOps.createBoolean(Z)Ljava/lang/Object;	implementations must now provide it
+com/mojang/datafixerupper	client,server	ABSTRACT	com/mojang/serialization/DynamicOps.getBooleanValue(Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;	implementations must now provide it
 com/mojang/logging	client,server	CLASS	com/mojang/logging/annotations/FieldsAreNonnullByDefault	
 com/mojang/logging	client,server	CLASS	com/mojang/logging/annotations/MethodsReturnNonnullByDefault	
 io/netty/netty-common	client,server	METHOD	io/netty/util/internal/PlatformDependent.allocateDirectBufferNoCleaner(I)Lio/netty/util/internal/CleanableDirectBuffer;	

@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_slib_1_21_4",
+ "version": "1.0.0",
+ "name": "CB slib library test (1.21.3 era)",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.slib.SlibLibs214Test"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.3" }
+}

@@ -1,0 +1,312 @@
+{
+ "_lib_basis": "slib library front of 1.21.3 -> 1.21.4 (core/segments/damage-lib/1.21.3__1.21.4.tsv): the rows a mod can reach; rows in packages their library does not export are ledgered in lib-internal-gen.json. Written by core/tools/lib_wiring_1214.py (rt/CbLibMisc, rt/CbLibIcu, rt/CbLibPhysicalMemory)",
+ "methodRenames": {
+  "org/joml/Vector4f.rotateAbout(FFFF)Lorg/joml/Vector4f;": "rotateAxis"
+ },
+ "callReshapes": {
+  "org/joml/Matrix3x2f.transform(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;": {
+   "desc": "(Lorg/joml/Vector3fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;",
+   "ops": [
+    "keep:0 Lorg/joml/Vector3fc;",
+    "keep:1"
+   ],
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4) takes the read-only interface where 1.10.5 took the class; the same object, the same method body"
+  },
+  "org/joml/Matrix3x2fc.transform(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;": {
+   "desc": "(Lorg/joml/Vector3fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;",
+   "ops": [
+    "keep:0 Lorg/joml/Vector3fc;",
+    "keep:1"
+   ],
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4) takes the read-only interface where 1.10.5 took the class; the same object, the same method body"
+  },
+  "org/joml/Matrix4d.mul(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4d;": {
+   "desc": "(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4d;",
+   "ops": [
+    "keep:0 Lorg/joml/Matrix4fc;"
+   ],
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4) takes the read-only interface where 1.10.5 took the class; the same object, the same method body"
+  },
+  "org/joml/Matrix4f.set3x3(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;": {
+   "desc": "(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
+   "ops": [
+    "keep:0 Lorg/joml/Matrix4fc;"
+   ],
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4) takes the read-only interface where 1.10.5 took the class; the same object, the same method body"
+  },
+  "org/joml/Matrix4f.set4x3(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;": {
+   "desc": "(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
+   "ops": [
+    "keep:0 Lorg/joml/Matrix4fc;"
+   ],
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4) takes the read-only interface where 1.10.5 took the class; the same object, the same method body"
+  },
+  "org/joml/Vector2d.div(Lorg/joml/Vector2d;)Lorg/joml/Vector2d;": {
+   "desc": "(Lorg/joml/Vector2dc;)Lorg/joml/Vector2d;",
+   "ops": [
+    "keep:0 Lorg/joml/Vector2dc;"
+   ],
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4) takes the read-only interface where 1.10.5 took the class; the same object, the same method body"
+  },
+  "org/joml/Vector3d.div(Lorg/joml/Vector3d;)Lorg/joml/Vector3d;": {
+   "desc": "(Lorg/joml/Vector3dc;)Lorg/joml/Vector3d;",
+   "ops": [
+    "keep:0 Lorg/joml/Vector3dc;"
+   ],
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4) takes the read-only interface where 1.10.5 took the class; the same object, the same method body"
+  },
+  "org/joml/Vector4i.distanceSquared(IIII)I": {
+   "desc": "(IIII)J",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc#lowInt(J)I",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): Vector4i dot / distanceSquared answer long; 1.10.5's int arithmetic is its low 32 bits (rt/CbLibMisc.lowInt)"
+  },
+  "org/joml/Vector4i.distanceSquared(Lorg/joml/Vector4ic;)I": {
+   "desc": "(Lorg/joml/Vector4ic;)J",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc#lowInt(J)I",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): Vector4i dot / distanceSquared answer long; 1.10.5's int arithmetic is its low 32 bits (rt/CbLibMisc.lowInt)"
+  },
+  "org/joml/Vector4i.dot(Lorg/joml/Vector4ic;)I": {
+   "desc": "(Lorg/joml/Vector4ic;)J",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc#lowInt(J)I",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): Vector4i dot / distanceSquared answer long; 1.10.5's int arithmetic is its low 32 bits (rt/CbLibMisc.lowInt)"
+  },
+  "org/joml/Vector4ic.distanceSquared(IIII)I": {
+   "desc": "(IIII)J",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc#lowInt(J)I",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): Vector4i dot / distanceSquared answer long; 1.10.5's int arithmetic is its low 32 bits (rt/CbLibMisc.lowInt)"
+  },
+  "org/joml/Vector4ic.distanceSquared(Lorg/joml/Vector4ic;)I": {
+   "desc": "(Lorg/joml/Vector4ic;)J",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc#lowInt(J)I",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): Vector4i dot / distanceSquared answer long; 1.10.5's int arithmetic is its low 32 bits (rt/CbLibMisc.lowInt)"
+  },
+  "org/joml/Vector4ic.dot(Lorg/joml/Vector4ic;)I": {
+   "desc": "(Lorg/joml/Vector4ic;)J",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc#lowInt(J)I",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): Vector4i dot / distanceSquared answer long; 1.10.5's int arithmetic is its low 32 bits (rt/CbLibMisc.lowInt)"
+  },
+  "it/unimi/dsi/fastutil/objects/ObjectSortedSets.emptySet()Lit/unimi/dsi/fastutil/objects/ObjectSet;": {
+   "desc": "()Lit/unimi/dsi/fastutil/objects/ObjectSortedSet;",
+   "ops": [],
+   "ret": "keep",
+   "basis": "fastutil 8.5.12 -> 8.5.15: emptySet() answers the sorted set it always was (same EMPTY_SET), typed as such"
+  },
+  "it/unimi/dsi/fastutil/objects/ReferenceSortedSets.emptySet()Lit/unimi/dsi/fastutil/objects/ReferenceSet;": {
+   "desc": "()Lit/unimi/dsi/fastutil/objects/ReferenceSortedSet;",
+   "ops": [],
+   "ret": "keep",
+   "basis": "fastutil 8.5.12 -> 8.5.15: emptySet() answers the sorted set it always was (same EMPTY_SET), typed as such"
+  },
+  "oshi/hardware/common/AbstractCentralProcessor.initProcessorCounts()Loshi/util/tuples/Triplet;": {
+   "desc": "()Loshi/util/tuples/Quartet;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc#withoutFeatureFlags(Loshi/util/tuples/Quartet;)Loshi/util/tuples/Triplet;",
+   "basis": "OSHI 6.4.10 -> 6.6.5: initProcessorCounts answers a Quartet whose fourth list (CPU feature flags) 6.4.10 did not have"
+  },
+  "oshi/hardware/platform/unix/openbsd/OpenBsdCentralProcessor.initProcessorCounts()Loshi/util/tuples/Triplet;": {
+   "desc": "()Loshi/util/tuples/Quartet;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc#withoutFeatureFlags(Loshi/util/tuples/Quartet;)Loshi/util/tuples/Triplet;",
+   "basis": "OSHI 6.4.10 -> 6.6.5: initProcessorCounts answers a Quartet whose fourth list (CPU feature flags) 6.4.10 did not have"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "transform(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;",
+   "new": "transform(Lorg/joml/Vector3fc;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;",
+   "narrow": true,
+   "onlyUnder": "org/joml/Matrix3x2fc",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): vanilla and JOML call the widened shape; a 1.10.5 override answers it for the class it took"
+  },
+  {
+   "old": "mul(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4d;",
+   "new": "mul(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4d;",
+   "narrow": true,
+   "onlyUnder": "org/joml/Matrix4d",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): vanilla and JOML call the widened shape; a 1.10.5 override answers it for the class it took"
+  },
+  {
+   "old": "set3x3(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;",
+   "new": "set3x3(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
+   "narrow": true,
+   "onlyUnder": "org/joml/Matrix4f",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): vanilla and JOML call the widened shape; a 1.10.5 override answers it for the class it took"
+  },
+  {
+   "old": "set4x3(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;",
+   "new": "set4x3(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
+   "narrow": true,
+   "onlyUnder": "org/joml/Matrix4f",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): vanilla and JOML call the widened shape; a 1.10.5 override answers it for the class it took"
+  },
+  {
+   "old": "div(Lorg/joml/Vector2d;)Lorg/joml/Vector2d;",
+   "new": "div(Lorg/joml/Vector2dc;)Lorg/joml/Vector2d;",
+   "narrow": true,
+   "onlyUnder": "org/joml/Vector2d",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): vanilla and JOML call the widened shape; a 1.10.5 override answers it for the class it took"
+  },
+  {
+   "old": "div(Lorg/joml/Vector3d;)Lorg/joml/Vector3d;",
+   "new": "div(Lorg/joml/Vector3dc;)Lorg/joml/Vector3d;",
+   "narrow": true,
+   "onlyUnder": "org/joml/Vector3d",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): vanilla and JOML call the widened shape; a 1.10.5 override answers it for the class it took"
+  },
+  {
+   "old": "distanceSquared(IIII)I",
+   "new": "distanceSquared(IIII)J",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc.widen(I)J",
+   "onlyUnder": "org/joml/Vector4ic",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): callers ask the long shape; a 1.10.5 override's int, widened"
+  },
+  {
+   "old": "distanceSquared(Lorg/joml/Vector4ic;)I",
+   "new": "distanceSquared(Lorg/joml/Vector4ic;)J",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc.widen(I)J",
+   "onlyUnder": "org/joml/Vector4ic",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): callers ask the long shape; a 1.10.5 override's int, widened"
+  },
+  {
+   "old": "dot(Lorg/joml/Vector4ic;)I",
+   "new": "dot(Lorg/joml/Vector4ic;)J",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc.widen(I)J",
+   "onlyUnder": "org/joml/Vector4ic",
+   "basis": "JOML 1.10.5 (1.21.3) -> 1.10.8 (1.21.4): callers ask the long shape; a 1.10.5 override's int, widened"
+  },
+  {
+   "old": "initProcessorCounts()Loshi/util/tuples/Triplet;",
+   "new": "initProcessorCounts()Loshi/util/tuples/Quartet;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc.withFeatureFlags(Loshi/util/tuples/Triplet;)Loshi/util/tuples/Quartet;",
+   "onlyUnder": "oshi/hardware/common/AbstractCentralProcessor",
+   "basis": "OSHI 6.4.10 -> 6.6.5: initProcessorCounts answers a Quartet whose fourth list (CPU feature flags) 6.4.10 did not have: a 6.4.10 subclass's counts with no feature flags"
+  }
+ ],
+ "staticRedirects": {
+  "oshi/util/FileUtil.readAllBytes(Ljava/lang/String;)[B": "top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc"
+ },
+ "fieldGetters": {
+  "oshi/util/Constants.SYSFS_SERIAL_PATH:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc"
+ },
+ "ctorRedirects": {
+  "oshi/hardware/PhysicalMemory.<init>(Ljava/lang/String;JJLjava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc#physicalMemory",
+  "com/ibm/icu/text/PersonNameFormatter.<init>(Ljava/util/Locale;[Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbLibIcu#personNameFormatter",
+  "org/apache/logging/log4j/core/jackson/JsonConstants.<init>()V": "top/dext/centurybridge/step/v1_21_4/rt/CbLibMisc#jsonConstants"
+ },
+ "superRenames": {
+  "oshi/hardware/PhysicalMemory": "top/dext/centurybridge/step/v1_21_4/rt/CbLibPhysicalMemory"
+ },
+ "superCtorReshapes": {
+  "com/ibm/icu/text/PersonNameFormatter.<init>(Ljava/util/Locale;[Ljava/lang/String;)V": {
+   "desc": "(Ljava/util/Locale;[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbLibIcu#noPatterns()[Ljava/lang/String;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbLibIcu#noPatterns()[Ljava/lang/String;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbLibIcu#noPatterns()[Ljava/lang/String;"
+   ],
+   "basis": "ICU 73.2's PersonNameFormatter(locale, patterns) left the surname-first patterns and both locale sets null"
+  }
+ },
+ "ledger": {
+  "com/nimbusds/jose/crypto/bc/BouncyCastleProviderSingleton.getInstance()Lorg/bouncycastle/jce/provider/BouncyCastleProvider;": "returns (and its 9.37.3 body constructs) org.bouncycastle.jce.provider.BouncyCastleProvider, and no BouncyCastle class is on 1.21.3's runtime (no org/bouncycastle entry in any of its libraries' jars): on 1.21.3 the call could only throw NoClassDefFoundError, so there is no behaviour to give back",
+  "com/nimbusds/jose/crypto/bc/BouncyCastleFIPSProviderSingleton.getInstance()Lorg/bouncycastle/jcajce/provider/BouncyCastleFipsProvider;": "returns (and its 9.37.3 body constructs) org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider, and no BouncyCastle class is on 1.21.3's runtime (no org/bouncycastle entry in any of its libraries' jars): on 1.21.3 the call could only throw NoClassDefFoundError",
+  "com/nimbusds/jose/crypto/impl/LegacyAESGCM": "every member of nimbus-jose-jwt 9.37.3's LegacyAESGCM works through BouncyCastle (javap: createAESCipher returns org.bouncycastle.crypto.engines.AESEngine, encrypt/decrypt build an org.bouncycastle GCMBlockCipher), and no BouncyCastle class is on 1.21.3's runtime: on 1.21.3 each call could only throw NoClassDefFoundError",
+  "com/microsoft/aad/msal4j/ManagedIdentityParameters.environmentVariables()Lcom/microsoft/aad/msal4j/IEnvironmentVariables;": "its type, IEnvironmentVariables, is package-private in msal4j 1.15.0 (javap: interface com.microsoft.aad.msal4j.IEnvironmentVariables, not public): a mod cannot name its answer, and msal4j 1.17.2's ManagedIdentityParameters keeps no environment-variables state at all (javap: field and accessors gone), so there is nothing to answer from",
+  "com/microsoft/aad/msal4j/ManagedIdentityParameters$ManagedIdentityParametersBuilder.environmentVariables(Lcom/microsoft/aad/msal4j/IEnvironmentVariables;)Lcom/microsoft/aad/msal4j/ManagedIdentityParameters$ManagedIdentityParametersBuilder;": "its argument type, IEnvironmentVariables, is package-private in msal4j 1.15.0: a mod can create no value for it (only null), and msal4j 1.17.2's parameters keep no environment-variables setting for it to configure",
+  "com/nimbusds/openid/connect/sdk/AuthenticationResponse.impliedResponseMode()Lcom/nimbusds/oauth2/sdk/ResponseMode;": "oauth2-oidc-sdk 11.20.1 computes the implied response mode from the response's kind and response type (AuthorizationResponse subclasses: query or fragment by response type, the JWT forms when secured); an implementation of 11.9.1's AuthenticationResponse interface that is not one of those classes carries no response type, so there is no 11.9.1 value to answer with -- an implementation through AuthorizationResponse inherits 11.20.1's own"
+ },
+ "abstractFills": [
+  {
+   "under": "oshi/hardware/CentralProcessor",
+   "method": "getFeatureFlags()Ljava/util/List;",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.getFeatureFlags(Loshi/hardware/CentralProcessor;)Ljava/util/List;",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: OSHI 6.4.10 read no CPU feature flags (rt/CbLibFills)"
+  },
+  {
+   "under": "com/nimbusds/openid/connect/sdk/AuthenticationResponse",
+   "method": "getIssuer()Lcom/nimbusds/oauth2/sdk/id/Issuer;",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.getIssuer(Lcom/nimbusds/openid/connect/sdk/AuthenticationResponse;)Lcom/nimbusds/oauth2/sdk/id/Issuer;",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: 11.9.1's response carried no issuer (rt/CbLibFills)"
+  },
+  {
+   "under": "com/nimbusds/openid/connect/sdk/AuthenticationResponse",
+   "method": "getJWTResponse()Lcom/nimbusds/jwt/JWT;",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.getJWTResponse(Lcom/nimbusds/openid/connect/sdk/AuthenticationResponse;)Lcom/nimbusds/jwt/JWT;",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: 11.9.1's response had no JWT-secured form (rt/CbLibFills)"
+  },
+  {
+   "under": "com/nimbusds/openid/connect/sdk/AuthenticationResponse",
+   "method": "getResponseMode()Lcom/nimbusds/oauth2/sdk/ResponseMode;",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.getResponseMode(Lcom/nimbusds/openid/connect/sdk/AuthenticationResponse;)Lcom/nimbusds/oauth2/sdk/ResponseMode;",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: 11.9.1's response named no response mode (rt/CbLibFills)"
+  },
+  {
+   "under": "com/nimbusds/openid/connect/sdk/op/ReadOnlyOIDCProviderMetadata",
+   "method": "supportsNativeSSO()Z",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.supportsNativeSSO(Lcom/nimbusds/openid/connect/sdk/op/ReadOnlyOIDCProviderMetadata;)Z",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: 11.9.1's metadata declared no native SSO (rt/CbLibFills)"
+  },
+  {
+   "under": "com/sun/jna/platform/unix/X11",
+   "method": "XMoveWindow(Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;II)I",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.XMoveWindow(Lcom/sun/jna/platform/unix/X11;Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;II)I",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: the native function through JNA's own binding (rt/CbLibFills)"
+  },
+  {
+   "under": "com/sun/jna/platform/unix/X11",
+   "method": "XResizeWindow(Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;II)I",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.XResizeWindow(Lcom/sun/jna/platform/unix/X11;Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;II)I",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: the native function through JNA's own binding (rt/CbLibFills)"
+  },
+  {
+   "under": "com/sun/jna/platform/unix/X11",
+   "method": "XMoveResizeWindow(Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;IIII)I",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.XMoveResizeWindow(Lcom/sun/jna/platform/unix/X11;Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;IIII)I",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: the native function through JNA's own binding (rt/CbLibFills)"
+  },
+  {
+   "under": "com/sun/jna/platform/unix/X11",
+   "method": "XRaiseWindow(Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;)I",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.XRaiseWindow(Lcom/sun/jna/platform/unix/X11;Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;)I",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: the native function through JNA's own binding (rt/CbLibFills)"
+  },
+  {
+   "under": "com/sun/jna/platform/unix/X11",
+   "method": "XLowerWindow(Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;)I",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.XLowerWindow(Lcom/sun/jna/platform/unix/X11;Lcom/sun/jna/platform/unix/X11$Display;Lcom/sun/jna/platform/unix/X11$Window;)I",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: the native function through JNA's own binding (rt/CbLibFills)"
+  },
+  {
+   "under": "com/sun/jna/platform/win32/Kernel32",
+   "method": "IsProcessorFeaturePresent(I)Z",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbLibFills.IsProcessorFeaturePresent(Lcom/sun/jna/platform/win32/Kernel32;I)Z",
+   "basis": "the 1.21.4 library demands it of an implementation; a 1.21.3-era one: the native function through JNA's own binding (rt/CbLibFills)"
+  }
+ ]
+}

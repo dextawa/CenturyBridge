@@ -5,10 +5,28 @@
 artifact	sides	kind	symbol	note
 com/github/oshi/oshi-core	client,server	METHOD	oshi/driver/windows/LogicalProcessorInformation.getLogicalProcessorInformation()Loshi/util/tuples/Pair;	
 com/github/oshi/oshi-core	client,server	METHOD	oshi/driver/windows/LogicalProcessorInformation.getLogicalProcessorInformationEx()Loshi/util/tuples/Pair;	
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/hardware/CentralProcessor.getProcessorCaches()Ljava/util/List;	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/hardware/common/AbstractCentralProcessor.initProcessorCounts()Loshi/util/tuples/Triplet;	implementations must now provide it
 com/github/oshi/oshi-core	client,server	METHOD	oshi/hardware/common/AbstractCentralProcessor.initProcessorCounts()Loshi/util/tuples/Pair;	
 com/github/oshi/oshi-core	client,server	METHOD	oshi/hardware/platform/unix/openbsd/OpenBsdCentralProcessor.initProcessorCounts()Loshi/util/tuples/Pair;	
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/linux/LinuxLibc.gettid()I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/linux/LinuxLibc.syscall(Lcom/sun/jna/NativeLong;[Ljava/lang/Object;)Lcom/sun/jna/NativeLong;	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/unix/AixLibc.thread_self()I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/unix/FreeBsdLibc.thr_self(Lcom/sun/jna/ptr/NativeLongByReference;)I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/unix/OpenBsdLibc.getthrid()I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/jna/platform/unix/SolarisLibc.thr_self()I	implementations must now provide it
 com/github/oshi/oshi-core	client,server	CLASS	oshi/jna/platform/windows/WinNT	
 com/github/oshi/oshi-core	client,server	CLASS	oshi/jna/platform/windows/WinNT$TOKEN_ELEVATION	
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/common/AbstractFileSystem.getMaxFileDescriptorsPerProcess()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/common/AbstractOSProcess.getHardOpenFileLimit()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/common/AbstractOSProcess.getSoftOpenFileLimit()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/common/AbstractOperatingSystem.getCurrentThread()Loshi/software/os/OSThread;	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/common/AbstractOperatingSystem.getThreadId()I	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/os/FileSystem.getMaxFileDescriptorsPerProcess()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/os/OSProcess.getHardOpenFileLimit()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/os/OSProcess.getSoftOpenFileLimit()J	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/os/OperatingSystem.getCurrentThread()Loshi/software/os/OSThread;	implementations must now provide it
+com/github/oshi/oshi-core	client,server	ABSTRACT	oshi/software/os/OperatingSystem.getThreadId()I	implementations must now provide it
 com/github/oshi/oshi-core	client,server	METHOD	oshi/software/os/linux/LinuxOSProcess.<init>(I)V	
 com/github/oshi/oshi-core	client,server	METHOD	oshi/software/os/mac/MacOSProcess.<init>(III)V	
 com/github/oshi/oshi-core	client,server	METHOD	oshi/software/os/unix/aix/AixOSProcess.<init>(ILoshi/util/tuples/Pair;Ljava/util/function/Supplier;)V	
@@ -18,7 +36,6 @@ com/github/oshi/oshi-core	client,server	METHOD	oshi/software/os/unix/solaris/Sol
 com/github/oshi/oshi-core	client,server	ACCESS	oshi/util/platform/windows/WmiQueryHandler.<init>()V	narrowed
 com/github/oshi/oshi-core	client,server	ACCESS	oshi/util/platform/windows/WmiQueryHandler.failedWmiClassNames:Ljava/util/Set;	narrowed
 com/github/oshi/oshi-core	client,server	ACCESS	oshi/util/platform/windows/WmiQueryHandler.wmiTimeout:I	narrowed
-com/google/guava/guava	client,server	ACCESS	com/google/common/collect/ForwardingMap$StandardEntrySet.<init>(Lcom/google/common/collect/ForwardingMap;)V	narrowed
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/units/UnitPreferences.getPreferencesFor(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)[Lcom/ibm/icu/impl/units/UnitPreferences$UnitPreference;	
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/units/UnitsData.getPreferencesFor(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)[Lcom/ibm/icu/impl/units/UnitPreferences$UnitPreference;	
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/units/UnitsRouter.<init>(Lcom/ibm/icu/impl/units/MeasureUnitImpl;Ljava/lang/String;Ljava/lang/String;)V	
@@ -46,6 +63,7 @@ com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.getSessio
 com/mojang/authlib	client,server	FIELD	com/mojang/authlib/EnvironmentParser.PROP_AUTH_HOST:Ljava/lang/String;	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/GameProfile.isComplete()Z	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/GameProfile.isLegacy()Z	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/GameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/ProfileLookupCallback;)V	implementations must now provide it
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/GameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/HttpAuthenticationService.createUrlConnection(Ljava/net/URL;)Ljava/net/HttpURLConnection;	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/HttpAuthenticationService.createUserAuthentication(Lcom/mojang/authlib/Agent;)Lcom/mojang/authlib/UserAuthentication;	
@@ -53,6 +71,7 @@ com/mojang/authlib	client,server	METHOD	com/mojang/authlib/HttpAuthenticationSer
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;Ljava/lang/String;)Ljava/lang/String;	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/HttpAuthenticationService.performPostRequest(Ljava/net/URL;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;	
 com/mojang/authlib	client,server	CLASS	com/mojang/authlib/HttpUserAuthentication	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/ProfileLookupCallback.onProfileLookupFailed(Ljava/lang/String;Ljava/lang/Exception;)V	implementations must now provide it
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/ProfileLookupCallback.onProfileLookupFailed(Lcom/mojang/authlib/GameProfile;Ljava/lang/Exception;)V	
 com/mojang/authlib	client,server	CLASS	com/mojang/authlib/UserAuthentication	
 com/mojang/authlib	client,server	CLASS	com/mojang/authlib/UserType	
@@ -62,6 +81,9 @@ com/mojang/authlib	client,server	CLASS	com/mojang/authlib/legacy/LegacyMinecraft
 com/mojang/authlib	client,server	CLASS	com/mojang/authlib/legacy/LegacyUserAuthentication	
 com/mojang/authlib	client,server	CLASS	com/mojang/authlib/minecraft/BaseMinecraftSessionService	
 com/mojang/authlib	client,server	CLASS	com/mojang/authlib/minecraft/HttpMinecraftSessionService	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/MinecraftSessionService.fetchProfile(Ljava/util/UUID;Z)Lcom/mojang/authlib/yggdrasil/ProfileResult;	implementations must now provide it
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/MinecraftSessionService.hasJoinedServer(Ljava/lang/String;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/yggdrasil/ProfileResult;	implementations must now provide it
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/MinecraftSessionService.joinServer(Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;)V	implementations must now provide it
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/MinecraftSessionService.fillProfileProperties(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/MinecraftSessionService.hasJoinedServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/GameProfile;	
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/MinecraftSessionService.joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V	
@@ -238,6 +260,10 @@ com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/Us
 com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse$ProfanityFilterPreferences.isEnabled()Z	
 com/mojang/authlib	client,server	METHOD	com/mojang/util/UUIDTypeAdapter.fromString(Ljava/lang/String;)Ljava/util/UUID;	
 com/mojang/authlib	client,server	METHOD	com/mojang/util/UUIDTypeAdapter.fromUUID(Ljava/util/UUID;)Ljava/lang/String;	
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Kernel32.VirtualLock(Lcom/sun/jna/Pointer;Lcom/sun/jna/platform/win32/BaseTSD$SIZE_T;)Z	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Kernel32.VirtualUnlock(Lcom/sun/jna/Pointer;Lcom/sun/jna/platform/win32/BaseTSD$SIZE_T;)Z	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/OleAuto.VariantTimeToSystemTime(DLcom/sun/jna/platform/win32/WinBase$SYSTEMTIME;)I	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Psapi.QueryWorkingSetEx(Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/Pointer;I)Z	implementations must now provide it
 org/lwjgl/lwjgl	client	FIELD	org/lwjgl/system/Configuration.SHADERC_SPVC_LIBRARY_NAME:Lorg/lwjgl/system/Configuration;	
 org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPJS(JJSSJ)S	
 org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/JNI.callPPI(JBJJ)I	

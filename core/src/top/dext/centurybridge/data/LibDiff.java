@@ -60,6 +60,8 @@ import org.objectweb.asm.tree.MethodNode;
  *   STATIC    static-ness flipped (IncompatibleClassChangeError)
  *   ACCESS    still there, no longer reachable (public/protected -&gt; narrower)
  *   FINAL     an overridable method or extendable class made final
+ *   ABSTRACT  an abstract class or interface demands a method its V-era implementations lack
+ *             (on V it resolved to a concrete method or to nothing)
  *
  *   lib-diff &lt;oldLibrariesDir&gt; &lt;newLibrariesDir&gt; &lt;out.tsv&gt; [&lt;artifacts.tsv&gt; &lt;V&gt; &lt;W&gt;]
  * </pre>
@@ -141,6 +143,14 @@ public final class LibDiff {
                 boolean extendable = (oc.access & (Opcodes.ACC_FINAL | Opcodes.ACC_INTERFACE)) == 0;
                 if (extendable && (nc.access & Opcodes.ACC_FINAL) != 0)
                     add(rows, s, coord, sides, "FINAL", name, "class made final");
+                // a method W demands of an implementation that V did not: a mod's class under it lacks it (AbstractMethodError).
+                // A class a mod can extend at all: an interface, or a class with a public/protected constructor
+                boolean implementable = (oc.access & Opcodes.ACC_INTERFACE) != 0 || oc.methods.stream().anyMatch(m ->
+                    m.name.equals("<init>") && (m.access & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) != 0);
+                if (implementable && (oc.access & Opcodes.ACC_FINAL) == 0 && (nc.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_INTERFACE)) != 0) {
+                    for (String key : newlyAbstract(oldS, oc, newS, nc))
+                        add(rows, s, coord, sides, "ABSTRACT", name + "." + key, "implementations must now provide it");
+                }
                 for (Map.Entry<String, Integer> m : reachable(oldS, oc).entrySet()) {
                     String key = m.getKey();
                     int was = m.getValue();
@@ -158,6 +168,12 @@ public final class LibDiff {
                         add(rows, s, coord, sides, "STATIC", sym, (n & Opcodes.ACC_STATIC) != 0 ? "now static" : "no longer static");
                     boolean narrowed = (was & Opcodes.ACC_PUBLIC) != 0 ? (n & Opcodes.ACC_PUBLIC) == 0
                         : (n & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) == 0;
+                    // an abstract class's constructor is only ever reached by a subclass's super(..): public -> protected
+                    // takes nothing away
+                    if (narrowed && key.startsWith("<init>") && (oc.access & Opcodes.ACC_ABSTRACT) != 0
+                            && (nc.access & Opcodes.ACC_ABSTRACT) != 0 && (n & Opcodes.ACC_PROTECTED) != 0) {
+                        narrowed = false;
+                    }
                     if (narrowed) add(rows, s, coord, sides, "ACCESS", sym, "narrowed");
                     if (method && extendable && (was & (Opcodes.ACC_FINAL | Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) == 0
                             && !key.startsWith("<") && (n & Opcodes.ACC_FINAL) != 0)
@@ -296,6 +312,35 @@ public final class LibDiff {
         if (c == null || !seen.add(c.name)) return false;
         for (String i : c.interfaces) if (i.equals(target) || subInterface(side, side.get(i), target, seen)) return true;
         return false;
+    }
+
+    /**
+     * the instance methods that resolve (on W, through nc) to an abstract declaration while on V they resolved through
+     * oc to a concrete one or to nothing: what a V-era implementation of the type does not have
+     */
+    private static List<String> newlyAbstract(Side oldS, ClassNode oc, Side newS, ClassNode nc) {
+        Set<String> keys = new java.util.TreeSet<>();
+        for (String t : supertypes(newS, nc)) {
+            ClassNode tc = newS.get(t);
+            if (tc != null) collectAbstract(tc, keys);
+        }
+        collectAbstract(nc, keys);
+        List<String> out = new ArrayList<>();
+        for (String key : keys) {
+            Hit now = resolve(newS, nc, key);
+            if (now == null || (now.access() & Opcodes.ACC_ABSTRACT) == 0) continue;
+            Hit was = resolve(oldS, oc, key);
+            if (was == null || (was.access() & Opcodes.ACC_ABSTRACT) == 0) out.add(key);
+        }
+        return out;
+    }
+
+    private static void collectAbstract(ClassNode c, Set<String> keys) {
+        for (MethodNode m : c.methods) {
+            if ((m.access & Opcodes.ACC_ABSTRACT) != 0 && (m.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) == 0) {
+                keys.add(m.name + m.desc);
+            }
+        }
     }
 
     /** every supertype name of c (resolvable or not), transitively */

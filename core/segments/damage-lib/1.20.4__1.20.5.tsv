@@ -8,19 +8,31 @@ com/mojang/datafixerupper	client,server	KIND	com/mojang/serialization/DataResult
 com/mojang/datafixerupper	client,server	METHOD	com/mojang/serialization/DataResult.get()Lcom/mojang/datafixers/util/Either;	
 com/mojang/datafixerupper	client,server	METHOD	com/mojang/serialization/DataResult.getOrThrow(ZLjava/util/function/Consumer;)Ljava/lang/Object;	
 com/mojang/datafixerupper	client,server	CLASS	com/mojang/serialization/DataResult$PartialResult	
+com/mojang/datafixerupper	client,server	ABSTRACT	com/mojang/serialization/DynamicLike.asBoolean()Lcom/mojang/serialization/DataResult;	implementations must now provide it
 com/mojang/datafixerupper	client,server	METHOD	com/mojang/serialization/codecs/KeyDispatchCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/Function;Ljava/util/function/Function;Z)V	
 com/mojang/datafixerupper	client,server	METHOD	com/mojang/serialization/codecs/KeyDispatchCodec.unsafe(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/Function;Ljava/util/function/Function;)Lcom/mojang/serialization/codecs/KeyDispatchCodec;	
 com/mojang/datafixerupper	client,server	METHOD	com/mojang/serialization/codecs/ListCodec.<init>(Lcom/mojang/serialization/Codec;)V	
 com/mojang/datafixerupper	client,server	METHOD	com/mojang/serialization/codecs/OptionalFieldCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;)V	
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Kernel32.GetPriorityClass(Lcom/sun/jna/platform/win32/WinNT$HANDLE;)Lcom/sun/jna/platform/win32/WinDef$DWORD;	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Kernel32.GetThreadPriority(Lcom/sun/jna/platform/win32/WinNT$HANDLE;)I	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Kernel32.SetPriorityClass(Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/platform/win32/WinDef$DWORD;)Z	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Kernel32.SetThreadPriority(Lcom/sun/jna/platform/win32/WinNT$HANDLE;I)Z	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Winspool.SetJob(Lcom/sun/jna/platform/win32/WinNT$HANDLE;IILcom/sun/jna/Pointer;I)Z	implementations must now provide it
+net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Winspool.SetPrinter(Lcom/sun/jna/platform/win32/WinNT$HANDLE;ILcom/sun/jna/Pointer;I)Z	implementations must now provide it
 org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/Level.readResolve()Ljava/lang/Object;	narrowed
+org/apache/logging/log4j/log4j-api	client,server	ABSTRACT	org/apache/logging/log4j/Logger.getFlowMessageFactory()Lorg/apache/logging/log4j/message/FlowMessageFactory;	implementations must now provide it
 org/apache/logging/log4j/log4j-api	client,server	METHOD	org/apache/logging/log4j/internal/DefaultLogBuilder.<init>(Lorg/apache/logging/log4j/Logger;)V	
 org/apache/logging/log4j/log4j-api	client,server	METHOD	org/apache/logging/log4j/internal/DefaultLogBuilder.<init>(Lorg/apache/logging/log4j/Logger;Lorg/apache/logging/log4j/Level;)V	
 org/apache/logging/log4j/log4j-api	client,server	METHOD	org/apache/logging/log4j/internal/DefaultLogBuilder.reset(Lorg/apache/logging/log4j/Level;)Lorg/apache/logging/log4j/LogBuilder;	
+org/apache/logging/log4j/log4j-api	client,server	ABSTRACT	org/apache/logging/log4j/message/FlowMessageFactory.newEntryMessage(Ljava/lang/String;[Ljava/lang/Object;)Lorg/apache/logging/log4j/message/EntryMessage;	implementations must now provide it
+org/apache/logging/log4j/log4j-api	client,server	ABSTRACT	org/apache/logging/log4j/message/FlowMessageFactory.newExitMessage(Ljava/lang/String;Ljava/lang/Object;)Lorg/apache/logging/log4j/message/ExitMessage;	implementations must now provide it
+org/apache/logging/log4j/log4j-api	client,server	ABSTRACT	org/apache/logging/log4j/message/FlowMessageFactory.newExitMessage(Lorg/apache/logging/log4j/message/Message;)Lorg/apache/logging/log4j/message/ExitMessage;	implementations must now provide it
 org/apache/logging/log4j/log4j-api	client,server	FINAL	org/apache/logging/log4j/message/StructuredDataId.makeId(Ljava/lang/String;I)Lorg/apache/logging/log4j/message/StructuredDataId;	method made final
 org/apache/logging/log4j/log4j-api	client,server	STATIC	org/apache/logging/log4j/simple/SimpleLogger.logBuilder:Ljava/lang/ThreadLocal;	now static
 org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/simple/SimpleLogger.logBuilder:Ljava/lang/ThreadLocal;	narrowed
 org/apache/logging/log4j/log4j-api	client,server	STATIC	org/apache/logging/log4j/spi/AbstractLogger.logBuilder:Ljava/lang/ThreadLocal;	now static
 org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/spi/AbstractLogger.logBuilder:Ljava/lang/ThreadLocal;	narrowed
+org/apache/logging/log4j/log4j-api	client,server	ABSTRACT	org/apache/logging/log4j/spi/ExtendedLogger.getFlowMessageFactory()Lorg/apache/logging/log4j/message/FlowMessageFactory;	implementations must now provide it
 org/apache/logging/log4j/log4j-api	client,server	STATIC	org/apache/logging/log4j/spi/ExtendedLoggerWrapper.logBuilder:Ljava/lang/ThreadLocal;	now static
 org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/spi/ExtendedLoggerWrapper.logBuilder:Ljava/lang/ThreadLocal;	narrowed
 org/apache/logging/log4j/log4j-api	client,server	STATIC	org/apache/logging/log4j/status/StatusLogger.logBuilder:Ljava/lang/ThreadLocal;	now static
@@ -68,6 +80,7 @@ org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/Pointer$Default.wrap(Ljava/lang/C
 org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/SharedLibrary$Default.wrap(Ljava/lang/Class;JI)Lorg/lwjgl/system/CustomBuffer;	
 org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/SharedLibrary$Default.wrap(Ljava/lang/Class;JILjava/nio/ByteBuffer;)Lorg/lwjgl/system/CustomBuffer;	
 org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/SharedLibrary$Default.wrap(Ljava/lang/Class;Lorg/lwjgl/system/CustomBuffer;)Lorg/lwjgl/system/CustomBuffer;	
+org/lwjgl/lwjgl	client	ABSTRACT	org/lwjgl/system/Struct.create(JLjava/nio/ByteBuffer;)Lorg/lwjgl/system/Struct;	implementations must now provide it
 org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/Struct.wrap(Ljava/lang/Class;J)Lorg/lwjgl/system/Struct;	
 org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/Struct.wrap(Ljava/lang/Class;JI)Lorg/lwjgl/system/CustomBuffer;	
 org/lwjgl/lwjgl	client	METHOD	org/lwjgl/system/Struct.wrap(Ljava/lang/Class;JILjava/nio/ByteBuffer;)Lorg/lwjgl/system/CustomBuffer;	

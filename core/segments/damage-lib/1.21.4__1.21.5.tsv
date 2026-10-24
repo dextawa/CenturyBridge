@@ -3,6 +3,8 @@
 # scope = the artifacts V ships (artifacts.tsv: version JSON = client, server bundler list = server); sides column from it.
 # regenerate: Main lib-diff <oldLibs> <newLibs> <out.tsv> core/segments/damage-lib/artifacts.tsv <V> <W>
 artifact	sides	kind	symbol	note
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/GameProfileRepository.findProfileByName(Ljava/lang/String;)Ljava/util/Optional;	implementations must now provide it
+com/mojang/text2speech	client	ABSTRACT	com/mojang/text2speech/Narrator.say(Ljava/lang/String;ZF)V	implementations must now provide it
 com/mojang/text2speech	client	METHOD	com/mojang/text2speech/Narrator.say(Ljava/lang/String;Z)V	
 com/mojang/text2speech	client	METHOD	com/mojang/text2speech/NarratorLinux.say(Ljava/lang/String;Z)V	
 com/mojang/text2speech	client	METHOD	com/mojang/text2speech/NarratorMac.say(Ljava/lang/String;Z)V	hierarchy incomplete: ca/weblite/objc/NSObject
