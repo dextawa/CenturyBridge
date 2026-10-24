@@ -17,6 +17,11 @@ public final class CbRestRecipesHolder {
 
     private static volatile List<class_8786<?>> received = List.of();
 
+    /** the server running in this process, or null */
+    public static net.minecraft.server.MinecraftServer server() {
+        return server;
+    }
+
     /** the recipes this client last received from the server (empty on a server or before any arrived) */
     public static List<class_8786<?>> receivedRecipes() {
         return received;

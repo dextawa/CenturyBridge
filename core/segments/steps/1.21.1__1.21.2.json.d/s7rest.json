@@ -30,7 +30,29 @@
   "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange": "top/dext/centurybridge/step/v1_21_2/facade/fapi/ClientWorldEvents$AfterClientWorldChange",
   "net/fabricmc/fabric/api/entity/event/v1/FabricElytraItem": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricElytraItem",
   "net/fabricmc/fabric/api/event/registry/FabricRegistry": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry",
-  "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricTagFile"
+  "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricTagFile",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate": "top/dext/centurybridge/step/v1_21_2/facade/fapi/AttachmentSyncPredicate",
+  "net/minecraft/class_314": "top/dext/centurybridge/step/v1_21_2/facade/RecipeBookCategories",
+  "net/minecraft/class_516": "top/dext/centurybridge/step/v1_21_2/facade/RecipeCollection",
+  "net/minecraft/class_505": "top/dext/centurybridge/step/v1_21_2/facade/GhostRecipe",
+  "net/minecraft/class_505$class_506": "top/dext/centurybridge/step/v1_21_2/facade/GhostRecipe$GhostIngredient",
+  "net/minecraft/class_512": "top/dext/centurybridge/step/v1_21_2/facade/RecipeBookTabButton",
+  "net/minecraft/class_514": "top/dext/centurybridge/step/v1_21_2/facade/RecipeButton",
+  "net/minecraft/class_508": "top/dext/centurybridge/step/v1_21_2/facade/OverlayRecipeComponent",
+  "net/minecraft/class_508$class_509": "top/dext/centurybridge/step/v1_21_2/facade/OverlayRecipeComponent$OverlayRecipeButton",
+  "net/minecraft/class_508$class_509$class_510": "top/dext/centurybridge/step/v1_21_2/facade/OverlayRecipeComponent$OverlayRecipeButton$Pos",
+  "net/minecraft/class_508$class_511": "top/dext/centurybridge/step/v1_21_2/facade/OverlayRecipeComponent$OverlaySmeltingRecipeButton",
+  "net/minecraft/class_513": "top/dext/centurybridge/step/v1_21_2/facade/RecipeBookPage",
+  "net/minecraft/class_507": "top/dext/centurybridge/step/v1_21_2/facade/RecipeBookComponent",
+  "net/minecraft/class_517": "top/dext/centurybridge/step/v1_21_2/facade/AbstractFurnaceRecipeBookComponent",
+  "net/minecraft/class_3875": "top/dext/centurybridge/step/v1_21_2/facade/BlastingRecipeBookComponent",
+  "net/minecraft/class_3876": "top/dext/centurybridge/step/v1_21_2/facade/SmeltingRecipeBookComponent",
+  "net/minecraft/class_3877": "top/dext/centurybridge/step/v1_21_2/facade/SmokingRecipeBookComponent",
+  "net/minecraft/class_515": "top/dext/centurybridge/step/v1_21_2/facade/RecipeShownListener",
+  "net/minecraft/class_518": "top/dext/centurybridge/step/v1_21_2/facade/RecipeUpdateListener",
+  "net/minecraft/class_2952": "top/dext/centurybridge/step/v1_21_2/facade/PlaceRecipe",
+  "net/minecraft/class_2713": "top/dext/centurybridge/step/v1_21_2/facade/ClientboundRecipePacket",
+  "net/minecraft/class_2713$class_2714": "top/dext/centurybridge/step/v1_21_2/facade/ClientboundRecipePacket$State"
  },
  "covers": [
   "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
@@ -95,6 +117,9 @@
   "method_3118()F": {
    "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#firstPersonCamera()Z",
    "1": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#unscaledFovEffect()F"
+  },
+  "method_59964(Lnet/minecraft/class_8786;)V": {
+   "0": "zero: 1.21.2 calls finishPlacingRecipe only from its own placement, which passes the level; a 1.21.1 mod calling its super directly, outside a placement, has no level 1.21.1's shape could hand on"
   }
  },
  "methodRenames": {
@@ -180,7 +205,35 @@
   "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.apply(Ljava/lang/Object;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
   "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
   "net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition.test(Lnet/minecraft/class_7225$class_7874;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
-  "net/minecraft/class_2378.addAlias(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry"
+  "net/minecraft/class_2378.addAlias(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder.syncWith(Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder.buildAndRegister(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentType.isSynced()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.setAttached(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.removeAttached(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.modifyAttached(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrCreate(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrCreate(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrSet(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/minecraft/class_299.method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#setupCollections",
+  "net/minecraft/class_299.method_1396(Lnet/minecraft/class_314;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#getCollection",
+  "net/minecraft/class_299.method_1393()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_1124.method_60352(Lnet/minecraft/class_299;Lnet/minecraft/class_5455$class_6890;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#updateRecipes",
+  "net/minecraft/class_1124.method_60364()Lnet/minecraft/class_1129;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_1729.method_7653()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7656()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7655()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7658()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7654(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7657()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7652(Lnet/minecraft/class_8786;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_490.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_479.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_634.method_11115(Lnet/minecraft/class_2713;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners",
+  "net/minecraft/class_2602.method_11115(Lnet/minecraft/class_2713;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners",
+  "net/minecraft/class_638$class_5271.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#gameRules"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -210,7 +263,9 @@
   "net/minecraft/class_7655.method_56519(Ljava/util/Map;Lnet/minecraft/class_5912;Lnet/minecraft/class_5455;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
   "net/minecraft/class_9383.method_58284(Lnet/minecraft/class_7780;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
   "net/minecraft/class_5350.method_29466(Lnet/minecraft/class_3300;Lnet/minecraft/class_7780;Lnet/minecraft/class_7699;Lnet/minecraft/class_2170$class_5364;ILjava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
-  "net/fabricmc/fabric/api/event/registry/RegistryEntryAddedCallback.allEntries(Lnet/minecraft/class_2378;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources"
+  "net/fabricmc/fabric/api/event/registry/RegistryEntryAddedCallback.allEntries(Lnet/minecraft/class_2378;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry.create(Lnet/minecraft/class_2960;Ljava/util/function/Consumer;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/minecraft/class_366.method_1985(Lnet/minecraft/class_374;Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient"
  },
  "fieldGetters": {
   "net/minecraft/class_3417.field_20613:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
@@ -230,7 +285,8 @@
   "net/minecraft/class_514.field_32413:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
   "net/minecraft/class_7573.field_46063:Lnet/minecraft/class_7573;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
   "net/minecraft/class_3999.field_17830:Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
-  "net/minecraft/class_2321.field_10932:Lcom/mojang/brigadier/suggestion/SuggestionProvider;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands"
+  "net/minecraft/class_2321.field_10932:Lcom/mojang/brigadier/suggestion/SuggestionProvider;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands",
+  "net/minecraft/class_9094.field_48073:Lnet/minecraft/class_9145;": "top/dext/centurybridge/step/v1_21_2/facade/ClientboundRecipePacket"
  },
  "superCtorReshapes": {
   "net/minecraft/class_3227.<init>(Lnet/minecraft/class_2823;Lnet/minecraft/class_3898;ZLnet/minecraft/class_3846;Lnet/minecraft/class_3906;)V": {
@@ -502,6 +558,20 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#defaultCreationOptions()Lnet/minecraft/class_10220;"
    ],
    "basis": "as the five-argument constructor"
+  },
+  "net/minecraft/class_489.<init>(Lnet/minecraft/class_1720;Lnet/minecraft/class_517;Lnet/minecraft/class_1661;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_1720;Lnet/minecraft/class_1661;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Ljava/util/List;)V",
+   "ops": [
+    "keep:0",
+    "keep:2",
+    "keep:3",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#furnaceComponentArg(Ljava/lang/Object;)Lnet/minecraft/class_2561;",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#noTabs()Ljava/util/List;"
+   ],
+   "basis": "1.21.1's AbstractFurnaceScreen took the recipe book component the screen holds; 1.21.2's takes a filter name and tabs and makes its own: the 1.21.1 component's filter name, and the component itself is handed to AbstractRecipeBookScreen in place of the made one (CbRestFurnaceScreenMixin)"
   }
  },
  "overrideRenames": [
@@ -582,7 +652,85 @@
   "net/minecraft/class_5829.field_28799:Lnet/minecraft/class_315;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_5829.field_28800:Lnet/minecraft/class_372;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_5829.method_33701()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
-  "net/minecraft/class_5829.method_33703()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can"
+  "net/minecraft/class_5829.method_33703()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_505$class_506.field_3082:Lnet/minecraft/class_1856;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_505$class_506.field_3084:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_505$class_506.field_3083:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_512.method_2621(Lnet/minecraft/class_332;Lnet/minecraft/class_918;)V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_512.field_45554:Lnet/minecraft/class_8666;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_512.field_3123:Lnet/minecraft/class_314;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_512.field_32412:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_512.field_3122:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_45555:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_45556:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_45557:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_45558:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_32414:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_32415:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_26595:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3137:Lnet/minecraft/class_1729;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3138:Lnet/minecraft/class_3439;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3142:Lnet/minecraft/class_516;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3140:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3139:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3141:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_45541:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_32406:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_32407:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_33739:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3106:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3107:Z": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3105:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3103:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3108:Lnet/minecraft/class_310;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3111:Lnet/minecraft/class_516;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3104:Lnet/minecraft/class_8786;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508$class_509.field_3115:Z": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.method_2625()V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.method_2626()V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_45552:Lnet/minecraft/class_8666;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_45553:Lnet/minecraft/class_8666;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3131:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3129:Lnet/minecraft/class_514;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3132:Lnet/minecraft/class_508;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3126:Lnet/minecraft/class_310;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3134:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3127:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3128:Lnet/minecraft/class_361;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3130:Lnet/minecraft/class_361;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3124:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3135:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3136:Lnet/minecraft/class_3439;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3125:Lnet/minecraft/class_8786;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3133:Lnet/minecraft/class_516;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.method_2603(Z)V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.method_2606()V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.method_2602(Lnet/minecraft/class_332;IIII)V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.field_45551:Lnet/minecraft/class_8666;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.field_26593:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.field_3098:Lnet/minecraft/class_512;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.field_3086:Lnet/minecraft/class_513;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.field_3090:Lnet/minecraft/class_1662;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_517.field_45540:Lnet/minecraft/class_8666;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_517.field_3149:Lnet/minecraft/class_1856;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_3875.field_26592:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_3876.field_26596:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_3877.field_26597:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_314.field_1807:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.method_30295(Lnet/minecraft/class_5455;Ljava/util/List;)Z": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_42069:Lnet/minecraft/class_5455;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_3144:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_3148:Z": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_3146:Ljava/util/Set;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_3145:Ljava/util/Set;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_3147:Ljava/util/Set;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_505.field_3079:Lnet/minecraft/class_8786;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_505.field_3081:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_2713.method_55905(Lnet/minecraft/class_2540;)V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_2713.field_12408:Lnet/minecraft/class_2713$class_2714;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_2713.field_12414:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_2713.field_12409:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_2713.field_25797:Lnet/minecraft/class_5411;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class"
  },
  "overrideHooks": [
   {
@@ -841,6 +989,35 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources.test(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources$LegacyCondition;Lnet/minecraft/class_6903$class_7863;)Z",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "0.106.1's ResourceCondition.test takes the registry info lookup of the reading ops where 0.116's took a provider: a 1.21.1 condition gets the provider that lookup wraps (CbRestFapiResources.provider)"
+  },
+  {
+   "old": "method_59964(Lnet/minecraft/class_8786;)V",
+   "new": "method_59964(Lnet/minecraft/class_3218;Lnet/minecraft/class_8786;)V",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1714",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.21.2's CraftingMenu.finishPlacingRecipe takes the level too: a 1.21.1 subclass's finishPlacingRecipe(recipe) is asked from it, its super call passes the level 1.21.2's placement passed (the generated hook, kept here: the RecipeBookMenu adapters of this fragment made the generator count it as wired)"
+  },
+  {
+   "old": "method_3141(Lnet/minecraft/class_8786;)V",
+   "new": "method_3141(Lnet/minecraft/class_10298;)V",
+   "onlyUnder": "net/minecraft/class_746",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient$LegacyRemoveHighlight",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient.removeHighlightW(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient$LegacyRemoveHighlight;Lnet/minecraft/class_10298;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.2 removes a recipe's highlight by display id where 1.21.1 did it by recipe: a 1.21.1 LocalPlayer subclass's override is asked with the recipe the display belongs to (a display of a recipe the client was not sent: 1.21.2's body); its super call removes each display's highlight as 1.21.2's body does (superRedirects)"
+  },
+  {
+   "old": "method_2912(ILnet/minecraft/class_8786;Z)V",
+   "new": "method_2912(ILnet/minecraft/class_10298;Z)V",
+   "onlyUnder": "net/minecraft/class_636",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient$LegacyPlaceRecipe",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient.placeRecipeW(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient$LegacyPlaceRecipe;ILnet/minecraft/class_10298;Z)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.2 places a recipe by display id where 1.21.1 placed it by recipe: a 1.21.1 MultiPlayerGameMode subclass's override is asked with the recipe the display belongs to (otherwise 1.21.2's body: the place packet of the display); its super call sends the recipe's display, or its id to a server with the layer (superRedirects)"
   }
  ],
  "lambdaAdapters": {
@@ -869,7 +1046,8 @@
   "net/minecraft/class_2788.<init>(Ljava/util/Collection;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeSync#newUpdateRecipesPacket",
   "net/minecraft/class_2840.<init>(ILnet/minecraft/class_8786;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newPlaceRecipe",
   "net/minecraft/class_2853.<init>(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newSeenRecipe",
-  "net/minecraft/class_2695.<init>(ILnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newGhostRecipe"
+  "net/minecraft/class_2695.<init>(ILnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newGhostRecipe",
+  "net/minecraft/class_366.<init>(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#newRecipeToast"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_8673.field_51520:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#strictErrorHandlingField",
@@ -882,14 +1060,27 @@
   "net/minecraft/class_744.field_3904:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputJumping",
   "net/minecraft/class_744.field_3903:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputShiftKeyDown",
   "net/minecraft/class_4883.field_22633:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#spawnAnimals",
-  "net/minecraft/class_4883.field_22635:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#spawnNpcs"
+  "net/minecraft/class_4883.field_22635:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#spawnNpcs",
+  "net/minecraft/class_489.field_2924:Lnet/minecraft/class_517;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#furnaceComponent"
  },
  "superRedirects": {
   "net/minecraft/class_1297.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#entitySuperSystemMessage",
   "net/minecraft/class_746.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#localPlayerSuperSystemMessage",
   "net/minecraft/class_745.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#remotePlayerSuperSystemMessage",
   "net/minecraft/class_4309.method_20731(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#superPrepare",
-  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources#superReload"
+  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources#superReload",
+  "net/minecraft/class_299.method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#method_1401",
+  "net/minecraft/class_299.method_1396(Lnet/minecraft/class_314;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#method_1396",
+  "net/minecraft/class_1124.method_60352(Lnet/minecraft/class_299;Lnet/minecraft/class_5455$class_6890;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#method_60352",
+  "net/minecraft/class_634.method_2877()Lnet/minecraft/class_1863;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#method_2877",
+  "net/minecraft/class_746.method_3141(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#method_3141",
+  "net/minecraft/class_636.method_2912(ILnet/minecraft/class_8786;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#method_2912",
+  "net/minecraft/class_490.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
+  "net/minecraft/class_479.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
+  "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
+  "net/minecraft/class_638$class_5271.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#clientGameRules",
+  "net/minecraft/class_9383$class_9385.method_58289()Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#superHolderRegistries",
+  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#superProfiler"
  },
  "adapterHooks": [
   {
@@ -905,6 +1096,190 @@
    "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands$LegacySuggestions",
    "requires": [
     "method_9273()Ljava/util/stream/Stream;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeView$LegacyResult",
+   "requires": [
+    "method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeView$LegacyDimensions",
+   "requires": [
+    "method_8113(II)Z"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeView$LegacyIngredients",
+   "requires": [
+    "method_8117()Lnet/minecraft/class_2371;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeView$LegacyIncomplete",
+   "requires": [
+    "method_31584()Z"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyGridWidth",
+   "requires": [
+    "method_7653()I"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyGridHeight",
+   "requires": [
+    "method_7656()I"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyResultSlot",
+   "requires": [
+    "method_7655()I"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacySize",
+   "requires": [
+    "method_7658()I"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyFill",
+   "requires": [
+    "method_7654(Lnet/minecraft/class_1662;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyMatches",
+   "requires": [
+    "method_7652(Lnet/minecraft/class_8786;)Z"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyPlacement",
+   "requires": [
+    "method_17697(ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyBeginPlacing",
+   "requires": [
+    "method_59963()V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyFinishPlacing",
+   "requires": [
+    "method_59964(Lnet/minecraft/class_8786;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyClear",
+   "requires": [
+    "method_7657()V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyMoveToInventory",
+   "requires": [
+    "method_32339(I)Z"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_299",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient$LegacySetupCollections",
+   "requires": [
+    "method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_299",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient$LegacyGetCollection",
+   "requires": [
+    "method_1396(Lnet/minecraft/class_314;)Ljava/util/List;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1124",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient$LegacyUpdateRecipes",
+   "requires": [
+    "method_60352(Lnet/minecraft/class_299;Lnet/minecraft/class_5455$class_6890;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_634",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient$LegacyGetRecipeManager",
+   "requires": [
+    "method_2877()Lnet/minecraft/class_1863;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners$LegacyRecipeListener",
+   "requires": [
+    "method_11115(Lnet/minecraft/class_2713;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_638$class_5271",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient$LegacyGameRules",
+   "requires": [
+    "method_146()Lnet/minecraft/class_1928;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_9383$class_9385",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer$LegacyHolderGet",
+   "requires": [
+    "method_58289()Lnet/minecraft/class_5455$class_6890;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/server/MinecraftServer",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer$LegacyProfiler",
+   "requires": [
+    "method_16044()Lnet/minecraft/class_3695;"
    ],
    "synth": []
   }
@@ -929,11 +1304,71 @@
    "under": "net/minecraft/class_368",
    "method": "method_61988()Lnet/minecraft/class_368$class_369;",
    "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.wantedVisibility(Lnet/minecraft/class_368;)Lnet/minecraft/class_368$class_369;"
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "method": "method_7654(Lnet/minecraft/class_9875;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus.fillW(Lnet/minecraft/class_1729;Lnet/minecraft/class_9875;)V"
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "method": "method_17697(ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus.handlePlacement(Lnet/minecraft/class_1729;ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_64555(Lnet/minecraft/class_10266;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.recipeBookAdd(Lnet/minecraft/class_2602;Lnet/minecraft/class_10266;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_11115(Lnet/minecraft/class_10268;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.recipeBookRemove(Lnet/minecraft/class_2602;Lnet/minecraft/class_10268;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_64556(Lnet/minecraft/class_10269;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.recipeBookSettings(Lnet/minecraft/class_2602;Lnet/minecraft/class_10269;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_64553(Lnet/minecraft/class_10264;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.entityPositionSync(Lnet/minecraft/class_2602;Lnet/minecraft/class_10264;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_61187(Lnet/minecraft/class_9834;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.setCursorItem(Lnet/minecraft/class_2602;Lnet/minecraft/class_9834;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_61188(Lnet/minecraft/class_9835;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.setPlayerInventory(Lnet/minecraft/class_2602;Lnet/minecraft/class_9835;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_61186(Lnet/minecraft/class_9833;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.minecartAlongTrack(Lnet/minecraft/class_2602;Lnet/minecraft/class_9833;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_64554(Lnet/minecraft/class_10265;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.rotatePlayer(Lnet/minecraft/class_2602;Lnet/minecraft/class_10265;)V"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_61219(Lnet/minecraft/class_9836;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.clientTickEnd(Lnet/minecraft/class_2792;Lnet/minecraft/class_9836;)V"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_61220(Lnet/minecraft/class_9837;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.selectBundleItem(Lnet/minecraft/class_2792;Lnet/minecraft/class_9837;)V"
   }
  ],
  "ledger": {
-  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "a 1.21.1 MinecraftServer subclass overriding getProfiler(): 1.21.2's MinecraftServer has only a private method of that name and descriptor (vanilla reads the profiler from Profiler.get()), so nothing can reach an override; 1.21.1 callers of server.getProfiler() are bridged (CbRestServer.profiler, Profiler.get() -- the same profiler 1.21.2's server ticks with)",
-  "net/minecraft/class_4341.method_20995(JLnet/minecraft/class_4413;)Ljava/lang/Boolean;": "RealmsClient.resetWorldWithSeed: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
+  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "override of getProfiler() in a 1.21.1 subclass of MinecraftServer: 1.21.2 made the server's getProfiler private and profiles through the thread's Profiler.get(), never asking the server, so the vanilla server does not use the override's profiler (a profiler change 1.21.2 itself made); mods' own calls of getProfiler() reach the override (instanceRedirects + adapterHooks), its super call answers the thread's profiler",
+  "net/minecraft/class_4341.method_20995(JLnet/minecraft/class_4413;)Ljava/lang/Boolean;": "override of RealmsClient.resetWorldWithSeed in a 1.21.1 subclass: 1.21.2 removed resetting a Realms world from a seed (only templates remain), so nothing calls it; calls of it are answered with an explicit Realms error (see the RealmsClient entries)",
   "net/minecraft/class_5673.method_32517(Lnet/minecraft/class_4341;J)V": "ResettingGeneratedWorldTask.sendResetRequest: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
   "net/minecraft/class_8844.run()V": "CreateSnapshotRealmTask.run: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
   "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "RealmsCreateRealmScreen(lastScreen, parentWorldId), the snapshot-creation screen whose only action is the removed request (and whose 1.21.1 subclass super(..) has no 1.21.2 constructor to call): 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
@@ -1009,7 +1444,8 @@
   "net/minecraft/class_2851.method_12370()Z": "override of method_12370()Z of a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlayerInputPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
   "net/minecraft/class_2853": "the class of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
   "net/minecraft/class_2853.<init>(Lnet/minecraft/class_8786;)V": "super(..) of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
-  "net/minecraft/class_2853.method_12406()Lnet/minecraft/class_2960;": "override of method_12406()Lnet/minecraft/class_2960; of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects)."
+  "net/minecraft/class_2853.method_12406()Lnet/minecraft/class_2960;": "override of method_12406()Lnet/minecraft/class_2960; of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_366.<init>(Lnet/minecraft/class_8786;)V": "a 1.21.1 subclass of RecipeToast: 1.21.2's RecipeToast has only a private constructor (toasts are made through addOrUpdate), so no class can extend it; 1.21.1's constructor and addOrUpdate are bridged (ctorRedirects / staticRedirects)"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_744.field_3910:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputUp",
@@ -1113,6 +1549,12 @@
     "net/minecraft/class_3847$class_3849"
    ],
    "basis": "1.21.1's QueueStrictQueue is renamed to the layer's facade (StrictQueue$QueueStrictQueue, generic in T as 1.21.1's): a 1.21.1 mod's constructor call builds that facade, never 1.21.2's Runnable-only class"
+  },
+  "net/minecraft/class_516.method_2650()Ljava/util/List;": {
+   "by": [
+    "net/minecraft/class_516"
+   ],
+   "basis": "1.21.1's RecipeCollection is renamed to the layer's facade, whose getRecipes() answers the RecipeHolders 1.21.1's did (a 1.21.2 collection is never handed to a 1.21.1 mod as one: the book, search tree and screens answer facades)"
   }
  },
  "fieldRedirects": {
@@ -1127,7 +1569,17 @@
   "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.load(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
   "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.apply(Ljava/lang/Object;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
   "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
-  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition.test(Lnet/minecraft/class_7225$class_7874;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources"
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition.test(Lnet/minecraft/class_7225$class_7874;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder.syncWith(Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder.buildAndRegister(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentType.isSynced()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.setAttached(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.removeAttached(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.modifyAttached(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrCreate(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrCreate(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrSet(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/minecraft/class_2602.method_11115(Lnet/minecraft/class_2713;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners"
  },
  "depRenames": {
   "fabric-tag-api-v1": "centurybridge_step_1_21_2@*"
