@@ -1,0 +1,11 @@
+Third-party source in this layer (rt/), ported from the library versions Minecraft 1.20.4 shipped, which 1.20.5 dropped:
+
+class	from	licence
+CbLibLog4jFastDateParser, CbLibLog4jDateParser	log4j-core 2.19.0 (org.apache.logging.log4j.core.util.datetime), source renamed by core/tools/port_log4j_datetime.py	Apache-2.0
+CbLibLog4jEventBuilder	log4j-slf4j2-impl 2.19.0 (org.apache.logging.slf4j.Log4jEventBuilder), as a subclass	Apache-2.0
+CbLibUringNotificationRegister, CbLibUringNotificationSlot	LWJGL 3.3.2 (org.lwjgl.system.linux.liburing), ported by core/tools/port_uring.py	BSD-3-Clause (https://www.lwjgl.org/license)
+
+Apache Log4j: Copyright 1999-2022 The Apache Software Foundation; this product includes software developed at The Apache
+Software Foundation (http://www.apache.org/). Apache-2.0: LICENSE-Apache-2.0.txt beside this file.
+LWJGL: Copyright (c) 2012-present Lightweight Java Game Library; all rights reserved, redistribution under the BSD 3-Clause
+licence at https://www.lwjgl.org/license.
