@@ -1,0 +1,35 @@
+{
+ "_lib_basis": "slib library front of 1.21.10 -> 1.21.11 (core/segments/damage-lib/1.21.10__1.21.11.tsv): DFU 8.0.16 -> 9.0.19 (rt/CbLibDfu)",
+ "staticRedirects": {
+  "com/mojang/serialization/Codec.unit(Ljava/lang/Object;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu",
+  "com/mojang/serialization/Codec.unit(Ljava/util/function/Supplier;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu"
+ },
+ "ctorRedirects": {
+  "com/mojang/serialization/codecs/KeyDispatchCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/Function;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu#keyDispatch"
+ },
+ "superCtorReshapes": {
+  "com/mojang/serialization/codecs/KeyDispatchCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/Function;)V": {
+   "desc": "(Lcom/mojang/serialization/MapCodec;Ljava/util/function/Function;Ljava/util/function/Function;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu#keyField(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "DFU 9.0.19 takes the type key's field codec: keyCodec.fieldOf(typeKey)"
+  },
+  "com/mojang/serialization/codecs/KeyDispatchCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/Function;Ljava/util/function/Function;)V": {
+   "desc": "(Lcom/mojang/serialization/MapCodec;Ljava/util/function/Function;Ljava/util/function/Function;Ljava/util/function/Function;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu#keyField(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "DFU 9.0.19 takes the type key's field codec: keyCodec.fieldOf(typeKey)"
+  }
+ },
+ "instanceFieldGetters": {
+  "com/mojang/datafixers/schemas/Schema.parent:Lcom/mojang/datafixers/schemas/Schema;": "top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu#parent",
+  "com/mojang/datafixers/schemas/Schema.RECURSIVE_TYPES:Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu#RECURSIVE_TYPES"
+ }
+}
