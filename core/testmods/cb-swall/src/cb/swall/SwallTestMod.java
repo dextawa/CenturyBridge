@@ -817,11 +817,104 @@ public class SwallTestMod implements ModInitializer {
             extendFinal();
             worldCalls(server);
             legacyStates();
+            trades(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
         }
         System.out.println("CBTEST SUMMARY " + passed + "/" + (passed + FAILS.size()) + " passed" + (FAILS.isEmpty() ? "" : " fails=" + FAILS));
+    }
+
+    /** a 1.21.11 listing: an emerald for one of the item, or nothing */
+    static net.minecraft.class_3853.class_1652 sell(net.minecraft.class_1792 item) {
+        return (level, trader, random) -> item == null ? null
+            : new net.minecraft.class_1914(new net.minecraft.class_9306(net.minecraft.class_1802.field_8687), new net.minecraft.class_1799(item), 12, 2, 0.05F);
+    }
+
+    /** a 1.21.11 villager subclass: logs vanilla's calls of addOffersFromItemListings, reaches updateTrades and the method itself */
+    static class TestVillager extends net.minecraft.class_1646 {
+        final List<String> log = new ArrayList<>();
+
+        TestVillager(net.minecraft.class_3218 level) {
+            super(net.minecraft.class_1299.field_6077, level);
+        }
+
+        @Override
+        protected void method_19170(net.minecraft.class_3218 level, net.minecraft.class_1916 offers, net.minecraft.class_3853.class_1652[] listings, int count) {
+            log.add(listings.length + "x" + count);
+            super.method_19170(level, offers, listings, count);
+        }
+
+        void update(net.minecraft.class_3218 level) {
+            method_7237(level);
+        }
+
+        void addDirect(net.minecraft.class_3218 level, net.minecraft.class_3853.class_1652 listing) {
+            method_19170(level, method_8264(), new net.minecraft.class_3853.class_1652[] {listing}, 1);
+        }
+    }
+
+    /** a 1.21.11 wandering trader subclass logging vanilla's calls of addOffersFromItemListings */
+    static class TestTrader extends net.minecraft.class_3989 {
+        final List<String> log = new ArrayList<>();
+
+        TestTrader(net.minecraft.class_3218 level) {
+            super(net.minecraft.class_1299.field_17713, level);
+        }
+
+        @Override
+        protected void method_19170(net.minecraft.class_3218 level, net.minecraft.class_1916 offers, net.minecraft.class_3853.class_1652[] listings, int count) {
+            log.add(listings.length + "x" + count);
+            super.method_19170(level, offers, listings, count);
+        }
+    }
+
+    private static boolean sells(net.minecraft.class_1916 offers, net.minecraft.class_1792 item) {
+        for (net.minecraft.class_1914 o : offers) {
+            if (o.method_8250().method_31574(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** 1.21.11's trade tables and AbstractVillager.addOffersFromItemListings over 26.1's data-driven trades */
+    private static void trades(MinecraftServer server) {
+        net.minecraft.class_3218 level = server.method_30002();
+        it.unimi.dsi.fastutil.ints.Int2ObjectMap<net.minecraft.class_3853.class_1652[]> farmer = net.minecraft.class_3853.field_17067.get(net.minecraft.class_3852.field_17056);
+        farmer.put(1, new net.minecraft.class_3853.class_1652[] {sell(net.minecraft.class_1802.field_8477), sell(net.minecraft.class_1802.field_8695), sell(net.minecraft.class_1802.field_8620)});
+        farmer.put(2, new net.minecraft.class_3853.class_1652[] {sell(net.minecraft.class_1802.field_8600)});
+        farmer.put(3, new net.minecraft.class_3853.class_1652[] {sell(null), sell(net.minecraft.class_1802.field_8279)});
+        TestVillager v = new TestVillager(level);
+        v.method_7195(v.method_7231().method_66688(server.method_30611(), net.minecraft.class_3852.field_17056).method_16920(1));
+        net.minecraft.class_1916 offers = v.method_8264();
+        java.util.Set<net.minecraft.class_1792> got = new java.util.HashSet<>();
+        for (net.minecraft.class_1914 o : offers) {
+            got.add(o.method_8250().method_7909());
+        }
+        check("trades.villagerLevel1", offers.size() == 2 && got.size() == 2
+            && java.util.Set.of(net.minecraft.class_1802.field_8477, net.minecraft.class_1802.field_8695, net.minecraft.class_1802.field_8620).containsAll(got)
+            && v.log.equals(List.of("3x2")), offers.size() + " " + got + " " + v.log);
+        v.method_7195(v.method_7231().method_16920(2));
+        v.update(level);
+        check("trades.villagerLevel2", offers.size() == 3 && offers.get(2).method_8250().method_31574(net.minecraft.class_1802.field_8600)
+            && v.log.equals(List.of("3x2", "1x2")), offers.size() + " " + v.log);
+        v.method_7195(v.method_7231().method_16920(3));
+        v.update(level);
+        check("trades.nullListingNotCounted", offers.size() == 4 && offers.get(3).method_8250().method_31574(net.minecraft.class_1802.field_8279), offers.size());
+        v.addDirect(level, sell(net.minecraft.class_1802.field_8137));
+        check("trades.addOffersFromItemListings", offers.size() == 5 && offers.get(4).method_8250().method_31574(net.minecraft.class_1802.field_8137), offers.size());
+
+        net.minecraft.class_3853.field_17724.add(org.apache.commons.lang3.tuple.Pair.of(new net.minecraft.class_3853.class_1652[] {sell(net.minecraft.class_1802.field_8137)}, 1));
+        TestTrader t = new TestTrader(level);
+        net.minecraft.class_1916 wares = t.method_8264();
+        check("trades.wanderingPool", sells(wares, net.minecraft.class_1802.field_8137) && t.log.size() == net.minecraft.class_3853.field_17724.size()
+            && t.log.get(t.log.size() - 1).equals("1x1"), wares.size() + " " + t.log);
+
+        net.minecraft.class_3990 spawner = new net.minecraft.class_3990(server.method_27728().method_27859());
+        net.minecraft.class_3990 derived = new net.minecraft.class_3990((net.minecraft.class_5268) server.method_3847(net.minecraft.class_1937.field_25180).method_8401()) {
+        };
+        check("trades.spawnerCtors", spawner != null && derived != null, "");
     }
 
     /** a 1.21.11 armor stand class declaring interactAt and interact */

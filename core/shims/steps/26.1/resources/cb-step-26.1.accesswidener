@@ -180,3 +180,8 @@ accessible	field	net/minecraft/world/level/levelgen/synth/PerlinNoise	lowestFreq
 accessible	field	net/minecraft/world/level/levelgen/synth/PerlinNoise	lowestFreqInputFactor	D
 # 1.21.11 StateHolder.codec / propertiesCodec of a state whose owner is neither a block nor a fluid (swall, rt/CbWallStates)
 accessible	field	net/minecraft/world/level/block/state/StateHolder	owner	Ljava/lang/Object;
+# 1.21.11 Material (26.1 SpriteId) was an open class with overridable equals/hashCode/toString; 26.1 made it a final record (swall)
+extendable	class	net/minecraft/client/resources/model/sprite/SpriteId
+extendable	method	net/minecraft/client/resources/model/sprite/SpriteId	equals	(Ljava/lang/Object;)Z
+extendable	method	net/minecraft/client/resources/model/sprite/SpriteId	hashCode	()I
+extendable	method	net/minecraft/client/resources/model/sprite/SpriteId	toString	()Ljava/lang/String;
