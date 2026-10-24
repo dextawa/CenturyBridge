@@ -50,6 +50,17 @@ public final class CbRenderCtors {
     }
 
     /**
+     * an EntityRendererProvider.Context where 1.21.2's layer constructor asks for one and 1.21.1's took none (its layers
+     * reached the game's model set themselves): the context 1.21.2's EntityRenderDispatcher builds on reload, from the same
+     * game objects (its item renderer, map renderer, block renderer, resource manager, model set, equipment assets, font)
+     */
+    public static net.minecraft.class_5617.class_5618 rendererContext() {
+        net.minecraft.class_310 mc = net.minecraft.class_310.method_1551();
+        return new net.minecraft.class_5617.class_5618(mc.method_1561(), mc.method_1480(), mapRenderer(), mc.method_1541(), mc.method_1478(), modelSet(),
+            equipmentAssets(), mc.field_1772);
+    }
+
+    /**
      * new BakedGlyph.Effect(x0, y0, x1, y1, depth, r, g, b, a): 1.21.2's record keeps the colour packed. 1.21.1 drew the
      * effect with VertexConsumer.setColor(r, g, b, a), which stored (int) (channel * 255) of each as a byte: packed the
      * same way.

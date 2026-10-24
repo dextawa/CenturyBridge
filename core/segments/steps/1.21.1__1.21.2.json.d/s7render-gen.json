@@ -2456,6 +2456,33 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen.st142(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen$St142;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 method_4203(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V under net/minecraft/class_998: 1.21.2 calls method_4203(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V with the render state; the synthesized one hands the mod's override the entity the state was extracted from and the arguments 1.21.1's caller computed (CbRenderStateGen.st142)"
+  },
+  {
+   "old": "method_22134(Lnet/minecraft/class_1309;)I",
+   "new": "method_22134(Lnet/minecraft/class_10055;)I",
+   "onlyUnder": "net/minecraft/class_4506",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen$St143",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen.st143(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen$St143;Lnet/minecraft/class_10055;)I",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 method_22134(Lnet/minecraft/class_1309;)I under net/minecraft/class_4506: 1.21.2 calls method_22134(Lnet/minecraft/class_10055;)I with the render state; the synthesized one hands the mod's override the entity the state was extracted from and the arguments 1.21.1's caller computed (CbRenderStateGen.st143)"
+  },
+  {
+   "old": "method_22134(Lnet/minecraft/class_1309;)I",
+   "new": "method_22134(Lnet/minecraft/class_10055;)I",
+   "onlyUnder": "net/minecraft/class_4507",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen$St144",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen.st144(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen$St144;Lnet/minecraft/class_10055;)I",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 method_22134(Lnet/minecraft/class_1309;)I under net/minecraft/class_4507: 1.21.2 calls method_22134(Lnet/minecraft/class_10055;)I with the render state; the synthesized one hands the mod's override the entity the state was extracted from and the arguments 1.21.1's caller computed (CbRenderStateGen.st144)"
+  },
+  {
+   "old": "method_22134(Lnet/minecraft/class_1309;)I",
+   "new": "method_22134(Lnet/minecraft/class_10055;)I",
+   "onlyUnder": "net/minecraft/class_973",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen$St145",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen.st145(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderStateGen$St145;Lnet/minecraft/class_10055;)I",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 method_22134(Lnet/minecraft/class_1309;)I under net/minecraft/class_973: 1.21.2 calls method_22134(Lnet/minecraft/class_10055;)I with the render state; the synthesized one hands the mod's override the entity the state was extracted from and the arguments 1.21.1's caller computed (CbRenderStateGen.st145)"
   }
  ],
  "abstractFills": [
@@ -2634,7 +2661,9 @@
   "net/minecraft/class_4495.method_2819(Lnet/minecraft/class_1297;FFFFF)V",
   "net/minecraft/class_4505.method_22129(Lnet/minecraft/class_4466;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_4505.method_3931(Lnet/minecraft/class_1297;)Lnet/minecraft/class_2960;",
+  "net/minecraft/class_4506.method_22134(Lnet/minecraft/class_1309;)I",
   "net/minecraft/class_4507.method_22132(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V",
+  "net/minecraft/class_4507.method_22134(Lnet/minecraft/class_1309;)I",
   "net/minecraft/class_4507.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V",
   "net/minecraft/class_4606.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V",
   "net/minecraft/class_4607.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V",
@@ -3240,6 +3269,7 @@
   "net/minecraft/class_971.method_4175(Lnet/minecraft/class_1641;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_972.method_4177(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;FFFFFF)V",
   "net/minecraft/class_972.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V",
+  "net/minecraft/class_973.method_22134(Lnet/minecraft/class_1309;)I",
   "net/minecraft/class_975.method_4179(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1560;FFFFFF)V",
   "net/minecraft/class_975.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V",
   "net/minecraft/class_976.method_17159(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V",

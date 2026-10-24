@@ -156,7 +156,9 @@
   "net/minecraft/class_761.method_22710(Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel",
   "net/minecraft/class_8679.method_52828(Lnet/minecraft/class_4604;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections",
   "net/minecraft/class_8679.method_52834(ZLnet/minecraft/class_4184;Lnet/minecraft/class_4604;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections",
-  "net/minecraft/class_846$class_851.method_3663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#cancelTasks"
+  "net/minecraft/class_846$class_851.method_3663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#cancelTasks",
+  "net/minecraft/class_1007.method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands",
+  "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands"
  },
  "ctorRedirects": {
   "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#create",
@@ -750,6 +752,32 @@
     1
    ],
    "basis": "1.21.1 BoatRenderer(context, chest) drew every variant with that variant's model and texture; 1.21.2's takes one layer: built on the oak one, then given 1.21.1's model and render type per variant (CbRenderBoats.legacyRenderer, CbRenderBoatRendererMixin)"
+  },
+  "net/minecraft/class_973.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_922;)V": {
+   "desc": "(Lnet/minecraft/class_922;Lnet/minecraft/class_5617$class_5618;)V",
+   "ops": [
+    "keep:1",
+    "keep:0"
+   ],
+   "basis": "1.21.1 ArrowLayer(context, renderer), 1.21.2 ArrowLayer(renderer, context): the same arguments in 1.21.2's order"
+  },
+  "net/minecraft/class_4506.<init>(Lnet/minecraft/class_922;)V": {
+   "desc": "(Lnet/minecraft/class_922;Lnet/minecraft/class_5617$class_5618;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#rendererContext()Lnet/minecraft/class_5617$class_5618;"
+   ],
+   "basis": "1.21.1 BeeStingerLayer(renderer) baked its stinger model from the game's model set; 1.21.2's takes a renderer context for that: the context 1.21.2's dispatcher builds (CbRenderCtors.rendererContext)"
+  },
+  "net/minecraft/class_4507.<init>(Lnet/minecraft/class_922;)V": {
+   "desc": "(Lnet/minecraft/class_922;Lnet/minecraft/class_3879;Lnet/minecraft/class_2960;Lnet/minecraft/class_4507$class_9995;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuck#emptyModel()Lnet/minecraft/class_3879;",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuck#noTexture()Lnet/minecraft/class_2960;",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuck#placement()Lnet/minecraft/class_4507$class_9995;"
+   ],
+   "basis": "1.21.1 StuckInBodyLayer(renderer): a 1.21.1 subclass drew its stuck items itself (renderStuckItem); 1.21.2's constructor takes the model it would draw: an empty one, never drawn, the layer drawing 1.21.1's body (CbRenderStuck)"
   }
  },
  "overrideHooks": [
@@ -875,6 +903,24 @@
    "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "superCalls": "rewrite",
    "basis": "1.21.1 SectionOcclusionGraph.addSectionsInFrustum(frustum, visible); 1.21.2 also collects the nearby sections into a second list: a mod override answers 1.21.2's calls and its super call passes the list 1.21.2 passed"
+  },
+  {
+   "old": "method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V",
+   "new": "method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;Z)V",
+   "onlyUnder": "net/minecraft/class_1007",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands$LegacyRight",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands.right(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderHands$LegacyRight;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;Z)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 PlayerRenderer.render(Right|Left)Hand(.., player), 1.21.2's (.., skin, sleeveVisible): a mod renderer's override answers 1.21.2's calls with the local player (CbRenderHands)"
+  },
+  {
+   "old": "method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V",
+   "new": "method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;Z)V",
+   "onlyUnder": "net/minecraft/class_1007",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands$LegacyLeft",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands.left(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderHands$LegacyLeft;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;Z)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 PlayerRenderer.render(Right|Left)Hand(.., player), 1.21.2's (.., skin, sleeveVisible): a mod renderer's override answers 1.21.2's calls with the local player (CbRenderHands)"
   }
  ],
  "covers": [
@@ -1056,7 +1102,9 @@
   "net/minecraft/class_816$class_817.method_3523(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/class_816;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#superDeserializePart",
   "net/minecraft/class_790$class_792.method_3427(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_816;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#method_3427",
   "net/fabricmc/fabric/api/renderer/v1/render/RenderContext.fallbackConsumer()Ljava/util/function/Consumer;": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi#fallbackConsumer",
-  "net/minecraft/class_846$class_851.method_3663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#cancelTasks"
+  "net/minecraft/class_846$class_851.method_3663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#cancelTasks",
+  "net/minecraft/class_1007.method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands#method_4220",
+  "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands#method_4221"
  },
  "methodRenames": {
   "net/minecraft/class_807.method_3497()Ljava/util/List;": "comp_3049",
@@ -1135,5 +1183,16 @@
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi#mesh(Ltop/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi$LegacyMesh;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;",
    "basis": "1.21.1 Fabric API's Mesh had one abstract method (forEach); 1.21.2's also makes outputTo abstract, which a 1.21.1 lambda's class lacks: built as the 1.21.1 shape and adapted (outputTo: 1.21.1's default)"
   }
- }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_4507",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuck$Legacy",
+   "requires": [
+    "method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V"
+   ],
+   "synth": [],
+   "basis": "1.21.1 StuckInBodyLayer.renderStuckItem(.., entity, x, y, z, partialTick), private in 1.21.2 with another shape: a subclass declaring it gets the adapter, and its layer calls it from 1.21.1's render body (CbRenderStuckMixin)"
+  }
+ ]
 }
