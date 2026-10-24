@@ -313,6 +313,19 @@ public final class JarRemapper {
      * checks them, and until now the wall pass skipped them wholesale: every
      * jar-in-jar library crossed into 26.x still spelling intermediary names.
      */
+    /** a nested jar marked "centurybridge:verbatim" (JarProcessor.verbatimLibrary) */
+    private static boolean verbatim(byte[] jar) throws IOException {
+        try (ZipInputStream nin = new ZipInputStream(new java.io.ByteArrayInputStream(jar))) {
+            ZipEntry n;
+            while ((n = nin.getNextEntry()) != null) {
+                if (n.getName().equals("fabric.mod.json")) {
+                    return top.dext.centurybridge.engine.JarProcessor.verbatimLibrary(nin.readAllBytes());
+                }
+            }
+        }
+        return false;
+    }
+
     private static int remapEntries(ZipInputStream zin, ZipOutputStream zout, Table table) throws IOException {
         java.util.Map<String, String> byOwner = table.byOwner;
         java.util.Map<String, String> members = table.members;
@@ -331,6 +344,12 @@ public final class JarRemapper {
                     continue;
                 }
                 byte[] data = zin.readAllBytes();
+                if (e.getName().startsWith("META-INF/jars/") && e.getName().endsWith(".jar") && verbatim(data)) {
+                    zout.putNextEntry(new ZipEntry(e.getName())); // a library a layer gives back whole: byte for byte
+                    zout.write(data);
+                    zout.closeEntry();
+                    continue;
+                }
                 if (e.getName().startsWith("META-INF/jars/") && e.getName().endsWith(".jar")) {
                     java.io.ByteArrayOutputStream bos = new java.io.ByteArrayOutputStream();
                     try (ZipInputStream nin = new ZipInputStream(new java.io.ByteArrayInputStream(data));
