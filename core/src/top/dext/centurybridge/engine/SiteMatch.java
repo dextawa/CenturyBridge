@@ -154,14 +154,14 @@ public final class SiteMatch {
         if (f != null) {
             for (AbstractInsnNode in : m.instructions) {
                 if (!(in instanceof MethodInsnNode) && !(in instanceof FieldInsnNode)) continue;
-                AbstractInsnNode c = in;
-                for (int hop = 0; c != null && hop < 32; hop++) {
-                    String s = f.strings.get(c);
-                    if (s != null) {
-                        out.put(in, (hop == 0 ? "" : sigOf(c) + "<-") + s);
+                // string constants first; where none is down the chain, the static fields it takes
+                // (player.hasEffect(MobEffects.CONFUSION)): another statement's own name for its subject
+                for (Map<AbstractInsnNode, String> by : List.of(f.strings, f.statics)) {
+                    String k = chainKey(f, by, in);
+                    if (k != null) {
+                        out.put(in, k);
                         break;
                     }
-                    c = f.consumer.get(c);
                 }
             }
         }
@@ -169,11 +169,23 @@ public final class SiteMatch {
         return out;
     }
 
+    private static String chainKey(Flow f, Map<AbstractInsnNode, String> by, AbstractInsnNode in) {
+        AbstractInsnNode c = in;
+        for (int hop = 0; c != null && hop < 32; hop++) {
+            String s = by.get(c);
+            if (s != null) {
+                return (hop == 0 ? "" : sigOf(c) + "<-") + s;
+            }
+            c = f.consumer.get(c);
+        }
+        return null;
+    }
+
     private static final Map<MethodNode, Map<AbstractInsnNode, String>> KEYS = java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
 
     /** who takes each instruction's value (when exactly one instruction does), and each call's string operands */
     private record Flow(Map<AbstractInsnNode, AbstractInsnNode> consumer, Map<AbstractInsnNode, String> strings,
-                        Map<AbstractInsnNode, AbstractInsnNode[]> producers) {}
+                        Map<AbstractInsnNode, String> statics, Map<AbstractInsnNode, AbstractInsnNode[]> producers) {}
 
     private static final Map<MethodNode, Flow> FLOWS = java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
 
@@ -284,6 +296,7 @@ public final class SiteMatch {
         Set<AbstractInsnNode> shared = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
         Map<AbstractInsnNode, String> strings = new java.util.IdentityHashMap<>();
         Map<AbstractInsnNode, AbstractInsnNode[]> producers = new java.util.IdentityHashMap<>();
+        Map<AbstractInsnNode, String> statics = new java.util.IdentityHashMap<>();
         for (int i = 0; i < m.instructions.size(); i++) {
             AbstractInsnNode in = m.instructions.get(i);
             var fr = frames[i];
@@ -291,6 +304,7 @@ public final class SiteMatch {
             int n = operands(in);
             if (n <= 0 || n > fr.getStackSize()) continue;
             StringBuilder s = new StringBuilder();
+            StringBuilder st = new StringBuilder();
             AbstractInsnNode[] ps = new AbstractInsnNode[n];
             producers.put(in, ps);
             for (int a = 0; a < n; a++) {
@@ -305,12 +319,15 @@ public final class SiteMatch {
                 consumer.put(p, in);
                 if (p instanceof LdcInsnNode ldc && ldc.cst instanceof String str) {
                     s.append('"').append(str).append('"').append('@').append(a).append(';');
+                } else if (p instanceof FieldInsnNode gf && gf.getOpcode() == Opcodes.GETSTATIC) {
+                    st.append("F:").append(gf.owner).append('.').append(gf.name).append('@').append(a).append(';');
                 }
             }
             if (s.length() > 0) strings.put(in, s.toString());
+            if (st.length() > 0) statics.put(in, st.toString());
         }
         for (AbstractInsnNode p : shared) consumer.remove(p);
-        return new Flow(consumer, strings, producers);
+        return new Flow(consumer, strings, statics, producers);
     }
 
     /** stack operands a call or field instruction takes (receiver included); 0 for others */
