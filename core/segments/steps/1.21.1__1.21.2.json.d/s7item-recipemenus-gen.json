@@ -1,152 +1,18 @@
 {
  "instanceRedirects": {
-  "net/minecraft/class_1729.method_17697(ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#handlePlacement",
-  "net/minecraft/class_1729.method_59963()V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#beginPlacingRecipe",
-  "net/minecraft/class_1729.method_59964(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#finishPlacingRecipe",
   "net/minecraft/class_4861.method_48352()Lnet/minecraft/class_8047;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#createInputSlotDefinitions",
   "net/minecraft/class_4861.method_48357(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#getSlotToQuickMoveTo",
   "net/minecraft/class_3441.method_14901(Lnet/minecraft/class_2487;Lnet/minecraft/class_1863;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeBook#fromNbt"
  },
  "superRedirects": {
-  "net/minecraft/class_1714.method_7654(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superFillCraftSlotsStackedContents",
-  "net/minecraft/class_1723.method_7654(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superFillCraftSlotsStackedContents",
-  "net/minecraft/class_1720.method_7654(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superFillCraftSlotsStackedContents",
-  "net/minecraft/class_1714.method_7657()V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superClearCraftingContent",
-  "net/minecraft/class_1723.method_7657()V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superClearCraftingContent",
-  "net/minecraft/class_1720.method_7657()V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superClearCraftingContent",
-  "net/minecraft/class_1714.method_7652(Lnet/minecraft/class_8786;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superRecipeMatches",
-  "net/minecraft/class_1723.method_7652(Lnet/minecraft/class_8786;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superRecipeMatches",
-  "net/minecraft/class_1720.method_7652(Lnet/minecraft/class_8786;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superRecipeMatches",
-  "net/minecraft/class_1714.method_7655()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetResultSlotIndex",
-  "net/minecraft/class_1723.method_7655()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetResultSlotIndex",
-  "net/minecraft/class_1720.method_7655()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetResultSlotIndex",
-  "net/minecraft/class_1714.method_7653()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetGridWidth",
-  "net/minecraft/class_1723.method_7653()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetGridWidth",
-  "net/minecraft/class_1720.method_7653()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetGridWidth",
-  "net/minecraft/class_1714.method_7656()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetGridHeight",
-  "net/minecraft/class_1723.method_7656()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetGridHeight",
-  "net/minecraft/class_1720.method_7656()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetGridHeight",
-  "net/minecraft/class_1714.method_7658()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetSize",
-  "net/minecraft/class_1723.method_7658()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetSize",
-  "net/minecraft/class_1720.method_7658()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetSize",
-  "net/minecraft/class_1714.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superShouldMoveToInventory",
-  "net/minecraft/class_1723.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superShouldMoveToInventory",
-  "net/minecraft/class_1720.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superShouldMoveToInventory",
-  "net/minecraft/class_1720.method_59964(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superFinishPlacingRecipe",
   "net/minecraft/class_1706.method_48352()Lnet/minecraft/class_8047;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superCreateInputSlotDefinitions",
   "net/minecraft/class_4862.method_48352()Lnet/minecraft/class_8047;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superCreateInputSlotDefinitions",
   "net/minecraft/class_4861.method_48357(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superGetSlotToQuickMoveTo",
   "net/minecraft/class_4862.method_48357(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superGetSlotToQuickMoveTo"
  },
- "staticRedirects": {
-  "net/minecraft/class_1714.method_17399(Lnet/minecraft/class_1703;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_8566;Lnet/minecraft/class_1731;Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#slotChangedCraftingGrid"
- },
+ "staticRedirects": {},
  "adapterHooks": [],
  "overrideHooks": [
-  {
-   "old": "method_17697(ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V",
-   "new": "method_17697(ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;",
-   "onlyUnder": "net/minecraft/class_1714",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_handlePlacement",
-   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.handleBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_handlePlacement;ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;",
-   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.superHandleBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$SuperPlace;ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V",
-   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$SuperPlace",
-   "superAccessors": [
-    "method_17697(ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;"
-   ],
-   "basis": "1.21.2's packet handler calls handlePlacement(placeAll, creative, recipe, level, inventory): a mod menu's 1.21.1 handlePlacement(placeAll, recipe, player) does the placement (ghost included); its super call is 1.21.1's placement on 1.21.2's super (CbItemRecipeMenus)"
-  },
-  {
-   "old": "method_17697(ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V",
-   "new": "method_17697(ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;",
-   "onlyUnder": "net/minecraft/class_1723",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_handlePlacement",
-   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.handleBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_handlePlacement;ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;",
-   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.superHandleBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$SuperPlace;ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V",
-   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$SuperPlace",
-   "superAccessors": [
-    "method_17697(ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;"
-   ],
-   "basis": "1.21.2's packet handler calls handlePlacement(placeAll, creative, recipe, level, inventory): a mod menu's 1.21.1 handlePlacement(placeAll, recipe, player) does the placement (ghost included); its super call is 1.21.1's placement on 1.21.2's super (CbItemRecipeMenus)"
-  },
-  {
-   "old": "method_17697(ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V",
-   "new": "method_17697(ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;",
-   "onlyUnder": "net/minecraft/class_1720",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_handlePlacement",
-   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.handleBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_handlePlacement;ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;",
-   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.superHandleBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$SuperPlace;ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V",
-   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$SuperPlace",
-   "superAccessors": [
-    "method_17697(ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;"
-   ],
-   "basis": "1.21.2's packet handler calls handlePlacement(placeAll, creative, recipe, level, inventory): a mod menu's 1.21.1 handlePlacement(placeAll, recipe, player) does the placement (ghost included); its super call is 1.21.1's placement on 1.21.2's super (CbItemRecipeMenus)"
-  },
-  {
-   "old": "method_59964(Lnet/minecraft/class_8786;)V",
-   "new": "method_59964(Lnet/minecraft/class_3218;Lnet/minecraft/class_8786;)V",
-   "onlyUnder": "net/minecraft/class_1723",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_finishPlacingRecipe",
-   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.finishBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_finishPlacingRecipe;Lnet/minecraft/class_3218;Lnet/minecraft/class_8786;)V",
-   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.superFinishBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$SuperFinish;Lnet/minecraft/class_8786;)V",
-   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$SuperFinish",
-   "superAccessors": [
-    "method_59964(Lnet/minecraft/class_3218;Lnet/minecraft/class_8786;)V"
-   ],
-   "basis": "AbstractCraftingMenu.handlePlacement calls finishPlacingRecipe(level, recipe): a mod menu's 1.21.1 finishPlacingRecipe(recipe) answers; its super call is 1.21.1's body (the level from the menu's ContainerLevelAccess, nothing on a client) -- not the frames hook, whose direct entry would hand 1.21.2's body a null level (CbItemRecipeMenus)"
-  },
-  {
-   "old": "method_7654(Lnet/minecraft/class_1662;)V",
-   "new": "method_7654(Lnet/minecraft/class_9875;)V",
-   "onlyUnder": "net/minecraft/class_1714",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_fillCraftSlotsStackedContents",
-   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.fillBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_fillCraftSlotsStackedContents;Lnet/minecraft/class_9875;)V",
-   "basis": "1.21.2's recipe book fills StackedItemContents: a mod menu's 1.21.1 override fills a 1.21.1 StackedContents, poured into it (CbItemRecipeMenus.fillBridge)"
-  },
-  {
-   "old": "method_7654(Lnet/minecraft/class_1662;)V",
-   "new": "method_7654(Lnet/minecraft/class_9875;)V",
-   "onlyUnder": "net/minecraft/class_1723",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_fillCraftSlotsStackedContents",
-   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.fillBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_fillCraftSlotsStackedContents;Lnet/minecraft/class_9875;)V",
-   "basis": "1.21.2's recipe book fills StackedItemContents: a mod menu's 1.21.1 override fills a 1.21.1 StackedContents, poured into it (CbItemRecipeMenus.fillBridge)"
-  },
-  {
-   "old": "method_7654(Lnet/minecraft/class_1662;)V",
-   "new": "method_7654(Lnet/minecraft/class_9875;)V",
-   "onlyUnder": "net/minecraft/class_1720",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_fillCraftSlotsStackedContents",
-   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.fillBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_fillCraftSlotsStackedContents;Lnet/minecraft/class_9875;)V",
-   "basis": "1.21.2's recipe book fills StackedItemContents: a mod menu's 1.21.1 override fills a 1.21.1 StackedContents, poured into it (CbItemRecipeMenus.fillBridge)"
-  },
-  {
-   "old": "method_7653()I",
-   "new": "method_61629()I",
-   "onlyUnder": "net/minecraft/class_1714",
-   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "basis": "1.21.1 RecipeBookMenu.getGridWidth of a crafting menu is 1.21.2's AbstractCraftingMenu.getGridWidth (same use: the recipe placement's grid): the mod's override answers it"
-  },
-  {
-   "old": "method_7656()I",
-   "new": "method_61630()I",
-   "onlyUnder": "net/minecraft/class_1714",
-   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "basis": "1.21.1 RecipeBookMenu.getGridHeight of a crafting menu is 1.21.2's AbstractCraftingMenu.getGridHeight (same use: the recipe placement's grid): the mod's override answers it"
-  },
-  {
-   "old": "method_7653()I",
-   "new": "method_61629()I",
-   "onlyUnder": "net/minecraft/class_1723",
-   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "basis": "1.21.1 RecipeBookMenu.getGridWidth of a crafting menu is 1.21.2's AbstractCraftingMenu.getGridWidth (same use: the recipe placement's grid): the mod's override answers it"
-  },
-  {
-   "old": "method_7656()I",
-   "new": "method_61630()I",
-   "onlyUnder": "net/minecraft/class_1723",
-   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "basis": "1.21.1 RecipeBookMenu.getGridHeight of a crafting menu is 1.21.2's AbstractCraftingMenu.getGridHeight (same use: the recipe placement's grid): the mod's override answers it"
-  },
   {
    "old": "method_14901(Lnet/minecraft/class_2487;Lnet/minecraft/class_1863;)V",
    "new": "method_14901(Lnet/minecraft/class_2487;Ljava/util/function/Predicate;)V",
@@ -162,32 +28,6 @@
   }
  ],
  "superCtorReshapes": {
-  "net/minecraft/class_1720.<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;)V": {
-   "desc": "(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;)V",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#furnaceInputs(Lnet/minecraft/class_3956;)Lnet/minecraft/class_5321;",
-    "keep:2",
-    "keep:3",
-    "keep:4"
-   ],
-   "basis": "1.21.2's AbstractFurnaceMenu takes the recipe property set of its inputs: 1.21.2's own for the vanilla cooking types, else canSmelt is 1.21.1's lookup (CbItemRecipeMenus.furnaceInputs, CbItemFurnaceMenuMixin)"
-  },
-  "net/minecraft/class_1720.<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;)V": {
-   "desc": "(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;)V",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#furnaceInputs(Lnet/minecraft/class_3956;)Lnet/minecraft/class_5321;",
-    "keep:2",
-    "keep:3",
-    "keep:4",
-    "keep:5",
-    "keep:6"
-   ],
-   "basis": "1.21.2's AbstractFurnaceMenu takes the recipe property set of its inputs: 1.21.2's own for the vanilla cooking types, else canSmelt is 1.21.1's lookup (CbItemRecipeMenus.furnaceInputs, CbItemFurnaceMenuMixin)"
-  },
   "net/minecraft/class_4861.<init>(Lnet/minecraft/class_3917;ILnet/minecraft/class_1661;Lnet/minecraft/class_3914;)V": {
    "desc": "(Lnet/minecraft/class_3917;ILnet/minecraft/class_1661;Lnet/minecraft/class_3914;Lnet/minecraft/class_8047;)V",
    "ops": [
