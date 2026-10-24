@@ -964,6 +964,9 @@
   },
   "method_42741()Ljava/util/List;": {
    "0": "zero: 1.21.2's WardenModel part-list getter ignores the state it takes (returns the model's own list, checked: aload_0 getfield areturn), so null is never read"
+  },
+  "getPartsToDraw(Lnet/minecraft/class_583;)Ljava/util/List;": {
+   "1": "zero: LivingEntityEmissiveLayer.DrawSelector.getPartsToDraw is abstract in both 1.21.1's and 1.21.2's interface -- no implementation's super call can reach it, so no rewritten super call ever reads this"
   }
  },
  "depRenames": {
