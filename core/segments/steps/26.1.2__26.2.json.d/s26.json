@@ -84,7 +84,12 @@
   "net/minecraft/client/renderer/LevelRenderer.getTotalSections()D": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#getTotalSections",
   "net/minecraft/client/renderer/LevelRenderer.resetSampler()V": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#resetSampler",
   "net/minecraft/client/renderer/LevelRenderer.onResourceManagerReload(Lnet/minecraft/server/packs/resources/ResourceManager;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#onResourceManagerReload",
-  "net/minecraft/client/renderer/LevelRenderer.blockChanged(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#blockChanged"
+  "net/minecraft/client/renderer/LevelRenderer.blockChanged(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#blockChanged",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitModelPart(Lnet/minecraft/client/model/geom/ModelPart;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;IILnet/minecraft/client/renderer/texture/TextureAtlasSprite;ZZ)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitModelPart",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitModelPart(Lnet/minecraft/client/model/geom/ModelPart;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;IILnet/minecraft/client/renderer/texture/TextureAtlasSprite;ZZILnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitModelPart",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitMovingBlock",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitBreakingBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;JI)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitBreakingBlockModel",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitNameTag(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZIDLnet/minecraft/client/renderer/state/level/CameraRenderState;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitNameTag"
  },
  "_instanceRedirects_basis": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.*": "26.2 replaced the parser's option booleans by option-state objects (nameOption() ... advancementsOption()); rt/CbS26Selector reads and sets the same facts on them (see its javadoc)",
@@ -250,6 +255,15 @@
   "blockedByItem(Lnet/minecraft/world/entity/LivingEntity;)V": {
    "1": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#noCause(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;",
    "2": "zero: passed on to knockback, read there only for a source with an entity; the default source has none"
+  },
+  "submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V": {
+   "2": "zero: the outline colour; 0 is no outline (26.2 submits the outlined copy only for a non-zero colour), and 26.1.2 moving blocks had no outline"
+  },
+  "publishServer(Lnet/minecraft/world/level/GameType;ZI)Z": {
+   "0": "top/dext/centurybridge/step/v26_2/rt/CbS26Server#lanScope(Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/server/MinecraftServer$MultiplayerScope;"
+  },
+  "send(Lnet/minecraft/client/telemetry/TelemetryEventSender;)Z": {
+   "1": "zero: 26.2's flag forces the event without a server brand; 26.1.2's send returned false without one, which is 26.2's send with false (javap of both)"
   }
  },
  "ctorRedirects": {
