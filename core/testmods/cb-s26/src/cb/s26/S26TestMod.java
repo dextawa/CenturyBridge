@@ -64,6 +64,28 @@ public class S26TestMod implements ModInitializer {
         return "unregistered " + v.getClass().getName();
     }
 
+    static ResourceKey<net.minecraft.world.level.block.Block> blockKey(String path) {
+        return ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath("cb_s26", path));
+    }
+
+    static net.minecraft.world.level.block.state.BlockBehaviour.Properties blockProps(String path) {
+        return net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().setId(blockKey(path));
+    }
+
+    /** a 26.1.2 DripstoneUtils subclass using its protected helpers */
+    static class DripstoneSub extends DripstoneUtils {
+        void column(List<net.minecraft.world.level.block.state.BlockState> out) {
+            buildBaseToTipColumn(net.minecraft.core.Direction.UP, 4, true, out::add);
+        }
+    }
+
+    /** a 26.1.2 PointedDripstoneBlock subclass: super(properties) */
+    static class DripBlock extends net.minecraft.world.level.block.PointedDripstoneBlock {
+        DripBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties p) {
+            super(p);
+        }
+    }
+
     @Override
     public void onInitialize() {
         RegConstChecks.run();
@@ -174,6 +196,71 @@ public class S26TestMod implements ModInitializer {
         // EntityType.byString (rt/CbS26Entity)
         check("entity.byString", EntityType.byString("minecraft:pig").orElse(null) == EntityType.PIG
             && EntityType.byString("minecraft:no_such").isEmpty(), "");
+
+        // dripstone worldgen on 26.2's speleothems (rt/CbS26Dripstone)
+        try {
+            var cluster = new net.minecraft.world.level.levelgen.feature.configurations.DripstoneClusterConfiguration(12,
+                net.minecraft.util.valueproviders.ConstantInt.of(4), net.minecraft.util.valueproviders.ConstantInt.of(5), 1, 3,
+                net.minecraft.util.valueproviders.ConstantInt.of(2), net.minecraft.util.valueproviders.ConstantFloat.of(0.5F),
+                net.minecraft.util.valueproviders.ConstantFloat.of(0.25F), 0.1F, 3, 8);
+            check("dripstone.cluster.fields", cluster.floorToCeilingSearchRange == 12 && cluster.height.sample(null) == 4
+                && cluster.radius.sample(null) == 5 && cluster.maxStalagmiteStalactiteHeightDiff == 1 && cluster.heightDeviation == 3
+                && cluster.dripstoneBlockLayerThickness.sample(null) == 2 && cluster.density.sample(null) == 0.5F
+                && cluster.wetness.sample(null) == 0.25F && cluster.chanceOfDripstoneColumnAtMaxDistanceFromCenter == 0.1F
+                && cluster.maxDistanceFromEdgeAffectingChanceOfDripstoneColumn == 3 && cluster.maxDistanceFromCenterAffectingHeightBias == 8, cluster);
+            com.google.gson.JsonElement cj = net.minecraft.world.level.levelgen.feature.configurations.DripstoneClusterConfiguration.CODEC
+                .encodeStart(com.mojang.serialization.JsonOps.INSTANCE, cluster).getOrThrow();
+            var back = net.minecraft.world.level.levelgen.feature.configurations.DripstoneClusterConfiguration.CODEC
+                .parse(com.mojang.serialization.JsonOps.INSTANCE, cj).getOrThrow();
+            check("dripstone.cluster.codec", cj.getAsJsonObject().has("dripstone_block_layer_thickness")
+                && cj.getAsJsonObject().has("chance_of_dripstone_column_at_max_distance_from_center")
+                && cj.getAsJsonObject().size() == 11 && back.heightDeviation == 3 && back.radius.sample(null) == 5, cj);
+            var pointed = new net.minecraft.world.level.levelgen.feature.configurations.PointedDripstoneConfiguration(0.1F, 0.2F, 0.3F, 0.4F);
+            var dflt = net.minecraft.world.level.levelgen.feature.configurations.PointedDripstoneConfiguration.CODEC
+                .parse(com.mojang.serialization.JsonOps.INSTANCE, new com.google.gson.JsonObject()).getOrThrow();
+            check("dripstone.pointed", pointed.chanceOfTallerDripstone == 0.1F && pointed.chanceOfDirectionalSpread == 0.2F
+                && pointed.chanceOfSpreadRadius2 == 0.3F && pointed.chanceOfSpreadRadius3 == 0.4F
+                && dflt.chanceOfTallerDripstone == 0.2F && dflt.chanceOfDirectionalSpread == 0.7F && dflt.chanceOfSpreadRadius3 == 0.5F, dflt);
+            check("dripstone.feature", describe(net.minecraft.world.level.levelgen.feature.Feature.POINTED_DRIPSTONE).startsWith("value\tminecraft:worldgen/feature\t")
+                && describe(net.minecraft.world.level.levelgen.feature.Feature.DRIPSTONE_CLUSTER).startsWith("value\tminecraft:worldgen/feature\t"),
+                describe(net.minecraft.world.level.levelgen.feature.Feature.POINTED_DRIPSTONE));
+            var large = new net.minecraft.world.level.levelgen.feature.configurations.LargeDripstoneConfiguration(30,
+                net.minecraft.util.valueproviders.ConstantInt.of(3), net.minecraft.util.valueproviders.ConstantFloat.of(1.0F), 0.33F,
+                net.minecraft.util.valueproviders.ConstantFloat.of(1.0F), net.minecraft.util.valueproviders.ConstantFloat.of(1.0F),
+                net.minecraft.util.valueproviders.ConstantFloat.of(0.0F), 4, 0.6F);
+            com.google.gson.JsonElement lj = net.minecraft.world.level.levelgen.feature.configurations.LargeDripstoneConfiguration.CODEC
+                .encodeStart(com.mojang.serialization.JsonOps.INSTANCE, large).getOrThrow();
+            lj.getAsJsonObject().remove("floor_to_ceiling_search_range");
+            var lback = net.minecraft.world.level.levelgen.feature.configurations.LargeDripstoneConfiguration.CODEC
+                .parse(com.mojang.serialization.JsonOps.INSTANCE, lj).getOrThrow();
+            check("dripstone.large", large.minRadiusForWind == 4 && large.maxColumnRadiusToCaveHeightRatio == 0.33F
+                && !lj.getAsJsonObject().has("replaceable_blocks") && lback.floorToCeilingSearchRange == 30 && lback.minBluntnessForWind == 0.6F, lj);
+            check("dripstone.utils", DripstoneUtils.isDripstoneBase(Blocks.DRIPSTONE_BLOCK.defaultBlockState())
+                && DripstoneUtils.isDripstoneBaseOrLava(Blocks.DRIPSTONE_BLOCK.defaultBlockState()), ""); // other states read the tag, unbound at init on 26.1.2 too
+            List<net.minecraft.world.level.block.state.BlockState> column = new ArrayList<>();
+            new DripstoneSub().column(column);
+            check("dripstone.column", column.size() == 4 && column.get(0).is(Blocks.POINTED_DRIPSTONE)
+                && "base".equals(column.get(0).getValue(net.minecraft.world.level.block.PointedDripstoneBlock.THICKNESS).getSerializedName())
+                && "tip_merge".equals(column.get(3).getValue(net.minecraft.world.level.block.PointedDripstoneBlock.THICKNESS).getSerializedName()), column);
+            net.minecraft.world.level.block.state.BlockState hanging = Blocks.POINTED_DRIPSTONE.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.PointedDripstoneBlock.TIP_DIRECTION, net.minecraft.core.Direction.DOWN);
+            check("dripstone.canDrip", !net.minecraft.world.level.block.PointedDripstoneBlock.canDrip(Blocks.POINTED_DRIPSTONE.defaultBlockState())
+                && net.minecraft.world.level.block.PointedDripstoneBlock.canDrip(hanging), "");
+            net.minecraft.world.level.block.PointedDripstoneBlock plain = new net.minecraft.world.level.block.PointedDripstoneBlock(blockProps("plain_drip"));
+            DripBlock sub = new DripBlock(blockProps("sub_drip"));
+            net.minecraft.core.Registry.register(BuiltInRegistries.BLOCK, blockKey("plain_drip"), plain);
+            net.minecraft.core.Registry.register(BuiltInRegistries.BLOCK, blockKey("sub_drip"), sub);
+            check("dripstone.block", plain.defaultBlockState().hasProperty(net.minecraft.world.level.block.PointedDripstoneBlock.THICKNESS)
+                && sub.defaultBlockState().hasProperty(net.minecraft.world.level.block.PointedDripstoneBlock.TIP_DIRECTION), sub);
+        } catch (Throwable e) {
+            StringBuilder st = new StringBuilder(e.toString());
+            for (StackTraceElement el : e.getStackTrace()) {
+                if (el.getClassName().startsWith("cb.") || el.getClassName().contains("centurybridge")) {
+                    st.append(" @ ").append(el);
+                }
+            }
+            check("dripstone", false, st);
+        }
 
         System.out.println("CB-S26 DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS: " + FAILS));
     }

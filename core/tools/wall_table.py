@@ -214,6 +214,17 @@ class Table:
         self.wsup[w] = out
         return out
 
+    def w_method(self, w, name, desc_tokens):
+        """the method target class w (or a supertype) declares under name with a descriptor unifying with these"""
+        for s in self.wsupers(w):
+            k = self.W.get(s)
+            if not k:
+                continue
+            for m in k.methods:
+                if m.name == name and unify_desc(desc_tokens, m.desc, []):
+                    return m
+        return None
+
     def w_has(self, w, kind, name, desc_tokens, votes):
         """does target class w (or a supertype) declare kind/name with a descriptor unifying with these?"""
         for s in self.wsupers(w):
@@ -1423,7 +1434,7 @@ def write_fragment(t, V, W, path, step):
     class that is neither final nor a record) an overrideRenames entry under the V class with super calls
     renamed, so a mod's override is what W's callers of the new name reach."""
     renames, check = {}, {}
-    mren, fren, oren = {}, {}, []
+    mren, fren, oren, diverged = {}, {}, [], []
     for key in sorted(t.ren):
         c, name = key.rsplit(".", 1)
         if c not in V:
@@ -1439,6 +1450,14 @@ def write_fragment(t, V, W, path, step):
                 continue
             if kind == "F":
                 fren[f"{c}.{name}:{m.desc}"] = n
+                continue
+            # a rename found from the bodies around the member (it is named where a kept body names it)
+            # says where the member went, not that it still does the same: a method whose own body on W
+            # is not the same code is left for the step to wire (26.2's SpeleothemBlock.isFreeHangingStalactite
+            # tests the #speleothems tag where 26.1.2's PointedDripstoneBlock.canDrip tested the block)
+            wm = t.w_method(w, n, t.tdesc(m.desc))
+            if m.insns is not None and wm is not None and wm.insns is not None and not t.same_code(m, wm)[0]:
+                diverged.append(f"{c}.{name}{m.desc} -> {n}")
                 continue
             mren[f"{c}.{name}{m.desc}"] = n
             if not (m.access & (bytecode.ACC_STATIC | bytecode.ACC_FINAL)) and name != "<init>" and \
@@ -1480,13 +1499,14 @@ def write_fragment(t, V, W, path, step):
         "overrideRenames": oren,
         "_pkgmoves_check": check,
         "_pkgmoves_member_renames": {k: t.ren[k] for k in sorted(t.ren)},
+        "_pkgmoves_renamed_not_same_code": diverged,
     }
     with open(path, "w", encoding="utf-8", newline="\n") as o:
         json.dump(out, o, indent=1, ensure_ascii=False)
         o.write("\n")
     n_miss = sum(1 for v in check.values() if "missing" in v)
     n_ren = sum(1 for v in check.values() if "renamed" in v)
-    print(f"fragment -> {path}: {len(renames)} classRenames, {len(mren)} methodRenames, {len(fren)} fieldRenames, {len(oren)} overrideRenames ({n_miss} with members the target lacks, "
+    print(f"fragment -> {path}: {len(renames)} classRenames, {len(mren)} methodRenames, {len(fren)} fieldRenames, {len(oren)} overrideRenames, {len(diverged)} renamed members not the same code ({n_miss} with members the target lacks, "
           f"{n_ren} with renamed members)")
 
 
