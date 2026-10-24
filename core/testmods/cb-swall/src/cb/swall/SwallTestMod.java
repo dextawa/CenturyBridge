@@ -466,6 +466,73 @@ public class SwallTestMod implements ModInitializer {
         }
     }
 
+    /** a 1.21.11 subclass of the structure index */
+    static class CountingIndex extends net.minecraft.class_3440 {
+        int starts;
+
+        @Override
+        public boolean method_14897(long chunk) {
+            starts++;
+            return super.method_14897(chunk);
+        }
+    }
+
+    /** 1.21.11 string-named saved data, StructureFeatureIndexSavedData and LegacyStructureDataHandler */
+    private static void legacyStructureData(MinecraftServer server) throws Exception {
+        java.nio.file.Path dir = java.nio.file.Files.createTempDirectory("cbswall-data");
+        net.minecraft.class_10741<net.minecraft.class_3440> type = net.minecraft.class_3440.method_67412("cbswall_index");
+        net.minecraft.class_26 storage = new net.minecraft.class_26(dir, server.method_3855(), server.method_30611());
+        net.minecraft.class_3440 index = storage.method_17924(type);
+        index.method_14896(5L);
+        index.method_14896(6L);
+        index.method_14895(6L);
+        storage.method_125();
+        net.minecraft.class_26 reopened = new net.minecraft.class_26(dir, server.method_3855(), server.method_30611());
+        net.minecraft.class_3440 back = reopened.method_17924(net.minecraft.class_3440.method_67412("cbswall_index"));
+        check("savedData.stringIdFile", java.nio.file.Files.exists(dir.resolve("cbswall_index.dat"))
+            && "cbswall_index".equals(type.comp_3641()) && type.equals(net.minecraft.class_3440.method_67412("cbswall_index")), type.comp_3641());
+        check("structureIndex.roundTrip", back.method_14897(5L) && back.method_14897(6L) && back.method_14894(5L) && !back.method_14894(6L)
+            && back.method_14898().size() == 2, back.method_14898());
+        CountingIndex counting = new CountingIndex();
+        counting.method_14896(7L);
+        check("structureIndex.subclass", counting.method_14897(7L) && counting.starts == 1 && counting.method_14894(7L), counting.starts);
+
+        // a pre-1.13 nether: Fortress.dat in the data folder, a 1.13-era chunk flagged as holding legacy structure data
+        net.minecraft.class_2487 feature = new net.minecraft.class_2487();
+        feature.method_10569("ChunkX", 0);
+        feature.method_10569("ChunkZ", 0);
+        feature.method_10582("id", "Fortress");
+        net.minecraft.class_2487 features = new net.minecraft.class_2487();
+        features.method_10566("[0,0]", feature);
+        net.minecraft.class_2487 data = new net.minecraft.class_2487();
+        data.method_10566("Features", features);
+        net.minecraft.class_2487 file = new net.minecraft.class_2487();
+        file.method_10566("data", data);
+        file.method_10569("DataVersion", 1493);
+        net.minecraft.class_2507.method_30614(file, dir.resolve("Fortress.dat"));
+        java.util.function.Supplier<net.minecraft.class_12242> nether = net.minecraft.class_3360.method_14745(net.minecraft.class_1937.field_25180, () -> reopened, server.method_3855());
+        net.minecraft.class_12242 fixer = nether.get();
+        net.minecraft.class_2487 level = new net.minecraft.class_2487();
+        level.method_10569("xPos", 0);
+        level.method_10569("zPos", 0);
+        level.method_10556("hasLegacyStructureData", true);
+        net.minecraft.class_2487 chunk = new net.minecraft.class_2487();
+        chunk.method_10566("Level", level);
+        chunk.method_10569("DataVersion", 1492);
+        // DataFixTypes.update leaves DataVersion to the storage (1.21.11 and 26.1 alike); References gets the fortress key
+        net.minecraft.class_2487 fixed = fixer.applyFix(chunk);
+        java.util.Optional<long[]> refs = fixed.method_68568("Level").method_68568("Structures").method_68568("References").method_10565("Fortress");
+        check("legacyStructure.netherFixer", fixer instanceof net.minecraft.class_3360 && fixer.targetDataVersion() == 1493
+            && refs.isPresent() && refs.get().length == 0, fixed);
+        fixer.markChunkDone(new net.minecraft.class_1923(0, 0));
+        net.minecraft.class_2487 plain = new net.minecraft.class_2487();
+        net.minecraft.class_12242 none = net.minecraft.class_3360.method_14745(
+            net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41223, net.minecraft.class_2960.method_60655("cbswall", "dim")),
+            () -> reopened, server.method_3855()).get();
+        check("legacyStructure.otherDimension", !(none instanceof net.minecraft.class_3360) && none.applyFix(plain) == plain
+            && none.targetDataVersion() == -1, none);
+    }
+
     /** 1.21.11's one interact packet for three actions, over 26.1's interact and attack packets */
     private static void interactPacket(MinecraftServer server) {
         net.minecraft.class_3218 level = server.method_30002();
@@ -647,6 +714,7 @@ public class SwallTestMod implements ModInitializer {
             removedRecipes(server);
             specialRecipeCtors(server);
             legacyRegionStorage(server);
+            legacyStructureData(server);
             interactPacket(server);
             timerQueue();
             extendFinal();

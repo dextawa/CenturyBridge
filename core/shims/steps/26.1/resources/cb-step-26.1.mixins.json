@@ -46,6 +46,7 @@
     "CbWallServerAccess",
     "CbWallSingleItemRecipeMixin",
     "CbWallStonecutterRecipeMixin",
+    "CbWallSavedDataStorageMixin",
     "CbWallServerMixin",
     "CbWallSimpleContainerMixin",
     "CbWallTraderSpawnerMixin",
