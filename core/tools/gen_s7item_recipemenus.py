@@ -10,6 +10,9 @@
                      handlePlacement, finishPlacingRecipe, fillCraftSlotsStackedContents, getGridWidth/Height
                      (AbstractCraftingMenu's); its super call goes through a super bridge where the 1.21.2 method
                      would land back in the mod's override
+  superCtorReshapes  AbstractFurnaceMenu(.., recipeType, bookType, ..): the recipe property set 1.21.2 adds, by recipe type
+  classRenames       1.21.1 PlaceRecipe / ServerPlaceRecipe -> the layer's facades (1.21.1 bodies; 1.21.2 removed the one and
+                     rebuilt the other as a private placer)
   Direct mod subclasses of RecipeBookMenu are s7rest's facade (it implements CbItemRecipeMenus.Legacy).
 
   python gen_s7item_recipemenus.py <out fragment.json>
@@ -106,6 +109,25 @@ def main():
                 "old": old, "new": new, "onlyUnder": owner, "guard": GUARD,
                 "basis": "1.21.1 RecipeBookMenu." + what + " of a crafting menu is 1.21.2's AbstractCraftingMenu."
                          + what + " (same use: the recipe placement's grid): the mod's override answers it"})
+    out["superCtorReshapes"] = {}
+    for tail in ["", "Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;"]:
+        old = ("(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;"
+               + tail + ")V")
+        new = ("(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;"
+               "ILnet/minecraft/class_1661;" + tail + ")V")
+        n = 5 + (2 if tail else 0)
+        ops = ["keep:0", "keep:1",
+               "conv:1 " + RT + "#furnaceInputs(Lnet/minecraft/class_3956;)Lnet/minecraft/class_5321;"]
+        ops += ["keep:%d" % i for i in range(2, n)]
+        out["superCtorReshapes"][FURNACE + ".<init>" + old] = {
+            "desc": new, "ops": ops,
+            "basis": "1.21.2's AbstractFurnaceMenu takes the recipe property set of its inputs: 1.21.2's own for the "
+                     "vanilla cooking types, else canSmelt is 1.21.1's lookup (CbItemRecipeMenus.furnaceInputs, "
+                     "CbItemFurnaceMenuMixin)"}
+    out["classRenames"] = {
+        "net/minecraft/class_2952": "top/dext/centurybridge/step/v1_21_2/facade/PlaceRecipe",
+        "net/minecraft/class_2955": "top/dext/centurybridge/step/v1_21_2/facade/ServerPlaceRecipe",
+    }
     json.dump(out, open(sys.argv[1], "w", encoding="utf-8", newline="\n"), indent=1)
 
 

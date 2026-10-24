@@ -261,5 +261,37 @@
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 RecipeBookMenu.getGridHeight of a crafting menu is 1.21.2's AbstractCraftingMenu.getGridHeight (same use: the recipe placement's grid): the mod's override answers it"
   }
- ]
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_1720.<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;)V": {
+   "desc": "(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#furnaceInputs(Lnet/minecraft/class_3956;)Lnet/minecraft/class_5321;",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "1.21.2's AbstractFurnaceMenu takes the recipe property set of its inputs: 1.21.2's own for the vanilla cooking types, else canSmelt is 1.21.1's lookup (CbItemRecipeMenus.furnaceInputs, CbItemFurnaceMenuMixin)"
+  },
+  "net/minecraft/class_1720.<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;)V": {
+   "desc": "(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#furnaceInputs(Lnet/minecraft/class_3956;)Lnet/minecraft/class_5321;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "1.21.2's AbstractFurnaceMenu takes the recipe property set of its inputs: 1.21.2's own for the vanilla cooking types, else canSmelt is 1.21.1's lookup (CbItemRecipeMenus.furnaceInputs, CbItemFurnaceMenuMixin)"
+  }
+ },
+ "classRenames": {
+  "net/minecraft/class_2952": "top/dext/centurybridge/step/v1_21_2/facade/PlaceRecipe",
+  "net/minecraft/class_2955": "top/dext/centurybridge/step/v1_21_2/facade/ServerPlaceRecipe"
+ }
 }

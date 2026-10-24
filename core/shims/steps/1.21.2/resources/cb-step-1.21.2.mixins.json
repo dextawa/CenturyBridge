@@ -63,6 +63,7 @@
     "CbItemConsumeSoundMixin",
     "CbItemCooldownsInvoker",
     "CbItemCraftingInputMixin",
+    "CbItemFurnaceMenuMixin",
     "CbItemEquipableBlockItemMixin",
     "CbItemEquipableCarpetMixin",
     "CbItemEquipableShieldMixin",

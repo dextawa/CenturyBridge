@@ -18,11 +18,14 @@ import net.minecraft.class_2695;
 import net.minecraft.class_3218;
 import net.minecraft.class_3222;
 import net.minecraft.class_3955;
+import net.minecraft.class_3956;
+import net.minecraft.class_5321;
 import net.minecraft.class_8566;
 import net.minecraft.class_8786;
 import net.minecraft.class_9696;
 import net.minecraft.class_9875;
 import net.minecraft.class_9884;
+import net.minecraft.class_10290;
 import net.minecraft.class_10297;
 import top.dext.centurybridge.step.v1_21_2.facade.StackedContents;
 
@@ -526,16 +529,25 @@ public final class CbItemRecipeMenus {
         class_1729.class_9885 action = placement.place(placeAll, player.method_7337(), recipe, player.method_51469(),
             player.method_31548());
         if (action == class_1729.class_9885.field_52573) {
-            class_1863 manager = player.field_13995.method_3772();
-            class_10297[] first = new class_10297[1];
-            manager.method_64679(recipe.comp_1932(), entry -> {
-                if (first[0] == null) {
-                    first[0] = entry;
-                }
-            });
-            if (first[0] != null) {
-                player.field_13987.method_14364(new class_2695(player.field_7512.field_7763, first[0].comp_3263()));
+            sendGhostRecipe(player, recipe);
+        }
+    }
+
+    /**
+     * 1.21.1's ClientboundPlaceGhostRecipePacket(player.containerMenu.containerId, recipe): 1.21.2's packet carries a
+     * recipe display instead of the recipe -- the first one the server's recipe manager lists for it (1.21.2's packet
+     * handler sends the display the client clicked; a recipe without a display has nothing a client could draw).
+     */
+    public static void sendGhostRecipe(class_3222 player, class_8786<?> recipe) {
+        class_1863 manager = player.field_13995.method_3772();
+        class_10297[] first = new class_10297[1];
+        manager.method_64679(recipe.comp_1932(), entry -> {
+            if (first[0] == null) {
+                first[0] = entry;
             }
+        });
+        if (first[0] != null) {
+            player.field_13987.method_14364(new class_2695(player.field_7512.field_7763, first[0].comp_3263()));
         }
     }
 
@@ -559,6 +571,43 @@ public final class CbItemRecipeMenus {
             class_8786<?> recipe, class_3218 level, class_1661 inventory) {
         self.method_17697(placeAll, recipe, (class_3222) inventory.field_7546);
         return class_1729.class_9885.field_52572;
+    }
+
+    // ---- AbstractFurnaceMenu's constructor and canSmelt ----
+
+    /**
+     * The recipe property set 1.21.2's AbstractFurnaceMenu constructor takes, for a 1.21.1 constructor that took only
+     * the recipe type: 1.21.2's own pairing for smelting / blasting / smoking / campfire cooking (FurnaceMenu,
+     * BlastFurnaceMenu, SmokerMenu pass these). Another recipe type has no set; it gets the furnace's, which its menu
+     * never reads: canSmelt is 1.21.1's lookup for it (CbItemFurnaceMenuMixin).
+     */
+    public static class_5321<class_10290> furnaceInputs(class_3956<?> type) {
+        if (type == class_3956.field_17547) {
+            return class_10290.field_54651;
+        }
+        if (type == class_3956.field_17548) {
+            return class_10290.field_54652;
+        }
+        if (type == class_3956.field_17549) {
+            return class_10290.field_54653;
+        }
+        return class_10290.field_54650;
+    }
+
+    /** whether the recipe type has 1.21.2's input set ({@link #furnaceInputs}) */
+    public static boolean hasInputSet(class_3956<?> type) {
+        return type == class_3956.field_17546 || type == class_3956.field_17547 || type == class_3956.field_17548
+            || type == class_3956.field_17549;
+    }
+
+    /**
+     * 1.21.1 AbstractFurnaceMenu.canSmelt(stack): level.getRecipeManager().getRecipeFor(recipeType, new
+     * SingleRecipeInput(stack), level).isPresent() -- the level's 1.21.1 recipe manager as the layer gives it
+     * (CbLevelLevels).
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static boolean legacyCanSmelt(class_3956<?> type, class_1799 stack, class_1937 level) {
+        return CbLevelLevels.method_8433(level).method_8132((class_3956) type, new class_9696(stack), level).isPresent();
     }
 
     // ---- CraftingMenu.slotChangedCraftingGrid ----
