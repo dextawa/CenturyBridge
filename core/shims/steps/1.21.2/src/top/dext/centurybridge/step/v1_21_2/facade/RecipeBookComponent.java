@@ -11,6 +11,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestRecipeBookClient;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestRecipeBooks;
+import top.dext.centurybridge.step.v1_21_2.rt.CbItemRecipeMenus;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestRecipeMenus;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestRecipeView;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestRecipesClient;
@@ -19,7 +20,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRestRecipesClient;
  * RecipeBookComponent of 1.21.1 (net/minecraft/class_507; classRenamed -- 1.21.2's is an abstract component
  * built for one menu from tab infos, over display entries): the recipe book beside a container screen. 1.21.1's
  * body, on the recipes the server sent (CbRestRecipeSync) and the 1.21.1 book state kept beside 1.21.2's
- * (CbRestRecipeBookClient); asking the menu as 1.21.1 asked it (CbRestRecipeMenus); placing a recipe with
+ * (CbRestRecipeBookClient); asking the menu as 1.21.1 asked it (CbItemRecipeMenus); placing a recipe with
  * 1.21.1's handlePlaceRecipe (CbRestRecipesClient: the recipe's display, or by id); drawn with 1.21.2's
  * GuiGraphics (the textured gui render type where 1.21.1's blit had none).
  *
@@ -185,7 +186,7 @@ public class RecipeBookComponent extends net.minecraft.class_507<net.minecraft.c
 
     /** slotClicked(slot) */
     public void method_2600(net.minecraft.class_1735 slot) {
-        if (slot != null && slot.field_7874 < CbRestRecipeMenus.method_7658(this.field_3095)) {
+        if (slot != null && slot.field_7874 < CbItemRecipeMenus.getSize(this.field_3095)) {
             this.field_3092.method_2571();
             if (this.method_2605()) {
                 this.updateStackedContents();
@@ -196,7 +197,7 @@ public class RecipeBookComponent extends net.minecraft.class_507<net.minecraft.c
     private void updateCollections(boolean resetPage) {
         List<RecipeCollection> collections = CbRestRecipeBookClient.getCollection(this.book, this.selectedTab.method_2623());
         StackedContents counts = CbRestRecipeMenus.legacyCounts(this.stackedContents);
-        collections.forEach(c -> c.method_2649(counts, CbRestRecipeMenus.method_7653(this.field_3095), CbRestRecipeMenus.method_7656(this.field_3095), this.book));
+        collections.forEach(c -> c.method_2649(counts, CbItemRecipeMenus.getGridWidth(this.field_3095), CbItemRecipeMenus.getGridHeight(this.field_3095), this.book));
         List<RecipeCollection> shown = Lists.newArrayList(collections);
         shown.removeIf(c -> !c.method_2652());
         shown.removeIf(c -> !c.method_2657());
@@ -471,7 +472,7 @@ public class RecipeBookComponent extends net.minecraft.class_507<net.minecraft.c
         net.minecraft.class_1799 result = CbRestRecipeView.resultItem(recipe.comp_1933(), this.field_3091.field_1687.method_30349());
         this.field_3092.method_2565(recipe);
         this.field_3092.cb$addStacks(new net.minecraft.class_1799[] {result}, slots.get(0).field_7873, slots.get(0).field_7872);
-        this.method_12816(CbRestRecipeMenus.method_7653(this.field_3095), CbRestRecipeMenus.method_7656(this.field_3095), CbRestRecipeMenus.method_7655(this.field_3095),
+        this.method_12816(CbItemRecipeMenus.getGridWidth(this.field_3095), CbItemRecipeMenus.getGridHeight(this.field_3095), CbItemRecipeMenus.getResultSlotIndex(this.field_3095),
             recipe, CbRestRecipeView.ingredients(recipe.comp_1933()).iterator(), 0);
     }
 
@@ -576,7 +577,7 @@ public class RecipeBookComponent extends net.minecraft.class_507<net.minecraft.c
     /** 1.21.2's isCraftingSlot: a slot below the menu's grid size, as 1.21.1's slotClicked judged */
     @Override
     protected boolean method_62023(net.minecraft.class_1735 slot) {
-        return this.field_3095 != null && slot.field_7874 < CbRestRecipeMenus.method_7658(this.field_3095);
+        return this.field_3095 != null && slot.field_7874 < CbItemRecipeMenus.getSize(this.field_3095);
     }
 
     /** 1.21.2's selectMatchingRecipes: not asked (this component's 1.21.1 collections do the selecting) */

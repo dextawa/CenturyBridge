@@ -18,7 +18,27 @@
   "com/ibm/icu/util/NounClass": "top/dext/centurybridge/facade/v1_20_2/IcuNounClass",
   "com/ibm/icu/text/PluralRules$FixedDecimalRange": "top/dext/centurybridge/facade/v1_20_2/IcuFixedDecimalRange",
   "com/ibm/icu/text/PluralRules$FixedDecimalSamples": "top/dext/centurybridge/facade/v1_20_2/IcuFixedDecimalSamples",
-  "com/ibm/icu/text/PluralSamples": "top/dext/centurybridge/facade/v1_20_2/IcuPluralSamples"
+  "com/ibm/icu/text/PluralSamples": "top/dext/centurybridge/facade/v1_20_2/IcuPluralSamples",
+  "com/mojang/authlib/BaseAuthenticationService": "top/dext/centurybridge/facade/v1_20_2/authlib/BaseAuthenticationService",
+  "com/mojang/authlib/BaseUserAuthentication": "top/dext/centurybridge/facade/v1_20_2/authlib/BaseUserAuthentication",
+  "com/mojang/authlib/HttpUserAuthentication": "top/dext/centurybridge/facade/v1_20_2/authlib/HttpUserAuthentication",
+  "com/mojang/authlib/UserAuthentication": "top/dext/centurybridge/facade/v1_20_2/authlib/UserAuthentication",
+  "com/mojang/authlib/UserType": "top/dext/centurybridge/facade/v1_20_2/authlib/UserType",
+  "com/mojang/authlib/exceptions/UserMigratedException": "top/dext/centurybridge/facade/v1_20_2/authlib/UserMigratedException",
+  "com/mojang/authlib/legacy/LegacyAuthenticationService": "top/dext/centurybridge/facade/v1_20_2/authlib/LegacyAuthenticationService",
+  "com/mojang/authlib/legacy/LegacyMinecraftSessionService": "top/dext/centurybridge/facade/v1_20_2/authlib/LegacyMinecraftSessionService",
+  "com/mojang/authlib/legacy/LegacyUserAuthentication": "top/dext/centurybridge/facade/v1_20_2/authlib/LegacyUserAuthentication",
+  "com/mojang/authlib/minecraft/BaseMinecraftSessionService": "top/dext/centurybridge/facade/v1_20_2/authlib/BaseMinecraftSessionService",
+  "com/mojang/authlib/minecraft/HttpMinecraftSessionService": "top/dext/centurybridge/facade/v1_20_2/authlib/HttpMinecraftSessionService",
+  "com/mojang/authlib/yggdrasil/ProfileIncompleteException": "top/dext/centurybridge/facade/v1_20_2/authlib/ProfileIncompleteException",
+  "com/mojang/authlib/yggdrasil/YggdrasilUserAuthentication": "top/dext/centurybridge/facade/v1_20_2/authlib/YggdrasilUserAuthentication",
+  "com/mojang/authlib/yggdrasil/request/AuthenticationRequest": "top/dext/centurybridge/facade/v1_20_2/authlib/AuthenticationRequest",
+  "com/mojang/authlib/yggdrasil/request/RefreshRequest": "top/dext/centurybridge/facade/v1_20_2/authlib/RefreshRequest",
+  "com/mojang/authlib/yggdrasil/request/ValidateRequest": "top/dext/centurybridge/facade/v1_20_2/authlib/ValidateRequest",
+  "com/mojang/authlib/yggdrasil/response/AuthenticationResponse": "top/dext/centurybridge/facade/v1_20_2/authlib/AuthenticationResponse",
+  "com/mojang/authlib/yggdrasil/response/RefreshResponse": "top/dext/centurybridge/facade/v1_20_2/authlib/RefreshResponse",
+  "com/mojang/authlib/yggdrasil/response/Response": "top/dext/centurybridge/facade/v1_20_2/authlib/Response",
+  "com/mojang/authlib/yggdrasil/response/User": "top/dext/centurybridge/facade/v1_20_2/authlib/User"
  },
  "ctorRedirects": {
   "com/mojang/authlib/GameProfile.<init>(Ljava/util/UUID;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#gameProfile",
@@ -41,7 +61,11 @@
     "keep",
     "drop"
    ],
-   "basis": "authlib 5.0.47 dropped the client token, which only legacy login used"
+   "basis": "authlib 5.0.47 dropped the client token; the username/password login (CbLibAuthlibLogin) keeps it for the service",
+   "post": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin#rememberToken(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;Ljava/lang/String;)V",
+   "postArgs": [
+    1
+   ]
   },
   "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.<init>(Ljava/net/Proxy;Ljava/lang/String;Lcom/mojang/authlib/Environment;)V": {
    "desc": "(Ljava/net/Proxy;Lcom/mojang/authlib/Environment;)V",
@@ -50,7 +74,12 @@
     "drop",
     "keep"
    ],
-   "basis": "authlib 5.0.47 dropped the client token, which only legacy login used"
+   "basis": "authlib 5.0.47 dropped the client token; the username/password login (CbLibAuthlibLogin) keeps it for the service",
+   "post": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin#rememberTokenAndEnvironment(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;Ljava/lang/String;Lcom/mojang/authlib/Environment;)V",
+   "postArgs": [
+    1,
+    2
+   ]
   },
   "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.<init>(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;Lcom/mojang/authlib/Environment;)V": {
    "desc": "(Lcom/mojang/authlib/yggdrasil/ServicesKeySet;Ljava/net/Proxy;Lcom/mojang/authlib/Environment;)V",
@@ -190,10 +219,10 @@
   "com/mojang/authlib/ProfileLookupCallback.onProfileLookupFailed(Lcom/mojang/authlib/GameProfile;Ljava/lang/Exception;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
   "com/mojang/authlib/GameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
   "com/mojang/authlib/yggdrasil/YggdrasilGameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
-  "com/mojang/authlib/HttpAuthenticationService.createUrlConnection(Ljava/net/URL;)Ljava/net/HttpURLConnection;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
-  "com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
-  "com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
-  "com/mojang/authlib/HttpAuthenticationService.performPostRequest(Ljava/net/URL;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/HttpAuthenticationService.createUrlConnection(Ljava/net/URL;)Ljava/net/HttpURLConnection;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin",
+  "com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin",
+  "com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin",
+  "com/mojang/authlib/HttpAuthenticationService.performPostRequest(Ljava/net/URL;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin",
   "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.getAuthenticationService()Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
   "com/mojang/authlib/minecraft/MinecraftSessionService.joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
   "com/mojang/authlib/minecraft/MinecraftSessionService.hasJoinedServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
@@ -208,7 +237,12 @@
   "org/lwjgl/system/linux/liburing/IOURingCQE.set(JII)Lorg/lwjgl/system/linux/liburing/IOURingCQE;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl",
   "com/ibm/icu/number/FormattedNumber.getNounClass()Lcom/ibm/icu/util/NounClass;": "top/dext/centurybridge/rt/v1_20_2/CbLibIcu",
   "com/ibm/icu/text/PluralRules$FixedDecimal.getShiftedValue()J": "top/dext/centurybridge/rt/v1_20_2/CbLibIcu",
-  "com/ibm/icu/text/PluralRules.getDecimalSamples(Ljava/lang/String;Lcom/ibm/icu/text/PluralRules$SampleType;)Lcom/ibm/icu/text/PluralRules$FixedDecimalSamples;": "top/dext/centurybridge/rt/v1_20_2/CbLibIcu"
+  "com/ibm/icu/text/PluralRules.getDecimalSamples(Ljava/lang/String;Lcom/ibm/icu/text/PluralRules$SampleType;)Lcom/ibm/icu/text/PluralRules$FixedDecimalSamples;": "top/dext/centurybridge/rt/v1_20_2/CbLibIcu",
+  "com/mojang/authlib/AuthenticationService.createUserAuthentication(Lcom/mojang/authlib/Agent;)Lcom/mojang/authlib/UserAuthentication;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin",
+  "com/mojang/authlib/HttpAuthenticationService.createUserAuthentication(Lcom/mojang/authlib/Agent;)Lcom/mojang/authlib/UserAuthentication;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin",
+  "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.createUserAuthentication(Lcom/mojang/authlib/Agent;)Lcom/mojang/authlib/UserAuthentication;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin",
+  "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.makeRequest(Ljava/net/URL;Ljava/lang/Object;Ljava/lang/Class;)Lcom/mojang/authlib/yggdrasil/response/Response;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin",
+  "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.makeRequest(Ljava/net/URL;Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;)Lcom/mojang/authlib/yggdrasil/response/Response;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin"
  },
  "superRedirects": {
   "com/mojang/authlib/HttpAuthenticationService.createUrlConnection(Ljava/net/URL;)Ljava/net/HttpURLConnection;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
@@ -227,7 +261,10 @@
   "org/lwjgl/system/linux/liburing/IOURingSQ.set(Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Lorg/lwjgl/system/linux/liburing/IOURingSQE;IILjava/nio/ByteBuffer;)Lorg/lwjgl/system/linux/liburing/IOURingSQ;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl#set",
   "org/lwjgl/system/linux/liburing/IOURingCQ.set(Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Lorg/lwjgl/system/linux/liburing/IOURingCQE;Ljava/nio/ByteBuffer;)Lorg/lwjgl/system/linux/liburing/IOURingCQ;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl#set",
   "org/lwjgl/system/linux/liburing/IOURingCQE.set(JII)Lorg/lwjgl/system/linux/liburing/IOURingCQE;": "top/dext/centurybridge/rt/v1_20_2/CbLibLwjgl#set",
-  "com/ibm/icu/text/PluralRules$FixedDecimal.getShiftedValue()J": "top/dext/centurybridge/rt/v1_20_2/CbLibIcu#superGetShiftedValue"
+  "com/ibm/icu/text/PluralRules$FixedDecimal.getShiftedValue()J": "top/dext/centurybridge/rt/v1_20_2/CbLibIcu#superGetShiftedValue",
+  "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.createUserAuthentication(Lcom/mojang/authlib/Agent;)Lcom/mojang/authlib/UserAuthentication;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin#superCreateUserAuthentication",
+  "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.makeRequest(Ljava/net/URL;Ljava/lang/Object;Ljava/lang/Class;)Lcom/mojang/authlib/yggdrasil/response/Response;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin#superMakeRequest",
+  "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.makeRequest(Ljava/net/URL;Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;)Lcom/mojang/authlib/yggdrasil/response/Response;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlibLogin#superMakeRequest"
  },
  "overrideHooks": [
   {

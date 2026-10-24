@@ -79,14 +79,15 @@ public final class Chain {
      */
     public final java.util.Set<String> resourceTypes = new java.util.HashSet<>();
     /**
-     * "&lt;registry&gt; minecraft:&lt;tag&gt;" -&gt; {"to": id, "mirror": bool}: a vanilla tag whose members the step's W
-     * changed under the same id, and the tag the step layer ships with V's members (core/tools/gen_tag_compat.py).
-     * A converted mod's data naming the vanilla tag names that one instead; with mirror, the mod's own file for the
-     * vanilla tag is copied into it too (engine/res/LegacyTags).
+     * "&lt;registry&gt; minecraft:&lt;tag&gt;" -&gt; {"to": id, "mirror": [ids]}: a vanilla tag the step's W changed or
+     * dropped, and the tag that carries its V meaning on W (core/tools/gen_tag_compat.py: the layer's compat tag
+     * with V's members, or the W tag vanilla now acts on). A converted mod's data naming the vanilla tag names
+     * that one instead; the mod's own file for the vanilla tag is copied into each "mirror" id too
+     * (engine/res/LegacyTags). "mirror": true is [to].
      */
     public final java.util.Map<String, String> tagMap = new java.util.HashMap<>();
-    /** the tagMap keys with "mirror" */
-    public final java.util.Set<String> tagMirror = new java.util.HashSet<>();
+    /** the tagMap keys' mirror targets */
+    public final java.util.Map<String, java.util.List<String>> tagMirror = new java.util.HashMap<>();
     /** dead vanilla classes renamed to facade classes shipped in the runtime bridge */
     public final java.util.Map<String, String> classRenames = new java.util.HashMap<>();
     /**
@@ -956,6 +957,47 @@ public final class Chain {
      * there until the whole-jar rename. Null on every other step (MixinBridge uses mixinRepair).
      */
     public MixinRepair bridgeCode;
+
+    /**
+     * The class renames a mixin's target follows before anything judges the mixin (from -> to): the
+     * step renames V's class to a vanilla class W adds in its place (Boat -> AbstractBoat at 1.21.2), so
+     * V's instances of the class are W's instances of the new one -- the step's own premise for mods'
+     * code -- and a mixin of V's class belongs on it. Not followed: a rename into one of
+     * CenturyBridge's classes (a facade), into a class V already had (ElytraItem -> Item: V's Item
+     * instances are not V's ElytraItem instances), or into a class two V classes are renamed to.
+     * Null until {@link #mixinFollow()} computes it from the two code models.
+     */
+    private java.util.Map<String, String> mixinFollow;
+
+    public java.util.Map<String, String> mixinFollow() {
+        if (mixinFollow != null) {
+            return mixinFollow;
+        }
+        MixinRepair w = bridgeCode != null ? bridgeCode : mixinRepair;
+        java.util.Map<String, String> out = new java.util.HashMap<>();
+        if (w != null && sourceCode != null) {
+            java.util.Map<String, Integer> into = new java.util.HashMap<>();
+            classRenames.values().forEach(t -> into.merge(t, 1, Integer::sum));
+            classRenames.forEach((from, to) -> {
+                if (minecraftOwned(from) && minecraftOwned(to) && into.get(to) == 1
+                        && w.declares(to) && !sourceCode.declares(to) && sourceCode.declares(from)) {
+                    out.put(from, to);
+                }
+            });
+            sourceCode.aliases(out);
+        }
+        mixinFollow = out;
+        // their private members, re-declared under new ids in the new class, as the wiring of the step
+        int inferred = 0;
+        for (java.util.Map.Entry<String, String> e : out.entrySet()) {
+            inferred += MixinBridge.inferPrivateRenames(this, e.getKey(), e.getValue());
+        }
+        if (!out.isEmpty()) {
+            System.out.println("mixins follow " + out.size() + " class renames into classes " + to + " adds; "
+                + inferred + " private member renames read off their bodies");
+        }
+        return out;
+    }
 
     /**
      * Past the wall the mods' injectors are judged one by one against the target's real bodies once the
@@ -2240,9 +2282,18 @@ public final class Chain {
             if (root.has("tagMap")) {
                 for (var tm : root.getAsJsonObject("tagMap").entrySet()) {
                     var v = tm.getValue().getAsJsonObject();
-                    c.tagMap.put(tm.getKey(), v.get("to").getAsString());
-                    if (v.has("mirror") && v.get("mirror").getAsBoolean()) {
-                        c.tagMirror.add(tm.getKey());
+                    String target = v.get("to").getAsString();
+                    c.tagMap.put(tm.getKey(), target);
+                    var mirror = new java.util.ArrayList<String>();
+                    if (v.has("mirror") && v.get("mirror").isJsonArray()) {
+                        for (var m : v.getAsJsonArray("mirror")) {
+                            mirror.add(m.getAsString());
+                        }
+                    } else if (v.has("mirror") && v.get("mirror").getAsBoolean()) {
+                        mirror.add(target);
+                    }
+                    if (!mirror.isEmpty()) {
+                        c.tagMirror.put(tm.getKey(), mirror);
                     }
                 }
             }

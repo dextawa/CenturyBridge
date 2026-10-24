@@ -49,24 +49,12 @@ public final class CbRenderShaders {
     }
 
     /**
-     * 1.21.1 new ShaderInstance(provider, name, format) (ctorRedirects): 1.21.1 read shaders/core/&lt;name&gt;.json and its
-     * programs through the provider; 1.21.2's ShaderManager compiles a program for a key (ShaderProgram: the config id
-     * namespace:core/&lt;name&gt;, the format, no defines) from the shader resources it loaded at the last reload, which is
-     * where the provider's files come from too. A compile failure is the IOException 1.21.1's constructor threw.
-     * A mod shader's json must be in 1.21.2's format (vertex / fragment as namespace:core/... ids) to load: converting
-     * 1.21.1-format shader resources is not done here.
+     * 1.21.1 new ShaderInstance(provider, name, format) (ctorRedirects): built from the provider's shaders/core json and
+     * sources as 1.21.1's constructor built it (CbRenderShaderLoad), not taken from 1.21.2's ShaderManager, whose
+     * programs are compiled from 1.21.2-form configs only. A failure is the IOException 1.21.1's constructor threw.
      */
     public static net.minecraft.class_5944 create(net.minecraft.class_5912 provider, String name, net.minecraft.class_293 format) throws java.io.IOException {
-        int colon = name.indexOf(':');
-        net.minecraft.class_2960 id = colon < 0
-            ? net.minecraft.class_2960.method_60655("minecraft", "core/" + name)
-            : net.minecraft.class_2960.method_60655(name.substring(0, colon), "core/" + name.substring(colon + 1));
-        try {
-            return net.minecraft.class_310.method_1551().method_62887()
-                .method_64062(new net.minecraft.class_10156(id, format, net.minecraft.class_10149.field_53930));
-        } catch (net.minecraft.class_10151.class_10152 e) {
-            throw new java.io.IOException("shader " + name + ": " + e.getMessage(), e);
-        }
+        return CbRenderShaderLoad.create(provider, name, format);
     }
 
     /** 1.21.1 ShaderInstance.CHUNK_OFFSET (instanceFieldGetters): the uniform 1.21.2 names ModelOffset, which its shaders use in its place */

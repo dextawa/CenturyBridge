@@ -43,7 +43,11 @@
   "net/minecraft/class_837$class_4702": "top/dext/centurybridge/step/v1_21_2/facade/SignModel",
   "net/minecraft/class_895$class_625": "top/dext/centurybridge/step/v1_21_2/facade/DragonModel",
   "net/minecraft/class_559": "top/dext/centurybridge/step/v1_21_2/facade/ChestedHorseModel",
-  "net/minecraft/class_883": "top/dext/centurybridge/step/v1_21_2/facade/ChestedHorseRenderer"
+  "net/minecraft/class_883": "top/dext/centurybridge/step/v1_21_2/facade/ChestedHorseRenderer",
+  "net/minecraft/class_7755": "top/dext/centurybridge/step/v1_21_2/facade/WaterPatchModel",
+  "net/minecraft/class_944": "top/dext/centurybridge/step/v1_21_2/facade/ShulkerHeadLayer",
+  "net/minecraft/class_793$class_6246": "top/dext/centurybridge/step/v1_21_2/facade/BlockModelLoopException",
+  "net/minecraft/class_9824$class_7777": "top/dext/centurybridge/step/v1_21_2/facade/BlockStateLoadedJson"
  },
  "facadeGaps": {
   "net/minecraft/class_790$class_791.field_4243:Lcom/google/gson/Gson;": "1.21.1 BlockModelDefinition.Context's own state, unreachable to a mod (protected in a final class; a mod's access widener never applies to a CenturyBridge class): the facade keeps the definition behind its getter and setter, and parses through 1.21.2's BlockModelDefinition.GSON, whose multipart is the selectors the layer builds 1.21.1's MultiPart from (CbRenderBlockDefs)",
@@ -123,18 +127,25 @@
   "net/minecraft/class_837.method_32157(Lnet/minecraft/class_5599;Lnet/minecraft/class_4719;)Lnet/minecraft/class_837$class_4702;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSigns",
   "net/minecraft/class_837.method_32154()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSigns",
   "net/minecraft/class_895.method_32165()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDragons",
-  "net/minecraft/class_554.method_45703(Lnet/minecraft/class_5610;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBoats"
+  "net/minecraft/class_554.method_45703(Lnet/minecraft/class_5610;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBoats",
+  "net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFI)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
+  "net/minecraft/class_3887.method_23199(Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
+  "net/minecraft/class_922.method_23622(Lnet/minecraft/class_1309;F)I": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
+  "net/minecraft/class_976.method_32798(Lnet/minecraft/class_4587;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
+  "net/minecraft/class_4722.method_24076()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
+  "net/minecraft/class_4696.method_23683(Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
+  "net/minecraft/class_4696.method_23678(Lnet/minecraft/class_1799;Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
+  "net/minecraft/class_4840.method_32026(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
+  "net/minecraft/class_4840.method_47656(Lnet/minecraft/class_5605;Lnet/minecraft/class_5609;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
+  "net/minecraft/class_892.method_32164()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
+  "net/minecraft/class_596.method_32034()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
+  "net/minecraft/class_998.method_32200()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes"
  },
  "instanceRedirects": {
-  "net/minecraft/class_799.method_3472()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
-  "net/minecraft/class_799.method_33690()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
   "net/minecraft/class_806.method_3495(Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
-  "net/minecraft/class_799$class_5826.method_33692()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
-  "net/minecraft/class_799$class_5826.method_33693()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
   "net/minecraft/class_793.method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
   "net/minecraft/class_5617$class_5618.method_43338()Lnet/minecraft/class_759;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItems",
   "net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;Z)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors",
-  "net/minecraft/class_1060.method_22813(Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost",
   "net/minecraft/class_1041.method_15999(I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
   "net/minecraft/class_1041.method_16000()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
   "net/minecraft/class_1041.method_15998()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
@@ -158,7 +169,16 @@
   "net/minecraft/class_8679.method_52834(ZLnet/minecraft/class_4184;Lnet/minecraft/class_4604;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections",
   "net/minecraft/class_846$class_851.method_3663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#cancelTasks",
   "net/minecraft/class_1007.method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands",
-  "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands"
+  "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands",
+  "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher",
+  "net/minecraft/class_7288$class_7289.apply(Lnet/minecraft/class_7260;FF)F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive",
+  "net/minecraft/class_7288$class_7311.getPartsToDraw(Lnet/minecraft/class_583;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive",
+  "net/minecraft/class_4507.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuckItems",
+  "net/minecraft/class_973.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuckItems",
+  "net/minecraft/class_4506.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuckItems",
+  "net/minecraft/class_925.method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts",
+  "net/minecraft/class_957.method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts",
+  "net/minecraft/class_957.method_4137(Lnet/minecraft/class_1701;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts"
  },
  "ctorRedirects": {
   "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#create",
@@ -167,10 +187,14 @@
   "net/minecraft/class_6367.<init>(IIZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets#textureTarget",
   "net/minecraft/class_284.<init>(Ljava/lang/String;IILnet/minecraft/class_3679;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost#uniform",
   "net/minecraft/class_330.<init>(Lnet/minecraft/class_1060;Lnet/minecraft/class_9443;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost#mapRenderer",
-  "net/minecraft/class_382$class_328.<init>(FFFFFFFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#glyphEffect"
+  "net/minecraft/class_382$class_328.<init>(FFFFFFFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#glyphEffect",
+  "net/minecraft/class_9824.<init>(Ljava/util/Map;Lnet/minecraft/class_3695;Lnet/minecraft/class_1100;Lnet/minecraft/class_324;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockStates#create",
+  "net/minecraft/class_1088.<init>(Lnet/minecraft/class_324;Lnet/minecraft/class_3695;Ljava/util/Map;Ljava/util/Map;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBakery#create"
  },
  "fieldRedirects": {
-  "net/minecraft/class_5944.field_32778:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders"
+  "net/minecraft/class_5944.field_32778:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders",
+  "net/minecraft/class_998.field_32946:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
+  "net/minecraft/class_9824.field_52260:Lnet/minecraft/class_7654;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockStates"
  },
  "fieldGetters": {
   "net/minecraft/class_1088.field_5374:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
@@ -206,7 +230,14 @@
   "net/minecraft/class_1095.field_21863:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_21863",
   "net/minecraft/class_1095.field_5425:Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5425",
   "net/minecraft/class_1095.field_5426:Lnet/minecraft/class_809;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5426",
-  "net/minecraft/class_1095.field_5428:Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5428"
+  "net/minecraft/class_1095.field_5428:Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5428",
+  "net/minecraft/class_761.field_25274:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25274",
+  "net/minecraft/class_761.field_25275:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25275",
+  "net/minecraft/class_761.field_25276:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25276",
+  "net/minecraft/class_761.field_25277:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25277",
+  "net/minecraft/class_761.field_25278:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25278",
+  "net/minecraft/class_925.field_4747:Lnet/minecraft/class_583;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts",
+  "net/minecraft/class_863.field_4535:Lnet/minecraft/class_863$class_864;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes"
  },
  "superCtorReshapes": {
   "net/minecraft/class_583.<init>()V": {
@@ -773,6 +804,122 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuck#placement()Lnet/minecraft/class_4507$class_9995;"
    ],
    "basis": "1.21.1 StuckInBodyLayer(renderer): a 1.21.1 subclass drew its stuck items itself (renderStuckItem); 1.21.2's constructor takes the model it would draw: an empty one, never drawn, the layer drawing 1.21.1's body (CbRenderStuck)"
+  },
+  "net/minecraft/class_7288.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;Ljava/util/function/Function;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive#renderType()Ljava/util/function/Function;"
+   ],
+   "basis": "LivingEntityEmissiveLayer takes the render-type function in 1.21.2 (WardenRenderer passes RenderType::entityTranslucentEmissive); 1.21.1's layer drew with RenderType.entityTranslucentEmissive(texture) (javap both)"
+  },
+  "net/minecraft/class_6367.<init>(IIZZ)V": {
+   "desc": "(IIZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "basis": "TextureTarget(width, height, useDepth, clearError): 1.21.2's constructor takes no clearError (its RenderTarget resize/createBuffers dropped the flag; javap both)"
+  },
+  "net/minecraft/class_284.<init>(Ljava/lang/String;IILnet/minecraft/class_3679;)V": {
+   "desc": "(Ljava/lang/String;II)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "basis": "Uniform(name, type, count, parent): 1.21.2's uniform keeps no parent shader (no such field or constructor argument; javap both)"
+  },
+  "net/minecraft/class_330.<init>(Lnet/minecraft/class_1060;Lnet/minecraft/class_9443;)V": {
+   "desc": "(Lnet/minecraft/class_9443;Lnet/minecraft/class_10093;)V",
+   "ops": [
+    "keep:1",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#mapTextures(Lnet/minecraft/class_1060;)Lnet/minecraft/class_10093;"
+   ],
+   "basis": "MapRenderer(textureManager, decorationTextures) -> (decorationTextures, mapTextureManager): 1.21.1's renderer kept its map textures on the texture manager itself, 1.21.2 keeps them in a MapTextureManager (one of its own here)"
+  },
+  "net/minecraft/class_5598.<init>()V": {
+   "desc": "(Lnet/minecraft/class_630;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelBase#emptyRoot()Lnet/minecraft/class_630;"
+   ],
+   "basis": "1.21.1 SkullModelBase() had no root part: built around an empty root (CbRenderModelBase: the model draws itself)"
+  },
+  "net/minecraft/class_961.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_5601;)V": {
+   "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_5601;Lnet/minecraft/class_5601;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbRenderBabyLayers#equineBaby(Lnet/minecraft/class_5601;)Lnet/minecraft/class_5601;",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#skeletonHorse(Lnet/minecraft/class_5601;)Z"
+   ],
+   "basis": "UndeadHorseRenderer(context, layer) -> (context, adult, baby, skeleton): 1.21.1 drew the baby from the adult layer under the young scaling (equineBaby derives that layer) and picked the texture by entity type, 1.21.2 by the flag (the skeleton horse layer: skeleton)"
+  },
+  "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": {
+   "desc": "(I)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaderLoad#link(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)I"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaderLoad#setup(Lnet/minecraft/class_5944;Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V",
+   "postArgs": [
+    0,
+    1,
+    2
+   ],
+   "basis": "1.21.1 ShaderInstance(provider, name, format) read shaders/core/<name>.json and compiled, bound, attached and linked its program; 1.21.2's CompiledShaderProgram(programId) (private, opened by the layer's access widener) takes the linked id: CbRenderShaderLoad.link does 1.21.1's constructor up to the id, setup gives the constructed program its uniforms, samplers, name, format and Programs"
+  },
+  "net/minecraft/class_597.<init>(Lnet/minecraft/class_630;ZFFFFI)V": {
+   "desc": "(Lnet/minecraft/class_630;)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderQuadruped#legacyBaby(Lnet/minecraft/class_597;ZFFFFI)V",
+   "postArgs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "1.21.1 QuadrupedModel(root, scaleHead, babyYHeadOffset, babyZHeadOffset, babyHeadScale, babyBodyScale, bodyYOffset) was an AgeableListModel scaling a young entity's head and body parts; 1.21.2's QuadrupedModel(root) bakes babies from another layer: the root goes to 1.21.2's constructor, the six values to the model, which draws as 1.21.1's AgeableListModel did (CbRenderQuadruped)"
+  },
+  "net/minecraft/class_9824.<init>(Ljava/util/Map;Lnet/minecraft/class_3695;Lnet/minecraft/class_1100;Lnet/minecraft/class_324;Ljava/util/function/BiConsumer;)V": {
+   "desc": "(Lnet/minecraft/class_1100;)V",
+   "ops": [
+    "keep:2"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockStates#legacy(Lnet/minecraft/class_9824;Ljava/util/Map;Lnet/minecraft/class_3695;Lnet/minecraft/class_324;Ljava/util/function/BiConsumer;)V",
+   "postArgs": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "basis": "1.21.1 BlockStateModelLoader(blockStates, profiler, missingModel, blockColors, output); 1.21.2's takes the missing model: the other arguments go to the loader, whose 1.21.1 loadAllBlockStates / getModelGroups run over them (CbRenderBlockStates)"
+  },
+  "net/minecraft/class_1088.<init>(Lnet/minecraft/class_324;Lnet/minecraft/class_3695;Ljava/util/Map;Ljava/util/Map;)V": {
+   "desc": "(Ljava/util/Map;Ljava/util/Map;Lnet/minecraft/class_1100;)V",
+   "ops": [
+    "conv:0,1,2,3 top/dext/centurybridge/step/v1_21_2/rt/CbRenderBakery#topModels(Lnet/minecraft/class_324;Lnet/minecraft/class_3695;Ljava/util/Map;Ljava/util/Map;)Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderBakery#referencedModels()Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderBakery#missingModel()Lnet/minecraft/class_1100;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBakery#setup(Lnet/minecraft/class_1088;)V",
+   "postArgs": [],
+   "basis": "1.21.1 ModelBakery(blockColors, profiler, modelResources, blockStateResources) discovered every model itself; 1.21.2's takes the discovery's top and referenced models and the missing model: 1.21.1's arguments run 1.21.2's discovery order once (CbRenderBakery)"
   }
  },
  "overrideHooks": [
@@ -952,6 +1099,84 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays.renderText(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays$LegacyText;Lnet/minecraft/class_10071;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 class_8141.renderInner(display, subState, ...), 1.21.2's renderInner(state, ...): a mod renderer's override answers 1.21.2's calls (CbRenderDisplays)"
+  },
+  {
+   "old": "method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "onlyUnder": "net/minecraft/class_989",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItemInHand$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItemInHand.renderArmWithItem(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderItemInHand$Legacy;Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 ItemInHandLayer.renderArmWithItem(entity, stack, ..), 1.21.2's (state, bakedModel, stack, ..): a mod layer's override answers 1.21.2's calls with the entity of the state and the stack 1.21.2 passes; its super call reaches 1.21.1's body (covers, CbRenderItemInHand)"
+  },
+  {
+   "old": "method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_62424(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "onlyUnder": "net/minecraft/class_898",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher.render(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher$Legacy;Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 EntityRenderDispatcher.render(entity, x, y, z, yRot, partialTick, ..); 1.21.2's render drops the yaw (renderers read the entity's rotation): a mod dispatcher's override answers 1.21.2's calls with the yaw 1.21.1's LevelRenderer.renderEntity passed (lerp of yRotO and yRot), its super call reaching vanilla's render (CbRenderDispatcher.superRender, under the guard)"
+  },
+  {
+   "old": "method_30001(Lnet/minecraft/class_4597;Ljava/util/function/Function;Z)Lnet/minecraft/class_4588;",
+   "new": "method_30001(Lnet/minecraft/class_4597;Ljava/util/function/Function;ZZ)Lnet/minecraft/class_4588;",
+   "args": [
+    0,
+    1,
+    3
+   ],
+   "onlyUnder": "net/minecraft/class_4730",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "Material.buffer(buffers, renderType, foil): 1.21.2's also takes the item/entity glint choice: a mod Material's 1.21.1 override answers 1.21.2's calls with buffers, render type and foil, its super call passing the glint choice vanilla passed (frameDefaults: 1.21.1's item glint)"
+  },
+  {
+   "old": "method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4064(Lnet/minecraft/class_10045;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "onlyUnder": "net/minecraft/class_925",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts.contents(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts$Legacy;Lnet/minecraft/class_10045;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 AbstractMinecartRenderer.renderMinecartContents(minecart, partialTick, ..); 1.21.2's takes the render state: a mod renderer's override answers with the minecart the state was extracted from and the frame's partial tick (CbRenderMinecarts.contents)"
+  },
+  {
+   "old": "method_4137(Lnet/minecraft/class_1701;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4137(Lnet/minecraft/class_10046;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "onlyUnder": "net/minecraft/class_957",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts$LegacyTnt",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts.tnt(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts$LegacyTnt;Lnet/minecraft/class_10046;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 TntMinecartRenderer.renderMinecartContents(tntMinecart, partialTick, ..); 1.21.2's takes the TNT render state: a mod renderer's override answers with the minecart the state was extracted from and the frame's partial tick (CbRenderMinecarts.tnt)"
+  },
+  {
+   "old": "method_3472()Lnet/minecraft/class_2960;",
+   "new": "comp_3193()Lnet/minecraft/class_2960;",
+   "onlyUnder": "net/minecraft/class_799",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 ItemOverride.method_3472: 1.21.2's record reads the component accessor instead; a 1.21.1 subclass's override answers it, its super call reaching 1.21.1's body over the record's field (CbRenderItemOverride*Mixin)"
+  },
+  {
+   "old": "method_33690()Ljava/util/stream/Stream;",
+   "new": "comp_3194()Ljava/util/List;",
+   "onlyUnder": "net/minecraft/class_799",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake.predicateList(Ljava/util/stream/Stream;)Ljava/util/List;",
+   "basis": "1.21.1 ItemOverride.method_33690: 1.21.2's record reads the component accessor instead; a 1.21.1 subclass's override answers it (its stream collected to the list 1.21.2 reads), its super call reaching 1.21.1's body over the record's field (CbRenderItemOverride*Mixin)"
+  },
+  {
+   "old": "method_33692()Lnet/minecraft/class_2960;",
+   "new": "comp_3195()Lnet/minecraft/class_2960;",
+   "onlyUnder": "net/minecraft/class_799$class_5826",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 ItemOverride.Predicate.method_33692: 1.21.2's record reads the component accessor instead; a 1.21.1 subclass's override answers it, its super call reaching 1.21.1's body over the record's field (CbRenderItemOverride*Mixin)"
+  },
+  {
+   "old": "method_33693()F",
+   "new": "comp_3196()F",
+   "onlyUnder": "net/minecraft/class_799$class_5826",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 ItemOverride.Predicate.method_33693: 1.21.2's record reads the component accessor instead; a 1.21.1 subclass's override answers it, its super call reaching 1.21.1's body over the record's field (CbRenderItemOverride*Mixin)"
   }
  ],
  "covers": [
@@ -1080,12 +1305,24 @@
   "net/minecraft/class_8138$class_8140.method_49055(Lnet/minecraft/class_8113$class_8122;Lnet/minecraft/class_8113$class_8122$class_8226;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
   "net/minecraft/class_8138$class_8141.method_49924(Lnet/minecraft/class_8113$class_8123;)Lnet/minecraft/class_8113$class_8123$class_8230;",
   "net/minecraft/class_8138$class_8141.method_49921(Lnet/minecraft/class_8113;)Ljava/lang/Object;",
-  "net/minecraft/class_8138$class_8141.method_49056(Lnet/minecraft/class_8113$class_8123;Lnet/minecraft/class_8113$class_8123$class_8230;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V"
+  "net/minecraft/class_8138$class_8141.method_49056(Lnet/minecraft/class_8113$class_8123;Lnet/minecraft/class_8113$class_8123$class_8230;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+  "net/minecraft/class_989.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+  "net/minecraft/class_5697.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+  "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;",
+  "net/minecraft/class_5944.method_1278()Lnet/minecraft/class_281;",
+  "net/minecraft/class_5944.method_34418()V",
+  "net/minecraft/class_1060.method_22813(Lnet/minecraft/class_2960;)V",
+  "net/minecraft/class_584.method_17106(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFFI)V",
+  "net/minecraft/class_876.method_23153(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIIFFIIII)V",
+  "net/minecraft/class_799.method_3472()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_799$class_5826.method_33693()F",
+  "net/minecraft/class_799.method_33690()Ljava/util/stream/Stream;",
+  "net/minecraft/class_799$class_5826.method_33692()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_9824.method_61051()V",
+  "net/minecraft/class_9824.method_61069()Lit/unimi/dsi/fastutil/objects/Object2IntMap;",
+  "net/minecraft/class_1088.method_21605()Lit/unimi/dsi/fastutil/objects/Object2IntMap;"
  ],
  "ledger": {
-  "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;": "getVertexProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
-  "net/minecraft/class_5944.method_1278()Lnet/minecraft/class_281;": "getFragmentProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
-  "net/minecraft/class_5944.method_34418()V": "attachToProgram(): 1.21.1 re-attached the shader's vertex and fragment Program objects to its GL program; 1.21.2 links a CompiledShaderProgram once from shaders it does not keep (no Program class, no attach step: javap class_5944 / ShaderManager 1.21.2), so there is nothing to attach",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires OnLoad while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires ModelResolver while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)",
   "net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires BlockStateResolver while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)"
@@ -1135,6 +1372,9 @@
   },
   "method_52828(Lnet/minecraft/class_4604;Ljava/util/List;)V": {
    "2": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#nearbySections(Lnet/minecraft/class_8679;Lnet/minecraft/class_4604;Ljava/util/List;)Ljava/util/List;"
+  },
+  "method_30001(Lnet/minecraft/class_4597;Ljava/util/function/Function;Z)Lnet/minecraft/class_4588;": {
+   "2": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#itemGlint()Z"
   }
  },
  "depRenames": {
@@ -1148,7 +1388,15 @@
   "net/fabricmc/fabric/api/renderer/v1/render/RenderContext.fallbackConsumer()Ljava/util/function/Consumer;": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi#fallbackConsumer",
   "net/minecraft/class_846$class_851.method_3663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#cancelTasks",
   "net/minecraft/class_1007.method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands#method_4220",
-  "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands#method_4221"
+  "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands#method_4221",
+  "net/minecraft/class_973.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuckItems#superArrow",
+  "net/minecraft/class_4506.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuckItems#superStinger",
+  "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher#superRender",
+  "net/minecraft/class_925.method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts#superContents",
+  "net/minecraft/class_957.method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts#superTntContents",
+  "net/minecraft/class_957.method_4137(Lnet/minecraft/class_1701;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts#superTnt",
+  "net/minecraft/class_806.method_3495(Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#superResolve",
+  "net/minecraft/class_793.method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#superBake"
  },
  "methodRenames": {
   "net/minecraft/class_807.method_3497()Ljava/util/List;": "comp_3049",
@@ -1226,6 +1474,16 @@
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi$LegacyMesh",
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi#mesh(Ltop/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi$LegacyMesh;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;",
    "basis": "1.21.1 Fabric API's Mesh had one abstract method (forEach); 1.21.2's also makes outputTo abstract, which a 1.21.1 lambda's class lacks: built as the 1.21.1 shape and adapted (outputTo: 1.21.1's default)"
+  },
+  "net/minecraft/class_7288$class_7289.apply(Lnet/minecraft/class_7260;FF)F": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyAlpha",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive#alpha(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyAlpha;)Lnet/minecraft/class_7288$class_7289;",
+   "basis": "1.21.1 LivingEntityEmissiveLayer.AlphaFunction.apply(warden, partialTick, ageInTicks); 1.21.2's apply(state, ageInTicks): a 1.21.1 lambda is built as the 1.21.1 shape and adapted (the warden of the state, the frame's partial tick)"
+  },
+  "net/minecraft/class_7288$class_7311.getPartsToDraw(Lnet/minecraft/class_583;)Ljava/util/List;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyParts",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive#parts(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyParts;)Lnet/minecraft/class_7288$class_7311;",
+   "basis": "1.21.1 LivingEntityEmissiveLayer.DrawSelector.getPartsToDraw(model); 1.21.2's also takes the state: a 1.21.1 lambda is built as the 1.21.1 shape and adapted (answers from the model alone, as it did)"
   }
  },
  "adapterHooks": [
@@ -1237,6 +1495,66 @@
    ],
    "synth": [],
    "basis": "1.21.1 StuckInBodyLayer.renderStuckItem(.., entity, x, y, z, partialTick), private in 1.21.2 with another shape: a subclass declaring it gets the adapter, and its layer calls it from 1.21.1's render body (CbRenderStuckMixin)"
+  },
+  {
+   "under": "net/minecraft/class_4607",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSwirl$Legacy",
+   "requires": [
+    "method_23202(F)F"
+   ],
+   "synth": [
+    {
+     "new": "method_62591(Lnet/minecraft/class_10017;)Z",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSwirl.powered(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderSwirl$Legacy;Lnet/minecraft/class_10017;)Z"
+    }
+   ],
+   "basis": "1.21.1 EnergySwirlLayer.render drew the swirl when its entity (PowerableMob) isPowered(); 1.21.2's asks the abstract isPowered(state), which a 1.21.1 subclass lacks: synthesized to answer from the entity the state was extracted from (CbRenderSwirl)"
+  },
+  {
+   "under": "net/minecraft/class_7288$class_7289",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyAlpha",
+   "requires": [
+    "apply(Lnet/minecraft/class_7260;FF)F"
+   ],
+   "synth": [
+    {
+     "new": "apply(Lnet/minecraft/class_10042;F)F",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive.alphaOf(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyAlpha;Lnet/minecraft/class_10042;F)F"
+    }
+   ],
+   "basis": "1.21.1 LivingEntityEmissiveLayer.AlphaFunction.apply(warden, partialTick, ageInTicks); 1.21.2's apply(state, ageInTicks): a mod class implementing the 1.21.1 shape answers with the warden the state was extracted from and the frame's partial tick (as the lambda adapter)"
+  },
+  {
+   "under": "net/minecraft/class_7288$class_7311",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyParts",
+   "requires": [
+    "getPartsToDraw(Lnet/minecraft/class_583;)Ljava/util/List;"
+   ],
+   "synth": [
+    {
+     "new": "getPartsToDraw(Lnet/minecraft/class_583;Lnet/minecraft/class_10042;)Ljava/util/List;",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive.partsOf(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyParts;Lnet/minecraft/class_583;Lnet/minecraft/class_10042;)Ljava/util/List;"
+    }
+   ],
+   "basis": "1.21.1 LivingEntityEmissiveLayer.DrawSelector.getPartsToDraw(model); 1.21.2's also takes the state: a mod class implementing the 1.21.1 shape answers from the model alone, as it did"
+  },
+  {
+   "under": "net/minecraft/class_806",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake$LegacyOverrides",
+   "requires": [
+    "method_3495(Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;"
+   ],
+   "synth": [],
+   "basis": "1.21.1 ItemOverrides.resolve(base, stack, level, entity, seed); 1.21.2's ItemRenderer asks findOverride(stack, level, entity, seed) without the model: a subclass declaring resolve gets the adapter and ItemRenderer asks its resolve with the model (CbRenderItemRendererMixin), its super call reaching 1.21.1's vanilla resolve (CbRenderBake.superResolve)"
+  },
+  {
+   "under": "net/minecraft/class_793",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake$LegacyBake",
+   "requires": [
+    "method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;"
+   ],
+   "synth": [],
+   "basis": "1.21.1 BlockModel.bake(baker, spriteGetter, state) baked through bake(baker, this, spriteGetter, state, true); 1.21.2's calls bake(spriteGetter, state, true): a subclass declaring the five-argument bake gets the adapter and 1.21.2's bake(baker, ..) runs it with the baker (CbRenderBakeBlockModelMixin), its super call reaching 1.21.1's vanilla body (CbRenderBake.superBake)"
   }
  ],
  "mixinTargets": {
@@ -1300,6 +1618,292 @@
     4
    ],
    "basis": "1.21.1 renderInner(display, subState, poseStack, buffers, light, interpolationProgress) is 1.21.2's renderInner(state, poseStack, buffers, light, interpolationProgress): the sub-state is the state's field extraction copied, the last argument the same value (javap both)"
+  },
+  "net/minecraft/class_757.method_3168(Lnet/minecraft/class_2960;)V": {
+   "to": "method_62904(Lnet/minecraft/class_2960;)V",
+   "args": [
+    0
+   ],
+   "basis": "GameRenderer.loadEffect(location) -> setPostEffect(id) (javap both bodies): both make the given post effect the active one (1.21.1 built the PostChain there and set effectActive; 1.21.2 records the id, sets effectActive, and ShaderManager builds the chain when it runs). The argument names the same effect, spelled <ns>:shaders/post/<name>.json in 1.21.1 and <ns>:<name> in 1.21.2"
+  },
+  "net/minecraft/class_584.method_17111(Lnet/minecraft/class_584$class_585;IFFFFF)V": {
+   "to": "method_17112(Lnet/minecraft/class_10051;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "ParrotModel's private setupAnim(State, tickCount, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch) -> setupAnim(ParrotRenderState) (javap both bodies: the same head-look, state switch and per-state poses, now reading pose / ages from the render state, run for the mob and, through ParrotOnShoulderLayer's state, on the shoulder; 1.21.2 first runs resetPose and prepare(pose)). Every value comes from the state, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_1007.method_23205(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;Lnet/minecraft/class_630;Lnet/minecraft/class_630;)V": {
+   "to": "method_23205(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;Lnet/minecraft/class_630;Z)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    4,
+    -1
+   ],
+   "basis": "PlayerRenderer.renderHand(poseStack, buffers, light, player, arm, sleeve) -> (poseStack, buffers, light, skinTexture, arm, sleeveVisible) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_1007.method_4210(Lnet/minecraft/class_742;Lnet/minecraft/class_1268;)Lnet/minecraft/class_572$class_573;": {
+   "to": "method_4210(Lnet/minecraft/class_10055;Lnet/minecraft/class_10055$class_10056;Lnet/minecraft/class_1268;)Lnet/minecraft/class_572$class_573;",
+   "args": [
+    -1,
+    2
+   ],
+   "basis": "PlayerRenderer.getArmPose(player, hand) -> (state, handState, hand) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_898.method_23166(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1297;FFLnet/minecraft/class_4538;F)V": {
+   "to": "method_23166(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10017;FFLnet/minecraft/class_4538;F)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "EntityRenderDispatcher.renderShadow(poseStack, buffers, entity, ..) -> (poseStack, buffers, state, ..) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_898.method_23165(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1297;Lorg/joml/Quaternionf;)V": {
+   "to": "method_23165(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10017;Lorg/joml/Quaternionf;)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3
+   ],
+   "basis": "EntityRenderDispatcher.renderFlame(poseStack, buffers, entity, rotation) -> (poseStack, buffers, state, rotation) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_970.method_4169(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1309;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V": {
+   "to": "method_4169(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3,
+    4,
+    5
+   ],
+   "basis": "HumanoidArmorLayer.renderArmorPiece(poseStack, buffers, entity, slot, light, model) -> (poseStack, buffers, the slot's item, slot, light, model) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_970.method_4172(Lnet/minecraft/class_1304;)Lnet/minecraft/class_572;": {
+   "to": "method_4172(Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;)Lnet/minecraft/class_572;",
+   "args": [
+    1
+   ],
+   "basis": "HumanoidArmorLayer.getArmorModel(slot) -> (state, slot) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_826.method_22749(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_630;Lnet/minecraft/class_630;Lnet/minecraft/class_630;FII)V": {
+   "to": "method_22749(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_9944;FII)V",
+   "args": [
+    0,
+    1,
+    -1,
+    -1,
+    -1,
+    3,
+    4,
+    5
+   ],
+   "basis": "ChestRenderer.render(poseStack, consumer, lid, lock, bottom, openness, light, overlay) -> (poseStack, consumer, chestModel, openness, light, overlay) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_928.method_4074(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_1534;IILnet/minecraft/class_1058;Lnet/minecraft/class_1058;)V": {
+   "to": "method_4074(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;[IIILnet/minecraft/class_1058;Lnet/minecraft/class_1058;)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "PaintingRenderer.renderPainting(poseStack, consumer, painting, width, height, front, back) -> (poseStack, consumer, lightCoords, width, height, front, back) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_5697.method_32799(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_32799(Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "basis": "PlayerItemInHandLayer.renderArmWithSpyglass(entity, stack, arm, ..) -> (model, stack, arm, ..) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_572.method_30155(Lnet/minecraft/class_1309;)V": {
+   "to": "method_30155(Lnet/minecraft/class_10034;Lnet/minecraft/class_572$class_573;)V",
+   "args": [
+    -1
+   ],
+   "basis": "HumanoidModel.poseRightArm(entity) -> (state, armPose) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_572.method_30154(Lnet/minecraft/class_1309;)V": {
+   "to": "method_30154(Lnet/minecraft/class_10034;Lnet/minecraft/class_572$class_573;)V",
+   "args": [
+    -1
+   ],
+   "basis": "HumanoidModel.poseLeftArm(entity) -> (state, armPose) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_7751.method_45704(Lnet/minecraft/class_7689;)V": {
+   "to": "method_45704(Lnet/minecraft/class_10007;)V",
+   "args": [
+    -1
+   ],
+   "basis": "CamelModel.toggleInvisibleParts(camel) -> (state) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_621.method_32066(Lnet/minecraft/class_1528;Lnet/minecraft/class_630;I)V": {
+   "to": "method_32066(Lnet/minecraft/class_10083;Lnet/minecraft/class_630;I)V",
+   "args": [
+    -1,
+    1,
+    2
+   ],
+   "basis": "WitherBossModel.setupHeadRotation(wither, head, index) -> (state, head, index) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_617.method_48293(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;F)V": {
+   "to": "method_48293(ZZF)V",
+   "args": [
+    -1,
+    -1,
+    2
+   ],
+   "basis": "VexModel.setArmsCharging(mainHand, offHand, ageInTicks) -> (rightHandItem empty?, leftHandItem empty?, ageInTicks) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_4840.method_29354(Lnet/minecraft/class_1308;)V": {
+   "to": "method_29354(Lnet/minecraft/class_10054;)V",
+   "args": [
+    -1
+   ],
+   "basis": "PiglinModel.holdWeaponHigh(mob) -> (state) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_9085.method_57819(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;)V": {
+   "to": "method_57819(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_3879;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "WolfArmorLayer.maybeRenderCracks(poseStack, buffers, light, armour) -> (.., model) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_8138.method_49053(Lnet/minecraft/class_8113$class_8229;Lnet/minecraft/class_8113;FLorg/joml/Quaternionf;)Lorg/joml/Quaternionf;": {
+   "to": "method_49053(Lnet/minecraft/class_8113$class_8229;Lnet/minecraft/class_10011;Lorg/joml/Quaternionf;)Lorg/joml/Quaternionf;",
+   "args": [
+    0,
+    -1,
+    -1,
+    2
+   ],
+   "basis": "DisplayRenderer.calculateOrientation(constraints, display, partialTick, rotation) -> (constraints, state, rotation) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_4915.method_48523(Lnet/minecraft/class_1738;)V": {
+   "to": "method_48523(Lnet/minecraft/class_1792;Lnet/minecraft/class_2960;Lnet/minecraft/class_10186;Lnet/minecraft/class_1304;)V",
+   "args": [
+    -1
+   ],
+   "basis": "ItemModelGenerators.generateArmorTrims(armorItem) -> (item, modelId, equipmentModel, slot) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_62424(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    -1,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "EntityRenderDispatcher.render(entity, x, y, z, yRot, partialTick, ..) -> the public render(entity, x, y, z, partialTick, ..) 1.21.2 runs for every entity (javap both: the same renderer lookup, offset, render, shadow, hitbox and crash report); the yaw has no counterpart"
+  },
+  "net/minecraft/class_989.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "renderArmWithItem(entity, stack, context, arm, ..) -> 1.21.2's (state, bakedModel, stack, context, arm, ..), the method vanilla's layer render calls (javap both: the same hand transform, rotations and offset); the entity is the state's, so only handlers not taking it follow"
+  },
+  "net/minecraft/class_5697.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "renderArmWithItem(entity, stack, context, arm, ..) -> 1.21.2's (state, bakedModel, stack, context, arm, ..), the method vanilla's layer render calls (javap both: the same hand transform, rotations and offset); the entity is the state's, so only handlers not taking it follow"
+  },
+  "net/minecraft/class_7751.method_45705(Lnet/minecraft/class_7689;FFF)V": {
+   "to": "method_45705(Lnet/minecraft/class_10007;FF)V",
+   "args": [
+    -1,
+    1,
+    2,
+    -1
+   ],
+   "basis": "CamelModel.applyHeadRotation(camel, netHeadYaw, headPitch, ageInTicks) -> (state, yRot, xRot): the same clamps and rotations (javap both), the jump cooldown and age read off the state"
+  },
+  "net/minecraft/class_7280.method_42736(Lnet/minecraft/class_7260;FF)V": {
+   "to": "method_42736(Lnet/minecraft/class_10081;F)V",
+   "args": [
+    -1,
+    1,
+    -1
+   ],
+   "basis": "WardenModel.animateTendrils(warden, ageInTicks, partialTick) -> (state, ageInTicks): the same tendril swing (javap both), the tendril animation read off the state instead of warden.getTendrilAnimation(partialTick)"
+  },
+  "net/minecraft/class_825.method_3558(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_630;Lnet/minecraft/class_2350;Lnet/minecraft/class_4730;IIZ)V": {
+   "to": "method_3558(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_3879;Lnet/minecraft/class_2350;Lnet/minecraft/class_4730;IIZ)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "BedRenderer.renderPiece(poseStack, buffers, part, direction, material, light, overlay, foot): 1.21.2 takes the head/foot Model where 1.21.1 took its ModelPart, the rest the same"
+  },
+  "net/minecraft/class_1092.method_45883(Lnet/minecraft/class_3695;Ljava/util/Map;Lnet/minecraft/class_1088;)Lnet/minecraft/class_1092$class_7779;": {
+   "to": "method_45883(Lnet/minecraft/class_3695;Ljava/util/Map;Lnet/minecraft/class_1088;Lit/unimi/dsi/fastutil/objects/Object2IntMap;)Lnet/minecraft/class_1092$class_7779;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "ModelManager.loadModels(profiler, atlases, bakery): 1.21.2 also takes the model groups 1.21.1 read from the bakery (bakery.getModelGroups()); the same bake and reload state"
+  },
+  "net/minecraft/class_4915.method_48519(Lnet/minecraft/class_2960;Ljava/util/Map;Lnet/minecraft/class_6880;)Lcom/google/gson/JsonObject;": {
+   "to": "method_48519(Lnet/minecraft/class_2960;Ljava/util/Map;Lnet/minecraft/class_2960;)Lcom/google/gson/JsonObject;",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "ItemModelGenerators.generateBaseArmorTrimTemplate(id, textures, armor material holder) -> (id, textures, material id): the same trim override json, the material named by its id"
   }
  },
  "fieldRenames": {
@@ -1313,7 +1917,8 @@
   "net/minecraft/class_382$class_328.field_2007:F": "comp_3308",
   "net/minecraft/class_382$class_328.field_2006:F": "comp_3309",
   "net/minecraft/class_382$class_328.field_2005:F": "comp_3310",
-  "net/minecraft/class_382$class_328.field_20911:F": "comp_3311"
+  "net/minecraft/class_382$class_328.field_20911:F": "comp_3311",
+  "net/minecraft/class_761.field_4101:Lnet/minecraft/class_276;": "field_53080"
  },
  "mixinLedger": {
   "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_40570:Lnet/minecraft/class_7654;": "ModelBakery statics 1.21.2 dropped (its counterparts are MissingBlockModel's / the layer's fieldGetters): 1.21.2's ModelBakery <clinit> assigns no such field",
@@ -1523,7 +2128,63 @@
   "net/minecraft/class_761.method_3273(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V @ FIELD Lnet/minecraft/class_310;field_1724:Lnet/minecraft/class_746;": "1.21.2 LevelRenderer.setupRender repositions the view area from the camera position (Vec3.x() / y() / z() of camera.getPosition()) instead of the local player's getX / getY / getZ (javap both bodies); V's minecraft.player reads and position calls are gone",
   "net/minecraft/class_761.method_3273(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V @ INVOKE Lnet/minecraft/class_746;method_23317()D": "1.21.2 LevelRenderer.setupRender repositions the view area from the camera position (Vec3.x() / y() / z() of camera.getPosition()) instead of the local player's getX / getY / getZ (javap both bodies); V's minecraft.player reads and position calls are gone",
   "net/minecraft/class_761.method_3273(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V @ INVOKE Lnet/minecraft/class_746;method_23318()D": "1.21.2 LevelRenderer.setupRender repositions the view area from the camera position (Vec3.x() / y() / z() of camera.getPosition()) instead of the local player's getX / getY / getZ (javap both bodies); V's minecraft.player reads and position calls are gone",
-  "net/minecraft/class_761.method_3273(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V @ INVOKE Lnet/minecraft/class_746;method_23321()D": "1.21.2 LevelRenderer.setupRender repositions the view area from the camera position (Vec3.x() / y() / z() of camera.getPosition()) instead of the local player's getX / getY / getZ (javap both bodies); V's minecraft.player reads and position calls are gone"
+  "net/minecraft/class_761.method_3273(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V @ INVOKE Lnet/minecraft/class_746;method_23321()D": "1.21.2 LevelRenderer.setupRender repositions the view area from the camera position (Vec3.x() / y() / z() of camera.getPosition()) instead of the local player's getX / getY / getZ (javap both bodies); V's minecraft.player reads and position calls are gone",
+  "net/minecraft/class_761.method_3277()V": "createLightSky: 1.21.2 moved LevelRenderer's sky buffer set-up into SkyRenderer (class_9975): its constructor builds the light sky, dark sky and star buffers in private methods of that class (method_62301 / 62311 / 62313); LevelRenderer keeps no method holding this code (javap both classes), so a mixin would need SkyRenderer as its target. The rename candidate method_64059()V is an unrelated list clear",
+  "net/minecraft/class_761.method_3293()V": "createStars: 1.21.2 moved LevelRenderer's sky buffer set-up into SkyRenderer (class_9975): its constructor builds the light sky, dark sky and star buffers in private methods of that class (method_62301 / 62311 / 62313); LevelRenderer keeps no method holding this code (javap both classes), so a mixin would need SkyRenderer as its target. The rename candidate method_64059()V is an unrelated list clear",
+  "net/minecraft/class_761.method_3265()V": "createDarkSky: 1.21.2 moved LevelRenderer's sky buffer set-up into SkyRenderer (class_9975): its constructor builds the light sky, dark sky and star buffers in private methods of that class (method_62301 / 62311 / 62313); LevelRenderer keeps no method holding this code (javap both classes), so a mixin would need SkyRenderer as its target. The rename candidate method_64059()V is an unrelated list clear",
+  "net/minecraft/class_761.method_29365()V": "initTransparency: 1.21.2 has no Fabulous transparency set-up on LevelRenderer: the translucent/item_entity/particles/weather/clouds targets and the transparency post chain are frame-graph resources (LevelTargetBundle, PostChain from ShaderManager by id) allocated per frame; V's init/deinit pair and its RenderTarget fields have no W method (javap both bodies). The rename candidate method_64059()V is an unrelated list clear",
+  "net/minecraft/class_761.method_29701()V": "deinitTransparency: 1.21.2 has no Fabulous transparency set-up on LevelRenderer: the translucent/item_entity/particles/weather/clouds targets and the transparency post chain are frame-graph resources (LevelTargetBundle, PostChain from ShaderManager by id) allocated per frame; V's init/deinit pair and its RenderTarget fields have no W method (javap both bodies). The rename candidate method_64059()V is an unrelated list clear",
+  "net/minecraft/class_761.method_3243(Lnet/minecraft/class_4184;)V": "renderWorldBorder(Camera): 1.21.2 moved the world-border drawing into WorldBorderRenderer.render (class_9978), called from the frame pass with the border, camera position and render distance; LevelRenderer keeps no method holding it (javap both classes), so a mixin would need WorldBorderRenderer as its target. The rename candidate method_62209(Camera) is tickRain, unrelated code",
+  "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_5371:Ljava/lang/String;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_5374:Lnet/minecraft/class_2960;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_5389:Lnet/minecraft/class_793;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_5400:Lnet/minecraft/class_793;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Ljava/lang/String;replace(CC)Ljava/lang/String;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Ljava/util/Map;of(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_1047;method_4539()Lnet/minecraft/class_2960;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_1091;<init>(Lnet/minecraft/class_2960;Ljava/lang/String;)V": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_156;method_654(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_2960;method_12832()Ljava/lang/String;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_7654;method_45114(Ljava/lang/String;)Lnet/minecraft/class_7654;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ INVOKE Lnet/minecraft/class_793;method_3430(Ljava/lang/String;)Lnet/minecraft/class_793;": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_1088.<clinit>()V @ NEW net/minecraft/class_1091": "1.21.2's ModelBakery.<clinit> keeps the fire / lava / water / banner / shield materials, the destroy stages and the item model generator but no longer builds the missing model or the markers (javap both <clinit>s): the missing model's id and variant moved to MissingBlockModel.<clinit> (class_10096: SpecialModels.builtinModelId(\"missing\"), new ModelResourceLocation(.., \"missing\")), the missing model itself is built in code (MissingBlockModel.missingModel(), no json string, no BUILTIN_MODELS map), the generation / block-entity markers are SpecialModels' (class_10101) and the models lister ModelManager's own; a mixin into ModelBakery.<clinit> at these sites has no counterpart in that method",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ FIELD Lnet/minecraft/class_293;field_1600:I": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ FIELD Lnet/minecraft/class_293;field_1602:Ljava/util/List;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;<init>(Ljava/lang/String;)V": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;append(C)Ljava/lang/StringBuilder;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;append(I)Ljava/lang/StringBuilder;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;append(Ljava/lang/Object;)Ljava/lang/StringBuilder;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/lang/StringBuilder;toString()Ljava/lang/String;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/util/List;get(I)Ljava/lang/Object;": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Ljava/util/List;size()I": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ INVOKE Lnet/minecraft/class_293;method_60835(Lnet/minecraft/class_296;)I": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_293.toString()Ljava/lang/String; @ NEW java/lang/StringBuilder": "VertexFormat.toString(): 1.21.1 built a multi-line listing with a StringBuilder (byte size, then index. name: element @ offset per element); 1.21.2's answers \"VertexFormat\" + the name list by one string concatenation (javap both: getfield field_52100, String.valueOf, invokedynamic makeConcatWithConstants) -- no StringBuilder, no size / element / offset reads, so none of these sites exists in it",
+  "net/minecraft/class_395.method_27442()Lit/unimi/dsi/fastutil/ints/IntSet; @ INVOKE Lit/unimi/dsi/fastutil/ints/IntSet;add(I)Z": "TrueTypeGlyphProvider.getSupportedGlyphs(): 1.21.1 enumerated the face's characters on every call (MemoryStack, FT_Get_First_Char / FT_Get_Next_Char into a set, the skip set removed); 1.21.2 enumerates them once in its constructor into the glyph index (class_8532) and getSupportedGlyphs answers its key set (javap both: method_27442 is getfield field_52695 + method_51603; the FreeType loop is in <init>, a different method with no counterpart of these sites' return)",
+  "net/minecraft/class_395.method_27442()Lit/unimi/dsi/fastutil/ints/IntSet; @ INVOKE Lit/unimi/dsi/fastutil/ints/IntSet;removeAll(Lit/unimi/dsi/fastutil/ints/IntCollection;)Z": "TrueTypeGlyphProvider.getSupportedGlyphs(): 1.21.1 enumerated the face's characters on every call (MemoryStack, FT_Get_First_Char / FT_Get_Next_Char into a set, the skip set removed); 1.21.2 enumerates them once in its constructor into the glyph index (class_8532) and getSupportedGlyphs answers its key set (javap both: method_27442 is getfield field_52695 + method_51603; the FreeType loop is in <init>, a different method with no counterpart of these sites' return)",
+  "net/minecraft/class_395.method_27442()Lit/unimi/dsi/fastutil/ints/IntSet; @ INVOKE Ljava/lang/Throwable;addSuppressed(Ljava/lang/Throwable;)V": "TrueTypeGlyphProvider.getSupportedGlyphs(): 1.21.1 enumerated the face's characters on every call (MemoryStack, FT_Get_First_Char / FT_Get_Next_Char into a set, the skip set removed); 1.21.2 enumerates them once in its constructor into the glyph index (class_8532) and getSupportedGlyphs answers its key set (javap both: method_27442 is getfield field_52695 + method_51603; the FreeType loop is in <init>, a different method with no counterpart of these sites' return)",
+  "net/minecraft/class_395.method_27442()Lit/unimi/dsi/fastutil/ints/IntSet; @ INVOKE Ljava/nio/IntBuffer;get(I)I": "TrueTypeGlyphProvider.getSupportedGlyphs(): 1.21.1 enumerated the face's characters on every call (MemoryStack, FT_Get_First_Char / FT_Get_Next_Char into a set, the skip set removed); 1.21.2 enumerates them once in its constructor into the glyph index (class_8532) and getSupportedGlyphs answers its key set (javap both: method_27442 is getfield field_52695 + method_51603; the FreeType loop is in <init>, a different method with no counterpart of these sites' return)",
+  "net/minecraft/class_395.method_27442()Lit/unimi/dsi/fastutil/ints/IntSet; @ INVOKE Lnet/minecraft/class_395;method_51884()Lorg/lwjgl/util/freetype/FT_Face;": "TrueTypeGlyphProvider.getSupportedGlyphs(): 1.21.1 enumerated the face's characters on every call (MemoryStack, FT_Get_First_Char / FT_Get_Next_Char into a set, the skip set removed); 1.21.2 enumerates them once in its constructor into the glyph index (class_8532) and getSupportedGlyphs answers its key set (javap both: method_27442 is getfield field_52695 + method_51603; the FreeType loop is in <init>, a different method with no counterpart of these sites' return)",
+  "net/minecraft/class_395.method_27442()Lit/unimi/dsi/fastutil/ints/IntSet; @ INVOKE Lorg/lwjgl/system/MemoryStack;close()V": "TrueTypeGlyphProvider.getSupportedGlyphs(): 1.21.1 enumerated the face's characters on every call (MemoryStack, FT_Get_First_Char / FT_Get_Next_Char into a set, the skip set removed); 1.21.2 enumerates them once in its constructor into the glyph index (class_8532) and getSupportedGlyphs answers its key set (javap both: method_27442 is getfield field_52695 + method_51603; the FreeType loop is in <init>, a different method with no counterpart of these sites' return)",
+  "net/minecraft/class_395.method_27442()Lit/unimi/dsi/fastutil/ints/IntSet; @ INVOKE Lorg/lwjgl/system/MemoryStack;mallocInt(I)Ljava/nio/IntBuffer;": "TrueTypeGlyphProvider.getSupportedGlyphs(): 1.21.1 enumerated the face's characters on every call (MemoryStack, FT_Get_First_Char / FT_Get_Next_Char into a set, the skip set removed); 1.21.2 enumerates them once in its constructor into the glyph index (class_8532) and getSupportedGlyphs answers its key set (javap both: method_27442 is getfield field_52695 + method_51603; the FreeType loop is in <init>, a different method with no counterpart of these sites' return)",
+  "net/minecraft/class_395.method_27442()Lit/unimi/dsi/fastutil/ints/IntSet; @ INVOKE Lorg/lwjgl/system/MemoryStack;stackPush()Lorg/lwjgl/system/MemoryStack;": "TrueTypeGlyphProvider.getSupportedGlyphs(): 1.21.1 enumerated the face's characters on every call (MemoryStack, FT_Get_First_Char / FT_Get_Next_Char into a set, the skip set removed); 1.21.2 enumerates them once in its constructor into the glyph index (class_8532) and getSupportedGlyphs answers its key set (javap both: method_27442 is getfield field_52695 + method_51603; the FreeType loop is in <init>, a different method with no counterpart of these sites' return)",
+  "net/minecraft/class_395.method_27442()Lit/unimi/dsi/fastutil/ints/IntSet; @ INVOKE Lorg/lwjgl/util/freetype/FreeType;FT_Get_First_Char(Lorg/lwjgl/util/freetype/FT_Face;Ljava/nio/IntBuffer;)J": "TrueTypeGlyphProvider.getSupportedGlyphs(): 1.21.1 enumerated the face's characters on every call (MemoryStack, FT_Get_First_Char / FT_Get_Next_Char into a set, the skip set removed); 1.21.2 enumerates them once in its constructor into the glyph index (class_8532) and getSupportedGlyphs answers its key set (javap both: method_27442 is getfield field_52695 + method_51603; the FreeType loop is in <init>, a different method with no counterpart of these sites' return)",
+  "net/minecraft/class_395.method_27442()Lit/unimi/dsi/fastutil/ints/IntSet; @ INVOKE Lorg/lwjgl/util/freetype/FreeType;FT_Get_Next_Char(Lorg/lwjgl/util/freetype/FT_Face;JLjava/nio/IntBuffer;)J": "TrueTypeGlyphProvider.getSupportedGlyphs(): 1.21.1 enumerated the face's characters on every call (MemoryStack, FT_Get_First_Char / FT_Get_Next_Char into a set, the skip set removed); 1.21.2 enumerates them once in its constructor into the glyph index (class_8532) and getSupportedGlyphs answers its key set (javap both: method_27442 is getfield field_52695 + method_51603; the FreeType loop is in <init>, a different method with no counterpart of these sites' return)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ FIELD Lnet/minecraft/class_1095;field_21863:Z": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ FIELD Lnet/minecraft/class_1095;field_5425:Lnet/minecraft/class_1058;": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ FIELD Lnet/minecraft/class_1095;field_5426:Lnet/minecraft/class_809;": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ FIELD Lnet/minecraft/class_1095;field_5428:Lnet/minecraft/class_806;": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ FIELD Lnet/minecraft/class_1095;field_5429:Z": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ FIELD Lnet/minecraft/class_1095;field_5430:Z": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ INVOKE Ljava/util/Iterator;next()Ljava/lang/Object;": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ INVOKE Ljava/util/List;iterator()Ljava/util/Iterator;": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ INVOKE Lnet/minecraft/class_1087;method_24304()Z": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ INVOKE Lnet/minecraft/class_1087;method_4708()Z": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ INVOKE Lnet/minecraft/class_1087;method_4709()Lnet/minecraft/class_809;": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ INVOKE Lnet/minecraft/class_1087;method_4710()Lnet/minecraft/class_806;": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ INVOKE Lnet/minecraft/class_1087;method_4711()Lnet/minecraft/class_1058;": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ INVOKE Lnet/minecraft/class_1087;method_4712()Z": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)",
+  "net/minecraft/class_1095.<init>(Ljava/util/List;)V @ INVOKE Lorg/apache/commons/lang3/tuple/Pair;getRight()Ljava/lang/Object;": "MultiPartBakedModel(selectors): 1.21.1's constructor took the first selector's model and copied its ambient occlusion, gui3d, side-lit, particle icon, transforms and overrides into six fields; 1.21.2's passes that model (method_64095) to DelegateBakedModel's constructor and keeps no copies -- every property is the delegate's, asked per call (javap both <init>s: no iterator / Pair.getRight / BakedModel getters / putfields of these fields in 1.21.2's)"
  },
  "callReshapes": {
   "net/minecraft/class_5772.method_33297(F)V": {
@@ -1549,6 +2210,367 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderAxolotlPoses#fullWeight()F"
    ],
    "basis": "the mirror-legs helper () -> (weight): AxolotlModel's private pose helper takes its state's weight in 1.21.2 (added last; returns early below 1e-5) and adds that share of the same pose 1.21.1 applied whole (javap both bodies); a 1.21.1 call asks for the whole pose: weight 1 (CbRenderAxolotlPoses)"
+  },
+  "net/minecraft/class_846$class_851.method_3651(Lnet/minecraft/class_2338;)Z": {
+   "desc": "(J)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#sectionNode(Lnet/minecraft/class_2338;)J"
+   ],
+   "basis": "RenderSection.doesChunkExistAt: 1.21.1 took a block position and reduced it to section x/z itself, 1.21.2 takes the SectionPos node and reads its x/z (javap both bodies); SectionPos.asLong(pos) is that node"
+  },
+  "net/minecraft/class_8679.method_52832(Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Z": {
+   "desc": "(JJ)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#sectionNode(Lnet/minecraft/class_2338;)J",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#sectionNode(Lnet/minecraft/class_2338;)J"
+   ],
+   "basis": "SectionOcclusionGraph.isInViewDistance: 1.21.1 took two block positions and reduced each to section x/z, 1.21.2 takes two SectionPos nodes and reads their x/z (javap both bodies)"
+  },
+  "net/minecraft/class_8679.method_52831(Lnet/minecraft/class_2338;Lnet/minecraft/class_846$class_851;Lnet/minecraft/class_2350;)Lnet/minecraft/class_846$class_851;": {
+   "desc": "(JLnet/minecraft/class_846$class_851;Lnet/minecraft/class_2350;)Lnet/minecraft/class_846$class_851;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#sectionNode(Lnet/minecraft/class_2338;)J",
+    "keep",
+    "keep"
+   ],
+   "basis": "SectionOcclusionGraph.getRelativeFrom: the camera position, a block position reduced to sections in 1.21.1, is the camera's SectionPos node in 1.21.2 (javap both bodies: the same view-distance and |dy| tests, on section coordinates)"
+  },
+  "net/minecraft/class_757.method_3196(Lnet/minecraft/class_4184;FZ)D": {
+   "desc": "(Lnet/minecraft/class_4184;FZ)F",
+   "ops": [
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#fovDouble(F)D",
+   "basis": "GameRenderer.getFov answers a float in 1.21.2 (same computation, javap both bodies); widened back to 1.21.1's double"
+  },
+  "net/minecraft/class_915.method_33434(Lnet/minecraft/class_1533;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1091;": {
+   "desc": "(ZLnet/minecraft/class_1799;)Lnet/minecraft/class_1091;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#glowFrame(Lnet/minecraft/class_1533;)Z",
+    "keep"
+   ],
+   "basis": "ItemFrameRenderer.getFrameModelResourceLoc: 1.21.1 tested frame.getType() == GLOW_ITEM_FRAME, 1.21.2 takes that answer (javap both bodies; the map test reads the stack in both)"
+  },
+  "net/minecraft/class_915.method_33433(Lnet/minecraft/class_1533;II)I": {
+   "desc": "(ZII)I",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#glowFrame(Lnet/minecraft/class_1533;)Z",
+    "keep",
+    "keep"
+   ],
+   "basis": "ItemFrameRenderer.getLightVal: 1.21.1 tested frame.getType() == GLOW_ITEM_FRAME, 1.21.2 takes that answer (javap both bodies)"
+  },
+  "net/minecraft/class_1921.method_56848(Z)Lnet/minecraft/class_1921$class_4687;": {
+   "desc": "(ZZ)Lnet/minecraft/class_1921$class_4687;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#cloudsCull()Z"
+   ],
+   "basis": "RenderType's clouds builder gained a cull flag in 1.21.2 (true: CULL, false: NO_CULL; javap both bodies); 1.21.1's built NO_CULL, so false. 1.21.2's clouds draw no texture, so 1.21.1's clouds.png shard has no counterpart"
+  },
+  "net/minecraft/class_327.method_1723(Lnet/minecraft/class_5481;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I": {
+   "desc": "(Lnet/minecraft/class_5481;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;IIZ)I",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#fontDefaultDepth()Z"
+   ],
+   "basis": "Font's private draw helper gained a last flag in 1.21.2 (PreparedTextBuilder's inverse depth: which way the background/shadow layers are offset); 1.21.2's own 1.21.1-shaped drawInBatch passes true (javap), as 1.21.1 drew"
+  },
+  "net/minecraft/class_327.method_1724(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)F": {
+   "desc": "(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;IIZ)F",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#fontDefaultDepth()Z"
+   ],
+   "basis": "Font's private draw helper gained a last flag in 1.21.2 (PreparedTextBuilder's inverse depth: which way the background/shadow layers are offset); 1.21.2's own 1.21.1-shaped drawInBatch passes true (javap), as 1.21.1 drew"
+  },
+  "net/minecraft/class_327.method_27530(Lnet/minecraft/class_5481;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)F": {
+   "desc": "(Lnet/minecraft/class_5481;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;IIZ)F",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#fontDefaultDepth()Z"
+   ],
+   "basis": "Font's private draw helper gained a last flag in 1.21.2 (PreparedTextBuilder's inverse depth: which way the background/shadow layers are offset); 1.21.2's own 1.21.1-shaped drawInBatch passes true (javap), as 1.21.1 drew"
+  },
+  "net/minecraft/class_775.method_29710(Lnet/minecraft/class_1922;Lnet/minecraft/class_2350;FLnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Z": {
+   "desc": "(Lnet/minecraft/class_2350;FLnet/minecraft/class_2680;)Z",
+   "ops": [
+    "drop",
+    "keep",
+    "keep",
+    "drop",
+    "keep"
+   ],
+   "basis": "LiquidBlockRenderer.isFaceOccludedByState: 1.21.1 read the state's occlusion shape at (level, pos), 1.21.2 its face occlusion shape (BlockState.getFaceOcclusionShape(direction.getOpposite())) with no level or position (javap both bodies); the dropped arguments are not read in 1.21.2"
+  },
+  "net/minecraft/class_775.method_3344(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;FLnet/minecraft/class_2680;)Z": {
+   "desc": "(Lnet/minecraft/class_2350;FLnet/minecraft/class_2680;)Z",
+   "ops": [
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "LiquidBlockRenderer.isFaceOccludedByNeighbor: passes on to isFaceOccludedByState, which no longer takes the level or position (javap both bodies); the dropped arguments are not read in 1.21.2"
+  },
+  "net/minecraft/class_775.method_29709(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z",
+   "ops": [
+    "drop",
+    "drop",
+    "keep",
+    "keep"
+   ],
+   "basis": "LiquidBlockRenderer.isFaceOccludedBySelf: passes on to isFaceOccludedByState, which no longer takes the level or position (javap both bodies); the dropped arguments are not read in 1.21.2"
+  },
+  "net/minecraft/class_761.method_22712(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_1297;DDDLnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_1297;DDDLnet/minecraft/class_2338;Lnet/minecraft/class_2680;I)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#hitOutlineColor()I"
+   ],
+   "basis": "LevelRenderer.renderHitOutline takes the outline colour in 1.21.2 (ShapeRenderer.renderShape(.., colour)); 1.21.1 drew black at alpha 0.4 (javap both bodies)"
+  },
+  "net/minecraft/class_796.method_3458(Lnet/minecraft/class_787;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;[FLnet/minecraft/class_4590;Lnet/minecraft/class_789;Z)[I": {
+   "desc": "(Lnet/minecraft/class_787;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;[FLnet/minecraft/class_4590;Lnet/minecraft/class_789;)[I",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "basis": "FaceBakery.makeVertices: 1.21.1 only handed the shade flag on to fillVertex, which 1.21.2 dropped with it (javap both bodies; the quad keeps its shade flag)"
+  },
+  "net/minecraft/class_796.method_3461([IILnet/minecraft/class_2350;Lnet/minecraft/class_787;[FLnet/minecraft/class_1058;Lnet/minecraft/class_4590;Lnet/minecraft/class_789;Z)V": {
+   "desc": "([IILnet/minecraft/class_2350;Lnet/minecraft/class_787;[FLnet/minecraft/class_1058;Lnet/minecraft/class_4590;Lnet/minecraft/class_789;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "basis": "FaceBakery.fillVertex: 1.21.2 dropped the shade flag (javap both bodies)"
+  },
+  "net/minecraft/class_4604.method_23089(DDDDDD)Z": {
+   "desc": "(DDDDDD)I",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#inFrustum(I)Z",
+   "basis": "Frustum.cubeInFrustum answers FrustumIntersection.intersectAab in 1.21.2 (INSIDE -2, INTERSECT -1, else the outside plane) where 1.21.1 answered testAab (inside or intersecting): < 0 (javap both bodies)"
+  },
+  "net/minecraft/class_8679.method_52825(Lnet/minecraft/class_8679$class_6600;Lnet/minecraft/class_243;Ljava/util/Queue;ZLjava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_8679$class_6600;Lnet/minecraft/class_243;Ljava/util/Queue;ZLjava/util/function/Consumer;Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#noEmptySections()Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;"
+   ],
+   "basis": "SectionOcclusionGraph's search helper takes the client's loaded empty sections in 1.21.2 and skips them (javap: !set.contains(node) guards 1.21.1's path); 1.21.1 skipped none: an empty set"
+  },
+  "net/minecraft/class_8679.method_52833(ZLnet/minecraft/class_4184;Lnet/minecraft/class_243;)V": {
+   "desc": "(ZLnet/minecraft/class_4184;Lnet/minecraft/class_243;Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#noEmptySections()Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;"
+   ],
+   "basis": "SectionOcclusionGraph's search helper takes the client's loaded empty sections in 1.21.2 and skips them (javap: !set.contains(node) guards 1.21.1's path); 1.21.1 skipped none: an empty set"
+  },
+  "net/minecraft/class_8679.method_52835(ZLnet/minecraft/class_4604;Ljava/util/List;Lnet/minecraft/class_243;)V": {
+   "desc": "(ZLnet/minecraft/class_4604;Ljava/util/List;Lnet/minecraft/class_243;Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#noEmptySections()Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;"
+   ],
+   "basis": "SectionOcclusionGraph's search helper takes the client's loaded empty sections in 1.21.2 and skips them (javap: !set.contains(node) guards 1.21.1's path); 1.21.1 skipped none: an empty set"
+  },
+  "net/minecraft/class_1041.method_4485(Z)V": {
+   "desc": "(ZLnet/minecraft/class_10219;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#noFrameCapture()Lnet/minecraft/class_10219;"
+   ],
+   "basis": "Window.updateFullscreen passes 1.21.2's Tracy frame capture on to updateDisplay / RenderSystem.flipFrame, which skip a null one (javap); 1.21.1 had no capture"
+  },
+  "net/minecraft/class_276.method_1233(IIZ)V": {
+   "desc": "(II)V",
+   "ops": [
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "basis": "RenderTarget._blitToScreen: 1.21.2 dropped the disableBlend flag (javap both bodies: the same colour mask, depth and viewport set-up, then the blit_screen program's draw; 1.21.1's optional GlStateManager._disableBlend() has no counterpart, the program's own blend state applies)"
+  },
+  "net/minecraft/class_877.method_3878(Lnet/minecraft/class_1531;)Z": {
+   "desc": "(Lnet/minecraft/class_1531;D)Z",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1531;)D"
+   ],
+   "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
+  },
+  "net/minecraft/class_897.method_3921(Lnet/minecraft/class_1297;)Z": {
+   "desc": "(Lnet/minecraft/class_1297;D)Z",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1297;)D"
+   ],
+   "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
+  },
+  "net/minecraft/class_915.method_23176(Lnet/minecraft/class_1533;)Z": {
+   "desc": "(Lnet/minecraft/class_1533;D)Z",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1533;)D"
+   ],
+   "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
+  },
+  "net/minecraft/class_922.method_4055(Lnet/minecraft/class_1309;)Z": {
+   "desc": "(Lnet/minecraft/class_1309;D)Z",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1309;)D"
+   ],
+   "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
+  },
+  "net/minecraft/class_927.method_4071(Lnet/minecraft/class_1308;)Z": {
+   "desc": "(Lnet/minecraft/class_1308;D)Z",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1308;)D"
+   ],
+   "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
+  },
+  "net/minecraft/class_4896.method_25446(Lnet/minecraft/class_630;Lnet/minecraft/class_630;Lnet/minecraft/class_1309;Z)V": {
+   "desc": "(Lnet/minecraft/class_630;Lnet/minecraft/class_630;FIZ)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#crossbowChargeDuration(Lnet/minecraft/class_1309;)F",
+    "conv:2 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#ticksUsingItem(Lnet/minecraft/class_1309;)I",
+    "keep:3"
+   ],
+   "basis": "AnimationUtils.animateCrossbowCharge: 1.21.1 read CrossbowItem.getChargeDuration(entity.getUseItem(), entity) and entity.getTicksUsingItem() itself, 1.21.2 takes those two values (javap both bodies: the same clamp and arm angles)"
+  },
+  "net/minecraft/class_4896.method_29351(Lnet/minecraft/class_630;Lnet/minecraft/class_630;Lnet/minecraft/class_1308;FF)V": {
+   "desc": "(Lnet/minecraft/class_630;Lnet/minecraft/class_630;Lnet/minecraft/class_1306;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#mainArm(Lnet/minecraft/class_1308;)Lnet/minecraft/class_1306;",
+    "keep",
+    "keep"
+   ],
+   "basis": "AnimationUtils.swingWeaponDown: 1.21.1 read mob.getMainArm() itself, 1.21.2 takes the arm (javap both bodies)"
+  },
+  "net/minecraft/class_863.method_23099(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;DDD)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4604;Lnet/minecraft/class_4597$class_4598;DDD)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#levelFrustum()Lnet/minecraft/class_4604;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "DebugRenderer.render takes the culling frustum in 1.21.2 (LevelRenderer passes its own, javap); a 1.21.1 call gets the level renderer's frustum; super calls follow"
+  },
+  "net/minecraft/class_4730.method_30001(Lnet/minecraft/class_4597;Ljava/util/function/Function;Z)Lnet/minecraft/class_4588;": {
+   "desc": "(Lnet/minecraft/class_4597;Ljava/util/function/Function;ZZ)Lnet/minecraft/class_4588;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#itemGlint()Z",
+    "keep"
+   ],
+   "basis": "Material.buffer(buffers, renderType, foil) takes the item/entity glint choice before foil in 1.21.2 (ItemRenderer.getFoilBuffer); 1.21.1's drew the item glint (getFoilBufferDirect(buffers, type, true, foil)), so true (javap both)"
+  },
+  "net/minecraft/class_823.method_23802(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;ZLnet/minecraft/class_1767;Lnet/minecraft/class_9307;Z)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;ZLnet/minecraft/class_1767;Lnet/minecraft/class_9307;ZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#itemGlint()Z"
+   ],
+   "basis": "BannerRenderer.renderPatterns hands Material.buffer the item/entity glint choice in 1.21.2 (a last flag); 1.21.1's Material.buffer drew the item glint, so true (javap both)"
+  },
+  "net/minecraft/class_775.method_29708(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_3610;)Z": {
+   "desc": "(Lnet/minecraft/class_3610;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_3610;)Z",
+   "ops": [
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "LiquidBlockRenderer.shouldRenderFace: the same two tests (isFaceOccludedBySelf, isNeighborSameFluid; javap both bodies); the level and position went only to isFaceOccludedBySelf, which no longer takes them"
   }
  }
 }

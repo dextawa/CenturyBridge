@@ -6,11 +6,13 @@
  "tagMap": {
   "banner_pattern minecraft:no_item_required": {
    "to": "centurybridge:compat/1_21_1/no_item_required",
-   "mirror": false
+   "mirror": []
   },
   "item minecraft:wolf_food": {
    "to": "centurybridge:compat/1_21_1/wolf_food",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_21_1/wolf_food"
+   ]
   }
  }
 }

@@ -60,6 +60,9 @@ public final class SiteMatch {
         int[] map = new int[vo.size()];
         Arrays.fill(map, -1);
         boolean[] taken = new boolean[wo.size()];
+        // the strongest evidence first: the string constants the occurrence (or what consumes its value) takes
+        boolean[] byKey = new boolean[vo.size()];
+        matchByKey(vm, vo, wm, wo, map, taken, byKey);
         List<String> vs = sig(vm), ws = sig(wm);
         List<Integer> vi = sigIndex(vm, vo), wi = sigIndex(wm, wo);
         for (int k = 4; k >= minK; k--) {
@@ -97,11 +100,178 @@ public final class SiteMatch {
         }
         int last = -1;
         for (int i = 0; i < map.length; i++) {
-            if (map[i] < 0) continue;
+            if (map[i] < 0 || byKey[i]) continue; // a match by key holds where W reordered the statements
             if (map[i] < last) map[i] = -1;
             else last = map[i];
         }
         return map;
+    }
+
+    // ------------------------------------------------------------------ argument keys
+
+    /**
+     * Matches occurrences by their argument key ({@link #keys}): a V occurrence and a W occurrence
+     * whose keys are equal, where V and W hold the same number of occurrences with that key (the n-th
+     * with a key is the n-th's counterpart -- the n-th addBox of the "left_sleeve" part).
+     */
+    private static void matchByKey(MethodNode vm, List<AbstractInsnNode> vo, MethodNode wm, List<AbstractInsnNode> wo,
+                                   int[] map, boolean[] taken, boolean[] byKey) {
+        if (vo.isEmpty() || wo.isEmpty()) return;
+        Map<AbstractInsnNode, String> vk = keys(vm), wk = keys(wm);
+        Map<String, List<Integer>> vg = new HashMap<>(), wg = new HashMap<>();
+        for (int i = 0; i < vo.size(); i++) {
+            String k = vk.get(vo.get(i));
+            if (k != null) vg.computeIfAbsent(k, x -> new ArrayList<>()).add(i);
+        }
+        for (int j = 0; j < wo.size(); j++) {
+            String k = wk.get(wo.get(j));
+            if (k != null) wg.computeIfAbsent(k, x -> new ArrayList<>()).add(j);
+        }
+        for (Map.Entry<String, List<Integer>> e : vg.entrySet()) {
+            List<Integer> w = wg.get(e.getKey());
+            if (w == null || w.size() != e.getValue().size()) continue;
+            for (int n = 0; n < w.size(); n++) {
+                map[e.getValue().get(n)] = w.get(n);
+                taken[w.get(n)] = true;
+                byKey[e.getValue().get(n)] = true;
+            }
+        }
+    }
+
+    /**
+     * Each call / field instruction's argument key, where it has one: the string constants it takes as
+     * operands ({@code addOrReplaceChild("left_sleeve", ..)}), or else those of the first instruction
+     * down its value's chain of consumers that takes any (a CubeListBuilder's addBox, whose builder the
+     * "left_sleeve" call takes), with that instruction's owner.name. A string constant is a statement's
+     * own name for what it builds; the key survives W reordering the statements or reshaping their
+     * other arguments.
+     */
+    static Map<AbstractInsnNode, String> keys(MethodNode m) {
+        Map<AbstractInsnNode, String> cached = KEYS.get(m);
+        if (cached != null) return cached;
+        Map<AbstractInsnNode, String> out = new java.util.IdentityHashMap<>();
+        Flow f = flowOf(m);
+        if (f != null) {
+            for (AbstractInsnNode in : m.instructions) {
+                if (!(in instanceof MethodInsnNode) && !(in instanceof FieldInsnNode)) continue;
+                AbstractInsnNode c = in;
+                for (int hop = 0; c != null && hop < 32; hop++) {
+                    String s = f.strings.get(c);
+                    if (s != null) {
+                        out.put(in, (hop == 0 ? "" : sigOf(c) + "<-") + s);
+                        break;
+                    }
+                    c = f.consumer.get(c);
+                }
+            }
+        }
+        KEYS.put(m, out);
+        return out;
+    }
+
+    private static final Map<MethodNode, Map<AbstractInsnNode, String>> KEYS = java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
+
+    /** who takes each instruction's value (when exactly one instruction does), and each call's string operands */
+    private record Flow(Map<AbstractInsnNode, AbstractInsnNode> consumer, Map<AbstractInsnNode, String> strings,
+                        Map<AbstractInsnNode, AbstractInsnNode[]> producers) {}
+
+    private static final Map<MethodNode, Flow> FLOWS = java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
+
+    private static Flow flowOf(MethodNode m) {
+        if (FLOWS.containsKey(m)) return FLOWS.get(m);
+        Flow f = flow(m);
+        FLOWS.put(m, f);
+        return f;
+    }
+
+    /**
+     * The W instruction standing in V's site's slot: V's site is an operand of one consumer that has an
+     * argument key ({@link #keys}), the only V instruction of its owner.name with that key; W has exactly
+     * one such consumer, and what feeds the same operand there is a single instruction accepted by
+     * {@code candidate} (PartPose.offset(..) re-described as offsetAndRotation(..) in the same
+     * addOrReplaceChild("ear", ..) slot). Null otherwise.
+     */
+    public static AbstractInsnNode slotCounterpart(MethodNode vm, AbstractInsnNode site, MethodNode wm, Predicate<AbstractInsnNode> candidate) {
+        Flow vf = flowOf(vm), wf = flowOf(wm);
+        if (vf == null || wf == null) return null;
+        AbstractInsnNode c = vf.consumer.get(site);
+        if (c == null) return null;
+        AbstractInsnNode[] vp = vf.producers.get(c);
+        int slot = -1;
+        for (int a = 0; vp != null && a < vp.length; a++) if (vp[a] == site) slot = a;
+        String key = keys(vm).get(c);
+        if (slot < 0 || key == null) return null;
+        String cs = sigOf(c);
+        int same = 0;
+        for (Map.Entry<AbstractInsnNode, String> e : keys(vm).entrySet()) {
+            if (e.getValue().equals(key) && cs.equals(sigOf(e.getKey()))) same++;
+        }
+        if (same != 1) return null;
+        AbstractInsnNode wc = null;
+        for (Map.Entry<AbstractInsnNode, String> e : keys(wm).entrySet()) {
+            if (e.getValue().equals(key) && cs.equals(sigOf(e.getKey()))) {
+                if (wc != null) return null;
+                wc = e.getKey();
+            }
+        }
+        if (wc == null) return null;
+        AbstractInsnNode[] wp = wf.producers.get(wc);
+        if (wp == null || wp.length != vp.length || wp[slot] == null) return null;
+        return candidate.test(wp[slot]) ? wp[slot] : null;
+    }
+
+    private static Flow flow(MethodNode m) {
+        if (m.instructions == null || m.instructions.size() == 0) return null;
+        org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue>[] frames;
+        try {
+            frames = new org.objectweb.asm.tree.analysis.Analyzer<>(new org.objectweb.asm.tree.analysis.SourceInterpreter())
+                .analyze("cb/Flow", m);
+        } catch (org.objectweb.asm.tree.analysis.AnalyzerException | RuntimeException ex) {
+            return null;
+        }
+        Map<AbstractInsnNode, AbstractInsnNode> consumer = new java.util.IdentityHashMap<>();
+        Set<AbstractInsnNode> shared = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+        Map<AbstractInsnNode, String> strings = new java.util.IdentityHashMap<>();
+        Map<AbstractInsnNode, AbstractInsnNode[]> producers = new java.util.IdentityHashMap<>();
+        for (int i = 0; i < m.instructions.size(); i++) {
+            AbstractInsnNode in = m.instructions.get(i);
+            var fr = frames[i];
+            if (fr == null) continue;
+            int n = operands(in);
+            if (n <= 0 || n > fr.getStackSize()) continue;
+            StringBuilder s = new StringBuilder();
+            AbstractInsnNode[] ps = new AbstractInsnNode[n];
+            producers.put(in, ps);
+            for (int a = 0; a < n; a++) {
+                var v = fr.getStack(fr.getStackSize() - n + a);
+                if (v.insns.size() != 1) continue;
+                AbstractInsnNode p = v.insns.iterator().next();
+                ps[a] = p;
+                if (consumer.containsKey(p) && consumer.get(p) != in) shared.add(p);
+                consumer.put(p, in);
+                if (p instanceof LdcInsnNode ldc && ldc.cst instanceof String str) {
+                    s.append('"').append(str).append('"').append('@').append(a).append(';');
+                }
+            }
+            if (s.length() > 0) strings.put(in, s.toString());
+        }
+        for (AbstractInsnNode p : shared) consumer.remove(p);
+        return new Flow(consumer, strings, producers);
+    }
+
+    /** stack operands a call or field instruction takes (receiver included); 0 for others */
+    private static int operands(AbstractInsnNode in) {
+        if (in instanceof MethodInsnNode mi) {
+            return Type.getArgumentTypes(mi.desc).length + (mi.getOpcode() == Opcodes.INVOKESTATIC ? 0 : 1);
+        }
+        if (in instanceof FieldInsnNode) {
+            return switch (in.getOpcode()) {
+                case Opcodes.PUTFIELD -> 2;
+                case Opcodes.GETFIELD, Opcodes.PUTSTATIC -> 1;
+                default -> 0;
+            };
+        }
+        return 0;
     }
 
     /**
@@ -110,7 +280,9 @@ public final class SiteMatch {
      * the instruction itself left out) are V's site's, for the widest k from 4 down to 2 that finds any,
      * counting only contexts with a neighbour other than the body's edges and returns.
      * Null when no such instruction, or when two or more stand there, or when another V instruction of
-     * the site's kind has the same neighbours (V's site is then not singled out either).
+     * the site's kind has the same neighbours (V's site is then not singled out either). When no width
+     * finds one, the instruction filling V's site's operand slot in the same keyed statement
+     * ({@link #slotCounterpart}).
      */
     public static AbstractInsnNode counterpart(MethodNode vm, AbstractInsnNode site, MethodNode wm, Predicate<AbstractInsnNode> candidate) {
         List<String> vs = sig(vm), ws = sig(wm);
@@ -134,7 +306,8 @@ public final class SiteMatch {
             if (hits == 1) return hit;
             if (hits > 1) return null;
         }
-        return null;
+        // the neighbours changed around it (its own operands re-described): the slot it fills in a keyed statement
+        return slotCounterpart(vm, site, wm, candidate);
     }
 
     /**
@@ -154,6 +327,14 @@ public final class SiteMatch {
         Object c = constantOf(site);
         Object d = constantOf(in);
         return c != null && d != null && !(c instanceof Type) && c.getClass() == d.getClass();
+    }
+
+    /** a read of a value: a call returning one (no constructor), or a GETFIELD / GETSTATIC */
+    public static boolean valueRead(AbstractInsnNode in) {
+        if (in instanceof MethodInsnNode mi) {
+            return !mi.name.equals("<init>") && Type.getReturnType(mi.desc).getSort() != Type.VOID;
+        }
+        return in instanceof FieldInsnNode && (in.getOpcode() == Opcodes.GETFIELD || in.getOpcode() == Opcodes.GETSTATIC);
     }
 
     /** some neighbour within k is a call, field access, type instruction, constant or invokedynamic */

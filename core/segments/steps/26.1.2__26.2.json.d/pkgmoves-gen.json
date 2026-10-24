@@ -210,12 +210,357 @@
   "net/minecraft/world/level/levelgen/feature/DripstoneClusterFeature": "net/minecraft/world/level/levelgen/feature/SpeleothemClusterFeature",
   "net/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/SpeleothemClusterConfiguration"
  },
+ "methodRenames": {
+  "com/mojang/blaze3d/pipeline/RenderPipeline$UniformDescription.textureFormat()Lcom/mojang/blaze3d/textures/TextureFormat;": "gpuFormat",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getVertexFormatMode()Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;": "getPrimitiveTopology",
+  "com/mojang/blaze3d/platform/Monitor.getCurrentMode()Lcom/mojang/blaze3d/platform/VideoMode;": "currentMode",
+  "com/mojang/blaze3d/platform/Monitor.getMode(I)Lcom/mojang/blaze3d/platform/VideoMode;": "mode",
+  "com/mojang/blaze3d/platform/Monitor.getModeCount()I": "modeCount",
+  "com/mojang/blaze3d/platform/Monitor.getMonitor()J": "monitor",
+  "com/mojang/blaze3d/platform/Monitor.getVideoModeIndex(Lcom/mojang/blaze3d/platform/VideoMode;)I": "indexOfMode",
+  "com/mojang/blaze3d/platform/Monitor.getX()I": "x",
+  "com/mojang/blaze3d/platform/Monitor.getY()I": "y",
+  "com/mojang/blaze3d/platform/ScreenManager.shutdown()V": "close",
+  "com/mojang/blaze3d/vertex/MeshData$DrawState.mode()Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;": "primitiveTopology",
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer.copyToHeap(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/buffers/GpuBuffer;JJJ)V": "copyTo",
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer.getStagingBuffer()Ljava/nio/ByteBuffer;": "getWriteBuffer",
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer.copyToHeap(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/buffers/GpuBuffer;JJJ)V": "copyTo",
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer.getStagingBuffer()Ljava/nio/ByteBuffer;": "getWriteBuffer",
+  "net/minecraft/CrashReportCategory$Entry.getKey()Ljava/lang/String;": "key",
+  "net/minecraft/CrashReportCategory$Entry.getValue()Ljava/lang/String;": "value",
+  "net/minecraft/client/gui/font/GlyphRenderTypes.createForIntensityTexture(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/gui/font/GlyphRenderTypes;": "createForGrayscaleTexture",
+  "net/minecraft/client/renderer/GameRenderer.getBossOverlayWorldDarkening(F)F": "bossOverlayWorldDarkening",
+  "net/minecraft/client/renderer/GameRenderer.getFeatureRenderDispatcher()Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher;": "featureRenderDispatcher",
+  "net/minecraft/client/renderer/GameRenderer.getGameRenderState()Lnet/minecraft/client/renderer/state/GameRenderState;": "gameRenderState",
+  "net/minecraft/client/renderer/GameRenderer.getLighting()Lcom/mojang/blaze3d/platform/Lighting;": "lighting",
+  "net/minecraft/client/renderer/GameRenderer.getMainCamera()Lnet/minecraft/client/Camera;": "mainCamera",
+  "net/minecraft/client/renderer/GameRenderer.getNightVisionScale(Lnet/minecraft/world/entity/LivingEntity;F)F": "nightVisionScale",
+  "net/minecraft/client/renderer/GameRenderer.getPanorama()Lnet/minecraft/client/renderer/Panorama;": "panorama",
+  "net/minecraft/client/renderer/LevelRenderer.collectPerFrameGizmos()Lnet/minecraft/gizmos/Gizmos$TemporaryCollection;": "collectPerFrameRenderThreadGizmos",
+  "net/minecraft/client/renderer/LevelRenderer.getCloudRenderer()Lnet/minecraft/client/renderer/CloudRenderer;": "cloudRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.getCloudsTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;": "cloudsTarget",
+  "net/minecraft/client/renderer/LevelRenderer.getItemEntityTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;": "itemEntityTarget",
+  "net/minecraft/client/renderer/LevelRenderer.getParticlesTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;": "particlesTarget",
+  "net/minecraft/client/renderer/LevelRenderer.getSectionOcclusionGraph()Lnet/minecraft/client/renderer/SectionOcclusionGraph;": "sectionOcclusionGraph",
+  "net/minecraft/client/renderer/LevelRenderer.getSectionRenderDispatcher()Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;": "sectionRenderDispatcher",
+  "net/minecraft/client/renderer/LevelRenderer.getTranslucentTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;": "translucentTarget",
+  "net/minecraft/client/renderer/LevelRenderer.getVisibleSections()Lit/unimi/dsi/fastutil/objects/ObjectArrayList;": "visibleSections",
+  "net/minecraft/client/renderer/LevelRenderer.getWeatherTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;": "weatherTarget",
+  "net/minecraft/client/renderer/SectionOcclusionGraph$GraphState.events()Lnet/minecraft/client/renderer/SectionOcclusionGraph$GraphEvents;": "sectionsToPropagateFrom",
+  "net/minecraft/client/renderer/SubmitNodeCollection.submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V": "submitQuadParticleGroup",
+  "net/minecraft/client/renderer/SubmitNodeStorage.submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V": "submitQuadParticleGroup",
+  "net/minecraft/client/renderer/rendertype/RenderType.mode()Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;": "primitiveTopology",
+  "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensity(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderType;": "textGrayscale",
+  "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensityPolygonOffset(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderType;": "textGrayscalePolygonOffset",
+  "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensitySeeThrough(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderType;": "textGrayscaleSeeThrough",
+  "net/minecraft/client/renderer/rendertype/TextureTransform.getMatrix()Lorg/joml/Matrix4f;": "createMatrix",
+  "net/minecraft/commands/arguments/ColorArgument.color()Lnet/minecraft/commands/arguments/ColorArgument;": "teamColor",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getCollisionRule()Lnet/minecraft/world/scores/Team$CollisionRule;": "collisionRule",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getDisplayName()Lnet/minecraft/network/chat/Component;": "displayName",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getPlayerPrefix()Lnet/minecraft/network/chat/Component;": "playerPrefix",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getPlayerSuffix()Lnet/minecraft/network/chat/Component;": "playerSuffix",
+  "net/minecraft/server/PlayerAdvancements.stopListening()V": "clearTriggers",
+  "net/minecraft/server/level/PlayerSpawnFinder.getOverworldRespawnPos(Lnet/minecraft/server/level/ServerLevel;II)Lnet/minecraft/core/BlockPos;": "getLevelRespawnPos",
+  "net/minecraft/world/effect/HealOrHarmMobEffect.applyInstantenousEffect(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;ID)V": "applyInstantaneousEffect",
+  "net/minecraft/world/effect/MobEffect.applyInstantenousEffect(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;ID)V": "applyInstantaneousEffect",
+  "net/minecraft/world/effect/MobEffect.isInstantenous()Z": "isInstantaneous",
+  "net/minecraft/world/level/block/PointedDripstoneBlock.canDrip(Lnet/minecraft/world/level/block/state/BlockState;)Z": "isFreeHangingStalactite",
+  "net/minecraft/world/level/chunk/ChunkAccess.markPosForPostprocessing(Lnet/minecraft/core/BlockPos;)V": "markPosForPostProcessing",
+  "net/minecraft/world/level/chunk/ProtoChunk.markPosForPostprocessing(Lnet/minecraft/core/BlockPos;)V": "markPosForPostProcessing",
+  "net/minecraft/world/level/levelgen/DensityFunctions$BlendDensity.input()Lnet/minecraft/world/level/levelgen/DensityFunction;": "wrapped",
+  "net/minecraft/world/level/levelgen/SurfaceRules.noiseCondition(Lnet/minecraft/resources/ResourceKey;D)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource;": "noiseCondition2d",
+  "net/minecraft/world/level/levelgen/SurfaceRules.noiseCondition(Lnet/minecraft/resources/ResourceKey;DD)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource;": "noiseCondition2d",
+  "net/minecraft/world/level/lighting/LightEngine.getLightBlockInto(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;I)I": "getLightDampeningInto"
+ },
+ "fieldRenames": {
+  "com/mojang/blaze3d/opengl/GlBuffer.MEMORY_POOl:Lcom/mojang/jtracy/MemoryPool;": "MEMORY_POOL",
+  "net/minecraft/client/renderer/RenderPipelines.GUI_TEXT_INTENSITY:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "GUI_TEXT_GRAYSCALE",
+  "net/minecraft/util/profiling/jfr/JvmProfiler$NoOpProfiler.noOpCommit:Lnet/minecraft/util/profiling/jfr/callback/ProfiledDuration;": "NO_OP_COMMIT",
+  "net/minecraft/world/level/block/state/properties/BlockStateProperties.DRIPSTONE_THICKNESS:Lnet/minecraft/world/level/block/state/properties/EnumProperty;": "SPELEOTHEM_THICKNESS",
+  "net/minecraft/world/level/levelgen/feature/Feature.DRIPSTONE_CLUSTER:Lnet/minecraft/world/level/levelgen/feature/Feature;": "SPELEOTHEM_CLUSTER",
+  "net/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration.CAN_PLACE_BELOW_OVERWORLD_TRUNKS:Lnet/minecraft/world/level/levelgen/blockpredicates/BlockPredicate;": "CAN_PLACE_BELOW_TREE_TRUNKS",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/BlackstoneReplaceProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/BlockRotProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/CappedProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/GravityProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/JigsawReplacementProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/LavaSubmergedBlockProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/NopProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "MAP_CODEC"
+ },
+ "overrideRenames": [
+  {
+   "old": "getVertexFormatMode()Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;",
+   "new": "getPrimitiveTopology",
+   "onlyUnder": "com/mojang/blaze3d/pipeline/RenderPipeline",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: com/mojang/blaze3d/pipeline/RenderPipeline.getVertexFormatMode is com/mojang/blaze3d/pipeline/RenderPipeline.getPrimitiveTopology on W (named in a body that is the same code (1 site(s), strength 2, in com/mojang/blaze3d/pipeline/RenderPipeline))"
+  },
+  {
+   "old": "shutdown()V",
+   "new": "close",
+   "onlyUnder": "com/mojang/blaze3d/platform/ScreenManager",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: com/mojang/blaze3d/platform/ScreenManager.shutdown is com/mojang/blaze3d/platform/MonitorManager.close on W (same code (1 site(s), strength 3, in com/mojang/blaze3d/platform/ScreenManager))"
+  },
+  {
+   "old": "copyToHeap(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/buffers/GpuBuffer;JJJ)V",
+   "new": "copyTo",
+   "onlyUnder": "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer.copyToHeap is com/mojang/blaze3d/vertex/StagingBuffer$Cpu.copyTo on W (same code (1 site(s), strength 4, in com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer))"
+  },
+  {
+   "old": "getStagingBuffer()Ljava/nio/ByteBuffer;",
+   "new": "getWriteBuffer",
+   "onlyUnder": "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer.getStagingBuffer is com/mojang/blaze3d/vertex/StagingBuffer$Cpu.getWriteBuffer on W (same code (1 site(s), strength 1, in com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer))"
+  },
+  {
+   "old": "copyToHeap(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/buffers/GpuBuffer;JJJ)V",
+   "new": "copyTo",
+   "onlyUnder": "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer.copyToHeap is com/mojang/blaze3d/vertex/StagingBuffer$PersistentlyMapped.copyTo on W (same code (1 site(s), strength 4, in com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer))"
+  },
+  {
+   "old": "getStagingBuffer()Ljava/nio/ByteBuffer;",
+   "new": "getWriteBuffer",
+   "onlyUnder": "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer.getStagingBuffer is com/mojang/blaze3d/vertex/StagingBuffer$PersistentlyMapped.getWriteBuffer on W (same code (1 site(s), strength 1, in com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer))"
+  },
+  {
+   "old": "getKey()Ljava/lang/String;",
+   "new": "key",
+   "onlyUnder": "net/minecraft/CrashReportCategory$Entry",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/CrashReportCategory$Entry.getKey is net/minecraft/CrashReportCategory$Entry.key on W (same code (1 site(s), strength 1, in net/minecraft/CrashReportCategory$Entry))"
+  },
+  {
+   "old": "getValue()Ljava/lang/String;",
+   "new": "value",
+   "onlyUnder": "net/minecraft/CrashReportCategory$Entry",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/CrashReportCategory$Entry.getValue is net/minecraft/CrashReportCategory$Entry.value on W (same code (1 site(s), strength 1, in net/minecraft/CrashReportCategory$Entry))"
+  },
+  {
+   "old": "getBossOverlayWorldDarkening(F)F",
+   "new": "bossOverlayWorldDarkening",
+   "onlyUnder": "net/minecraft/client/renderer/GameRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/GameRenderer.getBossOverlayWorldDarkening is net/minecraft/client/renderer/GameRenderer.bossOverlayWorldDarkening on W (named in a kept body that is the same code (2 site(s), strength 17, in net/minecraft/client/renderer/GameRenderer))"
+  },
+  {
+   "old": "getFeatureRenderDispatcher()Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher;",
+   "new": "featureRenderDispatcher",
+   "onlyUnder": "net/minecraft/client/renderer/GameRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/GameRenderer.getFeatureRenderDispatcher is net/minecraft/client/renderer/GameRenderer.featureRenderDispatcher on W (same code (1 site(s), strength 1, in net/minecraft/client/renderer/GameRenderer))"
+  },
+  {
+   "old": "getGameRenderState()Lnet/minecraft/client/renderer/state/GameRenderState;",
+   "new": "gameRenderState",
+   "onlyUnder": "net/minecraft/client/renderer/GameRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/GameRenderer.getGameRenderState is net/minecraft/client/renderer/GameRenderer.gameRenderState on W (named in a kept body that is the same code (7 site(s), strength 68, in net/minecraft/client/renderer/GameRenderer))"
+  },
+  {
+   "old": "getLighting()Lcom/mojang/blaze3d/platform/Lighting;",
+   "new": "lighting",
+   "onlyUnder": "net/minecraft/client/renderer/GameRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/GameRenderer.getLighting is net/minecraft/client/renderer/GameRenderer.lighting on W (named in a kept body that is the same code (3 site(s), strength 106, in net/minecraft/client/renderer/GameRenderer))"
+  },
+  {
+   "old": "getMainCamera()Lnet/minecraft/client/Camera;",
+   "new": "mainCamera",
+   "onlyUnder": "net/minecraft/client/renderer/GameRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/GameRenderer.getMainCamera is net/minecraft/client/renderer/GameRenderer.mainCamera on W (named in a kept body that is the same code (12 site(s), strength 93, in net/minecraft/client/renderer/GameRenderer))"
+  },
+  {
+   "old": "getPanorama()Lnet/minecraft/client/renderer/Panorama;",
+   "new": "panorama",
+   "onlyUnder": "net/minecraft/client/renderer/GameRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/GameRenderer.getPanorama is net/minecraft/client/renderer/GameRenderer.panorama on W (same code (1 site(s), strength 1, in net/minecraft/client/renderer/GameRenderer))"
+  },
+  {
+   "old": "collectPerFrameGizmos()Lnet/minecraft/gizmos/Gizmos$TemporaryCollection;",
+   "new": "collectPerFrameRenderThreadGizmos",
+   "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.collectPerFrameGizmos is net/minecraft/client/renderer/LevelRenderer.collectPerFrameRenderThreadGizmos on W (same code (1 site(s), strength 1, in net/minecraft/client/renderer/LevelRenderer))"
+  },
+  {
+   "old": "getCloudRenderer()Lnet/minecraft/client/renderer/CloudRenderer;",
+   "new": "cloudRenderer",
+   "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.getCloudRenderer is net/minecraft/client/renderer/LevelRenderer.cloudRenderer on W (same code (1 site(s), strength 1, in net/minecraft/client/renderer/LevelRenderer))"
+  },
+  {
+   "old": "getCloudsTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;",
+   "new": "cloudsTarget",
+   "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.getCloudsTarget is net/minecraft/client/renderer/LevelRenderer.cloudsTarget on W (same code (1 site(s), strength 6, in net/minecraft/client/renderer/LevelRenderer))"
+  },
+  {
+   "old": "getItemEntityTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;",
+   "new": "itemEntityTarget",
+   "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.getItemEntityTarget is net/minecraft/client/renderer/LevelRenderer.itemEntityTarget on W (same code (1 site(s), strength 6, in net/minecraft/client/renderer/LevelRenderer))"
+  },
+  {
+   "old": "getParticlesTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;",
+   "new": "particlesTarget",
+   "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.getParticlesTarget is net/minecraft/client/renderer/LevelRenderer.particlesTarget on W (same code (1 site(s), strength 6, in net/minecraft/client/renderer/LevelRenderer))"
+  },
+  {
+   "old": "getSectionOcclusionGraph()Lnet/minecraft/client/renderer/SectionOcclusionGraph;",
+   "new": "sectionOcclusionGraph",
+   "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.getSectionOcclusionGraph is net/minecraft/client/renderer/LevelRenderer.sectionOcclusionGraph on W (same code (3 site(s), strength 93, in net/minecraft/client/renderer/LevelRenderer))"
+  },
+  {
+   "old": "getSectionRenderDispatcher()Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;",
+   "new": "sectionRenderDispatcher",
+   "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.getSectionRenderDispatcher is net/minecraft/client/renderer/LevelRenderer.sectionRenderDispatcher on W (same code (1 site(s), strength 1, in net/minecraft/client/renderer/LevelRenderer))"
+  },
+  {
+   "old": "getTranslucentTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;",
+   "new": "translucentTarget",
+   "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.getTranslucentTarget is net/minecraft/client/renderer/LevelRenderer.translucentTarget on W (same code (1 site(s), strength 6, in net/minecraft/client/renderer/LevelRenderer))"
+  },
+  {
+   "old": "getVisibleSections()Lit/unimi/dsi/fastutil/objects/ObjectArrayList;",
+   "new": "visibleSections",
+   "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.getVisibleSections is net/minecraft/client/renderer/LevelRenderer.visibleSections on W (same code (2 site(s), strength 93, in net/minecraft/client/renderer/LevelRenderer))"
+  },
+  {
+   "old": "getWeatherTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;",
+   "new": "weatherTarget",
+   "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.getWeatherTarget is net/minecraft/client/renderer/LevelRenderer.weatherTarget on W (same code (1 site(s), strength 6, in net/minecraft/client/renderer/LevelRenderer))"
+  },
+  {
+   "old": "submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V",
+   "new": "submitQuadParticleGroup",
+   "onlyUnder": "net/minecraft/client/renderer/SubmitNodeCollection",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/SubmitNodeCollection.submitParticleGroup is net/minecraft/client/renderer/SubmitNodeCollection.submitQuadParticleGroup on W (named in a body that is the same code (1 site(s), strength 1, in net/minecraft/client/renderer/SubmitNodeCollection))"
+  },
+  {
+   "old": "submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V",
+   "new": "submitQuadParticleGroup",
+   "onlyUnder": "net/minecraft/client/renderer/SubmitNodeStorage",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/SubmitNodeStorage.submitParticleGroup is net/minecraft/client/renderer/SubmitNodeStorage.submitQuadParticleGroup on W (same code (1 site(s), strength 1, in net/minecraft/client/renderer/SubmitNodeStorage))"
+  },
+  {
+   "old": "mode()Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;",
+   "new": "primitiveTopology",
+   "onlyUnder": "net/minecraft/client/renderer/rendertype/RenderType",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/rendertype/RenderType.mode is net/minecraft/client/renderer/rendertype/RenderType.primitiveTopology on W (same code (1 site(s), strength 2, in net/minecraft/client/renderer/rendertype/RenderType))"
+  },
+  {
+   "old": "getMatrix()Lorg/joml/Matrix4f;",
+   "new": "createMatrix",
+   "onlyUnder": "net/minecraft/client/renderer/rendertype/TextureTransform",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/client/renderer/rendertype/TextureTransform.getMatrix is net/minecraft/client/renderer/rendertype/TextureTransform.createMatrix on W (same code (1 site(s), strength 3, in net/minecraft/client/renderer/rendertype/TextureTransform))"
+  },
+  {
+   "old": "getCollisionRule()Lnet/minecraft/world/scores/Team$CollisionRule;",
+   "new": "collisionRule",
+   "onlyUnder": "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getCollisionRule is net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.collisionRule on W (same code (1 site(s), strength 1, in net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters))"
+  },
+  {
+   "old": "getDisplayName()Lnet/minecraft/network/chat/Component;",
+   "new": "displayName",
+   "onlyUnder": "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getDisplayName is net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.displayName on W (same code (1 site(s), strength 1, in net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters))"
+  },
+  {
+   "old": "getPlayerPrefix()Lnet/minecraft/network/chat/Component;",
+   "new": "playerPrefix",
+   "onlyUnder": "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getPlayerPrefix is net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.playerPrefix on W (same code (1 site(s), strength 1, in net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters))"
+  },
+  {
+   "old": "getPlayerSuffix()Lnet/minecraft/network/chat/Component;",
+   "new": "playerSuffix",
+   "onlyUnder": "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getPlayerSuffix is net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.playerSuffix on W (same code (1 site(s), strength 1, in net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters))"
+  },
+  {
+   "old": "stopListening()V",
+   "new": "clearTriggers",
+   "onlyUnder": "net/minecraft/server/PlayerAdvancements",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/server/PlayerAdvancements.stopListening is net/minecraft/server/PlayerAdvancements.clearTriggers on W (named in a kept body that is the same code (2 site(s), strength 48, in net/minecraft/server/PlayerAdvancements))"
+  },
+  {
+   "old": "applyInstantenousEffect(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;ID)V",
+   "new": "applyInstantaneousEffect",
+   "onlyUnder": "net/minecraft/world/effect/HealOrHarmMobEffect",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/world/effect/HealOrHarmMobEffect.applyInstantenousEffect is net/minecraft/world/effect/HealOrHarmMobEffect.applyInstantaneousEffect on W (same code (1 site(s), strength 11, in net/minecraft/world/effect/HealOrHarmMobEffect))"
+  },
+  {
+   "old": "applyInstantenousEffect(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;ID)V",
+   "new": "applyInstantaneousEffect",
+   "onlyUnder": "net/minecraft/world/effect/MobEffect",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/world/effect/MobEffect.applyInstantenousEffect is net/minecraft/world/effect/MobEffect.applyInstantaneousEffect on W (same code (3 site(s), strength 84, in net/minecraft/world/effect/MobEffect))"
+  },
+  {
+   "old": "isInstantenous()Z",
+   "new": "isInstantaneous",
+   "onlyUnder": "net/minecraft/world/effect/MobEffect",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/world/effect/MobEffect.isInstantenous is net/minecraft/world/effect/MobEffect.isInstantaneous on W (same code (5 site(s), strength 84, in net/minecraft/world/effect/MobEffect))"
+  },
+  {
+   "old": "markPosForPostprocessing(Lnet/minecraft/core/BlockPos;)V",
+   "new": "markPosForPostProcessing",
+   "onlyUnder": "net/minecraft/world/level/chunk/ChunkAccess",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/world/level/chunk/ChunkAccess.markPosForPostprocessing is net/minecraft/world/level/chunk/ChunkAccess.markPosForPostProcessing on W (named in a body that is the same code (9 site(s), strength 48, in net/minecraft/world/level/chunk/ChunkAccess))"
+  },
+  {
+   "old": "markPosForPostprocessing(Lnet/minecraft/core/BlockPos;)V",
+   "new": "markPosForPostProcessing",
+   "onlyUnder": "net/minecraft/world/level/chunk/ProtoChunk",
+   "superCalls": "rename",
+   "basis": "wall_table.py --identity: net/minecraft/world/level/chunk/ProtoChunk.markPosForPostprocessing is net/minecraft/world/level/chunk/ProtoChunk.markPosForPostProcessing on W (same code (1 site(s), strength 7, in net/minecraft/world/level/chunk/ProtoChunk))"
+  }
+ ],
  "_pkgmoves_check": {
   "com/mojang/blaze3d/pipeline/RenderPipeline$UniformDescription": {
    "to": "com/mojang/blaze3d/pipeline/BindGroupLayout$UniformDescription",
    "kept": 8,
-   "missing": [
-    "textureFormat()Lcom/mojang/blaze3d/textures/TextureFormat;"
+   "renamed": [
+    "textureFormat()Lcom/mojang/blaze3d/textures/TextureFormat; -> gpuFormat"
    ],
    "basis": "members 5.0/6 vs 6 (dice 0.83, 2nd 0.50), body votes 0/0"
   },
@@ -404,7 +749,7 @@
   "net/minecraft/advancements/criterion/CollectionPredicate": {
    "to": "net/minecraft/advancements/predicates/CollectionPredicate",
    "kept": 9,
-   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.30), body votes 0/0"
+   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.20), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/ConstructBeaconTrigger": {
    "to": "net/minecraft/advancements/triggers/ConstructBeaconTrigger",
@@ -464,7 +809,7 @@
   "net/minecraft/advancements/criterion/DataComponentMatchers": {
    "to": "net/minecraft/advancements/predicates/DataComponentMatchers",
    "kept": 11,
-   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.11), body votes 0/0"
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.10), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/DataComponentMatchers$Builder": {
    "to": "net/minecraft/advancements/predicates/DataComponentMatchers$Builder",
@@ -591,7 +936,7 @@
    "missing": [
     "subPredicate(Lnet/minecraft/advancements/criterion/EntitySubPredicate;)Lnet/minecraft/advancements/criterion/EntityPredicate$Builder;"
    ],
-   "basis": "members 22.0/41 vs 32 (dice 0.60, 2nd 0.22), body votes 2/2"
+   "basis": "members 23.0/41 vs 32 (dice 0.63, 2nd 0.22), body votes 2/2"
   },
   "net/minecraft/advancements/criterion/EntitySubPredicate": {
    "to": "net/minecraft/advancements/predicates/entity/EntitySubPredicate",
@@ -719,7 +1064,7 @@
   "net/minecraft/advancements/criterion/ItemPredicate": {
    "to": "net/minecraft/advancements/predicates/ItemPredicate",
    "kept": 9,
-   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.11), body votes 6/7"
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.10), body votes 6/7"
   },
   "net/minecraft/advancements/criterion/ItemPredicate$Builder": {
    "to": "net/minecraft/advancements/predicates/ItemPredicate$Builder",
@@ -798,7 +1143,7 @@
   "net/minecraft/advancements/criterion/LocationPredicate": {
    "to": "net/minecraft/advancements/predicates/LocationPredicate",
    "kept": 15,
-   "basis": "members 19.0/19 vs 19 (dice 1.00, 2nd 0.08), body votes 0/0"
+   "basis": "members 19.0/19 vs 19 (dice 1.00, 2nd 0.18), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/LocationPredicate$Builder": {
    "to": "net/minecraft/advancements/predicates/LocationPredicate$Builder",
@@ -923,12 +1268,12 @@
   "net/minecraft/advancements/criterion/PlayerPredicate$AdvancementCriterionsPredicate": {
    "to": "net/minecraft/advancements/predicates/entity/PlayerPredicate$AdvancementCriterionsPredicate",
    "kept": 6,
-   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.20), body votes 0/0"
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.17), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/PlayerPredicate$AdvancementDonePredicate": {
    "to": "net/minecraft/advancements/predicates/entity/PlayerPredicate$AdvancementDonePredicate",
    "kept": 6,
-   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.20), body votes 0/0"
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.17), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/PlayerPredicate$AdvancementPredicate": {
    "to": "net/minecraft/advancements/predicates/entity/PlayerPredicate$AdvancementPredicate",
@@ -1085,7 +1430,7 @@
   "net/minecraft/advancements/criterion/StatePropertiesPredicate$PropertyMatcher": {
    "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$PropertyMatcher",
    "kept": 8,
-   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.40), body votes 0/0"
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.60), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/StatePropertiesPredicate$RangedMatcher": {
    "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$RangedMatcher",
@@ -1180,7 +1525,7 @@
   "net/minecraft/client/gui/Gui$1DisplayEntry": {
    "to": "net/minecraft/client/gui/Hud$1DisplayEntry",
    "kept": 7,
-   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.40), body votes 0/0"
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.20), body votes 0/0"
   },
   "net/minecraft/client/gui/Gui$ContextualInfo": {
    "to": "net/minecraft/client/gui/Hud$ContextualInfo",
@@ -1215,7 +1560,7 @@
   "net/minecraft/client/gui/contextualbar/LocatorBarRenderer": {
    "to": "net/minecraft/client/gui/contextualbar/LocatorBar",
    "kept": 3,
-   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.02), body votes 0/0"
+   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.05), body votes 0/0"
   },
   "net/minecraft/client/renderer/LevelRenderer$BrightnessGetter": {
    "to": "net/minecraft/util/LightCoordsUtil$BrightnessGetter",
@@ -1237,12 +1582,12 @@
    "missing": [
     "<init>(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/renderer/SubmitNodeCollector$CustomGeometryRenderer;)V"
    ],
-   "basis": "members 4.0/4 vs 8 (dice 0.67, 2nd 0.36), body votes 0/0"
+   "basis": "members 4.0/4 vs 8 (dice 0.67, 2nd 0.27), body votes 0/0"
   },
   "net/minecraft/client/renderer/SubmitNodeStorage$FlameSubmit": {
    "to": "net/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit",
    "kept": 7,
-   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.18), body votes 0/0"
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.24), body votes 0/0"
   },
   "net/minecraft/client/renderer/SubmitNodeStorage$ItemSubmit": {
    "to": "net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit",
@@ -1252,7 +1597,7 @@
   "net/minecraft/client/renderer/SubmitNodeStorage$LeashSubmit": {
    "to": "net/minecraft/client/renderer/feature/LeashFeatureRenderer$Submit",
    "kept": 6,
-   "basis": "members 4.0/4 vs 5 (dice 0.89, 2nd 0.22), body votes 0/0"
+   "basis": "members 4.0/4 vs 5 (dice 0.89, 2nd 0.25), body votes 0/0"
   },
   "net/minecraft/client/renderer/SubmitNodeStorage$ModelSubmit": {
    "to": "net/minecraft/client/renderer/feature/ModelFeatureRenderer$Submit",
@@ -1275,7 +1620,7 @@
   "net/minecraft/client/renderer/SubmitNodeStorage$ShadowSubmit": {
    "to": "net/minecraft/client/renderer/feature/ShadowFeatureRenderer$Submit",
    "kept": 7,
-   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.17), body votes 0/0"
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.24), body votes 0/0"
   },
   "net/minecraft/client/renderer/chunk/CompileTaskDynamicQueue": {
    "to": "net/minecraft/client/renderer/chunk/SectionTaskDynamicQueue",
@@ -1309,7 +1654,7 @@
     "getColor(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/ChatFormatting;",
     "parse(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/ChatFormatting;"
    ],
-   "basis": "members 5.5/7 vs 7 (dice 0.79, 2nd 0.06), body votes 0/0"
+   "basis": "members 5.5/7 vs 7 (dice 0.79, 2nd 0.00), body votes 0/0"
   },
   "net/minecraft/util/CubicSpline$1Point": {
    "to": "net/minecraft/util/CubicSpline$Multipoint$Point",
@@ -1408,6 +1753,11 @@
   }
  },
  "_pkgmoves_member_renames": {
+  "com/mojang/blaze3d/opengl/GlBuffer.MEMORY_POOl": "MEMORY_POOL",
+  "com/mojang/blaze3d/opengl/GlConst$1.$SwitchMap$com$mojang$blaze3d$vertex$VertexFormat$IndexType": "$SwitchMap$com$mojang$blaze3d$IndexType",
+  "com/mojang/blaze3d/opengl/GlConst$1.$SwitchMap$com$mojang$blaze3d$vertex$VertexFormat$Mode": "$SwitchMap$com$mojang$blaze3d$PrimitiveTopology",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.vertexFormatMode": "primitiveTopology",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$UniformDescription.textureFormat": "gpuFormat",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getVertexFormatMode": "getPrimitiveTopology",
   "com/mojang/blaze3d/platform/Monitor.getCurrentMode": "currentMode",
   "com/mojang/blaze3d/platform/Monitor.getMode": "mode",
@@ -1417,14 +1767,30 @@
   "com/mojang/blaze3d/platform/Monitor.getX": "x",
   "com/mojang/blaze3d/platform/Monitor.getY": "y",
   "com/mojang/blaze3d/platform/ScreenManager.shutdown": "close",
+  "com/mojang/blaze3d/platform/Window.screenManager": "monitorManager",
+  "com/mojang/blaze3d/systems/RenderSystem$1.$SwitchMap$com$mojang$blaze3d$vertex$VertexFormat$IndexType": "$SwitchMap$com$mojang$blaze3d$IndexType",
+  "com/mojang/blaze3d/systems/RenderSystem$1.$SwitchMap$com$mojang$blaze3d$vertex$VertexFormat$Mode": "$SwitchMap$com$mojang$blaze3d$PrimitiveTopology",
+  "com/mojang/blaze3d/textures/TextureFormat.DEPTH32": "D32_FLOAT",
+  "com/mojang/blaze3d/textures/TextureFormat.RED8": "R8_UNORM",
+  "com/mojang/blaze3d/textures/TextureFormat.RGBA8": "RGBA8_UNORM",
+  "com/mojang/blaze3d/vertex/BufferBuilder.mode": "primitiveTopology",
+  "com/mojang/blaze3d/vertex/ByteBufferBuilder$Result.capacity": "size",
+  "com/mojang/blaze3d/vertex/MeshData$1.$SwitchMap$com$mojang$blaze3d$vertex$VertexFormat$IndexType": "$SwitchMap$com$mojang$blaze3d$IndexType",
+  "com/mojang/blaze3d/vertex/MeshData$DrawState.mode": "primitiveTopology",
   "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer.copyToHeap": "copyTo",
   "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer.getStagingBuffer": "getWriteBuffer",
   "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer.copyToHeap": "copyTo",
   "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer.getStagingBuffer": "getWriteBuffer",
+  "com/mojang/realmsclient/RealmsMainScreen.access$2600": "access$2700",
+  "com/mojang/realmsclient/RealmsMainScreen.access$2700": "access$2800",
   "net/minecraft/CrashReportCategory$Entry.getKey": "key",
   "net/minecraft/CrashReportCategory$Entry.getValue": "value",
+  "net/minecraft/advancements/criterion/EntityPredicate$Builder.subPredicate": "lightingBolt",
+  "net/minecraft/client/gui/Gui.SAVING_TEXT": "SAVING_LEVEL",
   "net/minecraft/client/gui/font/GlyphRenderTypes.createForIntensityTexture": "createForGrayscaleTexture",
   "net/minecraft/client/gui/render/GuiRenderer$1.accept": "acceptRenderable",
+  "net/minecraft/client/multiplayer/ClientChunkCache$Storage.addEmptySections": "onChunkAdded",
+  "net/minecraft/client/multiplayer/ClientChunkCache$Storage.dropEmptySections": "onChunkRemoved",
   "net/minecraft/client/renderer/GameRenderer.getBossOverlayWorldDarkening": "bossOverlayWorldDarkening",
   "net/minecraft/client/renderer/GameRenderer.getFeatureRenderDispatcher": "featureRenderDispatcher",
   "net/minecraft/client/renderer/GameRenderer.getGameRenderState": "gameRenderState",
@@ -1432,6 +1798,7 @@
   "net/minecraft/client/renderer/GameRenderer.getMainCamera": "mainCamera",
   "net/minecraft/client/renderer/GameRenderer.getNightVisionScale": "nightVisionScale",
   "net/minecraft/client/renderer/GameRenderer.getPanorama": "panorama",
+  "net/minecraft/client/renderer/GameRenderer.submitNodeStorage": "handAndScreenSubmitNodeStorage",
   "net/minecraft/client/renderer/LevelRenderer.collectPerFrameGizmos": "collectPerFrameRenderThreadGizmos",
   "net/minecraft/client/renderer/LevelRenderer.collectedGizmos": "renderThreadGizmos",
   "net/minecraft/client/renderer/LevelRenderer.getCloudRenderer": "cloudRenderer",
@@ -1444,9 +1811,14 @@
   "net/minecraft/client/renderer/LevelRenderer.getVisibleSections": "visibleSections",
   "net/minecraft/client/renderer/LevelRenderer.getWeatherTarget": "weatherTarget",
   "net/minecraft/client/renderer/RenderPipelines.GUI_TEXT_INTENSITY": "GUI_TEXT_GRAYSCALE",
+  "net/minecraft/client/renderer/SectionOcclusionGraph$GraphState.events": "sectionsToPropagateFrom",
   "net/minecraft/client/renderer/SubmitNodeCollection.submitParticleGroup": "submitQuadParticleGroup",
   "net/minecraft/client/renderer/SubmitNodeStorage.submitParticleGroup": "submitQuadParticleGroup",
+  "net/minecraft/client/renderer/chunk/SectionRenderDispatcher.compileQueue": "queue",
   "net/minecraft/client/renderer/rendertype/RenderType.mode": "primitiveTopology",
+  "net/minecraft/client/renderer/rendertype/RenderTypes.TEXT_INTENSITY": "TEXT_GRAYSCALE",
+  "net/minecraft/client/renderer/rendertype/RenderTypes.TEXT_INTENSITY_POLYGON_OFFSET": "TEXT_GRAYSCALE_POLYGON_OFFSET",
+  "net/minecraft/client/renderer/rendertype/RenderTypes.TEXT_INTENSITY_SEE_THROUGH": "TEXT_GRAYSCALE_SEE_THROUGH",
   "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensity": "textGrayscale",
   "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensityPolygonOffset": "textGrayscalePolygonOffset",
   "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensitySeeThrough": "textGrayscaleSeeThrough",
@@ -1458,18 +1830,41 @@
   "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getPlayerSuffix": "playerSuffix",
   "net/minecraft/references/BlockIds.createKey": "create",
   "net/minecraft/references/ItemIds.createKey": "create",
+  "net/minecraft/server/PlayerAdvancements.stopListening": "clearTriggers",
+  "net/minecraft/server/commands/PublishCommand.ERROR_ALREADY_PUBLISHED": "ERROR_ALREADY_PUBLISHED_LAN",
   "net/minecraft/server/commands/TeamCommand.lambda$setNametagVisibility$0": "lambda$setNameTagVisibility$0",
   "net/minecraft/server/commands/TeamCommand.setNametagVisibility": "setNameTagVisibility",
   "net/minecraft/server/level/PlayerSpawnFinder.getOverworldRespawnPos": "getLevelRespawnPos",
   "net/minecraft/server/level/WorldGenRegion.markPosForPostprocessing": "markPosForPostProcessing",
+  "net/minecraft/server/network/ServerGamePacketListenerImpl.detectRateSpam": "detectChatRateSpam",
+  "net/minecraft/util/NativeModuleLister.tryGetVersion": "tryGetModuleVersion",
+  "net/minecraft/util/Tuple.getA": "getFirst",
+  "net/minecraft/util/Tuple.getB": "getSecond",
+  "net/minecraft/util/profiling/jfr/JvmProfiler$NoOpProfiler.noOpCommit": "NO_OP_COMMIT",
   "net/minecraft/world/effect/HealOrHarmMobEffect.applyInstantenousEffect": "applyInstantaneousEffect",
   "net/minecraft/world/effect/MobEffect.applyInstantenousEffect": "applyInstantaneousEffect",
+  "net/minecraft/world/effect/MobEffect.isInstantenous": "isInstantaneous",
   "net/minecraft/world/entity/Entity.collectColliders": "collectCollidersIgnoringWorldBorder",
+  "net/minecraft/world/entity/monster/Ghast$GhastMoveControl.ghast": "mob",
+  "net/minecraft/world/level/block/PointedDripstoneBlock.canDrip": "isFreeHangingStalactite",
+  "net/minecraft/world/level/block/WeatheringCopper.lambda$static$1": "lambda$static$2",
+  "net/minecraft/world/level/block/state/properties/BlockStateProperties.DRIPSTONE_THICKNESS": "SPELEOTHEM_THICKNESS",
   "net/minecraft/world/level/chunk/ChunkAccess.markPosForPostprocessing": "markPosForPostProcessing",
   "net/minecraft/world/level/chunk/ProtoChunk.markPosForPostprocessing": "markPosForPostProcessing",
   "net/minecraft/world/level/levelgen/DensityFunctions$BlendDensity.input": "wrapped",
+  "net/minecraft/world/level/levelgen/SurfaceRules.noiseCondition": "noiseCondition2d",
+  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.getDripstoneHeight": "getSpeleothemHeight",
+  "net/minecraft/world/level/levelgen/feature/Feature.DRIPSTONE_CLUSTER": "SPELEOTHEM_CLUSTER",
   "net/minecraft/world/level/levelgen/feature/configurations/MultifaceGrowthConfiguration.apply": "validateBlock",
   "net/minecraft/world/level/levelgen/feature/configurations/MultifaceGrowthConfiguration.lambda$apply$0": "lambda$validateBlock$0",
+  "net/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration.CAN_PLACE_BELOW_OVERWORLD_TRUNKS": "CAN_PLACE_BELOW_TREE_TRUNKS",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/BlackstoneReplaceProcessor.CODEC": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/BlockRotProcessor.CODEC": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/CappedProcessor.CODEC": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/GravityProcessor.CODEC": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/JigsawReplacementProcessor.CODEC": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/LavaSubmergedBlockProcessor.CODEC": "MAP_CODEC",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/NopProcessor.CODEC": "MAP_CODEC",
   "net/minecraft/world/level/lighting/LightEngine.getLightBlockInto": "getLightDampeningInto"
  }
 }

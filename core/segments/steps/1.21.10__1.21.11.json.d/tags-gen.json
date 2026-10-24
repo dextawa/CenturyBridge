@@ -11,7 +11,15 @@
  "tagMap": {
   "entity_type minecraft:can_wear_horse_armor": {
    "to": "centurybridge:compat/1_21_10/can_wear_horse_armor",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_21_10/can_wear_horse_armor"
+   ]
+  },
+  "item minecraft:enchantable/sword": {
+   "to": "minecraft:enchantable/sword",
+   "mirror": [
+    "minecraft:enchantable/sweeping"
+   ]
   }
  }
 }

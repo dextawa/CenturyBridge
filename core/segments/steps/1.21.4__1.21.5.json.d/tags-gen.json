@@ -13,27 +13,31 @@
  "tagMap": {
   "block minecraft:big_dripleaf_placeable": {
    "to": "centurybridge:compat/1_21_4/big_dripleaf_placeable",
-   "mirror": false
+   "mirror": []
   },
   "block minecraft:mineable/axe": {
    "to": "centurybridge:compat/1_21_4/mineable/axe",
-   "mirror": false
+   "mirror": []
   },
   "block minecraft:mineable/hoe": {
    "to": "centurybridge:compat/1_21_4/mineable/hoe",
-   "mirror": false
+   "mirror": []
   },
   "block minecraft:sword_efficient": {
    "to": "centurybridge:compat/1_21_4/sword_efficient",
-   "mirror": false
+   "mirror": []
   },
   "damage_type minecraft:bypasses_shield": {
    "to": "centurybridge:compat/1_21_4/bypasses_shield",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_21_4/bypasses_shield"
+   ]
   },
   "worldgen/biome minecraft:has_structure/woodland_mansion": {
    "to": "centurybridge:compat/1_21_4/has_structure/woodland_mansion",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_21_4/has_structure/woodland_mansion"
+   ]
   }
  }
 }
