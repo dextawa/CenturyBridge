@@ -11,6 +11,8 @@
                      (AbstractCraftingMenu's); its super call goes through a super bridge where the 1.21.2 method
                      would land back in the mod's override
   superCtorReshapes  AbstractFurnaceMenu(.., recipeType, bookType, ..): the recipe property set 1.21.2 adds, by recipe type
+  ItemCombinerMenu   createInputSlotDefinitions / getSlotToQuickMoveTo calls, supers and overrides; its old constructor
+                     (CbItemCombiner, CbItemCombinerMenuMixin)
   classRenames       1.21.1 PlaceRecipe / ServerPlaceRecipe -> the layer's facades (1.21.1 bodies; 1.21.2 removed the one and
                      rebuilt the other as a private placer)
   Direct mod subclasses of RecipeBookMenu are s7rest's facade (it implements CbItemRecipeMenus.Legacy).
@@ -128,7 +130,37 @@ def main():
         "net/minecraft/class_2952": "top/dext/centurybridge/step/v1_21_2/facade/PlaceRecipe",
         "net/minecraft/class_2955": "top/dext/centurybridge/step/v1_21_2/facade/ServerPlaceRecipe",
     }
+    combiner(out)
     json.dump(out, open(sys.argv[1], "w", encoding="utf-8", newline="\n"), indent=1)
+
+
+COMBINER_RT = "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner"
+COMBINER = "net/minecraft/class_4861"
+SMITHING = "net/minecraft/class_4862"
+ANVIL = "net/minecraft/class_1706"
+DEFS = "method_48352()Lnet/minecraft/class_8047;"
+QUICK = "method_48357(Lnet/minecraft/class_1799;)I"
+
+
+def combiner(out):
+    """ItemCombinerMenu: createInputSlotDefinitions / getSlotToQuickMoveTo (CbItemCombiner, CbItemCombinerMenuMixin)."""
+    out["instanceRedirects"][COMBINER + "." + DEFS] = COMBINER_RT + "#createInputSlotDefinitions"
+    out["instanceRedirects"][COMBINER + "." + QUICK] = COMBINER_RT + "#getSlotToQuickMoveTo"
+    for owner in [ANVIL, SMITHING]:
+        out["superRedirects"][owner + "." + DEFS] = COMBINER_RT + "#superCreateInputSlotDefinitions"
+    for owner in [COMBINER, SMITHING]:
+        out["superRedirects"][owner + "." + QUICK] = COMBINER_RT + "#superGetSlotToQuickMoveTo"
+    for shape, name in [(DEFS, "createInputSlotDefinitions"), (QUICK, "getSlotToQuickMoveTo")]:
+        out["adapterHooks"].append({
+            "under": COMBINER, "adapter": COMBINER_RT + "$Legacy_" + name, "requires": [shape], "synth": [],
+            "basis": "a mod ItemCombinerMenu declaring 1.21.1's " + name + " answers its calls, the definition "
+                     "1.21.2's constructor takes / the quick-move start (CbItemCombiner, CbItemCombinerMenuMixin)"})
+    out["superCtorReshapes"][COMBINER + ".<init>(Lnet/minecraft/class_3917;ILnet/minecraft/class_1661;"
+                             "Lnet/minecraft/class_3914;)V"] = {
+        "desc": "(Lnet/minecraft/class_3917;ILnet/minecraft/class_1661;Lnet/minecraft/class_3914;Lnet/minecraft/class_8047;)V",
+        "ops": ["keep", "keep", "keep", "keep", "push " + COMBINER_RT + "#deferred()Lnet/minecraft/class_8047;"],
+        "basis": "1.21.1's constructor asked createInputSlotDefinitions() itself; the definition passed is a placeholder "
+                 "CbItemCombinerMenuMixin replaces with the menu's own answer at the same point of the constructor"}
 
 
 if __name__ == "__main__":

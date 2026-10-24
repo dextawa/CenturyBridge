@@ -10,7 +10,9 @@
   "net/minecraft/class_1729.method_7653()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#getGridWidth",
   "net/minecraft/class_1729.method_7656()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#getGridHeight",
   "net/minecraft/class_1729.method_7658()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#getSize",
-  "net/minecraft/class_1729.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#shouldMoveToInventory"
+  "net/minecraft/class_1729.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#shouldMoveToInventory",
+  "net/minecraft/class_4861.method_48352()Lnet/minecraft/class_8047;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#createInputSlotDefinitions",
+  "net/minecraft/class_4861.method_48357(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#getSlotToQuickMoveTo"
  },
  "superRedirects": {
   "net/minecraft/class_1714.method_7654(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superFillCraftSlotsStackedContents",
@@ -37,7 +39,11 @@
   "net/minecraft/class_1714.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superShouldMoveToInventory",
   "net/minecraft/class_1723.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superShouldMoveToInventory",
   "net/minecraft/class_1720.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superShouldMoveToInventory",
-  "net/minecraft/class_1720.method_59964(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superFinishPlacingRecipe"
+  "net/minecraft/class_1720.method_59964(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superFinishPlacingRecipe",
+  "net/minecraft/class_1706.method_48352()Lnet/minecraft/class_8047;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superCreateInputSlotDefinitions",
+  "net/minecraft/class_4862.method_48352()Lnet/minecraft/class_8047;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superCreateInputSlotDefinitions",
+  "net/minecraft/class_4861.method_48357(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superGetSlotToQuickMoveTo",
+  "net/minecraft/class_4862.method_48357(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superGetSlotToQuickMoveTo"
  },
  "staticRedirects": {
   "net/minecraft/class_1714.method_17399(Lnet/minecraft/class_1703;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_8566;Lnet/minecraft/class_1731;Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#slotChangedCraftingGrid"
@@ -141,6 +147,24 @@
    ],
    "synth": [],
    "basis": "a mod menu declaring 1.21.1's RecipeBookMenu.shouldMoveToInventory answers its calls (CbItemRecipeMenus)"
+  },
+  {
+   "under": "net/minecraft/class_4861",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner$Legacy_createInputSlotDefinitions",
+   "requires": [
+    "method_48352()Lnet/minecraft/class_8047;"
+   ],
+   "synth": [],
+   "basis": "a mod ItemCombinerMenu declaring 1.21.1's createInputSlotDefinitions answers its calls, the definition 1.21.2's constructor takes / the quick-move start (CbItemCombiner, CbItemCombinerMenuMixin)"
+  },
+  {
+   "under": "net/minecraft/class_4861",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner$Legacy_getSlotToQuickMoveTo",
+   "requires": [
+    "method_48357(Lnet/minecraft/class_1799;)I"
+   ],
+   "synth": [],
+   "basis": "a mod ItemCombinerMenu declaring 1.21.1's getSlotToQuickMoveTo answers its calls, the definition 1.21.2's constructor takes / the quick-move start (CbItemCombiner, CbItemCombinerMenuMixin)"
   }
  ],
  "overrideHooks": [
@@ -288,6 +312,17 @@
     "keep:6"
    ],
    "basis": "1.21.2's AbstractFurnaceMenu takes the recipe property set of its inputs: 1.21.2's own for the vanilla cooking types, else canSmelt is 1.21.1's lookup (CbItemRecipeMenus.furnaceInputs, CbItemFurnaceMenuMixin)"
+  },
+  "net/minecraft/class_4861.<init>(Lnet/minecraft/class_3917;ILnet/minecraft/class_1661;Lnet/minecraft/class_3914;)V": {
+   "desc": "(Lnet/minecraft/class_3917;ILnet/minecraft/class_1661;Lnet/minecraft/class_3914;Lnet/minecraft/class_8047;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#deferred()Lnet/minecraft/class_8047;"
+   ],
+   "basis": "1.21.1's constructor asked createInputSlotDefinitions() itself; the definition passed is a placeholder CbItemCombinerMenuMixin replaces with the menu's own answer at the same point of the constructor"
   }
  },
  "classRenames": {

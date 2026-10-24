@@ -62,6 +62,7 @@
     "CbItemComponentPredicateAccess",
     "CbItemConsumeSoundMixin",
     "CbItemCooldownsInvoker",
+    "CbItemCombinerMenuMixin",
     "CbItemCraftingInputMixin",
     "CbItemFurnaceMenuMixin",
     "CbItemEquipableBlockItemMixin",
