@@ -106,4 +106,14 @@ public final class CbWallRecipes {
     public static RecipeSerializer<?> getSerializer(Recipe<?> recipe) {
         return serializer(recipe.getSerializer());
     }
+
+    /** 26.1's CustomRecipe keeping 1.21.11's constructor category (mixin/CbWallCustomRecipeMixin) */
+    public interface CustomCategory {
+        void cb$setCategory(net.minecraft.world.item.crafting.CraftingBookCategory category);
+    }
+
+    /** post of a 1.21.11 CustomRecipe subclass's super(category): the category its category() answers, as 1.21.11's did */
+    public static void customCategory(net.minecraft.world.item.crafting.CustomRecipe recipe, net.minecraft.world.item.crafting.CraftingBookCategory category) {
+        ((CustomCategory) recipe).cb$setCategory(category);
+    }
 }

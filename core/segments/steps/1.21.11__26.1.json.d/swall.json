@@ -355,7 +355,9 @@
   "net/minecraft/class_10529": "top/dext/centurybridge/step/v26_1/facade/AbstractSignRenderer",
   "net/minecraft/class_837": "top/dext/centurybridge/step/v26_1/facade/SignRenderer",
   "net/minecraft/class_7761": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer",
-  "net/minecraft/class_7761$class_10382": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer$ModelKey"
+  "net/minecraft/class_7761$class_10382": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer$ModelKey",
+  "net/minecraft/class_1852$class_1866": "top/dext/centurybridge/step/v26_1/facade/CustomRecipeSerializer",
+  "net/minecraft/class_1852$class_1866$class_7711": "top/dext/centurybridge/step/v26_1/facade/CustomRecipeSerializer$Factory"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -664,7 +666,9 @@
   "net/minecraft/class_7761.field_40521:Ljava/lang/String;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
   "net/minecraft/class_7761.field_44575:F": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
   "net/minecraft/class_7761.field_44576:Lnet/minecraft/class_243;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
-  "net/minecraft/class_7761.field_40524:Ljava/util/Map;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)"
+  "net/minecraft/class_7761.field_40524:Ljava/util/Map;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_1852$class_1866.field_46106:Lcom/mojang/serialization/MapCodec;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_1852$class_1866.field_48362:Lnet/minecraft/class_9139;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -848,6 +852,17 @@
     "push top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#noOwner()Ljava/lang/Runnable;"
    ],
    "basis": "26.1 hands a custom boss event its UUID and its owner's dirty callback; 1.21.11's event drew an insecure random UUID itself and had no owner to tell (CbWallBossEvents)"
+  },
+  "net/minecraft/class_1852.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes#customCategory(Lnet/minecraft/class_1852;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "26.1's CustomRecipe takes no category and answers MISC; 1.21.11's took it in the constructor and answered it from category(): the recipe keeps it (CbWallCustomRecipeMixin)"
   }
  },
  "fieldGetters": {

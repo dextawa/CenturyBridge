@@ -23,6 +23,7 @@
     "CbWallBrainAccess",
     "CbWallBrainMixin",
     "CbWallCriterionValidatorMixin",
+    "CbWallCustomRecipeMixin",
     "CbWallDragonFightAccess",
     "CbWallDragonFightLevelMixin",
     "CbWallDragonFightSaveMixin",

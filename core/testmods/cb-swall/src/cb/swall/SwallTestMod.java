@@ -73,6 +73,16 @@ public class SwallTestMod implements ModInitializer {
         check("expirable.codec", "z".equals(back.method_24637()) && back.method_35127() == 7L
                 && json.toString().contains("\"ttl\":7"), json);
 
+        net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41189,
+            net.minecraft.class_2960.method_60655("cbswall", "test_recipe"), TEST_SERIALIZER);
+        TestRecipe recipe = new TestRecipe(net.minecraft.class_7710.field_40250);
+        check("customRecipe.category", recipe.method_45441() == net.minecraft.class_7710.field_40250, recipe.method_45441());
+        com.google.gson.JsonElement recipeJson = TEST_SERIALIZER.method_53736().codec().encodeStart(JsonOps.INSTANCE, recipe).getOrThrow();
+        TestRecipe decoded = TEST_SERIALIZER.method_53736().codec().parse(JsonOps.INSTANCE, recipeJson).getOrThrow();
+        check("customRecipe.serializerCodec", recipeJson.toString().contains("\"category\":\"equipment\"")
+            && decoded.method_45441() == net.minecraft.class_7710.field_40250, recipeJson);
+        check("customRecipe.getSerializer", recipe.method_8119() == TEST_SERIALIZER, recipe.method_8119());
+
         ServerLifecycleEvents.SERVER_STARTED.register(SwallTestMod::onStarted);
     }
 
@@ -216,4 +226,28 @@ public class SwallTestMod implements ModInitializer {
         net.minecraft.class_3002 loaded = server.method_3837().method_12971(net.minecraft.class_2960.method_60656("cbtest2"));
         check("bossEvents.load", loaded != null && loaded.method_12959().equals(net.minecraft.class_2960.method_60656("cbtest2")), loaded);
     }
+
+    /** a 1.21.11 special recipe: CustomRecipe with its category, a CustomRecipe.Serializer */
+    static class TestRecipe extends net.minecraft.class_1852 {
+        TestRecipe(net.minecraft.class_7710 category) {
+            super(category);
+        }
+
+        @Override
+        public boolean method_8115(net.minecraft.class_9694 input, net.minecraft.class_1937 level) {
+            return false;
+        }
+
+        @Override
+        public net.minecraft.class_1799 method_8116(net.minecraft.class_9694 input, net.minecraft.class_7225.class_7874 registries) {
+            return net.minecraft.class_1799.field_8037;
+        }
+
+        @Override
+        public net.minecraft.class_1865<TestRecipe> method_8119() {
+            return TEST_SERIALIZER;
+        }
+    }
+
+    static final net.minecraft.class_1852.class_1866<TestRecipe> TEST_SERIALIZER = new net.minecraft.class_1852.class_1866<>(TestRecipe::new);
 }
