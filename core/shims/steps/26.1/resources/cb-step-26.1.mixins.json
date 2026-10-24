@@ -139,7 +139,11 @@
     "CbWallCameraLegacyMixin",
     "CbWallHumanoidModelVisibleMixin",
     "CbWallContainerScreenBgMixin",
-    "CbWallScreenContainerBgMixin"
+    "CbWallScreenContainerBgMixin",
+    "CbWallGlCommandEncoderMixin",
+    "CbWallChatRenderMixin",
+    "CbWallGlRenderPassMixin",
+    "CbWallEndPortalRendererMixin"
   ],
   "server": [],
   "injectors": {

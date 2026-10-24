@@ -232,7 +232,14 @@
   "net/minecraft/class_11785.method_73480(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#submitItem",
   "net/minecraft/class_11661$class_11668.comp_4641()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#renderType",
   "net/minecraft/class_10444.method_65603(Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#pickParticleIcon",
-  "net/minecraft/class_846.method_22752(Lnet/minecraft/class_638;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallChunks#setLevel"
+  "net/minecraft/class_846.method_22752(Lnet/minecraft/class_638;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallChunks#setLevel",
+  "net/minecraft/class_10865.createCommandEncoder()Lcom/mojang/blaze3d/systems/CommandEncoder;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#createCommandEncoder",
+  "net/minecraft/class_10860.createRenderPass(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalInt;)Lcom/mojang/blaze3d/systems/RenderPass;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#createRenderPass",
+  "net/minecraft/class_10860.createRenderPass(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalInt;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalDouble;)Lcom/mojang/blaze3d/systems/RenderPass;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#createRenderPass",
+  "net/minecraft/class_10860.mapBuffer(Lcom/mojang/blaze3d/buffers/GpuBuffer;ZZ)Lcom/mojang/blaze3d/buffers/GpuBuffer$MappedView;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#mapBuffer",
+  "net/minecraft/class_10860.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#writeToTexture",
+  "net/minecraft/class_1041.method_15998(Lnet/minecraft/class_10219;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#updateDisplay",
+  "net/minecraft/class_761.method_22710(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelRender#renderLevel"
  },
  "overrideHooks": [
   {
@@ -866,7 +873,8 @@
   "net/minecraft/class_10809.<init>(ZLnet/minecraft/class_1058;Lnet/minecraft/class_809;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#modelRenderProperties",
   "com/mojang/blaze3d/vertex/VertexFormatElement.<init>(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#element",
   "net/minecraft/class_3990.<init>(Lnet/minecraft/class_5268;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#newSpawner",
-  "net/minecraft/class_11661$class_11668.<init>(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#itemSubmit"
+  "net/minecraft/class_11661$class_11668.<init>(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#itemSubmit",
+  "net/minecraft/class_1041.<init>(Lnet/minecraft/class_3678;Lnet/minecraft/class_323;Lnet/minecraft/class_543;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#newWindow"
  },
  "adapterHooks": [
   {
@@ -1307,7 +1315,13 @@
   "net/minecraft/class_12249.method_76006(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#entityDecal",
   "net/minecraft/class_12249.method_76012(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#dragonExplosionAlpha",
   "net/minecraft/class_12249.method_76009()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#tripwireMovingBlock",
-  "net/minecraft/class_12249.method_75992(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#weather"
+  "net/minecraft/class_12249.method_75992(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#weather",
+  "com/mojang/blaze3d/systems/RenderSystem.flipFrame(Lnet/minecraft/class_1041;Lnet/minecraft/class_10219;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#flipFrame",
+  "com/mojang/blaze3d/systems/RenderSystem.limitDisplayFPS(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#limitDisplayFPS",
+  "com/mojang/blaze3d/systems/RenderSystem.initBackendSystem()Lnet/minecraft/class_7576$class_7577;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#initBackendSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.initRenderer(JIZLnet/minecraft/class_12289;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#initRenderer",
+  "com/mojang/blaze3d/platform/GLX._initGlfw()Ljava/util/function/LongSupplier;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#initGlfw",
+  "com/mojang/blaze3d/platform/GLX.make(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#make"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -2143,6 +2157,51 @@
     "keep"
    ],
    "basis": "ChunkSectionsToRender's draws: a 1.21.11 layer's draw list as one 26.1 draw group (rt/CbWallChunkDraws)"
+  },
+  "net/minecraft/class_10865.<init>(JIZLnet/minecraft/class_12289;Z)V": {
+   "desc": "(JLnet/minecraft/class_12289;Lcom/mojang/blaze3d/shaders/GpuDebugOptions;)V",
+   "ops": [
+    "keep:0",
+    "keep:3",
+    "conv:1,2,4 top/dext/centurybridge/step/v26_1/rt/CbWallGpu#debugOptions(IZZ)Lcom/mojang/blaze3d/shaders/GpuDebugOptions;"
+   ],
+   "basis": "26.1 GlDevice takes its debug settings (verbosity, synchronous logs, labels) as one GpuDebugOptions (rt/CbWallGpu)"
+  },
+  "net/minecraft/class_10866.<init>(Lnet/minecraft/class_10860;Z)V": {
+   "desc": "(Lnet/minecraft/class_10860;Lnet/minecraft/class_10865;Z)V",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallGpu#device(Lnet/minecraft/class_10860;)Lnet/minecraft/class_10865;",
+    "keep:1"
+   ],
+   "basis": "26.1 GlRenderPass takes the device beside the encoder: the encoder's own (rt/CbWallGpu)"
+  },
+  "com/mojang/blaze3d/systems/RenderPass$class_10884.<init>(ILcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$class_5595;II)V": {
+   "desc": "(ILcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$class_5595;III)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallGpu#zeroBaseVertex()I"
+   ],
+   "basis": "26.1 RenderPass.Draw has a base vertex after the index count; 1.21.11's multi-draws drew every Draw from vertex 0 (GlCommandEncoder.executeDrawMultiple)"
+  },
+  "com/mojang/blaze3d/systems/RenderPass$class_10884.<init>(ILcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$class_5595;IILjava/util/function/BiConsumer;)V": {
+   "desc": "(ILcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$class_5595;IIILjava/util/function/BiConsumer;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallGpu#zeroBaseVertex()I",
+    "keep"
+   ],
+   "basis": "26.1 RenderPass.Draw has a base vertex after the index count; 1.21.11's multi-draws drew every Draw from vertex 0 (GlCommandEncoder.executeDrawMultiple)"
   }
  },
  "fieldGetters": {
@@ -2343,6 +2402,12 @@
    "method": "isEmpty()Z",
    "call": "top/dext/centurybridge/step/v26_1/rt/CbWallCollectorFills.isEmpty(Lnet/minecraft/class_11659$class_11947;)Z",
    "basis": "26.1 skips empty particle groups; 1.21.11 prepared and drew every group: a 1.21.11 group is never empty"
+  },
+  {
+   "under": "net/minecraft/class_9939",
+   "method": "getDefaultEarAngleInDegrees()F",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPiglinParts.defaultEarAngle(Lnet/minecraft/class_9939;)F",
+   "basis": "26.1 made the piglin ears' resting angle abstract (adult 30, baby 5 degrees); 1.21.11 drew every piglin's ears at 30 degrees (0.5235988 rad in AbstractPiglinModel.setupAnim)"
   }
  ],
  "ledger": {},
@@ -2444,7 +2509,13 @@
   "net/minecraft/class_4184.method_36425()Lnet/minecraft/class_4184$class_6355;",
   "net/minecraft/class_4184.method_55437()F",
   "net/minecraft/class_572.method_2805(Z)V",
-  "net/minecraft/class_465.method_2389(Lnet/minecraft/class_332;FII)V"
+  "net/minecraft/class_465.method_2389(Lnet/minecraft/class_332;FII)V",
+  "net/minecraft/class_10860.method_68369()Lnet/minecraft/class_10865;",
+  "net/minecraft/class_338.method_75804(Lnet/minecraft/class_332;Lnet/minecraft/class_327;IIIZZ)V",
+  "net/minecraft/class_338.method_75803(Lnet/minecraft/class_12225;IIZ)V",
+  "net/minecraft/class_840.method_3594()F",
+  "net/minecraft/class_840.method_35793()F",
+  "net/minecraft/class_840.method_34589()Lnet/minecraft/class_1921;"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -2758,7 +2829,13 @@
   "net/minecraft/class_4643.field_29279:Lnet/minecraft/class_4651;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#dirtProvider",
   "net/minecraft/class_4643.field_29281:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#forceDirt",
   "net/minecraft/class_2688.field_24740:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_1/rt/CbWallStates#propertiesCodec",
-  "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#displayBlockState"
+  "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#displayBlockState",
+  "net/minecraft/class_9939.field_52856:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallPiglinParts#leftSleeve",
+  "net/minecraft/class_9939.field_52857:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallPiglinParts#rightSleeve",
+  "net/minecraft/class_9939.field_52858:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallPiglinParts#leftPants",
+  "net/minecraft/class_9939.field_52859:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallPiglinParts#rightPants",
+  "net/minecraft/class_9939.field_52860:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallPiglinParts#jacket",
+  "net/minecraft/class_11966.field_62726:Ljava/util/EnumSet;": "top/dext/centurybridge/step/v26_1/rt/CbWallEndPortalStates#facesToShow"
  },
  "convertHooks": [
   {
@@ -3060,6 +3137,30 @@
     "net/minecraft/class_3680"
    ],
    "basis": "CatCollarLayer's parent: 1.21.11's RenderLayerParent<CatRenderState, CatModel>, 26.1's RenderLayerParent<CatRenderState, AbstractFelineModel<CatRenderState>>. CatModel becomes 26.1's AdultCatModel (classRenames), an AbstractFelineModel<CatRenderState>: the parent passes unchanged and the model the layer reads from it is one."
+  },
+  "net/minecraft/class_9655.<init>(Ljava/util/Optional;)V": {
+   "by": [
+    "net/minecraft/class_2073.method_8970(Lnet/minecraft/class_1799;)Z"
+   ],
+   "basis": "BundlePredicate's items: 1.21.11's Optional<CollectionPredicate<ItemStack, ItemPredicate>>, 26.1's Optional<CollectionPredicate<ItemInstance, ItemPredicate>>. The element type is phantom in the record: a CollectionPredicate holds only ItemPredicate records (its contains / counts entries) and a size bound, and the same ItemPredicate class tests 26.1's ItemInstance (its 1.21.11 test(ItemStack) reshaped onto it, the 'by' key), which every ItemStack is. So the value passes unchanged both ways: 26.1 tests it on bundle / container ItemInstances, and a 1.21.11 reader tests it on ItemStacks."
+  },
+  "net/minecraft/class_9655.comp_2630()Ljava/util/Optional;": {
+   "by": [
+    "net/minecraft/class_2073.method_8970(Lnet/minecraft/class_1799;)Z"
+   ],
+   "basis": "BundlePredicate's items: 1.21.11's Optional<CollectionPredicate<ItemStack, ItemPredicate>>, 26.1's Optional<CollectionPredicate<ItemInstance, ItemPredicate>>. The element type is phantom in the record: a CollectionPredicate holds only ItemPredicate records (its contains / counts entries) and a size bound, and the same ItemPredicate class tests 26.1's ItemInstance (its 1.21.11 test(ItemStack) reshaped onto it, the 'by' key), which every ItemStack is. So the value passes unchanged both ways: 26.1 tests it on bundle / container ItemInstances, and a 1.21.11 reader tests it on ItemStacks."
+  },
+  "net/minecraft/class_9656.<init>(Ljava/util/Optional;)V": {
+   "by": [
+    "net/minecraft/class_2073.method_8970(Lnet/minecraft/class_1799;)Z"
+   ],
+   "basis": "ContainerPredicate's items: 1.21.11's Optional<CollectionPredicate<ItemStack, ItemPredicate>>, 26.1's Optional<CollectionPredicate<ItemInstance, ItemPredicate>>. The element type is phantom in the record: a CollectionPredicate holds only ItemPredicate records (its contains / counts entries) and a size bound, and the same ItemPredicate class tests 26.1's ItemInstance (its 1.21.11 test(ItemStack) reshaped onto it, the 'by' key), which every ItemStack is. So the value passes unchanged both ways: 26.1 tests it on bundle / container ItemInstances, and a 1.21.11 reader tests it on ItemStacks."
+  },
+  "net/minecraft/class_9656.comp_2631()Ljava/util/Optional;": {
+   "by": [
+    "net/minecraft/class_2073.method_8970(Lnet/minecraft/class_1799;)Z"
+   ],
+   "basis": "ContainerPredicate's items: 1.21.11's Optional<CollectionPredicate<ItemStack, ItemPredicate>>, 26.1's Optional<CollectionPredicate<ItemInstance, ItemPredicate>>. The element type is phantom in the record: a CollectionPredicate holds only ItemPredicate records (its contains / counts entries) and a size bound, and the same ItemPredicate class tests 26.1's ItemInstance (its 1.21.11 test(ItemStack) reshaped onto it, the 'by' key), which every ItemStack is. So the value passes unchanged both ways: 26.1 tests it on bundle / container ItemInstances, and a 1.21.11 reader tests it on ItemStacks."
   }
  },
  "superRenames": {
@@ -3214,6 +3315,7 @@
   "net/minecraft/class_437.method_47413(Lnet/minecraft/class_332;IIF)V": "extractRenderStateWithTooltipAndSubtitles"
  },
  "instanceFieldSetters": {
-  "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#setDisplayBlockState"
+  "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#setDisplayBlockState",
+  "net/minecraft/class_11966.field_62726:Ljava/util/EnumSet;": "top/dext/centurybridge/step/v26_1/rt/CbWallEndPortalStates#setFacesToShow"
  }
 }
