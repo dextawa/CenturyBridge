@@ -85,6 +85,31 @@
     7
    ],
    "basis": "AbstractFurnaceMenu(menuType, recipeType, bookType, id, inventory[, container, data]) -> the same with the recipe property set after recipeType: javap, the same body (fields, the three furnace slots, the inventory slots, data slots); 1.21.2 adds the property-set lookup and moved the inventory-slot loops into addStandardInventorySlots"
+  },
+  "net/minecraft/class_3441.method_20732(Lnet/minecraft/class_2499;Ljava/util/function/Consumer;Lnet/minecraft/class_1863;)V": {
+   "to": "method_20732(Lnet/minecraft/class_2499;Ljava/util/function/Consumer;Ljava/util/function/Predicate;)V",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "ServerRecipeBook.loadRecipes(list, add, recipeManager) -> loadRecipes(list, add, recognised): javap, the same walk over the saved ids handing each known recipe on (1.21.2 hands its key and tests it with the predicate instead of looking the holder up); the consumer's type changed, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_8053.method_48577(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)Ljava/lang/String;": {
+   "to": "method_48577(Lnet/minecraft/class_6880;Lnet/minecraft/class_2960;)Ljava/lang/String;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "ArmorTrim.getColorPaletteSuffix(material, armorMaterial) -> (material, equipment asset id): javap, the same override-map lookup by the armour and the material's asset name fallback (1.21.2 keys the overrides by the equipment model id)"
+  },
+  "net/minecraft/class_1781.method_58656(Lnet/minecraft/class_2342;Lnet/minecraft/class_2350;)Lnet/minecraft/class_243;": {
+   "to": "method_63679(Lnet/minecraft/class_2342;Lnet/minecraft/class_2350;)Lnet/minecraft/class_243;",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "FireworkRocketItem's dispense position (private static; createDispenseConfig hands it to the dispense config as its position function in both versions): javap, the same block-centre-plus-facing offset; 1.21.2 dropped the rocket's own width/height from it"
   }
  },
  "callReshapes": {
@@ -118,6 +143,8 @@
   "net/minecraft/class_1772": "EnchantedBookItem: removed in 1.21.2; enchanted books are plain Items with STORED_ENCHANTMENTS -- no code of the class survives",
   "net/minecraft/class_1751": "BookItem: removed in 1.21.2; the book is a plain Item, enchantable through the ENCHANTABLE component",
   "net/minecraft/class_1762": "ComplexItem: removed in 1.21.2; MapItem, its only vanilla subclass, extends Item directly -- no ComplexItem method remains to hook",
-  "net/minecraft/class_1798": "ItemNameBlockItem: removed in 1.21.2; a BlockItem with Item.Properties.useItemDescriptionPrefix replaces it -- it had no code but getDescriptionId"
+  "net/minecraft/class_1798": "ItemNameBlockItem: removed in 1.21.2; a BlockItem with Item.Properties.useItemDescriptionPrefix replaces it -- it had no code but getDescriptionId",
+  "net/minecraft/class_314": "1.21.1 RecipeBookCategories (a client enum) is the layer's facade (classRenames); 1.21.2 reused class_314 for the server's RecipeBookCategory holder, unrelated code, and its client recipe book tabs are other classes -- a mixin follows the rename to the facade, which only 1.21.1 mods' recipe book screens (the layer's ported RecipeBookComponent) read; vanilla 1.21.2 never runs it",
+  "net/minecraft/class_2955": "1.21.1 ServerPlaceRecipe is the layer's facade (classRenames): 1.21.2 rebuilt class_2955 as a static placer over a CraftingMenuAccess (placeRecipe(access, width, height, slots, ..)) with other members -- a mixin follows the rename to the facade, which runs only for 1.21.1 mods' own placements; vanilla 1.21.2 places through its own class_2955"
  }
 }
