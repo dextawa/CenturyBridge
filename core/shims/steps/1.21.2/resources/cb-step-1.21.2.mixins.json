@@ -89,6 +89,7 @@
     "CbRestServerPropertiesMixin"
   ],
   "client": [
+    "CbFapiClientWorldMixin",
     "CbRenderBakeBakerMixin",
     "CbRenderBakeBlockModelMixin",
     "CbRenderBakeBuilderMixin",

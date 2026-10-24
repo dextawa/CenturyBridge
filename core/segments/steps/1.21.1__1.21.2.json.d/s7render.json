@@ -22,7 +22,15 @@
   "net/minecraft/class_757$class_7760": "top/dext/centurybridge/step/v1_21_2/facade/GameRendererResourceCache",
   "net/minecraft/class_4491": "top/dext/centurybridge/step/v1_21_2/facade/RenderCallStorage",
   "net/minecraft/class_761$class_5347": "top/dext/centurybridge/step/v1_21_2/facade/TransparencyShaderException",
-  "net/minecraft/class_291$class_8555": "net/minecraft/class_8555"
+  "net/minecraft/class_291$class_8555": "net/minecraft/class_8555",
+  "net/fabricmc/fabric/api/client/rendereregistry/v1/BlockEntityRendererRegistry": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/rendereregistry/v1/BlockEntityRendererRegistry",
+  "net/fabricmc/fabric/api/client/rendereregistry/v1/EntityRendererRegistry": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/rendereregistry/v1/EntityRendererRegistry",
+  "net/fabricmc/fabric/api/client/rendereregistry/v1/EntityModelLayerRegistry": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/rendereregistry/v1/EntityModelLayerRegistry",
+  "net/fabricmc/fabric/api/client/rendereregistry/v1/EntityModelLayerRegistry$TexturedModelDataProvider": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/rendereregistry/v1/EntityModelLayerRegistry$TexturedModelDataProvider",
+  "net/fabricmc/fabric/api/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback",
+  "net/fabricmc/fabric/api/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback$RegistrationHelper": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback$RegistrationHelper",
+  "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/event/lifecycle/v1/ClientWorldEvents",
+  "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange"
  },
  "facadeGaps": {},
  "staticRedirects": {
@@ -85,7 +93,9 @@
   "net/minecraft/class_1060.method_22813(Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost",
   "net/minecraft/class_1041.method_15999(I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
   "net/minecraft/class_1041.method_16000()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
-  "net/minecraft/class_1041.method_15998()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow"
+  "net/minecraft/class_1041.method_15998()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
+  "net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap.putItem(Lnet/minecraft/class_1792;Lnet/minecraft/class_1921;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRender",
+  "net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap.putItems(Lnet/minecraft/class_1921;[Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRender"
  },
  "ctorRedirects": {
   "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#create",
@@ -618,5 +628,9 @@
   "method_42741()Ljava/util/List;": {
    "0": "zero: 1.21.2's WardenModel part-list getter ignores the state it takes (returns the model's own list, checked: aload_0 getfield areturn), so null is never read"
   }
- }
+ },
+ "depRenames": {
+  "fabric-renderer-registries-v1": "centurybridge_step_1_21_2@*"
+ },
+ "_s7render_depRenames_basis": "1.21.2's Fabric API (0.106.1) no longer ships fabric-renderer-registries-v1, which 1.21.1's (0.116.15) did (META-INF/jars of both fabric-api jars); this step's layer gives its API back (compat/fapi/client/rendereregistry/v1, the module's own bodies delegating to fabric-rendering-v1, which 1.21.2's Fabric API keeps), so a mod's dependency on it is met by the layer"
 }
