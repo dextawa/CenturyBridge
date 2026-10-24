@@ -196,3 +196,9 @@ accessible	field	net/minecraft/client/renderer/chunk/SectionRenderDispatcher	sec
 # 1.21.11 CompiledSectionMesh.uploadMeshLayer(layer, data, sectionNode) finds its section in the view area (swall, rt/CbWallSectionUploads)
 accessible	field	net/minecraft/client/renderer/LevelRenderer	viewArea	Lnet/minecraft/client/renderer/ViewArea;
 accessible	method	net/minecraft/client/renderer/ViewArea	getRenderSection	(J)Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection;
+# 1.21.11 GL classes were the API: a GlCommandEncoder caller gets the CommandEncoder over it, with its device (swall, rt/CbWallGpu)
+accessible	field	com/mojang/blaze3d/opengl/GlCommandEncoder	device	Lcom/mojang/blaze3d/opengl/GlDevice;
+# 1.21.11 LevelRenderer.renderLevel draws the level state it extracts for the caller's camera (swall, rt/CbWallLevelRender)
+accessible	field	net/minecraft/client/renderer/LevelRenderer	levelRenderState	Lnet/minecraft/client/renderer/state/level/LevelRenderState;
+# 26.1 AbstractPiglinModel.getDefaultEarAngleInDegrees is package-private abstract: a 1.21.11 subclass gets it filled (swall, rt/CbWallPiglinParts)
+accessible	method	net/minecraft/client/model/monster/piglin/AbstractPiglinModel	getDefaultEarAngleInDegrees	()F
