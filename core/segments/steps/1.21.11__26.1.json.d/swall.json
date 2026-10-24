@@ -470,7 +470,8 @@
   "net/minecraft/class_1867$class_1868": "top/dext/centurybridge/step/v26_1/facade/ShapelessRecipeSerializer",
   "net/minecraft/class_10223$class_10224": "top/dext/centurybridge/step/v26_1/facade/TransmuteRecipeSerializer",
   "net/minecraft/class_8060$class_8061": "top/dext/centurybridge/step/v26_1/facade/SmithingTransformRecipeSerializer",
-  "net/minecraft/class_8062$class_8063": "top/dext/centurybridge/step/v26_1/facade/SmithingTrimRecipeSerializer"
+  "net/minecraft/class_8062$class_8063": "top/dext/centurybridge/step/v26_1/facade/SmithingTrimRecipeSerializer",
+  "net/minecraft/class_5620$class_8821": "top/dext/centurybridge/step/v26_1/facade/CauldronInteractionMap"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -835,7 +836,12 @@
   "net/minecraft/class_7761$class_10381.method_65244(Lnet/minecraft/class_2680;)Lnet/minecraft/class_7761$class_10381;": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer#attachmentByBlockState",
   "net/minecraft/class_1769.method_7803(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1769;": "top/dext/centurybridge/step/v26_1/rt/CbWallDyes#byColor",
   "net/minecraft/class_1826.method_8019(Lnet/minecraft/class_1299;)Lnet/minecraft/class_1826;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#byId",
-  "net/minecraft/class_1826.method_8017()Ljava/lang/Iterable;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#eggs"
+  "net/minecraft/class_1826.method_8017()Ljava/lang/Iterable;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#eggs",
+  "net/minecraft/class_5620.method_32206(Ljava/lang/String;)Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#newInteractionMap",
+  "net/minecraft/class_5620.method_32212()V": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#bootStrap",
+  "net/minecraft/class_5620.method_34850(Ljava/util/Map;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#addDefaultInteractions",
+  "net/minecraft/class_5620.method_32210(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Ljava/util/function/Predicate;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#fillBucket",
+  "net/minecraft/class_5620.method_32207(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#emptyBucket"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -1150,6 +1156,23 @@
     0
    ],
    "basis": "26.1's dye keeps its color as its default DYE component (Items registers each dye so); 1.21.11's constructor took it and recorded the item for byColor (CbWallDyes)"
+  },
+  "net/minecraft/class_2275.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_5620$class_8821;)V": {
+   "desc": "(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#dispatcher(Lnet/minecraft/class_5620$class_8821;)Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;"
+   ],
+   "basis": "26.1's cauldron blocks take the dispatcher a 1.21.11 interaction map stands for (CbWallCauldrons)"
+  },
+  "net/minecraft/class_5556.<init>(Lnet/minecraft/class_1959$class_1963;Lnet/minecraft/class_5620$class_8821;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_1959$class_1963;Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#dispatcher(Lnet/minecraft/class_5620$class_8821;)Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;",
+    "keep:2"
+   ],
+   "basis": "26.1's cauldron blocks take the dispatcher a 1.21.11 interaction map stands for (CbWallCauldrons)"
   }
  },
  "fieldGetters": {
@@ -1184,7 +1207,13 @@
   "net/minecraft/class_31.field_31843:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
   "net/minecraft/class_31.field_36349:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
   "net/minecraft/class_1799.field_51397:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemCodecs",
-  "net/minecraft/class_1799.field_51398:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemCodecs"
+  "net/minecraft/class_1799.field_51398:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemCodecs",
+  "net/minecraft/class_5620.field_46589:Ljava/util/Map;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_5620.field_46590:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_5620.field_27775:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_5620.field_27776:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_5620.field_27777:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_5620.field_28011:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons"
  },
  "abstractFills": [
   {
@@ -1297,6 +1326,7 @@
   }
  },
  "instanceFieldGetters": {
-  "net/minecraft/class_757.field_60579:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#guiCubeMap"
+  "net/minecraft/class_757.field_60579:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#guiCubeMap",
+  "net/minecraft/class_2275.field_27084:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#interactions"
  }
 }

@@ -117,6 +117,7 @@ public class SwallTestMod implements ModInitializer {
 
             recipes(server);
             items();
+            cauldrons();
             interactions(server);
             levelData(server);
         } catch (Throwable t) {
@@ -289,5 +290,14 @@ public class SwallTestMod implements ModInitializer {
         }
         check("spawnEgg.byIdTypeEggs", pigEgg == net.minecraft.class_1802.field_8493 && listed
             && pigEgg.method_8015(eggStack) == net.minecraft.class_1299.field_6093 && pigEgg.method_8018(eggStack, net.minecraft.class_1299.field_6093), pigEgg);
+    }
+
+    private static void cauldrons() {
+        net.minecraft.class_5620 stick = (state, level, pos, player, hand, stack) -> net.minecraft.class_1269.field_5812;
+        java.util.Map<net.minecraft.class_1792, net.minecraft.class_5620> water = net.minecraft.class_5620.field_27776.comp_1982();
+        water.put(net.minecraft.class_1802.field_8600, stick);
+        check("cauldron.putGet", water.get(net.minecraft.class_1802.field_8600) == stick, water.get(net.minecraft.class_1802.field_8600));
+        check("cauldron.vanillaEntries", net.minecraft.class_5620.field_27775.comp_1982().containsKey(net.minecraft.class_1802.field_8705)
+            && water.containsKey(net.minecraft.class_1802.field_8539) && "water".equals(net.minecraft.class_5620.field_27776.comp_1981()), water.size());
     }
 }
