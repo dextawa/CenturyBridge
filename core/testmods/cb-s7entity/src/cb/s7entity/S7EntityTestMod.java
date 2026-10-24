@@ -112,6 +112,7 @@ public class S7EntityTestMod implements ModInitializer {
                 try {
                     hurt(server);
                     boats(server);
+                    tail(server);
                 } catch (Throwable e) {
                     check(false, "threw " + e);
                     e.printStackTrace(System.out);
@@ -242,6 +243,222 @@ public class S7EntityTestMod implements ModInitializer {
             "EntityType.BOAT.create(level): an oak boat (" + (made == null ? null : typeId(made)) + ")");
         boat.method_31472();
     }
+
+    static Object call(Object target, String name) throws Exception {
+        java.lang.reflect.Method m = target.getClass().getMethod(name);
+        return m.invoke(target);
+    }
+
+    /** members s7entity bridged after the boat commit: minecarts, dragon / wither, spin, statics, tail */
+    static void tail(MinecraftServer server) throws Exception {
+        class_3218 level = server.method_30002();
+        class_2338 spawn = level.method_43126();
+        double x = spawn.method_10263() + 0.5, y = spawn.method_10264() + 2, z = spawn.method_10260() - 4.5;
+
+        // StackedContents (1.21.1 counts kept)
+        net.minecraft.class_1662 contents = new net.minecraft.class_1662();
+        contents.method_7400(new class_1799(class_1802.field_8477, 3));
+        check(contents.field_7550.get(net.minecraft.class_1662.method_7408(new class_1799(class_1802.field_8477))) == 3,
+            "StackedContents.accountStack(3 diamonds): count 3");
+
+        // minecart rail physics: a mod minecart's moveAlongTrack / applyNaturalSlowdown overrides on a rail
+        class_2338 rail = class_2338.method_49637(x, y + 6, z);
+        level.method_8652(rail.method_10074(), net.minecraft.class_2246.field_10340.method_9564(), 3);
+        level.method_8652(rail, net.minecraft.class_2246.field_10167.method_9564(), 3);
+        ModCart cart = new ModCart(class_1299.field_6096, level);
+        cart.method_5814(rail.method_10263() + 0.5, rail.method_10264(), rail.method_10260() + 0.5);
+        level.method_8649(cart);
+        cart.method_18799(new net.minecraft.class_243(0.2, 0.0, 0.0));
+        cart.method_5773();
+        check(cart.trackCalls >= 1 && cart.trackState != null && cart.trackState.method_27852(net.minecraft.class_2246.field_10167),
+            "a mod minecart's moveAlongTrack(pos, state) ran on the rail (calls=" + cart.trackCalls + ", state=" + cart.trackState + ")");
+        check(cart.slowCalls >= 1, "its applyNaturalSlowdown() override ran (calls=" + cart.slowCalls + ")");
+        check(cart.method_7508(cart.method_23317(), cart.method_23318(), cart.method_23321()) != null, "getPos(x, y, z) on the rail answers a position");
+        cart.method_31472();
+        net.minecraft.class_1696 furnace = new net.minecraft.class_1696(level, x, y, z);
+        furnace.field_7737 = 0.5;
+        furnace.field_7736 = -0.25;
+        check(furnace.field_7737 == 0.5 && furnace.field_7736 == -0.25, "MinecartFurnace xPush / zPush written and read back");
+
+        // EnderDragon flight history: positions / posPointer are what getLatencyPos and vanilla's history read
+        net.minecraft.class_1510 dragon = new net.minecraft.class_1510(class_1299.field_6116, level);
+        check(dragon.field_7010 == -1, "a new dragon's posPointer is -1: " + dragon.field_7010);
+        dragon.field_7010 = 5;
+        dragon.field_7026[5][0] = 30.0;
+        dragon.field_7026[5][1] = 64.0;
+        double[] lp = dragon.method_6817(0, 1.0f);
+        check(lp[0] == 30.0 && lp[1] == 64.0, "getLatencyPos(0, 1) reads positions[posPointer]: " + lp[0] + ", " + lp[1]);
+        Object history = dragon.getClass().getField("field_52493").get(dragon);
+        Object sample = history.getClass().getMethod("method_61484", int.class).invoke(history, 0);
+        check((Double) call(sample, "comp_2916") == 64.0 && (Float) call(sample, "comp_2917") == 30.0f,
+            "1.21.2's DragonFlightHistory.get(0) answers the same sample: " + sample);
+        ModDragon md = new ModDragon(class_1299.field_6116, level);
+        Object mh = md.getClass().getField("field_52493").get(md);
+        Object ms = mh.getClass().getMethod("method_61484", int.class).invoke(mh, 3);
+        check((Double) call(ms, "comp_2916") == 70.0, "a mod dragon's getLatencyPos override answers vanilla's history: " + ms);
+
+        // WitherBoss heads
+        net.minecraft.class_1528 wither = new net.minecraft.class_1528(class_1299.field_6119, level);
+        check(wither.method_6879(0) == 0.0f, "WitherBoss.getHeadYRot(0) of a new wither: 0");
+        ModWither mw = new ModWither(class_1299.field_6119, level);
+        float[] yr = (float[]) mw.getClass().getMethod("method_61488").invoke(mw);
+        check(yr.length == 2 && yr[0] == 42.0f && yr[1] == 43.0f, "a mod wither's getHeadYRot override answers getHeadYRots: " + java.util.Arrays.toString(yr));
+
+        // ItemEntity.getSpin
+        class_1542 plainItem = new class_1542(level, x, y, z, new class_1799(class_1802.field_8477));
+        float spin = plainItem.method_27314(0.5f);
+        check(Math.abs(spin - ((plainItem.method_6985() + 0.5f) / 20.0f + plainItem.field_7203)) < 1e-6, "ItemEntity.getSpin(0.5): 1.21.1's (age + 0.5) / 20 + bobOffs");
+        SpinItem si = new SpinItem(level, x, y, z, new class_1799(class_1802.field_8477));
+        check(Math.abs(si.method_43078() - (180.0f - 1.0f / 6.2831855f * 360.0f)) < 1e-4, "a mod ItemEntity's getSpin override answers getVisualRotationYInDegrees: " + si.method_43078());
+
+        // statics and constructors
+        class_1799 banner = net.minecraft.class_3765.method_16515(server.method_30611().method_46762(class_7924.field_41252));
+        check(banner.method_7909() == class_1802.field_8539 && banner.method_7932() == net.minecraft.class_1814.field_8906,
+            "Raid.getLeaderBannerInstance: a white banner of the item's own rarity (" + banner.method_7932() + ")");
+        ModZombie gold = new ModZombie(class_1299.field_6051, level);
+        gold.method_5673(net.minecraft.class_1304.field_6169, new class_1799(class_1802.field_8862));
+        ModZombie iron = new ModZombie(class_1299.field_6051, level);
+        iron.method_5673(net.minecraft.class_1304.field_6169, new class_1799(class_1802.field_8743));
+        check(net.minecraft.class_4838.method_24719(gold) && !net.minecraft.class_4838.method_24719(iron), "PiglinAi.isWearingGold: golden helmet yes, iron no");
+        com.mojang.serialization.DataResult<?> poi = net.minecraft.class_4157.method_28364(() -> { })
+            .parse(com.mojang.serialization.JsonOps.INSTANCE, com.google.gson.JsonParser.parseString("{\"Valid\":true,\"Records\":[]}"));
+        check(poi.result().isPresent(), "PoiSection.codec(setDirty) decodes a 1.21.1 section: " + poi);
+        net.minecraft.class_1535 painting = new net.minecraft.class_1535(32, 16, class_2960.method_60655("cb_s7entity", "wide"));
+        check(painting.comp_2670() == 32 && painting.comp_2671() == 16, "new PaintingVariant(32, 16, id)");
+        net.minecraft.class_6670 visible = new net.minecraft.class_6670(gold, java.util.List.of(iron));
+        visible.method_38972(iron);
+        check(true, "new NearestVisibleLivingEntities(entity, list) answers contains()");
+        net.minecraft.class_8949 breeze = new net.minecraft.class_8949(class_1299.field_47244, level);
+        net.minecraft.class_8953.method_55038(breeze, iron);
+        check(true, "Shoot.isFacingTarget(breeze, target) runs");
+
+        // LivingEntity tail
+        TailZombie tz = new TailZombie(class_1299.field_6051, level);
+        tz.method_5814(x, y, z);
+        level.method_8649(tz);
+        check(tz.method_55693() == 2.0f, "a mod LivingEntity's getScale override answers the final getScale: " + tz.method_55693());
+        check(tz.method_32326(new class_1799(class_1802.field_8477)) == net.minecraft.class_1304.field_6171,
+            "its getEquipmentSlotForItem override answers the final one");
+        check(tz.method_32326(new class_1799(class_1802.field_8862)) == net.minecraft.class_1304.field_6169,
+            "... and its super call is vanilla's (golden helmet: HEAD)");
+        tz.method_6092(new net.minecraft.class_1293(net.minecraft.class_1294.field_5904, 200));
+        tz.method_6016(net.minecraft.class_1294.field_5904);
+        check(tz.effectRemoved == 1 && !tz.method_6059(net.minecraft.class_1294.field_5904), "removeEffect(SPEED) reached the mod's onEffectRemoved once (" + tz.effectRemoved + ")");
+        check(tz.method_59926().isEmpty(), "activeLocationDependentEnchantments() of an unenchanted entity: empty");
+        tz.method_6007();
+        check(tz.insideCalls >= 1, "LivingEntity.aiStep ran the mod's checkInsideBlocks (calls=" + tz.insideCalls + ")");
+        ModDolphin dolphin = new ModDolphin(class_1299.field_6087, level);
+        int air = dolphin.method_5669();
+        dolphin.air(air);
+        check(dolphin.airCalls == 1 && dolphin.method_5669() == air, "Dolphin.handleAirSupply override reached, super is 1.21.1 Dolphin's empty body: calls=" + dolphin.airCalls + ", air " + air + " -> " + dolphin.method_5669());
+        tz.method_31472();
+    }
+
+    public static class ModCart extends net.minecraft.class_1695 {
+        int trackCalls;
+        int slowCalls;
+        net.minecraft.class_2680 trackState;
+
+        public ModCart(class_1299<?> type, class_1937 level) {
+            super(type, level);
+        }
+
+        @Override
+        protected void method_7513(class_2338 pos, net.minecraft.class_2680 state) {
+            trackCalls++;
+            trackState = state;
+            super.method_7513(pos, state);
+        }
+
+        @Override
+        protected void method_7525() {
+            slowCalls++;
+            super.method_7525();
+        }
+    }
+
+    public static class ModDragon extends net.minecraft.class_1510 {
+        public ModDragon(class_1299<? extends net.minecraft.class_1510> type, class_1937 level) {
+            super(type, level);
+        }
+
+        @Override
+        public double[] method_6817(int index, float partialTick) {
+            return new double[] {10.0, 70.0, 0.0};
+        }
+    }
+
+    public static class ModWither extends net.minecraft.class_1528 {
+        public ModWither(class_1299<? extends net.minecraft.class_1528> type, class_1937 level) {
+            super(type, level);
+        }
+
+        @Override
+        public float method_6879(int head) {
+            return 42.0f + head;
+        }
+    }
+
+    public static class SpinItem extends class_1542 {
+        public SpinItem(class_1937 level, double x, double y, double z, class_1799 stack) {
+            super(level, x, y, z, stack);
+        }
+
+        @Override
+        public float method_27314(float partialTick) {
+            return 1.0f;
+        }
+    }
+
+    public static class TailZombie extends class_1642 {
+        int effectRemoved;
+        int insideCalls;
+
+        public TailZombie(class_1299<? extends class_1642> type, class_1937 level) {
+            super(type, level);
+        }
+
+        @Override
+        public float method_55693() {
+            return 2.0f;
+        }
+
+        @Override
+        public net.minecraft.class_1304 method_32326(class_1799 stack) {
+            return stack.method_7909() == class_1802.field_8477 ? net.minecraft.class_1304.field_6171 : super.method_32326(stack);
+        }
+
+        @Override
+        protected void method_6129(net.minecraft.class_1293 effect) {
+            effectRemoved++;
+            super.method_6129(effect);
+        }
+
+        @Override
+        protected void method_5852() {
+            insideCalls++;
+            super.method_5852();
+        }
+    }
+
+    public static class ModDolphin extends net.minecraft.class_1433 {
+        int airCalls;
+
+        public ModDolphin(class_1299<? extends net.minecraft.class_1433> type, class_1937 level) {
+            super(type, level);
+        }
+
+        void air(int a) {
+            method_6673(a);
+        }
+
+        @Override
+        protected void method_6673(int air) {
+            airCalls++;
+            super.method_6673(air);
+        }
+    }
+
 
     public static class ModBoat extends net.minecraft.class_1690 {
         int paddleCalls;
