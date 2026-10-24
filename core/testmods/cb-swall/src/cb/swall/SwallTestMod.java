@@ -498,6 +498,49 @@ public class SwallTestMod implements ModInitializer {
         stand.method_31472();
     }
 
+    /** 1.21.11's TimerQueue subclass writing itself through store() */
+    static final class StoringQueue extends net.minecraft.class_236<MinecraftServer> {
+        int stores;
+
+        StoringQueue() {
+            super(net.minecraft.class_233.field_1306);
+        }
+
+        @Override
+        public net.minecraft.class_2499 method_982() {
+            stores++;
+            return super.method_982();
+        }
+    }
+
+    /** 1.21.11 TimerQueue: built with its callbacks, written with store(), read back from saved events */
+    private static void timerQueue() {
+        net.minecraft.class_236<MinecraftServer> queue = new net.minecraft.class_236<>(net.minecraft.class_233.field_1306);
+        queue.method_985("cb_later", 200L, new net.minecraft.class_231(net.minecraft.class_2960.method_60655("cb", "later")));
+        queue.method_985("cb_sooner", 100L, new net.minecraft.class_231(net.minecraft.class_2960.method_60655("cb", "sooner")));
+        net.minecraft.class_2499 stored = queue.method_982();
+        net.minecraft.class_2487 first = stored.isEmpty() ? null : (net.minecraft.class_2487) stored.get(0);
+        check("timerQueue.store", stored.size() == 2 && first != null && "cb_sooner".equals(first.method_68564("Name", ""))
+            && first.method_68080("TriggerTime", 0L) == 100L && first.method_10545("Callback"), stored);
+        net.minecraft.class_236<MinecraftServer> loaded = new net.minecraft.class_236<>(net.minecraft.class_233.field_1306,
+            stored.stream().map(t -> new com.mojang.serialization.Dynamic<>(class_2509.field_11560, t)));
+        check("timerQueue.load", loaded.method_22592().equals(java.util.Set.of("cb_later", "cb_sooner")), loaded.method_22592());
+        StoringQueue sub = new StoringQueue();
+        sub.method_985("cb_sub", 5L, new net.minecraft.class_231(net.minecraft.class_2960.method_60655("cb", "sub")));
+        net.minecraft.class_2499 subStored = sub.method_982();
+        check("timerQueue.subclassStore", subStored.size() == 1 && sub.stores == 1, subStored + " stores=" + sub.stores);
+        // 26.1 writes the queue through pack(): the subclass's store() is what it writes (read reflectively, as the
+        // name exists only on 26.1)
+        Object packed = null;
+        try {
+            java.lang.reflect.Method pack = sub.getClass().getMethod("pack");
+            packed = pack.invoke(sub);
+        } catch (ReflectiveOperationException e) {
+            packed = e;
+        }
+        check("timerQueue.packThroughStore", sub.stores == 2 && String.valueOf(packed).contains("cb_sub"), packed + " stores=" + sub.stores);
+    }
+
     /** generic drift at the wall read on a running server */
     private static void generic(MinecraftServer server) {
         Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
@@ -558,6 +601,7 @@ public class SwallTestMod implements ModInitializer {
             specialRecipeCtors(server);
             legacyRegionStorage(server);
             interactPacket(server);
+            timerQueue();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
