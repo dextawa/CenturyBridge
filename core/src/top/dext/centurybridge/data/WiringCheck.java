@@ -662,6 +662,55 @@ public final class WiringCheck {
                 }
             }
         }
+        // mixinTargets: the W method a V method's code now lives in must be declared on the (renamed)
+        // class itself -- Mixin looks injector targets up in the target's own member table -- and every
+        // argument index must name a W argument of the V argument's (renamed) type or a subtype of it
+        if (root.has("mixinTargets") && !stub.isEmpty()) {
+            for (var e : root.getAsJsonObject("mixinTargets").entrySet()) {
+                checked++;
+                Sym s = Sym.method(e.getKey());
+                var o = e.getValue().getAsJsonObject();
+                String where = "mixinTargets " + e.getKey();
+                if (!o.has("to") || !o.has("basis")) {
+                    problems.add(where + ": needs \"to\" and \"basis\"");
+                    continue;
+                }
+                String to = o.get("to").getAsString();
+                int p = to.indexOf('(');
+                if (p <= 0) {
+                    problems.add(where + ": \"to\" is not name(desc)");
+                    continue;
+                }
+                String owner = targetName(facade.mapType(s.owner));
+                ClassNode cn = classes.containsKey(owner) ? classes.get(owner) : stub.get(owner);
+                String nm = to.substring(0, p);
+                String nd = methodDesc(to.substring(p));
+                if (cn == null || cn.methods.stream().noneMatch(m -> m.name.equals(nm) && m.desc.equals(nd))) {
+                    problems.add(where + ": " + owner + " does not itself declare " + nm + nd);
+                    continue;
+                }
+                if (!o.has("args")) {
+                    continue;
+                }
+                var a = o.getAsJsonArray("args");
+                org.objectweb.asm.Type[] va = org.objectweb.asm.Type.getArgumentTypes(methodDesc(s.desc));
+                org.objectweb.asm.Type[] wa = org.objectweb.asm.Type.getArgumentTypes(nd);
+                if (a.size() != va.length) {
+                    problems.add(where + ": args has " + a.size() + " entries, the V method " + va.length + " arguments");
+                    continue;
+                }
+                for (int i = 0; i < va.length; i++) {
+                    int j = a.get(i).getAsInt();
+                    if (j < -1 || j >= wa.length) {
+                        problems.add(where + ": args[" + i + "] = " + j + " is no argument of " + nm + nd);
+                    } else if (j >= 0 && !wa[j].equals(va[i])
+                            && !(wa[j].getSort() == org.objectweb.asm.Type.OBJECT && va[i].getSort() == org.objectweb.asm.Type.OBJECT
+                                 && resolvesSuper(wa[j].getInternalName(), va[i].getInternalName()))) {
+                        problems.add(where + ": args[" + i + "]: W argument " + j + " (" + wa[j] + ") is not a " + va[i]);
+                    }
+                }
+            }
+        }
         // callReshapes: the reshaped call must resolve on the target (the owner or a supertype
         // declares the new shape), and every converter / supplier it runs must exist
         if (root.has("callReshapes")) {
@@ -1127,6 +1176,22 @@ public final class WiringCheck {
     }
 
     /** whether name+desc is declared on the owner or one of its supertypes (shim tree or target stub) */
+    /** whether sub is sup or extends / implements it on the target (stub and compiled classes) */
+    private boolean resolvesSuper(String sub, String sup) {
+        java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(sub));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.pop();
+            if (!seen.add(c)) continue;
+            if (c.equals(sup) || sup.equals("java/lang/Object")) return true;
+            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            if (n == null) continue;
+            if (n.superName != null) todo.push(n.superName);
+            todo.addAll(n.interfaces);
+        }
+        return false;
+    }
+
     private boolean resolves(String owner, String name, String desc) {
         java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
         java.util.Set<String> seen = new java.util.HashSet<>();
