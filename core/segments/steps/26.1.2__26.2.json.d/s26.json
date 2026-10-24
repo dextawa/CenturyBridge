@@ -18,7 +18,8 @@
   "net/minecraft/world/item/Items.COPPER_CHAIN:Lnet/minecraft/world/item/WeatheringCopperItems;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Items_COPPER_CHAIN",
   "net/minecraft/world/item/Items.COPPER_LANTERN:Lnet/minecraft/world/item/WeatheringCopperItems;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Items_COPPER_LANTERN",
   "net/minecraft/ChatFormatting.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting#CODEC",
-  "net/minecraft/ChatFormatting.COLOR_CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting#COLOR_CODEC"
+  "net/minecraft/ChatFormatting.COLOR_CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting#COLOR_CODEC",
+  "net/minecraft/world/entity/LivingEntity.TAG_HURT_BY_TIMESTAMP:Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#TAG_HURT_BY_TIMESTAMP"
  },
  "instanceRedirects": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasNameEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
@@ -52,7 +53,15 @@
   "net/minecraft/ChatFormatting.getName()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
   "net/minecraft/ChatFormatting.getSerializedName()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
   "net/minecraft/core/BlockPos.getCenter()Lnet/minecraft/world/phys/Vec3;": "top/dext/centurybridge/step/v26_2/rt/CbS26World",
-  "net/minecraft/core/BlockPos.getBottomCenter()Lnet/minecraft/world/phys/Vec3;": "top/dext/centurybridge/step/v26_2/rt/CbS26World"
+  "net/minecraft/core/BlockPos.getBottomCenter()Lnet/minecraft/world/phys/Vec3;": "top/dext/centurybridge/step/v26_2/rt/CbS26World",
+  "net/minecraft/world/entity/LivingEntity.knockback(DDD)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+  "net/minecraft/world/entity/LivingEntity.causeExtraKnockback(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/phys/Vec3;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+  "net/minecraft/world/entity/LivingEntity.blockUsingItem(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+  "net/minecraft/world/entity/LivingEntity.blockedByItem(Lnet/minecraft/world/entity/LivingEntity;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+  "net/minecraft/world/scores/PlayerTeam.packOptions()I": "top/dext/centurybridge/step/v26_2/rt/CbS26Team",
+  "net/minecraft/world/scores/PlayerTeam.unpackOptions(I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Team",
+  "net/minecraft/world/scores/PlayerTeam.setColor(Lnet/minecraft/ChatFormatting;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Team",
+  "net/minecraft/world/scores/PlayerTeam.getColor()Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team"
  },
  "_instanceRedirects_basis": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.*": "26.2 replaced the parser's option booleans by option-state objects (nameOption() ... advancementsOption()); rt/CbS26Selector reads and sets the same facts on them (see its javadoc)",
@@ -61,6 +70,138 @@
  "staticRedirects": {
   "net/minecraft/ChatFormatting.getByName(Ljava/lang/String;)Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
   "net/minecraft/ChatFormatting.getById(I)Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
-  "net/minecraft/ChatFormatting.getNames(ZZ)Ljava/util/Collection;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting"
+  "net/minecraft/ChatFormatting.getNames(ZZ)Ljava/util/Collection;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
+  "net/minecraft/world/entity/EntityType.byString(Ljava/lang/String;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+  "net/minecraft/world/entity/EntityType.createDefaultStackConfig(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/Consumer;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+  "net/minecraft/world/entity/EntityType.appendDefaultStackConfig(Ljava/util/function/Consumer;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/Consumer;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+  "net/minecraft/world/entity/EntityType.appendComponentsConfig(Ljava/util/function/Consumer;Lnet/minecraft/world/item/ItemStack;)Ljava/util/function/Consumer;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+  "net/minecraft/world/entity/EntityType.appendCustomEntityStackConfig(Ljava/util/function/Consumer;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/Consumer;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+  "net/minecraft/world/entity/EntityType.create(Lnet/minecraft/world/level/storage/ValueInput;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnReason;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+  "net/minecraft/world/entity/EntityType.loadEntityRecursive(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/EntityProcessor;)Lnet/minecraft/world/entity/Entity;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity"
+ },
+ "callReshapes": {
+  "net/minecraft/world/entity/EntityType.spawn(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Consumer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;": {
+   "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/PostSpawnProcessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26Entity#toProcessor(Ljava/util/function/Consumer;)Lnet/minecraft/world/entity/PostSpawnProcessor;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.2 takes the spawn configuration as a PostSpawnProcessor (apply(T)) where 26.1.2 took a Consumer (accept(T)); CbS26Entity adapts it (and unwraps its own adapter)"
+  },
+  "net/minecraft/world/entity/EntityType.create(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Consumer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;": {
+   "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/PostSpawnProcessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26Entity#toProcessor(Ljava/util/function/Consumer;)Lnet/minecraft/world/entity/PostSpawnProcessor;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.2 takes the spawn configuration as a PostSpawnProcessor (apply(T)) where 26.1.2 took a Consumer (accept(T)); CbS26Entity adapts it (and unwraps its own adapter)"
+  }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/world/entity/LivingEntity.currentExplosionCause:Lnet/minecraft/world/entity/Entity;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#getCurrentExplosionCause"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/world/entity/LivingEntity.currentExplosionCause:Lnet/minecraft/world/entity/Entity;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#setCurrentExplosionCause"
+ },
+ "overrideHooks": [
+  {
+   "old": "spawn(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Consumer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;",
+   "new": "spawn(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/PostSpawnProcessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;",
+   "onlyUnder": "net/minecraft/world/entity/EntityType",
+   "wrap": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity.toConsumer(Lnet/minecraft/world/entity/PostSpawnProcessor;)Ljava/util/function/Consumer;",
+   "basis": "26.2 calls the PostSpawnProcessor shape; the old override gets it as a Consumer; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "create(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Consumer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;",
+   "new": "create(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/PostSpawnProcessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;",
+   "onlyUnder": "net/minecraft/world/entity/EntityType",
+   "wrap": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity.toConsumer(Lnet/minecraft/world/entity/PostSpawnProcessor;)Ljava/util/function/Consumer;",
+   "basis": "26.2 calls the PostSpawnProcessor shape; the old override gets it as a Consumer; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "knockback(DDD)V",
+   "new": "knockback(DDDLnet/minecraft/world/damagesource/DamageSource;F)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/world/entity/LivingEntity",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "26.2's overridable knockback (EnderDragon, Creaking override it as 26.1.2 overrode the three-argument one) carries the cause; the old override gets strength and direction, its super call passes on what 26.2 passed"
+  },
+  {
+   "old": "causeExtraKnockback(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/phys/Vec3;)V",
+   "new": "causeExtraKnockback(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/damagesource/DamageSource;FZ)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/world/entity/LivingEntity",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "26.2 passes the attack's source, amount and sweep flag on to knockback; the old override gets 26.1.2's three arguments, its super call passes on what 26.2 passed"
+  },
+  {
+   "old": "setColor(Lnet/minecraft/ChatFormatting;)V",
+   "new": "setColor(Ljava/util/Optional;)V",
+   "onlyUnder": "net/minecraft/world/scores/PlayerTeam",
+   "guard": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "basis": "26.2 keeps the team colour as an Optional of TeamColor; the old override is converted (CbS26Team); its super call reaches 26.2's shape through the instance redirect, the guard falling through to super on re-entry",
+   "wrap": "top/dext/centurybridge/step/v26_2/rt/CbS26Team.wrapColor(Ljava/util/Optional;)Lnet/minecraft/ChatFormatting;"
+  },
+  {
+   "old": "getColor()Lnet/minecraft/ChatFormatting;",
+   "new": "getColor()Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/world/scores/PlayerTeam",
+   "guard": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "basis": "26.2 keeps the team colour as an Optional of TeamColor; the old override is converted (CbS26Team); its super call reaches 26.2's shape through the instance redirect, the guard falling through to super on re-entry",
+   "unwrap": "top/dext/centurybridge/step/v26_2/rt/CbS26Team.unwrapColor(Lnet/minecraft/ChatFormatting;)Ljava/util/Optional;"
+  },
+  {
+   "old": "packOptions()I",
+   "new": "packOptions()B",
+   "onlyUnder": "net/minecraft/world/scores/PlayerTeam",
+   "guard": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "unwrap": "top/dext/centurybridge/step/v26_2/rt/CbS26Team.optionsByte(I)B",
+   "basis": "26.2 packs the team options into a byte (the same two bits); the old override answers an int"
+  },
+  {
+   "old": "unpackOptions(I)V",
+   "new": "unpackOptions(B)V",
+   "onlyUnder": "net/minecraft/world/scores/PlayerTeam",
+   "guard": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "wrap": "top/dext/centurybridge/step/v26_2/rt/CbS26Team.optionsInt(B)I",
+   "basis": "26.2 unpacks the team options from a byte (the same two bits); the old override takes an int"
+  }
+ ],
+ "frameDefaults": {
+  "knockback(DDD)V": {
+   "3": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#noCause(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;",
+   "4": "zero: 26.2 reads the amount only for a source with an entity (SulfurCube); the default source is generic(), which has none"
+  },
+  "causeExtraKnockback(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/phys/Vec3;)V": {
+   "3": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#noCause(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;",
+   "4": "zero: read only by knockback with a source that has an entity (SulfurCube); the default source has none",
+   "5": "zero: false is 26.2's own default (its five-argument knockback passes false)"
+  },
+  "blockUsingItem(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)V": {
+   "2": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#noCause(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;",
+   "3": "zero: passed on to knockback, read there only for a source with an entity; the default source has none"
+  },
+  "blockedByItem(Lnet/minecraft/world/entity/LivingEntity;)V": {
+   "1": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#noCause(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;",
+   "2": "zero: passed on to knockback, read there only for a source with an entity; the default source has none"
+  }
  }
 }

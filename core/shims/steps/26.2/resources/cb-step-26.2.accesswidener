@@ -90,3 +90,6 @@ accessible field net/minecraft/commands/arguments/selector/options/InvertableSet
 accessible field net/minecraft/commands/arguments/selector/options/SetOnceOptionState hasValue Z
 accessible field net/minecraft/commands/arguments/selector/EntitySelectorParser type Lnet/minecraft/world/entity/EntityType;
 accessible field net/minecraft/ChatFormatting code C
+accessible method net/minecraft/world/entity/LivingEntity blockUsingItem (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)V
+accessible method net/minecraft/world/entity/LivingEntity blockedByItem (Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)V
+accessible field net/minecraft/server/level/ServerPlayer currentExplosionCause Lnet/minecraft/world/entity/Entity;
