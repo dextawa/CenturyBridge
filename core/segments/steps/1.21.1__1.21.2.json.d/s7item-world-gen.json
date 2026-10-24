@@ -3,7 +3,12 @@
   "net/minecraft/class_6761.method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#save",
   "net/minecraft/class_4296.method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#save",
   "net/minecraft/class_1806.method_7757(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#getUpdatePacket",
-  "net/minecraft/class_1745.method_7703()Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#getDisplayName"
+  "net/minecraft/class_1745.method_7703()Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#getDisplayName",
+  "net/minecraft/class_8047.method_48365(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#hasSlot",
+  "net/minecraft/class_8047.method_48371()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#getInputSlotIndexes",
+  "net/minecraft/class_8508$class_8509.comp_2087()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#recipeId",
+  "net/minecraft/class_2119$class_2121.comp_2089()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#recipe",
+  "net/minecraft/class_8508.method_51350(Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#trigger"
  },
  "superRedirects": {
   "net/minecraft/class_4296.method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#superSave",
@@ -17,7 +22,17 @@
   "net/minecraft/class_8052.method_48418(Lnet/minecraft/class_5321;[Lnet/minecraft/class_7696;)Lnet/minecraft/class_8052;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmithingTemplates#createArmorTrimTemplate",
   "net/minecraft/class_8052.method_48419(Lnet/minecraft/class_2960;[Lnet/minecraft/class_7696;)Lnet/minecraft/class_8052;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmithingTemplates#createArmorTrimTemplate",
   "net/minecraft/class_8052.method_48420()Lnet/minecraft/class_8052;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmithingTemplates#createNetheriteUpgradeTemplate",
-  "net/minecraft/class_1842.method_8051(Ljava/util/Optional;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions#getName"
+  "net/minecraft/class_1842.method_8051(Ljava/util/Optional;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions#getName",
+  "net/minecraft/class_9792.method_60747(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)Lnet/minecraft/class_9062;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#tryInsertIntoJukebox",
+  "net/minecraft/class_2010$class_2012.method_8828(Lnet/minecraft/class_1935;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#usedItem",
+  "net/minecraft/class_2123$class_2125.method_9120(Lnet/minecraft/class_1935;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#shotCrossbow",
+  "net/minecraft/class_2148$class_2150.method_9170(Lnet/minecraft/class_1935;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#usedTotem",
+  "net/minecraft/class_2135$class_2137.method_43136(Lnet/minecraft/class_2248;Lnet/minecraft/class_1792;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#walkOnBlockWithEquipment",
+  "net/minecraft/class_3735.method_58057(Lnet/minecraft/class_7871;)Lnet/minecraft/class_3735;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#captainPredicate",
+  "net/minecraft/class_8508$class_8509.method_51352(Lnet/minecraft/class_2960;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#craftedItem",
+  "net/minecraft/class_8508$class_8509.method_51353(Lnet/minecraft/class_2960;Ljava/util/List;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#craftedItem",
+  "net/minecraft/class_8508$class_8509.method_58450(Lnet/minecraft/class_2960;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#crafterCraftedItem",
+  "net/minecraft/class_2119.method_27847(Lnet/minecraft/class_2960;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#unlocked"
  },
  "adapterHooks": [
   {
@@ -54,7 +69,21 @@
    "basis": "a 1.21.1 BannerPatternItem subclass's getDisplayName answers its calls"
   }
  ],
- "overrideHooks": [],
+ "overrideHooks": [
+  {
+   "old": "method_51350(Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;Ljava/util/List;)V",
+   "new": "method_51350(Lnet/minecraft/class_3222;Lnet/minecraft/class_5321;Ljava/util/List;)V",
+   "onlyUnder": "net/minecraft/class_8508",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers$LegacyCrafted",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers.triggerBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers$LegacyCrafted;Lnet/minecraft/class_3222;Lnet/minecraft/class_5321;Ljava/util/List;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers.superTriggerBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers$SuperCrafted;Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;Ljava/util/List;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers$SuperCrafted",
+   "superAccessors": [
+    "method_51350(Lnet/minecraft/class_3222;Lnet/minecraft/class_5321;Ljava/util/List;)V"
+   ],
+   "basis": "1.21.2 triggers RecipeCraftedTrigger with the recipe's key: a 1.21.1 subclass's trigger(player, id, items) answers with its location; its super call is 1.21.2's body with the id's key"
+  }
+ ],
  "lambdaAdapters": {
   "net/minecraft/class_6761.method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520;": {
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks$LegacySave",
@@ -135,12 +164,77 @@
     "keep"
    ],
    "basis": "1.21.2's DustColorTransitionOptions takes its colours packed RGB (CbItemPotions.rgb)"
+  },
+  "net/minecraft/class_1749.<init>(ZLnet/minecraft/class_1690$class_1692;Lnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#boatEntity(ZLnet/minecraft/class_1690$class_1692;)Lnet/minecraft/class_1299;",
+    "keep:2"
+   ],
+   "basis": "1.21.2's BoatItem takes the boat entity type: the type's boat or chest boat (s7entity's BoatType)"
+  },
+  "net/minecraft/class_2967.<init>(Lnet/minecraft/class_1690$class_1692;)V": {
+   "desc": "(Lnet/minecraft/class_1299;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#boatEntity(Lnet/minecraft/class_1690$class_1692;)Lnet/minecraft/class_1299;"
+   ],
+   "basis": "1.21.2's BoatDispenseItemBehavior takes the boat entity type"
+  },
+  "net/minecraft/class_2967.<init>(Lnet/minecraft/class_1690$class_1692;Z)V": {
+   "desc": "(Lnet/minecraft/class_1299;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#boatEntity(Lnet/minecraft/class_1690$class_1692;Z)Lnet/minecraft/class_1299;"
+   ],
+   "basis": "1.21.2's BoatDispenseItemBehavior takes the boat entity type: the type's boat or chest boat"
+  },
+  "net/minecraft/class_1808.<init>(Lnet/minecraft/class_1688$class_1689;Lnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#minecartEntity(Lnet/minecraft/class_1688$class_1689;)Lnet/minecraft/class_1299;",
+    "keep"
+   ],
+   "basis": "1.21.2's MinecartItem takes the minecart entity type (s7entity's MinecartType)"
+  },
+  "net/minecraft/class_3727.<init>(Lnet/minecraft/class_1297;)V": {
+   "desc": "(Lnet/minecraft/class_1297;Z)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#noFluidCollision()Z"
+   ],
+   "basis": "1.21.2's EntityCollisionContext adds alwaysCollideWithFluid; 1.21.1's never did"
+  },
+  "net/minecraft/class_8508$class_8509.<init>(Ljava/util/Optional;Lnet/minecraft/class_2960;Ljava/util/List;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_5321;Ljava/util/List;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep"
+   ],
+   "basis": "1.21.2 names the recipe by its key: the id in the recipe registry"
+  },
+  "net/minecraft/class_2119$class_2121.<init>(Ljava/util/Optional;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.2 names the recipe by its key: the id in the recipe registry"
   }
  },
  "fieldGetters": {
   "net/minecraft/class_2390.field_28272:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions",
-  "net/minecraft/class_5743.field_28267:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions"
+  "net/minecraft/class_5743.field_28267:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions",
+  "net/minecraft/class_7701.field_40178:Lnet/minecraft/class_7696;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall",
+  "net/minecraft/class_1799.field_48350:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall"
  },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_3726",
+   "method": "method_62878(Lnet/minecraft/class_2680;Lnet/minecraft/class_1941;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall.collisionShape(Lnet/minecraft/class_3726;Lnet/minecraft/class_2680;Lnet/minecraft/class_1941;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;",
+   "basis": "1.21.2's CollisionContext demands getCollisionShape(state, level, pos); a 1.21.1 context answers the state's collision shape in it, what 1.21.1's callers asked"
+  }
+ ],
  "classRenames": {
   "net/minecraft/class_1762": "top/dext/centurybridge/step/v1_21_2/facade/ComplexItem",
   "net/minecraft/class_1751": "top/dext/centurybridge/step/v1_21_2/facade/BookItem",
