@@ -178,7 +178,11 @@ public final class WiringCheck {
             if (root.has("classRenames")) {
                 root.getAsJsonObject("classRenames").entrySet().forEach(e -> renames.put(e.getKey(), e.getValue().getAsString()));
             }
-            w.wall = JarRemapper.loadTable(table).keepFacadeTokens(JarRemapper.Table.facadeOwners(renames)).remapper();
+            JarRemapper.Table t = JarRemapper.loadTable(table).keepFacadeTokens(JarRemapper.Table.facadeOwners(renames));
+            if (stubJar != null && Files.exists(stubJar)) {
+                JarRemapper.loadTarget(t, stubJar); // the conversion's descriptor choice for reused ids
+            }
+            w.wall = t.remapper();
         }
         w.genericOverrides = genericOverrideRows(shimsJson);
         w.check(root);
@@ -1143,7 +1147,9 @@ public final class WiringCheck {
             // facade is one, and the stub (Minecraft only) does not carry it
             return;
         }
-        ClassNode kn = stub.containsKey(kt) ? stub.get(kt) : gameLibs.get(kt);
+        // a Fabric API class surviving on the target (0.116's FabricRecipeProvider on 0.106's, -Dcb.fapi) is judged
+        // like a Minecraft one
+        ClassNode kn = stub.containsKey(kt) ? stub.get(kt) : gameLibs.containsKey(kt) ? gameLibs.get(kt) : lib.get(kt);
         if (kn == null && gameLibs.isEmpty() && !top.dext.centurybridge.engine.Chain.minecraftOwned(kt) && !lib.containsKey(kt)) {
             // a game library's class (authlib's PropertyMap) with no -Dcb.libs: the stub (Minecraft only) does not
             // carry it, so only the subtype half is judged, through the facade's own compiled supertypes

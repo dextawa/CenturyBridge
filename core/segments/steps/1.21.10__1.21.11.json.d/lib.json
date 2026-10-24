@@ -1,5 +1,5 @@
 {
- "_lib_basis": "slib library front of 1.21.10 -> 1.21.11 (core/segments/damage-lib/1.21.10__1.21.11.tsv): DFU 8.0.16 -> 9.0.19 (rt/CbLibDfu)",
+ "_lib_basis": "slib library front of 1.21.10 -> 1.21.11 (core/segments/damage-lib/1.21.10__1.21.11.tsv): DFU 8.0.16 -> 9.0.19 (rt/CbLibDfu), netty 4.1.118 -> 4.2.7 and JNA (rt/CbLibNetty, facade/Netty*); the libraries 1.21.11 dropped are nested whole in the layer (resources/nested-libraries.tsv)",
  "staticRedirects": {
   "com/mojang/serialization/Codec.unit(Ljava/lang/Object;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu",
   "com/mojang/serialization/Codec.unit(Ljava/util/function/Supplier;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu"
@@ -31,5 +31,69 @@
  "instanceFieldGetters": {
   "com/mojang/datafixers/schemas/Schema.parent:Lcom/mojang/datafixers/schemas/Schema;": "top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu#parent",
   "com/mojang/datafixers/schemas/Schema.RECURSIVE_TYPES:Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "top/dext/centurybridge/step/v1_21_11/rt/CbLibDfu#RECURSIVE_TYPES"
+ },
+ "classRenames": {
+  "io/netty/handler/codec/xml/XmlFrameDecoder": "top/dext/centurybridge/step/v1_21_11/facade/NettyXmlFrameDecoder",
+  "io/netty/handler/codec/protobuf/ProtobufVarint32FrameDecoder": "top/dext/centurybridge/step/v1_21_11/facade/NettyProtobufVarint32FrameDecoder",
+  "io/netty/handler/codec/protobuf/ProtobufVarint32LengthFieldPrepender": "top/dext/centurybridge/step/v1_21_11/facade/NettyProtobufVarint32LengthFieldPrepender"
+ },
+ "callReshapes": {
+  "io/netty/channel/nio/AbstractNioChannel.eventLoop()Lio/netty/channel/nio/NioEventLoop;": {
+   "desc": "()Lio/netty/channel/EventLoop;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_11/rt/CbLibNetty#nioEventLoop(Lio/netty/channel/EventLoop;)Lio/netty/channel/nio/NioEventLoop;",
+   "basis": "netty 4.1.118's AbstractNioChannel.eventLoop() was (NioEventLoop) super.eventLoop(); 4.2 drops the covariant override (rt/CbLibNetty: vanilla 1.21.11's game channels run on loops that are no NioEventLoop, where the cast fails as 4.1.118's would)"
+  }
+ },
+ "instanceRedirects": {
+  "io/netty/channel/epoll/EpollEventLoop.openFileDescriptors()V": "top/dext/centurybridge/step/v1_21_11/rt/CbLibNetty",
+  "io/netty/channel/epoll/EpollEventLoop.closeFileDescriptors()V": "top/dext/centurybridge/step/v1_21_11/rt/CbLibNetty"
+ },
+ "abstractFills": [
+  {
+   "under": "com/sun/jna/platform/win32/User32",
+   "method": "RegisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/platform/win32/Guid$GUID;I)Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;",
+   "call": "top/dext/centurybridge/step/v1_21_11/rt/CbLibNetty.RegisterPowerSettingNotification(Lcom/sun/jna/platform/win32/User32;Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/platform/win32/Guid$GUID;I)Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;",
+   "basis": "JNA 5.17 demands it of a WinUser implementation; a 5.15-era one reaches the native function through JNA's User32 binding"
+  },
+  {
+   "under": "com/sun/jna/platform/win32/User32",
+   "method": "UnregisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;)Lcom/sun/jna/platform/win32/WinDef$BOOL;",
+   "call": "top/dext/centurybridge/step/v1_21_11/rt/CbLibNetty.UnregisterPowerSettingNotification(Lcom/sun/jna/platform/win32/User32;Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;)Lcom/sun/jna/platform/win32/WinDef$BOOL;",
+   "basis": "JNA 5.17 demands it of a WinUser implementation; a 5.15-era one reaches the native function through JNA's User32 binding"
+  },
+  {
+   "under": "com/sun/jna/platform/win32/WinUser",
+   "method": "RegisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/platform/win32/Guid$GUID;I)Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;",
+   "call": "top/dext/centurybridge/step/v1_21_11/rt/CbLibNetty.RegisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinUser;Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/platform/win32/Guid$GUID;I)Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;",
+   "basis": "JNA 5.17 demands it of a WinUser implementation; a 5.15-era one reaches the native function through JNA's User32 binding"
+  },
+  {
+   "under": "com/sun/jna/platform/win32/WinUser",
+   "method": "UnregisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;)Lcom/sun/jna/platform/win32/WinDef$BOOL;",
+   "call": "top/dext/centurybridge/step/v1_21_11/rt/CbLibNetty.UnregisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinUser;Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;)Lcom/sun/jna/platform/win32/WinDef$BOOL;",
+   "basis": "JNA 5.17 demands it of a WinUser implementation; a 5.15-era one reaches the native function through JNA's User32 binding"
+  }
+ ],
+ "ledger": {
+  "io/netty/handler/codec/marshalling/CompatibleMarshallingDecoder": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/marshalling/CompatibleMarshallingEncoder": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/marshalling/ContextBoundUnmarshallerProvider": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/marshalling/DefaultMarshallerProvider": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/marshalling/DefaultUnmarshallerProvider": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/marshalling/MarshallerProvider": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/marshalling/MarshallingDecoder": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/marshalling/MarshallingEncoder": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/marshalling/ThreadLocalMarshallerProvider": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/marshalling/ThreadLocalUnmarshallerProvider": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/marshalling/UnmarshallerProvider": "needs JBoss Marshalling: every netty-codec 4.1.118 marshalling class works through org.jboss.marshalling types (its providers answer org.jboss.marshalling.Marshaller/Unmarshaller, the coders call them), and no org/jboss/marshalling class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 no encode or decode could link, so there is no behaviour to give back",
+  "io/netty/handler/codec/protobuf/ProtobufDecoder": "needs Google protobuf: netty-codec 4.1.118's ProtobufDecoder takes and produces com.google.protobuf messages, and no com/google/protobuf class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 it could not encode or decode anything",
+  "io/netty/handler/codec/protobuf/ProtobufEncoder": "needs Google protobuf: netty-codec 4.1.118's ProtobufEncoder takes and produces com.google.protobuf messages, and no com/google/protobuf class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 it could not encode or decode anything",
+  "io/netty/handler/codec/protobuf/ProtobufDecoderNano": "needs Google protobuf: netty-codec 4.1.118's ProtobufDecoderNano takes and produces com.google.protobuf.nano messages, and no com/google/protobuf class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 it could not encode or decode anything",
+  "io/netty/handler/codec/protobuf/ProtobufEncoderNano": "needs Google protobuf: netty-codec 4.1.118's ProtobufEncoderNano takes and produces com.google.protobuf.nano messages, and no com/google/protobuf class is on 1.21.10's runtime (none in any of its libraries' jars): on 1.21.10 it could not encode or decode anything",
+  "io/netty/handler/ssl/JdkNpnApplicationProtocolNegotiator": "its static initializer throws on 1.21.10: NPN_WRAPPER's constructor throws RuntimeException(\"NPN unsupported...\") unless JettyNpnSslEngine.isAvailable(), which loads sun.security.ssl.NextProtoNegoExtension -- a class of the Jetty NPN boot jar for Java 7/8, absent from every Java the game runs on (javap of netty-handler 4.1.118's JdkNpnApplicationProtocolNegotiator$1 and JettyNpnSslEngine): every use was an ExceptionInInitializerError on 1.21.10",
+  "io/netty/handler/ssl/ocsp/OcspClientHandler": "its only constructor requires a non-null ReferenceCountedOpenSslEngine (ObjectUtil.checkNotNull), and such an engine exists only with netty-tcnative's native OpenSSL (io.netty.internal.tcnative), which is not on 1.21.10's runtime (no tcnative jar in its libraries): on 1.21.10 no OcspClientHandler could be constructed",
+  "com/microsoft/aad/msal4j/CustomJWTAuthentication": "its only constructor (protected) takes msal4j's ClientAssertion, a package-private class in 1.21.10's msal4j (javap: final class com.microsoft.aad.msal4j.ClientAssertion), so a mod subclass can pass only null; a layer class outside com.microsoft.aad.msal4j cannot declare that parameter (javac refuses it, and access wideners only tweak game classes), and msal4j 1.23 has no such class",
+  "org/apache/logging/log4j/core/async/AsyncLogger.<init>(Lorg/apache/logging/log4j/core/LoggerContext;Ljava/lang/String;Lorg/apache/logging/log4j/message/MessageFactory;Lorg/apache/logging/log4j/core/async/AsyncLoggerDisruptor;)V": "its last parameter, AsyncLoggerDisruptor, is package-private in 1.21.10's log4j-core 2.24.1 (javap: class org.apache.logging.log4j.core.async.AsyncLoggerDisruptor, not public), so a mod can pass only null; 2.25's constructor is package-private, and a layer factory outside org.apache.logging.log4j.core.async cannot declare that parameter type (javac refuses it; access wideners only tweak game classes)"
  }
 }

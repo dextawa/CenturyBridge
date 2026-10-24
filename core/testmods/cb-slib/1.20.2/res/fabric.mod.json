@@ -1,0 +1,16 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_slib_1_20_2",
+ "version": "1.0.0",
+ "name": "CB slib authlib test (1.20.1 era)",
+ "environment": "*",
+ "entrypoints": {
+  "main": [
+   "cb.slib.SlibAuthlib2Test"
+  ]
+ },
+ "depends": {
+  "fabricloader": ">=0.14.0",
+  "minecraft": "1.20.1"
+ }
+}

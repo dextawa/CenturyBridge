@@ -1,0 +1,22 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3481.field_15497:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbTagCompat#BlockTags_field_15497",
+  "net/minecraft/class_3481.field_25739:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbTagCompat#BlockTags_field_25739",
+  "net/minecraft/class_3481.field_33641:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbTagCompat#BlockTags_field_33641",
+  "net/minecraft/class_3481.field_44589:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbTagCompat#BlockTags_field_44589"
+ },
+ "tagMap": {
+  "block minecraft:dirt": {
+   "to": "centurybridge:compat/1_21_11/dirt",
+   "mirror": false
+  },
+  "block minecraft:maintains_farmland": {
+   "to": "centurybridge:compat/1_21_11/maintains_farmland",
+   "mirror": true
+  },
+  "item minecraft:dirt": {
+   "to": "centurybridge:compat/1_21_11/dirt",
+   "mirror": false
+  }
+ }
+}

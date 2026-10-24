@@ -1,0 +1,16 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3481.field_20339:Lnet/minecraft/class_6862;": "top/dext/centurybridge/rt/v1_20_2/CbTagCompat#BlockTags_field_20339",
+  "net/minecraft/class_3489.field_20344:Lnet/minecraft/class_6862;": "top/dext/centurybridge/rt/v1_20_2/CbTagCompat#ItemTags_field_20344"
+ },
+ "tagMap": {
+  "block minecraft:flowers": {
+   "to": "centurybridge:compat/1_20_1/flowers",
+   "mirror": true
+  },
+  "item minecraft:flowers": {
+   "to": "centurybridge:compat/1_20_1/flowers",
+   "mirror": true
+  }
+ }
+}

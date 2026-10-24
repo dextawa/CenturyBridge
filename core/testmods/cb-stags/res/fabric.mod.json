@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_stags",
+ "version": "1.0.0",
+ "name": "CB stags tag-drift test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.stags.StagsTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.3", "fabric-lifecycle-events-v1": "*" }
+}

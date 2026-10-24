@@ -144,29 +144,11 @@ public final class CbRenderModelFields {
     // ---- fields 1.21.2 keeps as other members (instanceFieldGetters / fieldGetters) ----
 
     /** PartPose x / y / z / xRot / yRot / zRot: 1.21.2's PartPose is a record of the same values (and a scale) */
-    public static float field_27702(net.minecraft.class_5603 p) {
-        return p.comp_2997();
-    }
 
-    public static float field_27703(net.minecraft.class_5603 p) {
-        return p.comp_2998();
-    }
 
-    public static float field_27704(net.minecraft.class_5603 p) {
-        return p.comp_2999();
-    }
 
-    public static float field_27705(net.minecraft.class_5603 p) {
-        return p.comp_3000();
-    }
 
-    public static float field_27706(net.minecraft.class_5603 p) {
-        return p.comp_3001();
-    }
 
-    public static float field_27707(net.minecraft.class_5603 p) {
-        return p.comp_3002();
-    }
 
     /** VillagerModel.root (protected): the part the model was built from, 1.21.2's Model.root() */
     public static net.minecraft.class_630 field_27525(net.minecraft.class_620 m) {
