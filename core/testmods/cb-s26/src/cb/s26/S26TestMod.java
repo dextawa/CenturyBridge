@@ -340,6 +340,25 @@ public class S26TestMod implements ModInitializer {
             check("processor", false, st);
         }
 
+        // BlockFamilies copper constants on 26.2's WeatheringCopperCollection (rt/CbS26BlockFamilies)
+        check("families.copper", net.minecraft.data.BlockFamilies.COPPER_BLOCK.getBaseBlock() == Blocks.COPPER_BLOCK
+            && net.minecraft.data.BlockFamilies.EXPOSED_COPPER.getBaseBlock() == Blocks.EXPOSED_COPPER
+            && net.minecraft.data.BlockFamilies.WAXED_OXIDIZED_COPPER.getBaseBlock() == Blocks.WAXED_OXIDIZED_COPPER
+            && net.minecraft.data.BlockFamilies.WEATHERED_CUT_COPPER.getBaseBlock() == Blocks.WEATHERED_CUT_COPPER
+            && net.minecraft.data.BlockFamilies.WAXED_CUT_COPPER.getBaseBlock() == Blocks.WAXED_CUT_COPPER,
+            net.minecraft.data.BlockFamilies.EXPOSED_COPPER.getBaseBlock());
+
+        // ServerboundSpectateEntityPacket on 26.2's ServerboundSpectatorActionPacket (rt/CbS26Packets)
+        var spec = new net.minecraft.network.protocol.game.ServerboundSpectateEntityPacket(42);
+        check("packet.spectate", spec.entityId() == 42, spec);
+        // ClientboundSetPlayerTeamPacket.Parameters getters on 26.2's record (rt/CbS26Team)
+        net.minecraft.world.scores.PlayerTeam pteam = new net.minecraft.world.scores.PlayerTeam(new net.minecraft.world.scores.Scoreboard(), "cbs26p");
+        pteam.setColor(net.minecraft.ChatFormatting.GOLD);
+        pteam.setAllowFriendlyFire(true);
+        var params = new net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket.Parameters(pteam);
+        check("packet.teamParameters", params.getColor() == net.minecraft.ChatFormatting.GOLD && (params.getOptions() & 1) == 1
+            && params.getNametagVisibility() == net.minecraft.world.scores.Team.Visibility.ALWAYS, params.getColor());
+
         System.out.println("CB-S26 DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS: " + FAILS));
     }
 }
