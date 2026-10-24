@@ -384,6 +384,21 @@ public class SwallTestMod implements ModInitializer {
             && net.minecraft.class_7400.field_38870 != null, disk);
     }
 
+    /** tag-content drift (1.21.11's dirt) and the motion packet codec over a FriendlyByteBuf */
+    private static void driftPilots() {
+        check("tagDrift.dirt", net.minecraft.class_2246.field_10219.method_9564().method_26164(net.minecraft.class_3481.field_29822)
+            && net.minecraft.class_2246.field_10566.method_9564().method_26164(net.minecraft.class_3481.field_29822)
+            && !net.minecraft.class_2246.field_10340.method_9564().method_26164(net.minecraft.class_3481.field_29822), "");
+        net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
+        net.minecraft.class_2743.field_47981.encode(buf, new net.minecraft.class_2743(42, new net.minecraft.class_243(0.5, 0.25, -1.0)));
+        net.minecraft.class_2743 back = net.minecraft.class_2743.field_47981.decode(buf);
+        net.minecraft.class_9139<net.minecraft.class_2540, Integer> ids = net.minecraft.class_2743.field_47981.method_56432(net.minecraft.class_2743::method_11818,
+            id -> new net.minecraft.class_2743(id, net.minecraft.class_243.field_1353));
+        net.minecraft.class_2540 buf2 = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
+        ids.encode(buf2, 7);
+        check("streamCodec.motion", back.method_11818() == 42 && ids.decode(buf2) == 7, back.method_11818());
+    }
+
     /** generic drift at the wall read on a running server */
     private static void generic(MinecraftServer server) {
         Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
@@ -439,6 +454,7 @@ public class SwallTestMod implements ModInitializer {
             placements();
             removedFeatures(server);
             worldgenConfigs();
+            driftPilots();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
