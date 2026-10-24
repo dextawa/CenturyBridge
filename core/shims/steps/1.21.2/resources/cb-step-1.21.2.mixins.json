@@ -333,6 +333,7 @@
     "CbRenderParts624Mixin",
     "CbRenderParts7201Mixin",
     "CbRenderPiglinMixin",
+    "CbRenderPlayerPartsMixin",
     "CbRenderRaftModelMixin",
     "CbRenderSectionMixin",
     "CbRenderShaderManagerMixin",
