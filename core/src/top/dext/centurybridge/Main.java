@@ -187,14 +187,25 @@ public final class Main {
         if (crossesWall && !Files.exists(renameTable)) {
             throw new IllegalStateException("chain crosses the namespace wall but " + renameTable + " is missing");
         }
-        // the whole-jar rename every converted jar takes past the wall (facade tokens keep their names)
-        top.dext.centurybridge.data.JarRemapper.Table wallTable = crossesWall
-            ? top.dext.centurybridge.data.JarRemapper.loadTable(renameTable).keepFacadeTokens(
-                top.dext.centurybridge.data.JarRemapper.Table.facadeOwners(chain.classRenames))
-            : null;
         String lj = System.getProperty("cb.layerJar");
         if (lj == null && System.getProperty("cb.layersDir") != null) {
             lj = Path.of(System.getProperty("cb.layersDir"), "centurybridge-0.3.0+" + args[3] + ".jar").toString();
+        }
+        // the whole-jar rename every converted jar takes past the wall (facade tokens keep their names
+        // where the facades declare them so: read off the step's layer -- the climb's, or the one
+        // build.sh built in the work dir whose core/segments this conversion reads)
+        top.dext.centurybridge.data.JarRemapper.Table wallTable = null;
+        if (crossesWall) {
+            Path workDir = Path.of(args[1]).toAbsolutePath().normalize().getParent().getParent();
+            Path surfaces = lj != null ? Path.of(lj) : workDir.resolve("build/centurybridge-0.3.0+" + args[3] + ".jar");
+            java.util.Map<String, java.util.Set<String>> declared = null;
+            if (Files.exists(surfaces)) {
+                declared = top.dext.centurybridge.data.JarRemapper.Table.facadeMembers(surfaces);
+                System.out.println("facade surfaces for the wall rename: " + surfaces);
+            } else if (!top.dext.centurybridge.data.JarRemapper.Table.facadeOwners(chain.classRenames).isEmpty()) {
+                System.out.println("WARNING: no layer jar (" + surfaces + "): every facade-only token keeps its intermediary name");
+            }
+            wallTable = top.dext.centurybridge.data.JarRemapper.loadTable(renameTable).keepFacadeTokens(chain.classRenames, declared);
         }
         if (lj != null && Files.exists(Path.of(lj))) {
             chain.layerJar = Path.of(lj);

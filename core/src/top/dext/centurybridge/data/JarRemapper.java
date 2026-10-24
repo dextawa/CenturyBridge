@@ -85,19 +85,111 @@ public final class JarRemapper {
          * ExpirableValue.tick() is method_24913 on the facade, and a mod subclass's this.tick() went out
          * as tick (NoSuchMethodError), its override of it as tick (never called). A token declared by any
          * other class as well (an override family reaching vanilla classes) keeps its mapping.
+         * <p>
+         * Only a token the facade really declares under that name is kept. A facade written against the
+         * target declares the member under the table's name instead when it overrides the target's own
+         * (1.21.11 ArmorDyeRecipe.matches(CraftingInput, Level), method_17701, is 26.1 Recipe.matches on the
+         * facade): there the token takes the table's rename, through the mod class and through the facade
+         * alike ({@link #remapper}), or the mod's override kept the token and nothing called it (ORPHAN).
+         * {@code declared}: each facade's member names, its CB superclasses' included ({@link #facadeMembers});
+         * null when the facades are not known, and then every facade-only token is kept.
          */
-        public Table keepFacadeTokens(java.util.Collection<String> facadeOwners) {
+        public Table keepFacadeTokens(java.util.Map<String, String> classRenames, java.util.Map<String, java.util.Set<String>> declared) {
+            java.util.Set<String> facadeOwners = facadeOwners(classRenames);
+            facadeOrigins.clear();
+            for (String c : facadeOwners) {
+                facadeOrigins.computeIfAbsent(classRenames.get(c), x -> new java.util.ArrayList<>()).add(c);
+            }
+            facadeDeclared = declared;
             java.util.Map<String, java.util.Set<String>> owners = new java.util.HashMap<>();
             for (String k : byOwner.keySet()) {
                 int dot = k.lastIndexOf('.');
                 owners.computeIfAbsent(k.substring(dot + 1), x -> new java.util.HashSet<>()).add(k.substring(0, dot));
             }
             for (var e : owners.entrySet()) {
-                if (facadeOwners.containsAll(e.getValue())) {
+                if (facadeOwners.containsAll(e.getValue()) && (declared == null || declaredByFacade(e.getValue(), classRenames, e.getKey()))) {
                     members.remove(e.getKey());
                 }
             }
             return this;
+        }
+
+        private boolean declaredByFacade(java.util.Set<String> owners, java.util.Map<String, String> classRenames, String token) {
+            for (String o : owners) {
+                java.util.Set<String> d = facadeDeclared.get(classRenames.get(o));
+                if (d != null && d.contains(token)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /** facade class -> the intermediary classes classRenames retire into it ({@link #keepFacadeTokens}) */
+        public final java.util.Map<String, java.util.List<String>> facadeOrigins = new java.util.HashMap<>();
+        /** facade class -> the member names it declares or inherits from CB superclasses; null: not known */
+        public java.util.Map<String, java.util.Set<String>> facadeDeclared;
+
+        /**
+         * A reference naming a facade: the token it names when the facade declares it so (or the facades are
+         * not known); otherwise the table's rename of the member of the class retired into it (or of one it
+         * inherits), null if none.
+         */
+        String facadeMember(String facade, String name) {
+            java.util.List<String> origins = facadeOrigins.get(facade);
+            if (origins == null || facadeDeclared == null) {
+                return null;
+            }
+            java.util.Set<String> d = facadeDeclared.get(facade);
+            if (d != null && d.contains(name)) {
+                return null;
+            }
+            for (String o : origins) {
+                String hit = byOwner.get(o + "." + name);
+                if (hit != null) {
+                    return hit;
+                }
+            }
+            // a member the facade inherits from the target (26.1 CustomRecipe.isSpecial under ArmorDyeRecipe)
+            return members.get(name);
+        }
+
+        /**
+         * The member names of the CB classes among {@code classes} (internal name -> node), each with those
+         * of its CB superclasses: what {@link #keepFacadeTokens} reads a facade's surface from.
+         */
+        public static java.util.Map<String, java.util.Set<String>> facadeMembers(java.util.Map<String, org.objectweb.asm.tree.ClassNode> classes) {
+            java.util.Map<String, java.util.Set<String>> out = new java.util.HashMap<>();
+            for (String n : classes.keySet()) {
+                if (!n.startsWith("top/dext/centurybridge/")) {
+                    continue;
+                }
+                java.util.Set<String> names = new java.util.HashSet<>();
+                java.util.Set<String> seen = new java.util.HashSet<>();
+                for (org.objectweb.asm.tree.ClassNode c = classes.get(n); c != null && seen.add(c.name);
+                     c = c.superName != null ? classes.get(c.superName) : null) {
+                    c.methods.forEach(m -> names.add(m.name));
+                    c.fields.forEach(f -> names.add(f.name));
+                }
+                out.put(n, names);
+            }
+            return out;
+        }
+
+        /** {@link #facadeMembers} of a built layer jar's CB classes */
+        public static java.util.Map<String, java.util.Set<String>> facadeMembers(Path layerJar) throws IOException {
+            java.util.Map<String, org.objectweb.asm.tree.ClassNode> classes = new java.util.HashMap<>();
+            try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(layerJar))) {
+                ZipEntry e;
+                while ((e = zin.getNextEntry()) != null) {
+                    if (!e.getName().endsWith(".class") || !e.getName().startsWith("top/dext/centurybridge/")) {
+                        continue;
+                    }
+                    org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+                    new ClassReader(zin.readAllBytes()).accept(cn, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                    classes.put(cn.name, cn);
+                }
+            }
+            return facadeMembers(classes);
         }
 
         /** the classes a wiring's classRenames retire into CB facades */
@@ -145,7 +237,9 @@ public final class JarRemapper {
                     // token-named members: the converter wired call sites to them
                     // by exactly that name, and nothing in the game maps them
                     if (owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/")) {
-                        return name;
+                        // a facade not declaring the token answers to the table's name (keepFacadeTokens)
+                        String f = facadeMember(owner, name);
+                        return f != null ? f : name;
                     }
                     String hit = byOwner.get(owner + "." + name);
                     return hit != null ? hit : members.getOrDefault(name, name);

@@ -77,7 +77,7 @@ public final class CbWallRecipeKinds {
     // ---- matches(input, level) / assemble(input, registries) named through the 1.21.11 classes
 
     public static boolean matches(ArmorDyeRecipe recipe, CraftingInput input, Level level) {
-        return recipe.method_17701(input, level);
+        return recipe.matches(input, level);
     }
 
     public static boolean superMatches(ArmorDyeRecipe recipe, CraftingInput input, Level level) {
@@ -85,7 +85,7 @@ public final class CbWallRecipeKinds {
     }
 
     public static ItemStack assemble(ArmorDyeRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {
-        return recipe.method_17700(input, registries);
+        return recipe.assemble(input, registries);
     }
 
     public static ItemStack superAssemble(ArmorDyeRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {
@@ -93,7 +93,7 @@ public final class CbWallRecipeKinds {
     }
 
     public static boolean matches(MapCloningRecipe recipe, CraftingInput input, Level level) {
-        return recipe.method_17715(input, level);
+        return recipe.matches(input, level);
     }
 
     public static boolean superMatches(MapCloningRecipe recipe, CraftingInput input, Level level) {
@@ -101,7 +101,7 @@ public final class CbWallRecipeKinds {
     }
 
     public static ItemStack assemble(MapCloningRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {
-        return recipe.method_17714(input, registries);
+        return recipe.assemble(input, registries);
     }
 
     public static ItemStack superAssemble(MapCloningRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {
@@ -109,7 +109,7 @@ public final class CbWallRecipeKinds {
     }
 
     public static boolean matches(TippedArrowRecipe recipe, CraftingInput input, Level level) {
-        return recipe.method_17741(input, level);
+        return recipe.matches(input, level);
     }
 
     public static boolean superMatches(TippedArrowRecipe recipe, CraftingInput input, Level level) {
@@ -117,7 +117,7 @@ public final class CbWallRecipeKinds {
     }
 
     public static ItemStack assemble(TippedArrowRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {
-        return recipe.method_17740(input, registries);
+        return recipe.assemble(input, registries);
     }
 
     public static ItemStack superAssemble(TippedArrowRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {

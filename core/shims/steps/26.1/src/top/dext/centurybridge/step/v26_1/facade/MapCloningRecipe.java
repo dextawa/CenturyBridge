@@ -24,28 +24,20 @@ public class MapCloningRecipe extends CustomRecipe {
         CbWallRecipes.customCategory(this, category);
     }
 
-    /** 26.1's matches: 1.21.11's matches(input, level) under its own token, which a 1.21.11 subclass overrides */
+    /** 1.21.11 MapCloningRecipe.matches(input, level) (method_17715): 26.1's matches, which a 1.21.11 subclass's override (renamed by the wall table) overrides */
     @Override
     public boolean matches(CraftingInput input, Level level) {
-        return method_17715(input, level);
-    }
-
-    /** 26.1's assemble(input): 1.21.11's assemble(input, registries) under its own token, with the level's registries */
-    @Override
-    public ItemStack assemble(CraftingInput input) {
-        return method_17714(input, CbWallRegistries.access());
-    }
-
-    /**
-     * 1.21.11 MapCloningRecipe.matches(input, level) (class_1855.method_17715): the class is gone in 26.1, so a 1.21.11 subclass's
-     * override keeps this name past the wall and overrides it here
-     */
-    public boolean method_17715(CraftingInput input, Level level) {
         return cb$matches(input, level);
     }
 
-    /** 1.21.11 MapCloningRecipe.assemble(input, registries) (class_1855.method_17714), likewise */
-    public ItemStack method_17714(CraftingInput input, net.minecraft.core.HolderLookup.Provider registries) {
+    /** 26.1's assemble(input): 1.21.11's assemble(input, registries) with the level's registries */
+    @Override
+    public ItemStack assemble(CraftingInput input) {
+        return assemble(input, CbWallRegistries.access());
+    }
+
+    /** 1.21.11 MapCloningRecipe.assemble(input, registries) (class_1855.method_17714) under the wall table's name, which a 1.21.11 subclass's override takes */
+    public ItemStack assemble(CraftingInput input, net.minecraft.core.HolderLookup.Provider registries) {
         return cb$assemble(input);
     }
 

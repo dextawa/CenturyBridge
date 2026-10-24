@@ -178,7 +178,7 @@ public final class WiringCheck {
             if (root.has("classRenames")) {
                 root.getAsJsonObject("classRenames").entrySet().forEach(e -> renames.put(e.getKey(), e.getValue().getAsString()));
             }
-            JarRemapper.Table t = JarRemapper.loadTable(table).keepFacadeTokens(JarRemapper.Table.facadeOwners(renames));
+            JarRemapper.Table t = JarRemapper.loadTable(table).keepFacadeTokens(renames, JarRemapper.Table.facadeMembers(w.classes));
             if (stubJar != null && Files.exists(stubJar)) {
                 JarRemapper.loadTarget(t, stubJar); // the conversion's descriptor choice for reused ids
             }
@@ -362,7 +362,13 @@ public final class WiringCheck {
                 checked++;
                 String desc = methodDesc(m.desc);
                 String gapKey = dead + "." + m.name + m.desc;
-                MethodNode has = facadeMethod(fac, m.name, desc, m.name.equals("<init>"));
+                // past the wall, under the name the conversion gives a reference naming the facade: the token
+                // where the facade declares it so, the table's rename otherwise (JarRemapper.Table.keepFacadeTokens).
+                // A private member of the class stands in only under its token: a facade's own private member of
+                // the table's name is the facade's implementation, not that member given back
+                String name = wall != null && !m.name.equals("<init>") && (m.access & Opcodes.ACC_PRIVATE) == 0
+                    ? wall.mapMethodName(fac, m.name, m.desc) : m.name;
+                MethodNode has = facadeMethod(fac, name, desc, m.name.equals("<init>"));
                 if (has != null && has != OBJECT_METHOD && foundIn.startsWith("top/dext/")
                         && (has.access & Opcodes.ACC_PUBLIC) == 0 && !(enumFacade && m.name.equals("<init>"))) {
                     closed.add(m.name + desc);
@@ -387,7 +393,8 @@ public final class WiringCheck {
                 checked++;
                 String desc = typeDesc(f.desc);
                 String gapKey = dead + "." + f.name + ":" + f.desc;
-                FieldNode has = facadeField(fac, f.name, desc);
+                FieldNode has = facadeField(fac, wall != null && (f.access & Opcodes.ACC_PRIVATE) == 0
+                    ? wall.mapFieldName(fac, f.name, f.desc) : f.name, desc);
                 if (has != null && foundIn.startsWith("top/dext/") && (has.access & Opcodes.ACC_PUBLIC) == 0) {
                     closed.add(f.name + ":" + desc);
                 }
