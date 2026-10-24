@@ -243,6 +243,14 @@
    "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers.submitNoData(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers$LegacyNoDataSubmit;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "26.1 dropped the display context from NoDataSpecialModelRenderer.submit; as for SpecialModelRenderer.submit (CbWallSpecialRenderers)"
+  },
+  {
+   "old": "method_64721()Lnet/minecraft/class_1799;",
+   "new": "method_64721()Lnet/minecraft/world/item/ItemStackTemplate;",
+   "onlyUnder": "net/minecraft/class_3972",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors.template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "a 1.21.11 single-item recipe subclass's result() answered its stack; 26.1 asks for the template: the template of the override's stack"
   }
  ],
  "frameDefaults": {
@@ -441,7 +449,16 @@
   "net/minecraft/class_7761": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer",
   "net/minecraft/class_7761$class_10382": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer$ModelKey",
   "net/minecraft/class_1852$class_1866": "top/dext/centurybridge/step/v26_1/facade/CustomRecipeSerializer",
-  "net/minecraft/class_1852$class_1866$class_7711": "top/dext/centurybridge/step/v26_1/facade/CustomRecipeSerializer$Factory"
+  "net/minecraft/class_1852$class_1866$class_7711": "top/dext/centurybridge/step/v26_1/facade/CustomRecipeSerializer$Factory",
+  "net/minecraft/class_1874$class_3958": "top/dext/centurybridge/step/v26_1/facade/CookingRecipeSerializer$Factory",
+  "net/minecraft/class_1874$class_10285": "top/dext/centurybridge/step/v26_1/facade/CookingRecipeSerializer",
+  "net/minecraft/class_3972$class_3974": "top/dext/centurybridge/step/v26_1/facade/SingleItemRecipeSerializer$Factory",
+  "net/minecraft/class_3972$class_3973": "top/dext/centurybridge/step/v26_1/facade/SingleItemRecipeSerializer",
+  "net/minecraft/class_1869$class_1870": "top/dext/centurybridge/step/v26_1/facade/ShapedRecipeSerializer",
+  "net/minecraft/class_1867$class_1868": "top/dext/centurybridge/step/v26_1/facade/ShapelessRecipeSerializer",
+  "net/minecraft/class_10223$class_10224": "top/dext/centurybridge/step/v26_1/facade/TransmuteRecipeSerializer",
+  "net/minecraft/class_8060$class_8061": "top/dext/centurybridge/step/v26_1/facade/SmithingTransformRecipeSerializer",
+  "net/minecraft/class_8062$class_8063": "top/dext/centurybridge/step/v26_1/facade/SmithingTrimRecipeSerializer"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -752,7 +769,16 @@
   "net/minecraft/class_7761.field_44576:Lnet/minecraft/class_243;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
   "net/minecraft/class_7761.field_40524:Ljava/util/Map;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
   "net/minecraft/class_1852$class_1866.field_46106:Lcom/mojang/serialization/MapCodec;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
-  "net/minecraft/class_1852$class_1866.field_48362:Lnet/minecraft/class_9139;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104"
+  "net/minecraft/class_1852$class_1866.field_48362:Lnet/minecraft/class_9139;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_1874$class_10285.field_54625:Lcom/mojang/serialization/MapCodec;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_1874$class_10285.field_54626:Lnet/minecraft/class_9139;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_3972$class_3973.field_46107:Lcom/mojang/serialization/MapCodec;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_3972$class_3973.field_48363:Lnet/minecraft/class_9139;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_1869$class_1870.method_8163(Lnet/minecraft/class_9129;)Lnet/minecraft/class_1869;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
+  "net/minecraft/class_1869$class_1870.method_8165(Lnet/minecraft/class_9129;Lnet/minecraft/class_1869;)V": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
+  "net/minecraft/class_1867$class_1868.field_46104:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
+  "net/minecraft/class_10223$class_10224.field_54326:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
+  "net/minecraft/class_8060$class_8061.field_46108:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -1130,7 +1156,9 @@
   "net/minecraft/class_765.field_32769:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
   "net/minecraft/class_757.field_32686:F": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer",
   "net/minecraft/class_31.field_31843:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
-  "net/minecraft/class_31.field_36349:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData"
+  "net/minecraft/class_31.field_36349:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
+  "net/minecraft/class_1799.field_51397:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemCodecs",
+  "net/minecraft/class_1799.field_51398:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemCodecs"
  },
  "abstractFills": [
   {
@@ -1233,6 +1261,12 @@
     "keep"
    ],
    "basis": "26.1 CubeMap.render(xRot, yRot): 1.21.11's minecraft argument only fed the window size its own projection now keeps"
+  },
+  "net/minecraft/class_3972.method_64721()Lnet/minecraft/class_1799;": {
+   "desc": "()Lnet/minecraft/world/item/ItemStackTemplate;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#stack(Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_1799;",
+   "basis": "26.1's SingleItemRecipe.result() answers the result's template, 1.21.11's its stack: the template's stack"
   }
  },
  "instanceFieldGetters": {

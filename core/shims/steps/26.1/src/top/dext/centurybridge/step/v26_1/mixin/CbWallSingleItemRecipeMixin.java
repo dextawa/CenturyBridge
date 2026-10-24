@@ -1,7 +1,10 @@
 package top.dext.centurybridge.step.v26_1.mixin;
 
 import net.minecraft.world.item.crafting.SingleItemRecipe;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v26_1.rt.CbWallRecipes;
 
@@ -16,6 +19,14 @@ public abstract class CbWallSingleItemRecipeMixin implements CbWallRecipes.Singl
 
     @Unique
     private String cb$group;
+
+    @Shadow
+    protected abstract ItemStackTemplate result();
+
+    @Override
+    public ItemStack cb$resultStack() {
+        return this.result().create();
+    }
 
     @Override
     public void cb$setGroup(String group) {

@@ -71,4 +71,14 @@ public final class CbWallRecipeCtors {
     public static void singleItemGroup(net.minecraft.world.item.crafting.StonecutterRecipe recipe, String group) {
         singleItemGroup((SingleItemRecipe) recipe, group);
     }
+
+    /** 1.21.11's SingleItemRecipe result (serializers read it back): the stack of 26.1's template */
+    public static ItemStack result(SingleItemRecipe recipe) {
+        return ((CbWallRecipes.SingleItemGroup) recipe).cb$resultStack();
+    }
+
+    /** a result template as 1.21.11's result stack (a mod's call of result(), its super call) */
+    public static ItemStack stack(ItemStackTemplate template) {
+        return template.create();
+    }
 }

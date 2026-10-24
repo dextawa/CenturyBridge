@@ -202,5 +202,8 @@ public final class CbWallRecipes {
         void cb$setGroup(String group);
 
         String cb$group();
+
+        /** 1.21.11's result(): the recipe's result stack (26.1 keeps its template) */
+        net.minecraft.world.item.ItemStack cb$resultStack();
     }
 }
