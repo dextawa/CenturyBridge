@@ -166,3 +166,6 @@ accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_56
 # ---- s7item: 1.21.1's builder constructors (dev-time datagen; rt/CbItemDatagen) ----
 accessible method net/minecraft/class_2447 <init> (Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)V
 accessible method net/minecraft/class_2450 <init> (Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)V
+accessible method net/minecraft/class_7803 <init> (Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_8790;)V
+extendable method net/minecraft/class_7803 <init> (Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_8790;)V
+accessible method net/minecraft/class_7803 method_10419 ()V

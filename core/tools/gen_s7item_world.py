@@ -4,7 +4,7 @@
                      (1.21.2: pack(gameTime)), ProtoChunkTicks.load and SavedTick.loadTickList / saveTick on ListTags,
                      LevelTicks(isTickable, profiler) (rt/CbItemTicks, CbItemLevelTicksMixin)
 
-  items              ComplexItem / BookItem / ItemNameBlockItem / RecipeBookCategories facades (classRenames), MapItem.getUpdatePacket,
+  items              ComplexItem / BookItem / ItemNameBlockItem facades (classRenames; RecipeBookCategories is s7rest's), MapItem.getUpdatePacket,
                      BannerPatternItem.getDisplayName, BundleItem(properties) (rt/CbItemSmall, CbItemComplexMixin)
 
   smithing templates SmithingTemplateItem's 1.21.1 constructor and factories (rt/CbItemSmithingTemplates,
@@ -72,7 +72,6 @@ def items(out):
         "net/minecraft/class_1762": fac + "ComplexItem",
         "net/minecraft/class_1751": fac + "BookItem",
         "net/minecraft/class_1798": fac + "ItemNameBlockItem",
-        "net/minecraft/class_314": fac + "RecipeBookCategories",
     }
     upd = "method_7757(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2596;"
     out["instanceRedirects"]["net/minecraft/class_1806." + upd] = rt + "#getUpdatePacket"
