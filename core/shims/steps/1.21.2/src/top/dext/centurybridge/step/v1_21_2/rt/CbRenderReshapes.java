@@ -132,4 +132,28 @@ public final class CbRenderReshapes {
     public static double distanceToCameraSq(net.minecraft.class_1533 entity) {
         return distanceToCameraSq((net.minecraft.class_1297) entity);
     }
+
+    /**
+     * Material.buffer / BannerRenderer.renderPatterns: 1.21.2 takes whether the foil is an item's (glint) or an
+     * entity's (entity glint); 1.21.1's Material.buffer always drew the item glint (getFoilBufferDirect(.., true, foil))
+     */
+    public static boolean itemGlint() {
+        return true;
+    }
+
+    /**
+     * new MapRenderer(textureManager, decorationTextures): 1.21.1's renderer kept its own map textures on that texture
+     * manager; 1.21.2's takes a MapTextureManager, so it gets one of its own on the same texture manager
+     */
+    public static net.minecraft.class_10093 mapTextures(net.minecraft.class_1060 textureManager) {
+        return new net.minecraft.class_10093(textureManager);
+    }
+
+    /**
+     * new UndeadHorseRenderer(context, layer): 1.21.1 picked the zombie or skeleton horse texture from the entity's
+     * type when drawing; 1.21.2's constructor takes the choice -- the skeleton horse's layer is the skeleton one
+     */
+    public static boolean skeletonHorse(net.minecraft.class_5601 layer) {
+        return net.minecraft.class_5602.field_27600.equals(layer);
+    }
 }

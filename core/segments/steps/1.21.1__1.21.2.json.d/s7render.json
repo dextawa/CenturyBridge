@@ -803,6 +803,51 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive#renderType()Ljava/util/function/Function;"
    ],
    "basis": "LivingEntityEmissiveLayer takes the render-type function in 1.21.2 (WardenRenderer passes RenderType::entityTranslucentEmissive); 1.21.1's layer drew with RenderType.entityTranslucentEmissive(texture) (javap both)"
+  },
+  "net/minecraft/class_6367.<init>(IIZZ)V": {
+   "desc": "(IIZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "basis": "TextureTarget(width, height, useDepth, clearError): 1.21.2's constructor takes no clearError (its RenderTarget resize/createBuffers dropped the flag; javap both)"
+  },
+  "net/minecraft/class_284.<init>(Ljava/lang/String;IILnet/minecraft/class_3679;)V": {
+   "desc": "(Ljava/lang/String;II)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "basis": "Uniform(name, type, count, parent): 1.21.2's uniform keeps no parent shader (no such field or constructor argument; javap both)"
+  },
+  "net/minecraft/class_330.<init>(Lnet/minecraft/class_1060;Lnet/minecraft/class_9443;)V": {
+   "desc": "(Lnet/minecraft/class_9443;Lnet/minecraft/class_10093;)V",
+   "ops": [
+    "keep:1",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#mapTextures(Lnet/minecraft/class_1060;)Lnet/minecraft/class_10093;"
+   ],
+   "basis": "MapRenderer(textureManager, decorationTextures) -> (decorationTextures, mapTextureManager): 1.21.1's renderer kept its map textures on the texture manager itself, 1.21.2 keeps them in a MapTextureManager (one of its own here)"
+  },
+  "net/minecraft/class_5598.<init>()V": {
+   "desc": "(Lnet/minecraft/class_630;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelBase#emptyRoot()Lnet/minecraft/class_630;"
+   ],
+   "basis": "1.21.1 SkullModelBase() had no root part: built around an empty root (CbRenderModelBase: the model draws itself)"
+  },
+  "net/minecraft/class_961.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_5601;)V": {
+   "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_5601;Lnet/minecraft/class_5601;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbRenderBabyLayers#equineBaby(Lnet/minecraft/class_5601;)Lnet/minecraft/class_5601;",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#skeletonHorse(Lnet/minecraft/class_5601;)Z"
+   ],
+   "basis": "UndeadHorseRenderer(context, layer) -> (context, adult, baby, skeleton): 1.21.1 drew the baby from the adult layer under the young scaling (equineBaby derives that layer) and picked the texture by entity type, 1.21.2 by the flag (the skeleton horse layer: skeleton)"
   }
  },
  "overrideHooks": [
@@ -2164,6 +2209,33 @@
     "keep"
    ],
    "basis": "DebugRenderer.render takes the culling frustum in 1.21.2 (LevelRenderer passes its own, javap); a 1.21.1 call gets the level renderer's frustum; super calls follow"
+  },
+  "net/minecraft/class_4730.method_30001(Lnet/minecraft/class_4597;Ljava/util/function/Function;Z)Lnet/minecraft/class_4588;": {
+   "desc": "(Lnet/minecraft/class_4597;Ljava/util/function/Function;ZZ)Lnet/minecraft/class_4588;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#itemGlint()Z",
+    "keep"
+   ],
+   "basis": "Material.buffer(buffers, renderType, foil) takes the item/entity glint choice before foil in 1.21.2 (ItemRenderer.getFoilBuffer); 1.21.1's drew the item glint (getFoilBufferDirect(buffers, type, true, foil)), so true (javap both)"
+  },
+  "net/minecraft/class_823.method_23802(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;ZLnet/minecraft/class_1767;Lnet/minecraft/class_9307;Z)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;ZLnet/minecraft/class_1767;Lnet/minecraft/class_9307;ZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#itemGlint()Z"
+   ],
+   "basis": "BannerRenderer.renderPatterns hands Material.buffer the item/entity glint choice in 1.21.2 (a last flag); 1.21.1's Material.buffer drew the item glint, so true (javap both)"
   }
  }
 }
