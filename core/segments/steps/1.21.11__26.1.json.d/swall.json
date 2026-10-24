@@ -228,7 +228,11 @@
   "com/mojang/blaze3d/vertex/VertexFormatElement.usage()Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#usage",
   "net/minecraft/class_5617$class_5618.method_43337()Lnet/minecraft/class_776;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderContexts#getBlockRenderDispatcher",
   "net/minecraft/class_5614$class_5615.comp_4535()Lnet/minecraft/class_776;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderContexts#blockRenderDispatcher",
-  "net/minecraft/class_5614$class_5615.comp_4537()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderContexts#itemRenderer"
+  "net/minecraft/class_5614$class_5615.comp_4537()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderContexts#itemRenderer",
+  "net/minecraft/class_11785.method_73480(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#submitItem",
+  "net/minecraft/class_11661$class_11668.comp_4641()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#renderType",
+  "net/minecraft/class_10444.method_65603(Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#pickParticleIcon",
+  "net/minecraft/class_846.method_22752(Lnet/minecraft/class_638;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallChunks#setLevel"
  },
  "overrideHooks": [
   {
@@ -502,6 +506,55 @@
    "wrap": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords.mutable(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "a 1.21.11 Font subclass's override gets 26.1's pose as a Matrix4f (the same matrix when it is one)"
+  },
+  {
+   "old": "method_73480(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V",
+   "new": "submitItem(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_10444$class_10445;)V",
+   "onlyUnder": "net/minecraft/class_11785",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits$LegacySubmitItem",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits.submitItem(Ltop/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits$LegacySubmitItem;Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_10444$class_10445;)V",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1's submitItem takes each quad's render type from the quad instead of one for the layer: a 1.21.11 collector implementation gets 26.1's quads one run of a single render type at a time (CbWallItemSubmits)"
+  },
+  {
+   "old": "method_65603(Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;",
+   "new": "pickParticleMaterial(Lnet/minecraft/class_5819;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+   "onlyUnder": "net/minecraft/class_10444",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits.particleMaterial(Lnet/minecraft/class_1058;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1's ItemStackRenderState picks a particle material (sprite + translucency) where 1.21.11 picked the sprite: a 1.21.11 subclass's sprite as a material not forced translucent"
+  },
+  {
+   "old": "method_27521(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)V",
+   "new": "drawInBatch(Ljava/lang/String;FFIZLorg/joml/Matrix4fc;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)V",
+   "onlyUnder": "net/minecraft/class_327",
+   "wrap": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords.mutable(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "a 1.21.11 Font subclass's override gets 26.1's pose as a Matrix4f (the same matrix when it is one)"
+  },
+  {
+   "old": "method_37296(Lnet/minecraft/class_5481;FFIILorg/joml/Matrix4f;Lnet/minecraft/class_4597;I)V",
+   "new": "drawInBatch8xOutline(Lnet/minecraft/class_5481;FFIILorg/joml/Matrix4fc;Lnet/minecraft/class_4597;I)V",
+   "onlyUnder": "net/minecraft/class_327",
+   "wrap": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords.mutable(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "a 1.21.11 Font subclass's override gets 26.1's pose as a Matrix4f (the same matrix when it is one)"
+  },
+  {
+   "old": "method_73403(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZ)V",
+   "new": "render(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IZ)V",
+   "onlyUnder": "net/minecraft/class_11767",
+   "wrap": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords.mutable(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "a 1.21.11 TextRenderable's render gets 26.1's pose as a Matrix4f (the same matrix when it is one)"
+  },
+  {
+   "old": "method_73402(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IFFFI)V",
+   "new": "renderSprite(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IFFFI)V",
+   "onlyUnder": "net/minecraft/class_11878",
+   "wrap": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords.mutable(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "a 1.21.11 PlainTextRenderable's renderSprite gets 26.1's pose as a Matrix4f (the same matrix when it is one)"
   }
  ],
  "frameDefaults": {
@@ -687,6 +740,41 @@
    "onlyUnder": "net/minecraft/class_1826",
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs$LegacyRequiredFeatures",
    "basis": "26.1's Item made requiredFeatures() final (a 1.21.11 spawn egg subclass's override would fail to load): renamed, answering through the final member (CbWallItemFeaturesMixin); its super call reaches 26.1's body"
+  },
+  {
+   "old": "method_73017(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V",
+   "new": "renderTranslucent",
+   "onlyUnder": "net/minecraft/class_11691",
+   "superCalls": "rename",
+   "basis": "1.21.11's TextFeatureRenderer.render drew all its submits; 26.1 draws them all in renderTranslucent (it has no solid half), same arguments"
+  },
+  {
+   "old": "method_73015(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V",
+   "new": "renderTranslucent",
+   "onlyUnder": "net/minecraft/class_11690",
+   "superCalls": "rename",
+   "basis": "1.21.11's ShadowFeatureRenderer.render drew all its submits; 26.1 draws them all in renderTranslucent (it has no solid half), same arguments"
+  },
+  {
+   "old": "method_73014(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_327;)V",
+   "new": "renderTranslucent",
+   "onlyUnder": "net/minecraft/class_11689",
+   "superCalls": "rename",
+   "basis": "1.21.11's NameTagFeatureRenderer.render drew all its submits; 26.1 draws them all in renderTranslucent (it has no solid half), same arguments"
+  },
+  {
+   "old": "method_22761()V",
+   "new": "uploadGlobalGeomBuffersToGPU",
+   "onlyUnder": "net/minecraft/class_846",
+   "superCalls": "rename",
+   "basis": "1.21.11's SectionRenderDispatcher.uploadAllPendingUploads (the compiled sections' buffers to the GPU, called by LevelRenderer before drawing sections) is 26.1's uploadGlobalGeomBuffersToGPU, called at the same point of LevelRenderer"
+  },
+  {
+   "old": "method_38722()Ljava/lang/String;",
+   "new": "currentDeviceName",
+   "onlyUnder": "net/minecraft/class_4225",
+   "superCalls": "rename",
+   "basis": "1.21.11's Library.getCurrentDeviceName (the opened device's OpenAL specifier) is 26.1's currentDeviceName, the same specifier queried when the device is opened"
   }
  ],
  "classRenames": {
@@ -738,7 +826,12 @@
   "net/minecraft/class_2824$class_5908": "top/dext/centurybridge/step/v26_1/facade/ServerboundInteractPacketHandler",
   "net/minecraft/class_3360": "top/dext/centurybridge/step/v26_1/facade/LegacyStructureDataHandler",
   "net/minecraft/class_3440": "top/dext/centurybridge/step/v26_1/facade/StructureFeatureIndexSavedData",
-  "com/mojang/blaze3d/vertex/VertexFormatElement$Usage": "top/dext/centurybridge/step/v26_1/facade/VertexFormatElement$Usage"
+  "com/mojang/blaze3d/vertex/VertexFormatElement$Usage": "top/dext/centurybridge/step/v26_1/facade/VertexFormatElement$Usage",
+  "net/minecraft/class_11278": "top/dext/centurybridge/step/v26_1/facade/CachedOrthoProjectionMatrixBuffer",
+  "net/minecraft/class_11279": "top/dext/centurybridge/step/v26_1/facade/CachedPerspectiveProjectionMatrixBuffer",
+  "net/minecraft/class_582": "net/minecraft/client/model/animal/feline/AdultFelineModel",
+  "net/minecraft/class_3680": "net/minecraft/client/model/animal/feline/AdultCatModel",
+  "net/minecraft/class_9949": "net/minecraft/client/model/animal/feline/AdultOcelotModel"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -772,7 +865,8 @@
   "net/minecraft/class_557$class_11650.<init>(FFFF)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#bookState",
   "net/minecraft/class_10809.<init>(ZLnet/minecraft/class_1058;Lnet/minecraft/class_809;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#modelRenderProperties",
   "com/mojang/blaze3d/vertex/VertexFormatElement.<init>(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#element",
-  "net/minecraft/class_3990.<init>(Lnet/minecraft/class_5268;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#newSpawner"
+  "net/minecraft/class_3990.<init>(Lnet/minecraft/class_5268;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#newSpawner",
+  "net/minecraft/class_11661$class_11668.<init>(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#itemSubmit"
  },
  "adapterHooks": [
   {
@@ -1084,7 +1178,23 @@
   "net/minecraft/class_8060$class_8061.field_46108:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
   "net/minecraft/class_1849.method_8119()Lnet/minecraft/class_1865;": "getSerializer() under its 1.21.11 token answering 1.21.11's serializer type: the facade overrides 26.1's getSerializer (the 26.1 record); a call naming ArmorDyeRecipe goes through CbWallRecipeKinds.getSerializer (the 1.21.11 serializer of the object's record, CbWallRecipes.getSerializer)",
   "net/minecraft/class_1855.method_8119()Lnet/minecraft/class_1865;": "getSerializer() under its 1.21.11 token answering 1.21.11's serializer type: the facade overrides 26.1's getSerializer (the 26.1 record); a call naming MapCloningRecipe goes through CbWallRecipeKinds.getSerializer (the 1.21.11 serializer of the object's record, CbWallRecipes.getSerializer)",
-  "net/minecraft/class_1876.method_8119()Lnet/minecraft/class_1865;": "getSerializer() under its 1.21.11 token answering 1.21.11's serializer type: the facade overrides 26.1's getSerializer (the 26.1 record); a call naming TippedArrowRecipe goes through CbWallRecipeKinds.getSerializer (the 1.21.11 serializer of the object's record, CbWallRecipes.getSerializer)"
+  "net/minecraft/class_1876.method_8119()Lnet/minecraft/class_1865;": "getSerializer() under its 1.21.11 token answering 1.21.11's serializer type: the facade overrides 26.1's getSerializer (the 26.1 record); a call naming TippedArrowRecipe goes through CbWallRecipeKinds.getSerializer (the 1.21.11 serializer of the object's record, CbWallRecipes.getSerializer)",
+  "net/minecraft/class_11278.method_71094(FF)Lorg/joml/Matrix4f;": "1.21.11 private matrix builder: the facade sets up a 26.1 Projection (setupOrtho) that builds the same matrix; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11278.field_60059:Lcom/mojang/blaze3d/buffers/GpuBuffer;": "1.21.11 private uniform buffer: the facade keeps a 26.1 ProjectionMatrixBuffer (cb$buffer) holding it; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11278.field_60060:Lcom/mojang/blaze3d/buffers/GpuBufferSlice;": "1.21.11 private buffer slice: ProjectionMatrixBuffer.getBuffer hands it out; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11278.field_60061:F": "1.21.11 private zNear: the facade keeps it as cb$zNear; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11278.field_60062:F": "1.21.11 private zFar: the facade keeps it as cb$zFar; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11278.field_60063:Z": "1.21.11 private invertY: the facade keeps it as cb$invertY; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11278.field_60064:F": "1.21.11 private last width: the 26.1 Projection keeps it (and rewrites the buffer only when it changes); only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11278.field_60065:F": "1.21.11 private last height: the 26.1 Projection keeps it; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11279.method_71097(IIF)Lorg/joml/Matrix4f;": "1.21.11 private matrix builder: the facade sets up a 26.1 Projection (setupPerspective); only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11279.field_60066:Lcom/mojang/blaze3d/buffers/GpuBuffer;": "1.21.11 private uniform buffer: the facade keeps a 26.1 ProjectionMatrixBuffer (cb$buffer) holding it; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11279.field_60067:Lcom/mojang/blaze3d/buffers/GpuBufferSlice;": "1.21.11 private buffer slice: ProjectionMatrixBuffer.getBuffer hands it out; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11279.field_60068:F": "1.21.11 private zNear: the facade keeps it as cb$zNear; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11279.field_60069:F": "1.21.11 private zFar: the facade keeps it as cb$zFar; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11279.field_60070:I": "1.21.11 private last width: the 26.1 Projection keeps it; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11279.field_60071:I": "1.21.11 private last height: the 26.1 Projection keeps it; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11279.field_60072:F": "1.21.11 private last fov: the 26.1 Projection keeps it; only an access widener on the dead class ever reached it"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -1188,7 +1298,16 @@
   "net/minecraft/class_7655.method_56515(Lnet/minecraft/class_3300;Ljava/util/List;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#load",
   "net/minecraft/class_7655.method_56519(Ljava/util/Map;Lnet/minecraft/class_5912;Ljava/util/List;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#load",
   "net/minecraft/class_2688.method_28494(Lcom/mojang/serialization/Codec;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallStates#codec",
-  "com/mojang/blaze3d/vertex/VertexFormatElement.register(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;I)Lcom/mojang/blaze3d/vertex/VertexFormatElement;": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#register"
+  "com/mojang/blaze3d/vertex/VertexFormatElement.register(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;I)Lcom/mojang/blaze3d/vertex/VertexFormatElement;": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#register",
+  "net/minecraft/class_957.method_23190(Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#submitWhiteSolidBlock",
+  "net/minecraft/class_823.method_23802(Lnet/minecraft/class_11701;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_3879;Ljava/lang/Object;Lnet/minecraft/class_4730;ZLnet/minecraft/class_1767;Lnet/minecraft/class_9307;ZLnet/minecraft/class_11683$class_11792;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockEntitySubmits#submitPatterns",
+  "net/minecraft/class_836.method_72958(Lnet/minecraft/class_2350;FFLnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_5598;Lnet/minecraft/class_1921;ILnet/minecraft/class_11683$class_11792;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockEntitySubmits#submitSkull",
+  "net/minecraft/class_4225.method_38500()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallAudio#getDefaultDeviceName",
+  "net/minecraft/class_12249.method_76004(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#entitySmoothCutout",
+  "net/minecraft/class_12249.method_76006(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#entityDecal",
+  "net/minecraft/class_12249.method_76012(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#dragonExplosionAlpha",
+  "net/minecraft/class_12249.method_76009()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#tripwireMovingBlock",
+  "net/minecraft/class_12249.method_75992(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#weather"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -1956,6 +2075,74 @@
     "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallTrades#spawnerStorage(Lnet/minecraft/class_5268;)Lnet/minecraft/class_26;"
    ],
    "basis": "26.1's spawner keeps its delay and chance in the server's WanderingTraderData (which 1.21.11 level data reads and writes, CbWallLevelData); a dimension's derived data had none, so its spawner keeps 1.21.11's defaults in memory (CbWallTrades)"
+  },
+  "net/minecraft/class_11684.<init>(Lnet/minecraft/class_11661;Lnet/minecraft/class_776;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_11697;Lnet/minecraft/class_4618;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_327;)V": {
+   "desc": "(Lnet/minecraft/class_11661;Lnet/minecraft/class_1092;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_11697;Lnet/minecraft/class_4618;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_327;Lnet/minecraft/client/renderer/state/GameRenderState;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#modelManager(Lnet/minecraft/class_776;)Lnet/minecraft/class_1092;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRenderStates#gameRenderState()Lnet/minecraft/client/renderer/state/GameRenderState;"
+   ],
+   "basis": "26.1's feature dispatcher resolves block models over the model manager (the given BlockRenderDispatcher's) and reads the game render state the game renderer extracts (CbWallRenderStates)"
+  },
+  "net/minecraft/class_761.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_898;Lnet/minecraft/class_824;Lnet/minecraft/class_4599;Lnet/minecraft/class_11658;Lnet/minecraft/class_11684;)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_898;Lnet/minecraft/class_824;Lnet/minecraft/class_4599;Lnet/minecraft/client/renderer/state/GameRenderState;Lnet/minecraft/class_11684;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v26_1/rt/CbWallRenderStates#gameRenderState(Lnet/minecraft/class_11658;)Lnet/minecraft/client/renderer/state/GameRenderState;",
+    "keep:5"
+   ],
+   "basis": "26.1's LevelRenderer takes the game render state around the level state: the game's own for the game's level state, otherwise one holding the given level state beside the game's other states (CbWallRenderStates)"
+  },
+  "net/minecraft/class_846.<init>(Lnet/minecraft/class_638;Lnet/minecraft/class_761;Lnet/minecraft/class_10207;Lnet/minecraft/class_4599;Lnet/minecraft/class_776;Lnet/minecraft/class_824;)V": {
+   "desc": "(Lnet/minecraft/class_638;Lnet/minecraft/class_761;Lnet/minecraft/class_10207;Lnet/minecraft/class_4599;Lnet/minecraft/class_9810;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4,5 top/dext/centurybridge/step/v26_1/rt/CbWallChunks#sectionCompiler(Lnet/minecraft/class_776;Lnet/minecraft/class_824;)Lnet/minecraft/class_9810;"
+   ],
+   "basis": "1.21.11's SectionRenderDispatcher built its SectionCompiler from the two dispatchers; 26.1's takes one, built as 26.1's LevelRenderer builds it (CbWallChunks)"
+  },
+  "net/minecraft/class_9810.<init>(Lnet/minecraft/class_776;Lnet/minecraft/class_824;)V": {
+   "desc": "(ZZLnet/minecraft/client/renderer/block/BlockStateModelSet;Lnet/minecraft/client/renderer/block/FluidStateModelSet;Lnet/minecraft/class_324;Lnet/minecraft/class_824;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallChunks#ambientOcclusion()Z",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallChunks#cutoutLeaves()Z",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunks#blockStateModels(Lnet/minecraft/class_776;)Lnet/minecraft/client/renderer/block/BlockStateModelSet;",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunks#fluidStateModels(Lnet/minecraft/class_776;)Lnet/minecraft/client/renderer/block/FluidStateModelSet;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallChunks#blockColors()Lnet/minecraft/class_324;",
+    "keep:1"
+   ],
+   "basis": "26.1's SectionCompiler takes the block / fluid model sets (the given dispatcher's model manager), the game's block colours and the ambient occlusion / cutout leaves options' values, which 1.21.11's read while compiling (CbWallChunks)"
+  },
+  "net/minecraft/class_11745.<init>(Lnet/minecraft/class_3883;Ljava/util/function/Function;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Ljava/util/function/Function;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallBlockDecoration#blockModels(Ljava/util/function/Function;)Ljava/util/function/Function;",
+    "keep"
+   ],
+   "basis": "BlockDecorationLayer's block source: 1.21.11's Function<S, Optional<BlockState>> as 26.1's Function<S, BlockModelRenderState> (the state resolved into a model render state per entity render state; rt/CbWallBlockDecoration)"
+  },
+  "net/minecraft/class_11532.<init>(Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/EnumMap;I[Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V": {
+   "desc": "(Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/EnumMap;I[Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallChunkDraws#groups(Ljava/util/EnumMap;)Ljava/util/EnumMap;",
+    "keep",
+    "keep"
+   ],
+   "basis": "ChunkSectionsToRender's draws: a 1.21.11 layer's draw list as one 26.1 draw group (rt/CbWallChunkDraws)"
   }
  },
  "fieldGetters": {
@@ -2030,7 +2217,35 @@
   "net/minecraft/class_5602.field_63560:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#undeadHorseBabyArmor",
   "net/minecraft/class_5602.field_53005:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#wolfBabyArmor",
   "net/minecraft/class_5602.field_56090:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#zombieHorseBabySaddle",
-  "net/minecraft/class_3988.field_30599:I": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#villagerSlotOffset"
+  "net/minecraft/class_3988.field_30599:I": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#villagerSlotOffset",
+  "net/minecraft/class_11515.field_60927:Lnet/minecraft/class_11515;": "top/dext/centurybridge/step/v26_1/rt/CbWallChunks#tripwireLayer",
+  "net/minecraft/class_11531.field_61024:Lnet/minecraft/class_11531;": "top/dext/centurybridge/step/v26_1/rt/CbWallChunks#tripwireGroup",
+  "net/minecraft/class_10799.field_64228:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#tripwireBlock",
+  "net/minecraft/class_10799.field_64229:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#tripwireTerrain",
+  "net/minecraft/class_10799.field_56897:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#translucentMovingBlock",
+  "net/minecraft/class_10799.field_56905:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#entityCutoutNoCullZOffset",
+  "net/minecraft/class_10799.field_56908:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#entitySmoothCutoutPipeline",
+  "net/minecraft/class_10799.field_56909:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#entityNoOutlinePipeline",
+  "net/minecraft/class_10799.field_56913:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#entityDecalPipeline",
+  "net/minecraft/class_10799.field_56915:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#itemEntityTranslucentCullPipeline",
+  "net/minecraft/class_10799.field_56813:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#dragonExplosionAlphaPipeline",
+  "net/minecraft/class_12249.field_64462:Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderTypes#movingBlockSampler",
+  "net/minecraft/class_1088.field_64594:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#lavaStill",
+  "net/minecraft/class_1088.field_5381:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#lavaFlow",
+  "net/minecraft/class_1088.field_64595:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#waterStill",
+  "net/minecraft/class_1088.field_5391:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#waterFlow",
+  "net/minecraft/class_1088.field_5388:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#waterOverlay",
+  "net/minecraft/class_1088.field_20847:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#bannerBase",
+  "net/minecraft/class_1088.field_21557:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#shieldBase",
+  "net/minecraft/class_1088.field_21558:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#noPatternShield",
+  "net/minecraft/class_10502.field_55429:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#giftChest",
+  "net/minecraft/class_10502.field_55430:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#normalChest",
+  "net/minecraft/class_10502.field_55431:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#trappedChest",
+  "net/minecraft/class_10502.field_61848:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#copperChest",
+  "net/minecraft/class_10502.field_61849:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#exposedCopperChest",
+  "net/minecraft/class_10502.field_61850:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#weatheredCopperChest",
+  "net/minecraft/class_10502.field_61851:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#oxidizedCopperChest",
+  "net/minecraft/class_582.field_52909:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallFelineModels#babyTransformer"
  },
  "abstractFills": [
   {
@@ -2110,6 +2325,24 @@
    "method": "clockManager()Lnet/minecraft/world/clock/ClockManager;",
    "call": "top/dext/centurybridge/step/v26_1/rt/CbWallInterfaceFills.clockManager(Lnet/minecraft/class_1937;)Lnet/minecraft/world/clock/ClockManager;",
    "basis": "1.21.11's day time of every level was the overworld's (CbWallLevelData): the running server's clocks, on the client the client level's"
+  },
+  {
+   "under": "net/minecraft/class_11785",
+   "method": "submitBlockModel(Lnet/minecraft/class_4587;Lnet/minecraft/class_1921;Ljava/util/List;[IIII)V",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallCollectorFills.submitBlockModel(Lnet/minecraft/class_11785;Lnet/minecraft/class_4587;Lnet/minecraft/class_1921;Ljava/util/List;[IIII)V",
+   "basis": "26.1's submitBlockModel takes the model's parts and per-tint colours; a 1.21.11 implementation's own submitBlockModel gets the parts as one model and tint 0's colour (CbWallCollectorFills)"
+  },
+  {
+   "under": "net/minecraft/class_11785",
+   "method": "submitBreakingBlockModel(Lnet/minecraft/class_4587;Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;JI)V",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallCollectorFills.submitBreakingBlockModel(Lnet/minecraft/class_11785;Lnet/minecraft/class_4587;Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;JI)V",
+   "basis": "1.21.11 drew the breaking overlay into the game's crumbling buffers, never through a collector: the game's own submit node storage draws it (CbWallCollectorFills)"
+  },
+  {
+   "under": "net/minecraft/class_11659$class_11947",
+   "method": "isEmpty()Z",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallCollectorFills.isEmpty(Lnet/minecraft/class_11659$class_11947;)Z",
+   "basis": "26.1 skips empty particle groups; 1.21.11 prepared and drew every group: a 1.21.11 group is never empty"
   }
  ],
  "ledger": {},
@@ -2141,7 +2374,10 @@
   "net/minecraft/class_26.method_17923(Ljava/lang/String;Lnet/minecraft/class_4284;I)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#readTagFromDisk",
   "net/minecraft/class_236.method_982()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#superStore",
   "net/minecraft/class_1747.method_45322()Lnet/minecraft/class_7699;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#blockItemFeatures",
-  "net/minecraft/class_3537.method_16453(DDDDDZ)D": "top/dext/centurybridge/step/v26_1/rt/CbWallNoise#superGetValue"
+  "net/minecraft/class_3537.method_16453(DDDDDZ)D": "top/dext/centurybridge/step/v26_1/rt/CbWallNoise#superGetValue",
+  "net/minecraft/class_11661.method_73480(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#superSubmitItem",
+  "net/minecraft/class_11788.method_73480(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#superSubmitItem",
+  "net/minecraft/class_10444.method_65603(Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#pickParticleIcon"
  },
  "covers": [
   "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
@@ -2182,7 +2418,33 @@
   "net/minecraft/class_1277.method_5488(Lnet/minecraft/class_1265;)V",
   "net/minecraft/class_338.method_44811(Lnet/minecraft/class_2561;Lnet/minecraft/class_7469;Lnet/minecraft/class_7591;)V",
   "net/minecraft/class_329.method_44354(Z)V",
-  "net/minecraft/class_329.method_44353()Z"
+  "net/minecraft/class_329.method_44353()Z",
+  "net/minecraft/class_11682.method_72999(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V",
+  "net/minecraft/class_11687.method_73010(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4618;)V",
+  "net/minecraft/class_11683.method_73001(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4618;Lnet/minecraft/class_4597$class_4598;)V",
+  "net/minecraft/class_11793.method_73543(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4618;Lnet/minecraft/class_4597$class_4598;)V",
+  "net/minecraft/class_11977.method_74407(Lnet/minecraft/class_11788;)V",
+  "net/minecraft/class_4603.method_23067(ZFLnet/minecraft/class_11659;)V",
+  "net/minecraft/class_3988.method_19170(Lnet/minecraft/class_3218;Lnet/minecraft/class_1916;[Lnet/minecraft/class_3853$class_1652;I)V",
+  "net/minecraft/class_925.method_4064(Lnet/minecraft/class_10045;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V",
+  "net/minecraft/class_957.method_4137(Lnet/minecraft/class_10046;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V",
+  "net/minecraft/class_10444$class_10446.method_67992(Lnet/minecraft/class_1921;)V",
+  "net/minecraft/class_10444$class_10446.method_67994(Lnet/minecraft/class_1058;)V",
+  "net/minecraft/class_10444$class_10446.method_65613(I)[I",
+  "net/minecraft/class_4225.method_19661(Ljava/lang/String;Z)V",
+  "net/minecraft/class_4225.method_38723()Z",
+  "net/minecraft/class_4225.method_38502()Ljava/util/List;",
+  "net/minecraft/class_846$class_851.method_72050(Ljava/util/Map;Lnet/minecraft/class_11516;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_846$class_851.method_68531(Lnet/minecraft/class_11516;Lnet/minecraft/class_9799$class_9800;Lnet/minecraft/class_11515;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_11516.method_72031(Lnet/minecraft/class_11515;Lnet/minecraft/class_9801;J)V",
+  "net/minecraft/class_11516.method_72030(Lnet/minecraft/class_11515;Lnet/minecraft/class_9799$class_9800;J)V",
+  "net/minecraft/class_761.method_35775()V",
+  "net/minecraft/class_761.method_35776()V",
+  "net/minecraft/class_761.method_62222()Lnet/minecraft/class_4604;",
+  "net/minecraft/class_4184.method_36425()Lnet/minecraft/class_4184$class_6355;",
+  "net/minecraft/class_4184.method_55437()F",
+  "net/minecraft/class_572.method_2805(Z)V",
+  "net/minecraft/class_465.method_2389(Lnet/minecraft/class_332;FII)V"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -2400,6 +2662,93 @@
     "keep"
    ],
    "basis": "26.1 Font.drawInBatch takes the pose as a Matrix4fc, which a 1.21.11 Matrix4f is (CbWallClientRecords)"
+  },
+  "net/minecraft/class_6850.method_39969(Lnet/minecraft/class_1937;J)Lnet/minecraft/class_853;": {
+   "desc": "(Lnet/minecraft/class_638;J)Lnet/minecraft/class_853;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunks#clientLevel(Lnet/minecraft/class_1937;)Lnet/minecraft/class_638;",
+    "keep:1"
+   ],
+   "basis": "26.1's RenderRegionCache builds regions of a client level (section rendering runs on one only)"
+  },
+  "net/minecraft/class_327.method_27521(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)V": {
+   "desc": "(Ljava/lang/String;FFIZLorg/joml/Matrix4fc;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#fc(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 Font.drawInBatch(String) takes the pose as a Matrix4fc, which a 1.21.11 Matrix4f is (CbWallClientRecords)"
+  },
+  "net/minecraft/class_327.method_37296(Lnet/minecraft/class_5481;FFIILorg/joml/Matrix4f;Lnet/minecraft/class_4597;I)V": {
+   "desc": "(Lnet/minecraft/class_5481;FFIILorg/joml/Matrix4fc;Lnet/minecraft/class_4597;I)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#fc(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 Font.drawInBatch8xOutline takes the pose as a Matrix4fc, which a 1.21.11 Matrix4f is"
+  },
+  "net/minecraft/class_327$class_11464.method_71799(Lnet/minecraft/class_4597;Lorg/joml/Matrix4f;Lnet/minecraft/class_327$class_6415;I)Lnet/minecraft/class_327$class_11464;": {
+   "desc": "(Lnet/minecraft/class_4597;Lorg/joml/Matrix4fc;Lnet/minecraft/class_327$class_6415;I)Lnet/minecraft/class_327$class_11464;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#fc(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 GlyphVisitor.forMultiBufferSource takes the pose as a Matrix4fc, which a 1.21.11 Matrix4f is"
+  },
+  "net/minecraft/class_11767.method_73403(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZ)V": {
+   "desc": "(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IZ)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#fc(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 TextRenderable.render takes the pose as a Matrix4fc, which a 1.21.11 Matrix4f is"
+  },
+  "net/minecraft/class_11878.method_73403(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZ)V": {
+   "desc": "(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IZ)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#fc(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 TextRenderable.render takes the pose as a Matrix4fc, which a 1.21.11 Matrix4f is"
+  },
+  "net/minecraft/class_11878.method_73402(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IFFFI)V": {
+   "desc": "(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IFFFI)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords#fc(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 PlainTextRenderable.renderSprite takes the pose as a Matrix4fc, which a 1.21.11 Matrix4f is"
+  },
+  "net/minecraft/class_11532.comp_4402()Ljava/util/EnumMap;": {
+   "desc": "()Ljava/util/EnumMap;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallChunkDraws#lists(Ljava/util/EnumMap;)Ljava/util/EnumMap;",
+   "basis": "ChunkSectionsToRender.drawGroupsPerLayer(): a layer's 26.1 draw groups as one 1.21.11 list (a record: no override)"
   }
  },
  "instanceFieldGetters": {
@@ -2408,7 +2757,8 @@
   "net/minecraft/class_2574.field_11779:Lnet/minecraft/class_2203$class_2209;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#compiledNbtPath",
   "net/minecraft/class_4643.field_29279:Lnet/minecraft/class_4651;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#dirtProvider",
   "net/minecraft/class_4643.field_29281:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#forceDirt",
-  "net/minecraft/class_2688.field_24740:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_1/rt/CbWallStates#propertiesCodec"
+  "net/minecraft/class_2688.field_24740:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_1/rt/CbWallStates#propertiesCodec",
+  "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#displayBlockState"
  },
  "convertHooks": [
   {
@@ -2704,6 +3054,12 @@
     "net/minecraft/class_10104"
    ],
    "basis": "ScoreContents.name(): 1.21.11's SelectorPattern is 26.1's CompilableString<EntitySelector> (classRenames: the record of a selector's text and the selector parsed from it, which 26.1 uses in its place everywhere); after the rename the Either holds the very objects 26.1's does -- the type argument is the only difference, and the renamed class has no type parameter to carry it"
+  },
+  "net/minecraft/class_3684.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;)V": {
+   "by": [
+    "net/minecraft/class_3680"
+   ],
+   "basis": "CatCollarLayer's parent: 1.21.11's RenderLayerParent<CatRenderState, CatModel>, 26.1's RenderLayerParent<CatRenderState, AbstractFelineModel<CatRenderState>>. CatModel becomes 26.1's AdultCatModel (classRenames), an AbstractFelineModel<CatRenderState>: the parent passes unchanged and the model the layer reads from it is one."
   }
  },
  "superRenames": {
@@ -2848,5 +3204,16 @@
    "iface": "top/dext/centurybridge/step/v26_1/rt/CbWallStates$LegacyFactory",
    "adapt": "top/dext/centurybridge/step/v26_1/rt/CbWallStates#adapt(Ltop/dext/centurybridge/step/v26_1/rt/CbWallStates$LegacyFactory;)Lnet/minecraft/class_2689$class_2691;"
   }
+ },
+ "methodRenames": {
+  "net/minecraft/class_11691.method_73017(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V": "renderTranslucent",
+  "net/minecraft/class_11690.method_73015(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;)V": "renderTranslucent",
+  "net/minecraft/class_11689.method_73014(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_327;)V": "renderTranslucent",
+  "net/minecraft/class_846.method_22761()V": "uploadGlobalGeomBuffersToGPU",
+  "net/minecraft/class_4225.method_38722()Ljava/lang/String;": "currentDeviceName",
+  "net/minecraft/class_437.method_47413(Lnet/minecraft/class_332;IIF)V": "extractRenderStateWithTooltipAndSubtitles"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#setDisplayBlockState"
  }
 }
