@@ -1457,7 +1457,11 @@
   "net/minecraft/class_3031.field_21220:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
   "net/minecraft/class_3031.field_13562:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
   "net/minecraft/class_3031.field_13584:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
-  "net/minecraft/class_7400.field_38870:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders"
+  "net/minecraft/class_7400.field_38870:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders",
+  "net/minecraft/class_2743.field_47981:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v26_1/rt/CbWallStreamCodecs",
+  "net/minecraft/class_2824.field_48195:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v26_1/rt/CbWallStreamCodecs",
+  "net/minecraft/class_2761.field_47991:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v26_1/rt/CbWallStreamCodecs",
+  "net/minecraft/class_3481.field_29822:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTagDrift"
  },
  "abstractFills": [
   {
@@ -1979,6 +1983,18 @@
     "net/minecraft/class_2950"
    ],
    "basis": "1.21.11's BlockBlobFeature (BlockStateConfiguration, blobs on dirt or stone) is this layer's facade (classRenames): 1.21.11 code constructing or extending it takes the Codec<BlockStateConfiguration> it passed; 26.1's BlockBlobFeature of a BlockBlobConfiguration is a different feature (forest_rock's 26.1 data) no 1.21.11 code names"
+  },
+  "net/minecraft/class_2578.<init>(Lcom/mojang/datafixers/util/Either;Ljava/lang/String;)V": {
+   "by": [
+    "net/minecraft/class_10104"
+   ],
+   "basis": "new ScoreContents(name, objective): 1.21.11's SelectorPattern is 26.1's CompilableString<EntitySelector> (classRenames: the record of a selector's text and the selector parsed from it, which 26.1 uses in its place everywhere); after the rename the Either holds the very objects 26.1's does -- the type argument is the only difference, and the renamed class has no type parameter to carry it"
+  },
+  "net/minecraft/class_2578.comp_3078()Lcom/mojang/datafixers/util/Either;": {
+   "by": [
+    "net/minecraft/class_10104"
+   ],
+   "basis": "ScoreContents.name(): 1.21.11's SelectorPattern is 26.1's CompilableString<EntitySelector> (classRenames: the record of a selector's text and the selector parsed from it, which 26.1 uses in its place everywhere); after the rename the Either holds the very objects 26.1's does -- the type argument is the only difference, and the renamed class has no type parameter to carry it"
   }
  },
  "superRenames": {
