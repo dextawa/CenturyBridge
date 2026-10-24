@@ -1078,7 +1078,9 @@
   "net/minecraft/class_490.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
   "net/minecraft/class_479.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
   "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
-  "net/minecraft/class_638$class_5271.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#clientGameRules"
+  "net/minecraft/class_638$class_5271.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#clientGameRules",
+  "net/minecraft/class_9383$class_9385.method_58289()Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#superHolderRegistries",
+  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#superProfiler"
  },
  "adapterHooks": [
   {
@@ -1264,6 +1266,22 @@
     "method_146()Lnet/minecraft/class_1928;"
    ],
    "synth": []
+  },
+  {
+   "under": "net/minecraft/class_9383$class_9385",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer$LegacyHolderGet",
+   "requires": [
+    "method_58289()Lnet/minecraft/class_5455$class_6890;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/server/MinecraftServer",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer$LegacyProfiler",
+   "requires": [
+    "method_16044()Lnet/minecraft/class_3695;"
+   ],
+   "synth": []
   }
  ],
  "abstractFills": [
@@ -1349,7 +1367,7 @@
   }
  ],
  "ledger": {
-  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "override of getProfiler() in a 1.21.1 subclass of MinecraftServer: 1.21.2 made the server's getProfiler private and profiles through the thread's Profiler.get() (installed by the server's own tick loop), never asking the server for one, so an override's profiler has nowhere to go; calls of getProfiler() are bridged (instanceRedirects: the thread's profiler)",
+  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "override of getProfiler() in a 1.21.1 subclass of MinecraftServer: 1.21.2 made the server's getProfiler private and profiles through the thread's Profiler.get(), never asking the server, so the vanilla server does not use the override's profiler (a profiler change 1.21.2 itself made); mods' own calls of getProfiler() reach the override (instanceRedirects + adapterHooks), its super call answers the thread's profiler",
   "net/minecraft/class_4341.method_20995(JLnet/minecraft/class_4413;)Ljava/lang/Boolean;": "override of RealmsClient.resetWorldWithSeed in a 1.21.1 subclass: 1.21.2 removed resetting a Realms world from a seed (only templates remain), so nothing calls it; calls of it are answered with an explicit Realms error (see the RealmsClient entries)",
   "net/minecraft/class_5673.method_32517(Lnet/minecraft/class_4341;J)V": "ResettingGeneratedWorldTask.sendResetRequest: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
   "net/minecraft/class_8844.run()V": "CreateSnapshotRealmTask.run: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
