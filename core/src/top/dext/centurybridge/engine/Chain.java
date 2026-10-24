@@ -115,6 +115,18 @@ public final class Chain {
     public final java.util.Map<String, String> methodRenames = new java.util.HashMap<>();
 
     /**
+     * Where a V method's code lives on W for mixins ("mixinTargets"), judged by an area agent from both
+     * bodies: key "owner.name(desc)" (V), value {"to": "name(desc)" of the same class on W, "args":
+     * [for each V argument the W argument index it arrives as, or -1], "basis": why}. MixinBridge moves
+     * an injector selecting the V method there (handlers taking the target's arguments get a W-shaped
+     * handler mapping them back through "args"; an argument at -1 leaves only handlers that take none),
+     * before anything it would infer itself. Mods' plain calls are not touched (that is callReshapes').
+     */
+    public record MixinTarget(String name, String desc, int[] args, String basis) {}
+
+    public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
+
+    /**
      * The class or interface a {@link #methodRenames} key is on for a site naming {@code owner}, in JVM
      * resolution order: the owner and its superclasses, then (an instance member only: an interface's
      * static is not inherited) their superinterfaces breadth first, injected ones included. A vanilla
@@ -2549,6 +2561,24 @@ public final class Chain {
                 var fr = root.getAsJsonObject("fieldRenames");
                 for (String k : fr.keySet()) {
                     c.fieldRenames.put(k, fr.get(k).getAsString());
+                }
+            }
+            if (root.has("mixinTargets")) {
+                var mt = root.getAsJsonObject("mixinTargets");
+                for (String k : mt.keySet()) {
+                    var o = mt.getAsJsonObject(k);
+                    String mtTo = o.get("to").getAsString();
+                    int mtP = mtTo.indexOf('(');
+                    int[] mtArgs = null;
+                    if (o.has("args")) {
+                        var mtA = o.getAsJsonArray("args");
+                        mtArgs = new int[mtA.size()];
+                        for (int i = 0; i < mtArgs.length; i++) {
+                            mtArgs[i] = mtA.get(i).getAsInt();
+                        }
+                    }
+                    c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs,
+                        o.has("basis") ? o.get("basis").getAsString() : ""));
                 }
             }
             if (root.has("methodRenames")) {

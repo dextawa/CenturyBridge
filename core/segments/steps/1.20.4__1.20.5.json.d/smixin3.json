@@ -1,0 +1,9 @@
+{
+  "mixinTargets": {
+    "net/minecraft/class_8153.method_18377(Lnet/minecraft/class_4050;)Lnet/minecraft/class_4048;": {
+      "to": "method_55694(Lnet/minecraft/class_4050;)Lnet/minecraft/class_4048;",
+      "args": [0],
+      "basis": "Sniffer.getDimensions(Pose) -> getDefaultDimensions(Pose), as for every entity in 1.20.5 (Entity.getDimensions calls it and scales); javap: same DIGGING branch and super call, 1.20.5 dropped the entityData dirty check (body similarity 0.74, below body follow's 0.75)"
+    }
+  }
+}

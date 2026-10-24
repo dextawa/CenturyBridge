@@ -2159,6 +2159,17 @@ final class MixinBridge {
      */
     private Fate selectorFate(String owner, String name, String vdesc, List<String> why) {
         Type[] va = Type.getArgumentTypes(vdesc);
+        // an area agent's judgment of where the V code lives on W comes before anything inferred
+        Chain.MixinTarget mt = chain.mixinTargets.get(owner + "." + name + vdesc);
+        if (mt != null) {
+            boolean known = mt.args() != null && mt.args().length == va.length;
+            int[] from = known ? mt.args().clone() : null;
+            for (int i = 0; known && i < from.length; i++) {
+                known = from[i] >= 0;
+            }
+            return new Fate(mt.name(), mt.desc(), known ? from : null, new String[va.length][], new boolean[va.length], known,
+                "mixinTargets (" + mt.basis() + ")");
+        }
         for (Chain.OverrideHook h : chain.overrideHooksForOld(name, vdesc)) {
             if (h.onlyUnder != null && !chain.sourceSubtype(List.of(owner), h.onlyUnder)
                     || h.notUnder != null && chain.sourceSubtype(List.of(owner), h.notUnder)) {
