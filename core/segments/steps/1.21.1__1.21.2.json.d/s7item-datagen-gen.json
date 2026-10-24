@@ -1,0 +1,198 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_5797.method_17972(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.2 saves a recipe under its key in the recipe registry: the id's key"
+  },
+  "net/minecraft/class_2447.method_17972(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.2 saves a recipe under its key in the recipe registry: the id's key"
+  },
+  "net/minecraft/class_2450.method_17972(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.2 saves a recipe under its key in the recipe registry: the id's key"
+  },
+  "net/minecraft/class_2454.method_17972(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.2 saves a recipe under its key in the recipe registry: the id's key"
+  },
+  "net/minecraft/class_3981.method_17972(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.2 saves a recipe under its key in the recipe registry: the id's key"
+  },
+  "net/minecraft/class_8074.method_48537(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.2 saves a recipe under its key in the recipe registry: the id's key"
+  },
+  "net/minecraft/class_8076.method_48542(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.2 saves a recipe under its key in the recipe registry: the id's key"
+  },
+  "net/minecraft/class_2456.method_10475(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.2 saves a recipe under its key in the recipe registry: the id's key"
+  },
+  "net/minecraft/class_8790.method_53819(Lnet/minecraft/class_2960;Lnet/minecraft/class_1860;Lnet/minecraft/class_8779;)V": {
+   "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_1860;Lnet/minecraft/class_8779;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep",
+    "keep"
+   ],
+   "basis": "RecipeOutput.accept: the recipe's key"
+  },
+  "net/minecraft/class_2447.method_10437(Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;)Lnet/minecraft/class_2447;": {
+   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;)Lnet/minecraft/class_2447;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#items()Lnet/minecraft/class_7871;",
+    "keep",
+    "keep"
+   ],
+   "basis": "ShapedRecipeBuilder.shaped(category, item): the item lookup (the built-in registry)"
+  },
+  "net/minecraft/class_2447.method_10436(Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)Lnet/minecraft/class_2447;": {
+   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)Lnet/minecraft/class_2447;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#items()Lnet/minecraft/class_7871;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "ShapedRecipeBuilder.shaped(category, item, count): the item lookup"
+  },
+  "net/minecraft/class_2450.method_10447(Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;)Lnet/minecraft/class_2450;": {
+   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2450;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#items()Lnet/minecraft/class_7871;",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#stack(Lnet/minecraft/class_1935;)Lnet/minecraft/class_1799;"
+   ],
+   "basis": "ShapelessRecipeBuilder.shapeless(category, item): the item lookup and one of the item"
+  },
+  "net/minecraft/class_2450.method_10448(Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)Lnet/minecraft/class_2450;": {
+   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)Lnet/minecraft/class_2450;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#items()Lnet/minecraft/class_7871;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "ShapelessRecipeBuilder.shapeless(category, item, count): the item lookup"
+  },
+  "net/minecraft/class_7803$class_8905.comp_2013()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_5321;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "TrimTemplate.id(): the key's location"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_2447.<init>(Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)V": {
+   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#items()Lnet/minecraft/class_7871;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "ShapedRecipeBuilder(category, item, count): the item lookup (the constructor is opened by the layer's access widener)"
+  },
+  "net/minecraft/class_2450.<init>(Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)V": {
+   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#items()Lnet/minecraft/class_7871;",
+    "keep:0",
+    "conv:1,2 top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#stack(Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1799;"
+   ],
+   "basis": "ShapelessRecipeBuilder(category, item, count): the item lookup and the result stack"
+  },
+  "net/minecraft/class_7803$class_8905.<init>(Lnet/minecraft/class_1792;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_1792;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "VanillaRecipeProvider.TrimTemplate(item, id): the recipe key"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_17972(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V",
+   "new": "method_17972(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "onlyUnder": "net/minecraft/class_5797",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "a 1.21.1 builder's save(output, id) answers 1.21.2's save(output, key) with the key's location; its super call takes the call's conversion (CbItemDatagen)"
+  },
+  {
+   "old": "method_48537(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V",
+   "new": "method_48537(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "onlyUnder": "net/minecraft/class_8074",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "a 1.21.1 builder's save(output, id) answers 1.21.2's save(output, key) with the key's location; its super call takes the call's conversion (CbItemDatagen)"
+  },
+  {
+   "old": "method_48542(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V",
+   "new": "method_48542(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "onlyUnder": "net/minecraft/class_8076",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "a 1.21.1 builder's save(output, id) answers 1.21.2's save(output, key) with the key's location; its super call takes the call's conversion (CbItemDatagen)"
+  },
+  {
+   "old": "method_10475(Lnet/minecraft/class_8790;Lnet/minecraft/class_2960;)V",
+   "new": "method_10475(Lnet/minecraft/class_8790;Lnet/minecraft/class_5321;)V",
+   "onlyUnder": "net/minecraft/class_2456",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "a 1.21.1 builder's save(output, id) answers 1.21.2's save(output, key) with the key's location; its super call takes the call's conversion (CbItemDatagen)"
+  },
+  {
+   "old": "method_53819(Lnet/minecraft/class_2960;Lnet/minecraft/class_1860;Lnet/minecraft/class_8779;)V",
+   "new": "method_53819(Lnet/minecraft/class_5321;Lnet/minecraft/class_1860;Lnet/minecraft/class_8779;)V",
+   "onlyUnder": "net/minecraft/class_8790",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "a 1.21.1 RecipeOutput's accept(id, ..) answers 1.21.2's accept(key, ..) with the key's location"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_8790",
+   "method": "method_62738()V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen.includeRootAdvancement(Lnet/minecraft/class_8790;)V",
+   "basis": "1.21.2's RecipeOutput.includeRootAdvancement(): a 1.21.1 output had no root advancement of its own (1.21.1's RecipeProvider wrote it)"
+  }
+ ],
+ "superRenames": {
+  "net/minecraft/class_2446": "top/dext/centurybridge/step/v1_21_2/facade/RecipeProvider"
+ }
+}

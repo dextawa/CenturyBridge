@@ -110,3 +110,6 @@ accessible method net/minecraft/class_5411 method_30186 (Lnet/minecraft/class_25
 accessible method net/minecraft/class_5411 method_30190 (Lnet/minecraft/class_2540;)V
 extendable method net/minecraft/class_5411 method_30190 (Lnet/minecraft/class_2540;)V
 # ---- END GENERATED (s7item) ----
+# ---- s7item: 1.21.1's builder constructors (dev-time datagen; rt/CbItemDatagen) ----
+accessible method net/minecraft/class_2447 <init> (Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)V
+accessible method net/minecraft/class_2450 <init> (Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)V
