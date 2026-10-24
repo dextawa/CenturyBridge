@@ -2,6 +2,7 @@ package top.dext.centurybridge.rt.v1_20_2;
 
 import com.mojang.authlib.AuthenticationService;
 import com.mojang.authlib.Environment;
+import com.mojang.authlib.EnvironmentParser;
 import com.mojang.authlib.HttpAuthenticationService;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
@@ -23,6 +24,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 import org.apache.commons.lang3.StringUtils;
 import top.dext.centurybridge.facade.v1_20_2.AuthlibAgent;
+import top.dext.centurybridge.facade.v1_20_2.authlib.BaseAuthenticationService;
 import top.dext.centurybridge.facade.v1_20_2.authlib.LegacyAuthenticationService;
 import top.dext.centurybridge.facade.v1_20_2.authlib.Response;
 import top.dext.centurybridge.facade.v1_20_2.authlib.UserAuthentication;
@@ -47,9 +49,15 @@ public final class CbLibAuthlibLogin {
 
     private static final Map<YggdrasilAuthenticationService, Built> BUILT = Collections.synchronizedMap(new WeakHashMap<>());
 
-    /** what a 4.0.43 constructor gave the service: its client token and environment (5.0.47 keeps neither for login) */
+    /**
+     * what a 4.0.43 constructor gave the service: its client token and environment (5.0.47 keeps no token). A constructor
+     * without an environment determined it then, as 4.0.43's did: the system properties' environment, else PROD (5.0.47's
+     * determineEnvironment, the same code)
+     */
     public static void remember(YggdrasilAuthenticationService service, String clientToken, Environment environment) {
-        BUILT.put(service, new Built(clientToken, environment));
+        Environment env = environment != null ? environment
+            : EnvironmentParser.getEnvironmentFromProperties().orElse(YggdrasilEnvironment.PROD.getEnvironment());
+        BUILT.put(service, new Built(clientToken, env));
     }
 
     /** a mod subclass's super(proxy, clientToken) */
@@ -62,41 +70,9 @@ public final class CbLibAuthlibLogin {
         remember(service, clientToken, environment);
     }
 
-    private static String clientToken(YggdrasilAuthenticationService service) {
-        Built built = BUILT.get(service);
-        return built == null ? null : built.clientToken();
-    }
-
-    private static final java.lang.reflect.Field ENVIRONMENT;
-
-    static {
-        java.lang.reflect.Field f;
-        try {
-            f = YggdrasilAuthenticationService.class.getDeclaredField("environment");
-            f.setAccessible(true);
-        } catch (ReflectiveOperationException | RuntimeException e) {
-            f = null;
-        }
-        ENVIRONMENT = f;
-    }
-
-    /** the service's environment: the one its 4.0.43 constructor named, else the one 5.0.47 determined (its private field) */
-    private static Environment environment(YggdrasilAuthenticationService service) {
-        Built built = BUILT.get(service);
-        if (built != null && built.environment() != null) {
-            return built.environment();
-        }
-        if (ENVIRONMENT != null) {
-            try {
-                Environment env = (Environment) ENVIRONMENT.get(service);
-                if (env != null) {
-                    return env;
-                }
-            } catch (IllegalAccessException ignored) {
-                // fall through
-            }
-        }
-        return YggdrasilEnvironment.PROD.getEnvironment();
+    /** the service's 4.0.43 client token and environment, or null for a service no 4.0.43 constructor built */
+    private static Built built(YggdrasilAuthenticationService service) {
+        return BUILT.get(service);
     }
 
     // ------------------------------------------------------------------ createUserAuthentication
@@ -109,6 +85,9 @@ public final class CbLibAuthlibLogin {
      * environment ("Missing client token" for a service built without one, as 4.0.43 refused)
      */
     public static UserAuthentication createUserAuthentication(AuthenticationService service, AuthlibAgent agent) {
+        if (service instanceof BaseAuthenticationService base) {
+            return base.createUserAuthentication(agent);
+        }
         if (service instanceof LegacyAuthenticationService legacy) {
             return legacy.createUserAuthentication(agent);
         }
@@ -126,13 +105,27 @@ public final class CbLibAuthlibLogin {
         throw new AbstractMethodError(service.getClass().getName() + ".createUserAuthentication(Agent)");
     }
 
-    /** YggdrasilAuthenticationService's own createUserAuthentication (a subclass's super call) */
+    /** the same call through an HttpAuthenticationService */
+    public static UserAuthentication createUserAuthentication(HttpAuthenticationService service, AuthlibAgent agent) {
+        return createUserAuthentication((AuthenticationService) service, agent);
+    }
+
+    /** the same call through a YggdrasilAuthenticationService */
+    public static UserAuthentication createUserAuthentication(YggdrasilAuthenticationService service, AuthlibAgent agent) {
+        return createUserAuthentication((AuthenticationService) service, agent);
+    }
+
+    /**
+     * YggdrasilAuthenticationService's own createUserAuthentication (also a subclass's super call): a login for the client token
+     * and environment its 4.0.43 constructor was given; a service built without a token (5.0.47's constructors, which have
+     * none) is refused as 4.0.43 refused one ("Missing client token")
+     */
     public static UserAuthentication superCreateUserAuthentication(YggdrasilAuthenticationService service, AuthlibAgent agent) {
-        String clientToken = clientToken(service);
-        if (clientToken == null) {
+        Built built = built(service);
+        if (built == null || built.clientToken() == null) {
             throw new IllegalStateException("Missing client token");
         }
-        return new YggdrasilUserAuthentication(service, clientToken, agent, environment(service));
+        return new YggdrasilUserAuthentication(service, built.clientToken(), agent, built.environment());
     }
 
     // ------------------------------------------------------------------ the request helpers, dispatching to 4.0.43 overrides
@@ -163,6 +156,21 @@ public final class CbLibAuthlibLogin {
             }
         }
         return CbLibAuthlib.performPostRequest(service, url, post, contentType);
+    }
+
+    private static final MethodType PERFORM_GET_1 = MethodType.methodType(String.class, URL.class);
+
+    /** service.performGetRequest(url): an override of it, else 4.0.43's body, which asked this.performGetRequest(url, null) */
+    public static String performGetRequest(HttpAuthenticationService service, URL url) throws IOException {
+        MethodHandle override = CbLibOverrides.find(service, HttpAuthenticationService.class, "performGetRequest", PERFORM_GET_1);
+        if (override != null) {
+            try {
+                return (String) override.invoke(service, url);
+            } catch (Throwable t) {
+                throw CbLibOverrides.rethrow(t);
+            }
+        }
+        return CbLibAuthlib.performGetRequest(service, url);
     }
 
     public static String performGetRequest(HttpAuthenticationService service, URL url, String authentication) throws IOException {

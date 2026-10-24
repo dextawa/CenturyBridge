@@ -351,12 +351,12 @@ public final class CbLibAuthlib {
         return connection;
     }
 
-    /** HttpAuthenticationService.performPostRequest(url, post, contentType) */
+    /** HttpAuthenticationService.performPostRequest(url, post, contentType); its connection from this.createUrlConnection (an override's) */
     public static String performPostRequest(HttpAuthenticationService service, URL url, String post, String contentType) throws IOException {
         Objects.requireNonNull(url, "The validated object is null");
         Objects.requireNonNull(post, "The validated object is null");
         Objects.requireNonNull(contentType, "The validated object is null");
-        HttpURLConnection connection = createUrlConnection(service, url);
+        HttpURLConnection connection = CbLibAuthlibLogin.createUrlConnection(service, url);
         byte[] postAsBytes = post.getBytes(StandardCharsets.UTF_8);
         connection.setRequestProperty("Content-Type", contentType + "; charset=utf-8");
         connection.setRequestProperty("Content-Length", "" + postAsBytes.length);
@@ -368,15 +368,15 @@ public final class CbLibAuthlib {
         return readResponse(connection, url);
     }
 
-    /** HttpAuthenticationService.performGetRequest(url) */
+    /** HttpAuthenticationService.performGetRequest(url): this.performGetRequest(url, null) (an override's) */
     public static String performGetRequest(HttpAuthenticationService service, URL url) throws IOException {
-        return performGetRequest(service, url, null);
+        return CbLibAuthlibLogin.performGetRequest(service, url, null);
     }
 
-    /** HttpAuthenticationService.performGetRequest(url, authentication) */
+    /** HttpAuthenticationService.performGetRequest(url, authentication); its connection from this.createUrlConnection (an override's) */
     public static String performGetRequest(HttpAuthenticationService service, URL url, String authentication) throws IOException {
         Objects.requireNonNull(url, "The validated object is null");
-        HttpURLConnection connection = createUrlConnection(service, url);
+        HttpURLConnection connection = CbLibAuthlibLogin.createUrlConnection(service, url);
         if (authentication != null) {
             connection.setRequestProperty("Authorization", authentication);
         }
