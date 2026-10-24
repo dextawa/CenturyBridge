@@ -1,0 +1,21 @@
+{
+ "_s26_basis": "s26 (26.1.2 -> 26.2, Minecraft side): hand-judged entries; generated families are in pkgmoves-gen / staticmoves-gen / regconst-gen / delegates-gen",
+ "classRenames": {
+  "net/minecraft/util/Tuple": "top/dext/centurybridge/step/v26_2/facade/Tuple",
+  "net/minecraft/world/level/block/WeatheringCopperBlocks": "top/dext/centurybridge/step/v26_2/facade/WeatheringCopperBlocks",
+  "net/minecraft/world/item/WeatheringCopperItems": "top/dext/centurybridge/step/v26_2/facade/WeatheringCopperItems"
+ },
+ "_classRenames_basis": {
+  "net/minecraft/util/Tuple": "26.2 deleted Tuple (no class of 26.2 holds its members; its callers use DFU Pair); the layer's facade is 26.1.2's class as it was",
+  "net/minecraft/world/level/block/WeatheringCopperBlocks": "26.2 replaced the record by WeatheringCopperCollection<Block> (weathering/waxed ByState); the facade is 26.1.2's record with every member, of(collection) for the constants",
+  "net/minecraft/world/item/WeatheringCopperItems": "26.2 replaced the record by WeatheringCopperCollection<Item>; the facade is 26.1.2's record with every member, of(collection) for the constants"
+ },
+ "fieldGetters": {
+  "net/minecraft/world/level/block/Blocks.COPPER_BARS:Lnet/minecraft/world/level/block/WeatheringCopperBlocks;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Blocks_COPPER_BARS",
+  "net/minecraft/world/level/block/Blocks.COPPER_CHAIN:Lnet/minecraft/world/level/block/WeatheringCopperBlocks;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Blocks_COPPER_CHAIN",
+  "net/minecraft/world/level/block/Blocks.COPPER_LANTERN:Lnet/minecraft/world/level/block/WeatheringCopperBlocks;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Blocks_COPPER_LANTERN",
+  "net/minecraft/world/item/Items.COPPER_BARS:Lnet/minecraft/world/item/WeatheringCopperItems;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Items_COPPER_BARS",
+  "net/minecraft/world/item/Items.COPPER_CHAIN:Lnet/minecraft/world/item/WeatheringCopperItems;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Items_COPPER_CHAIN",
+  "net/minecraft/world/item/Items.COPPER_LANTERN:Lnet/minecraft/world/item/WeatheringCopperItems;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Items_COPPER_LANTERN"
+ }
+}

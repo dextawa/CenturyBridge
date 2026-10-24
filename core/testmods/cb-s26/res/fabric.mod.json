@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s26",
+ "version": "1.0.0",
+ "name": "CB s26 step test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.s26.S26TestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "26.1.2" }
+}
