@@ -84,6 +84,9 @@ public class SwallTestMod implements ModInitializer {
         check("customRecipe.getSerializer", recipe.method_8119() == TEST_SERIALIZER, recipe.method_8119());
 
         lootRegistry();
+        STEP_TYPE = net.minecraft.class_6018.method_35014("cbswall_step", StepInt.CODEC);
+        HALF_TYPE = net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41139,
+            net.minecraft.class_2960.method_60655("cbswall", "half"), () -> HalfFloat.CODEC);
         EARLY_ATTACKS = new net.minecraft.class_10707(0.25F, 1.0F, List.of(), net.minecraft.class_10707.class_10709.field_56308,
             Optional.of(net.minecraft.class_8103.field_56242), Optional.empty(), Optional.empty());
         ServerLifecycleEvents.SERVER_STARTED.register(SwallTestMod::onStarted);
@@ -103,6 +106,75 @@ public class SwallTestMod implements ModInitializer {
     }
 
     static net.minecraft.class_10707 EARLY_ATTACKS;
+    static net.minecraft.class_6018<StepInt> STEP_TYPE;
+    static net.minecraft.class_5864<HalfFloat> HALF_TYPE;
+
+    /** a 1.21.11 int provider: always its value, bounds value..value */
+    static final class StepInt extends net.minecraft.class_6017 {
+        static final com.mojang.serialization.MapCodec<StepInt> CODEC = Codec.INT.fieldOf("step").xmap(StepInt::new, p -> p.value);
+        final int value;
+
+        StepInt(int value) {
+            this.value = value;
+        }
+
+        @Override
+        public int method_35008(net.minecraft.class_5819 random) {
+            return value;
+        }
+
+        @Override
+        public int method_35009() {
+            return value;
+        }
+
+        @Override
+        public int method_35011() {
+            return value;
+        }
+
+        @Override
+        public net.minecraft.class_6018<?> method_35012() {
+            return STEP_TYPE;
+        }
+    }
+
+    /** a 1.21.11 float provider registered through a lambda type */
+    static final class HalfFloat extends net.minecraft.class_5863 {
+        static final com.mojang.serialization.MapCodec<HalfFloat> CODEC = com.mojang.serialization.MapCodec.unit(HalfFloat::new);
+
+        @Override
+        public float method_33920(net.minecraft.class_5819 random) {
+            return 0.5F;
+        }
+
+        @Override
+        public float method_33915() {
+            return 0.5F;
+        }
+
+        @Override
+        public float method_33921() {
+            return 0.5F;
+        }
+
+        @Override
+        public net.minecraft.class_5864<?> method_33923() {
+            return HALF_TYPE;
+        }
+    }
+
+    /** a 1.21.11 subclass of ClampedInt (an open class there) */
+    static final class LoggedClamp extends net.minecraft.class_6334 {
+        LoggedClamp() {
+            super(net.minecraft.class_6019.method_35017(0, 100), 10, 20);
+        }
+
+        @Override
+        public net.minecraft.class_6018<?> method_35012() {
+            return super.method_35012();
+        }
+    }
     static final com.mojang.serialization.MapCodec<TestFn> TEST_FN_CODEC = com.mojang.serialization.MapCodec.unit(TestFn::new);
     static net.minecraft.class_5339<TestFn> TEST_FN_TYPE;
 
@@ -199,6 +271,33 @@ public class SwallTestMod implements ModInitializer {
         check("dye.applyDyes", color != null && (color.comp_2384() & 0xFFFFFF) == (net.minecraft.class_1767.field_7964.method_7787() & 0xFFFFFF), color);
     }
 
+    /** IntProvider / FloatProvider: 1.21.11 abstract classes with types, 26.1 interfaces with codecs */
+    private static void valueProviders(MinecraftServer server) {
+        net.minecraft.class_5819 random = net.minecraft.class_5819.method_43049(1L);
+        StepInt step = new StepInt(7);
+        net.minecraft.class_6017 asProvider = step;
+        check("provider.subclass", asProvider.method_35008(random) == 7 && asProvider.method_35009() == 7 && asProvider.method_35012() == STEP_TYPE, step);
+        com.google.gson.JsonElement json = net.minecraft.class_6017.field_29946.encodeStart(JsonOps.INSTANCE, step).getOrThrow();
+        net.minecraft.class_6017 back = net.minecraft.class_6017.field_29946.parse(JsonOps.INSTANCE, json).getOrThrow();
+        check("provider.codecRoundTrip", json.toString().contains("cbswall_step") && back instanceof StepInt s && s.value == 7, json);
+        net.minecraft.class_6019 uniform = net.minecraft.class_6019.method_35017(1, 4);
+        check("provider.vanillaType", uniform.method_35012() == net.minecraft.class_6018.field_29948
+            && ((net.minecraft.class_6017) uniform).method_35012() == net.minecraft.class_6018.field_29948, uniform.method_35012());
+        net.minecraft.class_6018<?> read = net.minecraft.class_7923.field_41140.method_63535(net.minecraft.class_2960.method_60656("cbswall_step"));
+        check("provider.registryReadBack", read == STEP_TYPE && read.codec() == StepInt.CODEC, read);
+        check("provider.rangedCodec", net.minecraft.class_6017.method_35004(0, 5).parse(JsonOps.INSTANCE, new com.google.gson.JsonPrimitive(9)).error().isPresent()
+            && net.minecraft.class_6017.method_35004(0, 10).parse(JsonOps.INSTANCE, new com.google.gson.JsonPrimitive(9)).result().isPresent(), "");
+        HalfFloat half = new HalfFloat();
+        com.google.gson.JsonElement fjson = net.minecraft.class_5863.field_29007.encodeStart(JsonOps.INSTANCE, half).getOrThrow();
+        check("provider.float", half.method_33923() == HALF_TYPE && ((net.minecraft.class_5863) half).method_33920(random) == 0.5F
+            && fjson.toString().contains("cbswall:half") && net.minecraft.class_5862.method_33908(2F).method_33923() == net.minecraft.class_5864.field_29008, fjson);
+        LoggedClamp clamp = new LoggedClamp();
+        com.google.gson.JsonElement cjson = net.minecraft.class_6017.field_29946.encodeStart(JsonOps.INSTANCE, clamp).getOrThrow();
+        int sample = clamp.method_35008(random);
+        check("provider.clampedSubclass", clamp.method_35012() == net.minecraft.class_6018.field_33453 && sample >= 10 && sample <= 20
+            && cjson.toString().contains("clamped"), cjson);
+    }
+
     /** generic drift at the wall read on a running server */
     private static void generic(MinecraftServer server) {
         Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
@@ -250,6 +349,7 @@ public class SwallTestMod implements ModInitializer {
             componentValues(server);
             selectors();
             itemContainers(server);
+            valueProviders(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);

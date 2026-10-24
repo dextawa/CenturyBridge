@@ -2,6 +2,9 @@ accessWidener	v2	official
 
 # 1.21.11 GuiGraphics.renderComponentHoverEffect, overridable there: mods' overrides are renamed onto it (swall)
 extendable	method	net/minecraft/client/gui/GuiGraphicsExtractor	componentHoverEffect	(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Style;II)V
+# 1.21.11 ClampedInt was an open class, 26.1's a final record: a 1.21.11 subclass extends the record (swall; its
+# getType() reconnected to codec(), super.getType() answers CLAMPED)
+extendable	class	net/minecraft/util/valueproviders/ClampedInt
 
 # ---- BEGIN GENERATED (swall): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
