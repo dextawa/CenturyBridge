@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.Recipe;
+import top.dext.centurybridge.step.v26_1.rt.CbWallRecipeKinds;
 import top.dext.centurybridge.step.v26_1.rt.CbWallRecipes;
 import top.dext.centurybridge.step.v26_1.rt.CbWallRegistry;
 
@@ -14,13 +15,22 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallRegistry;
  * record of its codecs -- one per serializer, both ways, so a recipe's serializer compares equal to the
  * constant it was registered as ({@link CbWallRecipes}).
  *
- * The constants are the serializers 26.1 registers under 1.21.11's ids. Three 1.21.11 serializers have no
- * 26.1 counterpart (crafting_special_armordye, crafting_special_mapcloning, crafting_special_tippedarrow:
- * the recipe types are gone from 26.1) and are not given back (facadeGaps / ledger).
+ * The constants are the serializers 26.1 registers under 1.21.11's ids. The three whose recipe types 26.1
+ * removed (crafting_special_armordye, crafting_special_mapcloning, crafting_special_tippedarrow) are this
+ * layer's, registered under those ids with 1.21.11's recipes (rt/CbWallRecipeKinds).
  * Member names are 1.21.11's intermediary names.
  */
 @SuppressWarnings({"rawtypes", "unused"})
 public interface RecipeSerializer<T extends Recipe<?>> extends CbWallRegistry.Wrapper {
+
+    /** 1.21.11 RecipeSerializer.ARMOR_DYE ("crafting_special_armordye", this layer's: rt/CbWallRecipeKinds) */
+    RecipeSerializer field_9028 = CbWallRecipeKinds.armorDye();
+
+    /** 1.21.11 RecipeSerializer.MAP_CLONING ("crafting_special_mapcloning", this layer's) */
+    RecipeSerializer field_9044 = CbWallRecipeKinds.mapCloning();
+
+    /** 1.21.11 RecipeSerializer.TIPPED_ARROW ("crafting_special_tippedarrow", this layer's) */
+    RecipeSerializer field_9037 = CbWallRecipeKinds.tippedArrow();
 
     /** 1.21.11 RecipeSerializer constant registered as "crafting_shaped" */
     RecipeSerializer field_9035 = CbWallRecipes.vanilla("crafting_shaped");

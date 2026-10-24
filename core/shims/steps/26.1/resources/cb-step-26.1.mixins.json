@@ -71,7 +71,8 @@
     "CbWallBrainProviderSnifferMixin",
     "CbWallBrainProviderBreezeMixin",
     "CbWallBrainProviderArmadilloMixin",
-    "CbWallFeatureRegisterMixin"
+    "CbWallFeatureRegisterMixin",
+    "CbWallRecipeKindsMixin"
   ],
   "client": [
     "CbFapiBlockColorsMixin",
