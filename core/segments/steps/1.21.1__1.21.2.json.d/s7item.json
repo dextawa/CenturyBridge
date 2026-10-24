@@ -40,5 +40,37 @@
    ],
    "basis": "Item.use answers an InteractionResult since 1.21.2 (a Success carries the stack the hand turns into) where 1.21.1's answered an InteractionResultHolder<ItemStack>: the mod's holder as that result, and the hand set as 1.21.1's game modes set it for PASS/FAIL (CbItemResults.result); its super.use(..) reaches super's 1.21.2 use, as a holder"
   }
- ]
+ ],
+ "mixinTargets": {
+  "net/minecraft/class_7803.method_10419(Lnet/minecraft/class_8790;)V": {
+   "to": "method_10419()V",
+   "args": [
+    -1
+   ],
+   "basis": "VanillaRecipeProvider.buildRecipes(output) -> buildRecipes() (1.21.2 saves into the provider's own output field); javap: the same recipe sequence, a few trim/dye loops moved into private helpers"
+  },
+  "net/minecraft/class_3971.method_17866()V": {
+   "to": "method_17866(I)V",
+   "args": [],
+   "basis": "StonecutterMenu.setupResultSlot() -> setupResultSlot(selected index): javap, the same result-slot update for the selected recipe (1.21.2's caller passes selectedRecipeIndex)"
+  },
+  "net/minecraft/class_3971.method_17855(Lnet/minecraft/class_1263;Lnet/minecraft/class_1799;)V": {
+   "to": "method_17855(Lnet/minecraft/class_1799;)V",
+   "args": [
+    -1,
+    0
+   ],
+   "basis": "StonecutterMenu.setupRecipeList(container, stack) -> setupRecipeList(stack): javap, the same reset of the selection and result slot and the recipe lookup for the stack (1.21.1 read the container only to build the lookup's input)"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_1863.method_59821(Lnet/minecraft/class_3956;Lnet/minecraft/class_2960;)Lnet/minecraft/class_8786;": {
+   "desc": "(Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;)Lnet/minecraft/class_8786;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeBook#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "RecipeManager.byKeyTyped(type, id) (private) -> byKeyTyped(type, key): javap, the same lookup of the holder and type check, by the id's recipe key"
+  }
+ }
 }
