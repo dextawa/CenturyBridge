@@ -1,0 +1,45 @@
+{
+ "_basis_lib": "slib library front of the wall step (1.21.11 -> 26.1; core/segments/damage-lib/1.21.11__26.1.tsv), hand-wired part: LWJGL 3.3.3 -> 3.4.1 liburing functions whose offset/length width changed (rt/CbLibLwjglUringCalls, values as 3.3.3's natives stored them: objdump of lwjgl-3.3.3-natives-linux), reserved members newer kernel headers named (resv2 -> user_addr, pad -> min_wait_usec: same offset and width, renamed), IOURingSyncCancelReg pad[4] over 3.4.1's opcode/pad/pad2 bytes. The struct accessors 3.4.1 hid are lib-lwjgl-uring-gen.json (core/tools/gen_lib_lwjgl_uring.py)",
+ "staticRedirects": {
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_read_fixed(JIJIII)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_read_fixed(Lorg/lwjgl/system/linux/liburing/IOURingSQE;ILjava/nio/ByteBuffer;II)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_writev(JIJII)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_writev(Lorg/lwjgl/system/linux/liburing/IOURingSQE;ILorg/lwjgl/system/linux/IOVec$Buffer;I)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_writev2(JIJIII)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_writev2(Lorg/lwjgl/system/linux/liburing/IOURingSQE;ILorg/lwjgl/system/linux/IOVec$Buffer;II)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_write_fixed(JIJIII)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_write_fixed(Lorg/lwjgl/system/linux/liburing/IOURingSQE;ILjava/nio/ByteBuffer;II)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_read(JIJII)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_read(Lorg/lwjgl/system/linux/liburing/IOURingSQE;ILjava/nio/ByteBuffer;I)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_write(JIJII)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_write(Lorg/lwjgl/system/linux/liburing/IOURingSQE;ILjava/nio/ByteBuffer;I)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_fadvise(JIIJI)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_fadvise(Lorg/lwjgl/system/linux/liburing/IOURingSQE;IIJI)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_madvise(JJJI)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.nio_uring_prep_sync_file_range(JIIII)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_prep_sync_file_range(Lorg/lwjgl/system/linux/liburing/IOURingSQE;IIII)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/LibURing.io_uring_enter2(IIIIJJ)I": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/IOURingSyncCancelReg.npad(J)Ljava/nio/LongBuffer;": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/IOURingSyncCancelReg.npad(JI)J": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/IOURingSyncCancelReg.npad(JLjava/nio/LongBuffer;)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls",
+  "org/lwjgl/system/linux/liburing/IOURingSyncCancelReg.npad(JIJ)V": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls"
+ },
+ "methodRenames": {
+  "org/lwjgl/system/linux/liburing/IOCQRingOffsets.nresv2(J)J": "nuser_addr",
+  "org/lwjgl/system/linux/liburing/IOCQRingOffsets.nresv2(JJ)V": "nuser_addr",
+  "org/lwjgl/system/linux/liburing/IOSQRingOffsets.nresv2(J)J": "nuser_addr",
+  "org/lwjgl/system/linux/liburing/IOSQRingOffsets.nresv2(JJ)V": "nuser_addr",
+  "org/lwjgl/system/linux/liburing/IOURingGeteventsArg.npad(J)I": "nmin_wait_usec",
+  "org/lwjgl/system/linux/liburing/IOURingGeteventsArg.npad(JI)V": "nmin_wait_usec",
+  "org/lwjgl/system/linux/liburing/IOURingGeteventsArg.pad()I": "min_wait_usec",
+  "org/lwjgl/system/linux/liburing/IOURingGeteventsArg.pad(I)Lorg/lwjgl/system/linux/liburing/IOURingGeteventsArg;": "min_wait_usec",
+  "org/lwjgl/system/linux/liburing/IOURingGeteventsArg$Buffer.pad()I": "min_wait_usec",
+  "org/lwjgl/system/linux/liburing/IOURingGeteventsArg$Buffer.pad(I)Lorg/lwjgl/system/linux/liburing/IOURingGeteventsArg$Buffer;": "min_wait_usec"
+ },
+ "fieldGetters": {
+  "org/lwjgl/system/linux/liburing/IOCQRingOffsets.RESV2:I": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls#IOCQRingOffsets_RESV2",
+  "org/lwjgl/system/linux/liburing/IOSQRingOffsets.RESV2:I": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls#IOSQRingOffsets_RESV2",
+  "org/lwjgl/system/linux/liburing/IOURingGeteventsArg.PAD:I": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls#IOURingGeteventsArg_PAD",
+  "org/lwjgl/system/linux/liburing/IOURingSyncCancelReg.PAD:I": "top/dext/centurybridge/step/v26_1/rt/CbLibLwjglUringCalls#IOURingSyncCancelReg_PAD"
+ }
+}
