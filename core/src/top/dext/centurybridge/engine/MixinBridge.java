@@ -86,6 +86,7 @@ import org.objectweb.asm.tree.VarInsnNode;
  */
 final class MixinBridge {
     private static final Gson GSON = new Gson();
+    static final String MIXIN = "Lorg/spongepowered/asm/mixin/Mixin;";
     static final String SHADOW = "Lorg/spongepowered/asm/mixin/Shadow;";
     static final String MUTABLE = "Lorg/spongepowered/asm/mixin/Mutable;";
     static final String OVERWRITE = "Lorg/spongepowered/asm/mixin/Overwrite;";
@@ -145,6 +146,11 @@ final class MixinBridge {
     private final String step;
     private ClassNode helper;
     private int helperSeq;
+    /** the config / side list / mixin package being bridged (restoreOverride lists its mixins there) */
+    private String curPkg = "";
+    private String curKey = "mixins";
+    /** restoring mixins made for the current config, by class name */
+    private final Map<String, ClassNode> restorers = new LinkedHashMap<>();
 
     private MixinBridge(Chain chain, Map<String, byte[]> entries, String helperName) {
         this.chain = chain;
@@ -246,7 +252,9 @@ final class MixinBridge {
                 if (!cfg.has(key) || !cfg.get(key).isJsonArray()) {
                     continue;
                 }
-                for (JsonElement e : cfg.getAsJsonArray(key)) {
+                b.curPkg = pkg;
+                b.curKey = key;
+                for (JsonElement e : cfg.getAsJsonArray(key).deepCopy()) {
                     String cls = (pkg.isEmpty() ? "" : pkg + "/") + e.getAsString().replace('.', '/');
                     byte[] bytes = entries.get(cls + ".class");
                     if (bytes == null) {
@@ -259,6 +267,18 @@ final class MixinBridge {
             }
             if (refmapDirty) {
                 entries.put(refmapName, GSON.toJson(refmapRoot).getBytes(StandardCharsets.UTF_8));
+            }
+            if (!b.restorers.isEmpty()) {
+                // the restoring mixins join the config, on the side of the mixins that needed them
+                for (Map.Entry<String, ClassNode> r : b.restorers.entrySet()) {
+                    String key = (String) r.getValue().invisibleAnnotations.get(1).values.get(1);
+                    r.getValue().invisibleAnnotations.remove(1);
+                    String rel = (pkg.isEmpty() ? r.getKey() : r.getKey().substring(pkg.length() + 1)).replace('/', '.');
+                    cfg.getAsJsonArray(key).add(rel);
+                    entries.put(r.getKey() + ".class", write(r.getValue()));
+                }
+                entries.put(cfgName, GSON.toJson(cfg).getBytes(StandardCharsets.UTF_8));
+                b.restorers.clear();
             }
         }
         if (b.helper != null) {
@@ -1480,6 +1500,10 @@ final class MixinBridge {
                     return null;
                 }
                 List<MethodNode> wm = s.match(wt);
+                if (wm.isEmpty() && s.desc() != null && !chain.renamedDesc(s.desc()).equals(s.desc())) {
+                    // the descriptor as the ClassRemapper leaves it (classRenames): nothing moved under it
+                    wm = new MixinRepair.Sel(s.owner(), s.name(), chain.renamedDesc(s.desc()), s.wildcard()).match(wt);
+                }
                 if (!wm.isEmpty()) {
                     return new Selection(h, an, vt == null ? List.of() : s.match(vt), wm);
                 }
@@ -1498,7 +1522,21 @@ final class MixinBridge {
                 String where = "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "." + vmeth.name + vmeth.desc;
                 List<String> why = new ArrayList<>();
                 Fate fate = selectorFate(target, vmeth.name, vmeth.desc, why);
+                if (fate == null && method(wt, vmeth.name, vmeth.desc) == null) {
+                    // no wiring for it, or wiring for mods' overrides that cannot carry an injector: where W keeps its code
+                    List<String> bwhy = new ArrayList<>();
+                    fate = bodyFate(vt, wt, vmeth, bwhy);
+                    if (fate == null && (why.isEmpty() || !bwhy.isEmpty() && bwhy.get(0).contains("split across"))) {
+                        why.addAll(0, bwhy); // a split is the more precise reason than the wiring's
+                    }
+                }
                 if (fate == null) {
+                    MethodNode restored = restoreOverride(vmeth, wt, why);
+                    if (restored != null) {
+                        injected("@" + kind + " " + sn + "." + h.name, where + " => the override " + chain.to
+                            + " dropped, restored in the mixin as a call of the inherited one");
+                        return new Selection(h, an, List.of(vmeth), List.of(restored));
+                    }
                     if (!why.isEmpty()) {
                         left.add(where + ": " + why.get(0));
                     }
@@ -1783,13 +1821,20 @@ final class MixinBridge {
                 // what ats() can retarget: the wiring's new anchor, as often in W as the old in V, with the
                 // handler able to take it
                 AtFate af = a.kind().equals("INVOKE") || a.kind().equals("FIELD") ? atFate(a) : null;
+                boolean byContext = a.role().equals("main") && counterpartAnchor(kind, h, a, List.of(vmeth), List.of(wmeth), new ArrayList<>()) != null;
                 if (af == null || !af.desc().equals(a.desc()) && !kind.equals("Inject")
                         || kind.equals("Inject") && capturesLocals(h) || hasSugar(h, "Local;")) {
+                    if (byContext) {
+                        continue; // ats() retargets it to what stands in its place
+                    }
                     return a.toString();
                 }
                 MixinRepair.Anchor na = new MixinRepair.Anchor(a.kind(), af.owner(), af.name(), af.desc(), null, a.ordinal(), a.role());
                 int vc = count(List.of(vmeth), a);
                 if (vc == 0 || count(List.of(wmeth), na) != vc) {
+                    if (byContext) {
+                        continue;
+                    }
                     return a.toString();
                 }
             }
@@ -1810,6 +1855,15 @@ final class MixinBridge {
             for (AnnotationNode at : atNodes(sel.an())) {
                 Map<String, Object> av = MixinRepair.values(at);
                 String value = String.valueOf(av.get("value"));
+                if (value.equals("NEW") || value.equals("CONSTANT")) {
+                    // no wiring speaks of allocations or constants: only what W's body has in their place
+                    MixinRepair.Anchor a = MixinRepair.parseAt(av, table);
+                    if (a == null || a == MixinRepair.POSITIONAL || count(sel.w(), a) > 0 || count(sel.v(), a) == 0) {
+                        continue;
+                    }
+                    counterpartAt(sel, kind, at, value, av.get("target") instanceof String nt ? nt : null, a, null);
+                    continue;
+                }
                 if (!value.equals("INVOKE") && !value.equals("INVOKE_ASSIGN") && !value.equals("FIELD")
                         || !(av.get("target") instanceof String t)) {
                     continue;
@@ -1827,13 +1881,19 @@ final class MixinBridge {
                     + "." + a.name() + (fld ? ":" : "") + a.desc();
                 AtFate af = atFate(a);
                 if (af == null) {
+                    if (!value.equals("INVOKE_ASSIGN")) {
+                        counterpartAt(sel, kind, at, value, t, a, null);
+                    }
                     continue;
                 }
                 MixinRepair.Anchor na = new MixinRepair.Anchor(a.kind(), af.owner(), af.name(), af.desc(), null, a.ordinal());
                 int wc = count(sel.w(), na);
                 if (wc != vc) {
-                    left.add(where + ": " + af.how() + " gives " + af.name() + af.desc() + ", standing " + wc + " time(s) in "
-                        + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from);
+                    String wired = af.how() + " gives " + af.name() + af.desc() + ", standing " + wc + " time(s) in "
+                        + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from;
+                    if (value.equals("INVOKE_ASSIGN") || !counterpartAt(sel, kind, at, value, t, a, wired)) {
+                        left.add(where + ": " + wired);
+                    }
                     continue;
                 }
                 if (!af.desc().equals(a.desc()) && !kind.equals("Inject")) {
@@ -1855,6 +1915,213 @@ final class MixinBridge {
                 changed = true;
                 injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + af.name() + (fld ? ":" : "") + af.desc() + " (" + af.how() + ")");
             }
+        }
+
+        /**
+         * An @At whose anchor W's body no longer holds, with no wiring that puts the same number of
+         * anything in its place: retargeted to the instruction W has where each V site stood
+         * ({@link SiteMatch#counterpart}: same kind, same significant neighbours, unique on both sides).
+         * A positional @Inject only -- every other injector handles the call or value itself, and a
+         * handler reading the target's locals reads them at a site whose surroundings changed. One new
+         * anchor must stand at every counterpart; it is pinned by ordinal unless its occurrences in W
+         * are exactly the counterparts. True when retargeted; otherwise the reason is reported.
+         */
+        private boolean counterpartAt(Selection sel, String kind, AnnotationNode at, String value, String t,
+                                      MixinRepair.Anchor a, String wired) {
+            String where = "@" + kind + " " + sn + "." + sel.handler().name + " @At " + value + " " + a;
+            List<String> why = new ArrayList<>();
+            MixinRepair.Anchor na = counterpartAnchor(kind, sel.handler(), a, sel.v(), sel.w(), why);
+            if (na == null) {
+                if (!why.isEmpty()) {
+                    left.add(where + ": " + (wired != null ? wired + "; " : "") + "in its place " + why.get(0));
+                }
+                return false;
+            }
+            switch (value) {
+                case "INVOKE", "FIELD" -> {
+                    String nt = "L" + na.owner() + ";" + na.name() + (value.equals("FIELD") ? ":" : "") + na.desc();
+                    if (t != null && ownKey(t)) {
+                        MixinRepair.refmapPut(table, t, nt);
+                        refmapDirty = true;
+                    } else {
+                        setValue(at, "target", nt);
+                    }
+                }
+                case "NEW" -> {
+                    String nt = t != null && t.startsWith("L") ? "L" + na.owner() + ";" : na.owner();
+                    if (t != null && ownKey(t)) {
+                        MixinRepair.refmapPut(table, t, nt);
+                        refmapDirty = true;
+                    } else {
+                        setValue(at, "target", nt);
+                    }
+                }
+                case "CONSTANT" -> {
+                    String key = constantKey(na.constant());
+                    List<Object> args = new ArrayList<>();
+                    for (Object o : MixinRepair.list(MixinRepair.values(at).get("args"))) {
+                        String sa = String.valueOf(o);
+                        args.add(sa.matches("\\s*(int|float|long|double|string)Value\\s*=.*") ? key + "=" + na.constant() : sa);
+                    }
+                    setValue(at, "args", args);
+                }
+                default -> {
+                    return false;
+                }
+            }
+            if (na.ordinal() >= 0) {
+                setValue(at, "ordinal", na.ordinal());
+            } else if (at.values != null) {
+                for (int i = 0; i + 1 < at.values.size(); i += 2) {
+                    if ("ordinal".equals(at.values.get(i))) {
+                        at.values.remove(i + 1);
+                        at.values.remove(i);
+                        break;
+                    }
+                }
+            }
+            changed = true;
+            injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + na + " (the instruction standing in its place in "
+                + chain.to + ", by context" + (wired != null ? "; the wiring's own count differs" : "") + ")");
+            return true;
+        }
+
+        /** the anchor standing where V's sites of {@code a} stood (see counterpartAt), or null with why */
+        private MixinRepair.Anchor counterpartAnchor(String kind, MethodNode h, MixinRepair.Anchor a, List<MethodNode> vms,
+                                                     List<MethodNode> wms, List<String> why) {
+            if (!kind.equals("Inject") || capturesLocals(h) || hasSugar(h, "Local;") || vms.size() != 1 || wms.size() != 1) {
+                return null;
+            }
+            MethodNode vm = vms.get(0);
+            MethodNode wm = wms.get(0);
+            List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> MixinRepair.matchesAnchor(in, a));
+            if (vo.isEmpty() || a.ordinal() >= vo.size()) {
+                return null;
+            }
+            List<AbstractInsnNode> sites = a.ordinal() >= 0 ? List.of(vo.get(a.ordinal())) : vo;
+            List<AbstractInsnNode> found = new ArrayList<>();
+            for (AbstractInsnNode site : sites) {
+                AbstractInsnNode c = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in));
+                if (c == null) {
+                    why.add("W's body has no single instruction of its kind between the same neighbours ("
+                        + (sites.size() == 1 ? "the site" : found.size() + " of " + sites.size() + " sites found") + ")");
+                    return null;
+                }
+                found.add(c);
+            }
+            MixinRepair.Anchor na = anchorOf(found.get(0));
+            for (AbstractInsnNode c : found) {
+                if (!MixinRepair.matchesAnchor(c, na)) {
+                    why.add("different instructions stand in place of its " + sites.size() + " sites");
+                    return null;
+                }
+            }
+            List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, na));
+            if (sites.size() == 1 && (a.ordinal() >= 0 || wo.size() > 1)) {
+                return withOrdinal(na, wo.indexOf(found.get(0)));
+            }
+            if (!new HashSet<>(found).equals(new HashSet<>(wo))) {
+                why.add(na + " stands in place of all " + sites.size() + " sites, and " + (wo.size() - found.size()) + " time(s) elsewhere");
+                return null;
+            }
+            return na;
+        }
+
+        /**
+         * V's class overrode the method, W's inherits it (the override was dropped): the injector's
+         * target method is put back as an override that only calls the inherited one -- Sub.m runs
+         * exactly when it did, and does what W does -- merged by this mixin, marked {@link #RESTORED}
+         * (repair and the judge take it as the target). Only for an instance method W declares on a
+         * superclass, not private, final, static or abstract there, overridable from the target's
+         * package; one per mixin and member. Anchors are then judged in it as in any target.
+         */
+        private MethodNode restoreOverride(MethodNode vmeth, ClassNode wt, List<String> why) {
+            if (itf || (vmeth.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE | Opcodes.ACC_ABSTRACT)) != 0
+                    || vmeth.name.startsWith("<")) {
+                return null;
+            }
+            for (MethodNode m : mx.methods) {
+                if (m.name.equals(vmeth.name) && m.desc.equals(vmeth.desc)) {
+                    return null; // the mixin itself declares it (an overwrite / its own method): not ours to add
+                }
+            }
+            ClassNode decl = null;
+            MethodNode inherited = null;
+            for (String c = wt.superName; c != null && inherited == null; ) {
+                ClassNode cn = w(c);
+                if (cn == null) {
+                    return null;
+                }
+                MethodNode m = method(cn, vmeth.name, vmeth.desc);
+                if (m != null) {
+                    decl = cn;
+                    inherited = m;
+                }
+                c = cn.superName;
+            }
+            if (inherited == null) {
+                return null;
+            }
+            int acc = inherited.access;
+            if ((acc & (Opcodes.ACC_FINAL | Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_ABSTRACT)) != 0) {
+                why.add(shortName(decl.name) + "." + vmeth.name + vmeth.desc + ", which " + shortName(wt.name) + " now inherits, cannot be overridden");
+                return null;
+            }
+            boolean pkgPrivate = (acc & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) == 0;
+            if (pkgPrivate && !pkg(decl.name).equals(pkg(wt.name))) {
+                why.add(shortName(decl.name) + "." + vmeth.name + vmeth.desc + " is package-private in another package");
+                return null;
+            }
+            // super.m(..) as javac writes it: through the direct superclass, the JVM finds the declaration above
+            ClassNode rc = restorer(target, wt.superName);
+            for (MethodNode m : rc.methods) {
+                if (m.name.equals(vmeth.name) && m.desc.equals(vmeth.desc)) {
+                    return m;
+                }
+            }
+            MethodNode r = new MethodNode(acc & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED | Opcodes.ACC_VARARGS),
+                vmeth.name, vmeth.desc, null, inherited.exceptions == null ? null : inherited.exceptions.toArray(new String[0]));
+            r.visitAnnotation(RESTORED, false);
+            r.visitCode();
+            r.visitVarInsn(Opcodes.ALOAD, 0);
+            int slot = 1;
+            for (Type t : Type.getArgumentTypes(vmeth.desc)) {
+                r.visitVarInsn(t.getOpcode(Opcodes.ILOAD), slot);
+                slot += t.getSize();
+            }
+            r.visitMethodInsn(Opcodes.INVOKESPECIAL, wt.superName, vmeth.name, vmeth.desc, false);
+            r.visitInsn(Type.getReturnType(vmeth.desc).getOpcode(Opcodes.IRETURN));
+            r.visitMaxs(slot + 1, slot);
+            r.visitEnd();
+            rc.methods.add(r);
+            return r;
+        }
+
+        /**
+         * The jar's restoring mixin for a target on the current config's side: abstract, extending the
+         * target's W superclass (its super calls are then Mixin's own super calls), with
+         * priority 1 -- merged before any mod's mixins, so whichever converted mod restores a member
+         * first, every mod's injectors may target it (Mixin refuses an injector a method merged by a mixin
+         * of equal or higher priority); a second restoring of the same member is skipped by Mixin with
+         * an overwrite-conflict warning.
+         */
+        private ClassNode restorer(String target, String sup) {
+            String name = (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$restore$" + step + "$" + curKey + "$"
+                + target.replace('/', '_').replace('$', '_');
+            ClassNode rc = restorers.get(name);
+            if (rc == null) {
+                rc = new ClassNode();
+                rc.version = mx.version;
+                rc.access = Opcodes.ACC_PUBLIC | Opcodes.ACC_ABSTRACT | Opcodes.ACC_SUPER;
+                rc.name = name;
+                rc.superName = sup;
+                AnnotationNode mixin = new AnnotationNode(MIXIN);
+                mixin.values = new ArrayList<>(List.of("value", List.of(Type.getObjectType(target)), "priority", 1));
+                rc.invisibleAnnotations = new ArrayList<>(List.of(mixin, new AnnotationNode("Lcb/side;")));
+                rc.invisibleAnnotations.get(1).values = new ArrayList<>(List.of("key", curKey));
+                restorers.put(name, rc);
+            }
+            return rc;
         }
     }
 
@@ -1964,6 +2231,122 @@ final class MixinBridge {
                     known &= from[i] >= 0;
                 }
                 return new Fate(name, ad[0], from, new String[va.length][], new boolean[va.length], known, "constructor adapter");
+            }
+        }
+        return null;
+    }
+
+    /**
+     * A V method W no longer declares and the step's wiring says nothing of: the W method of the same
+     * class that holds its code now (1.20.5 made every packet's write(FriendlyByteBuf) a private
+     * write(RegistryFriendlyByteBuf) its stream codec calls, and split each block's use() into
+     * useItemOn / useWithoutItem) -- the vanilla code an injector into V's method hooked runs there.
+     * Candidates are the methods W declares and V does not (by name and descriptor), not synthetic, of
+     * the same static-ness, a constructor for a constructor. Evidence: their significant instructions
+     * (SiteMatch.sig) agree with V's body at least 0.75 (2 x common subsequence / both lengths) and
+     * every other candidate trails by 0.15 or more; anything less is reported, never picked. V's
+     * arguments are W's where each has exactly one W argument of its type (or a W subtype of it) and no
+     * two share one: otherwise the arguments are unknown and only a handler taking none follows (plan);
+     * a changed return type is plan's to judge as well.
+     */
+    private Fate bodyFate(ClassNode vt, ClassNode wt, MethodNode vm, List<String> why) {
+        if ((vm.access & Opcodes.ACC_SYNTHETIC) != 0 || vm.instructions == null || vm.instructions.size() == 0) {
+            return null;
+        }
+        Set<String> vkeys = new HashSet<>();
+        for (MethodNode m : vt.methods) {
+            vkeys.add(m.name + m.desc);
+        }
+        Type[] va = Type.getArgumentTypes(vm.desc);
+        List<String> vs = SiteMatch.sig(vm);
+        MethodNode best = null;
+        double bs = -1;
+        double second = -1;
+        List<MethodNode> cands = new ArrayList<>();
+        for (MethodNode m : wt.methods) {
+            if (vkeys.contains(m.name + m.desc) || (m.access & Opcodes.ACC_SYNTHETIC) != 0
+                    || ((m.access ^ vm.access) & Opcodes.ACC_STATIC) != 0 || m.name.equals("<init>") != vm.name.equals("<init>")
+                    || m.name.equals("<clinit>")) {
+                continue;
+            }
+            cands.add(m);
+            double sim = SiteMatch.similarity(vs, SiteMatch.sig(m));
+            if (sim > bs) {
+                second = bs;
+                bs = sim;
+                best = m;
+            } else if (sim > second) {
+                second = sim;
+            }
+        }
+        if (best == null) {
+            return null;
+        }
+        if (bs < 0.75 || bs - second < 0.15) {
+            why.add(String.format(Locale.ROOT, "no wiring; the closest W method by code is %s%s at %.2f (next %.2f), short of evidence",
+                best.name, best.desc, bs, Math.max(second, 0)));
+            return null;
+        }
+        String split = split(vs, best, cands);
+        if (split != null) {
+            why.add("no wiring; its code is split across W methods: " + best.name + best.desc + " and " + split
+                + " (an injector cannot follow it into one of them)");
+            return null;
+        }
+        Type[] wa = Type.getArgumentTypes(best.desc);
+        int[] from = new int[va.length];
+        boolean known = true;
+        Set<Integer> used = new HashSet<>();
+        for (int i = 0; i < va.length; i++) {
+            from[i] = -1;
+            for (int j = 0; j < wa.length; j++) {
+                if (wa[j].equals(va[i]) || wAssignable(wa[j], va[i])) {
+                    from[i] = from[i] == -1 ? j : -2;
+                }
+            }
+            known &= from[i] >= 0 && used.add(from[i]);
+        }
+        return new Fate(best.name, best.desc, known ? from : null, new String[va.length][], new boolean[va.length], known,
+            String.format(Locale.ROOT, "W keeps its code there (similarity %.2f, next %.2f)%s", bs, Math.max(second, 0),
+                known ? "" : "; its arguments are not V's one for one"));
+    }
+
+    /**
+     * Another W method holding a share of V's code the best match does not (1.20.5 split Block.use into
+     * useItemOn and useWithoutItem): by the alignment of V's significant instructions against each body,
+     * a candidate that aligns at least a sixth of V's instructions the best match leaves unaligned,
+     * with at least 4 of them, and is itself mostly V's code (60% of its own instructions aligned).
+     * Null when no candidate does.
+     */
+    private static String split(List<String> vs, MethodNode best, List<MethodNode> cands) {
+        if (vs.size() < 4) {
+            return null;
+        }
+        int[] b = SiteMatch.align(vs, SiteMatch.sig(best));
+        if (b == null) {
+            return null;
+        }
+        for (MethodNode c : cands) {
+            if (c == best) {
+                continue;
+            }
+            List<String> cs = SiteMatch.sig(c);
+            int[] a = SiteMatch.align(vs, cs);
+            if (a == null || cs.isEmpty()) {
+                continue;
+            }
+            int extra = 0;
+            int own = 0;
+            for (int i = 0; i < vs.size(); i++) {
+                if (a[i] >= 0) {
+                    own++;
+                    if (b[i] < 0) {
+                        extra++;
+                    }
+                }
+            }
+            if (extra >= 4 && extra * 6 >= vs.size() && own * 10 >= cs.size() * 6) {
+                return c.name + c.desc;
             }
         }
         return null;
@@ -2276,5 +2659,46 @@ final class MixinBridge {
         }
         boolean field = desc != null && !desc.startsWith("(");
         return prefix + name + (desc == null ? "" : (field ? ":" : "") + desc);
+    }
+
+    private static MixinRepair.Anchor anchorOf(AbstractInsnNode in) {
+        if (in instanceof MethodInsnNode mi) {
+            return new MixinRepair.Anchor("INVOKE", mi.owner, mi.name, mi.desc, null, -1);
+        }
+        if (in instanceof FieldInsnNode fi) {
+            return new MixinRepair.Anchor("FIELD", fi.owner, fi.name, fi.desc, null, -1);
+        }
+        if (in instanceof TypeInsnNode ti) {
+            return new MixinRepair.Anchor("NEW", ti.desc, null, null, null, -1);
+        }
+        return new MixinRepair.Anchor("CONSTANT", null, null, null, SiteMatch.constantOf(in), -1);
+    }
+
+    private static MixinRepair.Anchor withOrdinal(MixinRepair.Anchor a, int ordinal) {
+        return new MixinRepair.Anchor(a.kind(), a.owner(), a.name(), a.desc(), a.constant(), ordinal, a.role());
+    }
+
+    private static String constantKey(Object c) {
+        return c instanceof Integer ? "intValue" : c instanceof Float ? "floatValue" : c instanceof Long ? "longValue"
+            : c instanceof Double ? "doubleValue" : "stringValue";
+    }
+
+    /** marks a method MixinBridge put back into a mixin as a target override (restoreOverride) */
+    static final String RESTORED = "Ltop/dext/centurybridge/RestoredOverride;";
+
+    static boolean restoredMark(MethodNode m) {
+        if (m.invisibleAnnotations != null) {
+            for (AnnotationNode a : m.invisibleAnnotations) {
+                if (a.desc.equals(RESTORED)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static String pkg(String internal) {
+        int i = internal.lastIndexOf('/');
+        return i < 0 ? "" : internal.substring(0, i);
     }
 }

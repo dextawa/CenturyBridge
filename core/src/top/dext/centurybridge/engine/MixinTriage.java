@@ -155,25 +155,34 @@ public final class MixinTriage {
         java.util.function.BiConsumer<Spec, String> declCheck = (sp, what) -> {
             List<String> owners = sp.owner != null ? List.of(sp.owner) : targets;
             for (String o : owners) {
+                // the descriptor as the jar's ClassRemapper will leave it (the step's classRenames: 1.21.2
+                // DirectionProperty -> EnumProperty, a @Shadow DirectionProperty FACING is then exactly W's field)
+                String d = chain.renamedDesc(sp.desc);
                 boolean declared = sp.kind == 'f'
-                    ? chain.fieldDeclaredOnTarget(o, sp.name, sp.desc)
-                    : chain.declaredOnTarget(o, sp.name, sp.desc);
+                    ? chain.fieldDeclaredOnTarget(o, sp.name, sp.desc) || !java.util.Objects.equals(d, sp.desc) && chain.fieldDeclaredOnTarget(o, sp.name, d)
+                    : chain.declaredOnTarget(o, sp.name, sp.desc) || !java.util.Objects.equals(d, sp.desc) && chain.declaredOnTarget(o, sp.name, d);
                 if (!declared) {
                     touch.accept(new Chain.Issue(Chain.Level.L3, "target-decl"),
                         what + " not declared on " + o.substring(o.lastIndexOf('/') + 1));
                 }
             }
         };
-        // L2 says a member of that name changed its descriptor at some boundary. When the target
+        // L2 says a member of that name changed its descriptor at some boundary (L3 that it is gone, for a
+        // descriptor naming a class the step renames). When the target
         // declares exactly the shape the mixin names (a mixin MixinBridge carried to the new shape,
         // or another overload that stayed), Mixin finds it: nothing is broken
         java.util.function.BiFunction<Spec, Chain.Issue, Chain.Issue> exact = (sp, issue) -> {
-            if (issue.level() != Chain.Level.L2 || sp.desc == null || chain.targetDecls.isEmpty()) {
+            // L3 too when the step's classRenames give the member exactly W's shape (the segment judged the
+            // V descriptor; the ClassRemapper will write the renamed one)
+            boolean viaRename = issue.level() == Chain.Level.L3 && sp.desc != null && !sp.desc.equals(chain.renamedDesc(sp.desc));
+            if (issue.level() != Chain.Level.L2 && !viaRename || sp.desc == null || chain.targetDecls.isEmpty()) {
                 return issue;
             }
             for (String o : sp.owner != null ? List.of(sp.owner) : targets) {
                 java.util.Set<String> d = chain.targetDecls.get(o);
-                if (d == null || !d.contains(sp.kind == 'f' ? sp.name + ":" + sp.desc : sp.name + sp.desc)) {
+                String rd = chain.renamedDesc(sp.desc); // as the ClassRemapper leaves it
+                if (d == null || !d.contains(sp.kind == 'f' ? sp.name + ":" + sp.desc : sp.name + sp.desc)
+                        && !d.contains(sp.kind == 'f' ? sp.name + ":" + rd : sp.name + rd)) {
                     return issue;
                 }
             }
@@ -299,7 +308,7 @@ public final class MixinTriage {
                                     for (Object o : asList(values.get("method"))) {
                                         if (o instanceof String s && !s.equals("*") && !s.startsWith("/")) {
                                             Spec sp = parseSpec(rm(refmap, s));
-                                            touch.accept(chain.resolveSpec(sp.kind, sp.name, sp.desc),
+                                            touch.accept(exact.apply(sp, chain.resolveSpec(sp.kind, sp.name, sp.desc)),
                                                 "inject-target " + sp.name);
                                             if (sp.kind == 'm') {
                                                 declCheck.accept(sp, "inject-target " + sp.name);
@@ -312,7 +321,8 @@ public final class MixinTriage {
                                             if (sp.owner != null) {
                                                 touch.accept(chain.resolveClass(sp.owner), "at-owner " + sp.owner);
                                             }
-                                            touch.accept(chain.resolveSpec(sp.kind, sp.name, sp.desc), "at " + sp.name);
+                                            touch.accept(sp.owner != null ? exact.apply(sp, chain.resolveSpec(sp.kind, sp.name, sp.desc))
+                                                : chain.resolveSpec(sp.kind, sp.name, sp.desc), "at " + sp.name);
                                         }
                                     }
                                 });
