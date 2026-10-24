@@ -32,7 +32,9 @@
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#POINTED_CODEC",
   "net/minecraft/world/level/levelgen/feature/configurations/LargeDripstoneConfiguration.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#LARGE_CODEC",
   "net/minecraft/core/registries/BuiltInRegistries.STRUCTURE_PROCESSOR:Lnet/minecraft/core/Registry;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#structureProcessor",
-  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#PROTECTED_CODEC"
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#PROTECTED_CODEC",
+  "net/minecraft/client/Minecraft.UNIFORM_FONT:Lnet/minecraft/resources/Identifier;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#UNIFORM_FONT",
+  "net/minecraft/client/Minecraft.ALT_FONT:Lnet/minecraft/resources/Identifier;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#ALT_FONT"
  },
  "instanceRedirects": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasNameEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
@@ -89,7 +91,15 @@
   "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitModelPart(Lnet/minecraft/client/model/geom/ModelPart;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;IILnet/minecraft/client/renderer/texture/TextureAtlasSprite;ZZILnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitModelPart",
   "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitMovingBlock",
   "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitBreakingBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;JI)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitBreakingBlockModel",
-  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitNameTag(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZIDLnet/minecraft/client/renderer/state/level/CameraRenderState;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitNameTag"
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitNameTag(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZIDLnet/minecraft/client/renderer/state/level/CameraRenderState;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitNameTag",
+  "net/minecraft/client/Minecraft.setScreen(Lnet/minecraft/client/gui/screens/Screen;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#setScreen",
+  "net/minecraft/client/Minecraft.getOverlay()Lnet/minecraft/client/gui/screens/Overlay;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getOverlay",
+  "net/minecraft/client/Minecraft.getToastManager()Lnet/minecraft/client/gui/components/toasts/ToastManager;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getToastManager",
+  "net/minecraft/client/Minecraft.openChatScreen(Lnet/minecraft/client/gui/components/ChatComponent$ChatMethod;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#openChatScreen",
+  "net/minecraft/client/Minecraft.isSingleplayer()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#isSingleplayer",
+  "net/minecraft/client/Minecraft.getMainRenderTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getMainRenderTarget",
+  "net/minecraft/client/Minecraft.getWaypointStyles()Lnet/minecraft/client/resources/WaypointStyleManager;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getWaypointStyles",
+  "net/minecraft/client/Minecraft.commandHistory()Lnet/minecraft/client/CommandHistory;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#commandHistory"
  },
  "_instanceRedirects_basis": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.*": "26.2 replaced the parser's option booleans by option-state objects (nameOption() ... advancementsOption()); rt/CbS26Selector reads and sets the same facts on them (see its javadoc)",
@@ -112,7 +122,9 @@
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils.growPointedDripstone(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;IZ)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#growPointedDripstone",
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils.placeDripstoneBlockIfPossible(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#placeDripstoneBlockIfPossible",
   "net/minecraft/world/level/block/PointedDripstoneBlock.growStalactiteOrStalagmiteIfPossible(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#growStalactiteOrStalagmiteIfPossible",
-  "net/minecraft/world/level/block/PointedDripstoneBlock.canDrip(Lnet/minecraft/world/level/block/state/BlockState;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#canDrip"
+  "net/minecraft/world/level/block/PointedDripstoneBlock.canDrip(Lnet/minecraft/world/level/block/state/BlockState;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#canDrip",
+  "net/minecraft/client/Minecraft.useShaderTransparency()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#useShaderTransparency",
+  "net/minecraft/client/Minecraft.renderNames()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#renderNames"
  },
  "callReshapes": {
   "net/minecraft/world/entity/EntityType.spawn(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Consumer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;": {
@@ -159,10 +171,12 @@
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.chanceOfSpreadRadius3:F": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#chanceOfSpreadRadius3",
   "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.cannotReplace:Lnet/minecraft/tags/TagKey;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#cannotReplace",
   "net/minecraft/client/renderer/LevelRenderer.debugRenderer:Lnet/minecraft/client/renderer/debug/DebugRenderer;": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#debugRenderer",
-  "net/minecraft/client/renderer/LevelRenderer.gameTestBlockHighlightRenderer:Lnet/minecraft/client/renderer/debug/GameTestBlockHighlightRenderer;": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#gameTestBlockHighlightRenderer"
+  "net/minecraft/client/renderer/LevelRenderer.gameTestBlockHighlightRenderer:Lnet/minecraft/client/renderer/debug/GameTestBlockHighlightRenderer;": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#gameTestBlockHighlightRenderer",
+  "net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getScreen"
  },
  "instanceFieldSetters": {
-  "net/minecraft/world/entity/LivingEntity.currentExplosionCause:Lnet/minecraft/world/entity/Entity;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#setCurrentExplosionCause"
+  "net/minecraft/world/entity/LivingEntity.currentExplosionCause:Lnet/minecraft/world/entity/Entity;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#setCurrentExplosionCause",
+  "net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#putScreen"
  },
  "overrideHooks": [
   {

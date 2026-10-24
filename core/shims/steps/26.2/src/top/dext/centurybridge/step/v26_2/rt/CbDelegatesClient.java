@@ -11,6 +11,21 @@ import net.fabricmc.api.Environment;
 public final class CbDelegatesClient {
     private CbDelegatesClient() {}
 
+    /** GpuDevice.isZZeroToOne is DeviceInfo.isZZeroToOne (called where V called it: net/minecraft/client/Camera.createProjectionMatrixForCulling, net/minecraft/client/renderer/Projection.getMatrix), reached as self.getDeviceInfo() */
+    public static boolean GpuDevice_isZZeroToOne(com.mojang.blaze3d.systems.GpuDevice self) {
+        return self.getDeviceInfo().isZZeroToOne();
+    }
+
+    /** Minecraft.getChatListener is Gui.chatListener (called where V called it: net/minecraft/client/Options.new, net/minecraft/client/gui/components/ChatComponent.clearMessages, net/minecraft/client/gui/components/ChatComponent.extractRenderState, net/minecraft/client/gui/screens/ChatScreen.handleComponentClicked, net/minecraft/client/multiplayer/ClientPacketListener.handleConfigurationStart, net/minecraft/client/multiplayer/ClientPacketListener.handleDeleteChat, net/minecraft/client/multiplayer/ClientPacketListener.handleDisguisedChat, net/minecraft/client/multiplayer/ClientPacketListener.handlePlayerChat, net/minecraft/client/multiplayer/ClientPacketListener.handleSystemChat, net/minecraft/client/player/LocalPlayer.sendOverlayMessage, net/minecraft/client/player/LocalPlayer.sendSystemMessage), reached as self.gui */
+    public static net.minecraft.client.multiplayer.chat.ChatListener Minecraft_getChatListener(net.minecraft.client.Minecraft self) {
+        return self.gui.chatListener();
+    }
+
+    /** Minecraft.getSplashManager is Gui.splashManager (called where V called it: net/minecraft/client/gui/screens/TitleScreen.init), reached as self.gui */
+    public static net.minecraft.client.resources.SplashManager Minecraft_getSplashManager(net.minecraft.client.Minecraft self) {
+        return self.gui.splashManager();
+    }
+
     /** Minecraft.renderBuffers is GameRenderer.renderBuffers (same code), reached as self.gameRenderer */
     public static net.minecraft.client.renderer.RenderBuffers Minecraft_renderBuffers(net.minecraft.client.Minecraft self) {
         return self.gameRenderer.renderBuffers();
@@ -74,6 +89,11 @@ public final class CbDelegatesClient {
     /** Gui.getTabList is Hud.getTabList (same code), reached as self.hud */
     public static net.minecraft.client.gui.components.PlayerTabOverlay Gui_getTabList(net.minecraft.client.gui.Gui self) {
         return self.hud.getTabList();
+    }
+
+    /** Gui.onDisconnected is Hud.onDisconnected (called where V called it: net/minecraft/client/Minecraft.clearClientLevel, net/minecraft/client/Minecraft.disconnect), reached as self.hud */
+    public static void Gui_onDisconnected(net.minecraft.client.gui.Gui self) {
+        self.hud.onDisconnected();
     }
 
     /** Gui.resetTitleTimes is Hud.resetTitleTimes (same code), reached as self.hud */

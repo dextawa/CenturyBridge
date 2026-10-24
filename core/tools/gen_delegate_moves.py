@@ -189,7 +189,7 @@ def main():
             call_index[key] = idx
         out = set()
         for c, base in call_index[key].get((owner, name, desc), ()):
-            c = D if H is not None and c == H else (tc(c) if jar is V else c)
+            c = D if H is not None and D is not None and c == H else (tc(c) if jar is V else c)
             out.add(c + "." + base)
         return out
 
@@ -232,6 +232,21 @@ def main():
             else:
                 near.append(path + " (" + D.rsplit("/", 1)[1] + ": body differs)")
         if not hits:
+            # the code moved with its state onto the held object and reads differently there: the method of D that
+            # W's callers call from exactly the caller methods V's called H's from, under a name saying the same
+            vcall = callers(V, H, name, desc, H, None)
+            for path, D in (paths if vcall else []):
+                if D not in W:
+                    continue
+                cands = []
+                for s2 in supers(D, W):
+                    k2 = W.get(s2)
+                    for m2 in (k2.methods if k2 else []):
+                        if m2.desc == wdesc and m2.access & bytecode.ACC_PUBLIC and not m2.access & bytecode.ACC_STATIC                                 and same_stem(name, m2.name) and callers(W, s2, m2.name, m2.desc, None, None) == vcall:
+                            cands.append(m2.name)
+                if len(set(cands)) == 1:
+                    hits.append((path, D, cands[0], None, "callers"))
+        if not hits:
             for (G, get, held), sibs in singletons.items():
                 if held_type(G, held) != wh:
                     continue
@@ -260,14 +275,15 @@ def main():
                         hits.append((sib, D, cands[0], (G, get, held), "callers"))
         if len(set(h[:4] for h in hits)) == 1:
             path, D, wname, single = hits[0][:4]
-            how = "called where V called it: " + ", ".join(sorted(callers(V, H, name, desc, H, D))) if len(hits[0]) > 4 else "same code"
+            how = ("called where V called it: " + ", ".join(sorted(callers(V, H, name, desc, H, D if single else None)))
+                   if len(hits[0]) > 4 else "same code")
             out[key] = (path, D, name, desc, wdesc, H, wname, single)
             if single:
                 G, get, held = single
                 basis[key] = (f"{H.rsplit('/', 1)[1]}.{name} is {D.rsplit('/', 1)[1]}.{wname} ({how}), the sibling "
                               f"{G.rsplit('/', 1)[1]}.{get}(){path} of {G.rsplit('/', 1)[1]}.{get}().{held}")
             else:
-                basis[key] = f"{H.rsplit('/', 1)[1]}.{name} is {D.rsplit('/', 1)[1]}.{name} (same code), reached as self{path}"
+                basis[key] = f"{H.rsplit('/', 1)[1]}.{name} is {D.rsplit('/', 1)[1]}.{wname} ({how}), reached as self{path}"
         elif hits or near:
             left.append((key, ("ambiguous: " + ", ".join(h[0] + " " + h[2] for h in hits)) if hits else "; ".join(near)))
     classes = collections.defaultdict(list)
@@ -304,7 +320,7 @@ def main():
                        f"which serves only {G.rsplit('/', 1)[1]}.{get}().{held}\");",
                        "        }"]
             else:
-                call = f"self{path}.{name}({argl})"
+                call = f"self{path}.{wname}({argl})"
                 pre = []
             body = (call if ret == "V" else "return " + call) + ";"
             lines += ["", f"    /** {basis[key]} */", f"    public static {jtype(ret)} {mname}({params}) {{"] + pre + [

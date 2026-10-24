@@ -1,6 +1,9 @@
 {
  "_delegates_generated": "core/tools/gen_delegate_moves.py ... 26.1.2 26.2: instance methods moved onto an object the old owner holds; regenerate, never hand-edit",
  "instanceRedirects": {
+  "com/mojang/blaze3d/systems/GpuDevice.isZZeroToOne()Z": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#GpuDevice_isZZeroToOne",
+  "net/minecraft/client/Minecraft.getChatListener()Lnet/minecraft/client/multiplayer/chat/ChatListener;": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Minecraft_getChatListener",
+  "net/minecraft/client/Minecraft.getSplashManager()Lnet/minecraft/client/resources/SplashManager;": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Minecraft_getSplashManager",
   "net/minecraft/client/Minecraft.renderBuffers()Lnet/minecraft/client/renderer/RenderBuffers;": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Minecraft_renderBuffers",
   "net/minecraft/client/Minecraft.setOverlay(Lnet/minecraft/client/gui/screens/Overlay;)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Minecraft_setOverlay",
   "net/minecraft/client/gui/Gui.clearCache()V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_clearCache",
@@ -14,6 +17,7 @@
   "net/minecraft/client/gui/Gui.getGuiTicks()I": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_getGuiTicks",
   "net/minecraft/client/gui/Gui.getSpectatorGui()Lnet/minecraft/client/gui/components/spectator/SpectatorGui;": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_getSpectatorGui",
   "net/minecraft/client/gui/Gui.getTabList()Lnet/minecraft/client/gui/components/PlayerTabOverlay;": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_getTabList",
+  "net/minecraft/client/gui/Gui.onDisconnected()V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_onDisconnected",
   "net/minecraft/client/gui/Gui.resetTitleTimes()V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_resetTitleTimes",
   "net/minecraft/client/gui/Gui.setNowPlaying(Lnet/minecraft/network/chat/Component;)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_setNowPlaying",
   "net/minecraft/client/gui/Gui.setOverlayMessage(Lnet/minecraft/network/chat/Component;Z)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#Gui_setOverlayMessage",
@@ -32,6 +36,9 @@
   "net/minecraft/client/renderer/LevelRenderer.setSectionRangeDirty(IIIIII)V": "top/dext/centurybridge/step/v26_2/rt/CbDelegatesClient#LevelRenderer_setSectionRangeDirty"
  },
  "_delegates_basis": {
+  "com/mojang/blaze3d/systems/GpuDevice.isZZeroToOne()Z": "GpuDevice.isZZeroToOne is DeviceInfo.isZZeroToOne (called where V called it: net/minecraft/client/Camera.createProjectionMatrixForCulling, net/minecraft/client/renderer/Projection.getMatrix), reached as self.getDeviceInfo()",
+  "net/minecraft/client/Minecraft.getChatListener()Lnet/minecraft/client/multiplayer/chat/ChatListener;": "Minecraft.getChatListener is Gui.chatListener (called where V called it: net/minecraft/client/Options.new, net/minecraft/client/gui/components/ChatComponent.clearMessages, net/minecraft/client/gui/components/ChatComponent.extractRenderState, net/minecraft/client/gui/screens/ChatScreen.handleComponentClicked, net/minecraft/client/multiplayer/ClientPacketListener.handleConfigurationStart, net/minecraft/client/multiplayer/ClientPacketListener.handleDeleteChat, net/minecraft/client/multiplayer/ClientPacketListener.handleDisguisedChat, net/minecraft/client/multiplayer/ClientPacketListener.handlePlayerChat, net/minecraft/client/multiplayer/ClientPacketListener.handleSystemChat, net/minecraft/client/player/LocalPlayer.sendOverlayMessage, net/minecraft/client/player/LocalPlayer.sendSystemMessage), reached as self.gui",
+  "net/minecraft/client/Minecraft.getSplashManager()Lnet/minecraft/client/resources/SplashManager;": "Minecraft.getSplashManager is Gui.splashManager (called where V called it: net/minecraft/client/gui/screens/TitleScreen.init), reached as self.gui",
   "net/minecraft/client/Minecraft.renderBuffers()Lnet/minecraft/client/renderer/RenderBuffers;": "Minecraft.renderBuffers is GameRenderer.renderBuffers (same code), reached as self.gameRenderer",
   "net/minecraft/client/Minecraft.setOverlay(Lnet/minecraft/client/gui/screens/Overlay;)V": "Minecraft.setOverlay is Gui.setOverlay (same code), reached as self.gui",
   "net/minecraft/client/gui/Gui.clearCache()V": "Gui.clearCache is Hud.clearCache (same code), reached as self.hud",
@@ -45,6 +52,7 @@
   "net/minecraft/client/gui/Gui.getGuiTicks()I": "Gui.getGuiTicks is Hud.getGuiTicks (same code), reached as self.hud",
   "net/minecraft/client/gui/Gui.getSpectatorGui()Lnet/minecraft/client/gui/components/spectator/SpectatorGui;": "Gui.getSpectatorGui is Hud.getSpectatorGui (same code), reached as self.hud",
   "net/minecraft/client/gui/Gui.getTabList()Lnet/minecraft/client/gui/components/PlayerTabOverlay;": "Gui.getTabList is Hud.getTabList (same code), reached as self.hud",
+  "net/minecraft/client/gui/Gui.onDisconnected()V": "Gui.onDisconnected is Hud.onDisconnected (called where V called it: net/minecraft/client/Minecraft.clearClientLevel, net/minecraft/client/Minecraft.disconnect), reached as self.hud",
   "net/minecraft/client/gui/Gui.resetTitleTimes()V": "Gui.resetTitleTimes is Hud.resetTitleTimes (same code), reached as self.hud",
   "net/minecraft/client/gui/Gui.setNowPlaying(Lnet/minecraft/network/chat/Component;)V": "Gui.setNowPlaying is Hud.setNowPlaying (same code), reached as self.hud",
   "net/minecraft/client/gui/Gui.setOverlayMessage(Lnet/minecraft/network/chat/Component;Z)V": "Gui.setOverlayMessage is Hud.setOverlayMessage (same code), reached as self.hud",
