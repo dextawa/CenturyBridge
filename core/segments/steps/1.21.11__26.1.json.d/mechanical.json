@@ -27,20 +27,6 @@
    ],
    "basis": "mechanical: same values; I x3 paired by use V#4->W#3, V#5->W#4, V#7->W#6; dropped Lnet/minecraft/world/item/ItemDisplayContext;, never read in V"
   },
-  "net/minecraft/class_10515.method_65694(Ljava/lang/Object;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V": {
-   "desc": "(Ljava/lang/Object;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V",
-   "ops": [
-    "keep:0",
-    "keep:2",
-    "keep:3",
-    "keep:4",
-    "keep:5",
-    "keep:6",
-    "keep:7",
-    "drop:1"
-   ],
-   "basis": "mechanical: same values; I x3 paired by use V#4->W#3, V#5->W#4, V#7->W#6; dropped Lnet/minecraft/world/item/ItemDisplayContext;: no body of V reads it, but net/minecraft/class_10515 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
   "net/minecraft/class_11533.method_72178(Lnet/minecraft/class_11786$class_11787;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V": {
    "desc": "(Lnet/minecraft/class_11786$class_11787;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V",
    "ops": [
@@ -412,16 +398,6 @@
    "frames": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; I x3 paired by use V#2->W#3, V#3->W#4, V#6->W#7; new Lnet/minecraft/world/level/block/BannerBlock$AttachmentType; not passed"
-  },
-  {
-   "old": "method_74334()Lnet/minecraft/class_11971;",
-   "new": "method_74334()Lnet/minecraft/class_11954;",
-   "args": [],
-   "onlyUnder": "net/minecraft/class_10529",
-   "frames": "top/dext/centurybridge/step/v26_1/rt/Guard",
-   "superCalls": "rewrite",
-   "superDefault": "new net/minecraft/class_11971",
-   "basis": "mechanical: the old method gets every parameter it had; W's method_74334 is abstract where a mod's super call lands, V's default was new net/minecraft/class_11971: the super call is that default (superDefault)"
   },
   {
    "old": "method_22752(Lnet/minecraft/class_638;)V",
