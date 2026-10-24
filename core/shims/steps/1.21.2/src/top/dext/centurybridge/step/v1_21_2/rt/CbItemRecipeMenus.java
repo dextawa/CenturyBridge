@@ -36,8 +36,8 @@ import top.dext.centurybridge.step.v1_21_2.facade.StackedContents;
  * placement code. Each static answers the 1.21.1 call:
  * <ul>
  * <li>a menu that declares the 1.21.1 method itself -- a mod subclass, which implements the shape's {@code Legacy_*}
- *     interface (the engine adds it to a mod class under RecipeBookMenu declaring the shape; s7rest's facade for
- *     direct mod subclasses implements {@link Legacy}) -- answers with its own method;</li>
+ *     interface (the engine adds it to a mod class under RecipeBookMenu declaring the shape) -- answers with its
+ *     own method;</li>
  * <li>a vanilla 1.21.2 menu answers with the body its class had in 1.21.1 (CraftingMenu, InventoryMenu,
  *     AbstractFurnaceMenu; read off 1.21.1's bytecode), built on 1.21.2's members.</li>
  * </ul>
@@ -571,6 +571,44 @@ public final class CbItemRecipeMenus {
             class_8786<?> recipe, class_3218 level, class_1661 inventory) {
         self.method_17697(placeAll, recipe, (class_3222) inventory.field_7546);
         return class_1729.class_9885.field_52572;
+    }
+
+    // ---- a direct mod subclass of RecipeBookMenu: 1.21.2's abstract methods (abstractFills) ----
+
+    /**
+     * 1.21.2's handlePlacement(placeAll, creative, recipe, level, inventory) of a 1.21.1 class extending
+     * RecipeBookMenu itself: its own 1.21.1 override when it has one ({@link #handleBridge}); otherwise 1.21.1's
+     * RecipeBookMenu.handlePlacement -- beginPlacingRecipe, new ServerPlaceRecipe(this).recipeClicked(player, recipe,
+     * placeAll), finishPlacingRecipe(recipe) in a finally -- which sent its own ghost recipe, so 1.21.2 is told
+     * NOTHING. The player is the one the inventory belongs to (1.21.2's packet handler passes the server player's).
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static class_1729.class_9885 placeW(class_1729 menu, boolean placeAll, boolean creative,
+            class_8786<?> recipe, class_3218 level, class_1661 inventory) {
+        if (menu instanceof Legacy_handlePlacement legacy) {
+            return handleBridge(legacy, placeAll, creative, recipe, level, inventory);
+        }
+        beginPlacingRecipe(menu);
+        try {
+            new top.dext.centurybridge.step.v1_21_2.facade.ServerPlaceRecipe(menu)
+                .method_12826((class_3222) inventory.field_7546, (class_8786) recipe, placeAll);
+        } finally {
+            finishPlacingRecipe(menu, recipe);
+        }
+        return class_1729.class_9885.field_52572;
+    }
+
+    /**
+     * 1.21.2's fillCraftSlotsStackedContents(StackedItemContents) of a 1.21.1 class extending RecipeBookMenu itself:
+     * 1.21.1 declared the method abstract, so the class has its own, filling a 1.21.1 StackedContents
+     * ({@link #fillBridge}).
+     */
+    public static void fillW(class_1729 menu, class_9875 contents) {
+        if (menu instanceof Legacy_fillCraftSlotsStackedContents legacy) {
+            fillBridge(legacy, contents);
+            return;
+        }
+        throw unknown(menu, "fillCraftSlotsStackedContents");
     }
 
     // ---- AbstractFurnaceMenu's constructor and canSmelt ----
