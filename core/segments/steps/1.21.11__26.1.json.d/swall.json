@@ -92,7 +92,9 @@
   "net/minecraft/class_4095$class_5303.method_28335(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#providerMakeBrain",
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive",
   "net/minecraft/class_766.method_71651(Lnet/minecraft/class_1060;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#registerTextures",
-  "net/minecraft/class_5219.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getGameRules"
+  "net/minecraft/class_5219.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getGameRules",
+  "net/minecraft/class_1297.method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteract#interact",
+  "net/minecraft/class_1657.method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteract#interactOn"
  },
  "overrideHooks": [
   {
@@ -221,6 +223,15 @@
   },
   "method_22752(Lnet/minecraft/class_638;)V": {
    "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#sectionCompiler(Lnet/minecraft/class_846;)Lnet/minecraft/class_9810;"
+  },
+  "method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": {
+   "2": "top/dext/centurybridge/step/v26_1/rt/CbWallInteract#location(Lnet/minecraft/class_1297;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_243;"
+  },
+  "method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": {
+   "2": "top/dext/centurybridge/step/v26_1/rt/CbWallInteract#targetLocation(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_243;"
+  },
+  "method_2905(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": {
+   "2": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractClient#hit(Lnet/minecraft/class_636;Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_3966;"
   }
  },
  "overrideRenames": [
@@ -741,7 +752,11 @@
   "net/minecraft/class_310.method_43587(Lnet/minecraft/class_128;)V",
   "net/minecraft/class_310.method_15995(Z)V",
   "net/minecraft/class_310.method_33884()Lnet/minecraft/class_310$class_5859;",
-  "net/minecraft/class_310.method_1480()Lnet/minecraft/class_918;"
+  "net/minecraft/class_310.method_1480()Lnet/minecraft/class_918;",
+  "net/minecraft/class_1297.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+  "net/minecraft/class_1531.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+  "net/minecraft/class_636.method_2917(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_3966;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+  "net/minecraft/class_636.method_2905(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"

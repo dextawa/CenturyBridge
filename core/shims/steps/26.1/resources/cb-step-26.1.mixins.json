@@ -19,6 +19,9 @@
     "CbFapiWanderingTraderTradesMixin",
     "CbWallBrainAccess",
     "CbWallBrainMixin",
+    "CbWallInteractArmorStandMixin",
+    "CbWallInteractEntityMixin",
+    "CbWallInteractPlayerMixin",
     "CbWallLivingEntityAccess",
     "CbWallServerMixin"
   ],
@@ -50,6 +53,7 @@
     "CbWallGuiAccess",
     "CbWallGuiRendererAccess",
     "CbWallGuiRendererMixin",
+    "CbWallInteractGameModeMixin",
     "CbWallItemFeatureRendererAccess",
     "CbWallMinecraftAccess",
     "CbWallMinecraftMixin",
