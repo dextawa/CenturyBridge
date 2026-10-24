@@ -14,6 +14,7 @@
   "minecraft": "1.21.1",
   "fabric-events-interaction-v0": "*",
   "fabric-recipe-api-v1": "*",
-  "fabric-item-api-v1": "*"
+  "fabric-item-api-v1": "*",
+  "fabric-data-generation-api-v1": "*"
  }
 }

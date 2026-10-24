@@ -12,8 +12,7 @@ rm -rf $W/classes && mkdir -p $W/classes $W/out
 javac -nowarn -proc:none -cp "$LIBS" -d $W/classes $(find $W/src/core/src -name '*.java') || exit 1
 ART=$W/src/core/segments/damage-lib/artifacts.tsv
 R=(1.20.1 1.20.2 1.20.3 1.20.4 1.20.5 1.20.6 1.21 1.21.1 1.21.2 1.21.3 1.21.4 1.21.5 1.21.6 1.21.7 1.21.8 1.21.9 1.21.10 1.21.11 26.1 26.1.1 26.1.2 26.2)
-# a release whose runtime dir holds another release's libraries reads a corrected dir instead
-libdir() { case $1 in 1.20.1) echo $HOME/cbtest/client-1.20.1/libraries;; *) echo data/runtime/client-$1/libraries;; esac; }
+. "$W/src/core/tools/lib_dirs.sh"
 run() { java -Xmx4g -cp "$W/classes:$LIBS" top.dext.centurybridge.Main lib-diff "$@"; }
 summ() { echo "$1 rows=$(($(grep -c . $2) - 1)) $(cut -f1 $2 | tail -n +2 | sort | uniq -c | sort -rn | head -8 | awk '{printf "%s:%s ", $2, $1}')"; }
 for V in ${CALIB:-1.20.1 1.20.5 1.21.11 26.2}; do

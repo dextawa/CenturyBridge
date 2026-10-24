@@ -1,21 +1,13 @@
 package top.dext.centurybridge.step.v1_21_2.facade;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.class_161;
-import net.minecraft.class_1860;
 import net.minecraft.class_2405;
-import net.minecraft.class_2960;
-import net.minecraft.class_5321;
-import net.minecraft.class_5797;
 import net.minecraft.class_7225;
 import net.minecraft.class_7403;
 import net.minecraft.class_7784;
 import net.minecraft.class_7924;
 import net.minecraft.class_8779;
-import net.minecraft.class_8790;
 import top.dext.centurybridge.step.v1_21_2.rt.CbItemDatagenRecipes;
 
 /**
@@ -32,7 +24,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemDatagenRecipes;
  * 1.21.2's RecipeProvider reach them through CbItemDatagenRecipes); 1.21.1's private registries future is cb$registries
  * (1.21.2's class has a field of that name).
  */
-public abstract class RecipeProvider extends net.minecraft.class_2446 implements class_2405 {
+public abstract class RecipeProvider extends net.minecraft.class_2446 implements class_2405, CbItemDatagenRecipes.LegacyProvider {
 
     /** recipePathProvider */
     public final class_7784.class_7489 field_39378;
@@ -56,39 +48,8 @@ public abstract class RecipeProvider extends net.minecraft.class_2446 implements
 
     /** run(output, registries): every recipe buildRecipes saves, written as JSON with its advancement */
     public CompletableFuture<?> method_56888(class_7403 output, class_7225.class_7874 registries) {
-        Set<class_2960> ids = new java.util.HashSet<>();
-        List<CompletableFuture<?>> writes = new ArrayList<>();
-        RecipeProvider self = this;
-        class_8790 recipes = new class_8790() {
-            @Override
-            public void method_53819(class_5321<class_1860<?>> key, class_1860<?> recipe, class_8779 advancement) {
-                class_2960 id = key.method_29177();
-                if (!ids.add(id)) {
-                    throw new IllegalStateException("Duplicate recipe " + id);
-                }
-                writes.add(class_2405.method_53496(output, registries, class_1860.field_47319, recipe, self.field_39378.method_44107(id)));
-                if (advancement != null) {
-                    writes.add(self.method_46206(output, registries, advancement));
-                }
-            }
-
-            @Override
-            public class_161.class_162 method_53818() {
-                return class_161.class_162.method_51698().method_708(class_5797.field_39377);
-            }
-
-            /** 1.21.1's output had no root advancement of its own */
-            @Override
-            public void method_62738() {
-            }
-        };
-        CbItemDatagenRecipes.bindFor(registries, recipes);
-        try {
-            this.method_10419(recipes);
-        } finally {
-            CbItemDatagenRecipes.unbindFor();
-        }
-        return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
+        return CbItemDatagenRecipes.runLegacy(output, registries, this.field_39378, this::method_10419,
+            advancement -> this.method_46206(output, registries, advancement));
     }
 
     /** buildAdvancement(output, registries, advancement): the advancement as JSON */
@@ -98,7 +59,7 @@ public abstract class RecipeProvider extends net.minecraft.class_2446 implements
     }
 
     /** buildRecipes(output) */
-    protected abstract void method_10419(class_8790 output);
+    protected abstract void method_10419(net.minecraft.class_8790 output);
 
     /**
      * 1.21.2's buildRecipes(): a 1.21.1 provider builds through buildRecipes(output) in its own run; nothing asks this

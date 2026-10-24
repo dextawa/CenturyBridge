@@ -5,9 +5,22 @@ extendable	method	net/minecraft/client/gui/GuiGraphicsExtractor	componentHoverEf
 # 1.21.11 ClampedInt was an open class, 26.1's a final record: a 1.21.11 subclass extends the record (swall; its
 # getType() reconnected to codec(), super.getType() answers CLAMPED)
 extendable	class	net/minecraft/util/valueproviders/ClampedInt
+# 1.21.11 ChunkPos and ItemInput were open classes, 26.1's are final records: a 1.21.11 subclass extends the record,
+# and may override what it overrode on 1.21.11 (ChunkPos.equals; Object's equals/hashCode/toString on ItemInput),
+# final on the records (swall; ChunkPos's other constructors reshaped onto ChunkPos(x, z))
+extendable	class	net/minecraft/world/level/ChunkPos
+extendable	method	net/minecraft/world/level/ChunkPos	equals	(Ljava/lang/Object;)Z
+extendable	class	net/minecraft/commands/arguments/item/ItemInput
+extendable	method	net/minecraft/commands/arguments/item/ItemInput	equals	(Ljava/lang/Object;)Z
+extendable	method	net/minecraft/commands/arguments/item/ItemInput	hashCode	()I
+extendable	method	net/minecraft/commands/arguments/item/ItemInput	toString	()Ljava/lang/String;
 # 1.21.11 RuleBasedBlockStateProvider's record components (fallback(), rules()) on 26.1's RuleBasedStateProvider (swall)
 accessible	field	net/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider	fallback	Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;
 accessible	field	net/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider	rules	Ljava/util/List;
+# 1.21.11 DimensionDataStorage.readTagFromDisk(name, ..) resolved the name in the data folder (swall)
+accessible	field	net/minecraft/world/level/storage/SavedDataStorage	dataFolder	Ljava/nio/file/Path;
+# 1.21.11 TimerQueue.store() was public; 26.1 writes the same events through the protected pack() (swall)
+accessible	method	net/minecraft/world/level/timers/TimerQueue	pack	()Lnet/minecraft/world/level/timers/TimerQueue$Packed;
 
 # ---- BEGIN GENERATED (swall): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same

@@ -2087,12 +2087,27 @@ public final class JarProcessor {
             Set<String> d = layer.decls.get(cur);
             if (d == null) {
                 // the first class outside the layer: a library class and its library superclasses
-                for (String c = cur; c != null && !c.startsWith("java/") && !Chain.minecraftOwned(c) && hops < 64;
+                String c = cur;
+                boolean declared = false;
+                for (; c != null && !c.startsWith("java/") && !Chain.minecraftOwned(c) && hops < 64;
                         c = chain.libSuperOf.get(c), hops++) {
                     if (keyed.test(c + "." + member)) {
                         return c;
                     }
+                    declared |= chain.libDecls.getOrDefault(c, Set.of()).contains(member);
                     todo.addAll(chain.libInterfacesOf.getOrDefault(c, List.of()));
+                }
+                // a static member reached through library classes above a Minecraft class, none of them declaring
+                // it (a mod's Fabric API FabricRecipeProvider subclass calling RecipeProvider's static has(item)
+                // through its own name): resolved by declaration, it is the Minecraft class's, served by the wiring
+                // keyed there. Not an instance member: the library class may stand on another hierarchy on the
+                // target (a superRename), where its own members answer the virtual call.
+                if (isStatic && c != null && Chain.minecraftOwned(c) && !declared) {
+                    for (String v : chain.selfAndSupers(c)) {
+                        if (keyed.test(v + "." + member)) {
+                            return v;
+                        }
+                    }
                 }
                 break;
             }
@@ -2481,6 +2496,9 @@ public final class JarProcessor {
                 }
             } else if (name.startsWith("META-INF/jars/") && name.endsWith(".jar")) {
                 Map<String, byte[]> nested = readAll(e.getValue());
+                if (verbatimLibrary(nested.get("fabric.mod.json"))) {
+                    continue; // a library a layer gives back whole (nest_libraries.py): carried byte for byte
+                }
                 // sibling nested jars share the flat runtime classpath too, so
                 // the nested jar's own name joins the uniqueness tag
                 String nestedTag = jarTag + "_" + name.substring("META-INF/jars/".length())
@@ -2552,7 +2570,8 @@ public final class JarProcessor {
         // the data pack and resource pack are read by the target's loaders, in the
         // target's formats: carry them over the same boundaries the bytecode crossed
         top.dext.centurybridge.engine.res.ResourceTranslator.Outcome res =
-            top.dext.centurybridge.engine.res.ResourceTranslator.apply(entries, chain.from, chain.to, chain.resourceTypes);
+            top.dext.centurybridge.engine.res.ResourceTranslator.apply(entries, chain.from, chain.to, chain.resourceTypes,
+                chain.tagMap, chain.tagMirror);
         if (res.changedAnything()) {
             rpt.notes.add(tag + "resources: " + res.moved + " moved, " + res.rewritten + " rewritten, "
                 + res.generated + " generated for " + chain.to);
@@ -2769,6 +2788,24 @@ public final class JarProcessor {
         return buf.toByteArray();
     }
 
+    /**
+     * A nested jar marked "centurybridge:verbatim" in its fabric.mod.json custom values: a whole library a step layer gives
+     * back (core/tools/nest_libraries.py: the release's own artifact, checked against its version-JSON sha1). Converting,
+     * remapping or repairing it would change a library that has no Minecraft reference to change: it climbs byte for byte.
+     */
+    public static boolean verbatimLibrary(byte[] fmj) {
+        if (fmj == null) {
+            return false;
+        }
+        try {
+            var root = com.google.gson.JsonParser.parseString(new String(fmj, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            var custom = root.getAsJsonObject("custom");
+            return custom != null && custom.has("centurybridge:verbatim") && custom.get("centurybridge:verbatim").getAsBoolean();
+        } catch (RuntimeException ex) {
+            return false;
+        }
+    }
+
     private static Map<String, byte[]> readAll(byte[] jar) throws IOException {
         Map<String, byte[]> entries = new LinkedHashMap<>();
         try (ZipInputStream zin = new ZipInputStream(new ByteArrayInputStream(jar))) {
@@ -2874,6 +2911,9 @@ public final class JarProcessor {
             String name = e.getKey();
             if (name.startsWith("META-INF/jars/") && name.endsWith(".jar")) {
                 Map<String, byte[]> nested = readAll(e.getValue());
+                if (verbatimLibrary(nested.get("fabric.mod.json"))) {
+                    continue;
+                }
                 if (repairLayer(nested, repair, rpt, tag + "(bundled) ")) {
                     e.setValue(writeJar(nested));
                     changed = true;

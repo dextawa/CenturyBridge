@@ -71,6 +71,7 @@ def main():
     # ---- compose per member ----
     out = io.open(out_tsv, "w", encoding="utf-8", newline="\n")
     n_cls = n_m = n_f = 0
+    m_keys = set()  # the M rows' keys: a comp_ field whose accessor has its id is covered by the M row
     inter_syms = []  # (kind, inter_owner, inter_name, moj_owner, moj_name, moj_sig)
     for moj_cls, obf_cls, members in sections:
         inter_cls = obf_to_inter_cls.get(obf_cls)
@@ -89,6 +90,7 @@ def main():
                 inter = inter_members.get((obf_cls, obf, obf_desc))
                 if inter:
                     out.write(f"M\t{inter_cls}.{inter}\t{moj_internal}.{name}\n")
+                    m_keys.add(f"{inter_cls}.{inter}")
                     n_m += 1
                     inter_syms.append(("M", inter_cls, inter, moj_internal, name,
                                        f"({args})"))
@@ -117,6 +119,16 @@ def main():
                 out.write(f"F\t{inter_cls}.{iv}\t{moj_internal}.{name}\n")
                 n_f += 1
                 break
+        else:
+            # a record component's backing field (comp_N, matched with its descriptor: the obfuscated name
+            # is shared with methods). Its accessor usually carries the same id and its M row covers the
+            # key, but an accessor that implements an interface method takes that method's id (1.21.11
+            # WritableBookContent: field comp_2418, accessor pages() is BookContent's comp_2422), and the
+            # field had no row at all: a mixin naming it kept the intermediary id across the wall
+            iv = inter_members.get((obf_cls, obf_name, jvm_type(_t, moj_cls_to_obf)))
+            if iv is not None and iv.startswith("comp_") and f"{inter_cls}.{iv}" not in m_keys:
+                out.write(f"F\t{inter_cls}.{iv}\t{moj_internal}.{name}\n")
+                n_f += 1
     out.close()
     print(f"composed: {n_cls} classes, {n_m} methods, {n_f} fields -> {out_tsv}")
 

@@ -100,7 +100,13 @@ def main():
         "basis": "TrimTemplate.id(): the key's location"}
     # a 1.21.1 recipe provider's superclass: 1.21.1's data provider (the facade), its helpers answered by a 1.21.2
     # provider bound to its output (gen_s7item_datagen_recipes.py)
-    out["superRenames"] = {"net/minecraft/class_2446": "top/dext/centurybridge/step/v1_21_2/facade/RecipeProvider"}
+    fac = "top/dext/centurybridge/step/v1_21_2/facade/"
+    out["superRenames"] = {"net/minecraft/class_2446": fac + "RecipeProvider",
+                           "net/minecraft/class_7803": fac + "VanillaRecipeProvider"}
+    out["classRenames"] = {"net/minecraft/class_7801": fac + "BundleRecipeProvider"}
+    out["ctorRedirects"] = {
+        "net/minecraft/class_7803.<init>(Lnet/minecraft/class_7784;Ljava/util/concurrent/CompletableFuture;)V":
+            RT + "#newVanillaRecipeProvider"}
     adv = "Lnet/minecraft/class_8779;"
     push_types = "push " + RT + "#entityTypes()" + ITEMS
     out["callReshapes"]["net/minecraft/class_2412.method_55581(" + adv + "Ljava/util/function/Consumer;Ljava/util/List;)" + adv] = {
@@ -116,7 +122,13 @@ def main():
         "desc": "(" + ITEMS + ITEMS + "Z)Lnet/minecraft/class_1959;",
         "ops": ["keep", "keep", "push " + RT + "#notPaleGarden()Z"],
         "basis": "OverworldBiomes.darkForest: 1.21.2's takes isPaleGarden; 1.21.1's dark forest is its false branch"}
+    out["staticRedirects"] = {
+        "net/minecraft/class_7788.method_45995(Lnet/minecraft/class_1935;)Lnet/minecraft/class_52$class_53;": RT,
+        "net/minecraft/class_7789.method_46031(Lnet/minecraft/class_1935;)Lnet/minecraft/class_52$class_53;": RT,
+        "net/minecraft/class_3864.method_16992(Lnet/minecraft/class_5485$class_5495;)V": RT,
+    }
     out["fieldGetters"] = {
+        "net/minecraft/class_7788.field_40604:Lnet/minecraft/class_5341$class_210;": RT,
         "net/minecraft/class_6800.field_35767:Lnet/minecraft/class_5321;": RT,
         "net/minecraft/class_6811.field_35975:Lnet/minecraft/class_5321;": RT,
         "net/minecraft/class_8998.field_47509:Lnet/minecraft/class_5321;": RT,

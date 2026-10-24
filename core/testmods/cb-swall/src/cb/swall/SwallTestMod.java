@@ -401,6 +401,193 @@ public class SwallTestMod implements ModInitializer {
         check("streamCodec.motion", back.method_11818() == 42 && ids.decode(buf2) == 7, back.method_11818());
     }
 
+    /** ArmorDye / MapCloning / TippedArrow, removed in 26.1, given back with 1.21.11's bodies and serializers */
+    private static void removedRecipes(MinecraftServer server) {
+        net.minecraft.class_7225.class_7874 registries = server.method_30611();
+        net.minecraft.class_1799 e = net.minecraft.class_1799.field_8037;
+        net.minecraft.class_1849 dye = new net.minecraft.class_1849(net.minecraft.class_7710.field_40251);
+        net.minecraft.class_9694 dyeGrid = net.minecraft.class_9694.method_59986(2, 1, List.of(
+            new net.minecraft.class_1799(net.minecraft.class_1802.field_8267), new net.minecraft.class_1799(net.minecraft.class_1802.field_8264)));
+        net.minecraft.class_1799 dyed = dye.method_17700(dyeGrid, registries);
+        check("recipe.armorDye", dye.method_17701(dyeGrid, server.method_30002()) && dyed.method_57826(net.minecraft.class_9334.field_49644)
+            && dye.method_8119() == net.minecraft.class_1865.field_9028
+            && "minecraft:crafting_special_armordye".equals(String.valueOf(net.minecraft.class_7923.field_41189.method_10221(
+                net.minecraft.class_7923.field_41189.method_63535(net.minecraft.class_2960.method_60656("crafting_special_armordye"))))), dyed);
+        java.util.List<net.minecraft.class_1799> grid = new java.util.ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            grid.add(new net.minecraft.class_1799(i == 4 ? net.minecraft.class_1802.field_8150 : net.minecraft.class_1802.field_8107));
+        }
+        net.minecraft.class_1876 tipped = new net.minecraft.class_1876(net.minecraft.class_7710.field_40251);
+        net.minecraft.class_9694 arrows = net.minecraft.class_9694.method_59986(3, 3, grid);
+        net.minecraft.class_1799 out = tipped.method_17740(arrows, registries);
+        check("recipe.tippedArrow", tipped.method_17741(arrows, server.method_30002()) && out.method_31574(net.minecraft.class_1802.field_8087)
+            && out.method_7947() == 8 && tipped.method_8119() == net.minecraft.class_1865.field_9037, out);
+        net.minecraft.class_1855 maps = new net.minecraft.class_1855(net.minecraft.class_7710.field_40251);
+        check("recipe.mapCloning", !maps.method_17715(net.minecraft.class_9694.method_59986(2, 1, List.of(
+            new net.minecraft.class_1799(net.minecraft.class_1802.field_8895), e)), server.method_30002())
+            && maps.method_8119() == net.minecraft.class_1865.field_9044, "");
+    }
+
+    /** 1.21.11's special recipe constructors (category only) over 26.1's parameterized recipes */
+    private static void specialRecipeCtors(MinecraftServer server) {
+        net.minecraft.class_1851 rocket = new net.minecraft.class_1851(net.minecraft.class_7710.field_40250);
+        net.minecraft.class_9694 grid = net.minecraft.class_9694.method_59986(2, 1, List.of(
+            new net.minecraft.class_1799(net.minecraft.class_1802.field_8407), new net.minecraft.class_1799(net.minecraft.class_1802.field_8054)));
+        net.minecraft.class_1799 rockets = rocket.method_17708(grid, server.method_30611());
+        net.minecraft.class_4317 repair = new net.minecraft.class_4317(net.minecraft.class_7710.field_40251);
+        check("recipe.specialCtors", rocket.method_8115(grid, server.method_30002()) && rockets.method_31574(net.minecraft.class_1802.field_8639)
+            && rockets.method_7947() == 3 && rocket.method_45441() == net.minecraft.class_7710.field_40250
+            && repair.method_45441() == net.minecraft.class_7710.field_40251
+            && new net.minecraft.class_1848(net.minecraft.class_7710.field_40251) != null, rockets);
+    }
+
+    /** 1.21.11 SimpleRegionStorage with a legacy tag fixer, over 26.1's storage */
+    private static void legacyRegionStorage(MinecraftServer server) throws Exception {
+        int[] done = new int[1];
+        net.minecraft.class_12242 fixer = new net.minecraft.class_12242() {
+            @Override
+            public net.minecraft.class_2487 applyFix(net.minecraft.class_2487 tag) {
+                tag.method_10556("cbFixed", true);
+                return tag;
+            }
+
+            @Override
+            public void markChunkDone(net.minecraft.class_1923 pos) {
+                done[0]++;
+            }
+        };
+        java.nio.file.Path dir = java.nio.file.Files.createTempDirectory("cbswall-region");
+        int current = net.minecraft.class_155.method_16673().comp_4026().comp_4038();
+        try (net.minecraft.class_3977 storage = new net.minecraft.class_3977(new net.minecraft.class_9240("cbtest", net.minecraft.class_1937.field_25179, "chunk"),
+                dir, server.method_3855(), false, net.minecraft.class_4284.field_19214, () -> fixer)) {
+            net.minecraft.class_2487 tag = new net.minecraft.class_2487();
+            net.minecraft.class_2487 out = storage.method_17907(tag, current - 1, new net.minecraft.class_2487());
+            check("regionStorage.legacyFixer", out.method_68566("cbFixed", false) && out.method_68083("DataVersion", 0) == current, out);
+        }
+    }
+
+    /** 1.21.11's one interact packet for three actions, over 26.1's interact and attack packets */
+    private static void interactPacket(MinecraftServer server) {
+        net.minecraft.class_3218 level = server.method_30002();
+        net.minecraft.class_1531 stand = new net.minecraft.class_1531(level, 0.5, 100, 0.5);
+        level.method_8649(stand);
+        StringBuilder log = new StringBuilder();
+        net.minecraft.class_2824.class_5908 handler = new net.minecraft.class_2824.class_5908() {
+            @Override
+            public void method_34219(net.minecraft.class_1268 hand) {
+                log.append("interact;");
+            }
+
+            @Override
+            public void method_34220(net.minecraft.class_1268 hand, net.minecraft.class_243 location) {
+                log.append("at;");
+            }
+
+            @Override
+            public void method_34218() {
+                log.append("attack;");
+            }
+        };
+        net.minecraft.class_2824 attack = net.minecraft.class_2824.method_34206(stand, true);
+        net.minecraft.class_2824 at = net.minecraft.class_2824.method_34208(stand, true, net.minecraft.class_1268.field_5808, new net.minecraft.class_243(0, 1, 0));
+        attack.method_34209(handler);
+        at.method_34209(handler);
+        Object asObject = at;
+        check("interactPacket.split", attack.method_12248(level) == stand && at.method_12248(level) == stand && at.method_30007()
+            && !attack.method_30007() && "attack;at;interact;".contentEquals(log) && asObject instanceof net.minecraft.class_2824, log);
+        stand.method_31472();
+    }
+
+    /** a 1.21.11 ChunkPos subclass (26.1's ChunkPos is a final record) */
+    static final class TaggedChunk extends net.minecraft.class_1923 {
+        final String tag;
+
+        TaggedChunk(net.minecraft.class_2338 pos, String tag) {
+            super(pos);
+            this.tag = tag;
+        }
+
+        TaggedChunk(long packed, String tag) {
+            super(packed);
+            this.tag = tag;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return super.equals(o) && (!(o instanceof TaggedChunk t) || t.tag.equals(tag));
+        }
+    }
+
+    /** a 1.21.11 ItemInput subclass (26.1's ItemInput is a final record) */
+    static final class NamedInput extends net.minecraft.class_2290 {
+        NamedInput() {
+            super(net.minecraft.class_1802.field_8477.method_40131(), net.minecraft.class_9326.field_49588);
+        }
+
+        @Override
+        public String toString() {
+            return "named:" + method_9785();
+        }
+    }
+
+    /** subclasses of classes 26.1 made final records */
+    private static void extendFinal() throws Exception {
+        TaggedChunk byBlock = new TaggedChunk(new net.minecraft.class_2338(33, 70, -17), "a");
+        long packed = ((long) -7 << 32) | (5L & 0xFFFFFFFFL);
+        TaggedChunk byLong = new TaggedChunk(packed, "b");
+        check("extendFinal.chunkPos", byBlock.field_9181 == 2 && byBlock.field_9180 == -2 && byLong.field_9181 == 5
+            && byLong.field_9180 == -7 && byBlock.equals(new net.minecraft.class_1923(2, -2))
+            && !byBlock.equals(new TaggedChunk(new net.minecraft.class_2338(33, 0, -17), "c")),
+            byBlock.field_9181 + "," + byBlock.field_9180 + " " + byLong.field_9181 + "," + byLong.field_9180);
+        NamedInput input = new NamedInput();
+        net.minecraft.class_1799 stack = input.method_9781(3, false);
+        check("extendFinal.itemInput", input.toString().startsWith("named:") && stack.method_7947() == 3
+            && stack.method_31574(net.minecraft.class_1802.field_8477), input + " " + stack);
+    }
+
+    /** 1.21.11's TimerQueue subclass writing itself through store() */
+    static final class StoringQueue extends net.minecraft.class_236<MinecraftServer> {
+        int stores;
+
+        StoringQueue() {
+            super(net.minecraft.class_233.field_1306);
+        }
+
+        @Override
+        public net.minecraft.class_2499 method_982() {
+            stores++;
+            return super.method_982();
+        }
+    }
+
+    /** 1.21.11 TimerQueue: built with its callbacks, written with store(), read back from saved events */
+    private static void timerQueue() {
+        net.minecraft.class_236<MinecraftServer> queue = new net.minecraft.class_236<>(net.minecraft.class_233.field_1306);
+        queue.method_985("cb_later", 200L, new net.minecraft.class_231(net.minecraft.class_2960.method_60655("cb", "later")));
+        queue.method_985("cb_sooner", 100L, new net.minecraft.class_231(net.minecraft.class_2960.method_60655("cb", "sooner")));
+        net.minecraft.class_2499 stored = queue.method_982();
+        net.minecraft.class_2487 first = stored.isEmpty() ? null : (net.minecraft.class_2487) stored.get(0);
+        check("timerQueue.store", stored.size() == 2 && first != null && "cb_sooner".equals(first.method_68564("Name", ""))
+            && first.method_68080("TriggerTime", 0L) == 100L && first.method_10545("Callback"), stored);
+        net.minecraft.class_236<MinecraftServer> loaded = new net.minecraft.class_236<>(net.minecraft.class_233.field_1306,
+            stored.stream().map(t -> new com.mojang.serialization.Dynamic<>(class_2509.field_11560, t)));
+        check("timerQueue.load", loaded.method_22592().equals(java.util.Set.of("cb_later", "cb_sooner")), loaded.method_22592());
+        StoringQueue sub = new StoringQueue();
+        sub.method_985("cb_sub", 5L, new net.minecraft.class_231(net.minecraft.class_2960.method_60655("cb", "sub")));
+        net.minecraft.class_2499 subStored = sub.method_982();
+        check("timerQueue.subclassStore", subStored.size() == 1 && sub.stores == 1, subStored + " stores=" + sub.stores);
+        // 26.1 writes the queue through pack(): the subclass's store() is what it writes (read reflectively, as the
+        // name exists only on 26.1)
+        Object packed = null;
+        try {
+            java.lang.reflect.Method pack = sub.getClass().getMethod("pack");
+            packed = pack.invoke(sub);
+        } catch (ReflectiveOperationException e) {
+            packed = e;
+        }
+        check("timerQueue.packThroughStore", sub.stores == 2 && String.valueOf(packed).contains("cb_sub"), packed + " stores=" + sub.stores);
+    }
+
     /** generic drift at the wall read on a running server */
     private static void generic(MinecraftServer server) {
         Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
@@ -457,6 +644,12 @@ public class SwallTestMod implements ModInitializer {
             removedFeatures(server);
             worldgenConfigs();
             driftPilots();
+            removedRecipes(server);
+            specialRecipeCtors(server);
+            legacyRegionStorage(server);
+            interactPacket(server);
+            timerQueue();
+            extendFinal();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);

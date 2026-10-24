@@ -179,7 +179,26 @@
   "net/minecraft/class_7400.comp_725()Lnet/minecraft/class_4651;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#fallback",
   "net/minecraft/class_7400.comp_726()Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#rules",
   "net/minecraft/class_4643$class_4644.method_34346(Lnet/minecraft/class_4651;)Lnet/minecraft/class_4643$class_4644;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#dirt",
-  "net/minecraft/class_4643$class_4644.method_34347()Lnet/minecraft/class_4643$class_4644;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#forceDirt"
+  "net/minecraft/class_4643$class_4644.method_34347()Lnet/minecraft/class_4643$class_4644;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#forceDirt",
+  "net/minecraft/class_1849.method_17701(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#matches",
+  "net/minecraft/class_1849.method_17700(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#assemble",
+  "net/minecraft/class_1855.method_17715(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#matches",
+  "net/minecraft/class_1855.method_17714(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#assemble",
+  "net/minecraft/class_1876.method_17741(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#matches",
+  "net/minecraft/class_1876.method_17740(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#assemble",
+  "net/minecraft/class_1849.method_8119()Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#getSerializer",
+  "net/minecraft/class_1855.method_8119()Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#getSerializer",
+  "net/minecraft/class_1876.method_8119()Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#getSerializer",
+  "net/minecraft/class_3977.method_17907(Lnet/minecraft/class_2487;ILnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#upgradeChunkTag",
+  "net/minecraft/class_3977.method_75898(Lnet/minecraft/class_1923;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#markChunkDone",
+  "net/minecraft/class_26.method_17923(Ljava/lang/String;Lnet/minecraft/class_4284;I)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#readTagFromDisk",
+  "net/minecraft/class_2824.method_12248(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#getTarget",
+  "net/minecraft/class_2824.method_30007()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#isUsingSecondaryAction",
+  "net/minecraft/class_2824.method_76681(Lnet/minecraft/class_3222;Lnet/minecraft/class_238;D)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#isWithinRange",
+  "net/minecraft/class_2824.method_34209(Lnet/minecraft/class_2824$class_5908;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#dispatch",
+  "net/minecraft/class_2824.method_12251(Lnet/minecraft/class_2792;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#handle",
+  "net/minecraft/class_2792.method_12062(Lnet/minecraft/class_2824;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#handleInteract",
+  "net/minecraft/class_236.method_982()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#store"
  },
  "overrideHooks": [
   {
@@ -357,6 +376,42 @@
     "method_32439()Lnet/minecraft/class_5650;",
     "method_32475()Lnet/minecraft/class_5669;"
    ]
+  },
+  {
+   "old": "method_17700(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17700(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1849",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1's assemble(input) of a mod's ArmorDyeRecipe subclass overriding 1.21.11's assemble(input, registries): its own assemble with the level's registries (as gen_wall_recipe_assemble.py hooks the other recipe classes)"
+  },
+  {
+   "old": "method_17714(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17714(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1855",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1's assemble(input) of a mod's MapCloningRecipe subclass overriding 1.21.11's assemble(input, registries): its own assemble with the level's registries (as gen_wall_recipe_assemble.py hooks the other recipe classes)"
+  },
+  {
+   "old": "method_17740(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17740(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1876",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1's assemble(input) of a mod's TippedArrowRecipe subclass overriding 1.21.11's assemble(input, registries): its own assemble with the level's registries (as gen_wall_recipe_assemble.py hooks the other recipe classes)"
+  },
+  {
+   "old": "method_982()Lnet/minecraft/class_2499;",
+   "new": "pack()Lnet/minecraft/world/level/timers/TimerQueue$Packed;",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers.pack(Ltop/dext/centurybridge/step/v26_1/rt/CbWallTimers$LegacyStore;)Lnet/minecraft/world/level/timers/TimerQueue$Packed;",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers$LegacyStore",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "onlyUnder": "net/minecraft/class_236",
+   "basis": "1.21.11 wrote a TimerQueue through store() (a ListTag of {Name, TriggerTime, Callback}); 26.1 writes it through pack(): a subclass's store() answers the events pack() hands 26.1's codec, read back with the queue's callbacks"
   }
  ],
  "frameDefaults": {
@@ -584,7 +639,13 @@
   "net/minecraft/class_3070": "top/dext/centurybridge/step/v26_1/facade/IceSpikeFeature",
   "net/minecraft/class_2950": "top/dext/centurybridge/step/v26_1/facade/BlockBlobFeature",
   "net/minecraft/class_7400": "net/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider",
-  "net/minecraft/class_7400$class_7401": "net/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider$Rule"
+  "net/minecraft/class_7400$class_7401": "net/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider$Rule",
+  "net/minecraft/class_1849": "top/dext/centurybridge/step/v26_1/facade/ArmorDyeRecipe",
+  "net/minecraft/class_1855": "top/dext/centurybridge/step/v26_1/facade/MapCloningRecipe",
+  "net/minecraft/class_1876": "top/dext/centurybridge/step/v26_1/facade/TippedArrowRecipe",
+  "net/minecraft/class_12242": "top/dext/centurybridge/step/v26_1/facade/LegacyTagFixer",
+  "net/minecraft/class_2824": "net/minecraft/network/protocol/Packet",
+  "net/minecraft/class_2824$class_5908": "top/dext/centurybridge/step/v26_1/facade/ServerboundInteractPacketHandler"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -596,7 +657,9 @@
   "net/minecraft/class_10823.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#create",
   "net/minecraft/class_1923.<init>(Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#chunkPos",
   "net/minecraft/class_1923.<init>(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#chunkPos",
-  "net/minecraft/class_10104.<init>(Ljava/lang/String;Lnet/minecraft/class_2300;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSelectors#create"
+  "net/minecraft/class_10104.<init>(Ljava/lang/String;Lnet/minecraft/class_2300;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSelectors#create",
+  "net/minecraft/class_236.<init>(Lnet/minecraft/class_233;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#newQueue",
+  "net/minecraft/class_236.<init>(Lnet/minecraft/class_233;Ljava/util/stream/Stream;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#newQueue"
  },
  "adapterHooks": [
   {
@@ -855,9 +918,6 @@
   "net/minecraft/class_776.field_4169:Lnet/minecraft/class_5819;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the scratch random of renderBreakingTexture, a local in the facade",
   "net/minecraft/class_776.field_57937:Ljava/util/List;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the scratch part list of renderBreakingTexture, a local in the facade",
   "net/minecraft/class_776.field_20987:Lnet/minecraft/class_324;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; kept as cb$blockColors",
-  "net/minecraft/class_1865.field_9028:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_armordye\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
-  "net/minecraft/class_1865.field_9044:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_mapcloning\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
-  "net/minecraft/class_1865.field_9037:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_tippedarrow\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
   "net/minecraft/class_4831.field_22330:Ljava/lang/Object;": "1.21.11 private final field (the value): the facade keeps it as its own value field, read through method_24637 (getValue); only an access widener on the dead class ever reached it",
   "net/minecraft/class_4831.field_22331:J": "1.21.11 private field (the time to live): the facade keeps it, or reads the brain's MemorySlot it stands for, through method_35127 (getTimeToLive) and method_24913 (tick); only an access widener on the dead class ever reached it",
   "net/minecraft/class_765.method_42596(Lnet/minecraft/class_1309;FF)F": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
@@ -911,7 +971,16 @@
   "net/minecraft/class_8060$class_8061.field_46108:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
   "net/minecraft/class_4628.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming RandomPatchFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)",
   "net/minecraft/class_3070.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming IceSpikeFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)",
-  "net/minecraft/class_2950.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming BlockBlobFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)"
+  "net/minecraft/class_2950.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming BlockBlobFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)",
+  "net/minecraft/class_1849.method_17701(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "matches(input, level) under 1.21.11's ArmorDyeRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming ArmorDyeRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
+  "net/minecraft/class_1849.method_17700(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "assemble(input, registries) under 1.21.11's ArmorDyeRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming ArmorDyeRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
+  "net/minecraft/class_1855.method_17715(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "matches(input, level) under 1.21.11's MapCloningRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming MapCloningRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
+  "net/minecraft/class_1855.method_17714(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "assemble(input, registries) under 1.21.11's MapCloningRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming MapCloningRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
+  "net/minecraft/class_1876.method_17741(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "matches(input, level) under 1.21.11's TippedArrowRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming TippedArrowRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
+  "net/minecraft/class_1876.method_17740(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "assemble(input, registries) under 1.21.11's TippedArrowRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming TippedArrowRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
+  "net/minecraft/class_1849.method_8119()Lnet/minecraft/class_1865;": "getSerializer() under its 1.21.11 token answering 1.21.11's serializer type: the facade overrides 26.1's getSerializer (the 26.1 record); a call naming ArmorDyeRecipe goes through CbWallRecipeKinds.getSerializer (the 1.21.11 serializer of the object's record, CbWallRecipes.getSerializer)",
+  "net/minecraft/class_1855.method_8119()Lnet/minecraft/class_1865;": "getSerializer() under its 1.21.11 token answering 1.21.11's serializer type: the facade overrides 26.1's getSerializer (the 26.1 record); a call naming MapCloningRecipe goes through CbWallRecipeKinds.getSerializer (the 1.21.11 serializer of the object's record, CbWallRecipes.getSerializer)",
+  "net/minecraft/class_1876.method_8119()Lnet/minecraft/class_1865;": "getSerializer() under its 1.21.11 token answering 1.21.11's serializer type: the facade overrides 26.1's getSerializer (the 26.1 record); a call naming TippedArrowRecipe goes through CbWallRecipeKinds.getSerializer (the 1.21.11 serializer of the object's record, CbWallRecipes.getSerializer)"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -982,7 +1051,30 @@
   "net/minecraft/class_5863.method_33916(FF)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatCodec",
   "net/minecraft/class_7400.method_43314(Lnet/minecraft/class_4651;)Lnet/minecraft/class_7400;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#simple",
   "net/minecraft/class_7400.method_43312(Lnet/minecraft/class_2248;)Lnet/minecraft/class_7400;": "top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#simple",
-  "net/minecraft/class_5141.method_27400(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#setDirtAt"
+  "net/minecraft/class_5141.method_27400(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#setDirtAt",
+  "net/minecraft/class_2824.method_34206(Lnet/minecraft/class_1297;Z)Lnet/minecraft/class_2824;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#attack",
+  "net/minecraft/class_2824.method_34207(Lnet/minecraft/class_1297;ZLnet/minecraft/class_1268;)Lnet/minecraft/class_2824;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#interaction",
+  "net/minecraft/class_2824.method_34208(Lnet/minecraft/class_1297;ZLnet/minecraft/class_1268;Lnet/minecraft/class_243;)Lnet/minecraft/class_2824;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#interaction",
+  "net/minecraft/class_10648.method_66840(Z)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$EquineSaddleModel#createSaddleLayer",
+  "net/minecraft/class_10648.method_66841(Z)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$EquineSaddleModel#createFullScaleSaddleLayer",
+  "net/minecraft/class_4041.method_31999()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$FoxModel#createBodyLayer",
+  "net/minecraft/class_4495.method_31981()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$BeeModel#createBodyLayer",
+  "net/minecraft/class_4791.method_62091()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$HoglinModel#createBabyLayer",
+  "net/minecraft/class_4997.method_32058()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$StriderModel#createBodyLayer",
+  "net/minecraft/class_549.method_62053(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AbstractEquineModel#createBabyMesh",
+  "net/minecraft/class_549.method_62054(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AbstractEquineModel#createFullScaleBabyMesh",
+  "net/minecraft/class_558.method_31988()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ChickenModel#createBodyLayer",
+  "net/minecraft/class_558.method_67546()Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ChickenModel#createBaseChickenModel",
+  "net/minecraft/class_590.method_32029(Z)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$PolarBearModel#createBodyLayer",
+  "net/minecraft/class_596.method_32034(Z)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$RabbitModel#createBodyLayer",
+  "net/minecraft/class_614.method_32062()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$TurtleModel#createBodyLayer",
+  "net/minecraft/class_624.method_32068(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$WolfModel#createMeshDefinition",
+  "net/minecraft/class_7751.method_45707()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$CamelModel#createBodyLayer",
+  "net/minecraft/class_7751.method_66836()Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$CamelModel#createBodyMesh",
+  "net/minecraft/class_9082.method_55818()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ArmadilloModel#createBodyLayer",
+  "net/minecraft/class_9939.method_62055(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AbstractPiglinModel#createMesh",
+  "net/minecraft/class_9945.method_62080(F)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$DonkeyModel#createBabyLayer",
+  "net/minecraft/class_9945.method_66838(FZ)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$DonkeyModel#createSaddleLayer"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -1404,6 +1496,206 @@
     "conv:5,9 top/dext/centurybridge/step/v26_1/rt/CbWallTrees#belowTrunk(Lnet/minecraft/class_4651;Z)Lnet/minecraft/class_4651;"
    ],
    "basis": "a 1.21.11 TreeConfiguration subclass's super(.., dirtProvider, minimumSize, decorators, ignoreVines, forceDirt): 26.1 takes one below-trunk provider; the dirt pair as it (CbWallTrees.belowTrunk)"
+  },
+  "net/minecraft/class_1848.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#banners()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#whiteBanner()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1848;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's BannerDuplicateRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it -- one recipe for every banner colour, duplicating as 1.21.11 did (mixin/CbWallBannerDuplicateMixin)"
+  },
+  "net/minecraft/class_1850.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#writtenBook()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#bookCloningTarget()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#bookGenerations()Lnet/minecraft/class_2096$class_2100;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#writtenBookResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1850;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's BookCloningRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_8164.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#potIngredient()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#decoratedPot()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_8164;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's DecoratedPotRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_1851.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#paper()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#gunpowder()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStar()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#threeRockets()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1851;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's FireworkRocketRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_1854.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStar()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#dyes()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStarResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1854;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's FireworkStarFadeRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_1853.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Ljava/util/Map;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#starShapes()Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#diamond()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#glowstoneDust()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#gunpowder()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#dyes()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStarResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1853;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's FireworkStarRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_1861.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#filledMap()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#paper()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#filledMapResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1861;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's MapExtendingRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_4317.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_4317;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's RepairItemRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_1872.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#banners()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#shield()Lnet/minecraft/class_1856;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#shieldResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1872;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's ShieldDecorationRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_3977.<init>(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLnet/minecraft/class_4284;Ljava/util/function/Supplier;)V": {
+   "desc": "(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLnet/minecraft/class_4284;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#fixer(Lnet/minecraft/class_3977;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    5
+   ],
+   "basis": "1.21.11's SimpleRegionStorage(.., legacyFixer): 26.1's has no legacy fixer; the supplier is kept for the storage (CbWallRegionStorage) and run as 1.21.11's upgradeChunkTag ran it"
+  },
+  "net/minecraft/class_9171.<init>(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLnet/minecraft/class_4284;Ljava/util/function/Supplier;)V": {
+   "desc": "(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLnet/minecraft/class_4284;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#fixer(Lnet/minecraft/class_9171;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    7
+   ],
+   "basis": "1.21.11's RecreatingSimpleRegionStorage(.., legacyFixer): as SimpleRegionStorage's"
+  },
+  "net/minecraft/class_236.<init>(Lnet/minecraft/class_233;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#remember(Lnet/minecraft/class_236;Lnet/minecraft/class_233;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11's TimerQueue(callbacks): 26.1's queue is built empty and has no callbacks of its own; they are kept for the queue (CbWallTimers) and used where 1.21.11's queue used them (store, loading saved events)"
+  },
+  "net/minecraft/class_236.<init>(Lnet/minecraft/class_233;Ljava/util/stream/Stream;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#load(Lnet/minecraft/class_236;Lnet/minecraft/class_233;Ljava/util/stream/Stream;)V",
+   "postArgs": [
+    0,
+    1
+   ],
+   "basis": "1.21.11's TimerQueue(callbacks, events): 26.1's queue is built empty; the callbacks are kept for the queue and the saved events scheduled as 1.21.11's constructor read them (compounds of Name, TriggerTime, Callback read with those callbacks)"
+  },
+  "net/minecraft/class_1923.<init>(Lnet/minecraft/class_2338;)V": {
+   "desc": "(II)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunkPos#blockX(Lnet/minecraft/class_2338;)I",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunkPos#blockZ(Lnet/minecraft/class_2338;)I"
+   ],
+   "basis": "1.21.11's ChunkPos(BlockPos) set x, z to the block's section coordinates; 26.1's record has only ChunkPos(x, z), given the same coordinates"
+  },
+  "net/minecraft/class_1923.<init>(J)V": {
+   "desc": "(II)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunkPos#packedX(J)I",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunkPos#packedZ(J)I"
+   ],
+   "basis": "1.21.11's ChunkPos(long) unpacked x (low int) and z (high int); 26.1's record has only ChunkPos(x, z), given the same coordinates"
   }
  },
  "fieldGetters": {
@@ -1462,7 +1754,22 @@
   "net/minecraft/class_2824.field_48195:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v26_1/rt/CbWallStreamCodecs",
   "net/minecraft/class_2761.field_47991:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v26_1/rt/CbWallStreamCodecs",
   "net/minecraft/class_3481.field_29822:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTagDrift",
-  "net/minecraft/class_3489.field_36269:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTagDrift"
+  "net/minecraft/class_3489.field_36269:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTagDrift",
+  "net/minecraft/class_5602.field_56080:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#camelBabySaddle",
+  "net/minecraft/class_5602.field_64212:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#camelHuskBabySaddle",
+  "net/minecraft/class_5602.field_56581:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#coldChickenBaby",
+  "net/minecraft/class_5602.field_55865:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#coldPigBaby",
+  "net/minecraft/class_5602.field_56082:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#donkeyBabySaddle",
+  "net/minecraft/class_5602.field_52965:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#horseBabyArmor",
+  "net/minecraft/class_5602.field_56086:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#horseBabySaddle",
+  "net/minecraft/class_5602.field_56084:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#muleBabySaddle",
+  "net/minecraft/class_5602.field_52989:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#pigBabySaddle",
+  "net/minecraft/class_5602.field_57103:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#sheepBabyWoolUndercoat",
+  "net/minecraft/class_5602.field_56088:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#skeletonHorseBabySaddle",
+  "net/minecraft/class_5602.field_55120:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#striderBabySaddle",
+  "net/minecraft/class_5602.field_63560:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#undeadHorseBabyArmor",
+  "net/minecraft/class_5602.field_53005:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#wolfBabyArmor",
+  "net/minecraft/class_5602.field_56090:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#zombieHorseBabySaddle"
  },
  "abstractFills": [
   {
@@ -1478,26 +1785,7 @@
    "basis": "26.1 made group abstract; 1.21.11 default answered the empty group"
   }
  ],
- "ledger": {
-  "net/minecraft/class_1865.field_9028:Lnet/minecraft/class_1865;": "the 1.21.11 recipe serializer \"crafting_special_armordye\" has no 26.1 counterpart: 26.1 RecipeSerializers.bootstrap registers no serializer under that id (its recipe type is gone; 26.1 itself rejects data naming it), so there is no serializer to answer with; a mod reading the constant gets NoSuchFieldError",
-  "net/minecraft/class_1865.field_9044:Lnet/minecraft/class_1865;": "the 1.21.11 recipe serializer \"crafting_special_mapcloning\" has no 26.1 counterpart: 26.1 RecipeSerializers.bootstrap registers no serializer under that id (its recipe type is gone; 26.1 itself rejects data naming it), so there is no serializer to answer with; a mod reading the constant gets NoSuchFieldError",
-  "net/minecraft/class_1865.field_9037:Lnet/minecraft/class_1865;": "the 1.21.11 recipe serializer \"crafting_special_tippedarrow\" has no 26.1 counterpart: 26.1 RecipeSerializers.bootstrap registers no serializer under that id (its recipe type is gone; 26.1 itself rejects data naming it), so there is no serializer to answer with; a mod reading the constant gets NoSuchFieldError",
-  "net/minecraft/class_5602.field_56080:Lnet/minecraft/class_5601;": "model layer minecraft:camel_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_64212:Lnet/minecraft/class_5601;": "model layer minecraft:camel_husk_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56581:Lnet/minecraft/class_5601;": "model layer minecraft:cold_chicken_baby#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_55865:Lnet/minecraft/class_5601;": "model layer minecraft:cold_pig_baby#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56082:Lnet/minecraft/class_5601;": "model layer minecraft:donkey_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_52965:Lnet/minecraft/class_5601;": "model layer minecraft:horse_armor_baby#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56086:Lnet/minecraft/class_5601;": "model layer minecraft:horse_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56084:Lnet/minecraft/class_5601;": "model layer minecraft:mule_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_52989:Lnet/minecraft/class_5601;": "model layer minecraft:pig_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_57103:Lnet/minecraft/class_5601;": "model layer minecraft:sheep_baby#wool_undercoat: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56088:Lnet/minecraft/class_5601;": "model layer minecraft:skeleton_horse_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_55120:Lnet/minecraft/class_5601;": "model layer minecraft:strider_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_63560:Lnet/minecraft/class_5601;": "model layer minecraft:undead_horse_baby_armor#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_53005:Lnet/minecraft/class_5601;": "model layer minecraft:wolf_baby_armor#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56090:Lnet/minecraft/class_5601;": "model layer minecraft:zombie_horse_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read"
- },
+ "ledger": {},
  "superRedirects": {
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthTestFunction()Lcom/mojang/blaze3d/platform/DepthTestFunction;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthTestFunction",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getBlendFunction()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetBlendFunction",
@@ -1514,7 +1802,17 @@
   "net/minecraft/class_3070.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#superPlace",
   "net/minecraft/class_2950.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#superPlace",
   "net/minecraft/class_4643$class_4644.method_34346(Lnet/minecraft/class_4651;)Lnet/minecraft/class_4643$class_4644;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#dirt",
-  "net/minecraft/class_4643$class_4644.method_34347()Lnet/minecraft/class_4643$class_4644;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#forceDirt"
+  "net/minecraft/class_4643$class_4644.method_34347()Lnet/minecraft/class_4643$class_4644;": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#forceDirt",
+  "net/minecraft/class_1849.method_17701(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superMatches",
+  "net/minecraft/class_1849.method_17700(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superAssemble",
+  "net/minecraft/class_1855.method_17715(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superMatches",
+  "net/minecraft/class_1855.method_17714(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superAssemble",
+  "net/minecraft/class_1876.method_17741(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superMatches",
+  "net/minecraft/class_1876.method_17740(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superAssemble",
+  "net/minecraft/class_3977.method_17907(Lnet/minecraft/class_2487;ILnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#upgradeChunkTag",
+  "net/minecraft/class_3977.method_75898(Lnet/minecraft/class_1923;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#markChunkDone",
+  "net/minecraft/class_26.method_17923(Ljava/lang/String;Lnet/minecraft/class_4284;I)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#readTagFromDisk",
+  "net/minecraft/class_236.method_982()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#superStore"
  },
  "covers": [
   "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
@@ -1733,7 +2031,9 @@
   "net/minecraft/class_10711": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#castProvidesTrimMaterial",
   "net/minecraft/class_6862": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#castTagKey",
   "net/minecraft/class_6018": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#castIntType",
-  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#castFloatType"
+  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#castFloatType",
+  "net/minecraft/class_1865": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castRecipeSerializer",
+  "net/minecraft/class_2824": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#cast"
  },
  "instanceOfRedirects": {
   "net/minecraft/class_5339": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isFunctionType",
@@ -1746,7 +2046,9 @@
   "net/minecraft/class_10711": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#isProvidesTrimMaterial",
   "net/minecraft/class_6862": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#isTagKey",
   "net/minecraft/class_6018": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#isIntType",
-  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#isFloatType"
+  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#isFloatType",
+  "net/minecraft/class_1865": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isRecipeSerializer",
+  "net/minecraft/class_2824": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#is"
  },
  "genericWitnesses": {
   "net/minecraft/class_7923.field_41133:Lnet/minecraft/class_2378;": {
@@ -2001,5 +2303,25 @@
  "superRenames": {
   "net/minecraft/class_6017": "top/dext/centurybridge/step/v26_1/facade/IntProvider",
   "net/minecraft/class_5863": "top/dext/centurybridge/step/v26_1/facade/FloatProvider"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_4041.field_52912:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$FoxModel#BABY_TRANSFORMER",
+  "net/minecraft/class_4495.field_52871:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$BeeModel#BABY_TRANSFORMER",
+  "net/minecraft/class_4791.field_52916:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$HoglinModel#BABY_TRANSFORMER",
+  "net/minecraft/class_4997.field_55115:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$StriderModel#BABY_TRANSFORMER",
+  "net/minecraft/class_549.field_52854:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AbstractEquineModel#BABY_TRANSFORMER",
+  "net/minecraft/class_558.field_32471:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ChickenModel#RED_THING",
+  "net/minecraft/class_558.field_52891:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ChickenModel#BABY_TRANSFORMER",
+  "net/minecraft/class_5772.field_52869:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AxolotlModel#BABY_TRANSFORMER",
+  "net/minecraft/class_578.field_52920:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$LlamaModel#BABY_TRANSFORMER",
+  "net/minecraft/class_586.field_52924:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$PandaModel#BABY_TRANSFORMER",
+  "net/minecraft/class_601.field_52936:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$SheepModel#BABY_TRANSFORMER",
+  "net/minecraft/class_614.field_52940:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$TurtleModel#BABY_TRANSFORMER",
+  "net/minecraft/class_620.field_55116:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$VillagerModel#BABY_TRANSFORMER",
+  "net/minecraft/class_6227.field_52914:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$GoatModel#BABY_TRANSFORMER",
+  "net/minecraft/class_624.field_52948:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$WolfModel#BABY_TRANSFORMER",
+  "net/minecraft/class_7751.field_52883:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$CamelModel#BABY_TRANSFORMER",
+  "net/minecraft/class_8185.field_52938:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$SnifferModel#BABY_TRANSFORMER",
+  "net/minecraft/class_9082.field_52867:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ArmadilloModel#BABY_TRANSFORMER"
  }
 }

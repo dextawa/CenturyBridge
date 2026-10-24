@@ -1,0 +1,17 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3481.field_35575:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_20_5/rt/CbTagCompat#BlockTags_field_35575",
+  "net/minecraft/class_3489.field_42616:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_20_5/rt/CbTagCompat#ItemTags_field_42616",
+  "net/minecraft/class_8103.field_46211:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_20_5/rt/CbTagCompat#DamageTypeTags_field_46211"
+ },
+ "tagMap": {
+  "block minecraft:wolves_spawnable_on": {
+   "to": "centurybridge:compat/1_20_4/wolves_spawnable_on",
+   "mirror": true
+  },
+  "damage_type minecraft:always_kills_armor_stands": {
+   "to": "centurybridge:compat/1_20_4/always_kills_armor_stands",
+   "mirror": false
+  }
+ }
+}

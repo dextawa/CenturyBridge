@@ -25,6 +25,18 @@
    "method": "getBooleanValue(Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;",
    "call": "top/dext/centurybridge/step/v26_2/rt/CbLibMisc.getBooleanValue(Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;",
    "basis": "DFU 9.0.19's default getBooleanValue: a number whose byte value is non-zero"
+  },
+  {
+   "under": "com/google/common/graph/Graph",
+   "method": "asNetwork()Lcom/google/common/graph/Network;",
+   "call": "top/dext/centurybridge/step/v26_2/rt/CbLibGraphNetwork.asNetwork(Lcom/google/common/graph/Graph;)Lcom/google/common/graph/Network;",
+   "basis": "Guava 33.6 demands it; a 33.5-era graph gets the view Guava builds for its own graphs (rt/CbLibGraphNetwork)"
+  },
+  {
+   "under": "com/google/common/graph/ValueGraph",
+   "method": "asNetwork()Lcom/google/common/graph/Network;",
+   "call": "top/dext/centurybridge/step/v26_2/rt/CbLibGraphNetwork.asNetwork(Lcom/google/common/graph/ValueGraph;)Lcom/google/common/graph/Network;",
+   "basis": "Guava 33.6 demands it; a 33.5-era value graph gets the view Guava builds for its own graphs (rt/CbLibGraphNetwork)"
   }
  ],
  "ledger": {

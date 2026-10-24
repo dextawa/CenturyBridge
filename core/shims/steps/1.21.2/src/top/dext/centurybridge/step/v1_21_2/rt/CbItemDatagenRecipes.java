@@ -94,10 +94,105 @@ public class CbItemDatagenRecipes extends net.minecraft.class_2446 {
         return p != null ? p : new CbItemDatagenRecipes(builtIn(), NOWHERE);
     }
 
+    /**
+     * 1.21.1's RecipeProvider.run(output, registries), shared by the facades standing for 1.21.1's providers
+     * (RecipeProvider, VanillaRecipeProvider, BundleRecipeProvider): buildRecipes gets an output that writes each recipe
+     * as JSON under the recipe path and its advancement through buildAdvancement, refusing a duplicate id; the root
+     * advancement 1.21.1's output gave its recipes' advancements; a 1.21.2 provider bound to that output answers the
+     * static helpers while buildRecipes runs
+     */
+    public static java.util.concurrent.CompletableFuture<?> runLegacy(net.minecraft.class_7403 output, class_7225.class_7874 registries,
+            net.minecraft.class_7784.class_7489 recipePaths, java.util.function.Consumer<class_8790> buildRecipes,
+            java.util.function.Function<class_8779, java.util.concurrent.CompletableFuture<?>> buildAdvancement) {
+        java.util.Set<net.minecraft.class_2960> ids = new java.util.HashSet<>();
+        java.util.List<java.util.concurrent.CompletableFuture<?>> writes = new java.util.ArrayList<>();
+        class_8790 recipes = new class_8790() {
+            @Override
+            public void method_53819(class_5321<class_1860<?>> key, class_1860<?> recipe, class_8779 advancement) {
+                net.minecraft.class_2960 id = key.method_29177();
+                if (!ids.add(id)) {
+                    throw new IllegalStateException("Duplicate recipe " + id);
+                }
+                writes.add(net.minecraft.class_2405.method_53496(output, registries, class_1860.field_47319, recipe,
+                    recipePaths.method_44107(id)));
+                if (advancement != null) {
+                    writes.add(buildAdvancement.apply(advancement));
+                }
+            }
+
+            @Override
+            public class_161.class_162 method_53818() {
+                return class_161.class_162.method_51698().method_708(net.minecraft.class_5797.field_39377);
+            }
+
+            /** 1.21.1's output had no root advancement of its own */
+            @Override
+            public void method_62738() {
+            }
+        };
+        bind(registries, recipes);
+        try {
+            buildRecipes.accept(recipes);
+        } finally {
+            unbind();
+        }
+        return java.util.concurrent.CompletableFuture.allOf(writes.toArray(java.util.concurrent.CompletableFuture[]::new));
+    }
+
+    /**
+     * A 1.21.2 RecipeProvider whose buildRecipes is a 1.21.1 one (Fabric API 0.106's createRecipeProvider of a 0.116
+     * FabricRecipeProvider): the 1.21.1 body runs on the output with this provider answering the static helpers
+     */
+    public static net.minecraft.class_2446 delegating(class_7225.class_7874 registries, class_8790 output,
+            java.util.function.Consumer<class_8790> buildRecipes) {
+        return new CbItemDatagenRecipes(registries, output) {
+            @Override
+            public void method_10419() {
+                CbItemDatagenRecipes before = CURRENT.get();
+                CURRENT.set(this);
+                try {
+                    buildRecipes.accept(output);
+                } finally {
+                    if (before != null) {
+                        CURRENT.set(before);
+                    } else {
+                        CURRENT.remove();
+                    }
+                }
+            }
+        };
+    }
+
+    /** 1.21.1 VanillaRecipeProvider.buildRecipes(output): a 1.21.2 VanillaRecipeProvider bound to the output builds them */
+    public static void vanillaRecipes(class_8790 output) {
+        new net.minecraft.class_7803(runningRegistries(), output).method_10419();
+    }
+
+    /** the registries of the 1.21.1 provider run in progress (its buildRecipes), else the built-in ones */
+    public static class_7225.class_7874 runningRegistries() {
+        CbItemDatagenRecipes p = CURRENT.get();
+        return p != null ? p.field_48981 : builtIn();
+    }
+
     // ---- 1.21.1 RecipeProvider instance members, called naming the class (the receiver is a 1.21.1 provider: the facade) ----
 
-    private static top.dext.centurybridge.step.v1_21_2.facade.RecipeProvider legacy(net.minecraft.class_2446 provider) {
-        return (top.dext.centurybridge.step.v1_21_2.facade.RecipeProvider) provider;
+    /** a 1.21.1 data provider standing for RecipeProvider (the RecipeProvider and VanillaRecipeProvider facades) */
+    public interface LegacyProvider {
+        java.util.concurrent.CompletableFuture<?> method_10319(net.minecraft.class_7403 output);
+
+        String method_10321();
+
+        java.util.concurrent.CompletableFuture<?> method_56888(net.minecraft.class_7403 output, class_7225.class_7874 registries);
+
+        java.util.concurrent.CompletableFuture<?> method_46206(net.minecraft.class_7403 output, class_7225.class_7874 registries,
+            class_8779 advancement);
+    }
+
+    private static LegacyProvider legacy(net.minecraft.class_2446 provider) {
+        if (provider instanceof LegacyProvider legacy) {
+            return legacy;
+        }
+        throw new IllegalStateException(provider.getClass().getName() + " is 1.21.2's RecipeProvider, not 1.21.1's data provider");
     }
 
     /** run(output) */

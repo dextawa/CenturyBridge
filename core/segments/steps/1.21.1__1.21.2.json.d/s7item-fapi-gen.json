@@ -6,7 +6,16 @@
   "net/fabricmc/fabric/api/item/v1/FabricItemStack.getCreatorNamespace()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#getCreatorNamespace",
   "net/fabricmc/fabric/api/item/v1/FabricTooltipType.shouldDisplayAllInformation()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#shouldDisplayAllInformation",
   "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext.addCarver(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#addCarver",
-  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext.removeCarver(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#removeCarver"
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext.removeCarver(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#removeCarver",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.remove(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenTags#remove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.remove([Ljava/lang/Object;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenTags#remove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.remove(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenTags#remove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.remove([Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenTags#remove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.removeAll(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenTags#removeAll",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.removeAll(Ljava/util/stream/Stream;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenTags#removeAll",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenTags#removeTag",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider.method_10419(Lnet/minecraft/class_8790;)V": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRecipeProvider#buildRecipes",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider.method_56888(Lnet/minecraft/class_7403;Lnet/minecraft/class_7225$class_7874;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRecipeProvider#run"
  },
  "staticRedirects": {
   "net/fabricmc/fabric/api/biome/v1/BiomeModifications.addCarver(Ljava/util/function/Predicate;Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi#addCarver"
@@ -61,9 +70,36 @@
    ],
    "synth": [],
    "basis": "a class declaring FabricItemStack.getCreatorNamespace() answers the calls (CbItemFapi)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi$LegacyCarvers",
+   "requires": [
+    "addCarver(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)V",
+    "removeCarver(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)Z"
+   ],
+   "synth": [
+    {
+     "new": "addCarver(Lnet/minecraft/class_5321;)V",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi.addCarverAir(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemFapi$LegacyCarvers;Lnet/minecraft/class_5321;)V"
+    },
+    {
+     "new": "removeCarver(Lnet/minecraft/class_5321;)Z",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFapi.removeCarverAll(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemFapi$LegacyCarvers;Lnet/minecraft/class_5321;)Z"
+    }
+   ],
+   "basis": "a 1.21.1 GenerationSettingsContext implementation answers 0.106's step-less addCarver (its air step, 1.21.2's one) and removeCarver (0.116's default: every step) (CbItemFapi)"
   }
  ],
  "classRenames": {
-  "net/fabricmc/fabric/api/item/v1/FabricTooltipType": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricTooltipType"
+  "net/fabricmc/fabric/api/item/v1/FabricTooltipType": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricTooltipType",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricProvidedTagBuilder",
+  "net/fabricmc/fabric/api/datagen/v1/recipe/FabricRecipeExporter": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRecipeExporter"
+ },
+ "fieldRenames": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/SimpleFabricLootTableProvider.lootContextType:Lnet/minecraft/class_176;": "contextType"
+ },
+ "superRenames": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRecipeProvider"
  }
 }

@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "minecraft:bad_respawn_point",
+      "required": false
+    },
+    {
+      "id": "minecraft:explosion",
+      "required": false
+    },
+    {
+      "id": "minecraft:player_explosion",
+      "required": false
+    }
+  ]
+}

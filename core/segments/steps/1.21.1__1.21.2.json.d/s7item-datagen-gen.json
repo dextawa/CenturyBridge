@@ -223,9 +223,22 @@
   }
  ],
  "superRenames": {
-  "net/minecraft/class_2446": "top/dext/centurybridge/step/v1_21_2/facade/RecipeProvider"
+  "net/minecraft/class_2446": "top/dext/centurybridge/step/v1_21_2/facade/RecipeProvider",
+  "net/minecraft/class_7803": "top/dext/centurybridge/step/v1_21_2/facade/VanillaRecipeProvider"
+ },
+ "classRenames": {
+  "net/minecraft/class_7801": "top/dext/centurybridge/step/v1_21_2/facade/BundleRecipeProvider"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_7803.<init>(Lnet/minecraft/class_7784;Ljava/util/concurrent/CompletableFuture;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#newVanillaRecipeProvider"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_7788.method_45995(Lnet/minecraft/class_1935;)Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen",
+  "net/minecraft/class_7789.method_46031(Lnet/minecraft/class_1935;)Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen",
+  "net/minecraft/class_3864.method_16992(Lnet/minecraft/class_5485$class_5495;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen"
  },
  "fieldGetters": {
+  "net/minecraft/class_7788.field_40604:Lnet/minecraft/class_5341$class_210;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen",
   "net/minecraft/class_6800.field_35767:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen",
   "net/minecraft/class_6811.field_35975:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen",
   "net/minecraft/class_8998.field_47509:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen"

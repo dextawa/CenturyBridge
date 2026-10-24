@@ -110,6 +110,9 @@ public final class CbWallRecipes {
     /** 26.1's CustomRecipe keeping 1.21.11's constructor category (mixin/CbWallCustomRecipeMixin) */
     public interface CustomCategory {
         void cb$setCategory(net.minecraft.world.item.crafting.CraftingBookCategory category);
+
+        /** the category a 1.21.11 constructor gave, null for a recipe 26.1 made */
+        net.minecraft.world.item.crafting.CraftingBookCategory cb$legacyCategory();
     }
 
     /** post of a 1.21.11 CustomRecipe subclass's super(category): the category its category() answers, as 1.21.11's did */

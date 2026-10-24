@@ -45,6 +45,22 @@ accessible method net/minecraft/class_554 method_45703 (Lnet/minecraft/class_561
 # s7render: RenderSection's compile / resort task types, read for 1.21.1's cancelTasks() answer (CbRenderSectionMixin)
 accessible class net/minecraft/class_846$class_851$class_4578
 accessible class net/minecraft/class_846$class_851$class_4579
+# s7render: PartPose's position/rotation and BakedSheetGlyph.EffectInstance's position/depth: 1.21.1's public fields are these record fields (fieldRenames), so mods' reads and mixins' field anchors follow
+accessible field net/minecraft/class_5603 comp_2997 F
+accessible field net/minecraft/class_5603 comp_2998 F
+accessible field net/minecraft/class_5603 comp_2999 F
+accessible field net/minecraft/class_5603 comp_3000 F
+accessible field net/minecraft/class_5603 comp_3001 F
+accessible field net/minecraft/class_5603 comp_3002 F
+accessible field net/minecraft/class_382$class_328 comp_3307 F
+accessible field net/minecraft/class_382$class_328 comp_3308 F
+accessible field net/minecraft/class_382$class_328 comp_3309 F
+accessible field net/minecraft/class_382$class_328 comp_3310 F
+accessible field net/minecraft/class_382$class_328 comp_3311 F
+# s7render: DelegateBakedModel's delegate, the model 1.21.1's MultiPartBakedModel copied its fields from (rt/CbRenderBake)
+accessible field net/minecraft/class_10200 field_54188 Lnet/minecraft/class_1087;
+# s7render: ModelPart's cubes, to build 1.21.1's ear / cloak parts from 1.21.2's ears / cape layers (CbRenderPlayerPartsMixin)
+accessible field net/minecraft/class_630 field_3663 Ljava/util/List;
 # s7render: RenderType.create, to build 1.21.1's entityTranslucentCull / entityGlintDirect render types 1.21.2 deleted (rt/CbRenderTypes)
 # s7render: LivingEntityRenderer's layers, to give 1.21.1's head scales to the head layer HumanoidMobRenderer adds (rt/CbRenderHeads)
 accessible field net/minecraft/class_922 field_4738 Ljava/util/List;
@@ -150,3 +166,6 @@ accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_56
 # ---- s7item: 1.21.1's builder constructors (dev-time datagen; rt/CbItemDatagen) ----
 accessible method net/minecraft/class_2447 <init> (Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)V
 accessible method net/minecraft/class_2450 <init> (Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)V
+accessible method net/minecraft/class_7803 <init> (Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_8790;)V
+extendable method net/minecraft/class_7803 <init> (Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_8790;)V
+accessible method net/minecraft/class_7803 method_10419 ()V

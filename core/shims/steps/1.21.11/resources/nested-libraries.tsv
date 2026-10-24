@@ -1,0 +1,18 @@
+# The game libraries Minecraft 1.21.11 dropped from its own list (Mojang's 1.21.10 version JSON vs 1.21.11's), given back
+# whole and verbatim as nested jars of this layer (core/tools/nest_libraries.py; sha1 = the 1.21.10 version JSON's).
+# Not given back: netty-codec 4.1.118 (splits packages with 4.2's netty: its removed classes are bridged as rows),
+# lz4-java 1.8.0 (its classes ship on as at.yawk.lz4:lz4-java 1.8.1), asm 9.6 (Fabric Loader brings its own).
+# release	artifact	sha1	licence
+1.21.10	com.fasterxml.jackson.core:jackson-annotations:2.13.4	858c6cc78e1f08a885b1613e1d817c829df70a6e	Apache-2.0
+1.21.10	com.fasterxml.jackson.core:jackson-core:2.13.4	0cf934c681294b97ef6d80082faeefbe1edadf56	Apache-2.0
+1.21.10	com.fasterxml.jackson.core:jackson-databind:2.13.4.2	325c06bdfeb628cfb80ebaaf1a26cc1eb558a585	Apache-2.0
+1.21.10	com.github.stephenc.jcip:jcip-annotations:1.0-1	ef31541dd28ae2cefdd17c7ebf352d93e9058c63	CC-BY-2.5
+1.21.10	com.nimbusds:content-type:2.3	e3aa0be212d7a42839a8f3f506f5b990bcce0222	Apache-2.0
+1.21.10	com.nimbusds:lang-tag:1.7	97c73ecd70bc7e8eefb26c5eea84f251a63f1031	Apache-2.0
+1.21.10	com.nimbusds:nimbus-jose-jwt:9.40	42b1dfa0360e4062951b070bac52dd8d96fd7b38	Apache-2.0
+1.21.10	com.nimbusds:oauth2-oidc-sdk:11.18	07c7ec4f4066625ff07a711ad856fa04da1ff9de	Apache-2.0
+1.21.10	commons-logging:commons-logging:1.3.4	b9fc14968d63a8b8a8a2c1885fe3e90564239708	Apache-2.0
+1.21.10	net.minidev:accessors-smart:2.5.1	19b820261eb2e7de7d5bde11d1c06e4501dd7e5f	Apache-2.0
+1.21.10	net.minidev:json-smart:2.5.1	4c11d2808d009132dfbbf947ebf37de6bf266c8e	Apache-2.0
+1.21.10	org.apache.httpcomponents:httpclient:4.5.14	1194890e6f56ec29177673f2f12d0b8e627dec98	Apache-2.0
+1.21.10	org.apache.httpcomponents:httpcore:4.4.16	51cf043c87253c9f58b539c9f7e44c8894223850	Apache-2.0

@@ -71,7 +71,9 @@
     "CbWallBrainProviderSnifferMixin",
     "CbWallBrainProviderBreezeMixin",
     "CbWallBrainProviderArmadilloMixin",
-    "CbWallFeatureRegisterMixin"
+    "CbWallFeatureRegisterMixin",
+    "CbWallRecipeKindsMixin",
+    "CbWallBannerDuplicateMixin"
   ],
   "client": [
     "CbFapiBlockColorsMixin",
@@ -106,6 +108,7 @@
     "CbWallInteractGameModeMixin",
     "CbWallItemFeatureRendererAccess",
     "CbWallItemStackRenderStateMixin",
+    "CbWallLayerDefinitionsMixin",
     "CbWallMinecraftAccess",
     "CbWallMinecraftMixin",
     "CbWallModelBlockRendererAccess",

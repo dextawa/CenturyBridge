@@ -90,6 +90,21 @@ public final class CbWallRegistryValues {
     }
 
     /**
+     * a cast to 1.21.11's RecipeSerializer (an interface there, 26.1's a final record): a 26.1 record read back
+     * from BuiltInRegistries.RECIPE_SERIALIZER, a recipe's getSerializer() or a holder is the 1.21.11 serializer it
+     * was registered for (CbWallRecipes, one each way)
+     */
+    public static Object castRecipeSerializer(Object o) {
+        return o instanceof net.minecraft.world.item.crafting.RecipeSerializer<?> r ? CbWallRecipes.serializer(r) : o;
+    }
+
+    /** instanceof 1.21.11's RecipeSerializer */
+    public static boolean isRecipeSerializer(Object o) {
+        return o instanceof top.dext.centurybridge.step.v26_1.facade.RecipeSerializer<?>
+            || o instanceof net.minecraft.world.item.crafting.RecipeSerializer<?>;
+    }
+
+    /**
      * a value read out of a loot context (LootContext.getParameter / getOptionalParameter, ContextMap's
      * getters): 26.1's TOOL is a ContextKey of ItemInstance and vanilla puts an ItemStackTemplate there where
      * it has no stack (Block.getDrops, /loot mine with a template), 1.21.11's was a key of ItemStack -- a

@@ -392,12 +392,14 @@ class TagFields:
         self.values = {}       # (owner, field) -> value
         self.reg_ids = self._registry_ids()
         self.by_tag = defaultdict(list)
+        self.raw = defaultdict(list)   # (registry, tag) -> [(owner, field)]
         for h in holders:
             if f"{h}.class" in self.zf.namelist():
                 self._eval(h)
         for (owner, field), val in self.values.items():
             if val and val[0] == "tag" and val[1]:
                 self.by_tag[(val[1], val[2])].append(self._label(owner, field))
+                self.raw[(val[1], val[2])].append((owner, field))
 
     def _label(self, owner, field):
         if self.year:
@@ -597,8 +599,10 @@ class Version:
         return self._fields
 
 
-def compare(V, W):
-    """rows, proxied registries"""
+def compare(V, W, details=None):
+    """rows, registries without a contents source, tags in both, tags removed in W. With a details
+    list, appends one dict per row for generators: key, kind, vset (V's resolved ids), successors
+    (W tags holding V's set; "new" = those V did not have), fields ([(owner, field)] of V)."""
     regs = V.registries | W.registries
     V.cover(regs)
     W.cover(regs)
@@ -661,6 +665,11 @@ def compare(V, W):
             cands.discard(tag)
             succ = ",".join(sorted(cands)) or "-"
         rows.append((reg, tag, kind, mark(rem, wc[reg]), mark(add, vc[reg], flagged), succ, ";".join(sorted(fields.get(key, []))) or "-"))
+        if details is not None:
+            succs = [] if succ == "-" else succ.split(",")
+            details.append({"key": key, "kind": kind, "vset": a, "successors": succs,
+                            "new_successors": [c for c in succs if (reg, c) not in vs],
+                            "fields": sorted(V.fields().raw.get(key, []))})
     return rows, unknown, len(set(vs) & set(ws)), len(set(vs) - set(ws))
 
 
