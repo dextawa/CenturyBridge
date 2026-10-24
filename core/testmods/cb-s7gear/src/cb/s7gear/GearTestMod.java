@@ -777,6 +777,19 @@ public class GearTestMod implements ModInitializer {
         class_1799[] items = vanilla.method_8105();
         check(items.length == 1 && items[0].method_31574(class_1802.field_8620), "its getItems(): the iron its 1.21.1 getMatchingStacks gave");
         check(IRON_SERIALIZER.getCodec(false) != null, "CustomIngredientSerializer.getCodec(false)");
+        class_1799 book = new class_1799(class_1802.field_8361);
+        book.method_57379(class_9334.field_49613, List.of(class_2960.method_60656("crafting_table")));
+        List<class_2960> recipes = book.method_57824(class_9334.field_49613);
+        check(recipes != null && recipes.size() == 1 && recipes.get(0).equals(class_2960.method_60656("crafting_table")),
+            "knowledge book RECIPES: set and get 1.21.1's ids: " + recipes);
+        class_1799 bottle = new class_1799(class_1802.field_50140);
+        bottle.method_57379(class_9334.field_50238, 3);
+        Integer amplifier = bottle.method_57824(class_9334.field_50238);
+        check(amplifier != null && amplifier == 3, "OMINOUS_BOTTLE_AMPLIFIER: set and get an Integer: " + amplifier);
+        class_1799 netherite = new class_1799(class_1802.field_22020);
+        check(netherite.method_57826(class_9334.field_50076) && netherite.method_57824(class_9334.field_50076) == net.minecraft.class_3902.field_17274
+                && !new class_1799(class_1802.field_8620).method_57826(class_9334.field_50076),
+            "FIRE_RESISTANT: netherite has it (Unit), iron not");
         check("cbs7gear".equals(((net.fabricmc.fabric.api.item.v1.FabricItem) CHEST).getCreatorNamespace(new class_1799(CHEST))) && "minecraft".equals(((net.fabricmc.fabric.api.item.v1.FabricItemStack) (Object) new class_1799(class_1802.field_8620)).getCreatorNamespace()),
             "FabricItem / FabricItemStack.getCreatorNamespace");
     }

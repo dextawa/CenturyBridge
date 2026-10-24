@@ -57,6 +57,110 @@
     "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemGeneric#overridesByModel(Ljava/util/Map;)Ljava/util/Map;"
    ],
    "basis": "TrimMaterial.create(.., overrides): 1.21.1's ArmorMaterial keys as 1.21.2's equipment model ids"
+  },
+  "net/minecraft/class_9322.method_57824(Lnet/minecraft/class_9331;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+   "ops": [
+    "keep"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toV(Ljava/lang/Object;)Ljava/lang/Object;"
+  },
+  "net/minecraft/class_9322.method_57825(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toW(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toV(Ljava/lang/Object;)Ljava/lang/Object;"
+  },
+  "net/minecraft/class_9323.method_57829(Lnet/minecraft/class_9331;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+   "ops": [
+    "keep"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toV(Ljava/lang/Object;)Ljava/lang/Object;"
+  },
+  "net/minecraft/class_9323.method_57830(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toW(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toV(Ljava/lang/Object;)Ljava/lang/Object;"
+  },
+  "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toW(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toV(Ljava/lang/Object;)Ljava/lang/Object;"
+  },
+  "net/minecraft/class_1799.method_57381(Lnet/minecraft/class_9331;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+   "ops": [
+    "keep"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toV(Ljava/lang/Object;)Ljava/lang/Object;"
+  },
+  "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toW(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "conv:0,2 top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#operator(Lnet/minecraft/class_9331;Ljava/util/function/UnaryOperator;)Ljava/util/function/UnaryOperator;"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toV(Ljava/lang/Object;)Ljava/lang/Object;"
+  },
+  "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toW(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "keep:2",
+    "conv:0,3 top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#biFunction(Lnet/minecraft/class_9331;Ljava/util/function/BiFunction;)Ljava/util/function/BiFunction;"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toV(Ljava/lang/Object;)Ljava/lang/Object;"
+  },
+  "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;": {
+   "desc": "(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toW(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)"
+  },
+  "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;": {
+   "desc": "(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toW(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)"
+  },
+  "net/minecraft/class_9326.method_57845(Lnet/minecraft/class_9331;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_9331;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toV(Ljava/util/Optional;)Ljava/util/Optional;"
+  },
+  "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;": {
+   "desc": "(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues#toW(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "a component value handed in / taken out: RECIPES ids <-> keys, OMINOUS_BOTTLE_AMPLIFIER Integer <-> OminousBottleAmplifier, FIRE_RESISTANT's Unit <-> DamageResistant(is_fire) (CbItemComponentValues)"
   }
  },
  "convertHooks": [
@@ -66,5 +170,44 @@
    "ret": "top/dext/centurybridge/step/v1_21_2/rt/CbItemGeneric#tagLists(Ljava/util/Map;)Ljava/util/Map;",
    "basis": "a 1.21.1 TagLoader.build(..) override answers Collection values; 1.21.2's loader reads Lists"
   }
- ]
+ ],
+ "genericWitnesses": {
+  "net/minecraft/class_9334.field_49613:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57381(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+    "net/minecraft/class_9322.method_57824(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+    "net/minecraft/class_9322.method_57825(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9323.method_57829(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+    "net/minecraft/class_9323.method_57830(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9326.method_57845(Lnet/minecraft/class_9331;)Ljava/util/Optional;"
+   ],
+   "basis": "the component type passes unchanged (the same 1.21.2 object); its values convert at every site a mod hands one in or takes one out (CbItemComponentValues)"
+  },
+  "net/minecraft/class_9334.field_50238:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57381(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+    "net/minecraft/class_9322.method_57824(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+    "net/minecraft/class_9322.method_57825(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9323.method_57829(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+    "net/minecraft/class_9323.method_57830(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9326.method_57845(Lnet/minecraft/class_9331;)Ljava/util/Optional;"
+   ],
+   "basis": "the component type passes unchanged (the same 1.21.2 object); its values convert at every site a mod hands one in or takes one out (CbItemComponentValues)"
+  }
+ },
+ "fieldGetters": {
+  "net/minecraft/class_9334.field_50076:Lnet/minecraft/class_9331;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemComponentValues"
+ }
 }
