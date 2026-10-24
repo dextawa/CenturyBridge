@@ -389,6 +389,8 @@ public class SwallTestMod implements ModInitializer {
         check("tagDrift.dirt", net.minecraft.class_2246.field_10219.method_9564().method_26164(net.minecraft.class_3481.field_29822)
             && net.minecraft.class_2246.field_10566.method_9564().method_26164(net.minecraft.class_3481.field_29822)
             && !net.minecraft.class_2246.field_10340.method_9564().method_26164(net.minecraft.class_3481.field_29822), "");
+        check("tagDrift.itemDirt", new net.minecraft.class_1799(net.minecraft.class_1802.field_8270).method_31573(net.minecraft.class_3489.field_36269)
+            && !new net.minecraft.class_1799(net.minecraft.class_1802.field_20391).method_31573(net.minecraft.class_3489.field_36269), "");
         net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
         net.minecraft.class_2743.field_47981.encode(buf, new net.minecraft.class_2743(42, new net.minecraft.class_243(0.5, 0.25, -1.0)));
         net.minecraft.class_2743 back = net.minecraft.class_2743.field_47981.decode(buf);
@@ -397,6 +399,33 @@ public class SwallTestMod implements ModInitializer {
         net.minecraft.class_2540 buf2 = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
         ids.encode(buf2, 7);
         check("streamCodec.motion", back.method_11818() == 42 && ids.decode(buf2) == 7, back.method_11818());
+    }
+
+    /** ArmorDye / MapCloning / TippedArrow, removed in 26.1, given back with 1.21.11's bodies and serializers */
+    private static void removedRecipes(MinecraftServer server) {
+        net.minecraft.class_7225.class_7874 registries = server.method_30611();
+        net.minecraft.class_1799 e = net.minecraft.class_1799.field_8037;
+        net.minecraft.class_1849 dye = new net.minecraft.class_1849(net.minecraft.class_7710.field_40251);
+        net.minecraft.class_9694 dyeGrid = net.minecraft.class_9694.method_59986(2, 1, List.of(
+            new net.minecraft.class_1799(net.minecraft.class_1802.field_8267), new net.minecraft.class_1799(net.minecraft.class_1802.field_8264)));
+        net.minecraft.class_1799 dyed = dye.method_17700(dyeGrid, registries);
+        check("recipe.armorDye", dye.method_17701(dyeGrid, server.method_30002()) && dyed.method_57826(net.minecraft.class_9334.field_49644)
+            && dye.method_8119() == net.minecraft.class_1865.field_9028
+            && "minecraft:crafting_special_armordye".equals(String.valueOf(net.minecraft.class_7923.field_41189.method_10221(
+                net.minecraft.class_7923.field_41189.method_63535(net.minecraft.class_2960.method_60656("crafting_special_armordye"))))), dyed);
+        java.util.List<net.minecraft.class_1799> grid = new java.util.ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            grid.add(new net.minecraft.class_1799(i == 4 ? net.minecraft.class_1802.field_8150 : net.minecraft.class_1802.field_8107));
+        }
+        net.minecraft.class_1876 tipped = new net.minecraft.class_1876(net.minecraft.class_7710.field_40251);
+        net.minecraft.class_9694 arrows = net.minecraft.class_9694.method_59986(3, 3, grid);
+        net.minecraft.class_1799 out = tipped.method_17740(arrows, registries);
+        check("recipe.tippedArrow", tipped.method_17741(arrows, server.method_30002()) && out.method_31574(net.minecraft.class_1802.field_8087)
+            && out.method_7947() == 8 && tipped.method_8119() == net.minecraft.class_1865.field_9037, out);
+        net.minecraft.class_1855 maps = new net.minecraft.class_1855(net.minecraft.class_7710.field_40251);
+        check("recipe.mapCloning", !maps.method_17715(net.minecraft.class_9694.method_59986(2, 1, List.of(
+            new net.minecraft.class_1799(net.minecraft.class_1802.field_8895), e)), server.method_30002())
+            && maps.method_8119() == net.minecraft.class_1865.field_9044, "");
     }
 
     /** generic drift at the wall read on a running server */
@@ -455,6 +484,7 @@ public class SwallTestMod implements ModInitializer {
             removedFeatures(server);
             worldgenConfigs();
             driftPilots();
+            removedRecipes(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);

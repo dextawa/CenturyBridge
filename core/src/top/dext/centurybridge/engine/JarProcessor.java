@@ -2475,6 +2475,9 @@ public final class JarProcessor {
                 }
             } else if (name.startsWith("META-INF/jars/") && name.endsWith(".jar")) {
                 Map<String, byte[]> nested = readAll(e.getValue());
+                if (verbatimLibrary(nested.get("fabric.mod.json"))) {
+                    continue; // a library a layer gives back whole (nest_libraries.py): carried byte for byte
+                }
                 // sibling nested jars share the flat runtime classpath too, so
                 // the nested jar's own name joins the uniqueness tag
                 String nestedTag = jarTag + "_" + name.substring("META-INF/jars/".length())
@@ -2753,6 +2756,24 @@ public final class JarProcessor {
         return buf.toByteArray();
     }
 
+    /**
+     * A nested jar marked "centurybridge:verbatim" in its fabric.mod.json custom values: a whole library a step layer gives
+     * back (core/tools/nest_libraries.py: the release's own artifact, checked against its version-JSON sha1). Converting,
+     * remapping or repairing it would change a library that has no Minecraft reference to change: it climbs byte for byte.
+     */
+    public static boolean verbatimLibrary(byte[] fmj) {
+        if (fmj == null) {
+            return false;
+        }
+        try {
+            var root = com.google.gson.JsonParser.parseString(new String(fmj, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            var custom = root.getAsJsonObject("custom");
+            return custom != null && custom.has("centurybridge:verbatim") && custom.get("centurybridge:verbatim").getAsBoolean();
+        } catch (RuntimeException ex) {
+            return false;
+        }
+    }
+
     private static Map<String, byte[]> readAll(byte[] jar) throws IOException {
         Map<String, byte[]> entries = new LinkedHashMap<>();
         try (ZipInputStream zin = new ZipInputStream(new ByteArrayInputStream(jar))) {
@@ -2858,6 +2879,9 @@ public final class JarProcessor {
             String name = e.getKey();
             if (name.startsWith("META-INF/jars/") && name.endsWith(".jar")) {
                 Map<String, byte[]> nested = readAll(e.getValue());
+                if (verbatimLibrary(nested.get("fabric.mod.json"))) {
+                    continue;
+                }
                 if (repairLayer(nested, repair, rpt, tag + "(bundled) ")) {
                     e.setValue(writeJar(nested));
                     changed = true;

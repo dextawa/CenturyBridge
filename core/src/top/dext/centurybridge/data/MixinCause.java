@@ -70,7 +70,7 @@ import top.dext.centurybridge.engine.Wiring;
  *   ordinal-shift             the counterpart is another ordinal (remappable: V#i -> W#j)
  *   ordinal-site-lost / count-ambiguous
  *
- *   mixin-cause <V code jar> <W code jar> <wiring.json> <open-mixin.tsv> <out.tsv> [<index.tsv> <report.md>]
+ *   mixin-cause <V code jar> <W code jar> <wiring.json> <open-mixin.tsv> <out.tsv> [<index.tsv> <report.md> [<layer jar>]] [--wall <table>]
  * out.tsv: the open rows with cause and evidence; stdout: counts per cause (rows and distinct targets).
  * With the isolated probe's index and the converter's report (mixin_step.sh's mixin/), a wired target
  * is split by what MixinBridge / repair / triage said about that very probe member ("wired: <why>").
@@ -129,6 +129,22 @@ public final class MixinCause {
         }
 
         /** declared on owner or a superclass / superinterface */
+        /** a member of that name (any descriptor) on owner or a supertype */
+        boolean resolvesName(String owner, String name, boolean field) {
+            Set<String> seen = new HashSet<>();
+            List<String> todo = new ArrayList<>(List.of(owner));
+            while (!todo.isEmpty()) {
+                String c = todo.remove(todo.size() - 1);
+                if (!seen.add(c)) continue;
+                ClassNode cn = get(c);
+                if (cn == null) continue;
+                if (field ? cn.fields.stream().anyMatch(f -> f.name.equals(name)) : cn.methods.stream().anyMatch(m -> m.name.equals(name))) return true;
+                if (cn.superName != null) todo.add(cn.superName);
+                todo.addAll(cn.interfaces);
+            }
+            return false;
+        }
+
         boolean resolves(String owner, String name, String desc, boolean field) {
             Set<String> seen = new HashSet<>();
             List<String> todo = new ArrayList<>(List.of(owner));
@@ -174,7 +190,18 @@ public final class MixinCause {
     }
 
     public static void run(String[] args) throws IOException {
-        MixinCause mc = new MixinCause(Path.of(args[1]), Path.of(args[2]), Wiring.read(Path.of(args[3])));
+        // --wall <table>: the namespace wall step. The rows, the wiring and V's code are intermediary; W's
+        // code is taken into the same namespace (WallInverse, as MixinBridge sees it at the wall)
+        java.util.List<String> argl = new java.util.ArrayList<>(java.util.Arrays.asList(args));
+        Path wJar = Path.of(argl.get(2));
+        int wi = argl.indexOf("--wall");
+        if (wi > 0) {
+            wJar = top.dext.centurybridge.engine.WallInverse.intermediaryView(wJar, Path.of(argl.get(1)), Path.of(argl.get(wi + 1)));
+            argl.remove(wi + 1);
+            argl.remove(wi);
+        }
+        args = argl.toArray(new String[0]);
+        MixinCause mc = new MixinCause(Path.of(args[1]), wJar, Wiring.read(Path.of(args[3])));
         List<String> lines = Files.readAllLines(Path.of(args[4]), StandardCharsets.UTF_8);
         String[] head = lines.get(0).split("\t", -1);
         Map<String, Integer> col = new HashMap<>();
@@ -215,7 +242,7 @@ public final class MixinCause {
                 } catch (RuntimeException ex) {
                     vd = new Verdict("triage-error", String.valueOf(ex));
                 }
-                o.println(line + "\t" + vd.cause() + "\t" + vd.evidence());
+                o.println(line + "\t" + vd.cause().replaceAll("[\\t\\r\\n]+", " ") + "\t" + vd.evidence().replaceAll("[\\t\\r\\n]+", " "));
                 counts.computeIfAbsent(vd.cause(), x -> new int[1])[0]++;
                 targets.computeIfAbsent(vd.cause(), x -> new HashSet<>()).add(r.owner() + "." + r.target());
             }
@@ -383,6 +410,13 @@ public final class MixinCause {
         if (best != null && bs >= 0.6 && bs - second >= 0.2) {
             return new Verdict("target-private-similar", best.name + best.desc + String.format(" (%.2f, next %.2f)", bs, second));
         }
+        // the only W method of V's exact descriptor and static-ness V has nothing of that name+desc for: a
+        // rename the body did not prove (a candidate to judge, never "gone")
+        List<MethodNode> sameDesc = new ArrayList<>();
+        for (MethodNode m : cands) if (m.desc.equals(vm.desc)) sameDesc.add(m);
+        if (sameDesc.size() == 1) {
+            return new Verdict("target-private-rename-candidate", sameDesc.get(0).name + sameDesc.get(0).desc + " (only unmatched method of the descriptor)");
+        }
         return new Verdict("target-private-gone", access(vm.access) + " " + vm.name + vm.desc);
     }
 
@@ -402,6 +436,14 @@ public final class MixinCause {
         }
         if (hits.size() == 1) return new Verdict("target-private-rename", hits.get(0).name + ":" + hits.get(0).desc + " (same uses)");
         if (hits.size() > 1) return new Verdict("target-private-ambiguous", hits.size() + " W fields with the same uses");
+        // the only W field of the type and static-ness V has no field of that name for: a rename the uses did
+        // not prove (its uses changed, or past the wall a name the table missed: GuiSignRenderer.materials ->
+        // sprites). A candidate to judge, never "gone"
+        List<FieldNode> cand = new ArrayList<>();
+        for (FieldNode f : wc.fields) {
+            if (!vnames.contains(f.name) && f.desc.equals(vf.desc) && (f.access & Opcodes.ACC_STATIC) == (vf.access & Opcodes.ACC_STATIC)) cand.add(f);
+        }
+        if (cand.size() == 1) return new Verdict("target-private-rename-candidate", cand.get(0).name + ":" + cand.get(0).desc + " (only unmatched field of the type)");
         return new Verdict("target-private-gone", access(vf.access) + " " + vf.name + ":" + vf.desc);
     }
 
@@ -516,14 +558,21 @@ public final class MixinCause {
         if (avc == null) return new Verdict("anchor-member-gone", "outside the game: " + key);
         if (a.kind().equals("INVOKE")) {
             MethodNode am = v.method(a.owner(), a.name(), a.desc());
-            if (am == null) return new Verdict("anchor-member-gone", "inherited: " + key);
+            if (am == null) {
+                // declared above the owner in V: re-described there (same name, another descriptor) is no removal
+                return w.resolvesName(a.owner(), a.name(), false) ? new Verdict("anchor-reshaped", "inherited, same name in W: " + key)
+                    : new Verdict("anchor-member-gone", "inherited: " + key);
+            }
             if (w.get(a.owner()) == null) return new Verdict("anchor-member-gone", "class gone: " + a.owner());
             if (api(am.access)) return new Verdict("anchor-api-gone", key);
             Verdict p = privateMethod(a.owner(), am);
             return new Verdict(p.cause().replace("target-", "anchor-"), p.evidence());
         }
         FieldNode af = v.field(a.owner(), a.name(), a.desc());
-        if (af == null) return new Verdict("anchor-member-gone", "inherited: " + key);
+        if (af == null) {
+            return w.resolvesName(a.owner(), a.name(), true) ? new Verdict("anchor-reshaped", "inherited, same name in W: " + key)
+                : new Verdict("anchor-member-gone", "inherited: " + key);
+        }
         if (w.get(a.owner()) == null) return new Verdict("anchor-member-gone", "class gone: " + a.owner());
         if (api(af.access)) return new Verdict("anchor-api-gone", key);
         Verdict p = privateField(a.owner(), af);

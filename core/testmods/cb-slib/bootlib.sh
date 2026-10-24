@@ -18,12 +18,19 @@ if [ ! -f "$SRV/fabric-server.jar" ]; then
 fi
 CONV=$WD/boot/$TAG
 rm -rf "$CONV" && mkdir -p "$CONV"
+# CB_NO_CONVERT=1: a control boot of W itself -- nothing converted, no layer, only CB_EXTRA_MODS
+if [ -z "${CB_NO_CONVERT:-}" ]; then
 "$JAVA" -Xmx4g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" "$V" "$W" "$CONV/conv" "$@" \
     > "$CONV/climb.log" 2>&1 || { echo "climb failed"; tail -5 "$CONV/climb.log"; exit 1; }
+fi
 rm -rf "$SRV/mods" "$SRV/world-$TAG" && mkdir -p "$SRV/mods"
 cp data/runtime/client-$W/mods/fabric-api-*.jar "$SRV/mods/"
-cp $WD/build/centurybridge-0.3.0+$W.jar "$SRV/mods/"
-cp "$CONV"/conv/*+$W.jar "$SRV/mods/"
+if [ -z "${CB_NO_CONVERT:-}" ]; then
+    cp ${CB_LAYER:-$WD/build/centurybridge-0.3.0+$W.jar} "$SRV/mods/"  # CB_LAYER: another built layer jar (or several, CB_RUNTIME_DIR-style)
+    cp "$CONV"/conv/*+$W.jar "$SRV/mods/"
+fi
+# CB_EXTRA_MODS: W-era mods copied in as they are (not converted)
+for m in ${CB_EXTRA_MODS:-}; do cp "$m" "$SRV/mods/"; done
 cp "$SRV/server.properties.orig" "$SRV/server.properties"
 sed -i "s/^level-name=.*/level-name=world-$TAG/" "$SRV/server.properties"
 echo "mods: $(ls "$SRV/mods" | tr '\n' ' ')"
@@ -32,7 +39,7 @@ timeout 400 "$JAVA" -Xmx3g -jar fabric-server.jar nogui > "boot-$TAG.log" 2>&1 <
 PID=$!
 for i in $(seq 1 190); do
     sleep 2
-    grep -qaE 'CB-SLIB DONE|Minecraft has crashed|Crash report|A mod crashed|Incompatible|Failed to start|Exception in thread "main"' "boot-$TAG.log" && break
+    grep -qaE "${CB_DONE:-CB-SLIB DONE}|Minecraft has crashed|Crash report|A mod crashed|Incompatible|Failed to start|Exception in thread \"main\"" "boot-$TAG.log" && break
 done
 sleep 2
 grep -aE 'CB-SLIB|/ERROR|Caused by|Exception|crashed|NoClassDefFound|NoSuchMethod|AbstractMethod|VerifyError|IncompatibleClassChange' "boot-$TAG.log" | head -80

@@ -1,0 +1,171 @@
+{
+ "_lib_basis": "slib library front of step 1 (1.20.1 -> 1.20.2; core/segments/damage-lib/1.20.1__1.20.2.tsv, read against 1.20.1's own libraries): authlib 4.0.43 -> 5.0.47 core (rt/v1_20_2/CbLibAuthlib, facade/v1_20_2/AuthlibAgent); 4.0.43's semantics read off its bytecode",
+ "methodRenames": {
+  "com/mojang/authlib/properties/Property.getName()Ljava/lang/String;": "name",
+  "com/mojang/authlib/properties/Property.getValue()Ljava/lang/String;": "value",
+  "com/mojang/authlib/properties/Property.getSignature()Ljava/lang/String;": "signature"
+ },
+ "classRenames": {
+  "com/mojang/authlib/Agent": "top/dext/centurybridge/facade/v1_20_2/AuthlibAgent"
+ },
+ "ctorRedirects": {
+  "com/mojang/authlib/GameProfile.<init>(Ljava/util/UUID;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#gameProfile",
+  "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.<init>(Ljava/net/Proxy;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#authenticationService",
+  "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.<init>(Ljava/net/Proxy;Ljava/lang/String;Lcom/mojang/authlib/Environment;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#authenticationService",
+  "com/mojang/authlib/yggdrasil/YggdrasilGameProfileRepository.<init>(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;Lcom/mojang/authlib/Environment;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#profileRepository"
+ },
+ "superCtorReshapes": {
+  "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.<init>(Ljava/net/Proxy;Ljava/lang/String;)V": {
+   "desc": "(Ljava/net/Proxy;)V",
+   "ops": [
+    "keep",
+    "drop"
+   ],
+   "basis": "authlib 5.0.47 dropped the client token, which only legacy login used"
+  },
+  "com/mojang/authlib/yggdrasil/YggdrasilAuthenticationService.<init>(Ljava/net/Proxy;Ljava/lang/String;Lcom/mojang/authlib/Environment;)V": {
+   "desc": "(Ljava/net/Proxy;Lcom/mojang/authlib/Environment;)V",
+   "ops": [
+    "keep",
+    "drop",
+    "keep"
+   ],
+   "basis": "authlib 5.0.47 dropped the client token, which only legacy login used"
+  },
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.<init>(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;Lcom/mojang/authlib/Environment;)V": {
+   "desc": "(Lcom/mojang/authlib/yggdrasil/ServicesKeySet;Ljava/net/Proxy;Lcom/mojang/authlib/Environment;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#servicesKeySet(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;)Lcom/mojang/authlib/yggdrasil/ServicesKeySet;",
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#proxy(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;)Ljava/net/Proxy;",
+    "keep:1"
+   ],
+   "post": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#rememberAuthService(Lcom/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService;Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "authlib 5.0.47's session service takes the key set and proxy the 4.0.43 authentication service held; the service itself is remembered for getAuthenticationService"
+  },
+  "com/mojang/authlib/yggdrasil/YggdrasilGameProfileRepository.<init>(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;Lcom/mojang/authlib/Environment;)V": {
+   "desc": "(Ljava/net/Proxy;Lcom/mojang/authlib/Environment;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#proxy(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;)Ljava/net/Proxy;",
+    "keep:1"
+   ],
+   "basis": "authlib 5.0.47's repository takes the proxy the 4.0.43 authentication service held"
+  }
+ },
+ "staticRedirects": {
+  "com/mojang/authlib/Environment.create(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/mojang/authlib/Environment;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/util/UUIDTypeAdapter.fromUUID(Ljava/util/UUID;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/util/UUIDTypeAdapter.fromString(Ljava/lang/String;)Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib"
+ },
+ "fieldGetters": {
+  "com/mojang/authlib/EnvironmentParser.PROP_AUTH_HOST:Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib"
+ },
+ "instanceRedirects": {
+  "com/mojang/authlib/GameProfile.getId()Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/GameProfile.isComplete()Z": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/GameProfile.isLegacy()Z": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/Environment.getAuthHost()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/Environment.getAccountsHost()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/Environment.getSessionHost()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/Environment.getServicesHost()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/Environment.getName()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/Environment.asString()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/ProfileLookupCallback.onProfileLookupFailed(Lcom/mojang/authlib/GameProfile;Ljava/lang/Exception;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/GameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilGameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/HttpAuthenticationService.createUrlConnection(Ljava/net/URL;)Ljava/net/HttpURLConnection;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/HttpAuthenticationService.performPostRequest(Ljava/net/URL;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.getAuthenticationService()Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/minecraft/MinecraftSessionService.joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/minecraft/MinecraftSessionService.hasJoinedServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/minecraft/MinecraftSessionService.fillProfileProperties(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.hasJoinedServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.fillProfileProperties(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.fillGameProfile(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib"
+ },
+ "superRedirects": {
+  "com/mojang/authlib/HttpAuthenticationService.createUrlConnection(Ljava/net/URL;)Ljava/net/HttpURLConnection;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/HttpAuthenticationService.performGetRequest(Ljava/net/URL;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/HttpAuthenticationService.performPostRequest(Ljava/net/URL;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.fillGameProfile(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.getAuthenticationService()Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.fillProfileProperties(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.hasJoinedServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/yggdrasil/YggdrasilGameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#superFindProfilesByNames",
+  "com/mojang/authlib/GameProfile.isComplete()Z": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib",
+  "com/mojang/authlib/GameProfile.isLegacy()Z": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib"
+ },
+ "overrideHooks": [
+  {
+   "old": "onProfileLookupFailed(Lcom/mojang/authlib/GameProfile;Ljava/lang/Exception;)V",
+   "new": "onProfileLookupFailed(Ljava/lang/String;Ljava/lang/Exception;)V",
+   "onlyUnder": "com/mojang/authlib/ProfileLookupCallback",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLibProfileFailedOld",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib.failedBridge(Ltop/dext/centurybridge/rt/v1_20_2/CbLibProfileFailedOld;Ljava/lang/String;Ljava/lang/Exception;)V",
+   "basis": "authlib 5.0.47's repository reports a failed name; 4.0.43's handed a name-only profile"
+  },
+  {
+   "old": "findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V",
+   "new": "findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/ProfileLookupCallback;)V",
+   "onlyUnder": "com/mojang/authlib/GameProfileRepository",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLibProfileRepositoryOld",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib.findProfilesByNamesBridge(Ltop/dext/centurybridge/rt/v1_20_2/CbLibProfileRepositoryOld;[Ljava/lang/String;Lcom/mojang/authlib/ProfileLookupCallback;)V",
+   "basis": "authlib 5.0.47 looks up game profiles without an agent; a 4.0.43 repository is asked for MINECRAFT",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "com/mojang/authlib/minecraft/MinecraftSessionService",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLibSessionOld",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "requires": [
+    "joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V",
+    "hasJoinedServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/GameProfile;",
+    "fillProfileProperties(Lcom/mojang/authlib/GameProfile;Z)Lcom/mojang/authlib/GameProfile;"
+   ],
+   "synth": [
+    {
+     "new": "joinServer(Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;)V",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib.joinServerBridge(Ltop/dext/centurybridge/rt/v1_20_2/CbLibSessionOld;Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;)V"
+    },
+    {
+     "new": "hasJoinedServer(Ljava/lang/String;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/yggdrasil/ProfileResult;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib.hasJoinedServerBridge(Ltop/dext/centurybridge/rt/v1_20_2/CbLibSessionOld;Ljava/lang/String;Ljava/lang/String;Ljava/net/InetAddress;)Lcom/mojang/authlib/yggdrasil/ProfileResult;"
+    },
+    {
+     "new": "fetchProfile(Ljava/util/UUID;Z)Lcom/mojang/authlib/yggdrasil/ProfileResult;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib.fetchProfileBridge(Ltop/dext/centurybridge/rt/v1_20_2/CbLibSessionOld;Ljava/util/UUID;Z)Lcom/mojang/authlib/yggdrasil/ProfileResult;"
+    }
+   ],
+   "basis": "authlib 5.0.47's game calls joinServer by id, hasJoinedServer by name and fetchProfile by id; a 4.0.43 session service answered the profile shapes (rt/v1_20_2/CbLibAuthlib bridges)"
+  }
+ ],
+ "lambdaAdapters": {
+  "com/mojang/authlib/GameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/Agent;Lcom/mojang/authlib/ProfileLookupCallback;)V": {
+   "iface": "top/dext/centurybridge/rt/v1_20_2/CbLibProfileRepositoryOld",
+   "adapt": "top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#repositoryFromLambda(Ltop/dext/centurybridge/rt/v1_20_2/CbLibProfileRepositoryOld;)Lcom/mojang/authlib/GameProfileRepository;"
+  }
+ },
+ "ledger": {
+  "com/mojang/authlib/properties/Property": "authlib 5.0.47 made Property a final record (javap: public final class com.mojang.authlib.properties.Property extends java.lang.Record): a mod subclass cannot load, and no other class can stand where 1.20.2 code takes a Property. Calls are renamed (name/value/signature)",
+  "com/mojang/authlib/Environment": "authlib 5.0.47 made Environment a final record where 4.0.43's was an interface (javap): a mod's own Environment implementation cannot be one, and 1.20.2 code takes only the record. Every call on an Environment is bridged (rt/v1_20_2/CbLibAuthlib)"
+ },
+ "callReshapes": {
+  "com/mojang/authlib/yggdrasil/YggdrasilServicesKeyInfo.get(Ljava/net/URL;Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;)Lcom/mojang/authlib/yggdrasil/ServicesKeySet;": {
+   "desc": "(Ljava/net/URL;Lcom/mojang/authlib/minecraft/client/MinecraftClient;)Lcom/mojang/authlib/yggdrasil/ServicesKeySet;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbLibAuthlib#unauthenticatedClient(Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;)Lcom/mojang/authlib/minecraft/client/MinecraftClient;"
+   ],
+   "basis": "4.0.43 fetched the services keys unauthenticated over the authentication service's proxy; 5.0.47 takes that client"
+  }
+ }
+}

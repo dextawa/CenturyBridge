@@ -16,7 +16,8 @@ Ledgered (each reason is what mixin-cause verified; nothing else is):
   target-wired: ... no W method holds its code / disabled, target gone
                            gone from W; the step's wiring rebuilds it for mods' calls in layer code (redirects),
                            vanilla no longer runs it, and no W method holds its code
-  anchor-unused-here / anchor-member-gone / anchor-private-gone / constant-gone   (positional @Inject rows only)
+  anchor-member-gone / anchor-private-gone / constant-gone   (positional @Inject rows only; never
+                           anchor-unused-here: there the member still exists and only moved)
                            the anchor no longer stands in the target, in what the target calls (depth 2) or in
                            the lambdas it makes, and no single instruction of its kind stands between the same
                            neighbours (MixinBridge's stand-in search); an anchor on an API member W dropped is
@@ -27,7 +28,8 @@ Left open (mechanisms or a step agent's judgment): the API side still open (targ
 reshaped or only similar, anchors moved into callees with several call sites, wired anchors, counts and
 ordinals, constants with a candidate, renamed vanilla classes.
 
-  python gen_mixin_ledger.py <cause-mixin.tsv> <out fragment.json>
+  python gen_mixin_ledger.py [--strict] <cause-mixin.tsv> <out fragment.json>
+      (--strict leaves rows on members the wiring speaks of open: facade classes, redirects, covers, reshapes)
       writes {"mixinLedger": {key: reason}}: key "<owner>" (class), "<owner>.<target>" (member) or
       "<owner>.<target> @ <anchor>" (one anchor of a member)
   python gen_mixin_ledger.py --count <open-mixin.tsv> <wiring.json>
@@ -41,7 +43,8 @@ import sys
 
 # anchors whose own member is not API (an API member gone is the step's API work: wired, MixinBridge carries
 # the anchor), judged only for positional @Inject rows -- the only injectors MixinBridge looks for a stand-in for
-ANCHOR_GONE = {"anchor-unused-here", "anchor-member-gone", "anchor-private-gone", "constant-gone"}
+# not "anchor-unused-here": the anchor's member still exists, the code moved -- mechanism work, never ledger
+ANCHOR_GONE = {"anchor-member-gone", "anchor-private-gone", "constant-gone"}
 
 
 def reason(cause, mojang, target, anchor, evidence, usage):
@@ -66,7 +69,12 @@ def key_of(kind, owner, target, anchor):
     return owner if kind == "class" else f"{owner}.{target}" if kind == "member" else f"{owner}.{target} @ {anchor}"
 
 
-def generate(cause_tsv, out):
+# --strict: rows on members the step's wiring speaks of (a facade class, a redirect / cover / reshape) are
+# left open: whether the layer's code gives a hook back is the area agent's question, not a removal
+WIRED = ("class-renamed-to-layer", "target-wired")
+
+
+def generate(cause_tsv, out, strict=False):
     led = {}
     by = collections.Counter()
     with open(cause_tsv, encoding="utf-8") as f:
@@ -74,6 +82,10 @@ def generate(cause_tsv, out):
         ix = {n: i for i, n in enumerate(head)}
         for line in f:
             r = line.rstrip("\n").split("\t")
+            if len(r) < len(head):
+                continue  # a broken line (evidence text with a line break)
+            if strict and r[ix["cause"]].startswith(WIRED):
+                continue
             kind, why = reason(r[ix["cause"]], r[ix["mojang"]], r[ix["target"]], r[ix["anchor"]], r[ix["evidence"]], r[ix["usage"]])
             if kind is None:
                 continue
@@ -104,6 +116,8 @@ def count(open_tsv, wiring):
         ix = {k: i for i, k in enumerate(head)}
         for line in f:
             r = line.rstrip("\n").split("\t")
+            if len(r) < len(head):
+                continue
             total += 1
             o, t, a = r[ix["owner"]], r[ix["target"]], r[ix["anchor"]]
             if o in led or f"{o}.{t}" in led or f"{o}.{t} @ {a}" in led:
@@ -114,5 +128,7 @@ def count(open_tsv, wiring):
 if __name__ == "__main__":
     if sys.argv[1] == "--count":
         count(sys.argv[2], sys.argv[3])
+    elif sys.argv[1] == "--strict":
+        generate(sys.argv[2], sys.argv[3], strict=True)
     else:
         generate(sys.argv[1], sys.argv[2])

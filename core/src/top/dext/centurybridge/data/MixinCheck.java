@@ -82,7 +82,10 @@ public final class MixinCheck {
             c.sources = SourceStubs.before(stubDir, targetVersion);
         }
         if (table != null && Files.exists(table)) {
-            c.wall = JarRemapper.loadTable(table).remapper();
+            // the conversion's descriptor choice for ids the table gives two names (Table.loadTarget)
+            JarRemapper.Table t = JarRemapper.loadTable(table);
+            JarRemapper.loadTarget(t, targetJar);
+            c.wall = t.remapper();
             for (String ln : Files.readAllLines(table)) {
                 String[] p = ln.split("\t");
                 if (p.length < 3) {

@@ -1,29 +1,10 @@
 {
-  "replace": false,
   "values": [
-    {
-      "id": "minecraft:leather_boots",
-      "required": false
-    },
-    {
-      "id": "minecraft:leather_chestplate",
-      "required": false
-    },
-    {
-      "id": "minecraft:leather_helmet",
-      "required": false
-    },
-    {
-      "id": "minecraft:leather_horse_armor",
-      "required": false
-    },
-    {
-      "id": "minecraft:leather_leggings",
-      "required": false
-    },
-    {
-      "id": "minecraft:wolf_armor",
-      "required": false
-    }
+    "minecraft:leather_helmet",
+    "minecraft:leather_chestplate",
+    "minecraft:leather_leggings",
+    "minecraft:leather_boots",
+    "minecraft:leather_horse_armor",
+    "minecraft:wolf_armor"
   ]
 }
