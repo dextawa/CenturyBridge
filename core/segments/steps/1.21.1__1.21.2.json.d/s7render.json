@@ -123,7 +123,11 @@
   "net/minecraft/class_837.method_32157(Lnet/minecraft/class_5599;Lnet/minecraft/class_4719;)Lnet/minecraft/class_837$class_4702;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSigns",
   "net/minecraft/class_837.method_32154()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSigns",
   "net/minecraft/class_895.method_32165()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDragons",
-  "net/minecraft/class_554.method_45703(Lnet/minecraft/class_5610;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBoats"
+  "net/minecraft/class_554.method_45703(Lnet/minecraft/class_5610;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBoats",
+  "net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFI)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
+  "net/minecraft/class_3887.method_23199(Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
+  "net/minecraft/class_922.method_23622(Lnet/minecraft/class_1309;F)I": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
+  "net/minecraft/class_976.method_32798(Lnet/minecraft/class_4587;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers"
  },
  "instanceRedirects": {
   "net/minecraft/class_799.method_3472()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
@@ -158,7 +162,8 @@
   "net/minecraft/class_8679.method_52834(ZLnet/minecraft/class_4184;Lnet/minecraft/class_4604;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections",
   "net/minecraft/class_846$class_851.method_3663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#cancelTasks",
   "net/minecraft/class_1007.method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands",
-  "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands"
+  "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands",
+  "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes"
  },
  "ctorRedirects": {
   "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#create",
@@ -957,6 +962,15 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays.renderText(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderDisplays$LegacyText;Lnet/minecraft/class_10071;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 class_8141.renderInner(display, subState, ...), 1.21.2's renderInner(state, ...): a mod renderer's override answers 1.21.2's calls (CbRenderDisplays)"
+  },
+  {
+   "old": "method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "onlyUnder": "net/minecraft/class_989",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItemInHand$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItemInHand.renderArmWithItem(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderItemInHand$Legacy;Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 ItemInHandLayer.renderArmWithItem(entity, stack, ..), 1.21.2's (state, bakedModel, stack, ..): a mod layer's override answers 1.21.2's calls with the entity of the state and the stack 1.21.2 passes; its super call reaches 1.21.1's body (covers, CbRenderItemInHand)"
   }
  ],
  "covers": [
@@ -1085,7 +1099,9 @@
   "net/minecraft/class_8138$class_8140.method_49055(Lnet/minecraft/class_8113$class_8122;Lnet/minecraft/class_8113$class_8122$class_8226;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
   "net/minecraft/class_8138$class_8141.method_49924(Lnet/minecraft/class_8113$class_8123;)Lnet/minecraft/class_8113$class_8123$class_8230;",
   "net/minecraft/class_8138$class_8141.method_49921(Lnet/minecraft/class_8113;)Ljava/lang/Object;",
-  "net/minecraft/class_8138$class_8141.method_49056(Lnet/minecraft/class_8113$class_8123;Lnet/minecraft/class_8113$class_8123$class_8230;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V"
+  "net/minecraft/class_8138$class_8141.method_49056(Lnet/minecraft/class_8113$class_8123;Lnet/minecraft/class_8113$class_8123$class_8230;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+  "net/minecraft/class_989.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+  "net/minecraft/class_5697.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"
  ],
  "ledger": {
   "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;": "getVertexProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
@@ -1499,6 +1515,47 @@
     -1
    ],
    "basis": "ItemModelGenerators.generateArmorTrims(armorItem) -> (item, modelId, equipmentModel, slot) (javap both: the same member, reshaped); arguments 1.21.2 replaced by render-state values carry -1, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_62424(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    -1,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "EntityRenderDispatcher.render(entity, x, y, z, yRot, partialTick, ..) -> the public render(entity, x, y, z, partialTick, ..) 1.21.2 runs for every entity (javap both: the same renderer lookup, offset, render, shadow, hitbox and crash report); the yaw has no counterpart"
+  },
+  "net/minecraft/class_989.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "renderArmWithItem(entity, stack, context, arm, ..) -> 1.21.2's (state, bakedModel, stack, context, arm, ..), the method vanilla's layer render calls (javap both: the same hand transform, rotations and offset); the entity is the state's, so only handlers not taking it follow"
+  },
+  "net/minecraft/class_5697.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "to": "method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "args": [
+    -1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "renderArmWithItem(entity, stack, context, arm, ..) -> 1.21.2's (state, bakedModel, stack, context, arm, ..), the method vanilla's layer render calls (javap both: the same hand transform, rotations and offset); the entity is the state's, so only handlers not taking it follow"
   }
  },
  "fieldRenames": {
@@ -2003,6 +2060,46 @@
     "drop"
    ],
    "basis": "RenderTarget._blitToScreen: 1.21.2 dropped the disableBlend flag (javap both bodies: the same colour mask, depth and viewport set-up, then the blit_screen program's draw; 1.21.1's optional GlStateManager._disableBlend() has no counterpart, the program's own blend state applies)"
+  },
+  "net/minecraft/class_877.method_3878(Lnet/minecraft/class_1531;)Z": {
+   "desc": "(Lnet/minecraft/class_1531;D)Z",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1297;)D"
+   ],
+   "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
+  },
+  "net/minecraft/class_897.method_3921(Lnet/minecraft/class_1297;)Z": {
+   "desc": "(Lnet/minecraft/class_1297;D)Z",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1297;)D"
+   ],
+   "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
+  },
+  "net/minecraft/class_915.method_23176(Lnet/minecraft/class_1533;)Z": {
+   "desc": "(Lnet/minecraft/class_1533;D)Z",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1297;)D"
+   ],
+   "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
+  },
+  "net/minecraft/class_922.method_4055(Lnet/minecraft/class_1309;)Z": {
+   "desc": "(Lnet/minecraft/class_1309;D)Z",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1297;)D"
+   ],
+   "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
+  },
+  "net/minecraft/class_927.method_4071(Lnet/minecraft/class_1308;)Z": {
+   "desc": "(Lnet/minecraft/class_1308;D)Z",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1297;)D"
+   ],
+   "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
   }
  }
 }

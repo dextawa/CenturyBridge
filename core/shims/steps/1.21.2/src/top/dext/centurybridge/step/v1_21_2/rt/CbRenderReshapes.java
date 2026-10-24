@@ -71,4 +71,25 @@ public final class CbRenderReshapes {
     public static net.minecraft.class_10219 noFrameCapture() {
         return null;
     }
+
+    /**
+     * EntityRenderer.shouldShowName(entity) and its overrides: 1.21.2 takes the entity's squared distance to the
+     * camera as well, which its extractRenderState computes as EntityRenderDispatcher.distanceToSqr(entity) -- so
+     * does a 1.21.1 call
+     */
+    public static double distanceToCameraSq(net.minecraft.class_1297 entity) {
+        return net.minecraft.class_310.method_1551().method_1561().method_23168(entity);
+    }
+
+    /**
+     * EntityRenderDispatcher.render(entity, x, y, z, yRot, partialTick, poseStack, buffers, light) (instanceRedirects):
+     * 1.21.2's public render(entity, x, y, z, partialTick, poseStack, buffers, light) is the same draw; it takes no
+     * yaw because each renderer's extractRenderState reads the entity's own rotation (1.21.1's living renderers
+     * already ignored the passed yaw for the body rotation)
+     */
+    public static void method_3954(net.minecraft.class_898 dispatcher, net.minecraft.class_1297 entity, double x, double y, double z,
+                                   float yRot, float partialTick, net.minecraft.class_4587 poseStack, net.minecraft.class_4597 buffers,
+                                   int light) {
+        dispatcher.method_62424(entity, x, y, z, partialTick, poseStack, buffers, light);
+    }
 }

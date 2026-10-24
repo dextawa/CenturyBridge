@@ -212,6 +212,8 @@
     "CbRenderDisplayMixin",
     "CbRenderDisplayTextMixin",
     "CbRenderGameMixin",
+    "CbRenderItemInHandMixin",
+    "CbRenderPlayerItemInHandMixin",
     "CbRenderGlyphMixin",
     "CbRenderHeadLayerMixin",
     "CbRenderHumanoidArm564Mixin",
