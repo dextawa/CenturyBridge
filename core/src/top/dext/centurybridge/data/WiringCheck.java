@@ -722,7 +722,9 @@ public final class WiringCheck {
                 }
                 String owner = targetName(facade.mapType(s.owner));
                 ClassNode cn = classes.containsKey(owner) ? classes.get(owner) : stub.get(owner);
-                String nm = to.substring(0, p);
+                String toName = to.substring(0, p);
+                // past the wall "to" is in the analysis namespace like every key: the name through the wall table
+                String nm = wall == null || toName.startsWith("<") ? toName : wall.mapMethodName(s.owner, toName, to.substring(p));
                 String nd = methodDesc(to.substring(p));
                 if (cn == null || cn.methods.stream().noneMatch(m -> m.name.equals(nm) && m.desc.equals(nd))) {
                     problems.add(where + ": " + owner + " does not itself declare " + nm + nd);
