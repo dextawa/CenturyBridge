@@ -277,6 +277,19 @@ public final class MixinCause {
         return out;
     }
 
+    /** why no stand-in was taken for a followed injector's anchor (MixinBridge.anchorGone), "" when unsaid */
+    private static String standIn(String l) {
+        if (l.contains("in its place W's body has no single")) return ": nothing stands in its place";
+        if (l.contains("does not take the operands")) return ": the stand-in takes other operands";
+        if (l.contains("reads the target's locals")) return ": the handler reads locals";
+        if (l.contains("is not carried to a stand-in")) return ": injector kind not carried";
+        if (l.contains("in its place the injector targets")) return ": several target methods";
+        if (l.contains("in its place the anchor does not stand")) return ": not in V's body as named";
+        if (l.contains("stands in place of all")) return ": the stand-in also stands elsewhere";
+        if (l.contains("different instructions stand in place")) return ": different stand-ins per site";
+        return "";
+    }
+
     private static String whyKind(String l) {
         if (l.startsWith("- stripped mixin")) {
             if (l.contains("became an interface")) return "stripped, target became an interface";
@@ -286,11 +299,11 @@ public final class MixinCause {
         if (l.startsWith("- disabled injector")) return l.contains("target gone") ? "disabled, target gone" : "disabled, anchor gone";
         if (l.contains("is split across W methods")) return "code split across W methods";
         if (l.contains("short of evidence")) return "no W method holds its code";
-        if (l.contains("W keeps its code there") && l.contains("no longer stands")) return "follows by code, anchor gone in the new method";
+        if (l.contains("W keeps its code there") && l.contains("no longer stands")) return "follows by code, anchor gone in the new method" + standIn(l);
         if (l.contains("W keeps its code there")) return "follows by code, handler cannot take it";
-        if (l.contains("in its place W's body has no single")) return "anchor gone, nothing stands in its place";
         if (l.contains("through an adapter")) return "hook reaches another method through an adapter";
-        if (l.contains("no longer stands")) return "follows, anchor gone in the new method";
+        if (l.contains("no longer stands")) return "follows, anchor gone in the new method" + standIn(l);
+        if (l.contains("in its place W's body has no single")) return "anchor gone, nothing stands in its place";
         if (l.contains("does not declare")) return "follows, new method not declared on target";
         if (l.contains("the wiring does not say")) return "hook through adapter, argument map unsaid";
         if (l.contains("shape changed")) return "call shape changed under a call-handling injector";

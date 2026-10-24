@@ -52,6 +52,12 @@ public final class JarProcessor {
      * same ClassRemapper as the rest of the class, so a facade-renamed old
      * parameter type lands on the facade.
      */
+    /** does W's code (in the analysis namespace) declare the class; false when no code is at hand */
+    static boolean wDeclares(Chain chain, String cls) {
+        MixinRepair w = MixinBridge.wcode(chain);
+        return w != null && w.declares(cls);
+    }
+
     /** verifier frame type for one parameter (locals are never widened here) */
     static Object frameType(org.objectweb.asm.Type t) {
         switch (t.getSort()) {
@@ -2541,7 +2547,17 @@ public final class JarProcessor {
             } else if (name.endsWith(".json") && name.contains("refmap") && !chain.classRenames.isEmpty()) {
                 // the mixins' refmap names classes in strings the class rewrite never reads: the
                 // step's class renames carried into its values (MixinClassRenames)
-                byte[] rew = MixinClassRenames.refmap(e.getValue(), chain.classRenames);
+                Map<String, String> vanillaRenames = MixinClassRenames.forVanilla(chain.classRenames, c -> wDeclares(chain, c));
+                byte[] rew = MixinClassRenames.refmap(e.getValue(), chain.classRenames, mixinCls -> {
+                    byte[] mb = entries.get(mixinCls + ".class");
+                    if (mb == null) {
+                        return chain.classRenames;
+                    }
+                    org.objectweb.asm.tree.ClassNode mcn = new org.objectweb.asm.tree.ClassNode();
+                    new org.objectweb.asm.ClassReader(mb).accept(mcn, org.objectweb.asm.ClassReader.SKIP_CODE);
+                    List<String> ts = MixinRepair.mixinTargets(mcn, null);
+                    return ts.isEmpty() || MixinClassRenames.facadeMixin(ts, chain.classRenames) ? chain.classRenames : vanillaRenames;
+                });
                 if (rew != null) {
                     e.setValue(rew);
                     rpt.notes.add(tag + "refmap " + name + ": class renames carried into its values");
@@ -4194,7 +4210,7 @@ public final class JarProcessor {
         };
         ClassVisitor sink = needClassRename
             ? MixinClassRenames.annotations(new org.objectweb.asm.commons.ClassRemapper(kinds,
-                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames)), chain.classRenames)
+                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames)), chain.classRenames, c -> wDeclares(chain, c))
             : kinds;
         // super/implements-only rename layer: rewrites the hierarchy declaration
         // and super-invocations to the facade, leaving every other reference to
