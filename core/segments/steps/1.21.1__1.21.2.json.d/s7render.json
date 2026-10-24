@@ -133,7 +133,8 @@
   "net/minecraft/class_4696.method_23678(Lnet/minecraft/class_1799;Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
   "net/minecraft/class_4840.method_32026(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
   "net/minecraft/class_4840.method_47656(Lnet/minecraft/class_5605;Lnet/minecraft/class_5609;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
-  "net/minecraft/class_892.method_32164()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes"
+  "net/minecraft/class_892.method_32164()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
+  "net/minecraft/class_596.method_32034()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes"
  },
  "instanceRedirects": {
   "net/minecraft/class_799.method_3472()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
@@ -169,7 +170,9 @@
   "net/minecraft/class_846$class_851.method_3663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#cancelTasks",
   "net/minecraft/class_1007.method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands",
   "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands",
-  "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes"
+  "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes",
+  "net/minecraft/class_7288$class_7289.apply(Lnet/minecraft/class_7260;FF)F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive",
+  "net/minecraft/class_7288$class_7311.getPartsToDraw(Lnet/minecraft/class_583;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive"
  },
  "ctorRedirects": {
   "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#create",
@@ -789,6 +792,17 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuck#placement()Lnet/minecraft/class_4507$class_9995;"
    ],
    "basis": "1.21.1 StuckInBodyLayer(renderer): a 1.21.1 subclass drew its stuck items itself (renderStuckItem); 1.21.2's constructor takes the model it would draw: an empty one, never drawn, the layer drawing 1.21.1's body (CbRenderStuck)"
+  },
+  "net/minecraft/class_7288.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;Ljava/util/function/Function;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive#renderType()Ljava/util/function/Function;"
+   ],
+   "basis": "LivingEntityEmissiveLayer takes the render-type function in 1.21.2 (WardenRenderer passes RenderType::entityTranslucentEmissive); 1.21.1's layer drew with RenderType.entityTranslucentEmissive(texture) (javap both)"
   }
  },
  "overrideHooks": [
@@ -1253,6 +1267,16 @@
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi$LegacyMesh",
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi#mesh(Ltop/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi$LegacyMesh;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;",
    "basis": "1.21.1 Fabric API's Mesh had one abstract method (forEach); 1.21.2's also makes outputTo abstract, which a 1.21.1 lambda's class lacks: built as the 1.21.1 shape and adapted (outputTo: 1.21.1's default)"
+  },
+  "net/minecraft/class_7288$class_7289.apply(Lnet/minecraft/class_7260;FF)F": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyAlpha",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive#alpha(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyAlpha;)Lnet/minecraft/class_7288$class_7289;",
+   "basis": "1.21.1 LivingEntityEmissiveLayer.AlphaFunction.apply(warden, partialTick, ageInTicks); 1.21.2's apply(state, ageInTicks): a 1.21.1 lambda is built as the 1.21.1 shape and adapted (the warden of the state, the frame's partial tick)"
+  },
+  "net/minecraft/class_7288$class_7311.getPartsToDraw(Lnet/minecraft/class_583;)Ljava/util/List;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyParts",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive#parts(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyParts;)Lnet/minecraft/class_7288$class_7311;",
+   "basis": "1.21.1 LivingEntityEmissiveLayer.DrawSelector.getPartsToDraw(model); 1.21.2's also takes the state: a 1.21.1 lambda is built as the 1.21.1 shape and adapted (answers from the model alone, as it did)"
   }
  },
  "adapterHooks": [
