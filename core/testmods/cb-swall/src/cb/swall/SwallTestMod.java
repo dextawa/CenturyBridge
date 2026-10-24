@@ -466,6 +466,38 @@ public class SwallTestMod implements ModInitializer {
         }
     }
 
+    /** 1.21.11's one interact packet for three actions, over 26.1's interact and attack packets */
+    private static void interactPacket(MinecraftServer server) {
+        net.minecraft.class_3218 level = server.method_30002();
+        net.minecraft.class_1531 stand = new net.minecraft.class_1531(level, 0.5, 100, 0.5);
+        level.method_8649(stand);
+        StringBuilder log = new StringBuilder();
+        net.minecraft.class_2824.class_5908 handler = new net.minecraft.class_2824.class_5908() {
+            @Override
+            public void method_34219(net.minecraft.class_1268 hand) {
+                log.append("interact;");
+            }
+
+            @Override
+            public void method_34220(net.minecraft.class_1268 hand, net.minecraft.class_243 location) {
+                log.append("at;");
+            }
+
+            @Override
+            public void method_34218() {
+                log.append("attack;");
+            }
+        };
+        net.minecraft.class_2824 attack = net.minecraft.class_2824.method_34206(stand, true);
+        net.minecraft.class_2824 at = net.minecraft.class_2824.method_34208(stand, true, net.minecraft.class_1268.field_5808, new net.minecraft.class_243(0, 1, 0));
+        attack.method_34209(handler);
+        at.method_34209(handler);
+        Object asObject = at;
+        check("interactPacket.split", attack.method_12248(level) == stand && at.method_12248(level) == stand && at.method_30007()
+            && !attack.method_30007() && "attack;at;interact;".contentEquals(log) && asObject instanceof net.minecraft.class_2824, log);
+        stand.method_31472();
+    }
+
     /** generic drift at the wall read on a running server */
     private static void generic(MinecraftServer server) {
         Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
@@ -525,6 +557,7 @@ public class SwallTestMod implements ModInitializer {
             removedRecipes(server);
             specialRecipeCtors(server);
             legacyRegionStorage(server);
+            interactPacket(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
