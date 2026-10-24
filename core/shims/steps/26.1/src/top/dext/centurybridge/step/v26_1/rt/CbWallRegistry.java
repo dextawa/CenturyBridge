@@ -21,28 +21,52 @@ public final class CbWallRegistry {
         Object cb$unwrap();
     }
 
+    private static final java.util.Map<Object, Wrapper> WRAPPERS = new java.util.IdentityHashMap<>();
+
     private static Object registered(Object value) {
         return value instanceof Wrapper w ? w.cb$unwrap() : value;
+    }
+
+    /** the value registered (what 26.1 holds), remembering the 1.21.11 wrapper it was registered as */
+    private static Object registering(Object value) {
+        if (value instanceof Wrapper w) {
+            Object v = w.cb$unwrap();
+            synchronized (WRAPPERS) {
+                WRAPPERS.putIfAbsent(v, w);
+            }
+            return v;
+        }
+        return value;
+    }
+
+    /**
+     * the 1.21.11 value a mod registered for what 26.1 holds, or null: a value read back is handed out as the very
+     * object the mod registered (an interface type such as IntProviderType has no record to make canonical)
+     */
+    public static Wrapper wrapperOf(Object registered) {
+        synchronized (WRAPPERS) {
+            return WRAPPERS.get(registered);
+        }
     }
 
     /** 1.21.11 Registry.register(Registry, String, T) */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Object register(Registry registry, String name, Object value) {
-        Object r = Registry.register(registry, name, registered(value));
+        Object r = Registry.register(registry, name, registering(value));
         return value instanceof Wrapper ? value : r;
     }
 
     /** 1.21.11 Registry.register(Registry, Identifier, T) */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Object register(Registry registry, Identifier id, Object value) {
-        Object r = Registry.register(registry, id, registered(value));
+        Object r = Registry.register(registry, id, registering(value));
         return value instanceof Wrapper ? value : r;
     }
 
     /** 1.21.11 Registry.register(Registry, ResourceKey, T) */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Object register(Registry registry, ResourceKey key, Object value) {
-        Object r = Registry.register(registry, key, registered(value));
+        Object r = Registry.register(registry, key, registering(value));
         return value instanceof Wrapper ? value : r;
     }
 
@@ -52,13 +76,13 @@ public final class CbWallRegistry {
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Holder.Reference registerForHolder(Registry registry, ResourceKey key, Object value) {
-        return Registry.registerForHolder(registry, key, registered(value));
+        return Registry.registerForHolder(registry, key, registering(value));
     }
 
     /** 1.21.11 Registry.registerForHolder(Registry, Identifier, T) */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Holder.Reference registerForHolder(Registry registry, Identifier id, Object value) {
-        return Registry.registerForHolder(registry, id, registered(value));
+        return Registry.registerForHolder(registry, id, registering(value));
     }
 
     // The registry's lookups by value: a value this layer gives back as a Wrapper is looked up as what 26.1

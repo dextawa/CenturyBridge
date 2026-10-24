@@ -33,6 +33,15 @@ public final class CbWallRegistries {
         throw new IllegalStateException("1.21.11 call needing the level's registries with no server or client level");
     }
 
+    /** {@link #access()}, or null while no server or client level is up (an item's default components) */
+    public static RegistryAccess accessOrNull() {
+        MinecraftServer server = CbWallLevelData.SERVER;
+        if (server != null) {
+            return server.registryAccess();
+        }
+        return CLIENT ? Client.access() : null;
+    }
+
     @Environment(EnvType.CLIENT)
     private static final class Client {
         static RegistryAccess access() {

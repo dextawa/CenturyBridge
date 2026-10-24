@@ -150,7 +150,29 @@
   "net/minecraft/class_2378.method_10206(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getId",
   "net/minecraft/class_2378.method_47983(Ljava/lang/Object;)Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#wrapAsHolder",
   "net/minecraft/class_2359.method_10206(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getId",
-  "net/minecraft/class_2359.method_56158(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getIdOrThrow"
+  "net/minecraft/class_2359.method_56158(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getIdOrThrow",
+  "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#set",
+  "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#update",
+  "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#update",
+  "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#set",
+  "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#set",
+  "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#set",
+  "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#setComponent",
+  "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#component",
+  "net/minecraft/class_10104.comp_3067()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallSelectors#text",
+  "net/minecraft/class_10104.comp_3068()Lnet/minecraft/class_2300;": "top/dext/centurybridge/step/v26_1/rt/CbWallSelectors#resolved",
+  "net/minecraft/class_6017.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#intGetType",
+  "net/minecraft/class_6016.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#intGetType",
+  "net/minecraft/class_6019.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#intGetType",
+  "net/minecraft/class_6333.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#intGetType",
+  "net/minecraft/class_6334.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#intGetType",
+  "net/minecraft/class_6642.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#intGetType",
+  "net/minecraft/class_6728.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#intGetType",
+  "net/minecraft/class_5863.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
+  "net/minecraft/class_5862.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
+  "net/minecraft/class_5866.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
+  "net/minecraft/class_5861.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
+  "net/minecraft/class_5865.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType"
  },
  "overrideHooks": [
   {
@@ -296,6 +318,38 @@
    "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents.resolve(Ltop/dext/centurybridge/step/v26_1/rt/CbWallComponents$LegacyResolve;Lnet/minecraft/network/chat/ResolutionContext;I)Lnet/minecraft/class_5250;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "26.1's ComponentContents.resolve takes a resolution context of the source and the entity 1.21.11 passed: a 1.21.11 contents class answers with its own resolve; its super call reaches the implementation above it through the guard (CbWallComponents)"
+  },
+  {
+   "old": "method_35012()Lnet/minecraft/class_6018;",
+   "new": "codec()Lcom/mojang/serialization/MapCodec;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders.intCodec(Lnet/minecraft/class_6018;)Lcom/mojang/serialization/MapCodec;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "onlyUnder": "net/minecraft/class_6017",
+   "basis": "1.21.11 IntProvider.getType() answered the IntProviderType 26.1 replaced with its codec: codec() answers the codec of the type the mod's getType() returns -- a class that is both a provider and a loot function/condition/entry/provider can answer only one codec() (26.1's interfaces share it): its superclass, the provider, wins",
+   "shadows": [
+    "method_29321()Lnet/minecraft/class_5339;",
+    "method_29325()Lnet/minecraft/class_5342;",
+    "method_29318()Lnet/minecraft/class_5338;",
+    "method_365()Lnet/minecraft/class_5657;",
+    "method_32439()Lnet/minecraft/class_5650;",
+    "method_32475()Lnet/minecraft/class_5669;"
+   ]
+  },
+  {
+   "old": "method_33923()Lnet/minecraft/class_5864;",
+   "new": "codec()Lcom/mojang/serialization/MapCodec;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders.floatCodec(Lnet/minecraft/class_5864;)Lcom/mojang/serialization/MapCodec;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "onlyUnder": "net/minecraft/class_5863",
+   "basis": "1.21.11 FloatProvider.getType() answered the FloatProviderType 26.1 replaced with its codec: codec() answers the codec of the type the mod's getType() returns -- a class that is both a provider and a loot function/condition/entry/provider can answer only one codec() (26.1's interfaces share it): its superclass, the provider, wins",
+   "shadows": [
+    "method_29321()Lnet/minecraft/class_5339;",
+    "method_29325()Lnet/minecraft/class_5342;",
+    "method_29318()Lnet/minecraft/class_5338;",
+    "method_365()Lnet/minecraft/class_5657;",
+    "method_32439()Lnet/minecraft/class_5650;",
+    "method_32475()Lnet/minecraft/class_5669;"
+   ]
   }
  ],
  "frameDefaults": {
@@ -514,7 +568,10 @@
   "net/minecraft/class_5620$class_8821": "top/dext/centurybridge/step/v26_1/facade/CauldronInteractionMap",
   "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/facade/EitherHolder",
   "net/minecraft/class_2291$class_7215": "net/minecraft/commands/arguments/item/ItemInput",
-  "net/minecraft/class_1265": "top/dext/centurybridge/step/v26_1/facade/ContainerListener"
+  "net/minecraft/class_1265": "top/dext/centurybridge/step/v26_1/facade/ContainerListener",
+  "net/minecraft/class_10104": "net/minecraft/util/CompilableString",
+  "net/minecraft/class_6018": "top/dext/centurybridge/step/v26_1/facade/IntProviderType",
+  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/facade/FloatProviderType"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -525,7 +582,8 @@
   "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#newPanorama",
   "net/minecraft/class_10823.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#create",
   "net/minecraft/class_1923.<init>(Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#chunkPos",
-  "net/minecraft/class_1923.<init>(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#chunkPos"
+  "net/minecraft/class_1923.<init>(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#chunkPos",
+  "net/minecraft/class_10104.<init>(Ljava/lang/String;Lnet/minecraft/class_2300;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSelectors#create"
  },
  "adapterHooks": [
   {
@@ -901,7 +959,11 @@
   "net/minecraft/class_8055.method_48440(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getFromIngredient",
   "net/minecraft/class_2480.method_10525(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getBlockByColor",
   "net/minecraft/class_2480.method_10529(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getColoredItemStack",
-  "net/minecraft/class_2215.method_9398(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#bannerByColor"
+  "net/minecraft/class_2215.method_9398(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#bannerByColor",
+  "net/minecraft/class_10104.method_62667(Ljava/lang/String;)Lcom/mojang/serialization/DataResult;": "top/dext/centurybridge/step/v26_1/rt/CbWallSelectors#parse",
+  "net/minecraft/class_6017.method_35004(II)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#intCodec",
+  "net/minecraft/class_6017.method_49103(IILcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#validateCodec",
+  "net/minecraft/class_5863.method_33916(FF)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatCodec"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -1265,6 +1327,26 @@
     "keep:3"
    ],
    "basis": "26.1 keeps the NBT path compiled with its text and adds a plain flag 1.21.11 lacked (CbWallComponents)"
+  },
+  "net/minecraft/class_10707.<init>(FFLjava/util/List;Lnet/minecraft/class_10707$class_10709;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(FFLjava/util/List;Lnet/minecraft/class_10707$class_10709;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#tagSet(Ljava/util/Optional;)Ljava/util/Optional;",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "new BlocksAttacks(.., bypassedBy tag, ..): 26.1 takes the damage types as a HolderSet; the tag as the registries' named set, or, made with an item before registries load, a set that is the tag's whenever used and encodes as the tag (CbWallTagSet) -- 1.21.11 looked the tag up when used"
+  },
+  "net/minecraft/class_9276.<init>(Ljava/util/List;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallGeneric#templates(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "basis": "new BundleContents(items): 26.1 takes the items' templates where 1.21.11 took the stacks; each non-empty stack's template (26.1's bundle, like 1.21.11's codec and Mutable, holds no empty stacks)"
   }
  },
  "fieldGetters": {
@@ -1307,7 +1389,12 @@
   "net/minecraft/class_5620.field_27777:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
   "net/minecraft/class_5620.field_28011:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
   "net/minecraft/class_6053.field_30400:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallGoats",
-  "net/minecraft/class_6053.field_30401:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallGoats"
+  "net/minecraft/class_6053.field_30401:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallGoats",
+  "net/minecraft/class_10104.field_53684:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallSelectors",
+  "net/minecraft/class_6017.field_29946:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
+  "net/minecraft/class_6017.field_33450:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
+  "net/minecraft/class_6017.field_33451:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
+  "net/minecraft/class_5863.field_29007:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders"
  },
  "abstractFills": [
   {
@@ -1352,7 +1439,9 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteDepth()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superIsWriteDepth",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasScaleFactor()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasScaleFactor",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasConstant",
-  "net/minecraft/class_2881.method_12530()Lnet/minecraft/class_2881$class_8576;": "top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#superSaveData"
+  "net/minecraft/class_2881.method_12530()Lnet/minecraft/class_2881$class_8576;": "top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#superSaveData",
+  "net/minecraft/class_6334.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#clampedType",
+  "net/minecraft/class_6642.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#weightedListType"
  },
  "covers": [
   "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
@@ -1509,6 +1598,26 @@
    ],
    "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#contextValue(Ljava/lang/Object;)Ljava/lang/Object;",
    "basis": "26.1's LootContextParams.TOOL is a key of ItemInstance and vanilla puts an ItemStackTemplate there where it has no stack (Block.getDrops / LootCommand / triggers take an ItemInstance); 1.21.11's held an ItemStack: a template read back is its stack, every other value as it is"
+  },
+  "net/minecraft/class_10707.comp_3637()Ljava/util/Optional;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#tagOf(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "BlocksAttacks.bypassedBy(): 26.1 holds a HolderSet of damage types where 1.21.11 held a TagKey; a set standing for a tag (a named set, or the tag a 1.21.11 mod gave) answers the tag; a listed set (26.1 data can list types) has no 1.21.11 form and stays a set"
+  },
+  "net/minecraft/class_9288.method_59714()Ljava/lang/Iterable;": {
+   "desc": "()Ljava/lang/Iterable;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallGeneric#stacks(Ljava/lang/Iterable;)Ljava/lang/Iterable;",
+   "basis": "ItemContainerContents.nonEmptyItems(): 26.1 iterates the templates, 1.21.11 the stacks; each template's stack"
+  },
+  "net/minecraft/class_9282.method_57471(Lnet/minecraft/class_1799;Ljava/util/List;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_1799;Ljava/util/List;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallGeneric#dyeColors(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "basis": "DyedItemColor.applyDyes(stack, dyes): 26.1 takes the dye colors where 1.21.11 took the dye items; 1.21.11's body read each item's getDyeColor(), which 26.1 keeps as the dye's DYE component (CbWallDyes.dyeColor)"
   }
  },
  "instanceFieldGetters": {
@@ -1538,7 +1647,12 @@
   "net/minecraft/class_5338": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castEntryType",
   "net/minecraft/class_5657": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castNumberProviderType",
   "net/minecraft/class_5650": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castNbtProviderType",
-  "net/minecraft/class_5669": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castScoreProviderType"
+  "net/minecraft/class_5669": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castScoreProviderType",
+  "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#castEitherHolder",
+  "net/minecraft/class_10711": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#castProvidesTrimMaterial",
+  "net/minecraft/class_6862": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#castTagKey",
+  "net/minecraft/class_6018": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#castIntType",
+  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#castFloatType"
  },
  "instanceOfRedirects": {
   "net/minecraft/class_5339": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isFunctionType",
@@ -1546,7 +1660,12 @@
   "net/minecraft/class_5338": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isEntryType",
   "net/minecraft/class_5657": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isNumberProviderType",
   "net/minecraft/class_5650": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isNbtProviderType",
-  "net/minecraft/class_5669": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isScoreProviderType"
+  "net/minecraft/class_5669": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isScoreProviderType",
+  "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#isEitherHolder",
+  "net/minecraft/class_10711": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#isProvidesTrimMaterial",
+  "net/minecraft/class_6862": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#isTagKey",
+  "net/minecraft/class_6018": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#isIntType",
+  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#isFloatType"
  },
  "genericWitnesses": {
   "net/minecraft/class_7923.field_41133:Lnet/minecraft/class_2378;": {
@@ -1676,6 +1795,112 @@
     "net/minecraft/class_10352.method_64966(Lnet/minecraft/class_169;Ljava/lang/Object;)Ljava/lang/Object;"
    ],
    "basis": "phantom key: LootContextArg.ArgCodecBuilder.anyItemStack(function of a tool key): the keys handed to the mod's function are 26.1's item keys (TOOL) and pass unchanged; a value the mod's LootContextArg reads under them comes through LootContext's getters, a template read as its stack"
+  },
+  "net/minecraft/class_9334.field_56397:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V",
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_10711"
+   ],
+   "basis": "DataComponents.PROVIDES_TRIM_MATERIAL: the component type passes unchanged; 1.21.11 held ProvidesTrimMaterial (around an EitherHolder), 26.1 holds the trim material's holder. A value 1.21.11 code hands in goes through the component setters (ItemStack.set/update, DataComponentMap/DataComponentPatch builders, PatchedDataComponentMap.set, Entity.setComponent, Item.Properties.component -- keys and tags made before registries load go to 26.1's delayed components), which convert it (CbWallComponentValues.in); a value it reads back meets a cast to the 1.21.11 type, explicit or LambdaMetafactory's, where checkCastRedirects / instanceOfRedirects turn 26.1's value into 1.21.11's"
+  },
+  "net/minecraft/class_9334.field_56398:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V",
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_6862"
+   ],
+   "basis": "DataComponents.PROVIDES_BANNER_PATTERNS: the component type passes unchanged; 1.21.11 held a TagKey of banner patterns, 26.1 holds the tag's HolderSet. A value 1.21.11 code hands in goes through the component setters (ItemStack.set/update, DataComponentMap/DataComponentPatch builders, PatchedDataComponentMap.set, Entity.setComponent, Item.Properties.component -- keys and tags made before registries load go to 26.1's delayed components), which convert it (CbWallComponentValues.in); a value it reads back meets a cast to the 1.21.11 type, explicit or LambdaMetafactory's, where checkCastRedirects / instanceOfRedirects turn 26.1's value into 1.21.11's"
+  },
+  "net/minecraft/class_9334.field_56595:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V",
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_9791"
+   ],
+   "basis": "DataComponents.CHICKEN_VARIANT: the component type passes unchanged; 1.21.11 held EitherHolder<ChickenVariant>, 26.1 holds the holder. A value 1.21.11 code hands in goes through the component setters (ItemStack.set/update, DataComponentMap/DataComponentPatch builders, PatchedDataComponentMap.set, Entity.setComponent, Item.Properties.component -- keys and tags made before registries load go to 26.1's delayed components), which convert it (CbWallComponentValues.in); a value it reads back meets a cast to the 1.21.11 type, explicit or LambdaMetafactory's, where checkCastRedirects / instanceOfRedirects turn 26.1's value into 1.21.11's"
+  },
+  "net/minecraft/class_9334.field_63636:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V",
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_9791"
+   ],
+   "basis": "DataComponents.DAMAGE_TYPE: the component type passes unchanged; 1.21.11 held EitherHolder<DamageType>, 26.1 holds the holder. A value 1.21.11 code hands in goes through the component setters (ItemStack.set/update, DataComponentMap/DataComponentPatch builders, PatchedDataComponentMap.set, Entity.setComponent, Item.Properties.component -- keys and tags made before registries load go to 26.1's delayed components), which convert it (CbWallComponentValues.in); a value it reads back meets a cast to the 1.21.11 type, explicit or LambdaMetafactory's, where checkCastRedirects / instanceOfRedirects turn 26.1's value into 1.21.11's"
+  },
+  "net/minecraft/class_9334.field_64474:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V",
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_9791"
+   ],
+   "basis": "DataComponents.ZOMBIE_NAUTILUS_VARIANT: the component type passes unchanged; 1.21.11 held EitherHolder<ZombieNautilusVariant>, 26.1 holds the holder. A value 1.21.11 code hands in goes through the component setters (ItemStack.set/update, DataComponentMap/DataComponentPatch builders, PatchedDataComponentMap.set, Entity.setComponent, Item.Properties.component -- keys and tags made before registries load go to 26.1's delayed components), which convert it (CbWallComponentValues.in); a value it reads back meets a cast to the 1.21.11 type, explicit or LambdaMetafactory's, where checkCastRedirects / instanceOfRedirects turn 26.1's value into 1.21.11's"
+  },
+  "net/minecraft/class_7923.field_41140:Lnet/minecraft/class_2378;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_6018"
+   ],
+   "basis": "BuiltInRegistries.INT_PROVIDER_TYPE: the registry passes unchanged; 26.1 holds the provider MapCodec where 1.21.11 held the IntProviderType around it. Types register as their codecs (CbWallRegistry, remembering the type a mod registered), lookups by value unwrap them, and a value read back meets a cast to IntProviderType (explicit or LambdaMetafactory's) where checkCastRedirects / instanceOfRedirects answer the canonical type of a codec registered there (CbWallValueProviders)"
+  },
+  "net/minecraft/class_7924.field_41196:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_6018"
+   ],
+   "basis": "phantom key: Registries.INT_PROVIDER_TYPE names the same registry in both releases; its values reach 1.21.11 code converted as for BuiltInRegistries.INT_PROVIDER_TYPE"
+  },
+  "net/minecraft/class_7923.field_41139:Lnet/minecraft/class_2378;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_5864"
+   ],
+   "basis": "BuiltInRegistries.FLOAT_PROVIDER_TYPE: the registry passes unchanged; 26.1 holds the provider MapCodec where 1.21.11 held the FloatProviderType around it. Types register as their codecs (CbWallRegistry, remembering the type a mod registered), lookups by value unwrap them, and a value read back meets a cast to FloatProviderType (explicit or LambdaMetafactory's) where checkCastRedirects / instanceOfRedirects answer the canonical type of a codec registered there (CbWallValueProviders)"
+  },
+  "net/minecraft/class_7924.field_41269:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_2378.method_10221(Ljava/lang/Object;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_5864"
+   ],
+   "basis": "phantom key: Registries.FLOAT_PROVIDER_TYPE names the same registry in both releases; its values reach 1.21.11 code converted as for BuiltInRegistries.FLOAT_PROVIDER_TYPE"
   }
+ },
+ "superRenames": {
+  "net/minecraft/class_6017": "top/dext/centurybridge/step/v26_1/facade/IntProvider",
+  "net/minecraft/class_5863": "top/dext/centurybridge/step/v26_1/facade/FloatProvider"
  }
 }

@@ -84,6 +84,11 @@ public class SwallTestMod implements ModInitializer {
         check("customRecipe.getSerializer", recipe.method_8119() == TEST_SERIALIZER, recipe.method_8119());
 
         lootRegistry();
+        STEP_TYPE = net.minecraft.class_6018.method_35014("cbswall_step", StepInt.CODEC);
+        HALF_TYPE = net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41139,
+            net.minecraft.class_2960.method_60655("cbswall", "half"), () -> HalfFloat.CODEC);
+        EARLY_ATTACKS = new net.minecraft.class_10707(0.25F, 1.0F, List.of(), net.minecraft.class_10707.class_10709.field_56308,
+            Optional.of(net.minecraft.class_8103.field_56242), Optional.empty(), Optional.empty());
         ServerLifecycleEvents.SERVER_STARTED.register(SwallTestMod::onStarted);
     }
 
@@ -100,6 +105,76 @@ public class SwallTestMod implements ModInitializer {
         }
     }
 
+    static net.minecraft.class_10707 EARLY_ATTACKS;
+    static net.minecraft.class_6018<StepInt> STEP_TYPE;
+    static net.minecraft.class_5864<HalfFloat> HALF_TYPE;
+
+    /** a 1.21.11 int provider: always its value, bounds value..value */
+    static final class StepInt extends net.minecraft.class_6017 {
+        static final com.mojang.serialization.MapCodec<StepInt> CODEC = Codec.INT.fieldOf("step").xmap(StepInt::new, p -> p.value);
+        final int value;
+
+        StepInt(int value) {
+            this.value = value;
+        }
+
+        @Override
+        public int method_35008(net.minecraft.class_5819 random) {
+            return value;
+        }
+
+        @Override
+        public int method_35009() {
+            return value;
+        }
+
+        @Override
+        public int method_35011() {
+            return value;
+        }
+
+        @Override
+        public net.minecraft.class_6018<?> method_35012() {
+            return STEP_TYPE;
+        }
+    }
+
+    /** a 1.21.11 float provider registered through a lambda type */
+    static final class HalfFloat extends net.minecraft.class_5863 {
+        static final com.mojang.serialization.MapCodec<HalfFloat> CODEC = com.mojang.serialization.MapCodec.unit(HalfFloat::new);
+
+        @Override
+        public float method_33920(net.minecraft.class_5819 random) {
+            return 0.5F;
+        }
+
+        @Override
+        public float method_33915() {
+            return 0.5F;
+        }
+
+        @Override
+        public float method_33921() {
+            return 0.5F;
+        }
+
+        @Override
+        public net.minecraft.class_5864<?> method_33923() {
+            return HALF_TYPE;
+        }
+    }
+
+    /** a 1.21.11 subclass of ClampedInt (an open class there) */
+    static final class LoggedClamp extends net.minecraft.class_6334 {
+        LoggedClamp() {
+            super(net.minecraft.class_6019.method_35017(0, 100), 10, 20);
+        }
+
+        @Override
+        public net.minecraft.class_6018<?> method_35012() {
+            return super.method_35012();
+        }
+    }
     static final com.mojang.serialization.MapCodec<TestFn> TEST_FN_CODEC = com.mojang.serialization.MapCodec.unit(TestFn::new);
     static net.minecraft.class_5339<TestFn> TEST_FN_TYPE;
 
@@ -120,6 +195,146 @@ public class SwallTestMod implements ModInitializer {
         Object o = reg.method_63535(net.minecraft.class_2960.method_60656("set_count"));
         check("lootRegistry.iterateAndInstanceof", n > 30 && o instanceof net.minecraft.class_5339<?> sc
             && sc.comp_1858() == net.minecraft.class_141.field_45845 && new TestFn().method_29321() == TEST_FN_TYPE, n + " " + o);
+    }
+
+    /** data components whose value type 26.1 changed, set and read by 1.21.11 code */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void componentValues(MinecraftServer server) {
+        net.minecraft.class_2378<net.minecraft.class_8110> damageTypes = server.method_30611().method_30530(net.minecraft.class_7924.field_42534);
+        net.minecraft.class_6880<net.minecraft.class_8110> generic = damageTypes.method_46747(net.minecraft.class_8111.field_42348);
+        net.minecraft.class_1799 stack = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600);
+        stack.method_57379(net.minecraft.class_9334.field_63636, new net.minecraft.class_9791<>(generic));
+        net.minecraft.class_9791<net.minecraft.class_8110> back = stack.method_58694(net.minecraft.class_9334.field_63636);
+        check("componentValue.eitherHolder", back != null && back.comp_3636().left().get().method_40230().get().equals(net.minecraft.class_8111.field_42348), back);
+        stack.method_57379(net.minecraft.class_9334.field_63636, new net.minecraft.class_9791<>(net.minecraft.class_8111.field_42348));
+        Object raw = stack.method_58694(net.minecraft.class_9334.field_63636);
+        check("componentValue.eitherKeyResolvedAndInstanceof", raw instanceof net.minecraft.class_9791<?> e
+            && e.comp_3636().left().isPresent() && e.comp_3636().left().get().method_40230().get().equals(net.minecraft.class_8111.field_42348), raw);
+
+        net.minecraft.class_6862<net.minecraft.class_2582> flower = net.minecraft.class_1799.class.cast(
+            new net.minecraft.class_1799(net.minecraft.class_1802.field_8498)).method_58694(net.minecraft.class_9334.field_56398);
+        check("componentValue.bannerTagVanilla", net.minecraft.class_7440.field_39098.equals(flower), flower);
+        stack.method_57379(net.minecraft.class_9334.field_56398, net.minecraft.class_7440.field_39098);
+        Optional<net.minecraft.class_2960> loc = Optional.ofNullable(stack.method_58694(net.minecraft.class_9334.field_56398))
+            .map((net.minecraft.class_6862<net.minecraft.class_2582> t) -> t.comp_327());
+        check("componentValue.bannerTagSetLambda", loc.isPresent() && loc.get().equals(net.minecraft.class_7440.field_39098.comp_327()), loc);
+
+        net.minecraft.class_10711 trim = new net.minecraft.class_1799(net.minecraft.class_1802.field_8620).method_58694(net.minecraft.class_9334.field_56397);
+        check("componentValue.providesTrimMaterial", trim != null && trim.comp_3599().comp_3636().left().get().method_40230().get()
+            .equals(net.minecraft.class_8055.field_42005), trim);
+
+        net.minecraft.class_10707 attacks = new net.minecraft.class_10707(0.25F, 1.0F, List.of(), net.minecraft.class_10707.class_10709.field_56308,
+            Optional.of(net.minecraft.class_8103.field_56242), Optional.empty(), Optional.empty());
+        net.minecraft.class_10707 shield = new net.minecraft.class_1799(net.minecraft.class_1802.field_8255).method_58694(net.minecraft.class_9334.field_56396);
+        check("componentValue.blocksAttacksTag", attacks.comp_3637().get().equals(net.minecraft.class_8103.field_56242)
+            && shield.comp_3637().get().equals(net.minecraft.class_8103.field_56242), attacks.comp_3637() + " " + shield.comp_3637());
+        net.minecraft.class_1799 early = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600);
+        early.method_57379(net.minecraft.class_9334.field_56396, EARLY_ATTACKS);
+        net.minecraft.class_10707 earlyBack = early.method_58694(net.minecraft.class_9334.field_56396);
+        com.google.gson.JsonElement earlyJson = net.minecraft.class_1799.field_24671.encodeStart(
+            server.method_30611().method_57093(com.mojang.serialization.JsonOps.INSTANCE), early).getOrThrow();
+        check("componentValue.blocksAttacksEarlyTag", earlyBack.comp_3637().get().equals(net.minecraft.class_8103.field_56242)
+            && earlyJson.toString().contains("#minecraft:bypasses_shield"), earlyJson);
+    }
+
+    /** 1.21.11's SelectorPattern, 26.1's CompilableString of an entity selector */
+    private static void selectors() {
+        net.minecraft.class_10104 pat = net.minecraft.class_10104.method_62667("@a[limit=1]").getOrThrow();
+        check("selector.parse", "@a[limit=1]".equals(pat.comp_3067()) && pat.comp_3068() != null
+            && net.minecraft.class_10104.method_62667("@q").error().isPresent(), pat);
+        net.minecraft.class_5250 comp = net.minecraft.class_2561.method_43467(pat, Optional.empty());
+        check("selector.component", comp.method_10851() instanceof net.minecraft.class_2579 sc && sc.comp_3080().comp_3067().equals("@a[limit=1]"), comp);
+        net.minecraft.class_2578 score = new net.minecraft.class_2578(com.mojang.datafixers.util.Either.left(pat), "obj");
+        net.minecraft.class_10104 back = net.minecraft.class_10104.field_53684.parse(JsonOps.INSTANCE, new com.google.gson.JsonPrimitive("@p")).getOrThrow();
+        check("selector.scoreAndCodec", score.comp_3078().left().get().comp_3067().equals("@a[limit=1]") && "@p".equals(back.comp_3067())
+            && new net.minecraft.class_10104("@s", back.comp_3068()).comp_3067().equals("@s"), back);
+    }
+
+    /** bundle / container contents and dyes: 1.21.11 stacks and dye items over 26.1 templates and colors */
+    private static void itemContainers(MinecraftServer server) {
+        net.minecraft.class_9276 bundle = new net.minecraft.class_9276(List.of(new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 3),
+            net.minecraft.class_1799.field_8037));
+        int count = 0;
+        for (net.minecraft.class_1799 s : bundle.method_57421()) {
+            count += s.method_7947();
+        }
+        check("container.bundleCtor", count == 3, count);
+        net.minecraft.class_9288 contents = net.minecraft.class_9288.method_57493(List.of(new net.minecraft.class_1799(net.minecraft.class_1802.field_8620, 2)));
+        int iron = 0;
+        for (net.minecraft.class_1799 s : contents.method_59714()) {
+            iron += s.method_31574(net.minecraft.class_1802.field_8620) ? s.method_7947() : 0;
+        }
+        check("container.nonEmptyItems", iron == 2, iron);
+        net.minecraft.class_1799 leather = new net.minecraft.class_1799(net.minecraft.class_1802.field_8267);
+        net.minecraft.class_1799 dyed = net.minecraft.class_9282.method_57471(leather, List.of((net.minecraft.class_1769) net.minecraft.class_1802.field_8264));
+        net.minecraft.class_9282 color = dyed.method_58694(net.minecraft.class_9334.field_49644);
+        check("dye.applyDyes", color != null && (color.comp_2384() & 0xFFFFFF) == (net.minecraft.class_1767.field_7964.method_7787() & 0xFFFFFF), color);
+    }
+
+    /** IntProvider / FloatProvider: 1.21.11 abstract classes with types, 26.1 interfaces with codecs */
+    private static void valueProviders(MinecraftServer server) {
+        net.minecraft.class_5819 random = net.minecraft.class_5819.method_43049(1L);
+        StepInt step = new StepInt(7);
+        net.minecraft.class_6017 asProvider = step;
+        check("provider.subclass", asProvider.method_35008(random) == 7 && asProvider.method_35009() == 7 && asProvider.method_35012() == STEP_TYPE, step);
+        com.google.gson.JsonElement json = net.minecraft.class_6017.field_29946.encodeStart(JsonOps.INSTANCE, step).getOrThrow();
+        net.minecraft.class_6017 back = net.minecraft.class_6017.field_29946.parse(JsonOps.INSTANCE, json).getOrThrow();
+        check("provider.codecRoundTrip", json.toString().contains("cbswall_step") && back instanceof StepInt s && s.value == 7, json);
+        net.minecraft.class_6019 uniform = net.minecraft.class_6019.method_35017(1, 4);
+        check("provider.vanillaType", uniform.method_35012() == net.minecraft.class_6018.field_29948
+            && ((net.minecraft.class_6017) uniform).method_35012() == net.minecraft.class_6018.field_29948, uniform.method_35012());
+        net.minecraft.class_6018<?> read = net.minecraft.class_7923.field_41140.method_63535(net.minecraft.class_2960.method_60656("cbswall_step"));
+        check("provider.registryReadBack", read == STEP_TYPE && read.codec() == StepInt.CODEC, read);
+        check("provider.rangedCodec", net.minecraft.class_6017.method_35004(0, 5).parse(JsonOps.INSTANCE, new com.google.gson.JsonPrimitive(9)).error().isPresent()
+            && net.minecraft.class_6017.method_35004(0, 10).parse(JsonOps.INSTANCE, new com.google.gson.JsonPrimitive(9)).result().isPresent(), "");
+        HalfFloat half = new HalfFloat();
+        com.google.gson.JsonElement fjson = net.minecraft.class_5863.field_29007.encodeStart(JsonOps.INSTANCE, half).getOrThrow();
+        check("provider.float", half.method_33923() == HALF_TYPE && ((net.minecraft.class_5863) half).method_33920(random) == 0.5F
+            && fjson.toString().contains("cbswall:half") && net.minecraft.class_5862.method_33908(2F).method_33923() == net.minecraft.class_5864.field_29008, fjson);
+        LoggedClamp clamp = new LoggedClamp();
+        com.google.gson.JsonElement cjson = net.minecraft.class_6017.field_29946.encodeStart(JsonOps.INSTANCE, clamp).getOrThrow();
+        int sample = clamp.method_35008(random);
+        check("provider.clampedSubclass", clamp.method_35012() == net.minecraft.class_6018.field_33453 && sample >= 10 && sample <= 20
+            && cjson.toString().contains("clamped"), cjson);
+    }
+
+    /** a 1.21.11 placement modifier: the origin and the block above it */
+    static final class Twice extends net.minecraft.class_6797 {
+        @Override
+        public java.util.stream.Stream<net.minecraft.class_2338> method_14452(net.minecraft.class_5444 context, net.minecraft.class_5819 random,
+                net.minecraft.class_2338 pos) {
+            return java.util.stream.Stream.of(pos, pos.method_10084());
+        }
+
+        @Override
+        public net.minecraft.class_6798<?> method_39615() {
+            return net.minecraft.class_6798.field_35749;
+        }
+    }
+
+    /** a 1.21.11 repeating placement: three times */
+    static final class Thrice extends net.minecraft.class_5857 {
+        @Override
+        protected int method_14452(net.minecraft.class_5819 random, net.minecraft.class_2338 pos) {
+            return 3;
+        }
+
+        @Override
+        public net.minecraft.class_6798<?> method_39615() {
+            return net.minecraft.class_6798.field_35749;
+        }
+    }
+
+    /** method_14452 names both getPositions and RepeatingPlacement.count in 1.21.11 */
+    private static void placements() {
+        net.minecraft.class_5819 random = net.minecraft.class_5819.method_43049(2L);
+        net.minecraft.class_2338 origin = new net.minecraft.class_2338(0, 64, 0);
+        net.minecraft.class_6797 twice = new Twice();
+        Thrice thrice = new Thrice();
+        long a = twice.method_14452(null, random, origin).count();
+        long b = thrice.method_14452(null, random, origin).count();
+        long c = net.minecraft.class_5450.method_39639().method_14452(null, random, origin).count();
+        check("placement.reusedId", a == 2 && b == 3 && c == 1 && thrice.method_14452(random, origin) == 3, a + " " + b + " " + c);
     }
 
     /** generic drift at the wall read on a running server */
@@ -170,6 +385,11 @@ public class SwallTestMod implements ModInitializer {
             interactions(server);
             levelData(server);
             generic(server);
+            componentValues(server);
+            selectors();
+            itemContainers(server);
+            valueProviders(server);
+            placements();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
