@@ -8,6 +8,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.chunk.SectionCompiler;
 import net.minecraft.client.renderer.chunk.SectionRenderDispatcher;
+import net.minecraft.world.level.block.BannerBlock;
 import top.dext.centurybridge.step.v26_1.mixin.CbWallSectionRenderDispatcherAccess;
 
 /** frameDefaults of this step's client-side override hooks (see {@link CbWallFrames}) */
@@ -20,6 +21,14 @@ public final class CbWallFramesClient {
     /** Camera.getNearPlane(): 1.21.11's computed it from the field-of-view option (26.1's caller passes the same) */
     public static float fov() {
         return (float) Minecraft.getInstance().options.fov().get().intValue();
+    }
+
+    /**
+     * BannerRenderer.submitSpecial(pose, collector, light, overlay, color, patterns, outline): 1.21.11's drew the
+     * standing banner (standingModel / standingFlagModel), 26.1's ground attachment
+     */
+    public static BannerBlock.AttachmentType standingBanner() {
+        return BannerBlock.AttachmentType.GROUND;
     }
 
     /** Library.init(device, hrtf): 1.21.11's queried the default device itself */

@@ -94,7 +94,12 @@
   "net/minecraft/class_766.method_71651(Lnet/minecraft/class_1060;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#registerTextures",
   "net/minecraft/class_5219.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getGameRules",
   "net/minecraft/class_1297.method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteract#interact",
-  "net/minecraft/class_1657.method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteract#interactOn"
+  "net/minecraft/class_1657.method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteract#interactOn",
+  "net/minecraft/class_7196.method_54610(Lcom/mojang/serialization/Dynamic;ZLnet/minecraft/class_3283;)Lnet/minecraft/class_6904;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldOpen#loadWorldStem",
+  "net/minecraft/class_825.method_72160(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBed#callExtents",
+  "net/minecraft/class_11659$class_11947.method_74755(Lnet/minecraft/class_11977$class_12051;)Lnet/minecraft/class_11944$class_12041;": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles#callPrepare",
+  "net/minecraft/class_11659$class_11947.method_74324(Lnet/minecraft/class_11944$class_12041;Lnet/minecraft/class_11977$class_12051;Lcom/mojang/blaze3d/systems/RenderPass;Lnet/minecraft/class_1060;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles#callRender",
+  "net/minecraft/class_823.method_65556(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_1767;Lnet/minecraft/class_9307;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBanner#submitSpecial"
  },
  "overrideHooks": [
   {
@@ -163,6 +168,48 @@
    "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.pack(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$SerializeStart;)Lnet/minecraft/world/entity/ai/Brain$Packed;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "1.21.11 saved a brain through serializeStart(ops); 26.1 saves Brain.pack(): a mod brain overriding serializeStart is saved as its override writes (same {\"memories\": ...} format, read back through Brain.Packed's codec); its super.serializeStart reaches the covered 1.21.11 method, whose pack() falls through to 26.1's on re-entry"
+  },
+  {
+   "old": "method_72160(Ljava/util/function/Consumer;)V",
+   "new": "method_72160(Lnet/minecraft/class_2742;Ljava/util/function/Consumer;)V",
+   "onlyUnder": "net/minecraft/class_825",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallBed$LegacyExtents",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBed.getExtents(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBed$LegacyExtents;Lnet/minecraft/class_2742;Ljava/util/function/Consumer;)V",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBed.superExtents(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBed$SuperExtents;Ljava/util/function/Consumer;)V",
+   "superAccess": "top/dext/centurybridge/step/v26_1/rt/CbWallBed$SuperExtents",
+   "superAccessors": [
+    "method_72160(Lnet/minecraft/class_2742;Ljava/util/function/Consumer;)V"
+   ],
+   "basis": "1.21.11 BedRenderer.getExtents(consumer) gave the whole bed, each part posed as 1.21.11 placed it; 26.1 asks per part, unposed, and its bed item composite poses each part with that same pose: the override answers its whole bed with the asked part's pose undone, its super call gives both parts posed, head first (CbWallBed)"
+  },
+  {
+   "old": "method_74755(Lnet/minecraft/class_11977$class_12051;)Lnet/minecraft/class_11944$class_12041;",
+   "new": "method_74755(Lnet/minecraft/class_11977$class_12051;Z)Lnet/minecraft/class_11944$class_12041;",
+   "onlyUnder": "net/minecraft/class_11659$class_11947",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles$LegacyPrepare",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles.prepare(Ltop/dext/centurybridge/step/v26_1/rt/CbWallParticles$LegacyPrepare;Lnet/minecraft/class_11977$class_12051;Z)Lnet/minecraft/class_11944$class_12041;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles.superPrepare(Ltop/dext/centurybridge/step/v26_1/rt/CbWallParticles$SuperPrepare;Lnet/minecraft/class_11977$class_12051;)Lnet/minecraft/class_11944$class_12041;",
+   "superAccess": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles$SuperPrepare",
+   "superAccessors": [
+    "method_74755(Lnet/minecraft/class_11977$class_12051;Z)Lnet/minecraft/class_11944$class_12041;"
+   ],
+   "basis": "1.21.11 prepared a particle group once, every layer, and rendered it per translucency; 26.1 prepares and renders it once per translucency pass: the override prepares as in 1.21.11 in each pass, its super call prepares the pass's translucency (CbWallParticles)"
+  },
+  {
+   "old": "method_74324(Lnet/minecraft/class_11944$class_12041;Lnet/minecraft/class_11977$class_12051;Lcom/mojang/blaze3d/systems/RenderPass;Lnet/minecraft/class_1060;Z)V",
+   "new": "method_74324(Lnet/minecraft/class_11944$class_12041;Lnet/minecraft/class_11977$class_12051;Lcom/mojang/blaze3d/systems/RenderPass;Lnet/minecraft/class_1060;)V",
+   "onlyUnder": "net/minecraft/class_11659$class_11947",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles$LegacyRender",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles.render(Ltop/dext/centurybridge/step/v26_1/rt/CbWallParticles$LegacyRender;Lnet/minecraft/class_11944$class_12041;Lnet/minecraft/class_11977$class_12051;Lcom/mojang/blaze3d/systems/RenderPass;Lnet/minecraft/class_1060;)V",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles.superRender(Ltop/dext/centurybridge/step/v26_1/rt/CbWallParticles$SuperRender;Lnet/minecraft/class_11944$class_12041;Lnet/minecraft/class_11977$class_12051;Lcom/mojang/blaze3d/systems/RenderPass;Lnet/minecraft/class_1060;Z)V",
+   "superAccess": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles$SuperRender",
+   "superAccessors": [
+    "method_74324(Lnet/minecraft/class_11944$class_12041;Lnet/minecraft/class_11977$class_12051;Lcom/mojang/blaze3d/systems/RenderPass;Lnet/minecraft/class_1060;)V"
+   ],
+   "basis": "1.21.11 rendered a prepared particle group with the translucency to draw; 26.1 renders what the pass prepared: the override renders the running pass's translucency (solid, then translucent, 1.21.11's order), its super call renders when that is the pass's (CbWallParticles)"
   }
  ],
  "frameDefaults": {
@@ -232,6 +279,15 @@
   },
   "method_2905(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": {
    "2": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractClient#hit(Lnet/minecraft/class_636;Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_3966;"
+  },
+  "method_54610(Lcom/mojang/serialization/Dynamic;ZLnet/minecraft/class_3283;)Lnet/minecraft/class_6904;": {
+   "0": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldOpen#access(Lnet/minecraft/class_7196;Lcom/mojang/serialization/Dynamic;ZLnet/minecraft/class_3283;)Lnet/minecraft/class_32$class_5143;"
+  },
+  "method_65556(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_1767;Lnet/minecraft/class_9307;I)V": {
+   "0": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#standingBanner()Lnet/minecraft/class_2215$AttachmentType;"
+  },
+  "method_67054(Lnet/minecraft/class_3218;)V": {
+   "1": "zero: never read -- the hook's super call is 1.21.11's no-op default (superDefault void), which takes no argument; 26.1's value is the one setup answered, and a 1.21.11 environment's setup answers none"
   }
  },
  "overrideRenames": [

@@ -22,6 +22,7 @@
     "CbWallInteractArmorStandMixin",
     "CbWallInteractEntityMixin",
     "CbWallInteractPlayerMixin",
+    "CbWallLevelAccessMixin",
     "CbWallLivingEntityAccess",
     "CbWallServerMixin"
   ],
@@ -59,10 +60,12 @@
     "CbWallMinecraftMixin",
     "CbWallModelBlockRendererAccess",
     "CbWallPanoramaMixin",
+    "CbWallParticleFeatureMixin",
     "CbWallPipelineBuilderAccess",
     "CbWallRenderPipelinesAccess",
     "CbWallSectionRenderDispatcherAccess",
-    "CbWallWindowAccess"
+    "CbWallWindowAccess",
+    "CbWallWorldOpenFlowsAccess"
   ],
   "server": [],
   "injectors": {

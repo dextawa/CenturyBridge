@@ -397,17 +397,6 @@
    "basis": "mechanical: the old method gets every parameter it had; new Ljava/util/Optional; not passed"
   },
   {
-   "old": "method_72160(Ljava/util/function/Consumer;)V",
-   "new": "method_72160(Lnet/minecraft/class_2742;Ljava/util/function/Consumer;)V",
-   "args": [
-    1
-   ],
-   "onlyUnder": "net/minecraft/class_825",
-   "frames": "top/dext/centurybridge/step/v26_1/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/world/level/block/state/properties/BedPart; not passed"
-  },
-  {
    "old": "method_65556(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_1767;Lnet/minecraft/class_9307;I)V",
    "new": "method_65556(Lnet/minecraft/class_2215$AttachmentType;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_1767;Lnet/minecraft/class_9307;I)V",
    "args": [
@@ -433,17 +422,6 @@
    "superCalls": "rewrite",
    "superDefault": "new net/minecraft/class_11971",
    "basis": "mechanical: the old method gets every parameter it had; W's method_74334 is abstract where a mod's super call lands, V's default was new net/minecraft/class_11971: the super call is that default (superDefault)"
-  },
-  {
-   "old": "method_74755(Lnet/minecraft/class_11977$class_12051;)Lnet/minecraft/class_11944$class_12041;",
-   "new": "method_74755(Lnet/minecraft/class_11977$class_12051;Z)Lnet/minecraft/class_11944$class_12041;",
-   "args": [
-    0
-   ],
-   "onlyUnder": "net/minecraft/class_11659$class_11947",
-   "frames": "top/dext/centurybridge/step/v26_1/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
   },
   {
    "old": "method_22752(Lnet/minecraft/class_638;)V",
