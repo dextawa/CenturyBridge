@@ -127,7 +127,13 @@
   "net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFI)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
   "net/minecraft/class_3887.method_23199(Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
   "net/minecraft/class_922.method_23622(Lnet/minecraft/class_1309;F)I": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
-  "net/minecraft/class_976.method_32798(Lnet/minecraft/class_4587;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers"
+  "net/minecraft/class_976.method_32798(Lnet/minecraft/class_4587;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLayers",
+  "net/minecraft/class_4722.method_24076()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
+  "net/minecraft/class_4696.method_23683(Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
+  "net/minecraft/class_4696.method_23678(Lnet/minecraft/class_1799;Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
+  "net/minecraft/class_4840.method_32026(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
+  "net/minecraft/class_4840.method_47656(Lnet/minecraft/class_5605;Lnet/minecraft/class_5609;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
+  "net/minecraft/class_892.method_32164()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes"
  },
  "instanceRedirects": {
   "net/minecraft/class_799.method_3472()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
@@ -2065,7 +2071,7 @@
    "desc": "(Lnet/minecraft/class_1531;D)Z",
    "ops": [
     "keep:0",
-    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1297;)D"
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1531;)D"
    ],
    "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
   },
@@ -2081,7 +2087,7 @@
    "desc": "(Lnet/minecraft/class_1533;D)Z",
    "ops": [
     "keep:0",
-    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1297;)D"
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1533;)D"
    ],
    "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
   },
@@ -2089,7 +2095,7 @@
    "desc": "(Lnet/minecraft/class_1309;D)Z",
    "ops": [
     "keep:0",
-    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1297;)D"
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1309;)D"
    ],
    "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
   },
@@ -2097,9 +2103,43 @@
    "desc": "(Lnet/minecraft/class_1308;D)Z",
    "ops": [
     "keep:0",
-    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1297;)D"
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#distanceToCameraSq(Lnet/minecraft/class_1308;)D"
    ],
    "basis": "shouldShowName(entity) takes the entity's squared camera distance as well in 1.21.2; EntityRenderer.extractRenderState passes EntityRenderDispatcher.distanceToSqr(entity) (javap), computed the same way for a 1.21.1 call; super calls follow"
+  },
+  "net/minecraft/class_4896.method_25446(Lnet/minecraft/class_630;Lnet/minecraft/class_630;Lnet/minecraft/class_1309;Z)V": {
+   "desc": "(Lnet/minecraft/class_630;Lnet/minecraft/class_630;FIZ)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#crossbowChargeDuration(Lnet/minecraft/class_1309;)F",
+    "conv:2 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#ticksUsingItem(Lnet/minecraft/class_1309;)I",
+    "keep:3"
+   ],
+   "basis": "AnimationUtils.animateCrossbowCharge: 1.21.1 read CrossbowItem.getChargeDuration(entity.getUseItem(), entity) and entity.getTicksUsingItem() itself, 1.21.2 takes those two values (javap both bodies: the same clamp and arm angles)"
+  },
+  "net/minecraft/class_4896.method_29351(Lnet/minecraft/class_630;Lnet/minecraft/class_630;Lnet/minecraft/class_1308;FF)V": {
+   "desc": "(Lnet/minecraft/class_630;Lnet/minecraft/class_630;Lnet/minecraft/class_1306;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#mainArm(Lnet/minecraft/class_1308;)Lnet/minecraft/class_1306;",
+    "keep",
+    "keep"
+   ],
+   "basis": "AnimationUtils.swingWeaponDown: 1.21.1 read mob.getMainArm() itself, 1.21.2 takes the arm (javap both bodies)"
+  },
+  "net/minecraft/class_863.method_23099(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;DDD)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4604;Lnet/minecraft/class_4597$class_4598;DDD)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#levelFrustum()Lnet/minecraft/class_4604;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "DebugRenderer.render takes the culling frustum in 1.21.2 (LevelRenderer passes its own, javap); a 1.21.1 call gets the level renderer's frustum; super calls follow"
   }
  }
 }

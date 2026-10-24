@@ -92,4 +92,44 @@ public final class CbRenderReshapes {
                                    int light) {
         dispatcher.method_62424(entity, x, y, z, partialTick, poseStack, buffers, light);
     }
+
+    /**
+     * AnimationUtils.animateCrossbowCharge(rightArm, leftArm, entity, rightHanded): 1.21.1 read the charge duration
+     * (CrossbowItem.getChargeDuration(entity.getUseItem(), entity)) and the ticks using the item from the entity;
+     * 1.21.2 takes both, as HumanoidMobRenderer extracts them
+     */
+    public static float crossbowChargeDuration(net.minecraft.class_1309 entity) {
+        return (float) net.minecraft.class_1764.method_7775(entity.method_6030(), entity);
+    }
+
+    public static int ticksUsingItem(net.minecraft.class_1309 entity) {
+        return entity.method_6048();
+    }
+
+    /** AnimationUtils.swingWeaponDown(rightArm, leftArm, mob, ..): 1.21.1 read mob.getMainArm(), 1.21.2 takes the arm */
+    public static net.minecraft.class_1306 mainArm(net.minecraft.class_1308 mob) {
+        return mob.method_6068();
+    }
+
+    /** DebugRenderer.render takes the culling frustum in 1.21.2: the level renderer's, as its level render passes it */
+    public static net.minecraft.class_4604 levelFrustum() {
+        return net.minecraft.class_310.method_1551().field_1769.method_62222();
+    }
+
+    /** the same for each renderer's own shouldShowName erasure (a converter takes the old argument's exact type) */
+    public static double distanceToCameraSq(net.minecraft.class_1309 entity) {
+        return distanceToCameraSq((net.minecraft.class_1297) entity);
+    }
+
+    public static double distanceToCameraSq(net.minecraft.class_1308 entity) {
+        return distanceToCameraSq((net.minecraft.class_1297) entity);
+    }
+
+    public static double distanceToCameraSq(net.minecraft.class_1531 entity) {
+        return distanceToCameraSq((net.minecraft.class_1297) entity);
+    }
+
+    public static double distanceToCameraSq(net.minecraft.class_1533 entity) {
+        return distanceToCameraSq((net.minecraft.class_1297) entity);
+    }
 }
