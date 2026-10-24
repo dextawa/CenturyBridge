@@ -70,3 +70,5 @@ extendable class net/minecraft/class_2754
 extendable method net/minecraft/class_2754 <init> (Ljava/lang/String;Ljava/lang/Class;Ljava/util/List;)V
 # StackedItemContents' item-holder counts, read back into 1.21.1's StackedContents (rt/CbLevelStacked)
 accessible field net/minecraft/class_9875 field_52506 Lnet/minecraft/class_1662;
+# PalettedContainer.Data, whose copy() 1.21.1 mixins invoke (rt/CbLevelPalette)
+accessible class net/minecraft/class_2841$class_6561

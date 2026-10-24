@@ -873,6 +873,12 @@ def palette_and_be_types(f):
         f.put("instanceRedirects", c + "." + old, RT + "/CbLevelPalette")
     # the override hook itself is mechanical.json's (copy() asked as copy(PaletteResize), frames + superCalls)
     f.put("frameDefaults", old, {"0": RT + "/CbLevelPalette#resize(" + PAL + ")" + PR})
+    DATA = MC + "class_2841$class_6561"
+    f.put("instanceRedirects", DATA + ".method_44338()" + L(DATA), RT + "/CbLevelPalette")
+    # no class can extend the record: the hook only tells mixin selectors where copy() went (handlers take none of
+    # its arguments; V had none)
+    f.hook(old="method_44338()" + L(DATA), new="method_44338(" + PR + ")" + L(DATA), args=[], onlyUnder=DATA,
+           basis="PalettedContainer.Data.copy() takes the palette's resize handler since 1.21.2")
     RO, PC = L("class_7522"), L("class_2841")
     f.w["abstractFills"].append({"under": MC + "class_7522", "method": "method_39957()" + PC,
                                  "call": RT + "/CbLevelPalette.copy(" + RO + ")" + PC})
@@ -992,6 +998,27 @@ def stacked(f):
                  "1.21.2's body read back (CbLevelStacked)")
 
 
+# ------------------------------------------------------------------------------------------- mixin-only targets gone
+def mixin_ledger(f):
+    """members only mixins reach (package-private records/caches, a constructor), with no counterpart on 1.21.2"""
+    CNU = MC + "class_7159"
+    for rec, comp, what in (("$class_7163", "comp_591", "SimpleNeighborUpdate"), ("$class_7160", "comp_587", "FullNeighborUpdate")):
+        f.put("ledger", CNU + rec + "." + comp + "()" + L("class_2338"),
+              "CollectingNeighborUpdater." + what + ".neighborPos(): 1.21.2's record holds the update's Orientation "
+              "(class_9904) in place of the neighbor position (same constructor slot, compared in both jars); no "
+              "member of the record answers a neighbor position any more, so an injector, invoker or shadow on this "
+              "accessor has nothing to stand on")
+    f.put("ledger", MC + "class_4970$class_4971$class_3752.field_16557:Z",
+          "BlockStateBase.Cache.solidRender: 1.21.1 computed isSolidRender(EmptyBlockGetter, ORIGIN) into the cache; "
+          "1.21.2 computes it into a private field of BlockStateBase itself (field_52639, set in initCache), not of "
+          "the Cache class an accessor or shadow on Cache names; the value stays readable through "
+          "BlockStateBase.isSolidRender()")
+    f.put("ledger", MC + "class_2852.<init>()V",
+          "1.21.1 ChunkSerializer's implicit empty constructor (a static utility); converted mods' ChunkSerializer is "
+          "CenturyBridge's facade (classRenames), and 1.21.2's class_2852 is the record SerializableChunkData whose "
+          "only constructor builds a chunk's data: an injector into the empty constructor has no counterpart")
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -1020,6 +1047,7 @@ def main():
     generic(f)
     frame_defaults(f)
     stacked(f)
+    mixin_ledger(f)
     f.write()
 
 
