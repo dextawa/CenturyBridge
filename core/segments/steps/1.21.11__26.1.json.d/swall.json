@@ -110,7 +110,8 @@
   "net/minecraft/class_5219.method_228()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#getCustomBossEvents",
   "net/minecraft/class_5219.method_221(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#setCustomBossEvents",
   "net/minecraft/class_5219.method_226()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#getLoadedPlayerTag",
-  "net/minecraft/class_5219.method_163(Lnet/minecraft/class_5455;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#createTag"
+  "net/minecraft/class_5219.method_163(Lnet/minecraft/class_5455;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#createTag",
+  "net/minecraft/class_3002.method_12959()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#getTextId"
  },
  "overrideHooks": [
   {
@@ -308,6 +309,13 @@
    "onlyUnder": "net/minecraft/class_332",
    "superCalls": "rename",
    "basis": "GuiGraphics.renderComponentHoverEffect lives on as GuiGraphicsExtractor.componentHoverEffect, same descriptor and body; vanilla calls it with invokevirtual and the layer's access widener makes it extendable, so the renamed override is what 26.1 calls. Vanilla never passes a null style (both releases test first); the mod's own calls go through CbWallGui, which keeps 1.21.11's null test"
+  },
+  {
+   "old": "method_12959()Lnet/minecraft/class_2960;",
+   "new": "customId",
+   "onlyUnder": "net/minecraft/class_3002",
+   "superCalls": "rename",
+   "basis": "CustomBossEvent.getTextId() lives on as customId(), same descriptor and body; 26.1 calls customId(), so the renamed override is what it calls; the mod's own calls go through CbWallBossEvents.getTextId, which calls customId() virtually"
   }
  ],
  "classRenames": {
@@ -649,7 +657,8 @@
   "com/mojang/blaze3d/opengl/GlConst.toGl(Lcom/mojang/blaze3d/platform/DepthTestFunction;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#toGl",
   "com/mojang/blaze3d/opengl/GlStateManager._colorMask(ZZZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#colorMask",
   "net/minecraft/class_4095.method_28313(Ljava/util/Collection;Ljava/util/Collection;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#codec",
-  "net/minecraft/class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lnet/minecraft/class_1940;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#parse"
+  "net/minecraft/class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lnet/minecraft/class_1940;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#parse",
+  "net/minecraft/class_3002.method_12966(Lnet/minecraft/class_2960;Lnet/minecraft/class_3002$class_10765;)Lnet/minecraft/class_3002;": "top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#load"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -781,6 +790,16 @@
     1
    ],
    "basis": "26.1 keeps the world generation options in the server's WorldGenSettings saved data, not the level data: the options the 1.21.11 constructor took are kept for the data, and its worldGenOptions() answers them (CbWallWorldData)"
+  },
+  "net/minecraft/class_3002.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_2561;)V": {
+   "desc": "(Ljava/util/UUID;Lnet/minecraft/class_2960;Lnet/minecraft/class_2561;Ljava/lang/Runnable;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#newEventId()Ljava/util/UUID;",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#noOwner()Ljava/lang/Runnable;"
+   ],
+   "basis": "26.1 hands a custom boss event its UUID and its owner's dirty callback; 1.21.11's event drew an insecure random UUID itself and had no owner to tell (CbWallBossEvents)"
   }
  },
  "fieldGetters": {
@@ -881,7 +900,17 @@
   "net/minecraft/class_1297.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
   "net/minecraft/class_1531.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
   "net/minecraft/class_636.method_2917(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_3966;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
-  "net/minecraft/class_636.method_2905(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;"
+  "net/minecraft/class_636.method_2905(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+  "net/minecraft/class_3004.method_12970(Lnet/minecraft/class_2960;Lnet/minecraft/class_2561;)Lnet/minecraft/class_3002;",
+  "net/minecraft/class_3004.method_12974(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;",
+  "net/minecraft/class_3004.method_12972(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+  "net/minecraft/class_3002.method_12964(Ljava/util/UUID;)V",
+  "net/minecraft/class_8944.method_54966(Ljava/util/Optional;Ljava/lang/String;)V",
+  "net/minecraft/class_8944.method_54965(Ljava/util/List;Ljava/lang/String;)V",
+  "net/minecraft/class_8944.method_54962(Lnet/minecraft/class_5258;Ljava/lang/String;)V",
+  "net/minecraft/class_8944.method_54961(Lnet/minecraft/class_5258;Lnet/minecraft/class_176;Ljava/lang/String;)V",
+  "net/minecraft/class_8944.method_54964(Ljava/util/List;Lnet/minecraft/class_176;Ljava/lang/String;)V",
+  "net/minecraft/class_58.method_22568(Lnet/minecraft/class_176;)Lnet/minecraft/class_58;"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"

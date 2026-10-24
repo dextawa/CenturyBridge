@@ -17,8 +17,12 @@
     "CbFapiTradeServerMixin",
     "CbFapiVillagerTradesMixin",
     "CbFapiWanderingTraderTradesMixin",
+    "CbWallBossEventMixin",
+    "CbWallBossEventsAccess",
+    "CbWallBossEventsMixin",
     "CbWallBrainAccess",
     "CbWallBrainMixin",
+    "CbWallCriterionValidatorMixin",
     "CbWallDragonFightAccess",
     "CbWallDragonFightLevelMixin",
     "CbWallDragonFightSaveMixin",
@@ -29,7 +33,9 @@
     "CbWallLivingEntityAccess",
     "CbWallServerAccess",
     "CbWallServerMixin",
-    "CbWallTraderSpawnerMixin"
+    "CbWallTraderSpawnerMixin",
+    "CbWallValidationContextAccess",
+    "CbWallValidationContextMixin"
   ],
   "client": [
     "CbFapiBlockColorsMixin",
