@@ -949,6 +949,14 @@ public final class Chain {
     public MixinRepair bridgeCode;
 
     /**
+     * Past the wall the mods' injectors are judged one by one against the target's real bodies once the
+     * jar has its real names (JarProcessor.repairPastWall): triage then leaves injector target / anchor
+     * findings to that pass, as it does to {@link #mixinRepair} on every other step, instead of
+     * stripping a whole mixin for one injector. Set by Main when the wall's code jar is at hand.
+     */
+    public boolean injectorsJudgedPastWall;
+
+    /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,
      * its superclasses, their interfaces. TRUE found, FALSE definitely absent (every class
      * on the way is a target-stub class and none declares it), null when the answer leaves

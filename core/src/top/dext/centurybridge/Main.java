@@ -237,6 +237,7 @@ public final class Main {
                                                                 : Path.of("data/jars/client-" + args[3] + ".jar");
             if (Files.exists(code)) {
                 wallRepair = new top.dext.centurybridge.engine.MixinRepair(code);
+                chain.injectorsJudgedPastWall = true;
                 System.out.println("mixin anchors past the wall: checked against " + code);
             } else {
                 System.out.println("mixin anchors past the wall: NOT checked (no " + code + "; set CB_TARGET_CODE)");
