@@ -116,6 +116,36 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
    "basis": "TrimTemplate.id(): the key's location"
+  },
+  "net/minecraft/class_2412.method_55581(Lnet/minecraft/class_8779;Ljava/util/function/Consumer;Ljava/util/List;)Lnet/minecraft/class_8779;": {
+   "desc": "(Lnet/minecraft/class_8779;Ljava/util/function/Consumer;Lnet/minecraft/class_7871;Ljava/util/List;)Lnet/minecraft/class_8779;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#entityTypes()Lnet/minecraft/class_7871;",
+    "keep"
+   ],
+   "basis": "VanillaAdventureAdvancements helper: the entity type lookup 1.21.2 takes (the built-in registry)"
+  },
+  "net/minecraft/class_2414.method_47810(Lnet/minecraft/class_8779;Ljava/util/function/Consumer;Ljava/util/stream/Stream;Ljava/util/stream/Stream;)Lnet/minecraft/class_8779;": {
+   "desc": "(Lnet/minecraft/class_8779;Ljava/util/function/Consumer;Lnet/minecraft/class_7871;Ljava/util/stream/Stream;Ljava/util/stream/Stream;)Lnet/minecraft/class_8779;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#entityTypes()Lnet/minecraft/class_7871;",
+    "keep",
+    "keep"
+   ],
+   "basis": "VanillaHusbandryAdvancements helper: the entity type lookup 1.21.2 takes (the built-in registry)"
+  },
+  "net/minecraft/class_5478.method_30705(Lnet/minecraft/class_7871;Lnet/minecraft/class_7871;)Lnet/minecraft/class_1959;": {
+   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_7871;Z)Lnet/minecraft/class_1959;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#notPaleGarden()Z"
+   ],
+   "basis": "OverworldBiomes.darkForest: 1.21.2's takes isPaleGarden; 1.21.1's dark forest is its false branch"
   }
  },
  "superCtorReshapes": {
@@ -194,6 +224,11 @@
  ],
  "superRenames": {
   "net/minecraft/class_2446": "top/dext/centurybridge/step/v1_21_2/facade/RecipeProvider"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_6800.field_35767:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen",
+  "net/minecraft/class_6811.field_35975:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen",
+  "net/minecraft/class_8998.field_47509:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen"
  },
  "instanceRedirects": {
   "net/minecraft/class_2446.method_10319(Lnet/minecraft/class_7403;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenRecipes#method_10319",

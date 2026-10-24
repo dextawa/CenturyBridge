@@ -55,4 +55,38 @@ public final class CbItemDatagen {
     /** RecipeOutput.includeRootAdvancement() of a 1.21.1 output (abstractFills): nothing to include */
     public static void includeRootAdvancement(class_8790 output) {
     }
+
+    // ---- worldgen keys 1.21.2 dropped (dev-time datagen bootstrap): 1.21.1's keys, the same ids ----
+
+    /** AquaticFeatures.SEAGRASS_SIMPLE: the configured feature key minecraft:seagrass_simple */
+    public static class_5321<?> field_35767() {
+        return class_5321.method_29179(net.minecraft.class_7924.field_41239, class_2960.method_60656("seagrass_simple"));
+    }
+
+    /** AquaticPlacements.SEAGRASS_SIMPLE: the placed feature key minecraft:seagrass_simple */
+    public static class_5321<?> field_35975() {
+        return class_5321.method_29179(net.minecraft.class_7924.field_41245, class_2960.method_60656("seagrass_simple"));
+    }
+
+    /** TrialChambersStructurePools field_47509: the template pool key minecraft:trial_chambers/chamber/entrance_cap */
+    public static class_5321<?> field_47509() {
+        return class_5321.method_29179(net.minecraft.class_7924.field_41249, class_2960.method_60656("trial_chambers/chamber/entrance_cap"));
+    }
+
+
+    // ---- advancement and biome bootstrap helpers (dev-time datagen) ----
+
+    /** the entity type lookup 1.21.2's advancement helpers take; 1.21.1's resolved in the built-in registry */
+    public static class_7871<net.minecraft.class_1299<?>> entityTypes() {
+        return class_7923.field_41177;
+    }
+
+    /**
+     * OverworldBiomes.darkForest(features, carvers): 1.21.2's takes whether it is the pale garden (new in 1.21.2); the
+     * dark forest 1.21.1 built is its other branch
+     */
+    public static boolean notPaleGarden() {
+        return false;
+    }
+
 }

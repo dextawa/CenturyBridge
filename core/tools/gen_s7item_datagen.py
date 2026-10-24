@@ -101,6 +101,26 @@ def main():
     # a 1.21.1 recipe provider's superclass: 1.21.1's data provider (the facade), its helpers answered by a 1.21.2
     # provider bound to its output (gen_s7item_datagen_recipes.py)
     out["superRenames"] = {"net/minecraft/class_2446": "top/dext/centurybridge/step/v1_21_2/facade/RecipeProvider"}
+    adv = "Lnet/minecraft/class_8779;"
+    push_types = "push " + RT + "#entityTypes()" + ITEMS
+    out["callReshapes"]["net/minecraft/class_2412.method_55581(" + adv + "Ljava/util/function/Consumer;Ljava/util/List;)" + adv] = {
+        "desc": "(" + adv + "Ljava/util/function/Consumer;" + ITEMS + "Ljava/util/List;)" + adv,
+        "ops": ["keep", "keep", push_types, "keep"],
+        "basis": "VanillaAdventureAdvancements helper: the entity type lookup 1.21.2 takes (the built-in registry)"}
+    out["callReshapes"]["net/minecraft/class_2414.method_47810(" + adv + "Ljava/util/function/Consumer;Ljava/util/stream/Stream;"
+                        "Ljava/util/stream/Stream;)" + adv] = {
+        "desc": "(" + adv + "Ljava/util/function/Consumer;" + ITEMS + "Ljava/util/stream/Stream;Ljava/util/stream/Stream;)" + adv,
+        "ops": ["keep", "keep", push_types, "keep", "keep"],
+        "basis": "VanillaHusbandryAdvancements helper: the entity type lookup 1.21.2 takes (the built-in registry)"}
+    out["callReshapes"]["net/minecraft/class_5478.method_30705(" + ITEMS + ITEMS + ")Lnet/minecraft/class_1959;"] = {
+        "desc": "(" + ITEMS + ITEMS + "Z)Lnet/minecraft/class_1959;",
+        "ops": ["keep", "keep", "push " + RT + "#notPaleGarden()Z"],
+        "basis": "OverworldBiomes.darkForest: 1.21.2's takes isPaleGarden; 1.21.1's dark forest is its false branch"}
+    out["fieldGetters"] = {
+        "net/minecraft/class_6800.field_35767:Lnet/minecraft/class_5321;": RT,
+        "net/minecraft/class_6811.field_35975:Lnet/minecraft/class_5321;": RT,
+        "net/minecraft/class_8998.field_47509:Lnet/minecraft/class_5321;": RT,
+    }
     dr = "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenRecipes"
     rp = "net/minecraft/class_2446."
     co = "Ljava/util/concurrent/CompletableFuture;"
