@@ -206,6 +206,10 @@ public final class SiteMatch {
         if (vf == null || wf == null) return null;
         // a constructor call produces nothing itself: the value is its NEW's
         AbstractInsnNode value = site instanceof MethodInsnNode sm && sm.name.equals("<init>") ? newOf(sm) : site;
+        if (value != site && value != null && !vf.consumer.containsKey(value) && value.getNext() != null
+                && value.getNext().getOpcode() == Opcodes.DUP) {
+            value = value.getNext(); // NEW; DUP: the analysis hands both copies to the DUP
+        }
         AbstractInsnNode c = value == null ? null : vf.consumer.get(value);
         if (c == null) return null;
         AbstractInsnNode[] vp = vf.producers.get(c);
@@ -294,6 +298,9 @@ public final class SiteMatch {
                 if (v.insns.size() != 1) continue;
                 AbstractInsnNode p = v.insns.iterator().next();
                 ps[a] = p;
+                if (a == 0 && in instanceof MethodInsnNode ci && ci.name.equals("<init>")) {
+                    continue; // a constructor call initializes its NEW's copy: the value goes on to whoever takes the other
+                }
                 if (consumer.containsKey(p) && consumer.get(p) != in) shared.add(p);
                 consumer.put(p, in);
                 if (p instanceof LdcInsnNode ldc && ldc.cst instanceof String str) {
@@ -342,11 +349,13 @@ public final class SiteMatch {
         List<AbstractInsnNode> vsi = sigInsns(vm), wsi = sigInsns(wm);
         int p = vsi.indexOf(site);
         if (p < 0) return null;
+        widths:
         for (int k = 4; k >= 2; k--) {
             String key = around(vs, p, k);
             if (!informative(vs, p, k)) continue; // only the body's edges and returns around it: no evidence
             for (int r = 0; r < vsi.size(); r++) {
-                if (r != p && candidate.test(vsi.get(r)) && around(vs, r, k).equals(key)) return null;
+                // V's site not singled out by its neighbours (narrower widths less so): only its slot can say
+                if (r != p && candidate.test(vsi.get(r)) && around(vs, r, k).equals(key)) break widths;
             }
             AbstractInsnNode hit = null;
             int hits = 0;
@@ -357,7 +366,7 @@ public final class SiteMatch {
                 }
             }
             if (hits == 1) return hit;
-            if (hits > 1) return null;
+            if (hits > 1) break;
         }
         // the neighbours changed around it (its own operands re-described): the slot it fills in a keyed statement
         return slotCounterpart(vm, site, wm, candidate, place);

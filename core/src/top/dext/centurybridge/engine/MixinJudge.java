@@ -535,7 +535,7 @@ public final class MixinJudge {
                 return "anchor gone";
             }
             if (source != null && a.ordinal() >= 0 && a.ordinal() < c && anchors.size() == 1 && vcount > 0 && c != vcount) {
-                String pinned = pinned(a, wm, c);
+                String pinned = pinned(a, wm, c, an.desc.equals("Lorg/spongepowered/asm/mixin/injection/Inject;"));
                 if ("".equals(pinned)) {
                     continue;
                 }
@@ -560,7 +560,7 @@ public final class MixinJudge {
      * the V site's place, SiteMatch.counterpart), a fate when it stands elsewhere, null when the row's
      * V site is not one site to compare (left to the count rule).
      */
-    private String pinned(MixinRepair.Anchor a, MethodNode wm, int c) {
+    private String pinned(MixinRepair.Anchor a, MethodNode wm, int c, boolean positional) {
         ClassNode vc = source.target(rowOwner);
         int p = rowTarget.indexOf('(');
         MethodNode vm = null;
@@ -590,7 +590,10 @@ public final class MixinJudge {
             return j < 0 ? "anchor ordinal site lost (V #" + vi + " of " + vo.size() + ", W " + c + ")"
                 : "anchor ordinal shifted (V #" + vi + " is W #" + j + ", pinned to #" + a.ordinal() + ")";
         }
-        AbstractInsnNode cp = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in));
+        // what MixinBridge.counterpartAnchor takes as standing there: for a positional @Inject also a value read
+        // of another kind, or the keyed consumer a construction now runs inside (SiteMatch.counterpart)
+        AbstractInsnNode cp = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in)
+            || positional && SiteMatch.valueRead(site) && SiteMatch.valueRead(in), positional);
         return cp != null && wo.indexOf(cp) == a.ordinal() ? "" : null;
     }
 
