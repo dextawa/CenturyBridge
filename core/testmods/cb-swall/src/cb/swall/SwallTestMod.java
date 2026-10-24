@@ -815,6 +815,7 @@ public class SwallTestMod implements ModInitializer {
             interactPacket(server);
             timerQueue();
             extendFinal();
+            worldCalls(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1042,5 +1043,58 @@ public class SwallTestMod implements ModInitializer {
             && net.minecraft.class_2215.method_9398(net.minecraft.class_1767.field_7964) == net.minecraft.class_2246.field_10406, "");
         check("component.nbtContents", "a.b".equals(good.method_10920()) && "[[[".equals(bad.method_10920())
             && bad.method_10890(source, null, 0).getString().isEmpty(), good.method_10920());
+    }
+
+    /** 1.21.11 world calls 26.1 reshaped (CbWallWorldCalls); each check on its own so one failure keeps the rest */
+    private static void worldCalls(MinecraftServer server) {
+        net.minecraft.class_3218 level = server.method_30002();
+        try {
+            java.util.List<net.minecraft.class_1799> drops = net.minecraft.class_2248.method_9609(net.minecraft.class_2246.field_10340.method_9564(),
+                level, new net.minecraft.class_2338(0, 100, 0), null, null, new net.minecraft.class_1799(net.minecraft.class_1802.field_8377));
+            check("world.getDrops", drops.size() == 1 && drops.get(0).method_31574(net.minecraft.class_1802.field_20412), drops);
+        } catch (Throwable t) {
+            check("world.getDrops", false, t);
+        }
+        try {
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(3, 250, 3);
+            level.method_8501(pos.method_10074(), net.minecraft.class_2246.field_10114.method_9564());
+            level.method_8501(pos, net.minecraft.class_2246.field_10382.method_9564());
+            net.minecraft.class_2258.method_34267(level, pos, level.method_8320(pos), level.method_8320(pos.method_10074()));
+            net.minecraft.class_2680 now = level.method_8320(pos);
+            check("world.bubbleColumn", now.method_27852(net.minecraft.class_2246.field_10422), now);
+        } catch (Throwable t) {
+            check("world.bubbleColumn", false, t);
+        }
+        try {
+            net.minecraft.class_12210<Float> lerp = net.minecraft.class_12210.method_75706();
+            net.minecraft.class_12210<Float> step = net.minecraft.class_12210.method_75707(0.5F);
+            net.minecraft.class_12192<Float> type = net.minecraft.class_12192.method_75634(com.mojang.serialization.Codec.FLOAT, java.util.Map.of(), lerp, step);
+            check("world.attributeType", type.comp_5211() == lerp && type.comp_5131() == lerp && type.comp_5132() == step && type.comp_5128() == com.mojang.serialization.Codec.FLOAT, type);
+        } catch (Throwable t) {
+            check("world.attributeType", false, t);
+        }
+        try {
+            net.minecraft.class_2761 on = new net.minecraft.class_2761(5L, 1234L, true);
+            net.minecraft.class_2761 off = new net.minecraft.class_2761(6L, 99L, false);
+            check("world.setTimePacket", on.comp_3219() == 5L && on.comp_3220() == 1234L && on.comp_3221()
+                && off.comp_3220() == 99L && !off.comp_3221(), on);
+        } catch (Throwable t) {
+            check("world.setTimePacket", false, t);
+        }
+        try {
+            net.minecraft.class_10215 resist = new net.minecraft.class_1799(net.minecraft.class_1802.field_22020).method_58694(net.minecraft.class_9334.field_54273);
+            check("world.damageResistantTag", resist != null && resist.comp_3210() == net.minecraft.class_8103.field_42246, resist);
+        } catch (Throwable t) {
+            check("world.damageResistantTag", false, t);
+        }
+        try {
+            @SuppressWarnings({"rawtypes", "unchecked"}) net.minecraft.class_7655.class_7657 banners = new net.minecraft.class_7655.class_7657(net.minecraft.class_7924.field_41252,
+                net.minecraft.class_2582.field_49757, false);
+            @SuppressWarnings("unchecked") net.minecraft.class_5455.class_6890 loaded = net.minecraft.class_7655.method_56515(server.method_34864(), java.util.List.of(), java.util.List.of(banners));
+            long n = loaded.method_30530(net.minecraft.class_7924.field_41252).method_10220().count();
+            check("world.registryLoadSync", n > 10, n);
+        } catch (Throwable t) {
+            check("world.registryLoadSync", false, t);
+        }
     }
 }

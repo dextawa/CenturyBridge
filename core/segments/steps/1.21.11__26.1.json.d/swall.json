@@ -214,7 +214,12 @@
   "net/minecraft/class_8895.comp_2008()Lnet/minecraft/class_5219;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#levelWorldData",
   "net/minecraft/class_9476.method_58740()Lnet/minecraft/class_5658;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#amplifier",
   "net/minecraft/class_7375.comp_3560()Lnet/minecraft/class_12079$class_10726;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#catAssetInfo",
-  "net/minecraft/class_3537.method_16453(DDDDDZ)D": "top/dext/centurybridge/step/v26_1/rt/CbWallNoise#getValue"
+  "net/minecraft/class_3537.method_16453(DDDDDZ)D": "top/dext/centurybridge/step/v26_1/rt/CbWallNoise#getValue",
+  "net/minecraft/class_2761.comp_3220()J": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#dayTime",
+  "net/minecraft/class_2761.comp_3221()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#tickDayTime",
+  "net/minecraft/class_10215.comp_3210()Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#types",
+  "net/minecraft/class_32$class_5143.method_27425(Lnet/minecraft/class_5455;Lnet/minecraft/class_5219;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#saveDataTag",
+  "net/minecraft/class_32$class_5143.method_27426(Lnet/minecraft/class_5455;Lnet/minecraft/class_5219;Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#saveDataTag"
  },
  "overrideHooks": [
   {
@@ -682,7 +687,8 @@
   "net/minecraft/class_9346.<init>(Lnet/minecraft/class_9346$class_10688;Lnet/minecraft/class_10702;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#wolfVariant",
   "net/minecraft/class_7655$class_7657.<init>(Lnet/minecraft/class_5321;Lcom/mojang/serialization/Codec;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#registryData",
   "net/minecraft/class_7375.<init>(Lnet/minecraft/class_12079$class_10726;Lnet/minecraft/class_10702;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#catVariant",
-  "net/minecraft/class_4635.<init>(Lnet/minecraft/class_4651;Lnet/minecraft/class_4651;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMushrooms#config"
+  "net/minecraft/class_4635.<init>(Lnet/minecraft/class_4651;Lnet/minecraft/class_4651;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMushrooms#config",
+  "net/minecraft/class_2761.<init>(JJZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#setTimePacket"
  },
  "adapterHooks": [
   {
@@ -1094,7 +1100,12 @@
   "net/minecraft/class_9945.method_66838(FZ)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$DonkeyModel#createSaddleLayer",
   "net/minecraft/class_3532.method_15394()Ljava/util/UUID;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#createInsecureUUID",
   "net/minecraft/class_2512.method_73082(Lcom/mojang/serialization/Dynamic;)Lcom/mojang/serialization/Dynamic;": "top/dext/centurybridge/step/v26_1/rt/CbWallNbt#addCurrentDataVersion",
-  "net/minecraft/class_5628.method_32304(Ljava/lang/String;)Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v26_1/rt/CbWallNbt#handleEscapePretty"
+  "net/minecraft/class_5628.method_32304(Ljava/lang/String;)Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v26_1/rt/CbWallNbt#handleEscapePretty",
+  "net/minecraft/class_2248.method_9609(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2586;Lnet/minecraft/class_1297;Lnet/minecraft/class_1799;)Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#getDrops",
+  "net/minecraft/class_2258.method_34267(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#updateColumn",
+  "net/minecraft/class_12192.method_75634(Lcom/mojang/serialization/Codec;Ljava/util/Map;Lnet/minecraft/class_12210;Lnet/minecraft/class_12210;)Lnet/minecraft/class_12192;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#ofInterpolated",
+  "net/minecraft/class_7655.method_56515(Lnet/minecraft/class_3300;Ljava/util/List;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#load",
+  "net/minecraft/class_7655.method_56519(Ljava/util/Map;Lnet/minecraft/class_5912;Ljava/util/List;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#load"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
