@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s4fingt",
+ "version": "1.0.0",
+ "name": "CB s4fin gametest/registry Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.s4fingt.S4FinGtMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.4", "fabric-lifecycle-events-v1": "*" }
+}
