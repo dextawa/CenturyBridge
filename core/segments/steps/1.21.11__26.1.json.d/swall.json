@@ -1660,6 +1660,22 @@
     1
    ],
    "basis": "1.21.11's TimerQueue(callbacks, events): 26.1's queue is built empty; the callbacks are kept for the queue and the saved events scheduled as 1.21.11's constructor read them (compounds of Name, TriggerTime, Callback read with those callbacks)"
+  },
+  "net/minecraft/class_1923.<init>(Lnet/minecraft/class_2338;)V": {
+   "desc": "(II)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunkPos#blockX(Lnet/minecraft/class_2338;)I",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunkPos#blockZ(Lnet/minecraft/class_2338;)I"
+   ],
+   "basis": "1.21.11's ChunkPos(BlockPos) set x, z to the block's section coordinates; 26.1's record has only ChunkPos(x, z), given the same coordinates"
+  },
+  "net/minecraft/class_1923.<init>(J)V": {
+   "desc": "(II)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunkPos#packedX(J)I",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallChunkPos#packedZ(J)I"
+   ],
+   "basis": "1.21.11's ChunkPos(long) unpacked x (low int) and z (high int); 26.1's record has only ChunkPos(x, z), given the same coordinates"
   }
  },
  "fieldGetters": {
