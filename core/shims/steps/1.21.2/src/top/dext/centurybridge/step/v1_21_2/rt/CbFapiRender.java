@@ -33,4 +33,27 @@ public final class CbFapiRender {
             putItem(map, item, renderLayer);
         }
     }
+
+    /** the 1.21.1 ArmorRenderer registered for each item (compat ArmorRenderer.register) */
+    private static final java.util.Map<net.minecraft.class_1792, top.dext.centurybridge.step.v1_21_2.compat.fapi.client.rendering.v1.ArmorRenderer> ARMOR =
+        new java.util.concurrent.ConcurrentHashMap<>();
+
+    public static void armorRenderer(net.minecraft.class_1792 item, top.dext.centurybridge.step.v1_21_2.compat.fapi.client.rendering.v1.ArmorRenderer renderer) {
+        ARMOR.put(item, renderer);
+    }
+
+    /**
+     * Whether the head layer skips the head item: 1.21.1 Fabric API's HeadFeatureRendererMixin cancelled the layer when
+     * the item's armour renderer answered false to shouldRenderDefaultHeadItem(entity, stack). Asked of 1.21.1 renderers
+     * only (1.21.2's ArmorRenderer has no such method), with the entity the state was extracted from.
+     */
+    public static boolean hidesHeadItem(net.minecraft.class_10042 state) {
+        net.minecraft.class_1799 stack = state.field_53467;
+        if (stack == null || stack.method_7960()) {
+            return false;
+        }
+        top.dext.centurybridge.step.v1_21_2.compat.fapi.client.rendering.v1.ArmorRenderer renderer = ARMOR.get(stack.method_7909());
+        return renderer != null && CbRenderStateEntity.entityOf(state) instanceof net.minecraft.class_1309 entity
+            && !renderer.shouldRenderDefaultHeadItem(entity, stack);
+    }
 }

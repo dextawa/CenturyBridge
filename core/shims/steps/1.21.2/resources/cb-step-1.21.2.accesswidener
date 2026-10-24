@@ -31,7 +31,22 @@ extendable class net/minecraft/class_807
 extendable method net/minecraft/class_807 equals (Ljava/lang/Object;)Z
 extendable method net/minecraft/class_807 hashCode ()I
 extendable method net/minecraft/class_807 toString ()Ljava/lang/String;
+# s7render: ModelDiscovery.getModel(id), 1.21.1 Fabric API's getOrLoadModel during discovery (rt/CbFapiModels)
+accessible method net/minecraft/class_10097 method_62638 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
+# s7render: BakedSheetGlyph.EffectInstance, a plain class 1.21.1 mods extend, a final record in 1.21.2
+extendable class net/minecraft/class_382$class_328
+extendable method net/minecraft/class_382$class_328 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_382$class_328 hashCode ()I
+extendable method net/minecraft/class_382$class_328 toString ()Ljava/lang/String;
 # s7render: RenderType.create, to build 1.21.1's entityTranslucentCull / entityGlintDirect render types 1.21.2 deleted (rt/CbRenderTypes)
+# s7render: LivingEntityRenderer's layers, to give 1.21.1's head scales to the head layer HumanoidMobRenderer adds (rt/CbRenderHeads)
+accessible field net/minecraft/class_922 field_4738 Ljava/util/List;
+# s7render: AgeableMobRenderer's adult and baby models, for 1.21.1's PiglinRenderer noRightEar (rt/CbRenderCtors)
+accessible field net/minecraft/class_9990 field_53177 Lnet/minecraft/class_583;
+accessible field net/minecraft/class_9990 field_53178 Lnet/minecraft/class_583;
+mutable field net/minecraft/class_9990 field_53177 Lnet/minecraft/class_583;
+mutable field net/minecraft/class_9990 field_53178 Lnet/minecraft/class_583;
+accessible field net/minecraft/class_922 field_4737 Lnet/minecraft/class_583;
 accessible class net/minecraft/class_1921$class_4688
 accessible class net/minecraft/class_1921$class_4687
 accessible method net/minecraft/class_1921 method_24048 (Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;ILnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
@@ -84,12 +99,6 @@ extendable method net/minecraft/class_2754 <init> (Ljava/lang/String;Ljava/lang/
 accessible field net/minecraft/class_9875 field_52506 Lnet/minecraft/class_1662;
 # PalettedContainer.Data, whose copy() 1.21.1 mixins invoke (rt/CbLevelPalette)
 accessible class net/minecraft/class_2841$class_6561
-
-# ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----
-accessible method net/minecraft/class_1011 method_4305 (III)V
-accessible method net/minecraft/class_1011 method_4315 (II)I
-accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
-# ---- END GENERATED (s7render) ----
 # ---- s7item: 1.21.1 RecipeBookMenu bodies on 1.21.2's menus (rt/CbItemRecipeMenus) ----
 accessible field net/minecraft/class_9884 field_52559 Lnet/minecraft/class_8566;
 accessible field net/minecraft/class_9884 field_52560 Lnet/minecraft/class_1731;
@@ -123,3 +132,9 @@ accessible method net/minecraft/class_5411 method_30186 (Lnet/minecraft/class_25
 accessible method net/minecraft/class_5411 method_30190 (Lnet/minecraft/class_2540;)V
 extendable method net/minecraft/class_5411 method_30190 (Lnet/minecraft/class_2540;)V
 # ---- END GENERATED (s7item) ----
+
+# ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----
+accessible method net/minecraft/class_1011 method_4305 (III)V
+accessible method net/minecraft/class_1011 method_4315 (II)I
+accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
+# ---- END GENERATED (s7render) ----
