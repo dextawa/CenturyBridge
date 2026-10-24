@@ -383,7 +383,7 @@ public final class MixinRepair {
                 }
                 List<Anchor> anchors = anchors(an, v, refmap); // null = anchor not statically evaluable
                 int require = v.get("require") instanceof Integer i && i >= 0 ? i : defaultRequire;
-                boolean capturesArgs = capturesTargetArgs(an, handler);
+                boolean capturesArgs = capturesTargetArgs(an, handler, anchors);
                 String kind = an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
 
                 // Selector lists are ALTERNATIVES (fabric name, forge lambda, SRG name...):
@@ -1385,6 +1385,29 @@ public final class MixinRepair {
             return args.length > 1;
         }
         return true; // Redirect / ModifyArg(s) / Wrap*: operand shape is call-specific; don't move them
+    }
+
+    /**
+     * As {@link #capturesTargetArgs(AnnotationNode, MethodNode)}, with the injector's one anchor known: a
+     * handler of a call it handles itself takes the call's operands (receiver and arguments; an
+     * Operation after them for @WrapOperation; the one argument for @ModifyArg, the Args for @ModifyArgs),
+     * and only parameters beyond those are the target's -- the same call in another method hands the
+     * handler the same operands.
+     */
+    static boolean capturesTargetArgs(AnnotationNode an, MethodNode h, List<Anchor> anchors) {
+        if (!capturesTargetArgs(an, h)) return false;
+        if (anchors == null || anchors.size() != 1 || !anchors.get(0).kind.equals("INVOKE") || anchors.get(0).desc == null) return true;
+        Anchor a = anchors.get(0);
+        if (a.name.equals("<init>")) return true;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        int n = Type.getArgumentTypes(a.desc).length;
+        String recv = a.owner == null ? null : Type.getObjectType(a.owner).getDescriptor();
+        boolean withRecv = hp.length > 0 && recv != null && hp[0].getDescriptor().equals(recv);
+        int operands = n + (withRecv ? 1 : 0);
+        if (an.desc.endsWith("/Redirect;") || an.desc.endsWith("/WrapWithCondition;")) return hp.length != operands;
+        if (an.desc.endsWith("/WrapOperation;")) return hp.length != operands + 1;
+        if (an.desc.endsWith("/ModifyArg;") || an.desc.endsWith("/ModifyArgs;")) return hp.length != 1;
+        return true;
     }
 
     private static boolean touchesThisFree(MethodNode h) {

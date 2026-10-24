@@ -1990,11 +1990,11 @@ final class MixinBridge {
         private MixinRepair.Descend descendFollowed(AnnotationNode an, MethodNode h, MethodNode vmeth, MethodNode wmeth,
                                                     ClassNode vt, ClassNode wt, List<String> why) {
             MixinRepair code = wcode(chain);
-            if (code == null || MixinRepair.capturesTargetArgs(an, h) || hasSugar(h, "Local;")) {
+            if (code == null || hasSugar(h, "Local;")) {
                 return null;
             }
             List<MixinRepair.Anchor> anchors = code.anchors(an, MixinRepair.values(an), table);
-            if (anchors == null || anchors.size() != 1) {
+            if (anchors == null || anchors.size() != 1 || MixinRepair.capturesTargetArgs(an, h, anchors)) {
                 return null;
             }
             return code.descendBySite(an, h, wt, vt, vmeth, wmeth, anchors.get(0), why);
