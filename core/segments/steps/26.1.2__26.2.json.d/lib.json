@@ -1,0 +1,33 @@
+{
+ "_lib_basis": "slib library front of 26.1.2 -> 26.2 (core/segments/damage-lib/26.1.2__26.2.tsv): the rows a mod can reach; rows the library declares internal are ledgered in lib-internal-gen.json (rt/CbLibMisc, rt/CbLibIcu, facade/Logging*, facade/Log4jJmxRuntimeInputArgumentsLookup)",
+ "fieldGetters": {
+  "com/ibm/icu/util/MeasureUnit.PORTION_PER_1E9:Lcom/ibm/icu/util/MeasureUnit;": "top/dext/centurybridge/step/v26_2/rt/CbLibIcu",
+  "com/ibm/icu/util/Currency.PORTION_PER_1E9:Lcom/ibm/icu/util/MeasureUnit;": "top/dext/centurybridge/step/v26_2/rt/CbLibIcu",
+  "com/ibm/icu/util/TimeUnit.PORTION_PER_1E9:Lcom/ibm/icu/util/MeasureUnit;": "top/dext/centurybridge/step/v26_2/rt/CbLibIcu"
+ },
+ "ctorRedirects": {
+  "com/mojang/authlib/yggdrasil/response/UserAttributesResponse.<init>(Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges;Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$ProfanityFilterPreferences;Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus;)V": "top/dext/centurybridge/step/v26_2/rt/CbLibMisc#userAttributesResponse"
+ },
+ "classRenames": {
+  "com/mojang/logging/annotations/FieldsAreNonnullByDefault": "top/dext/centurybridge/step/v26_2/facade/LoggingFieldsAreNonnullByDefault",
+  "com/mojang/logging/annotations/MethodsReturnNonnullByDefault": "top/dext/centurybridge/step/v26_2/facade/LoggingMethodsReturnNonnullByDefault",
+  "org/apache/logging/log4j/core/lookup/JmxRuntimeInputArgumentsLookup": "top/dext/centurybridge/step/v26_2/facade/Log4jJmxRuntimeInputArgumentsLookup"
+ },
+ "abstractFills": [
+  {
+   "under": "com/mojang/serialization/DynamicOps",
+   "method": "createBoolean(Z)Ljava/lang/Object;",
+   "call": "top/dext/centurybridge/step/v26_2/rt/CbLibMisc.createBoolean(Lcom/mojang/serialization/DynamicOps;Z)Ljava/lang/Object;",
+   "basis": "DFU 9.0.19's default createBoolean: a byte 1/0"
+  },
+  {
+   "under": "com/mojang/serialization/DynamicOps",
+   "method": "getBooleanValue(Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;",
+   "call": "top/dext/centurybridge/step/v26_2/rt/CbLibMisc.getBooleanValue(Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;",
+   "basis": "DFU 9.0.19's default getBooleanValue: a number whose byte value is non-zero"
+  }
+ ],
+ "ledger": {
+  "com/ibm/icu/util/ChineseCalendar.<init>(Lcom/ibm/icu/util/TimeZone;Lcom/ibm/icu/util/ULocale;ILcom/ibm/icu/util/TimeZone;)V": "the int is the calendar's epoch year, which ICU 78.3 no longer has: ChineseCalendar's epochYear field is gone (javap of 77.1 vs 78.3: 77.1 'private int epochYear', 78.3 only the fixed CHINESE_EPOCH_YEAR), so extended years count from the Chinese epoch for every subclass -- 78.3's own DangiCalendar no longer passes its -2332. A subclass's own epoch has nowhere to go on 26.2"
+ }
+}

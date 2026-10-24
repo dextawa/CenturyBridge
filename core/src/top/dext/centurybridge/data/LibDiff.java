@@ -140,22 +140,25 @@ public final class LibDiff {
                         (nc.access & Opcodes.ACC_INTERFACE) != 0 ? "class -> interface" : "interface -> class");
                 if ((nc.access & Opcodes.ACC_PUBLIC) == 0)
                     add(rows, s, coord, sides, "ACCESS", name, "class no longer public");
-                boolean extendable = (oc.access & (Opcodes.ACC_FINAL | Opcodes.ACC_INTERFACE)) == 0;
+                // a class a mod can subclass: not final, not sealed (DFU 7's DataResult permits only its own two), with a
+                // public or protected constructor -- otherwise no mod class can sit under it, and its protected members, its
+                // overridable methods and its finality are no reference a mod can make
+                boolean unsealed = oc.permittedSubclasses == null || oc.permittedSubclasses.isEmpty();
+                boolean extendable = unsealed && (oc.access & (Opcodes.ACC_FINAL | Opcodes.ACC_INTERFACE)) == 0
+                    && oc.methods.stream().anyMatch(m -> m.name.equals("<init>")
+                        && (m.access & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) != 0);
                 if (extendable && (nc.access & Opcodes.ACC_FINAL) != 0)
                     add(rows, s, coord, sides, "FINAL", name, "class made final");
-                // a method W demands of an implementation that V did not: a mod's class under it lacks it (AbstractMethodError).
-                // A type a mod can extend at all: not sealed (DFU 7's DataResult permits only its own two), and an interface
-                // or a class with a public/protected constructor
-                boolean implementable = (oc.permittedSubclasses == null || oc.permittedSubclasses.isEmpty())
-                    && ((oc.access & Opcodes.ACC_INTERFACE) != 0 || oc.methods.stream().anyMatch(m ->
-                        m.name.equals("<init>") && (m.access & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) != 0));
-                if (implementable && (oc.access & Opcodes.ACC_FINAL) == 0 && (nc.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_INTERFACE)) != 0) {
+                // a method W demands of an implementation that V did not: a mod's class under it lacks it (AbstractMethodError)
+                boolean implementable = extendable || (unsealed && (oc.access & Opcodes.ACC_INTERFACE) != 0);
+                if (implementable && (nc.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_INTERFACE)) != 0) {
                     for (String key : newlyAbstract(oldS, oc, newS, nc))
                         add(rows, s, coord, sides, "ABSTRACT", name + "." + key, "implementations must now provide it");
                 }
                 for (Map.Entry<String, Integer> m : reachable(oldS, oc).entrySet()) {
                     String key = m.getKey();
                     int was = m.getValue();
+                    if ((was & Opcodes.ACC_PROTECTED) != 0 && !extendable) continue; // only a subclass reaches it
                     boolean method = key.contains("(");
                     newS.missing.clear();
                     Hit now = resolve(newS, nc, key);

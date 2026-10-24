@@ -783,7 +783,6 @@ com/github/stephenc/jcip/jcip-annotations	client,server	CLASS	net/jcip/annotatio
 com/github/stephenc/jcip/jcip-annotations	client,server	CLASS	net/jcip/annotations/ThreadSafe	artifact gone
 com/google/code/gson/gson	client,server	METHOD	com/google/gson/internal/$Gson$Types.requiresOwnerType(Ljava/lang/reflect/Type;)Z	
 com/google/guava/guava	client,server	ABSTRACT	com/google/common/base/Supplier.equals(Ljava/lang/Object;)Z	implementations must now provide it
-com/google/guava/guava	client,server	FINAL	com/google/common/collect/TreeBasedTable.rowComparator()Ljava/util/Comparator;	method made final
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/MFDataModel$Annotation	
 com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/MFDataModel$FunctionAnnotation	
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFDataModel$FunctionExpression.<init>(Lcom/ibm/icu/message2/MFDataModel$FunctionAnnotation;Ljava/util/List;)V	
@@ -792,13 +791,9 @@ com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFDataModel$LiteralExpressi
 com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/message2/MFDataModel$LiteralExpression.annotation:Lcom/ibm/icu/message2/MFDataModel$Annotation;	
 com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFDataModel$VariableExpression.<init>(Lcom/ibm/icu/message2/MFDataModel$VariableRef;Lcom/ibm/icu/message2/MFDataModel$Annotation;Ljava/util/List;)V	
 com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/message2/MFDataModel$VariableExpression.annotation:Lcom/ibm/icu/message2/MFDataModel$Annotation;	
-com/microsoft/azure/msal4j	client,server	METHOD	com/microsoft/aad/msal4j/AbstractClientApplicationBase.clientAuthentication()Lcom/nimbusds/oauth2/sdk/auth/ClientAuthentication;	
 com/microsoft/azure/msal4j	client,server	ACCESS	com/microsoft/aad/msal4j/AuthenticationResult$AuthenticationResultBuilder	class no longer public
-com/microsoft/azure/msal4j	client,server	METHOD	com/microsoft/aad/msal4j/ConfidentialClientApplication.clientAuthentication()Lcom/nimbusds/oauth2/sdk/auth/ClientAuthentication;	
-com/microsoft/azure/msal4j	client,server	METHOD	com/microsoft/aad/msal4j/ConfidentialClientApplication.createClientAuthFromClientAssertion(Lcom/microsoft/aad/msal4j/ClientAssertion;)Lcom/nimbusds/oauth2/sdk/auth/ClientAuthentication;	
 com/microsoft/azure/msal4j	client,server	CLASS	com/microsoft/aad/msal4j/CustomJWTAuthentication	
 com/microsoft/azure/msal4j	client,server	CLASS	com/microsoft/aad/msal4j/InstanceDiscoveryMetadataEntry$InstanceDiscoveryMetadataEntryBuilder	
-com/microsoft/azure/msal4j	client,server	METHOD	com/microsoft/aad/msal4j/PublicClientApplication.clientAuthentication()Lcom/nimbusds/oauth2/sdk/auth/ClientAuthentication;	
 com/mojang/datafixerupper	client,server	FIELD	com/mojang/datafixers/schemas/Schema.RECURSIVE_TYPES:Lit/unimi/dsi/fastutil/objects/Object2IntMap;	
 com/mojang/datafixerupper	client,server	ACCESS	com/mojang/datafixers/schemas/Schema.parent:Lcom/mojang/datafixers/schemas/Schema;	narrowed
 com/mojang/datafixerupper	client,server	METHOD	com/mojang/serialization/Codec.unit(Ljava/lang/Object;)Lcom/mojang/serialization/Codec;	
@@ -1684,16 +1679,8 @@ io/netty/netty-transport	client,server	METHOD	io/netty/channel/socket/nio/NioSer
 io/netty/netty-transport	client,server	METHOD	io/netty/channel/socket/nio/NioSocketChannel.eventLoop()Lio/netty/channel/nio/NioEventLoop;	
 io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/AbstractEpollServerChannel.flags:I	
 io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/AbstractEpollStreamChannel.flags:I	
-io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/EpollDatagramChannel.flags:I	
-io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/EpollDomainDatagramChannel.flags:I	
-io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/EpollDomainSocketChannel.flags:I	
-io/netty/netty-transport-classes-epoll	client,server	FINAL	io/netty/channel/epoll/EpollEventLoop.cleanup()V	method made final
 io/netty/netty-transport-classes-epoll	client,server	METHOD	io/netty/channel/epoll/EpollEventLoop.closeFileDescriptors()V	
 io/netty/netty-transport-classes-epoll	client,server	METHOD	io/netty/channel/epoll/EpollEventLoop.openFileDescriptors()V	
-io/netty/netty-transport-classes-epoll	client,server	FINAL	io/netty/channel/epoll/EpollEventLoop.wakeup(Z)V	method made final
-io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/EpollServerDomainSocketChannel.flags:I	
-io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/EpollServerSocketChannel.flags:I	
-io/netty/netty-transport-classes-epoll	client,server	FIELD	io/netty/channel/epoll/EpollSocketChannel.flags:I	
 net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/User32.RegisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/platform/win32/Guid$GUID;I)Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;	implementations must now provide it
 net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/User32.UnregisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;)Lcom/sun/jna/platform/win32/WinDef$BOOL;	implementations must now provide it
 net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/WinUser.RegisterPowerSettingNotification(Lcom/sun/jna/platform/win32/WinNT$HANDLE;Lcom/sun/jna/platform/win32/Guid$GUID;I)Lcom/sun/jna/platform/win32/WinUser$HPOWERNOTIFY;	implementations must now provide it

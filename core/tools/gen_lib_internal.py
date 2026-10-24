@@ -8,7 +8,9 @@ says its class is not public API:
     library's own statement of its public packages: ICU's com.ibm.icu.impl, Gson's com.google.gson.internal);
   - the class carries the library's internal-API marker (log4j's @org.apache.logging.log4j.util.InternalApi);
   - the class or a class enclosing it is not public in its class file (javac cannot name it from another
-    package: JOML's package-private MemUtil and its nested MemUtilNIO / MemUtilUnsafe).
+    package: JOML's package-private MemUtil and its nested MemUtilNIO / MemUtilUnsafe);
+  - its package has a segment named "internal" or "shaded" (netty's io.netty.util.internal and the JCTools copy shaded
+    under it): the library's implementation by its own naming, even where an OSGi header exports it for its other bundles.
 Every other row stays open. The output is a generated wiring fragment ("ledger" only):
 core/segments/steps/<V>__<W>.json.d/lib-internal-gen.json (step 1: core/segments/shims-1.20.2.json.d/).
 <librariesRoot>/<V> is V's libraries directory (data/runtime/client-<V>/libraries; 1.20.1's own libraries are
@@ -131,7 +133,12 @@ def main():
         name, ver = art.split("/")[-1], versions[art]
         exp = exports[art]
         reason = None
-        if exp is not None and pkg not in exp:
+        named = [seg for seg in pkg.split("/") if seg in ("internal", "shaded")]
+        if named:
+            reason = (f"internal to {name} {ver}: package {pkg} is the library's own {'internal' if 'internal' in named else 'shaded'} "
+                      f"package (a package segment named '{named[0]}': implementation, not API"
+                      + (", though exported for the library's other bundles)" if exp is not None and pkg in exp else ")"))
+        elif exp is not None and pkg not in exp:
             reason = (f"internal to {name} {ver}: package {pkg} is not among the {len(exp)} packages the jar's OSGi "
                       f"Export-Package manifest header declares public")
         else:

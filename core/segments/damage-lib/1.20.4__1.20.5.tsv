@@ -19,7 +19,6 @@ net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/
 net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Kernel32.SetThreadPriority(Lcom/sun/jna/platform/win32/WinNT$HANDLE;I)Z	implementations must now provide it
 net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Winspool.SetJob(Lcom/sun/jna/platform/win32/WinNT$HANDLE;IILcom/sun/jna/Pointer;I)Z	implementations must now provide it
 net/java/dev/jna/jna-platform	client,server	ABSTRACT	com/sun/jna/platform/win32/Winspool.SetPrinter(Lcom/sun/jna/platform/win32/WinNT$HANDLE;ILcom/sun/jna/Pointer;I)Z	implementations must now provide it
-org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/Level.readResolve()Ljava/lang/Object;	narrowed
 org/apache/logging/log4j/log4j-api	client,server	ABSTRACT	org/apache/logging/log4j/Logger.getFlowMessageFactory()Lorg/apache/logging/log4j/message/FlowMessageFactory;	implementations must now provide it
 org/apache/logging/log4j/log4j-api	client,server	METHOD	org/apache/logging/log4j/internal/DefaultLogBuilder.<init>(Lorg/apache/logging/log4j/Logger;)V	
 org/apache/logging/log4j/log4j-api	client,server	METHOD	org/apache/logging/log4j/internal/DefaultLogBuilder.<init>(Lorg/apache/logging/log4j/Logger;Lorg/apache/logging/log4j/Level;)V	
@@ -35,16 +34,6 @@ org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j
 org/apache/logging/log4j/log4j-api	client,server	ABSTRACT	org/apache/logging/log4j/spi/ExtendedLogger.getFlowMessageFactory()Lorg/apache/logging/log4j/message/FlowMessageFactory;	implementations must now provide it
 org/apache/logging/log4j/log4j-api	client,server	STATIC	org/apache/logging/log4j/spi/ExtendedLoggerWrapper.logBuilder:Ljava/lang/ThreadLocal;	now static
 org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/spi/ExtendedLoggerWrapper.logBuilder:Ljava/lang/ThreadLocal;	narrowed
-org/apache/logging/log4j/log4j-api	client,server	STATIC	org/apache/logging/log4j/status/StatusLogger.logBuilder:Ljava/lang/ThreadLocal;	now static
-org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/status/StatusLogger.logBuilder:Ljava/lang/ThreadLocal;	narrowed
-org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/util/ProviderUtil.PROVIDERS:Ljava/util/Collection;	narrowed
-org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/util/ProviderUtil.PROVIDER_RESOURCE:Ljava/lang/String;	narrowed
-org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/util/ProviderUtil.STARTUP_LOCK:Ljava/util/concurrent/locks/Lock;	narrowed
-org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/util/ProviderUtil.addProvider(Lorg/apache/logging/log4j/spi/Provider;)V	narrowed
-org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/util/ProviderUtil.lazyInit()V	narrowed
-org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/util/ProviderUtil.loadProvider(Ljava/net/URL;Ljava/lang/ClassLoader;)V	narrowed
-org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/util/ProviderUtil.loadProviders(Ljava/lang/ClassLoader;)V	narrowed
-org/apache/logging/log4j/log4j-api	client,server	ACCESS	org/apache/logging/log4j/util/ProviderUtil.loadProviders(Ljava/util/Enumeration;Ljava/lang/ClassLoader;)V	narrowed
 org/apache/logging/log4j/log4j-core	client,server	STATIC	org/apache/logging/log4j/core/Logger.logBuilder:Ljava/lang/ThreadLocal;	now static
 org/apache/logging/log4j/log4j-core	client,server	ACCESS	org/apache/logging/log4j/core/Logger.logBuilder:Ljava/lang/ThreadLocal;	narrowed
 org/apache/logging/log4j/log4j-core	client,server	STATIC	org/apache/logging/log4j/core/async/AsyncLogger.logBuilder:Ljava/lang/ThreadLocal;	now static

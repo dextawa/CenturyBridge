@@ -7,13 +7,6 @@ com/google/guava/guava	client,server	ABSTRACT	com/google/common/graph/Graph.asNe
 com/google/guava/guava	client,server	ABSTRACT	com/google/common/graph/MutableGraph.asNetwork()Lcom/google/common/graph/Network;	implementations must now provide it
 com/google/guava/guava	client,server	ABSTRACT	com/google/common/graph/MutableValueGraph.asNetwork()Lcom/google/common/graph/Network;	implementations must now provide it
 com/google/guava/guava	client,server	ABSTRACT	com/google/common/graph/ValueGraph.asNetwork()Lcom/google/common/graph/Network;	implementations must now provide it
-com/google/guava/guava	client,server	FINAL	com/google/common/util/concurrent/ClosingFuture$Combiner.call(Lcom/google/common/util/concurrent/ClosingFuture$Combiner$CombiningCallable;Ljava/util/concurrent/Executor;)Lcom/google/common/util/concurrent/ClosingFuture;	method made final
-com/google/guava/guava	client,server	FINAL	com/google/common/util/concurrent/ClosingFuture$Combiner.callAsync(Lcom/google/common/util/concurrent/ClosingFuture$Combiner$AsyncCombiningCallable;Ljava/util/concurrent/Executor;)Lcom/google/common/util/concurrent/ClosingFuture;	method made final
-com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
-com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner2.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
-com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner3.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
-com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner4.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
-com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner5.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
 com/google/guava/guava	client,server	FIELD	com/google/thirdparty/publicsuffix/PublicSuffixPatterns.EXACT:Lcom/google/common/collect/ImmutableMap;	
 com/google/guava/guava	client,server	FIELD	com/google/thirdparty/publicsuffix/PublicSuffixPatterns.EXCLUDED:Lcom/google/common/collect/ImmutableMap;	
 com/google/guava/guava	client,server	FIELD	com/google/thirdparty/publicsuffix/PublicSuffixPatterns.UNDER:Lcom/google/common/collect/ImmutableMap;	
