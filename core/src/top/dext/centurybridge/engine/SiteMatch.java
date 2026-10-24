@@ -144,7 +144,10 @@ public final class SiteMatch {
      * down its value's chain of consumers that takes any (a CubeListBuilder's addBox, whose builder the
      * "left_sleeve" call takes), with that instruction's owner.name. A string constant is a statement's
      * own name for what it builds; the key survives W reordering the statements or reshaping their
-     * other arguments.
+     * other arguments. An instruction no string reaches is keyed by the game static fields it takes as its
+     * own operands or that the first consumer down its chain takes ({@code stack.is(Items.MAP)},
+     * {@code player.hasEffect(MobEffects.CONFUSION)}): a registered constant names what the statement is about
+     * the same way, and keeps its name across releases.
      */
     static Map<AbstractInsnNode, String> keys(MethodNode m) {
         Map<AbstractInsnNode, String> cached = KEYS.get(m);
@@ -183,7 +186,10 @@ public final class SiteMatch {
 
     private static final Map<MethodNode, Map<AbstractInsnNode, String>> KEYS = java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
 
-    /** who takes each instruction's value (when exactly one instruction does), and each call's string operands */
+    /**
+     * who takes each instruction's value (when exactly one instruction does), each call's string operands, and
+     * the game static fields it takes as operands (Items.MAP, ItemStack.EMPTY)
+     */
     private record Flow(Map<AbstractInsnNode, AbstractInsnNode> consumer, Map<AbstractInsnNode, String> strings,
                         Map<AbstractInsnNode, String> statics, Map<AbstractInsnNode, AbstractInsnNode[]> producers) {}
 
@@ -295,8 +301,8 @@ public final class SiteMatch {
         Map<AbstractInsnNode, AbstractInsnNode> consumer = new java.util.IdentityHashMap<>();
         Set<AbstractInsnNode> shared = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
         Map<AbstractInsnNode, String> strings = new java.util.IdentityHashMap<>();
-        Map<AbstractInsnNode, AbstractInsnNode[]> producers = new java.util.IdentityHashMap<>();
         Map<AbstractInsnNode, String> statics = new java.util.IdentityHashMap<>();
+        Map<AbstractInsnNode, AbstractInsnNode[]> producers = new java.util.IdentityHashMap<>();
         for (int i = 0; i < m.instructions.size(); i++) {
             AbstractInsnNode in = m.instructions.get(i);
             var fr = frames[i];
@@ -319,7 +325,8 @@ public final class SiteMatch {
                 consumer.put(p, in);
                 if (p instanceof LdcInsnNode ldc && ldc.cst instanceof String str) {
                     s.append('"').append(str).append('"').append('@').append(a).append(';');
-                } else if (p instanceof FieldInsnNode gf && gf.getOpcode() == Opcodes.GETSTATIC) {
+                } else if (p instanceof FieldInsnNode gf && gf.getOpcode() == Opcodes.GETSTATIC && Chain.minecraftOwned(gf.owner)) {
+                    // a game constant (Items.MAP, MobEffects.CONFUSION): it keeps its name across releases
                     st.append("F:").append(gf.owner).append('.').append(gf.name).append('@').append(a).append(';');
                 }
             }

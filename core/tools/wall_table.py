@@ -1222,6 +1222,9 @@ class Table:
                     nv = cvote.get(c, {}).get(w, 0)
                 same_simple = w in same_named
                 unique_name = same_simple and len(same_named) == 1
+                # a simple name corrected in its spelling (26.2: InstantenousMobEffect -> InstantaneousMobEffect,
+                # one letter) corroborates as the same name does
+                near_simple = not same_simple and spelling_fix(simple(c), simple(w))
                 # A move is a claim that the class IS the other one (every reference follows it), so a
                 # wrong one merges two types: the evidence must be specific. Bodies that are the same
                 # code naming it (votes) are; members are when there are enough of them and nothing
@@ -1250,6 +1253,7 @@ class Table:
                         child is not None or
                         (unanimous and nv >= 2 and d >= 0.25 and second < d) or
                         (same_simple and d >= 0.4 and m >= 1 and second < d) or
+                        (near_simple and d >= 0.6 and m >= 1 and second < d) or
                         (unique_name and m >= 1 and (d >= 0.25 or unanimous)) or
                         (d >= 0.6 and m >= 3 and d - second >= 0.25) or
                         (followed and (d >= 0.3 or t + nw == 0 or unanimous))):
@@ -1265,6 +1269,20 @@ class Table:
             log(f"round {rnd}: {changed} decisions; classes {len(self.cm)}/{len(V)}, member renames {len(self.ren)}")
             if not changed and rnd >= 1:
                 break
+
+
+def spelling_fix(a, b):
+    """two simple names one or two letters apart (inserted, dropped or changed), both long enough that this says
+    something: a corrected spelling, not another word"""
+    if a == b or min(len(a), len(b)) < 8 or abs(len(a) - len(b)) > 2:
+        return False
+    prev = list(range(len(b) + 1))
+    for i, x in enumerate(a, 1):
+        cur = [i]
+        for j, y in enumerate(b, 1):
+            cur.append(min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (x != y)))
+        prev = cur
+    return prev[-1] <= 2
 
 
 def simple(c):

@@ -1659,11 +1659,13 @@ final class MixinBridge {
                 if (!wm.isEmpty()) {
                     return new Selection(h, an, vt == null ? List.of() : s.match(vt), wm);
                 }
-                // a member the layer restores on the W class (LayerMembers) that W's vanilla read path runs through
-                // (@CbVanillaReads): the selector names a method that exists and that vanilla calls, nothing moves
-                // under it. One vanilla never calls (kept for mods' calls only) does not hold the mixin: the selector
-                // follows to where W runs V's code (mixinTargets, hooks, body follow) as for any other moved method.
-                if (s.desc() != null && chain.layerMembers.match(target, s).stream().anyMatch(m -> chain.layerMembers.vanillaReads(m) != null)) {
+                // a member the layer restores on the W class (LayerMembers) whose vanilla read path the layer
+                // routes through it (@CbVanillaReads): the selector names a method that exists at runtime and
+                // vanilla calls, nothing moves under it. An unmarked restored member (a delegate onto the code W
+                // kept) is not taken here: the selector follows V's code to W below, and only when nothing
+                // carries it does it stay on the restored member (MixinJudge: "vanilla path unmixed")
+                if (s.desc() != null && chain.layerMembers.match(target, s).stream()
+                        .anyMatch(m -> chain.layerMembers.vanillaReads(m) != null)) {
                     injected("@" + kind + " " + sn + "." + h.name, "@" + kind + " " + sn + "." + h.name + " -> "
                         + shortName(target) + "." + s.name() + s.desc() + ": the layer's restored member");
                     return null;

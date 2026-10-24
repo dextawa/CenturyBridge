@@ -206,6 +206,7 @@ public class GearTestMod implements ModInitializer {
         section("fapi", () -> fapi(server));
         section("datagen", () -> datagen(server));
         section("restoredMixins", GearTestMod::restoredMixins);
+        section("restoredMixinsRecipes", () -> restoredMixinsRecipes(server));
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -583,6 +584,25 @@ public class GearTestMod implements ModInitializer {
         int dirt = net.minecraft.class_1890.method_8227(r, 2, 15, new class_1799(class_1802.field_8831));
         check(dirt == 0, "an unmixed item of value 0 (dirt) still costs 0: " + dirt);
         check(class_1802.field_8802.method_7837() == 10, "diamond sword's value is its own (10), the mixin leaves it");
+        // IngredientItemsMixin: an ingredient that takes sticks also takes diamonds (mixin on 1.21.1's getItems())
+        class_1856 sticks = class_1856.method_8091(class_1802.field_8600);
+        check(sticks.method_8105().length == 2, "mixin on Ingredient.getItems: the mod's own call sees stick + diamond: "
+            + sticks.method_8105().length);
+        check(sticks.method_8093(new class_1799(class_1802.field_8477)),
+            "mixin on Ingredient.getItems: vanilla's Ingredient.test of a stick ingredient now takes a diamond");
+        check(sticks.method_8093(new class_1799(class_1802.field_8600)), "the stick ingredient still takes a stick");
+        check(!class_1856.method_8091(class_1802.field_8831).method_8093(new class_1799(class_1802.field_8477)),
+            "an unmixed ingredient (dirt) does not take a diamond");
+    }
+
+    /** vanilla's own recipe matching (ShapedRecipePattern.matches -> Ingredient.test): coal over a diamond is a torch */
+    static void restoredMixinsRecipes(MinecraftServer server) {
+        net.minecraft.class_9694 input = net.minecraft.class_9694.method_59986(1, 2,
+            java.util.List.of(new class_1799(class_1802.field_8713), new class_1799(class_1802.field_8477)));
+        java.util.Optional<? extends class_8786<?>> torch = server.method_3772().method_8132(net.minecraft.class_3956.field_17545, input,
+            server.method_30002());
+        check(torch.isPresent() && torch.get().comp_1933().method_8110(server.method_30611()).method_31574(class_1802.field_8810),
+            "mixin on Ingredient.getItems: vanilla's crafting match takes coal over a diamond as a torch: " + torch);
     }
 
     /** 1.21.1's RecipeBookCategories (client only): constants, tabs, icons, search sub-tabs */

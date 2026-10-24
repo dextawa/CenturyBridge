@@ -7,7 +7,10 @@
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils": "net/minecraft/world/level/levelgen/feature/SpeleothemUtils",
   "net/minecraft/world/level/levelgen/feature/PointedDripstoneFeature": "net/minecraft/world/level/levelgen/feature/SpeleothemFeature",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/SpeleothemConfiguration",
-  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "top/dext/centurybridge/step/v26_2/facade/StructureProcessorType"
+  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "top/dext/centurybridge/step/v26_2/facade/StructureProcessorType",
+  "com/mojang/blaze3d/platform/SourceFactor": "com/mojang/blaze3d/platform/BlendFactor",
+  "com/mojang/blaze3d/platform/DestFactor": "com/mojang/blaze3d/platform/BlendFactor",
+  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket": "net/minecraft/network/protocol/game/ServerboundSpectatorActionPacket"
  },
  "_classRenames_basis": {
   "net/minecraft/util/Tuple": "26.2 deleted Tuple (no class of 26.2 holds its members; its callers use DFU Pair); the layer's facade is 26.1.2's class as it was",
@@ -16,7 +19,10 @@
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils": "26.2 generalised DripstoneUtils into SpeleothemUtils (same members, the dripstone blocks and #dripstone_replaceable_blocks now parameters); the members whose shape changed redirect to rt/CbS26Dripstone with the dripstone arguments 26.2's CaveFeatures passes",
   "net/minecraft/world/level/levelgen/feature/PointedDripstoneFeature": "26.2's SpeleothemFeature is 26.1.2's PointedDripstoneFeature over SpeleothemConfiguration (Feature.POINTED_DRIPSTONE became Feature.SPELEOTHEM, configured_feature/pointed_dripstone uses minecraft:speleothem)",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration": "26.2's SpeleothemConfiguration record is PointedDripstoneConfiguration plus base/pointed block and replaceable set; construction, fields and CODEC go through rt/CbS26Dripstone with the dripstone values",
-  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "26.1.2's registry value type (a holder of its processor's map codec) is gone: 26.2 registers the map codecs and keeps only the four codecs under this name; the facade is 26.1.2's interface with every member (constants = the types of 26.2's codecs under the same ids)"
+  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "26.1.2's registry value type (a holder of its processor's map codec) is gone: 26.2 registers the map codecs and keeps only the four codecs under this name; the facade is 26.1.2's interface with every member (constants = the types of 26.2's codecs under the same ids)",
+  "com/mojang/blaze3d/platform/SourceFactor": "26.2 merged SourceFactor and DestFactor into BlendFactor: the same 15 constants as SourceFactor in its order; GlConst.toGl(BlendFactor) and BlendFunction's components take it (javap)",
+  "com/mojang/blaze3d/platform/DestFactor": "26.2's BlendFactor holds DestFactor's 14 constants and SRC_ALPHA_SATURATE (source-only in GL); values()/valueOf answer DestFactor's set (rt/CbS26Blend)",
+  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket": "26.2 folded the spectate request into ServerboundSpectatorActionPacket(OptionalInt): construction and entityId() through rt/CbS26Packets; type/handle/STREAM_CODEC and the record members resolve on 26.2's packet"
  },
  "fieldGetters": {
   "net/minecraft/world/level/block/Blocks.COPPER_BARS:Lnet/minecraft/world/level/block/WeatheringCopperBlocks;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Blocks_COPPER_BARS",
@@ -32,7 +38,25 @@
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#POINTED_CODEC",
   "net/minecraft/world/level/levelgen/feature/configurations/LargeDripstoneConfiguration.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#LARGE_CODEC",
   "net/minecraft/core/registries/BuiltInRegistries.STRUCTURE_PROCESSOR:Lnet/minecraft/core/Registry;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#structureProcessor",
-  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#PROTECTED_CODEC"
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#PROTECTED_CODEC",
+  "net/minecraft/client/Minecraft.UNIFORM_FONT:Lnet/minecraft/resources/Identifier;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#UNIFORM_FONT",
+  "net/minecraft/client/Minecraft.ALT_FONT:Lnet/minecraft/resources/Identifier;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#ALT_FONT",
+  "net/minecraft/data/BlockFamilies.COPPER_BLOCK:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#COPPER_BLOCK",
+  "net/minecraft/data/BlockFamilies.EXPOSED_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#EXPOSED_COPPER",
+  "net/minecraft/data/BlockFamilies.WEATHERED_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WEATHERED_COPPER",
+  "net/minecraft/data/BlockFamilies.OXIDIZED_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#OXIDIZED_COPPER",
+  "net/minecraft/data/BlockFamilies.WAXED_COPPER_BLOCK:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_COPPER_BLOCK",
+  "net/minecraft/data/BlockFamilies.WAXED_EXPOSED_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_EXPOSED_COPPER",
+  "net/minecraft/data/BlockFamilies.WAXED_WEATHERED_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_WEATHERED_COPPER",
+  "net/minecraft/data/BlockFamilies.WAXED_OXIDIZED_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_OXIDIZED_COPPER",
+  "net/minecraft/data/BlockFamilies.CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#CUT_COPPER",
+  "net/minecraft/data/BlockFamilies.EXPOSED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#EXPOSED_CUT_COPPER",
+  "net/minecraft/data/BlockFamilies.WEATHERED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WEATHERED_CUT_COPPER",
+  "net/minecraft/data/BlockFamilies.OXIDIZED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#OXIDIZED_CUT_COPPER",
+  "net/minecraft/data/BlockFamilies.WAXED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_CUT_COPPER",
+  "net/minecraft/data/BlockFamilies.WAXED_EXPOSED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_EXPOSED_CUT_COPPER",
+  "net/minecraft/data/BlockFamilies.WAXED_WEATHERED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_WEATHERED_CUT_COPPER",
+  "net/minecraft/data/BlockFamilies.WAXED_OXIDIZED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_OXIDIZED_CUT_COPPER"
  },
  "instanceRedirects": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasNameEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
@@ -77,7 +101,39 @@
   "net/minecraft/world/scores/PlayerTeam.getColor()Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team",
   "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessor.processBlock(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#processBlock",
   "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessor.getType()Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#getType",
-  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.processBlock(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#processBlock"
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.processBlock(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#processBlock",
+  "net/minecraft/client/renderer/LevelRenderer.allChanged()V": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#allChanged",
+  "net/minecraft/client/renderer/LevelRenderer.setLevel(Lnet/minecraft/client/multiplayer/ClientLevel;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#setLevel",
+  "net/minecraft/client/renderer/LevelRenderer.countRenderedSections()I": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#countRenderedSections",
+  "net/minecraft/client/renderer/LevelRenderer.getTotalSections()D": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#getTotalSections",
+  "net/minecraft/client/renderer/LevelRenderer.resetSampler()V": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#resetSampler",
+  "net/minecraft/client/renderer/LevelRenderer.onResourceManagerReload(Lnet/minecraft/server/packs/resources/ResourceManager;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#onResourceManagerReload",
+  "net/minecraft/client/renderer/LevelRenderer.blockChanged(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#blockChanged",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitModelPart(Lnet/minecraft/client/model/geom/ModelPart;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;IILnet/minecraft/client/renderer/texture/TextureAtlasSprite;ZZ)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitModelPart",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitModelPart(Lnet/minecraft/client/model/geom/ModelPart;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;IILnet/minecraft/client/renderer/texture/TextureAtlasSprite;ZZILnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitModelPart",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitMovingBlock",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitBreakingBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;JI)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitBreakingBlockModel",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitNameTag(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZIDLnet/minecraft/client/renderer/state/level/CameraRenderState;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitClient#submitNameTag",
+  "net/minecraft/client/Minecraft.setScreen(Lnet/minecraft/client/gui/screens/Screen;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#setScreen",
+  "net/minecraft/client/Minecraft.getOverlay()Lnet/minecraft/client/gui/screens/Overlay;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getOverlay",
+  "net/minecraft/client/Minecraft.getToastManager()Lnet/minecraft/client/gui/components/toasts/ToastManager;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getToastManager",
+  "net/minecraft/client/Minecraft.openChatScreen(Lnet/minecraft/client/gui/components/ChatComponent$ChatMethod;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#openChatScreen",
+  "net/minecraft/client/Minecraft.isSingleplayer()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#isSingleplayer",
+  "net/minecraft/client/Minecraft.getMainRenderTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getMainRenderTarget",
+  "net/minecraft/client/Minecraft.getWaypointStyles()Lnet/minecraft/client/resources/WaypointStyleManager;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getWaypointStyles",
+  "net/minecraft/client/Minecraft.commandHistory()Lnet/minecraft/client/CommandHistory;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#commandHistory",
+  "com/mojang/blaze3d/systems/GpuDevice.getVendor()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getVendor",
+  "com/mojang/blaze3d/systems/GpuDevice.getRenderer()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getRenderer",
+  "com/mojang/blaze3d/systems/GpuDevice.getVersion()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getVersion",
+  "com/mojang/blaze3d/systems/GpuDevice.getBackendName()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getBackendName",
+  "com/mojang/blaze3d/systems/GpuDevice.getMaxTextureSize()I": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getMaxTextureSize",
+  "com/mojang/blaze3d/systems/GpuDevice.getUniformOffsetAlignment()I": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getUniformOffsetAlignment",
+  "com/mojang/blaze3d/systems/GpuDevice.getMaxSupportedAnisotropy()I": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getMaxSupportedAnisotropy",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.write(Lnet/minecraft/network/RegistryFriendlyByteBuf;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Team#writeParameters",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getOptions()I": "top/dext/centurybridge/step/v26_2/rt/CbS26Team#parametersOptions",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getColor()Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team#parametersColor",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getNametagVisibility()Lnet/minecraft/world/scores/Team$Visibility;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team#parametersNametagVisibility",
+  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket.entityId()I": "top/dext/centurybridge/step/v26_2/rt/CbS26Packets#spectateEntityId"
  },
  "_instanceRedirects_basis": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.*": "26.2 replaced the parser's option booleans by option-state objects (nameOption() ... advancementsOption()); rt/CbS26Selector reads and sets the same facts on them (see its javadoc)",
@@ -100,7 +156,11 @@
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils.growPointedDripstone(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;IZ)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#growPointedDripstone",
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils.placeDripstoneBlockIfPossible(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#placeDripstoneBlockIfPossible",
   "net/minecraft/world/level/block/PointedDripstoneBlock.growStalactiteOrStalagmiteIfPossible(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#growStalactiteOrStalagmiteIfPossible",
-  "net/minecraft/world/level/block/PointedDripstoneBlock.canDrip(Lnet/minecraft/world/level/block/state/BlockState;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#canDrip"
+  "net/minecraft/world/level/block/PointedDripstoneBlock.canDrip(Lnet/minecraft/world/level/block/state/BlockState;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#canDrip",
+  "net/minecraft/client/Minecraft.useShaderTransparency()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#useShaderTransparency",
+  "net/minecraft/client/Minecraft.renderNames()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#renderNames",
+  "com/mojang/blaze3d/platform/DestFactor.values()[Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Blend#destValues",
+  "com/mojang/blaze3d/platform/DestFactor.valueOf(Ljava/lang/String;)Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Blend#destValueOf"
  },
  "callReshapes": {
   "net/minecraft/world/entity/EntityType.spawn(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Consumer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;": {
@@ -145,10 +205,14 @@
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.chanceOfDirectionalSpread:F": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#chanceOfDirectionalSpread",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.chanceOfSpreadRadius2:F": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#chanceOfSpreadRadius2",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.chanceOfSpreadRadius3:F": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#chanceOfSpreadRadius3",
-  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.cannotReplace:Lnet/minecraft/tags/TagKey;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#cannotReplace"
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.cannotReplace:Lnet/minecraft/tags/TagKey;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#cannotReplace",
+  "net/minecraft/client/renderer/LevelRenderer.debugRenderer:Lnet/minecraft/client/renderer/debug/DebugRenderer;": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#debugRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.gameTestBlockHighlightRenderer:Lnet/minecraft/client/renderer/debug/GameTestBlockHighlightRenderer;": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#gameTestBlockHighlightRenderer",
+  "net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getScreen"
  },
  "instanceFieldSetters": {
-  "net/minecraft/world/entity/LivingEntity.currentExplosionCause:Lnet/minecraft/world/entity/Entity;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#setCurrentExplosionCause"
+  "net/minecraft/world/entity/LivingEntity.currentExplosionCause:Lnet/minecraft/world/entity/Entity;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#setCurrentExplosionCause",
+  "net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#putScreen"
  },
  "overrideHooks": [
   {
@@ -241,12 +305,23 @@
   "blockedByItem(Lnet/minecraft/world/entity/LivingEntity;)V": {
    "1": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#noCause(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;",
    "2": "zero: passed on to knockback, read there only for a source with an entity; the default source has none"
+  },
+  "submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V": {
+   "2": "zero: the outline colour; 0 is no outline (26.2 submits the outlined copy only for a non-zero colour), and 26.1.2 moving blocks had no outline"
+  },
+  "publishServer(Lnet/minecraft/world/level/GameType;ZI)Z": {
+   "0": "top/dext/centurybridge/step/v26_2/rt/CbS26Server#lanScope(Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/server/MinecraftServer$MultiplayerScope;"
+  },
+  "send(Lnet/minecraft/client/telemetry/TelemetryEventSender;)Z": {
+   "1": "zero: 26.2's flag forces the event without a server brand; 26.1.2's send returned false without one, which is 26.2's send with false (javap of both)"
   }
  },
  "ctorRedirects": {
   "net/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration.<init>(ILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/IntProvider;IILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/FloatProvider;Lnet/minecraft/util/valueproviders/FloatProvider;FII)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#cbNewCluster",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.<init>(FFFF)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#cbNewPointed",
-  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.<init>(Lnet/minecraft/tags/TagKey;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#cbNewProtected"
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.<init>(Lnet/minecraft/tags/TagKey;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#cbNewProtected",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.<init>(Lnet/minecraft/network/RegistryFriendlyByteBuf;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Team#cbNewParameters",
+  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket.<init>(I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Packets#cbNewSpectate"
  },
  "fieldRenames": {
   "net/minecraft/world/level/levelgen/feature/Feature.POINTED_DRIPSTONE:Lnet/minecraft/world/level/levelgen/feature/Feature;": "SPELEOTHEM"
@@ -281,18 +356,22 @@
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils.getDripstoneHeight(DDDD)D": "getSpeleothemHeight",
   "net/minecraft/world/level/chunk/ChunkAccess.markPosForPostprocessing(Lnet/minecraft/core/BlockPos;)V": "markPosForPostProcessing",
   "net/minecraft/server/PlayerAdvancements.stopListening()V": "clearTriggers",
-  "net/minecraft/world/level/levelgen/SurfaceRules.noiseCondition(Lnet/minecraft/resources/ResourceKey;DD)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource;": "noiseCondition2d"
+  "net/minecraft/world/level/levelgen/SurfaceRules.noiseCondition(Lnet/minecraft/resources/ResourceKey;DD)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource;": "noiseCondition2d",
+  "net/minecraft/network/protocol/game/ServerGamePacketListener.handleSpectateEntity(Lnet/minecraft/network/protocol/game/ServerboundSpectateEntityPacket;)V": "handleSpectatorAction",
+  "net/minecraft/server/network/ServerGamePacketListenerImpl.handleSpectateEntity(Lnet/minecraft/network/protocol/game/ServerboundSpectateEntityPacket;)V": "handleSpectatorAction"
  },
  "ledger": {
   "net/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration.<init>(ILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/IntProvider;IILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/FloatProvider;Lnet/minecraft/util/valueproviders/FloatProvider;FII)V": "a 26.1.2 class extending DripstoneClusterConfiguration (super(...) included): 26.2's SpeleothemClusterConfiguration that the class became is a final record (javap 26.2), and 26.2's Feature reads its configuration by casting to that record (SpeleothemFeature / SpeleothemClusterFeature.place), so a subclass outside the record could not reach 26.2's feature either; construction, fields and CODEC are bridged (rt/CbS26Dripstone), a subclass fails to load (IncompatibleClassChangeError: cannot inherit from final class)",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.<init>(FFFF)V": "a 26.1.2 class extending PointedDripstoneConfiguration (super(...) included): 26.2's SpeleothemConfiguration that the class became is a final record (javap 26.2), and 26.2's Feature reads its configuration by casting to that record (SpeleothemFeature / SpeleothemClusterFeature.place), so a subclass outside the record could not reach 26.2's feature either; construction, fields and CODEC are bridged (rt/CbS26Dripstone), a subclass fails to load (IncompatibleClassChangeError: cannot inherit from final class)",
-  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.<init>(Lnet/minecraft/tags/TagKey;)V": "a 26.1.2 class extending ProtectedBlockProcessor (super(tag) included): 26.2's ProtectedBlockProcessor is a final record of a HolderSet (javap 26.2); construction, cannotReplace, processBlock and CODEC (26.1.2's {value: #tag} shape, rt/CbS26Processors) are bridged, a subclass fails to load (cannot inherit from final class)"
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.<init>(Lnet/minecraft/tags/TagKey;)V": "a 26.1.2 class extending ProtectedBlockProcessor (super(tag) included): 26.2's ProtectedBlockProcessor is a final record of a HolderSet (javap 26.2); construction, cannotReplace, processBlock and CODEC (26.1.2's {value: #tag} shape, rt/CbS26Processors) are bridged, a subclass fails to load (cannot inherit from final class)",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.<init>(Lnet/minecraft/network/RegistryFriendlyByteBuf;)V": "a 26.1.2 class extending ClientboundSetPlayerTeamPacket.Parameters (super(buf) included): 26.2's Parameters is a final record (javap 26.2); reading, writing and the getters are bridged (rt/CbS26Team), a subclass fails to load"
  },
  "_methodRenames_basis": {
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils.getDripstoneHeight(DDDD)D": "wall_table found the rename (same code); DripstoneUtils is renamed here by hand, its class pairing being undecided there",
   "net/minecraft/world/level/chunk/ChunkAccess.markPosForPostprocessing(Lnet/minecraft/core/BlockPos;)V": "renames the generator left out (_pkgmoves_renamed_not_same_code), checked by javap: the bodies differ only in the warning's text ('PostProcessing' -> 'post processing'); ProtoChunk's override was the same code",
   "net/minecraft/server/PlayerAdvancements.stopListening()V": "26.1.2 removed this player's listeners from every trigger (trigger.removePlayerListeners(this)); 26.2 keeps a player's listeners in its own activeTriggers map, and clearTriggers() empties it -- what reload() calls in the place 26.1.2 called stopListening()",
-  "net/minecraft/world/level/levelgen/SurfaceRules.noiseCondition(Lnet/minecraft/resources/ResourceKey;DD)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource;": "26.1.2's NoiseThresholdConditionSource sampled NormalNoise.getValue(x, 0.0, z) (2D); 26.2's noiseCondition2d builds it with is3d = false (iconst_0), the 2D sampling; the one-threshold overload was the same code"
+  "net/minecraft/world/level/levelgen/SurfaceRules.noiseCondition(Lnet/minecraft/resources/ResourceKey;DD)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource;": "26.1.2's NoiseThresholdConditionSource sampled NormalNoise.getValue(x, 0.0, z) (2D); 26.2's noiseCondition2d builds it with is3d = false (iconst_0), the 2D sampling; the one-threshold overload was the same code",
+  "net/minecraft/network/protocol/game/ServerGamePacketListener.handleSpectateEntity(Lnet/minecraft/network/protocol/game/ServerboundSpectateEntityPacket;)V": "26.2's handleSpectatorAction handles the spectate request (javap: a present id teleports the spectator to the entity, as 26.1.2's handleSpectateEntity did)"
  },
  "overrideRenames": [
   {
@@ -306,6 +385,13 @@
    "old": "stopListening()V",
    "new": "clearTriggers",
    "onlyUnder": "net/minecraft/server/PlayerAdvancements",
+   "superCalls": "rename",
+   "basis": "see _methodRenames_basis"
+  },
+  {
+   "old": "handleSpectateEntity(Lnet/minecraft/network/protocol/game/ServerboundSpectateEntityPacket;)V",
+   "new": "handleSpectatorAction",
+   "onlyUnder": "net/minecraft/network/protocol/game/ServerGamePacketListener",
    "superCalls": "rename",
    "basis": "see _methodRenames_basis"
   }

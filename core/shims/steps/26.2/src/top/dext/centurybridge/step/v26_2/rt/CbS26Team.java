@@ -93,4 +93,34 @@ public final class CbS26Team {
         }
         return f == null ? text : text.withStyle(f);
     }
+
+    // ---- ClientboundSetPlayerTeamPacket.Parameters, a record on 26.2 ----
+
+    /** 26.1.2 new Parameters(buf): the parameters read from the buffer, 26.2's STREAM_CODEC (the same wire format) */
+    public static net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket.Parameters cbNewParameters(
+            net.minecraft.network.RegistryFriendlyByteBuf buf) {
+        return net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket.Parameters.STREAM_CODEC.decode(buf);
+    }
+
+    /** 26.1.2 Parameters.write(buf) */
+    public static void writeParameters(net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket.Parameters p,
+            net.minecraft.network.RegistryFriendlyByteBuf buf) {
+        net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket.Parameters.STREAM_CODEC.encode(buf, p);
+    }
+
+    /** 26.1.2 Parameters.getOptions(): the option bits as an int (26.1.2 read the same byte) */
+    public static int parametersOptions(net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket.Parameters p) {
+        return p.options();
+    }
+
+    /** 26.1.2 Parameters.getColor(): the colour, RESET for none (26.1.2's packet carried RESET for a team without one) */
+    public static ChatFormatting parametersColor(net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket.Parameters p) {
+        return toFormatting(p.color());
+    }
+
+    /** 26.1.2 Parameters.getNametagVisibility() */
+    public static net.minecraft.world.scores.Team.Visibility parametersNametagVisibility(
+            net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket.Parameters p) {
+        return p.nameTagVisibility();
+    }
 }
