@@ -24,4 +24,9 @@ public final class CbRenderDragons {
     public static float method_23155(net.minecraft.class_1511 crystal, float partialTick) {
         return net.minecraft.class_892.method_23155((float) crystal.field_7034 + partialTick);
     }
+
+    /** EnderDragonRenderer.createBodyLayer(): 1.21.2's ender dragon layer, the one facade/DragonModel is baked from */
+    public static net.minecraft.class_5607 method_32165() {
+        return net.minecraft.class_625.method_62128();
+    }
 }

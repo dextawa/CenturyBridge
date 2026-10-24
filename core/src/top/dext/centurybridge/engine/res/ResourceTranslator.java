@@ -92,6 +92,9 @@ public final class ResourceTranslator {
                 out.lost("function files (.mcfunction) not translated: command syntax changed at 1.20.5 (x" + fns + ")");
             }
         }
+        if (Release.before(from, "1.21.2") && Release.reaches(to, "1.21.2")) {
+            LegacyShaders.apply(entries, out);
+        }
         if (Release.before(from, "1.21.4") && Release.reaches(to, "1.21.4")) {
             itemDefinitions(entries, runtimeTypes, out);
         }

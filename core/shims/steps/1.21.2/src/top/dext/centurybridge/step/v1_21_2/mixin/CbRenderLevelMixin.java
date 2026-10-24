@@ -11,6 +11,9 @@ import org.spongepowered.asm.mixin.Shadow;
  * - graphicsChanged (method_35774): set up or tore down the Fabulous transparency targets for the new graphics mode;
  *   1.21.2 sets them up for every frame from the current mode (its renderLevel asks Minecraft.useShaderTransparency()),
  *   so a mode change takes effect without it.
+ * The level events and jukebox songs 1.21.1 handled here (levelEvent, globalLevelEvent, playJukeboxSong,
+ * stopJukeboxSongAndNotifyNearby): 1.21.2's LevelEventHandler of the level, which 1.21.2 calls instead and which hands
+ * the calls back to a mod subclass's overrides (CbRenderLevel.routes).
  * And 1.21.1's renderSky / renderClouds, which 1.21.2 draws as passes of its frame graph:
  * - renderSky(frustumMatrix, projectionMatrix, partialTick, camera, isFoggy, skyFogSetup): 1.21.1's checks (fog setup
  *   run first; nothing when foggy, in powder snow or lava, or when a mob effect blocks the sky), then 1.21.2's sky drawing
@@ -24,7 +27,7 @@ import org.spongepowered.asm.mixin.Shadow;
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_761.class)
-public abstract class CbRenderLevelMixin {
+public abstract class CbRenderLevelMixin implements top.dext.centurybridge.step.v1_21_2.rt.CbRenderLevel.LegacyEvents {
 
     @Shadow
     private net.minecraft.class_638 field_4085;
@@ -88,5 +91,29 @@ public abstract class CbRenderLevelMixin {
         ((net.minecraft.class_761) (Object) this).method_62196().method_62168(this.field_4085.method_23785(partialTick),
             minecraft.field_1690.method_1632(), height + 0.33F, modelView, projectionMatrix, new net.minecraft.class_243(camX, camY, camZ),
             (float) this.field_4073 + partialTick);
+    }
+
+    /** 1.21.1 levelEvent(type, pos, data) */
+    @Override
+    public void method_8567(int type, net.minecraft.class_2338 pos, int data) {
+        top.dext.centurybridge.step.v1_21_2.rt.CbRenderLevel.levelEvent(this.field_4085, type, pos, data);
+    }
+
+    /** 1.21.1 globalLevelEvent(type, pos, data) */
+    @Override
+    public void method_8564(int type, net.minecraft.class_2338 pos, int data) {
+        top.dext.centurybridge.step.v1_21_2.rt.CbRenderLevel.globalLevelEvent(this.field_4085, type, pos, data);
+    }
+
+    /** 1.21.1 playJukeboxSong(song, pos) */
+    @Override
+    public void method_60891(net.minecraft.class_6880<net.minecraft.class_9793> song, net.minecraft.class_2338 pos) {
+        top.dext.centurybridge.step.v1_21_2.rt.CbRenderLevel.playJukeboxSong(this.field_4085, song, pos);
+    }
+
+    /** 1.21.1 stopJukeboxSongAndNotifyNearby(pos) */
+    @Override
+    public void method_60889(net.minecraft.class_2338 pos) {
+        top.dext.centurybridge.step.v1_21_2.rt.CbRenderLevel.stopJukeboxSong(this.field_4085, pos);
     }
 }

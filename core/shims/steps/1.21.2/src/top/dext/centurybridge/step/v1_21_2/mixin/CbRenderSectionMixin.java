@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_21_2.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 /**
@@ -15,11 +16,13 @@ import org.spongepowered.asm.mixin.Unique;
  * - isAxisAlignedWith(x, y, z): 1.21.1's body, on the section coordinates of the origin;
  * - resortTransparency(renderType, dispatcher): 1.21.1 resorted (and answered true) only when the section had blocks of
  *   that render type, and its resort task always sorted the translucent buffer -- what 1.21.2's resortTransparency(
- *   dispatcher) does.
+ *   dispatcher) does;
+ * - cancelTasks(): 1.21.1 answered whether there was a compile or resort task to cancel; 1.21.2's cancels the same two
+ *   and answers nothing (cb$cancelTasks: whether either was there, then 1.21.2's).
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_846.class_851.class)
-public abstract class CbRenderSectionMixin {
+public abstract class CbRenderSectionMixin implements top.dext.centurybridge.step.v1_21_2.rt.CbRenderSections.LegacySection {
 
     @Unique
     private net.minecraft.class_846.class_851 cb$self() {
@@ -51,5 +54,22 @@ public abstract class CbRenderSectionMixin {
         }
         cb$self().method_22773(dispatcher);
         return true;
+    }
+
+    @Shadow
+    private net.minecraft.class_846.class_851.class_4578 field_20834;
+
+    @Shadow
+    private net.minecraft.class_846.class_851.class_4579 field_4461;
+
+    @Shadow
+    protected abstract void method_3663();
+
+    /** 1.21.1 cancelTasks(): whether a task was there to cancel */
+    @Override
+    public boolean cb$cancelTasks() {
+        boolean any = this.field_20834 != null || this.field_4461 != null;
+        this.method_3663();
+        return any;
     }
 }
