@@ -2269,7 +2269,7 @@ final class MixinBridge {
             vkeys.add(m.name + m.desc);
         }
         Type[] va = Type.getArgumentTypes(vm.desc);
-        List<String> vs = SiteMatch.sig(vm);
+        List<String> vs = SiteMatch.sigSelf(vm, vt.name);
         MethodNode best = null;
         double bs = -1;
         double second = -1;
@@ -2281,7 +2281,7 @@ final class MixinBridge {
                 continue;
             }
             cands.add(m);
-            double sim = SiteMatch.similarity(vs, SiteMatch.sig(m));
+            double sim = SiteMatch.similarity(vs, SiteMatch.sigSelf(m, wt.name));
             if (sim > bs) {
                 second = bs;
                 bs = sim;
@@ -2293,12 +2293,18 @@ final class MixinBridge {
         if (best == null) {
             return null;
         }
+        if (vs.size() < 6 && bs < 1.0) {
+            // a getter / delegate of a few instructions looks like any other: no evidence short of identity
+            why.add(String.format(Locale.ROOT, "no wiring; the closest W method by code is %s%s at %.2f, but a body of %d significant "
+                + "instructions is no evidence short of identity", best.name, best.desc, bs, vs.size()));
+            return null;
+        }
         if (bs < 0.75 || bs - second < 0.15) {
             why.add(String.format(Locale.ROOT, "no wiring; the closest W method by code is %s%s at %.2f (next %.2f), short of evidence",
                 best.name, best.desc, bs, Math.max(second, 0)));
             return null;
         }
-        String split = split(vs, best, cands);
+        String split = split(vs, best, cands, wt.name);
         if (split != null) {
             why.add("no wiring; its code is split across W methods: " + best.name + best.desc + " and " + split
                 + " (an injector cannot follow it into one of them)");
@@ -2329,11 +2335,11 @@ final class MixinBridge {
      * with at least 4 of them, and is itself mostly V's code (60% of its own instructions aligned).
      * Null when no candidate does.
      */
-    private static String split(List<String> vs, MethodNode best, List<MethodNode> cands) {
+    private static String split(List<String> vs, MethodNode best, List<MethodNode> cands, String owner) {
         if (vs.size() < 4) {
             return null;
         }
-        int[] b = SiteMatch.align(vs, SiteMatch.sig(best));
+        int[] b = SiteMatch.align(vs, SiteMatch.sigSelf(best, owner));
         if (b == null) {
             return null;
         }
@@ -2341,7 +2347,7 @@ final class MixinBridge {
             if (c == best) {
                 continue;
             }
-            List<String> cs = SiteMatch.sig(c);
+            List<String> cs = SiteMatch.sigSelf(c, owner);
             int[] a = SiteMatch.align(vs, cs);
             if (a == null || cs.isEmpty()) {
                 continue;
