@@ -5,7 +5,10 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CbS26ImpulseResetMixin",
-    "CbS26TeamColorMixin"
+    "CbS26TeamColorMixin",
+    "CbS26CappedOriginalMixin",
+    "CbS26ProcessorOriginalMixin",
+    "CbS26ProcessorRegistryMixin"
   ],
   "client": [],
   "server": [],
