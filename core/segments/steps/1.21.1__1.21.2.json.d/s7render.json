@@ -141,11 +141,7 @@
   "net/minecraft/class_998.method_32200()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes"
  },
  "instanceRedirects": {
-  "net/minecraft/class_799.method_3472()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
-  "net/minecraft/class_799.method_33690()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
   "net/minecraft/class_806.method_3495(Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
-  "net/minecraft/class_799$class_5826.method_33692()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
-  "net/minecraft/class_799$class_5826.method_33693()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
   "net/minecraft/class_793.method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
   "net/minecraft/class_5617$class_5618.method_43338()Lnet/minecraft/class_759;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItems",
   "net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;Z)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors",
@@ -1123,6 +1119,35 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts.tnt(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts$LegacyTnt;Lnet/minecraft/class_10046;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 TntMinecartRenderer.renderMinecartContents(tntMinecart, partialTick, ..); 1.21.2's takes the TNT render state: a mod renderer's override answers with the minecart the state was extracted from and the frame's partial tick (CbRenderMinecarts.tnt)"
+  },
+  {
+   "old": "method_3472()Lnet/minecraft/class_2960;",
+   "new": "comp_3193()Lnet/minecraft/class_2960;",
+   "onlyUnder": "net/minecraft/class_799",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 ItemOverride.method_3472: 1.21.2's record reads the component accessor instead; a 1.21.1 subclass's override answers it, its super call reaching 1.21.1's body over the record's field (CbRenderItemOverride*Mixin)"
+  },
+  {
+   "old": "method_33690()Ljava/util/stream/Stream;",
+   "new": "comp_3194()Ljava/util/List;",
+   "onlyUnder": "net/minecraft/class_799",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake.predicateList(Ljava/util/stream/Stream;)Ljava/util/List;",
+   "basis": "1.21.1 ItemOverride.method_33690: 1.21.2's record reads the component accessor instead; a 1.21.1 subclass's override answers it (its stream collected to the list 1.21.2 reads), its super call reaching 1.21.1's body over the record's field (CbRenderItemOverride*Mixin)"
+  },
+  {
+   "old": "method_33692()Lnet/minecraft/class_2960;",
+   "new": "comp_3195()Lnet/minecraft/class_2960;",
+   "onlyUnder": "net/minecraft/class_799$class_5826",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 ItemOverride.Predicate.method_33692: 1.21.2's record reads the component accessor instead; a 1.21.1 subclass's override answers it, its super call reaching 1.21.1's body over the record's field (CbRenderItemOverride*Mixin)"
+  },
+  {
+   "old": "method_33693()F",
+   "new": "comp_3196()F",
+   "onlyUnder": "net/minecraft/class_799$class_5826",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 ItemOverride.Predicate.method_33693: 1.21.2's record reads the component accessor instead; a 1.21.1 subclass's override answers it, its super call reaching 1.21.1's body over the record's field (CbRenderItemOverride*Mixin)"
   }
  ],
  "covers": [
@@ -1259,7 +1284,11 @@
   "net/minecraft/class_5944.method_34418()V",
   "net/minecraft/class_1060.method_22813(Lnet/minecraft/class_2960;)V",
   "net/minecraft/class_584.method_17106(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFFI)V",
-  "net/minecraft/class_876.method_23153(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIIFFIIII)V"
+  "net/minecraft/class_876.method_23153(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIIFFIIII)V",
+  "net/minecraft/class_799.method_3472()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_799$class_5826.method_33693()F",
+  "net/minecraft/class_799.method_33690()Ljava/util/stream/Stream;",
+  "net/minecraft/class_799$class_5826.method_33692()Lnet/minecraft/class_2960;"
  ],
  "ledger": {
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires OnLoad while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)",
@@ -1333,7 +1362,9 @@
   "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher#superRender",
   "net/minecraft/class_925.method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts#superContents",
   "net/minecraft/class_957.method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts#superTntContents",
-  "net/minecraft/class_957.method_4137(Lnet/minecraft/class_1701;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts#superTnt"
+  "net/minecraft/class_957.method_4137(Lnet/minecraft/class_1701;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts#superTnt",
+  "net/minecraft/class_806.method_3495(Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#superResolve",
+  "net/minecraft/class_793.method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#superBake"
  },
  "methodRenames": {
   "net/minecraft/class_807.method_3497()Ljava/util/List;": "comp_3049",
@@ -1474,6 +1505,24 @@
     }
    ],
    "basis": "1.21.1 LivingEntityEmissiveLayer.DrawSelector.getPartsToDraw(model); 1.21.2's also takes the state: a mod class implementing the 1.21.1 shape answers from the model alone, as it did"
+  },
+  {
+   "under": "net/minecraft/class_806",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake$LegacyOverrides",
+   "requires": [
+    "method_3495(Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;"
+   ],
+   "synth": [],
+   "basis": "1.21.1 ItemOverrides.resolve(base, stack, level, entity, seed); 1.21.2's ItemRenderer asks findOverride(stack, level, entity, seed) without the model: a subclass declaring resolve gets the adapter and ItemRenderer asks its resolve with the model (CbRenderItemRendererMixin), its super call reaching 1.21.1's vanilla resolve (CbRenderBake.superResolve)"
+  },
+  {
+   "under": "net/minecraft/class_793",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake$LegacyBake",
+   "requires": [
+    "method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;"
+   ],
+   "synth": [],
+   "basis": "1.21.1 BlockModel.bake(baker, spriteGetter, state) baked through bake(baker, this, spriteGetter, state, true); 1.21.2's calls bake(spriteGetter, state, true): a subclass declaring the five-argument bake gets the adapter and 1.21.2's bake(baker, ..) runs it with the baker (CbRenderBakeBlockModelMixin), its super call reaching 1.21.1's vanilla body (CbRenderBake.superBake)"
   }
  ],
  "mixinTargets": {

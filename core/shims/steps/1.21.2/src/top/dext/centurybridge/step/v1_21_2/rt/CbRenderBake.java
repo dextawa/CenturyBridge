@@ -117,8 +117,24 @@ public final class CbRenderBake {
      */
     public static net.minecraft.class_1087 method_3495(net.minecraft.class_806 overrides, net.minecraft.class_1087 base, net.minecraft.class_1799 stack,
                                                        net.minecraft.class_638 level, net.minecraft.class_1309 entity, int seed) {
+        if (overrides instanceof LegacyOverrides legacy) {
+            // a 1.21.1 subclass's own resolve
+            return legacy.method_3495(base, stack, level, entity, seed);
+        }
+        return superResolve(overrides, base, stack, level, entity, seed);
+    }
+
+    /** a 1.21.1 ItemOverrides subclass's super.resolve(..) (superRedirects): 1.21.1's vanilla resolve, over 1.21.2's findOverride */
+    public static net.minecraft.class_1087 superResolve(net.minecraft.class_806 overrides, net.minecraft.class_1087 base, net.minecraft.class_1799 stack,
+                                                        net.minecraft.class_638 level, net.minecraft.class_1309 entity, int seed) {
         net.minecraft.class_1087 m = overrides.method_64063(stack, level, entity, seed);
         return m != null ? m : base;
+    }
+
+    /** a 1.21.1 ItemOverrides subclass overriding resolve(base, stack, level, entity, seed) (adapterHooks; CbRenderItemRendererMixin asks it) */
+    public interface LegacyOverrides {
+        net.minecraft.class_1087 method_3495(net.minecraft.class_1087 base, net.minecraft.class_1799 stack, net.minecraft.class_638 level,
+                                             net.minecraft.class_1309 entity, int seed);
     }
 
     /**
@@ -152,6 +168,24 @@ public final class CbRenderBake {
     public static net.minecraft.class_1087 method_3446(net.minecraft.class_793 model, net.minecraft.class_7775 baker, net.minecraft.class_793 owner,
                                                        java.util.function.Function<net.minecraft.class_4730, net.minecraft.class_1058> sprites,
                                                        net.minecraft.class_3665 state, boolean usesBlockLight) {
+        if (model instanceof LegacyBake legacy) {
+            // a 1.21.1 subclass's own bake
+            return legacy.method_3446(baker, owner, sprites, state, usesBlockLight);
+        }
+        return superBake(model, baker, owner, sprites, state, usesBlockLight);
+    }
+
+    /** a 1.21.1 BlockModel subclass overriding bake(baker, owner, spriteGetter, state, usesBlockLight) (adapterHooks; CbRenderBakeBlockModelMixin) */
+    public interface LegacyBake {
+        net.minecraft.class_1087 method_3446(net.minecraft.class_7775 baker, net.minecraft.class_793 owner,
+                                             java.util.function.Function<net.minecraft.class_4730, net.minecraft.class_1058> sprites,
+                                             net.minecraft.class_3665 state, boolean usesBlockLight);
+    }
+
+    /** a 1.21.1 BlockModel subclass's super.bake(baker, owner, ..) (superRedirects): 1.21.1's vanilla body */
+    public static net.minecraft.class_1087 superBake(net.minecraft.class_793 model, net.minecraft.class_7775 baker, net.minecraft.class_793 owner,
+                                                     java.util.function.Function<net.minecraft.class_4730, net.minecraft.class_1058> sprites,
+                                                     net.minecraft.class_3665 state, boolean usesBlockLight) {
         net.minecraft.class_1087 baked = model.method_3446(sprites, state, usesBlockLight);
         java.util.List<net.minecraft.class_799> list = owner.method_3434();
         if (list.isEmpty()) {
@@ -166,32 +200,12 @@ public final class CbRenderBake {
         };
     }
 
-    /** 1.21.1 ItemOverride.Predicate.getProperty() (instanceRedirects) */
-    public static net.minecraft.class_2960 method_33692(net.minecraft.class_799.class_5826 predicate) {
-        return predicate.comp_3195();
-    }
-
-    /** 1.21.1 ItemOverride.Predicate.getValue() (instanceRedirects) */
-    public static float method_33693(net.minecraft.class_799.class_5826 predicate) {
-        return predicate.comp_3196();
-    }
-
     /** 1.21.2 UnbakedModel.resolveDependencies(resolver) of a 1.21.1 model (overrideHooks, on its resolveParents) */
     public static void resolveDependencies(Legacy legacy, net.minecraft.class_1100.class_10103 resolver) {
         for (net.minecraft.class_2960 id : legacy.method_4755()) {
             resolver.method_62642(id);
         }
         legacy.method_45785(resolver::method_62642);
-    }
-
-    /** 1.21.1 ItemOverride.getModel() (instanceRedirects): the record's model component */
-    public static net.minecraft.class_2960 method_3472(net.minecraft.class_799 override) {
-        return override.comp_3193();
-    }
-
-    /** 1.21.1 ItemOverride.getPredicates() (instanceRedirects) */
-    public static java.util.stream.Stream<net.minecraft.class_799.class_5826> method_33690(net.minecraft.class_799 override) {
-        return override.comp_3194().stream();
     }
 
     // ---- 1.21.1 MultiPartBakedModel's protected fields (instanceFieldGetters) ----
@@ -221,5 +235,10 @@ public final class CbRenderBake {
 
     public static net.minecraft.class_806 field_5428(net.minecraft.class_1095 model) {
         return model.field_54188.method_4710();
+    }
+
+    /** what 1.21.2 reads where a 1.21.1 ItemOverride subclass overrides getPredicates() (overrideHooks unwrap) */
+    public static java.util.List<net.minecraft.class_799.class_5826> predicateList(java.util.stream.Stream<net.minecraft.class_799.class_5826> predicates) {
+        return predicates.toList();
     }
 }
