@@ -158,6 +158,23 @@ public class S26TestMod implements ModInitializer {
         check("blockpos.center", bp.getCenter().equals(new net.minecraft.world.phys.Vec3(1.5, 2.5, 3.5))
             && bp.getBottomCenter().equals(new net.minecraft.world.phys.Vec3(1.5, 2.0, 3.5)), bp.getCenter());
 
+        // PlayerTeam's 26.1.2 colour and int options on 26.2's TeamColor and byte options (rt/CbS26Team)
+        net.minecraft.world.scores.PlayerTeam team = new net.minecraft.world.scores.PlayerTeam(new net.minecraft.world.scores.Scoreboard(), "cbs26");
+        boolean noColor = team.getColor() == net.minecraft.ChatFormatting.RESET;
+        team.setColor(net.minecraft.ChatFormatting.DARK_AQUA);
+        boolean aqua = team.getColor() == net.minecraft.ChatFormatting.DARK_AQUA;
+        team.setColor(net.minecraft.ChatFormatting.BOLD);
+        check("team.color", noColor && aqua && team.getColor() == net.minecraft.ChatFormatting.BOLD, team.getColor());
+        team.setAllowFriendlyFire(false);
+        team.setSeeFriendlyInvisibles(true);
+        int packed = team.packOptions();
+        team.unpackOptions(1);
+        check("team.options", packed == 2 && team.isAllowFriendlyFire() && !team.canSeeFriendlyInvisibles(), packed);
+
+        // EntityType.byString (rt/CbS26Entity)
+        check("entity.byString", EntityType.byString("minecraft:pig").orElse(null) == EntityType.PIG
+            && EntityType.byString("minecraft:no_such").isEmpty(), "");
+
         System.out.println("CB-S26 DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS: " + FAILS));
     }
 }
