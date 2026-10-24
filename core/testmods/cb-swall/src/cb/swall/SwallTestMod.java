@@ -119,6 +119,8 @@ public class SwallTestMod implements ModInitializer {
             items();
             cauldrons();
             goats(server);
+            misc();
+            components(server);
             interactions(server);
             levelData(server);
         } catch (Throwable t) {
@@ -319,5 +321,34 @@ public class SwallTestMod implements ModInitializer {
         boolean removed = !goat.method_43538() && !goat.method_43539();
         goat.method_43541();
         check("goat.hornsAndBrainProvider", removed && goat.method_43538() && goat.method_43539() && goat.provider() != null, removed);
+    }
+
+    private static void misc() {
+        net.minecraft.class_1923 chunk = new net.minecraft.class_1923(new net.minecraft.class_2338(17, 0, 33));
+        net.minecraft.class_1923 unpacked = new net.minecraft.class_1923(chunk.method_8324());
+        check("chunkPos.ctors", chunk.field_9181 == 1 && chunk.field_9180 == 2 && unpacked.field_9181 == 1 && unpacked.field_9180 == 2, chunk);
+        check("entityType.isTag", net.minecraft.class_1299.field_6137.method_20210(net.minecraft.class_3483.field_15507)
+            && !net.minecraft.class_1299.field_6093.method_20210(net.minecraft.class_3483.field_15507), "");
+        net.minecraft.class_1277 container = new net.minecraft.class_1277(1);
+        int[] changes = {0};
+        container.method_5489(c -> changes[0]++);
+        container.method_5447(0, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600));
+        check("simpleContainer.listener", changes[0] == 1, changes[0]);
+    }
+
+    private static void components(MinecraftServer server) throws Exception {
+        net.minecraft.class_2168 source = server.method_3739();
+        net.minecraft.class_5250 resolved = net.minecraft.class_2561.method_43471("cb.key").method_10851().method_10890(source, null, 0);
+        check("component.resolveTranslatable", "cb.key".equals(resolved.getString()), resolved.getString());
+        net.minecraft.class_4616 storage = new net.minecraft.class_4616(net.minecraft.class_2960.method_60655("cbswall", "none"));
+        net.minecraft.class_2574 good = new net.minecraft.class_2574("a.b", false, Optional.empty(), storage);
+        net.minecraft.class_2574 bad = new net.minecraft.class_2574("[[[", false, Optional.empty(), storage);
+        net.minecraft.class_5250 updated = net.minecraft.class_2564.method_10881(source, net.minecraft.class_2561.method_43471("cb.up"), null, 0);
+        check("component.updateForEntity", "cb.up".equals(updated.getString()), updated.getString());
+        check("statics.colors", net.minecraft.class_2480.method_10525(net.minecraft.class_1767.field_7964) == net.minecraft.class_2246.field_10068
+            && net.minecraft.class_2480.method_10525(null) == net.minecraft.class_2246.field_10603
+            && net.minecraft.class_2215.method_9398(net.minecraft.class_1767.field_7964) == net.minecraft.class_2246.field_10406, "");
+        check("component.nbtContents", "a.b".equals(good.method_10920()) && "[[[".equals(bad.method_10920())
+            && bad.method_10890(source, null, 0).getString().isEmpty(), good.method_10920());
     }
 }

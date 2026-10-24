@@ -125,7 +125,26 @@
   "net/minecraft/class_10823.comp_3781()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#growlSound",
   "net/minecraft/class_10823.comp_3782()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#hurtSound",
   "net/minecraft/class_10823.comp_3783()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#pantSound",
-  "net/minecraft/class_10823.comp_3784()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#whineSound"
+  "net/minecraft/class_10823.comp_3784()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#whineSound",
+  "net/minecraft/class_4970$class_4971.method_41520()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#getBlockHolder",
+  "net/minecraft/class_4970$class_4971.method_40144()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#getTags",
+  "net/minecraft/class_4970$class_4971.method_26232(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#hasPostProcess",
+  "net/minecraft/class_4970$class_2251.method_26247(Lnet/minecraft/class_4970$class_4973;)Lnet/minecraft/class_4970$class_2251;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#hasPostProcess",
+  "net/minecraft/class_2688.method_11656()Ljava/util/Map;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#getValues",
+  "net/minecraft/class_2290.method_9785()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemInputs#getItem",
+  "net/minecraft/class_2290.method_9781(IZ)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemInputs#createItemStack",
+  "net/minecraft/class_2290.method_9782(Lnet/minecraft/class_7225$class_7874;)Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemInputs#serialize",
+  "net/minecraft/class_4651.method_23455(Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#getState",
+  "net/minecraft/class_1299.method_20210(Lnet/minecraft/class_6862;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#is",
+  "net/minecraft/class_1299.method_53125(Lnet/minecraft/class_6885;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#is",
+  "net/minecraft/class_9276.method_57422(I)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#getItemUnsafe",
+  "net/minecraft/class_9276.method_57421()Ljava/lang/Iterable;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#items",
+  "net/minecraft/class_9276.method_59708()Ljava/lang/Iterable;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#itemsCopy",
+  "net/minecraft/class_9276.method_57428()Lorg/apache/commons/lang3/math/Fraction;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#weight",
+  "net/minecraft/class_9276.method_61668()I": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#getSelectedItem",
+  "net/minecraft/class_9276.method_61669()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#hasSelectedItem",
+  "net/minecraft/class_7417.method_10890(Lnet/minecraft/class_2168;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#callResolve",
+  "net/minecraft/class_2574.method_10920()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#getNbtPath"
  },
  "overrideHooks": [
   {
@@ -262,6 +281,15 @@
    "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors.template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "a 1.21.11 single-item recipe subclass's result() answered its stack; 26.1 asks for the template: the template of the override's stack"
+  },
+  {
+   "old": "method_10890(Lnet/minecraft/class_2168;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;",
+   "new": "method_10890(Lnet/minecraft/network/chat/ResolutionContext;I)Lnet/minecraft/class_5250;",
+   "onlyUnder": "net/minecraft/class_7417",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents$LegacyResolve",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents.resolve(Ltop/dext/centurybridge/step/v26_1/rt/CbWallComponents$LegacyResolve;Lnet/minecraft/network/chat/ResolutionContext;I)Lnet/minecraft/class_5250;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1's ComponentContents.resolve takes a resolution context of the source and the entity 1.21.11 passed: a 1.21.11 contents class answers with its own resolve; its super call reaches the implementation above it through the guard (CbWallComponents)"
   }
  ],
  "frameDefaults": {
@@ -478,7 +506,9 @@
   "net/minecraft/class_8060$class_8061": "top/dext/centurybridge/step/v26_1/facade/SmithingTransformRecipeSerializer",
   "net/minecraft/class_8062$class_8063": "top/dext/centurybridge/step/v26_1/facade/SmithingTrimRecipeSerializer",
   "net/minecraft/class_5620$class_8821": "top/dext/centurybridge/step/v26_1/facade/CauldronInteractionMap",
-  "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/facade/EitherHolder"
+  "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/facade/EitherHolder",
+  "net/minecraft/class_2291$class_7215": "net/minecraft/commands/arguments/item/ItemInput",
+  "net/minecraft/class_1265": "top/dext/centurybridge/step/v26_1/facade/ContainerListener"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -487,7 +517,9 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#newSnippet",
   "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#newBrain",
   "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#newPanorama",
-  "net/minecraft/class_10823.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#create"
+  "net/minecraft/class_10823.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#create",
+  "net/minecraft/class_1923.<init>(Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#chunkPos",
+  "net/minecraft/class_1923.<init>(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#chunkPos"
  },
  "adapterHooks": [
   {
@@ -853,7 +885,17 @@
   "net/minecraft/class_5537.method_61642(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#hasSelectedItem",
   "net/minecraft/class_5537.method_61644(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getSelectedItem",
   "net/minecraft/class_5537.method_64975()Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getAllBundleItemColors",
-  "net/minecraft/class_5537.method_64277(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getByColor"
+  "net/minecraft/class_5537.method_64277(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getByColor",
+  "net/minecraft/class_2564.method_10881(Lnet/minecraft/class_2168;Lnet/minecraft/class_2561;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#updateForEntity",
+  "net/minecraft/class_2564.method_36330(Lnet/minecraft/class_2168;Ljava/util/Optional;Lnet/minecraft/class_1297;I)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#updateForEntity",
+  "net/minecraft/class_3031.method_23395(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#isStone",
+  "net/minecraft/class_3031.method_23396(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#isDirt",
+  "net/minecraft/class_3031.method_27368(Lnet/minecraft/class_3746;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#isGrassOrDirt",
+  "net/minecraft/class_2591.method_11033(Lnet/minecraft/class_2591;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getKey",
+  "net/minecraft/class_8055.method_48440(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getFromIngredient",
+  "net/minecraft/class_2480.method_10525(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getBlockByColor",
+  "net/minecraft/class_2480.method_10529(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getColoredItemStack",
+  "net/minecraft/class_2215.method_9398(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#bannerByColor"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -1206,6 +1248,17 @@
     "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#holder(Lnet/minecraft/class_9791;)Lnet/minecraft/class_6880;"
    ],
    "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
+  },
+  "net/minecraft/class_2574.<init>(Ljava/lang/String;ZLjava/util/Optional;Lnet/minecraft/class_7419;)V": {
+   "desc": "(Lnet/minecraft/util/CompilableString;ZZLjava/util/Optional;Lnet/minecraft/class_7419;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallComponents#nbtPath(Ljava/lang/String;)Lnet/minecraft/util/CompilableString;",
+    "keep:1",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallComponents#notPlain()Z",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "26.1 keeps the NBT path compiled with its text and adds a plain flag 1.21.11 lacked (CbWallComponents)"
   }
  },
  "fieldGetters": {
@@ -1329,7 +1382,12 @@
   "net/minecraft/class_58.method_22568(Lnet/minecraft/class_176;)Lnet/minecraft/class_58;",
   "net/minecraft/class_1769.method_7802()Lnet/minecraft/class_1767;",
   "net/minecraft/class_6053.method_43541()V",
-  "net/minecraft/class_6053.method_43542()V"
+  "net/minecraft/class_6053.method_43542()V",
+  "net/minecraft/class_1277.method_5489(Lnet/minecraft/class_1265;)V",
+  "net/minecraft/class_1277.method_5488(Lnet/minecraft/class_1265;)V",
+  "net/minecraft/class_338.method_44811(Lnet/minecraft/class_2561;Lnet/minecraft/class_7469;Lnet/minecraft/class_7591;)V",
+  "net/minecraft/class_329.method_44354(Z)V",
+  "net/minecraft/class_329.method_44353()Z"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -1382,6 +1440,7 @@
  },
  "instanceFieldGetters": {
   "net/minecraft/class_757.field_60579:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#guiCubeMap",
-  "net/minecraft/class_2275.field_27084:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#interactions"
+  "net/minecraft/class_2275.field_27084:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#interactions",
+  "net/minecraft/class_2574.field_11779:Lnet/minecraft/class_2203$class_2209;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#compiledNbtPath"
  }
 }
