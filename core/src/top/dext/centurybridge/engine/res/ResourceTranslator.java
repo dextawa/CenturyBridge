@@ -76,16 +76,16 @@ public final class ResourceTranslator {
      *        not have falls back to vanilla types and reports what that loses
      */
     public static Outcome apply(Map<String, byte[]> entries, String from, String to, java.util.Set<String> runtimeTypes) {
-        return apply(entries, from, to, runtimeTypes, Map.of(), java.util.Set.of());
+        return apply(entries, from, to, runtimeTypes, Map.of(), Map.of());
     }
 
     /**
      * @param tagMap the climb step's vanilla tags whose members W changed, each to the id carrying V's members
      *        (wiring {@code tagMap}, see {@link LegacyTags}); empty outside a climb step
-     * @param tagMirror the tagMap keys whose mod tag files are copied into that id
+     * @param tagMirror per tagMap key, the tags a mod's own file for the vanilla tag is copied into
      */
     public static Outcome apply(Map<String, byte[]> entries, String from, String to, java.util.Set<String> runtimeTypes,
-            Map<String, String> tagMap, java.util.Set<String> tagMirror) {
+            Map<String, String> tagMap, Map<String, List<String>> tagMirror) {
         Outcome out = new Outcome();
         if (Release.before(from, "1.21") && Release.reaches(to, "1.21")) {
             dataDirs(entries, out);

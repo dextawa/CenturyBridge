@@ -5,7 +5,9 @@
  "tagMap": {
   "damage_type minecraft:no_knockback": {
    "to": "centurybridge:compat/1_20_6/no_knockback",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_20_6/no_knockback"
+   ]
   }
  }
 }

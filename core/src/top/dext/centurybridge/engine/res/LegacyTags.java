@@ -7,18 +7,20 @@ import com.google.gson.JsonPrimitive;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import top.dext.centurybridge.res.Json;
 import top.dext.centurybridge.res.Release;
 
 /**
  * Vanilla data-tag drift on the data side of a climb step (a mod's data/**.json naming a vanilla tag).
  *
- * <p>W can keep a vanilla tag's id while changing what it holds (26.1 narrowed minecraft:dirt; 1.21.4 widened
- * minecraft:replaceable_by_trees by every small flower). The step layer ships a tag holding V's members under its
- * own id (core/tools/gen_tag_compat.py: centurybridge:compat/&lt;V_&gt;/&lt;tag&gt;), and the step's wiring maps each
- * drifted vanilla tag to it ({@code tagMap}: "&lt;registry&gt; minecraft:&lt;tag&gt;" -&gt; {"to": id, "mirror": bool}). A tag W
- * removed and the layer restores under its own id needs nothing here and is not in the map.
+ * <p>W can keep a vanilla tag's id while changing what it holds (1.21.4 widened minecraft:replaceable_by_trees by
+ * every small flower), or rename it (26.1: big_dripleaf_placeable is supports_big_dripleaf, same members, the same
+ * blocks read it). The step's wiring maps each such vanilla tag to the tag carrying its V meaning on W
+ * (core/tools/gen_tag_compat.py; {@code tagMap}: "&lt;registry&gt; minecraft:&lt;tag&gt;" -&gt; {"to": id, "mirror": [ids]}):
+ * the layer's compat tag holding V's members (centurybridge:compat/&lt;V_&gt;/&lt;tag&gt;), or the W tag vanilla acts on
+ * (a rename; a W tag with exactly V's members that names #minecraft:&lt;tag&gt; itself, as 26.1 substrate_overworld
+ * does for 1.21.11 dirt). A tag W removed that the layer restores under its own id maps to itself, and only when
+ * part of its readers moved to another W tag with the same members (26.1 cauldron_can_remove_dye of dyeable).
  *
  * <p>Two things happen to a V-era mod's data:
  * <ul>
@@ -29,10 +31,11 @@ import top.dext.centurybridge.res.Release;
  * registry; a key that names one registry ("blocks", "items", "biomes", "infiniburn", "supported_items", ...); a
  * recipe's ingredients (items). Where nothing says, the reference is rewritten only when the step maps that id in
  * exactly one registry; otherwise it is left and reported.</li>
- * <li>A mod's own file for a mapped vanilla tag with {@code mirror} (widened and changed tags, whose compat tag
- * does not name #minecraft:&lt;tag&gt; -- that would bring W's new vanilla members) is copied into the compat tag as
- * well, so what the mod added to the vanilla tag still counts for V-era readers. Narrowed compat tags name
- * #minecraft:&lt;tag&gt; and get the mod's additions through it.</li>
+ * <li>A mod's own file for a mapped vanilla tag is copied into each {@code mirror} id as well (merged with what the
+ * jar already has there), so what the mod added to the vanilla tag still reaches the readers: a widened or changed
+ * tag's compat tag (which does not name #minecraft:&lt;tag&gt; -- that would bring W's new vanilla members), a renamed
+ * tag's successor, a restored tag's partial successors. Narrowed compat tags name #minecraft:&lt;tag&gt; and get the
+ * mod's additions through it.</li>
  * </ul>
  */
 final class LegacyTags {
@@ -70,9 +73,9 @@ final class LegacyTags {
     /**
      * @param map "&lt;registry&gt; minecraft:&lt;tag&gt;" -&gt; the id carrying V's members, the step's wiring {@code tagMap}
      *        (empty outside a climb step)
-     * @param mirror the keys of map whose mod tag files are copied into the target tag
+     * @param mirror per key of map, the tags a mod's own file for that vanilla tag is copied into
      */
-    static void apply(Map<String, byte[]> entries, Map<String, String> map, Set<String> mirror, String to,
+    static void apply(Map<String, byte[]> entries, Map<String, String> map, Map<String, java.util.List<String>> mirror, String to,
             ResourceTranslator.Outcome out) {
         if (map.isEmpty()) {
             return;
@@ -103,22 +106,45 @@ final class LegacyTags {
                 e.setValue(Json.write(up));
                 out.rewritten++;
             }
-            String id = tagFile == null || !mirror.contains(tagFile) ? null : map.get(tagFile);
-            if (id != null) {
+            for (String id : tagFile == null ? java.util.List.<String>of() : mirror.getOrDefault(tagFile, java.util.List.of())) {
                 String ns = id.substring(0, id.indexOf(':'));
                 String path = id.substring(id.indexOf(':') + 1);
                 String dir = Release.before(to, "1.21") ? pluralDir(fileRegistry) : fileRegistry;
                 String target = "data/" + ns + "/tags/" + dir + "/" + path + ".json";
-                if (!entries.containsKey(target)) {
-                    mirrors.put(target, e.getValue());
-                    out.notes.add("mirrored " + n + " into " + id + " (the mod's additions to a vanilla tag W changed)");
+                if (!target.equals(n)) {
+                    mirrors.merge(target, e.getValue(), LegacyTags::mergeTag);
+                    out.notes.add("mirrored " + n + " into " + id + " (the mod's additions to a vanilla tag W changed or renamed)");
                 }
             }
         }
         for (var m : mirrors.entrySet()) {
-            entries.put(m.getKey(), m.getValue());
+            byte[] have = entries.get(m.getKey());
+            entries.put(m.getKey(), have == null ? m.getValue() : mergeTag(have, m.getValue()));
             out.generated++;
         }
+    }
+
+    /** two tag files as one: values end to end, replace if either replaces */
+    private static byte[] mergeTag(byte[] a, byte[] b) {
+        JsonElement ja = Json.tryParse(a);
+        JsonElement jb = Json.tryParse(b);
+        if (!(ja instanceof JsonObject oa) || !(jb instanceof JsonObject ob)) {
+            return a;
+        }
+        JsonObject m = new JsonObject();
+        boolean replace = (oa.has("replace") && oa.get("replace").getAsBoolean())
+            || (ob.has("replace") && ob.get("replace").getAsBoolean());
+        if (replace) {
+            m.addProperty("replace", true);
+        }
+        JsonArray vals = new JsonArray();
+        for (JsonObject o : new JsonObject[] {oa, ob}) {
+            if (o.has("values")) {
+                vals.addAll(o.getAsJsonArray("values"));
+            }
+        }
+        m.add("values", vals);
+        return Json.write(m);
     }
 
     private static String pluralDir(String registry) {
