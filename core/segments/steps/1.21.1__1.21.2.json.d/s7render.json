@@ -193,25 +193,20 @@
  "instanceFieldGetters": {
   "net/minecraft/class_5944.field_29482:Lnet/minecraft/class_284;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#field_29482",
   "net/minecraft/class_763.field_4129:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItemModels#field_4129",
-  "net/minecraft/class_5603.field_27702:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27702",
-  "net/minecraft/class_5603.field_27703:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27703",
-  "net/minecraft/class_5603.field_27704:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27704",
-  "net/minecraft/class_5603.field_27705:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27705",
-  "net/minecraft/class_5603.field_27706:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27706",
-  "net/minecraft/class_5603.field_27707:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27707",
   "net/minecraft/class_620.field_27525:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27525",
   "net/minecraft/class_4840.field_27464:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27464",
   "net/minecraft/class_757.field_29403:Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderGame#blitShader",
-  "net/minecraft/class_382$class_328.field_2008:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#effectX0",
-  "net/minecraft/class_382$class_328.field_2007:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#effectY0",
-  "net/minecraft/class_382$class_328.field_2006:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#effectX1",
-  "net/minecraft/class_382$class_328.field_2005:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#effectY1",
-  "net/minecraft/class_382$class_328.field_20911:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#effectDepth",
   "net/minecraft/class_382$class_328.field_2004:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#effectR",
   "net/minecraft/class_382$class_328.field_2003:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#effectG",
   "net/minecraft/class_382$class_328.field_2010:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#effectB",
   "net/minecraft/class_382$class_328.field_2009:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#effectA",
-  "net/minecraft/class_7761$class_7762.field_40525:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSigns#field_40525"
+  "net/minecraft/class_7761$class_7762.field_40525:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSigns#field_40525",
+  "net/minecraft/class_1095.field_5430:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5430",
+  "net/minecraft/class_1095.field_5429:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5429",
+  "net/minecraft/class_1095.field_21863:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_21863",
+  "net/minecraft/class_1095.field_5425:Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5425",
+  "net/minecraft/class_1095.field_5426:Lnet/minecraft/class_809;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5426",
+  "net/minecraft/class_1095.field_5428:Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#field_5428"
  },
  "superCtorReshapes": {
   "net/minecraft/class_583.<init>()V": {
@@ -1036,12 +1031,14 @@
   "net/minecraft/class_761.method_8564(ILnet/minecraft/class_2338;I)V",
   "net/minecraft/class_761.method_60891(Lnet/minecraft/class_6880;Lnet/minecraft/class_2338;)V",
   "net/minecraft/class_761.method_60889(Lnet/minecraft/class_2338;)V",
-  "net/minecraft/class_769.method_3330(DD)V"
+  "net/minecraft/class_769.method_3330(DD)V",
+  "net/minecraft/class_591.method_2824(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;II)V",
+  "net/minecraft/class_591.method_2823(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;II)V"
  ],
  "ledger": {
   "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;": "getVertexProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
   "net/minecraft/class_5944.method_1278()Lnet/minecraft/class_281;": "getFragmentProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
-  "net/minecraft/class_5944.method_34418()V": "attachToProgram(): re-attached the vertex and fragment Program to the GL program; 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
+  "net/minecraft/class_5944.method_34418()V": "attachToProgram(): 1.21.1 re-attached the shader's vertex and fragment Program objects to its GL program; 1.21.2 links a CompiledShaderProgram once from shaders it does not keep (no Program class, no attach step: javap class_5944 / ShaderManager 1.21.2), so there is nothing to attach",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires OnLoad while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires ModelResolver while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)",
   "net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires BlockStateResolver while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)"
@@ -1221,5 +1218,41 @@
    ],
    "basis": "1.21.1 LevelRenderer.renderClouds is 1.21.2's clouds pass body method_62205 (it hands the CloudRenderer what 1.21.1's renderClouds drew from: colour, option, height, the frustum and projection matrices, camera position, ticks)"
   }
+ },
+ "fieldRenames": {
+  "net/minecraft/class_5603.field_27702:F": "comp_2997",
+  "net/minecraft/class_5603.field_27703:F": "comp_2998",
+  "net/minecraft/class_5603.field_27704:F": "comp_2999",
+  "net/minecraft/class_5603.field_27705:F": "comp_3000",
+  "net/minecraft/class_5603.field_27706:F": "comp_3001",
+  "net/minecraft/class_5603.field_27707:F": "comp_3002",
+  "net/minecraft/class_382$class_328.field_2008:F": "comp_3307",
+  "net/minecraft/class_382$class_328.field_2007:F": "comp_3308",
+  "net/minecraft/class_382$class_328.field_2006:F": "comp_3309",
+  "net/minecraft/class_382$class_328.field_2005:F": "comp_3310",
+  "net/minecraft/class_382$class_328.field_20911:F": "comp_3311"
+ },
+ "mixinLedger": {
+  "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_40570:Lnet/minecraft/class_7654;": "ModelBakery statics 1.21.2 dropped (its counterparts are MissingBlockModel's / the layer's fieldGetters): 1.21.2's ModelBakery <clinit> assigns no such field",
+  "net/minecraft/class_1088.<clinit>()V @ FIELD Lnet/minecraft/class_1088;field_52276:Lnet/minecraft/class_1091;": "ModelBakery statics 1.21.2 dropped (its counterparts are MissingBlockModel's / the layer's fieldGetters): 1.21.2's ModelBakery <clinit> assigns no such field",
+  "net/minecraft/class_1921.method_23689(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; @ FIELD Lnet/minecraft/class_1921;field_29628:Ljava/util/function/Function;": "the render types 1.21.2 deleted (entityTranslucentCull, entityGlintDirect): the layer's CbRenderTypes rebuilds them for mods' calls, vanilla never runs that code",
+  "net/minecraft/class_1921.method_29707()Lnet/minecraft/class_1921; @ FIELD Lnet/minecraft/class_1921;field_25488:Lnet/minecraft/class_1921;": "the render types 1.21.2 deleted (entityTranslucentCull, entityGlintDirect): the layer's CbRenderTypes rebuilds them for mods' calls, vanilla never runs that code",
+  "net/minecraft/class_276.method_1233(IIZ)V @ FIELD Lnet/minecraft/class_757;field_29403:Lnet/minecraft/class_5944;": "1.21.2's GameRenderer holds no blit shader (RenderTarget.blitToScreen asks the ShaderManager for the blit_screen program; the layer keeps 1.21.1's field for mods); no 1.21.2 body reads or writes it",
+  "net/minecraft/class_4668.<clinit>()V @ FIELD Lnet/minecraft/class_4668;field_29406:Lnet/minecraft/class_4668$class_5942;": "RenderStateShard's shards of the two core shaders 1.21.2 deleted (entity_translucent_cull, entity_glint_direct): 1.21.2's <clinit> builds no such shard (the layer's CbRenderTypes builds them for mods)",
+  "net/minecraft/class_4668.<clinit>()V @ FIELD Lnet/minecraft/class_4668;field_29425:Lnet/minecraft/class_4668$class_5942;": "RenderStateShard's shards of the two core shaders 1.21.2 deleted (entity_translucent_cull, entity_glint_direct): 1.21.2's <clinit> builds no such shard (the layer's CbRenderTypes builds them for mods)",
+  "net/minecraft/class_757.close()V @ FIELD Lnet/minecraft/class_757;field_29403:Lnet/minecraft/class_5944;": "1.21.2's GameRenderer holds no blit shader (RenderTarget.blitToScreen asks the ShaderManager for the blit_screen program; the layer keeps 1.21.1's field for mods); no 1.21.2 body reads or writes it",
+  "net/minecraft/class_757.method_34521(Lnet/minecraft/class_5912;)V @ FIELD Lnet/minecraft/class_757;field_29403:Lnet/minecraft/class_5944;": "1.21.2's GameRenderer holds no blit shader (RenderTarget.blitToScreen asks the ShaderManager for the blit_screen program; the layer keeps 1.21.1's field for mods); no 1.21.2 body reads or writes it",
+  "com/mojang/blaze3d/systems/RenderSystem.setShaderTexture(II)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;_setShaderTexture(II)V": "1.21.2's setShaderTexture stores the texture itself on the render thread (assertOnRenderThread, array store): there is no _setShaderTexture call or render-call queue (javap: RenderSystem 1.21.2)",
+  "com/mojang/blaze3d/systems/RenderSystem.setShaderTexture(ILnet/minecraft/class_2960;)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;_setShaderTexture(ILnet/minecraft/class_2960;)V": "1.21.2's setShaderTexture stores the texture itself on the render thread (assertOnRenderThread, array store): there is no _setShaderTexture call or render-call queue (javap: RenderSystem 1.21.2)",
+  "net/minecraft/class_751.method_3156(Lnet/minecraft/class_310;FFF)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;applyModelViewMatrix()V": "1.21.2's RenderSystem has no applyModelViewMatrix: shaders read the model-view stack itself (getModelViewMatrix), so no 1.21.2 body has the apply step this anchor stood at (javap: RenderSystem 1.21.2)",
+  "net/minecraft/class_757.method_3172(Lnet/minecraft/class_4184;FLorg/joml/Matrix4f;)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;applyModelViewMatrix()V": "1.21.2's RenderSystem has no applyModelViewMatrix: shaders read the model-view stack itself (getModelViewMatrix), so no 1.21.2 body has the apply step this anchor stood at (javap: RenderSystem 1.21.2)",
+  "net/minecraft/class_757.method_3192(Lnet/minecraft/class_9779;Z)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;applyModelViewMatrix()V": "1.21.2's RenderSystem has no applyModelViewMatrix: shaders read the model-view stack itself (getModelViewMatrix), so no 1.21.2 body has the apply step this anchor stood at (javap: RenderSystem 1.21.2)",
+  "net/minecraft/class_758.method_23792()V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V": "1.21.2 sets the fog as one FogParameters value (RenderSystem.setShaderFog / getShaderFog only): FogRenderer computes and returns it and no 1.21.2 body calls a per-field fog setter (javap: RenderSystem, FogRenderer 1.21.2)",
+  "net/minecraft/class_758.method_3211(Lnet/minecraft/class_4184;Lnet/minecraft/class_758$class_4596;FZF)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogEnd(F)V": "1.21.2 sets the fog as one FogParameters value (RenderSystem.setShaderFog / getShaderFog only): FogRenderer computes and returns it and no 1.21.2 body calls a per-field fog setter (javap: RenderSystem, FogRenderer 1.21.2)",
+  "net/minecraft/class_758.method_3211(Lnet/minecraft/class_4184;Lnet/minecraft/class_758$class_4596;FZF)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogShape(Lnet/minecraft/class_6854;)V": "1.21.2 sets the fog as one FogParameters value (RenderSystem.setShaderFog / getShaderFog only): FogRenderer computes and returns it and no 1.21.2 body calls a per-field fog setter (javap: RenderSystem, FogRenderer 1.21.2)",
+  "net/minecraft/class_758.method_3211(Lnet/minecraft/class_4184;Lnet/minecraft/class_758$class_4596;FZF)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V": "1.21.2 sets the fog as one FogParameters value (RenderSystem.setShaderFog / getShaderFog only): FogRenderer computes and returns it and no 1.21.2 body calls a per-field fog setter (javap: RenderSystem, FogRenderer 1.21.2)",
+  "net/minecraft/class_758.method_3212()V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogColor(FFF)V": "1.21.2 sets the fog as one FogParameters value (RenderSystem.setShaderFog / getShaderFog only): FogRenderer computes and returns it and no 1.21.2 body calls a per-field fog setter (javap: RenderSystem, FogRenderer 1.21.2)",
+  "net/minecraft/class_761.method_22710(Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;applyModelViewMatrix()V": "1.21.2's RenderSystem has no applyModelViewMatrix: shaders read the model-view stack itself (getModelViewMatrix), so no 1.21.2 body has the apply step this anchor stood at (javap: RenderSystem 1.21.2)",
+  "net/minecraft/class_554.method_45703(Lnet/minecraft/class_5610;)V": "1.21.2's BoatModel.createChildren is 1.21.1's minus its last part, water_patch (1.21.2 builds it in createWaterPatch, a layer of its own; the layer adds it back for mods' calls), and minus the five constants 1.21.1 stored in unused locals at entry (bipush 32/6/20/4/28): every site the matcher lost is one of those (javap, both bodies); the remaining sites are matched"
  }
 }

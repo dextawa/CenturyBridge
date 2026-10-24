@@ -79,26 +79,11 @@ public final class CbRenderCtors {
             | (int) (b * 255.0F) & 0xFF;
     }
 
-    /** 1.21.1 EffectInstance's protected fields (instanceFieldGetters), read off 1.21.2's record */
-    public static float effectX0(net.minecraft.class_382.class_328 e) {
-        return e.comp_3307();
-    }
+    /** 1.21.1 EffectInstance's colour fields (instanceFieldGetters), read off 1.21.2's packed colour; its position / depth fields are the record's (fieldRenames) */
 
-    public static float effectY0(net.minecraft.class_382.class_328 e) {
-        return e.comp_3308();
-    }
 
-    public static float effectX1(net.minecraft.class_382.class_328 e) {
-        return e.comp_3309();
-    }
 
-    public static float effectY1(net.minecraft.class_382.class_328 e) {
-        return e.comp_3310();
-    }
 
-    public static float effectDepth(net.minecraft.class_382.class_328 e) {
-        return e.comp_3311();
-    }
 
     public static float effectR(net.minecraft.class_382.class_328 e) {
         return (e.comp_3312() >> 16 & 0xFF) / 255.0F;

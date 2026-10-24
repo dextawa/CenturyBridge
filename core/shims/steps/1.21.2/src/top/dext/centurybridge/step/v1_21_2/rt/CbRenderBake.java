@@ -193,4 +193,33 @@ public final class CbRenderBake {
     public static java.util.stream.Stream<net.minecraft.class_799.class_5826> method_33690(net.minecraft.class_799 override) {
         return override.comp_3194().stream();
     }
+
+    // ---- 1.21.1 MultiPartBakedModel's protected fields (instanceFieldGetters) ----
+    // 1.21.1's constructor copied them from the first selector's model; 1.21.2's MultiPartBakedModel answers the same
+    // properties from that model (DelegateBakedModel's delegate, method_64095's pick): each read is the delegate's
+    // property, not a virtual call on the model (a subclass's override did not change 1.21.1's fields).
+
+    public static boolean field_5430(net.minecraft.class_1095 model) {
+        return model.field_54188.method_4708();
+    }
+
+    public static boolean field_5429(net.minecraft.class_1095 model) {
+        return model.field_54188.method_4712();
+    }
+
+    public static boolean field_21863(net.minecraft.class_1095 model) {
+        return model.field_54188.method_24304();
+    }
+
+    public static net.minecraft.class_1058 field_5425(net.minecraft.class_1095 model) {
+        return model.field_54188.method_4711();
+    }
+
+    public static net.minecraft.class_809 field_5426(net.minecraft.class_1095 model) {
+        return model.field_54188.method_4709();
+    }
+
+    public static net.minecraft.class_806 field_5428(net.minecraft.class_1095 model) {
+        return model.field_54188.method_4710();
+    }
 }
