@@ -1194,5 +1194,32 @@
    "synth": [],
    "basis": "1.21.1 StuckInBodyLayer.renderStuckItem(.., entity, x, y, z, partialTick), private in 1.21.2 with another shape: a subclass declaring it gets the adapter, and its layer calls it from 1.21.1's render body (CbRenderStuckMixin)"
   }
- ]
+ ],
+ "mixinTargets": {
+  "net/minecraft/class_761.method_3257(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/class_4184;ZLjava/lang/Runnable;)V": {
+   "to": "method_62215(Lnet/minecraft/class_9958;Lnet/minecraft/class_5294$class_5401;FLnet/minecraft/class_5294;)V",
+   "args": [
+    -1,
+    -1,
+    2,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 LevelRenderer.renderSky's drawing (end sky, or sky disc / sunrise / sun, moon and stars / dark disc) is 1.21.2's sky pass body method_62215, the partial tick passed on (javap: the same RenderSystem / Tesselator sequence; 1.21.2's pass checks fluid and mob effects before, as 1.21.1's renderSky did first)"
+  },
+  "net/minecraft/class_761.method_3259(Lnet/minecraft/class_4587;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FDDD)V": {
+   "to": "method_62205(Lnet/minecraft/class_9925;ILnet/minecraft/class_4063;FLorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lnet/minecraft/class_243;F)V",
+   "args": [
+    -1,
+    4,
+    5,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "1.21.1 LevelRenderer.renderClouds is 1.21.2's clouds pass body method_62205 (it hands the CloudRenderer what 1.21.1's renderClouds drew from: colour, option, height, the frustum and projection matrices, camera position, ticks)"
+  }
+ }
 }
