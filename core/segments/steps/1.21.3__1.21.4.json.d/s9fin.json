@@ -1,0 +1,46 @@
+{
+ "classRenames": {
+  "net/minecraft/class_2838": "top/dext/centurybridge/step/v1_21_4/facade/ServerboundPickItemPacket"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_9094.field_48096:Lnet/minecraft/class_9145;": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2792.method_12084(Lnet/minecraft/class_2838;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick",
+  "net/minecraft/class_3244.method_12084(Lnet/minecraft/class_2838;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick"
+ },
+ "superRedirects": {
+  "net/minecraft/class_3244.method_12084(Lnet/minecraft/class_2838;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick#superPickItem"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2792",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick$LegacyPickItem",
+   "requires": [
+    "method_12084(Lnet/minecraft/class_2838;)V"
+   ],
+   "synth": [],
+   "basis": "s9fin pick: a 1.21.3 ServerGamePacketListener (own implementation or ServerGamePacketListenerImpl subclass) declaring handlePickItem(ServerboundPickItemPacket): the packet's handle and every handlePickItem call reach it (CbFinPick.method_12084)"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_12084(Lnet/minecraft/class_10371;)V",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick.pickItemFromEntity(Lnet/minecraft/class_2792;Lnet/minecraft/class_10371;)V",
+   "basis": "s9fin pick: 1.21.4's handlePickItemFromEntity; the packet did not exist in 1.21.3 (its connection failed on an unknown id), so a 1.21.3 listener fails on it naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_65085(Lnet/minecraft/class_10370;)V",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick.pickItemFromBlock(Lnet/minecraft/class_2792;Lnet/minecraft/class_10370;)V",
+   "basis": "s9fin pick: 1.21.4's handlePickItemFromBlock; the packet did not exist in 1.21.3 (its connection failed on an unknown id), so a 1.21.3 listener fails on it naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_65306(Lnet/minecraft/class_10387;)V",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick.playerLoaded(Lnet/minecraft/class_2792;Lnet/minecraft/class_10387;)V",
+   "basis": "s9fin pick: 1.21.4's handleAcceptPlayerLoad; the packet did not exist in 1.21.3 (its connection failed on an unknown id), so a 1.21.3 listener fails on it naming the packet"
+  }
+ ]
+}
