@@ -241,6 +241,31 @@ public final class SiteMatch {
         return 2.0 * prev[m] / (n + m);
     }
 
+    /**
+     * As {@link #sig}, with the class's own members known by kind, arity and the sort of their type instead
+     * of name and descriptor: two
+     * releases that name the same private helper differently (past the namespace wall the table lists
+     * only what it could match, so a 26.1 helper keeps its own name while 1.21.11's is method_NNNN) still
+     * line up. For comparing whole bodies (body follow), not for anchor contexts.
+     */
+    public static List<String> sigSelf(MethodNode m, String owner) {
+        List<String> out = new ArrayList<>();
+        if (m.instructions == null) return out;
+        for (AbstractInsnNode in : m.instructions) {
+            String s;
+            if (in instanceof MethodInsnNode mi && mi.owner.equals(owner)) {
+                // by arity and the sort of its answer: the classes in a descriptor are renamed / retyped too
+                s = "self/" + Type.getArgumentTypes(mi.desc).length + Type.getReturnType(mi.desc).getSort();
+            } else if (in instanceof FieldInsnNode fi && fi.owner.equals(owner)) {
+                s = fi.getOpcode() + "self:" + Type.getType(fi.desc).getSort();
+            } else {
+                s = sigOf(in);
+            }
+            if (s != null) out.add(s);
+        }
+        return out;
+    }
+
     /** the significant instructions of a body, rendered */
     public static List<String> sig(MethodNode m) {
         List<String> out = new ArrayList<>();
