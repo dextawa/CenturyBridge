@@ -7,7 +7,9 @@
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils": "net/minecraft/world/level/levelgen/feature/SpeleothemUtils",
   "net/minecraft/world/level/levelgen/feature/PointedDripstoneFeature": "net/minecraft/world/level/levelgen/feature/SpeleothemFeature",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/SpeleothemConfiguration",
-  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "top/dext/centurybridge/step/v26_2/facade/StructureProcessorType"
+  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "top/dext/centurybridge/step/v26_2/facade/StructureProcessorType",
+  "com/mojang/blaze3d/platform/SourceFactor": "com/mojang/blaze3d/platform/BlendFactor",
+  "com/mojang/blaze3d/platform/DestFactor": "com/mojang/blaze3d/platform/BlendFactor"
  },
  "_classRenames_basis": {
   "net/minecraft/util/Tuple": "26.2 deleted Tuple (no class of 26.2 holds its members; its callers use DFU Pair); the layer's facade is 26.1.2's class as it was",
@@ -16,7 +18,9 @@
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils": "26.2 generalised DripstoneUtils into SpeleothemUtils (same members, the dripstone blocks and #dripstone_replaceable_blocks now parameters); the members whose shape changed redirect to rt/CbS26Dripstone with the dripstone arguments 26.2's CaveFeatures passes",
   "net/minecraft/world/level/levelgen/feature/PointedDripstoneFeature": "26.2's SpeleothemFeature is 26.1.2's PointedDripstoneFeature over SpeleothemConfiguration (Feature.POINTED_DRIPSTONE became Feature.SPELEOTHEM, configured_feature/pointed_dripstone uses minecraft:speleothem)",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration": "26.2's SpeleothemConfiguration record is PointedDripstoneConfiguration plus base/pointed block and replaceable set; construction, fields and CODEC go through rt/CbS26Dripstone with the dripstone values",
-  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "26.1.2's registry value type (a holder of its processor's map codec) is gone: 26.2 registers the map codecs and keeps only the four codecs under this name; the facade is 26.1.2's interface with every member (constants = the types of 26.2's codecs under the same ids)"
+  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "26.1.2's registry value type (a holder of its processor's map codec) is gone: 26.2 registers the map codecs and keeps only the four codecs under this name; the facade is 26.1.2's interface with every member (constants = the types of 26.2's codecs under the same ids)",
+  "com/mojang/blaze3d/platform/SourceFactor": "26.2 merged SourceFactor and DestFactor into BlendFactor: the same 15 constants as SourceFactor in its order; GlConst.toGl(BlendFactor) and BlendFunction's components take it (javap)",
+  "com/mojang/blaze3d/platform/DestFactor": "26.2's BlendFactor holds DestFactor's 14 constants and SRC_ALPHA_SATURATE (source-only in GL); values()/valueOf answer DestFactor's set (rt/CbS26Blend)"
  },
  "fieldGetters": {
   "net/minecraft/world/level/block/Blocks.COPPER_BARS:Lnet/minecraft/world/level/block/WeatheringCopperBlocks;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Blocks_COPPER_BARS",
@@ -99,7 +103,14 @@
   "net/minecraft/client/Minecraft.isSingleplayer()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#isSingleplayer",
   "net/minecraft/client/Minecraft.getMainRenderTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getMainRenderTarget",
   "net/minecraft/client/Minecraft.getWaypointStyles()Lnet/minecraft/client/resources/WaypointStyleManager;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getWaypointStyles",
-  "net/minecraft/client/Minecraft.commandHistory()Lnet/minecraft/client/CommandHistory;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#commandHistory"
+  "net/minecraft/client/Minecraft.commandHistory()Lnet/minecraft/client/CommandHistory;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#commandHistory",
+  "com/mojang/blaze3d/systems/GpuDevice.getVendor()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getVendor",
+  "com/mojang/blaze3d/systems/GpuDevice.getRenderer()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getRenderer",
+  "com/mojang/blaze3d/systems/GpuDevice.getVersion()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getVersion",
+  "com/mojang/blaze3d/systems/GpuDevice.getBackendName()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getBackendName",
+  "com/mojang/blaze3d/systems/GpuDevice.getMaxTextureSize()I": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getMaxTextureSize",
+  "com/mojang/blaze3d/systems/GpuDevice.getUniformOffsetAlignment()I": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getUniformOffsetAlignment",
+  "com/mojang/blaze3d/systems/GpuDevice.getMaxSupportedAnisotropy()I": "top/dext/centurybridge/step/v26_2/rt/CbS26GpuClient#getMaxSupportedAnisotropy"
  },
  "_instanceRedirects_basis": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.*": "26.2 replaced the parser's option booleans by option-state objects (nameOption() ... advancementsOption()); rt/CbS26Selector reads and sets the same facts on them (see its javadoc)",
@@ -124,7 +135,9 @@
   "net/minecraft/world/level/block/PointedDripstoneBlock.growStalactiteOrStalagmiteIfPossible(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#growStalactiteOrStalagmiteIfPossible",
   "net/minecraft/world/level/block/PointedDripstoneBlock.canDrip(Lnet/minecraft/world/level/block/state/BlockState;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#canDrip",
   "net/minecraft/client/Minecraft.useShaderTransparency()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#useShaderTransparency",
-  "net/minecraft/client/Minecraft.renderNames()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#renderNames"
+  "net/minecraft/client/Minecraft.renderNames()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#renderNames",
+  "com/mojang/blaze3d/platform/DestFactor.values()[Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Blend#destValues",
+  "com/mojang/blaze3d/platform/DestFactor.valueOf(Ljava/lang/String;)Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Blend#destValueOf"
  },
  "callReshapes": {
   "net/minecraft/world/entity/EntityType.spawn(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Consumer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;": {
