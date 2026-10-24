@@ -23,4 +23,235 @@ public final class CbTagCompat {
     public static net.minecraft.tags.TagKey<?> BlockTags_CONCRETE_POWDER() {
         return BlockTags_CONCRETE_POWDER;
     }
+
+    /** net/minecraft/tags/BlockTags.ACACIA_LOGS: 26.1.2 minecraft:acacia_logs (moved at 26.2: BlockItemTags.ACACIA_LOGS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_ACACIA_LOGS = net.minecraft.tags.BlockItemTags.ACACIA_LOGS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_ACACIA_LOGS() {
+        return BlockTags_ACACIA_LOGS;
+    }
+
+    /** net/minecraft/tags/BlockTags.BIRCH_LOGS: 26.1.2 minecraft:birch_logs (moved at 26.2: BlockItemTags.BIRCH_LOGS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_BIRCH_LOGS = net.minecraft.tags.BlockItemTags.BIRCH_LOGS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_BIRCH_LOGS() {
+        return BlockTags_BIRCH_LOGS;
+    }
+
+    /** net/minecraft/tags/BlockTags.CHERRY_LOGS: 26.1.2 minecraft:cherry_logs (moved at 26.2: BlockItemTags.CHERRY_LOGS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_CHERRY_LOGS = net.minecraft.tags.BlockItemTags.CHERRY_LOGS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_CHERRY_LOGS() {
+        return BlockTags_CHERRY_LOGS;
+    }
+
+    /** net/minecraft/tags/BlockTags.COAL_ORES: 26.1.2 minecraft:coal_ores (moved at 26.2: BlockItemTags.COAL_ORES.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_COAL_ORES = net.minecraft.tags.BlockItemTags.COAL_ORES.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_COAL_ORES() {
+        return BlockTags_COAL_ORES;
+    }
+
+    /** net/minecraft/tags/BlockTags.CRIMSON_STEMS: 26.1.2 minecraft:crimson_stems (moved at 26.2: BlockItemTags.CRIMSON_STEMS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_CRIMSON_STEMS = net.minecraft.tags.BlockItemTags.CRIMSON_STEMS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_CRIMSON_STEMS() {
+        return BlockTags_CRIMSON_STEMS;
+    }
+
+    /** net/minecraft/tags/BlockTags.DARK_OAK_LOGS: 26.1.2 minecraft:dark_oak_logs (moved at 26.2: BlockItemTags.DARK_OAK_LOGS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_DARK_OAK_LOGS = net.minecraft.tags.BlockItemTags.DARK_OAK_LOGS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_DARK_OAK_LOGS() {
+        return BlockTags_DARK_OAK_LOGS;
+    }
+
+    /** net/minecraft/tags/BlockTags.DIAMOND_ORES: 26.1.2 minecraft:diamond_ores (moved at 26.2: BlockItemTags.DIAMOND_ORES.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_DIAMOND_ORES = net.minecraft.tags.BlockItemTags.DIAMOND_ORES.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_DIAMOND_ORES() {
+        return BlockTags_DIAMOND_ORES;
+    }
+
+    /** net/minecraft/tags/BlockTags.EMERALD_ORES: 26.1.2 minecraft:emerald_ores (moved at 26.2: BlockItemTags.EMERALD_ORES.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_EMERALD_ORES = net.minecraft.tags.BlockItemTags.EMERALD_ORES.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_EMERALD_ORES() {
+        return BlockTags_EMERALD_ORES;
+    }
+
+    /** net/minecraft/tags/BlockTags.LAPIS_ORES: 26.1.2 minecraft:lapis_ores (moved at 26.2: BlockItemTags.LAPIS_ORES.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_LAPIS_ORES = net.minecraft.tags.BlockItemTags.LAPIS_ORES.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_LAPIS_ORES() {
+        return BlockTags_LAPIS_ORES;
+    }
+
+    /** net/minecraft/tags/BlockTags.LOGS_THAT_BURN: 26.1.2 minecraft:logs_that_burn (moved at 26.2: BlockItemTags.LOGS_THAT_BURN.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_LOGS_THAT_BURN = net.minecraft.tags.BlockItemTags.LOGS_THAT_BURN.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_LOGS_THAT_BURN() {
+        return BlockTags_LOGS_THAT_BURN;
+    }
+
+    /** net/minecraft/tags/BlockTags.MANGROVE_LOGS: 26.1.2 minecraft:mangrove_logs (moved at 26.2: BlockItemTags.MANGROVE_LOGS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_MANGROVE_LOGS = net.minecraft.tags.BlockItemTags.MANGROVE_LOGS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_MANGROVE_LOGS() {
+        return BlockTags_MANGROVE_LOGS;
+    }
+
+    /** net/minecraft/tags/BlockTags.OAK_LOGS: 26.1.2 minecraft:oak_logs (moved at 26.2: BlockItemTags.OAK_LOGS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_OAK_LOGS = net.minecraft.tags.BlockItemTags.OAK_LOGS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_OAK_LOGS() {
+        return BlockTags_OAK_LOGS;
+    }
+
+    /** net/minecraft/tags/BlockTags.REDSTONE_ORES: 26.1.2 minecraft:redstone_ores (moved at 26.2: BlockItemTags.REDSTONE_ORES.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_REDSTONE_ORES = net.minecraft.tags.BlockItemTags.REDSTONE_ORES.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_REDSTONE_ORES() {
+        return BlockTags_REDSTONE_ORES;
+    }
+
+    /** net/minecraft/tags/BlockTags.SAPLINGS: 26.1.2 minecraft:saplings (moved at 26.2: BlockItemTags.SAPLINGS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_SAPLINGS = net.minecraft.tags.BlockItemTags.SAPLINGS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_SAPLINGS() {
+        return BlockTags_SAPLINGS;
+    }
+
+    /** net/minecraft/tags/BlockTags.SMELTS_TO_GLASS: 26.1.2 minecraft:smelts_to_glass (moved at 26.2: BlockItemTags.SMELTS_TO_GLASS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_SMELTS_TO_GLASS = net.minecraft.tags.BlockItemTags.SMELTS_TO_GLASS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_SMELTS_TO_GLASS() {
+        return BlockTags_SMELTS_TO_GLASS;
+    }
+
+    /** net/minecraft/tags/BlockTags.SPRUCE_LOGS: 26.1.2 minecraft:spruce_logs (moved at 26.2: BlockItemTags.SPRUCE_LOGS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_SPRUCE_LOGS = net.minecraft.tags.BlockItemTags.SPRUCE_LOGS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_SPRUCE_LOGS() {
+        return BlockTags_SPRUCE_LOGS;
+    }
+
+    /** net/minecraft/tags/BlockTags.WARPED_STEMS: 26.1.2 minecraft:warped_stems (moved at 26.2: BlockItemTags.WARPED_STEMS.block()) */
+    public static final net.minecraft.tags.TagKey<?> BlockTags_WARPED_STEMS = net.minecraft.tags.BlockItemTags.WARPED_STEMS.block();
+
+    public static net.minecraft.tags.TagKey<?> BlockTags_WARPED_STEMS() {
+        return BlockTags_WARPED_STEMS;
+    }
+
+    /** net/minecraft/tags/ItemTags.BARS: 26.1.2 minecraft:bars (moved at 26.2: BlockItemTags.BARS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_BARS = net.minecraft.tags.BlockItemTags.BARS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_BARS() {
+        return ItemTags_BARS;
+    }
+
+    /** net/minecraft/tags/ItemTags.BUTTONS: 26.1.2 minecraft:buttons (moved at 26.2: BlockItemTags.BUTTONS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_BUTTONS = net.minecraft.tags.BlockItemTags.BUTTONS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_BUTTONS() {
+        return ItemTags_BUTTONS;
+    }
+
+    /** net/minecraft/tags/ItemTags.CHAINS: 26.1.2 minecraft:chains (moved at 26.2: BlockItemTags.CHAINS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_CHAINS = net.minecraft.tags.BlockItemTags.CHAINS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_CHAINS() {
+        return ItemTags_CHAINS;
+    }
+
+    /** net/minecraft/tags/ItemTags.COPPER_CHESTS: 26.1.2 minecraft:copper_chests (moved at 26.2: BlockItemTags.COPPER_CHESTS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_COPPER_CHESTS = net.minecraft.tags.BlockItemTags.COPPER_CHESTS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_COPPER_CHESTS() {
+        return ItemTags_COPPER_CHESTS;
+    }
+
+    /** net/minecraft/tags/ItemTags.COPPER_GOLEM_STATUES: 26.1.2 minecraft:copper_golem_statues (moved at 26.2: BlockItemTags.COPPER_GOLEM_STATUES.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_COPPER_GOLEM_STATUES = net.minecraft.tags.BlockItemTags.COPPER_GOLEM_STATUES.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_COPPER_GOLEM_STATUES() {
+        return ItemTags_COPPER_GOLEM_STATUES;
+    }
+
+    /** net/minecraft/tags/ItemTags.DOORS: 26.1.2 minecraft:doors (moved at 26.2: BlockItemTags.DOORS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_DOORS = net.minecraft.tags.BlockItemTags.DOORS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_DOORS() {
+        return ItemTags_DOORS;
+    }
+
+    /** net/minecraft/tags/ItemTags.FENCES: 26.1.2 minecraft:fences (moved at 26.2: BlockItemTags.FENCES.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_FENCES = net.minecraft.tags.BlockItemTags.FENCES.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_FENCES() {
+        return ItemTags_FENCES;
+    }
+
+    /** net/minecraft/tags/ItemTags.FLOWERS: 26.1.2 minecraft:flowers (moved at 26.2: BlockItemTags.FLOWERS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_FLOWERS = net.minecraft.tags.BlockItemTags.FLOWERS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_FLOWERS() {
+        return ItemTags_FLOWERS;
+    }
+
+    /** net/minecraft/tags/ItemTags.GRASS_BLOCKS: 26.1.2 minecraft:grass_blocks (moved at 26.2: BlockItemTags.GRASS_BLOCKS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_GRASS_BLOCKS = net.minecraft.tags.BlockItemTags.GRASS_BLOCKS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_GRASS_BLOCKS() {
+        return ItemTags_GRASS_BLOCKS;
+    }
+
+    /** net/minecraft/tags/ItemTags.LANTERNS: 26.1.2 minecraft:lanterns (moved at 26.2: BlockItemTags.LANTERNS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_LANTERNS = net.minecraft.tags.BlockItemTags.LANTERNS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_LANTERNS() {
+        return ItemTags_LANTERNS;
+    }
+
+    /** net/minecraft/tags/ItemTags.LIGHTNING_RODS: 26.1.2 minecraft:lightning_rods (moved at 26.2: BlockItemTags.LIGHTNING_RODS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_LIGHTNING_RODS = net.minecraft.tags.BlockItemTags.LIGHTNING_RODS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_LIGHTNING_RODS() {
+        return ItemTags_LIGHTNING_RODS;
+    }
+
+    /** net/minecraft/tags/ItemTags.SLABS: 26.1.2 minecraft:slabs (moved at 26.2: BlockItemTags.SLABS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_SLABS = net.minecraft.tags.BlockItemTags.SLABS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_SLABS() {
+        return ItemTags_SLABS;
+    }
+
+    /** net/minecraft/tags/ItemTags.SMALL_FLOWERS: 26.1.2 minecraft:small_flowers (moved at 26.2: BlockItemTags.SMALL_FLOWERS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_SMALL_FLOWERS = net.minecraft.tags.BlockItemTags.SMALL_FLOWERS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_SMALL_FLOWERS() {
+        return ItemTags_SMALL_FLOWERS;
+    }
+
+    /** net/minecraft/tags/ItemTags.STAIRS: 26.1.2 minecraft:stairs (moved at 26.2: BlockItemTags.STAIRS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_STAIRS = net.minecraft.tags.BlockItemTags.STAIRS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_STAIRS() {
+        return ItemTags_STAIRS;
+    }
+
+    /** net/minecraft/tags/ItemTags.STONE_BUTTONS: 26.1.2 minecraft:stone_buttons (moved at 26.2: BlockItemTags.STONE_BUTTONS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_STONE_BUTTONS = net.minecraft.tags.BlockItemTags.STONE_BUTTONS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_STONE_BUTTONS() {
+        return ItemTags_STONE_BUTTONS;
+    }
+
+    /** net/minecraft/tags/ItemTags.TRAPDOORS: 26.1.2 minecraft:trapdoors (moved at 26.2: BlockItemTags.TRAPDOORS.item()) */
+    public static final net.minecraft.tags.TagKey<?> ItemTags_TRAPDOORS = net.minecraft.tags.BlockItemTags.TRAPDOORS.item();
+
+    public static net.minecraft.tags.TagKey<?> ItemTags_TRAPDOORS() {
+        return ItemTags_TRAPDOORS;
+    }
 }

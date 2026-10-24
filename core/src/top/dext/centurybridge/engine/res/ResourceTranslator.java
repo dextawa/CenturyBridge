@@ -76,10 +76,21 @@ public final class ResourceTranslator {
      *        not have falls back to vanilla types and reports what that loses
      */
     public static Outcome apply(Map<String, byte[]> entries, String from, String to, java.util.Set<String> runtimeTypes) {
+        return apply(entries, from, to, runtimeTypes, Map.of(), java.util.Set.of());
+    }
+
+    /**
+     * @param tagMap the climb step's vanilla tags whose members W changed, each to the id carrying V's members
+     *        (wiring {@code tagMap}, see {@link LegacyTags}); empty outside a climb step
+     * @param tagMirror the tagMap keys whose mod tag files are copied into that id
+     */
+    public static Outcome apply(Map<String, byte[]> entries, String from, String to, java.util.Set<String> runtimeTypes,
+            Map<String, String> tagMap, java.util.Set<String> tagMirror) {
         Outcome out = new Outcome();
         if (Release.before(from, "1.21") && Release.reaches(to, "1.21")) {
             dataDirs(entries, out);
         }
+        LegacyTags.apply(entries, tagMap, tagMirror, to, out);
         recipes(entries, from, to, out);
         lootAndAdvancements(entries, from, to, out);
         worldgen(entries, from, to, out);
@@ -509,7 +520,7 @@ public final class ResourceTranslator {
     }
 
     /** "item minecraft:planks" for data/minecraft/tags/item(s)/planks.json; null for any other file */
-    private static String tagOf(String n) {
+    static String tagOf(String n) {
         if (!n.startsWith("data/") || !n.endsWith(".json")) {
             return null;
         }
