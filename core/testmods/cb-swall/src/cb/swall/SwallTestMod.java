@@ -83,7 +83,53 @@ public class SwallTestMod implements ModInitializer {
             && decoded.method_45441() == net.minecraft.class_7710.field_40250, recipeJson);
         check("customRecipe.getSerializer", recipe.method_8119() == TEST_SERIALIZER, recipe.method_8119());
 
+        lootRegistry();
         ServerLifecycleEvents.SERVER_STARTED.register(SwallTestMod::onStarted);
+    }
+
+    /** a 1.21.11 loot function and its type, registered into 26.1's registry of codecs */
+    static final class TestFn implements net.minecraft.class_117 {
+        @Override
+        public net.minecraft.class_5339<TestFn> method_29321() {
+            return TEST_FN_TYPE;
+        }
+
+        @Override
+        public net.minecraft.class_1799 apply(net.minecraft.class_1799 stack, net.minecraft.class_47 context) {
+            return stack;
+        }
+    }
+
+    static final com.mojang.serialization.MapCodec<TestFn> TEST_FN_CODEC = com.mojang.serialization.MapCodec.unit(TestFn::new);
+    static net.minecraft.class_5339<TestFn> TEST_FN_TYPE;
+
+    /** BuiltInRegistries.LOOT_FUNCTION_TYPE read back by 1.21.11 code: values are LootItemFunctionType again */
+    private static void lootRegistry() {
+        net.minecraft.class_2960 id = net.minecraft.class_2960.method_60655("cbswall", "test_fn");
+        net.minecraft.class_2378<net.minecraft.class_5339<?>> reg = net.minecraft.class_7923.field_41134;
+        TEST_FN_TYPE = net.minecraft.class_2378.method_10230(reg, id, new net.minecraft.class_5339<>(TEST_FN_CODEC));
+        net.minecraft.class_5339<?> read = reg.method_63535(id);
+        check("lootRegistry.getValue", read == TEST_FN_TYPE && read.comp_1858() == TEST_FN_CODEC, read);
+        check("lootRegistry.getKey", id.equals(reg.method_10221(TEST_FN_TYPE)), reg.method_10221(TEST_FN_TYPE));
+        check("lootRegistry.lambda", reg.method_10220().filter(t -> t == TEST_FN_TYPE).count() == 1, "");
+        check("lootRegistry.methodRef", reg.method_10220().map(net.minecraft.class_5339::comp_1858).anyMatch(c -> c == TEST_FN_CODEC), "");
+        int n = 0;
+        for (net.minecraft.class_5339<?> t : reg) {
+            n++;
+        }
+        Object o = reg.method_63535(net.minecraft.class_2960.method_60656("set_count"));
+        check("lootRegistry.iterateAndInstanceof", n > 30 && o instanceof net.minecraft.class_5339<?> sc
+            && sc.comp_1858() == net.minecraft.class_141.field_45845 && new TestFn().method_29321() == TEST_FN_TYPE, n + " " + o);
+    }
+
+    /** generic drift at the wall read on a running server */
+    private static void generic(MinecraftServer server) {
+        Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
+            server.method_30002().method_14178().method_12129().method_39301();
+        check("generic.chunkGeneratorKey", key.isPresent() && key.get().method_29177().equals(net.minecraft.class_2960.method_60656("noise")), key);
+        net.minecraft.class_2378<net.minecraft.class_6796> placed = server.method_30611().method_30530(net.minecraft.class_7924.field_41245);
+        long features = placed.method_10220().flatMap(net.minecraft.class_6796::method_39643).map(f -> f.comp_332()).count();
+        check("generic.placedFeatures", features > 100, features);
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -123,6 +169,7 @@ public class SwallTestMod implements ModInitializer {
             components(server);
             interactions(server);
             levelData(server);
+            generic(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
