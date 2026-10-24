@@ -111,7 +111,10 @@
   "net/minecraft/class_5219.method_221(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#setCustomBossEvents",
   "net/minecraft/class_5219.method_226()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#getLoadedPlayerTag",
   "net/minecraft/class_5219.method_163(Lnet/minecraft/class_5455;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#createTag",
-  "net/minecraft/class_3002.method_12959()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#getTextId"
+  "net/minecraft/class_3002.method_12959()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#getTextId",
+  "net/minecraft/class_10515.method_65694(Ljava/lang/Object;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers#callSubmit",
+  "net/minecraft/class_10508.method_65699(Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers#callSubmitNoData",
+  "net/minecraft/class_10508.method_65705(Ljava/lang/Void;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers#callSubmitVoid"
  },
  "overrideHooks": [
   {
@@ -222,6 +225,32 @@
     "method_74324(Lnet/minecraft/class_11944$class_12041;Lnet/minecraft/class_11977$class_12051;Lcom/mojang/blaze3d/systems/RenderPass;Lnet/minecraft/class_1060;)V"
    ],
    "basis": "1.21.11 rendered a prepared particle group with the translucency to draw; 26.1 renders what the pass prepared: the override renders the running pass's translucency (solid, then translucent, 1.21.11's order), its super call renders when that is the pass's (CbWallParticles)"
+  },
+  {
+   "old": "method_65694(Ljava/lang/Object;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V",
+   "new": "method_65694(Ljava/lang/Object;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V",
+   "onlyUnder": "net/minecraft/class_10515",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers$LegacySubmit",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers.submit(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers$LegacySubmit;Ljava/lang/Object;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped the display context from SpecialModelRenderer.submit; a 1.21.11 renderer is asked with the context of the item render state submitting it, NONE outside an item, as 1.21.11 passed (CbWallSpecialRenderers)"
+  },
+  {
+   "old": "method_65699(Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V",
+   "new": "method_65699(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V",
+   "onlyUnder": "net/minecraft/class_10508",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers$LegacyNoDataSubmit",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers.submitNoData(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSpecialRenderers$LegacyNoDataSubmit;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 dropped the display context from NoDataSpecialModelRenderer.submit; as for SpecialModelRenderer.submit (CbWallSpecialRenderers)"
+  },
+  {
+   "old": "method_64721()Lnet/minecraft/class_1799;",
+   "new": "method_64721()Lnet/minecraft/world/item/ItemStackTemplate;",
+   "onlyUnder": "net/minecraft/class_3972",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors.template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "a 1.21.11 single-item recipe subclass's result() answered its stack; 26.1 asks for the template: the template of the override's stack"
   }
  ],
  "frameDefaults": {
@@ -316,6 +345,90 @@
    "onlyUnder": "net/minecraft/class_3002",
    "superCalls": "rename",
    "basis": "CustomBossEvent.getTextId() lives on as customId(), same descriptor and body; 26.1 calls customId(), so the renamed override is what it calls; the mod's own calls go through CbWallBossEvents.getTextId, which calls customId() virtually"
+  },
+  {
+   "old": "method_8112()Ljava/lang/String;",
+   "new": "cb$legacyGroup",
+   "onlyUnder": "net/minecraft/class_1869",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyGroup",
+   "basis": "26.1's NormalCraftingRecipe made method_8112 final (a 1.21.11 ShapedRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_45441()Lnet/minecraft/class_7710;",
+   "new": "cb$legacyCategory",
+   "onlyUnder": "net/minecraft/class_1869",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyCategory",
+   "basis": "26.1's NormalCraftingRecipe made method_45441 final (a 1.21.11 ShapedRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_49188()Z",
+   "new": "cb$legacyShowNotification",
+   "onlyUnder": "net/minecraft/class_1869",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyShowNotification",
+   "basis": "26.1's NormalCraftingRecipe made method_49188 final (a 1.21.11 ShapedRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_61671()Lnet/minecraft/class_9887;",
+   "new": "cb$legacyPlacementInfo",
+   "onlyUnder": "net/minecraft/class_1869",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyPlacementInfo",
+   "basis": "26.1's NormalCraftingRecipe made method_61671 final (a 1.21.11 ShapedRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_8112()Ljava/lang/String;",
+   "new": "cb$legacyGroup",
+   "onlyUnder": "net/minecraft/class_1867",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyGroup",
+   "basis": "26.1's NormalCraftingRecipe made method_8112 final (a 1.21.11 ShapelessRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_45441()Lnet/minecraft/class_7710;",
+   "new": "cb$legacyCategory",
+   "onlyUnder": "net/minecraft/class_1867",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyCategory",
+   "basis": "26.1's NormalCraftingRecipe made method_45441 final (a 1.21.11 ShapelessRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_49188()Z",
+   "new": "cb$legacyShowNotification",
+   "onlyUnder": "net/minecraft/class_1867",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyShowNotification",
+   "basis": "26.1's NormalCraftingRecipe made method_49188 final (a 1.21.11 ShapelessRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_61671()Lnet/minecraft/class_9887;",
+   "new": "cb$legacyPlacementInfo",
+   "onlyUnder": "net/minecraft/class_1867",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyPlacementInfo",
+   "basis": "26.1's NormalCraftingRecipe made method_61671 final (a 1.21.11 ShapelessRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_8112()Ljava/lang/String;",
+   "new": "cb$legacyGroup",
+   "onlyUnder": "net/minecraft/class_10223",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyGroup",
+   "basis": "26.1's NormalCraftingRecipe made method_8112 final (a 1.21.11 TransmuteRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_45441()Lnet/minecraft/class_7710;",
+   "new": "cb$legacyCategory",
+   "onlyUnder": "net/minecraft/class_10223",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyCategory",
+   "basis": "26.1's NormalCraftingRecipe made method_45441 final (a 1.21.11 TransmuteRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_49188()Z",
+   "new": "cb$legacyShowNotification",
+   "onlyUnder": "net/minecraft/class_10223",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyShowNotification",
+   "basis": "26.1's NormalCraftingRecipe made method_49188 final (a 1.21.11 TransmuteRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
+  },
+  {
+   "old": "method_61671()Lnet/minecraft/class_9887;",
+   "new": "cb$legacyPlacementInfo",
+   "onlyUnder": "net/minecraft/class_10223",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyPlacementInfo",
+   "basis": "26.1's NormalCraftingRecipe made method_61671 final (a 1.21.11 TransmuteRecipe subclass's override would fail to load): the override is renamed and answers through the final member (CbWallNormalCraftingRecipeMixin); its super call reaches 26.1's body, 1.21.11's super body from the same constructor arguments"
   }
  ],
  "classRenames": {
@@ -330,7 +443,22 @@
   "net/minecraft/class_12335": "top/dext/centurybridge/step/v26_1/facade/PanoramicScreenshotParameters",
   "net/minecraft/class_310$class_5859": "top/dext/centurybridge/step/v26_1/facade/ChatStatus",
   "net/minecraft/class_918": "top/dext/centurybridge/step/v26_1/facade/ItemRenderer",
-  "net/minecraft/class_2881$class_8576": "top/dext/centurybridge/step/v26_1/facade/EndDragonFightData"
+  "net/minecraft/class_2881$class_8576": "top/dext/centurybridge/step/v26_1/facade/EndDragonFightData",
+  "net/minecraft/class_10529": "top/dext/centurybridge/step/v26_1/facade/AbstractSignRenderer",
+  "net/minecraft/class_837": "top/dext/centurybridge/step/v26_1/facade/SignRenderer",
+  "net/minecraft/class_7761": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer",
+  "net/minecraft/class_7761$class_10382": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer$ModelKey",
+  "net/minecraft/class_1852$class_1866": "top/dext/centurybridge/step/v26_1/facade/CustomRecipeSerializer",
+  "net/minecraft/class_1852$class_1866$class_7711": "top/dext/centurybridge/step/v26_1/facade/CustomRecipeSerializer$Factory",
+  "net/minecraft/class_1874$class_3958": "top/dext/centurybridge/step/v26_1/facade/CookingRecipeSerializer$Factory",
+  "net/minecraft/class_1874$class_10285": "top/dext/centurybridge/step/v26_1/facade/CookingRecipeSerializer",
+  "net/minecraft/class_3972$class_3974": "top/dext/centurybridge/step/v26_1/facade/SingleItemRecipeSerializer$Factory",
+  "net/minecraft/class_3972$class_3973": "top/dext/centurybridge/step/v26_1/facade/SingleItemRecipeSerializer",
+  "net/minecraft/class_1869$class_1870": "top/dext/centurybridge/step/v26_1/facade/ShapedRecipeSerializer",
+  "net/minecraft/class_1867$class_1868": "top/dext/centurybridge/step/v26_1/facade/ShapelessRecipeSerializer",
+  "net/minecraft/class_10223$class_10224": "top/dext/centurybridge/step/v26_1/facade/TransmuteRecipeSerializer",
+  "net/minecraft/class_8060$class_8061": "top/dext/centurybridge/step/v26_1/facade/SmithingTransformRecipeSerializer",
+  "net/minecraft/class_8062$class_8063": "top/dext/centurybridge/step/v26_1/facade/SmithingTrimRecipeSerializer"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -617,7 +745,40 @@
   "net/minecraft/class_918.method_71138(Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;Lnet/minecraft/class_4587$class_4665;)Lnet/minecraft/class_4588;": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it",
   "net/minecraft/class_918.method_71139(Lnet/minecraft/class_1921;)Z": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it",
   "net/minecraft/class_918.method_65569([II)I": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it",
-  "net/minecraft/class_918.method_23180(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Ljava/util/List;[III)V": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it"
+  "net/minecraft/class_918.method_23180(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Ljava/util/List;[III)V": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_10529.method_65821(Lnet/minecraft/class_11971;Lnet/minecraft/class_4587;Lnet/minecraft/class_2680;Lnet/minecraft/class_2478;Lnet/minecraft/class_4719;Lnet/minecraft/class_3879$class_9948;Lnet/minecraft/class_11683$class_11792;Lnet/minecraft/class_11659;)V": "1.21.11 private method of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the step its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_10529.method_65828(Lnet/minecraft/class_11971;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Z)V": "1.21.11 private method of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the step its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_10529.method_65826(Lnet/minecraft/class_4587;ZLnet/minecraft/class_243;)V": "1.21.11 private method of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the step its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_10529.method_65827(Lnet/minecraft/class_2338;)Z": "1.21.11 private method of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the step its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_10529.field_55506:I": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_10529.field_55507:I": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_10529.field_55508:Lnet/minecraft/class_327;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_10529.field_61778:Lnet/minecraft/class_11701;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_837.method_65831(Lnet/minecraft/class_4587;F)V": "1.21.11 private method of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the step its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_837.field_44578:Lnet/minecraft/class_243;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_837.field_27754:Ljava/util/Map;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_40522:Ljava/lang/String;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_40523:Ljava/lang/String;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_40516:Ljava/lang/String;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_40517:Ljava/lang/String;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_40518:Ljava/lang/String;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_40519:Ljava/lang/String;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_40520:Ljava/lang/String;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_40521:Ljava/lang/String;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_44575:F": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_44576:Lnet/minecraft/class_243;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_7761.field_40524:Ljava/util/Map;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps the value its own way (its sign models, constants and 26.1's rendering path)",
+  "net/minecraft/class_1852$class_1866.field_46106:Lcom/mojang/serialization/MapCodec;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_1852$class_1866.field_48362:Lnet/minecraft/class_9139;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_1874$class_10285.field_54625:Lcom/mojang/serialization/MapCodec;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_1874$class_10285.field_54626:Lnet/minecraft/class_9139;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_3972$class_3973.field_46107:Lcom/mojang/serialization/MapCodec;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_3972$class_3973.field_48363:Lnet/minecraft/class_9139;": "1.21.11 private field of the dead class (its codec): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade keeps it under its own name, read through method_53736 / method_56104",
+  "net/minecraft/class_1869$class_1870.method_8163(Lnet/minecraft/class_9129;)Lnet/minecraft/class_1869;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
+  "net/minecraft/class_1869$class_1870.method_8165(Lnet/minecraft/class_9129;Lnet/minecraft/class_1869;)V": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
+  "net/minecraft/class_1867$class_1868.field_46104:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
+  "net/minecraft/class_10223$class_10224.field_54326:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
+  "net/minecraft/class_8060$class_8061.field_46108:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -658,7 +819,8 @@
   "com/mojang/blaze3d/opengl/GlStateManager._colorMask(ZZZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#colorMask",
   "net/minecraft/class_4095.method_28313(Ljava/util/Collection;Ljava/util/Collection;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#codec",
   "net/minecraft/class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lnet/minecraft/class_1940;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#parse",
-  "net/minecraft/class_3002.method_12966(Lnet/minecraft/class_2960;Lnet/minecraft/class_3002$class_10765;)Lnet/minecraft/class_3002;": "top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#load"
+  "net/minecraft/class_3002.method_12966(Lnet/minecraft/class_2960;Lnet/minecraft/class_3002$class_10765;)Lnet/minecraft/class_3002;": "top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#load",
+  "net/minecraft/class_7761$class_10381.method_65244(Lnet/minecraft/class_2680;)Lnet/minecraft/class_7761$class_10381;": "top/dext/centurybridge/step/v26_1/facade/HangingSignRenderer#attachmentByBlockState"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -800,6 +962,168 @@
     "push top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#noOwner()Ljava/lang/Runnable;"
    ],
    "basis": "26.1 hands a custom boss event its UUID and its owner's dirty callback; 1.21.11's event drew an insecure random UUID itself and had no owner to tell (CbWallBossEvents)"
+  },
+  "net/minecraft/class_1852.<init>(Lnet/minecraft/class_7710;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes#customCategory(Lnet/minecraft/class_1852;Lnet/minecraft/class_7710;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "26.1's CustomRecipe takes no category and answers MISC; 1.21.11's took it in the constructor and answered it from category(): the recipe keeps it (CbWallCustomRecipeMixin)"
+  },
+  "net/minecraft/class_1869.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_8957;Lnet/minecraft/class_1799;Z)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;Lnet/minecraft/class_8957;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "conv:4 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#commonInfo(Z)Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_1869.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_8957;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;Lnet/minecraft/class_8957;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_1867.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1799;Ljava/util/List;)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;Lnet/minecraft/world/item/ItemStackTemplate;Ljava/util/List;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "keep:3"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_10223.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/advancements/criterion/MinMaxBounds$Ints;Lnet/minecraft/class_10591;Z)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#oneMaterial()Lnet/minecraft/advancements/criterion/MinMaxBounds$Ints;",
+    "keep:4",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#materialCountNotInResult()Z"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_1874.<init>(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;FI)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_3861.<init>(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;FI)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_3859.<init>(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;FI)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_3862.<init>(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;FI)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_3920.<init>(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;FI)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_3972.<init>(Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#singleItemGroup(Lnet/minecraft/class_3972;Ljava/lang/String;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_3975.<init>(Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#singleItemGroup(Lnet/minecraft/class_3975;Ljava/lang/String;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_8060.<init>(Ljava/util/Optional;Lnet/minecraft/class_1856;Ljava/util/Optional;Lnet/minecraft/class_10591;)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Ljava/util/Optional;Lnet/minecraft/class_1856;Ljava/util/Optional;Lnet/minecraft/class_10591;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
+  },
+  "net/minecraft/class_8062.<init>(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_6880;)V": {
+   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   }
  },
  "fieldGetters": {
@@ -832,7 +1156,9 @@
   "net/minecraft/class_765.field_32769:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
   "net/minecraft/class_757.field_32686:F": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer",
   "net/minecraft/class_31.field_31843:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
-  "net/minecraft/class_31.field_36349:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData"
+  "net/minecraft/class_31.field_36349:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
+  "net/minecraft/class_1799.field_51397:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemCodecs",
+  "net/minecraft/class_1799.field_51398:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemCodecs"
  },
  "abstractFills": [
   {
@@ -935,6 +1261,12 @@
     "keep"
    ],
    "basis": "26.1 CubeMap.render(xRot, yRot): 1.21.11's minecraft argument only fed the window size its own projection now keeps"
+  },
+  "net/minecraft/class_3972.method_64721()Lnet/minecraft/class_1799;": {
+   "desc": "()Lnet/minecraft/world/item/ItemStackTemplate;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#stack(Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_1799;",
+   "basis": "26.1's SingleItemRecipe.result() answers the result's template, 1.21.11's its stack: the template's stack"
   }
  },
  "instanceFieldGetters": {
