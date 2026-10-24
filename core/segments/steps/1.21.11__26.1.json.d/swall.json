@@ -125,7 +125,15 @@
   "net/minecraft/class_10823.comp_3781()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#growlSound",
   "net/minecraft/class_10823.comp_3782()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#hurtSound",
   "net/minecraft/class_10823.comp_3783()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#pantSound",
-  "net/minecraft/class_10823.comp_3784()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#whineSound"
+  "net/minecraft/class_10823.comp_3784()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#whineSound",
+  "net/minecraft/class_4970$class_4971.method_41520()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#getBlockHolder",
+  "net/minecraft/class_4970$class_4971.method_40144()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#getTags",
+  "net/minecraft/class_4970$class_4971.method_26232(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#hasPostProcess",
+  "net/minecraft/class_4970$class_2251.method_26247(Lnet/minecraft/class_4970$class_4973;)Lnet/minecraft/class_4970$class_2251;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#hasPostProcess",
+  "net/minecraft/class_2688.method_11656()Ljava/util/Map;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#getValues",
+  "net/minecraft/class_2290.method_9785()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemInputs#getItem",
+  "net/minecraft/class_2290.method_9781(IZ)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemInputs#createItemStack",
+  "net/minecraft/class_2290.method_9782(Lnet/minecraft/class_7225$class_7874;)Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemInputs#serialize"
  },
  "overrideHooks": [
   {
@@ -478,7 +486,8 @@
   "net/minecraft/class_8060$class_8061": "top/dext/centurybridge/step/v26_1/facade/SmithingTransformRecipeSerializer",
   "net/minecraft/class_8062$class_8063": "top/dext/centurybridge/step/v26_1/facade/SmithingTrimRecipeSerializer",
   "net/minecraft/class_5620$class_8821": "top/dext/centurybridge/step/v26_1/facade/CauldronInteractionMap",
-  "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/facade/EitherHolder"
+  "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/facade/EitherHolder",
+  "net/minecraft/class_2291$class_7215": "net/minecraft/commands/arguments/item/ItemInput"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
