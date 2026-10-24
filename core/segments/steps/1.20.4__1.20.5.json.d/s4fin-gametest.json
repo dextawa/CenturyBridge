@@ -1,0 +1,122 @@
+{
+ "staticRedirects": {
+  "net/minecraft/class_4520.method_22203(Lnet/minecraft/class_4517;Lnet/minecraft/class_2338;Lnet/minecraft/class_4521;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#runTest",
+  "net/minecraft/class_4520.method_22210(Ljava/util/Collection;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;I)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#runTestBatches",
+  "net/minecraft/class_4520.method_22222(Ljava/util/Collection;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;I)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#runTests",
+  "net/minecraft/class_4520.method_22209(Ljava/util/Collection;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#groupTestsIntoBatches",
+  "net/minecraft/class_4520.method_22216(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_4521;I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#clearAllTests",
+  "net/minecraft/class_4519.method_22193(Ljava/lang/String;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#testFunctionsForClassName",
+  "net/minecraft/class_4519.method_29405()Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#lastFailedTests",
+  "net/minecraft/class_4525.method_22258(Lnet/minecraft/class_2338;ILnet/minecraft/class_3218;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#findStructureBlocks",
+  "net/minecraft/class_6306.method_40378(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Ljava/util/Collection;Lnet/minecraft/class_2338;)Lnet/minecraft/class_6306;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#createServer"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_4517.<init>(Lnet/minecraft/class_4529;Lnet/minecraft/class_2470;Lnet/minecraft/class_3218;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#newInfo",
+  "net/minecraft/class_4529.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_2470;IJZIILjava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#newTestFunction",
+  "net/minecraft/class_4520.<init>()V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#newRunner"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_4517.<init>(Lnet/minecraft/class_4529;Lnet/minecraft/class_2470;Lnet/minecraft/class_3218;)V": {
+   "desc": "(Lnet/minecraft/class_4529;Lnet/minecraft/class_2470;Lnet/minecraft/class_3218;Lnet/minecraft/class_9118;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests#noRetries()Lnet/minecraft/class_9118;"
+   ],
+   "basis": "s4fin gametest: GameTestInfo gained RetryOptions; a 1.20.4 test ran once (noRetries)"
+  },
+  "net/minecraft/class_4529.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_2470;IJZIILjava/util/function/Consumer;)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_2470;IJZZIIZLjava/util/function/Consumer;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#no()Z",
+    "keep:8",
+    "keep:7",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#no()Z",
+    "keep:9"
+   ],
+   "basis": "s4fin gametest: TestFunction(..., required, requiredSuccesses, maxAttempts, fn) is the record (..., required, manualOnly, maxAttempts, requiredSuccesses, skyAccess, fn); 1.20.4 had neither manual-only tests nor sky access (false, as 1.20.5's shorter constructors pass)"
+  }
+ },
+ "classRenames": {
+  "net/minecraft/class_4515": "top/dext/centurybridge/step/v1_20_5/facade/GameTestBatchRunner"
+ },
+ "superRenames": {
+  "net/minecraft/class_4520": "top/dext/centurybridge/step/v1_20_5/facade/LegacyGameTestRunner"
+ },
+ "callReshapes": {
+  "net/minecraft/class_4517.method_22165()V": {
+   "desc": "(Lnet/minecraft/class_4520;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbGameTests#tickerRunner()Lnet/minecraft/class_4520;"
+   ],
+   "basis": "s4fin gametest: GameTestInfo.tick() takes the runner since 1.20.5 (it hands it to the listeners); a 1.20.4 call gets the one 1.20.5's GameTestTicker hands every test it ticks"
+  },
+  "net/minecraft/class_4518.method_33317(Lnet/minecraft/class_4517;)V": {
+   "desc": "(Lnet/minecraft/class_4517;Lnet/minecraft/class_4520;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbGameTests#tickerRunner()Lnet/minecraft/class_4520;"
+   ],
+   "basis": "s4fin gametest: GameTestListener.testPassed takes the runner since 1.20.5 (a listener may rerun the test through it); a 1.20.4 call passes the one the ticker hands its tests"
+  },
+  "net/minecraft/class_4518.method_22190(Lnet/minecraft/class_4517;)V": {
+   "desc": "(Lnet/minecraft/class_4517;Lnet/minecraft/class_4520;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbGameTests#tickerRunner()Lnet/minecraft/class_4520;"
+   ],
+   "basis": "s4fin gametest: GameTestListener.testFailed takes the runner since 1.20.5 (a listener may rerun the test through it); a 1.20.4 call passes the one the ticker hands its tests"
+  }
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_4518",
+   "method": "method_56216(Lnet/minecraft/class_4517;Lnet/minecraft/class_4517;Lnet/minecraft/class_4520;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinGameTests.testAddedForRerun(Lnet/minecraft/class_4518;Lnet/minecraft/class_4517;Lnet/minecraft/class_4517;Lnet/minecraft/class_4520;)V"
+  }
+ ],
+ "covers": [
+  "net/minecraft/class_4517.method_54843()Lnet/minecraft/class_2338;",
+  "net/minecraft/class_4517.method_36061()Lnet/minecraft/class_2382;",
+  "net/minecraft/class_4517.method_22166(Lnet/minecraft/class_2338;)V",
+  "net/minecraft/class_4517.method_32240()V",
+  "net/minecraft/class_4517.method_54146(Z)V",
+  "net/minecraft/class_4517.method_54145()Z",
+  "net/minecraft/class_4514.method_22154()Ljava/util/Collection;",
+  "net/minecraft/class_4514.method_22153(Lnet/minecraft/class_3218;)V",
+  "net/minecraft/class_4514.method_32237(Lnet/minecraft/class_3218;)V",
+  "net/minecraft/class_4516.method_46228()Lnet/minecraft/class_1657;"
+ ],
+ "genericWitnesses": {
+  "net/minecraft/class_4514.<init>(Ljava/lang/String;Ljava/util/Collection;Ljava/util/function/Consumer;Ljava/util/function/Consumer;)V": {
+   "by": [
+    "net/minecraft/class_4515",
+    "net/minecraft/class_4520.method_22210(Ljava/util/Collection;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;I)Ljava/util/Collection;",
+    "net/minecraft/class_6306.method_40378(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Ljava/util/Collection;Lnet/minecraft/class_2338;)Lnet/minecraft/class_6306;"
+   ],
+   "basis": "s4fin gametest: a 1.20.4 batch holds TestFunctions; the collection passes unchanged and becomes GameTestInfos (with the runner's rotation and level, as 1.20.4's batch runner made them) exactly where 1.20.4 made infos of it -- the batch runner (facade GameTestBatchRunner, renamed from class_4515), runTestBatches and GameTestServer.create -- while getTestFunctions (mixin CbFinGameTestBatchMixin, a cover) answers TestFunctions for either kind; no 1.20.5 API a 1.20.4 mod can reach takes a batch"
+  }
+ },
+ "facadeGaps": {
+  "net/minecraft/class_4515.method_22156(I)V": "package-private in 1.20.4 (runBatch(index); the facade's is cbRunBatch)",
+  "net/minecraft/class_4515.field_20549:Lnet/minecraft/class_3218;": "package-private in 1.20.4 (the level; the facade keeps it package-private as level)",
+  "net/minecraft/class_4515.method_29401(Ljava/util/Collection;)Ljava/util/Map;": "private in 1.20.4 (createStructuresForBatch; the facade's is cbCreateStructuresForBatch)",
+  "net/minecraft/class_4515.field_20546:Lorg/slf4j/Logger;": "private in 1.20.4 (logger)",
+  "net/minecraft/class_4515.field_20548:Lnet/minecraft/class_2338;": "private in 1.20.4 (first test corner)",
+  "net/minecraft/class_4515.field_20550:Lnet/minecraft/class_4521;": "private in 1.20.4 (ticker)",
+  "net/minecraft/class_4515.field_20556:I": "private in 1.20.4 (tests per row)",
+  "net/minecraft/class_4515.field_20551:Ljava/util/List;": "private in 1.20.4 (all test infos)",
+  "net/minecraft/class_4515.field_20547:Ljava/util/List;": "private in 1.20.4 (batches with their infos)",
+  "net/minecraft/class_4515.field_46071:I": "private in 1.20.4 (structure count)",
+  "net/minecraft/class_4515.field_46072:Lnet/minecraft/class_238;": "private in 1.20.4 (row bounds)",
+  "net/minecraft/class_4515.field_20555:Lnet/minecraft/class_2338$class_2339;": "private in 1.20.4 (next corner)"
+ }
+}

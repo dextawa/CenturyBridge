@@ -9,8 +9,8 @@ import java.util.Optional;
  *     1.20.4 registry's own lifecycle(value) answers 1.20.5's registrationInfo(key) (adapter hook, guarded so a
  *     subclass's super call reaches the vanilla registry's), its pack identity kept.</li>
  * <li>Registry.getHolder(id) (1.20.5 added it abstract): a 1.20.4 registry's getHolder of the key with that id.</li>
- * <li>MappedRegistry.registerMapping(id, key, value, lifecycle): 1.20.5 registers only at the next id; that is the
- *     id it registers at, any other refused as 1.20.5 has no place to put it.</li>
+ * <li>MappedRegistry.register / registerMapping overrides, reached in 1.20.4's order (see below); 1.20.5 registers
+ *     only at the next id, any other refused as 1.20.5 has no place to put it.</li>
  * <li>Holder.is(holder) (1.20.5 added it abstract): a 1.20.4 holder is the same as another holding the same
  *     value.</li>
  * </ul>
@@ -70,19 +70,76 @@ public final class CbFinRegistries {
         return registry.method_40264(net.minecraft.class_5321.method_29179(registry.method_30517(), id));
     }
 
-    /** MappedRegistry.registerMapping(id, key, value, lifecycle) */
+    /*
+     * MappedRegistry registration. 1.20.4: register(key, value, lifecycle) was registerMapping(next id, key, value,
+     * lifecycle), and registerMapping did the registering. 1.20.5: register(key, value, info) does it, at the next id
+     * only. A 1.20.4 subclass may override either or both; 1.20.5's register(key, value, info) reaches them in 1.20.4's
+     * order:
+     *   - its register override (hook, bridge cbRegisterLegacy), whose super.register (super bridge superRegister)
+     *     is 1.20.4's MappedRegistry.register: the class's registerMapping override at the next id when it has one,
+     *     else 1.20.5's register;
+     *   - else its registerMapping override at the next id (hook, bridge cbRegister).
+     * A registerMapping super call (superRegisterMapping) is 1.20.4's MappedRegistry.registerMapping: 1.20.5's
+     * register itself, never the class's overrides again. Every path hands 1.20.5's register the info 1.20.5 gave
+     * for this registration when the lifecycle comes back unchanged (its pack identity kept).
+     */
+
+    /** registerMapping(id, key, value, lifecycle) called on a registry (a virtual call): the class's override, else MappedRegistry's */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static net.minecraft.class_6880.class_6883 registerMapping(net.minecraft.class_2370 registry, int id, net.minecraft.class_5321 key,
                                                                        Object value, com.mojang.serialization.Lifecycle lifecycle) {
+        if (registry instanceof LegacyRegisterMapping legacy) {
+            return legacy.method_46744(id, key, value, lifecycle);
+        }
+        return superRegisterMapping(registry, id, key, value, lifecycle);
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static net.minecraft.class_6880.class_6883 registerMapping(net.minecraft.class_2348 registry, int id, net.minecraft.class_5321 key,
+                                                                       Object value, com.mojang.serialization.Lifecycle lifecycle) {
+        return registerMapping((net.minecraft.class_2370) registry, id, key, value, lifecycle);
+    }
+
+    /** super.registerMapping(id, key, value, lifecycle): 1.20.4's MappedRegistry.registerMapping, i.e. 1.20.5's register at that id */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static net.minecraft.class_6880.class_6883 superRegisterMapping(net.minecraft.class_2370 registry, int id, net.minecraft.class_5321 key,
+                                                                            Object value, com.mojang.serialization.Lifecycle lifecycle) {
         if (id != registry.method_10204()) {
             throw new IllegalArgumentException("1.20.5 registers " + key + " in " + registry.method_30517() + " at id "
                 + registry.method_10204() + " only, not " + id);
         }
-        return registry.method_10272(key, value, registrationInfo(registry, key, lifecycle));
+        return vanillaRegister(registry, key, value, registrationInfo(registry, key, lifecycle));
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static net.minecraft.class_6880.class_6883 superRegisterMapping(net.minecraft.class_2348 registry, int id, net.minecraft.class_5321 key,
+                                                                            Object value, com.mojang.serialization.Lifecycle lifecycle) {
+        return superRegisterMapping((net.minecraft.class_2370) registry, id, key, value, lifecycle);
     }
 
     /**
-     * The registration info of a registerMapping: the one 1.20.5 handed {@link #cbRegister} for this
+     * 1.20.5's own register(key, value, info) of the registry's vanilla class, past the class's hooks: through the
+     * super accessor when the class has one, else a call made while the hook guard holds the registry, which a
+     * synthesized register(key, value, info) answers by falling through to super's.
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static net.minecraft.class_6880.class_6883 vanillaRegister(net.minecraft.class_2370 registry, net.minecraft.class_5321 key,
+                                                                        Object value, net.minecraft.class_9248 info) {
+        if (registry instanceof RegisterSuper access) {
+            return access.cb$super$method_10272(key, value, info);
+        }
+        boolean entered = Guard.cbEnter(registry);
+        try {
+            return registry.method_10272(key, value, info);
+        } finally {
+            if (entered) {
+                Guard.cbExit(registry);
+            }
+        }
+    }
+
+    /**
+     * The registration info of a 1.20.4 registration: the one 1.20.5 handed the hook's bridge for this
      * registration when the 1.20.4 override passes it on unchanged (its pack identity kept), else the
      * lifecycle alone (1.20.4 had no pack identity).
      */
@@ -98,33 +155,60 @@ public final class CbFinRegistries {
     /** registrations in progress through a 1.20.4 override: {registry, key, info} */
     private static final ThreadLocal<java.util.ArrayDeque<Object[]>> REGISTERING = ThreadLocal.withInitial(java.util.ArrayDeque::new);
 
-    /** a 1.20.4 MappedRegistry subclass's registerMapping(id, key, value, lifecycle) (the adapter the override hook adds) */
-    public interface LegacyRegisterMapping {
-        net.minecraft.class_6880.class_6883<?> method_46744(int id, net.minecraft.class_5321<?> key, Object value,
-                                                            com.mojang.serialization.Lifecycle lifecycle);
-    }
-
-    /**
-     * 1.20.5 registers through register(key, value, info); 1.20.4's register(key, value, lifecycle) was
-     * registerMapping(next id, key, value, lifecycle), which a subclass overrode to see every
-     * registration. Its override gets exactly that; a super call passing the lifecycle on registers
-     * with the info 1.20.5 gave.
-     */
-    public static net.minecraft.class_6880.class_6883<?> cbRegister(LegacyRegisterMapping registry, net.minecraft.class_5321<?> key,
-                                                                    Object value, net.minecraft.class_9248 info) {
+    private static net.minecraft.class_6880.class_6883<?> withInfo(Object registry, net.minecraft.class_5321<?> key, net.minecraft.class_9248 info,
+                                                                   java.util.function.Supplier<net.minecraft.class_6880.class_6883<?>> call) {
         java.util.ArrayDeque<Object[]> stack = REGISTERING.get();
         stack.push(new Object[] {registry, key, info});
         try {
-            return registry.method_46744(((net.minecraft.class_2370<?>) registry).method_10204(), key, value, info.comp_2355());
+            return call.get();
         } finally {
             stack.pop();
         }
     }
 
-    @SuppressWarnings("rawtypes")
-    public static net.minecraft.class_6880.class_6883 registerMapping(net.minecraft.class_2348 registry, int id, net.minecraft.class_5321 key,
+    /** a 1.20.4 MappedRegistry subclass's registerMapping(id, key, value, lifecycle) (adapterHooks add it to every class declaring one) */
+    public interface LegacyRegisterMapping {
+        net.minecraft.class_6880.class_6883<?> method_46744(int id, net.minecraft.class_5321<?> key, Object value,
+                                                            com.mojang.serialization.Lifecycle lifecycle);
+    }
+
+    /** a 1.20.4 MappedRegistry subclass's register(key, value, lifecycle) (the adapter the register hook adds) */
+    public interface LegacyRegister {
+        net.minecraft.class_6880.class_6883<?> method_10272(net.minecraft.class_5321<?> key, Object value,
+                                                            com.mojang.serialization.Lifecycle lifecycle);
+    }
+
+    /** the register hook's super access: super's 1.20.5 register(key, value, info) */
+    public interface RegisterSuper {
+        net.minecraft.class_6880.class_6883<?> cb$super$method_10272(net.minecraft.class_5321<?> key, Object value,
+                                                                     net.minecraft.class_9248 info);
+    }
+
+    /** 1.20.5's register(key, value, info) of a class overriding registerMapping only: the override at the next id */
+    public static net.minecraft.class_6880.class_6883<?> cbRegister(LegacyRegisterMapping registry, net.minecraft.class_5321<?> key,
+                                                                    Object value, net.minecraft.class_9248 info) {
+        return withInfo(registry, key, info,
+            () -> registry.method_46744(((net.minecraft.class_2370<?>) registry).method_10204(), key, value, info.comp_2355()));
+    }
+
+    /** 1.20.5's register(key, value, info) of a class overriding register(key, value, lifecycle): that override */
+    public static net.minecraft.class_6880.class_6883<?> cbRegisterLegacy(LegacyRegister registry, net.minecraft.class_5321<?> key,
+                                                                          Object value, net.minecraft.class_9248 info) {
+        return withInfo(registry, key, info, () -> registry.method_10272(key, value, info.comp_2355()));
+    }
+
+    /**
+     * super.register(key, value, lifecycle) of a register override: 1.20.4's MappedRegistry.register, which was
+     * registerMapping(next id, ..) -- the class's registerMapping override when it has one -- else 1.20.5's register.
+     */
+    public static net.minecraft.class_6880.class_6883<?> superRegister(RegisterSuper access, net.minecraft.class_5321<?> key,
                                                                        Object value, com.mojang.serialization.Lifecycle lifecycle) {
-        return registerMapping((net.minecraft.class_2370) registry, id, key, value, lifecycle);
+        net.minecraft.class_2370<?> registry = (net.minecraft.class_2370<?>) access;
+        net.minecraft.class_9248 info = registrationInfo(registry, key, lifecycle);
+        if (access instanceof LegacyRegisterMapping legacy) {
+            return withInfo(registry, key, info, () -> legacy.method_46744(registry.method_10204(), key, value, lifecycle));
+        }
+        return access.cb$super$method_10272(key, value, info);
     }
 
     /** Holder.is(other) of a 1.20.4 holder: the same holder, or one holding the same value */

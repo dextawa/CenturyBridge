@@ -416,6 +416,11 @@
    "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame$LegacyInfoWriter",
    "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#infoWriter(Ltop/dext/centurybridge/step/v1_20_5/rt/CbNetGame$LegacyInfoWriter;)Lnet/minecraft/class_2703$class_5893$class_7830;",
    "basis": "s4fin network: a 1.20.4 Action.Writer lambda, adapted to 1.20.5's RegistryFriendlyByteBuf shape"
+  },
+  "net/minecraft/class_2703$class_5893$class_7829.read(Lnet/minecraft/class_2703$class_7831;Lnet/minecraft/class_2540;)V": {
+   "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame$LegacyInfoReader",
+   "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#infoReader(Ltop/dext/centurybridge/step/v1_20_5/rt/CbNetGame$LegacyInfoReader;)Lnet/minecraft/class_2703$class_5893$class_7829;",
+   "basis": "s4fin network: a 1.20.4 Action.Reader lambda, adapted to 1.20.5's RegistryFriendlyByteBuf shape (EntryBuilder made accessible by the layer's access widener)"
   }
  },
  "adapterHooks": [

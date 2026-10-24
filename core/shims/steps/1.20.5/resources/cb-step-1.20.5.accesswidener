@@ -1442,3 +1442,11 @@ mutable field net/minecraft/class_4844 field_46588 Lcom/mojang/serialization/Cod
 accessible method net/minecraft/class_3953 <init> (Lnet/minecraft/class_3951;III)V
 # s4fin: BundleTooltip, a class 1.20.4 mods could extend, is a (final) record in 1.20.5; reopened for the 1.20.4 subclass (CbFinBundleTooltipMixin)
 extendable class net/minecraft/class_5631
+# s4fin: ClientboundPlayerInfoUpdatePacket.EntryBuilder (package-private) is the first parameter of a 1.20.4 Action.Reader lambda; CbNetGame.infoReader names it
+accessible class net/minecraft/class_2703$class_7831
+# s4fin: game tests -- GameTestRunner's protected constructor (rt/CbFinGameTests.ensureRunner gives a ticker no runner has started one, as 1.20.5's builder does) and GameTestInfo.setStructureBlockPos (1.20.4's batch runner set it; facade/GameTestBatchRunner)
+accessible method net/minecraft/class_4520 <init> (Lnet/minecraft/class_4520$class_9116;Ljava/util/Collection;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;Lnet/minecraft/class_4520$class_9117;Lnet/minecraft/class_4520$class_9117;)V
+accessible method net/minecraft/class_4517 method_23635 (Lnet/minecraft/class_2338;)V
+# s4fin: ReportGameListener (package-private in 1.20.5) -- 1.20.4's GameTestRunner.runTest added one to every test it ran (rt/CbFinGameTests.runTest)
+accessible class net/minecraft/class_5624
+accessible method net/minecraft/class_5624 <init> ()V
