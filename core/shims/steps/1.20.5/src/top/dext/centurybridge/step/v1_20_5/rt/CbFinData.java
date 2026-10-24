@@ -105,6 +105,19 @@ public final class CbFinData {
         });
     }
 
+    /** TagNetworkSerialization.NetworkPayload.isEmpty(): 1.20.4's body, whether it carries no tag */
+    public static boolean method_40108(net.minecraft.class_6864.class_5748 payload) {
+        return payload.method_56531() == 0;
+    }
+
+    /**
+     * KeyDispatchDataCodec.of(codec): 1.20.5 takes the map codec a dispatching codec inlines; a 1.20.4
+     * codec becomes the map codec that writes it as 1.20.4's dispatch did (CbCodecs.toMapCodec).
+     */
+    public static <A> net.minecraft.class_7243<A> method_42115(Codec<A> codec) {
+        return net.minecraft.class_7243.method_42116(CbCodecs.toMapCodec(codec));
+    }
+
     private CbFinData() {
     }
 }

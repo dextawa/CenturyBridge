@@ -148,6 +148,58 @@ public final class CbFinWorld {
         return builder.method_58460(loreMode(replace));
     }
 
+    /** a 1.20.4 SetLoreFunction.Builder subclass's setReplace(replace) (the adapter the override hook adds) */
+    public interface LegacyLoreReplace {
+        net.minecraft.class_3671.class_6159 method_35548(boolean replace);
+    }
+
+    /**
+     * 1.20.5 sets a lore builder's list operation; a 1.20.4 override of setReplace(replace) is asked for
+     * the two operations 1.20.4 had (replace all: true, append: false). An operation 1.20.4 could not
+     * express (insert, replace a section) goes past the override to the builder's own setMode.
+     */
+    public static net.minecraft.class_3671.class_6159 cbSetMode(LegacyLoreReplace builder, net.minecraft.class_9368 mode) {
+        if (mode instanceof net.minecraft.class_9368.class_9371) {
+            return builder.method_35548(true);
+        }
+        if (mode instanceof net.minecraft.class_9368.class_9369) {
+            return builder.method_35548(false);
+        }
+        return ((net.minecraft.class_3671.class_6159) builder).method_58460(mode); // guarded: super's setMode
+    }
+
+    /** a 1.20.4 SetAttributesFunction.ModifierBuilder subclass's forSlot(slot) */
+    public interface LegacyForSlot {
+        net.minecraft.class_137.class_6156 method_35529(net.minecraft.class_1304 slot);
+    }
+
+    /** 1.20.4's six equipment slots */
+    private static final net.minecraft.class_1304[] SLOTS_1204 = {
+        net.minecraft.class_1304.field_6173, net.minecraft.class_1304.field_6171, net.minecraft.class_1304.field_6166,
+        net.minecraft.class_1304.field_6172, net.minecraft.class_1304.field_6174, net.minecraft.class_1304.field_6169};
+
+    /**
+     * 1.20.5 adds a slot group to a modifier builder; a 1.20.4 override of forSlot(slot) is asked for a
+     * group that is one of 1.20.4's slots. A group 1.20.4 could not name with one slot (any, hand,
+     * armor, body) goes past the override to the builder's own forSlot.
+     */
+    public static net.minecraft.class_137.class_6156 cbForSlot(LegacyForSlot builder, net.minecraft.class_9274 group) {
+        net.minecraft.class_1304 single = null;
+        for (net.minecraft.class_1304 slot : SLOTS_1204) {
+            if (group.method_57286(slot)) {
+                if (single != null) {
+                    single = null;
+                    break;
+                }
+                single = slot;
+            }
+        }
+        if (single != null && net.minecraft.class_9274.method_59524(single) == group) {
+            return builder.method_35529(single);
+        }
+        return ((net.minecraft.class_137.class_6156) builder).method_35529(group); // guarded: super's forSlot
+    }
+
     /** ExplorationMapFunction.DEFAULT_DECORATION */
     public static top.dext.centurybridge.step.v1_20_5.facade.class_20$class_21 field_1034() {
         return CbRestMaps.typeOf(net.minecraft.class_111.field_1034);

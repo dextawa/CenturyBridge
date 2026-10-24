@@ -289,6 +289,44 @@ public final class CbFinPredicates {
 
     // ---------------------------------------------------------------- network forms
 
+    /** a DisplayInfo write running 1.20.4's serializeToNetwork (CbFinDisplayInfoMixin): its super call writes 1.20.5's way */
+    private static final ThreadLocal<Boolean> IN_DISPLAY_WRITE = ThreadLocal.withInitial(() -> Boolean.FALSE);
+
+    /** classes of DisplayInfo declaring 1.20.4's serializeToNetwork(FriendlyByteBuf) */
+    private static final ClassValue<Boolean> OVERRIDES_DISPLAY_WRITE = new ClassValue<>() {
+        @Override
+        protected Boolean computeValue(Class<?> type) {
+            for (Class<?> c = type; c != null && c != net.minecraft.class_185.class; c = c.getSuperclass()) {
+                for (java.lang.reflect.Method m : c.getDeclaredMethods()) {
+                    if (m.getName().equals("method_813") && m.getParameterCount() == 1
+                            && m.getParameterTypes()[0] == net.minecraft.class_2540.class) {
+                        return Boolean.TRUE;
+                    }
+                }
+            }
+            return Boolean.FALSE;
+        }
+    };
+
+    public static boolean cbOverridesDisplayWrite(Class<?> type) {
+        return OVERRIDES_DISPLAY_WRITE.get(type);
+    }
+
+    public static boolean cbInDisplayWrite() {
+        return IN_DISPLAY_WRITE.get();
+    }
+
+    /** marks a 1.20.4 write in progress; answers the previous state for {@link #cbExitDisplayWrite} */
+    public static boolean cbEnterDisplayWrite() {
+        boolean outer = IN_DISPLAY_WRITE.get();
+        IN_DISPLAY_WRITE.set(Boolean.TRUE);
+        return outer;
+    }
+
+    public static void cbExitDisplayWrite(boolean outer) {
+        IN_DISPLAY_WRITE.set(outer);
+    }
+
     public static void method_813(net.minecraft.class_185 display, net.minecraft.class_2540 buf) {
         net.minecraft.class_185.field_48276.encode(CbNetBufs.cbRegistryBuf(buf), display);
     }

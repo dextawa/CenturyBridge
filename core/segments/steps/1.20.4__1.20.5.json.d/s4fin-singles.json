@@ -1,0 +1,33 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_6864$class_5748.method_40108()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinData"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_7243.method_42115(Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_7243;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinData"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_35548(Z)Lnet/minecraft/class_3671$class_6159;",
+   "new": "method_58460(Lnet/minecraft/class_9368;)Lnet/minecraft/class_3671$class_6159;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld.cbSetMode(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinWorld$LegacyLoreReplace;Lnet/minecraft/class_9368;)Lnet/minecraft/class_3671$class_6159;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld$LegacyLoreReplace",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_3671$class_6159",
+   "basis": "SetLoreFunction.Builder.setReplace(replace) is setMode(ListOperation) since 1.20.5; a 1.20.4 override answers replace-all/append, other operations go to the builder's own"
+  },
+  {
+   "old": "method_35529(Lnet/minecraft/class_1304;)Lnet/minecraft/class_137$class_6156;",
+   "new": "method_35529(Lnet/minecraft/class_9274;)Lnet/minecraft/class_137$class_6156;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld.cbForSlot(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinWorld$LegacyForSlot;Lnet/minecraft/class_9274;)Lnet/minecraft/class_137$class_6156;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld$LegacyForSlot",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_137$class_6156",
+   "basis": "SetAttributesFunction.ModifierBuilder.forSlot takes an EquipmentSlotGroup since 1.20.5; a 1.20.4 override answers a group that is one 1.20.4 slot, others go to the builder's own"
+  }
+ ],
+ "covers": [
+  "net/minecraft/class_8673.method_29091()Lnet/minecraft/class_5455$class_6890;",
+  "net/minecraft/class_8674.method_29091()Lnet/minecraft/class_5455$class_6890;",
+  "net/minecraft/class_185.method_813(Lnet/minecraft/class_2540;)V"
+ ]
+}
