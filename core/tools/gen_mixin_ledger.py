@@ -27,7 +27,8 @@ Left open (mechanisms or a step agent's judgment): the API side still open (targ
 reshaped or only similar, anchors moved into callees with several call sites, wired anchors, counts and
 ordinals, constants with a candidate, renamed vanilla classes.
 
-  python gen_mixin_ledger.py <cause-mixin.tsv> <out fragment.json>
+  python gen_mixin_ledger.py [--strict] <cause-mixin.tsv> <out fragment.json>
+      (--strict leaves rows on members the wiring speaks of open: facade classes, redirects, covers, reshapes)
       writes {"mixinLedger": {key: reason}}: key "<owner>" (class), "<owner>.<target>" (member) or
       "<owner>.<target> @ <anchor>" (one anchor of a member)
   python gen_mixin_ledger.py --count <open-mixin.tsv> <wiring.json>
@@ -66,7 +67,12 @@ def key_of(kind, owner, target, anchor):
     return owner if kind == "class" else f"{owner}.{target}" if kind == "member" else f"{owner}.{target} @ {anchor}"
 
 
-def generate(cause_tsv, out):
+# --strict: rows on members the step's wiring speaks of (a facade class, a redirect / cover / reshape) are
+# left open: whether the layer's code gives a hook back is the area agent's question, not a removal
+WIRED = ("class-renamed-to-layer", "target-wired")
+
+
+def generate(cause_tsv, out, strict=False):
     led = {}
     by = collections.Counter()
     with open(cause_tsv, encoding="utf-8") as f:
@@ -74,6 +80,10 @@ def generate(cause_tsv, out):
         ix = {n: i for i, n in enumerate(head)}
         for line in f:
             r = line.rstrip("\n").split("\t")
+            if len(r) < len(head):
+                continue  # a broken line (evidence text with a line break)
+            if strict and r[ix["cause"]].startswith(WIRED):
+                continue
             kind, why = reason(r[ix["cause"]], r[ix["mojang"]], r[ix["target"]], r[ix["anchor"]], r[ix["evidence"]], r[ix["usage"]])
             if kind is None:
                 continue
@@ -104,6 +114,8 @@ def count(open_tsv, wiring):
         ix = {k: i for i, k in enumerate(head)}
         for line in f:
             r = line.rstrip("\n").split("\t")
+            if len(r) < len(head):
+                continue
             total += 1
             o, t, a = r[ix["owner"]], r[ix["target"]], r[ix["anchor"]]
             if o in led or f"{o}.{t}" in led or f"{o}.{t} @ {a}" in led:
@@ -114,5 +126,7 @@ def count(open_tsv, wiring):
 if __name__ == "__main__":
     if sys.argv[1] == "--count":
         count(sys.argv[2], sys.argv[3])
+    elif sys.argv[1] == "--strict":
+        generate(sys.argv[2], sys.argv[3], strict=True)
     else:
         generate(sys.argv[1], sys.argv[2])

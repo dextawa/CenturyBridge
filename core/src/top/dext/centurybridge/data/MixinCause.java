@@ -70,7 +70,7 @@ import top.dext.centurybridge.engine.Wiring;
  *   ordinal-shift             the counterpart is another ordinal (remappable: V#i -> W#j)
  *   ordinal-site-lost / count-ambiguous
  *
- *   mixin-cause <V code jar> <W code jar> <wiring.json> <open-mixin.tsv> <out.tsv> [<index.tsv> <report.md>]
+ *   mixin-cause <V code jar> <W code jar> <wiring.json> <open-mixin.tsv> <out.tsv> [<index.tsv> <report.md> [<layer jar>]] [--wall <table>]
  * out.tsv: the open rows with cause and evidence; stdout: counts per cause (rows and distinct targets).
  * With the isolated probe's index and the converter's report (mixin_step.sh's mixin/), a wired target
  * is split by what MixinBridge / repair / triage said about that very probe member ("wired: <why>").
@@ -174,7 +174,18 @@ public final class MixinCause {
     }
 
     public static void run(String[] args) throws IOException {
-        MixinCause mc = new MixinCause(Path.of(args[1]), Path.of(args[2]), Wiring.read(Path.of(args[3])));
+        // --wall <table>: the namespace wall step. The rows, the wiring and V's code are intermediary; W's
+        // code is taken into the same namespace (WallInverse, as MixinBridge sees it at the wall)
+        java.util.List<String> argl = new java.util.ArrayList<>(java.util.Arrays.asList(args));
+        Path wJar = Path.of(argl.get(2));
+        int wi = argl.indexOf("--wall");
+        if (wi > 0) {
+            wJar = top.dext.centurybridge.engine.WallInverse.intermediaryView(wJar, Path.of(argl.get(1)), Path.of(argl.get(wi + 1)));
+            argl.remove(wi + 1);
+            argl.remove(wi);
+        }
+        args = argl.toArray(new String[0]);
+        MixinCause mc = new MixinCause(Path.of(args[1]), wJar, Wiring.read(Path.of(args[3])));
         List<String> lines = Files.readAllLines(Path.of(args[4]), StandardCharsets.UTF_8);
         String[] head = lines.get(0).split("\t", -1);
         Map<String, Integer> col = new HashMap<>();
@@ -215,7 +226,7 @@ public final class MixinCause {
                 } catch (RuntimeException ex) {
                     vd = new Verdict("triage-error", String.valueOf(ex));
                 }
-                o.println(line + "\t" + vd.cause() + "\t" + vd.evidence());
+                o.println(line + "\t" + vd.cause().replaceAll("[\\t\\r\\n]+", " ") + "\t" + vd.evidence().replaceAll("[\\t\\r\\n]+", " "));
                 counts.computeIfAbsent(vd.cause(), x -> new int[1])[0]++;
                 targets.computeIfAbsent(vd.cause(), x -> new HashSet<>()).add(r.owner() + "." + r.target());
             }
