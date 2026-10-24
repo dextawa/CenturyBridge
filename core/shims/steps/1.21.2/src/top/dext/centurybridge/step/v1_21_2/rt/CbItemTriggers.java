@@ -147,4 +147,30 @@ public final class CbItemTriggers {
         return class_7923.field_41177;
     }
 
+
+    // ---- EntitySubPredicates.BOAT ----
+
+    private static final class Boat {
+        /** 1.21.1's boat variant sub-predicate type: a boat entity's variant (s7entity's BoatType of its entity type) */
+        static final net.minecraft.class_7378.class_7380<top.dext.centurybridge.step.v1_21_2.facade.BoatType> TYPE =
+            net.minecraft.class_7378.class_7380.method_47840(top.dext.centurybridge.step.v1_21_2.facade.BoatType.field_41599,
+                entity -> java.util.Optional.ofNullable(top.dext.centurybridge.step.v1_21_2.facade.BoatType.of(entity.method_5864())));
+    }
+
+    /**
+     * EntitySubPredicates.BOAT (fieldGetters): 1.21.2 dropped it (each boat wood is its own entity type); 1.21.1's type,
+     * matching a boat whose entity type is one of a 1.21.1 variant's
+     */
+    public static net.minecraft.class_7378.class_7380<top.dext.centurybridge.step.v1_21_2.facade.BoatType> field_41535() {
+        return Boat.TYPE;
+    }
+
+    /**
+     * CbItemInit: the type's codec registered as 1.21.1 registered it, minecraft:boat in the entity sub-predicate
+     * types, so a predicate made from it -- and a 1.21.1 datapack's "type_specific" boat predicate -- reads and writes
+     */
+    public static void registerBoatPredicate() {
+        net.minecraft.class_2378.method_10226(class_7923.field_49911, "boat", Boat.TYPE.field_49794);
+    }
+
 }

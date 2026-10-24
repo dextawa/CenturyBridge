@@ -75,6 +75,7 @@
     "CbItemFoodPropertiesMixin",
     "CbItemIngredientInvoker",
     "CbItemIngredientMixin",
+    "CbItemInstrumentLoaderMixin",
     "CbItemLevelTicksMixin",
     "CbItemLockMixin",
     "CbItemMembersMixin",

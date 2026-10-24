@@ -21,6 +21,10 @@
   triggers           advancement criteria builders taking the registry lookups, RecipeCrafted / RecipeUnlocked triggers by
                      recipe id (rt/CbItemTriggers)
 
+  instruments        BuiltInRegistries.INSTRUMENT as a stand-in whose entries join each server's instrument registry;
+                     Instrument's tick duration; InstrumentItem.create / setRandom; Instruments.bootstrap / GOAT_HORN_RANGE
+                     (rt/CbItemInstruments, CbItemInstrumentLoaderMixin)
+
   python gen_s7item_world.py <out fragment.json>
 """
 import json
@@ -231,6 +235,24 @@ def frame_defaults(out):
     }
 
 
+def instruments(out):
+    rt = "top/dext/centurybridge/step/v1_21_2/rt/CbItemInstruments"
+    out["fieldGetters"]["net/minecraft/class_7923.field_41166:Lnet/minecraft/class_2378;"] = rt
+    out["fieldGetters"]["net/minecraft/class_7445.field_39125:I"] = rt
+    out["fieldGetters"]["net/minecraft/class_7378.field_41535:Lnet/minecraft/class_7378$class_7380;"] =         "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers"
+    out["superCtorReshapes"]["net/minecraft/class_7444.<init>(Lnet/minecraft/class_6880;IF)V"] = {
+        "desc": "(Lnet/minecraft/class_6880;FFLnet/minecraft/class_2561;)V",
+        "ops": ["keep", "conv " + rt + "#seconds(I)F", "keep", "push " + rt + "#unnamed()Lnet/minecraft/class_2561;"],
+        "basis": "1.21.2's Instrument counts its use duration in seconds and carries a description (made when the entry "
+                 "joins a world: CbItemInstruments)"}
+    out["instanceRedirects"]["net/minecraft/class_7444.comp_773()I"] = rt + "#comp_773"
+    out["staticRedirects"]["net/minecraft/class_7445.method_43713(Lnet/minecraft/class_2378;)Lnet/minecraft/class_7444;"] =         rt + "#bootstrapInto"
+    out["staticRedirects"]["net/minecraft/class_7430.method_43562(Lnet/minecraft/class_1799;Lnet/minecraft/class_6862;"
+                           "Lnet/minecraft/class_5819;)V"] = rt + "#setRandom"
+    out["staticRedirects"]["net/minecraft/class_7430.method_43558(Lnet/minecraft/class_1792;Lnet/minecraft/class_6880;)"
+                           "Lnet/minecraft/class_1799;"] = rt + "#create"
+
+
 def main():
     out = {"instanceRedirects": {}, "superRedirects": {}, "staticRedirects": {}, "adapterHooks": [],
            "overrideHooks": [], "lambdaAdapters": {}, "superCtorReshapes": {}, "fieldGetters": {}, "abstractFills": []}
@@ -242,6 +264,7 @@ def main():
     misc(out)
     triggers(out)
     frame_defaults(out)
+    instruments(out)
     json.dump(out, open(sys.argv[1], "w", encoding="utf-8", newline="\n"), indent=1)
 
 
