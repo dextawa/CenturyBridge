@@ -184,6 +184,27 @@ public class S9FinTestMod implements ModInitializer {
             }
         });
 
+        run("overworld builder modifier", () -> {
+            try {
+                java.lang.reflect.Method addBiomes = net.minecraft.class_6554.class.getDeclaredMethod("method_38185", java.util.function.Consumer.class);
+                addBiomes.setAccessible(true);
+                java.util.Set<String> none = new java.util.HashSet<>();
+                java.util.Set<String> winter = new java.util.HashSet<>();
+                addBiomes.invoke(new net.minecraft.class_6554(net.minecraft.class_6554.class_10317.field_54709),
+                    (java.util.function.Consumer<com.mojang.datafixers.util.Pair<?, net.minecraft.class_5321<?>>>) p -> none.add(p.getSecond().method_29177().toString()));
+                addBiomes.invoke(new net.minecraft.class_6554(net.minecraft.class_6554.class_10317.field_54710),
+                    (java.util.function.Consumer<com.mojang.datafixers.util.Pair<?, net.minecraft.class_5321<?>>>) p -> winter.add(p.getSecond().method_29177().toString()));
+                check(!none.contains("minecraft:pale_garden") && none.contains("minecraft:dark_forest"),
+                    "OverworldBiomeBuilder(Modifier.NONE) places no pale garden, as 1.21.3's did");
+                check(winter.contains("minecraft:pale_garden"), "OverworldBiomeBuilder(Modifier.WINTER_DROP) places the pale garden");
+                java.util.Set<String> diff = new java.util.HashSet<>(winter);
+                diff.removeAll(none);
+                check(diff.equals(java.util.Set.of("minecraft:pale_garden")), "the two differ by the pale garden alone: " + diff);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         System.out.println("CB-S9TEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED: " + FAILS));
     }
 }
