@@ -16,7 +16,8 @@ import net.fabricmc.api.Environment;
  * ageInTicks) / DrawSelector.getPartsToDraw(model, state). A mod's 1.21.1 lambda is built as the 1.21.1 shape and
  * adapted (lambdaAdapters): the alpha function gets the warden the state was extracted from and the frame's partial
  * tick, the selector the model. A mod's own 1.21.1-shaped call (instanceRedirects) reaches a 1.21.1 function directly,
- * or asks a 1.21.2 one with the warden's render state.
+ * or asks a 1.21.2 one with the warden's render state. A mod class implementing a 1.21.1 interface gets the 1.21.2 method
+ * synthesized (adapterHooks: {@link #alphaOf}, {@link #partsOf}), answering as the adapted lambdas do.
  */
 @Environment(EnvType.CLIENT)
 public final class CbRenderEmissive {
@@ -73,6 +74,9 @@ public final class CbRenderEmissive {
         if (function instanceof Alpha a) {
             return a.legacy().apply(warden, partialTick, ageInTicks);
         }
+        if (function instanceof LegacyAlpha legacy) {
+            return legacy.apply(warden, partialTick, ageInTicks);
+        }
         net.minecraft.class_10017 state = CbRenderLiving.stateOf(CbRenderLiving.rendererOf(warden), warden, partialTick);
         return function.apply((net.minecraft.class_10042) state, ageInTicks);
     }
@@ -86,6 +90,20 @@ public final class CbRenderEmissive {
         if (selector instanceof Parts p) {
             return p.legacy().getPartsToDraw(model);
         }
+        if (selector instanceof LegacyParts legacy) {
+            return legacy.getPartsToDraw(model);
+        }
         return selector.getPartsToDraw(model, null);
+    }
+
+    /** the synthesized 1.21.2 apply(state, ageInTicks) of a mod class implementing 1.21.1's AlphaFunction (adapterHooks) */
+    public static float alphaOf(LegacyAlpha function, net.minecraft.class_10042 state, float ageInTicks) {
+        return new Alpha(function).apply(state, ageInTicks);
+    }
+
+    /** the synthesized 1.21.2 getPartsToDraw(model, state) of a mod class implementing 1.21.1's DrawSelector (adapterHooks) */
+    @SuppressWarnings("rawtypes")
+    public static List<net.minecraft.class_630> partsOf(LegacyParts selector, net.minecraft.class_583 model, net.minecraft.class_10042 state) {
+        return selector.getPartsToDraw(model);
     }
 }

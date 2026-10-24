@@ -10,11 +10,11 @@ import org.spongepowered.asm.mixin.Unique;
  * 1.21.1 BoatModel's parts (see CbRenderBoats): createPartsBuilder(root) -- bottom, back, front, right, left and the
  * two paddles, the chest boat's (ChestBoatModel) also chest_bottom, chest_lid and chest_lock, which 1.21.2's one
  * BoatModel class has when baked from the chest boat layer -- parts(), built once from it as 1.21.1's constructor did
- * (a subclass's override is called), and waterPatch().
+ * (a subclass's override is called), and waterPatch(), implementing WaterPatchModel again as 1.21.1's boat models did.
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_554.class)
-public abstract class CbRenderBoatModelMixin {
+public abstract class CbRenderBoatModelMixin implements top.dext.centurybridge.step.v1_21_2.facade.WaterPatchModel {
 
     @Unique
     private ImmutableList<net.minecraft.class_630> cb$parts;
@@ -35,7 +35,8 @@ public abstract class CbRenderBoatModelMixin {
         return this.cb$parts;
     }
 
-    /** 1.21.1 waterPatch() */
+    /** 1.21.1 waterPatch() (WaterPatchModel) */
+    @Override
     public net.minecraft.class_630 method_22954() {
         if (this.cb$waterPatch == null) {
             this.cb$waterPatch = top.dext.centurybridge.step.v1_21_2.rt.CbRenderBoats.waterPatch();

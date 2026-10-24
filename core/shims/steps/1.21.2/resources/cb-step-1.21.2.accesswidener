@@ -174,3 +174,7 @@ accessible method net/minecraft/class_5944 <init> (I)V
 extendable method net/minecraft/class_5944 <init> (I)V
 # s7render: 1.21.1 AbstractMinecartRenderer.model read by 1.21.1 subclasses as an EntityModel (instanceFieldGetters, CbRenderMinecarts)
 accessible field net/minecraft/class_925 field_4747 Lnet/minecraft/class_580;
+# s7render: the ShulkerHeadLayer facade draws the parent ShulkerModel's head (1.21.1 getHead())
+accessible field net/minecraft/class_602 field_3554 Lnet/minecraft/class_630;
+# s7render: PalettedPermutations.loadPaletteEntryFromImage, private in 1.21.2 with the same body (NativeImage.getPixelsRGBA renamed getPixelsABGR: the same raw pixels)
+accessible method net/minecraft/class_8066 method_48486 (Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;)[I

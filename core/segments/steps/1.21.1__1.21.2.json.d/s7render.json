@@ -43,7 +43,10 @@
   "net/minecraft/class_837$class_4702": "top/dext/centurybridge/step/v1_21_2/facade/SignModel",
   "net/minecraft/class_895$class_625": "top/dext/centurybridge/step/v1_21_2/facade/DragonModel",
   "net/minecraft/class_559": "top/dext/centurybridge/step/v1_21_2/facade/ChestedHorseModel",
-  "net/minecraft/class_883": "top/dext/centurybridge/step/v1_21_2/facade/ChestedHorseRenderer"
+  "net/minecraft/class_883": "top/dext/centurybridge/step/v1_21_2/facade/ChestedHorseRenderer",
+  "net/minecraft/class_7755": "top/dext/centurybridge/step/v1_21_2/facade/WaterPatchModel",
+  "net/minecraft/class_944": "top/dext/centurybridge/step/v1_21_2/facade/ShulkerHeadLayer",
+  "net/minecraft/class_793$class_6246": "top/dext/centurybridge/step/v1_21_2/facade/BlockModelLoopException"
  },
  "facadeGaps": {
   "net/minecraft/class_790$class_791.field_4243:Lcom/google/gson/Gson;": "1.21.1 BlockModelDefinition.Context's own state, unreachable to a mod (protected in a final class; a mod's access widener never applies to a CenturyBridge class): the facade keeps the definition behind its getter and setter, and parses through 1.21.2's BlockModelDefinition.GSON, whose multipart is the selectors the layer builds 1.21.1's MultiPart from (CbRenderBlockDefs)",
@@ -134,7 +137,8 @@
   "net/minecraft/class_4840.method_32026(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
   "net/minecraft/class_4840.method_47656(Lnet/minecraft/class_5605;Lnet/minecraft/class_5609;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
   "net/minecraft/class_892.method_32164()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
-  "net/minecraft/class_596.method_32034()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes"
+  "net/minecraft/class_596.method_32034()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes",
+  "net/minecraft/class_998.method_32200()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes"
  },
  "instanceRedirects": {
   "net/minecraft/class_799.method_3472()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
@@ -189,7 +193,8 @@
   "net/minecraft/class_382$class_328.<init>(FFFFFFFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors#glyphEffect"
  },
  "fieldRedirects": {
-  "net/minecraft/class_5944.field_32778:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders"
+  "net/minecraft/class_5944.field_32778:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders",
+  "net/minecraft/class_998.field_32946:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMeshes"
  },
  "fieldGetters": {
   "net/minecraft/class_1088.field_5374:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
@@ -868,6 +873,28 @@
     2
    ],
    "basis": "1.21.1 ShaderInstance(provider, name, format) read shaders/core/<name>.json and compiled, bound, attached and linked its program; 1.21.2's CompiledShaderProgram(programId) (private, opened by the layer's access widener) takes the linked id: CbRenderShaderLoad.link does 1.21.1's constructor up to the id, setup gives the constructed program its uniforms, samplers, name, format and Programs"
+  },
+  "net/minecraft/class_597.<init>(Lnet/minecraft/class_630;ZFFFFI)V": {
+   "desc": "(Lnet/minecraft/class_630;)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderQuadruped#legacyBaby(Lnet/minecraft/class_597;ZFFFFI)V",
+   "postArgs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "1.21.1 QuadrupedModel(root, scaleHead, babyYHeadOffset, babyZHeadOffset, babyHeadScale, babyBodyScale, bodyYOffset) was an AgeableListModel scaling a young entity's head and body parts; 1.21.2's QuadrupedModel(root) bakes babies from another layer: the root goes to 1.21.2's constructor, the six values to the model, which draws as 1.21.1's AgeableListModel did (CbRenderQuadruped)"
   }
  },
  "overrideHooks": [
@@ -1226,7 +1253,13 @@
   "net/minecraft/class_8138$class_8141.method_49921(Lnet/minecraft/class_8113;)Ljava/lang/Object;",
   "net/minecraft/class_8138$class_8141.method_49056(Lnet/minecraft/class_8113$class_8123;Lnet/minecraft/class_8113$class_8123$class_8230;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
   "net/minecraft/class_989.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
-  "net/minecraft/class_5697.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"
+  "net/minecraft/class_5697.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+  "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;",
+  "net/minecraft/class_5944.method_1278()Lnet/minecraft/class_281;",
+  "net/minecraft/class_5944.method_34418()V",
+  "net/minecraft/class_1060.method_22813(Lnet/minecraft/class_2960;)V",
+  "net/minecraft/class_584.method_17106(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFFI)V",
+  "net/minecraft/class_876.method_23153(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIIFFIIII)V"
  ],
  "ledger": {
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires OnLoad while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)",
@@ -1399,6 +1432,48 @@
    ],
    "synth": [],
    "basis": "1.21.1 StuckInBodyLayer.renderStuckItem(.., entity, x, y, z, partialTick), private in 1.21.2 with another shape: a subclass declaring it gets the adapter, and its layer calls it from 1.21.1's render body (CbRenderStuckMixin)"
+  },
+  {
+   "under": "net/minecraft/class_4607",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSwirl$Legacy",
+   "requires": [
+    "method_23202(F)F"
+   ],
+   "synth": [
+    {
+     "new": "method_62591(Lnet/minecraft/class_10017;)Z",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSwirl.powered(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderSwirl$Legacy;Lnet/minecraft/class_10017;)Z"
+    }
+   ],
+   "basis": "1.21.1 EnergySwirlLayer.render drew the swirl when its entity (PowerableMob) isPowered(); 1.21.2's asks the abstract isPowered(state), which a 1.21.1 subclass lacks: synthesized to answer from the entity the state was extracted from (CbRenderSwirl)"
+  },
+  {
+   "under": "net/minecraft/class_7288$class_7289",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyAlpha",
+   "requires": [
+    "apply(Lnet/minecraft/class_7260;FF)F"
+   ],
+   "synth": [
+    {
+     "new": "apply(Lnet/minecraft/class_10042;F)F",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive.alphaOf(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyAlpha;Lnet/minecraft/class_10042;F)F"
+    }
+   ],
+   "basis": "1.21.1 LivingEntityEmissiveLayer.AlphaFunction.apply(warden, partialTick, ageInTicks); 1.21.2's apply(state, ageInTicks): a mod class implementing the 1.21.1 shape answers with the warden the state was extracted from and the frame's partial tick (as the lambda adapter)"
+  },
+  {
+   "under": "net/minecraft/class_7288$class_7311",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyParts",
+   "requires": [
+    "getPartsToDraw(Lnet/minecraft/class_583;)Ljava/util/List;"
+   ],
+   "synth": [
+    {
+     "new": "getPartsToDraw(Lnet/minecraft/class_583;Lnet/minecraft/class_10042;)Ljava/util/List;",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive.partsOf(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive$LegacyParts;Lnet/minecraft/class_583;Lnet/minecraft/class_10042;)Ljava/util/List;"
+    }
+   ],
+   "basis": "1.21.1 LivingEntityEmissiveLayer.DrawSelector.getPartsToDraw(model); 1.21.2's also takes the state: a mod class implementing the 1.21.1 shape answers from the model alone, as it did"
   }
  ],
  "mixinTargets": {

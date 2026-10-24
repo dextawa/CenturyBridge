@@ -217,6 +217,7 @@
     "CbRenderTextureManagerMixin",
     "CbRenderParrotShoulderMixin",
     "CbRenderArrowVertexMixin",
+    "CbRenderQuadrupedMixin",
     "CbRenderGlyphMixin",
     "CbRenderHeadLayerMixin",
     "CbRenderHumanoidArm564Mixin",

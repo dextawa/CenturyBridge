@@ -72,4 +72,18 @@ public final class CbRenderMeshes {
             net.minecraft.class_5603.method_32090(0.0F, 16.0F, -1.0F));
         return net.minecraft.class_5607.method_32110(mesh, 64, 32);
     }
+
+    /** 1.21.1 SpinAttackEffectLayer.BOX (fieldRedirects): the part name of its layer */
+    public static final String field_32946 = "box";
+
+    /**
+     * 1.21.1 SpinAttackEffectLayer.createLayer() (staticRedirects): one 16x32x16 box at the origin, 64x64; 1.21.2's
+     * SpinAttackEffectModel.createLayer builds two rotated, scaled boxes of its own
+     */
+    public static net.minecraft.class_5607 method_32200() {
+        net.minecraft.class_5609 mesh = new net.minecraft.class_5609();
+        mesh.method_32111().method_32117(field_32946, net.minecraft.class_5606.method_32108().method_32101(0, 0)
+            .method_32097(-8.0F, -16.0F, -8.0F, 16.0F, 32.0F, 16.0F), net.minecraft.class_5603.field_27701);
+        return net.minecraft.class_5607.method_32110(mesh, 64, 64);
+    }
 }
