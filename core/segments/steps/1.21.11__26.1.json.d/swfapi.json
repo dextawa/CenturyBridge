@@ -33,7 +33,12 @@
   "net/fabricmc/fabric/api/client/rendering/v1/SpecialBlockRendererRegistry": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/SpecialBlockRendererRegistry",
   "net/minecraft/class_4696": "top/dext/centurybridge/step/v26_1/facade/ItemBlockRenderTypes",
   "net/minecraft/class_322": "top/dext/centurybridge/step/v26_1/facade/BlockColor",
-  "net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/ColorProviderRegistry"
+  "net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/ColorProviderRegistry",
+  "net/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper": "top/dext/centurybridge/step/v26_1/compat/fapi/object/builder/v1/trade/TradeOfferHelper",
+  "net/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper$VillagerOffersAdder": "top/dext/centurybridge/step/v26_1/compat/fapi/object/builder/v1/trade/TradeOfferHelper$VillagerOffersAdder",
+  "net/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper$WanderingTraderOffersBuilder": "top/dext/centurybridge/step/v26_1/compat/fapi/object/builder/v1/trade/TradeOfferHelper$WanderingTraderOffersBuilder",
+  "net/minecraft/class_3853": "top/dext/centurybridge/step/v26_1/facade/VillagerTrades",
+  "net/minecraft/class_3853$class_1652": "top/dext/centurybridge/step/v26_1/facade/VillagerTrades$ItemListing"
  },
  "instanceRedirects": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
@@ -201,6 +206,17 @@
    "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels.material(Lnet/minecraft/class_1058;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
    "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockModels",
    "basis": "a 1.21.11 class overriding FabricBlockModels.getModelParticleSprite(state, view, pos): 26.1's FabricBlockStateModelSet asks getParticleMaterial with the client getter; the sprite becomes a material without forced translucency"
+  },
+  {
+   "old": "method_65587(Lnet/minecraft/class_10439$class_10440;)Lnet/minecraft/class_10439;",
+   "new": "method_65587(Lnet/minecraft/class_10439$class_10440;Lorg/joml/Matrix4fc;)Lnet/minecraft/class_10439;",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_10439$class_10441",
+   "frames": "top/dext/centurybridge/step/v26_1/rt/CbFapiItemBake",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.11 ItemModel.Unbaked's bake(context): 26.1 bakes with the transformation the parents accumulated, which 1.21.11 did not have; the old override gets its context, and the frames (rt/CbFapiItemBake: Guard's plus the transformation of each hooked bake in progress) hand the transformation to its super call and to its calls of bake(context) (callReshapes)"
   }
  ],
  "lambdaAdapters": {
@@ -324,6 +340,22 @@
     "keep"
    ],
    "basis": "a 1.21.11 call (or super call) of createGeometryKey(view, pos, state, random): 26.1 takes the client BlockAndTintGetter, otherwise the same member"
+  },
+  "net/minecraft/class_10439$class_10441.method_65587(Lnet/minecraft/class_10439$class_10440;)Lnet/minecraft/class_10439;": {
+   "desc": "(Lnet/minecraft/class_10439$class_10440;Lorg/joml/Matrix4fc;)Lnet/minecraft/class_10439;",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbFapiItemBake#transform(Lnet/minecraft/class_10439$class_10440;)Lorg/joml/Matrix4fc;"
+   ],
+   "basis": "a 1.21.11 call of bake(context) (super calls included): 26.1's bake(context, transformation) with the transformation of the innermost hooked bake of that context on the thread, the identity outside one (1.21.11 baked without a transformation)"
+  },
+  "net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperUnbakedItemModel.method_65587(Lnet/minecraft/class_10439$class_10440;)Lnet/minecraft/class_10439;": {
+   "desc": "(Lnet/minecraft/class_10439$class_10440;Lorg/joml/Matrix4fc;)Lnet/minecraft/class_10439;",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbFapiItemBake#transform(Lnet/minecraft/class_10439$class_10440;)Lorg/joml/Matrix4fc;"
+   ],
+   "basis": "a 1.21.11 call of bake(context) (super calls included): 26.1's bake(context, transformation) with the transformation of the innermost hooked bake of that context on the thread, the identity outside one (1.21.11 baked without a transformation)"
   }
  },
  "abstractFills": [
@@ -406,6 +438,31 @@
  "facadeGaps": {
   "net/minecraft/class_4696.field_21469:Ljava/util/Map;": "1.21.11 private field of the dead class (the block -> layer table): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the table is rt/CbFapiBlockLayers' (filled by BlockRenderLayerMap.putBlock(s))",
   "net/minecraft/class_4696.field_60921:Ljava/util/Map;": "1.21.11 private field of the dead class (the fluid -> layer table): only an access widener on it ever reached it; the table is rt/CbFapiFluids' (BlockRenderLayerMap.putFluid(s)), answered through 26.1's fluid models",
-  "net/minecraft/class_4696.field_63572:Z": "1.21.11 private field of the dead class (cutoutLeaves): only an access widener on it ever reached it; kept by rt/CbFapiBlockLayers (setCutoutLeaves, read by the section compiler)"
- }
+  "net/minecraft/class_4696.field_63572:Z": "1.21.11 private field of the dead class (cutoutLeaves): only an access widener on it ever reached it; kept by rt/CbFapiBlockLayers (setCutoutLeaves, read by the section compiler)",
+  "net/minecraft/class_3853.method_52552(I)Lnet/minecraft/class_3853$class_1652;": "1.21.11 private member of the dead class (a private builder of a vanilla listing): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the vanilla listings are 26.1's trade data, expanded by rt/CbFapiTrades",
+  "net/minecraft/class_3853.method_52551()Lnet/minecraft/class_3853$class_1652;": "1.21.11 private member of the dead class (a private builder of a vanilla listing): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the vanilla listings are 26.1's trade data, expanded by rt/CbFapiTrades",
+  "net/minecraft/class_3853.method_16928(Lcom/google/common/collect/ImmutableMap;)Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "1.21.11 private member of the dead class (the private ImmutableMap -> Int2ObjectMap helper of the static initializer): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the vanilla listings are 26.1's trade data, expanded by rt/CbFapiTrades",
+  "net/minecraft/class_3853.method_57311(Lnet/minecraft/class_6880;)Lnet/minecraft/class_9306;": "1.21.11 private member of the dead class (a private lambda of a vanilla listing): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the vanilla listings are 26.1's trade data, expanded by rt/CbFapiTrades",
+  "net/minecraft/class_3853.method_52553(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1799;": "1.21.11 private member of the dead class (a private lambda of a vanilla listing): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the vanilla listings are 26.1's trade data, expanded by rt/CbFapiTrades",
+  "net/minecraft/class_3853.field_30615:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30616:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30617:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30618:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30619:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30620:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30621:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30622:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30623:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30624:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30625:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30626:I": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30627:F": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data",
+  "net/minecraft/class_3853.field_30628:F": "1.21.11 private static final constant of the dead class (supply / xp / price multiplier of the vanilla listings): a compile-time constant a reader inlined, otherwise reached only by an access widener, which never reaches a CenturyBridge class; the vanilla listings' values are 26.1's trade data"
+ },
+ "frameDefaults": {
+  "method_65587(Lnet/minecraft/class_10439$class_10440;)Lnet/minecraft/class_10439;": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbFapiItemBake#transform(Lnet/minecraft/class_10439$class_10441;Lnet/minecraft/class_10439$class_10440;)Lorg/joml/Matrix4fc;"
+  }
+ },
+ "_swfapi_trades_basis": "1.21.11 villager trades: 26.1 made trades data (VillagerTrade / TradeSet registries, VillagerProfession.tradeSetsByLevel) and removed VillagerTrades' tables and ItemListing, and Fabric API's TradeOfferHelper. VillagerTrades is given back as a facade holding 1.21.11's three tables in 1.21.11's shape; each vanilla level / pool starts as a placeholder for its 26.1 trade set and becomes one listing per trade of the set when a server's registries and tags load (server construction, every tags reload), mods' edits kept in place (rt/CbFapiTrades). Villager / WanderingTrader.updateTrades pick from the tables with 1.21.11's bodies (mixins). TradeOfferHelper (+ VillagerOffersAdder, WanderingTraderOffersBuilder) is a compat class with 1.21.11 Fabric API's bodies over the tables."
 }
