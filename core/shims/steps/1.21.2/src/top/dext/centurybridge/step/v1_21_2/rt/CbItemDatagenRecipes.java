@@ -94,6 +94,34 @@ public class CbItemDatagenRecipes extends net.minecraft.class_2446 {
         return p != null ? p : new CbItemDatagenRecipes(builtIn(), NOWHERE);
     }
 
+    // ---- 1.21.1 RecipeProvider instance members, called naming the class (the receiver is a 1.21.1 provider: the facade) ----
+
+    private static top.dext.centurybridge.step.v1_21_2.facade.RecipeProvider legacy(net.minecraft.class_2446 provider) {
+        return (top.dext.centurybridge.step.v1_21_2.facade.RecipeProvider) provider;
+    }
+
+    /** run(output) */
+    public static java.util.concurrent.CompletableFuture<?> method_10319(net.minecraft.class_2446 provider, net.minecraft.class_7403 output) {
+        return legacy(provider).method_10319(output);
+    }
+
+    /** getName() */
+    public static String method_10321(net.minecraft.class_2446 provider) {
+        return legacy(provider).method_10321();
+    }
+
+    /** run(output, registries) */
+    public static java.util.concurrent.CompletableFuture<?> method_56888(net.minecraft.class_2446 provider, net.minecraft.class_7403 output,
+            class_7225.class_7874 registries) {
+        return legacy(provider).method_56888(output, registries);
+    }
+
+    /** buildAdvancement(output, registries, advancement) */
+    public static java.util.concurrent.CompletableFuture<?> method_46206(net.minecraft.class_2446 provider, net.minecraft.class_7403 output,
+            class_7225.class_7874 registries, class_8779 advancement) {
+        return legacy(provider).method_46206(output, registries, advancement);
+    }
+
     // ---- the helpers whose 1.21.2 form differs beyond the output (MANUAL in the generator) ----
 
     /** 1.21.1's RecipeProvider.method_48530(output, item, id): 1.21.2 names the recipe by key */

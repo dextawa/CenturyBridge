@@ -101,6 +101,16 @@ def main():
     # a 1.21.1 recipe provider's superclass: 1.21.1's data provider (the facade), its helpers answered by a 1.21.2
     # provider bound to its output (gen_s7item_datagen_recipes.py)
     out["superRenames"] = {"net/minecraft/class_2446": "top/dext/centurybridge/step/v1_21_2/facade/RecipeProvider"}
+    dr = "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenRecipes"
+    rp = "net/minecraft/class_2446."
+    co = "Ljava/util/concurrent/CompletableFuture;"
+    out["instanceRedirects"] = {
+        rp + "method_10319(Lnet/minecraft/class_7403;)" + co: dr + "#method_10319",
+        rp + "method_10321()Ljava/lang/String;": dr + "#method_10321",
+        rp + "method_56888(Lnet/minecraft/class_7403;Lnet/minecraft/class_7225$class_7874;)" + co: dr + "#method_56888",
+        rp + "method_46206(Lnet/minecraft/class_7403;Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_8779;)" + co:
+            dr + "#method_46206",
+    }
     json.dump(out, open(sys.argv[1], "w", encoding="utf-8", newline="\n"), indent=1)
 
 

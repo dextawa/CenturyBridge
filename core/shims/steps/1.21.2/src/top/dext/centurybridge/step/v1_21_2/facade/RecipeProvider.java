@@ -28,7 +28,9 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemDatagenRecipes;
  * 1.21.2 provider bound to that output answers the 1.21.1 static helpers (CbItemDatagenRecipes). It extends 1.21.2's
  * RecipeProvider (bound to the built-in registries and an output that takes nothing) so that an instance stands where
  * that type is expected. The members 1.21.1 kept package-private are public (an access widener never reaches a
- * CenturyBridge class); 1.21.1's private registries future is cb$registries (1.21.2's class has a field of that name).
+ * CenturyBridge class), and so are run(output, registries) / buildAdvancement, which 1.21.1 kept protected (calls naming
+ * 1.21.2's RecipeProvider reach them through CbItemDatagenRecipes); 1.21.1's private registries future is cb$registries
+ * (1.21.2's class has a field of that name).
  */
 public abstract class RecipeProvider extends net.minecraft.class_2446 implements class_2405 {
 
@@ -53,7 +55,7 @@ public abstract class RecipeProvider extends net.minecraft.class_2446 implements
     }
 
     /** run(output, registries): every recipe buildRecipes saves, written as JSON with its advancement */
-    protected CompletableFuture<?> method_56888(class_7403 output, class_7225.class_7874 registries) {
+    public CompletableFuture<?> method_56888(class_7403 output, class_7225.class_7874 registries) {
         Set<class_2960> ids = new java.util.HashSet<>();
         List<CompletableFuture<?>> writes = new ArrayList<>();
         RecipeProvider self = this;
@@ -90,7 +92,7 @@ public abstract class RecipeProvider extends net.minecraft.class_2446 implements
     }
 
     /** buildAdvancement(output, registries, advancement): the advancement as JSON */
-    protected CompletableFuture<?> method_46206(class_7403 output, class_7225.class_7874 registries, class_8779 advancement) {
+    public CompletableFuture<?> method_46206(class_7403 output, class_7225.class_7874 registries, class_8779 advancement) {
         return class_2405.method_53496(output, registries, class_161.field_47179, advancement.comp_1920(),
             this.field_39379.method_44107(advancement.comp_1919()));
     }

@@ -194,5 +194,11 @@
  ],
  "superRenames": {
   "net/minecraft/class_2446": "top/dext/centurybridge/step/v1_21_2/facade/RecipeProvider"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2446.method_10319(Lnet/minecraft/class_7403;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenRecipes#method_10319",
+  "net/minecraft/class_2446.method_10321()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenRecipes#method_10321",
+  "net/minecraft/class_2446.method_56888(Lnet/minecraft/class_7403;Lnet/minecraft/class_7225$class_7874;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenRecipes#method_56888",
+  "net/minecraft/class_2446.method_46206(Lnet/minecraft/class_7403;Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_8779;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagenRecipes#method_46206"
  }
 }
