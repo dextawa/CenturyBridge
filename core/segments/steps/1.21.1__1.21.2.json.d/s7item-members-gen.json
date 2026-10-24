@@ -144,5 +144,14 @@
    "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyDescriptionIdOverride",
    "basis": "Item.getDescriptionId() is final since 1.21.2: a 1.21.1 override is renamed and reached through the adapter by the mixin on the final method"
   }
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_7840(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V",
+   "new": "method_7840(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)Z",
+   "onlyUnder": "net/minecraft/class_1792",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers.releasedWithoutEffects()Z",
+   "basis": "1.21.2's ItemStack.releaseUsing applies the item's after-use component effects when releaseUsing answers true; a 1.21.1 item had no such effects (USE_REMAINDER / USE_COOLDOWN are 1.21.2's): its override runs and answers false (CbItemMembers); its super call is mechanical.json's (result dropped)"
+  }
  ]
 }

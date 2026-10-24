@@ -69,6 +69,15 @@ def main():
     # ItemStack.ITEM_NON_AIR_CODEC (1.21.1) is 1.21.2's Item.CODEC: the item registry's holder codec
     # validated against air, the same body
     out["fieldRedirects"][STACK + ".field_47312:Lcom/mojang/serialization/Codec;"] = ITEM + "#field_54952"
+    # releaseUsing(stack, level, entity, timeLeft): 1.21.2 answers whether the item's after-use component effects
+    # (USE_REMAINDER / USE_COOLDOWN, new in 1.21.2) apply; a 1.21.1 override answered nothing and had none
+    release = "method_7840(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)"
+    out["overrideHooks"] = [{
+        "old": release + "V", "new": release + "Z", "onlyUnder": ITEM,
+        "unwrap": RT + ".releasedWithoutEffects()Z",
+        "basis": "1.21.2's ItemStack.releaseUsing applies the item's after-use component effects when releaseUsing "
+                 "answers true; a 1.21.1 item had no such effects (USE_REMAINDER / USE_COOLDOWN are 1.21.2's): its "
+                 "override runs and answers false (CbItemMembers); its super call is mechanical.json's (result dropped)"}]
     json.dump(out, open(sys.argv[1], "w", encoding="utf-8", newline="\n"), indent=1)
 
 

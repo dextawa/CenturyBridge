@@ -88,6 +88,14 @@ public final class CbItemMembers {
         boolean method_7857();
     }
 
+    /**
+     * what a 1.21.1 releaseUsing override answers 1.21.2's releaseUsing (the override hook's unwrap): false, no
+     * after-use component effects -- a 1.21.1 item had none to apply
+     */
+    public static boolean releasedWithoutEffects() {
+        return false;
+    }
+
     // ---- calls ----
 
     /** getEnchantmentValue(): the item's ENCHANTABLE value, 0 without (1.21.1's Item answered 0) */

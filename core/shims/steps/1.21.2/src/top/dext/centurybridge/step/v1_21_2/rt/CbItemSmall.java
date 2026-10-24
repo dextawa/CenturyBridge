@@ -92,4 +92,94 @@ public final class CbItemSmall {
     public static class_2960 bundleOpenBack() {
         return class_2960.method_60656("bundle_open_back");
     }
+
+    // ---- boats and minecarts by entity type ----
+
+    /** BoatItem(hasChest, type, properties): 1.21.2 takes the boat's entity type */
+    public static net.minecraft.class_1299<?> boatEntity(boolean chest, top.dext.centurybridge.step.v1_21_2.facade.BoatType type) {
+        return type.entityType(chest);
+    }
+
+    /** BoatDispenseItemBehavior(type): a boat without a chest */
+    public static net.minecraft.class_1299<?> boatEntity(top.dext.centurybridge.step.v1_21_2.facade.BoatType type) {
+        return type.entityType(false);
+    }
+
+    /** BoatDispenseItemBehavior(type, hasChest) */
+    public static net.minecraft.class_1299<?> boatEntity(top.dext.centurybridge.step.v1_21_2.facade.BoatType type, boolean chest) {
+        return type.entityType(chest);
+    }
+
+    /** MinecartItem(type, properties): 1.21.2 takes the minecart's entity type */
+    public static net.minecraft.class_1299<?> minecartEntity(top.dext.centurybridge.step.v1_21_2.facade.MinecartType type) {
+        return type.entityType();
+    }
+
+    // ---- ItemCombinerMenuSlotDefinition ----
+
+    /** hasSlot(slot): 1.21.1's body, the number of input slots at least the slot */
+    public static boolean hasSlot(net.minecraft.class_8047 definition, int slot) {
+        return definition.method_48368().size() >= slot;
+    }
+
+    /** getInputSlotIndexes(): the input slots' indices, in order */
+    public static java.util.List<Integer> getInputSlotIndexes(net.minecraft.class_8047 definition) {
+        java.util.List<Integer> out = new java.util.ArrayList<>();
+        for (net.minecraft.class_8047.class_8049 slot : definition.method_48368()) {
+            out.add(slot.comp_1204());
+        }
+        return out;
+    }
+
+    // ---- collision contexts ----
+
+    /** EntityCollisionContext(entity): 1.21.1 had no "always collide with fluid" */
+    public static boolean noFluidCollision() {
+        return false;
+    }
+
+    /**
+     * 1.21.2's CollisionContext.getCollisionShape(state, level, pos), which a 1.21.1 implementation lacks: what every
+     * 1.21.1 caller asked -- the state's collision shape in this context (1.21.2's EntityCollisionContext answers so)
+     */
+    public static net.minecraft.class_265 collisionShape(net.minecraft.class_3726 context, net.minecraft.class_2680 state,
+            net.minecraft.class_1941 level, net.minecraft.class_2338 pos) {
+        return state.method_26194(level, pos, context);
+    }
+
+
+    // ---- JukeboxPlayable.tryInsertIntoJukebox ----
+
+    /**
+     * 1.21.1 answered an ItemInteractionResult: PASS_TO_DEFAULT_BLOCK_INTERACTION where nothing was inserted, else
+     * sidedSuccess(isClientSide) -- 1.21.2 answers TRY_WITH_EMPTY_HAND / SUCCESS for the same two outcomes
+     */
+    public static top.dext.centurybridge.step.v1_21_2.facade.ItemInteractionResult tryInsertIntoJukebox(net.minecraft.class_1937 level,
+            net.minecraft.class_2338 pos, class_1799 stack, class_1657 player) {
+        net.minecraft.class_1269 result = net.minecraft.class_9792.method_60747(level, pos, stack, player);
+        return result instanceof net.minecraft.class_1269.class_9862
+            ? top.dext.centurybridge.step.v1_21_2.facade.ItemInteractionResult.field_47731
+            : top.dext.centurybridge.step.v1_21_2.facade.ItemInteractionResult.method_55644(level.method_8608());
+    }
+
+    // ---- static fields 1.21.2 dropped ----
+
+    /**
+     * FeatureFlags.BUNDLE, the experimental flag 1.21.1's bundle needed: 1.21.2 released the bundle, so what needed it
+     * needs only the vanilla feature now
+     */
+    public static net.minecraft.class_7696 field_40178() {
+        return net.minecraft.class_7701.field_40177;
+    }
+
+    /** ItemStack.OPTIONAL_LIST_STREAM_CODEC: 1.21.1's, the optional stack codec over a NonNullList */
+    public static net.minecraft.class_9139<net.minecraft.class_9129, java.util.List<class_1799>> field_48350() {
+        return OptionalList.CODEC;
+    }
+
+    private static final class OptionalList {
+        static final net.minecraft.class_9139<net.minecraft.class_9129, java.util.List<class_1799>> CODEC =
+            class_1799.field_48349.method_56433(net.minecraft.class_9135.method_56374(net.minecraft.class_2371::method_37434));
+    }
+
 }
