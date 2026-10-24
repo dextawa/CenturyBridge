@@ -828,7 +828,10 @@
   "net/minecraft/class_3440": "top/dext/centurybridge/step/v26_1/facade/StructureFeatureIndexSavedData",
   "com/mojang/blaze3d/vertex/VertexFormatElement$Usage": "top/dext/centurybridge/step/v26_1/facade/VertexFormatElement$Usage",
   "net/minecraft/class_11278": "top/dext/centurybridge/step/v26_1/facade/CachedOrthoProjectionMatrixBuffer",
-  "net/minecraft/class_11279": "top/dext/centurybridge/step/v26_1/facade/CachedPerspectiveProjectionMatrixBuffer"
+  "net/minecraft/class_11279": "top/dext/centurybridge/step/v26_1/facade/CachedPerspectiveProjectionMatrixBuffer",
+  "net/minecraft/class_582": "net/minecraft/client/model/animal/feline/AdultFelineModel",
+  "net/minecraft/class_3680": "net/minecraft/client/model/animal/feline/AdultCatModel",
+  "net/minecraft/class_9949": "net/minecraft/client/model/animal/feline/AdultOcelotModel"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -2121,6 +2124,25 @@
     "keep:1"
    ],
    "basis": "26.1's SectionCompiler takes the block / fluid model sets (the given dispatcher's model manager), the game's block colours and the ambient occlusion / cutout leaves options' values, which 1.21.11's read while compiling (CbWallChunks)"
+  },
+  "net/minecraft/class_11745.<init>(Lnet/minecraft/class_3883;Ljava/util/function/Function;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Ljava/util/function/Function;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallBlockDecoration#blockModels(Ljava/util/function/Function;)Ljava/util/function/Function;",
+    "keep"
+   ],
+   "basis": "BlockDecorationLayer's block source: 1.21.11's Function<S, Optional<BlockState>> as 26.1's Function<S, BlockModelRenderState> (the state resolved into a model render state per entity render state; rt/CbWallBlockDecoration)"
+  },
+  "net/minecraft/class_11532.<init>(Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/EnumMap;I[Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V": {
+   "desc": "(Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/EnumMap;I[Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallChunkDraws#groups(Ljava/util/EnumMap;)Ljava/util/EnumMap;",
+    "keep",
+    "keep"
+   ],
+   "basis": "ChunkSectionsToRender's draws: a 1.21.11 layer's draw list as one 26.1 draw group (rt/CbWallChunkDraws)"
   }
  },
  "fieldGetters": {
@@ -2222,7 +2244,8 @@
   "net/minecraft/class_10502.field_61848:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#copperChest",
   "net/minecraft/class_10502.field_61849:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#exposedCopperChest",
   "net/minecraft/class_10502.field_61850:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#weatheredCopperChest",
-  "net/minecraft/class_10502.field_61851:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#oxidizedCopperChest"
+  "net/minecraft/class_10502.field_61851:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#oxidizedCopperChest",
+  "net/minecraft/class_582.field_52909:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallFelineModels#babyTransformer"
  },
  "abstractFills": [
   {
@@ -2720,6 +2743,12 @@
     "keep"
    ],
    "basis": "26.1 PlainTextRenderable.renderSprite takes the pose as a Matrix4fc, which a 1.21.11 Matrix4f is"
+  },
+  "net/minecraft/class_11532.comp_4402()Ljava/util/EnumMap;": {
+   "desc": "()Ljava/util/EnumMap;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallChunkDraws#lists(Ljava/util/EnumMap;)Ljava/util/EnumMap;",
+   "basis": "ChunkSectionsToRender.drawGroupsPerLayer(): a layer's 26.1 draw groups as one 1.21.11 list (a record: no override)"
   }
  },
  "instanceFieldGetters": {
@@ -3025,6 +3054,12 @@
     "net/minecraft/class_10104"
    ],
    "basis": "ScoreContents.name(): 1.21.11's SelectorPattern is 26.1's CompilableString<EntitySelector> (classRenames: the record of a selector's text and the selector parsed from it, which 26.1 uses in its place everywhere); after the rename the Either holds the very objects 26.1's does -- the type argument is the only difference, and the renamed class has no type parameter to carry it"
+  },
+  "net/minecraft/class_3684.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;)V": {
+   "by": [
+    "net/minecraft/class_3680"
+   ],
+   "basis": "CatCollarLayer's parent: 1.21.11's RenderLayerParent<CatRenderState, CatModel>, 26.1's RenderLayerParent<CatRenderState, AbstractFelineModel<CatRenderState>>. CatModel becomes 26.1's AdultCatModel (classRenames), an AbstractFelineModel<CatRenderState>: the parent passes unchanged and the model the layer reads from it is one."
   }
  },
  "superRenames": {
