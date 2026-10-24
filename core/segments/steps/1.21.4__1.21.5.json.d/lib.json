@@ -1,5 +1,5 @@
 {
- "_lib_basis": "slib library front: text2speech 1.17.9 (1.21.4) -> 1.18.11 (1.21.5), core/segments/damage-lib/1.21.4__1.21.5.tsv; rt/CbLibNarrator",
+ "_lib_basis": "slib library front: text2speech 1.17.9 (1.21.4) -> 1.18.11 (1.21.5), core/segments/damage-lib/1.21.4__1.21.5.tsv; rt/CbLibNarrator; authlib 6.0.57 -> 6.0.58 GameProfileRepository.findProfileByName (rt/CbLibAuthlib)",
  "callReshapes": {
   "com/mojang/text2speech/Narrator.say(Ljava/lang/String;Z)V": {
    "desc": "(Ljava/lang/String;ZF)V",
@@ -55,6 +55,20 @@
  "frameDefaults": {
   "say(Ljava/lang/String;Z)V": {
    "2": "top/dext/centurybridge/step/v1_21_5/rt/CbLibNarrator#fullVolume()F"
+  }
+ },
+ "abstractFills": [
+  {
+   "under": "com/mojang/authlib/GameProfileRepository",
+   "method": "findProfileByName(Ljava/lang/String;)Ljava/util/Optional;",
+   "call": "top/dext/centurybridge/step/v1_21_5/rt/CbLibAuthlib.findProfileByName(Lcom/mojang/authlib/GameProfileRepository;Ljava/lang/String;)Ljava/util/Optional;",
+   "basis": "authlib 6.0.58 demands it; a 6.0.57 repository is asked as 1.21.4 asked one name (rt/CbLibAuthlib)"
+  }
+ ],
+ "lambdaAdapters": {
+  "com/mojang/authlib/GameProfileRepository.findProfilesByNames([Ljava/lang/String;Lcom/mojang/authlib/ProfileLookupCallback;)V": {
+   "iface": "top/dext/centurybridge/step/v1_21_5/rt/CbLibAuthlib$Legacy",
+   "adapt": "top/dext/centurybridge/step/v1_21_5/rt/CbLibAuthlib#fromLambda(Ltop/dext/centurybridge/step/v1_21_5/rt/CbLibAuthlib$Legacy;)Lcom/mojang/authlib/GameProfileRepository;"
   }
  }
 }

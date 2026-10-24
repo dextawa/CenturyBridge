@@ -144,9 +144,11 @@ public final class LibDiff {
                 if (extendable && (nc.access & Opcodes.ACC_FINAL) != 0)
                     add(rows, s, coord, sides, "FINAL", name, "class made final");
                 // a method W demands of an implementation that V did not: a mod's class under it lacks it (AbstractMethodError).
-                // A class a mod can extend at all: an interface, or a class with a public/protected constructor
-                boolean implementable = (oc.access & Opcodes.ACC_INTERFACE) != 0 || oc.methods.stream().anyMatch(m ->
-                    m.name.equals("<init>") && (m.access & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) != 0);
+                // A type a mod can extend at all: not sealed (DFU 7's DataResult permits only its own two), and an interface
+                // or a class with a public/protected constructor
+                boolean implementable = (oc.permittedSubclasses == null || oc.permittedSubclasses.isEmpty())
+                    && ((oc.access & Opcodes.ACC_INTERFACE) != 0 || oc.methods.stream().anyMatch(m ->
+                        m.name.equals("<init>") && (m.access & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) != 0));
                 if (implementable && (oc.access & Opcodes.ACC_FINAL) == 0 && (nc.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_INTERFACE)) != 0) {
                     for (String key : newlyAbstract(oldS, oc, newS, nc))
                         add(rows, s, coord, sides, "ABSTRACT", name + "." + key, "implementations must now provide it");
