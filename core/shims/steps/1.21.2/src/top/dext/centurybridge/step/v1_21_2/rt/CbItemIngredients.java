@@ -32,7 +32,8 @@ import top.dext.centurybridge.step.v1_21_2.mixin.CbItemIngredientInvoker;
  * which keeps the constructor's emptiness check (made for direct lists) off it. CbItemIngredientMixin makes it match
  * the empty stack. Where 1.21.2 takes Optional ingredients the recipe bridges turn it into Optional.empty().
  * getItems() / getStackingIds() / isEmpty() and the stack / tag factories are 1.21.1's on 1.21.2's item holders
- * (1.21.1's ingredient matched by item; its stacks' counts and components were never compared).
+ * (1.21.1's ingredient matched by item; its stacks' counts and components were never compared). getItems() is
+ * restored as a member of Ingredient, and test() consults it as 1.21.1's did ({@link #testRead}).
  */
 public final class CbItemIngredients {
 
@@ -67,9 +68,53 @@ public final class CbItemIngredients {
         return isEmptyIngredient(ingredient);
     }
 
-    /** getItems(): a stack of each item */
+    /**
+     * getItems(): the ingredient's own restored getItems() (CbItemIngredientMixin), so a mod's call goes through the
+     * member mods' mixins target
+     */
     public static class_1799[] method_8105(class_1856 ingredient) {
-        return ingredient.method_8105().stream().map(class_1799::new).toArray(class_1799[]::new);
+        return ((IngredientStacks) (Object) ingredient).method_8105();
+    }
+
+    /** 1.21.1's getItems() as a member of Ingredient (CbItemIngredientMixin restores it) */
+    public interface IngredientStacks {
+        class_1799[] method_8105();
+    }
+
+    /** a stack of each item of 1.21.2's item list, in its order (1.21.1's getItems() of item values) */
+    public static class_1799[] stacksOf(List<class_6880<class_1792>> items) {
+        class_1799[] out = new class_1799[items.size()];
+        for (int i = 0; i < out.length; i++) {
+            out[i] = new class_1799(items.get(i));
+        }
+        return out;
+    }
+
+    /**
+     * What Ingredient.test(stack) answers, given 1.21.2's answer {@code w}: 1.21.1's test went through getItems()
+     * (a stack of the ingredient's items matching by item). While the restored getItems() gives exactly 1.21.2's
+     * item list, both answer the same and {@code w} stands; when it gives something else (a mod's mixin on
+     * getItems()), 1.21.1's answer from what it gives.
+     */
+    public static boolean testRead(class_1856 ingredient, class_1799 stack, boolean w) {
+        class_1799[] got = ((IngredientStacks) (Object) ingredient).method_8105();
+        List<class_6880<class_1792>> items = ingredient.method_8105();
+        boolean same = got != null && got.length == items.size();
+        for (int i = 0; same && i < got.length; i++) {
+            same = got[i] != null && got[i].method_7909() == items.get(i).comp_349();
+        }
+        if (same) {
+            return w;
+        }
+        if (stack == null || got == null) {
+            return false;
+        }
+        for (class_1799 s : got) {
+            if (s != null && s.method_31574(stack.method_7909())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** getStackingIds(): the items' registry ids, sorted (1.21.1's StackedContents index) */

@@ -144,7 +144,9 @@ public final class SiteMatch {
      * down its value's chain of consumers that takes any (a CubeListBuilder's addBox, whose builder the
      * "left_sleeve" call takes), with that instruction's owner.name. A string constant is a statement's
      * own name for what it builds; the key survives W reordering the statements or reshaping their
-     * other arguments.
+     * other arguments. An instruction no string reaches is keyed by the game static fields it takes as its
+     * own operands ({@code stack.is(Items.MAP)}, {@code slot.set(ItemStack.EMPTY)}): a registered constant
+     * names what the statement is about the same way, and keeps its name across releases.
      */
     static Map<AbstractInsnNode, String> keys(MethodNode m) {
         Map<AbstractInsnNode, String> cached = KEYS.get(m);
@@ -163,6 +165,9 @@ public final class SiteMatch {
                     }
                     c = f.consumer.get(c);
                 }
+                if (!out.containsKey(in) && f.statics.get(in) != null) {
+                    out.put(in, "#" + f.statics.get(in)); // no string: the game constants it takes itself (isOf(Items.MAP))
+                }
             }
         }
         KEYS.put(m, out);
@@ -171,9 +176,12 @@ public final class SiteMatch {
 
     private static final Map<MethodNode, Map<AbstractInsnNode, String>> KEYS = java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
 
-    /** who takes each instruction's value (when exactly one instruction does), and each call's string operands */
+    /**
+     * who takes each instruction's value (when exactly one instruction does), each call's string operands, and
+     * the game static fields it takes as operands (Items.MAP, ItemStack.EMPTY)
+     */
     private record Flow(Map<AbstractInsnNode, AbstractInsnNode> consumer, Map<AbstractInsnNode, String> strings,
-                        Map<AbstractInsnNode, AbstractInsnNode[]> producers) {}
+                        Map<AbstractInsnNode, AbstractInsnNode[]> producers, Map<AbstractInsnNode, String> statics) {}
 
     private static final Map<MethodNode, Flow> FLOWS = java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
 
@@ -283,6 +291,7 @@ public final class SiteMatch {
         Map<AbstractInsnNode, AbstractInsnNode> consumer = new java.util.IdentityHashMap<>();
         Set<AbstractInsnNode> shared = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
         Map<AbstractInsnNode, String> strings = new java.util.IdentityHashMap<>();
+        Map<AbstractInsnNode, String> statics = new java.util.IdentityHashMap<>();
         Map<AbstractInsnNode, AbstractInsnNode[]> producers = new java.util.IdentityHashMap<>();
         for (int i = 0; i < m.instructions.size(); i++) {
             AbstractInsnNode in = m.instructions.get(i);
@@ -290,7 +299,7 @@ public final class SiteMatch {
             if (fr == null) continue;
             int n = operands(in);
             if (n <= 0 || n > fr.getStackSize()) continue;
-            StringBuilder s = new StringBuilder();
+            StringBuilder s = new StringBuilder(), g = new StringBuilder();
             AbstractInsnNode[] ps = new AbstractInsnNode[n];
             producers.put(in, ps);
             for (int a = 0; a < n; a++) {
@@ -305,12 +314,15 @@ public final class SiteMatch {
                 consumer.put(p, in);
                 if (p instanceof LdcInsnNode ldc && ldc.cst instanceof String str) {
                     s.append('"').append(str).append('"').append('@').append(a).append(';');
+                } else if (p instanceof FieldInsnNode fi && fi.getOpcode() == Opcodes.GETSTATIC && fi.owner.startsWith("net/minecraft/")) {
+                    g.append(fi.owner).append('.').append(fi.name).append('@').append(a).append(';');
                 }
             }
             if (s.length() > 0) strings.put(in, s.toString());
+            if (g.length() > 0) statics.put(in, g.toString());
         }
         for (AbstractInsnNode p : shared) consumer.remove(p);
-        return new Flow(consumer, strings, producers);
+        return new Flow(consumer, strings, producers, statics);
     }
 
     /** stack operands a call or field instruction takes (receiver included); 0 for others */
