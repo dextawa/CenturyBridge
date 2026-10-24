@@ -816,6 +816,7 @@ public class SwallTestMod implements ModInitializer {
             timerQueue();
             extendFinal();
             worldCalls(server);
+            legacyStates();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1095,6 +1096,66 @@ public class SwallTestMod implements ModInitializer {
             check("world.registryLoadSync", n > 10, n);
         } catch (Throwable t) {
             check("world.registryLoadSync", false, t);
+        }
+    }
+
+    /** a 1.21.11 BlockState subclass built through 1.21.11's StateHolder constructor, factory and codec (CbWallStates) */
+    static final class LegacyState extends net.minecraft.class_2680 {
+        LegacyState(net.minecraft.class_2248 block, it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap<net.minecraft.class_2769<?>, Comparable<?>> values,
+                    com.mojang.serialization.MapCodec<net.minecraft.class_2680> codec) {
+            super(block, values, codec);
+        }
+
+        static com.mojang.serialization.Codec<net.minecraft.class_2680> legacyCodec() {
+            return method_28494(net.minecraft.class_7923.field_41175.method_39673(), net.minecraft.class_2248::method_9564);
+        }
+
+        com.mojang.serialization.MapCodec<net.minecraft.class_2680> codecField() {
+            return field_24740;
+        }
+    }
+
+    static final class LegacyFactoryClass implements net.minecraft.class_2689.class_2691<net.minecraft.class_2248, net.minecraft.class_2680> {
+        int calls;
+
+        @Override
+        public net.minecraft.class_2680 create(net.minecraft.class_2248 block, it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap<net.minecraft.class_2769<?>, Comparable<?>> values,
+                                               com.mojang.serialization.MapCodec<net.minecraft.class_2680> codec) {
+            calls++;
+            return new LegacyState(block, values, codec);
+        }
+    }
+
+    private static void legacyStates() {
+        try {
+            net.minecraft.class_2689<net.minecraft.class_2248, net.minecraft.class_2680> def = new net.minecraft.class_2689.class_2690<net.minecraft.class_2248, net.minecraft.class_2680>(
+                net.minecraft.class_2246.field_10524).method_11667(net.minecraft.class_2453.field_11413).method_11668(net.minecraft.class_2248::method_9564, LegacyState::new);
+            java.util.List<net.minecraft.class_2680> states = def.method_11662();
+            net.minecraft.class_2680 lit = states.stream().filter(st -> st.method_11654(net.minecraft.class_2453.field_11413)).findFirst().orElse(null);
+            check("states.lambdaFactory", states.size() == 2 && states.stream().allMatch(st -> st instanceof LegacyState) && lit != null
+                && lit.method_11656().size() == 1 && Boolean.TRUE.equals(lit.method_11656().get(net.minecraft.class_2453.field_11413)), states);
+        } catch (Throwable t) {
+            check("states.lambdaFactory", false, t);
+        }
+        try {
+            LegacyFactoryClass factory = new LegacyFactoryClass();
+            net.minecraft.class_2689<net.minecraft.class_2248, net.minecraft.class_2680> def = new net.minecraft.class_2689.class_2690<net.minecraft.class_2248, net.minecraft.class_2680>(
+                net.minecraft.class_2246.field_10524).method_11667(net.minecraft.class_2453.field_11413).method_11668(net.minecraft.class_2248::method_9564, factory);
+            check("states.factoryClass", factory.calls == 2 && def.method_11662().stream().allMatch(st -> st instanceof LegacyState), factory.calls);
+        } catch (Throwable t) {
+            check("states.factoryClass", false, t);
+        }
+        try {
+            net.minecraft.class_2680 lamp = net.minecraft.class_2246.field_10524.method_9564().method_11657(net.minecraft.class_2453.field_11413, true);
+            com.mojang.serialization.Codec<net.minecraft.class_2680> codec = LegacyState.legacyCodec();
+            com.google.gson.JsonElement json = codec.encodeStart(JsonOps.INSTANCE, lamp).getOrThrow();
+            net.minecraft.class_2680 back = codec.parse(JsonOps.INSTANCE, json).getOrThrow();
+            LegacyState own = new LegacyState(net.minecraft.class_2246.field_10524,
+                new it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap<>(new net.minecraft.class_2769<?>[] {net.minecraft.class_2453.field_11413}, new Comparable<?>[] {Boolean.TRUE}), null);
+            check("states.codecAndField", json.toString().contains("\"lit\":\"true\"") && back == lamp && own.codecField() != null
+                && own.method_11654(net.minecraft.class_2453.field_11413), json);
+        } catch (Throwable t) {
+            check("states.codecAndField", false, t);
         }
     }
 }
