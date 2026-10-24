@@ -62,6 +62,7 @@
     "CbItemIngredientMixin",
     "CbItemLockMixin",
     "CbItemMembersMixin",
+    "CbItemRecipeManagerAccess",
     "CbItemRegistryFrozenAccess",
     "CbItemRegistryMixin",
     "CbItemServerThreadMixin",
