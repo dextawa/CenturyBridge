@@ -10,7 +10,8 @@
   "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "top/dext/centurybridge/step/v26_2/facade/StructureProcessorType",
   "com/mojang/blaze3d/platform/SourceFactor": "com/mojang/blaze3d/platform/BlendFactor",
   "com/mojang/blaze3d/platform/DestFactor": "com/mojang/blaze3d/platform/BlendFactor",
-  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket": "net/minecraft/network/protocol/game/ServerboundSpectatorActionPacket"
+  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket": "net/minecraft/network/protocol/game/ServerboundSpectatorActionPacket",
+  "net/minecraft/world/level/levelgen/feature/configurations/SimpleRandomFeatureConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/CompositeFeatureConfiguration"
  },
  "_classRenames_basis": {
   "net/minecraft/util/Tuple": "26.2 deleted Tuple (no class of 26.2 holds its members; its callers use DFU Pair); the layer's facade is 26.1.2's class as it was",
@@ -22,7 +23,8 @@
   "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "26.1.2's registry value type (a holder of its processor's map codec) is gone: 26.2 registers the map codecs and keeps only the four codecs under this name; the facade is 26.1.2's interface with every member (constants = the types of 26.2's codecs under the same ids)",
   "com/mojang/blaze3d/platform/SourceFactor": "26.2 merged SourceFactor and DestFactor into BlendFactor: the same 15 constants as SourceFactor in its order; GlConst.toGl(BlendFactor) and BlendFunction's components take it (javap)",
   "com/mojang/blaze3d/platform/DestFactor": "26.2's BlendFactor holds DestFactor's 14 constants and SRC_ALPHA_SATURATE (source-only in GL); values()/valueOf answer DestFactor's set (rt/CbS26Blend)",
-  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket": "26.2 folded the spectate request into ServerboundSpectatorActionPacket(OptionalInt): construction and entityId() through rt/CbS26Packets; type/handle/STREAM_CODEC and the record members resolve on 26.2's packet"
+  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket": "26.2 folded the spectate request into ServerboundSpectatorActionPacket(OptionalInt): construction and entityId() through rt/CbS26Packets; type/handle/STREAM_CODEC and the record members resolve on 26.2's packet",
+  "net/minecraft/world/level/levelgen/feature/configurations/SimpleRandomFeatureConfiguration": "26.2's CompositeFeatureConfiguration is the same configuration (a non-empty HolderSet of placed features, CODEC {features: ...}, getSubFeatures) and Feature.SIMPLE_RANDOM_SELECTOR takes it; the public field reads the record component"
  },
  "fieldGetters": {
   "net/minecraft/world/level/block/Blocks.COPPER_BARS:Lnet/minecraft/world/level/block/WeatheringCopperBlocks;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Blocks_COPPER_BARS",
@@ -186,6 +188,47 @@
     "keep"
    ],
    "basis": "26.2 takes the spawn configuration as a PostSpawnProcessor (apply(T)) where 26.1.2 took a Consumer (accept(T)); CbS26Entity adapts it (and unwraps its own adapter)"
+  },
+  "net/minecraft/client/OptionInstance.createBoolean(Ljava/lang/String;ZLjava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance;": {
+   "desc": "(Ljava/lang/String;ZLnet/minecraft/client/OptionInstance$ValueUpdateListener;)Lnet/minecraft/client/OptionInstance;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#toListener(Ljava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance$ValueUpdateListener;"
+   ],
+   "basis": "26.2 takes the value-changed callback as OptionInstance.ValueUpdateListener where 26.1.2 took a Consumer (rt/CbS26OptionsClient adapts it)"
+  },
+  "net/minecraft/client/OptionInstance.createBoolean(Ljava/lang/String;Lnet/minecraft/client/OptionInstance$TooltipSupplier;ZLjava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance;": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/client/OptionInstance$TooltipSupplier;ZLnet/minecraft/client/OptionInstance$ValueUpdateListener;)Lnet/minecraft/client/OptionInstance;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#toListener(Ljava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance$ValueUpdateListener;"
+   ],
+   "basis": "26.2 takes the value-changed callback as OptionInstance.ValueUpdateListener where 26.1.2 took a Consumer (rt/CbS26OptionsClient adapts it)"
+  },
+  "net/minecraft/client/OptionInstance.createBoolean(Ljava/lang/String;Lnet/minecraft/client/OptionInstance$TooltipSupplier;Lnet/minecraft/client/OptionInstance$CaptionBasedToString;ZLjava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance;": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/client/OptionInstance$TooltipSupplier;Lnet/minecraft/client/OptionInstance$CaptionBasedToString;ZLnet/minecraft/client/OptionInstance$ValueUpdateListener;)Lnet/minecraft/client/OptionInstance;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#toListener(Ljava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance$ValueUpdateListener;"
+   ],
+   "basis": "26.2 takes the value-changed callback as OptionInstance.ValueUpdateListener where 26.1.2 took a Consumer (rt/CbS26OptionsClient adapts it)"
+  },
+  "net/minecraft/client/OptionInstance.createButton(Lnet/minecraft/client/Options;IIILjava/util/function/Consumer;)Lnet/minecraft/client/gui/components/AbstractWidget;": {
+   "desc": "(Lnet/minecraft/client/Options;IIILnet/minecraft/client/OptionInstance$ValueUpdateListener;)Lnet/minecraft/client/gui/components/AbstractWidget;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#toListener(Ljava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance$ValueUpdateListener;"
+   ],
+   "basis": "26.2 takes the value-changed callback as OptionInstance.ValueUpdateListener where 26.1.2 took a Consumer (rt/CbS26OptionsClient adapts it)"
   }
  },
  "instanceFieldGetters": {
@@ -208,7 +251,8 @@
   "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.cannotReplace:Lnet/minecraft/tags/TagKey;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#cannotReplace",
   "net/minecraft/client/renderer/LevelRenderer.debugRenderer:Lnet/minecraft/client/renderer/debug/DebugRenderer;": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#debugRenderer",
   "net/minecraft/client/renderer/LevelRenderer.gameTestBlockHighlightRenderer:Lnet/minecraft/client/renderer/debug/GameTestBlockHighlightRenderer;": "top/dext/centurybridge/step/v26_2/rt/CbS26LevelClient#gameTestBlockHighlightRenderer",
-  "net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getScreen"
+  "net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#getScreen",
+  "net/minecraft/world/level/levelgen/feature/configurations/SimpleRandomFeatureConfiguration.features:Lnet/minecraft/core/HolderSet;": "top/dext/centurybridge/step/v26_2/rt/CbS26World#features"
  },
  "instanceFieldSetters": {
   "net/minecraft/world/entity/LivingEntity.currentExplosionCause:Lnet/minecraft/world/entity/Entity;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#setCurrentExplosionCause",
@@ -350,6 +394,31 @@
     "keep"
    ],
    "basis": "26.2's LargeDripstoneConfiguration(replaceableBlocks, ...): 26.2's CaveFeatures passes #dripstone_replaceable_blocks, the set 26.1.2 hard-wired"
+  },
+  "net/minecraft/client/OptionInstance.<init>(Ljava/lang/String;Lnet/minecraft/client/OptionInstance$TooltipSupplier;Lnet/minecraft/client/OptionInstance$CaptionBasedToString;Lnet/minecraft/client/OptionInstance$ValueSet;Ljava/lang/Object;Ljava/util/function/Consumer;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/client/OptionInstance$TooltipSupplier;Lnet/minecraft/client/OptionInstance$CaptionBasedToString;Lnet/minecraft/client/OptionInstance$ValueSet;Ljava/lang/Object;Lnet/minecraft/client/OptionInstance$ValueUpdateListener;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#toListener(Ljava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance$ValueUpdateListener;"
+   ],
+   "basis": "26.2 takes the value-changed callback as OptionInstance.ValueUpdateListener where 26.1.2 took a Consumer (rt/CbS26OptionsClient adapts it)"
+  },
+  "net/minecraft/client/OptionInstance.<init>(Ljava/lang/String;Lnet/minecraft/client/OptionInstance$TooltipSupplier;Lnet/minecraft/client/OptionInstance$CaptionBasedToString;Lnet/minecraft/client/OptionInstance$ValueSet;Lcom/mojang/serialization/Codec;Ljava/lang/Object;Ljava/util/function/Consumer;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/client/OptionInstance$TooltipSupplier;Lnet/minecraft/client/OptionInstance$CaptionBasedToString;Lnet/minecraft/client/OptionInstance$ValueSet;Lcom/mojang/serialization/Codec;Ljava/lang/Object;Lnet/minecraft/client/OptionInstance$ValueUpdateListener;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#toListener(Ljava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance$ValueUpdateListener;"
+   ],
+   "basis": "26.2 takes the value-changed callback as OptionInstance.ValueUpdateListener where 26.1.2 took a Consumer (rt/CbS26OptionsClient adapts it)"
   }
  },
  "methodRenames": {
@@ -364,7 +433,8 @@
   "net/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration.<init>(ILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/IntProvider;IILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/FloatProvider;Lnet/minecraft/util/valueproviders/FloatProvider;FII)V": "a 26.1.2 class extending DripstoneClusterConfiguration (super(...) included): 26.2's SpeleothemClusterConfiguration that the class became is a final record (javap 26.2), and 26.2's Feature reads its configuration by casting to that record (SpeleothemFeature / SpeleothemClusterFeature.place), so a subclass outside the record could not reach 26.2's feature either; construction, fields and CODEC are bridged (rt/CbS26Dripstone), a subclass fails to load (IncompatibleClassChangeError: cannot inherit from final class)",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.<init>(FFFF)V": "a 26.1.2 class extending PointedDripstoneConfiguration (super(...) included): 26.2's SpeleothemConfiguration that the class became is a final record (javap 26.2), and 26.2's Feature reads its configuration by casting to that record (SpeleothemFeature / SpeleothemClusterFeature.place), so a subclass outside the record could not reach 26.2's feature either; construction, fields and CODEC are bridged (rt/CbS26Dripstone), a subclass fails to load (IncompatibleClassChangeError: cannot inherit from final class)",
   "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.<init>(Lnet/minecraft/tags/TagKey;)V": "a 26.1.2 class extending ProtectedBlockProcessor (super(tag) included): 26.2's ProtectedBlockProcessor is a final record of a HolderSet (javap 26.2); construction, cannotReplace, processBlock and CODEC (26.1.2's {value: #tag} shape, rt/CbS26Processors) are bridged, a subclass fails to load (cannot inherit from final class)",
-  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.<init>(Lnet/minecraft/network/RegistryFriendlyByteBuf;)V": "a 26.1.2 class extending ClientboundSetPlayerTeamPacket.Parameters (super(buf) included): 26.2's Parameters is a final record (javap 26.2); reading, writing and the getters are bridged (rt/CbS26Team), a subclass fails to load"
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.<init>(Lnet/minecraft/network/RegistryFriendlyByteBuf;)V": "a 26.1.2 class extending ClientboundSetPlayerTeamPacket.Parameters (super(buf) included): 26.2's Parameters is a final record (javap 26.2); reading, writing and the getters are bridged (rt/CbS26Team), a subclass fails to load",
+  "net/minecraft/world/level/levelgen/feature/configurations/SimpleRandomFeatureConfiguration.<init>(Lnet/minecraft/core/HolderSet;)V": "a 26.1.2 class extending SimpleRandomFeatureConfiguration (super(features) included): 26.2's CompositeFeatureConfiguration is a final record that Feature.SIMPLE_RANDOM_SELECTOR casts to; construction, features, getSubFeatures and CODEC are bridged, a subclass fails to load"
  },
  "_methodRenames_basis": {
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils.getDripstoneHeight(DDDD)D": "wall_table found the rename (same code); DripstoneUtils is renamed here by hand, its class pairing being undecided there",

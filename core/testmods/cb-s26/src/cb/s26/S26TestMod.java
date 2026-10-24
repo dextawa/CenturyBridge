@@ -359,6 +359,11 @@ public class S26TestMod implements ModInitializer {
         check("packet.teamParameters", params.getColor() == net.minecraft.ChatFormatting.GOLD && (params.getOptions() & 1) == 1
             && params.getNametagVisibility() == net.minecraft.world.scores.Team.Visibility.ALWAYS, params.getColor());
 
+        // SimpleRandomFeatureConfiguration on 26.2's CompositeFeatureConfiguration
+        net.minecraft.core.HolderSet<net.minecraft.world.level.levelgen.placement.PlacedFeature> none = net.minecraft.core.HolderSet.direct();
+        var simple = new net.minecraft.world.level.levelgen.feature.configurations.SimpleRandomFeatureConfiguration(none);
+        check("feature.simpleRandom", simple.features == none && simple.getSubFeatures().count() == 0, simple);
+
         System.out.println("CB-S26 DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS: " + FAILS));
     }
 }
