@@ -1,0 +1,70 @@
+{
+ "superCtorReshapes": {
+  "net/minecraft/class_170.<init>(ILjava/util/List;Ljava/util/List;Ljava/util/Optional;)V": {
+   "desc": "(ILjava/util/List;Ljava/util/List;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemGeneric#recipeKeys(Ljava/util/List;)Ljava/util/List;",
+    "keep"
+   ],
+   "basis": "AdvancementRewards' recipes: 1.21.1's ids as 1.21.2's recipe keys"
+  },
+  "net/minecraft/class_8054.<init>(Ljava/lang/String;Lnet/minecraft/class_6880;FLjava/util/Map;Lnet/minecraft/class_2561;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_6880;FLjava/util/Map;Lnet/minecraft/class_2561;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemGeneric#overridesByModel(Ljava/util/Map;)Ljava/util/Map;",
+    "keep"
+   ],
+   "basis": "TrimMaterial's armour overrides: 1.21.1's ArmorMaterial keys as 1.21.2's equipment model ids"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_170.comp_2027()Ljava/util/List;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemGeneric#recipeIds(Ljava/util/List;)Ljava/util/List;",
+   "basis": "AdvancementRewards.recipes(): 1.21.2's recipe keys as 1.21.1's ids (a record: no override)"
+  },
+  "net/minecraft/class_4553.comp_1820()Lit/unimi/dsi/fastutil/objects/Object2BooleanMap;": {
+   "desc": "()Lit/unimi/dsi/fastutil/objects/Object2BooleanMap;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemGeneric#recipeIdMap(Lit/unimi/dsi/fastutil/objects/Object2BooleanMap;)Lit/unimi/dsi/fastutil/objects/Object2BooleanMap;",
+   "basis": "PlayerPredicate.recipes(): 1.21.2's key -> unlocked map as 1.21.1's id -> unlocked (a record)"
+  },
+  "net/minecraft/class_2370.method_40272()Ljava/util/stream/Stream;": {
+   "desc": "()Ljava/util/stream/Stream;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#tagPairs(Ljava/util/stream/Stream;)Ljava/util/stream/Stream;",
+   "basis": "MappedRegistry.getTags() (declared there as well as on Registry, whose callReshape and convertHooks are s7item-registries-gen's): 1.21.1's stream of (key, set) pairs"
+  },
+  "net/minecraft/class_8054.comp_1237()Ljava/util/Map;": {
+   "desc": "()Ljava/util/Map;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemGeneric#overridesByMaterial(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "TrimMaterial.overrideArmorMaterials(): 1.21.2's model ids as 1.21.1's ArmorMaterial holders (a record)"
+  },
+  "net/minecraft/class_8054.method_48438(Ljava/lang/String;Lnet/minecraft/class_1792;FLnet/minecraft/class_2561;Ljava/util/Map;)Lnet/minecraft/class_8054;": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_1792;FLnet/minecraft/class_2561;Ljava/util/Map;)Lnet/minecraft/class_8054;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemGeneric#overridesByModel(Ljava/util/Map;)Ljava/util/Map;"
+   ],
+   "basis": "TrimMaterial.create(.., overrides): 1.21.1's ArmorMaterial keys as 1.21.2's equipment model ids"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_3503",
+   "member": "method_18242(Ljava/util/Map;)Ljava/util/Map;",
+   "ret": "top/dext/centurybridge/step/v1_21_2/rt/CbItemGeneric#tagLists(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "a 1.21.1 TagLoader.build(..) override answers Collection values; 1.21.2's loader reads Lists"
+  }
+ ]
+}

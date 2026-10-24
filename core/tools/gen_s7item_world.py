@@ -211,6 +211,26 @@ def triggers(out):
                  "items) answers with its location; its super call is 1.21.2's body with the id's key"})
 
 
+def frame_defaults(out):
+    """frameDefaults for mechanical.json's frames hooks in s7item's area: the value a 1.21.1 override entered directly
+    hands its rewritten super call (CbItemTriggers)"""
+    rt = "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#"
+    hg = ")Lnet/minecraft/class_7871;"
+    b = "Lnet/minecraft/class_2048$class_2049;"
+    out["frameDefaults"] = {
+        "method_8921(Lnet/minecraft/class_1299;)Lnet/minecraft/class_2048$class_2049;":
+            {"0": rt + "entityTypes(" + b + "Lnet/minecraft/class_1299;" + hg},
+        "method_8922(Lnet/minecraft/class_6862;)Lnet/minecraft/class_2048$class_2049;":
+            {"0": rt + "entityTypes(" + b + "Lnet/minecraft/class_6862;" + hg},
+        "method_8980(Lnet/minecraft/class_3222;Ljava/util/Collection;)V":
+            {"2": rt + "noWeapon(Lnet/minecraft/class_2076;Lnet/minecraft/class_3222;Ljava/util/Collection;)Lnet/minecraft/class_1799;"},
+        "method_46034()Lnet/minecraft/class_5341$class_210;":
+            {"0": rt + "entityTypes(Lnet/minecraft/class_7789;" + hg},
+        "method_46030(Lnet/minecraft/class_5321;)Lnet/minecraft/class_5341$class_210;":
+            {"0": rt + "entityTypes(Lnet/minecraft/class_7789;Lnet/minecraft/class_5321;" + hg},
+    }
+
+
 def main():
     out = {"instanceRedirects": {}, "superRedirects": {}, "staticRedirects": {}, "adapterHooks": [],
            "overrideHooks": [], "lambdaAdapters": {}, "superCtorReshapes": {}, "fieldGetters": {}, "abstractFills": []}
@@ -221,6 +241,7 @@ def main():
     entities_by_type(out)
     misc(out)
     triggers(out)
+    frame_defaults(out)
     json.dump(out, open(sys.argv[1], "w", encoding="utf-8", newline="\n"), indent=1)
 
 

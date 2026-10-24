@@ -118,4 +118,33 @@ public final class CbItemTriggers {
     public static void superTriggerBridge(SuperCrafted self, class_3222 player, class_2960 id, List<class_1799> items) {
         self.cb$super$method_51350(player, key(id), items);
     }
+
+    // ---- frameDefaults: what a 1.21.1 override entered directly (not from 1.21.2's shape) passes on to the new shape ----
+
+    /** EntityPredicate.Builder.of(type) / of(tag): the entity type lookup 1.21.1 resolved in, the built-in registry */
+    public static class_7871<net.minecraft.class_1299<?>> entityTypes(net.minecraft.class_2048.class_2049 builder,
+            net.minecraft.class_1299<?> type) {
+        return class_7923.field_41177;
+    }
+
+    public static class_7871<net.minecraft.class_1299<?>> entityTypes(net.minecraft.class_2048.class_2049 builder,
+            net.minecraft.class_6862<net.minecraft.class_1299<?>> tag) {
+        return class_7923.field_41177;
+    }
+
+    /** KilledByArrowTrigger.trigger(player, victims): 1.21.1's had no weapon (its instances test none) -- the empty stack */
+    public static class_1799 noWeapon(net.minecraft.class_2076 trigger, class_3222 player, java.util.Collection<?> victims) {
+        return class_1799.field_8037;
+    }
+
+    /** EntityLootSubProvider.killedByFrog() / killedByFrogVariant(variant): the built-in entity type registry */
+    public static class_7871<net.minecraft.class_1299<?>> entityTypes(net.minecraft.class_7789 provider) {
+        return class_7923.field_41177;
+    }
+
+    public static class_7871<net.minecraft.class_1299<?>> entityTypes(net.minecraft.class_7789 provider,
+            class_5321<net.minecraft.class_7106> variant) {
+        return class_7923.field_41177;
+    }
+
 }

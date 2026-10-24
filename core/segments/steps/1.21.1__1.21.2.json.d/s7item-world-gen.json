@@ -240,5 +240,22 @@
   "net/minecraft/class_1751": "top/dext/centurybridge/step/v1_21_2/facade/BookItem",
   "net/minecraft/class_1798": "top/dext/centurybridge/step/v1_21_2/facade/ItemNameBlockItem",
   "net/minecraft/class_314": "top/dext/centurybridge/step/v1_21_2/facade/RecipeBookCategories"
+ },
+ "frameDefaults": {
+  "method_8921(Lnet/minecraft/class_1299;)Lnet/minecraft/class_2048$class_2049;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#entityTypes(Lnet/minecraft/class_2048$class_2049;Lnet/minecraft/class_1299;)Lnet/minecraft/class_7871;"
+  },
+  "method_8922(Lnet/minecraft/class_6862;)Lnet/minecraft/class_2048$class_2049;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#entityTypes(Lnet/minecraft/class_2048$class_2049;Lnet/minecraft/class_6862;)Lnet/minecraft/class_7871;"
+  },
+  "method_8980(Lnet/minecraft/class_3222;Ljava/util/Collection;)V": {
+   "2": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#noWeapon(Lnet/minecraft/class_2076;Lnet/minecraft/class_3222;Ljava/util/Collection;)Lnet/minecraft/class_1799;"
+  },
+  "method_46034()Lnet/minecraft/class_5341$class_210;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#entityTypes(Lnet/minecraft/class_7789;)Lnet/minecraft/class_7871;"
+  },
+  "method_46030(Lnet/minecraft/class_5321;)Lnet/minecraft/class_5341$class_210;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#entityTypes(Lnet/minecraft/class_7789;Lnet/minecraft/class_5321;)Lnet/minecraft/class_7871;"
+  }
  }
 }
