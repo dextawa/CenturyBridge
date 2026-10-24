@@ -59,16 +59,30 @@
   "net/minecraft/class_2535.method_52910()V"
  ],
  "facadeGaps": {
-  "net/minecraft/class_2539$class_8698.<init>(Lnet/minecraft/class_2539;Lnet/minecraft/class_2598;Lnet/minecraft/class_2539$class_4532;)V": "takes 1.20.4's ConnectionProtocol.PacketSet, a package-private class (no mod could name or build one without an access widener) that 1.20.5 removed with the packet-class registry it was: 1.20.5 protocols are fixed sets of PacketTypes built once from vanilla's codecs, with no packet classes to register",
+  "net/minecraft/class_2539$class_8698.<init>(Lnet/minecraft/class_2539;Lnet/minecraft/class_2598;Lnet/minecraft/class_2539$class_4532;)V": "unreachable without an access widener, and nothing on 1.20.5 to build: its third argument is 1.20.4's ConnectionProtocol.PacketSet (class_2539$class_4532), a package-private class with a package-private constructor; no public 1.20.4 member returns one (ConnectionProtocol's PacketSets are private, CodecData's field_45674 is private), so no mod can name or pass one through 1.20.4's API (javap of 1.20.4's ConnectionProtocol / PacketSet / CodecData). What a PacketSet is -- packet classes registered with their decoders, ids by class -- has no 1.20.5 counterpart: a 1.20.5 protocol's IdDispatchCodec entries are (StreamCodec, PacketType) pairs with no packet class (class_9136$class_9138)",
   "net/minecraft/class_2539$class_8698.field_45674:Lnet/minecraft/class_2539$class_4532;": "private in 1.20.4 (the PacketSet behind the view; the facade keeps the 1.20.5 ProtocolInfo)",
   "net/minecraft/class_2539$class_8698.method_52928()Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "package-private in 1.20.4 (id -> packet class map, used by ConnectionProtocol.getPacketsByIds); 1.20.5 records no packet classes per id",
   "net/minecraft/class_8699.method_53009(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/class_2596;Ljava/util/List;Lio/netty/util/AttributeKey;)V": "private in 1.20.4 (the shared validation step; the facade's is cbValidate)",
   "net/minecraft/class_8699.field_45679:Lorg/slf4j/Logger;": "private in 1.20.4 (logger)"
  },
  "ledger": {
-  "net/minecraft/class_2539$class_8698.<init>(Lnet/minecraft/class_2539;Lnet/minecraft/class_2598;Lnet/minecraft/class_2539$class_4532;)V": "takes 1.20.4's ConnectionProtocol.PacketSet, a package-private class (no mod could name or build one without an access widener) that 1.20.5 removed with the packet-class registry it was: 1.20.5 protocols are fixed sets of PacketTypes built once from vanilla's codecs, with no packet classes to register",
-  "net/minecraft/class_2539.method_39498(Lnet/minecraft/class_2598;)Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "ConnectionProtocol.getPacketsByIds(flow) answered packet classes by id; 1.20.5's protocol codecs (IdDispatchCodec) map ids to PacketTypes and StreamCodecs built from lambdas, recording no packet class anywhere, so there is no class to answer (ids <-> types: ConnectionProtocolCodecData)",
-  "net/minecraft/class_8734.<init>(Lnet/minecraft/class_5455$class_6890;)V": "ClientboundRegistryDataPacket(registries): 1.20.4 sent every synchronized registry in one packet; 1.20.5's packet is one registry (its key and packed entries) and a configuration sends one per registry, so one packet built from a whole registry access has no 1.20.5 form",
-  "net/minecraft/class_8734.comp_1724()Lnet/minecraft/class_5455$class_6890;": "ClientboundRegistryDataPacket.registryHolder(): a 1.20.5 packet carries one registry's entries as (id, optional NBT), the NBT left out for every entry the client has from a known pack, so no registry access can be built from the packet alone (1.20.5 builds it from all packets plus the client's packs when configuration finishes)"
- }
+  "net/minecraft/class_2539$class_8698.<init>(Lnet/minecraft/class_2539;Lnet/minecraft/class_2598;Lnet/minecraft/class_2539$class_4532;)V": "unreachable without an access widener, and nothing on 1.20.5 to build: its third argument is 1.20.4's ConnectionProtocol.PacketSet (class_2539$class_4532), a package-private class with a package-private constructor; no public 1.20.4 member returns one (ConnectionProtocol's PacketSets are private, CodecData's field_45674 is private), so no mod can name or pass one through 1.20.4's API (javap of 1.20.4's ConnectionProtocol / PacketSet / CodecData). What a PacketSet is -- packet classes registered with their decoders, ids by class -- has no 1.20.5 counterpart: a 1.20.5 protocol's IdDispatchCodec entries are (StreamCodec, PacketType) pairs with no packet class (class_9136$class_9138)",
+  "net/minecraft/class_2539.method_39498(Lnet/minecraft/class_2598;)Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "ConnectionProtocol.getPacketsByIds(flow) answered the packet class registered at each id. 1.20.5 records no packet class for any id: a protocol is an IdDispatchCodec whose entries are (StreamCodec, PacketType) records (class_9136$class_9138: comp_2228 the codec, comp_2229 the type) and whose type -> id map is keyed by PacketType (field_48579); the codecs are lambdas over constructors, so no class is held anywhere to answer with. The id <-> type view 1.20.5 does have is given back by ConnectionProtocolCodecData",
+  "net/minecraft/class_8734.<init>(Lnet/minecraft/class_5455$class_6890;)V": "ClientboundRegistryDataPacket(registries) carried the whole synchronized registry access, and 1.20.4's client replaced its remote registry layer with it (ClientConfigurationPacketListenerImpl.handleRegistryData: LayeredRegistryAccess.replaceFrom(REMOTE, packet.registryHolder())). 1.20.5's protocol has one packet per registry (key + packed entries), and its client appends each packet's entries to what it has collected (RegistryDataCollector.ContentsCollector.appendContents: map.computeIfAbsent(key).addAll(entries)), with no message that replaces; the client may be a vanilla 1.20.5 one, so neither one packet nor a series of them carries 1.20.4's meaning",
+  "net/minecraft/class_8734.comp_1724()Lnet/minecraft/class_5455$class_6890;": "ClientboundRegistryDataPacket.registryHolder() answered the packet's whole registry access. A 1.20.5 packet holds one registry's entries as (id, optional NBT), the NBT left out for every entry the client has from a pack both sides know (RegistrySynchronization.packRegistries with the known packs), so the packet alone holds neither the other registries nor the data of those entries; 1.20.5's client builds the access only from all packets plus its own packs (RegistryDataCollector.collectGameRegistries)"
+ },
+ "superRedirects": {
+  "net/minecraft/class_2535.method_52899(Lnet/minecraft/class_8592;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet#superAfterHandshake"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2535",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet$LegacyAfterHandshake",
+   "requires": [
+    "method_52899(Lnet/minecraft/class_8592;)V"
+   ],
+   "synth": [],
+   "basis": "s4fin network: a 1.20.4 Connection subclass's setClientboundProtocolAfterHandshake(intent) override is what 1.20.5's handshake listener reaches (mixin CbFinHandshakeMixin) and what a 1.20.4 call of it reaches; its super call is 1.20.4's body"
+  }
+ ]
 }

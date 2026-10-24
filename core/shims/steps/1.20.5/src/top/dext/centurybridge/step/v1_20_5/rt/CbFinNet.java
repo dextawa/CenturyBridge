@@ -141,6 +141,33 @@ public final class CbFinNet {
      * client asked for -- 1.20.5's setupOutboundProtocol of that protocol.
      */
     public static void method_52899(class_2535 connection, class_8592 intent) {
+        if (connection instanceof LegacyAfterHandshake legacy) {
+            legacy.method_52899(intent);
+            return;
+        }
+        superAfterHandshake(connection, intent);
+    }
+
+    /** a 1.20.4 Connection subclass declaring setClientboundProtocolAfterHandshake(intent) (adapterHooks) */
+    public interface LegacyAfterHandshake {
+        void method_52899(class_8592 intent);
+    }
+
+    /**
+     * 1.20.5's handshake listener sets the clientbound protocol right after the handshake (status or login) where
+     * 1.20.4's called setClientboundProtocolAfterHandshake(STATUS / LOGIN): a 1.20.4 subclass's override of it is
+     * that call (mixin/CbFinHandshakeMixin), any other connection takes 1.20.5's own setupOutboundProtocol.
+     */
+    public static void afterHandshake(class_2535 connection, class_9127<?> info) {
+        if (connection instanceof LegacyAfterHandshake legacy) {
+            legacy.method_52899(info == net.minecraft.class_9103.field_48264 ? class_8592.field_44975 : class_8592.field_44974);
+        } else {
+            connection.method_56329(info);
+        }
+    }
+
+    /** super.setClientboundProtocolAfterHandshake(intent): 1.20.4's body (the protocol of the intent, clientbound) */
+    public static void superAfterHandshake(class_2535 connection, class_8592 intent) {
         class_2539 protocol = CbNetPacketWrites.method_52285(intent);
         class_9127<?> info = info(protocol, class_2598.field_11942);
         if (info == null) {

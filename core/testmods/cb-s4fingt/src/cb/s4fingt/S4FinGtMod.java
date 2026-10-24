@@ -128,6 +128,21 @@ public class S4FinGtMod implements ModInitializer {
             name + ": ids 0, 1, 2 (" + registry.method_10206("va") + "," + registry.method_10206("vb") + "," + registry.method_10206("vc") + ")");
     }
 
+    // ---- entity effect particles ----
+
+    static void particles(class_3218 level) {
+        net.minecraft.class_1295 cloud = new net.minecraft.class_1295(level, 0.5, 100, 0.5);
+        cloud.method_5608(net.minecraft.class_2398.field_11226);
+        net.minecraft.class_2960 type = net.minecraft.class_7923.field_41180.method_10221(cloud.method_5600().method_10295());
+        check(type != null && type.toString().equals("minecraft:entity_effect"), "cloud with ENTITY_EFFECT holds a registered entity_effect particle (" + type + ")");
+        cloud.method_5608(net.minecraft.class_2398.field_11225);
+        type = net.minecraft.class_7923.field_41180.method_10221(cloud.method_5600().method_10295());
+        check(type != null && type.toString().equals("minecraft:entity_effect"), "cloud with AMBIENT_ENTITY_EFFECT holds a registered entity_effect particle (" + type + ")");
+        int a = level.method_14199(net.minecraft.class_2398.field_11226, 0.5, 100, 0.5, 0, 1.0, 0.0, 0.0, 1.0);
+        int b = level.method_14199(net.minecraft.class_2398.field_11225, 0.5, 100, 0.5, 5, 0.2, 0.2, 0.2, 0.5);
+        check(a == 0 && b == 0, "sendParticles of both entity effects (no players: reached " + a + "/" + b + ")");
+    }
+
     // ---- game tests ----
 
     static boolean before, after, subBefore, passedFlag;
@@ -255,6 +270,7 @@ public class S4FinGtMod implements ModInitializer {
             guard("both", () -> registries("both", new Both(class_5321.method_29180(new class_2960("cb", "both"))), "R:a,M0:a", "R:b,M1:b", "M2:c"));
             guard("register only", () -> registries("register only", new RegisterOnly(class_5321.method_29180(new class_2960("cb", "ronly"))), "R:a", "R:b", ""));
             guard("mapping only", () -> registries("mapping only", new MappingOnly(class_5321.method_29180(new class_2960("cb", "monly"))), "M0:a", "M1:b", "M2:c"));
+            guard("particles", () -> particles(server.method_30002()));
             guard("gametests", () -> gametests(server.method_30002()));
             if (running == null) {
                 System.out.println("CBS4GT DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS " + FAILS));
