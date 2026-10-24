@@ -145,7 +145,6 @@
   "net/minecraft/class_793.method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
   "net/minecraft/class_5617$class_5618.method_43338()Lnet/minecraft/class_759;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItems",
   "net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;Z)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderCtors",
-  "net/minecraft/class_1060.method_22813(Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost",
   "net/minecraft/class_1041.method_15999(I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
   "net/minecraft/class_1041.method_16000()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
   "net/minecraft/class_1041.method_15998()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
@@ -170,9 +169,15 @@
   "net/minecraft/class_846$class_851.method_3663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#cancelTasks",
   "net/minecraft/class_1007.method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands",
   "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands",
-  "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes",
+  "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher",
   "net/minecraft/class_7288$class_7289.apply(Lnet/minecraft/class_7260;FF)F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive",
-  "net/minecraft/class_7288$class_7311.getPartsToDraw(Lnet/minecraft/class_583;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive"
+  "net/minecraft/class_7288$class_7311.getPartsToDraw(Lnet/minecraft/class_583;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderEmissive",
+  "net/minecraft/class_4507.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuckItems",
+  "net/minecraft/class_973.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuckItems",
+  "net/minecraft/class_4506.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuckItems",
+  "net/minecraft/class_925.method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts",
+  "net/minecraft/class_957.method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts",
+  "net/minecraft/class_957.method_4137(Lnet/minecraft/class_1701;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts"
  },
  "ctorRedirects": {
   "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#create",
@@ -225,7 +230,9 @@
   "net/minecraft/class_761.field_25275:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25275",
   "net/minecraft/class_761.field_25276:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25276",
   "net/minecraft/class_761.field_25277:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25277",
-  "net/minecraft/class_761.field_25278:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25278"
+  "net/minecraft/class_761.field_25278:Lnet/minecraft/class_276;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel#field_25278",
+  "net/minecraft/class_925.field_4747:Lnet/minecraft/class_583;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts",
+  "net/minecraft/class_863.field_4535:Lnet/minecraft/class_863$class_864;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes"
  },
  "superCtorReshapes": {
   "net/minecraft/class_583.<init>()V": {
@@ -848,6 +855,19 @@
     "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#skeletonHorse(Lnet/minecraft/class_5601;)Z"
    ],
    "basis": "UndeadHorseRenderer(context, layer) -> (context, adult, baby, skeleton): 1.21.1 drew the baby from the adult layer under the young scaling (equineBaby derives that layer) and picked the texture by entity type, 1.21.2 by the flag (the skeleton horse layer: skeleton)"
+  },
+  "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": {
+   "desc": "(I)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaderLoad#link(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)I"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaderLoad#setup(Lnet/minecraft/class_5944;Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V",
+   "postArgs": [
+    0,
+    1,
+    2
+   ],
+   "basis": "1.21.1 ShaderInstance(provider, name, format) read shaders/core/<name>.json and compiled, bound, attached and linked its program; 1.21.2's CompiledShaderProgram(programId) (private, opened by the layer's access widener) takes the linked id: CbRenderShaderLoad.link does 1.21.1's constructor up to the id, setup gives the constructed program its uniforms, samplers, name, format and Programs"
   }
  },
  "overrideHooks": [
@@ -1036,6 +1056,46 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItemInHand.renderArmWithItem(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderItemInHand$Legacy;Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 ItemInHandLayer.renderArmWithItem(entity, stack, ..), 1.21.2's (state, bakedModel, stack, ..): a mod layer's override answers 1.21.2's calls with the entity of the state and the stack 1.21.2 passes; its super call reaches 1.21.1's body (covers, CbRenderItemInHand)"
+  },
+  {
+   "old": "method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_62424(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "onlyUnder": "net/minecraft/class_898",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher.render(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher$Legacy;Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 EntityRenderDispatcher.render(entity, x, y, z, yRot, partialTick, ..); 1.21.2's render drops the yaw (renderers read the entity's rotation): a mod dispatcher's override answers 1.21.2's calls with the yaw 1.21.1's LevelRenderer.renderEntity passed (lerp of yRotO and yRot), its super call reaching vanilla's render (CbRenderDispatcher.superRender, under the guard)"
+  },
+  {
+   "old": "method_30001(Lnet/minecraft/class_4597;Ljava/util/function/Function;Z)Lnet/minecraft/class_4588;",
+   "new": "method_30001(Lnet/minecraft/class_4597;Ljava/util/function/Function;ZZ)Lnet/minecraft/class_4588;",
+   "args": [
+    0,
+    1,
+    3
+   ],
+   "onlyUnder": "net/minecraft/class_4730",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "Material.buffer(buffers, renderType, foil): 1.21.2's also takes the item/entity glint choice: a mod Material's 1.21.1 override answers 1.21.2's calls with buffers, render type and foil, its super call passing the glint choice vanilla passed (frameDefaults: 1.21.1's item glint)"
+  },
+  {
+   "old": "method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4064(Lnet/minecraft/class_10045;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "onlyUnder": "net/minecraft/class_925",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts.contents(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts$Legacy;Lnet/minecraft/class_10045;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 AbstractMinecartRenderer.renderMinecartContents(minecart, partialTick, ..); 1.21.2's takes the render state: a mod renderer's override answers with the minecart the state was extracted from and the frame's partial tick (CbRenderMinecarts.contents)"
+  },
+  {
+   "old": "method_4137(Lnet/minecraft/class_1701;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4137(Lnet/minecraft/class_10046;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "onlyUnder": "net/minecraft/class_957",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts$LegacyTnt",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts.tnt(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts$LegacyTnt;Lnet/minecraft/class_10046;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 TntMinecartRenderer.renderMinecartContents(tntMinecart, partialTick, ..); 1.21.2's takes the TNT render state: a mod renderer's override answers with the minecart the state was extracted from and the frame's partial tick (CbRenderMinecarts.tnt)"
   }
  ],
  "covers": [
@@ -1169,9 +1229,6 @@
   "net/minecraft/class_5697.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"
  ],
  "ledger": {
-  "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;": "getVertexProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
-  "net/minecraft/class_5944.method_1278()Lnet/minecraft/class_281;": "getFragmentProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
-  "net/minecraft/class_5944.method_34418()V": "attachToProgram(): 1.21.1 re-attached the shader's vertex and fragment Program objects to its GL program; 1.21.2 links a CompiledShaderProgram once from shaders it does not keep (no Program class, no attach step: javap class_5944 / ShaderManager 1.21.2), so there is nothing to attach",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires OnLoad while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires ModelResolver while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)",
   "net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context.loader()Lnet/minecraft/class_1088;": "loader() during model loading: 1.21.1's contexts answered the one ModelLoader (ModelBakery) that loaded, resolved and baked. 1.21.2 has no ModelBakery before baking -- Fabric API fires BlockStateResolver while the block-state models load / the ModelDiscovery resolves, and ModelManager builds the ModelBakery only afterwards from the discovery's result (Fabric API 0.106.1 BakedModelManagerMixin hooks the block-state, discovery and baking stages of ModelManager.reload in that order): there is no loader to answer. getOrLoadModel, the use 1.21.1 mods made of it there, is given back (CbFapiModels)"
@@ -1221,6 +1278,9 @@
   },
   "method_52828(Lnet/minecraft/class_4604;Ljava/util/List;)V": {
    "2": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#nearbySections(Lnet/minecraft/class_8679;Lnet/minecraft/class_4604;Ljava/util/List;)Ljava/util/List;"
+  },
+  "method_30001(Lnet/minecraft/class_4597;Ljava/util/function/Function;Z)Lnet/minecraft/class_4588;": {
+   "2": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#itemGlint()Z"
   }
  },
  "depRenames": {
@@ -1234,7 +1294,13 @@
   "net/fabricmc/fabric/api/renderer/v1/render/RenderContext.fallbackConsumer()Ljava/util/function/Consumer;": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRendererApi#fallbackConsumer",
   "net/minecraft/class_846$class_851.method_3663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSections#cancelTasks",
   "net/minecraft/class_1007.method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands#method_4220",
-  "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands#method_4221"
+  "net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderHands#method_4221",
+  "net/minecraft/class_973.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuckItems#superArrow",
+  "net/minecraft/class_4506.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderStuckItems#superStinger",
+  "net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderDispatcher#superRender",
+  "net/minecraft/class_925.method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts#superContents",
+  "net/minecraft/class_957.method_4064(Lnet/minecraft/class_1688;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts#superTntContents",
+  "net/minecraft/class_957.method_4137(Lnet/minecraft/class_1701;FLnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMinecarts#superTnt"
  },
  "methodRenames": {
   "net/minecraft/class_807.method_3497()Ljava/util/List;": "comp_3049",
@@ -2236,6 +2302,18 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRenderReshapes#itemGlint()Z"
    ],
    "basis": "BannerRenderer.renderPatterns hands Material.buffer the item/entity glint choice in 1.21.2 (a last flag); 1.21.1's Material.buffer drew the item glint, so true (javap both)"
+  },
+  "net/minecraft/class_775.method_29708(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_3610;)Z": {
+   "desc": "(Lnet/minecraft/class_3610;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_3610;)Z",
+   "ops": [
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "LiquidBlockRenderer.shouldRenderFace: the same two tests (isFaceOccludedBySelf, isNeighborSameFluid; javap both bodies); the level and position went only to isFaceOccludedBySelf, which no longer takes them"
   }
  }
 }

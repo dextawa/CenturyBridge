@@ -169,3 +169,8 @@ accessible method net/minecraft/class_2450 <init> (Lnet/minecraft/class_7871;Lne
 accessible method net/minecraft/class_7803 <init> (Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_8790;)V
 extendable method net/minecraft/class_7803 <init> (Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_8790;)V
 accessible method net/minecraft/class_7803 method_10419 ()V
+# s7render: 1.21.2 CompiledShaderProgram(programId), private there: 1.21.1 ShaderInstance(provider, name, format) builds the program (CbRenderShaderLoad) and constructs it, a 1.21.1 subclass through super (superCtorReshapes)
+accessible method net/minecraft/class_5944 <init> (I)V
+extendable method net/minecraft/class_5944 <init> (I)V
+# s7render: 1.21.1 AbstractMinecartRenderer.model read by 1.21.1 subclasses as an EntityModel (instanceFieldGetters, CbRenderMinecarts)
+accessible field net/minecraft/class_925 field_4747 Lnet/minecraft/class_580;

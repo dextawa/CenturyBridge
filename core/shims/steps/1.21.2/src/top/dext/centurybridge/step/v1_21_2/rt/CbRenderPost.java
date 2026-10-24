@@ -37,18 +37,13 @@ public final class CbRenderPost {
         }
     }
 
-    /** TextureManager.bindForSetup(location) */
+    /** 1.21.1 TextureManager.bindForSetup(location)'s body (CbRenderTextureManagerMixin) */
     public static void bindForSetup(net.minecraft.class_1060 textureManager, net.minecraft.class_2960 location) {
         if (!RenderSystem.isOnRenderThread()) {
             RenderSystem.recordRenderCall(() -> textureManager.method_4619(location).method_23207());
         } else {
             textureManager.method_4619(location).method_23207();
         }
-    }
-
-    /** TextureManager.bindForSetup(location), as an instance redirect */
-    public static void method_22813(net.minecraft.class_1060 textureManager, net.minecraft.class_2960 location) {
-        bindForSetup(textureManager, location);
     }
 
     /** ModelResourceLocation.vanilla(path, variant): 1.21.1's body, minecraft:path with the variant */

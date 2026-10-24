@@ -82,18 +82,6 @@ public final class CbRenderReshapes {
     }
 
     /**
-     * EntityRenderDispatcher.render(entity, x, y, z, yRot, partialTick, poseStack, buffers, light) (instanceRedirects):
-     * 1.21.2's public render(entity, x, y, z, partialTick, poseStack, buffers, light) is the same draw; it takes no
-     * yaw because each renderer's extractRenderState reads the entity's own rotation (1.21.1's living renderers
-     * already ignored the passed yaw for the body rotation)
-     */
-    public static void method_3954(net.minecraft.class_898 dispatcher, net.minecraft.class_1297 entity, double x, double y, double z,
-                                   float yRot, float partialTick, net.minecraft.class_4587 poseStack, net.minecraft.class_4597 buffers,
-                                   int light) {
-        dispatcher.method_62424(entity, x, y, z, partialTick, poseStack, buffers, light);
-    }
-
-    /**
      * AnimationUtils.animateCrossbowCharge(rightArm, leftArm, entity, rightHanded): 1.21.1 read the charge duration
      * (CrossbowItem.getChargeDuration(entity.getUseItem(), entity)) and the ticks using the item from the entity;
      * 1.21.2 takes both, as HumanoidMobRenderer extracts them
@@ -155,5 +143,10 @@ public final class CbRenderReshapes {
      */
     public static boolean skeletonHorse(net.minecraft.class_5601 layer) {
         return net.minecraft.class_5602.field_27600.equals(layer);
+    }
+
+    /** 1.21.1 DebugRenderer.waterDebugRenderer (instanceFieldGetters): a SimpleDebugRenderer there, the WaterDebugRenderer it holds in 1.21.2 */
+    public static net.minecraft.class_863.class_864 field_4535(net.minecraft.class_863 debugRenderer) {
+        return debugRenderer.field_4535;
     }
 }
