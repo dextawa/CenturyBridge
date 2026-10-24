@@ -3603,8 +3603,12 @@ public final class JarProcessor {
                             return; // a super-bridge accessor (rewriteHookSuperCalls) calling super's new shape
                         }
                         Chain.Issue r = chain.resolveMember('m', name);
+                        // judged as the converted jar will spell the site: the step's classRenames move the
+                        // owner and the descriptor's classes (26.2: RecipeBuilder.unlockedBy(String,
+                        // advancements/Criterion) is unlockedBy(String, advancements/triggers/Criterion))
                         if (r.level() == Chain.Level.OK && !name.startsWith("<") && !Chain.intermediaryClass(owner)
-                                && Boolean.FALSE.equals(chain.resolvesOnTarget(owner, name + desc))) {
+                                && Boolean.FALSE.equals(chain.resolvesOnTarget(chain.classRenames.getOrDefault(owner, owner),
+                                    name + chain.renamedDesc(desc)))) {
                             // classes Mojang never obfuscated (blaze3d, ...) keep real member names,
                             // which the death tables -- keyed by intermediary name -- cannot see go:
                             // the target stub is the judge. (On an intermediary-named class a

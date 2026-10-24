@@ -1,1 +1,92 @@
 accessWidener	v2	official
+
+# ---- BEGIN GENERATED (s26): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible class net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$CompileTask
+accessible field com/mojang/blaze3d/opengl/GlBuffer handle I
+accessible field net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$SectionTask isRecompile Z
+accessible field net/minecraft/client/renderer/state/gui/GuiTextRenderState backgroundColor I
+accessible field net/minecraft/client/renderer/state/gui/GuiTextRenderState color I
+accessible field net/minecraft/client/renderer/state/gui/GuiTextRenderState dropShadow Z
+accessible field net/minecraft/client/renderer/state/gui/GuiTextRenderState font Lnet/minecraft/client/gui/Font;
+accessible field net/minecraft/client/renderer/state/gui/GuiTextRenderState text Lnet/minecraft/util/FormattedCharSequence;
+accessible field net/minecraft/client/renderer/state/gui/GuiTextRenderState x I
+accessible field net/minecraft/client/renderer/state/gui/GuiTextRenderState y I
+accessible field net/minecraft/util/NativeModuleLister$NativeModuleInfo name Ljava/lang/String;
+accessible field net/minecraft/util/NativeModuleLister$NativeModuleInfo version Ljava/util/Optional;
+accessible field net/minecraft/util/NativeModuleLister$NativeModuleVersion company Ljava/lang/String;
+accessible field net/minecraft/util/NativeModuleLister$NativeModuleVersion description Ljava/lang/String;
+accessible field net/minecraft/util/NativeModuleLister$NativeModuleVersion version Ljava/lang/String;
+accessible field net/minecraft/util/Util timeSource Lnet/minecraft/util/TimeSource$NanoTimeSource;
+accessible field net/minecraft/world/level/levelgen/GeodeBlockSettings alternateInnerLayerProvider Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;
+accessible field net/minecraft/world/level/levelgen/GeodeBlockSettings fillingProvider Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;
+accessible field net/minecraft/world/level/levelgen/GeodeBlockSettings innerLayerProvider Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;
+accessible field net/minecraft/world/level/levelgen/GeodeBlockSettings innerPlacements Ljava/util/List;
+accessible field net/minecraft/world/level/levelgen/GeodeBlockSettings middleLayerProvider Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;
+accessible field net/minecraft/world/level/levelgen/GeodeBlockSettings outerLayerProvider Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;
+accessible field net/minecraft/world/level/levelgen/feature/WeightedPlacedFeature chance F
+accessible field net/minecraft/world/level/levelgen/feature/WeightedPlacedFeature feature Lnet/minecraft/core/Holder;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration distributionPoints Lnet/minecraft/util/valueproviders/IntProvider;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration geodeBlockSettings Lnet/minecraft/world/level/levelgen/GeodeBlockSettings;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration geodeCrackSettings Lnet/minecraft/world/level/levelgen/GeodeCrackSettings;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration geodeLayerSettings Lnet/minecraft/world/level/levelgen/GeodeLayerSettings;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration invalidBlocksThreshold I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration maxGenOffset I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration minGenOffset I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration noiseMultiplier D
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration outerWallDistance Lnet/minecraft/util/valueproviders/IntProvider;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration placementsRequireLayer0Alternate Z
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration pointOffset Lnet/minecraft/util/valueproviders/IntProvider;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration useAlternateLayer0Chance D
+accessible field net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration usePotentialPlacementsChance D
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RandomFeatureConfiguration defaultFeature Lnet/minecraft/core/Holder;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RandomFeatureConfiguration features Ljava/util/List;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration allowedTreePosition Lnet/minecraft/world/level/levelgen/blockpredicates/BlockPredicate;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration allowedVerticalWaterForTree I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration hangingRootPlacementAttempts I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration hangingRootRadius I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration hangingRootStateProvider Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration hangingRootsVerticalSpan I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration requiredVerticalSpaceForTree I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration rootColumnMaxHeight I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration rootPlacementAttempts I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration rootRadius I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration rootStateProvider Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/RootSystemConfiguration treeFeature Lnet/minecraft/core/Holder;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/VegetationPatchConfiguration depth Lnet/minecraft/util/valueproviders/IntProvider;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/VegetationPatchConfiguration extraBottomBlockChance F
+accessible field net/minecraft/world/level/levelgen/feature/configurations/VegetationPatchConfiguration extraEdgeColumnChance F
+accessible field net/minecraft/world/level/levelgen/feature/configurations/VegetationPatchConfiguration groundState Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/VegetationPatchConfiguration surface Lnet/minecraft/world/level/levelgen/placement/CaveSurface;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/VegetationPatchConfiguration vegetationChance F
+accessible field net/minecraft/world/level/levelgen/feature/configurations/VegetationPatchConfiguration vegetationFeature Lnet/minecraft/core/Holder;
+accessible field net/minecraft/world/level/levelgen/feature/configurations/VegetationPatchConfiguration verticalRange I
+accessible field net/minecraft/world/level/levelgen/feature/configurations/VegetationPatchConfiguration xzRadius Lnet/minecraft/util/valueproviders/IntProvider;
+accessible field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties airPocket Z
+accessible field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties cold Z
+accessible field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties mossiness F
+accessible field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties overgrown Z
+accessible field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties replaceWithBlackstone Z
+accessible field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties vines Z
+accessible method net/minecraft/client/gui/components/AbstractWidget extractWidgetRenderState (Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V
+accessible method net/minecraft/client/gui/components/SpriteIconButton$Builder <init> (Lnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/Button$OnPress;Z)V
+accessible method net/minecraft/client/gui/screens/inventory/MinecartCommandBlockEditScreen getCommandBlock ()Lnet/minecraft/world/level/BaseCommandBlock;
+accessible method net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection cancelTasks ()V
+accessible method net/minecraft/world/level/block/state/BlockBehaviour getSignal (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)I
+accessible method net/minecraft/world/phys/shapes/ArrayVoxelShape <init> (Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;[D[D[D)V
+extendable method net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection cancelTasks ()V
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties airPocket Z
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties cold Z
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties mossiness F
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties overgrown Z
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties replaceWithBlackstone Z
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties vines Z
+# ---- END GENERATED (s26) ----
+
+# s26: hand-wired members (rt/CbS26Selector: EntitySelectorParser flags on 26.2 option states; rt/CbS26ChatFormatting: getChar)
+accessible class net/minecraft/commands/arguments/selector/options/InvertableSetOptionState$Limitation
+accessible field net/minecraft/commands/arguments/selector/options/InvertableSetOptionState state Lnet/minecraft/commands/arguments/selector/options/InvertableSetOptionState$Limitation;
+accessible field net/minecraft/commands/arguments/selector/options/SetOnceOptionState hasValue Z
+accessible field net/minecraft/commands/arguments/selector/EntitySelectorParser type Lnet/minecraft/world/entity/EntityType;
+accessible field net/minecraft/ChatFormatting code C

@@ -16,6 +16,51 @@
   "net/minecraft/world/level/block/Blocks.COPPER_LANTERN:Lnet/minecraft/world/level/block/WeatheringCopperBlocks;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Blocks_COPPER_LANTERN",
   "net/minecraft/world/item/Items.COPPER_BARS:Lnet/minecraft/world/item/WeatheringCopperItems;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Items_COPPER_BARS",
   "net/minecraft/world/item/Items.COPPER_CHAIN:Lnet/minecraft/world/item/WeatheringCopperItems;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Items_COPPER_CHAIN",
-  "net/minecraft/world/item/Items.COPPER_LANTERN:Lnet/minecraft/world/item/WeatheringCopperItems;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Items_COPPER_LANTERN"
+  "net/minecraft/world/item/Items.COPPER_LANTERN:Lnet/minecraft/world/item/WeatheringCopperItems;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Items_COPPER_LANTERN",
+  "net/minecraft/ChatFormatting.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting#CODEC",
+  "net/minecraft/ChatFormatting.COLOR_CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting#COLOR_CODEC"
+ },
+ "instanceRedirects": {
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasNameEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setHasNameEquals(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasNameNotEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setHasNameNotEquals(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.isLimited()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setLimited(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.isSorted()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setSorted(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasGamemodeEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setHasGamemodeEquals(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasGamemodeNotEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setHasGamemodeNotEquals(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasTeamEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setHasTeamEquals(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasTeamNotEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setHasTeamNotEquals(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setTypeLimitedInversely()V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.isTypeLimited()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.isTypeLimitedInversely()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasScores()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setHasScores(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasAdvancements()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.setHasAdvancements(Z)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
+  "net/minecraft/ChatFormatting.getChar()C": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
+  "net/minecraft/ChatFormatting.getId()I": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
+  "net/minecraft/ChatFormatting.isFormat()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
+  "net/minecraft/ChatFormatting.isColor()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
+  "net/minecraft/ChatFormatting.getColor()Ljava/lang/Integer;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
+  "net/minecraft/ChatFormatting.getName()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
+  "net/minecraft/ChatFormatting.getSerializedName()Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
+  "net/minecraft/core/BlockPos.getCenter()Lnet/minecraft/world/phys/Vec3;": "top/dext/centurybridge/step/v26_2/rt/CbS26World",
+  "net/minecraft/core/BlockPos.getBottomCenter()Lnet/minecraft/world/phys/Vec3;": "top/dext/centurybridge/step/v26_2/rt/CbS26World"
+ },
+ "_instanceRedirects_basis": {
+  "net/minecraft/commands/arguments/selector/EntitySelectorParser.*": "26.2 replaced the parser's option booleans by option-state objects (nameOption() ... advancementsOption()); rt/CbS26Selector reads and sets the same facts on them (see its javadoc)",
+  "net/minecraft/ChatFormatting.*": "26.2 cut ChatFormatting down to its codes; rt/CbS26ChatFormatting gives back 26.1.2's data and lookups (see its javadoc)"
+ },
+ "staticRedirects": {
+  "net/minecraft/ChatFormatting.getByName(Ljava/lang/String;)Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
+  "net/minecraft/ChatFormatting.getById(I)Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting",
+  "net/minecraft/ChatFormatting.getNames(ZZ)Ljava/util/Collection;": "top/dext/centurybridge/step/v26_2/rt/CbS26ChatFormatting"
  }
 }
