@@ -30,9 +30,13 @@
   "net/fabricmc/fabric/api/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback",
   "net/fabricmc/fabric/api/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback$RegistrationHelper": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback$RegistrationHelper",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/model/loading/v1/ModelLoadingPlugin",
-  "net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/model/loading/v1/PreparableModelLoadingPlugin"
+  "net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/model/loading/v1/PreparableModelLoadingPlugin",
+  "net/minecraft/class_790$class_791": "top/dext/centurybridge/step/v1_21_2/facade/BlockModelDefinitionContext"
  },
- "facadeGaps": {},
+ "facadeGaps": {
+  "net/minecraft/class_790$class_791.field_4243:Lcom/google/gson/Gson;": "1.21.1 BlockModelDefinition.Context's own state, unreachable to a mod (protected in a final class; a mod's access widener never applies to a CenturyBridge class): the facade keeps the definition behind its getter and setter, and parses through 1.21.2's BlockModelDefinition.GSON, whose multipart is the selectors the layer builds 1.21.1's MultiPart from (CbRenderBlockDefs)",
+  "net/minecraft/class_790$class_791.field_4242:Lnet/minecraft/class_2689;": "1.21.1 BlockModelDefinition.Context's own state, unreachable to a mod (private in a final class; a mod's access widener never applies to a CenturyBridge class): the facade keeps the definition behind its getter and setter, and parses through 1.21.2's BlockModelDefinition.GSON, whose multipart is the selectors the layer builds 1.21.1's MultiPart from (CbRenderBlockDefs)"
+ },
  "staticRedirects": {
   "net/minecraft/class_7187.method_41827(Lnet/minecraft/class_5597;Lnet/minecraft/class_7184;JFLorg/joml/Vector3f;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelBase",
   "com/mojang/blaze3d/systems/RenderSystem.setShader(Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders",
@@ -73,10 +77,15 @@
   "net/minecraft/class_3673.method_35597(Lnet/minecraft/class_4491;F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
   "net/minecraft/class_1091.method_45910(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost",
   "net/minecraft/class_291$class_8555.values()[Lnet/minecraft/class_291$class_8555;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
-  "net/minecraft/class_291$class_8555.valueOf(Ljava/lang/String;)Lnet/minecraft/class_291$class_8555;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem"
+  "net/minecraft/class_291$class_8555.valueOf(Ljava/lang/String;)Lnet/minecraft/class_291$class_8555;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "net/minecraft/class_790.method_3424(Lnet/minecraft/class_790$class_791;Ljava/io/Reader;)Lnet/minecraft/class_790;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs",
+  "net/minecraft/class_790.method_45787(Lnet/minecraft/class_790$class_791;Lcom/google/gson/JsonElement;)Lnet/minecraft/class_790;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs",
+  "net/minecraft/class_757.method_34507()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
+  "net/minecraft/class_757.method_34528()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_23689(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_29707()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes"
  },
  "instanceRedirects": {
-  "net/minecraft/class_757.method_35767(Ljava/lang/String;)Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders",
   "net/minecraft/class_799.method_3472()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
   "net/minecraft/class_799.method_33690()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
   "net/minecraft/class_806.method_3495(Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake",
@@ -95,7 +104,10 @@
   "net/minecraft/class_1041.method_16000()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
   "net/minecraft/class_1041.method_15998()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderWindow",
   "net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap.putItem(Lnet/minecraft/class_1792;Lnet/minecraft/class_1921;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRender",
-  "net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap.putItems(Lnet/minecraft/class_1921;[Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRender"
+  "net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap.putItems(Lnet/minecraft/class_1921;[Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbFapiRender",
+  "net/minecraft/class_790.method_3421()Lnet/minecraft/class_816;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#getMultiPart",
+  "net/minecraft/class_816$class_817.method_3523(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/class_816;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#deserializePart",
+  "net/minecraft/class_790$class_792.method_3427(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_816;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs"
  },
  "ctorRedirects": {
   "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#create",
@@ -123,7 +135,9 @@
   "net/minecraft/class_582.field_32520:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields",
   "net/minecraft/class_4910.field_28548:Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderGeneric",
   "net/minecraft/class_291$class_8555.field_44793:Lnet/minecraft/class_291$class_8555;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
-  "net/minecraft/class_291$class_8555.field_44794:Lnet/minecraft/class_291$class_8555;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem"
+  "net/minecraft/class_291$class_8555.field_44794:Lnet/minecraft/class_291$class_8555;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "net/minecraft/class_4668.field_29406:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes",
+  "net/minecraft/class_4668.field_29425:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTypes"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_5944.field_29482:Lnet/minecraft/class_284;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#field_29482",
@@ -135,7 +149,8 @@
   "net/minecraft/class_5603.field_27706:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27706",
   "net/minecraft/class_5603.field_27707:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27707",
   "net/minecraft/class_620.field_27525:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27525",
-  "net/minecraft/class_4840.field_27464:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27464"
+  "net/minecraft/class_4840.field_27464:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27464",
+  "net/minecraft/class_757.field_29403:Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderGame#blitShader"
  },
  "superCtorReshapes": {
   "net/minecraft/class_583.<init>()V": {
@@ -419,6 +434,53 @@
     1
    ],
    "basis": "1.21.2's SimpleBakedModel.Builder no longer takes the item overrides; kept and handed to the model build() makes, as 1.21.1's Builder did (CbRenderBakeOverrides)"
+  },
+  "net/minecraft/class_790.<init>(Ljava/util/Map;Lnet/minecraft/class_816;)V": {
+   "desc": "(Ljava/util/Map;Lnet/minecraft/class_816$class_9982;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#variants(Ljava/util/Map;)Ljava/util/Map;",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#definitionOf(Lnet/minecraft/class_816;)Lnet/minecraft/class_816$class_9982;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#defined(Lnet/minecraft/class_790;Lnet/minecraft/class_816;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "1.21.1's BlockModelDefinition(variants, multiPart) copied the variants and kept the MultiPart; 1.21.2's takes the multipart's selectors (MultiPart.Definition): the selectors of the mod's MultiPart, tied back to it (CbRenderBlockDefs)"
+  },
+  "net/minecraft/class_790.<init>(Ljava/util/List;)V": {
+   "desc": "(Ljava/util/Map;Lnet/minecraft/class_816$class_9982;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#mergedVariants(Ljava/util/List;)Ljava/util/Map;",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#mergedDefinition(Ljava/util/List;)Lnet/minecraft/class_816$class_9982;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#merged(Lnet/minecraft/class_790;Ljava/util/List;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.1's BlockModelDefinition(List) merged the definitions in order (a multipart one clearing the variants before it and taking over the multipart); 1.21.2 has no such constructor: 1.21.1's merge, then 1.21.2's (variants, definition) constructor (CbRenderBlockDefs)"
+  },
+  "net/minecraft/class_816.<init>(Lnet/minecraft/class_2689;Ljava/util/List;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#parts(Lnet/minecraft/class_2689;Ljava/util/List;)Ljava/util/List;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#attach(Lnet/minecraft/class_816;Lnet/minecraft/class_2689;Ljava/util/List;)V",
+   "postArgs": [
+    0,
+    1
+   ],
+   "basis": "1.21.1's MultiPart(definition, selectors); 1.21.2's takes each selector's predicate over the definition with its variant, as Definition.instantiate builds them, and keeps neither (the layer keeps both, CbRenderBlockDefs)"
+  },
+  "net/minecraft/class_816$class_817.<init>(Lnet/minecraft/class_790$class_791;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#deserializer(Lnet/minecraft/class_816$class_817;Lnet/minecraft/class_790$class_791;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.1's MultiPart.Deserializer(context) built MultiParts against the context's definition; 1.21.2's has no context and parses the selectors: the context is kept on the deserializer, which then answers 1.21.1's MultiPart (CbRenderBlockDefDeserializerMixin)"
   }
  },
  "overrideHooks": [
@@ -493,6 +555,27 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderGame.projection(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderGame$Projection;F)Lorg/joml/Matrix4f;",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 GameRenderer.getProjectionMatrix(double fov); 1.21.2 calls getProjectionMatrix(float fov) where 1.21.1 called it with the double getFov: the mod's override gets the same field of view (CbRenderGame)"
+  },
+  {
+   "old": "method_3421()Lnet/minecraft/class_816;",
+   "new": "method_3421()Lnet/minecraft/class_816$class_9982;",
+   "onlyUnder": "net/minecraft/class_790",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs.definitionOf(Lnet/minecraft/class_816;)Lnet/minecraft/class_816$class_9982;",
+   "basis": "1.21.1 BlockModelDefinition.getMultiPart() answered the MultiPart, 1.21.2's the multipart's selectors: the mod's MultiPart as its selectors, tied back to it (CbRenderBlockDefs)"
+  },
+  {
+   "old": "method_3523(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/class_816;",
+   "new": "method_3523(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/class_816$class_9982;",
+   "onlyUnder": "net/minecraft/class_816$class_817",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs.definitionOf(Lnet/minecraft/class_816;)Lnet/minecraft/class_816$class_9982;",
+   "basis": "1.21.1 MultiPart.Deserializer.deserialize answered the MultiPart, 1.21.2's the selectors (CbRenderBlockDefs)"
+  },
+  {
+   "old": "method_3427(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_816;",
+   "new": "method_3427(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_816$class_9982;",
+   "onlyUnder": "net/minecraft/class_790$class_792",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs.definitionOf(Lnet/minecraft/class_816;)Lnet/minecraft/class_816$class_9982;",
+   "basis": "1.21.1 BlockModelDefinition.Deserializer.getMultiPart answered the MultiPart, 1.21.2's the selectors (CbRenderBlockDefs)"
   }
  ],
  "covers": [
@@ -581,7 +664,18 @@
   "net/minecraft/class_1011.method_35623(II)B",
   "net/minecraft/class_1011.method_35624(III)V",
   "net/minecraft/class_1011.method_35625(II)B",
-  "net/minecraft/class_1011.method_35626(II)B"
+  "net/minecraft/class_1011.method_35626(II)B",
+  "net/minecraft/class_790.method_35790(Ljava/lang/String;)Z",
+  "net/minecraft/class_790.method_3423()Ljava/util/Map;",
+  "net/minecraft/class_790.method_3422()Z",
+  "net/minecraft/class_816.method_3519()Ljava/util/List;",
+  "net/minecraft/class_816.method_3520()Ljava/util/Set;",
+  "net/minecraft/class_793.method_45785(Ljava/util/function/Function;)V",
+  "net/minecraft/class_807.method_45785(Ljava/util/function/Function;)V",
+  "net/minecraft/class_816.method_45785(Ljava/util/function/Function;)V",
+  "net/minecraft/class_757.method_35767(Ljava/lang/String;)Lnet/minecraft/class_5944;",
+  "net/minecraft/class_757.method_3183()Lnet/minecraft/class_279;",
+  "net/minecraft/class_757.method_45774()Lnet/minecraft/class_3302;"
  ],
  "ledger": {
   "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;": "getVertexProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
@@ -632,5 +726,33 @@
  "depRenames": {
   "fabric-renderer-registries-v1": "centurybridge_step_1_21_2@*"
  },
- "_s7render_depRenames_basis": "1.21.2's Fabric API (0.106.1) no longer ships fabric-renderer-registries-v1, which 1.21.1's (0.116.15) did (META-INF/jars of both fabric-api jars); this step's layer gives its API back (compat/fapi/client/rendereregistry/v1, the module's own bodies delegating to fabric-rendering-v1, which 1.21.2's Fabric API keeps), so a mod's dependency on it is met by the layer"
+ "_s7render_depRenames_basis": "1.21.2's Fabric API (0.106.1) no longer ships fabric-renderer-registries-v1, which 1.21.1's (0.116.15) did (META-INF/jars of both fabric-api jars); this step's layer gives its API back (compat/fapi/client/rendereregistry/v1, the module's own bodies delegating to fabric-rendering-v1, which 1.21.2's Fabric API keeps), so a mod's dependency on it is met by the layer",
+ "superRedirects": {
+  "net/minecraft/class_790.method_3421()Lnet/minecraft/class_816;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#superGetMultiPart",
+  "net/minecraft/class_816$class_817.method_3523(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/class_816;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#superDeserializePart",
+  "net/minecraft/class_790$class_792.method_3427(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_816;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBlockDefs#method_3427"
+ },
+ "methodRenames": {
+  "net/minecraft/class_807.method_3497()Ljava/util/List;": "comp_3049",
+  "net/minecraft/class_757.method_3207()V": "method_62905"
+ },
+ "overrideRenames": [
+  {
+   "old": "method_3497()Ljava/util/List;",
+   "new": "comp_3049",
+   "onlyUnder": "net/minecraft/class_807",
+   "superCalls": "rename",
+   "basis": "MultiVariant.getVariants() is 1.21.2's record accessor variants() (same field): a subclass's override takes it (the class is extendable again, the layer's access widener)"
+  },
+  {
+   "old": "method_3207()V",
+   "new": "method_62905",
+   "onlyUnder": "net/minecraft/class_757",
+   "superCalls": "rename",
+   "basis": "GameRenderer.shutdownEffect() is 1.21.2's clearPostEffect(): 1.21.1 closed and dropped the effect's chain, 1.21.2 drops the effect's id (the ShaderManager owns the chain); Minecraft calls it at the one place it called shutdownEffect (checked in both jars)"
+  }
+ ],
+ "instanceFieldSetters": {
+  "net/minecraft/class_757.field_29403:Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderGame#setBlitShader"
+ }
 }

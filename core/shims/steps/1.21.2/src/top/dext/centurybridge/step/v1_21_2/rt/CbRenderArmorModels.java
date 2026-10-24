@@ -22,8 +22,8 @@ import top.dext.centurybridge.step.v1_21_2.facade.ArmorMaterial;
  * (CbItemArmor, s7item's), and a 1.21.1 mod ships no such json.
  *
  * <p>Here: when the asset manager has no model for an id, and a 1.21.1 material of the layer's ARMOR_MATERIAL registry
- * has that model id (CbItemArmor's rule: the first layer's asset, else the registry id; 1.21.1's vanilla materials map
- * to 1.21.2's own models and are skipped), a model is synthesized from its layers: one humanoid and one
+ * has that model id (asked of CbItemArmor.toW, the one rule that names the 1.21.2 material's model; 1.21.1's vanilla
+ * materials map to 1.21.2's own models and are skipped), a model is synthesized from its layers: one humanoid and one
  * humanoid_leggings layer per 1.21.1 layer, in order. Each synthesized layer draws 1.21.1's texture
  * (CbRenderEquipmentLayerMixin: Layer.getTextureLocation answers layer.texture(leggings)) with 1.21.1's tint
  * (CbRenderEquipmentColorMixin). 1.21.2 draws the glint with the first layer, 1.21.1 once after all: the same single
@@ -64,7 +64,8 @@ public final class CbRenderArmorModels {
                 continue; // 1.21.1's vanilla materials: 1.21.2's own models
             }
             ArmorMaterial m = e.getValue();
-            net.minecraft.class_2960 model = m.comp_2302().isEmpty() ? e.getKey().method_29177() : m.comp_2302().get(0).cb$assetName();
+            // s7item's id for the material (CbItemArmor.toW: the model id its 1.21.2 material and so its EQUIPPABLE carry)
+            net.minecraft.class_2960 model = CbItemArmor.toW(registry.method_47983(m)).comp_3168();
             if (!model.equals(id)) {
                 continue;
             }
