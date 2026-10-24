@@ -100,6 +100,8 @@ accessible field net/minecraft/class_1720 field_7822 Lnet/minecraft/class_1937;
 accessible field net/minecraft/class_1714 field_51625 Z
 accessible field net/minecraft/class_1714 field_7799 Lnet/minecraft/class_3914;
 accessible method net/minecraft/class_1714 method_17399 (Lnet/minecraft/class_1703;Lnet/minecraft/class_3218;Lnet/minecraft/class_1657;Lnet/minecraft/class_8566;Lnet/minecraft/class_1731;Lnet/minecraft/class_8786;)V
+# ---- s7item: 1.21.1 StonecutterMenu.getRecipes asks the menu's level (rt/CbItemRecipeMenus) ----
+accessible field net/minecraft/class_3971 field_17632 Lnet/minecraft/class_1937;
 # ---- s7item: 1.21.1 ItemCombinerMenu definitions and quick-move slot (rt/CbItemCombiner) ----
 accessible method net/minecraft/class_4862 method_64652 (Lnet/minecraft/class_10286;)Lnet/minecraft/class_8047;
 accessible field net/minecraft/class_4861 field_22482 Lnet/minecraft/class_1657;
@@ -107,6 +109,10 @@ accessible field net/minecraft/class_4861 field_22480 Lnet/minecraft/class_1263;
 # ---- s7item: 1.21.1 RecipeBook's id sets as views of ServerRecipeBook's key sets (rt/CbItemRecipeBook) ----
 accessible field net/minecraft/class_3441 field_54550 Ljava/util/Set;
 accessible field net/minecraft/class_3441 field_54551 Ljava/util/Set;
+# ---- s7item: 1.21.1 Potion.getName reads the potion's name (rt/CbItemPotions) ----
+accessible field net/minecraft/class_1842 field_8954 Ljava/lang/String;
+# ---- s7item: 1.21.1 SavedTick.saveTick on 1.21.2's compound writer (rt/CbItemTicks) ----
+accessible method net/minecraft/class_6759 method_39403 (Ljava/lang/String;Lnet/minecraft/class_2338;ILnet/minecraft/class_1953;)Lnet/minecraft/class_2487;
 
 # ---- BEGIN GENERATED (s7item): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same

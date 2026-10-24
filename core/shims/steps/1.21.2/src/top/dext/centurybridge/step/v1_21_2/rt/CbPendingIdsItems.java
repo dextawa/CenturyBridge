@@ -175,8 +175,9 @@ public final class CbPendingIdsItems {
         @SuppressWarnings("unchecked")
         class_5321<class_1792> key = (class_5321<class_1792>) realKey;
         String descriptionId = d.descriptionId().get(key);
-        if (item instanceof class_1747 blockItem) {
-            // 1.21.1's BlockItem.getDescriptionId: its block's
+        if (item instanceof class_1747 blockItem
+                && !(item instanceof top.dext.centurybridge.step.v1_21_2.facade.ItemNameBlockItem)) {
+            // 1.21.1's BlockItem.getDescriptionId: its block's (ItemNameBlockItem's: its own, the item id's)
             class_2248 block = blockItem.method_7711();
             if (CbPendingIds.isPending(block)) {
                 WAITING_FOR_BLOCK.computeIfAbsent(block, b -> new ArrayList<>()).add(item);
