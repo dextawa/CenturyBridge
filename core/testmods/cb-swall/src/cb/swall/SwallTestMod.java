@@ -428,6 +428,19 @@ public class SwallTestMod implements ModInitializer {
             && maps.method_8119() == net.minecraft.class_1865.field_9044, "");
     }
 
+    /** 1.21.11's special recipe constructors (category only) over 26.1's parameterized recipes */
+    private static void specialRecipeCtors(MinecraftServer server) {
+        net.minecraft.class_1851 rocket = new net.minecraft.class_1851(net.minecraft.class_7710.field_40250);
+        net.minecraft.class_9694 grid = net.minecraft.class_9694.method_59986(2, 1, List.of(
+            new net.minecraft.class_1799(net.minecraft.class_1802.field_8407), new net.minecraft.class_1799(net.minecraft.class_1802.field_8054)));
+        net.minecraft.class_1799 rockets = rocket.method_17708(grid, server.method_30611());
+        net.minecraft.class_4317 repair = new net.minecraft.class_4317(net.minecraft.class_7710.field_40251);
+        check("recipe.specialCtors", rocket.method_8115(grid, server.method_30002()) && rockets.method_31574(net.minecraft.class_1802.field_8639)
+            && rockets.method_7947() == 3 && rocket.method_45441() == net.minecraft.class_7710.field_40250
+            && repair.method_45441() == net.minecraft.class_7710.field_40251
+            && new net.minecraft.class_1848(net.minecraft.class_7710.field_40251) != null, rockets);
+    }
+
     /** generic drift at the wall read on a running server */
     private static void generic(MinecraftServer server) {
         Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
@@ -485,6 +498,7 @@ public class SwallTestMod implements ModInitializer {
             worldgenConfigs();
             driftPilots();
             removedRecipes(server);
+            specialRecipeCtors(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
