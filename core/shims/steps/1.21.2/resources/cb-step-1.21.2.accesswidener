@@ -22,6 +22,21 @@ accessible method net/minecraft/class_2852 method_12393 ([Lit/unimi/dsi/fastutil
 # s7render: Blaze3D() public in 1.21.1, private in 1.21.2 (a utility class with only statics: the instance has no state)
 accessible method net/minecraft/class_3673 <init> ()V
 
+# s7render: 1.21.1's new MultiPart(definition, selectors) builds 1.21.2's predicate/variant pairs (package-private in 1.21.2) itself (rt/CbRenderBlockDefs)
+accessible method net/minecraft/class_816 <init> (Ljava/util/List;)V
+accessible class net/minecraft/class_816$class_9983
+accessible method net/minecraft/class_816$class_9983 <init> (Ljava/util/function/Predicate;Lnet/minecraft/class_807;)V
+# s7render: MultiVariant, a plain class 1.21.1 mods extend (equals/hashCode overridable there), a final record in 1.21.2
+extendable class net/minecraft/class_807
+extendable method net/minecraft/class_807 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_807 hashCode ()I
+extendable method net/minecraft/class_807 toString ()Ljava/lang/String;
+# s7render: RenderType.create, to build 1.21.1's entityTranslucentCull / entityGlintDirect render types 1.21.2 deleted (rt/CbRenderTypes)
+accessible class net/minecraft/class_1921$class_4688
+accessible class net/minecraft/class_1921$class_4687
+accessible method net/minecraft/class_1921 method_24048 (Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;ILnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+accessible method net/minecraft/class_1921 method_24049 (Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;IZZLnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+
 # s7render: ModelBakery's baker getModel(id), the 1.21.1 ModelBaker.getModel (CbRenderBakeBakerMixin)
 accessible method net/minecraft/class_1088$class_7778 method_45872 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
 # ---- s7entity: Phantom.canAttack(level, target, conditions), package-private in 1.21.2, answered by a mod Phantom's 1.21.1 canAttack(target, conditions) override (s7entity.json overrideHooks) ----
@@ -75,3 +90,36 @@ accessible method net/minecraft/class_1011 method_4305 (III)V
 accessible method net/minecraft/class_1011 method_4315 (II)I
 accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
 # ---- END GENERATED (s7render) ----
+# ---- s7item: 1.21.1 RecipeBookMenu bodies on 1.21.2's menus (rt/CbItemRecipeMenus) ----
+accessible field net/minecraft/class_9884 field_52559 Lnet/minecraft/class_8566;
+accessible field net/minecraft/class_9884 field_52560 Lnet/minecraft/class_1731;
+accessible field net/minecraft/class_1714 field_7797 Lnet/minecraft/class_1657;
+accessible field net/minecraft/class_1723 field_7828 Lnet/minecraft/class_1657;
+accessible field net/minecraft/class_1720 field_7824 Lnet/minecraft/class_1263;
+accessible field net/minecraft/class_1720 field_7822 Lnet/minecraft/class_1937;
+accessible field net/minecraft/class_1714 field_51625 Z
+accessible field net/minecraft/class_1714 field_7799 Lnet/minecraft/class_3914;
+accessible method net/minecraft/class_1714 method_17399 (Lnet/minecraft/class_1703;Lnet/minecraft/class_3218;Lnet/minecraft/class_1657;Lnet/minecraft/class_8566;Lnet/minecraft/class_1731;Lnet/minecraft/class_8786;)V
+# ---- s7item: 1.21.1 StonecutterMenu.getRecipes asks the menu's level (rt/CbItemRecipeMenus) ----
+accessible field net/minecraft/class_3971 field_17632 Lnet/minecraft/class_1937;
+# ---- s7item: 1.21.1 ItemCombinerMenu definitions and quick-move slot (rt/CbItemCombiner) ----
+accessible method net/minecraft/class_4862 method_64652 (Lnet/minecraft/class_10286;)Lnet/minecraft/class_8047;
+accessible field net/minecraft/class_4861 field_22482 Lnet/minecraft/class_1657;
+accessible field net/minecraft/class_4861 field_22480 Lnet/minecraft/class_1263;
+# ---- s7item: 1.21.1 RecipeBook's id sets as views of ServerRecipeBook's key sets (rt/CbItemRecipeBook) ----
+accessible field net/minecraft/class_3441 field_54550 Ljava/util/Set;
+accessible field net/minecraft/class_3441 field_54551 Ljava/util/Set;
+# ---- s7item: 1.21.1 Potion.getName reads the potion's name (rt/CbItemPotions) ----
+accessible field net/minecraft/class_1842 field_8954 Ljava/lang/String;
+# ---- s7item: 1.21.1 SavedTick.saveTick on 1.21.2's compound writer (rt/CbItemTicks) ----
+accessible method net/minecraft/class_6759 method_39403 (Ljava/lang/String;Lnet/minecraft/class_2338;ILnet/minecraft/class_1953;)Lnet/minecraft/class_2487;
+
+# ---- BEGIN GENERATED (s7item): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible field net/minecraft/class_7782 field_48771 Ljava/util/Set;
+accessible method net/minecraft/class_1715 <init> (Lnet/minecraft/class_1703;IILnet/minecraft/class_2371;)V
+accessible method net/minecraft/class_5411 method_30186 (Lnet/minecraft/class_2540;)Lnet/minecraft/class_5411;
+accessible method net/minecraft/class_5411 method_30190 (Lnet/minecraft/class_2540;)V
+extendable method net/minecraft/class_5411 method_30190 (Lnet/minecraft/class_2540;)V
+# ---- END GENERATED (s7item) ----

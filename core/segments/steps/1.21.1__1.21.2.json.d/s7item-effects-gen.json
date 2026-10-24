@@ -3,7 +3,9 @@
   "net/minecraft/class_1291.method_5572(Lnet/minecraft/class_1309;I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects",
   "net/minecraft/class_1291.method_5564(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;ID)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects",
   "net/minecraft/class_1291.method_58617(Lnet/minecraft/class_1309;ILnet/minecraft/class_1297$class_5529;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects",
-  "net/minecraft/class_1291.method_58614(Lnet/minecraft/class_1309;ILnet/minecraft/class_1282;F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects"
+  "net/minecraft/class_1291.method_58614(Lnet/minecraft/class_1309;ILnet/minecraft/class_1282;F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects",
+  "net/minecraft/class_1293.method_58622(Lnet/minecraft/class_1309;Lnet/minecraft/class_1297$class_5529;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects",
+  "net/minecraft/class_1293.method_58621(Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects"
  },
  "covers": [
   "net/minecraft/class_1702.method_35217()I",

@@ -113,11 +113,9 @@
  },
  "fieldGetters": {
   "net/minecraft/class_2398.field_47492:Lnet/minecraft/class_2400;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinData",
-  "net/minecraft/class_2398.field_47495:Lnet/minecraft/class_2400;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinData"
- },
- "ledger": {
-  "net/minecraft/class_2398.field_11225:Lnet/minecraft/class_2400;": "ambient_entity_effect: 1.20.5 removed the particle type (an ambient effect's particles are entity_effect with a translucent color); there is no SimpleParticleType 1.20.4's field could hold",
-  "net/minecraft/class_2398.field_11226:Lnet/minecraft/class_2400;": "entity_effect: 1.20.5 made it a ParticleType<ColorParticleOption> whose color is part of the options (1.20.4 passed it in the velocity arguments); no SimpleParticleType exists for it, and 1.20.4's field type is one"
+  "net/minecraft/class_2398.field_47495:Lnet/minecraft/class_2400;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinData",
+  "net/minecraft/class_2398.field_11225:Lnet/minecraft/class_2400;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinParticles",
+  "net/minecraft/class_2398.field_11226:Lnet/minecraft/class_2400;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinParticles"
  },
  "covers": [
   "net/minecraft/class_2487.method_29143()Ljava/util/Map;"

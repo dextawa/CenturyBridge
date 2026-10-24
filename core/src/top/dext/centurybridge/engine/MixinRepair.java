@@ -53,6 +53,11 @@ import org.objectweb.asm.tree.VarInsnNode;
  *              target calls on its own class: retarget there; a static callee
  *              takes a static handler, so an instance handler that never reads
  *              {@code this} is made static
+ *   ordinal-remap  an @At / @Constant pinned to the n-th occurrence of its anchor
+ *              in a target V and W both declare: the ordinal becomes that of the
+ *              occurrence's counterpart in W's body ({@link SiteMatch}, matched by
+ *              context, needs {@link #source}); with no unique counterpart it is
+ *              left as it stands and reported
  *
  * Whatever stays unrepairable with an effective require >= 1 is reported as
  * fatal with the reason, so the caller strips it instead of shipping a crash.
@@ -68,6 +73,13 @@ public final class MixinRepair {
 
     private final ZipFile code;
     private final Map<String, ClassNode> cache = new HashMap<>();
+    /** the step's source release (V) code, for ordinal-remap; null: ordinals are not remapped */
+    public MixinRepair source;
+    /**
+     * a descriptor as the converted jar will spell it (the step's classRenames, Chain.renamedDesc): a
+     * selector written with a class the step renames names the W method of the renamed shape
+     */
+    public java.util.function.UnaryOperator<String> renamed = d -> d;
 
     /** disabled: injectors switched to require=0 because their anchor is gone -- a KNOWN loss, reported */
     public record Outcome(Set<String> fatal, Map<String, String> fatalWhy, List<String> repairs, List<String> disabled) {}
@@ -156,6 +168,7 @@ public final class MixinRepair {
         List<String> disabledAll = new ArrayList<>();
         byte[] fmjBytes = entries.get("fabric.mod.json");
         if (fmjBytes == null) return new Outcome(fatal, why, repairs, disabledAll);
+        restoredByTarget = restoredOverrides(entries);
         JsonObject fmj;
         try {
             fmj = GSON.fromJson(new String(fmjBytes, StandardCharsets.UTF_8), JsonObject.class);
@@ -263,6 +276,10 @@ public final class MixinRepair {
                 Map<String, Object> v = values(an);
                 List<String> methods = strings(v.get("method"));
                 if (methods.isEmpty()) continue;
+                if (source != null && remapOrdinals(an, refmap, methods, targets, shortName + "." + handler.name, repairs)) {
+                    dirty[0] = true;
+                    v = values(an);
+                }
                 List<Anchor> anchors = anchors(an, v, refmap); // null = anchor not statically evaluable
                 int require = v.get("require") instanceof Integer i && i >= 0 ? i : defaultRequire;
                 boolean capturesArgs = capturesTargetArgs(an, handler);
@@ -288,6 +305,10 @@ public final class MixinRepair {
                         ClassNode tc = target(owner);
                         if (tc == null) { live = true; break; } // not a class we hold code for: can't judge
                         List<MethodNode> cands = s.match(tc);
+                        if (cands.isEmpty() && s.desc != null && !renamed.apply(s.desc).equals(s.desc)) {
+                            cands = new Sel(s.owner, s.name, renamed.apply(s.desc), s.wildcard).match(tc);
+                        }
+                        if (cands.isEmpty()) cands = restored(restoredByTarget, owner, s); // an override MixinBridge put back
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
                         if (cands.isEmpty()) {
@@ -323,6 +344,33 @@ public final class MixinRepair {
                                 fixes.add(() -> {
                                     if (setAtTarget(an, refmap, moved)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
                                 });
+                                continue;
+                            }
+                        }
+                        // descend-site (V's code at hand): where V's site of the anchor stands in W, in one
+                        // private method only the target's path calls; when it judged and refused, the
+                        // looser descend below does not get to guess
+                        if (source != null && anchors.size() == 1 && cands.size() == 1 && !capturesArgs) {
+                            List<String> dwhy = new ArrayList<>();
+                            Descend d = descendBySite(an, handler, owner, tc, cands.get(0), anchors.get(0), dwhy);
+                            if (d != null) {
+                                String repl = "L" + owner + ";" + d.callee().name + d.callee().desc;
+                                fixNotes.add("descend-site " + where + " " + anchors.get(0) + " => " + d.callee().name + d.callee().desc
+                                    + (d.ordinal() >= 0 ? " #" + d.ordinal() : "") + (d.makeStatic() ? " (handler made static)" : "")
+                                    + (d.toCir() ? " (callback as CallbackInfoReturnable)" : "")
+                                    + " (V's site by context; the callee is private, called from one site)");
+                                fixes.add(() -> {
+                                    if (d.makeStatic()) makeStatic(handler);
+                                    if (d.toCir()) toReturnable(handler);
+                                    setAtOrdinal(an, d.ordinal());
+                                    if (viaRefmap) { refmapPut(refmap, sel, repl); dirty[1] = true; }
+                                    else setMethodSelector(an, idx, repl);
+                                    dirty[0] = true;
+                                });
+                                continue;
+                            }
+                            if (!dwhy.isEmpty()) {
+                                if (deadWhy == null) deadWhy = "anchor gone: @" + kind + " " + where + " " + anchors + " (" + dwhy.get(0) + ")";
                                 continue;
                             }
                         }
@@ -380,6 +428,412 @@ public final class MixinRepair {
         }
         if (out == null && !refmapChanged && repairs.isEmpty() && fatalWhy == null && disabled.isEmpty()) return null;
         return new MixinResult(out, refmapChanged, repairs, disabled, fatalWhy);
+    }
+
+    // ------------------------------------------------------------------ descend by site
+
+    private record Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic) {}
+
+    /**
+     * descend-site: the anchor's V site (the pinned occurrence, or every occurrence) found by context
+     * ({@link SiteMatch#match}) in one method the W target reaches by calls on its own class (depth 2),
+     * and nowhere else. The injector moves there only if that changes nothing but the method it sits in:
+     * every method on the path is called from exactly one site (within its class when private, in the
+     * whole W jar through the class or its subclasses otherwise -- so it runs exactly when V's code
+     * ran, once per pass), the handler does not cancel (in the callee that would
+     * return from the callee, not the target), and its callback fits the callee (CallbackInfo becomes
+     * CallbackInfoReturnable for a callee returning a value -- a subclass, the body is unchanged; the
+     * other way, or a different return value type, is refused). Null without reasons when V's body or
+     * the site cannot be read (the looser descend may try); null with a reason when refused.
+     */
+    private Descend descendBySite(AnnotationNode an, MethodNode handler, String owner, ClassNode tc, MethodNode wm, Anchor a,
+                                  List<String> why) {
+        if (!a.role.equals("main") || a.kind.equals("LOCAL") || a == POSITIONAL) return null;
+        ClassNode vc = source.target(owner);
+        MethodNode vm = null;
+        if (vc != null) for (MethodNode m : vc.methods) if (m.name.equals(wm.name) && m.desc.equals(wm.desc)) vm = m;
+        if (vm == null) return null;
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> matchesAnchor(in, a));
+        if (vo.isEmpty() || a.ordinal >= vo.size()) return null;
+        List<Integer> sites = new ArrayList<>();
+        if (a.ordinal >= 0) sites.add(a.ordinal);
+        else for (int i = 0; i < vo.size(); i++) sites.add(i);
+        // what the target reaches by direct calls on its own class, depth 2: callee -> its caller
+        Map<MethodNode, MethodNode> parent = new LinkedHashMap<>();
+        List<MethodNode> frontier = List.of(wm);
+        for (int depth = 1; depth <= 2; depth++) {
+            List<MethodNode> next = new ArrayList<>();
+            for (MethodNode m : frontier) {
+                for (MethodNode c : callees(m, tc)) {
+                    if (c != wm && !parent.containsKey(c)) {
+                        parent.put(c, m);
+                        next.add(c);
+                    }
+                }
+            }
+            frontier = next;
+        }
+        List<MethodNode> places = new ArrayList<>(parent.keySet());
+        places.add(0, wm);
+        MethodNode into = null;
+        int[] ords = new int[sites.size()];
+        for (int k = 0; k < sites.size(); k++) {
+            MethodNode found = null;
+            int fj = -1;
+            int hits = 0;
+            for (MethodNode c : places) {
+                List<AbstractInsnNode> wo = SiteMatch.occurrences(c, in -> matchesAnchor(in, a));
+                if (wo.isEmpty()) continue;
+                // another method than V's own: a context of 3 or more, no alignment (audit: a 1-wide
+                // context matched index 0 of another statement's argument array)
+                int j = c == wm ? SiteMatch.match(vm, vo, c, wo)[sites.get(k)] : SiteMatch.match(vm, vo, c, wo, 3, false)[sites.get(k)];
+                if (j >= 0 && c != wm && ownSite(vc, c, wo.get(j), a)) {
+                    j = -1; // V's own copy of that callee already held this site: it is not where the target's went
+                }
+                if (j >= 0) {
+                    hits++;
+                    found = c;
+                    fj = j;
+                }
+            }
+            if (hits == 0) {
+                // V's site has no counterpart in the target or what it calls: the looser descend (any
+                // occurrence of the anchor in one callee) would be a guess
+                why.add("V's site has no counterpart in the target or the methods it calls");
+                return null;
+            }
+            if (found == wm) return null; // still in the target itself: not a descend
+            if (hits > 1) {
+                why.add("V's site matches in " + hits + " methods");
+                return null;
+            }
+            if (into != null && into != found) {
+                why.add("V's sites stand in different callees now");
+                return null;
+            }
+            into = found;
+            ords[k] = fj;
+        }
+        for (MethodNode m = into; m != wm; m = parent.get(m)) {
+            int calls = (m.access & Opcodes.ACC_PRIVATE) != 0 ? callSites(tc, m) : jarCallSites(tc.name, m);
+            if (calls != 1) {
+                why.add(m.name + m.desc + " holds V's site but is called from " + calls + " sites");
+                return null;
+            }
+        }
+        if (cancels(handler)) {
+            why.add("the handler cancels, which in " + into.name + " would return from it, not from the target");
+            return null;
+        }
+        boolean toCir = false;
+        if (an.desc.equals(INJECT)) {
+            boolean wantCir = Type.getReturnType(into.desc).getSort() != Type.VOID;
+            boolean hasCir = handler.desc.contains(CIR);
+            if (hasCir && !Type.getReturnType(into.desc).equals(Type.getReturnType(wm.desc))) {
+                why.add("the handler takes the target's return value; " + into.name + " returns " + Type.getReturnType(into.desc));
+                return null;
+            }
+            toCir = wantCir && !hasCir;
+        }
+        boolean calleeStatic = (into.access & Opcodes.ACC_STATIC) != 0;
+        boolean handlerStatic = (handler.access & Opcodes.ACC_STATIC) != 0;
+        if (!(calleeStatic == handlerStatic || handlerStatic || calleeStatic && touchesThisFree(handler))) {
+            why.add(into.name + " is static and the handler reads this");
+            return null;
+        }
+        int ordinal;
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(into, in -> matchesAnchor(in, a));
+        if (sites.size() == 1) {
+            ordinal = a.ordinal >= 0 || wo.size() > 1 ? ords[0] : -1;
+        } else {
+            Set<Integer> got = new java.util.HashSet<>();
+            for (int o : ords) got.add(o);
+            if (got.size() != wo.size()) {
+                why.add(into.name + " holds the anchor " + wo.size() + " times, V's " + sites.size() + " sites are " + got.size() + " of them");
+                return null;
+            }
+            ordinal = -1;
+        }
+        return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic);
+    }
+
+    /**
+     * Whether W's site in callee c is the counterpart of an occurrence of the anchor in V's own copy of
+     * c (same name and descriptor in V's class): then it stood in that method already in V.
+     */
+    private static boolean ownSite(ClassNode vc, MethodNode c, AbstractInsnNode site, Anchor a) {
+        MethodNode vcm = null;
+        for (MethodNode m : vc.methods) if (m.name.equals(c.name) && m.desc.equals(c.desc)) vcm = m;
+        if (vcm == null) return false;
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vcm, in -> matchesAnchor(in, a));
+        if (vo.isEmpty()) return false;
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(c, in -> matchesAnchor(in, a));
+        int at = wo.indexOf(site);
+        for (int j : SiteMatch.match(vcm, vo, c, wo)) if (j == at) return true;
+        return false;
+    }
+
+    /** calls of m within its class, method references (invokedynamic handles) included */
+    private static int callSites(ClassNode tc, MethodNode m) {
+        int n = 0;
+        for (MethodNode c : tc.methods) {
+            if (c.instructions == null) continue;
+            for (AbstractInsnNode in : c.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.owner.equals(tc.name) && mi.name.equals(m.name) && mi.desc.equals(m.desc)) n++;
+                if (in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode id) {
+                    for (Object b : id.bsmArgs) {
+                        if (b instanceof org.objectweb.asm.Handle h && h.getOwner().equals(tc.name) && h.getName().equals(m.name)
+                                && h.getDesc().equals(m.desc)) n++;
+                    }
+                }
+            }
+        }
+        return n;
+    }
+
+    /** call sites of name+desc in every class of the code jar, by owner: built once */
+    private Map<String, List<String>> callIndex;
+
+    /**
+     * calls anywhere in the W jar that reach a non-private m of class owner: through owner itself or a
+     * subclass of it (a call through a supertype that declares it too reaches it virtually: counted as
+     * well), method references included
+     */
+    private int jarCallSites(String owner, MethodNode m) {
+        if (callIndex == null) {
+            callIndex = new HashMap<>();
+            for (ZipEntry e : java.util.Collections.list(code.entries())) {
+                if (!e.getName().endsWith(".class")) continue;
+                String name = e.getName().substring(0, e.getName().length() - 6);
+                boolean had = cache.containsKey(name);
+                ClassNode cn = target(name);
+                if (cn == null) continue;
+                for (MethodNode c : cn.methods) {
+                    if (c.instructions == null) continue;
+                    for (AbstractInsnNode in : c.instructions) {
+                        if (in instanceof MethodInsnNode mi) {
+                            callIndex.computeIfAbsent(mi.name + mi.desc, k -> new ArrayList<>()).add(mi.owner);
+                        } else if (in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode id) {
+                            for (Object b : id.bsmArgs) {
+                                if (b instanceof org.objectweb.asm.Handle h) callIndex.computeIfAbsent(h.getName() + h.getDesc(), k -> new ArrayList<>()).add(h.getOwner());
+                            }
+                        }
+                    }
+                }
+                if (!had) cache.remove(name); // the index is what is kept, not every class
+            }
+        }
+        int n = 0;
+        for (String o : callIndex.getOrDefault(m.name + m.desc, List.of())) {
+            if (related(o, owner)) n++;
+        }
+        return n;
+    }
+
+    /** o is owner, a subclass of it, or a supertype of it */
+    private boolean related(String o, String owner) {
+        if (o.equals(owner)) return true;
+        for (String c = o; c != null; ) {
+            if (c.equals(owner)) return true;
+            ClassNode cn = target(c);
+            c = cn == null ? null : cn.superName;
+        }
+        for (String c = owner; c != null; ) {
+            if (c.equals(o)) return true;
+            ClassNode cn = target(c);
+            c = cn == null ? null : cn.superName;
+        }
+        return false;
+    }
+
+    /** does the handler cancel or set a return value through its callback */
+    private static boolean cancels(MethodNode h) {
+        if (h.instructions == null) return false;
+        String ci = CI.substring(1, CI.length() - 1), cir = CIR.substring(1, CIR.length() - 1);
+        for (AbstractInsnNode in : h.instructions) {
+            if (in instanceof MethodInsnNode mi && (mi.owner.equals(ci) || mi.owner.equals(cir))
+                    && (mi.name.equals("cancel") || mi.name.equals("setReturnValue"))) return true;
+        }
+        return false;
+    }
+
+    /** the handler's CallbackInfo parameter declared as CallbackInfoReturnable (its subclass) */
+    private static void toReturnable(MethodNode h) {
+        h.desc = h.desc.replace(CI, CIR);
+        if (h.localVariables != null) {
+            for (LocalVariableNode lv : h.localVariables) if (lv.desc.equals(CI)) lv.desc = CIR;
+        }
+        if (h.signature != null) h.signature = h.signature.replace(CI, CIR);
+    }
+
+    /** the injector's single @At pinned to ordinal (or unpinned for -1) */
+    private static void setAtOrdinal(AnnotationNode an, int ordinal) {
+        for (Object a : list(raw(an, "at"))) {
+            if (!(a instanceof AnnotationNode at)) continue;
+            if (at.values == null) at.values = new ArrayList<>();
+            int idx = -1;
+            for (int i = 0; i + 1 < at.values.size(); i += 2) if ("ordinal".equals(at.values.get(i))) idx = i;
+            if (ordinal >= 0) {
+                if (idx >= 0) at.values.set(idx + 1, ordinal);
+                else { at.values.add("ordinal"); at.values.add(ordinal); }
+            } else if (idx >= 0) {
+                at.values.remove(idx + 1);
+                at.values.remove(idx);
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------ ordinals
+
+    /**
+     * ordinal-remap: every @At (slices included) and @Constant of the injector pinned to an ordinal is
+     * moved to the ordinal of its V site's counterpart in W. Only for a selector naming one method that
+     * V and W both declare on one owner, by name and descriptor or by name alone when each release has
+     * exactly one (a target the step moved is not V's body any more). True if an
+     * ordinal changed; each change, and each pinned site left without a counterpart, is reported.
+     */
+    private boolean remapOrdinals(AnnotationNode an, JsonObject refmap, List<String> methods, List<String> targets,
+                                  String where, List<String> notes) {
+        MethodNode wm = null, vm = null;
+        for (String sel : methods) {
+            if (sel.startsWith("/")) return false;
+            Sel s = Sel.parse(refmapLookup(refmap, sel));
+            if (s.wildcard) return false;
+            // a selector by name alone (mods write "tick", "<clinit>") names one body when V and W each have one
+            List<String> owners = s.owner != null ? List.of(s.owner) : targets;
+            for (String owner : owners) {
+                ClassNode tc = target(owner), vc = source.target(owner);
+                if (tc == null || vc == null) continue;
+                List<MethodNode> w = s.match(tc), v = s.match(vc);
+                if (w.size() != 1 || v.size() != 1) continue;
+                if (wm != null) return false; // several live alternatives: not one body to match
+                wm = w.get(0);
+                vm = v.get(0);
+            }
+        }
+        if (wm == null) return false;
+        List<AnnotationNode> pinned = new ArrayList<>();
+        for (Object a : list(raw(an, "at"))) if (a instanceof AnnotationNode at) pinned.add(at);
+        for (Object sl : list(raw(an, "slice"))) {
+            if (!(sl instanceof AnnotationNode sn)) continue;
+            for (String edge : new String[] {"from", "to"}) if (raw(sn, edge) instanceof AnnotationNode at) pinned.add(at);
+        }
+        boolean changed = false;
+        for (AnnotationNode at : pinned) {
+            Anchor a = parseAt(values(at), refmap);
+            if (a == null || a == POSITIONAL || a.ordinal < 0) continue;
+            changed |= remapOne(at, a, vm, wm, where, notes);
+        }
+        changed |= splitSites(an, refmap, vm, wm, where, notes);
+        for (Object c : list(raw(an, "constant"))) {
+            if (!(c instanceof AnnotationNode cn)) continue;
+            Map<String, Object> cv = values(cn);
+            if (!(cv.get("ordinal") instanceof Integer ord) || ord < 0 || cv.containsKey("expandZeroConditions")) continue;
+            Object val = null;
+            for (String k : new String[] {"intValue", "floatValue", "longValue", "doubleValue", "stringValue", "classValue"}) {
+                if (cv.containsKey(k)) val = cv.get(k);
+            }
+            if (val == null) continue;
+            changed |= remapOne(cn, new Anchor("CONSTANT", null, null, null, val, ord), vm, wm, where, notes);
+        }
+        return changed;
+    }
+
+    /**
+     * sites-split: an @Inject whose single @At names its anchor without an ordinal injects at every
+     * occurrence; where W holds the anchor more often than V and each V occurrence has its W counterpart
+     * (SiteMatch), the @At becomes one @At per counterpart, pinned by ordinal -- the injector fires
+     * where V's code did and not at the occurrences W added. With a V occurrence left without a
+     * counterpart nothing is changed (reported).
+     */
+    private static boolean splitSites(AnnotationNode an, JsonObject refmap, MethodNode vm, MethodNode wm, String where, List<String> notes) {
+        if (!an.desc.equals(INJECT) || raw(an, "slice") != null) return false;
+        List<Object> ats = list(raw(an, "at"));
+        if (ats.size() != 1 || !(ats.get(0) instanceof AnnotationNode at)) return false;
+        Anchor a = parseAt(values(at), refmap);
+        if (a == null || a == POSITIONAL || a.ordinal >= 0) return false;
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> matchesAnchor(in, a));
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> matchesAnchor(in, a));
+        if (vo.isEmpty() || wo.size() <= vo.size()) return false;
+        int[] map = SiteMatch.match(vm, vo, wm, wo);
+        for (int j : map) {
+            if (j < 0) {
+                notes.add("sites-unmatched " + where + " " + a + ": W holds it " + wo.size() + " times, V " + vo.size()
+                    + ", not every V occurrence has a counterpart; left injecting at all");
+                return false;
+            }
+        }
+        List<Object> split = new ArrayList<>();
+        for (int j : map) {
+            AnnotationNode copy = new AnnotationNode(at.desc);
+            copy.values = new ArrayList<>(at.values == null ? List.of() : at.values);
+            copy.values.add("ordinal");
+            copy.values.add(j);
+            split.add(copy);
+        }
+        for (int i = 0; i + 1 < an.values.size(); i += 2) {
+            if ("at".equals(an.values.get(i))) an.values.set(i + 1, split);
+        }
+        notes.add("sites-split " + where + " " + a + " -> #" + java.util.Arrays.toString(map) + " of W's " + wo.size()
+            + " (V's " + vo.size() + " occurrences, by context)");
+        return true;
+    }
+
+    /** overrides MixinBridge.restoreOverride put back (restoring mixins of the jar being repaired), by target */
+    private Map<String, List<MethodNode>> restoredByTarget = Map.of();
+
+    /** the restored override of a target class this selector names, if any */
+    static List<MethodNode> restored(Map<String, List<MethodNode>> byTarget, String target, Sel s) {
+        for (MethodNode m : byTarget.getOrDefault(target, List.of())) {
+            if (m.name.equals(s.name) && (s.desc == null || m.desc.equals(s.desc))) return List.of(m);
+        }
+        return List.of();
+    }
+
+    /** the RESTORED methods of the jar's mixin classes, by target */
+    static Map<String, List<MethodNode>> restoredOverrides(Map<String, byte[]> entries) {
+        Map<String, List<MethodNode>> out = new HashMap<>();
+        for (Map.Entry<String, byte[]> e : entries.entrySet()) {
+            if (!e.getKey().endsWith(".class") || !e.getKey().contains("cb$restore$")) continue;
+            ClassNode cn = new ClassNode();
+            new ClassReader(e.getValue()).accept(cn, ClassReader.SKIP_FRAMES);
+            List<String> ts = mixinTargets(cn, null);
+            for (MethodNode m : cn.methods) {
+                if (!MixinBridge.restoredMark(m)) continue;
+                for (String t : ts) out.computeIfAbsent(t, k -> new ArrayList<>()).add(m);
+            }
+        }
+        return out;
+    }
+
+    /** an annotation value as stored (nested annotations stay AnnotationNodes) */
+    private static Object raw(AnnotationNode an, String key) {
+        if (an.values == null) return null;
+        for (int i = 0; i + 1 < an.values.size(); i += 2) if (key.equals(an.values.get(i))) return an.values.get(i + 1);
+        return null;
+    }
+
+    private static boolean remapOne(AnnotationNode holder, Anchor a, MethodNode vm, MethodNode wm, String where, List<String> notes) {
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> matchesAnchor(in, a));
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> matchesAnchor(in, a));
+        if (a.ordinal >= vo.size() || wo.isEmpty()) return false; // not V's site to begin with / nothing to map onto
+        int j = SiteMatch.match(vm, vo, wm, wo)[a.ordinal];
+        if (j < 0) {
+            if (vo.size() != wo.size()) {
+                notes.add("ordinal-unmatched " + where + " " + a + ": V's site has no unique counterpart among W's "
+                    + wo.size() + " (V " + vo.size() + "), left as it stands");
+            }
+            return false;
+        }
+        if (j == a.ordinal) return false;
+        for (int i = 0; i + 1 < holder.values.size(); i += 2) {
+            if ("ordinal".equals(holder.values.get(i))) {
+                holder.values.set(i + 1, j);
+                notes.add("ordinal-remap " + where + " " + a + " -> #" + j + " (V " + vo.size() + ", W " + wo.size() + " occurrences, by context)");
+                return true;
+            }
+        }
+        return false;
     }
 
     private Map<String, List<String>> implIndex;

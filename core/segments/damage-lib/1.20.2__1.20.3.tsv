@@ -1,0 +1,16 @@
+# library damage 1.20.2__1.20.3 (Main lib-diff, JVM-style resolution on both sides; calibrated: V vs V = 0 rows, unchanged jars = 0)
+# old/new = client-<V>/client-<W> runtime libraries on beta2 (1.20.1: ~/cbtest/client-1.20.1, the runtime dir holds 1.20.2 libraries);
+# scope = the artifacts V ships (artifacts.tsv: version JSON = client, server bundler list = server); sides column from it.
+# regenerate: Main lib-diff <oldLibs> <newLibs> <out.tsv> core/segments/damage-lib/artifacts.tsv <V> <W>
+artifact	sides	kind	symbol	note
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.accountsHost()Ljava/lang/String;	
+com/mojang/authlib	client,server	FIELD	com/mojang/authlib/EnvironmentParser.PROP_ACCOUNT_HOST:Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/InsecurePublicKeyException$MissingException.<init>()V	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/MinecraftSessionService.getPackedTextures(Lcom/mojang/authlib/GameProfile;)Lcom/mojang/authlib/properties/Property;	implementations must now provide it
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/MinecraftSessionService.unpackTextures(Lcom/mojang/authlib/properties/Property;)Lcom/mojang/authlib/minecraft/MinecraftProfileTextures;	implementations must now provide it
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/MinecraftSessionService.getTextures(Lcom/mojang/authlib/GameProfile;Z)Ljava/util/Map;	
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/minecraft/UserApiService.fetchProperties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;	implementations must now provide it
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/minecraft/UserApiService.properties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.getTextures(Lcom/mojang/authlib/GameProfile;Z)Ljava/util/Map;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/YggdrasilUserApiService.properties()Lcom/mojang/authlib/minecraft/UserApiService$UserProperties;	

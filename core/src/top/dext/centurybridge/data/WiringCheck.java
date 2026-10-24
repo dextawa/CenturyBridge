@@ -54,6 +54,8 @@ public final class WiringCheck {
      */
     private Map<String, List<String>> injected = Map.of();
     private final Map<String, ClassNode> lib = new HashMap<>();
+    /** the target's game libraries (-Dcb.libs), class headers only: subtype judgments of library-keyed wiring */
+    private final Map<String, ClassNode> gameLibs = new HashMap<>();
     private final List<String> problems = new ArrayList<>();
     private Remapper facade = new SimpleRemapper(Map.of());
     private Remapper wall;
@@ -146,6 +148,27 @@ public final class WiringCheck {
                 ClassNode cn = new ClassNode();
                 new ClassReader(Files.readAllBytes(p)).accept(cn, ClassReader.SKIP_CODE);
                 w.classes.put(cn.name, cn);
+            }
+        }
+        // the target's game libraries (-Dcb.libs=<its libraries dir>: authlib, JOML, fastutil...): class headers only, for
+        // the subtype judgments of wiring keyed on a library type (JOML's Vector3f passed as a Vector3fc)
+        String libs = System.getProperty("cb.libs");
+        if (libs != null && !libs.isEmpty() && Files.isDirectory(Path.of(libs))) {
+            List<Path> jars;
+            try (var s = Files.walk(Path.of(libs))) {
+                jars = s.filter(f -> f.toString().endsWith(".jar") && !f.getFileName().toString().contains("-natives-")).sorted().toList();
+            }
+            for (Path jar : jars) {
+                try (var z = new java.util.zip.ZipFile(jar.toFile())) {
+                    for (var en : java.util.Collections.list(z.entries())) {
+                        String n = en.getName();
+                        if (!n.endsWith(".class") || n.startsWith("META-INF/") || n.startsWith("net/minecraft/")) continue;
+                        ClassNode cn = new ClassNode();
+                        new ClassReader(z.getInputStream(en).readAllBytes()).accept(cn,
+                            ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                        w.gameLibs.putIfAbsent(cn.name, cn);
+                    }
+                }
             }
         }
         var root = top.dext.centurybridge.engine.Wiring.read(shimsJson);
@@ -662,6 +685,55 @@ public final class WiringCheck {
                 }
             }
         }
+        // mixinTargets: the W method a V method's code now lives in must be declared on the (renamed)
+        // class itself -- Mixin looks injector targets up in the target's own member table -- and every
+        // argument index must name a W argument of the V argument's (renamed) type or a subtype of it
+        if (root.has("mixinTargets") && !stub.isEmpty()) {
+            for (var e : root.getAsJsonObject("mixinTargets").entrySet()) {
+                checked++;
+                Sym s = Sym.method(e.getKey());
+                var o = e.getValue().getAsJsonObject();
+                String where = "mixinTargets " + e.getKey();
+                if (!o.has("to") || !o.has("basis")) {
+                    problems.add(where + ": needs \"to\" and \"basis\"");
+                    continue;
+                }
+                String to = o.get("to").getAsString();
+                int p = to.indexOf('(');
+                if (p <= 0) {
+                    problems.add(where + ": \"to\" is not name(desc)");
+                    continue;
+                }
+                String owner = targetName(facade.mapType(s.owner));
+                ClassNode cn = classes.containsKey(owner) ? classes.get(owner) : stub.get(owner);
+                String nm = to.substring(0, p);
+                String nd = methodDesc(to.substring(p));
+                if (cn == null || cn.methods.stream().noneMatch(m -> m.name.equals(nm) && m.desc.equals(nd))) {
+                    problems.add(where + ": " + owner + " does not itself declare " + nm + nd);
+                    continue;
+                }
+                if (!o.has("args")) {
+                    continue;
+                }
+                var a = o.getAsJsonArray("args");
+                org.objectweb.asm.Type[] va = org.objectweb.asm.Type.getArgumentTypes(methodDesc(s.desc));
+                org.objectweb.asm.Type[] wa = org.objectweb.asm.Type.getArgumentTypes(nd);
+                if (a.size() != va.length) {
+                    problems.add(where + ": args has " + a.size() + " entries, the V method " + va.length + " arguments");
+                    continue;
+                }
+                for (int i = 0; i < va.length; i++) {
+                    int j = a.get(i).getAsInt();
+                    if (j < -1 || j >= wa.length) {
+                        problems.add(where + ": args[" + i + "] = " + j + " is no argument of " + nm + nd);
+                    } else if (j >= 0 && !wa[j].equals(va[i])
+                            && !(wa[j].getSort() == org.objectweb.asm.Type.OBJECT && va[i].getSort() == org.objectweb.asm.Type.OBJECT
+                                 && resolvesSuper(wa[j].getInternalName(), va[i].getInternalName()))) {
+                        problems.add(where + ": args[" + i + "]: W argument " + j + " (" + wa[j] + ") is not a " + va[i]);
+                    }
+                }
+            }
+        }
         // callReshapes: the reshaped call must resolve on the target (the owner or a supertype
         // declares the new shape), and every converter / supplier it runs must exist
         if (root.has("callReshapes")) {
@@ -1053,7 +1125,16 @@ public final class WiringCheck {
             // facade is one, and the stub (Minecraft only) does not carry it
             return;
         }
-        ClassNode kn = stub.get(kt);
+        ClassNode kn = stub.containsKey(kt) ? stub.get(kt) : gameLibs.get(kt);
+        if (kn == null && gameLibs.isEmpty() && !top.dext.centurybridge.engine.Chain.minecraftOwned(kt) && !lib.containsKey(kt)) {
+            // a game library's class (authlib's PropertyMap) with no -Dcb.libs: the stub (Minecraft only) does not
+            // carry it, so only the subtype half is judged, through the facade's own compiled supertypes
+            if (classes.containsKey(fac) && !isSubtype(fac, kt)) {
+                problems.add("superRename " + key + " -> " + fac + ": not a subtype of the library class " + kt
+                    + " -- a mod instance reaching a " + kt + "-typed slot fails verification");
+            }
+            return;
+        }
         if (kn == null) {
             problems.add("superRename " + key + ": the class is gone on the target -- superRenames only move"
                 + " extends/implements, so NEW sites, casts and field/method types keep naming it; use classRenames");
@@ -1127,6 +1208,22 @@ public final class WiringCheck {
     }
 
     /** whether name+desc is declared on the owner or one of its supertypes (shim tree or target stub) */
+    /** whether sub is sup or extends / implements it on the target (stub and compiled classes) */
+    private boolean resolvesSuper(String sub, String sup) {
+        java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(sub));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.pop();
+            if (!seen.add(c)) continue;
+            if (c.equals(sup) || sup.equals("java/lang/Object")) return true;
+            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            if (n == null) continue;
+            if (n.superName != null) todo.push(n.superName);
+            todo.addAll(n.interfaces);
+        }
+        return false;
+    }
+
     private boolean resolves(String owner, String name, String desc) {
         java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
         java.util.Set<String> seen = new java.util.HashSet<>();
@@ -1217,7 +1314,7 @@ public final class WiringCheck {
             String c = todo.pop();
             if (c.equals(sup)) return true;
             if (!seen.add(c)) continue;
-            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.containsKey(c) ? stub.get(c) : gameLibs.get(c);
             if (n == null) {
                 // a JDK type (java.util.List where a reshape passes it as a Collection) is
                 // judged by the JDK itself; the game stub does not carry it

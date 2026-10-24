@@ -21,15 +21,6 @@ public final class CbRestDefaults {
         return 1.0F;
     }
 
-    /**
-     * GameType.SURVIVAL: 1.20.4 GameTestHelper.makeMockPlayer() made a player that is neither creative
-     * nor spectator (its anonymous Player answered false to both); 1.20.5 builds that player for the
-     * game type it is given
-     */
-    public static net.minecraft.class_1934 survival() {
-        return net.minecraft.class_1934.field_9215;
-    }
-
     /** 1.20.4 Raids.createOrExtendRaid(player) raided the player's block position */
     public static net.minecraft.class_2338 raidPos(net.minecraft.class_3222 player) {
         return player.method_24515();

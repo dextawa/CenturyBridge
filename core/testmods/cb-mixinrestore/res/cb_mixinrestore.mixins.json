@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "cb.mixinrestore.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": [
+    "ServerDriverMixin",
+    "FurnaceMixin",
+    "ParticleArgumentMixin",
+    "ParticleTypesMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

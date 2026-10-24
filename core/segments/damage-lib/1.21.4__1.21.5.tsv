@@ -1,0 +1,11 @@
+# library damage 1.21.4__1.21.5 (Main lib-diff, JVM-style resolution on both sides; calibrated: V vs V = 0 rows, unchanged jars = 0)
+# old/new = client-<V>/client-<W> runtime libraries on beta2 (1.20.1: ~/cbtest/client-1.20.1, the runtime dir holds 1.20.2 libraries);
+# scope = the artifacts V ships (artifacts.tsv: version JSON = client, server bundler list = server); sides column from it.
+# regenerate: Main lib-diff <oldLibs> <newLibs> <out.tsv> core/segments/damage-lib/artifacts.tsv <V> <W>
+artifact	sides	kind	symbol	note
+com/mojang/authlib	client,server	ABSTRACT	com/mojang/authlib/GameProfileRepository.findProfileByName(Ljava/lang/String;)Ljava/util/Optional;	implementations must now provide it
+com/mojang/text2speech	client	ABSTRACT	com/mojang/text2speech/Narrator.say(Ljava/lang/String;ZF)V	implementations must now provide it
+com/mojang/text2speech	client	METHOD	com/mojang/text2speech/Narrator.say(Ljava/lang/String;Z)V	
+com/mojang/text2speech	client	METHOD	com/mojang/text2speech/NarratorLinux.say(Ljava/lang/String;Z)V	
+com/mojang/text2speech	client	METHOD	com/mojang/text2speech/NarratorMac.say(Ljava/lang/String;Z)V	hierarchy incomplete: ca/weblite/objc/NSObject
+com/mojang/text2speech	client	METHOD	com/mojang/text2speech/NarratorWindows.say(Ljava/lang/String;Z)V	
