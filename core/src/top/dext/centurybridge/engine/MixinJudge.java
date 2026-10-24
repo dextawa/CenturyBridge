@@ -225,8 +225,12 @@ public final class MixinJudge {
         });
     }
 
+    /** the members each layer's mixins restore on game classes (LayerMembers) */
+    private final List<LayerMembers> restoredLayers = new ArrayList<>();
+
     private void loadExtra(Path p) throws IOException {
         layers.add(p);
+        restoredLayers.add(LayerMembers.read(p));
         try (ZipFile z = new ZipFile(p.toFile())) {
             for (ZipEntry e : java.util.Collections.list(z.entries())) {
                 if (e.getName().endsWith(".class")) {
@@ -462,12 +466,22 @@ public final class MixinJudge {
                 }
                 cands = MixinRepair.restored(restoredByTarget, tc.name, s); // an override the converter put back (a super call)
             }
+            LayerMembers restoring = null;
+            for (int li = 0; cands.isEmpty() && li < restoredLayers.size(); li++) {
+                cands = restoredLayers.get(li).match(oc.name, s); // a member a layer restores on the W class
+                restoring = cands.isEmpty() ? null : restoredLayers.get(li);
+            }
             if (cands.isEmpty()) {
                 first = first != null ? first : methodFate(oc, s.name(), s.desc(), st, "target");
                 continue;
             }
             for (MethodNode wm : cands) {
                 String why = fits(h, an, wm, st, anchors, vcount, oc);
+                if (why == null && restoring != null && restoring.vanillaReads(wm) == null) {
+                    // it applies, but W's own code never reads the restored member: the mod's mixin changes
+                    // nothing vanilla does (LayerMembers)
+                    why = "restored-member: vanilla path unmixed";
+                }
                 if (why == null) {
                     return null;
                 }
@@ -535,7 +549,7 @@ public final class MixinJudge {
                 return "anchor gone";
             }
             if (source != null && a.ordinal() >= 0 && a.ordinal() < c && anchors.size() == 1 && vcount > 0 && c != vcount) {
-                String pinned = pinned(a, wm, c);
+                String pinned = pinned(a, wm, c, an.desc.equals("Lorg/spongepowered/asm/mixin/injection/Inject;"));
                 if ("".equals(pinned)) {
                     continue;
                 }
@@ -560,7 +574,7 @@ public final class MixinJudge {
      * the V site's place, SiteMatch.counterpart), a fate when it stands elsewhere, null when the row's
      * V site is not one site to compare (left to the count rule).
      */
-    private String pinned(MixinRepair.Anchor a, MethodNode wm, int c) {
+    private String pinned(MixinRepair.Anchor a, MethodNode wm, int c, boolean positional) {
         ClassNode vc = source.target(rowOwner);
         int p = rowTarget.indexOf('(');
         MethodNode vm = null;
@@ -590,7 +604,10 @@ public final class MixinJudge {
             return j < 0 ? "anchor ordinal site lost (V #" + vi + " of " + vo.size() + ", W " + c + ")"
                 : "anchor ordinal shifted (V #" + vi + " is W #" + j + ", pinned to #" + a.ordinal() + ")";
         }
-        AbstractInsnNode cp = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in));
+        // what MixinBridge.counterpartAnchor takes as standing there: for a positional @Inject also a value read
+        // of another kind, or the keyed consumer a construction now runs inside (SiteMatch.counterpart)
+        AbstractInsnNode cp = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in)
+            || positional && SiteMatch.valueRead(site) && SiteMatch.valueRead(in), positional);
         return cp != null && wo.indexOf(cp) == a.ordinal() ? "" : null;
     }
 

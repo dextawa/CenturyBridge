@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "cb.s7gear.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "EnchantValueMixin",
+    "IngredientItemsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

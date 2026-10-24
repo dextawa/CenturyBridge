@@ -16,5 +16,8 @@
   "fabric-recipe-api-v1": "*",
   "fabric-item-api-v1": "*",
   "fabric-data-generation-api-v1": "*"
- }
+ },
+ "mixins": [
+  "cb_s7gear.mixins.json"
+ ]
 }

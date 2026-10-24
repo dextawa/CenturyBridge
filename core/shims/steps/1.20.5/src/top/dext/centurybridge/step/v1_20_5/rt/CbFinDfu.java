@@ -137,13 +137,13 @@ public final class CbFinDfu {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private static Function wholeMapDecoders(Function decoder) {
+    static Function wholeMapDecoders(Function decoder) {
         return key -> ((DataResult) decoder.apply(key)).map(d -> d instanceof MapCodec.MapCodecCodec m ? m.codec()
             : d instanceof MapDecoder md ? md : new WholeMapDecoder((Decoder) d));
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private static Function wholeMapEncoders(Function encoder) {
+    static Function wholeMapEncoders(Function encoder) {
         return value -> ((DataResult) encoder.apply(value)).map(e -> e instanceof MapCodec.MapCodecCodec m ? m.codec()
             : e instanceof MapEncoder me ? me : new WholeMapEncoder((Encoder) e));
     }

@@ -209,7 +209,8 @@ public final class Main {
         }
         if (lj != null && Files.exists(Path.of(lj))) {
             chain.layerJar = Path.of(lj);
-            System.out.println("step layer for redirect bodies: " + lj);
+            chain.layerMembers = top.dext.centurybridge.engine.LayerMembers.read(chain.layerJar);
+            System.out.println("step layer for redirect bodies and restored members: " + lj);
         }
         Path targetStub = stubOf(args[3]);
         if (Files.exists(targetStub)) {
@@ -239,6 +240,7 @@ public final class Main {
             if (codeJar != null && Files.exists(codeJar)) {
                 chain.mixinRepair = new top.dext.centurybridge.engine.MixinRepair(codeJar);
                 chain.mixinRepair.renamed = chain::renamedDesc;
+                chain.mixinRepair.layerMembers = chain.layerMembers;
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");
@@ -288,6 +290,16 @@ public final class Main {
             }
         }
         java.util.Map<String, Integer> verdicts = new java.util.TreeMap<>();
+        // the step's layer for the code models: a mixin following its target's class rename onto a facade is judged
+        // against the facade's own code (Chain.mixinFollow); at the wall in the analysis namespace like W's bodies
+        top.dext.centurybridge.engine.MixinRepair layerModel = chain.bridgeCode != null ? chain.bridgeCode : chain.mixinRepair;
+        if (chain.layerJar != null && layerModel != null) {
+            Path layerView = chain.layerJar;
+            if (chain.bridgeCode != null && Files.exists(codeOf(args[2]))) {
+                layerView = top.dext.centurybridge.engine.WallInverse.intermediaryView(chain.layerJar, codeOf(args[2]), renameTable);
+            }
+            layerModel.layer(layerView);
+        }
         int engineErrors = 0;
         int unaccounted = 0;
         int ledgered = 0;

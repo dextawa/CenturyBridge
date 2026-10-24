@@ -1659,6 +1659,17 @@ final class MixinBridge {
                 if (!wm.isEmpty()) {
                     return new Selection(h, an, vt == null ? List.of() : s.match(vt), wm);
                 }
+                // a member the layer restores on the W class (LayerMembers) whose vanilla read path the layer
+                // routes through it (@CbVanillaReads): the selector names a method that exists at runtime and
+                // vanilla calls, nothing moves under it. An unmarked restored member (a delegate onto the code W
+                // kept) is not taken here: the selector follows V's code to W below, and only when nothing
+                // carries it does it stay on the restored member (MixinJudge: "vanilla path unmixed")
+                if (s.desc() != null && chain.layerMembers.match(target, s).stream()
+                        .anyMatch(m -> chain.layerMembers.vanillaReads(m) != null)) {
+                    injected("@" + kind + " " + sn + "." + h.name, "@" + kind + " " + sn + "." + h.name + " -> "
+                        + shortName(target) + "." + s.name() + s.desc() + ": the layer's restored member");
+                    return null;
+                }
             }
             if (vt == null || itf) {
                 return null; // which V method was meant cannot be read / an interface mixin's injectors: not carried
@@ -1990,11 +2001,11 @@ final class MixinBridge {
         private MixinRepair.Descend descendFollowed(AnnotationNode an, MethodNode h, MethodNode vmeth, MethodNode wmeth,
                                                     ClassNode vt, ClassNode wt, List<String> why) {
             MixinRepair code = wcode(chain);
-            if (code == null || MixinRepair.capturesTargetArgs(an, h) || hasSugar(h, "Local;")) {
+            if (code == null || hasSugar(h, "Local;")) {
                 return null;
             }
             List<MixinRepair.Anchor> anchors = code.anchors(an, MixinRepair.values(an), table);
-            if (anchors == null || anchors.size() != 1) {
+            if (anchors == null || anchors.size() != 1 || MixinRepair.capturesTargetArgs(an, h, anchors)) {
                 return null;
             }
             return code.descendBySite(an, h, wt, vt, vmeth, wmeth, anchors.get(0), why);
@@ -2215,7 +2226,7 @@ final class MixinBridge {
                 // a positional @Inject marks a place: a value read there (a getter call re-described as a field
                 // read of a render state) stands as well as a call of the same kind; operand-taking ones need the kind
                 AbstractInsnNode c = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in)
-                    || !operands && SiteMatch.valueRead(site) && SiteMatch.valueRead(in));
+                    || !operands && SiteMatch.valueRead(site) && SiteMatch.valueRead(in), !operands);
                 if (c == null) {
                     why.add("W's body has no single instruction of its kind between the same neighbours ("
                         + (sites.size() == 1 ? "the site" : found.size() + " of " + sites.size() + " sites found") + ")");

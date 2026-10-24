@@ -120,7 +120,21 @@ public final class MixinRepair {
 
     /** does the code jar declare the class (its entry only, nothing parsed) */
     public boolean declares(String owner) {
-        return cache.get(owner) != null || code.getEntry(owner + ".class") != null;
+        return cache.get(owner) != null || code.getEntry(owner + ".class") != null || layerEntry(owner) != null;
+    }
+
+    /**
+     * The step's layer jar, for CenturyBridge's own classes (a facade a mixin follows its target's class
+     * rename to, Chain.mixinFollow): W's code model only. Null: none at hand.
+     */
+    private ZipFile layer;
+
+    public void layer(Path jar) throws IOException {
+        this.layer = new ZipFile(jar.toFile());
+    }
+
+    private ZipEntry layerEntry(String owner) {
+        return layer != null && owner.startsWith("top/dext/") ? layer.getEntry(owner + ".class") : null;
     }
 
     /**
@@ -131,12 +145,22 @@ public final class MixinRepair {
     private Map<String, String> aliasOf = Map.of();
     private Map<String, String> aliasRenames = Map.of();
 
-    /** take V's class {@code from} as {@code renames.get(from)}, its references renamed the same way */
-    public void aliases(Map<String, String> renames) {
+    /**
+     * the class renames a facade alias is read through: all the step's (a facade's code names every class as
+     * the converted jar does, and a mixin following onto it has all its names renamed, MixinClassRenames)
+     */
+    private Map<String, String> facadeRenames = Map.of();
+
+    /**
+     * take V's class {@code from} as {@code renames.get(from)}, its references renamed the same way; one
+     * taken as a facade (CenturyBridge's class) has its references renamed by all of {@code all}
+     */
+    public void aliases(Map<String, String> renames, Map<String, String> all) {
         Map<String, String> back = new HashMap<>();
         renames.forEach((from, to) -> back.put(to, from));
         this.aliasOf = back;
         this.aliasRenames = Map.copyOf(renames);
+        this.facadeRenames = Map.copyOf(all);
         cache.keySet().removeIf(back::containsKey);
     }
 
@@ -144,13 +168,20 @@ public final class MixinRepair {
         return cache.computeIfAbsent(owner, o -> {
             try {
                 ZipEntry e = code.getEntry(o + ".class");
+                ZipEntry le = e == null ? layerEntry(o) : null;
+                if (le != null) {
+                    ClassNode cn = new ClassNode();
+                    new ClassReader(layer.getInputStream(le).readAllBytes()).accept(cn, ClassReader.SKIP_FRAMES);
+                    return cn;
+                }
                 if (e == null) {
                     String v = aliasOf.get(o);
                     ZipEntry ve = v == null ? null : code.getEntry(v + ".class");
                     if (ve == null) return null;
                     ClassNode cn = new ClassNode();
                     new ClassReader(code.getInputStream(ve).readAllBytes()).accept(
-                        new org.objectweb.asm.commons.ClassRemapper(cn, new org.objectweb.asm.commons.SimpleRemapper(aliasRenames)),
+                        new org.objectweb.asm.commons.ClassRemapper(cn, new org.objectweb.asm.commons.SimpleRemapper(
+                            o.startsWith("top/dext/") ? facadeRenames : aliasRenames)),
                         ClassReader.SKIP_FRAMES);
                     return cn;
                 }
@@ -298,7 +329,8 @@ public final class MixinRepair {
         ClassNode mx = new ClassNode();
         new ClassReader(bytes).accept(mx, 0);
         List<String> targets = mixinTargets(mx, refmap);
-        if (targets.stream().noneMatch(t -> t.startsWith("net/minecraft/"))) return null;
+        // vanilla targets, and a facade a mixin followed its target's class rename to (its code is the layer's)
+        if (targets.stream().noneMatch(t -> t.startsWith("net/minecraft/") || t.startsWith("top/dext/") && layerEntry(t) != null)) return null;
         boolean classChanged = false;
         boolean refmapChanged = false;
         List<String> repairs = new ArrayList<>();
@@ -351,7 +383,7 @@ public final class MixinRepair {
                 }
                 List<Anchor> anchors = anchors(an, v, refmap); // null = anchor not statically evaluable
                 int require = v.get("require") instanceof Integer i && i >= 0 ? i : defaultRequire;
-                boolean capturesArgs = capturesTargetArgs(an, handler);
+                boolean capturesArgs = capturesTargetArgs(an, handler, anchors);
                 String kind = an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
 
                 // Selector lists are ALTERNATIVES (fabric name, forge lambda, SRG name...):
@@ -378,6 +410,7 @@ public final class MixinRepair {
                             cands = new Sel(s.owner, s.name, renamed.apply(s.desc), s.wildcard).match(tc);
                         }
                         if (cands.isEmpty()) cands = restored(restoredByTarget, owner, s); // an override MixinBridge put back
+                        if (cands.isEmpty()) cands = layerMembers.match(owner, s); // a member the layer restores (LayerMembers)
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
                         if (cands.isEmpty()) {
@@ -885,6 +918,9 @@ public final class MixinRepair {
     /** set by splitSites when an injector must not fire at all (see there); consumed by repairMixin */
     private String pendingDisable;
 
+    /** the members the step layer's mixins restore on game classes; their code is the layer's (LayerMembers) */
+    public LayerMembers layerMembers = LayerMembers.none();
+
     /** overrides MixinBridge.restoreOverride put back (restoring mixins of the jar being repaired), by target */
     private Map<String, List<MethodNode>> restoredByTarget = Map.of();
 
@@ -1353,6 +1389,29 @@ public final class MixinRepair {
             return args.length > 1;
         }
         return true; // Redirect / ModifyArg(s) / Wrap*: operand shape is call-specific; don't move them
+    }
+
+    /**
+     * As {@link #capturesTargetArgs(AnnotationNode, MethodNode)}, with the injector's one anchor known: a
+     * handler of a call it handles itself takes the call's operands (receiver and arguments; an
+     * Operation after them for @WrapOperation; the one argument for @ModifyArg, the Args for @ModifyArgs),
+     * and only parameters beyond those are the target's -- the same call in another method hands the
+     * handler the same operands.
+     */
+    static boolean capturesTargetArgs(AnnotationNode an, MethodNode h, List<Anchor> anchors) {
+        if (!capturesTargetArgs(an, h)) return false;
+        if (anchors == null || anchors.size() != 1 || !anchors.get(0).kind.equals("INVOKE") || anchors.get(0).desc == null) return true;
+        Anchor a = anchors.get(0);
+        if (a.name.equals("<init>")) return true;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        int n = Type.getArgumentTypes(a.desc).length;
+        String recv = a.owner == null ? null : Type.getObjectType(a.owner).getDescriptor();
+        boolean withRecv = hp.length > 0 && recv != null && hp[0].getDescriptor().equals(recv);
+        int operands = n + (withRecv ? 1 : 0);
+        if (an.desc.endsWith("/Redirect;") || an.desc.endsWith("/WrapWithCondition;")) return hp.length != operands;
+        if (an.desc.endsWith("/WrapOperation;")) return hp.length != operands + 1;
+        if (an.desc.endsWith("/ModifyArg;") || an.desc.endsWith("/ModifyArgs;")) return hp.length != 1;
+        return true;
     }
 
     private static boolean touchesThisFree(MethodNode h) {
