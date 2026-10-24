@@ -762,15 +762,6 @@
    "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_3730; not passed"
   },
   {
-   "old": "method_59926()Ljava/util/Map;",
-   "new": "method_59926(Lnet/minecraft/class_1304;)Ljava/util/Map;",
-   "args": [],
-   "onlyUnder": "net/minecraft/class_1309",
-   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_1304; not passed"
-  },
-  {
    "old": "method_5955(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z",
    "new": "method_5955(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Lnet/minecraft/class_1304;)Z",
    "args": [
