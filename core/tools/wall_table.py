@@ -1414,8 +1414,37 @@ def write_fragment(t, V, W, path, step):
     of V's class looked up on W's (its own and inherited members, descriptors translated through the
     moves): answered as it is, answered under a renamed name (a member rename the step still has to
     wire: classRenames move the class, not its members), or not answered (the step's damage on the
-    moved class). The check goes into the fragment's "_check" as counts, the missing members listed."""
+    moved class). The check goes into the fragment's "_check" as counts, the missing members listed.
+
+    The member renames the run found (t.ren, moved classes or not) are wired too, each V member whose
+    renamed W member answers with the translated descriptor: methodRenames ("owner.name(desc)" -> W name)
+    and fieldRenames ("owner.name:desc" -> W name), so calls, super calls, method references and field
+    accesses follow; and for an overridable method (not static, final, private or a constructor, of a
+    class that is neither final nor a record) an overrideRenames entry under the V class with super calls
+    renamed, so a mod's override is what W's callers of the new name reach."""
     renames, check = {}, {}
+    mren, fren, oren = {}, {}, []
+    for key in sorted(t.ren):
+        c, name = key.rsplit(".", 1)
+        if c not in V:
+            continue
+        w = t.cm.get(c, c)
+        n = t.ren[key]
+        klass = V[c]
+        for m in klass.methods + klass.fields:
+            if m.name != name or m.access & (bytecode.ACC_SYNTHETIC | bytecode.ACC_PRIVATE):
+                continue
+            kind = "M" if isinstance(m, bytecode.Meth) else "F"
+            if not t.w_has(w, kind, n, t.tdesc(m.desc), []):
+                continue
+            if kind == "F":
+                fren[f"{c}.{name}:{m.desc}"] = n
+                continue
+            mren[f"{c}.{name}{m.desc}"] = n
+            if not (m.access & (bytecode.ACC_STATIC | bytecode.ACC_FINAL)) and name != "<init>" and \
+                    not klass.access & bytecode.ACC_FINAL and klass.super != "java/lang/Record":
+                oren.append({"old": name + m.desc, "new": n, "onlyUnder": c, "superCalls": "rename",
+                             "basis": f"wall_table.py --identity: {c}.{name} is {w}.{n} on W ({t.ren_basis.get(key, '')})"})
     for c in sorted(t.cm):
         w = t.cm[c]
         if w == c:
@@ -1446,6 +1475,9 @@ def write_fragment(t, V, W, path, step):
                                "release moved or renamed, each found by member overlap and same-code bodies; "
                                "regenerate, never hand-edit",
         "classRenames": renames,
+        "methodRenames": mren,
+        "fieldRenames": fren,
+        "overrideRenames": oren,
         "_pkgmoves_check": check,
         "_pkgmoves_member_renames": {k: t.ren[k] for k in sorted(t.ren)},
     }
@@ -1454,7 +1486,7 @@ def write_fragment(t, V, W, path, step):
         o.write("\n")
     n_miss = sum(1 for v in check.values() if "missing" in v)
     n_ren = sum(1 for v in check.values() if "renamed" in v)
-    print(f"fragment -> {path}: {len(renames)} classRenames ({n_miss} with members the target lacks, "
+    print(f"fragment -> {path}: {len(renames)} classRenames, {len(mren)} methodRenames, {len(fren)} fieldRenames, {len(oren)} overrideRenames ({n_miss} with members the target lacks, "
           f"{n_ren} with renamed members)")
 
 
