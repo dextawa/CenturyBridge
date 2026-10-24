@@ -1607,6 +1607,20 @@ MIXIN_ROOTS = [
 ]
 
 
+def _spec_roots():
+    """family 4's state-moved methods as MIXIN_ROOTS rows: each 1.21.1 argument goes where the spec's wmap puts it"""
+    rows = []
+    for sp in SPECS:
+        if sp["si"] is None:
+            continue
+        n = len(_args(sp["v"][1]))
+        args = [-1] * n
+        for wi, vi in sp["wmap"].items():
+            args[vi] = wi
+        rows.append((sp["owner"], sp["v"], sp["w"], args, f"{sp['v'][0]} on the entity -> {sp['w'][0]} on the render state (family 4)"))
+    return rows
+
+
 def family_mixin_targets(V, W, vtargets, wtargets):
     def fam(c, root, J, targets):
         f = {root}
@@ -1621,7 +1635,8 @@ def family_mixin_targets(V, W, vtargets, wtargets):
         return f
 
     out = {}
-    for base, vroot, wroot, args, what in MIXIN_ROOTS:
+    roots = list(MIXIN_ROOTS) + [r for r in _spec_roots() if (r[1], r[2]) not in {(m[1], m[2]) for m in MIXIN_ROOTS}]
+    for base, vroot, wroot, args, what in roots:
         for c, ci in sorted(V.items()):
             if base not in chain(c, V) or c not in W:
                 continue
