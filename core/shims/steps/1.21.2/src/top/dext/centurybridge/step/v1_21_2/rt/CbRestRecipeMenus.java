@@ -1,6 +1,5 @@
 package top.dext.centurybridge.step.v1_21_2.rt;
 
-import net.minecraft.class_1662;
 import net.minecraft.class_1714;
 import net.minecraft.class_1720;
 import net.minecraft.class_1723;
@@ -43,7 +42,7 @@ public final class CbRestRecipeMenus {
 
     /** fillCraftSlotsStackedContents(stackedContents) of a 1.21.1 menu class */
     public interface LegacyFill {
-        void method_7654(class_1662<?> stackedContents);
+        void method_7654(top.dext.centurybridge.step.v1_21_2.facade.StackedContents stackedContents);
     }
 
     /** recipeMatches(recipe) of a 1.21.1 menu class */
@@ -86,7 +85,9 @@ public final class CbRestRecipeMenus {
     /** fillCraftSlotsStackedContents(stackedContents), counting into 1.21.2's StackedItemContents */
     public static void fill(class_1729 menu, class_9875 items) {
         if (menu instanceof LegacyFill legacy) {
-            legacy.method_7654(raw(items));
+            top.dext.centurybridge.step.v1_21_2.facade.StackedContents counts = new top.dext.centurybridge.step.v1_21_2.facade.StackedContents();
+            legacy.method_7654(counts);
+            CbEntityStacked.pour(counts, items);
             return;
         }
         menu.method_7654(items);
@@ -120,17 +121,19 @@ public final class CbRestRecipeMenus {
     }
 
     /** fillCraftSlotsStackedContents(stackedContents) of 1.21.1, called on any menu with a 1.21.1 StackedContents */
-    public static void method_7654(class_1729 menu, class_1662<?> stackedContents) {
+    public static void method_7654(class_1729 menu, top.dext.centurybridge.step.v1_21_2.facade.StackedContents stackedContents) {
         if (menu instanceof LegacyFill legacy) {
             legacy.method_7654(stackedContents);
             return;
         }
-        menu.method_7654(stackedItems(stackedContents));
+        class_9875 items = new class_9875();
+        menu.method_7654(items);
+        counts(items, stackedContents);
     }
 
     /** 1.21.2's fillCraftSlotsStackedContents of a 1.21.1 menu class (abstractFills): its own, into the same counts */
     public static void fillW(class_1729 menu, class_9875 items) {
-        ((LegacyFill) menu).method_7654(raw(items));
+        fill(menu, items);
     }
 
     /** clearCraftingContent() of 1.21.1: a 1.21.1 menu's own; 1.21.2's crafting grids and furnaces as 1.21.1's emptied them */
@@ -236,17 +239,23 @@ public final class CbRestRecipeMenus {
     }
 
     /**
-     * a 1.21.1 StackedContents (1.21.2's StackedContents of item holders) as the StackedItemContents 1.21.2's
-     * recipe matching asks: one reading the same counts
+     * the counts of 1.21.2's StackedItemContents added to a 1.21.1 StackedContents: each item counted under its
+     * stacking index (its raw id), as 1.21.1's accountStack counted it
      */
-    public static class_9875 stackedItems(class_1662<?> raw) {
-        class_9875 items = new class_9875();
-        ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestStackedItemContentsAccessor) items).cb$setRaw(raw);
-        return items;
+    public static void counts(class_9875 items, top.dext.centurybridge.step.v1_21_2.facade.StackedContents out) {
+        for (it.unimi.dsi.fastutil.objects.Reference2IntMap.Entry<net.minecraft.class_6880<net.minecraft.class_1792>> e
+                : ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestStackedItemContentsAccessor) items).cb$raw().field_52504.reference2IntEntrySet()) {
+            if (e.getIntValue() > 0) {
+                int index = net.minecraft.class_7923.field_41178.method_10206(e.getKey().comp_349());
+                out.field_7550.put(index, out.field_7550.get(index) + e.getIntValue());
+            }
+        }
     }
 
-    /** the StackedContents a StackedItemContents counts in (what a 1.21.1 menu fills) */
-    public static class_1662<?> raw(class_9875 items) {
-        return ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestStackedItemContentsAccessor) items).cb$raw();
+    /** 1.21.2's StackedItemContents as a 1.21.1 StackedContents of the same counts */
+    public static top.dext.centurybridge.step.v1_21_2.facade.StackedContents legacyCounts(class_9875 items) {
+        top.dext.centurybridge.step.v1_21_2.facade.StackedContents out = new top.dext.centurybridge.step.v1_21_2.facade.StackedContents();
+        counts(items, out);
+        return out;
     }
 }

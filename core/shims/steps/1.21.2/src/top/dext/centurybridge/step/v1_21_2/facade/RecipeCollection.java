@@ -68,8 +68,8 @@ public class RecipeCollection {
     }
 
     /** canCraft(stackedContents, width, height, book) */
-    public void method_2649(net.minecraft.class_1662<?> stackedContents, int width, int height, net.minecraft.class_3439 book) {
-        net.minecraft.class_9875 items = CbRestRecipeBooks.stackedItems(stackedContents);
+    public void method_2649(StackedContents stackedContents, int width, int height, net.minecraft.class_3439 book) {
+        net.minecraft.class_9875 items = stackedContents.toItemContents();
         for (net.minecraft.class_8786<?> recipe : this.recipes) {
             boolean fits = CbRestRecipeView.fits(recipe.comp_1933(), width, height) && CbRestRecipeBooks.contains(book, recipe);
             if (fits) {

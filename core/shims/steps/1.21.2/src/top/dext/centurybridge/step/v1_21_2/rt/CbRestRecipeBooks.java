@@ -5,7 +5,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.class_10297;
 import net.minecraft.class_10298;
-import net.minecraft.class_1662;
 import net.minecraft.class_299;
 import net.minecraft.class_3439;
 import net.minecraft.class_3441;
@@ -79,8 +78,4 @@ public final class CbRestRecipeBooks {
         return book.method_30176(menu.method_30264());
     }
 
-    /** a 1.21.1 StackedContents as 1.21.2's StackedItemContents reading the same counts (CbRestRecipeMenus) */
-    public static class_9875 stackedItems(class_1662<?> raw) {
-        return CbRestRecipeMenus.stackedItems(raw);
-    }
 }
