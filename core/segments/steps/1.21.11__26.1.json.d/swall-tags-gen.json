@@ -1,0 +1,16 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3481.field_35443:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_3481.field_39104:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_3481.field_39105:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_3489.field_48803:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_9636.field_51531:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_9636.field_51532:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_9636.field_51533:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_9636.field_51534:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_9636.field_51535:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_9636.field_51536:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_9636.field_51537:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags",
+  "net/minecraft/class_3481.field_56529:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTags"
+ }
+}

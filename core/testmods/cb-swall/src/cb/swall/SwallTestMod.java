@@ -73,6 +73,16 @@ public class SwallTestMod implements ModInitializer {
         check("expirable.codec", "z".equals(back.method_24637()) && back.method_35127() == 7L
                 && json.toString().contains("\"ttl\":7"), json);
 
+        net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41189,
+            net.minecraft.class_2960.method_60655("cbswall", "test_recipe"), TEST_SERIALIZER);
+        TestRecipe recipe = new TestRecipe(net.minecraft.class_7710.field_40250);
+        check("customRecipe.category", recipe.method_45441() == net.minecraft.class_7710.field_40250, recipe.method_45441());
+        com.google.gson.JsonElement recipeJson = TEST_SERIALIZER.method_53736().codec().encodeStart(JsonOps.INSTANCE, recipe).getOrThrow();
+        TestRecipe decoded = TEST_SERIALIZER.method_53736().codec().parse(JsonOps.INSTANCE, recipeJson).getOrThrow();
+        check("customRecipe.serializerCodec", recipeJson.toString().contains("\"category\":\"equipment\"")
+            && decoded.method_45441() == net.minecraft.class_7710.field_40250, recipeJson);
+        check("customRecipe.getSerializer", recipe.method_8119() == TEST_SERIALIZER, recipe.method_8119());
+
         ServerLifecycleEvents.SERVER_STARTED.register(SwallTestMod::onStarted);
     }
 
@@ -105,6 +115,10 @@ public class SwallTestMod implements ModInitializer {
             class_1928 rules = server.method_27728().method_146();
             check("worldData.getGameRules", rules == server.method_30002().method_64395(), rules);
 
+            recipes(server);
+            items();
+            cauldrons();
+            goats(server);
             interactions(server);
             levelData(server);
         } catch (Throwable t) {
@@ -215,5 +229,95 @@ public class SwallTestMod implements ModInitializer {
         server.method_3837().method_12972(again, server.method_30611());
         net.minecraft.class_3002 loaded = server.method_3837().method_12971(net.minecraft.class_2960.method_60656("cbtest2"));
         check("bossEvents.load", loaded != null && loaded.method_12959().equals(net.minecraft.class_2960.method_60656("cbtest2")), loaded);
+    }
+
+    /** a 1.21.11 special recipe: CustomRecipe with its category, a CustomRecipe.Serializer */
+    static class TestRecipe extends net.minecraft.class_1852 {
+        TestRecipe(net.minecraft.class_7710 category) {
+            super(category);
+        }
+
+        @Override
+        public boolean method_8115(net.minecraft.class_9694 input, net.minecraft.class_1937 level) {
+            return false;
+        }
+
+        @Override
+        public net.minecraft.class_1799 method_8116(net.minecraft.class_9694 input, net.minecraft.class_7225.class_7874 registries) {
+            return net.minecraft.class_1799.field_8037;
+        }
+
+        @Override
+        public net.minecraft.class_1865<TestRecipe> method_8119() {
+            return TEST_SERIALIZER;
+        }
+    }
+
+    static final net.minecraft.class_1852.class_1866<TestRecipe> TEST_SERIALIZER = new net.minecraft.class_1852.class_1866<>(TestRecipe::new);
+
+    /** a 1.21.11 shapeless recipe subclass overriding group(), which 26.1 made final */
+    static class TestShapeless extends net.minecraft.class_1867 {
+        TestShapeless() {
+            super("g", net.minecraft.class_7710.field_40251, new net.minecraft.class_1799(net.minecraft.class_1802.field_20395),
+                List.of(net.minecraft.class_1856.method_8091(net.minecraft.class_1802.field_8831)));
+        }
+
+        @Override
+        public String method_8112() {
+            return super.method_8112() + "!";
+        }
+    }
+
+    private static void recipes(MinecraftServer server) {
+        net.minecraft.class_3975 cutting = new net.minecraft.class_3975("grp", net.minecraft.class_1856.method_8091(net.minecraft.class_1802.field_20391),
+            new net.minecraft.class_1799(net.minecraft.class_1802.field_20395));
+        net.minecraft.class_1799 out = cutting.method_59998(new net.minecraft.class_9696(new net.minecraft.class_1799(net.minecraft.class_1802.field_20391)),
+            server.method_30611());
+        check("recipe.stonecutterGroupAssemble", "grp".equals(cutting.method_8112()) && cutting.method_49188()
+            && out.method_7909() == net.minecraft.class_1802.field_20395, cutting.method_8112() + " " + out);
+        TestShapeless shapeless = new TestShapeless();
+        check("recipe.finalGroupOverride", "g!".equals(shapeless.method_8112()) && shapeless.method_45441() == net.minecraft.class_7710.field_40251,
+            shapeless.method_8112());
+    }
+
+    private static void items() {
+        net.minecraft.class_1769 red = net.minecraft.class_1769.method_7803(net.minecraft.class_1767.field_7964);
+        check("dye.byColorAndColor", red == net.minecraft.class_1802.field_8264 && red.method_7802() == net.minecraft.class_1767.field_7964, red);
+        net.minecraft.class_1826 pigEgg = net.minecraft.class_1826.method_8019(net.minecraft.class_1299.field_6093);
+        net.minecraft.class_1799 eggStack = new net.minecraft.class_1799(net.minecraft.class_1802.field_8493);
+        boolean listed = false;
+        for (net.minecraft.class_1826 egg : net.minecraft.class_1826.method_8017()) {
+            listed |= egg == pigEgg;
+        }
+        check("spawnEgg.byIdTypeEggs", pigEgg == net.minecraft.class_1802.field_8493 && listed
+            && pigEgg.method_8015(eggStack) == net.minecraft.class_1299.field_6093 && pigEgg.method_8018(eggStack, net.minecraft.class_1299.field_6093), pigEgg);
+    }
+
+    private static void cauldrons() {
+        net.minecraft.class_5620 stick = (state, level, pos, player, hand, stack) -> net.minecraft.class_1269.field_5812;
+        java.util.Map<net.minecraft.class_1792, net.minecraft.class_5620> water = net.minecraft.class_5620.field_27776.comp_1982();
+        water.put(net.minecraft.class_1802.field_8600, stick);
+        check("cauldron.putGet", water.get(net.minecraft.class_1802.field_8600) == stick, water.get(net.minecraft.class_1802.field_8600));
+        check("cauldron.vanillaEntries", net.minecraft.class_5620.field_27775.comp_1982().containsKey(net.minecraft.class_1802.field_8705)
+            && water.containsKey(net.minecraft.class_1802.field_8539) && "water".equals(net.minecraft.class_5620.field_27776.comp_1981()), water.size());
+    }
+
+    /** a 1.21.11 goat class asking its brain provider (protected) */
+    static class TestGoat extends net.minecraft.class_6053 {
+        TestGoat(net.minecraft.class_1937 level) {
+            super(net.minecraft.class_1299.field_30052, level);
+        }
+
+        Object provider() {
+            return method_28306();
+        }
+    }
+
+    private static void goats(MinecraftServer server) {
+        TestGoat goat = new TestGoat(server.method_30002());
+        goat.method_43542();
+        boolean removed = !goat.method_43538() && !goat.method_43539();
+        goat.method_43541();
+        check("goat.hornsAndBrainProvider", removed && goat.method_43538() && goat.method_43539() && goat.provider() != null, removed);
     }
 }

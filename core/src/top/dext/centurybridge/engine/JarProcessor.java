@@ -2220,7 +2220,7 @@ public final class JarProcessor {
             }
         }
         for (MixinTriage.MixinInfo mx : triage.mixins()) {
-            if (mx.vanilla() && mx.applyFatal(repaired != null)) {
+            if (mx.vanilla() && mx.applyFatal(repaired != null || chain.injectorsJudgedPastWall)) {
                 deadMixins.add(mx.className());
                 String lb = mx.loadBearing() ? " [load-bearing! may be unstable]" : "";
                 rpt.strippedMixins.add(tag + shortName(mx.className()) + lb + " -- " + String.join("; ", mx.broken()));

@@ -39,15 +39,29 @@ public abstract class CbItemMembersMixin {
 
     /**
      * getDescriptionId(), final in 1.21.2: a 1.21.1 class's override (renamed cb$getDescriptionId by the
-     * converter) or getOrCreateDescriptionId() override answers it, as 1.21.1's virtual call reached them
+     * converter) or getOrCreateDescriptionId() override answers it, as 1.21.1's virtual call reached them. A call
+     * made from inside that override -- its super call into a facade class that inherits this final method
+     * (ItemNameBlockItem) -- is the superclass's body: the description id field, as 1.21.1's Item and
+     * ItemNameBlockItem answered (getOrCreateDescriptionId).
      */
     @Inject(method = "method_7876", at = @At("HEAD"), cancellable = true)
     private void cb$descriptionId(CallbackInfoReturnable<String> cir) {
         Object self = this;
-        if (self instanceof CbItemMembers.LegacyDescriptionIdOverride l) {
-            cir.setReturnValue(l.cb$getDescriptionId());
-        } else if (self instanceof CbItemMembers.LegacyOrCreateDescriptionId l) {
-            cir.setReturnValue(l.method_7869());
+        if (!(self instanceof CbItemMembers.LegacyDescriptionIdOverride)
+                && !(self instanceof CbItemMembers.LegacyOrCreateDescriptionId)) {
+            return;
+        }
+        if (!CbItemMembers.enterDescriptionId(self)) {
+            return;
+        }
+        try {
+            if (self instanceof CbItemMembers.LegacyDescriptionIdOverride l) {
+                cir.setReturnValue(l.cb$getDescriptionId());
+            } else {
+                cir.setReturnValue(((CbItemMembers.LegacyOrCreateDescriptionId) self).method_7869());
+            }
+        } finally {
+            CbItemMembers.exitDescriptionId(self);
         }
     }
 

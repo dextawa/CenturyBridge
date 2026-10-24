@@ -48,6 +48,22 @@ public final class CbItemEffects {
         }
     }
 
+    /** MobEffectInstance.onMobRemoved(entity, reason) */
+    public static void method_58622(net.minecraft.class_1293 instance, class_1309 entity, class_1297.class_5529 reason) {
+        class_3218 level = server(entity);
+        if (level != null) {
+            instance.method_58622(level, entity, reason);
+        }
+    }
+
+    /** MobEffectInstance.onMobHurt(entity, source, amount) */
+    public static void method_58621(net.minecraft.class_1293 instance, class_1309 entity, class_1282 source, float amount) {
+        class_3218 level = server(entity);
+        if (level != null) {
+            instance.method_58621(level, entity, source, amount);
+        }
+    }
+
     // ---- frameDefaults: the level a converted override's rewritten super call passes when the override was
     // entered directly (the mod's own call) rather than from 1.21.2's shape: the entity's ServerLevel -- on a
     // client entity, where 1.21.2 never calls these, null, which MobEffect's and MobEffectInstance's own bodies
