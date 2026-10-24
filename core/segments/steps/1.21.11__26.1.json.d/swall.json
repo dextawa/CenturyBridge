@@ -133,7 +133,16 @@
   "net/minecraft/class_2688.method_11656()Ljava/util/Map;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockStates#getValues",
   "net/minecraft/class_2290.method_9785()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemInputs#getItem",
   "net/minecraft/class_2290.method_9781(IZ)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemInputs#createItemStack",
-  "net/minecraft/class_2290.method_9782(Lnet/minecraft/class_7225$class_7874;)Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemInputs#serialize"
+  "net/minecraft/class_2290.method_9782(Lnet/minecraft/class_7225$class_7874;)Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemInputs#serialize",
+  "net/minecraft/class_4651.method_23455(Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#getState",
+  "net/minecraft/class_1299.method_20210(Lnet/minecraft/class_6862;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#is",
+  "net/minecraft/class_1299.method_53125(Lnet/minecraft/class_6885;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#is",
+  "net/minecraft/class_9276.method_57422(I)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#getItemUnsafe",
+  "net/minecraft/class_9276.method_57421()Ljava/lang/Iterable;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#items",
+  "net/minecraft/class_9276.method_59708()Ljava/lang/Iterable;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#itemsCopy",
+  "net/minecraft/class_9276.method_57428()Lorg/apache/commons/lang3/math/Fraction;": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#weight",
+  "net/minecraft/class_9276.method_61668()I": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#getSelectedItem",
+  "net/minecraft/class_9276.method_61669()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#hasSelectedItem"
  },
  "overrideHooks": [
   {
@@ -487,7 +496,8 @@
   "net/minecraft/class_8062$class_8063": "top/dext/centurybridge/step/v26_1/facade/SmithingTrimRecipeSerializer",
   "net/minecraft/class_5620$class_8821": "top/dext/centurybridge/step/v26_1/facade/CauldronInteractionMap",
   "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/facade/EitherHolder",
-  "net/minecraft/class_2291$class_7215": "net/minecraft/commands/arguments/item/ItemInput"
+  "net/minecraft/class_2291$class_7215": "net/minecraft/commands/arguments/item/ItemInput",
+  "net/minecraft/class_1265": "top/dext/centurybridge/step/v26_1/facade/ContainerListener"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -496,7 +506,9 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#newSnippet",
   "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#newBrain",
   "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#newPanorama",
-  "net/minecraft/class_10823.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#create"
+  "net/minecraft/class_10823.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#create",
+  "net/minecraft/class_1923.<init>(Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#chunkPos",
+  "net/minecraft/class_1923.<init>(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallMisc#chunkPos"
  },
  "adapterHooks": [
   {
@@ -1338,7 +1350,9 @@
   "net/minecraft/class_58.method_22568(Lnet/minecraft/class_176;)Lnet/minecraft/class_58;",
   "net/minecraft/class_1769.method_7802()Lnet/minecraft/class_1767;",
   "net/minecraft/class_6053.method_43541()V",
-  "net/minecraft/class_6053.method_43542()V"
+  "net/minecraft/class_6053.method_43542()V",
+  "net/minecraft/class_1277.method_5489(Lnet/minecraft/class_1265;)V",
+  "net/minecraft/class_1277.method_5488(Lnet/minecraft/class_1265;)V"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"

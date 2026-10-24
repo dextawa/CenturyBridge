@@ -119,6 +119,7 @@ public class SwallTestMod implements ModInitializer {
             items();
             cauldrons();
             goats(server);
+            misc();
             interactions(server);
             levelData(server);
         } catch (Throwable t) {
@@ -319,5 +320,18 @@ public class SwallTestMod implements ModInitializer {
         boolean removed = !goat.method_43538() && !goat.method_43539();
         goat.method_43541();
         check("goat.hornsAndBrainProvider", removed && goat.method_43538() && goat.method_43539() && goat.provider() != null, removed);
+    }
+
+    private static void misc() {
+        net.minecraft.class_1923 chunk = new net.minecraft.class_1923(new net.minecraft.class_2338(17, 0, 33));
+        net.minecraft.class_1923 unpacked = new net.minecraft.class_1923(chunk.method_8324());
+        check("chunkPos.ctors", chunk.field_9181 == 1 && chunk.field_9180 == 2 && unpacked.field_9181 == 1 && unpacked.field_9180 == 2, chunk);
+        check("entityType.isTag", net.minecraft.class_1299.field_6137.method_20210(net.minecraft.class_3483.field_15507)
+            && !net.minecraft.class_1299.field_6093.method_20210(net.minecraft.class_3483.field_15507), "");
+        net.minecraft.class_1277 container = new net.minecraft.class_1277(1);
+        int[] changes = {0};
+        container.method_5489(c -> changes[0]++);
+        container.method_5447(0, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600));
+        check("simpleContainer.listener", changes[0] == 1, changes[0]);
     }
 }

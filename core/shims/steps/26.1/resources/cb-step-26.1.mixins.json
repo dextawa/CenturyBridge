@@ -44,6 +44,7 @@
     "CbWallSingleItemRecipeMixin",
     "CbWallStonecutterRecipeMixin",
     "CbWallServerMixin",
+    "CbWallSimpleContainerMixin",
     "CbWallTraderSpawnerMixin",
     "CbWallValidationContextAccess",
     "CbWallValidationContextMixin",
