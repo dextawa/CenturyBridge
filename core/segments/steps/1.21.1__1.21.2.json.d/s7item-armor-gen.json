@@ -1,0 +1,166 @@
+{
+ "classRenames": {
+  "net/minecraft/class_1741": "top/dext/centurybridge/step/v1_21_2/facade/ArmorMaterial",
+  "net/minecraft/class_1741$class_9196": "top/dext/centurybridge/step/v1_21_2/facade/ArmorMaterial$Layer",
+  "net/minecraft/class_1740": "top/dext/centurybridge/step/v1_21_2/facade/ArmorMaterials",
+  "net/minecraft/class_1738$class_8051": "net/minecraft/class_8051",
+  "net/minecraft/class_5151": "java/lang/Object",
+  "net/minecraft/class_1770": "net/minecraft/class_1792"
+ },
+ "instanceOfRedirects": {
+  "net/minecraft/class_5151": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTypes#isEquipable",
+  "net/minecraft/class_1770": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTypes#isElytraItem"
+ },
+ "checkCastRedirects": {
+  "net/minecraft/class_5151": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTypes#castEquipable",
+  "net/minecraft/class_1770": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTypes#castElytraItem"
+ },
+ "covers": [
+  "net/minecraft/class_1819.method_7685()Lnet/minecraft/class_1304;",
+  "net/minecraft/class_2190.method_7685()Lnet/minecraft/class_1304;",
+  "net/minecraft/class_5815.method_7685()Lnet/minecraft/class_1304;",
+  "net/minecraft/class_5815.method_31570()Lnet/minecraft/class_6880;"
+ ],
+ "superRenames": {
+  "net/minecraft/class_1738": "top/dext/centurybridge/step/v1_21_2/facade/ArmorItem",
+  "net/minecraft/class_4059": "top/dext/centurybridge/step/v1_21_2/facade/AnimalArmorItem",
+  "net/minecraft/class_5151": "top/dext/centurybridge/step/v1_21_2/facade/Equipable",
+  "net/minecraft/class_1770": "top/dext/centurybridge/step/v1_21_2/facade/ElytraItem"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1738.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_1738$class_8051;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#newArmorItem",
+  "net/minecraft/class_4059.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_4059$class_9076;ZLnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#newAnimalArmorItem",
+  "net/minecraft/class_1770.<init>(Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable#newElytraItem"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1738$class_8051.method_56691()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_1770.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable",
+  "net/minecraft/class_1770.method_7878(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_5151.method_7685()Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable",
+  "net/minecraft/class_5151.method_31570()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable",
+  "net/minecraft/class_1770.method_7685()Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable",
+  "net/minecraft/class_1770.method_31570()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable",
+  "net/minecraft/class_5151.method_48576(Lnet/minecraft/class_1792;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable",
+  "net/minecraft/class_1738.method_48398()Lnet/minecraft/class_1738$class_8051;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_1738.method_7686()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_1738.method_7687()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_1738.method_26353()F": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_1738.method_7685()Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_1738.method_31570()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_48398()Lnet/minecraft/class_1738$class_8051;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_7686()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_7687()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_26353()F": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_7685()Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_31570()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_18454()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_57335()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_55756()Lnet/minecraft/class_4059$class_9076;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_7870(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1738.method_48398()Lnet/minecraft/class_1738$class_8051;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#super_method_48398",
+  "net/minecraft/class_1738.method_7686()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#super_method_7686",
+  "net/minecraft/class_1738.method_7687()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#super_method_7687",
+  "net/minecraft/class_1738.method_26353()F": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#super_method_26353",
+  "net/minecraft/class_1738.method_7685()Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#super_method_7685",
+  "net/minecraft/class_1738.method_31570()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#super_method_31570"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1738",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyType",
+   "requires": [
+    "method_48398()Lnet/minecraft/class_1738$class_8051;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 ArmorItem subclass overriding getType(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_1738",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyMaterial",
+   "requires": [
+    "method_7686()Lnet/minecraft/class_6880;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 ArmorItem subclass overriding getMaterial(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_1738",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyDefense",
+   "requires": [
+    "method_7687()I"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 ArmorItem subclass overriding getDefense(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_1738",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyToughness",
+   "requires": [
+    "method_26353()F"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 ArmorItem subclass overriding getToughness(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_1738",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyEquipmentSlot",
+   "requires": [
+    "method_7685()Lnet/minecraft/class_1304;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 ArmorItem subclass overriding getEquipmentSlot(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_1738",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyEquipSound",
+   "requires": [
+    "method_31570()Lnet/minecraft/class_6880;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 ArmorItem subclass overriding getEquipSound(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_4059",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyTexture",
+   "requires": [
+    "method_18454()Lnet/minecraft/class_2960;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 AnimalArmorItem subclass overriding getTexture(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_4059",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyOverlayTexture",
+   "requires": [
+    "method_57335()Lnet/minecraft/class_2960;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 AnimalArmorItem subclass overriding getOverlayTexture(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_4059",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyBodyType",
+   "requires": [
+    "method_55756()Lnet/minecraft/class_4059$class_9076;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 AnimalArmorItem subclass overriding getBodyType(): calls of it reach the override (CbItemArmor)"
+  }
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_1738.field_41933:Lnet/minecraft/class_1738$class_8051;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_1738.field_7881:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_1738.field_7879:Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_7923.field_48976:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_7924.field_48977:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1738.method_7684(Lnet/minecraft/class_2342;Lnet/minecraft/class_1799;)Z": "net/minecraft/class_10205#method_64106",
+  "net/minecraft/class_1770.method_7804(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/facade/ElytraItem",
+  "net/minecraft/class_5151.method_48957(Lnet/minecraft/class_1799;)Lnet/minecraft/class_5151;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable"
+ }
+}

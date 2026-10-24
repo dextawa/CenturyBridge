@@ -1,87 +1,5 @@
 {
  "callReshapes": {
-  "net/minecraft/class_807.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1087;": {
-   "desc": "(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:2",
-    "drop:3"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2960;: no body of V reads it, but net/minecraft/class_1100 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_7788.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": {
-   "desc": "(Ljava/util/function/BiConsumer;)V",
-   "ops": [
-    "keep:1",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_7225$class_7874;: no body of V reads it, but net/minecraft/class_7791 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_7789.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": {
-   "desc": "(Ljava/util/function/BiConsumer;)V",
-   "ops": [
-    "keep:1",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_7225$class_7874;: no body of V reads it, but net/minecraft/class_7791 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_8794.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": {
-   "desc": "(Ljava/util/function/BiConsumer;)V",
-   "ops": [
-    "keep:1",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_7225$class_7874;: no body of V reads it, but net/minecraft/class_7791 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_8255.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": {
-   "desc": "(Ljava/util/function/BiConsumer;)V",
-   "ops": [
-    "keep:1",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_7225$class_7874;: no body of V reads it, but net/minecraft/class_7791 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_2432.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": {
-   "desc": "(Ljava/util/function/BiConsumer;)V",
-   "ops": [
-    "keep:1",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_7225$class_7874;: no body of V reads it, but net/minecraft/class_7791 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_9486.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": {
-   "desc": "(Ljava/util/function/BiConsumer;)V",
-   "ops": [
-    "keep:1",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_7225$class_7874;: no body of V reads it, but net/minecraft/class_7791 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_3714.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": {
-   "desc": "(Ljava/util/function/BiConsumer;)V",
-   "ops": [
-    "keep:1",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_7225$class_7874;: no body of V reads it, but net/minecraft/class_7791 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_4845.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": {
-   "desc": "(Ljava/util/function/BiConsumer;)V",
-   "ops": [
-    "keep:1",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_7225$class_7874;: no body of V reads it, but net/minecraft/class_7791 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_9340.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": {
-   "desc": "(Ljava/util/function/BiConsumer;)V",
-   "ops": [
-    "keep:1",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_7225$class_7874;: no body of V reads it, but net/minecraft/class_7791 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
   "net/minecraft/class_3900.method_17629(Lnet/minecraft/class_3193;Ljava/lang/Runnable;)Lnet/minecraft/class_3900$class_3946;": {
    "desc": "(Lnet/minecraft/class_9761;Ljava/lang/Runnable;)Lnet/minecraft/class_3900$class_3946;",
    "ops": [
@@ -107,7 +25,7 @@
     "keep:3"
    ],
    "ret": "pop",
-   "basis": "mechanical: same values; return value popped"
+   "basis": "mechanical: same values; Lnet/minecraft/class_1297; x2 paired by use V#1->W#1, V#2->W#2; return value popped"
   },
   "net/minecraft/class_1799.method_7979(Lnet/minecraft/class_1309;Lnet/minecraft/class_1657;)V": {
    "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_1657;)Z",
@@ -135,28 +53,6 @@
     "drop:0"
    ],
    "basis": "mechanical: same values; dropped Ljava/util/concurrent/Executor;, never read in V"
-  },
-  "net/minecraft/class_2891.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": {
-   "desc": "(Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
-   "ops": [
-    "keep:1",
-    "keep:2",
-    "keep:3",
-    "keep:4",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Ljava/util/concurrent/Executor;: no body of V reads it, but net/minecraft/class_2794 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_2897.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": {
-   "desc": "(Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
-   "ops": [
-    "keep:1",
-    "keep:2",
-    "keep:3",
-    "keep:4",
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Ljava/util/concurrent/Executor;: no body of V reads it, but net/minecraft/class_2794 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_3754.method_38275(Ljava/util/concurrent/Executor;Lnet/minecraft/class_7138;Lnet/minecraft/class_6748;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": {
    "desc": "(Lnet/minecraft/class_7138;Lnet/minecraft/class_6748;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
@@ -380,7 +276,7 @@
    "onlyUnder": "net/minecraft/class_1811",
    "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had"
+   "basis": "mechanical: the old method gets every parameter it had; Lnet/minecraft/class_1309; x2 paired by use V#1->W#1, V#8->W#8; F x2 paired by use V#5->W#5, V#6->W#6"
   },
   {
    "old": "method_17503(Lnet/minecraft/class_1297;Lnet/minecraft/class_1799;I)Z",
@@ -413,7 +309,7 @@
    "onlyUnder": "net/minecraft/class_3784",
    "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_9822; not passed"
+   "basis": "mechanical: the old method gets every parameter it had; Lnet/minecraft/class_2338; x2 paired by use V#4->W#4, V#5->W#5; new Lnet/minecraft/class_9822; not passed"
   },
   {
    "old": "method_16616(Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Z)Lnet/minecraft/class_3492;",

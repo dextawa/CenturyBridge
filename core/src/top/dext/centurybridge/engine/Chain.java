@@ -94,8 +94,65 @@ public final class Chain {
     public final java.util.Map<String, String> superRenames = new java.util.HashMap<>();
     /** instance fields renamed in place (resolution reaches relocated/renamed fields via hierarchy) */
     public final java.util.Map<String, String> fieldRenames = new java.util.HashMap<>();
-    /** methods renamed in place (relocated-to-super methods resolve via hierarchy) */
+    /**
+     * Methods renamed in place ("owner.name(desc)" -> new name, same descriptor): a call, a super call
+     * or a method reference keeps its owner and kind and takes the new name. The key is found where the
+     * JVM resolves the site ({@link #methodRenameHome}): on a library owner through the library hierarchy
+     * (JarProcessor's library homes), on a vanilla owner through its superclasses and then its
+     * superinterfaces, Fabric API's injected interfaces included -- 26.1 renamed FabricItem's
+     * getRecipeRemainder, which a mod calls as Item.getRecipeRemainder. A member the mod class declares
+     * itself is never renamed (the site names the mod's own method), nor one a vanilla class on the way
+     * declares in the source release (vanilla's own member, not the renamed one).
+     *
+     * On a functional interface's abstract method a rename also renames the lambdas built for it: a
+     * LambdaMetafactory invokedynamic whose produced interface reaches the key (same resolution, the
+     * invokedynamic's name and erased SAM type as the member) is spun under the new name -- otherwise
+     * the class it spins implements only the old name and the first call is an AbstractMethodError.
+     * The bridges an altMetafactory lambda lists share the SAM's name and follow it; a serializable
+     * lambda is renamed too and reported, since its class's $deserializeLambda$ still matches the old
+     * name as a string.
+     */
     public final java.util.Map<String, String> methodRenames = new java.util.HashMap<>();
+
+    /**
+     * The class or interface a {@link #methodRenames} key is on for a site naming {@code owner}, in JVM
+     * resolution order: the owner and its superclasses, then (an instance member only: an interface's
+     * static is not inherited) their superinterfaces breadth first, injected ones included. A vanilla
+     * class or interface on the way that declares the member itself in the source release, with no key of
+     * its own, ends the walk: the site reaches vanilla's member there. Null when no key applies.
+     */
+    public String methodRenameHome(String owner, String nameDesc, boolean isStatic) {
+        java.util.Deque<String> todo = new java.util.ArrayDeque<>();
+        for (String o : selfAndSupers(owner)) {
+            if (methodRenames.containsKey(o + "." + nameDesc)) {
+                return o;
+            }
+            if (sourceDecls.getOrDefault(o, java.util.Set.of()).contains(nameDesc)) {
+                return null;
+            }
+            todo.addAll(interfacesOf.getOrDefault(o, java.util.List.of()));
+            todo.addAll(libInterfacesOf.getOrDefault(o, java.util.List.of()));
+        }
+        if (isStatic) {
+            return null;
+        }
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String i = todo.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            if (methodRenames.containsKey(i + "." + nameDesc)) {
+                return i;
+            }
+            if (sourceDecls.getOrDefault(i, java.util.Set.of()).contains(nameDesc)) {
+                continue;
+            }
+            todo.addAll(interfacesOf.getOrDefault(i, java.util.List.of()));
+            todo.addAll(libInterfacesOf.getOrDefault(i, java.util.List.of()));
+        }
+        return null;
+    }
     /**
      * GETFIELD "owner.name:desc" -> "runtimeClass[#member]": an instance field
      * read rewritten to a static getter taking the receiver (record components
@@ -109,6 +166,9 @@ public final class Chain {
      * setter converts) or one that is gone and lives on as other state (1.20.2 AbstractSelectionList's
      * x0/x1/y0/y1/width/height, which 1.20.3 keeps as the widget's geometry: a write moves the widget,
      * as the field write moved the list). Found up the hierarchy from the site's owner, as a getter.
+     * Both also serve a library (Fabric API) owner, found as the JVM resolves the field (a mod subclass
+     * reading its Fabric API superclass's protected field under its own name: 1.21.11's
+     * GameRuleBuilder.fabricCategory); the static takes the receiver as the keyed library class.
      */
     public final java.util.Map<String, String> instanceFieldSetters = new java.util.HashMap<>();
     /**
@@ -117,6 +177,14 @@ public final class Chain {
      * Item since 1.21.2) becomes INVOKESTATIC predicate(Object)Z.
      */
     public final java.util.Map<String, String> instanceOfRedirects = new java.util.HashMap<>();
+    /**
+     * CHECKCAST "type" -> "runtimeClass#name": the cast side of {@link #instanceOfRedirects}, for a dead class
+     * renamed onto a wider live one (1.21.2: DirectionProperty is EnumProperty&lt;Direction&gt;, classRenames
+     * onto EnumProperty, so a cast to it would accept every EnumProperty). The site gets INVOKESTATIC
+     * name(Object)Object before the (renamed) CHECKCAST: the static answers its argument when the source
+     * release's cast would have succeeded (null included) and throws ClassCastException otherwise.
+     */
+    public final java.util.Map<String, String> checkCastRedirects = new java.util.HashMap<>();
     /** examined-and-classified damage (quirk tier / structural / etc): "owner" or "owner.name" -> reason */
     public final java.util.Map<String, String> ledger = new java.util.HashMap<>();
 
@@ -152,12 +220,29 @@ public final class Chain {
 
     /** A cover/redirect recorded on any ancestor applies to this call site too. */
     public boolean coveredAnywhere(String owner, String nameDesc) {
+        return coverHome(owner, nameDesc) != null;
+    }
+
+    /** The class (owner or an ancestor) whose shim cover serves the member, nearest first; null when uncovered. */
+    public String coverHome(String owner, String nameDesc) {
         for (String o : selfAndSupers(owner)) {
             if (shimCovers.contains(o + "." + nameDesc)) {
-                return true;
+                return o;
             }
         }
-        return false;
+        return null;
+    }
+
+    /**
+     * Whether an instance redirect keys the member on a class strictly between the call's owner (inclusive)
+     * and the class whose cover would serve it: the nearer declaration wins, as the JVM's resolution would
+     * have found the source's own override first (1.20.4 IntegratedServer.logTickTime, public, over the
+     * protected MinecraftServer.logTickTime a mixin gives back: the cover alone left a mod's call resolving
+     * to the protected one -- an IllegalAccessError -- and skipped IntegratedServer's own redirect).
+     */
+    public boolean instanceRedirectNearerThanCover(String owner, String nameDesc, String coverHome) {
+        String home = redirectHome(instanceRedirects, owner, nameDesc);
+        return home != null && !home.equals(coverHome) && selfAndSupers(home).contains(coverHome);
     }
 
     /** Look a member up in a redirect map, walking the hierarchy. */
@@ -407,6 +492,14 @@ public final class Chain {
         public final java.util.Map<Integer, String[]> frameDefaults = new java.util.HashMap<>();
         /** "superCalls": "rewrite": a mod's super.old(..) in a class under the hook becomes super.new(..) */
         public boolean superCalls;
+        /**
+         * "superDefault", with superCalls: the old method had a concrete default in V while the new shape is
+         * abstract where the mod's super call lands in W (1.21.11's TestEnvironmentDefinition.teardown was a
+         * no-op default, 26.1's is abstract): super.new(..) would be an AbstractMethodError, so the rewritten
+         * super call is V's default body instead -- the receiver and arguments dropped and V's answer pushed:
+         * "void", a constant ("i:N", "l:N", "f:X", "d:X", "null") or "new OWNER" (a no-argument constructor).
+         */
+        public String superDefault;
         /**
          * Narrowing forward ("narrow": true), for a parameter the release widened (1.20.2: a
          * packet's handle(ClientGamePacketListener) became handle(ClientCommonPacketListener),
@@ -830,6 +923,18 @@ public final class Chain {
     /** true unless the owner is a known target-stub class that does NOT declare name(desc). */
     /** injector anchor check/repair against real target bodies; null = unavailable */
     public MixinRepair mixinRepair;
+    /**
+     * The SOURCE release's real method bodies (MixinBridge counts an @At anchor in the body it was
+     * written for before retargeting it to what the step's wiring says stands there now); null =
+     * unavailable, and no anchor is retargeted.
+     */
+    public MixinRepair sourceCode;
+    /**
+     * At the 1.21.11 -> 26.1 namespace wall only: 26.1's bodies renamed into the analysis namespace the step
+     * converts in (WallInverse), for MixinBridge -- the wiring and the mod's mixins are intermediary-named
+     * there until the whole-jar rename. Null on every other step (MixinBridge uses mixinRepair).
+     */
+    public MixinRepair bridgeCode;
 
     /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,
@@ -2116,6 +2221,10 @@ public final class Chain {
                     h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
                     h.frames = o.has("frames") ? o.get("frames").getAsString() : null;
                     h.superCalls = o.has("superCalls") && o.get("superCalls").getAsString().equals("rewrite");
+                    h.superDefault = o.has("superDefault") ? o.get("superDefault").getAsString() : null;
+                    if (h.superDefault != null && !h.superCalls) {
+                        throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc + ": superDefault goes with superCalls rewrite");
+                    }
                     if (h.frames != null && (h.guard != null || h.wrapName != null || h.unwrapName != null || o.has("bridge"))) {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
                             + ": frames go with plain argument forwarding only (no guard / wrap / unwrap / bridge)");
@@ -2310,6 +2419,12 @@ public final class Chain {
                 var ior = root.getAsJsonObject("instanceOfRedirects");
                 for (String k : ior.keySet()) {
                     c.instanceOfRedirects.put(k, ior.get(k).getAsString());
+                }
+            }
+            if (root.has("checkCastRedirects")) {
+                var ccr = root.getAsJsonObject("checkCastRedirects");
+                for (String k : ccr.keySet()) {
+                    c.checkCastRedirects.put(k, ccr.get(k).getAsString());
                 }
             }
             if (root.has("superRedirects")) {

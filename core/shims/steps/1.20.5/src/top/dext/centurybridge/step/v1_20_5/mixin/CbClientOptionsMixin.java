@@ -24,10 +24,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_315.class)
-public abstract class CbClientOptionsMixin {
+public abstract class CbClientOptionsMixin implements top.dext.centurybridge.step.v1_20_5.rt.CbClientRealms.Options32Bit {
 
     /** 1.20.4 Options.skipRealms32bitWarning */
     public boolean field_37208 = false;
+
+    @Override
+    public boolean cb$skipRealms32bitWarning() {
+        return this.field_37208;
+    }
+
+    @Override
+    public void cb$setSkipRealms32bitWarning(boolean skip) {
+        this.field_37208 = skip;
+    }
 
     @Unique
     private static MethodHandle cb$processBoolean;

@@ -416,6 +416,26 @@ public final class CbEntityPortals {
         if (info == null) {
             return null;
         }
+        return legacyMoveTo(entity, dest, info, guard);
+    }
+
+    /**
+     * 1.20.6's changeDimension(dest) past the entry point, with the entry point given -- what Fabric API 1.20.6's
+     * FabricDimensions.teleport made it answer (its custom teleport target) -- the rest as {@link #legacyMove}.
+     */
+    public static class_1297 legacyChangeDimensionTo(class_1297 entity, class_3218 dest, class_5454 info) {
+        if (!(entity.method_37908() instanceof class_3218 here) || entity.method_31481()) {
+            return null;
+        }
+        if (entity instanceof class_3222 player && here.method_27983() == class_1937.field_25181
+                && dest.method_27983() == class_1937.field_25179) {
+            player.method_60594();
+            return player;
+        }
+        return legacyMoveTo(entity, dest, info, false);
+    }
+
+    private static class_1297 legacyMoveTo(class_1297 entity, class_3218 dest, class_5454 info, boolean guard) {
         entity.method_18375();
         boolean toEnd = dest.method_27983() == class_1937.field_25181;
         class_5454.class_9823 after;

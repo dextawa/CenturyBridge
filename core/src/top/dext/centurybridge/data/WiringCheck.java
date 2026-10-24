@@ -32,7 +32,7 @@ import org.objectweb.asm.tree.MethodNode;
  * that table, so they compare verbatim.
  *
  * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects, interfaceCallRedirects,
- * fieldRedirects, fieldGetters, staticFieldSetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
+ * fieldRedirects, fieldGetters, staticFieldSetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects, checkCastRedirects,
  * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push / post
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
  * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
@@ -148,10 +148,15 @@ public final class WiringCheck {
                 w.classes.put(cn.name, cn);
             }
         }
-        if (table != null && Files.exists(table)) {
-            w.wall = JarRemapper.loadTable(table).remapper();
-        }
         var root = top.dext.centurybridge.engine.Wiring.read(shimsJson);
+        if (table != null && Files.exists(table)) {
+            // as the conversion renames (Main.convert): tokens only the wiring's facades declare keep their names
+            java.util.Map<String, String> renames = new java.util.HashMap<>();
+            if (root.has("classRenames")) {
+                root.getAsJsonObject("classRenames").entrySet().forEach(e -> renames.put(e.getKey(), e.getValue().getAsString()));
+            }
+            w.wall = JarRemapper.loadTable(table).keepFacadeTokens(JarRemapper.Table.facadeOwners(renames)).remapper();
+        }
         w.genericOverrides = genericOverrideRows(shimsJson);
         w.check(root);
         w.checkFacadeSurfaces(root);
@@ -567,6 +572,8 @@ public final class WiringCheck {
         });
         obj(root, "instanceOfRedirects", (k, v) ->
             wantMethod("instanceOfRedirects " + k, v, "cbInstanceOf", "(Ljava/lang/Object;)Z"));
+        obj(root, "checkCastRedirects", (k, v) ->
+            wantMethod("checkCastRedirects " + k, v, "cbCheckCast", "(Ljava/lang/Object;)Ljava/lang/Object;"));
         // "owner.<init>(args)V" -> factory (args)Lowner;
         obj(root, "ctorRedirects", (k, v) -> {
             Sym s = Sym.method(k);
@@ -620,6 +627,38 @@ public final class WiringCheck {
                     problems.add("overrideRenames " + old + " (no such adapter interface " + adapter + ")");
                 } else if (an.methods.stream().noneMatch(m -> m.name.equals(name) && m.desc.equals(desc))) {
                     problems.add("overrideRenames " + old + ": adapter " + adapter + " does not declare " + name + desc);
+                }
+            }
+        }
+        // methodRenames / fieldRenames of a Fabric API member (-Dcb.fapi): the renamed site -- the class
+        // renames applied, then the wall -- must name a member the target's Fabric API declares on the
+        // renamed owner or a supertype, with exactly the converter's descriptor. A rename onto a name the
+        // target lacks, or one whose descriptor moved too, links as NoSuchMethodError / NoSuchFieldError.
+        if (!lib.isEmpty()) {
+            for (String sec : new String[] {"methodRenames", "fieldRenames"}) {
+                if (!root.has(sec)) {
+                    continue;
+                }
+                boolean field = sec.equals("fieldRenames");
+                for (var e : root.getAsJsonObject(sec).entrySet()) {
+                    Sym s = field ? Sym.field(e.getKey()) : Sym.method(e.getKey());
+                    if (!s.owner.startsWith("net/fabricmc/")) {
+                        continue;
+                    }
+                    checked++;
+                    String owner = targetName(facade.mapType(s.owner));
+                    String nn = e.getValue().getAsString();
+                    if (field) {
+                        String nd = typeDesc(s.desc);
+                        if (!libField(owner, nn, nd)) {
+                            problems.add(sec + " " + e.getKey() + ": " + owner + "." + nn + ":" + nd + " is no field of the target's Fabric API");
+                        }
+                    } else {
+                        String nd = methodDesc(s.desc);
+                        if (!libMethod(owner, nn, nd)) {
+                            problems.add(sec + " " + e.getKey() + ": " + owner + "." + nn + nd + " is no method of the target's Fabric API");
+                        }
+                    }
                 }
             }
         }
@@ -911,8 +950,10 @@ public final class WiringCheck {
                         if (from.equals(to)) {
                             continue;
                         }
+                        // both sides as the converted class names them: the converter applies the facade
+                        // classRenames to the whole class, the synthesized narrowing test included
                         if (from.getSort() != org.objectweb.asm.Type.OBJECT || to.getSort() != org.objectweb.asm.Type.OBJECT
-                                || !isSubtype(targetName(from.getInternalName()), targetName(to.getInternalName()))) {
+                                || !isSubtype(convertedName(from.getInternalName()), convertedName(to.getInternalName()))) {
                             problems.add(where + " narrow: " + from.getDescriptor() + " is not a subtype of "
                                 + to.getDescriptor() + " on the target");
                         }
@@ -1007,6 +1048,11 @@ public final class WiringCheck {
         // classRename remapper), so it is the type the facade must be a subtype of.
         String merged = facade.map(key);
         String kt = targetName(merged != null && !merged.startsWith("top/dext/") ? merged : key);
+        if ("java/lang/Object".equals(kt)) {
+            // merged into Object (1.21.2: Equipable, whose 1.21.1 instances were items and blocks alike): every
+            // facade is one, and the stub (Minecraft only) does not carry it
+            return;
+        }
         ClassNode kn = stub.get(kt);
         if (kn == null) {
             problems.add("superRename " + key + ": the class is gone on the target -- superRenames only move"
@@ -1120,6 +1166,39 @@ public final class WiringCheck {
             }
         }
         return false;
+    }
+
+    /** whether the target's Fabric API (or the game) declares name+desc on owner or a supertype */
+    private boolean libMethod(String owner, String name, String desc) {
+        return libMember(owner, n -> n.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc)));
+    }
+
+    private boolean libField(String owner, String name, String desc) {
+        return libMember(owner, n -> n.fields.stream().anyMatch(f -> f.name.equals(name) && f.desc.equals(desc)));
+    }
+
+    private boolean libMember(String owner, java.util.function.Predicate<ClassNode> has) {
+        java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.pop();
+            if (!seen.add(c)) continue;
+            ClassNode n = lib.containsKey(c) ? lib.get(c) : stub.get(c);
+            if (n == null) continue;
+            if (has.test(n)) return true;
+            if (n.superName != null) todo.push(n.superName);
+            todo.addAll(n.interfaces);
+        }
+        return false;
+    }
+
+    /** a type as the converted class names it: through the facade renames, then (a vanilla type) the wall */
+    private String convertedName(String internalName) {
+        String f = facade.map(internalName); // null when the type is not renamed
+        if (f == null) {
+            f = internalName;
+        }
+        return f.startsWith("top/dext/") ? f : targetName(f);
     }
 
     private String targetName(String internalName) {

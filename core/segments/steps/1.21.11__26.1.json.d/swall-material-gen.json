@@ -1,0 +1,195 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_4944.method_25860(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;)Lnet/minecraft/client/resources/model/sprite/Material;",
+   "ops": [
+    "keep"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)",
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#id(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_2960;"
+  },
+  "net/minecraft/class_4944.method_25863(Lnet/minecraft/class_1792;Ljava/lang/String;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_1792;Ljava/lang/String;)Lnet/minecraft/client/resources/model/sprite/Material;",
+   "ops": [
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)",
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#id(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_2960;"
+  },
+  "net/minecraft/class_4944.method_25866(Lnet/minecraft/class_2248;Ljava/lang/String;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/lang/String;)Lnet/minecraft/client/resources/model/sprite/Material;",
+   "ops": [
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)",
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#id(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_2960;"
+  },
+  "net/minecraft/class_4944.method_25867(Lnet/minecraft/class_4945;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_4945;)Lnet/minecraft/client/resources/model/sprite/Material;",
+   "ops": [
+    "keep"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)",
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#id(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_2960;"
+  },
+  "net/minecraft/class_4944.method_25868(Lnet/minecraft/class_4945;Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/class_4945;Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25869(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25870(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25875(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25876(Lnet/minecraft/class_1792;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_1792;)Lnet/minecraft/client/resources/model/sprite/Material;",
+   "ops": [
+    "keep"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)",
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#id(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_2960;"
+  },
+  "net/minecraft/class_4944.method_25879(Lnet/minecraft/class_4945;Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/class_4945;Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25880(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25883(Lnet/minecraft/class_4945;Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/class_4945;Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25884(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25886(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25889(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25891(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25893(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_25895(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_32232(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_35909(Lnet/minecraft/class_4945;Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/class_4945;Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_35910(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_35911(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_48529(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4944.method_48745(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)Lnet/minecraft/class_4944;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4944;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  },
+  "net/minecraft/class_4946.method_25920(Lnet/minecraft/class_2960;)Lnet/minecraft/class_4946;": {
+   "desc": "(Lnet/minecraft/client/resources/model/sprite/Material;)Lnet/minecraft/class_4946;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallMaterials#material(Lnet/minecraft/class_2960;)Lnet/minecraft/client/resources/model/sprite/Material;"
+   ],
+   "basis": "26.1 retyped the texture Identifier as a sprite Material (the id, not force-translucent)"
+  }
+ }
+}

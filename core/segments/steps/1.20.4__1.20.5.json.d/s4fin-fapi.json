@@ -1,0 +1,30 @@
+{
+ "_s4fin_fapi_basis": "s4fin Fabric API: CustomIngredientSerializer's 1.20.4 codec / network methods on 1.20.5's map codec and packet codec (rt/CbFinFapiIngredients)",
+ "interfaceCallRedirects": {
+  "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer.getCodec(Z)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFapiIngredients",
+  "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer.read(Lnet/minecraft/class_2540;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFapiIngredients",
+  "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer.write(Lnet/minecraft/class_2540;Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFapiIngredients"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFapiIngredients$Legacy",
+   "requires": [
+    "getCodec(Z)Lcom/mojang/serialization/Codec;",
+    "read(Lnet/minecraft/class_2540;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;",
+    "write(Lnet/minecraft/class_2540;Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;)V"
+   ],
+   "synth": [
+    {
+     "new": "getCodec(Z)Lcom/mojang/serialization/MapCodec;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFapiIngredients.mapCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinFapiIngredients$Legacy;Z)Lcom/mojang/serialization/MapCodec;"
+    },
+    {
+     "new": "getPacketCodec()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFapiIngredients.packetCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinFapiIngredients$Legacy;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin Fabric API: a 1.20.4 CustomIngredientSerializer's codec and read / write are its 1.20.5 map codec and packet codec"
+  }
+ ]
+}

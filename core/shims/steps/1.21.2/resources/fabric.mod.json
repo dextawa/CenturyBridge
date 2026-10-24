@@ -1,24 +1,25 @@
 {
- "schemaVersion": 1,
- "id": "centurybridge_step_1_21_2",
- "version": "0.3.0+1.21.2",
- "name": "CenturyBridge: 1.21.1 API on 1.21.2",
- "environment": "*",
- "entrypoints": {
-  "main": [
-   "top.dext.centurybridge.step.v1_21_2.rt.CbRestInit"
+  "schemaVersion": 1,
+  "id": "centurybridge_step_1_21_2",
+  "version": "0.3.0+1.21.2",
+  "name": "CenturyBridge: 1.21.1 API on 1.21.2",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "top.dext.centurybridge.step.v1_21_2.rt.CbLevelInit",
+      "top.dext.centurybridge.step.v1_21_2.rt.CbRestInit"
+    ],
+    "client": [
+      "top.dext.centurybridge.step.v1_21_2.rt.CbRestClientInit"
+    ]
+  },
+  "mixins": [
+    "cb-step-1.21.2.mixins.json"
   ],
-  "client": [
-   "top.dext.centurybridge.step.v1_21_2.rt.CbRestClientInit"
-  ]
- },
- "mixins": [
-  "cb-step-1.21.2.mixins.json"
- ],
- "accessWidener": "cb-step-1.21.2.accesswidener",
- "depends": {
-  "fabricloader": ">=0.15.0",
-  "fabric-networking-api-v1": "*",
-  "fabric-lifecycle-events-v1": "*"
- }
+  "accessWidener": "cb-step-1.21.2.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-networking-api-v1": "*",
+    "fabric-lifecycle-events-v1": "*"
+  }
 }

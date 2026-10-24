@@ -18,6 +18,9 @@ OUT="${2:-build}"
 SHIM="${CB_SHIM:-core/shims/$VERSION}"
 [ -d "$SHIM" ] || { echo "no shim tree for $VERSION"; exit 1; }
 WIRING="${CB_WIRING:-core/segments/shims-$VERSION.json}"
+# a climb step's wiring (<V>__<W>.json): its layer serves mods entering at V only, so the gates look up
+# original members in V's stub alone (SourceStubs, -Dcb.sourceStubs=previous), not every older release's
+case "$(basename "$WIRING")" in *__*.json) SRC_STUBS="-Dcb.sourceStubs=previous";; *) SRC_STUBS="";; esac
 # CB_DATA: the working-set directory (game jars, runtimes, mappings). A git worktree has none of its
 # own; point CB_DATA at the main checkout's data instead of linking it in (a link inside a worktree
 # turns removing the worktree into deleting the data).
@@ -27,6 +30,45 @@ DATA="${CB_DATA:-data}"
 case "$VERSION" in 26.*) DEFAULT_STUB="$DATA/jars/client-$VERSION.jar" ;; *) DEFAULT_STUB="$DATA/jars/client-$VERSION-intermediary.jar" ;; esac
 STUB="${CB_STUB:-$DEFAULT_STUB}"
 [ -f "$STUB" ] || { echo "stub not found: $STUB (set CB_STUB)"; exit 1; }
+FAPI_JAR="${CB_FAPI_JAR:-$(ls $DATA/runtime/client-$VERSION/mods/fabric-api-*.jar 2>/dev/null | head -1)}"
+
+# A climb step's layer (core/shims/steps/<W>) compiles against the game with the access it has at
+# runtime, as the anchor trees 1.21.4 and 26.2 do: W's plain stub with every Fabric API module's
+# access widener plus the layer's own cb-step-<W>.accesswidener applied with the loader's semantics
+# (core/tools/make_aw_stub.sh -> Main apply-aw, data/AwRules.java). Without it a member the layer's
+# AW opens (a private field, a protected constructor) compiles nowhere, and the layer had to reach it
+# by reflection or a mixin accessor. When CB_STUB is unset build.sh makes that stub itself and keeps
+# it under the work dir's build/awstub/ (never data/), keyed by a hash of the layer's AW, W's Fabric
+# API jar, the plain stub and the AW-applying code: any of them changing rebuilds it. javac, and the
+# wiring and mixin gates below, all judge against this one stub. CB_STUB set = that stub, as given.
+case "$SHIM" in
+core/shims/steps/*|*/core/shims/steps/*)
+    if [ -z "${CB_STUB:-}" ]; then
+        LAYER_AW=$(ls "$SHIM"/resources/*.accesswidener 2>/dev/null | head -1)
+        [ -n "$LAYER_AW" ] || { echo "no access widener in $SHIM/resources"; exit 1; }
+        [ -f "$FAPI_JAR" ] || { echo "fabric-api jar not found (set CB_FAPI_JAR): needed for the layer's access-widened stub"; exit 1; }
+        [ -d core/build/classes/top/dext/centurybridge ] || {
+            echo "engine not compiled (core/build/classes): it applies the access wideners to the stub"; exit 1; }
+        AW_KEY=$(sha256sum "$LAYER_AW" "$FAPI_JAR" "$STUB" core/src/top/dext/centurybridge/data/AwRules.java \
+                     core/src/top/dext/centurybridge/data/ApplyAw.java core/tools/make_aw_stub.sh \
+                 | cut -d' ' -f1 | sha256sum | cut -c1-16)
+        # the name keeps "intermediary" where the plain stub has it: the gates below tell the era by it
+        AW_STUB="build/awstub/$(basename "$STUB" .jar)-aw.jar"
+        if [ ! -f "$AW_STUB" ] || [ "$(cat "$AW_STUB.key" 2>/dev/null)" != "$AW_KEY" ]; then
+            mkdir -p build/awstub
+            rm -f "$AW_STUB" "$AW_STUB.key"
+            CB_DATA="$DATA" CB_FAPI_JAR="$FAPI_JAR" bash core/tools/make_aw_stub.sh "$VERSION" "$STUB" "$AW_STUB.tmp" "$LAYER_AW" \
+                || { rm -f "$AW_STUB.tmp"; echo "build aborted: could not make the layer's access-widened stub"; exit 1; }
+            mv "$AW_STUB.tmp" "$AW_STUB"
+            echo "$AW_KEY" > "$AW_STUB.key"
+        else
+            echo "access-widened stub up to date: $AW_STUB"
+        fi
+        STUB="$AW_STUB"
+        # the interface-target gate below reads the stub from the environment
+        export CB_STUB="$STUB"
+    fi;;
+esac
 
 # Loader-side deps the shims compile against: mixin, and whatever the game
 # itself pulls in (gson, datafixerupper, joml, netty...).
@@ -172,7 +214,6 @@ SERVER="${CB_SERVER:-$(find "$DATA/runtime/server-$VERSION" -name server-interme
 [ -n "$SERVER" ] || SERVER="$DATA/runtime/server-$VERSION/versions/$VERSION/server-$VERSION.jar"
 [ -f "$SERVER" ] || { echo "dedicated server jar not found (set CB_SERVER): needed to verify what loads on a server"; exit 1; }
 SERVER_LIBS="${CB_SERVER_LIBS:-$DATA/runtime/server-$VERSION/libraries}"
-FAPI_JAR="${CB_FAPI_JAR:-$(ls $DATA/runtime/client-$VERSION/mods/fabric-api-*.jar 2>/dev/null | head -1)}"
 [ -f "$FAPI_JAR" ] || { echo "fabric-api jar not found (set CB_FAPI_JAR): needed to verify what loads on a server"; exit 1; }
 MIXIN_CFG=$(ls "$SHIM"/resources/*.mixins.json | head -1)
 java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$CLASSES" "$MIXIN_CFG" "$SERVER" "$SERVER_LIBS" "$FAPI_JAR" \
@@ -190,7 +231,7 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$
 # wrap/unwrap/guard, facade renames. A member a vanilla class has only through an
 # interface the target's Fabric API injects into it is judged on that interface
 # (-Dcb.fapi: the modules the shims compiled against).
-java -Dcb.fapi="$FAPI" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "$WIRING" "$NAMETABLE" "$STUB" \
+java $SRC_STUBS -Dcb.fapi="$FAPI" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "$WIRING" "$NAMETABLE" "$STUB" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: dangling redirect wiring"; exit 1; }
 
@@ -201,7 +242,7 @@ java -Dcb.fapi="$FAPI" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Ma
 # implemented interface (name AND descriptor), and the original member -- read
 # from the older stubs in data/jars -- must not be static, since a covered call
 # site keeps its invokestatic and no mixin may add a non-private static.
-java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
+java $SRC_STUBS -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 
@@ -219,14 +260,15 @@ jar cf "$JAR" -C "$CLASSES" .
 # throws NoSuchMethodError on the real jar. Worse, when the method we overrode
 # is one vanilla itself calls, the world dies on the first tick -- that is how
 # class_1297.cw() reached a player three times.
-python3 - "$JAR" <<'PYOBF'
+python3 - "$JAR" "$STUB" <<'PYOBF'
 import os, re, subprocess, sys, zipfile
 jar = sys.argv[1]
 # The premise (a 1-3 letter member name is an unstable obfuscated leftover)
 # only holds while the game ships obfuscated and we compile against
 # intermediary stubs. In the year-versioned era names are real -- Vec3.x()
 # is API, not residue -- so the gate stands down.
-if "intermediary" not in os.path.basename(os.environ.get("CB_STUB", "intermediary")):
+# (the stub this build compiled against -- build.sh's own default included, which CB_STUB alone misses)
+if "intermediary" not in os.path.basename(sys.argv[2]):
     print("real-name era stub: obfuscated-name gate not applicable")
     sys.exit(0)
 SAFE = {"get", "put", "add", "map", "of", "abs", "min", "max", "pow", "run",

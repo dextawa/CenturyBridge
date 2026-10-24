@@ -1,0 +1,57 @@
+{
+ "classRenames": {
+  "net/minecraft/class_1832": "top/dext/centurybridge/step/v1_21_2/facade/Tier",
+  "net/minecraft/class_1834": "top/dext/centurybridge/step/v1_21_2/facade/Tiers",
+  "net/minecraft/class_1831": "net/minecraft/class_1792"
+ },
+ "superRenames": {
+  "net/minecraft/class_1766": "top/dext/centurybridge/step/v1_21_2/facade/DiggerItem",
+  "net/minecraft/class_1831": "top/dext/centurybridge/step/v1_21_2/facade/TieredItem",
+  "net/minecraft/class_1829": "top/dext/centurybridge/step/v1_21_2/facade/SwordItem",
+  "net/minecraft/class_1743": "top/dext/centurybridge/step/v1_21_2/facade/AxeItem",
+  "net/minecraft/class_1810": "top/dext/centurybridge/step/v1_21_2/facade/PickaxeItem",
+  "net/minecraft/class_1821": "top/dext/centurybridge/step/v1_21_2/facade/ShovelItem",
+  "net/minecraft/class_1794": "top/dext/centurybridge/step/v1_21_2/facade/HoeItem"
+ },
+ "instanceOfRedirects": {
+  "net/minecraft/class_1831": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTypes#isTieredItem"
+ },
+ "checkCastRedirects": {
+  "net/minecraft/class_1831": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTypes#castTieredItem"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1831.<init>(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers#newTieredItem",
+  "net/minecraft/class_1829.<init>(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers#newSwordItem",
+  "net/minecraft/class_1743.<init>(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers#newAxeItem",
+  "net/minecraft/class_1810.<init>(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers#newPickaxeItem",
+  "net/minecraft/class_1821.<init>(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers#newShovelItem",
+  "net/minecraft/class_1794.<init>(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers#newHoeItem"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1766.method_57346(Lnet/minecraft/class_1832;FF)Lnet/minecraft/class_9285;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers",
+  "net/minecraft/class_1829.method_57394(Lnet/minecraft/class_1832;IF)Lnet/minecraft/class_9285;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers",
+  "net/minecraft/class_9424$class_9425.method_58431(Ljava/util/List;F)Lnet/minecraft/class_9424$class_9425;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers",
+  "net/minecraft/class_9424$class_9425.method_58428(Lnet/minecraft/class_6862;F)Lnet/minecraft/class_9424$class_9425;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers",
+  "net/minecraft/class_9424$class_9425.method_58427(Lnet/minecraft/class_6862;)Lnet/minecraft/class_9424$class_9425;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers",
+  "net/minecraft/class_9424$class_9425.method_58433(Lnet/minecraft/class_6862;F)Lnet/minecraft/class_9424$class_9425;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers",
+  "net/minecraft/class_9424$class_9425.method_58434(Ljava/util/List;F)Lnet/minecraft/class_9424$class_9425;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1766.method_8022()Lnet/minecraft/class_1832;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers",
+  "net/minecraft/class_1829.method_8022()Lnet/minecraft/class_1832;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers",
+  "net/minecraft/class_1831.method_8022()Lnet/minecraft/class_1832;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers",
+  "net/minecraft/class_1831.method_7837()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1831.method_7878(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1831",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTiers$LegacyTier",
+   "requires": [
+    "method_8022()Lnet/minecraft/class_1832;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 tool subclass overriding getTier(): calls of it on 1.21.2's tool classes reach the override (CbItemTiers)"
+  }
+ ]
+}
