@@ -47,4 +47,62 @@ public final class CbWallGeneric {
     public static Stream<?> featureHolders(Stream<?> features) {
         return features == null ? null : features.map(v -> v instanceof Holder<?> ? v : Holder.direct(v));
     }
+
+    /**
+     * new BundleContents(items): 1.21.11 took the stacks, 26.1 takes their templates (26.1's bundle holds only
+     * non-empty items, as 1.21.11's codec and its Mutable kept it); a template passes as it is
+     */
+    public static java.util.List<?> templates(java.util.List<?> stacks) {
+        if (stacks == null) {
+            return null;
+        }
+        java.util.List<Object> out = new java.util.ArrayList<>(stacks.size());
+        for (Object v : stacks) {
+            if (v instanceof net.minecraft.world.item.ItemStack s) {
+                if (!s.isEmpty()) {
+                    out.add(net.minecraft.world.item.ItemStackTemplate.fromNonEmptyStack(s));
+                }
+            } else {
+                out.add(v);
+            }
+        }
+        return java.util.List.copyOf(out);
+    }
+
+    /**
+     * ItemContainerContents.nonEmptyItems(): 1.21.11 iterated the non-empty stacks, 26.1 their templates; each
+     * template's stack (1.21.11 documented these as not to be modified; the stacks made here cannot write back)
+     */
+    public static Iterable<?> stacks(Iterable<?> templates) {
+        if (templates == null) {
+            return null;
+        }
+        return () -> {
+            java.util.Iterator<?> it = templates.iterator();
+            return new java.util.Iterator<Object>() {
+                @Override
+                public boolean hasNext() {
+                    return it.hasNext();
+                }
+
+                @Override
+                public Object next() {
+                    Object v = it.next();
+                    return v instanceof net.minecraft.world.item.ItemStackTemplate t ? t.create() : v;
+                }
+            };
+        };
+    }
+
+    /** DyedItemColor.applyDyes(stack, dyes): 1.21.11 took the dye items, 26.1 their colors (DyeItem.getDyeColor) */
+    public static java.util.List<?> dyeColors(java.util.List<?> dyes) {
+        if (dyes == null) {
+            return null;
+        }
+        java.util.List<Object> out = new java.util.ArrayList<>(dyes.size());
+        for (Object v : dyes) {
+            out.add(v instanceof net.minecraft.world.item.Item item ? CbWallDyes.dyeColor(item) : v);
+        }
+        return out;
+    }
 }

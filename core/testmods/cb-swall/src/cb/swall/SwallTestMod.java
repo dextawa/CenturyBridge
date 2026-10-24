@@ -165,6 +165,40 @@ public class SwallTestMod implements ModInitializer {
             && earlyJson.toString().contains("#minecraft:bypasses_shield"), earlyJson);
     }
 
+    /** 1.21.11's SelectorPattern, 26.1's CompilableString of an entity selector */
+    private static void selectors() {
+        net.minecraft.class_10104 pat = net.minecraft.class_10104.method_62667("@a[limit=1]").getOrThrow();
+        check("selector.parse", "@a[limit=1]".equals(pat.comp_3067()) && pat.comp_3068() != null
+            && net.minecraft.class_10104.method_62667("@q").error().isPresent(), pat);
+        net.minecraft.class_5250 comp = net.minecraft.class_2561.method_43467(pat, Optional.empty());
+        check("selector.component", comp.method_10851() instanceof net.minecraft.class_2579 sc && sc.comp_3080().comp_3067().equals("@a[limit=1]"), comp);
+        net.minecraft.class_2578 score = new net.minecraft.class_2578(com.mojang.datafixers.util.Either.left(pat), "obj");
+        net.minecraft.class_10104 back = net.minecraft.class_10104.field_53684.parse(JsonOps.INSTANCE, new com.google.gson.JsonPrimitive("@p")).getOrThrow();
+        check("selector.scoreAndCodec", score.comp_3078().left().get().comp_3067().equals("@a[limit=1]") && "@p".equals(back.comp_3067())
+            && new net.minecraft.class_10104("@s", back.comp_3068()).comp_3067().equals("@s"), back);
+    }
+
+    /** bundle / container contents and dyes: 1.21.11 stacks and dye items over 26.1 templates and colors */
+    private static void itemContainers(MinecraftServer server) {
+        net.minecraft.class_9276 bundle = new net.minecraft.class_9276(List.of(new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 3),
+            net.minecraft.class_1799.field_8037));
+        int count = 0;
+        for (net.minecraft.class_1799 s : bundle.method_57421()) {
+            count += s.method_7947();
+        }
+        check("container.bundleCtor", count == 3, count);
+        net.minecraft.class_9288 contents = net.minecraft.class_9288.method_57493(List.of(new net.minecraft.class_1799(net.minecraft.class_1802.field_8620, 2)));
+        int iron = 0;
+        for (net.minecraft.class_1799 s : contents.method_59714()) {
+            iron += s.method_31574(net.minecraft.class_1802.field_8620) ? s.method_7947() : 0;
+        }
+        check("container.nonEmptyItems", iron == 2, iron);
+        net.minecraft.class_1799 leather = new net.minecraft.class_1799(net.minecraft.class_1802.field_8267);
+        net.minecraft.class_1799 dyed = net.minecraft.class_9282.method_57471(leather, List.of((net.minecraft.class_1769) net.minecraft.class_1802.field_8264));
+        net.minecraft.class_9282 color = dyed.method_58694(net.minecraft.class_9334.field_49644);
+        check("dye.applyDyes", color != null && (color.comp_2384() & 0xFFFFFF) == (net.minecraft.class_1767.field_7964.method_7787() & 0xFFFFFF), color);
+    }
+
     /** generic drift at the wall read on a running server */
     private static void generic(MinecraftServer server) {
         Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
@@ -214,6 +248,8 @@ public class SwallTestMod implements ModInitializer {
             levelData(server);
             generic(server);
             componentValues(server);
+            selectors();
+            itemContainers(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
