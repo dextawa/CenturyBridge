@@ -99,12 +99,6 @@ extendable method net/minecraft/class_2754 <init> (Ljava/lang/String;Ljava/lang/
 accessible field net/minecraft/class_9875 field_52506 Lnet/minecraft/class_1662;
 # PalettedContainer.Data, whose copy() 1.21.1 mixins invoke (rt/CbLevelPalette)
 accessible class net/minecraft/class_2841$class_6561
-
-# ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----
-accessible method net/minecraft/class_1011 method_4305 (III)V
-accessible method net/minecraft/class_1011 method_4315 (II)I
-accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
-# ---- END GENERATED (s7render) ----
 # ---- s7item: 1.21.1 RecipeBookMenu bodies on 1.21.2's menus (rt/CbItemRecipeMenus) ----
 accessible field net/minecraft/class_9884 field_52559 Lnet/minecraft/class_8566;
 accessible field net/minecraft/class_9884 field_52560 Lnet/minecraft/class_1731;
@@ -138,3 +132,9 @@ accessible method net/minecraft/class_5411 method_30186 (Lnet/minecraft/class_25
 accessible method net/minecraft/class_5411 method_30190 (Lnet/minecraft/class_2540;)V
 extendable method net/minecraft/class_5411 method_30190 (Lnet/minecraft/class_2540;)V
 # ---- END GENERATED (s7item) ----
+
+# ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----
+accessible method net/minecraft/class_1011 method_4305 (III)V
+accessible method net/minecraft/class_1011 method_4315 (II)I
+accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
+# ---- END GENERATED (s7render) ----
