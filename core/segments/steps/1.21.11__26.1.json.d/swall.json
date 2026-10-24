@@ -119,7 +119,13 @@
   "net/minecraft/class_8234.method_49801(Lnet/minecraft/class_8242;Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallDyes#canApplyToSign",
   "net/minecraft/class_1826.method_8018(Lnet/minecraft/class_1799;Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#spawnsEntity",
   "net/minecraft/class_1826.method_8015(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#getType",
-  "net/minecraft/class_1826.method_24793(Lnet/minecraft/class_1657;Lnet/minecraft/class_1308;Lnet/minecraft/class_1299;Lnet/minecraft/class_3218;Lnet/minecraft/class_243;Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#spawnOffspringFromSpawnEgg"
+  "net/minecraft/class_1826.method_24793(Lnet/minecraft/class_1657;Lnet/minecraft/class_1308;Lnet/minecraft/class_1299;Lnet/minecraft/class_3218;Lnet/minecraft/class_243;Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpawnEggs#spawnOffspringFromSpawnEgg",
+  "net/minecraft/class_10823.comp_3779()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#ambientSound",
+  "net/minecraft/class_10823.comp_3780()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#deathSound",
+  "net/minecraft/class_10823.comp_3781()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#growlSound",
+  "net/minecraft/class_10823.comp_3782()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#hurtSound",
+  "net/minecraft/class_10823.comp_3783()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#pantSound",
+  "net/minecraft/class_10823.comp_3784()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#whineSound"
  },
  "overrideHooks": [
   {
@@ -480,7 +486,8 @@
   "net/minecraft/class_775.<init>(Lnet/minecraft/class_11701;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newLiquidBlockRenderer",
   "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#newSnippet",
   "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#newBrain",
-  "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#newPanorama"
+  "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#newPanorama",
+  "net/minecraft/class_10823.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#create"
  },
  "adapterHooks": [
   {
@@ -842,7 +849,11 @@
   "net/minecraft/class_5620.method_32212()V": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#bootStrap",
   "net/minecraft/class_5620.method_34850(Ljava/util/Map;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#addDefaultInteractions",
   "net/minecraft/class_5620.method_32210(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Ljava/util/function/Predicate;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#fillBucket",
-  "net/minecraft/class_5620.method_32207(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#emptyBucket"
+  "net/minecraft/class_5620.method_32207(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#emptyBucket",
+  "net/minecraft/class_5537.method_61642(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#hasSelectedItem",
+  "net/minecraft/class_5537.method_61644(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getSelectedItem",
+  "net/minecraft/class_5537.method_64975()Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getAllBundleItemColors",
+  "net/minecraft/class_5537.method_64277(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getByColor"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -1235,7 +1246,9 @@
   "net/minecraft/class_5620.field_27775:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
   "net/minecraft/class_5620.field_27776:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
   "net/minecraft/class_5620.field_27777:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
-  "net/minecraft/class_5620.field_28011:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons"
+  "net/minecraft/class_5620.field_28011:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons",
+  "net/minecraft/class_6053.field_30400:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallGoats",
+  "net/minecraft/class_6053.field_30401:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallGoats"
  },
  "abstractFills": [
   {
@@ -1314,7 +1327,9 @@
   "net/minecraft/class_8944.method_54961(Lnet/minecraft/class_5258;Lnet/minecraft/class_176;Ljava/lang/String;)V",
   "net/minecraft/class_8944.method_54964(Ljava/util/List;Lnet/minecraft/class_176;Ljava/lang/String;)V",
   "net/minecraft/class_58.method_22568(Lnet/minecraft/class_176;)Lnet/minecraft/class_58;",
-  "net/minecraft/class_1769.method_7802()Lnet/minecraft/class_1767;"
+  "net/minecraft/class_1769.method_7802()Lnet/minecraft/class_1767;",
+  "net/minecraft/class_6053.method_43541()V",
+  "net/minecraft/class_6053.method_43542()V"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"

@@ -118,6 +118,7 @@ public class SwallTestMod implements ModInitializer {
             recipes(server);
             items();
             cauldrons();
+            goats(server);
             interactions(server);
             levelData(server);
         } catch (Throwable t) {
@@ -299,5 +300,24 @@ public class SwallTestMod implements ModInitializer {
         check("cauldron.putGet", water.get(net.minecraft.class_1802.field_8600) == stick, water.get(net.minecraft.class_1802.field_8600));
         check("cauldron.vanillaEntries", net.minecraft.class_5620.field_27775.comp_1982().containsKey(net.minecraft.class_1802.field_8705)
             && water.containsKey(net.minecraft.class_1802.field_8539) && "water".equals(net.minecraft.class_5620.field_27776.comp_1981()), water.size());
+    }
+
+    /** a 1.21.11 goat class asking its brain provider (protected) */
+    static class TestGoat extends net.minecraft.class_6053 {
+        TestGoat(net.minecraft.class_1937 level) {
+            super(net.minecraft.class_1299.field_30052, level);
+        }
+
+        Object provider() {
+            return method_28306();
+        }
+    }
+
+    private static void goats(MinecraftServer server) {
+        TestGoat goat = new TestGoat(server.method_30002());
+        goat.method_43542();
+        boolean removed = !goat.method_43538() && !goat.method_43539();
+        goat.method_43541();
+        check("goat.hornsAndBrainProvider", removed && goat.method_43538() && goat.method_43539() && goat.provider() != null, removed);
     }
 }
