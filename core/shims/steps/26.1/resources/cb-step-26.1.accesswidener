@@ -5,6 +5,9 @@ extendable	method	net/minecraft/client/gui/GuiGraphicsExtractor	componentHoverEf
 # 1.21.11 ClampedInt was an open class, 26.1's a final record: a 1.21.11 subclass extends the record (swall; its
 # getType() reconnected to codec(), super.getType() answers CLAMPED)
 extendable	class	net/minecraft/util/valueproviders/ClampedInt
+# 1.21.11 RuleBasedBlockStateProvider's record components (fallback(), rules()) on 26.1's RuleBasedStateProvider (swall)
+accessible	field	net/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider	fallback	Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;
+accessible	field	net/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider	rules	Ljava/util/List;
 
 # ---- BEGIN GENERATED (swall): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
