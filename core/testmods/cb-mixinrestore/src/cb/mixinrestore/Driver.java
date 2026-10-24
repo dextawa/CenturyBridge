@@ -16,6 +16,13 @@ public final class Driver {
     private Driver() {
     }
 
+    private static final Map<String, Integer> COUNT = new ConcurrentHashMap<>();
+
+    /** a handler run during class initialisation, counted (it runs before the driver) */
+    public static void count(String c) {
+        COUNT.merge(c, 1, Integer::sum);
+    }
+
     public static void ran(String c, String values) {
         RAN.put(c, values);
         System.out.println("CB-MIXINRESTORE ran " + c + " " + values);
@@ -43,6 +50,14 @@ public final class Driver {
         } catch (Throwable t) {
             check("restored-override-head", false, "threw " + t);
         }
+        // ---- an unordinaled NEW injector where W added a second NEW: it fires at V's site only
+        // (forces ParticleArgument's initialisation if nothing else did)
+        new net.minecraft.class_2223(null);
+        int n = COUNT.getOrDefault("particle-argument-new-exception", 0);
+        check("sites-split-new", n == 1, "NEW DynamicCommandExceptionType handler ran " + n + " time(s) (V's code has 1 site)");
+        // ---- a HEAD injector on a private method W reshaped with no wiring (body follow)
+        int r = COUNT.getOrDefault("particle-types-register", 0);
+        check("body-follow-head", r == 11, "ParticleTypes.register handler ran " + r + " time(s) (1.20.5 registers 11 particle types with options through it)");
         System.out.println("CB-MIXINRESTORE summary ok=" + ok + " fail=" + fail);
     }
 }

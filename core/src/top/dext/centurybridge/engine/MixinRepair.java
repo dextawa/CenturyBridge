@@ -654,7 +654,8 @@ public final class MixinRepair {
     /**
      * ordinal-remap: every @At (slices included) and @Constant of the injector pinned to an ordinal is
      * moved to the ordinal of its V site's counterpart in W. Only for a selector naming one method that
-     * V and W both declare on one owner (a target the step moved is not V's body any more). True if an
+     * V and W both declare on one owner, by name and descriptor or by name alone when each release has
+     * exactly one (a target the step moved is not V's body any more). True if an
      * ordinal changed; each change, and each pinned site left without a counterpart, is reported.
      */
     private boolean remapOrdinals(AnnotationNode an, JsonObject refmap, List<String> methods, List<String> targets,
@@ -663,7 +664,8 @@ public final class MixinRepair {
         for (String sel : methods) {
             if (sel.startsWith("/")) return false;
             Sel s = Sel.parse(refmapLookup(refmap, sel));
-            if (s.wildcard || s.desc == null) return false;
+            if (s.wildcard) return false;
+            // a selector by name alone (mods write "tick", "<clinit>") names one body when V and W each have one
             List<String> owners = s.owner != null ? List.of(s.owner) : targets;
             for (String owner : owners) {
                 ClassNode tc = target(owner), vc = source.target(owner);

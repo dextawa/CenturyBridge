@@ -5,7 +5,9 @@
   "minVersion": "0.8",
   "mixins": [
     "ServerDriverMixin",
-    "FurnaceMixin"
+    "FurnaceMixin",
+    "ParticleArgumentMixin",
+    "ParticleTypesMixin"
   ],
   "injectors": {
     "defaultRequire": 1
