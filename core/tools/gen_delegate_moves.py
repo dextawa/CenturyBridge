@@ -15,6 +15,18 @@ answered by a generated static in the step layer, rt/CbDelegates (rt/CbDelegates
 instanceRedirects entry in <V>__<W>.json.d/delegates-gen.json. A key another fragment wires is left to it;
 candidates without such evidence are listed on stdout.
 
+A method can also have moved onto a sibling: an object held, like H's own instance, by a singleton -- a W class G
+with a public static no-argument method answering G (Minecraft.getInstance()) and a public instance field of H's
+type. 26.2 split LevelRenderer's level state into LevelExtractor (Minecraft.levelRenderer / Minecraft.levelExtractor):
+LevelRenderer.setSectionDirty is minecraft.levelExtractor.setSectionDirty. Such a path answers only for the instance
+the singleton holds (the generated static checks self is G's and throws IllegalStateException otherwise: the moved
+state lives on the singleton's sibling, not on another instance). On the sibling path the method may also have been
+renamed: the one public method of D with the translated descriptor whose body is the same code answers -- or, when
+the code moved with its state and reads differently, the one W's callers call from exactly the caller methods V's
+called H's from (LevelRenderer.allChanged and LevelExtractor.allChanged: KeyboardHandler.handleDebugKeys,
+Minecraft's and VideoSettingsScreen's lambdas, setLevel, and the method of the class itself that drives the frame),
+under a name that still says the same (one a prefix of the other once get/is is dropped: extractLevel / extract).
+
     python3 core/tools/gen_delegate_moves.py <V code jar> <W jar> <V> <W>
 """
 import collections
@@ -131,6 +143,56 @@ def main():
             return False
         return all(op == wop and norm(a, H, D) == wa for (op, a), (wop, wa) in zip(vm.insns, wm.insns))
 
+    # singletons: G with a public static ()LG; method; (G, getter, field holding an instance) -> its sibling paths
+    singletons = {}
+    gfields = {}
+    for G, k in W.items():
+        get = next((m.name for m in k.methods if m.access & bytecode.ACC_PUBLIC and m.access & bytecode.ACC_STATIC
+                    and m.desc == "()L" + G + ";"), None)
+        if get is None:
+            continue
+        fs = [(fl.name, fl.desc[1:-1]) for fl in k.fields if fl.access & bytecode.ACC_PUBLIC
+              and not fl.access & bytecode.ACC_STATIC and fl.desc.startswith("L")]
+        gfields[G] = dict(fs)
+        for held, ht in fs:
+            singletons[(G, get, held)] = [("." + f, t) for f, t in fs if f != held and t != ht]
+
+    def held_type(G, held):
+        return gfields[G][held]
+
+    def stem(n):
+        for pre in ("get", "is"):
+            if n.startswith(pre) and len(n) > len(pre) and n[len(pre)].isupper():
+                n = n[len(pre):]
+        return n.lower()
+
+    def same_stem(a, b):
+        """caller evidence names the method by where it is called; the name must still say the same thing
+        (getSectionStatistics / sectionStatistics, extractLevel / extract), not merely run at the same moment"""
+        x, y = stem(a), stem(b)
+        return x == y or x.startswith(y) or y.startswith(x)
+
+    call_index = {}
+
+    def callers(jar, owner, name, desc, H, D):
+        """the methods calling owner.name(desc) in jar, as 'Class.method' (lambdas as their enclosing method; a caller
+        in V's H named as W's D, the class its code moved to; other classes through classRenames)"""
+        key = id(jar)
+        if key not in call_index:
+            idx = collections.defaultdict(set)
+            for c, k in jar.items():
+                for m in k.methods:
+                    base = m.name.split("$")[1] if m.name.startswith("lambda$") else m.name
+                    for op, a in m.insns or []:
+                        if isinstance(a, tuple) and a[0] == "ref" and a[1] == "M":
+                            idx[(a[2], a[3], a[4])].add((c, base))
+            call_index[key] = idx
+        out = set()
+        for c, base in call_index[key].get((owner, name, desc), ()):
+            c = D if H is not None and c == H else (tc(c) if jar is V else c)
+            out.add(c + "." + base)
+        return out
+
     rows = set()
     for line in open(f"core/segments/damage/{step}.damage.tsv", encoding="utf-8"):
         f = line.rstrip("\n").split("\t")
@@ -166,17 +228,50 @@ def main():
             if wm is None or not wm.access & bytecode.ACC_PUBLIC:
                 continue
             if same(vm, wm, H, dh):
-                hits.append((path, D))
+                hits.append((path, D, name, None))
             else:
                 near.append(path + " (" + D.rsplit("/", 1)[1] + ": body differs)")
-        if len(set(hits)) == 1:
-            path, D = hits[0]
-            out[key] = (path, D, name, desc, wdesc, H)
-            basis[key] = f"{H.rsplit('/', 1)[1]}.{name} is {D.rsplit('/', 1)[1]}.{name} (same code), reached as self{path}"
+        if not hits:
+            for (G, get, held), sibs in singletons.items():
+                if held_type(G, held) != wh:
+                    continue
+                for sib, D in sibs:
+                    cands = []
+                    for s2 in supers(D, W):
+                        k2 = W.get(s2)
+                        for m2 in (k2.methods if k2 else []):
+                            if m2.desc == wdesc and m2.access & bytecode.ACC_PUBLIC and not m2.access & bytecode.ACC_STATIC                                     and same(vm, m2, H, s2):
+                                cands.append(m2.name)
+                    if len(set(cands)) == 1:
+                        hits.append((sib, D, cands[0], (G, get, held)))
+                        continue
+                    # the code moved with its state and so reads differently; the method that W's callers call
+                    # where V's called H's -- the same caller methods, none else -- is the one it became
+                    vcall = callers(V, H, name, desc, H, D)
+                    if not vcall:
+                        continue
+                    cands = []
+                    for s2 in supers(D, W):
+                        k2 = W.get(s2)
+                        for m2 in (k2.methods if k2 else []):
+                            if m2.desc == wdesc and m2.access & bytecode.ACC_PUBLIC and not m2.access & bytecode.ACC_STATIC                                     and same_stem(name, m2.name) and callers(W, s2, m2.name, m2.desc, None, None) == vcall:
+                                cands.append(m2.name)
+                    if len(set(cands)) == 1:
+                        hits.append((sib, D, cands[0], (G, get, held), "callers"))
+        if len(set(h[:4] for h in hits)) == 1:
+            path, D, wname, single = hits[0][:4]
+            how = "called where V called it: " + ", ".join(sorted(callers(V, H, name, desc, H, D))) if len(hits[0]) > 4 else "same code"
+            out[key] = (path, D, name, desc, wdesc, H, wname, single)
+            if single:
+                G, get, held = single
+                basis[key] = (f"{H.rsplit('/', 1)[1]}.{name} is {D.rsplit('/', 1)[1]}.{wname} ({how}), the sibling "
+                              f"{G.rsplit('/', 1)[1]}.{get}(){path} of {G.rsplit('/', 1)[1]}.{get}().{held}")
+            else:
+                basis[key] = f"{H.rsplit('/', 1)[1]}.{name} is {D.rsplit('/', 1)[1]}.{name} (same code), reached as self{path}"
         elif hits or near:
-            left.append((key, ("ambiguous: " + ", ".join(p for p, _ in hits)) if hits else "; ".join(near)))
+            left.append((key, ("ambiguous: " + ", ".join(h[0] + " " + h[2] for h in hits)) if hits else "; ".join(near)))
     classes = collections.defaultdict(list)
-    for key, (path, D, name, desc, wdesc, H) in sorted(out.items()):
+    for key, (path, D, name, desc, wdesc, H, wname, single) in sorted(out.items()):
         refs = [H, D] + [m.group(1) for m in DESC_CLS.finditer(wdesc)]
         client = any(r.startswith(CLIENT) for r in refs)
         classes["CbDelegatesClient" if client else "CbDelegates"].append(key)
@@ -191,16 +286,28 @@ def main():
             lines.append("@Environment(EnvType.CLIENT)")
         lines += [f"public final class {cls} {{", f"    private {cls}() {{}}"]
         for key in keys:
-            path, D, name, desc, wdesc, H = out[key]
+            path, D, name, desc, wdesc, H, wname, single = out[key]
             args, ret = parse_args(wdesc)
             mname = f"{H.rsplit('/', 1)[1].replace('$', '_')}_{name}"
             n = sum(1 for k in keys if k != key and out[k][2] == name and out[k][5] == H)
             if n:
                 mname += "_" + format(zlib.crc32(desc.encode()), "08x")
             params = ", ".join([f"{jtype('L' + tc(H) + ';')} self"] + [f"{jtype(a)} a{i}" for i, a in enumerate(args)])
-            call = f"self{path}.{name}(" + ", ".join(f"a{i}" for i in range(len(args))) + ")"
+            argl = ", ".join(f"a{i}" for i in range(len(args)))
+            if single:
+                G, get, held = single
+                gj = jtype("L" + G + ";")
+                call = f"g{path}.{wname}({argl})"
+                pre = [f"        {gj} g = {gj}.{get}();",
+                       f"        if (self != g.{held}) {{",
+                       f"            throw new IllegalStateException(\"{w} keeps this state on {G.rsplit('/', 1)[1]}.{get}(){path}, "
+                       f"which serves only {G.rsplit('/', 1)[1]}.{get}().{held}\");",
+                       "        }"]
+            else:
+                call = f"self{path}.{name}({argl})"
+                pre = []
             body = (call if ret == "V" else "return " + call) + ";"
-            lines += ["", f"    /** {basis[key]} */", f"    public static {jtype(ret)} {mname}({params}) {{",
+            lines += ["", f"    /** {basis[key]} */", f"    public static {jtype(ret)} {mname}({params}) {{"] + pre + [
                       f"        {body}", "    }"]
             redirects[key] = f"top/dext/centurybridge/step/v{wu}/rt/{cls}#{mname}"
         lines += ["}", ""]

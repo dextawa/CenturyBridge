@@ -110,4 +110,85 @@ public final class CbDelegatesClient {
     public static void Gui_tick(net.minecraft.client.gui.Gui self, boolean a0) {
         self.hud.tick(a0);
     }
+
+    /** LevelRenderer.extractLevel is LevelExtractor.extract (called where V called it: net/minecraft/client/renderer/GameRenderer.extract), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer */
+    public static void LevelRenderer_extractLevel(net.minecraft.client.renderer.LevelRenderer self, net.minecraft.client.DeltaTracker a0, net.minecraft.client.Camera a1, float a2) {
+        net.minecraft.client.Minecraft g = net.minecraft.client.Minecraft.getInstance();
+        if (self != g.levelRenderer) {
+            throw new IllegalStateException("26.2 keeps this state on Minecraft.getInstance().levelExtractor, which serves only Minecraft.getInstance().levelRenderer");
+        }
+        g.levelExtractor.extract(a0, a1, a2);
+    }
+
+    /** LevelRenderer.getEntityStatistics is LevelExtractor.entityStatistics (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer */
+    public static java.lang.String LevelRenderer_getEntityStatistics(net.minecraft.client.renderer.LevelRenderer self) {
+        net.minecraft.client.Minecraft g = net.minecraft.client.Minecraft.getInstance();
+        if (self != g.levelRenderer) {
+            throw new IllegalStateException("26.2 keeps this state on Minecraft.getInstance().levelExtractor, which serves only Minecraft.getInstance().levelRenderer");
+        }
+        return g.levelExtractor.entityStatistics();
+    }
+
+    /** LevelRenderer.getLastViewDistance is LevelExtractor.lastViewDistance (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer */
+    public static double LevelRenderer_getLastViewDistance(net.minecraft.client.renderer.LevelRenderer self) {
+        net.minecraft.client.Minecraft g = net.minecraft.client.Minecraft.getInstance();
+        if (self != g.levelRenderer) {
+            throw new IllegalStateException("26.2 keeps this state on Minecraft.getInstance().levelExtractor, which serves only Minecraft.getInstance().levelRenderer");
+        }
+        return g.levelExtractor.lastViewDistance();
+    }
+
+    /** LevelRenderer.getSectionStatistics is LevelExtractor.sectionStatistics (called where V called it: net/minecraft/client/gui/components/debug/DebugEntryChunkRenderStats.display), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer */
+    public static java.lang.String LevelRenderer_getSectionStatistics(net.minecraft.client.renderer.LevelRenderer self) {
+        net.minecraft.client.Minecraft g = net.minecraft.client.Minecraft.getInstance();
+        if (self != g.levelRenderer) {
+            throw new IllegalStateException("26.2 keeps this state on Minecraft.getInstance().levelExtractor, which serves only Minecraft.getInstance().levelRenderer");
+        }
+        return g.levelExtractor.sectionStatistics();
+    }
+
+    /** LevelRenderer.setBlockDirty is LevelExtractor.setBlockDirty (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer */
+    public static void LevelRenderer_setBlockDirty(net.minecraft.client.renderer.LevelRenderer self, net.minecraft.core.BlockPos a0, net.minecraft.world.level.block.state.BlockState a1, net.minecraft.world.level.block.state.BlockState a2) {
+        net.minecraft.client.Minecraft g = net.minecraft.client.Minecraft.getInstance();
+        if (self != g.levelRenderer) {
+            throw new IllegalStateException("26.2 keeps this state on Minecraft.getInstance().levelExtractor, which serves only Minecraft.getInstance().levelRenderer");
+        }
+        g.levelExtractor.setBlockDirty(a0, a1, a2);
+    }
+
+    /** LevelRenderer.setBlocksDirty is LevelExtractor.setBlocksDirty (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer */
+    public static void LevelRenderer_setBlocksDirty(net.minecraft.client.renderer.LevelRenderer self, int a0, int a1, int a2, int a3, int a4, int a5) {
+        net.minecraft.client.Minecraft g = net.minecraft.client.Minecraft.getInstance();
+        if (self != g.levelRenderer) {
+            throw new IllegalStateException("26.2 keeps this state on Minecraft.getInstance().levelExtractor, which serves only Minecraft.getInstance().levelRenderer");
+        }
+        g.levelExtractor.setBlocksDirty(a0, a1, a2, a3, a4, a5);
+    }
+
+    /** LevelRenderer.setSectionDirty is LevelExtractor.setSectionDirty (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer */
+    public static void LevelRenderer_setSectionDirty(net.minecraft.client.renderer.LevelRenderer self, int a0, int a1, int a2) {
+        net.minecraft.client.Minecraft g = net.minecraft.client.Minecraft.getInstance();
+        if (self != g.levelRenderer) {
+            throw new IllegalStateException("26.2 keeps this state on Minecraft.getInstance().levelExtractor, which serves only Minecraft.getInstance().levelRenderer");
+        }
+        g.levelExtractor.setSectionDirty(a0, a1, a2);
+    }
+
+    /** LevelRenderer.setSectionDirtyWithNeighbors is LevelExtractor.setSectionDirtyWithNeighbors (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer */
+    public static void LevelRenderer_setSectionDirtyWithNeighbors(net.minecraft.client.renderer.LevelRenderer self, int a0, int a1, int a2) {
+        net.minecraft.client.Minecraft g = net.minecraft.client.Minecraft.getInstance();
+        if (self != g.levelRenderer) {
+            throw new IllegalStateException("26.2 keeps this state on Minecraft.getInstance().levelExtractor, which serves only Minecraft.getInstance().levelRenderer");
+        }
+        g.levelExtractor.setSectionDirtyWithNeighbors(a0, a1, a2);
+    }
+
+    /** LevelRenderer.setSectionRangeDirty is LevelExtractor.setSectionRangeDirty (same code), the sibling Minecraft.getInstance().levelExtractor of Minecraft.getInstance().levelRenderer */
+    public static void LevelRenderer_setSectionRangeDirty(net.minecraft.client.renderer.LevelRenderer self, int a0, int a1, int a2, int a3, int a4, int a5) {
+        net.minecraft.client.Minecraft g = net.minecraft.client.Minecraft.getInstance();
+        if (self != g.levelRenderer) {
+            throw new IllegalStateException("26.2 keeps this state on Minecraft.getInstance().levelExtractor, which serves only Minecraft.getInstance().levelRenderer");
+        }
+        g.levelExtractor.setSectionRangeDirty(a0, a1, a2, a3, a4, a5);
+    }
 }
