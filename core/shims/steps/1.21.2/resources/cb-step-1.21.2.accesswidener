@@ -33,6 +33,11 @@ extendable method net/minecraft/class_807 hashCode ()I
 extendable method net/minecraft/class_807 toString ()Ljava/lang/String;
 # s7render: ModelDiscovery.getModel(id), 1.21.1 Fabric API's getOrLoadModel during discovery (rt/CbFapiModels)
 accessible method net/minecraft/class_10097 method_62638 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
+# s7render: BakedSheetGlyph.EffectInstance, a plain class 1.21.1 mods extend, a final record in 1.21.2
+extendable class net/minecraft/class_382$class_328
+extendable method net/minecraft/class_382$class_328 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_382$class_328 hashCode ()I
+extendable method net/minecraft/class_382$class_328 toString ()Ljava/lang/String;
 # s7render: RenderType.create, to build 1.21.1's entityTranslucentCull / entityGlintDirect render types 1.21.2 deleted (rt/CbRenderTypes)
 # s7render: LivingEntityRenderer's layers, to give 1.21.1's head scales to the head layer HumanoidMobRenderer adds (rt/CbRenderHeads)
 accessible field net/minecraft/class_922 field_4738 Ljava/util/List;

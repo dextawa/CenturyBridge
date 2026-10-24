@@ -64,4 +64,16 @@ public final class CbRenderLevel {
     public static net.minecraft.class_2960 field_4108() {
         return CLOUDS_LOCATION;
     }
+
+    /**
+     * 1.21.1 renderLevel(deltaTracker, renderBlockOutline, camera, gameRenderer, lightTexture, frustumMatrix,
+     * projectionMatrix): 1.21.2's takes the graphics resource allocator its frame graph draws with first -- the game
+     * renderer's resource pool, which 1.21.2's GameRenderer hands it (CbRenderFrames.ResourcePool)
+     */
+    public static void method_22710(net.minecraft.class_761 renderer, net.minecraft.class_9779 deltaTracker, boolean renderBlockOutline,
+                                    net.minecraft.class_4184 camera, net.minecraft.class_757 gameRenderer, net.minecraft.class_765 lightTexture,
+                                    org.joml.Matrix4f frustumMatrix, org.joml.Matrix4f projectionMatrix) {
+        renderer.method_22710(((CbRenderFrames.ResourcePool) gameRenderer).cb$resourcePool(), deltaTracker, renderBlockOutline, camera, gameRenderer,
+            lightTexture, frustumMatrix, projectionMatrix);
+    }
 }
