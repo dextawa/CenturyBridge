@@ -25,6 +25,15 @@ public final class CbWallMisc {
     private CbWallMisc() {
     }
 
+    /**
+     * a 1.21.11 mod's super.requiredFeatures() under BlockItem: 1.21.11's BlockItem answered its block's features
+     * (26.1's BlockItem declares none, and Item's answers its properties'); the mod's own override of the method,
+     * final on 26.1's Item, stands through the layer's access widener
+     */
+    public static net.minecraft.world.flag.FeatureFlagSet blockItemFeatures(net.minecraft.world.item.BlockItem item) {
+        return item.getBlock().requiredFeatures();
+    }
+
     public static ChunkPos chunkPos(BlockPos pos) {
         return ChunkPos.containing(pos);
     }

@@ -173,6 +173,135 @@ def Release_before(a, b):
 
 
 
+def step_names(v, w, wiring, data):
+    """(V class -> W class, renamed fields) of the step: the wall table at the namespace wall (fields as
+    "owner.field" -> (W owner, W name)), else the step wiring's classRenames and fieldRenames
+    ("owner.field:desc" -> new name)"""
+    cmap, fields = {}, {}
+    if wall(v, w):
+        import wall_tables
+        for line in open(wall_tables.table_for(w, data), encoding="utf-8"):
+            f = line.rstrip("\n").split("\t")
+            if len(f) < 3:
+                continue
+            if f[0] == "C":
+                cmap[f[1]] = f[2]
+            elif f[0] == "F":
+                o, n = f[2].rsplit(".", 1)
+                fields[f[1]] = (o, n)
+        return cmap, fields
+    files = [wiring] if os.path.exists(wiring) else []
+    if os.path.isdir(wiring + ".d"):
+        files += [os.path.join(wiring + ".d", n) for n in sorted(os.listdir(wiring + ".d")) if n.endswith(".json")]
+    for p in files:
+        doc = json.load(open(p, encoding="utf-8"))
+        cmap.update(doc.get("classRenames", {}))
+        fields.update(doc.get("fieldRenames", {}))
+    return cmap, fields
+
+
+def field_refs(b):
+    """(owner, name) of every Fieldref in a class file's constant pool"""
+    import struct
+    n = struct.unpack_from(">H", b, 8)[0]
+    cp, i, p = [None] * n, 1, 10
+    while i < n:
+        t = b[p]
+        if t == 1:
+            ln = struct.unpack_from(">H", b, p + 1)[0]
+            cp[i] = b[p + 3:p + 3 + ln].decode("utf-8", "replace")
+            p += 3 + ln
+        elif t in (3, 4):
+            p += 5
+        elif t in (5, 6):
+            p += 9
+            i += 1
+        elif t in (7, 8, 16, 19, 20):
+            cp[i] = (t, struct.unpack_from(">H", b, p + 1)[0])
+            p += 3
+        elif t in (9, 10, 11, 12, 17, 18):
+            cp[i] = (t,) + struct.unpack_from(">HH", b, p + 1)
+            p += 5
+        elif t == 15:
+            p += 4
+        else:
+            raise ValueError(f"constant tag {t}")
+        i += 1
+    out = set()
+    for e in cp:
+        if isinstance(e, tuple) and e[0] == 9:
+            out.add((cp[cp[e[1]][1]], cp[cp[e[2]][1]]))
+    return out
+
+
+def readers(data, version, owner, field, cache):
+    """classes of version's code (the owner and data generators aside) naming owner.field"""
+    import zipfile
+    if version not in cache:
+        idx = {}
+        with zipfile.ZipFile(tag_drift.code_jar(data, version)) as zf:
+            for n in zf.namelist():
+                if not n.endswith(".class") or n.startswith("net/minecraft/data/"):
+                    continue
+                b = zf.read(n)
+                for ref in field_refs(b):
+                    idx.setdefault(ref, set()).add(n[:-6])
+        cache[version] = idx
+    return {c for c in cache[version].get((owner, field), set()) if c != owner}
+
+
+def successors(V, W, d, cmap, cache):
+    """(rename, partial successors) of a tag W removed. The rename: the one W tag holding exactly V's members
+    whose readers in W's code are V's readers of the dropped constant (through the step's class names; data
+    generators aside) -- vanilla acts on it where it acted on the old tag, so mod data must reach it. Partial
+    successors: W tags holding exactly V's members that W introduced or that a non-empty part of those readers
+    reads (26.1 cauldron_can_remove_dye, read only by the cauldron, of 1.21.11 dyeable): mod additions are mirrored into
+    them so that part keeps acting on them. A tag with no V constant cannot be judged and is neither."""
+    reg, _ = d["key"]
+    vread = set()
+    for owner, field in d["fields"]:
+        vread |= {cmap.get(c, c) for c in readers(V.data, V.v, owner, field, cache)}
+    vread = {c for c in vread if not c.startswith("net/minecraft/data/")}
+    if not vread:
+        return None, []
+    equal, part = [], []
+    for c in d["exact"]:
+        wread = set()
+        for owner, field in W.fields().raw.get((reg, c), []):
+            wread |= readers(W.data, W.v, owner, field, cache)
+        wread = {x for x in wread if not x.startswith("net/minecraft/data/")}
+        if wread and wread == vread:
+            equal.append(c)
+        elif wread and (wread < vread or (reg, c) not in V.tags):
+            # read by part of the old readers, or a tag W introduced with exactly the old members (the reading
+            # code itself may have moved: 26.1 CauldronInteractions reads cauldron_can_remove_dye)
+            part.append(c)
+    if len(d["exact"]) == 1 and len(equal) == 1:
+        return equal[0], []
+    return None, sorted(part + equal)
+
+
+def carrier(W, d):
+    """the W tag that carries a narrowed tag's V meaning: the one W tag holding exactly V's members that names
+    #minecraft:<tag> itself (26.1 substrate_overworld for 1.21.11 dirt), so what mods add to the vanilla tag
+    reaches it too; None when there is not exactly one"""
+    reg, tag = d["key"]
+    hits = [c for c in d["exact"] if any(ref == tag and is_tag for ref, is_tag, _ in W.tags.get((reg, c), []))]
+    return hits[0] if len(hits) == 1 else None
+
+
+def renamed_field_handled(v, w, owner, field, W, cmap, field_renames, key):
+    """whether a V tag constant already reaches a W constant: through the wall table (when the name
+    it gives exists in W) or the step's fieldRenames"""
+    if wall(v, w):
+        t = field_renames.get(f"{owner}.{field}")
+        if not t:
+            return False
+        cf = W.fields()._class(t[0])
+        return cf is not None and any(fn == t[1] for _, fn, _, _ in cf.fields)
+    return key in field_renames
+
+
 def wall(v, w):
     """the namespace wall: V's intermediary names are not W's, the death tables and swall own it"""
     return tag_drift.year_era(w) and not tag_drift.year_era(v)
@@ -234,7 +363,8 @@ def main():
         if os.path.exists(p):
             os.remove(p)
     manifest = []
-    skipped_keys, skipped_files, summary, reused = [], [], [], []
+    skipped_keys, skipped_files, summary, reused, decisions, handled = [], [], [], [], [], []
+    readers_cache = {}
     cache = {}
     tagsets = {}
 
@@ -270,57 +400,85 @@ def main():
         holders = ver(v).fields().mojang
         regfield = {r: f for f, r in ver(w).fields().reg_ids.items()}
         consts, getters, ntags, tagmap = [], {}, 0, {}
+        cmap, field_renames = step_names(v, w, wiring, a.data)
         for d in rows:
             reg, tag = d["key"]
             m = ren.get(reg, {})
             ids = sorted({m.get(i, i) for i in d["vset"]})
             values = [{"id": ns(i), "required": False} for i in ids]
             later = [t for t in rel[rel.index(w) + 1:] if d["key"] in present(t)]
-            restore = d["kind"] == "removed" and not later
-            refs = []
-            if d["kind"] == "narrowed":
-                refs = [f"#minecraft:{tag}"]
-            elif d["kind"] == "removed" and not restore:
-                # a later release ships the id again with its own meaning: #minecraft:<tag> would bring that in
-                refs = [f"#minecraft:{s}" for s in d["new_successors"]]
-                reused.append(f"{v}__{w}	{reg}	minecraft:{tag}	vanilla again from {later[0]}")
-            values = [{"id": r, "required": False} for r in refs] + values
             regdir = LEGACY_DIRS.get(reg, reg) if Release_before(w, "1.21") else reg
-            if restore:
-                key_ns, key_path = "minecraft", tag
-                rp = f"data/minecraft/tags/{regdir}/{tag}.json"
+            mapkey = f"{reg} minecraft:{tag}"
+            # what carries V's meaning on W: a vanilla W tag (rename / carrier), the restored id, or the compat tag
+            successor, partial, why = None, [], ""
+            if d["kind"] == "removed":
+                successor, partial = successors(ver(v), ver(w), d, cmap, readers_cache)
+                why = "renamed" if successor else ""
+            elif d["kind"] == "narrowed":
+                successor = carrier(ver(w), d)
+                why = "carried" if successor else ""
+            restore = d["kind"] == "removed" and not successor and not later
+            written, relpath = False, "-"
+            if successor:
+                key_ns, key_path = "minecraft", successor
+                tagmap[mapkey] = {"to": f"minecraft:{successor}",
+                                  "mirror": [f"minecraft:{successor}"] if why == "renamed" else []}
+                decisions.append(f"{v}__{w}\t{mapkey}\t{why} -> minecraft:{successor}")
             else:
-                key_ns, key_path = "centurybridge", f"compat/{us(v)}/{tag}"
-                rp = f"data/centurybridge/tags/{regdir}/compat/{us(v)}/{tag}.json"
-                tagmap[f"{reg} minecraft:{tag}"] = {"to": f"centurybridge:{key_path}",
-                                                    "mirror": d["kind"] in ("widened", "changed", "removed")}
-            path = os.path.join(res, *rp.split("/"))
-            relpath = os.path.relpath(path, ROOT).replace(os.sep, "/")
+                refs = []
+                if d["kind"] == "narrowed":
+                    refs = [f"#minecraft:{tag}"]
+                elif d["kind"] == "removed" and not restore:
+                    # a later release ships the id again with its own meaning: #minecraft:<tag> would bring that in
+                    refs = [f"#minecraft:{s}" for s in d["new_successors"]]
+                    reused.append(f"{v}__{w}\t{reg}\tminecraft:{tag}\tvanilla again from {later[0]}")
+                values = [{"id": r, "required": False} for r in refs] + values
+                if restore:
+                    key_ns, key_path = "minecraft", tag
+                    rp = f"data/minecraft/tags/{regdir}/{tag}.json"
+                    if partial:
+                        tagmap[mapkey] = {"to": f"minecraft:{tag}", "mirror": [f"minecraft:{p}" for p in partial]}
+                        decisions.append(f"{v}__{w}\t{mapkey}\trestored, mod additions also into "
+                                         + ",".join(f"minecraft:{p}" for p in partial))
+                else:
+                    key_ns, key_path = "centurybridge", f"compat/{us(v)}/{tag}"
+                    rp = f"data/centurybridge/tags/{regdir}/compat/{us(v)}/{tag}.json"
+                    mirror = [f"centurybridge:{key_path}"] if d["kind"] in ("widened", "changed", "removed") else []
+                    tagmap[mapkey] = {"to": f"centurybridge:{key_path}",
+                                      "mirror": mirror + [f"minecraft:{p}" for p in partial]}
+                path = os.path.join(res, *rp.split("/"))
+                relpath = os.path.relpath(path, ROOT).replace(os.sep, "/")
+                written = not os.path.exists(path)
+                if not written:
+                    skipped_files.append(f"{v}__{w}\t{relpath}")
+                else:
+                    os.makedirs(os.path.dirname(path), exist_ok=True)
+                    with open(path, "w", encoding="utf-8", newline="\n") as f:
+                        json.dump({"replace": False, "values": values} if restore else {"values": values}, f, indent=2)
+                        f.write("\n")
+                    ntags += 1
             getter_names = []
-            written = not os.path.exists(path)
-            if not written:
-                skipped_files.append(f"{v}__{w}\t{relpath}")
-            else:
-                os.makedirs(os.path.dirname(path), exist_ok=True)
-                with open(path, "w", encoding="utf-8", newline="\n") as f:
-                    json.dump({"replace": False, "values": values} if restore else {"values": values}, f, indent=2)
-                    f.write("\n")
-                ntags += 1
             for owner, field in d["fields"]:
                 key = f"{owner}.{field}:L{tagkey};"
                 if f'"{key}"' in other:
                     skipped_keys.append(f"{v}__{w}\t{key}\tminecraft:{tag}\t{d['kind']}")
                     continue
+                if d["kind"] == "removed" and renamed_field_handled(v, w, owner, field, ver(w), cmap, field_renames, key):
+                    # W dropped the constant and the wall table / the step's fieldRenames already sends it to one
+                    # W declares (a rename's successor, 26.1 BlockTags.SUPPORTS_BAMBOO): left to it
+                    handled.append(f"{v}__{w}	{key}	minecraft:{tag}	{d['kind']}")
+                    continue
                 if reg not in regfield:
                     raise SystemExit(f"{w} has no Registries key for {reg}")
                 holder = holders.get(owner) or owner.rsplit("/", 1)[1]
                 name = f"{holder}_{field}"
-                consts.append({"owner": owner, "field": field, "tag": tag, "kind": d["kind"],
+                consts.append({"owner": owner, "field": field, "tag": tag, "kind": d["kind"] + (f", {why}" if why else ""),
                                "registry": reg, "name": name, "ns": key_ns, "path": key_path})
                 getters[key] = f"{pkg.replace('.', '/')}/CbTagCompat#{name}"
                 getter_names.append(name)
             manifest.append((f"{v}__{w}", reg, tag, relpath if written else "-",
-                             d["kind"], ",".join(getter_names) or "-"))
+                             d["kind"] + (f" ({why} minecraft:{successor})" if successor else ""),
+                             ",".join(getter_names) or "-"))
         for reg, tag, owner, field, expr, where in moved:
             key = f"{owner}.{field}:L{tagkey};"
             if f'"{key}"' in other:
@@ -364,6 +522,10 @@ def main():
         print("tag file not owned, left alone:", s)
     for s in reused:
         print("removed tag in the compat namespace (id vanilla again later):", s)
+    for s in decisions:
+        print("tag map:", s)
+    for s in handled:
+        print("field left to the wall table / fieldRenames:", s)
 
 
 if __name__ == "__main__":

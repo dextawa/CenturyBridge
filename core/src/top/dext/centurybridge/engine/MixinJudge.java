@@ -225,8 +225,12 @@ public final class MixinJudge {
         });
     }
 
+    /** the members each layer's mixins restore on game classes (LayerMembers) */
+    private final List<LayerMembers> restoredLayers = new ArrayList<>();
+
     private void loadExtra(Path p) throws IOException {
         layers.add(p);
+        restoredLayers.add(LayerMembers.read(p));
         try (ZipFile z = new ZipFile(p.toFile())) {
             for (ZipEntry e : java.util.Collections.list(z.entries())) {
                 if (e.getName().endsWith(".class")) {
@@ -462,12 +466,22 @@ public final class MixinJudge {
                 }
                 cands = MixinRepair.restored(restoredByTarget, tc.name, s); // an override the converter put back (a super call)
             }
+            LayerMembers restoring = null;
+            for (int li = 0; cands.isEmpty() && li < restoredLayers.size(); li++) {
+                cands = restoredLayers.get(li).match(oc.name, s); // a member a layer restores on the W class
+                restoring = cands.isEmpty() ? null : restoredLayers.get(li);
+            }
             if (cands.isEmpty()) {
                 first = first != null ? first : methodFate(oc, s.name(), s.desc(), st, "target");
                 continue;
             }
             for (MethodNode wm : cands) {
                 String why = fits(h, an, wm, st, anchors, vcount, oc);
+                if (why == null && restoring != null && restoring.vanillaReads(wm) == null) {
+                    // it applies, but W's own code never reads the restored member: the mod's mixin changes
+                    // nothing vanilla does (LayerMembers)
+                    why = "restored-member: vanilla path unmixed";
+                }
                 if (why == null) {
                     return null;
                 }

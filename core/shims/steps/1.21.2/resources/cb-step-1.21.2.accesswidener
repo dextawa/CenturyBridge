@@ -169,3 +169,23 @@ accessible method net/minecraft/class_2450 <init> (Lnet/minecraft/class_7871;Lne
 accessible method net/minecraft/class_7803 <init> (Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_8790;)V
 extendable method net/minecraft/class_7803 <init> (Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_8790;)V
 accessible method net/minecraft/class_7803 method_10419 ()V
+# s7render: 1.21.2 CompiledShaderProgram(programId), private there: 1.21.1 ShaderInstance(provider, name, format) builds the program (CbRenderShaderLoad) and constructs it, a 1.21.1 subclass through super (superCtorReshapes)
+accessible method net/minecraft/class_5944 <init> (I)V
+extendable method net/minecraft/class_5944 <init> (I)V
+# s7render: 1.21.1 AbstractMinecartRenderer.model read by 1.21.1 subclasses as an EntityModel (instanceFieldGetters, CbRenderMinecarts)
+accessible field net/minecraft/class_925 field_4747 Lnet/minecraft/class_580;
+# s7render: the ShulkerHeadLayer facade draws the parent ShulkerModel's head (1.21.1 getHead())
+accessible field net/minecraft/class_602 field_3554 Lnet/minecraft/class_630;
+# s7render: PalettedPermutations.loadPaletteEntryFromImage, private in 1.21.2 with the same body (NativeImage.getPixelsRGBA renamed getPixelsABGR: the same raw pixels)
+accessible method net/minecraft/class_8066 method_48486 (Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;)[I
+# s7render: 1.21.1 ItemOverride and ItemOverride.Predicate were open classes a mod could extend; 1.21.2 made them final records (CbRenderItemOverride*Mixin)
+extendable class net/minecraft/class_799
+extendable method net/minecraft/class_799 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_799 hashCode ()I
+extendable method net/minecraft/class_799 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_799$class_5826
+extendable method net/minecraft/class_799$class_5826 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_799$class_5826 hashCode ()I
+extendable method net/minecraft/class_799$class_5826 toString ()Ljava/lang/String;
+# s7render: 1.21.2 ModelManager.buildModelGroups, the grouping 1.21.1 BlockStateModelLoader.getModelGroups answered (CbRenderBlockStates)
+accessible method net/minecraft/class_1092 method_62654 (Lnet/minecraft/class_324;Lnet/minecraft/class_9824$class_10095;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;

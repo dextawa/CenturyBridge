@@ -111,6 +111,19 @@
     "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemPredicates#recipe(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
     "keep"
    ]
+  },
+  "net/minecraft/class_7789.method_46034()Lnet/minecraft/class_5341$class_210;": {
+   "desc": "(Lnet/minecraft/class_7871;)Lnet/minecraft/class_5341$class_210;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemPredicates#entityTypes()Lnet/minecraft/class_7871;"
+   ]
+  },
+  "net/minecraft/class_7789.method_46030(Lnet/minecraft/class_5321;)Lnet/minecraft/class_5341$class_210;": {
+   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_5321;)Lnet/minecraft/class_5341$class_210;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemPredicates#entityTypes()Lnet/minecraft/class_7871;",
+    "keep"
+   ]
   }
  },
  "superCtorReshapes": {

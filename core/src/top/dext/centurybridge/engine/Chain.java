@@ -79,14 +79,15 @@ public final class Chain {
      */
     public final java.util.Set<String> resourceTypes = new java.util.HashSet<>();
     /**
-     * "&lt;registry&gt; minecraft:&lt;tag&gt;" -&gt; {"to": id, "mirror": bool}: a vanilla tag whose members the step's W
-     * changed under the same id, and the tag the step layer ships with V's members (core/tools/gen_tag_compat.py).
-     * A converted mod's data naming the vanilla tag names that one instead; with mirror, the mod's own file for the
-     * vanilla tag is copied into it too (engine/res/LegacyTags).
+     * "&lt;registry&gt; minecraft:&lt;tag&gt;" -&gt; {"to": id, "mirror": [ids]}: a vanilla tag the step's W changed or
+     * dropped, and the tag that carries its V meaning on W (core/tools/gen_tag_compat.py: the layer's compat tag
+     * with V's members, or the W tag vanilla now acts on). A converted mod's data naming the vanilla tag names
+     * that one instead; the mod's own file for the vanilla tag is copied into each "mirror" id too
+     * (engine/res/LegacyTags). "mirror": true is [to].
      */
     public final java.util.Map<String, String> tagMap = new java.util.HashMap<>();
-    /** the tagMap keys with "mirror" */
-    public final java.util.Set<String> tagMirror = new java.util.HashSet<>();
+    /** the tagMap keys' mirror targets */
+    public final java.util.Map<String, java.util.List<String>> tagMirror = new java.util.HashMap<>();
     /** dead vanilla classes renamed to facade classes shipped in the runtime bridge */
     public final java.util.Map<String, String> classRenames = new java.util.HashMap<>();
     /**
@@ -1051,6 +1052,9 @@ public final class Chain {
      * rule does not apply (reported nowhere; the anchor is judged as before).
      */
     public java.nio.file.Path layerJar;
+
+    /** the V-named members the layer's mixins merge onto game classes, from {@link #layerJar} ({@link LayerMembers}) */
+    public LayerMembers layerMembers = LayerMembers.none();
 
     /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,
@@ -2319,9 +2323,18 @@ public final class Chain {
             if (root.has("tagMap")) {
                 for (var tm : root.getAsJsonObject("tagMap").entrySet()) {
                     var v = tm.getValue().getAsJsonObject();
-                    c.tagMap.put(tm.getKey(), v.get("to").getAsString());
-                    if (v.has("mirror") && v.get("mirror").getAsBoolean()) {
-                        c.tagMirror.add(tm.getKey());
+                    String target = v.get("to").getAsString();
+                    c.tagMap.put(tm.getKey(), target);
+                    var mirror = new java.util.ArrayList<String>();
+                    if (v.has("mirror") && v.get("mirror").isJsonArray()) {
+                        for (var m : v.getAsJsonArray("mirror")) {
+                            mirror.add(m.getAsString());
+                        }
+                    } else if (v.has("mirror") && v.get("mirror").getAsBoolean()) {
+                        mirror.add(target);
+                    }
+                    if (!mirror.isEmpty()) {
+                        c.tagMirror.put(tm.getKey(), mirror);
                     }
                 }
             }

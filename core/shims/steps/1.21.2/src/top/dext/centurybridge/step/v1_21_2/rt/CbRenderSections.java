@@ -35,6 +35,15 @@ public final class CbRenderSections {
     private CbRenderSections() {
     }
 
+    /**
+     * A block position as the SectionPos node 1.21.2's private section helpers take (doesChunkExistAt,
+     * isInViewDistance, getRelativeFrom): 1.21.1's took a section origin or the camera's block position and reduced
+     * it to section coordinates itself (SectionPos.blockToSectionCoord), as SectionPos.asLong does.
+     */
+    public static long sectionNode(net.minecraft.class_2338 pos) {
+        return net.minecraft.class_4076.method_33706(pos);
+    }
+
     /** the section 1.21.2 recentres on for 1.21.1's camera x and z */
     public static net.minecraft.class_4076 section(double x, double z) {
         return net.minecraft.class_4076.method_18682(net.minecraft.class_2338.method_49637(x, 0.0, z));

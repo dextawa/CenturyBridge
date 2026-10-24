@@ -85,7 +85,7 @@ public final class CbWallRecipeKinds {
     }
 
     public static ItemStack assemble(ArmorDyeRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {
-        return recipe.assemble(input);
+        return recipe.assemble(input, registries);
     }
 
     public static ItemStack superAssemble(ArmorDyeRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {
@@ -101,7 +101,7 @@ public final class CbWallRecipeKinds {
     }
 
     public static ItemStack assemble(MapCloningRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {
-        return recipe.assemble(input);
+        return recipe.assemble(input, registries);
     }
 
     public static ItemStack superAssemble(MapCloningRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {
@@ -117,7 +117,7 @@ public final class CbWallRecipeKinds {
     }
 
     public static ItemStack assemble(TippedArrowRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {
-        return recipe.assemble(input);
+        return recipe.assemble(input, registries);
     }
 
     public static ItemStack superAssemble(TippedArrowRecipe recipe, CraftingInput input, HolderLookup.Provider registries) {

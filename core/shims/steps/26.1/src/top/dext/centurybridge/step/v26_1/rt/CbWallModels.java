@@ -114,6 +114,15 @@ public final class CbWallModels {
         return part.particleMaterial().sprite();
     }
 
+    /**
+     * 1.21.11 new SimpleModelWrapper(quads, useAmbientOcclusion, particleIcon): 26.1's record holds the particle as
+     * a baked material; a 1.21.11 particle sprite carries no translucency override (26.1's default, false)
+     */
+    public static net.minecraft.client.resources.model.SimpleModelWrapper simpleModelWrapper(
+            net.minecraft.client.resources.model.geometry.QuadCollection quads, boolean useAmbientOcclusion, TextureAtlasSprite particleIcon) {
+        return new net.minecraft.client.resources.model.SimpleModelWrapper(quads, useAmbientOcclusion, new Material.Baked(particleIcon, false));
+    }
+
     /** 1.21.11 BlockStateModel.collectParts(RandomSource), a default method 26.1 dropped: same body */
     public static List<BlockStateModelPart> collectParts(BlockStateModel model, RandomSource random) {
         List<BlockStateModelPart> parts = new ObjectArrayList<>();

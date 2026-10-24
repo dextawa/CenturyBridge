@@ -205,6 +205,7 @@ public class GearTestMod implements ModInitializer {
         section("world", () -> world(server));
         section("fapi", () -> fapi(server));
         section("datagen", () -> datagen(server));
+        section("restoredMixins", GearTestMod::restoredMixins);
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -570,6 +571,30 @@ public class GearTestMod implements ModInitializer {
         return n;
     }
 
+    /**
+     * a 1.21.1 mod mixin on Item.getEnchantmentValue (cb.s7gear.mixin.EnchantValueMixin: a stick answers 30) changes
+     * what vanilla enchanting reads, as on 1.21.1: EnchantmentHelper.getEnchantmentCost is 0 for an item of value 0
+     */
+    static void restoredMixins() {
+        net.minecraft.class_5819 r = net.minecraft.class_5819.method_43049(1L);
+        check(class_1802.field_8600.method_7837() == 30, "mixin on Item.getEnchantmentValue: the mod's own call sees 30 for a stick");
+        int stick = net.minecraft.class_1890.method_8227(r, 2, 15, new class_1799(class_1802.field_8600));
+        check(stick > 0, "mixin on Item.getEnchantmentValue: vanilla's enchanting cost of a stick is no longer 0: " + stick);
+        int dirt = net.minecraft.class_1890.method_8227(r, 2, 15, new class_1799(class_1802.field_8831));
+        check(dirt == 0, "an unmixed item of value 0 (dirt) still costs 0: " + dirt);
+        check(class_1802.field_8802.method_7837() == 10, "diamond sword's value is its own (10), the mixin leaves it");
+    }
+
+    /** 1.21.1's RecipeBookCategories (client only): constants, tabs, icons, search sub-tabs */
+    static void recipeBookCategories() {
+        check(net.minecraft.class_314.values().length == 18 && net.minecraft.class_314.valueOf("CRAFTING_SEARCH") == net.minecraft.class_314.field_1809,
+            "RecipeBookCategories: 18 constants, valueOf");
+        check(net.minecraft.class_314.method_30285(net.minecraft.class_5421.field_25763).size() == 5
+                && net.minecraft.class_314.field_1809.method_1623().get(0).method_31574(class_1802.field_8251)
+                && net.minecraft.class_314.field_25783.get(net.minecraft.class_314.field_1804).size() == 3,
+            "RecipeBookCategories: crafting tabs, search icon, furnace search sub-tabs");
+    }
+
     /** 1.21.1's RecipeBookMenu members, handlePlacement, ServerPlaceRecipe and RecipeBook */
     @SuppressWarnings({"rawtypes", "unchecked"})
     static void menus(MinecraftServer server) {
@@ -719,12 +744,20 @@ public class GearTestMod implements ModInitializer {
         check(COMPLEX.method_16698() && ((net.minecraft.class_1762) COMPLEX).method_7757(new class_1799(COMPLEX), server.method_30002(), player(server)) == null,
             "ComplexItem: isComplex, no update packet of its own");
         check(TEMPLATE instanceof net.minecraft.class_8052, "SmithingTemplateItem.createArmorTrimTemplate(COAST) registered");
-        check(net.minecraft.class_314.values().length == 18 && net.minecraft.class_314.valueOf("CRAFTING_SEARCH") == net.minecraft.class_314.field_1809,
-            "RecipeBookCategories: 18 constants, valueOf");
-        check(net.minecraft.class_314.method_30285(net.minecraft.class_5421.field_25763).size() == 5
-                && net.minecraft.class_314.field_1809.method_1623().get(0).method_31574(class_1802.field_8251)
-                && net.minecraft.class_314.field_25783.get(net.minecraft.class_314.field_1804).size() == 3,
-            "RecipeBookCategories: crafting tabs, search icon, furnace search sub-tabs");
+        // 1.21.1's RecipeBookCategories is a client class (net/minecraft/client; the 1.21.1 server jar has no class_314):
+        // on a dedicated server touching it fails to load the class, as it did on 1.21.1
+        if (net.fabricmc.loader.api.FabricLoader.getInstance().getEnvironmentType() == net.fabricmc.api.EnvType.CLIENT) {
+            recipeBookCategories();
+        } else {
+            boolean categoriesLoaded;
+            try {
+                recipeBookCategories();
+                categoriesLoaded = true;
+            } catch (Throwable expected) {
+                categoriesLoaded = false;
+            }
+            check(!categoriesLoaded, "RecipeBookCategories (client-only, as on 1.21.1) does not load on a dedicated server");
+        }
         net.minecraft.class_1842 unnamed = new net.minecraft.class_1842(new class_1293(class_1294.field_5904, 100, 0));
         check(net.minecraft.class_1842.method_8051(java.util.Optional.of(class_6880.method_40223(unnamed)), "x.").equals("x.empty")
                 && net.minecraft.class_1842.method_8051(java.util.Optional.of(net.minecraft.class_1847.field_9005), "p.").equals("p.swiftness"),

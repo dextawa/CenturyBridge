@@ -17,6 +17,7 @@
     "CbFapiTradeServerMixin",
     "CbFapiVillagerTradesMixin",
     "CbFapiWanderingTraderTradesMixin",
+    "CbWallBlockDataSourceMixin",
     "CbWallBoneMealFlowersMixin",
     "CbWallBossEventMixin",
     "CbWallBossEventsAccess",
@@ -46,6 +47,8 @@
     "CbWallServerAccess",
     "CbWallSingleItemRecipeMixin",
     "CbWallStonecutterRecipeMixin",
+    "CbWallSavedDataStorageMixin",
+    "CbWallEntityDataSourceMixin",
     "CbWallServerMixin",
     "CbWallSimpleContainerMixin",
     "CbWallTraderSpawnerMixin",
@@ -73,7 +76,8 @@
     "CbWallBrainProviderArmadilloMixin",
     "CbWallFeatureRegisterMixin",
     "CbWallRecipeKindsMixin",
-    "CbWallBannerDuplicateMixin"
+    "CbWallBannerDuplicateMixin",
+    "CbWallAbstractVillagerOffersMixin"
   ],
   "client": [
     "CbFapiBlockColorsMixin",

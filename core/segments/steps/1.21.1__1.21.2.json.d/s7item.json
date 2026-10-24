@@ -61,6 +61,55 @@
     0
    ],
    "basis": "StonecutterMenu.setupRecipeList(container, stack) -> setupRecipeList(stack): javap, the same reset of the selection and result slot and the recipe lookup for the stack (1.21.1 read the container only to build the lookup's input)"
+  },
+  "net/minecraft/class_1720.<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;)V": {
+   "to": "<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;)V",
+   "args": [
+    0,
+    1,
+    3,
+    4,
+    5
+   ],
+   "basis": "AbstractFurnaceMenu(menuType, recipeType, bookType, id, inventory[, container, data]) -> the same with the recipe property set after recipeType: javap, the same body (fields, the three furnace slots, the inventory slots, data slots); 1.21.2 adds the property-set lookup and moved the inventory-slot loops into addStandardInventorySlots"
+  },
+  "net/minecraft/class_1720.<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;)V": {
+   "to": "<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;)V",
+   "args": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "AbstractFurnaceMenu(menuType, recipeType, bookType, id, inventory[, container, data]) -> the same with the recipe property set after recipeType: javap, the same body (fields, the three furnace slots, the inventory slots, data slots); 1.21.2 adds the property-set lookup and moved the inventory-slot loops into addStandardInventorySlots"
+  },
+  "net/minecraft/class_3441.method_20732(Lnet/minecraft/class_2499;Ljava/util/function/Consumer;Lnet/minecraft/class_1863;)V": {
+   "to": "method_20732(Lnet/minecraft/class_2499;Ljava/util/function/Consumer;Ljava/util/function/Predicate;)V",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "ServerRecipeBook.loadRecipes(list, add, recipeManager) -> loadRecipes(list, add, recognised): javap, the same walk over the saved ids handing each known recipe on (1.21.2 hands its key and tests it with the predicate instead of looking the holder up); the consumer's type changed, so only handlers taking no target arguments follow"
+  },
+  "net/minecraft/class_8053.method_48577(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)Ljava/lang/String;": {
+   "to": "method_48577(Lnet/minecraft/class_6880;Lnet/minecraft/class_2960;)Ljava/lang/String;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "ArmorTrim.getColorPaletteSuffix(material, armorMaterial) -> (material, equipment asset id): javap, the same override-map lookup by the armour and the material's asset name fallback (1.21.2 keys the overrides by the equipment model id)"
+  },
+  "net/minecraft/class_1781.method_58656(Lnet/minecraft/class_2342;Lnet/minecraft/class_2350;)Lnet/minecraft/class_243;": {
+   "to": "method_63679(Lnet/minecraft/class_2342;Lnet/minecraft/class_2350;)Lnet/minecraft/class_243;",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "FireworkRocketItem's dispense position (private static; createDispenseConfig hands it to the dispense config as its position function in both versions): javap, the same block-centre-plus-facing offset; 1.21.2 dropped the rocket's own width/height from it"
   }
  },
  "callReshapes": {

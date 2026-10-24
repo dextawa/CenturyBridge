@@ -6,11 +6,15 @@
  "tagMap": {
   "entity_type minecraft:impact_projectiles": {
    "to": "centurybridge:compat/1_20_2/impact_projectiles",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_20_2/impact_projectiles"
+   ]
   },
   "entity_type minecraft:skeletons": {
    "to": "centurybridge:compat/1_20_2/skeletons",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_20_2/skeletons"
+   ]
   }
  }
 }

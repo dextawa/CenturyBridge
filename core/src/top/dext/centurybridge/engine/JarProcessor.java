@@ -3603,8 +3603,12 @@ public final class JarProcessor {
                             return; // a super-bridge accessor (rewriteHookSuperCalls) calling super's new shape
                         }
                         Chain.Issue r = chain.resolveMember('m', name);
+                        // judged as the converted jar will spell the site: the step's classRenames move the
+                        // owner and the descriptor's classes (26.2: RecipeBuilder.unlockedBy(String,
+                        // advancements/Criterion) is unlockedBy(String, advancements/triggers/Criterion))
                         if (r.level() == Chain.Level.OK && !name.startsWith("<") && !Chain.intermediaryClass(owner)
-                                && Boolean.FALSE.equals(chain.resolvesOnTarget(owner, name + desc))) {
+                                && Boolean.FALSE.equals(chain.resolvesOnTarget(chain.classRenames.getOrDefault(owner, owner),
+                                    name + chain.renamedDesc(desc)))) {
                             // classes Mojang never obfuscated (blaze3d, ...) keep real member names,
                             // which the death tables -- keyed by intermediary name -- cannot see go:
                             // the target stub is the judge. (On an intermediary-named class a
@@ -3738,6 +3742,20 @@ public final class JarProcessor {
                                 fldSetters.put(fsite, rfst);
                                 top.dext.centurybridge.data.FullAudit.record(rkey, "field-setter");
                                 return;
+                            }
+                            // and an old instance field the new class keeps as other state (26.2 folded
+                            // DripstoneClusterConfiguration's public fields into SpeleothemClusterConfiguration's
+                            // record components): the getter / setter wired on the old owner, which takes the
+                            // receiver as the renamed class
+                            if (op == Opcodes.GETFIELD || op == Opcodes.PUTFIELD) {
+                                String rift = (op == Opcodes.GETFIELD ? chain.instanceFieldGetters : chain.instanceFieldSetters).get(rkey);
+                                if (rift != null) {
+                                    (op == Opcodes.GETFIELD ? instFldGetters : instFldSetters).put(fsite, rift);
+                                    emitOwner.put(fsite, owner);
+                                    top.dext.centurybridge.data.FullAudit.record(rkey,
+                                        op == Opcodes.GETFIELD ? "instance-field-getter" : "instance-field-setter");
+                                    return;
+                                }
                             }
                             String gap = chain.facadeGaps.get(owner + "." + name + ":" + desc);
                             if (gap != null) {

@@ -1,0 +1,3 @@
+# CB's own native sources and build outputs: bytes exactly as committed (their sha256s are recorded in SHA256SUMS)
+core/natives/** -text
+core/shims/steps/26.1/natives/** -text

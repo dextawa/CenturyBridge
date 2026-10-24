@@ -100,10 +100,33 @@ public final class CbItemMembers {
 
     /** getEnchantmentValue(): the item's ENCHANTABLE value, 0 without (1.21.1's Item answered 0) */
     public static int method_7837(class_1792 item) {
-        if (item instanceof LegacyEnchantmentValue l) {
-            return l.method_7837();
+        return ((ItemEnchantmentValue) (Object) item).method_7837();
+    }
+
+    /**
+     * 1.21.1's Item.getEnchantmentValue(), restored on every Item by CbItemMembersMixin: a call dispatches to a
+     * 1.21.1 class's override or to the restored body -- with whatever a mod's 1.21.1 mixin on it does
+     */
+    public interface ItemEnchantmentValue {
+        int method_7837();
+    }
+
+    /**
+     * ENCHANTABLE as 1.21.2's EnchantmentHelper reads it (CbItemEnchantableReadsMixin), through the item's
+     * restored getEnchantmentValue() as 1.21.1's EnchantmentHelper asked it: absent at 0 (1.21.1's "not
+     * enchantable"). A stack carrying an ENCHANTABLE of its own (1.21.2 only; 1.21.1 had no per-stack value) keeps
+     * it.
+     */
+    public static net.minecraft.class_9889 enchantableRead(class_1799 stack, net.minecraft.class_9889 read) {
+        class_1792 item = stack.method_7909();
+        if (!java.util.Objects.equals(read, item.method_57347().method_57829(class_9334.field_53695))) {
+            return read;
         }
-        return super_method_7837(item);
+        int v = method_7837(item);
+        if (v <= 0) {
+            return null;
+        }
+        return read != null && read.comp_2938() == v ? read : new net.minecraft.class_9889(v);
     }
 
     /**

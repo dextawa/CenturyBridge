@@ -6,7 +6,8 @@
  "environment": "*",
  "entrypoints": {
   "main": [
-   "cb.slib.SlibAuthlib2Test"
+   "cb.slib.SlibAuthlib2Test",
+   "cb.slib.SlibAuthlibLoginTest"
   ]
  },
  "depends": {

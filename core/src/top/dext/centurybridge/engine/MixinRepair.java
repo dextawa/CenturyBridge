@@ -410,6 +410,7 @@ public final class MixinRepair {
                             cands = new Sel(s.owner, s.name, renamed.apply(s.desc), s.wildcard).match(tc);
                         }
                         if (cands.isEmpty()) cands = restored(restoredByTarget, owner, s); // an override MixinBridge put back
+                        if (cands.isEmpty()) cands = layerMembers.match(owner, s); // a member the layer restores (LayerMembers)
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
                         if (cands.isEmpty()) {
@@ -916,6 +917,9 @@ public final class MixinRepair {
 
     /** set by splitSites when an injector must not fire at all (see there); consumed by repairMixin */
     private String pendingDisable;
+
+    /** the members the step layer's mixins restore on game classes; their code is the layer's (LayerMembers) */
+    public LayerMembers layerMembers = LayerMembers.none();
 
     /** overrides MixinBridge.restoreOverride put back (restoring mixins of the jar being repaired), by target */
     private Map<String, List<MethodNode>> restoredByTarget = Map.of();

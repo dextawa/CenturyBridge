@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import top.dext.centurybridge.step.v26_1.rt.CbWallDyes;
 import top.dext.centurybridge.step.v26_1.rt.CbWallRecipeKinds;
 import top.dext.centurybridge.step.v26_1.rt.CbWallRecipes;
+import top.dext.centurybridge.step.v26_1.rt.CbWallRegistries;
 import top.dext.centurybridge.step.v26_1.rt.CbWallTags;
 
 /**
@@ -38,13 +39,20 @@ public class ArmorDyeRecipe extends CustomRecipe {
         CbWallRecipes.customCategory(this, category);
     }
 
+    /** 1.21.11 ArmorDyeRecipe.matches(input, level) (method_17701): 26.1's matches, which a 1.21.11 subclass's override (renamed by the wall table) overrides */
     @Override
     public boolean matches(CraftingInput input, Level level) {
         return cb$matches(input, level);
     }
 
+    /** 26.1's assemble(input): 1.21.11's assemble(input, registries) with the level's registries */
     @Override
     public ItemStack assemble(CraftingInput input) {
+        return assemble(input, CbWallRegistries.access());
+    }
+
+    /** 1.21.11 ArmorDyeRecipe.assemble(input, registries) (class_1849.method_17700) under the wall table's name, which a 1.21.11 subclass's override takes */
+    public ItemStack assemble(CraftingInput input, net.minecraft.core.HolderLookup.Provider registries) {
         return cb$assemble(input);
     }
 

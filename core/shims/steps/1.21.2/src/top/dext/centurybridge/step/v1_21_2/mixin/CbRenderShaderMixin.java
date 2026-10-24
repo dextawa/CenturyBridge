@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderShaders;
 
 /**
@@ -21,12 +22,17 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderShaders;
  * - getName() / getVertexFormat(): 1.21.2's program keeps neither; the ShaderManager hands them over when it compiles
  *   the program for a key (CbRenderShaderManagerMixin), in 1.21.1's form (a core shader's bare name, another's
  *   namespace:name).
- * - the Shader interface (facade) again, as 1.21.1's ShaderInstance implemented it: getId (1.21.2's own) and markDirty;
- *   getVertexProgram / getFragmentProgram / attachToProgram stay unimplemented (ledger: no Program objects in 1.21.2).
+ * - the Shader interface (facade) again, as 1.21.1's ShaderInstance implemented it: getId (1.21.2's own), markDirty,
+ *   and getVertexProgram / getFragmentProgram / attachToProgram over the program's two shaders: a program 1.21.1's
+ *   constructor built (CbRenderShaderLoad) keeps the Programs it compiled; one 1.21.2 links (linkShader, from the
+ *   ShaderManager's compiled vertex and fragment shaders) gets a Program for each of them, named as 1.21.1 named the
+ *   shader (a vanilla shader's bare name, another's namespace:name) and not entered in Program.Type's cache, which
+ *   1.21.1 filled from its own compiles only. attachToProgram attaches both again, as 1.21.1's did.
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_5944.class)
-public abstract class CbRenderShaderMixin implements CbRenderShaders.Program, top.dext.centurybridge.step.v1_21_2.facade.Shader {
+public abstract class CbRenderShaderMixin implements CbRenderShaders.Program, top.dext.centurybridge.step.v1_21_2.rt.CbRenderShaderLoad.Legacy,
+    top.dext.centurybridge.step.v1_21_2.facade.Shader {
 
     @Unique
     private final Map<String, Object> cb$samplers = new LinkedHashMap<>();
@@ -36,6 +42,12 @@ public abstract class CbRenderShaderMixin implements CbRenderShaders.Program, to
 
     @Unique
     private net.minecraft.class_293 cb$format;
+
+    @Unique
+    private top.dext.centurybridge.step.v1_21_2.facade.Program cb$vertex;
+
+    @Unique
+    private top.dext.centurybridge.step.v1_21_2.facade.Program cb$fragment;
 
     @Shadow
     public abstract void method_62899(String name, int textureId);
@@ -64,6 +76,46 @@ public abstract class CbRenderShaderMixin implements CbRenderShaders.Program, to
     public void cb$compiledFor(net.minecraft.class_10156 key) {
         this.cb$name = CbRenderShaders.legacyName(key.comp_3113());
         this.cb$format = key.comp_3114();
+    }
+
+    @Override
+    public void cb$legacy(String name, net.minecraft.class_293 format, top.dext.centurybridge.step.v1_21_2.facade.Program vertex,
+                          top.dext.centurybridge.step.v1_21_2.facade.Program fragment) {
+        this.cb$name = name;
+        this.cb$format = format;
+        this.cb$vertex = vertex;
+        this.cb$fragment = fragment;
+    }
+
+    /** 1.21.1 ShaderInstance.getVertexProgram() */
+    @Override
+    public top.dext.centurybridge.step.v1_21_2.facade.Program method_1274() {
+        return this.cb$vertex;
+    }
+
+    /** 1.21.1 ShaderInstance.getFragmentProgram() */
+    @Override
+    public top.dext.centurybridge.step.v1_21_2.facade.Program method_1278() {
+        return this.cb$fragment;
+    }
+
+    /** 1.21.1 ShaderInstance.attachToProgram() */
+    @Override
+    public void method_34418() {
+        this.cb$fragment.method_1281(this);
+        this.cb$vertex.method_1281(this);
+    }
+
+    /** 1.21.2 linkShader(vertex, fragment, format): the linked program's Programs, over the two compiled shaders */
+    @Inject(method = "method_62896(Lnet/minecraft/class_10141;Lnet/minecraft/class_10141;Lnet/minecraft/class_293;)Lnet/minecraft/class_5944;",
+        at = @At("RETURN"))
+    private static void cb$linkedPrograms(net.minecraft.class_10141 vertex, net.minecraft.class_10141 fragment, net.minecraft.class_293 format,
+                                          CallbackInfoReturnable<net.minecraft.class_5944> cir) {
+        CbRenderShaderMixin linked = (CbRenderShaderMixin) (Object) cir.getReturnValue();
+        linked.cb$vertex = new top.dext.centurybridge.step.v1_21_2.facade.Program(top.dext.centurybridge.step.v1_21_2.facade.Program.Type.field_1530,
+            vertex.method_62883(), CbRenderShaders.legacyName(vertex.method_62881()));
+        linked.cb$fragment = new top.dext.centurybridge.step.v1_21_2.facade.Program(top.dext.centurybridge.step.v1_21_2.facade.Program.Type.field_1531,
+            fragment.method_62883(), CbRenderShaders.legacyName(fragment.method_62881()));
     }
 
     @Inject(method = "method_34586()V", at = @At("HEAD"))
