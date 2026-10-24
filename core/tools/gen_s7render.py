@@ -689,6 +689,9 @@ SPECS = [
     # netHeadYaw, headPitch) -> render(PoseStack, MultiBufferSource, light, S, yRot, xRot)
     dict(owner=MC + "class_3887", v=("method_4199", f"(L{PS};L{MBS};IL{ENTITY};FFFFFF)V"), w=("method_4199", f"(L{PS};L{MBS};IL{STATE};FF)V"),
          recv="l", ei=3, si=3, wmap={0: 0, 1: 1, 2: 2, 4: 8, 5: 9}, pt=6, fill={4: "walkPos", 5: "walkSpeed", 7: "bob"}),
+    # StuckInBodyLayer.numStuck(T) -> numStuck(PlayerRenderState)
+    dict(owner=MC + "class_4507", v=("method_22134", f"(L{MC}class_1309;)I"), w=("method_22134", f"(L{MC}class_10055;)I"),
+         recv="l", ei=0, si=0, wmap={}, pt=None, fill={}),
 ]
 STATE_MIXIN = "CbRenderState%sMixin"
 

@@ -13,7 +13,10 @@ import top.dext.centurybridge.step.v1_21_2.rt.Guard;
 @SuppressWarnings({"unused", "unchecked", "rawtypes"})
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_4507.class)
-public abstract class CbRenderState4507Mixin {
+public abstract class CbRenderState4507Mixin implements CbRenderStateGen.W4507 {
+
+    @Shadow
+    protected abstract int method_22134(net.minecraft.class_10055 w0);
 
     /** 1.21.1 method_22132(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V: the 1.21.2 method_4199 of a state extracted from the entity, as vanilla's */
     public void method_22132(net.minecraft.class_4587 p0, net.minecraft.class_4597 p1, int p2, net.minecraft.class_1309 p3, float p4, float p5, float p6, float p7, float p8, float p9) {
@@ -31,5 +34,23 @@ public abstract class CbRenderState4507Mixin {
     /** javac's 1.21.1 bridge method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V to it */
     public void method_4199(net.minecraft.class_4587 p0, net.minecraft.class_4597 p1, int p2, net.minecraft.class_1297 p3, float p4, float p5, float p6, float p7, float p8, float p9) {
         this.method_22132(p0, p1, p2, (net.minecraft.class_1309) p3, p4, p5, p6, p7, p8, p9);
+    }
+
+    /** 1.21.1 method_22134(Lnet/minecraft/class_1309;)I: the 1.21.2 method_22134 of a state extracted from the entity, as vanilla's */
+    public int method_22134(net.minecraft.class_1309 p0) {
+        net.minecraft.class_10017 s = CbRenderLiving.stateOf(CbRenderLiving.rendererOf(this, p0), p0, CbRenderTex.partialTick());
+        boolean in = Guard.cbEnter(this);
+        try {
+            return ((CbRenderStateGen.W4507) (Object) this).cb$w$method_22134((net.minecraft.class_10055) s);
+        } finally {
+            if (in) {
+                Guard.cbExit(this);
+            }
+        }
+    }
+
+    @Override
+    public int cb$w$method_22134(net.minecraft.class_10055 w0) {
+        return this.method_22134(w0);
     }
 }

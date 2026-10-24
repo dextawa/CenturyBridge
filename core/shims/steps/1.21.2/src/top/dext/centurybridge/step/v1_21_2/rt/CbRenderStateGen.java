@@ -15,6 +15,11 @@ public final class CbRenderStateGen {
         void cb$w$method_4199(net.minecraft.class_4587 w0, net.minecraft.class_4597 w1, int w2, net.minecraft.class_10017 w3, float w4, float w5);
     }
 
+    /** the 1.21.2 roots on net/minecraft/class_4507, public (the root's generated mixin implements it) */
+    public interface W4507 {
+        int cb$w$method_22134(net.minecraft.class_10055 w0);
+    }
+
     /** the 1.21.2 roots on net/minecraft/class_897, public (the root's generated mixin implements it) */
     public interface W897 {
         void cb$w$method_3936(net.minecraft.class_10017 w0, net.minecraft.class_4587 w1, net.minecraft.class_4597 w2, int w3);
@@ -2187,5 +2192,47 @@ public final class CbRenderStateGen {
             return;
         }
         ((W3887) self).cb$w$method_4199(w0, w1, w2, w3, w4, w5);
+    }
+
+    /** a 1.21.1 class under net/minecraft/class_4506 overriding method_22134(Lnet/minecraft/class_1309;)I */
+    public interface St143 {
+        int method_22134(net.minecraft.class_1309 p0);
+    }
+
+    public static int st143(St143 self, net.minecraft.class_10055 w0) {
+        net.minecraft.class_10017 state = w0;
+        if (CbRenderStateEntity.entityOf(state) instanceof net.minecraft.class_1309 e) {
+            float pt = CbRenderStateEntity.partialTickOf(state);
+            return self.method_22134(e);
+        }
+        return ((W4507) self).cb$w$method_22134(w0);
+    }
+
+    /** a 1.21.1 class under net/minecraft/class_4507 overriding method_22134(Lnet/minecraft/class_1309;)I */
+    public interface St144 {
+        int method_22134(net.minecraft.class_1309 p0);
+    }
+
+    public static int st144(St144 self, net.minecraft.class_10055 w0) {
+        net.minecraft.class_10017 state = w0;
+        if (CbRenderStateEntity.entityOf(state) instanceof net.minecraft.class_1309 e) {
+            float pt = CbRenderStateEntity.partialTickOf(state);
+            return self.method_22134(e);
+        }
+        throw new IllegalStateException("method_22134: a state no extraction filled reached a 1.21.1 override, and 1.21.2 has no implementation to fall back to");
+    }
+
+    /** a 1.21.1 class under net/minecraft/class_973 overriding method_22134(Lnet/minecraft/class_1309;)I */
+    public interface St145 {
+        int method_22134(net.minecraft.class_1309 p0);
+    }
+
+    public static int st145(St145 self, net.minecraft.class_10055 w0) {
+        net.minecraft.class_10017 state = w0;
+        if (CbRenderStateEntity.entityOf(state) instanceof net.minecraft.class_1309 e) {
+            float pt = CbRenderStateEntity.partialTickOf(state);
+            return self.method_22134(e);
+        }
+        return ((W4507) self).cb$w$method_22134(w0);
     }
 }
