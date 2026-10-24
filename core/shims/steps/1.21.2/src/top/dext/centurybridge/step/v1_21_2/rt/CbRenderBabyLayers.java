@@ -56,4 +56,12 @@ public final class CbRenderBabyLayers {
     public static net.minecraft.class_5601 camelBaby(net.minecraft.class_5601 adult) {
         return derive(adult, "camel", net.minecraft.class_7751.field_52883);
     }
+
+    /**
+     * an equine adult layer's baby layer (AbstractEquineModel.BABY_TRANSFORMER): 1.21.1 drew baby horses with the adult
+     * mesh under AgeableListModel's young scaling, which that transformer applies to the mesh
+     */
+    public static net.minecraft.class_5601 equineBaby(net.minecraft.class_5601 adult) {
+        return derive(adult, "equine", net.minecraft.class_549.field_52854);
+    }
 }

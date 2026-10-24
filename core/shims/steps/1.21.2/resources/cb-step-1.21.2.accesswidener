@@ -38,6 +38,13 @@ extendable class net/minecraft/class_382$class_328
 extendable method net/minecraft/class_382$class_328 equals (Ljava/lang/Object;)Z
 extendable method net/minecraft/class_382$class_328 hashCode ()I
 extendable method net/minecraft/class_382$class_328 toString ()Ljava/lang/String;
+# s7render: AbstractEquineModel's baby transformer, for 1.21.1 ChestedHorseRenderer's baby layer (rt/CbRenderBabyLayers)
+accessible field net/minecraft/class_549 field_52854 Lnet/minecraft/class_9953;
+# s7render: BoatModel.createChildren, 1.21.1's boat parts without the water patch (rt/CbRenderBoats)
+accessible method net/minecraft/class_554 method_45703 (Lnet/minecraft/class_5610;)V
+# s7render: RenderSection's compile / resort task types, read for 1.21.1's cancelTasks() answer (CbRenderSectionMixin)
+accessible class net/minecraft/class_846$class_851$class_4578
+accessible class net/minecraft/class_846$class_851$class_4579
 # s7render: RenderType.create, to build 1.21.1's entityTranslucentCull / entityGlintDirect render types 1.21.2 deleted (rt/CbRenderTypes)
 # s7render: LivingEntityRenderer's layers, to give 1.21.1's head scales to the head layer HumanoidMobRenderer adds (rt/CbRenderHeads)
 accessible field net/minecraft/class_922 field_4738 Ljava/util/List;
