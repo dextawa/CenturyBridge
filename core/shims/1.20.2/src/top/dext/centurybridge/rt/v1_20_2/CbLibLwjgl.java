@@ -29,7 +29,8 @@ import org.lwjgl.system.linux.liburing.LibURing;
  * <ul>
  * <li>liburing (2.1 -> 2.4-dev): the struct setters 3.3.1 composed from field setters are the same field setters (3.3.2's
  * {@code set} also writes the fields 2.4 added); io_uring's three padding ints after {@code features} are the same memory;
- * the int[] / long[] overloads 3.3.2 dropped pass a native copy of the array to the buffer overload.</li>
+ * the int[] / long[] overloads 3.3.2 dropped pass a native copy of the array to the buffer overload, as 3.3.1's liblwjgl
+ * did (see {@link #retained} for the three whose address outlives the call).</li>
  * <li>UIO.preadv2 / pwritev2: the same libc calls, made through LWJGL's libffi.</li>
  * <li>LibCStdio.sprintf: the C library's sprintf.</li>
  * </ul>
@@ -95,7 +96,10 @@ public final class CbLibLwjgl {
 
     // ------------------------------------------------------------------ liburing array overloads
 
-    /** the array's contents in native memory for one call, written back after it (JNI's mode-0 release of 3.3.1's array) */
+    /**
+     * the array's contents in native memory for one call, written back after it: 3.3.1's liblwjgl did the same
+     * (GetIntArrayElements / GetLongArrayElements, a C-heap copy on HotSpot, then a mode-0 Release that copies back and frees)
+     */
     private static long copyIn(MemoryStack st, int[] a) {
         long p = st.nmalloc(4, Math.max(1, a.length) * 4);
         for (int i = 0; i < a.length; i++) {
@@ -127,9 +131,20 @@ public final class CbLibLwjgl {
     private static final Cleaner CLEANER = Cleaner.create();
 
     /**
-     * An array whose address the submission queue entry keeps past the call (prep_accept's addrlen, prep_files_update's fds,
-     * read by the kernel at submission): native memory holding the array's contents, alive as long as the array is (freed
-     * when the array is collected)
+     * An array whose address the submission queue entry keeps past the call (prep_accept / prep_accept_direct's addrlen,
+     * prep_files_update's fds; the kernel reads them at submission and writes addrlen at completion).
+     * <p>
+     * What 3.3.1 did, read off liblwjgl.so 3.3.1 (linux x64; objdump of Java_..._LibURing_nio_1uring_1prep_1accept__JIJ_3II,
+     * ..._prep_1accept_1direct__JIJ_3III, ..._prep_1files_1update__J_3III): each calls JNIEnv slot 187
+     * GetIntArrayElements (call *0x5d8), stores the returned pointer in the SQE, then tail-calls slot 195
+     * ReleaseIntArrayElements (*0x618) with mode 0. HotSpot's GetIntArrayElements always hands back a C-heap copy, and
+     * mode-0 release copies it back and frees it, so 3.3.1's SQE kept a temporary address, freed before the call returned:
+     * the kernel read freed memory at submission, and its later addrlen write never reached the mod's array.
+     * <p>
+     * Here: native memory holding the array's contents as of the call, kept alive until the array is collected. What the mod
+     * observes matches 3.3.1 (the kernel sees the contents at prep time; late kernel writes do not reach the array). The one
+     * difference is that the address stays valid, where 3.3.1's pointed to freed memory (undefined behaviour, not V
+     * semantics to reproduce).
      */
     private static long retained(int[] a) {
         long p = nmemAlloc(Math.max(1, a.length) * 4L);
