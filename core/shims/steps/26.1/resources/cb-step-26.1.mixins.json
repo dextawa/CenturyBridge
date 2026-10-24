@@ -130,7 +130,8 @@
     "CbWallParticleFeatureRendererSplitMixin",
     "CbWallScreenEffectMixin",
     "CbWallMinecartContentsMixin",
-    "CbWallTntMinecartContentsMixin"
+    "CbWallTntMinecartContentsMixin",
+    "CbWallItemLayerMixin"
   ],
   "server": [],
   "injectors": {

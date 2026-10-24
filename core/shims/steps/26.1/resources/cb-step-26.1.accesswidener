@@ -185,3 +185,9 @@ extendable	class	net/minecraft/client/resources/model/sprite/SpriteId
 extendable	method	net/minecraft/client/resources/model/sprite/SpriteId	equals	(Ljava/lang/Object;)Z
 extendable	method	net/minecraft/client/resources/model/sprite/SpriteId	hashCode	()I
 extendable	method	net/minecraft/client/resources/model/sprite/SpriteId	toString	()Ljava/lang/String;
+# 1.21.11 LevelRenderer built over a level render state of its own: 26.1's GameRenderState holding it beside the game's other states (swall, rt/CbWallRenderStates)
+mutable	field	net/minecraft/client/renderer/state/GameRenderState	levelRenderState	Lnet/minecraft/client/renderer/state/level/LevelRenderState;
+mutable	field	net/minecraft/client/renderer/state/GameRenderState	lightmapRenderState	Lnet/minecraft/client/renderer/state/LightmapRenderState;
+mutable	field	net/minecraft/client/renderer/state/GameRenderState	guiRenderState	Lnet/minecraft/client/renderer/state/gui/GuiRenderState;
+mutable	field	net/minecraft/client/renderer/state/GameRenderState	optionsRenderState	Lnet/minecraft/client/renderer/state/OptionsRenderState;
+mutable	field	net/minecraft/client/renderer/state/GameRenderState	windowRenderState	Lnet/minecraft/client/renderer/state/WindowRenderState;
