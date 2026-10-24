@@ -477,9 +477,12 @@ public final class MixinJudge {
             }
             for (MethodNode wm : cands) {
                 String why = fits(h, an, wm, st, anchors, vcount, oc);
-                if (why == null && restoring != null && restoring.vanillaReads(wm) == null) {
-                    // it applies, but W's own code never reads the restored member: the mod's mixin changes
-                    // nothing vanilla does (LayerMembers)
+                if (why == null && restoring != null && restoring.vanillaReads(wm) == null
+                        && (source == null || !sourceRows.isEmpty() || source.invokes(wm.name))) {
+                    // it applies, but W's own code never reads the restored member where V's read it: the mod's
+                    // mixin changes nothing vanilla does (LayerMembers). When V's own code never called it either
+                    // (--source in the names W's members have, i.e. not past the wall; proven by name), a mixin on it
+                    // changed only its callers in V too, as it does now
                     why = "restored-member: vanilla path unmixed";
                 }
                 if (why == null) {

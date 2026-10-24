@@ -164,6 +164,53 @@ public final class MixinRepair {
         cache.keySet().removeIf(back::containsKey);
     }
 
+    /** the names of the methods the code jar's classes call or take a method reference to (lazily) */
+    private Set<String> invokedNames;
+    private boolean invokedUnproven;
+
+    /**
+     * Whether any class of the code jar calls a method of this name, or takes a method reference to one.
+     * By name only (intermediary method names are one per override family), so a same-named method of an
+     * unrelated class counts too: an answer of false is the proven one.
+     */
+    public synchronized boolean invokes(String name) {
+        if (invokedNames == null) {
+            Set<String> out = new java.util.HashSet<>();
+            for (ZipEntry e : java.util.Collections.list(code.entries())) {
+                if (!e.getName().endsWith(".class")) continue;
+                try {
+                    new ClassReader(code.getInputStream(e).readAllBytes()).accept(new org.objectweb.asm.ClassVisitor(Opcodes.ASM9) {
+                        @Override
+                        public org.objectweb.asm.MethodVisitor visitMethod(int access, String n, String d, String sig, String[] ex) {
+                            return new org.objectweb.asm.MethodVisitor(Opcodes.ASM9) {
+                                @Override
+                                public void visitMethodInsn(int op, String owner, String mn, String md, boolean itf) {
+                                    out.add(mn);
+                                }
+
+                                @Override
+                                public void visitInvokeDynamicInsn(String in, String id, org.objectweb.asm.Handle bsm, Object... args) {
+                                    for (Object a : args) {
+                                        if (a instanceof org.objectweb.asm.Handle h) out.add(h.getName());
+                                    }
+                                }
+
+                                @Override
+                                public void visitLdcInsn(Object v) {
+                                    if (v instanceof org.objectweb.asm.Handle h) out.add(h.getName());
+                                }
+                            };
+                        }
+                    }, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                } catch (IOException ex) {
+                    invokedUnproven = true; // an unreadable class may call anything
+                }
+            }
+            invokedNames = out;
+        }
+        return invokedUnproven || invokedNames.contains(name);
+    }
+
     public ClassNode target(String owner) {
         return cache.computeIfAbsent(owner, o -> {
             try {
