@@ -104,10 +104,116 @@ public class SwallTestMod implements ModInitializer {
 
             class_1928 rules = server.method_27728().method_146();
             check("worldData.getGameRules", rules == server.method_30002().method_64395(), rules);
+
+            interactions(server);
+            levelData(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
         }
         System.out.println("CBTEST SUMMARY " + passed + "/" + (passed + FAILS.size()) + " passed" + (FAILS.isEmpty() ? "" : " fails=" + FAILS));
+    }
+
+    /** a 1.21.11 armor stand class declaring interactAt and interact */
+    static class TestStand extends net.minecraft.class_1531 {
+        String log = "";
+        net.minecraft.class_1269 atAnswer = net.minecraft.class_1269.field_5811;
+
+        TestStand(net.minecraft.class_1937 level) {
+            super(net.minecraft.class_1299.field_6131, level);
+        }
+
+        @Override
+        public net.minecraft.class_1269 method_5664(net.minecraft.class_1657 player, net.minecraft.class_243 location, net.minecraft.class_1268 hand) {
+            log += "at;";
+            return atAnswer;
+        }
+
+        @Override
+        public net.minecraft.class_1269 method_5688(net.minecraft.class_1657 player, net.minecraft.class_1268 hand) {
+            log += "interact;";
+            return super.method_5688(player, hand);
+        }
+    }
+
+    private static void interactions(MinecraftServer server) throws Exception {
+        net.minecraft.class_3218 level = server.method_30002();
+        net.minecraft.class_1657 player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+        net.minecraft.class_1268 hand = net.minecraft.class_1268.field_5808;
+        net.minecraft.class_243 at = new net.minecraft.class_243(0.0, 1.0, 0.0);
+        // 26.1's own interaction (what its server runs for the interact packet), reached by name at runtime
+        java.lang.reflect.Method interactOn26 = net.minecraft.class_1657.class.getMethod("interactOn",
+            net.minecraft.class_1297.class, net.minecraft.class_1268.class, net.minecraft.class_243.class);
+
+        TestStand stand = new TestStand(level);
+        interactOn26.invoke(player, stand, hand, at);
+        check("interact.atThenInteract", "at;interact;".equals(stand.log), stand.log);
+
+        stand.log = "";
+        stand.atAnswer = net.minecraft.class_1269.field_5812;
+        Object r = interactOn26.invoke(player, stand, hand, at);
+        check("interact.atConsumes", "at;".equals(stand.log) && ((net.minecraft.class_1269) r).method_23665(), stand.log + " " + r);
+
+        stand.log = "";
+        stand.atAnswer = net.minecraft.class_1269.field_5811;
+        player.method_7287(stand, hand);
+        check("interact.oldInteractOnSecondStepOnly", "interact;".equals(stand.log), stand.log);
+
+        // 1.21.11's ArmorStand.interactAt: a held helmet goes onto a plain armor stand
+        player.method_6122(hand, new net.minecraft.class_1799(net.minecraft.class_1802.field_8743));
+        net.minecraft.class_1531 plain = new net.minecraft.class_1531(net.minecraft.class_1299.field_6131, level);
+        net.minecraft.class_1269 placed = plain.method_5664(player, at, hand);
+        check("interact.armorStandInteractAt", placed.method_23665()
+            && plain.method_6118(net.minecraft.class_1304.field_6169).method_31574(net.minecraft.class_1802.field_8743), placed);
+
+        // a 1.21.11 armor stand class whose interactAt does not place: 1.21.11's interact was LivingEntity's (no placing)
+        player.method_6122(hand, new net.minecraft.class_1799(net.minecraft.class_1802.field_8743));
+        TestStand keeps = new TestStand(level);
+        interactOn26.invoke(player, keeps, hand, at);
+        check("interact.oldStandNoPlacing", "at;interact;".equals(keeps.log)
+            && keeps.method_6118(net.minecraft.class_1304.field_6169).method_7960(), keeps.log);
+    }
+
+    private static void levelData(MinecraftServer server) {
+        net.minecraft.class_5219 data = server.method_27728();
+        net.minecraft.class_3218 end = server.method_3847(net.minecraft.class_1937.field_25181);
+        net.minecraft.class_2881.class_8576 record = new net.minecraft.class_2881.class_8576(false, true, true, false,
+            Optional.empty(), Optional.empty(), Optional.of(List.of(3, 1, 2)));
+        net.minecraft.class_2881 fight = new net.minecraft.class_2881(end, 42L, record);
+        net.minecraft.class_2881.class_8576 back = fight.method_12530();
+        check("dragon.constructSave", !back.comp_1540() && back.comp_1541() && back.comp_1542() && !back.comp_1543()
+            && back.comp_1546().orElseThrow().equals(List.of(3, 1, 2)), back);
+        com.google.gson.JsonElement json = net.minecraft.class_2881.class_8576.field_44945.encodeStart(JsonOps.INSTANCE, record).getOrThrow();
+        check("dragon.codec", json.toString().contains("\"DragonKilled\":true") && json.toString().contains("\"Gateways\":[3,1,2]"), json);
+        net.minecraft.class_2881.class_8576 live = data.method_29036();
+        check("dragon.worldDataLive", live.comp_1546().isPresent() && live.comp_1546().get().size() == 20, live);
+        data.method_29037(record);
+        check("dragon.worldDataSet", data.method_29036() == record, data.method_29036());
+
+        net.minecraft.class_5268 primary = data.method_27859();
+        net.minecraft.class_5268 nether = (net.minecraft.class_5268) server.method_3847(net.minecraft.class_1937.field_25180).method_8401();
+        java.util.UUID id = java.util.UUID.randomUUID();
+        primary.method_18040(id);
+        nether.method_18040(java.util.UUID.randomUUID());
+        check("trader.id", id.equals(primary.method_35506()) && nether.method_35506() == null, primary.method_35506() + " " + nether.method_35506());
+
+        check("border.legacyEmpty", primary.method_27422().isEmpty(), primary.method_27422());
+        primary.method_27415(Optional.of(net.minecraft.class_2784.class_5200.field_62538));
+        check("border.legacySet", primary.method_27422().isPresent() && nether.method_27422().isPresent(), nether.method_27422());
+
+        net.minecraft.class_2960 bossId = net.minecraft.class_2960.method_60656("cbtest");
+        net.minecraft.class_3002 boss = server.method_3837().method_12970(bossId, net.minecraft.class_2561.method_43470("cb"));
+        java.util.UUID offline = java.util.UUID.randomUUID();
+        boss.method_12964(offline);
+        check("bossEvents.createTextId", bossId.equals(boss.method_12959()), boss.method_12959());
+        net.minecraft.class_2487 events = data.method_228();
+        check("bossEvents.worldDataTag", events.method_10545("minecraft:cbtest"), events);
+        net.minecraft.class_2487 saved = server.method_3837().method_12974(server.method_30611());
+        check("bossEvents.saveOffline", saved.method_10545("minecraft:cbtest") && saved.toString().contains("Players"), saved);
+        net.minecraft.class_2487 again = new net.minecraft.class_2487();
+        again.method_10566("minecraft:cbtest2", saved.method_10580("minecraft:cbtest").method_10707());
+        server.method_3837().method_12972(again, server.method_30611());
+        net.minecraft.class_3002 loaded = server.method_3837().method_12971(net.minecraft.class_2960.method_60656("cbtest2"));
+        check("bossEvents.load", loaded != null && loaded.method_12959().equals(net.minecraft.class_2960.method_60656("cbtest2")), loaded);
     }
 }
