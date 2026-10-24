@@ -441,6 +441,31 @@ public class SwallTestMod implements ModInitializer {
             && new net.minecraft.class_1848(net.minecraft.class_7710.field_40251) != null, rockets);
     }
 
+    /** 1.21.11 SimpleRegionStorage with a legacy tag fixer, over 26.1's storage */
+    private static void legacyRegionStorage(MinecraftServer server) throws Exception {
+        int[] done = new int[1];
+        net.minecraft.class_12242 fixer = new net.minecraft.class_12242() {
+            @Override
+            public net.minecraft.class_2487 applyFix(net.minecraft.class_2487 tag) {
+                tag.method_10556("cbFixed", true);
+                return tag;
+            }
+
+            @Override
+            public void markChunkDone(net.minecraft.class_1923 pos) {
+                done[0]++;
+            }
+        };
+        java.nio.file.Path dir = java.nio.file.Files.createTempDirectory("cbswall-region");
+        int current = net.minecraft.class_155.method_16673().comp_4026().comp_4038();
+        try (net.minecraft.class_3977 storage = new net.minecraft.class_3977(new net.minecraft.class_9240("cbtest", net.minecraft.class_1937.field_25179, "chunk"),
+                dir, server.method_3855(), false, net.minecraft.class_4284.field_19214, () -> fixer)) {
+            net.minecraft.class_2487 tag = new net.minecraft.class_2487();
+            net.minecraft.class_2487 out = storage.method_17907(tag, current - 1, new net.minecraft.class_2487());
+            check("regionStorage.legacyFixer", out.method_68566("cbFixed", false) && out.method_68083("DataVersion", 0) == current, out);
+        }
+    }
+
     /** generic drift at the wall read on a running server */
     private static void generic(MinecraftServer server) {
         Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
@@ -499,6 +524,7 @@ public class SwallTestMod implements ModInitializer {
             driftPilots();
             removedRecipes(server);
             specialRecipeCtors(server);
+            legacyRegionStorage(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);

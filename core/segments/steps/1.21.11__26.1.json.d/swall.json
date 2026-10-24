@@ -188,7 +188,10 @@
   "net/minecraft/class_1876.method_17740(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#assemble",
   "net/minecraft/class_1849.method_8119()Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#getSerializer",
   "net/minecraft/class_1855.method_8119()Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#getSerializer",
-  "net/minecraft/class_1876.method_8119()Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#getSerializer"
+  "net/minecraft/class_1876.method_8119()Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#getSerializer",
+  "net/minecraft/class_3977.method_17907(Lnet/minecraft/class_2487;ILnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#upgradeChunkTag",
+  "net/minecraft/class_3977.method_75898(Lnet/minecraft/class_1923;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#markChunkDone",
+  "net/minecraft/class_26.method_17923(Ljava/lang/String;Lnet/minecraft/class_4284;I)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#readTagFromDisk"
  },
  "overrideHooks": [
   {
@@ -623,7 +626,8 @@
   "net/minecraft/class_7400$class_7401": "net/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider$Rule",
   "net/minecraft/class_1849": "top/dext/centurybridge/step/v26_1/facade/ArmorDyeRecipe",
   "net/minecraft/class_1855": "top/dext/centurybridge/step/v26_1/facade/MapCloningRecipe",
-  "net/minecraft/class_1876": "top/dext/centurybridge/step/v26_1/facade/TippedArrowRecipe"
+  "net/minecraft/class_1876": "top/dext/centurybridge/step/v26_1/facade/TippedArrowRecipe",
+  "net/minecraft/class_12242": "top/dext/centurybridge/step/v26_1/facade/LegacyTagFixer"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -1575,6 +1579,40 @@
     0
    ],
    "basis": "1.21.11's ShieldDecorationRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
+  },
+  "net/minecraft/class_3977.<init>(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLnet/minecraft/class_4284;Ljava/util/function/Supplier;)V": {
+   "desc": "(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLnet/minecraft/class_4284;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#fixer(Lnet/minecraft/class_3977;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    5
+   ],
+   "basis": "1.21.11's SimpleRegionStorage(.., legacyFixer): 26.1's has no legacy fixer; the supplier is kept for the storage (CbWallRegionStorage) and run as 1.21.11's upgradeChunkTag ran it"
+  },
+  "net/minecraft/class_9171.<init>(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLnet/minecraft/class_4284;Ljava/util/function/Supplier;)V": {
+   "desc": "(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLnet/minecraft/class_4284;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#fixer(Lnet/minecraft/class_9171;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    7
+   ],
+   "basis": "1.21.11's RecreatingSimpleRegionStorage(.., legacyFixer): as SimpleRegionStorage's"
   }
  },
  "fieldGetters": {
@@ -1688,7 +1726,10 @@
   "net/minecraft/class_1855.method_17715(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superMatches",
   "net/minecraft/class_1855.method_17714(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superAssemble",
   "net/minecraft/class_1876.method_17741(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superMatches",
-  "net/minecraft/class_1876.method_17740(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superAssemble"
+  "net/minecraft/class_1876.method_17740(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeKinds#superAssemble",
+  "net/minecraft/class_3977.method_17907(Lnet/minecraft/class_2487;ILnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#upgradeChunkTag",
+  "net/minecraft/class_3977.method_75898(Lnet/minecraft/class_1923;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#markChunkDone",
+  "net/minecraft/class_26.method_17923(Ljava/lang/String;Lnet/minecraft/class_4284;I)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#readTagFromDisk"
  },
  "covers": [
   "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
