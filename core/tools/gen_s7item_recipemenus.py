@@ -13,6 +13,8 @@
   superCtorReshapes  AbstractFurnaceMenu(.., recipeType, bookType, ..): the recipe property set 1.21.2 adds, by recipe type
   ItemCombinerMenu   createInputSlotDefinitions / getSlotToQuickMoveTo calls, supers and overrides; its old constructor
                      (CbItemCombiner, CbItemCombinerMenuMixin)
+  covers             1.21.1 RecipeBook known / highlight and its methods (CbItemRecipeBookMixin, CbItemRecipeBook);
+                     ServerRecipeBook's old constructor and fromNbt(tag, recipeManager)
   classRenames       1.21.1 PlaceRecipe / ServerPlaceRecipe -> the layer's facades (1.21.1 bodies; 1.21.2 removed the one and
                      rebuilt the other as a private placer)
   Direct mod subclasses of RecipeBookMenu are s7rest's facade (it implements CbItemRecipeMenus.Legacy).
@@ -131,7 +133,43 @@ def main():
         "net/minecraft/class_2955": "top/dext/centurybridge/step/v1_21_2/facade/ServerPlaceRecipe",
     }
     combiner(out)
+    recipe_book(out)
     json.dump(out, open(sys.argv[1], "w", encoding="utf-8", newline="\n"), indent=1)
+
+
+def recipe_book(out):
+    """1.21.1 RecipeBook's fields and methods, given back on 1.21.2's RecipeBook by CbItemRecipeBookMixin"""
+    book = "net/minecraft/class_3439"
+    rl = "Lnet/minecraft/class_2960;"
+    out["covers"] = [book + "." + m for m in [
+        "field_15300:Ljava/util/Set;", "field_15295:Ljava/util/Set;",
+        "method_14875(Lnet/minecraft/class_3439;)V",
+        "method_14876(" + HOLDER + ")V", "method_14881(" + rl + ")V",
+        "method_14878(" + HOLDER + ")Z", "method_22845(" + rl + ")Z",
+        "method_14893(" + HOLDER + ")V", "method_14879(" + rl + ")V",
+        "method_14883(" + HOLDER + ")Z", "method_14886(" + HOLDER + ")V",
+        "method_14885(" + HOLDER + ")V", "method_14877(" + rl + ")V",
+        "method_14880(Lnet/minecraft/class_1729;)Z"]]
+    srb = "net/minecraft/class_3441"
+    rbrt = "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeBook"
+    out["superCtorReshapes"][srb + ".<init>()V"] = {
+        "desc": "(Lnet/minecraft/class_3441$class_10271;)V",
+        "ops": ["push " + rbrt + "#displayResolver()Lnet/minecraft/class_3441$class_10271;"],
+        "basis": "1.21.2's ServerRecipeBook takes the resolver of the recipe displays it sends: the running server's "
+                 "recipe manager's, as 1.21.2's ServerPlayer builds it (CbItemRecipeBook.displayResolver)"}
+    old = "method_14901(Lnet/minecraft/class_2487;Lnet/minecraft/class_1863;)V"
+    new = "method_14901(Lnet/minecraft/class_2487;Ljava/util/function/Predicate;)V"
+    out["instanceRedirects"][srb + "." + old] = rbrt + "#fromNbt"
+    out["overrideHooks"].append({
+        "old": old, "new": new, "onlyUnder": srb,
+        "adapter": rbrt + "$LegacyFromNbt",
+        "bridge": rbrt + ".fromNbtBridge(L" + rbrt + "$LegacyFromNbt;Lnet/minecraft/class_2487;Ljava/util/function/Predicate;)V",
+        "superBridge": rbrt + ".superFromNbtBridge(L" + rbrt + "$SuperFromNbt;Lnet/minecraft/class_2487;Lnet/minecraft/class_1863;)V",
+        "superAccess": rbrt + "$SuperFromNbt",
+        "superAccessors": [new],
+        "basis": "1.21.2's ServerPlayer loads the book with fromNbt(tag, recognised): a mod book's 1.21.1 "
+                 "fromNbt(tag, recipeManager) answers with the running server's recipe manager; its super call is "
+                 "1.21.2's body with that manager's byKey as the test (CbItemRecipeBook)"})
 
 
 COMBINER_RT = "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner"

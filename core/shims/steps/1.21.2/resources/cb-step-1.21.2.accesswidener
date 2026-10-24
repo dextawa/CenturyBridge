@@ -89,6 +89,9 @@ accessible method net/minecraft/class_1714 method_17399 (Lnet/minecraft/class_17
 accessible method net/minecraft/class_4862 method_64652 (Lnet/minecraft/class_10286;)Lnet/minecraft/class_8047;
 accessible field net/minecraft/class_4861 field_22482 Lnet/minecraft/class_1657;
 accessible field net/minecraft/class_4861 field_22480 Lnet/minecraft/class_1263;
+# ---- s7item: 1.21.1 RecipeBook's id sets as views of ServerRecipeBook's key sets (rt/CbItemRecipeBook) ----
+accessible field net/minecraft/class_3441 field_54550 Ljava/util/Set;
+accessible field net/minecraft/class_3441 field_54551 Ljava/util/Set;
 
 # ---- BEGIN GENERATED (s7item): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same

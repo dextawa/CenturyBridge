@@ -32,8 +32,12 @@ public final class CbItemCombiner {
     private CbItemCombiner() {
     }
 
-    /** the definition a 1.21.1 constructor call passes: replaced by the menu's own before 1.21.2's constructor reads it */
-    public static final class_8047 DEFERRED = class_8047.method_48364().method_48373(0, 0, 0).method_48372();
+    /**
+     * the definition a 1.21.1 constructor call passes: replaced by the menu's own before 1.21.2's constructor reads it
+     * (a definition needs an input and a result slot to be built at all; this one is never used)
+     */
+    public static final class_8047 DEFERRED = class_8047.method_48364().method_48374(0, 0, 0, stack -> false)
+        .method_48373(1, 0, 0).method_48372();
 
     /** {@link #DEFERRED}, for the constructor reshape's push */
     public static class_8047 deferred() {

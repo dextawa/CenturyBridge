@@ -76,6 +76,7 @@
     "CbItemIngredientMixin",
     "CbItemLockMixin",
     "CbItemMembersMixin",
+    "CbItemRecipeBookMixin",
     "CbItemRecipeManagerAccess",
     "CbItemRegistryFrozenAccess",
     "CbItemRegistryMixin",
