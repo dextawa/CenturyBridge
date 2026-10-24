@@ -251,6 +251,11 @@ java $SRC_STUBS -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixi
 # (assets/: CenturyBridge's own models and textures) are mod SOURCE and live
 # under resources/; they are copied in at package time, not compiled.
 cp -r "$SHIM"/resources/. "$CLASSES"/
+# A layer that gives back whole libraries its release dropped nests them verbatim (nested-libraries.tsv: the
+# artifacts, checked against the source release's version-JSON sha1; core/tools/nest_libraries.py).
+if [ -f "$SHIM/resources/nested-libraries.tsv" ]; then
+    python3 core/tools/nest_libraries.py "$SHIM/resources" "$DATA/runtime" "$CLASSES"         || { echo "build aborted: nested libraries"; exit 1; }
+fi
 
 JAR="$OUT/centurybridge-0.3.0+$VERSION.jar"
 jar cf "$JAR" -C "$CLASSES" .

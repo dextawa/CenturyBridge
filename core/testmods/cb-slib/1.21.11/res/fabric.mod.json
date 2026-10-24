@@ -4,6 +4,14 @@
  "version": "1.0.0",
  "name": "CB slib DFU test (1.21.10 era)",
  "environment": "*",
- "entrypoints": { "main": ["cb.slib.SlibDfu11Test"] },
- "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.10" }
+ "entrypoints": {
+  "main": [
+   "cb.slib.SlibDfu11Test",
+   "cb.slib.SlibLibs11Test"
+  ]
+ },
+ "depends": {
+  "fabricloader": ">=0.14.0",
+  "minecraft": "1.21.10"
+ }
 }
