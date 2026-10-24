@@ -203,9 +203,6 @@
   "method_36425()Lnet/minecraft/class_4184$class_6355;": {
    "0": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#fov()F"
   },
-  "method_65587(Lnet/minecraft/class_10439$class_10440;)Lnet/minecraft/class_10439;": {
-   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#identityTransform()Lorg/joml/Matrix4fc;"
-  },
   "method_19661(Ljava/lang/String;Z)V": {
    "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#devices()Lcom/mojang/blaze3d/audio/DeviceList;"
   },

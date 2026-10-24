@@ -8,8 +8,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.chunk.SectionCompiler;
 import net.minecraft.client.renderer.chunk.SectionRenderDispatcher;
-import org.joml.Matrix4f;
-import org.joml.Matrix4fc;
 import top.dext.centurybridge.step.v26_1.mixin.CbWallSectionRenderDispatcherAccess;
 
 /** frameDefaults of this step's client-side override hooks (see {@link CbWallFrames}) */
@@ -22,11 +20,6 @@ public final class CbWallFramesClient {
     /** Camera.getNearPlane(): 1.21.11's computed it from the field-of-view option (26.1's caller passes the same) */
     public static float fov() {
         return (float) Minecraft.getInstance().options.fov().get().intValue();
-    }
-
-    /** ItemModel.Unbaked.bake(context): 1.21.11's item models had no transform -- the identity */
-    public static Matrix4fc identityTransform() {
-        return new Matrix4f();
     }
 
     /** Library.init(device, hrtf): 1.21.11's queried the default device itself */
