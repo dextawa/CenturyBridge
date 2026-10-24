@@ -391,6 +391,23 @@ public class SwallTestMod implements ModInitializer {
             && !net.minecraft.class_2246.field_10340.method_9564().method_26164(net.minecraft.class_3481.field_29822), "");
         check("tagDrift.itemDirt", new net.minecraft.class_1799(net.minecraft.class_1802.field_8270).method_31573(net.minecraft.class_3489.field_36269)
             && !new net.minecraft.class_1799(net.minecraft.class_1802.field_20391).method_31573(net.minecraft.class_3489.field_36269), "");
+        // block tags 26.1 renamed (same members, same vanilla readers): a 1.21.11 read is the tag vanilla 26.1 acts on
+        check("tagRename.members", is(net.minecraft.class_2246.field_10460, net.minecraft.class_3481.field_35443)
+            && is(net.minecraft.class_2246.field_10362, net.minecraft.class_3481.field_35443)
+            && is(net.minecraft.class_2246.field_10460, net.minecraft.class_3481.field_33641)
+            && is(net.minecraft.class_2246.field_10295, net.minecraft.class_3481.field_39104)
+            && is(net.minecraft.class_2246.field_21211, net.minecraft.class_3481.field_39105)
+            && is(net.minecraft.class_2246.field_10102, net.minecraft.class_3481.field_56529)
+            && is(net.minecraft.class_2246.field_10362, net.minecraft.class_3481.field_56529)
+            && is(net.minecraft.class_2246.field_10255, net.minecraft.class_3481.field_15497)
+            && is(net.minecraft.class_2246.field_10402, net.minecraft.class_3481.field_25739)
+            && !is(net.minecraft.class_2246.field_10340, net.minecraft.class_3481.field_35443), "");
+        check("tagRename.ids", "supports_big_dripleaf".equals(net.minecraft.class_3481.field_35443.comp_327().method_12832())
+            && "cannot_support_snow_layer".equals(net.minecraft.class_3481.field_39104.comp_327().method_12832())
+            && "support_override_snow_layer".equals(net.minecraft.class_3481.field_39105.comp_327().method_12832())
+            && "supports_dry_vegetation".equals(net.minecraft.class_3481.field_56529.comp_327().method_12832())
+            && "substrate_overworld".equals(net.minecraft.class_3481.field_29822.comp_327().method_12832()),
+            net.minecraft.class_3481.field_35443.comp_327() + " " + net.minecraft.class_3481.field_29822.comp_327());
         net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
         net.minecraft.class_2743.field_47981.encode(buf, new net.minecraft.class_2743(42, new net.minecraft.class_243(0.5, 0.25, -1.0)));
         net.minecraft.class_2743 back = net.minecraft.class_2743.field_47981.decode(buf);
@@ -464,6 +481,10 @@ public class SwallTestMod implements ModInitializer {
             net.minecraft.class_2487 out = storage.method_17907(tag, current - 1, new net.minecraft.class_2487());
             check("regionStorage.legacyFixer", out.method_68566("cbFixed", false) && out.method_68083("DataVersion", 0) == current, out);
         }
+    }
+
+    private static boolean is(net.minecraft.class_2248 block, net.minecraft.class_6862<net.minecraft.class_2248> tag) {
+        return block.method_9564().method_26164(tag);
     }
 
     /** a 1.21.11 subclass of the structure index */
