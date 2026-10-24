@@ -1,0 +1,48 @@
+package cb.mixinrestore;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * Runs once the server's world is loaded: triggers the vanilla methods the test injectors hook and
+ * checks that each handler ran with what V's code gave it. Logs "CB-MIXINRESTORE ok|FAIL <case>
+ * <detail>" per case and "CB-MIXINRESTORE summary ok=N fail=M" at the end.
+ */
+public final class Driver {
+    private static final Map<String, String> RAN = new ConcurrentHashMap<>();
+    private static int ok;
+    private static int fail;
+
+    private Driver() {
+    }
+
+    public static void ran(String c, String values) {
+        RAN.put(c, values);
+        System.out.println("CB-MIXINRESTORE ran " + c + " " + values);
+    }
+
+    private static void check(String c, boolean cond, String detail) {
+        if (cond) {
+            ok++;
+        } else {
+            fail++;
+        }
+        System.out.println("CB-MIXINRESTORE " + (cond ? "ok " : "FAIL ") + c + " " + detail);
+    }
+
+    public static void run(net.minecraft.server.MinecraftServer server) {
+        System.out.println("CB-MIXINRESTORE start");
+        // ---- a HEAD injector on an override W dropped: the furnace's stillValid(null)
+        try {
+            net.minecraft.class_3866 furnace = new net.minecraft.class_3866(net.minecraft.class_2338.field_10980,
+                net.minecraft.class_2246.field_10181.method_9564());
+            RAN.remove("furnace-stillValid-head");
+            boolean valid = ((net.minecraft.class_1263) furnace).method_5443(null);
+            check("restored-override-head", valid && RAN.containsKey("furnace-stillValid-head"),
+                "stillValid(null) -> " + valid + ", handler ran: " + RAN.containsKey("furnace-stillValid-head"));
+        } catch (Throwable t) {
+            check("restored-override-head", false, "threw " + t);
+        }
+        System.out.println("CB-MIXINRESTORE summary ok=" + ok + " fail=" + fail);
+    }
+}

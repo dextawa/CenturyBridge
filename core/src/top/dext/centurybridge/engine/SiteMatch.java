@@ -98,7 +98,8 @@ public final class SiteMatch {
     /**
      * The W instruction standing where V's {@code site} stood when the site itself is gone from W: the
      * one W instruction accepted by {@code candidate} whose significant neighbours (k before, k after,
-     * the instruction itself left out) are V's site's, for the widest k from 4 down to 2 that finds any.
+     * the instruction itself left out) are V's site's, for the widest k from 4 down to 2 that finds any,
+     * counting only contexts with a neighbour other than the body's edges and returns.
      * Null when no such instruction, or when two or more stand there, or when another V instruction of
      * the site's kind has the same neighbours (V's site is then not singled out either).
      */
@@ -109,6 +110,7 @@ public final class SiteMatch {
         if (p < 0) return null;
         for (int k = 4; k >= 2; k--) {
             String key = around(vs, p, k);
+            if (!informative(vs, p, k)) continue; // only the body's edges and returns around it: no evidence
             for (int r = 0; r < vsi.size(); r++) {
                 if (r != p && candidate.test(vsi.get(r)) && around(vs, r, k).equals(key)) return null;
             }
@@ -143,6 +145,15 @@ public final class SiteMatch {
         Object c = constantOf(site);
         Object d = constantOf(in);
         return c != null && d != null && !(c instanceof Type) && c.getClass() == d.getClass();
+    }
+
+    /** some neighbour within k is a call, field access, type instruction, constant or invokedynamic */
+    private static boolean informative(List<String> s, int at, int k) {
+        for (int d = -k; d <= k; d++) {
+            int p = at + d;
+            if (d != 0 && p >= 0 && p < s.size() && !s.get(p).startsWith("ret")) return true;
+        }
+        return false;
     }
 
     /** the context of position at, without the instruction itself */
