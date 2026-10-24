@@ -1892,6 +1892,8 @@ public final class Chain {
      */
     public final java.util.Map<String, String> libSuperOf = new java.util.HashMap<>();
     public final java.util.Map<String, java.util.List<String>> libInterfacesOf = new java.util.HashMap<>();
+    /** the methods ("name(desc)") each library class of {@link #libSuperOf} declares */
+    public final java.util.Map<String, java.util.Set<String>> libDecls = new java.util.HashMap<>();
 
     /**
      * Read the class headers of a release's Fabric API modules (its processedMods: the jars the loader
@@ -1922,6 +1924,18 @@ public final class Chain {
                     String[] itfs = cr.getInterfaces();
                     if (itfs.length > 0) {
                         libInterfacesOf.putIfAbsent(name, java.util.List.of(itfs));
+                    }
+                    if (!libDecls.containsKey(name)) {
+                        java.util.Set<String> decls = new java.util.HashSet<>();
+                        cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                            @Override
+                            public org.objectweb.asm.MethodVisitor visitMethod(int acc, String mn, String md, String sg, String[] ex) {
+                                decls.add(mn + md);
+                                return null;
+                            }
+                        }, org.objectweb.asm.ClassReader.SKIP_CODE | org.objectweb.asm.ClassReader.SKIP_DEBUG
+                            | org.objectweb.asm.ClassReader.SKIP_FRAMES);
+                        libDecls.put(name, decls);
                     }
                 }
             }

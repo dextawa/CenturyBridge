@@ -37,6 +37,16 @@ public final class CbItemDatagen {
         return key.method_29177();
     }
 
+    /**
+     * the key a vanilla builder saves its recipe under in an output: Fabric API 0.116 saved it under the output's
+     * FabricRecipeExporter.getRecipeIdentifier(id) (FabricRecipeProvider's output puts it in the mod's namespace)
+     */
+    public static class_5321<class_1860<?>> exportedKey(class_8790 output, class_5321<class_1860<?>> key) {
+        class_2960 id = key.method_29177();
+        class_2960 exported = ((top.dext.centurybridge.step.v1_21_2.facade.fapi.FabricRecipeExporter) (Object) output).getRecipeIdentifier(id);
+        return exported.equals(id) ? key : key(exported);
+    }
+
     /** the item lookup 1.21.1's builders resolved items in: the built-in item registry */
     public static class_7871<class_1792> items() {
         return class_7923.field_41178;

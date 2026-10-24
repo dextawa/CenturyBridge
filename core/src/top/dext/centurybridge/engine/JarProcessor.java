@@ -2081,12 +2081,27 @@ public final class JarProcessor {
             Set<String> d = layer.decls.get(cur);
             if (d == null) {
                 // the first class outside the layer: a library class and its library superclasses
-                for (String c = cur; c != null && !c.startsWith("java/") && !Chain.minecraftOwned(c) && hops < 64;
+                String c = cur;
+                boolean declared = false;
+                for (; c != null && !c.startsWith("java/") && !Chain.minecraftOwned(c) && hops < 64;
                         c = chain.libSuperOf.get(c), hops++) {
                     if (keyed.test(c + "." + member)) {
                         return c;
                     }
+                    declared |= chain.libDecls.getOrDefault(c, Set.of()).contains(member);
                     todo.addAll(chain.libInterfacesOf.getOrDefault(c, List.of()));
+                }
+                // a static member reached through library classes above a Minecraft class, none of them declaring
+                // it (a mod's Fabric API FabricRecipeProvider subclass calling RecipeProvider's static has(item)
+                // through its own name): resolved by declaration, it is the Minecraft class's, served by the wiring
+                // keyed there. Not an instance member: the library class may stand on another hierarchy on the
+                // target (a superRename), where its own members answer the virtual call.
+                if (isStatic && c != null && Chain.minecraftOwned(c) && !declared) {
+                    for (String v : chain.selfAndSupers(c)) {
+                        if (keyed.test(v + "." + member)) {
+                            return v;
+                        }
+                    }
                 }
                 break;
             }

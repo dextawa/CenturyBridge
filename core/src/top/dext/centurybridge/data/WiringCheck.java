@@ -1143,7 +1143,9 @@ public final class WiringCheck {
             // facade is one, and the stub (Minecraft only) does not carry it
             return;
         }
-        ClassNode kn = stub.containsKey(kt) ? stub.get(kt) : gameLibs.get(kt);
+        // a Fabric API class surviving on the target (0.116's FabricRecipeProvider on 0.106's, -Dcb.fapi) is judged
+        // like a Minecraft one
+        ClassNode kn = stub.containsKey(kt) ? stub.get(kt) : gameLibs.containsKey(kt) ? gameLibs.get(kt) : lib.get(kt);
         if (kn == null && gameLibs.isEmpty() && !top.dext.centurybridge.engine.Chain.minecraftOwned(kt) && !lib.containsKey(kt)) {
             // a game library's class (authlib's PropertyMap) with no -Dcb.libs: the stub (Minecraft only) does not
             // carry it, so only the subtype half is judged, through the facade's own compiled supertypes
