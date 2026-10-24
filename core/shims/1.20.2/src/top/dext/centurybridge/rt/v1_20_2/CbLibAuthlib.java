@@ -206,14 +206,18 @@ public final class CbLibAuthlib {
 
     // ------------------------------------------------------------------ authentication service / repository
 
-    /** new YggdrasilAuthenticationService(proxy, clientToken): the token served legacy login only */
+    /** new YggdrasilAuthenticationService(proxy, clientToken): the token served the username/password login only, kept for it (CbLibAuthlibLogin) */
     public static YggdrasilAuthenticationService authenticationService(Proxy proxy, String clientToken) {
-        return new YggdrasilAuthenticationService(proxy);
+        YggdrasilAuthenticationService service = new YggdrasilAuthenticationService(proxy);
+        CbLibAuthlibLogin.remember(service, clientToken, null);
+        return service;
     }
 
     /** new YggdrasilAuthenticationService(proxy, clientToken, environment) */
     public static YggdrasilAuthenticationService authenticationService(Proxy proxy, String clientToken, Environment environment) {
-        return new YggdrasilAuthenticationService(proxy, environment);
+        YggdrasilAuthenticationService service = new YggdrasilAuthenticationService(proxy, environment);
+        CbLibAuthlibLogin.remember(service, clientToken, environment);
+        return service;
     }
 
     /** a subclass's super(proxy, clientToken[, environment]): the token dropped */

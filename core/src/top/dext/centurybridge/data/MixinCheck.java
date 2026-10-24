@@ -78,6 +78,7 @@ public final class MixinCheck {
                            Path stubDir, String targetVersion) throws IOException {
         MixinCheck c = new MixinCheck();
         c.index(targetJar);
+        c.indexLibraries();
         if (stubDir != null && targetVersion != null) {
             c.sources = SourceStubs.before(stubDir, targetVersion);
         }
@@ -119,6 +120,38 @@ public final class MixinCheck {
         }
         if (!c.problems.isEmpty()) {
             System.exit(1);
+        }
+    }
+
+    /**
+     * The target's game libraries (-Dcb.libs=<its libraries dir>, as wiring-check reads them): a mixin may target a library
+     * class the game loads through Knot (authlib's records, whose fields a layer makes mutable), so its targets resolve against
+     * the library jars too. The game jar wins for a class both carry; natives and Minecraft's own classes are skipped.
+     */
+    private void indexLibraries() throws IOException {
+        String libs = System.getProperty("cb.libs");
+        if (libs == null || libs.isEmpty() || !Files.isDirectory(Path.of(libs))) {
+            return;
+        }
+        List<Path> jars;
+        try (var s = Files.walk(Path.of(libs))) {
+            jars = s.filter(f -> f.toString().endsWith(".jar") && !f.getFileName().toString().contains("-natives-")).sorted().toList();
+        }
+        for (Path lib : jars) {
+            try (var z = new java.util.zip.ZipFile(lib.toFile())) {
+                for (var en : java.util.Collections.list(z.entries())) {
+                    String n = en.getName();
+                    if (!n.endsWith(".class") || n.startsWith("META-INF/") || n.startsWith("net/minecraft/")) {
+                        continue;
+                    }
+                    ClassNode cn = new ClassNode();
+                    new ClassReader(z.getInputStream(en).readAllBytes()).accept(cn, ClassReader.SKIP_CODE);
+                    if (jar.putIfAbsent(cn.name, cn) == null) {
+                        int slash = cn.name.lastIndexOf('/');
+                        jarPackages.add(slash < 0 ? "" : cn.name.substring(0, slash));
+                    }
+                }
+            }
         }
     }
 
