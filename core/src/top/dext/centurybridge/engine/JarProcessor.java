@@ -2554,7 +2554,8 @@ public final class JarProcessor {
         // the data pack and resource pack are read by the target's loaders, in the
         // target's formats: carry them over the same boundaries the bytecode crossed
         top.dext.centurybridge.engine.res.ResourceTranslator.Outcome res =
-            top.dext.centurybridge.engine.res.ResourceTranslator.apply(entries, chain.from, chain.to, chain.resourceTypes);
+            top.dext.centurybridge.engine.res.ResourceTranslator.apply(entries, chain.from, chain.to, chain.resourceTypes,
+                chain.tagMap, chain.tagMirror);
         if (res.changedAnything()) {
             rpt.notes.add(tag + "resources: " + res.moved + " moved, " + res.rewritten + " rewritten, "
                 + res.generated + " generated for " + chain.to);

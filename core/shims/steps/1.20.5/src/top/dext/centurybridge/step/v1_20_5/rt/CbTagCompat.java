@@ -30,4 +30,11 @@ public final class CbTagCompat {
     public static net.minecraft.class_6862<?> DamageTypeTags_field_46211() {
         return DamageTypeTags_field_46211;
     }
+
+    /** net/minecraft/class_3489.field_42616: 1.20.4 minecraft:tools (removed at 1.20.5) */
+    public static final net.minecraft.class_6862<?> ItemTags_field_42616 = key(net.minecraft.class_7924.field_41197, "minecraft", "tools");
+
+    public static net.minecraft.class_6862<?> ItemTags_field_42616() {
+        return ItemTags_field_42616;
+    }
 }

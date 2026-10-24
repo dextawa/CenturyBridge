@@ -58,4 +58,32 @@ public final class CbTagCompat {
     public static net.minecraft.class_6862<?> BlockTags_field_44469() {
         return BlockTags_field_44469;
     }
+
+    /** net/minecraft/class_3481.field_20338: 1.21.3 minecraft:tall_flowers (removed at 1.21.4) */
+    public static final net.minecraft.class_6862<?> BlockTags_field_20338 = key(net.minecraft.class_7924.field_41254, "minecraft", "tall_flowers");
+
+    public static net.minecraft.class_6862<?> BlockTags_field_20338() {
+        return BlockTags_field_20338;
+    }
+
+    /** net/minecraft/class_3489.field_20344: 1.21.3 minecraft:flowers (removed at 1.21.4) */
+    public static final net.minecraft.class_6862<?> ItemTags_field_20344 = key(net.minecraft.class_7924.field_41197, "centurybridge", "compat/1_21_3/flowers");
+
+    public static net.minecraft.class_6862<?> ItemTags_field_20344() {
+        return ItemTags_field_20344;
+    }
+
+    /** net/minecraft/class_3489.field_20343: 1.21.3 minecraft:tall_flowers (removed at 1.21.4) */
+    public static final net.minecraft.class_6862<?> ItemTags_field_20343 = key(net.minecraft.class_7924.field_41197, "minecraft", "tall_flowers");
+
+    public static net.minecraft.class_6862<?> ItemTags_field_20343() {
+        return ItemTags_field_20343;
+    }
+
+    /** net/minecraft/class_3489.field_41892: 1.21.3 minecraft:trim_templates (removed at 1.21.4) */
+    public static final net.minecraft.class_6862<?> ItemTags_field_41892 = key(net.minecraft.class_7924.field_41197, "minecraft", "trim_templates");
+
+    public static net.minecraft.class_6862<?> ItemTags_field_41892() {
+        return ItemTags_field_41892;
+    }
 }

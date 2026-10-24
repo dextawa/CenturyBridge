@@ -66,11 +66,6 @@ public final class CbRestValues {
         return net.minecraft.class_3489.field_49957;
     }
 
-    /** ItemTags.TOOLS: minecraft:tools, 1.20.4's tag (its definition is this layer's data) */
-    public static net.minecraft.class_6862<net.minecraft.class_1792> field_42616() {
-        return net.minecraft.class_6862.method_40092(net.minecraft.class_7924.field_41197, new net.minecraft.class_2960("tools"));
-    }
-
     /** EntityTypeTags.DEFLECTS_ARROWS: 1.20.5 merged it and DEFLECTS_TRIDENTS into deflects_projectiles (both: the breeze) */
     public static net.minecraft.class_6862<net.minecraft.class_1299<?>> field_47215() {
         return net.minecraft.class_3483.field_48286;

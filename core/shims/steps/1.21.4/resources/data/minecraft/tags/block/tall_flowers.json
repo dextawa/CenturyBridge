@@ -1,9 +1,25 @@
 {
+  "replace": false,
   "values": [
-    "minecraft:sunflower",
-    "minecraft:lilac",
-    "minecraft:peony",
-    "minecraft:rose_bush",
-    "minecraft:pitcher_plant"
+    {
+      "id": "minecraft:lilac",
+      "required": false
+    },
+    {
+      "id": "minecraft:peony",
+      "required": false
+    },
+    {
+      "id": "minecraft:pitcher_plant",
+      "required": false
+    },
+    {
+      "id": "minecraft:rose_bush",
+      "required": false
+    },
+    {
+      "id": "minecraft:sunflower",
+      "required": false
+    }
   ]
 }
