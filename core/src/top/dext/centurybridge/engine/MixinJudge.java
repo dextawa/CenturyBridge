@@ -195,7 +195,38 @@ public final class MixinJudge {
     /** members the layers' mixins add to game classes (their non-shadow members): "name+desc" / "name:desc" */
     private final Map<String, Set<String>> folded = new HashMap<>();
 
+    /** the layers' jars: a mixin aimed at a facade is judged against the facade's own code */
+    private final List<Path> layers = new ArrayList<>();
+    private final Map<String, ClassNode> facades = new HashMap<>();
+
+    /**
+     * the class a mixin is aimed at, with its code: W's, or -- a mixin the converter moved onto one of
+     * CenturyBridge's classes with a class rename (a facade) -- the layer's
+     */
+    private ClassNode targetClass(String name) {
+        ClassNode c = code.target(name);
+        if (c != null || !name.startsWith("top/dext/")) {
+            return c;
+        }
+        return facades.computeIfAbsent(name, n -> {
+            for (Path p : layers) {
+                try (ZipFile z = new ZipFile(p.toFile())) {
+                    ZipEntry e = z.getEntry(n + ".class");
+                    if (e != null) {
+                        ClassNode cn = new ClassNode();
+                        new ClassReader(z.getInputStream(e).readAllBytes()).accept(cn, ClassReader.SKIP_FRAMES);
+                        return cn;
+                    }
+                } catch (IOException ex) {
+                    // an unreadable layer holds no facade
+                }
+            }
+            return null;
+        });
+    }
+
     private void loadExtra(Path p) throws IOException {
+        layers.add(p);
         try (ZipFile z = new ZipFile(p.toFile())) {
             for (ZipEntry e : java.util.Collections.list(z.entries())) {
                 if (e.getName().endsWith(".class")) {
@@ -318,16 +349,61 @@ public final class MixinJudge {
                     return judgeShadowField(f, target);
                 }
             }
+            String guarded = judgeGuarded(mx, name, vcount);
+            if (guarded != null) {
+                return guarded.isEmpty() ? null : guarded;
+            }
             return "member gone from the mixin";
         }
         return judgeMethod(mx, target, m, vcount, seen);
+    }
+
+    /**
+     * A handler MixinBridge.baseGuard moved: its injector now sits in a guard mixin of the superclass
+     * W keeps the code in, judged there. "" when it fits, the reason when not, null when the member
+     * was not moved.
+     */
+    private String judgeGuarded(ClassNode mx, String name, int vcount) {
+        for (MethodNode c : mx.methods) {
+            for (AnnotationNode a : MixinRepair.annotations(c)) {
+                if (!a.desc.equals(MixinBridge.GUARDED)) {
+                    continue;
+                }
+                Map<String, Object> v = MixinRepair.values(a);
+                if (!name.equals(v.get("of"))) {
+                    continue;
+                }
+                ClassNode gm = mixin(String.valueOf(v.get("mixin")));
+                if (gm == null) {
+                    return "guard mixin gone";
+                }
+                List<String> ts = MixinRepair.mixinTargets(gm, null);
+                ClassNode tc = ts.size() == 1 ? targetClass(ts.get(0)) : null;
+                if (tc == null) {
+                    return "guard mixin's target gone";
+                }
+                for (MethodNode h : gm.methods) {
+                    if (h.name.equals(v.get("handler"))) {
+                        for (AnnotationNode an : MixinRepair.annotations(h)) {
+                            if (MixinRepair.values(an).containsKey("method")) {
+                                String why = judgeInjector(gm, tc, h, an, vcount, null);
+                                return why == null ? "" : why;
+                            }
+                        }
+                        return "guarded injector disabled";
+                    }
+                }
+                return "guarded handler gone";
+            }
+        }
+        return null;
     }
 
     private String judgeMethod(ClassNode mx, String target, MethodNode m, int vcount, Set<String> seen) {
         if (!seen.add(mx.name + "." + m.name + m.desc)) {
             return null;
         }
-        ClassNode tc = code.target(target);
+        ClassNode tc = targetClass(target);
         if (tc == null) {
             return "target class gone";
         }
@@ -374,7 +450,7 @@ public final class MixinJudge {
         String first = null;
         for (String sel : sels) {
             MixinRepair.Sel s = MixinRepair.Sel.parse(MixinRepair.refmapLookup(rm, sel));
-            ClassNode oc = s.owner() != null ? code.target(s.owner()) : tc;
+            ClassNode oc = s.owner() != null ? targetClass(s.owner()) : tc;
             if (oc == null) {
                 first = first != null ? first : "target class gone";
                 continue;
@@ -610,7 +686,7 @@ public final class MixinJudge {
     }
 
     private String judgeShadowField(FieldNode f, String target) {
-        ClassNode tc = code.target(target);
+        ClassNode tc = targetClass(target);
         if (tc == null) {
             return "target class gone";
         }

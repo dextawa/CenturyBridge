@@ -88,6 +88,38 @@ public final class MixinRepair {
         this.code = new ZipFile(codeJar.toFile());
     }
 
+    /** every class of the code jar under its superclass (headers only), built on first use */
+    private Map<String, List<String>> subIndex;
+
+    /** the classes of the code jar extending c, directly or not */
+    public Set<String> subclasses(String c) {
+        if (subIndex == null) {
+            subIndex = new HashMap<>();
+            for (ZipEntry e : java.util.Collections.list(code.entries())) {
+                if (!e.getName().endsWith(".class")) continue;
+                try {
+                    ClassReader r = new ClassReader(code.getInputStream(e).readAllBytes());
+                    if (r.getSuperName() != null) subIndex.computeIfAbsent(r.getSuperName(), k -> new ArrayList<>()).add(r.getClassName());
+                } catch (IOException | RuntimeException ex) {
+                    // an unreadable entry extends nothing we can name
+                }
+            }
+        }
+        Set<String> out = new LinkedHashSet<>();
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(c));
+        while (!todo.isEmpty()) {
+            for (String k : subIndex.getOrDefault(todo.pop(), List.of())) {
+                if (out.add(k)) todo.push(k);
+            }
+        }
+        return out;
+    }
+
+    /** does the code jar declare the class (its entry only, nothing parsed) */
+    public boolean declares(String owner) {
+        return cache.get(owner) != null || code.getEntry(owner + ".class") != null;
+    }
+
     public ClassNode target(String owner) {
         return cache.computeIfAbsent(owner, o -> {
             try {
@@ -341,6 +373,13 @@ public final class MixinRepair {
                             live = true;
                             break;
                         }
+                        if (cands.stream().allMatch(MixinBridge::restoredMark)) {
+                            // an override MixinBridge put back is one super call: the anchor stood in the body V's
+                            // override had, and following it into the super call would move it before all of that
+                            if (deadWhy == null) deadWhy = "anchor gone: @" + kind + " " + where + " " + anchors
+                                + " (the target is an override put back as a super call; its anchor stood in V's own body)";
+                            continue;
+                        }
                         // @Inject marks a POSITION in the unchanged target: its anchor may
                         // follow the call it named -- re-described (drawTexture grew a
                         // Function parameter) or wrapped (tick -> hitOrDeflect -> onCollision)
@@ -440,7 +479,14 @@ public final class MixinRepair {
 
     // ------------------------------------------------------------------ descend by site
 
-    private record Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic) {}
+    record Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic) {}
+
+    /** the descend's handler and annotation changes (the selector is the caller's to set) */
+    static void applyDescend(Descend d, MethodNode handler, AnnotationNode an) {
+        if (d.makeStatic()) makeStatic(handler);
+        if (d.toCir()) toReturnable(handler);
+        setAtOrdinal(an, d.ordinal());
+    }
 
     /**
      * descend-site: the anchor's V site (the pinned occurrence, or every occurrence) found by context
@@ -456,11 +502,22 @@ public final class MixinRepair {
      */
     private Descend descendBySite(AnnotationNode an, MethodNode handler, String owner, ClassNode tc, MethodNode wm, Anchor a,
                                   List<String> why) {
-        if (!a.role.equals("main") || a.kind.equals("LOCAL") || a == POSITIONAL) return null;
         ClassNode vc = source.target(owner);
         MethodNode vm = null;
         if (vc != null) for (MethodNode m : vc.methods) if (m.name.equals(wm.name) && m.desc.equals(wm.desc)) vm = m;
         if (vm == null) return null;
+        return descendBySite(an, handler, tc, vc, vm, wm, a, why);
+    }
+
+    /**
+     * descend-site from V's method vm (of V's class vc) to what W's method wm reaches: wm is vm's own
+     * W copy, or the W method an injector's selector followed vm to (MixinBridge: rename, reshape,
+     * mixinTargets, body follow). The handler is written for vm: a callback it reads the return value
+     * through must fit vm's return.
+     */
+    Descend descendBySite(AnnotationNode an, MethodNode handler, ClassNode tc, ClassNode vc, MethodNode vm, MethodNode wm,
+                          Anchor a, List<String> why) {
+        if (!a.role.equals("main") || a.kind.equals("LOCAL") || a == POSITIONAL) return null;
         List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> matchesAnchor(in, a));
         if (vo.isEmpty() || a.ordinal >= vo.size()) return null;
         List<Integer> sites = new ArrayList<>();
@@ -537,7 +594,7 @@ public final class MixinRepair {
         if (an.desc.equals(INJECT)) {
             boolean wantCir = Type.getReturnType(into.desc).getSort() != Type.VOID;
             boolean hasCir = handler.desc.contains(CIR);
-            if (hasCir && !Type.getReturnType(into.desc).equals(Type.getReturnType(wm.desc))) {
+            if (hasCir && !Type.getReturnType(into.desc).equals(Type.getReturnType(vm.desc))) {
                 why.add("the handler takes the target's return value; " + into.name + " returns " + Type.getReturnType(into.desc));
                 return null;
             }
@@ -1252,7 +1309,7 @@ public final class MixinRepair {
      * CallbackInfo(Returnable). Other injectors: more parameters than the
      * anchor's own operands is conservatively treated as capturing.
      */
-    private static boolean capturesTargetArgs(AnnotationNode an, MethodNode h) {
+    static boolean capturesTargetArgs(AnnotationNode an, MethodNode h) {
         Type[] args = Type.getArgumentTypes(h.desc);
         if (an.desc.equals(INJECT)) {
             int ci = -1;
