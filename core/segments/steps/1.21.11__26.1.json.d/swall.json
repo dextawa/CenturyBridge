@@ -471,7 +471,8 @@
   "net/minecraft/class_10223$class_10224": "top/dext/centurybridge/step/v26_1/facade/TransmuteRecipeSerializer",
   "net/minecraft/class_8060$class_8061": "top/dext/centurybridge/step/v26_1/facade/SmithingTransformRecipeSerializer",
   "net/minecraft/class_8062$class_8063": "top/dext/centurybridge/step/v26_1/facade/SmithingTrimRecipeSerializer",
-  "net/minecraft/class_5620$class_8821": "top/dext/centurybridge/step/v26_1/facade/CauldronInteractionMap"
+  "net/minecraft/class_5620$class_8821": "top/dext/centurybridge/step/v26_1/facade/CauldronInteractionMap",
+  "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/facade/EitherHolder"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -1173,6 +1174,27 @@
     "keep:2"
    ],
    "basis": "26.1's cauldron blocks take the dispatcher a 1.21.11 interaction map stands for (CbWallCauldrons)"
+  },
+  "net/minecraft/class_9792.<init>(Lnet/minecraft/class_9791;)V": {
+   "desc": "(Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#holder(Lnet/minecraft/class_9791;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
+  },
+  "net/minecraft/class_10710.<init>(Lnet/minecraft/class_9791;)V": {
+   "desc": "(Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#holder(Lnet/minecraft/class_9791;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
+  },
+  "net/minecraft/class_10711.<init>(Lnet/minecraft/class_9791;)V": {
+   "desc": "(Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#holder(Lnet/minecraft/class_9791;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
   }
  },
  "fieldGetters": {
@@ -1323,6 +1345,24 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#stack(Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_1799;",
    "basis": "26.1's SingleItemRecipe.result() answers the result's template, 1.21.11's its stack: the template's stack"
+  },
+  "net/minecraft/class_9792.comp_2833()Lnet/minecraft/class_9791;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#either(Lnet/minecraft/class_6880;)Lnet/minecraft/class_9791;",
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
+  },
+  "net/minecraft/class_10710.comp_3598()Lnet/minecraft/class_9791;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#either(Lnet/minecraft/class_6880;)Lnet/minecraft/class_9791;",
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
+  },
+  "net/minecraft/class_10711.comp_3599()Lnet/minecraft/class_9791;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallEitherHolders#either(Lnet/minecraft/class_6880;)Lnet/minecraft/class_9791;",
+   "basis": "26.1's component holds the resolved holder where 1.21.11's held an EitherHolder (CbWallEitherHolders)"
   }
  },
  "instanceFieldGetters": {
