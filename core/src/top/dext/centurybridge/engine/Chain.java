@@ -1053,6 +1053,9 @@ public final class Chain {
      */
     public java.nio.file.Path layerJar;
 
+    /** the V-named members the layer's mixins merge onto game classes, from {@link #layerJar} ({@link LayerMembers}) */
+    public LayerMembers layerMembers = LayerMembers.none();
+
     /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,
      * its superclasses, their interfaces. TRUE found, FALSE definitely absent (every class

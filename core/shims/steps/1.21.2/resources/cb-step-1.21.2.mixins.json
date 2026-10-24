@@ -67,6 +67,7 @@
     "CbItemCraftingInputMixin",
     "CbItemFurnaceMenuMixin",
     "CbItemEquipableBlockItemMixin",
+    "CbItemEnchantableReadsMixin",
     "CbItemEquipableCarpetMixin",
     "CbItemEquipableShieldMixin",
     "CbItemEquipableSkullMixin",

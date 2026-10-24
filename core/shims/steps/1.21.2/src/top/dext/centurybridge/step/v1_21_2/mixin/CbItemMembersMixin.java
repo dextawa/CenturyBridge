@@ -1,5 +1,7 @@
 package top.dext.centurybridge.step.v1_21_2.mixin;
 
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
+
 import net.minecraft.class_1792;
 import net.minecraft.class_1799;
 import net.minecraft.class_2561;
@@ -22,12 +24,24 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemMembers;
  * getDescriptionId(stack) override.
  */
 @Mixin(class_1792.class)
-public abstract class CbItemMembersMixin {
+public abstract class CbItemMembersMixin implements CbItemMembers.ItemEnchantmentValue {
 
     @Shadow
     @Final
     @Mutable
     private class_9323 field_49263;
+
+    /**
+     * 1.21.1's Item.getEnchantmentValue(), restored: what the item's built components say (0 without ENCHANTABLE).
+     * A 1.21.1 class's own getEnchantmentValue overrides it; 1.21.2's EnchantmentHelper reads ENCHANTABLE through
+     * it, so a mod's 1.21.1 mixin on it changes enchanting as it did on 1.21.1.
+     */
+    @CbVanillaReads("CbItemEnchantableReadsMixin: EnchantmentHelper.getEnchantmentCost / selectEnchantment take the "
+        + "ENCHANTABLE they read from Item.getEnchantmentValue() unless the stack sets its own")
+    @Override
+    public int method_7837() {
+        return CbItemMembers.super_method_7837((class_1792) (Object) this);
+    }
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void cb$memberComponents(class_1792.class_1793 props, CallbackInfo ci) {

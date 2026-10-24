@@ -209,7 +209,8 @@ public final class Main {
         }
         if (lj != null && Files.exists(Path.of(lj))) {
             chain.layerJar = Path.of(lj);
-            System.out.println("step layer for redirect bodies: " + lj);
+            chain.layerMembers = top.dext.centurybridge.engine.LayerMembers.read(chain.layerJar);
+            System.out.println("step layer for redirect bodies and restored members: " + lj);
         }
         Path targetStub = stubOf(args[3]);
         if (Files.exists(targetStub)) {
@@ -239,6 +240,7 @@ public final class Main {
             if (codeJar != null && Files.exists(codeJar)) {
                 chain.mixinRepair = new top.dext.centurybridge.engine.MixinRepair(codeJar);
                 chain.mixinRepair.renamed = chain::renamedDesc;
+                chain.mixinRepair.layerMembers = chain.layerMembers;
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");
