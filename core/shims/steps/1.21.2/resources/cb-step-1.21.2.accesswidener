@@ -38,12 +38,6 @@ extendable method net/minecraft/class_1309 method_26318 (Lnet/minecraft/class_24
 
 # s7render: ModelBakery's baker getModel(id), the 1.21.1 ModelBaker.getModel (CbRenderBakeBakerMixin)
 accessible method net/minecraft/class_1088$class_7778 method_45872 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
-
-# ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----
-accessible method net/minecraft/class_1011 method_4305 (III)V
-accessible method net/minecraft/class_1011 method_4315 (II)I
-accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
-# ---- END GENERATED (s7render) ----
 accessible field net/minecraft/class_4970$class_4971 field_23166 Lnet/minecraft/class_4970$class_4971$class_3752;
 accessible method net/minecraft/class_2424 <init> (Lnet/minecraft/class_2350$class_2351;ILnet/minecraft/class_2350;Lnet/minecraft/class_2338;II)V
 extendable method net/minecraft/class_2424 <init> (Lnet/minecraft/class_2350$class_2351;ILnet/minecraft/class_2350;Lnet/minecraft/class_2338;II)V
@@ -75,3 +69,9 @@ extendable method net/minecraft/class_2754 <init> (Ljava/lang/String;Ljava/lang/
 accessible field net/minecraft/class_9875 field_52506 Lnet/minecraft/class_1662;
 # PalettedContainer.Data, whose copy() 1.21.1 mixins invoke (rt/CbLevelPalette)
 accessible class net/minecraft/class_2841$class_6561
+
+# ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----
+accessible method net/minecraft/class_1011 method_4305 (III)V
+accessible method net/minecraft/class_1011 method_4315 (II)I
+accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
+# ---- END GENERATED (s7render) ----
