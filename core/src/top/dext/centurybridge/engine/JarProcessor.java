@@ -3743,6 +3743,20 @@ public final class JarProcessor {
                                 top.dext.centurybridge.data.FullAudit.record(rkey, "field-setter");
                                 return;
                             }
+                            // and an old instance field the new class keeps as other state (26.2 folded
+                            // DripstoneClusterConfiguration's public fields into SpeleothemClusterConfiguration's
+                            // record components): the getter / setter wired on the old owner, which takes the
+                            // receiver as the renamed class
+                            if (op == Opcodes.GETFIELD || op == Opcodes.PUTFIELD) {
+                                String rift = (op == Opcodes.GETFIELD ? chain.instanceFieldGetters : chain.instanceFieldSetters).get(rkey);
+                                if (rift != null) {
+                                    (op == Opcodes.GETFIELD ? instFldGetters : instFldSetters).put(fsite, rift);
+                                    emitOwner.put(fsite, owner);
+                                    top.dext.centurybridge.data.FullAudit.record(rkey,
+                                        op == Opcodes.GETFIELD ? "instance-field-getter" : "instance-field-setter");
+                                    return;
+                                }
+                            }
                             String gap = chain.facadeGaps.get(owner + "." + name + ":" + desc);
                             if (gap != null) {
                                 rpt.ledgered++;
