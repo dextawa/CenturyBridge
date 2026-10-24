@@ -19,12 +19,17 @@
     "CbFapiWanderingTraderTradesMixin",
     "CbWallBrainAccess",
     "CbWallBrainMixin",
+    "CbWallDragonFightAccess",
+    "CbWallDragonFightLevelMixin",
+    "CbWallDragonFightSaveMixin",
     "CbWallInteractArmorStandMixin",
     "CbWallInteractEntityMixin",
     "CbWallInteractPlayerMixin",
     "CbWallLevelAccessMixin",
     "CbWallLivingEntityAccess",
-    "CbWallServerMixin"
+    "CbWallServerAccess",
+    "CbWallServerMixin",
+    "CbWallTraderSpawnerMixin"
   ],
   "client": [
     "CbFapiBlockColorsMixin",

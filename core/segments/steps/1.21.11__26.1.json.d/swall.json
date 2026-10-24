@@ -99,7 +99,18 @@
   "net/minecraft/class_825.method_72160(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBed#callExtents",
   "net/minecraft/class_11659$class_11947.method_74755(Lnet/minecraft/class_11977$class_12051;)Lnet/minecraft/class_11944$class_12041;": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles#callPrepare",
   "net/minecraft/class_11659$class_11947.method_74324(Lnet/minecraft/class_11944$class_12041;Lnet/minecraft/class_11977$class_12051;Lcom/mojang/blaze3d/systems/RenderPass;Lnet/minecraft/class_1060;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallParticles#callRender",
-  "net/minecraft/class_823.method_65556(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_1767;Lnet/minecraft/class_9307;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBanner#submitSpecial"
+  "net/minecraft/class_823.method_65556(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_1767;Lnet/minecraft/class_9307;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBanner#submitSpecial",
+  "net/minecraft/class_2881.method_12530()Lnet/minecraft/class_2881$class_8576;": "top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#saveData",
+  "net/minecraft/class_5219.method_29036()Lnet/minecraft/class_2881$class_8576;": "top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#endDragonFightData",
+  "net/minecraft/class_5219.method_29037(Lnet/minecraft/class_2881$class_8576;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#setEndDragonFightData",
+  "net/minecraft/class_5268.method_35506()Ljava/util/UUID;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getWanderingTraderId",
+  "net/minecraft/class_5268.method_18040(Ljava/util/UUID;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setWanderingTraderId",
+  "net/minecraft/class_5268.method_27422()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getLegacyWorldBorderSettings",
+  "net/minecraft/class_5268.method_27415(Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setLegacyWorldBorderSettings",
+  "net/minecraft/class_5219.method_228()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#getCustomBossEvents",
+  "net/minecraft/class_5219.method_221(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#setCustomBossEvents",
+  "net/minecraft/class_5219.method_226()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#getLoadedPlayerTag",
+  "net/minecraft/class_5219.method_163(Lnet/minecraft/class_5455;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#createTag"
  },
  "overrideHooks": [
   {
@@ -310,7 +321,8 @@
   "net/minecraft/class_765": "top/dext/centurybridge/step/v26_1/facade/LightTexture",
   "net/minecraft/class_12335": "top/dext/centurybridge/step/v26_1/facade/PanoramicScreenshotParameters",
   "net/minecraft/class_310$class_5859": "top/dext/centurybridge/step/v26_1/facade/ChatStatus",
-  "net/minecraft/class_918": "top/dext/centurybridge/step/v26_1/facade/ItemRenderer"
+  "net/minecraft/class_918": "top/dext/centurybridge/step/v26_1/facade/ItemRenderer",
+  "net/minecraft/class_2881$class_8576": "top/dext/centurybridge/step/v26_1/facade/EndDragonFightData"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -636,7 +648,8 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline.builder([Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#builder",
   "com/mojang/blaze3d/opengl/GlConst.toGl(Lcom/mojang/blaze3d/platform/DepthTestFunction;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#toGl",
   "com/mojang/blaze3d/opengl/GlStateManager._colorMask(ZZZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#colorMask",
-  "net/minecraft/class_4095.method_28313(Ljava/util/Collection;Ljava/util/Collection;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#codec"
+  "net/minecraft/class_4095.method_28313(Ljava/util/Collection;Ljava/util/Collection;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#codec",
+  "net/minecraft/class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lnet/minecraft/class_1940;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#parse"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -713,6 +726,61 @@
    "postArgs": [
     0
    ]
+  },
+  "net/minecraft/class_2881.<init>(Lnet/minecraft/class_3218;JLnet/minecraft/class_2881$class_8576;)V": {
+   "desc": "(ZZZLjava/util/Optional;ILjava/util/Optional;Ljava/util/Optional;Ljava/util/List;Ljava/util/List;)V",
+   "ops": [
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#needsStateScanning(Lnet/minecraft/class_2881$class_8576;)Z",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#dragonKilled(Lnet/minecraft/class_2881$class_8576;)Z",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#previouslyKilled(Lnet/minecraft/class_2881$class_8576;)Z",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#respawnStage(Lnet/minecraft/class_2881$class_8576;)Ljava/util/Optional;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#noRespawnTime()I",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#dragonUUID(Lnet/minecraft/class_2881$class_8576;)Ljava/util/Optional;",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#exitPortalLocation(Lnet/minecraft/class_2881$class_8576;)Ljava/util/Optional;",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#gateways(Lnet/minecraft/class_2881$class_8576;)Ljava/util/List;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#noRespawnCrystals()Ljava/util/List;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#init(Lnet/minecraft/class_2881;Lnet/minecraft/class_3218;J)V",
+   "postArgs": [
+    0,
+    1
+   ],
+   "basis": "1.21.11 built the fight from the world data's record (EndDragonFight.Data) and set it up in the constructor; 26.1 constructs it from its state and sets it up in init(level, seed, origin), which also shuffles the gateways from the seed when there are none, as 1.21.11's constructor did (CbWallDragonFight)"
+  },
+  "net/minecraft/class_2881.<init>(Lnet/minecraft/class_3218;JLnet/minecraft/class_2881$class_8576;Lnet/minecraft/class_2338;)V": {
+   "desc": "(ZZZLjava/util/Optional;ILjava/util/Optional;Ljava/util/Optional;Ljava/util/List;Ljava/util/List;)V",
+   "ops": [
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#needsStateScanning(Lnet/minecraft/class_2881$class_8576;)Z",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#dragonKilled(Lnet/minecraft/class_2881$class_8576;)Z",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#previouslyKilled(Lnet/minecraft/class_2881$class_8576;)Z",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#respawnStage(Lnet/minecraft/class_2881$class_8576;)Ljava/util/Optional;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#noRespawnTime()I",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#dragonUUID(Lnet/minecraft/class_2881$class_8576;)Ljava/util/Optional;",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#exitPortalLocation(Lnet/minecraft/class_2881$class_8576;)Ljava/util/Optional;",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#gateways(Lnet/minecraft/class_2881$class_8576;)Ljava/util/List;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#noRespawnCrystals()Ljava/util/List;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#init(Lnet/minecraft/class_2881;Lnet/minecraft/class_3218;JLnet/minecraft/class_2338;)V",
+   "postArgs": [
+    0,
+    1,
+    3
+   ],
+   "basis": "1.21.11 built the fight from the world data's record (EndDragonFight.Data) and set it up in the constructor; 26.1 constructs it from its state and sets it up in init(level, seed, origin), which also shuffles the gateways from the seed when there are none, as 1.21.11's constructor did (CbWallDragonFight)"
+  },
+  "net/minecraft/class_31.<init>(Lnet/minecraft/class_1940;Lnet/minecraft/class_5285;Lnet/minecraft/class_31$class_7729;Lcom/mojang/serialization/Lifecycle;)V": {
+   "desc": "(Lnet/minecraft/class_1940;Lnet/minecraft/class_31$class_7729;Lcom/mojang/serialization/Lifecycle;)V",
+   "ops": [
+    "keep",
+    "drop",
+    "keep",
+    "keep"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldData#constructed(Lnet/minecraft/class_31;Lnet/minecraft/class_5285;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "26.1 keeps the world generation options in the server's WorldGenSettings saved data, not the level data: the options the 1.21.11 constructor took are kept for the data, and its worldGenOptions() answers them (CbWallWorldData)"
   }
  },
  "fieldGetters": {
@@ -789,7 +857,8 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteAlpha()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superIsWriteAlpha",
   "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteDepth()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superIsWriteDepth",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasScaleFactor()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasScaleFactor",
-  "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasConstant"
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasConstant",
+  "net/minecraft/class_2881.method_12530()Lnet/minecraft/class_2881$class_8576;": "top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#superSaveData"
  },
  "covers": [
   "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
