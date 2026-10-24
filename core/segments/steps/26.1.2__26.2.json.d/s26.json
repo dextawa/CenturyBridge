@@ -6,7 +6,8 @@
   "net/minecraft/world/item/WeatheringCopperItems": "top/dext/centurybridge/step/v26_2/facade/WeatheringCopperItems",
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils": "net/minecraft/world/level/levelgen/feature/SpeleothemUtils",
   "net/minecraft/world/level/levelgen/feature/PointedDripstoneFeature": "net/minecraft/world/level/levelgen/feature/SpeleothemFeature",
-  "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/SpeleothemConfiguration"
+  "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/SpeleothemConfiguration",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "top/dext/centurybridge/step/v26_2/facade/StructureProcessorType"
  },
  "_classRenames_basis": {
   "net/minecraft/util/Tuple": "26.2 deleted Tuple (no class of 26.2 holds its members; its callers use DFU Pair); the layer's facade is 26.1.2's class as it was",
@@ -14,7 +15,8 @@
   "net/minecraft/world/item/WeatheringCopperItems": "26.2 replaced the record by WeatheringCopperCollection<Item>; the facade is 26.1.2's record with every member, of(collection) for the constants",
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils": "26.2 generalised DripstoneUtils into SpeleothemUtils (same members, the dripstone blocks and #dripstone_replaceable_blocks now parameters); the members whose shape changed redirect to rt/CbS26Dripstone with the dripstone arguments 26.2's CaveFeatures passes",
   "net/minecraft/world/level/levelgen/feature/PointedDripstoneFeature": "26.2's SpeleothemFeature is 26.1.2's PointedDripstoneFeature over SpeleothemConfiguration (Feature.POINTED_DRIPSTONE became Feature.SPELEOTHEM, configured_feature/pointed_dripstone uses minecraft:speleothem)",
-  "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration": "26.2's SpeleothemConfiguration record is PointedDripstoneConfiguration plus base/pointed block and replaceable set; construction, fields and CODEC go through rt/CbS26Dripstone with the dripstone values"
+  "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration": "26.2's SpeleothemConfiguration record is PointedDripstoneConfiguration plus base/pointed block and replaceable set; construction, fields and CODEC go through rt/CbS26Dripstone with the dripstone values",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType": "26.1.2's registry value type (a holder of its processor's map codec) is gone: 26.2 registers the map codecs and keeps only the four codecs under this name; the facade is 26.1.2's interface with every member (constants = the types of 26.2's codecs under the same ids)"
  },
  "fieldGetters": {
   "net/minecraft/world/level/block/Blocks.COPPER_BARS:Lnet/minecraft/world/level/block/WeatheringCopperBlocks;": "top/dext/centurybridge/step/v26_2/rt/CbS26Copper#Blocks_COPPER_BARS",
@@ -28,7 +30,9 @@
   "net/minecraft/world/entity/LivingEntity.TAG_HURT_BY_TIMESTAMP:Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#TAG_HURT_BY_TIMESTAMP",
   "net/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#CLUSTER_CODEC",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#POINTED_CODEC",
-  "net/minecraft/world/level/levelgen/feature/configurations/LargeDripstoneConfiguration.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#LARGE_CODEC"
+  "net/minecraft/world/level/levelgen/feature/configurations/LargeDripstoneConfiguration.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#LARGE_CODEC",
+  "net/minecraft/core/registries/BuiltInRegistries.STRUCTURE_PROCESSOR:Lnet/minecraft/core/Registry;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#structureProcessor",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#PROTECTED_CODEC"
  },
  "instanceRedirects": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasNameEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
@@ -70,7 +74,10 @@
   "net/minecraft/world/scores/PlayerTeam.packOptions()I": "top/dext/centurybridge/step/v26_2/rt/CbS26Team",
   "net/minecraft/world/scores/PlayerTeam.unpackOptions(I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Team",
   "net/minecraft/world/scores/PlayerTeam.setColor(Lnet/minecraft/ChatFormatting;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Team",
-  "net/minecraft/world/scores/PlayerTeam.getColor()Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team"
+  "net/minecraft/world/scores/PlayerTeam.getColor()Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessor.processBlock(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#processBlock",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessor.getType()Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorType;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#getType",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.processBlock(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#processBlock"
  },
  "_instanceRedirects_basis": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.*": "26.2 replaced the parser's option booleans by option-state objects (nameOption() ... advancementsOption()); rt/CbS26Selector reads and sets the same facts on them (see its javadoc)",
@@ -137,7 +144,8 @@
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.chanceOfTallerDripstone:F": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#chanceOfTallerDripstone",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.chanceOfDirectionalSpread:F": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#chanceOfDirectionalSpread",
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.chanceOfSpreadRadius2:F": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#chanceOfSpreadRadius2",
-  "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.chanceOfSpreadRadius3:F": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#chanceOfSpreadRadius3"
+  "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.chanceOfSpreadRadius3:F": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#chanceOfSpreadRadius3",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.cannotReplace:Lnet/minecraft/tags/TagKey;": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#cannotReplace"
  },
  "instanceFieldSetters": {
   "net/minecraft/world/entity/LivingEntity.currentExplosionCause:Lnet/minecraft/world/entity/Entity;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity#setCurrentExplosionCause"
@@ -237,7 +245,8 @@
  },
  "ctorRedirects": {
   "net/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration.<init>(ILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/IntProvider;IILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/FloatProvider;Lnet/minecraft/util/valueproviders/FloatProvider;FII)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#cbNewCluster",
-  "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.<init>(FFFF)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#cbNewPointed"
+  "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.<init>(FFFF)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#cbNewPointed",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.<init>(Lnet/minecraft/tags/TagKey;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#cbNewProtected"
  },
  "fieldRenames": {
   "net/minecraft/world/level/levelgen/feature/Feature.POINTED_DRIPSTONE:Lnet/minecraft/world/level/levelgen/feature/Feature;": "SPELEOTHEM"
@@ -276,7 +285,8 @@
  },
  "ledger": {
   "net/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration.<init>(ILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/IntProvider;IILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/FloatProvider;Lnet/minecraft/util/valueproviders/FloatProvider;FII)V": "a 26.1.2 class extending DripstoneClusterConfiguration (super(...) included): 26.2's SpeleothemClusterConfiguration that the class became is a final record (javap 26.2), and 26.2's Feature reads its configuration by casting to that record (SpeleothemFeature / SpeleothemClusterFeature.place), so a subclass outside the record could not reach 26.2's feature either; construction, fields and CODEC are bridged (rt/CbS26Dripstone), a subclass fails to load (IncompatibleClassChangeError: cannot inherit from final class)",
-  "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.<init>(FFFF)V": "a 26.1.2 class extending PointedDripstoneConfiguration (super(...) included): 26.2's SpeleothemConfiguration that the class became is a final record (javap 26.2), and 26.2's Feature reads its configuration by casting to that record (SpeleothemFeature / SpeleothemClusterFeature.place), so a subclass outside the record could not reach 26.2's feature either; construction, fields and CODEC are bridged (rt/CbS26Dripstone), a subclass fails to load (IncompatibleClassChangeError: cannot inherit from final class)"
+  "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.<init>(FFFF)V": "a 26.1.2 class extending PointedDripstoneConfiguration (super(...) included): 26.2's SpeleothemConfiguration that the class became is a final record (javap 26.2), and 26.2's Feature reads its configuration by casting to that record (SpeleothemFeature / SpeleothemClusterFeature.place), so a subclass outside the record could not reach 26.2's feature either; construction, fields and CODEC are bridged (rt/CbS26Dripstone), a subclass fails to load (IncompatibleClassChangeError: cannot inherit from final class)",
+  "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.<init>(Lnet/minecraft/tags/TagKey;)V": "a 26.1.2 class extending ProtectedBlockProcessor (super(tag) included): 26.2's ProtectedBlockProcessor is a final record of a HolderSet (javap 26.2); construction, cannotReplace, processBlock and CODEC (26.1.2's {value: #tag} shape, rt/CbS26Processors) are bridged, a subclass fails to load (cannot inherit from final class)"
  },
  "_methodRenames_basis": {
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils.getDripstoneHeight(DDDD)D": "wall_table found the rename (same code); DripstoneUtils is renamed here by hand, its class pairing being undecided there",
@@ -299,5 +309,11 @@
    "superCalls": "rename",
    "basis": "see _methodRenames_basis"
   }
- ]
+ ],
+ "superRenames": {
+  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessor": "top/dext/centurybridge/step/v26_2/facade/StructureProcessor"
+ },
+ "_superRenames_basis": {
+  "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessor": "26.2 turned the abstract class into an interface with processBlock(level, pos, pivot, originalPos, current, settings) and codec(); a 26.1.2 subclass extends the facade, which implements 26.2's interface over the subclass's 26.1.2 processBlock(.., originalInfo, ..) and getType()"
+ }
 }

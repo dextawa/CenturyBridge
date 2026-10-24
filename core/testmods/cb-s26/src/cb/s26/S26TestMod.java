@@ -86,6 +86,48 @@ public class S26TestMod implements ModInitializer {
         }
     }
 
+    /** a 26.1.2 structure processor: extends the abstract class, getType(), processBlock with the original info */
+    static class StoneProc extends net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor {
+        static final com.mojang.serialization.MapCodec<StoneProc> CODEC = com.mojang.serialization.MapCodec.unit(StoneProc::new);
+        static net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType<StoneProc> TYPE;
+
+        @Override
+        public net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo processBlock(
+                net.minecraft.world.level.LevelReader level, net.minecraft.core.BlockPos pos, net.minecraft.core.BlockPos pivot,
+                net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo original,
+                net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo current,
+                net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings settings) {
+            return new net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo(current.pos(),
+                Blocks.STONE.defaultBlockState(), current.nbt());
+        }
+
+        @Override
+        protected net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType<?> getType() {
+            return TYPE;
+        }
+    }
+
+    /** records what a later 26.1.2 processor is handed, and calls super.processBlock */
+    static class SpyProc extends net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor {
+        net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo seenOriginal, seenCurrent;
+
+        @Override
+        public net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo processBlock(
+                net.minecraft.world.level.LevelReader level, net.minecraft.core.BlockPos pos, net.minecraft.core.BlockPos pivot,
+                net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo original,
+                net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo current,
+                net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings settings) {
+            seenOriginal = original;
+            seenCurrent = current;
+            return super.processBlock(level, pos, pivot, original, current, settings);
+        }
+
+        @Override
+        protected net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType<?> getType() {
+            return net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType.NOP;
+        }
+    }
+
     @Override
     public void onInitialize() {
         RegConstChecks.run();
@@ -260,6 +302,42 @@ public class S26TestMod implements ModInitializer {
                 }
             }
             check("dripstone", false, st);
+        }
+
+        // structure processors: 26.1.2's abstract class, registry of types, original info (facade + rt/CbS26Processors)
+        try {
+            StoneProc.TYPE = net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType.register("cb_s26_stone", StoneProc.CODEC);
+            check("processor.register", StoneProc.TYPE.codec() == StoneProc.CODEC
+                && "minecraft:cb_s26_stone".equals(String.valueOf(BuiltInRegistries.STRUCTURE_PROCESSOR.getKey(StoneProc.TYPE)))
+                && BuiltInRegistries.STRUCTURE_PROCESSOR.getValue(net.minecraft.resources.Identifier.withDefaultNamespace("block_ignore"))
+                    == net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType.BLOCK_IGNORE, StoneProc.TYPE);
+            com.google.gson.JsonElement pj = net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType.SINGLE_CODEC
+                .encodeStart(com.mojang.serialization.JsonOps.INSTANCE, new StoneProc()).getOrThrow();
+            check("processor.codec", pj.toString().contains("minecraft:cb_s26_stone")
+                && net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType.SINGLE_CODEC
+                    .parse(com.mojang.serialization.JsonOps.INSTANCE, pj).getOrThrow() instanceof StoneProc, pj);
+            SpyProc spy = new SpyProc();
+            var settings = new net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings()
+                .addProcessor(new StoneProc()).addProcessor(spy);
+            var raw = new net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo(
+                new net.minecraft.core.BlockPos(1, 2, 3), Blocks.DIRT.defaultBlockState(), null);
+            var out = net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.processBlockInfos(null,
+                new net.minecraft.core.BlockPos(100, 64, 100), net.minecraft.core.BlockPos.ZERO, settings, List.of(raw));
+            check("processor.original", out.size() == 1 && out.get(0).state().is(Blocks.STONE) && spy.seenOriginal == raw
+                && spy.seenCurrent != null && spy.seenCurrent.state().is(Blocks.STONE), spy.seenOriginal);
+            var prot = new net.minecraft.world.level.levelgen.structure.templatesystem.ProtectedBlockProcessor(net.minecraft.tags.BlockTags.FEATURES_CANNOT_REPLACE);
+            com.google.gson.JsonElement prj = net.minecraft.world.level.levelgen.structure.templatesystem.ProtectedBlockProcessor.CODEC
+                .codec().encodeStart(com.mojang.serialization.JsonOps.INSTANCE, prot).getOrThrow();
+            check("processor.protected", prot.cannotReplace == net.minecraft.tags.BlockTags.FEATURES_CANNOT_REPLACE
+                && prj.toString().contains("#minecraft:features_cannot_replace"), prj);
+        } catch (Throwable e) {
+            StringBuilder st = new StringBuilder(e.toString());
+            for (StackTraceElement el : e.getStackTrace()) {
+                if (el.getClassName().startsWith("cb.") || el.getClassName().contains("centurybridge")) {
+                    st.append(" @ ").append(el);
+                }
+            }
+            check("processor", false, st);
         }
 
         System.out.println("CB-S26 DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS: " + FAILS));
