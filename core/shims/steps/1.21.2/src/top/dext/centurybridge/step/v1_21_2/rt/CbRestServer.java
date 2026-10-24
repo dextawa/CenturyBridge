@@ -76,6 +76,19 @@ public final class CbRestServer {
      * same profiler.
      */
     public static net.minecraft.class_3695 profiler(net.minecraft.server.MinecraftServer server) {
+        if (server instanceof LegacyProfiler legacy) {
+            return legacy.method_16044();
+        }
+        return net.minecraft.class_10209.method_64146();
+    }
+
+    /** getProfiler() of a 1.21.1 MinecraftServer subclass that overrides it (1.21.2's is private) */
+    public interface LegacyProfiler {
+        net.minecraft.class_3695 method_16044();
+    }
+
+    /** MinecraftServer.getProfiler() itself, a 1.21.1 subclass's super call: the running thread's profiler */
+    public static net.minecraft.class_3695 superProfiler(net.minecraft.server.MinecraftServer server) {
         return net.minecraft.class_10209.method_64146();
     }
 
@@ -391,6 +404,19 @@ public final class CbRestServer {
      * lookup provider; a holder made of a plain provider has no registry access to answer
      */
     public static net.minecraft.class_5455.class_6890 holderRegistries(net.minecraft.class_9383.class_9385 holder) {
+        if (holder instanceof LegacyHolderGet legacy) {
+            return legacy.method_58289();
+        }
+        return superHolderRegistries(holder);
+    }
+
+    /** get() of a 1.21.1 ReloadableServerRegistries.Holder subclass that overrides it (1.21.2 has no get to override) */
+    public interface LegacyHolderGet {
+        net.minecraft.class_5455.class_6890 method_58289();
+    }
+
+    /** ReloadableServerRegistries.Holder.get() itself (also a 1.21.1 subclass's super call) */
+    public static net.minecraft.class_5455.class_6890 superHolderRegistries(net.minecraft.class_9383.class_9385 holder) {
         net.minecraft.class_7225.class_7874 registries = ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestRegistriesHolderAccessor) holder).cb$registries();
         if (registries instanceof net.minecraft.class_5455.class_6890 frozen) {
             return frozen;
@@ -631,5 +657,21 @@ public final class CbRestServer {
                 + " server: 1.21.2 parses advancements with the server's registries, and there is none");
         }
         return server.method_30611().method_57093(com.mojang.serialization.JsonOps.INSTANCE);
+    }
+
+    // ------------------------------------------------------------------ ServerGamePacketListener
+
+    /**
+     * handleClientTickEnd of a 1.21.1 class implementing ServerGamePacketListener (abstractFills): 1.21.1's client
+     * sent no such message, so a 1.21.1 listener receives nothing for it, as it did
+     */
+    public static void clientTickEnd(net.minecraft.class_2792 listener, net.minecraft.class_9836 packet) {
+    }
+
+    /**
+     * handleBundleItemSelectedPacket of a 1.21.1 class implementing ServerGamePacketListener (abstractFills): 1.21.1's
+     * client sent no such message (bundle item selection is 1.21.2's), so a 1.21.1 listener receives nothing for it
+     */
+    public static void selectBundleItem(net.minecraft.class_2792 listener, net.minecraft.class_9837 packet) {
     }
 }

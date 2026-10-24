@@ -1,0 +1,65 @@
+{
+ "classRenames": {
+  "net/minecraft/class_2838": "top/dext/centurybridge/step/v1_21_4/facade/ServerboundPickItemPacket",
+  "net/minecraft/class_10340": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropAdvancementProvider",
+  "net/minecraft/class_10341": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropAdventureAdvancements",
+  "net/minecraft/class_10342": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropBlockLoot",
+  "net/minecraft/class_10343": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropLootTableProvider",
+  "net/minecraft/class_10344": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropRecipeProvider",
+  "net/minecraft/class_10344$class_10345": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropRecipeProvider$Runner",
+  "net/minecraft/class_10346": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropRegistries",
+  "net/minecraft/class_10347": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropBiomeTagsProvider",
+  "net/minecraft/class_10348": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropBlockTagsProvider",
+  "net/minecraft/class_10349": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropEntityTypeTagsProvider",
+  "net/minecraft/class_10350": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropItemTagsProvider"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_9094.field_48096:Lnet/minecraft/class_9145;": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2792.method_12084(Lnet/minecraft/class_2838;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick",
+  "net/minecraft/class_3244.method_12084(Lnet/minecraft/class_2838;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick"
+ },
+ "superRedirects": {
+  "net/minecraft/class_3244.method_12084(Lnet/minecraft/class_2838;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick#superPickItem"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2792",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick$LegacyPickItem",
+   "requires": [
+    "method_12084(Lnet/minecraft/class_2838;)V"
+   ],
+   "synth": [],
+   "basis": "s9fin pick: a 1.21.3 ServerGamePacketListener (own implementation or ServerGamePacketListenerImpl subclass) declaring handlePickItem(ServerboundPickItemPacket): the packet's handle and every handlePickItem call reach it (CbFinPick.method_12084)"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_12084(Lnet/minecraft/class_10371;)V",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick.pickItemFromEntity(Lnet/minecraft/class_2792;Lnet/minecraft/class_10371;)V",
+   "basis": "s9fin pick: 1.21.4's handlePickItemFromEntity; the packet did not exist in 1.21.3 (its connection failed on an unknown id), so a 1.21.3 listener fails on it naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_65085(Lnet/minecraft/class_10370;)V",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick.pickItemFromBlock(Lnet/minecraft/class_2792;Lnet/minecraft/class_10370;)V",
+   "basis": "s9fin pick: 1.21.4's handlePickItemFromBlock; the packet did not exist in 1.21.3 (its connection failed on an unknown id), so a 1.21.3 listener fails on it naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_65306(Lnet/minecraft/class_10387;)V",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick.playerLoaded(Lnet/minecraft/class_2792;Lnet/minecraft/class_10387;)V",
+   "basis": "s9fin pick: 1.21.4's handleAcceptPlayerLoad; the packet did not exist in 1.21.3 (its connection failed on an unknown id), so a 1.21.3 listener fails on it naming the packet"
+  }
+ ],
+ "staticRedirects": {
+  "net/minecraft/data/Main.method_4968(Ljava/nio/file/Path;Ljava/util/Collection;ZZZZZLnet/minecraft/class_6489;Z)Lnet/minecraft/class_2403;": "top/dext/centurybridge/step/v1_21_4/rt/CbFinData"
+ },
+ "ledger": {
+  "net/minecraft/class_3270.method_14420": "not bridgeable without a general engine mechanism, for a mod class implementing 1.21.3's MetadataSectionType (interface, extends MetadataSectionSerializer): 1.21.4's class_7677 is a final record (name, codec), so the class cannot keep implementing it, and a stand-in interface splits the type -- the mod's instance meets class_7677-typed slots (its own fields and locals, the redirect statics of toJson/getMetadataSectionName/fromJson, PackMetadataGenerator.add) and fails verification. A whole-class classRename onto an interface facade does not work either: the converter's classRename remapper runs outermost, so it also renames 1.21.4's class_7677 in every synthesized override bridge (PackResources.getMetadataSection, ResourceMetadata.getSection, Builder.put) and they stop overriding. Every other use is bridged (CbRestMetadata: serializers, fromCodec records, vanilla section types, pack and builder overrides); the mod's own MetadataSectionSerializer implementations work through the facade. Proposed to main: a split-aware rename (own declarations and frames move to the facade, vanilla member references keep the record with converters at the boundary)",
+  "net/minecraft/class_3270.method_14421": "not bridgeable without a general engine mechanism, for a mod class implementing 1.21.3's MetadataSectionType (interface, extends MetadataSectionSerializer): 1.21.4's class_7677 is a final record (name, codec), so the class cannot keep implementing it, and a stand-in interface splits the type -- the mod's instance meets class_7677-typed slots (its own fields and locals, the redirect statics of toJson/getMetadataSectionName/fromJson, PackMetadataGenerator.add) and fails verification. A whole-class classRename onto an interface facade does not work either: the converter's classRename remapper runs outermost, so it also renames 1.21.4's class_7677 in every synthesized override bridge (PackResources.getMetadataSection, ResourceMetadata.getSection, Builder.put) and they stop overriding. Every other use is bridged (CbRestMetadata: serializers, fromCodec records, vanilla section types, pack and builder overrides); the mod's own MetadataSectionSerializer implementations work through the facade. Proposed to main: a split-aware rename (own declarations and frames move to the facade, vanilla member references keep the record with converters at the boundary)",
+  "net/minecraft/class_3999.method_18130": "not bridgeable without a general engine mechanism, for a mod class implementing 1.21.3's ParticleRenderType (interface): 1.21.4's class_3999 is a final record (name, RenderType) that no class can implement, and the mod's instance meets class_3999-typed slots everywhere it is used (Particle.getRenderType overrides, its own static fields), so a stand-in interface fails verification (the type split the s9fin MetadataSectionType entry describes; same proposed mechanism). Calls of begin(tesselator, textureManager) on 1.21.4's vanilla types are bridged (CbClientRest.method_18130). Note that 1.21.3's ParticleEngine rendered only its RENDER_ORDER types, so a custom type also depended on the mod's own ParticleEngine mixin"
+ }
+}

@@ -15,8 +15,14 @@ import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemStack;
 import net.fabricmc.fabric.api.item.v1.FabricTooltipFlag;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.tag.v1.FabricTagFile;
 import net.minecraft.class_12279;
+import net.minecraft.class_1646;
+import net.minecraft.class_1914;
+import net.minecraft.class_3852;
+import net.minecraft.class_3853;
+import net.minecraft.class_9306;
 import net.minecraft.class_1269;
 import net.minecraft.class_1799;
 import net.minecraft.class_1802;
@@ -76,6 +82,8 @@ public class SwfapiTestMod implements ModInitializer {
 
         ServerChunkEvents.CHUNK_LOAD.register((level, chunk) -> CHUNK_LOADS.incrementAndGet());
 
+        registerTrades();
+
         ServerLifecycleEvents.SERVER_STARTED.register(server -> run(server, rule, category));
     }
 
@@ -116,10 +124,79 @@ public class SwfapiTestMod implements ModInitializer {
             check(((FabricItem) class_1802.field_20391).getRecipeRemainder(new class_1799(class_1802.field_20391)).method_7960(), "item: stone has an empty remainder");
 
             check(!((FabricTooltipFlag) (Object) class_1836.field_41070).shouldDisplayAllInformation(), "tooltip flag: vanilla NORMAL does not display all information");
+
+            trades(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check(false, "threw " + t);
         }
         System.out.println("CB-SWFAPI DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED: " + FAILS));
+    }
+
+    // ---- villager trades (VillagerTrades tables, TradeOfferHelper) ----
+
+    /** dirt -> stone: no vanilla trade has it */
+    static final class_3853.class_1652 FARMER_MINE = (level, trader, random) ->
+        new class_1914(new class_9306(class_1802.field_8831, 1), new class_1799(class_1802.field_20391), 12, 1, 0.05F);
+    /** bucket -> milk bucket: the fisherman's only level-1 listing (the vanilla ones replaced) */
+    static final class_3853.class_1652 FISHERMAN_ONLY = (level, trader, random) ->
+        new class_1914(new class_9306(class_1802.field_8550, 1), new class_1799(class_1802.field_8103), 12, 1, 0.05F);
+    /** dirt -> milk bucket, added to the wandering trader's buy pool */
+    static final class_3853.class_1652 WANDERING_MINE = (level, trader, random) ->
+        new class_1914(new class_9306(class_1802.field_8831, 2), new class_1799(class_1802.field_8103), 12, 1, 0.05F);
+    static boolean placeholderAtInit;
+
+    static void registerTrades() {
+        it.unimi.dsi.fastutil.ints.Int2ObjectMap<class_3853.class_1652[]> farmer = class_3853.field_17067.get(class_3852.field_17056);
+        placeholderAtInit = farmer != null && farmer.get(1) != null && farmer.get(1).length >= 1;
+        TradeOfferHelper.registerVillagerOffers(class_3852.field_17056, 1, list -> list.add(FARMER_MINE));
+        class_3853.field_17067.get(class_3852.field_17057).put(1, new class_3853.class_1652[] {FISHERMAN_ONLY});
+        TradeOfferHelper.registerWanderingTraderOffers(builder -> builder
+            .addOffersToPool(TradeOfferHelper.WanderingTraderOffersBuilder.BUY_ITEMS_POOL, WANDERING_MINE)
+            .pool(id("pool"), 1, WANDERING_MINE));
+    }
+
+    static class_1646 villager(net.minecraft.class_3218 level, net.minecraft.class_5321<class_3852> profession) {
+        class_1646 villager = (class_1646) net.minecraft.class_1299.field_6077.method_5883(level, net.minecraft.class_3730.field_16462);
+        class_6880<class_3852> holder = class_7923.field_41195.method_47983(class_7923.field_41195.method_31140(profession));
+        villager.method_7195(villager.method_7231().method_16921(holder).method_16920(1));
+        return villager;
+    }
+
+    static void trades(MinecraftServer server) {
+        net.minecraft.class_3218 level = server.method_30002();
+        check(placeholderAtInit, "trades: the farmer's level-1 listings exist in an initializer, before any registry");
+        class_3853.class_1652[] farmer = class_3853.field_17067.get(class_3852.field_17056).get(1);
+        boolean mine = false;
+        int vanillaOffers = 0;
+        class_1646 probe = villager(level, class_3852.field_17056);
+        for (class_3853.class_1652 listing : farmer) {
+            if (listing == FARMER_MINE) {
+                mine = true;
+            } else if (listing.method_7246(level, probe, level.method_8409()) != null) {
+                vanillaOffers++;
+            }
+        }
+        check(mine && farmer.length >= 3, "trades: farmer level 1 holds TradeOfferHelper's listing and the expanded vanilla ones (" + farmer.length + ")");
+        check(vanillaOffers >= 2, "trades: the vanilla farmer listings make offers from 26.1's data (" + vanillaOffers + ")");
+        boolean picked = false;
+        boolean twoEach = true;
+        for (int i = 0; i < 80 && !picked; i++) {
+            net.minecraft.class_1916 offers = villager(level, class_3852.field_17056).method_8264();
+            twoEach &= offers.size() == 2;
+            for (class_1914 offer : offers) {
+                picked |= offer.method_8250().method_31574(class_1802.field_20391);
+            }
+        }
+        check(twoEach, "trades: every new farmer gets two level-1 offers");
+        check(picked, "trades: a farmer picked TradeOfferHelper's listing from the table");
+        net.minecraft.class_1916 fisher = villager(level, class_3852.field_17057).method_8264();
+        check(fisher.size() == 1 && fisher.get(0).method_8250().method_31574(class_1802.field_8103),
+            "trades: the fisherman's level 1 replaced in TRADES offers only the mod's listing (" + fisher.size() + ")");
+        check(class_3853.field_17724.size() == 4 && java.util.Arrays.asList(class_3853.field_17724.get(0).getLeft()).contains(WANDERING_MINE),
+            "trades: wandering pools are buy / special / common + the mod's, the buy pool holds the added listing");
+        net.minecraft.class_3989 trader = (net.minecraft.class_3989) net.minecraft.class_1299.field_17713.method_5883(level, net.minecraft.class_3730.field_16462);
+        int count = trader.method_8264().size();
+        check(count == 10, "trades: a wandering trader gets 2 + 2 + 5 + 1 offers (" + count + ")");
     }
 }

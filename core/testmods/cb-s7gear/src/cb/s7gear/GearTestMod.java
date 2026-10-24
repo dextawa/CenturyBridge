@@ -174,6 +174,9 @@ public class GearTestMod implements ModInitializer {
             types();
             recipes(server);
             recipeClasses(server);
+            serializers(server);
+            cookingBytes(server);
+            recipeManager(server);
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -436,5 +439,99 @@ public class GearTestMod implements ModInitializer {
         class_2960 id = class_2960.method_60655("cbs7gear", "holder");
         check(id.equals(new class_8786<>(id, shapeless).comp_1932()), "RecipeHolder(id, recipe).id() = id");
         check(net.minecraft.class_7709.field_40245 != null, "CookingBookCategory.CODEC");
+    }
+
+    /** 1.21.1's recipe classes and serializers 1.21.2 removed, CraftingInput.stackedContents */
+    static void serializers(MinecraftServer server) {
+        net.minecraft.class_1871 coloring = new net.minecraft.class_1871(net.minecraft.class_7710.field_40251);
+        net.minecraft.class_9694 in = net.minecraft.class_9694.method_59986(2, 1,
+            List.of(new class_1799(class_1802.field_8545), new class_1799(class_1802.field_8264)));
+        check(coloring.method_17734(in, server.method_30002()), "ShulkerBoxColoring matches box + dye");
+        check(coloring.method_17733(in, server.method_30611()).method_31574(net.minecraft.class_2246.field_10068.method_8389()),
+            "ShulkerBoxColoring assembles the red box: " + coloring.method_17733(in, server.method_30611()));
+        check(coloring.method_8119() == net.minecraft.class_1865.field_9041
+            && class_2960.method_60656("crafting_special_shulkerboxcoloring").equals(class_7923.field_41189.method_10221(net.minecraft.class_1865.field_9041)),
+            "RecipeSerializer.SHULKER_BOX_COLORING registered under 1.21.1's id");
+        net.minecraft.class_1874 smelt = ((net.minecraft.class_3957<?>) net.minecraft.class_1865.field_9042).method_55104("", net.minecraft.class_7709.field_40244,
+            class_1856.method_8091(class_1802.field_20412), new class_1799(class_1802.field_20391), 0.1F, 200);
+        check(smelt.method_17716() == net.minecraft.class_3956.field_17546, "SimpleCookingSerializer.create on SMELTING_RECIPE: a smelting recipe");
+        net.minecraft.class_3957<TestCooking> own = new net.minecraft.class_3957<>((g, c, i, r, x, t) -> new TestCooking(), 100);
+        check(own.method_55104("", net.minecraft.class_7709.field_40244, class_1856.method_8091(class_1802.field_20412),
+            new class_1799(class_1802.field_20391), 0.1F, 100) instanceof TestCooking, "own SimpleCookingSerializer.create uses its factory");
+        net.minecraft.class_1662 contents = in.method_59988();
+        check(contents == in.method_59988() && contents.field_7550.size() == 2, "CraftingInput.stackedContents: one per input, two items");
+    }
+
+    /** what 1.21.1's SimpleCookingSerializer wrote: group, category (enum ordinal), ingredient, result, experience, time */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    static byte[] v1211Bytes(MinecraftServer server, class_1874 r, boolean intTime) {
+        net.minecraft.class_9129 buf = new net.minecraft.class_9129(io.netty.buffer.Unpooled.buffer(), server.method_30611());
+        buf.method_10814(r.method_8112());
+        buf.method_10817(r.method_45438());
+        ((net.minecraft.class_9139) class_1856.field_48355).encode(buf, r.method_8117().get(0));
+        ((net.minecraft.class_9139) class_1799.field_48349).encode(buf, r.method_8110(server.method_30611()));
+        buf.writeFloat(r.method_8171());
+        if (intTime) {
+            buf.writeInt(r.method_8167());
+        } else {
+            buf.method_10804(r.method_8167());
+        }
+        byte[] out = new byte[buf.readableBytes()];
+        buf.readBytes(out);
+        return out;
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    static void roundTrip(MinecraftServer server, String what, net.minecraft.class_9139 codec, class_1874 r, boolean intTime) {
+        byte[] expected = v1211Bytes(server, r, intTime);
+        net.minecraft.class_9129 buf = new net.minecraft.class_9129(io.netty.buffer.Unpooled.buffer(), server.method_30611());
+        codec.encode(buf, r);
+        byte[] written = new byte[buf.readableBytes()];
+        buf.getBytes(buf.readerIndex(), written);
+        check(java.util.Arrays.equals(expected, written), what + (intTime ? ": the serializer writes 1.21.1's fields, the cooking time as 1.21.2's int: " : ": the serializer writes 1.21.1's bytes: ") + java.util.HexFormat.of().formatHex(written)
+            + (java.util.Arrays.equals(expected, written) ? "" : " vs 1.21.1 " + java.util.HexFormat.of().formatHex(expected)));
+        net.minecraft.class_9129 in = new net.minecraft.class_9129(io.netty.buffer.Unpooled.wrappedBuffer(expected), server.method_30611());
+        class_1874 back = (class_1874) codec.decode(in);
+        check(back.method_8112().equals(r.method_8112()) && back.method_45438() == r.method_45438()
+            && back.method_8171() == r.method_8171() && back.method_8167() == r.method_8167()
+            && class_1799.method_7973(back.method_8110(server.method_30611()), r.method_8110(server.method_30611()))
+            && in.readableBytes() == 0, what + ": the bytes read back to the same recipe");
+    }
+
+    static void cookingBytes(MinecraftServer server) {
+        net.minecraft.class_3861 vanilla = null;
+        for (class_8786<?> h : server.method_3772().method_8126()) {
+            if (h.comp_1933() instanceof net.minecraft.class_3861 s) {
+                vanilla = s;
+                break;
+            }
+        }
+        check(vanilla != null, "found a vanilla smelting recipe");
+        if (vanilla != null) {
+            roundTrip(server, "vanilla smelting", net.minecraft.class_1865.field_9042.method_56104(), vanilla, true);
+        }
+        net.minecraft.class_3957<TestCooking> own = new net.minecraft.class_3957<>((g, c, i, r, x, t) -> new TestCooking(), 100);
+        roundTrip(server, "mod cooking", own.method_56104(), new TestCooking(), false);
+    }
+
+    /** 1.21.1's RecipeManager members */
+    static void recipeManager(MinecraftServer server) {
+        net.minecraft.class_1863 rm = server.method_3772();
+        net.minecraft.class_3218 level = server.method_30002();
+        List<class_8786<net.minecraft.class_3861>> smelting = rm.method_30027(net.minecraft.class_3956.field_17546);
+        check(!smelting.isEmpty(), "getAllRecipesFor(SMELTING): " + smelting.size());
+        class_2960 id = smelting.get(0).comp_1932();
+        check(rm.method_8130(id).isPresent(), "byKey(id) of a smelting recipe");
+        check(rm.method_8127().count() == rm.method_59822().size() && rm.method_8127().anyMatch(id::equals), "getRecipeIds = getOrderedRecipes ids");
+        check(!rm.method_35227(), "hasErrors false");
+        net.minecraft.class_9696 cobble = new net.minecraft.class_9696(new class_1799(class_1802.field_20412));
+        List<class_8786<net.minecraft.class_3861>> found = rm.method_17877(net.minecraft.class_3956.field_17546, cobble, level);
+        check(found.size() == 1 && found.get(0).comp_1933().method_8110(server.method_30611()).method_31574(class_1802.field_20391),
+            "getRecipesFor(SMELTING, cobblestone) = the stone recipe");
+        check(rm.method_42299(net.minecraft.class_3956.field_17546, cobble, level, found.get(0).comp_1932()).isPresent(),
+            "getRecipeFor(.., last id)");
+        net.minecraft.class_1863.class_7266<net.minecraft.class_9696, net.minecraft.class_3861> check = net.minecraft.class_1863.method_42302(net.minecraft.class_3956.field_17546);
+        check(check.method_42303(cobble, level).isPresent() && check.method_42303(cobble, level).isPresent(), "createCheck(SMELTING).getRecipeFor twice");
+        check(rm.method_8128(net.minecraft.class_3956.field_17546, cobble, level).size() == 1, "getRemainingItemsFor: one slot");
     }
 }

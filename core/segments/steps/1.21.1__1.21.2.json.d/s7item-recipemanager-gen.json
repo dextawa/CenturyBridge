@@ -1,0 +1,132 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_1863.method_35227()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863.method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863.method_30027(Lnet/minecraft/class_3956;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863.method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863.method_8128(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863.method_8130(Lnet/minecraft/class_2960;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863.method_59822()Ljava/util/Collection;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863.method_8127()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863.method_20702(Ljava/lang/Iterable;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863.method_20705(Ljava/util/Map;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863$class_7266.method_42303(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1863.method_35227()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#super_method_35227",
+  "net/minecraft/class_1863.method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#super_method_42299",
+  "net/minecraft/class_1863.method_30027(Lnet/minecraft/class_3956;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#super_method_30027",
+  "net/minecraft/class_1863.method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#super_method_17877",
+  "net/minecraft/class_1863.method_8128(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#super_method_8128",
+  "net/minecraft/class_1863.method_8130(Lnet/minecraft/class_2960;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#super_method_8130",
+  "net/minecraft/class_1863.method_59822()Ljava/util/Collection;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#super_method_59822",
+  "net/minecraft/class_1863.method_8127()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#super_method_8127",
+  "net/minecraft/class_1863.method_20702(Ljava/lang/Iterable;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#super_method_20702",
+  "net/minecraft/class_1863.method_20705(Ljava/util/Map;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#super_method_20705"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1863.method_17720(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_8786;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager",
+  "net/minecraft/class_1863.method_42302(Lnet/minecraft/class_3956;)Lnet/minecraft/class_1863$class_7266;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_20705(Ljava/util/Map;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V",
+   "new": "method_20705(Lnet/minecraft/class_10289;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V",
+   "onlyUnder": "net/minecraft/class_1863",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyApply",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager.apply(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyApply;Lnet/minecraft/class_10289;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "a 1.21.1 RecipeManager subclass's apply(Map<id, json>, ..): 1.21.2 applies a parsed RecipeMap; the override gets those recipes as JSON (encoded back with the recipe codec)"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1863",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyHasErrors",
+   "requires": [
+    "method_35227()Z"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 RecipeManager subclass overriding method_35227: calls of it reach the override (CbItemRecipeManager)"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyRecipeForLast",
+   "requires": [
+    "method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 RecipeManager subclass overriding method_42299: calls of it reach the override (CbItemRecipeManager)"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyAllRecipesFor",
+   "requires": [
+    "method_30027(Lnet/minecraft/class_3956;)Ljava/util/List;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 RecipeManager subclass overriding method_30027: calls of it reach the override (CbItemRecipeManager)"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyRecipesFor",
+   "requires": [
+    "method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/List;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 RecipeManager subclass overriding method_17877: calls of it reach the override (CbItemRecipeManager)"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyRemainingFor",
+   "requires": [
+    "method_8128(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Lnet/minecraft/class_2371;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 RecipeManager subclass overriding method_8128: calls of it reach the override (CbItemRecipeManager)"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyByKey",
+   "requires": [
+    "method_8130(Lnet/minecraft/class_2960;)Ljava/util/Optional;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 RecipeManager subclass overriding method_8130: calls of it reach the override (CbItemRecipeManager)"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyOrdered",
+   "requires": [
+    "method_59822()Ljava/util/Collection;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 RecipeManager subclass overriding method_59822: calls of it reach the override (CbItemRecipeManager)"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyIds",
+   "requires": [
+    "method_8127()Ljava/util/stream/Stream;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 RecipeManager subclass overriding method_8127: calls of it reach the override (CbItemRecipeManager)"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyReplace",
+   "requires": [
+    "method_20702(Ljava/lang/Iterable;)V"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 RecipeManager subclass overriding method_20702: calls of it reach the override (CbItemRecipeManager)"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/minecraft/class_1863$class_7266.method_42303(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/Optional;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyCachedCheck",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#fromLambda(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager$LegacyCachedCheck;)Lnet/minecraft/class_1863$class_7266;",
+   "basis": "a 1.21.1 CachedCheck lambda answers getRecipeFor(input, Level); 1.21.2 asks with a ServerLevel"
+  }
+ }
+}

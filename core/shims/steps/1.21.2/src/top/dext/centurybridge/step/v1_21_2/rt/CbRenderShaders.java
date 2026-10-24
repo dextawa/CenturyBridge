@@ -97,6 +97,9 @@ public final class CbRenderShaders {
             return null;
         }
         net.minecraft.class_10156 key = CbRenderShadersGen.byName(name);
+        if (key == null) {
+            key = CbRenderTypes.byName(name);
+        }
         return key == null ? null : program(key);
     }
 }

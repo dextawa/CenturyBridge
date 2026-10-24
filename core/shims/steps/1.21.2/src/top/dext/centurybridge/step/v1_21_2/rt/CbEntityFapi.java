@@ -93,6 +93,15 @@ public final class CbEntityFapi {
         return (previous, converted, params) -> legacy.onConversion(previous, converted, params.comp_3145());
     }
 
+    /**
+     * A mod FakePlayer subclass's super.isInvulnerableTo(source): Fabric API's FakePlayer answers true, both
+     * 1.21.1's isInvulnerableTo(source) and 1.21.2's isInvulnerableTo(level, source) (bytecode: iconst_1; ireturn).
+     * The override hook's super bridge only serves super calls naming a vanilla class.
+     */
+    public static boolean superFakePlayerInvulnerable(net.fabricmc.fabric.api.entity.FakePlayer player, net.minecraft.class_1282 source) {
+        return true;
+    }
+
     private CbEntityFapi() {
     }
 }

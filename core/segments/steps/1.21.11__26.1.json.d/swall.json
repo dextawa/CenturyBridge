@@ -91,7 +91,8 @@
   "net/minecraft/class_1309.method_18867(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#entityMakeBrain",
   "net/minecraft/class_4095$class_5303.method_28335(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#providerMakeBrain",
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive",
-  "net/minecraft/class_766.method_71651(Lnet/minecraft/class_1060;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#registerTextures"
+  "net/minecraft/class_766.method_71651(Lnet/minecraft/class_1060;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#registerTextures",
+  "net/minecraft/class_5219.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getGameRules"
  },
  "overrideHooks": [
   {
@@ -167,6 +168,59 @@
    "0": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#mouseX(Lnet/minecraft/class_332;)I",
    "1": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#mouseY(Lnet/minecraft/class_332;)I",
    "2": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#partialTick()F"
+  },
+  "method_18881(Lnet/minecraft/class_4168;Lcom/google/common/collect/ImmutableList;)V": {
+   "2": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#noConditions()Ljava/util/Set;",
+   "3": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#noMemoriesToErase()Ljava/util/Set;"
+  },
+  "method_7205(F)V": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#zombieAttributesReason()Lnet/minecraft/class_3730;"
+  },
+  "method_60984(Z)V": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#currentImpulseImpactPos(Lnet/minecraft/class_1657;)Lnet/minecraft/class_243;"
+  },
+  "method_76729(Lnet/minecraft/class_238;D)Z": {
+   "0": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#activeItem(Lnet/minecraft/class_1657;)Lnet/minecraft/class_1799;"
+  },
+  "method_12970(Lnet/minecraft/class_2960;Lnet/minecraft/class_2561;)Lnet/minecraft/class_3002;": {
+   "0": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#bossEventRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_36233(Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;)V": {
+   "2": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#smeltingCategory(Ljava/lang/Object;Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;)Lnet/minecraft/class_7709;"
+  },
+  "method_36234(Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;)V": {
+   "2": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#blastingCategory(Ljava/lang/Object;Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;)Lnet/minecraft/class_7709;"
+  },
+  "method_49798(Lnet/minecraft/class_1937;Lnet/minecraft/class_2625;ZLnet/minecraft/class_1657;)Z": {
+   "3": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#applicatorStack(Ljava/lang/Object;Lnet/minecraft/class_1937;Lnet/minecraft/class_2625;ZLnet/minecraft/class_1657;)Lnet/minecraft/class_1799;"
+  },
+  "method_49801(Lnet/minecraft/class_8242;Lnet/minecraft/class_1657;)Z": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#applicatorStack(Ljava/lang/Object;Lnet/minecraft/class_8242;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1799;"
+  },
+  "method_23455(Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": {
+   "0": "zero: 1.21.11's providers had no level, and 26.1's that existed then never read it (RandomizedIntStateProvider only hands it to its source provider); RuleBasedStateProvider, which does, is new in 26.1 and no 1.21.11 class extends it"
+  },
+  "method_36425()Lnet/minecraft/class_4184$class_6355;": {
+   "0": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#fov()F"
+  },
+  "method_19661(Ljava/lang/String;Z)V": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#devices()Lcom/mojang/blaze3d/audio/DeviceList;"
+  },
+  "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;)V": {
+   "2": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)",
+   "3": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)",
+   "4": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)",
+   "5": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)",
+   "6": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#textureWidth(Ljava/lang/Object;Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;)I",
+   "7": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#textureHeight(Ljava/lang/Object;Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;)I",
+   "8": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)",
+   "9": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)"
+  },
+  "method_29610(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Z)V": {
+   "3": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#noGameRules()Ljava/util/Optional;"
+  },
+  "method_22752(Lnet/minecraft/class_638;)V": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#sectionCompiler(Lnet/minecraft/class_846;)Lnet/minecraft/class_9810;"
   }
  },
  "overrideRenames": [
@@ -622,7 +676,9 @@
   "net/minecraft/class_765.field_32767:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
   "net/minecraft/class_765.field_32768:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
   "net/minecraft/class_765.field_32769:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
-  "net/minecraft/class_757.field_32686:F": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer"
+  "net/minecraft/class_757.field_32686:F": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer",
+  "net/minecraft/class_31.field_31843:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
+  "net/minecraft/class_31.field_36349:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData"
  },
  "abstractFills": [
   {

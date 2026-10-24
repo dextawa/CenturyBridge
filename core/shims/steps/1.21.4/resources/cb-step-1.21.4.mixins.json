@@ -38,6 +38,7 @@
     "CbFapiItemResolverMixin",
     "CbFapiItemStateMixin",
     "CbFapiPickMixin",
+    "CbFinPickSendMixin",
     "CbGuiRecipeCollectionMixin",
     "CbGuiScrollAreaAccess",
     "CbGuiScrollListMixin",

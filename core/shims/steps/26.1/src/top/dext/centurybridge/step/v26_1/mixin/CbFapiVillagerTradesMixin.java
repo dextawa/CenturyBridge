@@ -1,0 +1,44 @@
+package top.dext.centurybridge.step.v26_1.mixin;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.SharedConstants;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.villager.VillagerData;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.dext.centurybridge.step.v26_1.facade.VillagerTrades;
+import top.dext.centurybridge.step.v26_1.rt.CbFapiTrades;
+
+/** 1.21.11's Villager.updateTrades: two distinct listings of the villager's level from 1.21.11's tables (rt/CbFapiTrades) */
+@Mixin(Villager.class)
+public abstract class CbFapiVillagerTradesMixin {
+    @Shadow
+    public abstract VillagerData getVillagerData();
+
+    @Shadow
+    private void increaseMerchantCareer(ServerLevel level) {
+    }
+
+    @Inject(method = "updateTrades", at = @At("HEAD"), cancellable = true)
+    private void cb$legacyTrades(ServerLevel level, CallbackInfo ci) {
+        ci.cancel();
+        Villager self = (Villager) (Object) this;
+        VillagerData data = getVillagerData();
+        Int2ObjectMap<VillagerTrades.ItemListing[]> levels = CbFapiTrades.villagerLevels(level, data.profession());
+        if (levels == null || levels.isEmpty()) {
+            return;
+        }
+        VillagerTrades.ItemListing[] listings = levels.get(data.level());
+        if (listings == null) {
+            return;
+        }
+        CbFapiTrades.addOffersFromItemListings(level, self, self.getOffers(), listings, 2);
+        if (SharedConstants.DEBUG_UNLOCK_ALL_TRADES && data.level() < levels.size()) {
+            increaseMerchantCareer(level);
+        }
+    }
+}

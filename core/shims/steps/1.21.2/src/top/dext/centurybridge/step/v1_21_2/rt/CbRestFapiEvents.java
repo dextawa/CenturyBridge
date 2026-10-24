@@ -105,38 +105,6 @@ public final class CbRestFapiEvents {
         return CbItemResults.holder(callback.interact(player, level, hand), player, hand);
     }
 
-    // ------------------------------------------------------------------ ServerLivingEntityEvents.MobConversion
-
-    /**
-     * ServerLivingEntityEvents.MobConversion of 1.21.1's Fabric API: (previous, converted, keepEquipment);
-     * 0.106.1 hands the conversion's ConversionParams, whose keepEquipment is 1.21.1's flag.
-     */
-    @FunctionalInterface
-    public interface LegacyMobConversion {
-        void onConversion(net.minecraft.class_1308 previous, net.minecraft.class_1308 converted, boolean keepEquipment);
-    }
-
-    /** a 1.21.1 MobConversion lambda as 0.106.1's callback (lambdaAdapters) */
-    public static net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents.MobConversion mobConversion(LegacyMobConversion legacy) {
-        return (previous, converted, params) -> legacy.onConversion(previous, converted, params.comp_3145());
-    }
-
-    /** 0.106.1's onConversion of a 1.21.1 MobConversion class (override hook bridge) */
-    public static void mobConversion(LegacyMobConversion legacy, net.minecraft.class_1308 previous, net.minecraft.class_1308 converted,
-                                     net.minecraft.class_10179 params) {
-        legacy.onConversion(previous, converted, params.comp_3145());
-    }
-
-    /**
-     * callback.onConversion(previous, converted, keepEquipment) called by a 1.21.1 mod: 0.106.1's callback with
-     * the parameters of 1.21.1's Mob.convertTo -- a single conversion keeping the equipment as asked, the
-     * converted mob taking the previous one's loot pickup and team (1.21.1's convertTo copied both)
-     */
-    public static void onConversion(net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents.MobConversion callback,
-                                    net.minecraft.class_1308 previous, net.minecraft.class_1308 converted, boolean keepEquipment) {
-        callback.onConversion(previous, converted, net.minecraft.class_10179.method_63607(previous, keepEquipment, true));
-    }
-
     /** the level type 0.116 last reported for a chunk holder (CbRestFapiChunkHolderMixin) */
     public interface LevelTypeTracker {
         class_3194 cb$getCurrentEventLevelType();

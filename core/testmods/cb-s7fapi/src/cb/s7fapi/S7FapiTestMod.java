@@ -2,6 +2,10 @@ package cb.s7fapi;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentTarget;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.registry.FabricRegistry;
@@ -55,6 +59,11 @@ public class S7FapiTestMod implements ModInitializer {
         ((FabricRegistry) class_7923.field_41178).addAlias(old, class_2960.method_60655("minecraft", "stone"));
         check(class_7923.field_41178.method_10250(old), "an alias id is contained after addAlias");
 
+        AttachmentType<Integer> synced = AttachmentRegistry.<Integer>create(class_2960.method_60655("cb_s7fapi", "synced"),
+            builder -> builder.syncWith(net.minecraft.class_9135.field_49675.method_56430(), AttachmentSyncPredicate.all()));
+        AttachmentType<Integer> plain = AttachmentRegistry.create(class_2960.method_60655("cb_s7fapi", "plain"));
+        check(synced.isSynced() && !plain.isSynced(), "a type built with syncWith is synced, a plain one is not");
+
         check(class_2960.method_60656("tags").equals(ResourceReloadListenerKeys.TAGS), "ResourceReloadListenerKeys.TAGS is minecraft:tags");
 
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
@@ -63,6 +72,10 @@ public class S7FapiTestMod implements ModInitializer {
             class_6862<net.minecraft.class_1792> tag = class_6862.method_40092(class_7924.field_41197, class_2960.method_60655("cb_s7fapi", "test"));
             check(class_1802.field_20391.method_40131().method_40220(tag), "the tag keeps stone");
             check(!class_1802.field_8831.method_40131().method_40220(tag), "fabric:remove took dirt out of the tag");
+            AttachmentTarget world = (AttachmentTarget) server.method_30002();
+            world.setAttached(synced, 5);
+            world.modifyAttached(synced, v -> v + 2);
+            check(Integer.valueOf(7).equals(world.getAttached(synced)), "set and modify a synced attachment on the overworld (" + world.getAttached(synced) + ")");
             System.out.println("CB-FAPITEST DONE " + passed + "/" + checks);
         });
     }
