@@ -88,7 +88,7 @@ public final class MixinRepair {
         this.code = new ZipFile(codeJar.toFile());
     }
 
-    ClassNode target(String owner) {
+    public ClassNode target(String owner) {
         return cache.computeIfAbsent(owner, o -> {
             try {
                 ZipEntry e = code.getEntry(o + ".class");

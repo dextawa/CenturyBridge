@@ -49,6 +49,7 @@ public final class Main {
             case "mixin-probe" -> top.dext.centurybridge.data.MixinProbe.run(args);
             case "mixin-judge" -> top.dext.centurybridge.engine.MixinJudge.run(args);
             case "mixin-cause" -> top.dext.centurybridge.data.MixinCause.run(args);
+            case "gen-mixin-targets" -> top.dext.centurybridge.data.GenMixinTargets.run(args);
             // access-diff <oldStub> <newStub> [<wall.tsv>] [<shims-ver.json>] <out.aw>
             case "access-diff" -> top.dext.centurybridge.data.AccessDiff.run(args);
             case "gen-renames" -> {
@@ -255,6 +256,16 @@ public final class Main {
                 chain.bridgeCode = new top.dext.centurybridge.engine.MixinRepair(
                     top.dext.centurybridge.engine.WallInverse.intermediaryView(code, vCode, renameTable));
                 chain.sourceCode = new top.dext.centurybridge.engine.MixinRepair(vCode);
+            }
+            // and past the wall, the injectors are judged in 26.1's names: 1.21.11's bodies renamed through the
+            // same wall table give the repair V's sites to match (ordinal-remap, sites-split, descend-site), as
+            // chain.sourceCode does on every other step
+            if (wallRepair != null && Files.exists(vCode)) {
+                Path vWall = Files.createTempFile("cb-wall-vcode-", ".jar");
+                vWall.toFile().deleteOnExit();
+                top.dext.centurybridge.data.JarRemapper.remapWithTable(renameTable, vCode, vWall, code);
+                wallRepair.source = new top.dext.centurybridge.engine.MixinRepair(vWall);
+                System.out.println("mixin anchors past the wall: V sites from " + vCode + " renamed through " + renameTable);
             }
         }
         java.util.Map<String, Integer> verdicts = new java.util.TreeMap<>();

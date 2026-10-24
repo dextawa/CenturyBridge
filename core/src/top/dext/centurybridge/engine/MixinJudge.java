@@ -97,6 +97,7 @@ public final class MixinJudge {
     /** V's code (--source): an ordinal-pinned anchor is judged by whether it names V's site's counterpart */
     private MixinRepair source;
     /** the probe row being judged, as V had it (index columns owner, target, anchor, ordinal) */
+    private final Map<String, String[]> sourceRows = new HashMap<>();
     private String rowOwner;
     private String rowTarget;
     private String rowAnchor;
@@ -117,6 +118,13 @@ public final class MixinJudge {
                 j.loadExtra(Path.of(args[++i]));
             } else if (args[i].equals("--source")) {
                 j.source = new MixinRepair(Path.of(args[++i]));
+            } else if (args[i].equals("--source-index")) {
+                // the index in the source code's names (past the wall: wall_index.py), row for row
+                List<String> si = Files.readAllLines(Path.of(args[++i]), StandardCharsets.UTF_8);
+                for (int k = 1; k < si.size(); k++) {
+                    String[] r = si.get(k).split("	", -1);
+                    j.sourceRows.put(r[0] + "	" + r[1], r);
+                }
             } else if (args[i].equals("--keys")) {
                 keys = new HashSet<>();
                 List<String> lines = Files.readAllLines(Path.of(args[++i]), StandardCharsets.UTF_8);
@@ -156,9 +164,10 @@ public final class MixinJudge {
                         String name = r[1].substring(0, r[1].indexOf('('));
                         // the mixin's own target as it stands now (a class rename moves it), else V's owner
                         List<String> ts = MixinRepair.mixinTargets(mx, j.refmap(mx));
-                        j.rowOwner = r[3];
-                        j.rowTarget = r[4];
-                        j.rowAnchor = r[5];
+                        String[] sr = j.sourceRows.getOrDefault(r[0] + "	" + r[1], r);
+                        j.rowOwner = sr[3];
+                        j.rowTarget = sr[4];
+                        j.rowAnchor = sr[5];
                         j.rowOrdinal = Integer.parseInt(r[6]);
                         why = j.judgeMember(mx, ts.size() == 1 ? ts.get(0) : r[3], name, Integer.parseInt(r[7]), new HashSet<>());
                     }

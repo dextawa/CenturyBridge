@@ -63,6 +63,10 @@ WIRING="$WD/core/segments/steps/$SEG.json"
 # --source: an ordinal-pinned anchor W holds another number of times is judged by whether it names the
 # counterpart of the V site (same namespace on both sides: not at the wall)
 SRC=(); [ -z "$WALL" ] && SRC=(--source "$(code_of "$V")")
+# at the wall: V's code and the probe index in 26.1's names (the wall table renames both as it renames mods)
+if [ -n "$WALL" ]; then
+    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main remap-mojang "$WALL" "$(code_of "$V")" "$OUT/mixin/vcode-wall.jar"         > "$OUT/mixin/vwall.log" 2>&1         && python3 "$WD/core/tools/wall_index.py" "$WALL" "$OUT/mixin/mprobe-$V.jar.index.tsv" "$OUT/mixin/index-wall.tsv"         && SRC=(--source "$OUT/mixin/vcode-wall.jar" --source-index "$OUT/mixin/index-wall.tsv")
+fi
 "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-judge "$(code_of "$W")" "$(ls "$OUT"/mixin/conv/*.jar | head -1)" \
     "$OUT/mixin/mprobe-$V.jar.index.tsv" "$OUT/mixin/judged.tsv" --layer "$WD/build/centurybridge-0.3.0+$W.jar" "${SRC[@]}" \
     > "$OUT/mixin/judge.log" 2>&1 || { echo "mixin judge failed"; tail -3 "$OUT/mixin/judge.log"; exit 1; }
@@ -101,7 +105,7 @@ with open(out, "w", encoding="utf-8") as o:
         o.write("\t".join([r[0], r[1], moj(r[1])] + r[2:]) + "\n")
 print("open mixin entries ->", out)
 EOF
-rm -f "$OUT"/mixin/*.jar "$OUT"/mixin/conv/*.jar
+rm -f "$OUT"/mixin/*.jar "$OUT"/mixin/conv/*.jar "$OUT/mixin/index-wall.tsv"
 # why each open row is open (Main mixin-cause: V's and W's bytecode, the step's wiring, what the converter
 # said about each probe member, the layer's redirect bodies) -> cause-mixin.tsv, and how many of them the
 # step's mixinLedger (gen_mixin_ledger.py) writes down as having no hook point in W. Same namespace on both
