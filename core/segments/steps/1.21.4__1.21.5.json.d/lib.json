@@ -1,0 +1,60 @@
+{
+ "_lib_basis": "slib library front: text2speech 1.17.9 (1.21.4) -> 1.18.11 (1.21.5), core/segments/damage-lib/1.21.4__1.21.5.tsv; rt/CbLibNarrator",
+ "callReshapes": {
+  "com/mojang/text2speech/Narrator.say(Ljava/lang/String;Z)V": {
+   "desc": "(Ljava/lang/String;ZF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_5/rt/CbLibNarrator#fullVolume()F"
+   ],
+   "basis": "text2speech 1.17.9's say(text, interrupt) spoke at volume 1 (rt/CbLibNarrator)"
+  },
+  "com/mojang/text2speech/NarratorLinux.say(Ljava/lang/String;Z)V": {
+   "desc": "(Ljava/lang/String;ZF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_5/rt/CbLibNarrator#fullVolume()F"
+   ],
+   "basis": "text2speech 1.17.9's say(text, interrupt) spoke at volume 1 (rt/CbLibNarrator)"
+  },
+  "com/mojang/text2speech/NarratorMac.say(Ljava/lang/String;Z)V": {
+   "desc": "(Ljava/lang/String;ZF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_5/rt/CbLibNarrator#fullVolume()F"
+   ],
+   "basis": "text2speech 1.17.9's say(text, interrupt) spoke at volume 1 (rt/CbLibNarrator)"
+  },
+  "com/mojang/text2speech/NarratorWindows.say(Ljava/lang/String;Z)V": {
+   "desc": "(Ljava/lang/String;ZF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_5/rt/CbLibNarrator#fullVolume()F"
+   ],
+   "basis": "text2speech 1.17.9's say(text, interrupt) spoke at volume 1 (rt/CbLibNarrator)"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "say(Ljava/lang/String;Z)V",
+   "new": "say(Ljava/lang/String;ZF)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "com/mojang/text2speech/Narrator",
+   "frames": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "text2speech 1.18.11 calls say(text, interrupt, volume); a 1.17.9 narrator's own say gets its two values, its super call the volume vanilla passed"
+  }
+ ],
+ "frameDefaults": {
+  "say(Ljava/lang/String;Z)V": {
+   "2": "top/dext/centurybridge/step/v1_21_5/rt/CbLibNarrator#fullVolume()F"
+  }
+ }
+}
