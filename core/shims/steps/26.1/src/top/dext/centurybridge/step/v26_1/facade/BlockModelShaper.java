@@ -3,10 +3,17 @@ package top.dext.centurybridge.step.v26_1.facade;
 import java.util.Map;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.renderer.v1.model.FabricBlockStateModel;
+import net.fabricmc.fabric.api.client.renderer.v1.model.FabricBlockStateModelSet;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelManager;
+import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import top.dext.centurybridge.step.v26_1.rt.CbFapiModels;
 import top.dext.centurybridge.step.v26_1.rt.CbWallModels;
 
 /**
@@ -26,9 +33,12 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallModels;
  * </ul>
  * Member names are 1.21.11's intermediary names: the converter renames the dead class here and leaves the
  * call sites' member names alone.
+ *
+ * 1.21.11's Fabric API injected FabricBlockModels into it; that is 26.1's FabricBlockStateModelSet, answered
+ * from this shaper's own models (26.1's default reads a BlockStateModelSet, which this is not).
  */
 @Environment(EnvType.CLIENT)
-public class BlockModelShaper {
+public class BlockModelShaper implements FabricBlockStateModelSet {
 
     private Map<BlockState, BlockStateModel> cb$models = Map.of();
     private final ModelManager cb$modelManager;
@@ -75,5 +85,16 @@ public class BlockModelShaper {
         } else {
             this.cb$models = models;
         }
+    }
+
+    /** FabricBlockModels.getModelParticleSprite's 26.1 shape: the particle material of getBlockModel(state) */
+    @Override
+    public Material.Baked getParticleMaterial(BlockState state, BlockAndTintGetter level, BlockPos pos) {
+        return ((FabricBlockStateModel) (Object) this.method_3335(state)).particleMaterial(level, pos, state);
+    }
+
+    /** FabricBlockModels.getModelParticleSprite(state, view, pos), injected here by 1.21.11's Fabric API: getParticleMaterial's sprite */
+    public TextureAtlasSprite getModelParticleSprite(BlockState state, BlockAndLightGetter view, BlockPos pos) {
+        return CbFapiModels.getModelParticleSprite(this, state, view, pos);
     }
 }

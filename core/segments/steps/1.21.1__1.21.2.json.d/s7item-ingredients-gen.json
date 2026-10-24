@@ -1,0 +1,20 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_1856.field_9017:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemIngredients"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_1856.field_46096:Lcom/mojang/serialization/Codec;": "net/minecraft/class_1856#field_46095"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1856.method_8105()[Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemIngredients",
+  "net/minecraft/class_1856.method_8100()Lit/unimi/dsi/fastutil/ints/IntList;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemIngredients",
+  "net/minecraft/class_1856.method_8103()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemIngredients"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1856.method_35226()Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemIngredients",
+  "net/minecraft/class_1856.method_8101([Lnet/minecraft/class_1799;)Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemIngredients",
+  "net/minecraft/class_1856.method_8106(Lnet/minecraft/class_6862;)Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemIngredients",
+  "net/minecraft/class_1856.method_8091([Lnet/minecraft/class_1935;)Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemIngredients",
+  "net/minecraft/class_1856.method_26964(Ljava/util/stream/Stream;)Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemIngredients"
+ }
+}

@@ -3,13 +3,12 @@ accessWidener	v2	official
 # 1.21.11 GuiGraphics.renderComponentHoverEffect, overridable there: mods' overrides are renamed onto it (swall)
 extendable	method	net/minecraft/client/gui/GuiGraphicsExtractor	componentHoverEffect	(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Style;II)V
 
-# 1.21.11 GlRenderPass was a public class; 26.1 made it package-private while keeping its members public, so
-# step_access_aw.py (member lines only) leaves the class itself narrowed: a call through it is an IllegalAccessError (swall)
-accessible	class	com/mojang/blaze3d/opengl/GlRenderPass
-
 # ---- BEGIN GENERATED (swall): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
 # members, given back so a converted mod's call, read or write links again
+accessible class com/mojang/blaze3d/opengl/GlCommandEncoder
+accessible class com/mojang/blaze3d/opengl/GlDevice
+accessible class com/mojang/blaze3d/opengl/GlRenderPass
 accessible field com/mojang/realmsclient/gui/screens/configuration/RealmsSlotOptionsScreen parentScreen Lcom/mojang/realmsclient/gui/screens/configuration/RealmsConfigureWorldScreen;
 accessible field net/minecraft/client/Options DEFAULT_SOUND_DEVICE Ljava/lang/String;
 accessible field net/minecraft/client/model/animal/axolotl/AdultAxolotlModel SWIMMING_LEG_XROT F

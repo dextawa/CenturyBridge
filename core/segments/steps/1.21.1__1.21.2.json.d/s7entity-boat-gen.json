@@ -1,0 +1,257 @@
+{
+ "classRenames": {
+  "net/minecraft/class_1690": "net/minecraft/class_10255",
+  "net/minecraft/class_7264": "net/minecraft/class_10256",
+  "net/minecraft/class_1690$class_1691": "net/minecraft/class_10255$class_1691",
+  "net/minecraft/class_1690$class_1692": "top/dext/centurybridge/step/v1_21_2/facade/BoatType"
+ },
+ "methodRenames": {
+  "net/minecraft/class_1690.method_30959(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;)Z": "method_64486",
+  "net/minecraft/class_1690.method_7537()Lnet/minecraft/class_3414;": "method_64494",
+  "net/minecraft/class_1690.method_7538(ZZ)V": "method_64490",
+  "net/minecraft/class_1690.method_7551(IF)F": "method_64485",
+  "net/minecraft/class_1690.method_7544()F": "method_64495",
+  "net/minecraft/class_1690.method_7548()F": "method_64497",
+  "net/minecraft/class_1690.method_42280()F": "method_64499",
+  "net/minecraft/class_1690.method_49182(Lnet/minecraft/class_1297;)Z": "method_64488",
+  "net/minecraft/class_1690.method_7546(Lnet/minecraft/class_1297;)V": "method_64492",
+  "net/minecraft/class_1690.method_42281()I": "method_64500",
+  "net/minecraft/class_1690.method_7535(ZZZZ)V": "method_64487",
+  "net/minecraft/class_1690.method_7556(I)Z": "method_64491",
+  "net/minecraft/class_1690.method_7547(F)F": "method_64484",
+  "net/minecraft/class_7264.method_42280()F": "method_64499",
+  "net/minecraft/class_7264.method_42281()I": "method_64500",
+  "net/minecraft/class_7264.method_42282(Lnet/minecraft/class_1657;)V": "method_64501"
+ },
+ "overrideRenames": [
+  {
+   "old": "method_7537()Lnet/minecraft/class_3414;",
+   "new": "method_64494",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.getPaddleSound is 1.21.2 AbstractBoat.getPaddleSound (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_7538(ZZ)V",
+   "new": "method_64490",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.setPaddleState is 1.21.2 AbstractBoat.setPaddleState (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_7551(IF)F",
+   "new": "method_64485",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.getRowingTime is 1.21.2 AbstractBoat.getRowingTime (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_7544()F",
+   "new": "method_64495",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.getWaterLevelAbove is 1.21.2 AbstractBoat.getWaterLevelAbove (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_7548()F",
+   "new": "method_64497",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.getGroundFriction is 1.21.2 AbstractBoat.getGroundFriction (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_42280()F",
+   "new": "method_64499",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.getSinglePassengerXOffset is 1.21.2 AbstractBoat.getSinglePassengerXOffset (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_49182(Lnet/minecraft/class_1297;)Z",
+   "new": "method_64488",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.hasEnoughSpaceFor is 1.21.2 AbstractBoat.hasEnoughSpaceFor (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_7546(Lnet/minecraft/class_1297;)V",
+   "new": "method_64492",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.clampRotation is 1.21.2 AbstractBoat.clampRotation (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_42281()I",
+   "new": "method_64500",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.getMaxPassengers is 1.21.2 AbstractBoat.getMaxPassengers (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_7535(ZZZZ)V",
+   "new": "method_64487",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.setInput is 1.21.2 AbstractBoat.setInput (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_7556(I)Z",
+   "new": "method_64491",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.getPaddleState is 1.21.2 AbstractBoat.getPaddleState (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_7547(F)F",
+   "new": "method_64484",
+   "onlyUnder": "net/minecraft/class_1690",
+   "superCalls": "rename",
+   "basis": "1.21.1 Boat.getBubbleAngle is 1.21.2 AbstractBoat.getBubbleAngle (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_42280()F",
+   "new": "method_64499",
+   "onlyUnder": "net/minecraft/class_7264",
+   "superCalls": "rename",
+   "basis": "1.21.1 ChestBoat.getSinglePassengerXOffset is 1.21.2 AbstractChestBoat.getSinglePassengerXOffset (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_42281()I",
+   "new": "method_64500",
+   "onlyUnder": "net/minecraft/class_7264",
+   "superCalls": "rename",
+   "basis": "1.21.1 ChestBoat.getMaxPassengers is 1.21.2 AbstractChestBoat.getMaxPassengers (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_42282(Lnet/minecraft/class_1657;)V",
+   "new": "method_64501",
+   "onlyUnder": "net/minecraft/class_7264",
+   "superCalls": "rename",
+   "basis": "1.21.1 ChestBoat.unpackLootTable is 1.21.2 AbstractChestBoat.unpackLootTable (moved up, renamed; same body)"
+  },
+  {
+   "old": "method_7557()Lnet/minecraft/class_1792;",
+   "new": "cb$method_7557",
+   "onlyUnder": "net/minecraft/class_1690",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats$LegacyDrop",
+   "basis": "1.21.2's AbstractBoat.getDropItem is final: the mod's 1.21.1 override is renamed and answers through CbEntityBoats (the drop supplier its 1.21.1 constructor got)"
+  },
+  {
+   "old": "method_31480()Lnet/minecraft/class_1799;",
+   "new": "cb$method_31480",
+   "onlyUnder": "net/minecraft/class_1690",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats$LegacyPick",
+   "basis": "1.21.2's AbstractBoat.getPickResult is final: the mod's 1.21.1 override is renamed and answers through CbEntityBoats (CbEntityBoatMixin on getPickResult)"
+  }
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_1690.field_30697:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats",
+  "net/minecraft/class_1690.field_30698:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats",
+  "net/minecraft/class_1690.field_30699:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats",
+  "net/minecraft/class_1690.field_30700:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats",
+  "net/minecraft/class_1299.field_6121:Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats",
+  "net/minecraft/class_1299.field_38096:Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1690.method_47885()Lnet/minecraft/class_1690$class_1692;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#getVariant",
+  "net/minecraft/class_1690.method_47884(Lnet/minecraft/class_1690$class_1692;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#setVariant",
+  "net/minecraft/class_7264.method_7557()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#getDropItem",
+  "net/minecraft/class_7264.method_7516(Lnet/minecraft/class_1282;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#method_7516",
+  "net/minecraft/class_1690.method_7557()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#getDropItem"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1690.method_47885()Lnet/minecraft/class_1690$class_1692;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#superGetVariant",
+  "net/minecraft/class_1690.method_47884(Lnet/minecraft/class_1690$class_1692;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#superSetVariant",
+  "net/minecraft/class_1690.method_7557()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#superGetDropItem",
+  "net/minecraft/class_7264.method_7557()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#superGetDropItem",
+  "net/minecraft/class_1690.method_31480()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#superGetPickResult"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1690",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats$LegacySetVariant",
+   "requires": [
+    "method_47884(Lnet/minecraft/class_1690$class_1692;)V"
+   ],
+   "synth": [],
+   "basis": "a mod boat's own 1.21.1 setVariant answers the calls CbEntityBoats serves"
+  },
+  {
+   "under": "net/minecraft/class_1690",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats$LegacyVariant",
+   "requires": [
+    "method_47885()Lnet/minecraft/class_1690$class_1692;"
+   ],
+   "synth": [],
+   "basis": "a mod boat's own 1.21.1 getVariant answers the calls CbEntityBoats serves"
+  }
+ ],
+ "ctorRedirects": {
+  "net/minecraft/class_1690.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#newBoat",
+  "net/minecraft/class_1690.<init>(Lnet/minecraft/class_1937;DDD)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#newBoat",
+  "net/minecraft/class_7264.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#newChestBoat",
+  "net/minecraft/class_7264.<init>(Lnet/minecraft/class_1937;DDD)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#newChestBoat"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_1690.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Ljava/util/function/Supplier;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#noDrop()Ljava/util/function/Supplier;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#built(Lnet/minecraft/class_1690;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes the drop supplier: the boat's own 1.21.1 getDropItem (CbEntityBoats#built)"
+  },
+  "net/minecraft/class_1690.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Ljava/util/function/Supplier;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#oakBoat()Lnet/minecraft/class_1299;",
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#noDrop()Ljava/util/function/Supplier;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#at(Lnet/minecraft/class_1690;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was this(EntityType.BOAT / CHEST_BOAT, level) at x, y, z (1.21.2: the OAK type, 1.21.1's starting variant; setInitialPos, same body)"
+  },
+  "net/minecraft/class_7264.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Ljava/util/function/Supplier;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#noDrop()Ljava/util/function/Supplier;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#built(Lnet/minecraft/class_7264;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes the drop supplier: the boat's own 1.21.1 getDropItem (CbEntityBoats#built)"
+  },
+  "net/minecraft/class_7264.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Ljava/util/function/Supplier;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#oakChestBoat()Lnet/minecraft/class_1299;",
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#noDrop()Ljava/util/function/Supplier;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats#at(Lnet/minecraft/class_7264;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was this(EntityType.BOAT / CHEST_BOAT, level) at x, y, z (1.21.2: the OAK type, 1.21.1's starting variant; setInitialPos, same body)"
+  }
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_1690",
+   "method": "method_64489(Lnet/minecraft/class_4048;)D",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityBoats.rideHeight(Lnet/minecraft/class_1690;Lnet/minecraft/class_4048;)D",
+   "basis": "1.21.1 Boat's passenger height: dimensions.height / 3, a raft's (x 0.8888889) for BAMBOO"
+  }
+ ]
+}

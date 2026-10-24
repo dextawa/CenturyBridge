@@ -28,6 +28,50 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#shield()Lnet/minecraft/class_1799;"
    ],
    "basis": "1.21.1 disableShield put the 100-tick cooldown on Items.SHIELD; 1.21.2's puts it on the stack's item: a SHIELD stack (CbEntityFrames#shield)"
+  },
+  "net/minecraft/class_1299.method_5892(Lnet/minecraft/class_2487;Lnet/minecraft/class_1937;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_2487;Lnet/minecraft/class_1937;Lnet/minecraft/class_3730;)Ljava/util/Optional;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#createReason()Lnet/minecraft/class_3730;"
+   ],
+   "basis": "1.21.2 threads an EntitySpawnReason through to create(level, reason), which reads it nowhere (same body as 1.21.1's create(level)); TRIGGERED as for create(level) (CbEntityFrames#createReason)"
+  },
+  "net/minecraft/class_1299.method_17842(Lnet/minecraft/class_2487;Lnet/minecraft/class_1937;Ljava/util/function/Function;)Lnet/minecraft/class_1297;": {
+   "desc": "(Lnet/minecraft/class_2487;Lnet/minecraft/class_1937;Lnet/minecraft/class_3730;Ljava/util/function/Function;)Lnet/minecraft/class_1297;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#createReason()Lnet/minecraft/class_3730;",
+    "keep"
+   ],
+   "basis": "1.21.2 threads an EntitySpawnReason through to create(level, reason), which reads it nowhere (same body as 1.21.1's create(level)); TRIGGERED as for create(level) (CbEntityFrames#createReason)"
+  },
+  "net/minecraft/class_1299.method_31489(Ljava/util/List;Lnet/minecraft/class_1937;)Ljava/util/stream/Stream;": {
+   "desc": "(Ljava/util/List;Lnet/minecraft/class_1937;Lnet/minecraft/class_3730;)Ljava/util/stream/Stream;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#createReason()Lnet/minecraft/class_3730;"
+   ],
+   "basis": "1.21.2 threads an EntitySpawnReason through to create(level, reason), which reads it nowhere (same body as 1.21.1's create(level)); TRIGGERED as for create(level) (CbEntityFrames#createReason)"
+  },
+  "net/minecraft/class_8080.method_48568(FF)V": {
+   "desc": "(FFF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#unscaled()F"
+   ],
+   "basis": "1.21.2's WalkAnimationState.update also sets positionScale (default 1, the position getters multiply by it); 1.21.1 had no scale: 1"
+  },
+  "net/minecraft/class_1657.method_7335(Ljava/util/List;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbEntityGeneric#recipeKeys(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "basis": "generic drift: 1.21.1's Player.awardRecipesByKey took recipe ids, 1.21.2's recipe keys (CbEntityGeneric)"
   }
  },
  "instanceRedirects": {
@@ -41,7 +85,57 @@
   "net/minecraft/class_1308.method_5991()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#mobDefaultLootTable",
   "net/minecraft/class_7094.method_43686(FF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#updateTime",
   "net/minecraft/class_7094.method_43687()J": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#getAccumulatedTime",
-  "net/minecraft/class_1688.method_7518()Lnet/minecraft/class_1688$class_1689;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#getMinecartType"
+  "net/minecraft/class_1688.method_7518()Lnet/minecraft/class_1688$class_1689;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#getMinecartType",
+  "net/minecraft/class_1661.method_7387(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked#fillStackedContents",
+  "net/minecraft/class_1309.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#canTakeItem",
+  "net/minecraft/class_1297.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#getBoundingBoxForCulling",
+  "net/minecraft/class_1297.method_60607(ZLnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setOnGroundWithMovement",
+  "net/minecraft/class_1309.method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_4174;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#eat",
+  "net/minecraft/class_1309.method_60492(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#eat",
+  "net/minecraft/class_1309.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#getEatingSound",
+  "net/minecraft/class_1309.method_18807(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#getDrinkingSound",
+  "net/minecraft/class_1309.method_6098(Lnet/minecraft/class_1799;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#triggerItemUseEffects",
+  "net/minecraft/class_1308.method_29243(Lnet/minecraft/class_1299;Z)Lnet/minecraft/class_1308;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityConvert#convertTo",
+  "net/minecraft/class_1542.method_27314(F)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#getSpin",
+  "net/minecraft/class_1606.method_33352(F)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#getRenderPosition",
+  "net/minecraft/class_4146.method_43081()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors#radiusXZ",
+  "net/minecraft/class_4146.method_43082()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors#radiusY",
+  "net/minecraft/class_1309.method_18391(Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#canAttack",
+  "net/minecraft/class_1308.method_6773(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#isBodyArmorItem",
+  "net/minecraft/class_5147.method_6636(Lnet/minecraft/class_3419;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#shear",
+  "net/minecraft/class_1493.method_6711()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#isWet",
+  "net/minecraft/class_1493.method_6715(FF)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getBodyRollAngle",
+  "net/minecraft/class_1493.method_55710()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#hasArmor",
+  "net/minecraft/class_1501.method_6800()Lnet/minecraft/class_1767;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getSwag",
+  "net/minecraft/class_1451.method_16092()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getTextureId",
+  "net/minecraft/class_1531.method_6901()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#isNoBasePlate",
+  "net/minecraft/class_1477.method_6670(FFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#setMovementVector",
+  "net/minecraft/class_1646.method_35200()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#isChasing",
+  "net/minecraft/class_1646.method_35201(Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#setChasing",
+  "net/minecraft/class_1642.method_7212()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#supportsBreakDoorGoal",
+  "net/minecraft/class_1661.method_7371(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#findSlotMatchingUnusedItem",
+  "net/minecraft/class_1661.method_7373(D)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#swapPaint",
+  "net/minecraft/class_1665.method_7456()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#shotFromCrossbow",
+  "net/minecraft/class_8949.method_55009()D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getSnoutYPosition",
+  "net/minecraft/class_1304.method_5926()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getFilterFlag",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#build",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#build",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#build",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#fabricBuild",
+  "net/minecraft/class_1688.method_7508(DDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getPos",
+  "net/minecraft/class_1688.method_7505(DDDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getPosOffs",
+  "net/minecraft/class_1688.method_7525()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#applyNaturalSlowdown",
+  "net/minecraft/class_1688.method_7513(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#moveAlongTrack",
+  "net/minecraft/class_1510.method_6817(IF)[D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#getLatencyPos",
+  "net/minecraft/class_1510.method_6823(I[D[D)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#getHeadPartYOffset",
+  "net/minecraft/class_1528.method_6879(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#getHeadYRot",
+  "net/minecraft/class_1528.method_6887(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#getHeadXRot",
+  "net/minecraft/class_1297.method_36974()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityInside#tryCheckInsideBlocks",
+  "net/minecraft/class_1297.method_5852()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityInside#checkInsideBlocks",
+  "net/minecraft/class_1510.method_6819(Lnet/minecraft/class_1282;F)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#reallyHurt",
+  "net/minecraft/class_1309.method_6129(Lnet/minecraft/class_1293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving#onEffectRemoved",
+  "net/minecraft/class_1309.method_59926()Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving#activeLocationDependentEnchantments",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#onConversion"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -74,6 +168,15 @@
   },
   "method_7284()V": {
    "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#shield()Lnet/minecraft/class_1799;"
+  },
+  "method_60607(ZLnet/minecraft/class_243;)V": {
+   "1": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#horizontalCollision(Lnet/minecraft/class_1297;ZLnet/minecraft/class_243;)Z"
+  },
+  "method_48568(FF)V": {
+   "2": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#unscaled(Lnet/minecraft/class_8080;FF)F"
+  },
+  "method_18391(Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
   }
  },
  "staticRedirects": {
@@ -82,7 +185,12 @@
   "net/minecraft/class_4828.method_47137(Ljava/util/function/BiConsumer;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
   "net/minecraft/class_4828.method_47138(Ljava/util/function/Predicate;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
   "net/minecraft/class_4828.method_47139(Ljava/util/function/Predicate;Ljava/util/function/BiConsumer;Z)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
-  "net/minecraft/class_1688.method_7523(Lnet/minecraft/class_3218;DDDLnet/minecraft/class_1688$class_1689;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1688;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#createMinecart"
+  "net/minecraft/class_1688.method_7523(Lnet/minecraft/class_3218;DDDLnet/minecraft/class_1688$class_1689;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1688;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#createMinecart",
+  "net/minecraft/class_8953.method_55038(Lnet/minecraft/class_8949;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#isFacingTarget",
+  "net/minecraft/class_4838.method_24719(Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#isWearingGold",
+  "net/minecraft/class_3765.method_16515(Lnet/minecraft/class_7871;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#getLeaderBannerInstance",
+  "net/minecraft/class_4156.method_28359(Ljava/lang/Runnable;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#poiRecordCodec",
+  "net/minecraft/class_4157.method_28364(Ljava/lang/Runnable;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#poiSectionCodec"
  },
  "superCtorReshapes": {
   "net/minecraft/class_1400.<init>(Lnet/minecraft/class_1308;Ljava/lang/Class;IZZLjava/util/function/Predicate;)V": {
@@ -438,11 +546,38 @@
     3
    ],
    "basis": "1.21.1 AbstractMinecartContainer(type, x, y, z, level) was AbstractMinecart(type, level, x, y, z) -- this(type, level), setPos, xo/yo/zo -- and the item list, which 1.21.2's (type, level) makes too"
+  },
+  "net/minecraft/class_6670.<init>(Lnet/minecraft/class_1309;Ljava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Ljava/util/List;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#level(Lnet/minecraft/class_1309;)Lnet/minecraft/class_3218;",
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "1.21.2's NearestVisibleLivingEntities takes the level its targetability test runs in: the entity's own, as 1.21.1's (CbEntityStatics#level)"
+  },
+  "net/minecraft/class_1535.<init>(IILnet/minecraft/class_2960;)V": {
+   "desc": "(IILnet/minecraft/class_2960;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:2 top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#paintingTitle(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+    "conv:2 top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#paintingAuthor(Lnet/minecraft/class_2960;)Ljava/util/Optional;"
+   ],
+   "basis": "1.21.2's PaintingVariant carries its tooltip's title and author; 1.21.1's tooltip showed the painting.<id>.title/.author translations of its id (CbEntityStatics#paintingTitle)"
   }
  },
  "fieldGetters": {
   "net/minecraft/class_1493.field_18004:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#wolfPreySelector",
-  "net/minecraft/class_1481.field_6921:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#turtleBabyOnLandSelector"
+  "net/minecraft/class_1481.field_6921:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#turtleBabyOnLandSelector",
+  "net/minecraft/class_1309.field_30063:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat",
+  "net/minecraft/class_8947.field_47260:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors",
+  "net/minecraft/class_4148.field_30258:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors",
+  "net/minecraft/class_5760.field_30262:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors",
+  "net/minecraft/class_1661.field_33767:[I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail",
+  "net/minecraft/class_1661.field_33768:[I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail",
+  "net/minecraft/class_1535.field_51945:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityGeneric#paintingDirectStreamCodec"
  },
  "superRedirects": {
   "net/minecraft/class_1299.method_16351()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superDefaultLootTable",
@@ -450,7 +585,77 @@
   "net/minecraft/class_1308.method_5991()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superMobDefaultLootTable",
   "net/minecraft/class_1472.method_5991()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superSheepDefaultLootTable",
   "net/minecraft/class_7094.method_43686(FF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#superUpdateTime",
-  "net/minecraft/class_7094.method_43687()J": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#superGetAccumulatedTime"
+  "net/minecraft/class_7094.method_43687()J": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#superGetAccumulatedTime",
+  "net/minecraft/class_1661.method_7387(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked#superFillStackedContents",
+  "net/minecraft/class_1309.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1308.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1657.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1433.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_4019.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1440.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_7298.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1531.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1297.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superGetBoundingBoxForCulling",
+  "net/minecraft/class_1309.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superGetBoundingBoxForCulling",
+  "net/minecraft/class_1688.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superGetBoundingBoxForCulling",
+  "net/minecraft/class_8153.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superGetBoundingBoxForCulling",
+  "net/minecraft/class_1581.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superGetBoundingBoxForCulling",
+  "net/minecraft/class_1297.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
+  "net/minecraft/class_1321.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
+  "net/minecraft/class_1543.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
+  "net/minecraft/class_1564.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
+  "net/minecraft/class_1309.method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_4174;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superEat",
+  "net/minecraft/class_1657.method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_4174;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superEat",
+  "net/minecraft/class_1309.method_60492(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#eat",
+  "net/minecraft/class_1309.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetEatingSound",
+  "net/minecraft/class_4019.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetEatingSound",
+  "net/minecraft/class_9069.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetEatingSound",
+  "net/minecraft/class_6053.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetEatingSound",
+  "net/minecraft/class_8153.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetEatingSound",
+  "net/minecraft/class_1309.method_18807(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetDrinkingSound",
+  "net/minecraft/class_3989.method_18807(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetDrinkingSound",
+  "net/minecraft/class_1309.method_6098(Lnet/minecraft/class_1799;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superTriggerItemUseEffects",
+  "net/minecraft/class_1308.method_29243(Lnet/minecraft/class_1299;Z)Lnet/minecraft/class_1308;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityConvert#superConvertTo",
+  "net/minecraft/class_1606.method_33352(F)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#getRenderPosition",
+  "net/minecraft/class_4146.method_43081()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors#superRadius",
+  "net/minecraft/class_8947.method_43081()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors#superRadius",
+  "net/minecraft/class_7252.method_43081()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors#superRadius",
+  "net/minecraft/class_4146.method_43082()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors#superRadius",
+  "net/minecraft/class_8947.method_43082()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors#superRadius",
+  "net/minecraft/class_7252.method_43082()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors#superRadius",
+  "net/minecraft/class_1309.method_18391(Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superCanAttack",
+  "net/minecraft/class_1308.method_6773(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superIsBodyArmorItem",
+  "net/minecraft/class_1501.method_6773(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superIsBodyArmorItem",
+  "net/minecraft/class_1498.method_6773(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superIsBodyArmorItem",
+  "net/minecraft/class_1493.method_6711()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superIsWet",
+  "net/minecraft/class_1493.method_6715(FF)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetBodyRollAngle",
+  "net/minecraft/class_1493.method_55710()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superHasArmor",
+  "net/minecraft/class_1501.method_6800()Lnet/minecraft/class_1767;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetSwag",
+  "net/minecraft/class_1451.method_16092()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetTextureId",
+  "net/minecraft/class_1531.method_6901()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superIsNoBasePlate",
+  "net/minecraft/class_1477.method_6670(FFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSetMovementVector",
+  "net/minecraft/class_1646.method_35200()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superIsChasing",
+  "net/minecraft/class_1646.method_35201(Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSetChasing",
+  "net/minecraft/class_1642.method_7212()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSupportsBreakDoorGoal",
+  "net/minecraft/class_1551.method_7212()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSupportsBreakDoorGoal",
+  "net/minecraft/class_1661.method_7371(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superFindSlotMatchingUnusedItem",
+  "net/minecraft/class_1661.method_7373(D)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSwapPaint",
+  "net/minecraft/class_1665.method_7456()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superShotFromCrossbow",
+  "net/minecraft/class_8949.method_55009()D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetSnoutYPosition",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#fabricBuild",
+  "net/minecraft/class_1688.method_7508(DDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#superGetPos",
+  "net/minecraft/class_1688.method_7505(DDDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#superGetPosOffs",
+  "net/minecraft/class_1510.method_6817(IF)[D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetLatencyPos",
+  "net/minecraft/class_1510.method_6823(I[D[D)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadPartYOffset",
+  "net/minecraft/class_1528.method_6879(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadYRot",
+  "net/minecraft/class_1528.method_6887(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadXRot",
+  "net/minecraft/class_1542.method_27314(F)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#superGetSpin",
+  "net/minecraft/class_1297.method_36974()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityInside#superTryCheckInsideBlocks",
+  "net/minecraft/class_1297.method_5852()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityInside#superCheckInsideBlocks",
+  "net/fabricmc/fabric/api/entity/FakePlayer.method_5679(Lnet/minecraft/class_1282;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superFakePlayerInvulnerable"
  },
  "overrideHooks": [
   {
@@ -467,6 +672,137 @@
    "notUnder": "net/minecraft/class_1308",
    "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot.wrap(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
    "basis": "1.21.1 LivingEntity.getLootTable() is 1.21.2's Entity.getLootTable() (an Optional); Mob's was final in both"
+  },
+  {
+   "old": "method_7387(Lnet/minecraft/class_1662;)V",
+   "new": "method_7387(Lnet/minecraft/class_9875;)V",
+   "onlyUnder": "net/minecraft/class_1661",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked$LegacyFill",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked.fillBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked$LegacyFill;Lnet/minecraft/class_9875;)V",
+   "basis": "1.21.2's Inventory.fillStackedContents takes StackedItemContents: the mod's 1.21.1 override fills a 1.21.1 StackedContents, poured into it (CbEntityStacked)"
+  },
+  {
+   "old": "method_60607(ZLnet/minecraft/class_243;)V",
+   "new": "method_60607(ZZLnet/minecraft/class_243;)V",
+   "args": [
+    0,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_1297",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.21.2's setOnGroundWithMovement also takes horizontalCollision (which it sets); the old override gets onGround and the movement, its super call what vanilla passed"
+  },
+  {
+   "old": "method_29243(Lnet/minecraft/class_1299;Z)Lnet/minecraft/class_1308;",
+   "new": "method_63631(Lnet/minecraft/class_1299;Lnet/minecraft/class_10179;Lnet/minecraft/class_3730;Lnet/minecraft/class_10179$class_10180;)Lnet/minecraft/class_1308;",
+   "onlyUnder": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityConvert$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityConvert.convertBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityConvert$Legacy;Lnet/minecraft/class_1299;Lnet/minecraft/class_10179;Lnet/minecraft/class_3730;Lnet/minecraft/class_10179$class_10180;)Lnet/minecraft/class_1308;",
+   "basis": "1.21.2's convertTo(type, params, reason, after) of a mod Mob overriding 1.21.1's convertTo(type, keepEquipment): its override converts, vanilla's after-conversion step follows (CbEntityConvert)"
+  },
+  {
+   "old": "method_33352(F)Ljava/util/Optional;",
+   "new": "method_33352(F)Lnet/minecraft/class_243;",
+   "onlyUnder": "net/minecraft/class_1606",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall.renderPositionOf(Ljava/util/Optional;)Lnet/minecraft/class_243;",
+   "basis": "1.21.2's Shulker.getRenderPosition answers the position or null for 1.21.1's Optional (same body)"
+  },
+  {
+   "old": "method_48568(FF)V",
+   "new": "method_48568(FFF)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_8080",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a mod WalkAnimationState's 1.21.1 update answers 1.21.2's (positionScale not passed); its super call passes what vanilla passed"
+  },
+  {
+   "old": "method_18391(Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z",
+   "new": "method_64463(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z",
+   "args": [
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_1593",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.21.1's only vanilla asker of canAttack(target, conditions) was Phantom's goals, which 1.21.2's ask Phantom.canAttack(level, target, conditions) (made extendable by the layer's access widener): a mod Phantom's 1.21.1 override answers it"
+  },
+  {
+   "old": "onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V",
+   "new": "onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Lnet/minecraft/class_10179;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi.keepEquipment(Lnet/minecraft/class_10179;)Z",
+   "basis": "1.21.2's MobConversion takes the ConversionParams; a 1.21.1 implementation gets its keepEquipment (CbEntityFapi)"
+  },
+  {
+   "old": "method_7513(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V",
+   "new": "method_7513(Lnet/minecraft/class_3218;)V",
+   "onlyUnder": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacyTrack",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics.trackBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacyTrack;Lnet/minecraft/class_3218;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics.superMoveAlongTrack(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$TrackSuper;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$TrackSuper",
+   "superAccessors": [
+    "method_7513(Lnet/minecraft/class_3218;)V"
+   ],
+   "basis": "1.21.1 AbstractMinecart.tick called the overridable moveAlongTrack(pos, state) for the rail at the minecart; 1.21.2's OldMinecartBehavior runs the same step itself (moveAlongTrack(level), NewMinecartBehavior calls the minecart's): CbEntityMinecartOldMixin asks the mod's override, whose super call runs the behavior's body on the pos and state passed (CbEntityMinecartPhysics)"
+  },
+  {
+   "old": "method_7525()V",
+   "new": "method_7525(Lnet/minecraft/class_243;)Lnet/minecraft/class_243;",
+   "onlyUnder": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacySlowdown",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics.slowdownBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacySlowdown;Lnet/minecraft/class_243;)Lnet/minecraft/class_243;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics.superApplyNaturalSlowdown(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$SlowdownSuper;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$SlowdownSuper",
+   "superAccessors": [
+    "method_7525(Lnet/minecraft/class_243;)Lnet/minecraft/class_243;"
+   ],
+   "basis": "1.21.1's applyNaturalSlowdown() slowed the delta movement in place, 1.21.2's applyNaturalSlowdown(velocity) answers the slowed vector: the old override runs on the velocity passed (CbEntityMinecartPhysics)"
+  },
+  {
+   "old": "method_6819(Lnet/minecraft/class_1282;F)Z",
+   "new": "method_6819(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;F)V",
+   "onlyUnder": "net/minecraft/class_1510",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$LegacyReallyHurt",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon.reallyHurtBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$LegacyReallyHurt;Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;F)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon.superReallyHurt(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$ReallyHurtSuper;Lnet/minecraft/class_1282;F)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$ReallyHurtSuper",
+   "superAccessors": [
+    "method_6819(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;F)V"
+   ],
+   "basis": "1.21.2's EnderDragon.reallyHurt takes the ServerLevel and answers nothing (1.21.1's vanilla caller dropped the answer too): the old override answers it; its super call answers LivingEntity.hurtServer's result, false on a client level as 1.21.1's hurt (CbEntityDragon)"
+  },
+  {
+   "old": "method_6129(Lnet/minecraft/class_1293;)V",
+   "new": "method_6129(Ljava/util/Collection;)V",
+   "onlyUnder": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving$LegacyEffectRemoved",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving.effectsRemovedBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving$LegacyEffectRemoved;Ljava/util/Collection;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving.superOnEffectRemoved(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving$EffectsRemovedSuper;Lnet/minecraft/class_1293;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving$EffectsRemovedSuper",
+   "superAccessors": [
+    "method_6129(Ljava/util/Collection;)V"
+   ],
+   "basis": "1.21.1's onEffectRemoved(effect), once per effect, is 1.21.2's onEffectsRemoved(effects), once per batch, the same steps per effect: the old override answers each effect, its super call removes that one (CbEntityLiving)"
+  },
+  {
+   "old": "method_59926()Ljava/util/Map;",
+   "new": "method_59926(Lnet/minecraft/class_1304;)Ljava/util/Map;",
+   "onlyUnder": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving$LegacyLocationEnchantments",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving.locationEnchantmentsBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving$LegacyLocationEnchantments;Lnet/minecraft/class_1304;)Ljava/util/Map;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving.superActiveLocationDependentEnchantments(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving$LocationEnchantmentsSuper;)Ljava/util/Map;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving$LocationEnchantmentsSuper",
+   "superAccessors": [
+    "method_59926(Lnet/minecraft/class_1304;)Ljava/util/Map;"
+   ],
+   "basis": "1.21.1 kept one active location-dependent enchantment map per entity, 1.21.2 one per slot: a mod's 1.21.1 override answers its one map for every slot; its super call is super's slot maps merged, read-only (CbEntityLiving). Replaces the mechanical hook, whose super call outside a frame had no slot"
   }
  ],
  "adapterHooks": [
@@ -505,9 +841,422 @@
    ],
    "synth": [],
    "basis": "a mod minecart's own 1.21.1 getMinecartType answers the calls CbEntityMinecarts serves (1.21.2 has no such method)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake$Legacy",
+   "requires": [
+    "method_18397(Lnet/minecraft/class_1799;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 canTakeItem answers where 1.21.1's dispenser asked it (CbEntityTakeMixin on canEquipWithDispenser) and the calls CbEntityTake serves"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc$LegacyCulling",
+   "requires": [
+    "method_5830()Lnet/minecraft/class_238;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 asks the renderer for the culling box: a mod class's own 1.21.1 getBoundingBoxForCulling answers there (CbEntityCullingMixin) and the calls CbEntityMisc serves"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat$LegacyEat",
+   "requires": [
+    "method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_4174;)Lnet/minecraft/class_1799;"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers where 1.21.1 asked it (CbEntityEatMixin on Consumable) and the calls CbEntityEat serves"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat$LegacyTrigger",
+   "requires": [
+    "method_6098(Lnet/minecraft/class_1799;I)V"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers where 1.21.1 asked it (CbEntityEatMixin on Consumable) and the calls CbEntityEat serves"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat$LegacyEatingSound",
+   "requires": [
+    "method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers where 1.21.1 asked it (CbEntityEatMixin on Consumable) and the calls CbEntityEat serves"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat$LegacyDrinkingSound",
+   "requires": [
+    "method_18807(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers where 1.21.1 asked it (CbEntityEatMixin on Consumable) and the calls CbEntityEat serves"
+  },
+  {
+   "under": "net/minecraft/class_4146",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors$LegacyXZ",
+   "requires": [
+    "method_43081()I"
+   ],
+   "synth": [],
+   "basis": "a sensor class's own 1.21.1 radius answers the calls CbEntitySensors serves and sets the box its doTick searches (CbEntitySensorMixin)"
+  },
+  {
+   "under": "net/minecraft/class_4146",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors$LegacyY",
+   "requires": [
+    "method_43082()I"
+   ],
+   "synth": [],
+   "basis": "a sensor class's own 1.21.1 radius answers the calls CbEntitySensors serves and sets the box its doTick searches (CbEntitySensorMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc$LegacyCanAttack",
+   "requires": [
+    "method_18391(Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 canAttack(target, conditions) answers the calls CbEntityMisc serves"
+  },
+  {
+   "under": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake$LegacyBodyArmor",
+   "requires": [
+    "method_6773(Lnet/minecraft/class_1799;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod Mob's own 1.21.1 isBodyArmorItem answers whether a stack goes in its body slot (CbEntityTakeMixin on isEquippableInSlot) and the calls CbEntityTake serves"
+  },
+  {
+   "under": "net/minecraft/class_5147",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall$LegacyShear",
+   "requires": [
+    "method_6636(Lnet/minecraft/class_3419;)V"
+   ],
+   "synth": [],
+   "basis": "a mod Shearable's own 1.21.1 shear answers a call on a client level, where 1.21.2's needs a ServerLevel (CbEntitySmall#shear)"
+  },
+  {
+   "under": "net/minecraft/class_1493",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyWet",
+   "requires": [
+    "method_6711()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1493",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyRoll",
+   "requires": [
+    "method_6715(FF)F"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1493",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyWolfArmor",
+   "requires": [
+    "method_55710()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1501",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacySwag",
+   "requires": [
+    "method_6800()Lnet/minecraft/class_1767;"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1451",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyCatTexture",
+   "requires": [
+    "method_16092()Lnet/minecraft/class_2960;"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1531",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyBasePlate",
+   "requires": [
+    "method_6901()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1477",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyMovementVector",
+   "requires": [
+    "method_6670(FFF)V"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1646",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyChasing",
+   "requires": [
+    "method_35200()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1646",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacySetChasing",
+   "requires": [
+    "method_35201(Z)V"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1642",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyBreakDoor",
+   "requires": [
+    "method_7212()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1661",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyUnusedSlot",
+   "requires": [
+    "method_7371(Lnet/minecraft/class_1799;)I"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1661",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacySwapPaint",
+   "requires": [
+    "method_7373(D)V"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1665",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyCrossbow",
+   "requires": [
+    "method_7456()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_8949",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacySnout",
+   "requires": [
+    "method_55009()D"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi$LegacyBuild",
+   "requires": [
+    "build()Lnet/minecraft/class_1299;"
+   ],
+   "synth": [],
+   "basis": "a mod subclass of FabricEntityTypeBuilder's own 1.21.1 build() answers the calls CbEntityFapi serves (1.21.2's takes a key)"
+  },
+  {
+   "under": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacyPos",
+   "requires": [
+    "method_7508(DDD)Lnet/minecraft/class_243;"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getPos of a mod minecart, asked by 1.21.1's moveAlongTrack / getPosOffs / the renderer: OldMinecartBehavior's getPos (same body) asks it (CbEntityMinecartOldMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacyPosOffs",
+   "requires": [
+    "method_7505(DDDD)Lnet/minecraft/class_243;"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getPosOffs of a mod minecart, asked by the renderer: OldMinecartBehavior's getPosOffs (same body) asks it (CbEntityMinecartOldMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1510",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$LegacyLatency",
+   "requires": [
+    "method_6817(IF)[D"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getLatencyPos of a mod dragon, asked by aiStep (1.0), the renderer and the model: the dragon's flight history (and the render state's copy) answers get(i) / get(i, partialTick) with it (CbEntityDragonHistoryMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1510",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$LegacyHeadOffset",
+   "requires": [
+    "method_6823(I[D[D)F"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getHeadPartYOffset of a mod dragon, asked by the model: the render state's answers with it (CbEntityDragonStateMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1528",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$LegacyHeadYRot",
+   "requires": [
+    "method_6879(I)F"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getHeadYRot of a mod wither, asked by the model per head: getHeadYRots (the renderer's only source) answers with it (CbEntityWitherMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1528",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$LegacyHeadXRot",
+   "requires": [
+    "method_6887(I)F"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getHeadXRot of a mod wither, asked by the model per head: getHeadXRots answers with it (CbEntityWitherMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1542",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall$LegacySpin",
+   "requires": [
+    "method_27314(F)F"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getSpin(partialTick) of a mod item entity, asked by getVisualRotationYInDegrees and the renderer: CbEntitySpinMixin / CbEntitySpinRenderMixin ask it where 1.21.2 computes the static getSpin"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityInside$LegacyTry",
+   "requires": [
+    "method_36974()V"
+   ],
+   "synth": [],
+   "basis": "1.21.1's tryCheckInsideBlocks of a mod entity, run at the end of move(): 1.21.2's applyEffectsFromBlocks runs it in place of its block loop (CbEntityInsideMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityInside$LegacyCheck",
+   "requires": [
+    "method_5852()V"
+   ],
+   "synth": [],
+   "basis": "1.21.1's checkInsideBlocks of a mod entity: 1.21.2's applyEffectsFromBlocks runs 1.21.1's tryCheckInsideBlocks, which asks it, in place of its block loop (CbEntityInsideMixin)"
   }
  ],
  "classRenames": {
-  "net/minecraft/class_1688$class_1689": "top/dext/centurybridge/step/v1_21_2/facade/MinecartType"
- }
+  "net/minecraft/class_1688$class_1689": "top/dext/centurybridge/step/v1_21_2/facade/MinecartType",
+  "net/minecraft/class_1662": "top/dext/centurybridge/step/v1_21_2/facade/StackedContents",
+  "net/minecraft/class_1301$class_1302": "top/dext/centurybridge/step/v1_21_2/facade/MobCanWearArmorEntitySelector",
+  "net/minecraft/class_4582": "top/dext/centurybridge/step/v1_21_2/facade/PowerableMob",
+  "net/minecraft/class_6035": "net/minecraft/class_10183",
+  "net/minecraft/class_6375": "top/dext/centurybridge/step/v1_21_2/facade/LerpingModel"
+ },
+ "overrideRenames": [
+  {
+   "old": "method_5722(Lnet/minecraft/class_1297;)Z",
+   "new": "cb$method_5722",
+   "onlyUnder": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc$LegacyAllied",
+   "basis": "1.21.2's Entity.isAlliedTo is final: a mod's 1.21.1 override is renamed and answers it (CbEntityMiscMixin); its super call is 1.21.2's isAlliedTo of the vanilla classes"
+  },
+  {
+   "old": "method_6872()Z",
+   "new": "method_61492",
+   "onlyUnder": "net/minecraft/class_1548",
+   "superCalls": "rename",
+   "basis": "1.21.1 Creeper.isPowered is 1.21.2's isPowered under a new name (same body)"
+  },
+  {
+   "old": "method_6229(FFF)F",
+   "new": "method_63642",
+   "onlyUnder": "net/minecraft/class_1333",
+   "superCalls": "rename",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$RotateTowards",
+   "basis": "1.21.1 LookControl.rotateTowards is 1.21.2's Control.rotateTowards (a public default, same body): a mod LookControl's override is renamed and made public"
+  },
+  {
+   "old": "method_55693()F",
+   "new": "cb$method_55693",
+   "onlyUnder": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFinals$LegacyScale",
+   "basis": "1.21.2's LivingEntity.getScale is final (same body): a mod's 1.21.1 override is renamed and answers it (CbEntityFinalsMixin); its super call is the final method's body"
+  },
+  {
+   "old": "method_32326(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;",
+   "new": "cb$method_32326",
+   "onlyUnder": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFinals$LegacySlot",
+   "basis": "1.21.2's LivingEntity.getEquipmentSlotForItem is final: a mod's 1.21.1 override is renamed and answers it (CbEntityFinalsMixin); its super call is the vanilla classes' answer"
+  },
+  {
+   "old": "method_6673(I)V",
+   "new": "method_61456",
+   "onlyUnder": "net/minecraft/class_1433",
+   "superCalls": "rename",
+   "basis": "1.21.1 Dolphin.handleAirSupply(int) is 1.21.2's Dolphin.method_61456 (same body; Dolphin left WaterAnimal, whose handleAirSupply it overrode)"
+  }
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#getWasOnFire",
+  "net/minecraft/class_1665.field_7588:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getInGround",
+  "net/minecraft/class_1696.field_7737:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getXPush",
+  "net/minecraft/class_1696.field_7736:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getZPush",
+  "net/minecraft/class_1510.field_7026:[[D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#positions",
+  "net/minecraft/class_1510.field_7010:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#getPosPointer",
+  "net/minecraft/class_1341.field_6405:Lnet/minecraft/class_1937;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving#breedGoalLevel"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setWasOnFire",
+  "net/minecraft/class_1665.field_7588:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#setInGround",
+  "net/minecraft/class_1696.field_7737:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#setXPush",
+  "net/minecraft/class_1696.field_7736:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#setZPush",
+  "net/minecraft/class_1510.field_7010:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#setPosPointer"
+ },
+ "covers": [
+  "net/minecraft/class_1297.method_5687(I)Z",
+  "net/minecraft/class_1297.method_5691()I",
+  "net/minecraft/class_1297.method_5671()Lnet/minecraft/class_2168;",
+  "net/minecraft/class_1297.method_43496(Lnet/minecraft/class_2561;)V",
+  "net/minecraft/class_1297.method_9200()Z",
+  "net/minecraft/class_1297.method_9201()Z",
+  "net/minecraft/class_1297.method_9202()Z",
+  "net/minecraft/class_5762.method_36976()Ljava/util/Map;"
+ ],
+ "methodRenames": {
+  "net/minecraft/class_1548.method_6872()Z": "method_61492",
+  "net/minecraft/class_1333.method_6229(FFF)F": "method_63642",
+  "net/minecraft/class_1433.method_6673(I)V": "method_61456"
+ },
+ "lambdaAdapters": {
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi$LegacyConversion",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#conversion(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi$LegacyConversion;)Lnet/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion;"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_1657",
+   "member": "method_7335(Ljava/util/List;)V",
+   "args": [
+    "top/dext/centurybridge/step/v1_21_2/rt/CbEntityGeneric#recipeIds(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "ret": null,
+   "basis": "generic drift: a mod Player's 1.21.1 awardRecipesByKey override gets the recipe ids of the keys 1.21.2 passes (CbEntityGeneric)"
+  }
+ ]
 }

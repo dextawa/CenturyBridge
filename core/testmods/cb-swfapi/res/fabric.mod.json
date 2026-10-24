@@ -4,6 +4,16 @@
  "version": "1.0.0",
  "name": "CB swfapi step test",
  "environment": "*",
- "entrypoints": { "main": ["cb.swfapi.SwfapiTestMod"] },
- "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.11", "fabric-loot-api-v2": "*", "fabric-game-rule-api-v1": "*" }
+ "entrypoints": {
+  "main": [
+   "cb.swfapi.SwfapiTestMod"
+  ]
+ },
+ "depends": {
+  "fabricloader": ">=0.14.0",
+  "minecraft": "1.21.11",
+  "fabric-loot-api-v2": "*",
+  "fabric-game-rule-api-v1": "*",
+  "fabric-object-builder-api-v1": "*"
+ }
 }

@@ -12,4 +12,7 @@ public interface CbEntityMobInvoker {
 
     @Invoker("method_5955")
     boolean cb$canReplaceCurrentItem(class_1799 candidate, class_1799 existing, class_1304 slot);
+
+    @Invoker("method_5929")
+    float cb$getEquipmentDropChance(class_1304 slot);
 }

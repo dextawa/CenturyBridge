@@ -180,6 +180,11 @@ public final class Main {
         if (crossesWall && !Files.exists(renameTable)) {
             throw new IllegalStateException("chain crosses the namespace wall but " + renameTable + " is missing");
         }
+        // the whole-jar rename every converted jar takes past the wall (facade tokens keep their names)
+        top.dext.centurybridge.data.JarRemapper.Table wallTable = crossesWall
+            ? top.dext.centurybridge.data.JarRemapper.loadTable(renameTable).keepFacadeTokens(
+                top.dext.centurybridge.data.JarRemapper.Table.facadeOwners(chain.classRenames))
+            : null;
         Path targetStub = stubOf(args[3]);
         if (Files.exists(targetStub)) {
             chain.loadTargetCtors(targetStub, crossesWall ? renameTable : null);
@@ -258,7 +263,7 @@ public final class Main {
                     Path tmp = r.outputJar.resolveSibling(r.outputJar.getFileName() + ".preNs");
                     Files.move(r.outputJar, tmp);
                     // with the target's code jar: calls also take the invoke kind the target declares their owner as
-                    top.dext.centurybridge.data.JarRemapper.remapWithTable(renameTable, tmp, r.outputJar,
+                    top.dext.centurybridge.data.JarRemapper.remapWithTable(wallTable, tmp, r.outputJar,
                         System.getenv("CB_TARGET_CODE") != null ? Path.of(System.getenv("CB_TARGET_CODE"))
                                                                 : Path.of("data/jars/client-" + args[3] + ".jar"));
                     Files.delete(tmp);
@@ -315,7 +320,7 @@ public final class Main {
         System.out.println("report -> " + report);
         Path fullAudit = outDir.resolve("full-audit.tsv");
         top.dext.centurybridge.data.FullAudit.write(fullAudit,
-            crossesWall ? top.dext.centurybridge.data.JarRemapper.loadTable(renameTable).remapper() : null);
+            crossesWall ? wallTable.remapper() : null);
         System.out.println("full-audit (distinct symbols by fate category): "
             + top.dext.centurybridge.data.FullAudit.summary());
         System.out.println("full-audit -> " + fullAudit);

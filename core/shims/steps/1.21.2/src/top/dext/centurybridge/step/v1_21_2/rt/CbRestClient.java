@@ -196,4 +196,43 @@ public final class CbRestClient {
             boolean hat, boolean upsideDown) {
         net.minecraft.class_7532.method_44445(graphics, skin, x, y, size, hat, upsideDown, -1);
     }
+
+    /**
+     * WorldCreationContext's initial world creation options for a 1.21.1 context: what 1.21.2's own constructor from
+     * WorldDimensions gives -- survival, no game rule overrides, no flat preset
+     */
+    public static net.minecraft.class_10220 defaultCreationOptions() {
+        return new net.minecraft.class_10220(net.minecraft.class_8100.class_4539.field_20624, java.util.Set.of(), null);
+    }
+
+    // ------------------------------------------------------------------ ClientLevel.ClientLevelData.getGameRules
+
+    /** getGameRules() of a 1.21.1 ClientLevelData subclass that overrides it */
+    public interface LegacyGameRules {
+        net.minecraft.class_1928 method_146();
+    }
+
+    /** ClientLevelData.getGameRules() called on any client level data: a 1.21.1 subclass's override, else 1.21.1's */
+    public static net.minecraft.class_1928 gameRules(net.minecraft.class_638.class_5271 data) {
+        return data instanceof LegacyGameRules legacy ? legacy.method_146() : clientGameRules(data);
+    }
+
+    private static final java.util.Map<net.minecraft.class_638.class_5271, net.minecraft.class_1928> CLIENT_GAME_RULES =
+        java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
+
+    /**
+     * ClientLevel.ClientLevelData.getGameRules() of 1.21.1: the client level data's own game rules, the defaults
+     * (1.21.1's client made them so and never received the server's), except the daylight rule, which 1.21.1's
+     * client set from the time packet (day time negative when the day does not advance) -- 1.21.2's client keeps
+     * that as the level's tickDayTime, read here for the level showing this data
+     */
+    public static net.minecraft.class_1928 clientGameRules(net.minecraft.class_638.class_5271 data) {
+        net.minecraft.class_1928 rules = CLIENT_GAME_RULES.computeIfAbsent(data, d -> new net.minecraft.class_1928(net.minecraft.class_7701.field_40183));
+        net.minecraft.class_638 level = net.minecraft.class_310.method_1551().field_1687;
+        if (level != null && level.method_28104() == data) {
+            rules.method_20746(net.minecraft.class_1928.field_19396).method_20758(
+                ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestClientLevelAccessor) level).cb$tickDayTime(), null);
+        }
+        return rules;
+    }
 }

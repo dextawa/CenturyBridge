@@ -23,6 +23,7 @@ import net.minecraft.class_9886;
 import net.minecraft.class_9889;
 import net.minecraft.class_9890;
 import top.dext.centurybridge.step.v1_21_2.facade.Tier;
+import top.dext.centurybridge.step.v1_21_2.facade.TieredItem;
 import top.dext.centurybridge.step.v1_21_2.facade.Tiers;
 
 /**
@@ -121,7 +122,7 @@ public final class CbItemTiers {
 
         @Override
         public class_1856 method_8023() {
-            return class_1856.method_8106(class_7923.method_62715(class_7923.field_41178).method_46735(w.comp_2935()));
+            return class_1856.method_8106(top.dext.centurybridge.step.v1_21_2.rt.CbItemTags.lookup(class_7923.field_41178).method_46735(w.comp_2935()));
         }
     }
 
@@ -146,14 +147,14 @@ public final class CbItemTiers {
     public static class_9424 swordTool() {
         return new class_9424(List.of(
             class_9424.class_9425.method_58431(class_6885.method_40246(class_2246.field_10343.method_40142()), 15.0F),
-            class_9424.class_9425.method_58434(class_7923.method_62715(class_7923.field_41175).method_46735(class_3481.field_44469), 1.5F)),
+            class_9424.class_9425.method_58434(top.dext.centurybridge.step.v1_21_2.rt.CbItemTags.lookup(class_7923.field_41175).method_46735(class_3481.field_44469), 1.5F)),
             1.0F, 2);
     }
 
     // ---- Tool.Rule's 1.21.1 factories (tag / block list where 1.21.2 takes a holder set) ----
 
     private static class_6885<class_2248> blocks(class_6862<class_2248> tag) {
-        return class_7923.method_62715(class_7923.field_41175).method_46735(tag);
+        return top.dext.centurybridge.step.v1_21_2.rt.CbItemTags.lookup(class_7923.field_41175).method_46735(tag);
     }
 
     private static class_6885<class_2248> blocks(List<class_2248> list) {
@@ -220,7 +221,23 @@ public final class CbItemTiers {
     }
 
     private static Tier tier(class_1792 item) {
-        return item instanceof LegacyTier l ? l.method_8022() : super_tier(item);
+        if (item instanceof LegacyTier l) {
+            return l.method_8022();
+        }
+        return item instanceof TieredItem t ? t.method_8022() : super_tier(item);
+    }
+
+    /**
+     * getTier() through a TieredItem reference (an Item since TieredItem is renamed onto it; CbItemTypes has let only
+     * 1.21.1's TieredItems through): the class's override, the facade's tier, or the 1.21.2 tool's
+     */
+    public static Tier method_8022(class_1792 item) {
+        return tier(item);
+    }
+
+    /** new TieredItem(tier, properties): the facade, typed as the Item TieredItem references are */
+    public static class_1792 newTieredItem(Tier tier, class_1792.class_1793 properties) {
+        return new TieredItem(tier, properties);
     }
 
     /** 1.21.1's TieredItem.getTier(): the tier the tool was built with */

@@ -1,0 +1,72 @@
+{
+ "classRenames": {
+  "net/minecraft/class_7157$class_7870": "top/dext/centurybridge/step/v1_20_5/facade/CommandBuildContextConfigurable",
+  "net/minecraft/class_7157$class_7158": "top/dext/centurybridge/step/v1_20_5/facade/CommandBuildContextPolicy",
+  "net/minecraft/class_7225$class_7873": "top/dext/centurybridge/step/v1_20_5/facade/HolderLookupDelegate",
+  "net/minecraft/class_7225$class_7226$class_7875": "top/dext/centurybridge/step/v1_20_5/facade/RegistryLookupDelegate"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_7157.method_46723(Lnet/minecraft/class_5455;Lnet/minecraft/class_7699;)Lnet/minecraft/class_7157$class_7870;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinLookups"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_7157.method_41699(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225;": {
+   "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbFinLookups$LegacyBuildContext",
+   "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbFinLookups#cbBuildContext(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinLookups$LegacyBuildContext;)Lnet/minecraft/class_7157;"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_45919(Lnet/minecraft/class_7699;)Lnet/minecraft/class_7225;",
+   "new": "method_45919(Lnet/minecraft/class_7699;)Lnet/minecraft/class_7225$class_7226;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinLookups.cbFilterFeatures(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinLookups$LegacyFilterFeatures;Lnet/minecraft/class_7699;)Lnet/minecraft/class_7225$class_7226;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinLookups$LegacyFilterFeatures",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_7225$class_7226",
+   "basis": "RegistryLookup.filterFeatures answers a RegistryLookup since 1.20.5; a 1.20.4 override's HolderLookup keeps the lookup's own key and lifecycle"
+  },
+  {
+   "old": "method_54427(Lnet/minecraft/class_2487;Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_8839;)Lnet/minecraft/class_8868;",
+   "new": "method_52595(Lnet/minecraft/class_2487;Lcom/mojang/brigadier/CommandDispatcher;)Lnet/minecraft/class_8868;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFunctions.cbInstantiateMacro(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinFunctions$LegacyMacroInstantiate;Lnet/minecraft/class_2487;Lcom/mojang/brigadier/CommandDispatcher;)Lnet/minecraft/class_8868;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFunctions$LegacyMacroInstantiate",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_8641",
+   "shadows": [
+    "method_52595(Lnet/minecraft/class_2487;Lcom/mojang/brigadier/CommandDispatcher;Ljava/lang/Object;)Lnet/minecraft/class_8868;"
+   ],
+   "basis": "MacroFunction.instantiate takes no source since 1.20.5; a 1.20.4 subclass's typed override gets 1.20.5's function compilation source"
+  },
+  {
+   "old": "method_52595(Lnet/minecraft/class_2487;Lcom/mojang/brigadier/CommandDispatcher;Ljava/lang/Object;)Lnet/minecraft/class_8868;",
+   "new": "method_52595(Lnet/minecraft/class_2487;Lcom/mojang/brigadier/CommandDispatcher;)Lnet/minecraft/class_8868;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFunctions.cbInstantiate(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinFunctions$LegacyInstantiate;Lnet/minecraft/class_2487;Lcom/mojang/brigadier/CommandDispatcher;)Lnet/minecraft/class_8868;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFunctions$LegacyInstantiate",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_2158",
+   "basis": "CommandFunction.instantiate takes no source since 1.20.5; a 1.20.4 implementation gets 1.20.5's function compilation source"
+  },
+  {
+   "old": "method_46744(ILnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;",
+   "new": "method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lnet/minecraft/class_9248;)Lnet/minecraft/class_6880$class_6883;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries.cbRegister(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries$LegacyRegisterMapping;Lnet/minecraft/class_5321;Ljava/lang/Object;Lnet/minecraft/class_9248;)Lnet/minecraft/class_6880$class_6883;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries$LegacyRegisterMapping",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_2370",
+   "basis": "1.20.4's MappedRegistry.register(key, value, lifecycle) was registerMapping(next id, ..); a subclass's registerMapping override sees every 1.20.5 register(key, value, info); a class overriding both register(key, value, lifecycle) and registerMapping gets its registerMapping, the one every 1.20.4 registration reached (register only some of them)",
+   "shadows": [
+    "method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;"
+   ]
+  }
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_8641.method_54427(Lnet/minecraft/class_2487;Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_8839;)Lnet/minecraft/class_8868;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinFunctions"
+ },
+ "covers": [
+  "net/minecraft/class_7157.method_41699(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225;",
+  "net/minecraft/class_7225.method_46753(Ljava/util/function/Predicate;)Lnet/minecraft/class_7225;"
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_7923.field_41179:Lnet/minecraft/class_7922;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#potionRegistry",
+  "net/minecraft/class_7782.field_40587:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#registryNetworkCodec"
+ }
+}

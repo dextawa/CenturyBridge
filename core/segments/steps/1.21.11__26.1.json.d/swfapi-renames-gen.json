@@ -129,7 +129,6 @@
   "net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder": "net/fabricmc/fabric/api/client/renderer/v1/sprite/SpriteFinder",
   "net/fabricmc/fabric/api/renderer/v1/render/FabricLayerRenderState": "net/fabricmc/fabric/api/client/renderer/v1/render/FabricLayerRenderState",
   "net/fabricmc/fabric/api/renderer/v1/render/FabricRenderCommandQueue": "net/fabricmc/fabric/api/client/renderer/v1/render/FabricOrderedSubmitNodeCollector",
-  "net/fabricmc/fabric/api/renderer/v1/render/RenderLayerHelper": "net/fabricmc/fabric/api/client/renderer/v1/render/ChunkSectionLayerHelper",
   "net/fabricmc/fabric/api/renderer/v1/sprite/FabricErrorCollectingSpriteGetter": "net/fabricmc/fabric/api/client/renderer/v1/sprite/FabricMaterialBaker",
   "net/fabricmc/fabric/api/renderer/v1/sprite/FabricSpriteAtlasTexture": "net/fabricmc/fabric/api/client/renderer/v1/sprite/FabricPreparations",
   "net/fabricmc/fabric/api/renderer/v1/sprite/FabricStitchResult": "net/fabricmc/fabric/api/client/renderer/v1/sprite/FabricTextureAtlas",

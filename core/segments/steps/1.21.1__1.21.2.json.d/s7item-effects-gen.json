@@ -1,0 +1,34 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_1291.method_5572(Lnet/minecraft/class_1309;I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects",
+  "net/minecraft/class_1291.method_5564(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;ID)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects",
+  "net/minecraft/class_1291.method_58617(Lnet/minecraft/class_1309;ILnet/minecraft/class_1297$class_5529;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects",
+  "net/minecraft/class_1291.method_58614(Lnet/minecraft/class_1309;ILnet/minecraft/class_1282;F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects"
+ },
+ "covers": [
+  "net/minecraft/class_1702.method_35217()I",
+  "net/minecraft/class_1702.method_35219()F",
+  "net/minecraft/class_1702.method_35218(F)V",
+  "net/minecraft/class_1702.method_7588(Lnet/minecraft/class_1657;)V"
+ ],
+ "frameDefaults": {
+  "method_5572(Lnet/minecraft/class_1309;I)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects#level(Lnet/minecraft/class_1291;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_3218;"
+  },
+  "method_5564(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;ID)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects#level(Lnet/minecraft/class_1291;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;ID)Lnet/minecraft/class_3218;"
+  },
+  "method_58617(Lnet/minecraft/class_1309;ILnet/minecraft/class_1297$class_5529;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects#level(Lnet/minecraft/class_1291;Lnet/minecraft/class_1309;ILnet/minecraft/class_1297$class_5529;)Lnet/minecraft/class_3218;"
+  },
+  "method_58614(Lnet/minecraft/class_1309;ILnet/minecraft/class_1282;F)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects#level(Lnet/minecraft/class_1291;Lnet/minecraft/class_1309;ILnet/minecraft/class_1282;F)Lnet/minecraft/class_3218;"
+  },
+  "method_58622(Lnet/minecraft/class_1309;Lnet/minecraft/class_1297$class_5529;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects#level(Lnet/minecraft/class_1293;Lnet/minecraft/class_1309;Lnet/minecraft/class_1297$class_5529;)Lnet/minecraft/class_3218;"
+  },
+  "method_58621(Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;F)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEffects#level(Lnet/minecraft/class_1293;Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;F)Lnet/minecraft/class_3218;"
+  }
+ }
+}

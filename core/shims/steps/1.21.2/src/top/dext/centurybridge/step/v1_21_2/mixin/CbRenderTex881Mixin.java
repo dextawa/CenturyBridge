@@ -18,14 +18,14 @@ public abstract class CbRenderTex881Mixin implements top.dext.centurybridge.step
     private net.minecraft.class_2960 field_54501;
 
     /** 1.21.1 getTextureLocation(Lnet/minecraft/class_1690;)Lnet/minecraft/class_2960; of this renderer */
-    public net.minecraft.class_2960 method_3891(net.minecraft.class_1690 entity) {
+    public net.minecraft.class_2960 method_3891(net.minecraft.class_10255 entity) {
         net.minecraft.class_897<?, ?> r = net.minecraft.class_310.method_1551().method_1561().method_3953(entity);
         return r instanceof top.dext.centurybridge.step.v1_21_2.rt.CbRenderTex.BoatTexture b ? b.cb$boatTexture() : this.field_54501;
     }
 
     /** javac's 1.21.1 bridge method_3931(Lnet/minecraft/class_1297;)Lnet/minecraft/class_2960; to it */
     public net.minecraft.class_2960 method_3931(net.minecraft.class_1297 entity) {
-        return this.method_3891((net.minecraft.class_1690) entity);
+        return this.method_3891((net.minecraft.class_10255) entity);
     }
 
     @Override

@@ -100,6 +100,28 @@ public final class CbWallLevelData {
         return s.getWorldGenSettings().options();
     }
 
+    /**
+     * 1.21.11 WorldData.getGameRules(): the primary level data's game rules, which 26.1 keeps on the server.
+     * Answered for the running server's own world data (as {@link #worldGenOptions}).
+     */
+    public static GameRules getGameRules(WorldData data) {
+        MinecraftServer s = SERVER;
+        if (s == null || s.getWorldData() != data) {
+            throw new IllegalStateException(data + ": 1.21.11 world data of no running server has no game rules in 26.1");
+        }
+        return s.getGameRules();
+    }
+
+    /** 1.21.11 PrimaryLevelData.WORLD_GEN_SETTINGS (the level.dat key 1.21.11 wrote them under) */
+    public static String field_31843() {
+        return "WorldGenSettings";
+    }
+
+    /** 1.21.11 PrimaryLevelData.PLAYER (the level.dat key of the single player's data) */
+    public static String field_36349() {
+        return "Player";
+    }
+
     // ---- ServerLevelData ----
 
     /** 1.21.11 ServerLevelData.setDayTime(long) */

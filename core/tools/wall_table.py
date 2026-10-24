@@ -16,11 +16,21 @@ This decides, from bytecode only, where each 1.21.11 class and member lives in t
            its members' names and descriptors, and by bodies that are the same code (each instruction
            equal once names are translated). Never by simple name alone (26.1's sprite/SpriteGetter is
            1.21.11's MaterialSet, not its SpriteGetter).
-  member   the 1.21.11 name when the target class (or a supertype) has it; else a target member of the
+  member   the 1.21.11 name when the target class (or a supertype) has it and its body is the same code,
+           or no other member of the class is; else a target member of the
            same class whose body is the same code as 1.21.11's (one candidate, not trivial), or which
            the implementations of the same method family (an override elsewhere) or the bodies that
            use it name consistently. A member with no such evidence keeps its 1.21.11 name: it is
            damage of the step, to be bridged, not guessed.
+           Names the target reused for other code are collisions: 26.1's RenderTypes.entityCutout is
+           1.21.11's entityCutoutNoCull, 1.21.11's culling entityCutout is entityCutoutCull -- keeping the
+           name links and renders the other type. When the same-named member is not the same code and
+           exactly one other member of the class is (two references or more matched as they are, not
+           already the same code as the V member of its own name), the member maps there; more than one
+           is listed (member-collision-ambiguous), never guessed. Every collision is in the report.
+           A static constant whose name is gone maps to the one static field of the same erased type
+           and generic signature naming the class (26.1's loot entries and functions: MapCodec<LootItem>
+           CODEC -> MAP_CODEC), when it is the one such constant on both sides.
 
 Matching is a fixed point: a class found moved makes descriptors comparable, which finds members, whose
 bodies vote for more classes. Undecided candidates are listed in the report, never emitted.
@@ -57,6 +67,7 @@ Regenerating the climb's wall (from the repo root; java nowhere):
      (gen_step_reshapes.py --wall <table>).
 """
 import collections
+import difflib
 import json
 import os
 import re
@@ -71,6 +82,7 @@ TOKEN = re.compile(r"^(method|field|comp)_\d+$")
 GENERIC = {"<init>", "<clinit>", "values", "valueOf", "$values", "$VALUES", "equals", "hashCode", "toString",
            "CODEC", "STREAM_CODEC", "MAP_CODEC", "LOGGER", "INSTANCE", "TYPE", "ID"}
 DESC_CLS = re.compile(r"L([^;]+);")
+SIG_CLS = re.compile(r"L([^;<]+)[;<]")
 REFOPS = {0xb2, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8, 0xb9}
 ANON = re.compile(r"\$\d+$")
 
@@ -119,6 +131,9 @@ class Table:
         self.ren = {}                 # V member family name (token, or "owner.name" in identity mode) -> W name
         self.ren_basis = {}
         self.collisions = {}
+        self.reuse = {}               # (V class, V method) -> (kind, W name, W member it moved to, why)
+        self.reuse_amb = {}           # (V class, V method) -> (kind, W name, candidates, why)
+        self.segs = {}
         self.weak = {}                # V class -> its same-named W pair whose members say little
         self.wsup = {}
         self.nested = collections.defaultdict(set)  # W class -> its named nested classes
@@ -249,6 +264,9 @@ class Table:
             return False
         if not self.identity and not TOKEN.match(name):
             return False
+        # a library member (the JDK's, DFU's) has the same name in both: never a rename
+        if owner not in self.V:
+            return False
         votes.append(("F" if kind == "F" else "M", owner, name, wowner, wname))
         return True
 
@@ -269,7 +287,306 @@ class Table:
         self.last_anchors = anchors
         return True, votes
 
+    def tsig(self, s):
+        """a generic signature with its V classes translated, or None while one is undecided"""
+        out, i = [], 0
+        for m in SIG_CLS.finditer(s):
+            t = self.tcls(m.group(1))
+            if isinstance(t, Wild):
+                return None
+            out.append(s[i:m.start(1)] + t)
+            i = m.end(1)
+        return "".join(out) + s[i:]
+
+    def own_constant(self, c, w, f, n):
+        """the target field V's static constant f went to when its name n is gone from w: the one static
+        field of w with the same erased type and the same generic signature, naming the class itself,
+        while f is the one such constant of V's class (26.1 renamed the MapCodec constant of loot
+        entries, loot functions and value providers CODEC -> MAP_CODEC, the class initializers that
+        build them reworked: 1.21.11 LootItem.CODEC is MapCodec<LootItem>, 26.1's MAP_CODEC is too)"""
+        if not f.access & bytecode.ACC_STATIC or not f.signature:
+            return None
+        if ("L" + c + ";") not in f.signature and ("L" + c + "<") not in f.signature:
+            return None
+        if self.w_has(w, "F", n, self.tdesc(f.desc), []):
+            return None
+        sig = self.tsig(f.signature)
+        if sig is None:
+            return None
+        mine = [g for g in self.V[c].fields if g.access & bytecode.ACC_STATIC and g.signature == f.signature]
+        if len(mine) != 1:
+            return None
+        theirs = [y for y in self.W[w].fields if y.access & bytecode.ACC_STATIC and not y.access & bytecode.ACC_SYNTHETIC
+                  and y.signature == sig and unify_desc(self.tdesc(f.desc), y.desc, [])]
+        if len(theirs) != 1:
+            return None
+        y = theirs[0]
+        # not a field another V member of the class already answers to by its own name
+        if any(g is not f and self.mname(c, g.name) == y.name for g in self.V[c].fields):
+            return None
+        return y
+
+    # ---------------------------------------------------------------- static constants by initializer
+    def init_seg(self, side, cls, fname):
+        """the class initializer's code that computes static field fname of cls (from the previous
+        static store up to its own), or None"""
+        key = (side, cls, fname)
+        if key in self.segs:
+            return self.segs[key]
+        k = (self.V if side == "V" else self.W).get(cls)
+        out = None
+        clinit = next((m for m in k.methods if m.name == "<clinit>"), None) if k else None
+        if clinit is not None and clinit.insns:
+            start = 0
+            for i, (op, a) in enumerate(clinit.insns):
+                if op != 0xb3:
+                    continue
+                if a[2] == cls and a[3] == fname:
+                    out = clinit.insns[start:i]
+                    break
+                start = i + 1
+        self.segs[key] = out
+        return out
+
+    def loose_code(self, vi, wi, vcls, wcls, depth=2):
+        """(string distance, votes) when W code wi is V code vi under the names known so far with only
+        string constants differing (each differing pair adds 1 - its similarity ratio); a lambda of the class itself is compared by its body (two
+        levels). None when they are other code."""
+        if vi is None or wi is None or len(vi) != len(wi):
+            return None
+        votes, diff = [], 0
+        for (op, a), (wop, wa) in zip(vi, wi):
+            if op != wop:
+                return None
+            if isinstance(a, tuple) and a and a[0] == "str":
+                if not (isinstance(wa, tuple) and wa and wa[0] == "str"):
+                    return None
+                if a[1] != wa[1]:
+                    # how far apart (resource ids of the same family: "pipeline/entity_cutout" is nearer
+                    # "pipeline/entity_cutout_no_cull" than "..._no_cull_z_offset")
+                    diff += 1 - difflib.SequenceMatcher(None, a[1], wa[1]).ratio()
+                continue
+            if op == 0xba and depth > 0 and isinstance(a, tuple) and isinstance(wa, tuple) and \
+                    a[1] == wa[1] and len(a[4]) == len(wa[4]) and a[3] == wa[3]:
+                if not unify_desc(self.tdesc(a[2]), wa[2], votes):
+                    return None
+                for x, y in zip(a[4], wa[4]):
+                    if isinstance(x, tuple) and x and x[0] == "mhandle" and isinstance(y, tuple) and y and \
+                            y[0] == "mhandle" and x[2] == vcls and y[2] == wcls:
+                        vm = next((m for m in self.V[vcls].methods if m.name == x[3] and m.desc == x[4]), None)
+                        wm = next((m for m in self.W[wcls].methods if m.name == y[3] and m.desc == y[4]), None)
+                        if vm is None or wm is None or not unify_desc(self.tdesc(x[4]), y[4], votes):
+                            return None
+                        r = self.loose_code(vm.insns, wm.insns, vcls, wcls, depth - 1)
+                        if r is None:
+                            return None
+                        diff += r[0]
+                        votes.extend(r[1])
+                    elif not self.norm_operand(x, votes, y):
+                        return None
+                continue
+            if not self.norm_operand(a, votes, wa):
+                return None
+        return diff, votes
+
+    def init_diff(self, vc, vf, wc, wf):
+        """string distance of two constants' initializers, None when they are other code -- or only the
+        same code by assuming where an undecided V class went (1.21.11's RandomPatchFeature, gone in
+        26.1, would otherwise be any feature class)"""
+        r = self.loose_code(self.init_seg("V", vc, vf), self.init_seg("W", wc, wf), vc, wc)
+        if r is None or any(v[0] == "C" for v in r[1]):
+            return None
+        return r[0]
+
+    def field_reuse(self, c, w):
+        """static constants whose name the target passed along: the same-named target constant is
+        computed by other code, which is the initializer of another V constant of the class (string
+        constants aside), while one other target constant is computed by this one's (26.1
+        RenderPipelines: ENTITY_CUTOUT is 1.21.11's ENTITY_CUTOUT_NO_CULL -- withCull(false) -- and
+        1.21.11's culling ENTITY_CUTOUT is ENTITY_CUTOUT_CULL). Both ends of the chain are decided
+        together: {V field: (W field, why)}. Fewest differing string constants wins; a tie is listed."""
+        vk, wk = self.V[c], self.W[w]
+        # (not enum constants: an enum constant is its name -- valueOf, the serialized form -- and the
+        # ordinal in its initializer moves whenever one is inserted before it)
+        vst = [f for f in vk.fields if f.access & bytecode.ACC_STATIC and not f.access & (bytecode.ACC_SYNTHETIC | bytecode.ACC_ENUM)
+               and (self.identity or TOKEN.match(f.name)) and (self.identity or f.name not in self.ren)]
+        wst = [y for y in wk.fields if y.access & bytecode.ACC_STATIC and not y.access & bytecode.ACC_SYNTHETIC]
+        if not vst or not any(m.name == "<clinit>" for m in wk.methods):
+            return {}
+        out = {}
+
+        def best(f, pool):
+            dt = self.tdesc(f.desc)
+            sc = []
+            for y in pool:
+                if not unify_desc(dt, y.desc, []):
+                    continue
+                d = self.init_diff(c, f.name, w, y.name)
+                if d is not None:
+                    sc.append((d, y.name))
+            sc.sort()
+            if not sc:
+                return None, None
+            if len(sc) > 1 and sc[1][0] == sc[0][0]:
+                return None, sorted(n for d, n in sc if d == sc[0][0])
+            return sc[0], None
+
+        for f in vst:
+            n = self.mname(c, f.name)
+            x = next((y for y in wst if y.name == n and unify_desc(self.tdesc(f.desc), y.desc, [])), None)
+            if x is None or self.init_seg("V", c, f.name) is None or self.init_seg("W", w, x.name) is None:
+                continue
+            if self.init_diff(c, f.name, w, x.name) is not None:
+                continue
+            # who now holds the name: another V constant of the class whose own name the target has not
+            # kept for it (gone, or itself passed along)
+            holders = []
+            for g in vst:
+                if g is f or not unify_desc(self.tdesc(g.desc), x.desc, []):
+                    continue
+                gn = self.mname(c, g.name)
+                gx = next((y for y in wst if y.name == gn), None)
+                if gx is not None and self.init_diff(c, g.name, w, gx.name) is not None:
+                    continue
+                d = self.init_diff(c, g.name, w, x.name)
+                if d is not None:
+                    holders.append((d, g))
+            holders.sort(key=lambda e: e[0])
+            if not holders or (len(holders) > 1 and holders[1][0] == holders[0][0]):
+                if holders:
+                    self.reuse_amb[(c, f.name)] = ("constant name passed along", n, ", ".join(sorted(self.mname(c, g.name) for d, g in holders)),
+                                                   "more than one V constant is computed by the target constant's initializer")
+                continue
+            g = holders[0][1]
+            pick, tie = best(f, [y for y in wst if y is not x])
+            if tie:
+                self.reuse_amb[(c, f.name)] = ("constant name passed along", n, ", ".join(tie),
+                                               "more than one target constant is computed by this one's initializer")
+                continue
+            if pick is None:
+                continue
+            why = (f"constant name passed along: {w}.{n} is computed as V's {self.mname(c, g.name)} was "
+                   f"(string distance {holders[0][0]:.3f}), {pick[1]} as this one was (string distance {pick[0]:.3f})")
+            out[f.name] = (pick[1], why)
+            self.reuse[(c, f.name)] = ("constant name passed along", n, pick[1] + "(" + f.desc + ")", why)
+            if g.name not in out:
+                gwhy = f"constant name passed along: {w}.{n} is computed as this one was (string distance {holders[0][0]:.3f})"
+                out[g.name] = (n, gwhy)
+                self.reuse[(c, g.name)] = ("constant name passed along", self.mname(c, g.name), n + "(" + g.desc + ")", gwhy)
+        return out
+
     # ---------------------------------------------------------------- member matching of a class pair
+    def name_reuse(self, c, w, own_w):
+        """V methods of class c whose (translated) name the target class w reused for other code: the
+        target member of that name is not the same code as V's body, and exactly one other member of w
+        is (26.1 RenderTypes: entityCutout(Identifier) is 1.21.11's entityCutoutNoCull, and 1.21.11's
+        culling entityCutout is entityCutoutCull). A same-named member that only takes the old name links
+        and does something else, silently. Also a same name kept with another descriptor while V's body
+        lives on, the same code, under another name. -> {V name: (W member, votes, anchors, why)}
+
+        A candidate counts only when its body has at least two references that matched as they are, and
+        is not already answered, the same code, by the V member of its own name (V's body is then merely
+        alike, not moved). More than one candidate is listed (ambiguous), never guessed."""
+        vk = self.V[c]
+        out = {}
+
+        def answered(y):
+            for z in vk.methods:
+                if z.insns is None or self.mname(c, z.name) != y.name or not unify_desc(self.tdesc(z.desc), y.desc, []):
+                    continue
+                ok, _ = self.same_code(z, y)
+                if ok:
+                    return z.name
+            return None
+
+        for m in vk.methods:
+            if m.insns is None or m.access & bytecode.ACC_SYNTHETIC or m.name in GENERIC:
+                continue
+            if not (self.identity or TOKEN.match(m.name)):
+                continue
+            n = self.mname(c, m.name)
+            if n in GENERIC:
+                continue
+            dt = self.tdesc(m.desc)
+            x = next((x for x in own_w if x.name == n and unify_desc(dt, x.desc, [])), None)
+            if x is not None:
+                if x.insns is None:
+                    continue
+                ok, _ = self.same_code(m, x)
+                if ok:
+                    continue
+                kind = "name reused"
+            elif any(x.name == n for x in own_w):
+                kind = "name reshaped"
+            else:
+                continue
+            # the members the same-named one hands over to: then it is the same thing (26.1
+            # Registries.elementsDirPath calls the private registryDirPath, which has 1.21.11's body)
+            called = {(a[3], a[4]) for op, a in (x.insns if x is not None else ())
+                      if op in (0xb6, 0xb7, 0xb8, 0xb9) and isinstance(a, tuple) and a[2] == w}
+            cands = []
+            for y in own_w:
+                # never to a member the old references could not reach
+                if y.access & bytecode.ACC_PRIVATE and not m.access & bytecode.ACC_PRIVATE:
+                    continue
+                if y is x or y.name == n or y.insns is None or \
+                        bool(y.access & bytecode.ACC_STATIC) != bool(m.access & bytecode.ACC_STATIC):
+                    continue
+                v = []
+                if not unify_desc(dt, y.desc, v):
+                    continue
+                ok, bv = self.same_code(m, y)
+                if ok and self.last_anchors >= 2:
+                    cands.append((y, v + bv, self.last_anchors))
+            if not cands or any((e[0].name, e[0].desc) in called for e in cands):
+                # the same-named member being the same code as another V member instead (whose own
+                # name went) is a collision too, with no home for this one's body: listed, the row
+                # keeps the name (a bridge decides)
+                if x is not None and not cands and not called:
+                    for z in vk.methods:
+                        if z is m or z.insns is None or z.access & bytecode.ACC_SYNTHETIC or \
+                                not unify_desc(self.tdesc(z.desc), x.desc, []):
+                            continue
+                        zn = self.mname(c, z.name)
+                        if zn == n:
+                            continue
+                        ok, _ = self.same_code(z, x)
+                        if ok and self.last_anchors >= 2:
+                            self.reuse_amb[(c, m.name)] = (kind, n, f"{w}.{n} is the same code as V's {zn}",
+                                                           "the name went to another member's code; this body has no same-code home")
+                            break
+                continue
+            key = (c, m.name)
+            free = [e for e in cands if answered(e[0]) is None]
+            if len(free) == 1:
+                y, v, anchors = free[0]
+                why = (f"{kind}: {w}.{n}{x.desc if x is not None else ''} is other code, "
+                       f"{y.name}{y.desc} is the same code as V's body")
+                out[m.name] = (y, v, anchors, why)
+                self.reuse[key] = (kind, n, y.name + y.desc, why)
+            elif len(free) > 1:
+                # the bodies differ only in the constants of the class they read (26.1 RenderTypes:
+                # each factory returns its memoized function's answer): the constant computed by the
+                # same code as V's, string constants aside, tells them apart
+                scored = []
+                for e in free:
+                    fv = [x for x in e[1] if x[0] == "F" and x[1] == c and x[3] == w]
+                    ds = [self.init_diff(c, x[2], w, x[4]) for x in fv]
+                    if fv and None not in ds:
+                        scored.append((sum(ds), e))
+                scored.sort(key=lambda s: s[0])
+                if scored and (len(scored) == 1 or scored[1][0] > scored[0][0]):
+                    y, v, anchors = scored[0][1]
+                    why = (f"{kind}: {w}.{n}{x.desc if x is not None else ''} is other code; {len(free)} members are the "
+                           f"same code as V's body, {y.name}{y.desc} the one whose constants are computed as V's "
+                           f"(string distance {scored[0][0]:.3f})")
+                    out[m.name] = (y, v, anchors, why)
+                    self.reuse[key] = (kind, n, y.name + y.desc, why)
+                else:
+                    self.reuse_amb[key] = (kind, n, ", ".join(sorted(e[0].name + e[0].desc for e in free)),
+                                           "more than one target member is the same code as V's body")
+        return out
+
     def match_members(self, c, w, commit):
         """members of V class c found on W class w: (score parts, rename votes, class votes)"""
         vk, wk = self.V[c], self.W[w]
@@ -280,8 +597,13 @@ class Table:
         # W members V's members already reach by their own (translated) name: no rename may land there
         # (1.21.11 DerivedLevelData.isThundering delegates like isInitialized does; 26.1 dropped the
         # former, and its body is "the same code" as the latter's)
+        moved = self.name_reuse(c, w, own_w) if commit else {}
         wused = set()
         for m in vk.methods:
+            if m.name in moved:
+                y = moved[m.name][0]
+                wused.add((y.name, y.desc))
+                continue
             n = self.mname(c, m.name)
             dt = self.tdesc(m.desc)
             for x in own_w:
@@ -309,6 +631,14 @@ class Table:
                 continue
             total += 1
             dt = self.tdesc(m.desc)
+            if m.name in moved:
+                y, v, anchors, why = moved[m.name]
+                matched += 1
+                cvotes.extend(e for e in v if e[0] == "C")
+                renames.append(("M", c, m.name, y.name, anchors, why))
+                renames.extend(("M" if e[0] == "M" else "F", e[1], e[2], e[4], anchors, "named in a body that is the same code")
+                               for e in v if e[0] in ("M", "F"))
+                continue
             v = []
             hit = next((x for x in own_w if x.name == n and unify_desc(dt, x.desc, v)), None)
             if hit is not None:
@@ -350,10 +680,22 @@ class Table:
                 renames.append(("M", c, m.name, x.name, anchors, "same code"))
                 renames.extend(("M" if e[0] == "M" else "F", e[1], e[2], e[4], anchors, "named in a body that is the same code")
                                for e in v if e[0] in ("M", "F"))
+        fmoved = self.field_reuse(c, w) if commit else {}
         for f in vk.fields:
             if f.access & bytecode.ACC_SYNTHETIC or f.name in GENERIC:
                 continue
             n = self.mname(c, f.name)
+            if f.name in fmoved:
+                wn, why = fmoved[f.name]
+                total += 1
+                matched += 1
+                renames.append(("F", c, f.name, wn, 1, why))
+                continue
+            if commit and f.name not in self.ren and (self.identity or TOKEN.match(f.name)):
+                y = self.own_constant(c, w, f, n)
+                if y is not None:
+                    renames.append(("F", c, f.name, y.name, 1,
+                                    f"the one static constant of its generic type {y.signature} in both ({n} gone)"))
             if n in GENERIC:
                 continue
             total += 1
@@ -449,6 +791,7 @@ class Table:
             # (b) member renames inside decided pairs, and the class pairs their bodies imply
             fam = collections.defaultdict(lambda: collections.defaultdict(list))
             cvote = collections.defaultdict(collections.Counter)
+            self.reuse_amb = {}       # what the names known now leave ambiguous (a later round may decide)
             for c, w in list(self.cm.items()):
                 _, _, _, rens, cv = self.match_members(c, w, True)
                 for kind, owner, vname, wname, st, why in rens:
@@ -780,6 +1123,15 @@ def main():
         if key.startswith("class"):
             continue
         rep.append(("member-renamed" if key in t.ren else "member-undecided", key, "", t.ren.get(key, ""), t.ren_basis[key]))
+    # every same-name collision: applied (the row now names the member that is the same code), not
+    # applied (the rename lost to a conflict: see member-undecided), or ambiguous (listed, not guessed)
+    for (c, vname), (kind, n, tgt, why) in sorted(t.reuse.items()):
+        key = (c + "." + vname) if identity else vname
+        applied = t.ren.get(key) == tgt[:tgt.index("(")]
+        rep.append(("member-collision" if applied else "member-collision-unapplied", c + "." + vname, n, tgt,
+                    why + ("" if applied else "; not applied: " + t.ren_basis.get(key, "no decision"))))
+    for (c, vname), (kind, n, cands, why) in sorted(t.reuse_amb.items()):
+        rep.append(("member-collision-ambiguous", c + "." + vname, n, cands, f"{kind}: {why}"))
     with open(report, "w", encoding="utf-8", newline="\n") as o:
         o.write("kind\tv\tbase\ttarget\tevidence\n")
         for r in rep:

@@ -62,7 +62,37 @@
   "net/minecraft/class_3218.method_29199(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#setDayTime",
   "net/minecraft/class_3218.method_75003()J": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getDayCount",
   "net/minecraft/class_3218.method_51836(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5819;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getRandomSequence",
-  "net/minecraft/class_3218.method_52168()Lnet/minecraft/class_8565;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getRandomSequences"
+  "net/minecraft/class_3218.method_52168()Lnet/minecraft/class_8565;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getRandomSequences",
+  "net/minecraft/class_1657.method_7353(Lnet/minecraft/class_2561;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer#displayClientMessage",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.withDepthTestFunction(Lcom/mojang/blaze3d/platform/DepthTestFunction;)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#withDepthTestFunction",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.withBlend(Lcom/mojang/blaze3d/pipeline/BlendFunction;)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#withBlend",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.withoutBlend()Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#withoutBlend",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.withColorWrite(Z)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#withColorWrite",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.withColorWrite(ZZ)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#withColorWrite",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.withDepthWrite(Z)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#withDepthWrite",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.withColorLogic(Lcom/mojang/blaze3d/platform/LogicOp;)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#withColorLogic",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.withDepthBias(FF)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#withDepthBias",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.buildSnippet()Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#buildSnippet",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.build()Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#build",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.blendFunction()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#blendFunction",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.depthTestFunction()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#depthTestFunction",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.writeColor()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#writeColor",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.writeAlpha()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#writeAlpha",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.writeDepth()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#writeDepth",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.colorLogic()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#colorLogic",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthTestFunction()Lcom/mojang/blaze3d/platform/DepthTestFunction;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getDepthTestFunction",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getBlendFunction()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getBlendFunction",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getColorLogic()Lcom/mojang/blaze3d/platform/LogicOp;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getColorLogic",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteColor()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#isWriteColor",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteAlpha()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#isWriteAlpha",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteDepth()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#isWriteDepth",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasScaleFactor()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getDepthBiasScaleFactor",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getDepthBiasConstant",
+  "net/minecraft/class_1309.method_18867(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#entityMakeBrain",
+  "net/minecraft/class_4095$class_5303.method_28335(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#providerMakeBrain",
+  "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive",
+  "net/minecraft/class_766.method_71651(Lnet/minecraft/class_1060;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#registerTextures",
+  "net/minecraft/class_5219.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getGameRules"
  },
  "overrideHooks": [
   {
@@ -90,6 +120,47 @@
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssemble",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "26.1 dropped assemble(input, registries) for assemble(input): a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access)"
+  },
+  {
+   "old": "method_7353(Lnet/minecraft/class_2561;Z)V",
+   "new": "sendOverlayMessage(Lnet/minecraft/class_2561;)V",
+   "onlyUnder": "net/minecraft/class_1657",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer.sendOverlayMessage(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPlayer$LegacyMessages;Lnet/minecraft/class_2561;)V",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer$LegacyMessages",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 splits displayClientMessage(message, overlay) into sendOverlayMessage / sendSystemMessage; a 1.21.11 override answers both with its overlay flag"
+  },
+  {
+   "old": "method_7353(Lnet/minecraft/class_2561;Z)V",
+   "new": "sendSystemMessage(Lnet/minecraft/class_2561;)V",
+   "onlyUnder": "net/minecraft/class_1657",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer.sendSystemMessage(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPlayer$LegacyMessages;Lnet/minecraft/class_2561;)V",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer$LegacyMessages",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 splits displayClientMessage(message, overlay) into sendOverlayMessage / sendSystemMessage; a 1.21.11 override answers both with its overlay flag"
+  },
+  {
+   "old": "method_18867(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;",
+   "new": "method_18867(Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/class_4095;",
+   "onlyUnder": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain$MakeBrain",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.makeBrain(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$MakeBrain;Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/class_4095;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.superMakeBrain(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$SuperMakeBrain;Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;",
+   "superAccess": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain$SuperMakeBrain",
+   "superAccessors": [
+    "method_18867(Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/class_4095;"
+   ],
+   "basis": "1.21.11 LivingEntity.makeBrain(Dynamic) read the saved brain as a Dynamic; 26.1's makeBrain(Brain.Packed) takes it decoded (same {\"memories\": ...} format): the mod's override gets the Packed re-encoded to NBT, its super.makeBrain(dynamic) reaches super's makeBrain(Packed) with the dynamic decoded, and Brain.Provider.makeBrain(dynamic) inside it builds for the entity being made (CbWallBrain)"
+  },
+  {
+   "old": "method_28310(Lcom/mojang/serialization/DynamicOps;)Lcom/mojang/serialization/DataResult;",
+   "new": "pack()Lnet/minecraft/world/entity/ai/Brain$Packed;",
+   "onlyUnder": "net/minecraft/class_4095",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain$SerializeStart",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.pack(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$SerializeStart;)Lnet/minecraft/world/entity/ai/Brain$Packed;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "1.21.11 saved a brain through serializeStart(ops); 26.1 saves Brain.pack(): a mod brain overriding serializeStart is saved as its override writes (same {\"memories\": ...} format, read back through Brain.Packed's codec); its super.serializeStart reaches the covered 1.21.11 method, whose pack() falls through to 26.1's on re-entry"
   }
  ],
  "frameDefaults": {
@@ -97,6 +168,62 @@
    "0": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#mouseX(Lnet/minecraft/class_332;)I",
    "1": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#mouseY(Lnet/minecraft/class_332;)I",
    "2": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#partialTick()F"
+  },
+  "method_18881(Lnet/minecraft/class_4168;Lcom/google/common/collect/ImmutableList;)V": {
+   "2": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#noConditions()Ljava/util/Set;",
+   "3": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#noMemoriesToErase()Ljava/util/Set;"
+  },
+  "method_7205(F)V": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#zombieAttributesReason()Lnet/minecraft/class_3730;"
+  },
+  "method_60984(Z)V": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#currentImpulseImpactPos(Lnet/minecraft/class_1657;)Lnet/minecraft/class_243;"
+  },
+  "method_76729(Lnet/minecraft/class_238;D)Z": {
+   "0": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#activeItem(Lnet/minecraft/class_1657;)Lnet/minecraft/class_1799;"
+  },
+  "method_12970(Lnet/minecraft/class_2960;Lnet/minecraft/class_2561;)Lnet/minecraft/class_3002;": {
+   "0": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#bossEventRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_36233(Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;)V": {
+   "2": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#smeltingCategory(Ljava/lang/Object;Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;)Lnet/minecraft/class_7709;"
+  },
+  "method_36234(Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;)V": {
+   "2": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#blastingCategory(Ljava/lang/Object;Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;)Lnet/minecraft/class_7709;"
+  },
+  "method_49798(Lnet/minecraft/class_1937;Lnet/minecraft/class_2625;ZLnet/minecraft/class_1657;)Z": {
+   "3": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#applicatorStack(Ljava/lang/Object;Lnet/minecraft/class_1937;Lnet/minecraft/class_2625;ZLnet/minecraft/class_1657;)Lnet/minecraft/class_1799;"
+  },
+  "method_49801(Lnet/minecraft/class_8242;Lnet/minecraft/class_1657;)Z": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFrames#applicatorStack(Ljava/lang/Object;Lnet/minecraft/class_8242;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1799;"
+  },
+  "method_23455(Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": {
+   "0": "zero: 1.21.11's providers had no level, and 26.1's that existed then never read it (RandomizedIntStateProvider only hands it to its source provider); RuleBasedStateProvider, which does, is new in 26.1 and no 1.21.11 class extends it"
+  },
+  "method_36425()Lnet/minecraft/class_4184$class_6355;": {
+   "0": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#fov()F"
+  },
+  "method_65587(Lnet/minecraft/class_10439$class_10440;)Lnet/minecraft/class_10439;": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#identityTransform()Lorg/joml/Matrix4fc;"
+  },
+  "method_19661(Ljava/lang/String;Z)V": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#devices()Lcom/mojang/blaze3d/audio/DeviceList;"
+  },
+  "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;)V": {
+   "2": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)",
+   "3": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)",
+   "4": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)",
+   "5": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)",
+   "6": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#textureWidth(Ljava/lang/Object;Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;)I",
+   "7": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#textureHeight(Ljava/lang/Object;Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;)I",
+   "8": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)",
+   "9": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)"
+  },
+  "method_29610(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Z)V": {
+   "3": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#noGameRules()Ljava/util/Optional;"
+  },
+  "method_22752(Lnet/minecraft/class_638;)V": {
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#sectionCompiler(Lnet/minecraft/class_846;)Lnet/minecraft/class_9810;"
   }
  },
  "overrideRenames": [
@@ -112,12 +239,22 @@
   "net/minecraft/class_773": "top/dext/centurybridge/step/v26_1/facade/BlockModelShaper",
   "net/minecraft/class_1920": "net/minecraft/world/level/BlockAndLightGetter",
   "net/minecraft/class_776": "top/dext/centurybridge/step/v26_1/facade/BlockRenderDispatcher",
-  "net/minecraft/class_1865": "top/dext/centurybridge/step/v26_1/facade/RecipeSerializer"
+  "net/minecraft/class_1865": "top/dext/centurybridge/step/v26_1/facade/RecipeSerializer",
+  "com/mojang/blaze3d/platform/DepthTestFunction": "top/dext/centurybridge/step/v26_1/facade/DepthTestFunction",
+  "com/mojang/blaze3d/platform/LogicOp": "top/dext/centurybridge/step/v26_1/facade/LogicOp",
+  "net/minecraft/class_4831": "top/dext/centurybridge/step/v26_1/facade/ExpirableValue",
+  "net/minecraft/class_765": "top/dext/centurybridge/step/v26_1/facade/LightTexture",
+  "net/minecraft/class_12335": "top/dext/centurybridge/step/v26_1/facade/PanoramicScreenshotParameters",
+  "net/minecraft/class_310$class_5859": "top/dext/centurybridge/step/v26_1/facade/ChatStatus",
+  "net/minecraft/class_918": "top/dext/centurybridge/step/v26_1/facade/ItemRenderer"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newModelBlockRenderer",
-  "net/minecraft/class_775.<init>(Lnet/minecraft/class_11701;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newLiquidBlockRenderer"
+  "net/minecraft/class_775.<init>(Lnet/minecraft/class_11701;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newLiquidBlockRenderer",
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#newSnippet",
+  "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#newBrain",
+  "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#newPanorama"
  },
  "adapterHooks": [
   {
@@ -203,6 +340,167 @@
     }
    ],
    "basis": "a 1.21.11 getter overriding the default resolveSlot keeps answering it in 26.1"
+  },
+  {
+   "under": "com/mojang/blaze3d/pipeline/RenderPipeline",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline$LegacyDepthTest",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "requires": [
+    "getDepthTestFunction()Lcom/mojang/blaze3d/platform/DepthTestFunction;"
+   ],
+   "synth": [
+    {
+     "new": "getDepthStencilState()Lcom/mojang/blaze3d/pipeline/DepthStencilState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.depthStencilState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/DepthStencilState;"
+    },
+    {
+     "new": "getColorTargetState()Lcom/mojang/blaze3d/pipeline/ColorTargetState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.colorTargetState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/ColorTargetState;"
+    }
+   ],
+   "basis": "1.21.11's GL backend read a pipeline's depth / colour state through its getters (getDepthTestFunction among them), so a subclass overriding one changed what was drawn; 26.1's reads getDepthStencilState() / getColorTargetState(), synthesized from the 1.21.11 getters (the ones not overridden answer RenderPipeline's own)"
+  },
+  {
+   "under": "com/mojang/blaze3d/pipeline/RenderPipeline",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline$LegacyBlend",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "requires": [
+    "getBlendFunction()Ljava/util/Optional;"
+   ],
+   "synth": [
+    {
+     "new": "getDepthStencilState()Lcom/mojang/blaze3d/pipeline/DepthStencilState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.depthStencilState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/DepthStencilState;"
+    },
+    {
+     "new": "getColorTargetState()Lcom/mojang/blaze3d/pipeline/ColorTargetState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.colorTargetState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/ColorTargetState;"
+    }
+   ],
+   "basis": "1.21.11's GL backend read a pipeline's depth / colour state through its getters (getBlendFunction among them), so a subclass overriding one changed what was drawn; 26.1's reads getDepthStencilState() / getColorTargetState(), synthesized from the 1.21.11 getters (the ones not overridden answer RenderPipeline's own)"
+  },
+  {
+   "under": "com/mojang/blaze3d/pipeline/RenderPipeline",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline$LegacyColorLogic",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "requires": [
+    "getColorLogic()Lcom/mojang/blaze3d/platform/LogicOp;"
+   ],
+   "synth": [
+    {
+     "new": "getDepthStencilState()Lcom/mojang/blaze3d/pipeline/DepthStencilState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.depthStencilState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/DepthStencilState;"
+    },
+    {
+     "new": "getColorTargetState()Lcom/mojang/blaze3d/pipeline/ColorTargetState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.colorTargetState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/ColorTargetState;"
+    }
+   ],
+   "basis": "1.21.11's GL backend read a pipeline's depth / colour state through its getters (getColorLogic among them), so a subclass overriding one changed what was drawn; 26.1's reads getDepthStencilState() / getColorTargetState(), synthesized from the 1.21.11 getters (the ones not overridden answer RenderPipeline's own)"
+  },
+  {
+   "under": "com/mojang/blaze3d/pipeline/RenderPipeline",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline$LegacyWriteColor",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "requires": [
+    "isWriteColor()Z"
+   ],
+   "synth": [
+    {
+     "new": "getDepthStencilState()Lcom/mojang/blaze3d/pipeline/DepthStencilState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.depthStencilState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/DepthStencilState;"
+    },
+    {
+     "new": "getColorTargetState()Lcom/mojang/blaze3d/pipeline/ColorTargetState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.colorTargetState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/ColorTargetState;"
+    }
+   ],
+   "basis": "1.21.11's GL backend read a pipeline's depth / colour state through its getters (isWriteColor among them), so a subclass overriding one changed what was drawn; 26.1's reads getDepthStencilState() / getColorTargetState(), synthesized from the 1.21.11 getters (the ones not overridden answer RenderPipeline's own)"
+  },
+  {
+   "under": "com/mojang/blaze3d/pipeline/RenderPipeline",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline$LegacyWriteAlpha",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "requires": [
+    "isWriteAlpha()Z"
+   ],
+   "synth": [
+    {
+     "new": "getDepthStencilState()Lcom/mojang/blaze3d/pipeline/DepthStencilState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.depthStencilState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/DepthStencilState;"
+    },
+    {
+     "new": "getColorTargetState()Lcom/mojang/blaze3d/pipeline/ColorTargetState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.colorTargetState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/ColorTargetState;"
+    }
+   ],
+   "basis": "1.21.11's GL backend read a pipeline's depth / colour state through its getters (isWriteAlpha among them), so a subclass overriding one changed what was drawn; 26.1's reads getDepthStencilState() / getColorTargetState(), synthesized from the 1.21.11 getters (the ones not overridden answer RenderPipeline's own)"
+  },
+  {
+   "under": "com/mojang/blaze3d/pipeline/RenderPipeline",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline$LegacyWriteDepth",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "requires": [
+    "isWriteDepth()Z"
+   ],
+   "synth": [
+    {
+     "new": "getDepthStencilState()Lcom/mojang/blaze3d/pipeline/DepthStencilState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.depthStencilState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/DepthStencilState;"
+    },
+    {
+     "new": "getColorTargetState()Lcom/mojang/blaze3d/pipeline/ColorTargetState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.colorTargetState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/ColorTargetState;"
+    }
+   ],
+   "basis": "1.21.11's GL backend read a pipeline's depth / colour state through its getters (isWriteDepth among them), so a subclass overriding one changed what was drawn; 26.1's reads getDepthStencilState() / getColorTargetState(), synthesized from the 1.21.11 getters (the ones not overridden answer RenderPipeline's own)"
+  },
+  {
+   "under": "com/mojang/blaze3d/pipeline/RenderPipeline",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline$LegacyBiasScale",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "requires": [
+    "getDepthBiasScaleFactor()F"
+   ],
+   "synth": [
+    {
+     "new": "getDepthStencilState()Lcom/mojang/blaze3d/pipeline/DepthStencilState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.depthStencilState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/DepthStencilState;"
+    },
+    {
+     "new": "getColorTargetState()Lcom/mojang/blaze3d/pipeline/ColorTargetState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.colorTargetState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/ColorTargetState;"
+    }
+   ],
+   "basis": "1.21.11's GL backend read a pipeline's depth / colour state through its getters (getDepthBiasScaleFactor among them), so a subclass overriding one changed what was drawn; 26.1's reads getDepthStencilState() / getColorTargetState(), synthesized from the 1.21.11 getters (the ones not overridden answer RenderPipeline's own)"
+  },
+  {
+   "under": "com/mojang/blaze3d/pipeline/RenderPipeline",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline$LegacyBiasConstant",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "requires": [
+    "getDepthBiasConstant()F"
+   ],
+   "synth": [
+    {
+     "new": "getDepthStencilState()Lcom/mojang/blaze3d/pipeline/DepthStencilState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.depthStencilState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/DepthStencilState;"
+    },
+    {
+     "new": "getColorTargetState()Lcom/mojang/blaze3d/pipeline/ColorTargetState;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline.colorTargetState(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPipeline$Legacy;)Lcom/mojang/blaze3d/pipeline/ColorTargetState;"
+    }
+   ],
+   "basis": "1.21.11's GL backend read a pipeline's depth / colour state through its getters (getDepthBiasConstant among them), so a subclass overriding one changed what was drawn; 26.1's reads getDepthStencilState() / getColorTargetState(), synthesized from the 1.21.11 getters (the ones not overridden answer RenderPipeline's own)"
+  },
+  {
+   "under": "net/minecraft/class_3678",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer$CbWallMinecraftWindow",
+   "requires": [
+    "method_15995(Z)V"
+   ],
+   "synth": [],
+   "basis": "1.21.11 WindowEventHandler.setWindowActive(boolean), gone from 26.1's interface: an implementation's own method answers interface calls of it through the adapter (CbWallGameRenderer.setWindowActive)"
   }
  ],
  "facadeGaps": {
@@ -217,7 +515,25 @@
   "net/minecraft/class_776.field_20987:Lnet/minecraft/class_324;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; kept as cb$blockColors",
   "net/minecraft/class_1865.field_9028:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_armordye\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
   "net/minecraft/class_1865.field_9044:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_mapcloning\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
-  "net/minecraft/class_1865.field_9037:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_tippedarrow\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back"
+  "net/minecraft/class_1865.field_9037:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_tippedarrow\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
+  "net/minecraft/class_4831.field_22330:Ljava/lang/Object;": "1.21.11 private final field (the value): the facade keeps it as its own value field, read through method_24637 (getValue); only an access widener on the dead class ever reached it",
+  "net/minecraft/class_4831.field_22331:J": "1.21.11 private field (the time to live): the facade keeps it, or reads the brain's MemorySlot it stands for, through method_35127 (getTimeToLive) and method_24913 (tick); only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.method_42596(Lnet/minecraft/class_1309;FF)F": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_53098:I": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_60111:I": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_57927:Lcom/mojang/blaze3d/textures/GpuTexture;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_60581:Lcom/mojang/blaze3d/textures/GpuTextureView;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_4135:Z": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_21528:F": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_4134:Lnet/minecraft/class_757;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_4137:Lnet/minecraft/class_310;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_60112:Lnet/minecraft/class_11285;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_64675:Lnet/minecraft/class_5819;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_310$class_5859.field_28944:Lnet/minecraft/class_2561;": "1.21.11 private final field (the status message): the facade enum keeps it as its own message field, read through method_33885 (getMessage); only an access widener on the dead class ever reached it",
+  "net/minecraft/class_918.method_71138(Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;Lnet/minecraft/class_4587$class_4665;)Lnet/minecraft/class_4588;": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_918.method_71139(Lnet/minecraft/class_1921;)Z": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_918.method_65569([II)I": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_918.method_23180(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Ljava/util/List;[III)V": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -245,8 +561,6 @@
   "net/minecraft/class_4722.method_33082(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#getSignMaterial",
   "net/minecraft/class_4722.method_45781(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#getHangingSignMaterial",
   "net/minecraft/class_4722.method_24062(Lnet/minecraft/class_11959$class_11960;Lnet/minecraft/class_2745;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#chooseMaterial",
-  "net/minecraft/class_12249.method_75990(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#entityCutout",
-  "net/minecraft/class_12249.method_75994(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#entityCutoutNoCull",
   "net/minecraft/class_765.method_23687(II)I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#pack",
   "net/minecraft/class_765.method_24186(I)I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#block",
   "net/minecraft/class_765.method_24187(I)I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#sky",
@@ -254,7 +568,11 @@
   "net/minecraft/class_765.method_62226(FI)F": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#getBrightness",
   "net/minecraft/class_765.method_23284(Lnet/minecraft/class_2874;I)F": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#getBrightness",
   "net/minecraft/class_2540.method_62783(Lio/netty/buffer/ByteBuf;Lnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#writeVec3",
-  "net/minecraft/class_2540.method_62785(Lio/netty/buffer/ByteBuf;)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#readVec3"
+  "net/minecraft/class_2540.method_62785(Lio/netty/buffer/ByteBuf;)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#readVec3",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.builder([Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#builder",
+  "com/mojang/blaze3d/opengl/GlConst.toGl(Lcom/mojang/blaze3d/platform/DepthTestFunction;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#toGl",
+  "com/mojang/blaze3d/opengl/GlStateManager._colorMask(ZZZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#colorMask",
+  "net/minecraft/class_4095.method_28313(Ljava/util/Collection;Ljava/util/Collection;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#codec"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -272,6 +590,65 @@
     "conv top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#fluidModels(Lnet/minecraft/class_11701;)Lnet/minecraft/client/renderer/block/FluidStateModelSet;"
    ],
    "basis": "26.1 FluidRenderer takes the baked fluid models in place of the sprites 1.21.11 looked the fluid textures up in"
+  },
+  "com/mojang/blaze3d/pipeline/RenderPipeline.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_10149;Ljava/util/List;Ljava/util/List;Ljava/util/Optional;Lcom/mojang/blaze3d/platform/DepthTestFunction;Lcom/mojang/blaze3d/platform/PolygonMode;ZZZZLcom/mojang/blaze3d/platform/LogicOp;Lcom/mojang/blaze3d/vertex/VertexFormat;Lcom/mojang/blaze3d/vertex/VertexFormat$class_5596;FFI)V": {
+   "desc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_10149;Ljava/util/List;Ljava/util/List;Lcom/mojang/blaze3d/pipeline/ColorTargetState;Lcom/mojang/blaze3d/pipeline/DepthStencilState;Lcom/mojang/blaze3d/platform/PolygonMode;ZLcom/mojang/blaze3d/vertex/VertexFormat;Lcom/mojang/blaze3d/vertex/VertexFormat$class_5596;I)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "conv:6,10,11 top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#colorTarget(Ljava/util/Optional;ZZ)Lcom/mojang/blaze3d/pipeline/ColorTargetState;",
+    "conv:7,12,16,17 top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#depthStencil(Lcom/mojang/blaze3d/platform/DepthTestFunction;ZFF)Lcom/mojang/blaze3d/pipeline/DepthStencilState;",
+    "keep:8",
+    "keep:9",
+    "keep:14",
+    "keep:15",
+    "keep:18"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#constructed(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Ljava/util/Optional;Lcom/mojang/blaze3d/platform/DepthTestFunction;ZZZLcom/mojang/blaze3d/platform/LogicOp;FF)V",
+   "postArgs": [
+    6,
+    7,
+    10,
+    11,
+    12,
+    13,
+    16,
+    17
+   ]
+  },
+  "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": {
+   "desc": "(Ljava/util/Collection;Ljava/util/Collection;Ljava/util/List;Lnet/minecraft/world/entity/ai/memory/MemoryMap;Lnet/minecraft/util/RandomSource;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBrain#noActivities()Ljava/util/List;",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallBrain#memoryValues(Lcom/google/common/collect/ImmutableList;)Lnet/minecraft/world/entity/ai/memory/MemoryMap;",
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBrain#sensorDelays()Lnet/minecraft/util/RandomSource;"
+   ]
+  },
+  "net/minecraft/class_757.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_759;Lnet/minecraft/class_4599;Lnet/minecraft/class_776;)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_759;Lnet/minecraft/class_4599;Lnet/minecraft/client/resources/model/ModelManager;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#modelManager(Lnet/minecraft/class_776;)Lnet/minecraft/client/resources/model/ModelManager;"
+   ]
+  },
+  "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#constructed(Lnet/minecraft/class_766;Lnet/minecraft/class_751;)V",
+   "postArgs": [
+    0
+   ]
   }
  },
  "fieldGetters": {
@@ -301,7 +678,10 @@
   "net/minecraft/class_4722.field_61756:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
   "net/minecraft/class_765.field_32767:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
   "net/minecraft/class_765.field_32768:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
-  "net/minecraft/class_765.field_32769:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight"
+  "net/minecraft/class_765.field_32769:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
+  "net/minecraft/class_757.field_32686:F": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer",
+  "net/minecraft/class_31.field_31843:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
+  "net/minecraft/class_31.field_36349:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData"
  },
  "abstractFills": [
   {
@@ -336,5 +716,62 @@
   "net/minecraft/class_5602.field_63560:Lnet/minecraft/class_5601;": "model layer minecraft:undead_horse_baby_armor#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
   "net/minecraft/class_5602.field_53005:Lnet/minecraft/class_5601;": "model layer minecraft:wolf_baby_armor#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
   "net/minecraft/class_5602.field_56090:Lnet/minecraft/class_5601;": "model layer minecraft:zombie_horse_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read"
+ },
+ "superRedirects": {
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthTestFunction()Lcom/mojang/blaze3d/platform/DepthTestFunction;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthTestFunction",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getBlendFunction()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetBlendFunction",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getColorLogic()Lcom/mojang/blaze3d/platform/LogicOp;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetColorLogic",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteColor()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superIsWriteColor",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteAlpha()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superIsWriteAlpha",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteDepth()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superIsWriteDepth",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasScaleFactor()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasScaleFactor",
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasConstant"
+ },
+ "covers": [
+  "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
+  "net/minecraft/class_4095.method_28310(Lcom/mojang/serialization/DynamicOps;)Lcom/mojang/serialization/DataResult;",
+  "net/minecraft/class_4095.method_18911()Lnet/minecraft/class_4095;",
+  "net/minecraft/class_757.method_22973(F)Lorg/joml/Matrix4f;",
+  "net/minecraft/class_757.method_22974()Lnet/minecraft/class_765;",
+  "net/minecraft/class_757.method_3190(F)V",
+  "net/minecraft/class_757.method_3193()F",
+  "net/minecraft/class_757.method_32796()F",
+  "net/minecraft/class_757.method_35765()Z",
+  "net/minecraft/class_757.method_72912()Lnet/minecraft/class_11658;",
+  "net/minecraft/class_757.method_76295(Lnet/minecraft/class_9779;)V",
+  "net/minecraft/class_757.method_76543(Lnet/minecraft/class_12335;)V",
+  "net/minecraft/class_757.method_76544()Lnet/minecraft/class_12335;",
+  "net/minecraft/class_310.method_43587(Lnet/minecraft/class_128;)V",
+  "net/minecraft/class_310.method_15995(Z)V",
+  "net/minecraft/class_310.method_33884()Lnet/minecraft/class_310$class_5859;",
+  "net/minecraft/class_310.method_1480()Lnet/minecraft/class_918;"
+ ],
+ "interfaceCallRedirects": {
+  "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
+ },
+ "callReshapes": {
+  "net/minecraft/class_310.method_29610(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Z)V": {
+   "desc": "(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Ljava/util/Optional;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#noGameRules()Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "26.1 doWorldLoad takes the new world's initial game rules (empty: the saved world's own, as 1.21.11 loaded them)"
+  },
+  "net/minecraft/class_751.method_3156(Lnet/minecraft/class_310;FF)V": {
+   "desc": "(FF)V",
+   "ops": [
+    "drop",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 CubeMap.render(xRot, yRot): 1.21.11's minecraft argument only fed the window size its own projection now keeps"
+  }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_757.field_60579:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#guiCubeMap"
  }
 }

@@ -11,12 +11,12 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelCalls;
 public abstract class CbRenderModel7754Mixin {
 
     /** 1.21.1 setupAnim(Lnet/minecraft/class_1690;FFFFF)V: this model's 1.21.2 setupAnim(class_10004) on a state of the entity */
-    public void method_45711(net.minecraft.class_1690 entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void method_45711(net.minecraft.class_10255 entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         CbRenderModelCalls.setupAnim(this, entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, net.minecraft.class_10004.class);
     }
 
     /** javac's 1.21.1 bridge method_2819(Lnet/minecraft/class_1297;FFFFF)V to it */
     public void method_2819(net.minecraft.class_1297 entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.method_45711((net.minecraft.class_1690) entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        this.method_45711((net.minecraft.class_10255) entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 }

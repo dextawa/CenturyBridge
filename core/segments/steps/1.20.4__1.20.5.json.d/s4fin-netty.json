@@ -1,0 +1,74 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_2535.field_45666:Lio/netty/util/AttributeKey;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet",
+  "net/minecraft/class_2535.field_45667:Lio/netty/util/AttributeKey;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet",
+  "net/minecraft/class_2539.field_41866:I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet",
+  "net/minecraft/class_8039.field_41879:Lnet/minecraft/class_8039;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_2535.method_52901(Lio/netty/channel/Channel;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet",
+  "net/minecraft/class_8700.method_53011(Lio/netty/util/Attribute;Lnet/minecraft/class_2596;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet",
+  "net/minecraft/class_8039.method_48325(Ljava/lang/Class;Ljava/util/function/Function;Lnet/minecraft/class_8037;)Lnet/minecraft/class_8039;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2539.method_52921(Lnet/minecraft/class_2598;)Lnet/minecraft/class_2539$class_8698;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet",
+  "net/minecraft/class_2535.method_52899(Lnet/minecraft/class_8592;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet",
+  "net/minecraft/class_2535.method_10763(Lnet/minecraft/class_2547;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet"
+ },
+ "callReshapes": {
+  "net/minecraft/class_2535.method_48311(Lio/netty/channel/ChannelPipeline;Lnet/minecraft/class_2598;Lnet/minecraft/class_8762;)V": {
+   "desc": "(Lio/netty/channel/ChannelPipeline;Lnet/minecraft/class_2598;ZLnet/minecraft/class_8762;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinNet#cbFramed()Z",
+    "keep:2"
+   ]
+  }
+ },
+ "classRenames": {
+  "net/minecraft/class_2539$class_8698": "top/dext/centurybridge/step/v1_20_5/facade/ConnectionProtocolCodecData",
+  "net/minecraft/class_8039$class_8041": "top/dext/centurybridge/step/v1_20_5/facade/BundlerInfoProvider",
+  "net/minecraft/class_8699": "top/dext/centurybridge/step/v1_20_5/facade/PacketFlowValidator"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_2543.<init>(Lio/netty/util/AttributeKey;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet#cbNewDecoder",
+  "net/minecraft/class_2545.<init>(Lio/netty/util/AttributeKey;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet#cbNewEncoder",
+  "net/minecraft/class_8035.<init>(Lio/netty/util/AttributeKey;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet#cbNewBundlePacker",
+  "net/minecraft/class_8036.<init>(Lio/netty/util/AttributeKey;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet#cbNewBundleUnpacker"
+ },
+ "superRenames": {
+  "net/minecraft/class_2543": "top/dext/centurybridge/step/v1_20_5/facade/LegacyPacketDecoder",
+  "net/minecraft/class_2545": "top/dext/centurybridge/step/v1_20_5/facade/LegacyPacketEncoder",
+  "net/minecraft/class_8035": "top/dext/centurybridge/step/v1_20_5/facade/LegacyBundlePacker",
+  "net/minecraft/class_8036": "top/dext/centurybridge/step/v1_20_5/facade/LegacyBundleUnpacker"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_10763(Lnet/minecraft/class_2547;)V",
+   "new": "method_56330(Lnet/minecraft/class_9127;Lnet/minecraft/class_2547;)V",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet.cbSetupInbound(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinNet$LegacySetListener;Lnet/minecraft/class_9127;Lnet/minecraft/class_2547;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNet$LegacySetListener",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_2535",
+   "basis": "Connection.setListener(listener) is setupInboundProtocol(info, listener) since 1.20.5 (protocol and listener together); a 1.20.4 override gets the listener"
+  }
+ ],
+ "covers": [
+  "net/minecraft/class_2535.method_52898()V",
+  "net/minecraft/class_2535.method_52910()V"
+ ],
+ "facadeGaps": {
+  "net/minecraft/class_2539$class_8698.<init>(Lnet/minecraft/class_2539;Lnet/minecraft/class_2598;Lnet/minecraft/class_2539$class_4532;)V": "takes 1.20.4's ConnectionProtocol.PacketSet, a package-private class (no mod could name or build one without an access widener) that 1.20.5 removed with the packet-class registry it was: 1.20.5 protocols are fixed sets of PacketTypes built once from vanilla's codecs, with no packet classes to register",
+  "net/minecraft/class_2539$class_8698.field_45674:Lnet/minecraft/class_2539$class_4532;": "private in 1.20.4 (the PacketSet behind the view; the facade keeps the 1.20.5 ProtocolInfo)",
+  "net/minecraft/class_2539$class_8698.method_52928()Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "package-private in 1.20.4 (id -> packet class map, used by ConnectionProtocol.getPacketsByIds); 1.20.5 records no packet classes per id",
+  "net/minecraft/class_8699.method_53009(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/class_2596;Ljava/util/List;Lio/netty/util/AttributeKey;)V": "private in 1.20.4 (the shared validation step; the facade's is cbValidate)",
+  "net/minecraft/class_8699.field_45679:Lorg/slf4j/Logger;": "private in 1.20.4 (logger)"
+ },
+ "ledger": {
+  "net/minecraft/class_2539$class_8698.<init>(Lnet/minecraft/class_2539;Lnet/minecraft/class_2598;Lnet/minecraft/class_2539$class_4532;)V": "takes 1.20.4's ConnectionProtocol.PacketSet, a package-private class (no mod could name or build one without an access widener) that 1.20.5 removed with the packet-class registry it was: 1.20.5 protocols are fixed sets of PacketTypes built once from vanilla's codecs, with no packet classes to register",
+  "net/minecraft/class_2539.method_39498(Lnet/minecraft/class_2598;)Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "ConnectionProtocol.getPacketsByIds(flow) answered packet classes by id; 1.20.5's protocol codecs (IdDispatchCodec) map ids to PacketTypes and StreamCodecs built from lambdas, recording no packet class anywhere, so there is no class to answer (ids <-> types: ConnectionProtocolCodecData)",
+  "net/minecraft/class_8734.<init>(Lnet/minecraft/class_5455$class_6890;)V": "ClientboundRegistryDataPacket(registries): 1.20.4 sent every synchronized registry in one packet; 1.20.5's packet is one registry (its key and packed entries) and a configuration sends one per registry, so one packet built from a whole registry access has no 1.20.5 form",
+  "net/minecraft/class_8734.comp_1724()Lnet/minecraft/class_5455$class_6890;": "ClientboundRegistryDataPacket.registryHolder(): a 1.20.5 packet carries one registry's entries as (id, optional NBT), the NBT left out for every entry the client has from a known pack, so no registry access can be built from the packet alone (1.20.5 builds it from all packets plus the client's packs when configuration finishes)"
+ }
+}

@@ -140,6 +140,15 @@ public final class CbItemArmor {
         return w;
     }
 
+    /**
+     * The 1.21.2 equipment model id an ArmorItem built from this 1.21.1 material gets (its EQUIPPABLE asset id): the
+     * matching 1.21.2 vanilla material's, else the first layer's asset, else the registry id -- the id {@link #toW}
+     * gives the material (for s7render's synthesis of equipment models from 1.21.1 layers)
+     */
+    public static class_2960 equipmentModelId(class_6880<ArmorMaterial> holder) {
+        return toW(holder).comp_3168();
+    }
+
     private static class_2960 modelId(class_6880<ArmorMaterial> holder, ArmorMaterial m) {
         if (!m.comp_2302().isEmpty()) {
             return m.comp_2302().get(0).cb$assetName();
@@ -174,7 +183,7 @@ public final class CbItemArmor {
         EnumMap<class_8051, Integer> defense = new EnumMap<>(class_8051.class);
         defense.putAll(w.comp_2298());
         class_6862<class_1792> tag = w.comp_2301();
-        Supplier<class_1856> repair = () -> class_1856.method_8106(class_7923.method_62715(class_7923.field_41178).method_46735(tag));
+        Supplier<class_1856> repair = () -> class_1856.method_8106(top.dext.centurybridge.step.v1_21_2.rt.CbItemTags.lookup(class_7923.field_41178).method_46735(tag));
         h = class_6880.method_40223(new ArmorMaterial(defense, w.comp_3167(), w.comp_2300(), repair,
             List.of(new ArmorMaterial.Layer(w.comp_3168())), w.comp_2303(), w.comp_2304()));
         DERIVED.put(w, h);

@@ -192,6 +192,40 @@ public class S4FinTestMod implements ModInitializer {
             class_1496 horse = (class_1496) class_1299.field_6139.method_5883(level);
             check(horse.method_6771() == horse.method_26825(class_5134.field_23728), "getCustomJump is the jump strength");
         });
+        guard("item parser", () -> {
+            net.minecraft.class_2291.class_7215 r;
+            try {
+                r = net.minecraft.class_2291.method_41972(net.minecraft.class_7923.field_41178.method_46771(),
+                    new com.mojang.brigadier.StringReader("minecraft:diamond_sword{Damage:5}"));
+            } catch (com.mojang.brigadier.exceptions.CommandSyntaxException e) {
+                throw new RuntimeException(e);
+            }
+            check(r.comp_628().comp_349() == class_1802.field_8802 && r.comp_629() != null && r.comp_629().method_10550("Damage") == 5,
+                "ItemParser.parseForItem reads 1.20.4's id{nbt} (" + r.comp_629() + ")");
+            net.minecraft.class_2290 input = new net.minecraft.class_2290(r.comp_628(), r.comp_629());
+            class_1799 damaged = new class_1799(class_1802.field_8802);
+            damaged.method_7974(5);
+            check(input.method_9783(damaged) && !input.method_9783(new class_1799(class_1802.field_8802)), "ItemInput.test by item and NBT");
+        });
+        guard("item predicate", () -> {
+            net.minecraft.class_2073 p = net.minecraft.class_2073.class_2074.method_8973().method_35232(class_1847.field_8963).method_8976();
+            class_1799 healing = net.minecraft.class_1844.method_8061(new class_1799(class_1802.field_8574), class_1847.field_8963);
+            class_1799 water = net.minecraft.class_1844.method_8061(new class_1799(class_1802.field_8574), class_1847.field_8991);
+            check(p.method_8970(healing) && !p.method_8970(water), "ItemPredicate isPotion");
+            check(p.comp_1789().isPresent() && p.comp_1789().get().comp_349() == class_1847.field_8963, "ItemPredicate.potion()");
+        });
+        guard("sub predicate types", () -> check(net.minecraft.class_7376.class_7378.field_38731.get("slime") == net.minecraft.class_7376.class_7378.field_38728
+            && net.minecraft.class_7376.class_7378.field_38731.inverse().get(net.minecraft.class_7376.class_7378.field_38729.method_43114()).equals("cat"),
+            "EntitySubPredicate.Types by 1.20.4 name"));
+        guard("block predicate", () -> {
+            class_2338 pos = new class_2338(8, 120, 8);
+            level.method_8501(pos, class_2246.field_10431.method_9564());
+            net.minecraft.class_4550 p = new net.minecraft.class_4550(java.util.Optional.of(net.minecraft.class_3481.field_15475),
+                java.util.Optional.empty(), java.util.Optional.empty(), java.util.Optional.empty());
+            check(p.method_22454(level, pos) && p.comp_1731().isPresent(), "BlockPredicate by tag");
+        });
+        guard("registry lifecycle", () -> check(net.minecraft.class_7923.field_41178.method_31139(class_1802.field_8600) != null,
+            "Registry.lifecycle(value)"));
         System.out.println("CBS4FIN DONE " + (checks - FAILS.size()) + "/" + checks);
     }
 
