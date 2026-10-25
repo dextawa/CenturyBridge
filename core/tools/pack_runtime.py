@@ -7,6 +7,9 @@ access widener, exactly as it would load them side by side. Step 1's layer is th
 id is "centurybridge"; inside the package it becomes centurybridge_step_1_20_2 so the wrapper can carry the
 name. Classes the layers share byte for byte (the res/ data-format library every layer compiles in) stay
 in each layer; a class two layers carry with different bytes is refused, since only one of them would load.
+The mods a layer depends on that CenturyBridge releases separately (core/mods/<mod>, e.g. centurybridge-stbir1, which
+climb_runtime.sh puts beside the layers) are not nested: the player installs them as their own mods, and the layers'
+"depends" makes Fabric Loader say so when one is missing.
 
   python pack_runtime.py <runtime dir> <target> <version> <out.jar>
 """
@@ -23,10 +26,14 @@ def main():
     layers = sorted(f for f in os.listdir(rdir) if f.endswith(".jar"))
     seen = {}
     nested = []
+    separate = []
     for f in layers:
         data = open(os.path.join(rdir, f), "rb").read()
         zin = zipfile.ZipFile(io.BytesIO(data))
         fmj = json.loads(zin.read("fabric.mod.json").decode("utf-8"))
+        if fmj.get("id") != "centurybridge" and not fmj.get("id", "").startswith("centurybridge_step_"):
+            separate.append(f"{fmj.get('id')} {fmj.get('version')}")   # a separately released dependency
+            continue
         for n in zin.namelist():
             if n.endswith(".class"):
                 h = hashlib.sha1(zin.read(n)).hexdigest()
@@ -59,6 +66,8 @@ def main():
         for f, data, _ in nested:
             z.writestr(f"META-INF/jars/{f}", data)
     print(f"{out}: {len(nested)} layers ({', '.join(i for _, _, i in nested)})")
+    if separate:
+        print(f"not nested, installed separately: {', '.join(separate)}")
 
 
 if __name__ == "__main__":
