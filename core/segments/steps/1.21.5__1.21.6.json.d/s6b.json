@@ -5,7 +5,18 @@
   "net/minecraft/class_2995$class_2996": "top/dext/centurybridge/step/v1_21_6/facade/ServerScoreboardMethod",
   "net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap": "top/dext/centurybridge/step/v1_21_6/facade/fapi/BlockRenderLayerMap",
   "net/fabricmc/fabric/api/command/v1/CommandRegistrationCallback": "top/dext/centurybridge/step/v1_21_6/facade/fapi/CommandRegistrationCallbackV1",
-  "net/fabricmc/fabric/api/registry/CommandRegistry": "top/dext/centurybridge/step/v1_21_6/facade/fapi/CommandRegistry"
+  "net/fabricmc/fabric/api/registry/CommandRegistry": "top/dext/centurybridge/step/v1_21_6/facade/fapi/CommandRegistry",
+  "net/fabricmc/fabric/api/client/keybinding/FabricKeyBinding": "top/dext/centurybridge/step/v1_21_6/facade/fapi/FabricKeyBinding",
+  "net/fabricmc/fabric/api/client/keybinding/FabricKeyBinding$Builder": "top/dext/centurybridge/step/v1_21_6/facade/fapi/FabricKeyBinding$Builder",
+  "net/fabricmc/fabric/api/client/keybinding/KeyBindingRegistry": "top/dext/centurybridge/step/v1_21_6/facade/fapi/KeyBindingRegistry",
+  "net/fabricmc/fabric/api/rendering/data/v1/RenderAttachedBlockView": "top/dext/centurybridge/step/v1_21_6/facade/fapi/RenderAttachedBlockView",
+  "net/fabricmc/fabric/api/rendering/data/v1/RenderAttachmentBlockEntity": "net/fabricmc/fabric/api/blockview/v2/RenderDataBlockEntity",
+  "net/minecraft/class_9080": "top/dext/centurybridge/step/v1_21_6/facade/LayeredDraw",
+  "net/minecraft/class_9080$class_9081": "top/dext/centurybridge/step/v1_21_6/facade/LayeredDraw$Layer",
+  "net/fabricmc/fabric/api/client/rendering/v1/IdentifiedLayer": "top/dext/centurybridge/step/v1_21_6/facade/fapi/IdentifiedLayer",
+  "net/fabricmc/fabric/api/client/rendering/v1/LayeredDrawerWrapper": "top/dext/centurybridge/step/v1_21_6/facade/fapi/LayeredDrawerWrapper",
+  "net/fabricmc/fabric/api/client/rendering/v1/HudLayerRegistrationCallback": "top/dext/centurybridge/step/v1_21_6/facade/fapi/HudLayerRegistrationCallback",
+  "net/minecraft/class_1307": "top/dext/centurybridge/step/v1_21_6/facade/FlyingMob"
  },
  "instanceRedirects": {
   "net/minecraft/class_8942.method_54946(Ljava/lang/String;)Lnet/minecraft/class_8942;": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#forChild",
@@ -15,7 +26,10 @@
   "net/minecraft/class_58.method_364(Ljava/lang/String;)Lnet/minecraft/class_58;": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#forChild",
   "net/minecraft/class_58.method_51219(Ljava/lang/String;Lnet/minecraft/class_5321;)Lnet/minecraft/class_58;": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#enterElement",
   "net/minecraft/class_58.method_360(Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#reportProblem",
-  "net/minecraft/class_29.method_55789(Lnet/minecraft/class_1657;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayers#load"
+  "net/minecraft/class_29.method_55789(Lnet/minecraft/class_1657;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayers#load",
+  "net/minecraft/class_1324.method_26839()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_6/rt/CbAttributes#method_26839",
+  "net/minecraft/class_1324.method_26833(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbAttributes#method_26833",
+  "net/minecraft/class_1496.method_6737(Z)V": "top/dext/centurybridge/step/v1_21_6/rt/CbHorses#method_6737"
  },
  "superCtorReshapes": {
   "net/minecraft/class_1657.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;FLcom/mojang/authlib/GameProfile;)V": {
@@ -115,7 +129,10 @@
   "net/minecraft/class_5195.method_27281()I": "comp_4360",
   "net/minecraft/class_5195.method_27282()Z": "comp_4361",
   "net/minecraft/class_6595.method_38494()I": "comp_4038",
-  "net/minecraft/class_6595.method_38492()Ljava/lang/String;": "comp_4039"
+  "net/minecraft/class_6595.method_38492()Ljava/lang/String;": "comp_4039",
+  "net/fabricmc/fabric/api/rendering/data/v1/RenderAttachmentBlockEntity.getRenderAttachmentData()Ljava/lang/Object;": "getRenderData",
+  "net/minecraft/class_2632.method_11340()Z": "comp_4283",
+  "net/minecraft/class_2632.method_11342()Lnet/minecraft/class_1267;": "comp_4282"
  },
  "overrideRenames": [
   {
@@ -166,6 +183,20 @@
    "onlyUnder": "net/minecraft/class_6489",
    "superCalls": "rename",
    "basis": "1.21.6 made WorldVersion a record-shaped interface: method_48022 is the component accessor comp_4031 (same value: 1.21.5 DetectedVersion read id, name, data version, protocol, pack versions, build time and stability from version.json in that order; javap)"
+  },
+  {
+   "old": "getRenderAttachmentData()Ljava/lang/Object;",
+   "new": "getRenderData",
+   "onlyUnder": "net/minecraft/class_2586",
+   "superCalls": "rename",
+   "basis": "Fabric API 1.21.5's rendering-data-attachment-v1 made BlockEntity's getRenderData (block-view-api-v2) answer getRenderAttachmentData, null by default (its BlockEntityMixin, javap); 1.21.6 keeps block-view-api-v2, whose getRenderData is null by default, so a mod's getRenderAttachmentData is its getRenderData"
+  },
+  {
+   "old": "getRenderAttachmentData()Ljava/lang/Object;",
+   "new": "getRenderData",
+   "onlyUnder": "net/fabricmc/fabric/api/rendering/data/v1/RenderAttachmentBlockEntity",
+   "superCalls": "rename",
+   "basis": "Fabric API 1.21.5's rendering-data-attachment-v1 made BlockEntity's getRenderData (block-view-api-v2) answer getRenderAttachmentData, null by default (its BlockEntityMixin, javap); 1.21.6 keeps block-view-api-v2, whose getRenderData is null by default, so a mod's getRenderAttachmentData is its getRenderData"
   }
  ],
  "ledger": {
@@ -191,7 +222,17 @@
  "depRenames": {
   "fabric-blockrenderlayer-v1": "centurybridge_step_1_21_6@*",
   "fabric-command-api-v1": "centurybridge_step_1_21_6@*",
-  "fabric-commands-v0": "centurybridge_step_1_21_6@*"
+  "fabric-commands-v0": "centurybridge_step_1_21_6@*",
+  "fabric-keybindings-v0": "centurybridge_step_1_21_6@*",
+  "fabric-rendering-data-attachment-v1": "centurybridge_step_1_21_6@*",
+  "fabric-client-tags-api-v1": "fabric-tag-api-v1@*"
  },
- "_depRenames_basis": "1.21.6's Fabric API (0.128.2+1.21.6) no longer ships fabric-blockrenderlayer-v1, fabric-command-api-v1 and fabric-commands-v0, which 1.21.5's (0.128.2+1.21.5) did (META-INF/jars of both); this step's layer gives their APIs back (facade/fapi), so a mod's dependency on them is met by the layer"
+ "_depRenames_basis": "1.21.6's Fabric API (0.128.2+1.21.6) no longer ships fabric-blockrenderlayer-v1, fabric-command-api-v1, fabric-commands-v0, fabric-keybindings-v0, fabric-rendering-data-attachment-v1 and fabric-client-tags-api-v1, which 1.21.5's (0.128.2+1.21.5) did (META-INF/jars of both). This step's layer gives the first five back (facade/fapi; RenderAttachmentBlockEntity is block-view-api-v2's RenderDataBlockEntity under 1.21.5's method name), so a dependency on them is met by the layer; ClientTags moved unchanged into fabric-tag-api-v1 (same class, same four members, javap), so fabric-client-tags-api-v1 is met by fabric-tag-api-v1",
+ "instanceOfRedirects": {
+  "net/minecraft/class_1307": "top/dext/centurybridge/step/v1_21_6/rt/CbMobs#isFlyingMob"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_1324.field_52007:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_6/rt/CbAttributes",
+  "net/minecraft/class_1324.field_57596:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_6/rt/CbAttributes"
+ }
 }

@@ -17,8 +17,9 @@ if [ ! -f "$SRV/fabric-server.jar" ]; then
     printf 'online-mode=false\nlevel-type=minecraft\\:flat\nspawn-protection=0\nmax-tick-time=-1\nlevel-name=world\n' > "$SRV/server.properties.orig"
 fi
 # the test mod, against 1.21.5's intermediary stub and the Fabric loader's API
-B=$WD/boot/$TAG; rm -rf "$B" && mkdir -p "$B/cls"
-CP="data/jars/client-1.21.5-intermediary.jar:$(find data/runtime/server-1.21.6/libraries data/runtime/client-1.21.6/libraries -name '*.jar' | tr '\n' ':')"
+mkdir -p $WD/boot; B=$WD/boot/$TAG; rm -rf "$B" && mkdir -p "$B/cls"
+FV=$WD/boot/fapi-1.21.5; if [ ! -d "$FV" ]; then mkdir -p "$FV" && (cd "$FV" && unzip -qo ~/cbwork/data/runtime/client-1.21.5/mods/fabric-api-*.jar 'META-INF/jars/*'); fi
+CP="data/jars/client-1.21.5-intermediary.jar:$(ls $FV/META-INF/jars/*.jar | tr '\n' ':'):$(find data/runtime/server-1.21.6/libraries data/runtime/client-1.21.6/libraries -name '*.jar' | tr '\n' ':')"
 "$JAVAC" -nowarn -proc:none --release 21 -cp "$CP" -d "$B/cls" $(find $WD/core/testmods/cb-s6b/src -name '*.java') 2>&1 | grep -v '^Note\|^注' | head -20
 cp $WD/core/testmods/cb-s6b/res/fabric.mod.json "$B/cls/"
 (cd "$B/cls" && "${JAVA%java}jar" cf ../cb-s6b.jar .)

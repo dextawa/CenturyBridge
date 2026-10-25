@@ -10,6 +10,7 @@
  "accessWidener": "cb-step-1.21.6.accesswidener",
  "depends": {
   "fabricloader": ">=0.15.0",
-  "fabric-command-api-v2": "*"
+  "fabric-command-api-v2": "*",
+  "fabric-block-view-api-v2": "*"
  }
 }

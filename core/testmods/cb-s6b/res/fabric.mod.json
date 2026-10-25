@@ -4,6 +4,17 @@
  "version": "1.0.0",
  "name": "CB s6b Test",
  "environment": "*",
- "entrypoints": { "main": ["cb.s6b.S6bTestMod"] },
- "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.5" }
+ "entrypoints": {
+  "main": [
+   "cb.s6b.S6bTestMod"
+  ]
+ },
+ "depends": {
+  "fabricloader": ">=0.14.0",
+  "minecraft": "1.21.5",
+  "fabric-commands-v0": "*",
+  "fabric-command-api-v1": "*",
+  "fabric-rendering-data-attachment-v1": "*",
+  "fabric-client-tags-api-v1": "*"
+ }
 }
