@@ -39,3 +39,5 @@ accessible field net/minecraft/class_1921$class_4687 field_56922 Lcom/mojang/bla
 accessible method net/minecraft/class_1921$class_4688$class_4689 method_34577 (Lnet/minecraft/class_4668$class_5939;)Lnet/minecraft/class_1921$class_4688$class_4689;
 accessible method net/minecraft/class_1921$class_4688$class_4689 method_23617 (Z)Lnet/minecraft/class_1921$class_4688;
 accessible method net/minecraft/class_332 method_70848 (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_11231;IIIIILjava/lang/Integer;)V
+# CbGson: GsonHelper's own Gson, which 1.21.5's lenient parse used
+accessible field net/minecraft/class_3518 field_15657 Lcom/google/gson/Gson;
