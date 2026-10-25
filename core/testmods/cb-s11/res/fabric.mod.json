@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s11",
+  "version": "1.0.0",
+  "name": "CB s11 step test",
+  "description": "1.21.10-era mod exercising the 1.21.10 game rule API (vanilla keys, Fabric API GameRuleRegistry / GameRuleFactory rules) bridged by step 1.21.10 -> 1.21.11",
+  "environment": "*",
+  "entrypoints": { "main": ["cb.s11.Init"] },
+  "mixins": ["cb_s11.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.10", "fabric-game-rule-api-v1": "*" }
+}
