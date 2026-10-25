@@ -8,23 +8,16 @@ set -uo pipefail
 cd ~/cbwork
 WD="$1"; T="$2"; TAG="$3"; shift 3
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
-LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
 # CB_SERVER_DIR: an agent's own copy (cp -r ~/cbtest/server-T ~/cbwork/agents/<name>/), so two boots
 # never share a mods directory
 SRV="${CB_SERVER_DIR:-$HOME/cbtest/server-$T}"
 [ -f "$SRV/fabric-server.jar" ] || { echo "no Fabric server at $SRV"; exit 1; }
-[ -d "$WD/runtime-$T" ] || { echo "no $WD/runtime-$T (climb_runtime.sh $WD $T)"; exit 1; }
-CONV="$WD/boot/$TAG"
-rm -rf "$CONV" && mkdir -p "$CONV"
-"$JAVA" -Xmx8g -Dcb.layersDir="$WD/layers" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" 1.20.1 "$T" "$CONV/conv" "$@" \
-    > "$CONV/climb.log" 2>&1 || { echo "climb failed"; tail -5 "$CONV/climb.log"; exit 1; }
-rm -rf "$SRV/mods" "$SRV/world-$TAG" && mkdir -p "$SRV/mods"
-cp data/runtime/client-$T/mods/fabric-api-*.jar "$SRV/mods/"
-cp "$WD/runtime-$T"/*.jar "$SRV/mods/"
-cp "$CONV"/conv/*+"$T".jar "$SRV/mods/"
+# the climb and the mods directory are climb_mods.sh's, shared with the client boot (boot_client_remote.sh)
+[ -f "$WD/core/tools/climb_mods.sh" ] || { echo "no $WD/core/tools/climb_mods.sh (upload a current tree)"; exit 1; }
+bash "$WD/core/tools/climb_mods.sh" "$WD" "$T" "$WD/boot/$TAG" "$SRV/mods" "$@" || exit 1
+rm -rf "$SRV/world-$TAG"
 cp "$SRV/server.properties.orig" "$SRV/server.properties"
 sed -i "s/^level-name=.*/level-name=world-$TAG/" "$SRV/server.properties"
-echo "mods ($(ls "$SRV/mods" | wc -l)): $(ls "$SRV/mods" | tr '\n' ' ')"
 LOG="$SRV/boot-$TAG.log"
 cd "$SRV"
 timeout 300 "$JAVA" -Xmx6g -jar fabric-server.jar nogui > "$LOG" 2>&1 < /dev/null &
