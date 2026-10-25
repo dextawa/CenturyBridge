@@ -420,14 +420,6 @@
    "ret": "pop",
    "basis": "mechanical: same values; return value popped"
   },
-  "net/minecraft/class_3331.method_14635(Ljava/lang/Object;)V": {
-   "desc": "(Ljava/lang/Object;)Z",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "pop",
-   "basis": "mechanical: same values; return value popped"
-  },
   "net/minecraft/class_3331.method_14638(Lnet/minecraft/class_3330;)V": {
    "desc": "(Lnet/minecraft/class_3330;)Z",
    "ops": [

@@ -39,10 +39,19 @@ public final class CbSpawn {
         return data.method_74893().comp_4916();
     }
 
-    /** WritableLevelData.setSpawn(pos, angle): the dimension and pitch stay */
+    /**
+     * WritableLevelData.setSpawn(pos, angle): the dimension and pitch stay. 1.21.8's levels read the shared spawn
+     * straight from the overworld's data; 1.21.9's server keeps a copy (MinecraftServer.respawnData, refreshed by
+     * its own setRespawnData), so a set on that data refreshes the copy too -- without the spawn packet, which
+     * 1.21.8's setSpawn did not send either
+     */
     public static void method_187(class_5269 data, class_2338 pos, float angle) {
         class_5217.class_12064 cur = data.method_74893();
         data.method_187(class_5217.class_12064.method_74895(cur.method_74894(), pos, angle, cur.comp_4917()));
+        net.minecraft.server.MinecraftServer s = CbProfiles.cbServer();
+        if (s != null && s.method_27728() != null && s.method_27728().method_27859() == data && s.method_74944() != null) {
+            s.method_74946();
+        }
     }
 
     /** Level.getSharedSpawnPos(): the spawn clamped into this level's border (1.21.8's body is 1.21.9's clampToBorder) */

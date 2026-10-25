@@ -9,6 +9,8 @@ accessible field net/minecraft/class_11906 field_62592 Z
 accessible field net/minecraft/class_7920 field_62914 Ljava/lang/String;
 # the frame's camera for 1.21.8 renderer calls that bring no collector (CbSubmit.currentCamera)
 accessible field net/minecraft/class_757 field_61732 Lnet/minecraft/class_11658;
+# the server's cached respawn data, refreshed after a 1.21.8 setSpawn on the overworld's data (CbSpawn.method_187)
+accessible method net/minecraft/server/MinecraftServer method_74946 ()V
 
 # ---- BEGIN GENERATED (all): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
