@@ -27,6 +27,11 @@ public final class CbProfiles {
         server = new WeakReference<>(s);
     }
 
+    /** the running server, or null before it is constructed */
+    public static MinecraftServer cbServer() {
+        return server.get();
+    }
+
     public static class_11560 toNameAndId(GameProfile profile) {
         return profile == null ? null : new class_11560(profile);
     }
