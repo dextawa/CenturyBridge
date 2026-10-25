@@ -2,7 +2,8 @@
 # cb-smx1: a 1.20.1-era mod (intermediary names, no refmap, no fabric-api) whose mixins name 1.20.1 members that
 # step 1 (1.20.1 -> 1.20.2) moves for mixins: mixinTargets (LootPool's constructor, BeaconBlockEntity
 # getValidEffectById -> filterEffect, NbtIo.readUnnamedTag, AdvancementList.add -> AdvancementTree.addAll) and
-# fieldRenames (LootItemRandomChanceCondition.probability -> the record component). ServerDriverMixin runs Driver
+# fieldRenames (LootItemRandomChanceCondition.probability -> the record component) and a
+# @CbVanillaReads route (PathNavigation.isInLiquid, which 1.20.2's navigations ask again through the layer). ServerDriverMixin runs Driver
 # once the world is loaded: "CB-SMX1 ok|FAIL <case> <detail>", ending "CB-SMX1 summary ok=N fail=M".
 #
 #   bash core/testmods/cb-smx1/build.sh <out.jar>     (from the repository root; javac only;

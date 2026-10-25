@@ -818,6 +818,7 @@ public class SwallTestMod implements ModInitializer {
             worldCalls(server);
             legacyStates();
             trades(server);
+            brains(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1216,6 +1217,19 @@ public class SwallTestMod implements ModInitializer {
                                                com.mojang.serialization.MapCodec<net.minecraft.class_2680> codec) {
             calls++;
             return new LegacyState(block, values, codec);
+        }
+    }
+
+    /**
+     * 1.21.11's <Mob>Ai.makeBrain statics (rt/CbWallAiBrains): with no mod mixin, the route over the mob's own brain
+     * (on) and over a copy without behaviours (redo) leaves each of the 18 brains as 26.1 built it (off)
+     */
+    private static void brains(MinecraftServer server) {
+        for (net.minecraft.CbSwallBrainProbe.Result r : net.minecraft.CbSwallBrainProbe.all(server.method_30002())) {
+            boolean readable = !r.off().startsWith("unreadable") && !r.off().startsWith("behaviours []");
+            check("brain.makeBrain." + r.mob() + ".on", readable && r.on().equals(r.off()), r.off() + " <> " + r.on());
+            check("brain.makeBrain." + r.mob() + ".redo", readable && r.redo().equals(r.off()), r.off() + " <> " + r.redo());
+            System.out.println("CBTEST BRAIN " + r.mob() + " " + r.off());
         }
     }
 

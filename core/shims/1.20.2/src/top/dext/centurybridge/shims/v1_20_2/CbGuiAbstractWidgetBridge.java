@@ -9,7 +9,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbLegacyRenderTexture;
  * with the depth test on), over the 1.20.2 GuiGraphics blit that 1.20.1 called. The legacy image
  * buttons call it through {@link CbLegacyRenderTexture}, as 1.20.1's renderWidget did.
  */
-@Mixin(net.minecraft.class_339.class)
+@Mixin(value = net.minecraft.class_339.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbGuiAbstractWidgetBridge implements CbLegacyRenderTexture {
 
     @Override

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * (which 1.20.2 still has), each piece drawn with the 1.20.2 blit that 1.20.1 used. The pieces are drawn
  * through this object, as in 1.20.1, so a GuiGraphics subclass that overrides one of them is honoured.
  */
-@Mixin(net.minecraft.class_332.class)
+@Mixin(value = net.minecraft.class_332.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbGuiGraphicsBridge implements top.dext.centurybridge.rt.v1_20_2.CbLegacyNineSlice {
 
     /** 1.20.1 blitNineSliced(texture, x, y, width, height, sliceSize, uWidth, vHeight, u, v) */

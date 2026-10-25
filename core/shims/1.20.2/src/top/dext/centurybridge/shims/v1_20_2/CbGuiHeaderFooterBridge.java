@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * header / footer / contents FrameLayout, which 1.20.2 still has with the same methods. 1.20.1's vanilla
  * code never called these; they serve a mod's calls and its subclass's overrides and super calls.
  */
-@Mixin(net.minecraft.class_8132.class)
+@Mixin(value = net.minecraft.class_8132.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbGuiHeaderFooterBridge {
 
     @Shadow

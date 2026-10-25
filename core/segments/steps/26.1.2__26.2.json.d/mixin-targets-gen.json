@@ -1,0 +1,698 @@
+{
+  "_mixinTargets_basis": "Main gen-mixin-targets (V/W bytecode, damage-mixin table); regenerate, never hand-edit",
+  "mixinTargets": {
+    "com/mojang/blaze3d/opengl/GlCommandEncoder.presentTexture(Lcom/mojang/blaze3d/textures/GpuTextureView;)V": {
+      "to": "presentTexture(Lcom/mojang/blaze3d/textures/GpuTextureView;II)V",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/opengl/GlFence.<init>()V": {
+      "to": "<init>(Lcom/mojang/blaze3d/opengl/GlCommandEncoder;)V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/opengl/GlRenderPass.<init>(Lcom/mojang/blaze3d/opengl/GlCommandEncoder;Lcom/mojang/blaze3d/opengl/GlDevice;Z)V": {
+      "to": "<init>(Lcom/mojang/blaze3d/opengl/GlCommandEncoder;Lcom/mojang/blaze3d/opengl/GlDevice;ZILcom/mojang/blaze3d/systems/ScissorState;)V",
+      "args": [
+        0,
+        1,
+        2
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/opengl/GlStateManager._disableBlend()V": {
+      "to": "_disableBlend(I)V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/opengl/GlStateManager._enableBlend()V": {
+      "to": "_enableBlend(I)V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/opengl/Uniform$Utb.format()Lcom/mojang/blaze3d/textures/TextureFormat;": {
+      "to": "format()Lcom/mojang/blaze3d/GpuFormat;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/pipeline/RenderTarget.<init>(Ljava/lang/String;Z)V": {
+      "to": "<init>(Ljava/lang/String;ZLcom/mojang/blaze3d/GpuFormat;)V",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/platform/Monitor.<init>(J)V": {
+      "to": "<init>(Ljava/lang/String;JLjava/util/List;Lcom/mojang/blaze3d/platform/VideoMode;II)V",
+      "args": [
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/resource/RenderTargetDescriptor.clearColor()I": {
+      "to": "clearColor()Lorg/joml/Vector4fc;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.<init>(Lcom/mojang/blaze3d/systems/GpuDeviceBackend;Lcom/mojang/blaze3d/systems/CommandEncoderBackend;)V": {
+      "to": "<init>(Lcom/mojang/blaze3d/systems/TracyGpuProfiler;Lcom/mojang/blaze3d/systems/GpuDeviceBackend;Lcom/mojang/blaze3d/systems/CommandEncoderBackend;)V",
+      "args": [
+        1,
+        2
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/systems/GpuDevice.<init>(Lcom/mojang/blaze3d/systems/GpuDeviceBackend;)V": {
+      "to": "<init>(Lcom/mojang/blaze3d/systems/GpuDeviceBackend;Ljava/lang/Runnable;)V",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/systems/RenderPass$Draw.indexType()Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;": {
+      "to": "indexType()Lcom/mojang/blaze3d/IndexType;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/systems/RenderPass.<init>(Lcom/mojang/blaze3d/systems/RenderPassBackend;Lcom/mojang/blaze3d/systems/GpuDeviceBackend;)V": {
+      "to": "<init>(Lcom/mojang/blaze3d/systems/RenderPassBackend;Lcom/mojang/blaze3d/systems/GpuDeviceBackend;Ljava/util/List;Ljava/lang/Runnable;Lcom/mojang/blaze3d/systems/RenderPass$RenderArea;)V",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/systems/RenderSystem$AutoStorageIndexBuffer.type()Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;": {
+      "to": "type()Lcom/mojang/blaze3d/IndexType;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/systems/TimerQuery.endProfile()Lcom/mojang/blaze3d/systems/TimerQuery$FrameProfile;": {
+      "to": "endProfile()V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/textures/GpuTexture.getFormat()Lcom/mojang/blaze3d/textures/TextureFormat;": {
+      "to": "getFormat()Lcom/mojang/blaze3d/GpuFormat;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/vertex/MeshData$DrawState.indexType()Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;": {
+      "to": "indexType()Lcom/mojang/blaze3d/IndexType;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/vertex/MeshData$SortState.indexType()Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;": {
+      "to": "indexType()Lcom/mojang/blaze3d/IndexType;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/vertex/VertexFormat$Builder.<init>()V": {
+      "to": "<init>(I)V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "com/mojang/blaze3d/vertex/VertexFormat.builder()Lcom/mojang/blaze3d/vertex/VertexFormat$Builder;": {
+      "to": "builder(I)Lcom/mojang/blaze3d/vertex/VertexFormat$Builder;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/Minecraft.crash(Lnet/minecraft/client/Minecraft;Ljava/io/File;Lnet/minecraft/CrashReport;)V": {
+      "to": "crash(Lnet/minecraft/client/Minecraft;Ljava/io/File;Lnet/minecraft/CrashReport;I)V",
+      "args": [
+        0,
+        1,
+        2
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/Minecraft.saveReportAndShutdownSoundManager(Lnet/minecraft/client/Minecraft;Ljava/io/File;Lnet/minecraft/CrashReport;)I": {
+      "to": "saveReportAndShutdownSoundManager(Lnet/minecraft/client/Minecraft;Ljava/io/File;Lnet/minecraft/CrashReport;I)I",
+      "args": [
+        0,
+        1,
+        2
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/Gui.<init>(Lnet/minecraft/client/Minecraft;)V": {
+      "to": "<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/Hud;Lnet/minecraft/client/renderer/state/gui/GuiRenderState;)V",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/GuiGraphicsExtractor$ScissorStack.<init>()V": {
+      "to": "<init>(Lnet/minecraft/client/gui/navigation/ScreenRectangle;)V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/GuiGraphicsExtractor$ScissorStack.pop()Lnet/minecraft/client/gui/navigation/ScreenRectangle;": {
+      "to": "pop()V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/GuiGraphicsExtractor$ScissorStack.push(Lnet/minecraft/client/gui/navigation/ScreenRectangle;)Lnet/minecraft/client/gui/navigation/ScreenRectangle;": {
+      "to": "push(Lnet/minecraft/client/gui/navigation/ScreenRectangle;)V",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/components/tabs/TabNavigationBar.arrangeElements()V": {
+      "to": "arrangeElements(I)V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/components/toasts/SystemToast.nullToEmpty(Lnet/minecraft/network/chat/Component;)Lcom/google/common/collect/ImmutableList;": {
+      "to": "nullToEmpty(Lnet/minecraft/network/chat/Component;)Ljava/util/List;",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/screens/inventory/AbstractSignEditScreen.getSignTextScale()Lorg/joml/Vector3f;": {
+      "to": "getSignTextScale()Lorg/joml/Vector3fc;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/screens/inventory/HangingSignEditScreen.getSignTextScale()Lorg/joml/Vector3f;": {
+      "to": "getSignTextScale()Lorg/joml/Vector3fc;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/screens/inventory/SignEditScreen.getSignTextScale()Lorg/joml/Vector3f;": {
+      "to": "getSignTextScale()Lorg/joml/Vector3fc;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/screens/options/WorldOptionsScreen.createGameRulesButton()Lnet/minecraft/client/gui/components/Button;": {
+      "to": "createGameRulesButton(Lnet/minecraft/client/server/IntegratedServer;)Lnet/minecraft/client/gui/components/Button;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/screens/packs/PackSelectionScreen.filterEntries(Ljava/lang/String;Ljava/util/stream/Stream;Lnet/minecraft/client/gui/screens/packs/TransferableSelectionList;)V": {
+      "to": "filterEntries(Ljava/lang/String;Ljava/util/stream/Stream;Lnet/minecraft/client/gui/screens/packs/TransferableSelectionList;Lnet/minecraft/client/gui/screens/packs/PackSelectionModel$EntryBase;)V",
+      "args": [
+        0,
+        1,
+        2
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/gui/screens/social/PlayerSocialManager.<init>(Lnet/minecraft/client/Minecraft;Lcom/mojang/authlib/minecraft/UserApiService;)V": {
+      "to": "<init>(Lnet/minecraft/client/Minecraft;Lcom/mojang/authlib/minecraft/UserApiService;Lcom/mojang/authlib/yggdrasil/FriendsService;Lnet/minecraft/client/gui/screens/social/RemoteFriendListUpdateHandler;)V",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/profiling/ClientMetricsSamplersProvider.<init>(Ljava/util/function/LongSupplier;Lnet/minecraft/client/renderer/LevelRenderer;)V": {
+      "to": "<init>(Ljava/util/function/LongSupplier;Lnet/minecraft/client/renderer/LevelRenderer;Lnet/minecraft/client/renderer/extract/LevelExtractor;)V",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/SkyRenderer.<init>(Lnet/minecraft/client/renderer/texture/TextureManager;Lnet/minecraft/client/resources/model/sprite/AtlasManager;)V": {
+      "to": "<init>(Lnet/minecraft/client/renderer/texture/TextureManager;Lnet/minecraft/client/resources/model/sprite/AtlasManager;Lcom/mojang/blaze3d/pipeline/RenderTarget;)V",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/chunk/SectionMesh$SectionDraw.indexType()Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;": {
+      "to": "indexType()Lcom/mojang/blaze3d/IndexType;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$CompileTask.<init>(Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection;Z)V": {
+      "to": "<init>(Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection;Lnet/minecraft/client/renderer/chunk/RenderSectionRegion;Z)V",
+      "args": [
+        0,
+        2
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$CompileTask.doTask(Lnet/minecraft/client/renderer/SectionBufferBuilderPack;)Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$CompileTask$SectionTaskResult;": {
+      "to": "doTask(Lnet/minecraft/client/renderer/SectionBufferBuilderPack;)Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$SectionTask$SectionTaskResult;",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$ResortTransparencyTask.doTask(Lnet/minecraft/client/renderer/SectionBufferBuilderPack;)Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$CompileTask$SectionTaskResult;": {
+      "to": "doTask(Lnet/minecraft/client/renderer/SectionBufferBuilderPack;)Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$SectionTask$SectionTaskResult;",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection.indexBufferUploadCallback(Lnet/minecraft/client/renderer/chunk/SectionMesh;Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;Z)V": {
+      "to": "indexBufferUploadCallback(Lnet/minecraft/client/renderer/chunk/CompiledSectionMesh;Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;Z)V",
+      "args": [
+        0,
+        1,
+        2
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection.vertexBufferUploadCallback(Lnet/minecraft/client/renderer/chunk/SectionMesh;Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;)V": {
+      "to": "vertexBufferUploadCallback(Lnet/minecraft/client/renderer/chunk/CompiledSectionMesh;Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;)V",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/state/gui/BlitRenderState.pose()Lorg/joml/Matrix3x2f;": {
+      "to": "pose()Lorg/joml/Matrix3x2fc;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState.overrideCameraAngle()Lorg/joml/Quaternionf;": {
+      "to": "overrideCameraAngle()Lorg/joml/Quaternionfc;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState.rotation()Lorg/joml/Quaternionf;": {
+      "to": "rotation()Lorg/joml/Quaternionfc;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState.translation()Lorg/joml/Vector3f;": {
+      "to": "translation()Lorg/joml/Vector3fc;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/state/gui/pip/GuiSkinRenderState.playerModel()Lnet/minecraft/client/model/player/PlayerModel;": {
+      "to": "playerModel()Lnet/minecraft/client/model/Model$Simple;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/renderer/state/gui/pip/OversizedItemRenderState.pose()Lorg/joml/Matrix3x2f;": {
+      "to": "pose()Lorg/joml/Matrix3x2fc;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/client/telemetry/WorldSessionTelemetryManager.<init>(Lnet/minecraft/client/telemetry/TelemetryEventSender;ZLjava/time/Duration;Ljava/lang/String;)V": {
+      "to": "<init>(Lnet/minecraft/client/telemetry/TelemetryEventSender;ZLjava/time/Duration;Ljava/lang/String;Ljava/util/UUID;)V",
+      "args": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/commands/arguments/RangeArgument$Floats.getRange(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/advancements/criterion/MinMaxBounds$Doubles;": {
+      "to": "getRange(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/advancements/predicates/MinMaxBounds$Doubles;",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/commands/arguments/RangeArgument$Floats.parse(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/advancements/criterion/MinMaxBounds$Doubles;": {
+      "to": "parse(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/advancements/predicates/MinMaxBounds$Doubles;",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/commands/arguments/RangeArgument$Ints.getRange(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/advancements/criterion/MinMaxBounds$Ints;": {
+      "to": "getRange(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/advancements/predicates/MinMaxBounds$Ints;",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/commands/arguments/RangeArgument$Ints.parse(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/advancements/criterion/MinMaxBounds$Ints;": {
+      "to": "parse(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/advancements/predicates/MinMaxBounds$Ints;",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/commands/arguments/selector/EntitySelectorParser.getDistance()Lnet/minecraft/advancements/criterion/MinMaxBounds$Doubles;": {
+      "to": "getDistance()Lnet/minecraft/advancements/predicates/MinMaxBounds$Doubles;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/commands/arguments/selector/EntitySelectorParser.getLevel()Lnet/minecraft/advancements/criterion/MinMaxBounds$Ints;": {
+      "to": "getLevel()Lnet/minecraft/advancements/predicates/MinMaxBounds$Ints;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/commands/arguments/selector/EntitySelectorParser.getRotX()Lnet/minecraft/advancements/criterion/MinMaxBounds$FloatDegrees;": {
+      "to": "getRotX()Lnet/minecraft/advancements/predicates/MinMaxBounds$FloatDegrees;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/commands/arguments/selector/EntitySelectorParser.getRotY()Lnet/minecraft/advancements/criterion/MinMaxBounds$FloatDegrees;": {
+      "to": "getRotY()Lnet/minecraft/advancements/predicates/MinMaxBounds$FloatDegrees;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/core/component/predicates/AttributeModifiersPredicate$EntryPredicate.amount()Lnet/minecraft/advancements/criterion/MinMaxBounds$Doubles;": {
+      "to": "amount()Lnet/minecraft/advancements/predicates/MinMaxBounds$Doubles;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/core/component/predicates/CustomDataPredicate.value()Lnet/minecraft/advancements/criterion/NbtPredicate;": {
+      "to": "value()Lnet/minecraft/advancements/predicates/NbtPredicate;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/core/component/predicates/DamagePredicate.damage()Lnet/minecraft/advancements/criterion/MinMaxBounds$Ints;": {
+      "to": "damage()Lnet/minecraft/advancements/predicates/MinMaxBounds$Ints;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/core/component/predicates/FireworksPredicate.flightDuration()Lnet/minecraft/advancements/criterion/MinMaxBounds$Ints;": {
+      "to": "flightDuration()Lnet/minecraft/advancements/predicates/MinMaxBounds$Ints;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/core/component/predicates/WrittenBookPredicate.generation()Lnet/minecraft/advancements/criterion/MinMaxBounds$Ints;": {
+      "to": "generation()Lnet/minecraft/advancements/predicates/MinMaxBounds$Ints;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/advancements/packs/VanillaAdventureAdvancements.placedBlockActivatesCreakingHeart(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/tags/TagKey;)Lnet/minecraft/advancements/Criterion;": {
+      "to": "placedBlockActivatesCreakingHeart(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/tags/TagKey;)Lnet/minecraft/advancements/triggers/Criterion;",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/advancements/packs/VanillaAdventureAdvancements.placedBlockReadByComparator(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/advancements/Criterion;": {
+      "to": "placedBlockReadByComparator(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/advancements/triggers/Criterion;",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/advancements/packs/VanillaAdventureAdvancements.placedComparatorReadingBlock(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/advancements/Criterion;": {
+      "to": "placedComparatorReadingBlock(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/advancements/triggers/Criterion;",
+      "args": [
+        0,
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/recipes/RecipeProvider.bredAnimal()Lnet/minecraft/advancements/Criterion;": {
+      "to": "bredAnimal()Lnet/minecraft/advancements/triggers/Criterion;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/recipes/RecipeProvider.insideOf(Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/advancements/Criterion;": {
+      "to": "insideOf(Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/advancements/triggers/Criterion;",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/tags/BlockItemTagsProvider.<init>()V": {
+      "to": "<init>(Ljava/util/function/Function;)V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/worldgen/SurfaceRuleData.nether()Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": {
+      "to": "nether(Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/worldgen/SurfaceRuleData.overworld()Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": {
+      "to": "overworld(Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/worldgen/features/TreeFeatures.cherry()Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;": {
+      "to": "cherry(Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;)Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/worldgen/features/TreeFeatures.createBirch()Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;": {
+      "to": "createBirch(Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;)Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/worldgen/features/TreeFeatures.createDarkOak()Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;": {
+      "to": "createDarkOak(Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;)Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/worldgen/features/TreeFeatures.createFancyOak()Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;": {
+      "to": "createFancyOak(Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;)Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/worldgen/features/TreeFeatures.createJungleTree()Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;": {
+      "to": "createJungleTree(Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;)Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/worldgen/features/TreeFeatures.createOak()Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;": {
+      "to": "createOak(Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;)Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/data/worldgen/features/TreeFeatures.createSuperBirch()Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;": {
+      "to": "createSuperBirch(Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;)Lnet/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration$TreeConfigurationBuilder;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/network/protocol/login/ClientboundLoginFinishedPacket.<init>(Lcom/mojang/authlib/GameProfile;)V": {
+      "to": "<init>(Lcom/mojang/authlib/GameProfile;Ljava/util/UUID;)V",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/server/Bootstrap.checkGameruleTranslations(Ljava/util/Set;)V": {
+      "to": "checkGameruleTranslations(Lnet/minecraft/locale/Language;Ljava/util/Set;)V",
+      "args": [
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/server/Bootstrap.checkTranslations(Ljava/lang/Iterable;Ljava/util/function/Function;Ljava/util/Set;)V": {
+      "to": "checkTranslations(Lnet/minecraft/locale/Language;Ljava/lang/Iterable;Ljava/util/function/Function;Ljava/util/Set;)V",
+      "args": [
+        1,
+        2,
+        3
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/server/Bootstrap.getMissingTranslations()Ljava/util/Set;": {
+      "to": "getMissingTranslations(Lnet/minecraft/locale/Language;)Ljava/util/Set;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/server/MinecraftServer.<init>(Ljava/lang/Thread;Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lnet/minecraft/server/packs/repository/PackRepository;Lnet/minecraft/server/WorldStem;Ljava/util/Optional;Ljava/net/Proxy;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/server/Services;Lnet/minecraft/server/level/progress/LevelLoadListener;Z)V": {
+      "to": "<init>(Ljava/lang/Thread;Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lnet/minecraft/server/packs/repository/PackRepository;Lnet/minecraft/server/WorldStem;Ljava/util/Optional;Ljava/net/Proxy;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/server/Services;Lnet/minecraft/server/level/progress/LevelLoadListener;ZLnet/minecraft/server/notifications/NotificationManager;)V",
+      "args": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/server/dedicated/DedicatedServer.<init>(Ljava/lang/Thread;Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lnet/minecraft/server/packs/repository/PackRepository;Lnet/minecraft/server/WorldStem;Ljava/util/Optional;Lnet/minecraft/server/dedicated/DedicatedServerSettings;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/server/Services;)V": {
+      "to": "<init>(Ljava/lang/Thread;Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lnet/minecraft/server/packs/repository/PackRepository;Lnet/minecraft/server/WorldStem;Ljava/util/Optional;Lnet/minecraft/server/dedicated/DedicatedServerSettings;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/server/Services;Lnet/minecraft/server/jsonrpc/ManagementServer;Lnet/minecraft/server/notifications/NotificationManager;)V",
+      "args": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/server/level/BlockDestructionProgress.getUpdatedRenderTick()I": {
+      "to": "getUpdatedRenderTick()J",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/server/network/ServerGamePacketListenerImpl.detectRateSpam()V": {
+      "to": "detectRateSpam(Lnet/minecraft/util/TickThrottler;)V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/util/profiling/metrics/MetricSampler.<init>(Ljava/lang/String;Lnet/minecraft/util/profiling/metrics/MetricCategory;Ljava/util/function/DoubleSupplier;Ljava/lang/Runnable;Lnet/minecraft/util/profiling/metrics/MetricSampler$ThresholdTest;)V": {
+      "to": "<init>(Ljava/lang/String;Lnet/minecraft/util/profiling/metrics/MetricSampler$SamplingPhase;Lnet/minecraft/util/profiling/metrics/MetricCategory;Ljava/util/function/DoubleSupplier;Ljava/lang/Runnable;Lnet/minecraft/util/profiling/metrics/MetricSampler$ThresholdTest;)V",
+      "args": [
+        0,
+        2,
+        3,
+        4,
+        5
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/LockCode.predicate()Lnet/minecraft/advancements/criterion/ItemPredicate;": {
+      "to": "predicate()Lnet/minecraft/advancements/predicates/ItemPredicate;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/entity/LivingEntity.collectEquipmentChanges()Ljava/util/Map;": {
+      "to": "collectEquipmentChanges(Ljava/util/Map;)Ljava/util/Map;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/entity/monster/Vex.getOwner()Lnet/minecraft/world/entity/Mob;": {
+      "to": "getOwner()Lnet/minecraft/world/entity/LivingEntity;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/entity/variant/MoonBrightnessCheck.range()Lnet/minecraft/advancements/criterion/MinMaxBounds$Doubles;": {
+      "to": "range()Lnet/minecraft/advancements/predicates/MinMaxBounds$Doubles;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/item/Items.registerSpawnEgg(Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;": {
+      "to": "registerSpawnEgg(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;",
+      "args": [
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/item/alchemy/Potions.bootstrap(Lnet/minecraft/core/Registry;)Lnet/minecraft/core/Holder$Reference;": {
+      "to": "bootstrap(Lnet/minecraft/core/Registry;)Lnet/minecraft/core/Holder;",
+      "args": [
+        0
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/dimension/DimensionType.infiniburn()Lnet/minecraft/tags/TagKey;": {
+      "to": "infiniburn()Lnet/minecraft/core/HolderSet;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/DensityFunctions$Spline$Coordinate.function()Lnet/minecraft/core/Holder;": {
+      "to": "function()Lnet/minecraft/world/level/levelgen/DensityFunction;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$AbovePreliminarySurface.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$Bandlands.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$BiomeConditionSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$BlockRuleSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$Hole.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$NoiseThresholdConditionSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$NotConditionSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$SequenceRuleSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$Steep.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$StoneDepthCheck.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$Temperature.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$TestRuleSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$VerticalGradientConditionSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$WaterConditionSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$YConditionSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "to": "codec()Lcom/mojang/serialization/MapCodec;",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules.isBiome([Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource;": {
+      "to": "isBiome(Lnet/minecraft/core/HolderGetter;[Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource;",
+      "args": [
+        1
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/feature/MultifaceGrowthFeature.placeGrowthIfPossible(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/levelgen/feature/configurations/MultifaceGrowthConfiguration;Lnet/minecraft/util/RandomSource;Ljava/util/List;)Z": {
+      "to": "placeGrowthIfPossible(Lnet/minecraft/world/level/block/MultifaceSpreadeableBlock;Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/levelgen/feature/configurations/MultifaceGrowthConfiguration;Lnet/minecraft/util/RandomSource;Ljava/util/List;)Z",
+      "args": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    },
+    "net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties.<init>()V": {
+      "to": "<init>(ZFZZZZ)V",
+      "args": [],
+      "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+    }
+  }
+}

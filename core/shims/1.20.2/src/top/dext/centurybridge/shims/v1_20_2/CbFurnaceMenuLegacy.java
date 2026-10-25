@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * (0..1) under the same names; a converted menu overriding the pixel versions answers 1.20.2's
  * through CbMenus.
  */
-@Mixin(class_1720.class)
+@Mixin(value = class_1720.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbFurnaceMenuLegacy {
 
     @Shadow

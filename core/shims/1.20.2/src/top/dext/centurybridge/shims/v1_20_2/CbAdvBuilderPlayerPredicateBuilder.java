@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * storing what 1.20.1 stored -- ANY and null as absent -- so calls, overrides and super calls of a
  * 1.20.1 mod behave as they did.
  */
-@Mixin(net.minecraft.class_4553.class_4557.class)
+@Mixin(value = net.minecraft.class_4553.class_4557.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbAdvBuilderPlayerPredicateBuilder {
 
     @Shadow

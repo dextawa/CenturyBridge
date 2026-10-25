@@ -7,13 +7,15 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.rt.v1_20_2.CbLegacyNavigation;
+import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 
 /**
  * 1.20.1's PathNavigation.isInLiquid() back (s1misc navigation bridge), 1.20.1 body: the mob is
- * in water or in lava. Declared public; 1.20.1's was protected. The cb$ methods are the
+ * in water or in lava; CbNavigationVanillaMixin / CbNavigationAmphibiousVanillaMixin send 1.20.2's
+ * Entity.isInLiquid reads in the navigations back through it. Declared public; 1.20.1's was protected. The cb$ methods are the
  * trampolines CbNavigation reaches the navigation through.
  */
-@Mixin(class_1408.class)
+@Mixin(value = class_1408.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbNavigationLegacy implements CbLegacyNavigation {
 
     @Shadow
@@ -23,6 +25,8 @@ public abstract class CbNavigationLegacy implements CbLegacyNavigation {
     @Shadow
     protected abstract boolean method_6358();
 
+    @CbVanillaReads("CbNavigationVanillaMixin: ground / flying / water-bound canUpdatePath and (CbNavigationAmphibiousVanillaMixin) "
+        + "amphibious canMoveDirectly ask it where 1.20.2 asks Entity.isInLiquid")
     @Override
     public boolean method_6351() {
         return this.field_6684.method_5816() || this.field_6684.method_5771();

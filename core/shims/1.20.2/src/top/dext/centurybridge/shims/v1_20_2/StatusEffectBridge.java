@@ -16,7 +16,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbLegacyMobEffect;
  * behaviour differs is applied through these again (s1misc: CbLivingEffectAttributes,
  * CbEffectTemplateLegacyValue).
  */
-@Mixin(class_1291.class)
+@Mixin(value = class_1291.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class StatusEffectBridge implements CbLegacyMobEffect {
 
     @Override

@@ -101,6 +101,8 @@
     "CbMeleeAttackGoalLegacy",
     "CbMobMeleeRange",
     "CbNavigationLegacy",
+    "CbNavigationVanillaMixin",
+    "CbNavigationAmphibiousVanillaMixin",
     "CbNetAddEntityAccessor",
     "CbNetConnectionBridge",
     "CbNetCustomPayloadC2SBridge",

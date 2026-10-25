@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * Conditions interface). The runtime object is the same conditions instance,
  * so the legacy-erasure overload just delegates and casts. Work order: x14.
  */
-@Mixin(class_4558.class)
+@Mixin(value = class_4558.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class AbstractCriterionBridge {
 
     public class_195 method_27853(JsonObject json, class_5257 deserializer) {

@@ -179,6 +179,73 @@
       "to": "method_49193(Ljava/util/function/Function;)Lnet/minecraft/class_6544$class_6547;",
       "args": [0, -1],
       "basis": "MultiNoiseBiomeSourceParameterList.Preset.generateOverworldBiomes: javap -c both: new OverworldBiomeBuilder().addBiomes(..) into the parameter list; 1.21.4 dropped the winter-drop biome modifier (its biomes are always on)"
+    },
+    "net/minecraft/class_702.method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V": {
+      "to": "method_3049(Lnet/minecraft/class_4184;FLnet/minecraft/class_4597$class_4598;)V",
+      "args": [-1, 0, 1],
+      "basis": "ParticleEngine.render(lightTexture, camera, partialTick): javap -c both: the same loop over RENDER_ORDER render types and their particle queues; 1.21.4 draws each queue through renderParticleType with a BufferSource instead of turning the light texture on and building a Tesselator buffer inline"
+    },
+    "net/minecraft/class_996.method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+      "to": "method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10429;FF)V",
+      "args": [0, 1, 2, 3, 4, 5],
+      "basis": "SnowGolemHeadLayer.render: javap -c both: the same pumpkin-head check, head-part transform, scale 0.625 and carved pumpkin block (outline when invisible and glowing); 1.21.4 reads a SnowGolemRenderState (a LivingEntityRenderState subclass) instead of the head item"
+    },
+    "net/minecraft/class_4004.method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+      "to": "method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10427;FF)V",
+      "args": [0, 1, 2, 3, 4, 5],
+      "basis": "CrossedArmsItemLayer.render: javap -c both: skip when nothing is held, push, the crossed-arms transform (applyTranslation), draw the held item at overlay NO_OVERLAY, pop; 1.21.4 reads a HoldingEntityRenderState (a LivingEntityRenderState subclass)"
+    },
+    "net/minecraft/class_807.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;": {
+      "to": "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+      "args": [0, -1, -1],
+      "basis": "MultiVariant.bake: javap -c both (0.87, 23/23 instructions): one variant baked as it is, else a WeightedBakedModel.Builder over the variants (baker.bake(variant model, variant) with its weight); 1.21.4's bake(baker) is the block-state model bake the model bakery calls. V's sprite getter and state were not read (each variant carries its own rotation)"
+    },
+    "net/minecraft/class_816.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;": {
+      "to": "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+      "args": [0, -1, -1],
+      "basis": "MultiPart.bake: javap -c both (0.94, 18/18): a MultiPartBakedModel.Builder over the selectors, each selector's variant baked; V's sprite getter and state were only handed down to MultiVariant.bake, which did not read them"
+    },
+    "net/minecraft/class_743.method_3129(ZF)V": {
+      "to": "method_3129()V",
+      "args": [-1, -1],
+      "basis": "KeyboardInput.tick(isSneaking, sneakSpeed): javap -c both (0.95): the same key reads into up/down/left/right, jumping and shift, and the forward / left impulses; 1.21.4 moved V's final sneak scaling of the two impulses to LocalPlayer"
+    },
+    "net/minecraft/class_425$class_4070.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": {
+      "to": "method_65809(Lnet/minecraft/class_3300;)Lnet/minecraft/class_10539;",
+      "args": [0],
+      "basis": "LoadingOverlay.LogoTexture.getTextureImage -> loadContents: javap -c both: the vanilla pack's MOJANG_STUDIOS_LOGO_LOCATION opened and read as a NativeImage with blur on; 1.21.4 answers a TextureContents instead of a TextureImage"
+    },
+    "net/minecraft/class_4942.method_48524(Lnet/minecraft/class_2960;Ljava/util/Map;)Lcom/google/gson/JsonObject;": {
+      "to": "method_65503(Ljava/util/Map;)Lcom/google/gson/JsonElement;",
+      "args": [-1, 0],
+      "basis": "ModelTemplate.createBaseTemplate(id, slots): javap -c both (1.00): the JSON object with parent and the textures map built from the slots; V's id was not read; 1.21.4 answers it as a JsonElement (the same JsonObject)"
+    },
+    "net/minecraft/class_916.method_56858(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_1087;ZLnet/minecraft/class_5819;)V": {
+      "to": "method_56858(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10428;Lnet/minecraft/class_5819;)V",
+      "args": [-1, 0, 1, 2, -1, -1, -1, 4],
+      "basis": "ItemEntityRenderer.renderMultipleFromCount (static both): javap -c both (0.83): the same per-copy loop with the ground transform scale offsets and random spread, drawing each copy; 1.21.4 reads count, seed, 3D-ness and transform from an ItemClusterRenderState instead of the renderer, stack and model"
+    },
+    "net/minecraft/class_647.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1799;)V": {
+      "to": "<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_10444;)V",
+      "args": [0, 1, 2, 3, -1],
+      "basis": "BreakingItemParticle(level, x, y, z, stack): javap -c both (0.77): super(level, x, y, z, 0, 0, 0), the particle sprite set from the item's model, gravity 1, quad size halved; 1.21.4 takes the sprite from an ItemStackRenderState"
+    }
+  },
+  "callReshapes": {
+    "net/minecraft/class_761.method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_765;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V": {
+      "desc": "(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V",
+      "ops": ["keep", "drop", "keep", "keep", "keep"],
+      "basis": "LevelRenderer.addWeatherPass (private; mods reach it by invoker/shadow): the light texture V handed to the pass is the game renderer's own, which 1.21.4's pass reads itself (javap: the lambda no longer captures it)"
+    },
+    "net/minecraft/class_761.method_62201(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;Lnet/minecraft/class_765;FLnet/minecraft/class_9958;)V": {
+      "desc": "(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;FLnet/minecraft/class_9958;)V",
+      "ops": ["keep", "keep", "drop", "keep", "keep"],
+      "basis": "LevelRenderer.addParticlesPass (private): as addWeatherPass, the light texture is no longer passed (javap)"
+    },
+    "net/minecraft/class_8055.method_48578(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;F)V": {
+      "desc": "(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;)V",
+      "ops": ["keep", "keep", "keep", "keep", "drop"],
+      "basis": "TrimMaterials.register(context, key, item, style, itemModelIndex) (private static): 1.21.4 has no item model index for trim materials (item models select by material key), so the index has nothing to go to"
     }
   },
   "mixinLedger": {

@@ -8,7 +8,14 @@
     "IngredientItemsMixin",
     "BindTagsMixin",
     "ArmorEquipMixin",
-    "ShieldEquipMixin"
+    "ShieldEquipMixin",
+    "ArmorValuesMixin",
+    "TridentValueMixin",
+    "ItemDescriptionIdMixin",
+    "PotionDescriptionIdMixin",
+    "CompassDescriptionIdMixin",
+    "MaceRepairMixin",
+    "TotemEnchantableMixin"
   ],
   "injectors": {
     "defaultRequire": 1

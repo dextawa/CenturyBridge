@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * record with a null DataFixTypes -- matching the old no-datafix semantics.
  * Work order: L2 x23.
  */
-@Mixin(class_26.class)
+@Mixin(value = class_26.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class DimensionDataStorageBridge {
 
     public <T extends class_18> T method_17924(Function<class_2487, T> load, Supplier<T> ctor, String id) {

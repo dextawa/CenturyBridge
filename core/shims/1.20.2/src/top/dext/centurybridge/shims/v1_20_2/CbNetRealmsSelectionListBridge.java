@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * on itself from mouseClicked and kept the empty body); 1.20.2 dropped it. Put back as it was, so a
  * subclass's override and super call link.
  */
-@Mixin(class_4904.class)
+@Mixin(value = class_4904.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetRealmsSelectionListBridge {
 
     /** was itemClicked(int, int, double, double, int, int): nothing, as in 1.20.1 */
