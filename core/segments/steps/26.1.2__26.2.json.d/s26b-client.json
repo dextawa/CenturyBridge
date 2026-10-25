@@ -1,0 +1,16 @@
+{
+  "_s26b_client": "s26b, queue item 5: Minecraft.destroy (26.1.2) vs exitWorldAndClose (26.2) (javap of both)",
+  "instanceRedirects": {
+    "net/minecraft/client/Minecraft.destroy()V": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient"
+  },
+  "_redirects_basis": {
+    "net/minecraft/client/Minecraft.destroy()V": "26.1.2 destroy: log, narrator.destroy, leave the level, screen.removed, close(); finally Util.timeSource = System::nanoTime and System.exit(0) unless hasDelayedCrash. 26.2 exitWorldAndClose: the same without the narrator (26.2's close() destroys it) and without the ending (26.2's Main shuts down after it; 26.2 has no delayed crash, its crash path exits at once). The layer runs exitWorldAndClose and then 26.1.2's ending (Util.setTimeSource(System::nanoTime), System.exit(0))"
+  },
+  "mixinTargets": {
+    "net/minecraft/client/Minecraft.destroy()V": {
+      "to": "exitWorldAndClose()V",
+      "args": [],
+      "basis": "javap: 26.2's exitWorldAndClose is 26.1.2's destroy without the narrator.destroy call (moved into close()) and the time-source / System.exit ending (moved to Main); the rest (Stopping!, level.disconnect, disconnectWithProgressScreen, screen.removed, close) is the same in the same order, the screen read through gui.screen(). 26.2's Main calls it where 26.1.2's called destroy, at shutdown; anchors on the moved calls do not follow"
+    }
+  }
+}
