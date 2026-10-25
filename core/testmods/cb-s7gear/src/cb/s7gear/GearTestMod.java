@@ -1182,6 +1182,11 @@ public class GearTestMod implements ModInitializer {
         class_1799 named = new class_1799(item("stick"));
         named.method_57379(class_9334.field_50239, net.minecraft.class_2561.method_43470("own"));
         check(nameKey(named).equals(""), "a stick with its own ITEM_NAME keeps it (1.21.1's getHoverName took it first)");
+        check(item("beetroot").method_7876().equals("cb.s7gear.beetroot"),
+            "mixin on Item.getOrCreateDescriptionId: vanilla's getDescriptionId of beetroot: " + item("beetroot").method_7876());
+        check(nameKey(new class_1799(item("beetroot"))).equals("cb.s7gear.beetroot"),
+            "the beetroot stack is named from it, as 1.21.1's getName(stack) did: " + nameKey(new class_1799(item("beetroot"))));
+        check(item("carrot").method_7876().equals("item.minecraft.carrot"), "an unmixed item (carrot) keeps its description id");
         try {
             java.lang.reflect.Method getName = class_1792.class.getMethod("method_63680");
             net.minecraft.class_2561 carrot = (net.minecraft.class_2561) getName.invoke(item("carrot"));

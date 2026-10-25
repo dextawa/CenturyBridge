@@ -332,21 +332,23 @@ public final class CbItemMembers {
      * answer without a mod's mixin: CompassItem named a lodestone-tracking compass item.minecraft.lodestone_compass;
      * PotionItem and TippedArrowItem appended ".effect." and the potion's name (Potion.getName); ShieldItem appended
      * its base colour's name; every other item its description id. Those classes are unrelated, so testing them in
-     * turn is their virtual dispatch.
+     * turn is their virtual dispatch. The description id is the field's (super_method_7869), not getDescriptionId(),
+     * which a mod's mixin on getOrCreateDescriptionId() or a 1.21.1 class's override may answer otherwise -- a
+     * difference 1.21.1's getName(stack) showed.
      */
     public static String vanilla_method_7866(class_1792 item, class_1799 stack) {
         if (item instanceof net.minecraft.class_1759) {
-            return stack.method_57826(class_9334.field_49614) ? "item.minecraft.lodestone_compass" : item.method_7876();
+            return stack.method_57826(class_9334.field_49614) ? "item.minecraft.lodestone_compass" : super_method_7869(item);
         }
         if (item instanceof net.minecraft.class_1812 || item instanceof net.minecraft.class_1833) {
             net.minecraft.class_1844 contents = stack.method_57825(class_9334.field_49651, net.minecraft.class_1844.field_49274);
-            return CbItemPotions.getName(contents.comp_2378(), item.method_7876() + ".effect.");
+            return CbItemPotions.getName(contents.comp_2378(), super_method_7869(item) + ".effect.");
         }
         if (item instanceof net.minecraft.class_1819) {
             net.minecraft.class_1767 base = stack.method_57824(class_9334.field_49620);
-            return base != null ? item.method_7876() + "." + base.method_7792() : item.method_7876();
+            return base != null ? super_method_7869(item) + "." + base.method_7792() : super_method_7869(item);
         }
-        return item.method_7876();
+        return super_method_7869(item);
     }
 
     /**
@@ -360,6 +362,9 @@ public final class CbItemMembers {
             return null;
         }
         String m = ((ItemDescriptionId) (Object) item).method_7866(stack);
+        if (m == null) {
+            return null; // an item without its id yet (CbPendingIdsItems): 1.21.2's answer
+        }
         if (item instanceof LegacyDescriptionId || !m.equals(vanilla_method_7866(item, stack))) {
             return class_2561.method_43471(m);
         }
@@ -389,7 +394,10 @@ public final class CbItemMembers {
             return l.method_7848();
         }
         class_2561 m = ((ItemDescription) (Object) item).method_7848();
-        return m.equals(super_method_7848(item)) ? null : m;
+        String id = super_method_7869(item);
+        // the body's answer from the description id field: getDescriptionId() inside it may answer otherwise (a mod's
+        // mixin on getOrCreateDescriptionId(), a 1.21.1 class's override), which 1.21.1's getDescription() showed
+        return id == null || m.equals(class_2561.method_43471(id)) ? null : m;
     }
 
     public static class_2561 super_method_7848(class_1792 item) {
@@ -398,7 +406,29 @@ public final class CbItemMembers {
 
     /** getOrCreateDescriptionId(): the class's own, else 1.21.2's description id, made at construction (CbPendingIds) */
     public static String method_7869(class_1792 item) {
-        return item instanceof LegacyOrCreateDescriptionId l ? l.method_7869() : super_method_7869(item);
+        // the restored member (ItemOrCreateDescriptionId): a 1.21.1 class's override or the body, with whatever a mod's
+        // mixin on it does
+        return ((ItemOrCreateDescriptionId) (Object) item).method_7869();
+    }
+
+    /** 1.21.1's Item.getOrCreateDescriptionId(), restored on every Item by CbItemMembersRestoredMixin */
+    public interface ItemOrCreateDescriptionId {
+        String method_7869();
+    }
+
+    /**
+     * Item.getDescriptionId() (1.21.2's, final) of an item whose class 1.21.1 did not override it: 1.21.1's
+     * getDescriptionId() answered getOrCreateDescriptionId() -- the restored member -- where that answers otherwise than
+     * the description id field (a mod's mixin on it); else null, the field stands. An item without its id yet (a
+     * converted item before registration, CbPendingIdsItems) keeps 1.21.2's answer.
+     */
+    public static String orCreateDescriptionIdRead(class_1792 item) {
+        String b = super_method_7869(item);
+        if (b == null) {
+            return null;
+        }
+        String m = ((ItemOrCreateDescriptionId) (Object) item).method_7869();
+        return b.equals(m) ? null : m;
     }
 
     /** 1.21.1's Item.getOrCreateDescriptionId(): "item." + the registry id, made once -- 1.21.2's descriptionId field */

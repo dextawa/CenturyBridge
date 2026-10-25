@@ -19,7 +19,8 @@
     "RemainingItemsMixin",
     "ItemDescriptionMixin",
     "EatingSoundMixin",
-    "PlaySoundRecorderMixin"
+    "PlaySoundRecorderMixin",
+    "OrCreateDescriptionIdMixin"
   ],
   "injectors": {
     "defaultRequire": 1
