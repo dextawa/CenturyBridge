@@ -1766,6 +1766,12 @@ final class MixinBridge {
                 }
                 MethodNode wmeth = method(wt, fate.name(), fate.desc());
                 if (wmeth == null) {
+                    // a W-named member a layer mixin declares on the target (an override of an inherited W method,
+                    // say: SmithingTrimRecipe.matches, which 1.21.2 has only as SmithingRecipe's default): at runtime
+                    // the target declares it; MixinJudge decides whether vanilla reaches it
+                    wmeth = chain.layerMembers.member(target, fate.name(), fate.desc());
+                }
+                if (wmeth == null) {
                     left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", which "
                         + shortName(target) + " does not declare in " + chain.to);
                     continue;
@@ -1787,7 +1793,7 @@ final class MixinBridge {
                         } else {
                             MixinRepair.setMethodSelector(an, idx, nm);
                         }
-                        MixinRepair.applyDescend(d, h, an);
+                        MixinRepair.applyDescend(d, h, an, mx);
                         changed = true;
                         injected("@" + kind + " " + sn + "." + h.name, where + " => " + d.callee().name + d.callee().desc
                             + (d.ordinal() >= 0 ? " #" + d.ordinal() : "") + " (" + fate.how() + " gives " + fate.name() + fate.desc()
@@ -3647,7 +3653,7 @@ final class MixinBridge {
     }
 
     /** handler arguments carrying MixinExtras sugar (@Local, @Share...) */
-    private static int sugarCount(MethodNode h) {
+    static int sugarCount(MethodNode h) {
         int n = 0;
         int params = Type.getArgumentTypes(h.desc).length;
         for (int i = 0; i < params; i++) {
@@ -3683,7 +3689,7 @@ final class MixinBridge {
     }
 
     /** does an @Inject handler take parameters after its CallbackInfo (captured locals) */
-    private static boolean capturesLocals(MethodNode h) {
+    static boolean capturesLocals(MethodNode h) {
         Type[] hp = Type.getArgumentTypes(h.desc);
         for (int i = 0; i < hp.length; i++) {
             if (hp[i].getDescriptor().equals(CI) || hp[i].getDescriptor().equals(CIR)) {

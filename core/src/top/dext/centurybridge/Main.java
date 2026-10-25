@@ -246,6 +246,7 @@ public final class Main {
                 chain.mixinRepair = new top.dext.centurybridge.engine.MixinRepair(codeJar);
                 chain.mixinRepair.renamed = chain::renamedDesc;
                 chain.mixinRepair.layerMembers = chain.layerMembers;
+                chain.mixinRepair.classRenames = chain.classRenames; // anchor-facade: what restored bodies call
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");

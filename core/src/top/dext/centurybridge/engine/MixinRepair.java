@@ -24,6 +24,13 @@ import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.TryCatchBlockNode;
+import org.objectweb.asm.tree.LabelNode;
+import org.objectweb.asm.tree.JumpInsnNode;
+import org.objectweb.asm.tree.InsnNode;
+import org.objectweb.asm.tree.InsnList;
+import org.objectweb.asm.tree.FrameNode;
+import org.objectweb.asm.tree.FieldNode;
 import org.objectweb.asm.tree.IincInsnNode;
 import org.objectweb.asm.tree.IntInsnNode;
 import org.objectweb.asm.tree.LdcInsnNode;
@@ -67,6 +74,18 @@ import org.objectweb.asm.tree.VarInsnNode;
 public final class MixinRepair {
     private static final Gson GSON = new Gson();
     private static final String MIXIN = "Lorg/spongepowered/asm/mixin/Mixin;";
+
+    /** a class's @Mixin annotation (an empty one when it has none) */
+    static AnnotationNode mixinAnnotation(ClassNode cn) {
+        for (List<AnnotationNode> l : java.util.Arrays.asList(cn.invisibleAnnotations, cn.visibleAnnotations)) {
+            for (AnnotationNode a : l == null ? List.<AnnotationNode>of() : l) {
+                if (a.desc.equals(MIXIN)) {
+                    return a;
+                }
+            }
+        }
+        return new AnnotationNode(MIXIN);
+    }
     private static final String INJECT = "Lorg/spongepowered/asm/mixin/injection/Inject;";
     private static final String CI = "Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;";
     private static final String CIR = "Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;";
@@ -475,6 +494,20 @@ public final class MixinRepair {
                         if (cands.isEmpty() && s.desc != null && !renamed.apply(s.desc).equals(s.desc)) {
                             cands = layerMembers.match(owner, new Sel(s.owner, s.name, renamed.apply(s.desc), s.wildcard)); // as the step renames its types
                         }
+                        if (!cands.isEmpty() && cands.stream().allMatch(layerMembers::isMember)) {
+                            // Mixin refuses an injector into a member another mixin merged at a priority not below
+                            // its own (except HEAD / RETURN / TAIL): InvalidInjectionException at apply. Off, open
+                            int mp = values(mixinAnnotation(mx)).get("priority") instanceof Integer p ? p : LayerMembers.DEFAULT_PRIORITY;
+                            Map<String, Object> vv = v;
+                            List<MethodNode> ok = cands.stream().filter(m -> layerMembers.injectable(m, mp, vv)).toList();
+                            if (ok.isEmpty()) {
+                                if (deadWhy == null) deadWhy = "restored member merged at priority " + layerMembers.priority(cands.get(0))
+                                    + ", not below the mod's " + mp + ": @" + kind + " " + shortName + "." + handler.name + " -> "
+                                    + s.name + (s.desc != null ? s.desc : "");
+                                continue;
+                            }
+                            cands = ok;
+                        }
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
                         if (cands.isEmpty()) {
@@ -506,6 +539,27 @@ public final class MixinRepair {
                                 + " (the target is an override put back as a super call; its anchor stood in V's own body)";
                             continue;
                         }
+                        // a restored member's body calls the facade the step renames V's class to (the layer's
+                        // 1.21.1 ArmorMaterial for class_1741), where V's body called V's class: the anchor, kept in
+                        // V's name for a mixin aimed at vanilla (MixinClassRenames.forVanilla), names that call in
+                        // the facade's name at runtime
+                        if (anchors.size() == 1 && cands.stream().allMatch(layerMembers::isMember)) {
+                            Anchor a0 = anchors.get(0);
+                            String fo = a0.owner == null ? null : classRenames.get(a0.owner);
+                            if (MixinClassRenames.toLayer(fo) && (a0.kind.equals("INVOKE") || a0.kind.equals("FIELD"))) {
+                                String fd = MixinClassRenames.rename(a0.desc, classRenames);
+                                Anchor fa = new Anchor(a0.kind, fo, a0.name, fd, a0.constant, a0.ordinal, a0.role);
+                                if (cands.stream().anyMatch(m -> anchorIn(m, fa))) {
+                                    String value = "L" + fo + ";" + a0.name + (a0.kind.equals("FIELD") ? ":" : "") + fd;
+                                    fixNotes.add("anchor-facade " + where + " " + a0 + " => " + value
+                                        + " (the restored body calls the facade the step renames " + a0.owner + " to)");
+                                    fixes.add(() -> {
+                                        if (setAtTarget(an, refmap, value)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
+                                    });
+                                    continue;
+                                }
+                            }
+                        }
                         // @Inject marks a POSITION in the unchanged target: its anchor may
                         // follow the call it named -- re-described (drawTexture grew a
                         // Function parameter) or wrapped (tick -> hitOrDeflect -> onCollision)
@@ -533,9 +587,7 @@ public final class MixinRepair {
                                     + (d.toCir() ? " (callback as CallbackInfoReturnable)" : "")
                                     + " (V's site by context; the callee is " + d.how() + ")");
                                 fixes.add(() -> {
-                                    if (d.makeStatic()) makeStatic(handler);
-                                    if (d.toCir()) toReturnable(handler);
-                                    setAtOrdinal(an, d.ordinal());
+                                    applyDescend(d, handler, an, mx);
                                     if (viaRefmap) { refmapPut(refmap, sel, repl); dirty[1] = true; }
                                     else setMethodSelector(an, idx, repl);
                                     dirty[0] = true;
@@ -606,18 +658,286 @@ public final class MixinRepair {
     // ------------------------------------------------------------------ descend by site
 
     /** sibling: the callee is not reached from the target but is another entry point of the same framework class */
-    record Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic, boolean sibling) {
+    record Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic, boolean sibling,
+                   MethodInsnNode guardCall, String guardOwner, MethodNode guardIn, AbstractInsnNode site) {
+        Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic, boolean sibling) {
+            this(callee, ordinal, toCir, makeStatic, sibling, null, null, null, null);
+        }
+
         String how() {
             return sibling ? "another entry point of the same framework class, called from nowhere in its own class"
+                : guardCall != null ? "shared, so guarded: the handler acts only while the target's one call of it runs"
                 : "called from one site";
         }
     }
 
     /** the descend's handler and annotation changes (the selector is the caller's to set) */
-    static void applyDescend(Descend d, MethodNode handler, AnnotationNode an) {
+    static void applyDescend(Descend d, MethodNode handler, AnnotationNode an, ClassNode mx) {
         if (d.makeStatic()) makeStatic(handler);
         if (d.toCir()) toReturnable(handler);
         setAtOrdinal(an, d.ordinal());
+        if (d.guardCall() != null) guard(d, mx, handler, an);
+    }
+
+    static final String WRAP_OPERATION = "Lcom/llamalad7/mixinextras/injector/wrapoperation/WrapOperation;";
+    static final String OPERATION = "Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;";
+    static final String UNIQUE = "Lorg/spongepowered/asm/mixin/Unique;";
+    /** marks a handler a guarded descend moved: "in" the target's method, "call" the guarded call, "wrap" the guard's handler */
+    static final String CALL_GUARDED = "Ltop/dext/centurybridge/CallGuarded;";
+
+    /** what the guard's fallback does for an injector kind, or null when it cannot hand back what the site had */
+    static String guardFallback(AnnotationNode an, MethodNode h, AbstractInsnNode site) {
+        String kind = an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
+        Type[] p = Type.getArgumentTypes(h.desc);
+        Type r = Type.getReturnType(h.desc);
+        switch (kind) {
+            case "Inject":
+                return r.getSort() == Type.VOID ? "return" : null;
+            case "ModifyArg": case "ModifyExpressionValue": case "ModifyConstant": case "ModifyVariable": case "ModifyReturnValue":
+                return p.length >= 1 && p[0].equals(r) ? "value" : null;
+            case "WrapWithCondition":
+                return r.getSort() == Type.BOOLEAN ? "true" : null;
+            case "Redirect": {
+                if (!(site instanceof MethodInsnNode mi) || mi.name.startsWith("<")) return null;
+                Type[] a = Type.getArgumentTypes(mi.desc);
+                int n = a.length + (mi.getOpcode() == Opcodes.INVOKESTATIC ? 0 : 1);
+                return p.length == n && r.equals(Type.getReturnType(mi.desc)) ? "call" : null;
+            }
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Guarded descend (o): V's site stands in a callee W shares with other callers. The mod's handler moves into
+     * the callee as for any descend, but acts only while the target's one call of the callee runs: a per-thread
+     * depth counter (a ThreadLocal int[] the mixin adds, @Unique) that a @WrapOperation on that call raises around
+     * the call, try/finally, so an exception cannot leave it raised. Outside it the handler does what the site
+     * did without it: returns (@Inject), hands its value back (@Modify*), lets the call run (@WrapWithCondition)
+     * or makes the call itself (@Redirect).
+     */
+    static void guard(Descend d, ClassNode mx, MethodNode h, AnnotationNode an) {
+        String mode = guardFallback(an, h, d.site());
+        int n = 0;
+        for (FieldNode f : mx.fields) if (f.name.startsWith("cb$guard$")) n++;
+        String field = "cb$guard$" + n;
+        FieldNode fn = new FieldNode(Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_FINAL, field, "Ljava/lang/ThreadLocal;", null, null);
+        fn.invisibleAnnotations = new ArrayList<>(List.of(new AnnotationNode(UNIQUE)));
+        mx.fields.add(fn);
+        MethodNode clinit = null;
+        for (MethodNode m : mx.methods) if (m.name.equals("<clinit>")) clinit = m;
+        if (clinit == null) {
+            clinit = new MethodNode(Opcodes.ACC_STATIC, "<clinit>", "()V", null, null);
+            clinit.instructions.add(new InsnNode(Opcodes.RETURN));
+            clinit.maxStack = 0;
+            mx.methods.add(clinit);
+        }
+        InsnList ci = new InsnList();
+        ci.add(new TypeInsnNode(Opcodes.NEW, "java/lang/ThreadLocal"));
+        ci.add(new InsnNode(Opcodes.DUP));
+        ci.add(new MethodInsnNode(Opcodes.INVOKESPECIAL, "java/lang/ThreadLocal", "<init>", "()V", false));
+        ci.add(new FieldInsnNode(Opcodes.PUTSTATIC, mx.name, field, "Ljava/lang/ThreadLocal;"));
+        clinit.instructions.insert(ci);
+        clinit.maxStack = Math.max(clinit.maxStack, 2);
+
+        // the handler's prologue: outside the guarded call, what the site did without it
+        boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        Type hr = Type.getReturnType(h.desc);
+        InsnList pro = new InsnList();
+        LabelNode run = new LabelNode();
+        LabelNode fall = new LabelNode();
+        pro.add(new FieldInsnNode(Opcodes.GETSTATIC, mx.name, field, "Ljava/lang/ThreadLocal;"));
+        pro.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "get", "()Ljava/lang/Object;", false));
+        pro.add(new TypeInsnNode(Opcodes.CHECKCAST, "[I"));
+        pro.add(new InsnNode(Opcodes.DUP));
+        LabelNode nul = new LabelNode();
+        pro.add(new JumpInsnNode(Opcodes.IFNULL, nul));
+        pro.add(new InsnNode(Opcodes.ICONST_0));
+        pro.add(new InsnNode(Opcodes.IALOAD));
+        pro.add(new JumpInsnNode(Opcodes.IFNE, run));
+        pro.add(new JumpInsnNode(Opcodes.GOTO, fall));
+        pro.add(nul);
+        pro.add(new FrameNode(Opcodes.F_SAME1, 0, null, 1, new Object[] {"[I"}));
+        pro.add(new InsnNode(Opcodes.POP));
+        pro.add(fall);
+        pro.add(new FrameNode(Opcodes.F_SAME, 0, null, 0, null));
+        int slot0 = st ? 0 : 1;
+        switch (mode) {
+            case "return" -> pro.add(new InsnNode(Opcodes.RETURN));
+            case "value" -> {
+                pro.add(new VarInsnNode(hp[0].getOpcode(Opcodes.ILOAD), slot0));
+                pro.add(new InsnNode(hr.getOpcode(Opcodes.IRETURN)));
+            }
+            case "true" -> {
+                pro.add(new InsnNode(Opcodes.ICONST_1));
+                pro.add(new InsnNode(Opcodes.IRETURN));
+            }
+            default -> { // call
+                MethodInsnNode mi = (MethodInsnNode) d.site();
+                int slot = slot0;
+                for (Type t : hp) {
+                    pro.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+                    slot += t.getSize();
+                }
+                pro.add(new MethodInsnNode(mi.getOpcode(), mi.owner, mi.name, mi.desc, mi.itf));
+                pro.add(new InsnNode(hr.getOpcode(Opcodes.IRETURN)));
+            }
+        }
+        pro.add(run);
+        pro.add(new FrameNode(Opcodes.F_SAME, 0, null, 0, null));
+        h.instructions.insert(pro);
+        int argSize = 0;
+        for (Type t : hp) argSize += t.getSize();
+        h.maxStack = Math.max(h.maxStack, Math.max(3, argSize + 1));
+
+        // the guard: @WrapOperation on the target's one call of the callee
+        MethodInsnNode call = d.guardCall();
+        boolean callStatic = call.getOpcode() == Opcodes.INVOKESTATIC;
+        Type[] ca = Type.getArgumentTypes(call.desc);
+        Type cr = Type.getReturnType(call.desc);
+        List<Type> wp = new ArrayList<>();
+        if (!callStatic) wp.add(Type.getObjectType(call.owner));
+        wp.addAll(List.of(ca));
+        wp.add(Type.getType(OPERATION));
+        String wdesc = Type.getMethodDescriptor(cr, wp.toArray(new Type[0]));
+        String wname = "cb$guardcall$" + n;
+        MethodNode w = new MethodNode(Opcodes.ACC_PRIVATE, wname, wdesc, null, null);
+        // instance or static: a static wrapper works in either kind of method only when the method is static
+        boolean wmStatic = (d.guardIn().access & Opcodes.ACC_STATIC) != 0;
+        if (wmStatic) w.access |= Opcodes.ACC_STATIC;
+        AnnotationNode wa = new AnnotationNode(WRAP_OPERATION);
+        AnnotationNode at = new AnnotationNode("Lorg/spongepowered/asm/mixin/injection/At;");
+        at.values = new ArrayList<>(List.of("value", "INVOKE", "target", "L" + call.owner + ";" + call.name + call.desc));
+        wa.values = new ArrayList<>(List.of("method", new ArrayList<>(List.of("L" + d.guardOwner() + ";" + d.guardIn().name + d.guardIn().desc)),
+            "at", new ArrayList<>(List.of(at))));
+        w.visibleAnnotations = new ArrayList<>(List.of(wa));
+        int base = wmStatic ? 0 : 1;
+        int opSlot = base;
+        for (Type t : wp.subList(0, wp.size() - 1)) opSlot += t.getSize();
+        int cSlot = opSlot + 1;
+        int rSlot = cSlot + 1;
+        LabelNode tryStart = new LabelNode(), tryEnd = new LabelNode(), handler = new LabelNode();
+        InsnList b = w.instructions;
+        // int[] c = tl.get(); if (c == null) { c = new int[1]; tl.set(c); }
+        b.add(new FieldInsnNode(Opcodes.GETSTATIC, mx.name, field, "Ljava/lang/ThreadLocal;"));
+        b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "get", "()Ljava/lang/Object;", false));
+        b.add(new TypeInsnNode(Opcodes.CHECKCAST, "[I"));
+        b.add(new VarInsnNode(Opcodes.ASTORE, cSlot));
+        b.add(new VarInsnNode(Opcodes.ALOAD, cSlot));
+        LabelNode have = new LabelNode();
+        b.add(new JumpInsnNode(Opcodes.IFNONNULL, have));
+        b.add(new InsnNode(Opcodes.ICONST_1));
+        b.add(new IntInsnNode(Opcodes.NEWARRAY, Opcodes.T_INT));
+        b.add(new VarInsnNode(Opcodes.ASTORE, cSlot));
+        b.add(new FieldInsnNode(Opcodes.GETSTATIC, mx.name, field, "Ljava/lang/ThreadLocal;"));
+        b.add(new VarInsnNode(Opcodes.ALOAD, cSlot));
+        b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "set", "(Ljava/lang/Object;)V", false));
+        b.add(have);
+        List<Object> locals = new ArrayList<>();
+        if (!wmStatic) locals.add(mx.name);
+        for (Type t : wp) locals.add(frameType(t));
+        List<Object> withC = new ArrayList<>(locals);
+        withC.add("[I");
+        b.add(new FrameNode(Opcodes.F_FULL, withC.size(), withC.toArray(), 0, new Object[0]));
+        // c[0]++
+        b.add(new VarInsnNode(Opcodes.ALOAD, cSlot));
+        b.add(new InsnNode(Opcodes.ICONST_0));
+        b.add(new InsnNode(Opcodes.DUP2));
+        b.add(new InsnNode(Opcodes.IALOAD));
+        b.add(new InsnNode(Opcodes.ICONST_1));
+        b.add(new InsnNode(Opcodes.IADD));
+        b.add(new InsnNode(Opcodes.IASTORE));
+        b.add(tryStart);
+        // op.call(new Object[]{recv, args...})
+        b.add(new VarInsnNode(Opcodes.ALOAD, opSlot));
+        b.add(new IntInsnNode(Opcodes.SIPUSH, wp.size() - 1));
+        b.add(new TypeInsnNode(Opcodes.ANEWARRAY, "java/lang/Object"));
+        int slot = base;
+        for (int i = 0; i < wp.size() - 1; i++) {
+            Type t = wp.get(i);
+            b.add(new InsnNode(Opcodes.DUP));
+            b.add(new IntInsnNode(Opcodes.SIPUSH, i));
+            b.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+            box(b, t);
+            b.add(new InsnNode(Opcodes.AASTORE));
+            slot += t.getSize();
+        }
+        b.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE, OPERATION.substring(1, OPERATION.length() - 1), "call",
+            "([Ljava/lang/Object;)Ljava/lang/Object;", true));
+        b.add(tryEnd);
+        if (cr.getSort() == Type.VOID) {
+            b.add(new InsnNode(Opcodes.POP));
+        } else {
+            unbox(b, cr);
+            b.add(new VarInsnNode(cr.getOpcode(Opcodes.ISTORE), rSlot));
+        }
+        decrement(b, cSlot);
+        if (cr.getSort() == Type.VOID) {
+            b.add(new InsnNode(Opcodes.RETURN));
+        } else {
+            b.add(new VarInsnNode(cr.getOpcode(Opcodes.ILOAD), rSlot));
+            b.add(new InsnNode(cr.getOpcode(Opcodes.IRETURN)));
+        }
+        b.add(handler);
+        b.add(new FrameNode(Opcodes.F_FULL, withC.size(), withC.toArray(), 1, new Object[] {"java/lang/Throwable"}));
+        b.add(new VarInsnNode(Opcodes.ASTORE, rSlot));
+        decrement(b, cSlot);
+        b.add(new VarInsnNode(Opcodes.ALOAD, rSlot));
+        b.add(new InsnNode(Opcodes.ATHROW));
+        w.tryCatchBlocks.add(new TryCatchBlockNode(tryStart, tryEnd, handler, null));
+        w.maxLocals = rSlot + Math.max(1, cr.getSize());
+        w.maxStack = 8;
+        mx.methods.add(w);
+        AnnotationNode mark = new AnnotationNode(CALL_GUARDED);
+        mark.values = new ArrayList<>(List.of("in", d.guardOwner() + "." + d.guardIn().name + d.guardIn().desc,
+            "call", call.owner + "." + call.name + call.desc, "wrap", wname));
+        h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
+        h.invisibleAnnotations.add(mark);
+    }
+
+    private static void decrement(InsnList b, int cSlot) {
+        b.add(new VarInsnNode(Opcodes.ALOAD, cSlot));
+        b.add(new InsnNode(Opcodes.ICONST_0));
+        b.add(new InsnNode(Opcodes.DUP2));
+        b.add(new InsnNode(Opcodes.IALOAD));
+        b.add(new InsnNode(Opcodes.ICONST_1));
+        b.add(new InsnNode(Opcodes.ISUB));
+        b.add(new InsnNode(Opcodes.IASTORE));
+    }
+
+    private static Object frameType(Type t) {
+        return switch (t.getSort()) {
+            case Type.BOOLEAN, Type.BYTE, Type.CHAR, Type.SHORT, Type.INT -> Opcodes.INTEGER;
+            case Type.FLOAT -> Opcodes.FLOAT;
+            case Type.LONG -> Opcodes.LONG;
+            case Type.DOUBLE -> Opcodes.DOUBLE;
+            default -> t.getSort() == Type.ARRAY ? t.getDescriptor() : t.getInternalName();
+        };
+    }
+
+    private static final String[][] BOX = {
+        {"Z", "java/lang/Boolean", "booleanValue"}, {"B", "java/lang/Byte", "byteValue"}, {"C", "java/lang/Character", "charValue"},
+        {"S", "java/lang/Short", "shortValue"}, {"I", "java/lang/Integer", "intValue"}, {"F", "java/lang/Float", "floatValue"},
+        {"J", "java/lang/Long", "longValue"}, {"D", "java/lang/Double", "doubleValue"}};
+
+    private static void box(InsnList b, Type t) {
+        for (String[] x : BOX) {
+            if (x[0].equals(t.getDescriptor())) {
+                b.add(new MethodInsnNode(Opcodes.INVOKESTATIC, x[1], "valueOf", "(" + x[0] + ")L" + x[1] + ";", false));
+            }
+        }
+    }
+
+    private static void unbox(InsnList b, Type t) {
+        for (String[] x : BOX) {
+            if (x[0].equals(t.getDescriptor())) {
+                b.add(new TypeInsnNode(Opcodes.CHECKCAST, x[1]));
+                b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, x[1], x[2], "()" + x[0], false));
+                return;
+            }
+        }
+        b.add(new TypeInsnNode(Opcodes.CHECKCAST, t.getSort() == Type.ARRAY ? t.getDescriptor() : t.getInternalName()));
     }
 
     /**
@@ -720,11 +1040,16 @@ public final class MixinRepair {
             into = found;
             ords[k] = fj;
         }
+        MethodInsnNode guardCall = null;
         for (MethodNode m = into; m != wm && !siblings.contains(into); m = parent.get(m)) {
             int calls = (m.access & Opcodes.ACC_PRIVATE) != 0 ? callSites(tc, m) : jarCallSites(tc.name, m);
             if (calls != 1) {
-                why.add(m.name + m.desc + " holds V's site but is called from " + calls + " sites");
-                return null;
+                String g = guardable(an, handler, tc, wm, m, into, parent, a);
+                if (g != null) {
+                    why.add(m.name + m.desc + " holds V's site but is called from " + calls + " sites; guarded descend skipped: " + g);
+                    return null;
+                }
+                guardCall = callOf(wm, tc, m);
             }
         }
         if (cancels(handler)) {
@@ -760,7 +1085,57 @@ public final class MixinRepair {
             }
             ordinal = -1;
         }
+        if (guardCall != null) {
+            AbstractInsnNode site = wo.get(ordinal >= 0 ? ordinal : 0);
+            if (guardFallback(an, handler, site) == null) {
+                why.add(into.name + into.desc + " is shared; guarded descend skipped: no fallback for this handler's shape");
+                return null;
+            }
+            return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, false, guardCall, tc.name, wm, site);
+        }
         return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, siblings.contains(into));
+    }
+
+    /** the one call of m in wm (owner tc or a subclass), or null */
+    private static MethodInsnNode callOf(MethodNode wm, ClassNode tc, MethodNode m) {
+        MethodInsnNode one = null;
+        for (AbstractInsnNode in : wm.instructions) {
+            if (in instanceof MethodInsnNode mi && mi.name.equals(m.name) && mi.desc.equals(m.desc)) {
+                if (one != null) return null;
+                one = mi;
+            }
+        }
+        return one;
+    }
+
+    /**
+     * why a shared callee cannot take a guarded descend (stage 1), or null when it can: the callee is called
+     * directly by the target (depth 1), exactly once there, by name (no method reference), neither is a
+     * constructor or static initializer, and the handler is one whose fallback hands back what the site had
+     */
+    private String guardable(AnnotationNode an, MethodNode handler, ClassNode tc, MethodNode wm, MethodNode m, MethodNode into,
+                             Map<MethodNode, MethodNode> parent, Anchor a) {
+        if (m != into || parent.get(into) != wm) return "the callee is not called by the target directly";
+        if (wm.name.startsWith("<") || into.name.startsWith("<")) return "constructor or static initializer";
+        if (wm.instructions == null) return "target has no body";
+        int n = 0;
+        for (AbstractInsnNode in : wm.instructions) {
+            if (in instanceof MethodInsnNode mi && mi.name.equals(into.name) && mi.desc.equals(into.desc)) n++;
+            if (in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode id) {
+                for (Object b : id.bsmArgs) {
+                    if (b instanceof org.objectweb.asm.Handle h && h.getName().equals(into.name) && h.getDesc().equals(into.desc)) {
+                        return "the target takes a method reference to the callee";
+                    }
+                }
+            }
+        }
+        if (n != 1) return "the target calls the callee " + n + " times";
+        String kind = an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
+        if (kind.equals("WrapOperation")) return "@WrapOperation (no fallback in stage 1)";
+        if ((tc.access & Opcodes.ACC_INTERFACE) != 0) return "the target class is an interface";
+        if (MixinBridge.capturesLocals(handler)) return "the handler captures locals";
+        if (MixinBridge.sugarCount(handler) > 0) return "the handler takes sugar parameters";
+        return null;
     }
 
     /**
@@ -1070,6 +1445,8 @@ public final class MixinRepair {
 
     /** the members the step layer's mixins restore on game classes; their code is the layer's (LayerMembers) */
     public LayerMembers layerMembers = LayerMembers.none();
+    /** the step's classRenames (W side: a restored body calls the facade a V class is renamed to) */
+    public Map<String, String> classRenames = Map.of();
 
     /** overrides MixinBridge.restoreOverride put back (restoring mixins of the jar being repaired), by target */
     private Map<String, List<MethodNode>> restoredByTarget = Map.of();
