@@ -39,3 +39,7 @@ accessible method net/minecraft/class_1124$class_1125 <init> ()V
 # MobEffect.AttributeTemplate (a package-private record): CbMobEffectMixin routes MobEffect's create calls through the
 # restored 1.20.6 create(name, amplifier), so its handler names the class (smx6)
 accessible class net/minecraft/class_1291$class_8634
+
+# OozingMobEffect.NearbySlimes (a protected nested interface): CbOozingMixin's route takes 1.21's counting function (smx6)
+accessible class net/minecraft/class_9456
+accessible class net/minecraft/class_9456$class_9775

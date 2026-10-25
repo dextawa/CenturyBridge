@@ -94,6 +94,23 @@ public final class Driver {
         return v;
     }
 
+    /** a zombie under Oozing removed as killed at the surface beside spawn: the slimes it left within 4 blocks */
+    private static int oozing(net.minecraft.class_3218 level, int dx) {
+        net.minecraft.class_2338 spawn = level.method_43126();
+        net.minecraft.class_2338 pos = level.method_8598(net.minecraft.class_2902.class_2903.field_13197, spawn.method_10069(dx, 0, 24));
+        net.minecraft.class_1642 zombie = net.minecraft.class_1299.field_6051.method_5883(level);
+        zombie.method_5808(pos.method_10263() + 0.5, pos.method_10264(), pos.method_10260() + 0.5, 0.0F, 0.0F);
+        level.method_8649(zombie);
+        zombie.method_6092(new net.minecraft.class_1293(net.minecraft.class_1294.field_50120, 200, 0));
+        zombie.method_5650(net.minecraft.class_1297.class_5529.field_26998);
+        java.util.List<net.minecraft.class_1621> slimes = level.method_18023(net.minecraft.class_1299.field_6069, new net.minecraft.class_238(pos).method_1014(4.0), e -> true);
+        int n = slimes.size();
+        for (net.minecraft.class_1621 s : slimes) {
+            s.method_31472();
+        }
+        return n;
+    }
+
     public static void run(net.minecraft.server.MinecraftServer server) {
         boolean layer = net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("centurybridge")
             || net.fabricmc.loader.api.FabricLoader.getInstance().getAllMods().stream()
@@ -120,6 +137,9 @@ public final class Driver {
             double sp = speed(level);
             report(tag + " effect-speed", Math.abs(sp - 0.3) < 1e-6, "Speed I on a pig: speed " + sp);
             System.out.println("CB-SMX6V speed " + tag + " " + sp);
+            int slimes = oozing(level, 0);
+            report(tag + " oozing", slimes == 2, "Oozing zombie killed: " + slimes + " slime(s)");
+            System.out.println("CB-SMX6V oozing " + tag + " " + slimes);
         } catch (Throwable t) {
             report(tag + " exception", false, String.valueOf(t));
             t.printStackTrace();

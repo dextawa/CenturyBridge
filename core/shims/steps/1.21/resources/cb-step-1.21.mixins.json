@@ -73,6 +73,7 @@
     "CbVillagerEnchantBookMixin",
     "CbMobEffectMixin",
     "CbMobEffectTemplateMixin",
+    "CbOozingMixin",
     "CbWorldButtonAccessor",
     "CbWorldDataFixersMixin",
     "CbWorldLeverInvoker",
