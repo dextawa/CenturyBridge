@@ -5,5 +5,5 @@
  "name": "CB s26 step test",
  "environment": "*",
  "entrypoints": { "main": ["cb.s26.S26TestMod"] },
- "depends": { "fabricloader": ">=0.14.0", "minecraft": "26.1.2" }
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "26.1.2", "fabric-lifecycle-events-v1": "*" }
 }

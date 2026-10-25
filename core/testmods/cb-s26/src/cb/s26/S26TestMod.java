@@ -481,6 +481,15 @@ public class S26TestMod implements ModInitializer {
             check("colorArgument", false, e);
         }
 
-        System.out.println("CB-S26 DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS: " + FAILS));
+        SurfaceChecks.run();
+        BounceChecks.register();
+
+        done("");
+    }
+
+    /** "CB-S26 [<phase> ]DONE passed/checks[ FAILS: ...]" over every check so far */
+    static void done(String phase) {
+        System.out.println("CB-S26 " + (phase.isEmpty() ? "" : phase + " ") + "DONE " + (checks - FAILS.size()) + "/" + checks
+            + (FAILS.isEmpty() ? "" : " FAILS: " + FAILS));
     }
 }

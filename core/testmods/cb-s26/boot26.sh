@@ -41,7 +41,7 @@ timeout 300 "$JDK/java" -Xmx3g -jar fabric-server.jar nogui > "boot-$TAG.log" 2>
 PID=$!
 for i in $(seq 1 140); do
     sleep 2
-    grep -qaE 'Done \(|Minecraft has crashed|Crash report|A mod crashed|Incompatible|Failed to start|Exception in thread "main"' "boot-$TAG.log" && break
+    grep -qaE 'CB-S26 SERVER DONE|Minecraft has crashed|Crash report|A mod crashed|Incompatible|Failed to start|Exception in thread "main"' "boot-$TAG.log" && break
 done
 sleep 2
 grep -qa 'Done (' "boot-$TAG.log" && echo "===RESULT: DONE===" || echo "===RESULT: NOT DONE==="
