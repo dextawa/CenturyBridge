@@ -2,16 +2,12 @@ package top.dext.centurybridge.step.v1_21_11.rt;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.class_12247;
 import net.minecraft.class_12249;
 import net.minecraft.class_1921;
 import net.minecraft.class_2960;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import top.dext.centurybridge.step.v1_21_11.facade.CompositeState;
 import top.dext.centurybridge.step.v1_21_11.facade.RenderStateShard;
 
@@ -19,16 +15,14 @@ import top.dext.centurybridge.step.v1_21_11.facade.RenderStateShard;
  * 1.21.10's RenderType.create(name, bufferSize, [affectsCrumbling, sortOnUpload,] pipeline, state) on 1.21.11's
  * RenderType.create(name, RenderSetup): the composite state's shards become the RenderSetup 1.21.11 builds vanilla's
  * render types from (RenderTypes): its textures as Sampler0.., lightmap / overlay use, the LayeringTransform /
- * OutputTarget / TextureTransform the shard carries, buffer size, crumbling, sorting and outline property. A shard
- * 1.21.11 has no piece for (a mod's own layering or texturing runnables, a line width other than vanilla's) is
- * reported once per shard name: 1.21.11 draws run no shard runnables and read the line width from each vertex.
+ * OutputTarget / TextureTransform the shard carries (a mod's own layering / texturing shard runs its runnables where
+ * 1.21.11's draw asks for the layering and the texture matrix: layering / texturing), buffer size, crumbling, sorting
+ * and outline property. The line shard's width goes to the vertices a converted mod writes without one
+ * (rt/CbLineWidth): 1.21.11 reads the line width from each vertex.
  * Also the CompositeRenderType constants 1.21.11 keeps as RenderTypes factories (LINES, SECONDARY_BLOCK_OUTLINE).
  */
 @Environment(EnvType.CLIENT)
 public final class CbRenderTypeCreate {
-    private static final Logger LOGGER = LoggerFactory.getLogger("centurybridge/rendertype");
-    private static final Set<String> REPORTED = ConcurrentHashMap.newKeySet();
-
     private CbRenderTypeCreate() {
     }
 
@@ -51,20 +45,9 @@ public final class CbRenderTypeCreate {
         if (state.cb$overlay.field_21390) {
             b.method_75935();
         }
-        if (state.cb$layering.cb$layering != null) {
-            b.method_75930(state.cb$layering.cb$layering);
-        } else {
-            report(name, state.cb$layering);
-        }
+        b.method_75930(state.cb$layering.cb$layering != null ? state.cb$layering.cb$layering : layering(state.cb$layering));
         b.method_75931(state.field_57931.cb$output);
-        if (state.cb$texturing.cb$transform != null) {
-            b.method_75933(state.cb$texturing.cb$transform);
-        } else {
-            report(name, state.cb$texturing);
-        }
-        if (state.cb$line.field_21392.isPresent() && state.cb$line.field_21392.getAsDouble() != 1.0) {
-            report(name, state.cb$line);
-        }
+        b.method_75933(state.cb$texturing.cb$transform != null ? state.cb$texturing.cb$transform : texturing(state.cb$texturing));
         if (affectsCrumbling) {
             b.method_75936();
         }
@@ -73,14 +56,37 @@ public final class CbRenderTypeCreate {
         }
         b.method_75929(bufferSize);
         b.method_75932(state.field_21852);
-        return class_1921.method_75940(name, b.method_75938());
+        class_1921 type = class_1921.method_75940(name, b.method_75938());
+        CbLineWidth.register(type, state.cb$line);
+        return type;
     }
 
-    private static void report(String type, RenderStateShard shard) {
-        if (REPORTED.add(type + "/" + shard.field_21363)) {
-            LOGGER.warn("render type {}: 1.21.10 shard {} has no 1.21.11 counterpart (1.21.11 draws run no shard runnables "
-                + "and take line width per vertex); the render type is created without it", type, shard);
-        }
+    /**
+     * A mod's own layering shard on 1.21.11's LayeringTransform, whose modifier 1.21.11's draw runs on the model view
+     * stack it has just pushed (and pops after the draw): the shard's setup runs on that stack as on 1.21.10 (it
+     * pushes and changes it), the matrix it leaves is kept, its clear runs (it pops), and the kept matrix becomes
+     * the draw's.
+     */
+    static net.minecraft.class_12245 layering(RenderStateShard.LayeringStateShard shard) {
+        return new net.minecraft.class_12245(shard.field_21363, stack -> {
+            shard.method_23516();
+            org.joml.Matrix4f m = new org.joml.Matrix4f(stack);
+            shard.method_23518();
+            stack.set(m);
+        });
+    }
+
+    /**
+     * A mod's own texturing shard on 1.21.11's TextureTransform, whose matrix 1.21.11's draw asks for: the shard's
+     * setup runs (it sets 1.21.10's texture matrix, rt/CbRenderSystem), the matrix is taken, its clear runs.
+     */
+    static net.minecraft.class_12250 texturing(RenderStateShard.TexturingStateShard shard) {
+        return new net.minecraft.class_12250(shard.field_21363, () -> {
+            shard.method_23516();
+            org.joml.Matrix4f m = new org.joml.Matrix4f(CbRenderSystem.getTextureMatrix());
+            shard.method_23518();
+            return m;
+        });
     }
 
     /** RenderType.LINES */

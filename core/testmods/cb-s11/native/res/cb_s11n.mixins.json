@@ -3,6 +3,6 @@
   "package": "cb.s11n.mixin",
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
-  "mixins": ["NativeRulesMixin"],
+  "mixins": ["NativeRulesMixin", "NativeGameRuleMixin"],
   "injectors": { "defaultRequire": 1 }
 }

@@ -107,6 +107,7 @@ public final class GameRules {
             return this.field_19413;
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleMixin: 1.21.11's GameRule.getDescriptionId() of the rule this key stands for takes this answer where it differs from this body's (CbGameRules.routeDescriptionId)")
         public String method_27334() {
             return "gamerule." + this.field_19413;
         }
@@ -197,15 +198,17 @@ public final class GameRules {
 
         public abstract void method_20776(CommandContext<class_2168> context, String name);
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleCommandMixin: 1.21.11's game rule command (GameRuleCommand.setRule) of a rule one 1.21.10 boolean / integer key stands for runs this value's setFromArgument(context, \"value\") first and writes the value it hands over (CbGameRules.routeWrite)")
         public void method_20780(CommandContext<class_2168> context, String name) {
             this.method_20776(context, name);
             this.method_20778(context.getSource().method_9211());
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleCommandMixin / CbGameRulesMixin: 1.21.11's game rule command and set run this value's setFromArgument / set first, which call onChanged(server); 1.21.11's set then notifies the server (CbGameRules.changed)")
         public void method_20778(MinecraftServer server) {
             if (this.cb$rules != null) {
                 // a bound value: 1.21.11 runs a rule's effects (vanilla's and, through CbGameRulesServerMixin, a mod
-                // rule's callback) from the server's game rule hook
+                // rule's callback) from the server's game rule hook, which 1.21.11's set calls itself
                 CbGameRules.changed(this.cb$rules, this.cb$key, server);
                 return;
             }
@@ -288,6 +291,7 @@ public final class GameRules {
             this.field_19411 = value;
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleCommandMixin: 1.21.11's game rule command runs setFromArgument, which runs this (CbGameRules.routeWrite)")
         @Override
         public void method_20776(CommandContext<class_2168> context, String name) {
             this.cb$set(BoolArgumentType.getBool(context, name));
@@ -302,6 +306,7 @@ public final class GameRules {
         public void method_20758(boolean value, MinecraftServer server) {
             if (this.cb$rules != null) {
                 this.cb$write(value, server);
+                this.method_20778(server);
                 return;
             }
             this.field_19411 = value;
@@ -316,16 +321,19 @@ public final class GameRules {
             }
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleMixin: 1.21.11's GameRule.serialize(value) of a rule one 1.21.10 boolean / integer key stands for consults a value of its own holding the value, through this, and takes its answer where it differs from this body's (CbGameRules.routeSerialize)")
         @Override
         public String method_20779() {
             return Boolean.toString(this.method_20753());
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleMixin: 1.21.11's GameRule.deserialize(string) of a rule one 1.21.10 boolean / integer key stands for consults a value of its own holding the value, through this, and takes its answer where it differs from this body's (CbGameRules.routeDeserialize)")
         @Override
         public void method_20777(String value) {
             this.cb$set(Boolean.parseBoolean(value));
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleMixin: 1.21.11's GameRule.getCommandResult(value) of a rule one 1.21.10 boolean / integer key stands for consults a value of its own holding the value, through this, and takes its answer where it differs from this body's (CbGameRules.routeCommandResult)")
         @Override
         public int method_20781() {
             return this.method_20753() ? 1 : 0;
@@ -343,6 +351,7 @@ public final class GameRules {
         public void method_27326(BooleanValue other, MinecraftServer server) {
             if (this.cb$rules != null) {
                 this.cb$write(other.method_20753(), server);
+                this.method_20778(server);
                 return;
             }
             this.field_19411 = other.method_20753();
@@ -395,6 +404,7 @@ public final class GameRules {
             this.field_19412 = value;
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleCommandMixin: 1.21.11's game rule command runs setFromArgument, which runs this (CbGameRules.routeWrite)")
         @Override
         public void method_20776(CommandContext<class_2168> context, String name) {
             this.cb$set(IntegerArgumentType.getInteger(context, name));
@@ -409,6 +419,7 @@ public final class GameRules {
         public void method_35236(int value, MinecraftServer server) {
             if (this.cb$rules != null) {
                 this.cb$write(value, server);
+                this.method_20778(server);
                 return;
             }
             this.field_19412 = value;
@@ -423,11 +434,13 @@ public final class GameRules {
             }
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleMixin: 1.21.11's GameRule.serialize(value) of a rule one 1.21.10 boolean / integer key stands for consults a value of its own holding the value, through this, and takes its answer where it differs from this body's (CbGameRules.routeSerialize)")
         @Override
         public String method_20779() {
             return Integer.toString(this.method_20763());
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleMixin: 1.21.11's GameRule.deserialize(string) of a rule one 1.21.10 boolean / integer key stands for consults a value of its own holding the value, through this, and takes its answer where it differs from this body's (CbGameRules.routeDeserialize)")
         @Override
         public void method_20777(String value) {
             this.cb$set(method_20769(value));
@@ -443,6 +456,7 @@ public final class GameRules {
             }
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleMixin: 1.21.11's GameRule.deserialize(string) of a rule one 1.21.10 integer key stands for consults a value of its own holding the value, through this, and takes its answer where it differs from this body's (CbGameRules.routeDeserialize, through IntegerValue.deserialize)")
         public static int method_20769(String value) {
             if (!value.isEmpty()) {
                 try {
@@ -454,6 +468,7 @@ public final class GameRules {
             return 0;
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRuleMixin: 1.21.11's GameRule.getCommandResult(value) of a rule one 1.21.10 boolean / integer key stands for consults a value of its own holding the value, through this, and takes its answer where it differs from this body's (CbGameRules.routeCommandResult)")
         @Override
         public int method_20781() {
             return this.method_20763();
@@ -471,6 +486,7 @@ public final class GameRules {
         public void method_27331(IntegerValue other, MinecraftServer server) {
             if (this.cb$rules != null) {
                 this.cb$write(other.method_20763(), server);
+                this.method_20778(server);
                 return;
             }
             this.field_19412 = other.method_20763();
