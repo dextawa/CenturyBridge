@@ -919,7 +919,8 @@
   "net/minecraft/class_2392.<init>(Lnet/minecraft/class_2396;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#itemParticle",
   "net/minecraft/class_10710.<init>(Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#instrumentComponent",
   "net/minecraft/class_10711.<init>(Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#providesTrimMaterial",
-  "net/minecraft/class_185.<init>(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/Optional;Lnet/minecraft/class_189;ZZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#displayInfo"
+  "net/minecraft/class_185.<init>(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/Optional;Lnet/minecraft/class_189;ZZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#displayInfo",
+  "net/minecraft/class_7296.<init>(Ljava/util/function/Function;FI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGiveItems#goAndGiveItemsToTarget"
  },
  "adapterHooks": [
   {
@@ -2296,6 +2297,83 @@
     0
    ],
    "basis": "1.21.11 DisplayInfo took the icon ItemStack, 26.1 its ItemStackTemplate; the subclass's getIcon() answers the stack it passed (mixin/CbWallDisplayInfoIconMixin keeps it)"
+  },
+  "net/minecraft/class_2513.<init>(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_6862;Lnet/minecraft/class_6862;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBlockSupports#stemSupport()Lnet/minecraft/class_6862;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBlockSupports#stemFruitSupport()Lnet/minecraft/class_6862;",
+    "keep"
+   ],
+   "basis": "26.1 StemBlock takes the stem's and the fruit's support tags; a 1.21.11 stem stood on farmland and grew its fruit on farmland or dirt (CbWallBlockSupports, the layer's compat tags)"
+  },
+  "net/minecraft/class_2195.<init>(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_6862;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBlockSupports#stemSupport()Lnet/minecraft/class_6862;",
+    "keep"
+   ],
+   "basis": "26.1 AttachedStemBlock takes its support tag; a 1.21.11 attached stem stood on farmland"
+  },
+  "net/minecraft/class_4771.<init>(Lnet/minecraft/class_5321;Lnet/minecraft/class_2248;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_2248;Lnet/minecraft/class_6862;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBlockSupports#fungusSupport()Lnet/minecraft/class_6862;",
+    "keep"
+   ],
+   "basis": "26.1 NetherFungusBlock takes its support tag; a 1.21.11 fungus stood on nylium, mycelium, soul soil or what a bush took"
+  },
+  "net/minecraft/class_4774.<init>(Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_6862;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBlockSupports#rootsSupport()Lnet/minecraft/class_6862;",
+    "keep"
+   ],
+   "basis": "26.1 NetherRootsBlock takes its support tag; 1.21.11 roots stood on nylium, soul soil or what a bush took"
+  },
+  "net/minecraft/class_2500.<init>(Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBlockSupports#dirt()Lnet/minecraft/class_5321;"
+   ],
+   "basis": "26.1 SpreadingSnowyBlock takes the block it decays to; 1.21.11's SpreadingSnowyDirtBlock decayed to dirt"
+  },
+  "net/minecraft/class_7296.<init>(Ljava/util/function/Function;FI)V": {
+   "desc": "(Ljava/util/function/Function;FILnet/minecraft/world/entity/ai/behavior/GoAndGiveItemsToTarget$ItemThrower;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallGiveItems#legacyThrower()Lnet/minecraft/world/entity/ai/behavior/GoAndGiveItemsToTarget$ItemThrower;"
+   ],
+   "basis": "26.1 GoAndGiveItemsToTarget takes what happens after a throw as an ItemThrower; 1.21.11's did it itself: the throw sound, and for an allay its liked player's drop trigger (CbWallGiveItems.legacyThrower)"
+  },
+  "net/minecraft/class_12359.<init>(DDFF)V": {
+   "desc": "(DDF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "drop",
+    "keep"
+   ],
+   "basis": "26.1 SpearAttack(speedWhenCharging, speedWhenRepositioning, targetInRangeRadiusSq): 1.21.11's approachDistanceSq argument was stored and never read"
+  },
+  "net/minecraft/class_1346.<init>(Lnet/minecraft/class_1314;)V": {
+   "desc": "(Lnet/minecraft/class_1314;Ljava/lang/Class;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#followedBoats()Ljava/lang/Class;"
+   ],
+   "basis": "1.21.11 FollowBoatGoal became 26.1's FollowPlayerRiddenEntityGoal(mob, entityTypeToFollow), the same body over the class it is given; 1.21.11's followed boats (AbstractBoat)"
   }
  },
  "fieldGetters": {

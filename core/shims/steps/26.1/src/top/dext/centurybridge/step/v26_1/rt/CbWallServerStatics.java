@@ -45,7 +45,9 @@ import net.minecraft.world.phys.AABB;
  * <li>AbstractContainerMenu.getQuickCraftPlaceCount(slots, type, carried): 1.21.11's body (26.1 dropped it);</li>
  * <li>BigDripleafBlock.canPlaceAt(level, pos, state): inside the build height and replaceable (air, water, small
  *     dripleaf) -- 1.21.11's body (26.1's canPlaceAt(level, pos) tests other things);</li>
- * <li>BubbleColumnBlock.updateColumn(level, pos, state): 26.1's with the bubble column block it names.</li>
+ * <li>BubbleColumnBlock.updateColumn(level, pos, state): 26.1's with the bubble column block it names;</li>
+ * <li>FollowBoatGoal(mob): 26.1's FollowPlayerRiddenEntityGoal following what 1.21.11's followed, boats
+ *     (AbstractBoat), with the same body otherwise.</li>
  * </ul>
  */
 public final class CbWallServerStatics {
@@ -135,5 +137,10 @@ public final class CbWallServerStatics {
     /** 1.21.11 BubbleColumnBlock.updateColumn(level, pos, state) */
     public static void updateColumn(LevelAccessor level, BlockPos pos, BlockState state) {
         BubbleColumnBlock.updateColumn(Blocks.BUBBLE_COLUMN, level, pos, state);
+    }
+
+    /** the entity class 1.21.11's FollowBoatGoal followed (super(mob) of a 1.21.11 subclass, and new FollowBoatGoal(mob)) */
+    public static Class<? extends net.minecraft.world.entity.Entity> followedBoats() {
+        return net.minecraft.world.entity.vehicle.boat.AbstractBoat.class;
     }
 }
