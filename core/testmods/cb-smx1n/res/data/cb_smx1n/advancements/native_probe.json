@@ -1,0 +1,6 @@
+{
+  "criteria": {
+    "cbsmx1n_probe": {"trigger": "minecraft:impossible"}
+  },
+  "sends_telemetry_event": false
+}
