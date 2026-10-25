@@ -57,7 +57,35 @@ public final class CbTextures {
 
     /** was TextureManager.register(id, texture) (method_4616), called by a mod: 1.21.3's loadTexture, then the 1.21.4 register */
     public static void register(net.minecraft.class_1060 manager, net.minecraft.class_2960 id, net.minecraft.class_1044 texture) {
-        manager.method_4616(id, load(manager, id, texture));
+        registerLoaded(manager, id, load(manager, id, texture));
+    }
+
+    /** set while a texture already loaded the 1.21.3 way is handed to 1.21.4's register (it is not loaded again there) */
+    private static final ThreadLocal<Boolean> LOADED = ThreadLocal.withInitial(() -> false);
+
+    /** whether the texture register is given now was already loaded (register / registerLoaded) */
+    public static boolean loaded() {
+        return LOADED.get();
+    }
+
+    /** 1.21.4's register(id, texture) of a texture loaded the 1.21.3 way */
+    public static void registerLoaded(net.minecraft.class_1060 manager, net.minecraft.class_2960 id, net.minecraft.class_1044 texture) {
+        boolean was = LOADED.get();
+        LOADED.set(true);
+        try {
+            manager.method_4616(id, texture);
+        } finally {
+            LOADED.set(was);
+        }
+    }
+
+    /**
+     * 1.21.4's own register(id, texture) of a texture that does not reload from contents (dynamic, atlas, font textures;
+     * CbTextureManagerMixin): 1.21.3's register loaded it (loadTexture) first. The texture to register: the texture, or
+     * the missing texture when its load fails with an IOException, as 1.21.3's did.
+     */
+    public static net.minecraft.class_1044 loadOnRegister(net.minecraft.class_1060 manager, net.minecraft.class_2960 id, net.minecraft.class_1044 texture) {
+        return load(manager, id, texture);
     }
 
     /** 1.21.3 TextureManager.loadTexture(id, texture) */
