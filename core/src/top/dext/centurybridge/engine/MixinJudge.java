@@ -176,6 +176,12 @@ public final class MixinJudge {
                         j.rowOrdinal = Integer.parseInt(r[6]);
                         j.rowLayer = null;
                         why = j.judgeMember(mx, ts.size() == 1 ? ts.get(0) : r[3], name, Integer.parseInt(r[7]), new HashSet<>());
+                        if (why == null && j.rowLayer == null && ts.stream().anyMatch(t -> t.startsWith("top/dext/"))) {
+                            // a shadow / accessor / invoker of a mixin aimed at a facade: it reads and calls the facade's
+                            // own members, which stand for V's class only on the instances mods hold (as their own calls
+                            // of the facade do); not a vanilla path. Closed, counted apart (C7)
+                            j.rowLayer = "facade-access";
+                        }
                     }
                     if (j.rowLayer != null) {
                         layerCounts.merge(j.rowLayer, 1, Integer::sum);
@@ -203,7 +209,9 @@ public final class MixinJudge {
             + ", restored-partial " + layerCounts.getOrDefault("restored-partial", 0)
             + ", restored-open " + layerCounts.getOrDefault("restored-open", 0)
             + ", restored-override " + layerCounts.getOrDefault("restored-override", 0)
-            + ", restored-priority " + layerCounts.getOrDefault("restored-priority", 0) + "; partial, return untouched "
+            + ", restored-priority " + layerCounts.getOrDefault("restored-priority", 0)
+            + "; facade-access (shadow/accessor/invoker on a facade) " + layerCounts.getOrDefault("facade-access", 0)
+            + "; partial, return untouched "
             + layerCounts.getOrDefault("partial-return", 0));
     }
 
