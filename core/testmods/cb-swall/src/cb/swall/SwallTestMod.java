@@ -826,6 +826,7 @@ public class SwallTestMod implements ModInitializer {
             particleItems();
             books(server);
             itemMembers();
+            serverStatics(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1427,6 +1428,94 @@ public class SwallTestMod implements ModInitializer {
 
         net.minecraft.class_1799 base() {
             return super.method_10289();
+        }
+    }
+
+    /** 1.21.11 Allay / Piglin SENSOR_TYPES / MEMORY_TYPES read by a subclass (rt/CbWallBrainLists) */
+    private abstract static class AllayLists extends net.minecraft.class_7298 {
+        AllayLists() {
+            super(null, null);
+        }
+
+        static List<?> sensors() {
+            return field_38398;
+        }
+
+        static List<?> memories() {
+            return field_38403;
+        }
+    }
+
+    private abstract static class PiglinLists extends net.minecraft.class_4836 {
+        PiglinLists() {
+            super(null, null);
+        }
+
+        static List<?> sensors() {
+            return field_22376;
+        }
+    }
+
+    /** a 1.21.11 Zombie subclass calling handleAttributes(difficulty) (callReshapes: CONVERSION, no health reset) */
+    private static final class AttrZombie extends net.minecraft.class_1642 {
+        AttrZombie(net.minecraft.class_1937 level) {
+            super(level);
+        }
+
+        void attributes(float difficulty) {
+            method_7205(difficulty);
+        }
+    }
+
+    /** rt/CbWallServerStatics, CbWallBrainLists, CbWallLivingEntityAttackRangeMixin, Zombie.handleAttributes */
+    private static void serverStatics(MinecraftServer server) {
+        try {
+            int packed = net.minecraft.class_8104.method_68888(300, 7);
+            check("brightness.pack", packed == (300 << 4 | 7 << 20) && net.minecraft.class_8104.method_68887(packed) == 300
+                && net.minecraft.class_8104.method_68889(packed) == 7, packed);
+            net.minecraft.class_3610 water = net.minecraft.class_3612.field_15910.method_15785();
+            check("fluidState.holder", water.method_40180().method_40220(net.minecraft.class_3486.field_15517)
+                && water.method_40181().anyMatch(t -> t == net.minecraft.class_3486.field_15517), water);
+            check("piglinAi.isZombified", net.minecraft.class_4838.method_29534(net.minecraft.class_1299.field_6050)
+                && net.minecraft.class_4838.method_29534(net.minecraft.class_1299.field_23696)
+                && !net.minecraft.class_4838.method_29534(net.minecraft.class_1299.field_6051), "");
+            net.minecraft.class_3218 level = server.method_30002();
+            check("raids.type", net.minecraft.class_3767.method_67380(level.method_40134()) == net.minecraft.class_3767.field_56443
+                && net.minecraft.class_3767.field_56444 == net.minecraft.class_3767.field_56443, "");
+            check("brainLists.allay", AllayLists.sensors().size() == 4 && AllayLists.memories().size() == 12
+                && PiglinLists.sensors().size() > 0, AllayLists.sensors());
+            net.minecraft.class_3730 cmd = net.minecraft.class_3730.field_16462;
+            net.minecraft.class_7260 warden = (net.minecraft.class_7260) net.minecraft.class_1299.field_38095.method_5883(level, cmd);
+            net.minecraft.class_7261.method_42228(warden);
+            check("wardenAi.updateActivity", true, "");
+            AttrZombie zombie = new AttrZombie(level);
+            zombie.method_6033(5.0F);
+            zombie.attributes(1.0F);
+            check("zombie.handleAttributes", zombie.method_6032() == 5.0F, zombie.method_6032());
+            net.minecraft.class_12392 range = zombie.method_76693();
+            check("livingEntity.entityAttackRange", range != null && range.equals(net.minecraft.class_12392.method_76734(zombie)), range);
+            net.minecraft.class_1542 itemEntity = new net.minecraft.class_1542(level, 0, 100, 0,
+                new net.minecraft.class_1799(net.minecraft.class_1802.field_8477));
+            net.minecraft.class_5328.method_33263(itemEntity, List.of(new net.minecraft.class_1799(net.minecraft.class_1802.field_8477)));
+            check("itemUtils.onContainerDestroyed", true, "");
+            net.minecraft.class_1657 player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+            check("player.isWithinAttackRange", player.method_76729(player.method_5829().method_1014(1.0), 0.0), player);
+            net.minecraft.class_243 impact = new net.minecraft.class_243(1, 2, 3);
+            player.field_49989 = impact;
+            player.method_60984(true);
+            check("player.setIgnoreFallDamage", player.field_49989 == impact, player.field_49989);
+            player.method_60984(false);
+            try {
+                // isIgnoringFallDamageFromCurrentImpulse: 26.1 declares it on LivingEntity (cases_smixin3/swall.md, inherited-tombstone)
+                player.method_60984(true);
+                check("player.ignoreFallDamage", player.method_61165(), "false");
+                player.method_60984(false);
+            } catch (Throwable t) {
+                check("player.ignoreFallDamage", false, t);
+            }
+        } catch (Throwable t) {
+            check("serverStatics", false, t);
+            t.printStackTrace();
         }
     }
 

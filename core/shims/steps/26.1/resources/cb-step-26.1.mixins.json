@@ -50,6 +50,7 @@
     "CbWallItemParticleStackMixin",
     "CbWallItemStackRepresentationMixin",
     "CbWallLevelAccessMixin",
+    "CbWallLivingEntityAttackRangeMixin",
     "CbWallLivingEntityAttackTypeMixin",
     "CbWallMobAttackTypeMixin",
     "CbWallNbtContentsMixin",

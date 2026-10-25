@@ -245,7 +245,11 @@
   "net/minecraft/class_9302.method_57519()Lnet/minecraft/class_9302;": "top/dext/centurybridge/step/v26_1/rt/CbWallBooks#tryCraftCopy",
   "net/minecraft/class_9302.method_57521(Lnet/minecraft/class_2168;Lnet/minecraft/class_1657;)Lnet/minecraft/class_9302;": "top/dext/centurybridge/step/v26_1/rt/CbWallBooks#resolve",
   "net/minecraft/class_1792.method_7858()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemMembers#getCraftingRemainder",
-  "net/minecraft/class_1792.method_63680()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemMembers#getName"
+  "net/minecraft/class_1792.method_63680()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemMembers#getName",
+  "net/minecraft/class_3610.method_40180()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#holder",
+  "net/minecraft/class_3610.method_40181()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#getTags",
+  "net/minecraft/class_1657.method_76729(Lnet/minecraft/class_238;D)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#isWithinAttackRange",
+  "net/minecraft/class_1657.method_60984(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#setIgnoreFallDamageFromCurrentImpulse"
  },
  "overrideHooks": [
   {
@@ -1340,7 +1344,14 @@
   "com/mojang/blaze3d/platform/GLX.make(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#make",
   "net/minecraft/class_3255.method_14392(Lnet/minecraft/class_7677;Ljava/io/InputStream;Lnet/minecraft/class_9224;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallPackResources#getMetadataFromStream",
   "net/minecraft/class_7296.method_43393(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGiveItems#throwItem",
-  "net/minecraft/class_9302.method_66337(Lnet/minecraft/class_1799;Lnet/minecraft/class_2168;Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBooks#resolveForItem"
+  "net/minecraft/class_9302.method_66337(Lnet/minecraft/class_1799;Lnet/minecraft/class_2168;Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBooks#resolveForItem",
+  "net/minecraft/class_8104.method_68888(II)I": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#pack",
+  "net/minecraft/class_8104.method_68887(I)I": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#block",
+  "net/minecraft/class_8104.method_68889(I)I": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#sky",
+  "net/minecraft/class_4838.method_29534(Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#isZombified",
+  "net/minecraft/class_5328.method_33263(Lnet/minecraft/class_1542;Ljava/lang/Iterable;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#onContainerDestroyed",
+  "net/minecraft/class_3767.method_67380(Lnet/minecraft/class_6880;)Lnet/minecraft/class_10741;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#getType",
+  "net/minecraft/class_7261.method_42228(Lnet/minecraft/class_7260;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#updateActivity"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -2335,7 +2346,29 @@
   "net/minecraft/class_10502.field_61849:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#exposedCopperChest",
   "net/minecraft/class_10502.field_61850:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#weatheredCopperChest",
   "net/minecraft/class_10502.field_61851:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSpriteIds#oxidizedCopperChest",
-  "net/minecraft/class_582.field_52909:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallFelineModels#babyTransformer"
+  "net/minecraft/class_582.field_52909:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallFelineModels#babyTransformer",
+  "net/minecraft/class_7298.field_38398:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_7298.field_38403:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_5762.field_28333:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_5762.field_28334:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_7102.field_37449:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_7102.field_37450:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_7110.field_37497:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_7110.field_37498:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_12118.field_63350:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_12118.field_63351:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_12120.field_63364:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_12120.field_63365:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_5136.field_23731:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_5136.field_23733:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_10280.field_54585:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_10280.field_54586:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_4760.field_22365:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_4760.field_22366:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_4836.field_22376:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_4836.field_22381:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_5419.field_25761:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists",
+  "net/minecraft/class_5419.field_25760:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrainLists"
  },
  "abstractFills": [
   {
@@ -2562,7 +2595,8 @@
   "net/minecraft/class_1308.method_5973(Lnet/minecraft/class_1299;)Z",
   "net/minecraft/class_1439.method_5973(Lnet/minecraft/class_1299;)Z",
   "net/minecraft/class_8949.method_5973(Lnet/minecraft/class_1299;)Z",
-  "net/minecraft/class_1593.method_5973(Lnet/minecraft/class_1299;)Z"
+  "net/minecraft/class_1593.method_5973(Lnet/minecraft/class_1299;)Z",
+  "net/minecraft/class_1309.method_76693()Lnet/minecraft/class_12392;"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -2867,6 +2901,14 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallChunkDraws#lists(Ljava/util/EnumMap;)Ljava/util/EnumMap;",
    "basis": "ChunkSectionsToRender.drawGroupsPerLayer(): a layer's 26.1 draw groups as one 1.21.11 list (a record: no override)"
+  },
+  "net/minecraft/class_1642.method_7205(F)V": {
+   "desc": "(FLnet/minecraft/class_3730;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallFrames#zombieAttributesReason()Lnet/minecraft/class_3730;"
+   ],
+   "basis": "26.1 Zombie.handleAttributes(difficulty, reason) resets the health to the maximum unless the reason is a conversion, load or dimension travel; 1.21.11's never did: CONVERSION (CbWallFrames, the hook's frame default)"
   }
  },
  "instanceFieldGetters": {
@@ -3235,7 +3277,8 @@
   "net/minecraft/class_9082.field_52867:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ArmadilloModel#BABY_TRANSFORMER",
   "net/minecraft/class_1799.field_49747:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemStacks#SINGLE_ITEM_CODEC",
   "net/minecraft/class_1799.field_49267:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemStacks#SIMPLE_ITEM_CODEC",
-  "net/minecraft/class_9302.field_49380:I": "top/dext/centurybridge/step/v26_1/rt/CbWallBooks#MAX_CRAFTABLE_GENERATION"
+  "net/minecraft/class_9302.field_49380:I": "top/dext/centurybridge/step/v26_1/rt/CbWallBooks#MAX_CRAFTABLE_GENERATION",
+  "net/minecraft/class_3767.field_56444:Lnet/minecraft/class_10741;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#TYPE_END"
  },
  "mixinTargets": {
   "net/minecraft/class_2564.method_10881(Lnet/minecraft/class_2168;Lnet/minecraft/class_2561;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;": {
