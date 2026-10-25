@@ -79,6 +79,7 @@ public final class MixinCheck {
         MixinCheck c = new MixinCheck();
         c.index(targetJar);
         c.indexLibraries();
+        c.indexDependencies();
         if (stubDir != null && targetVersion != null) {
             c.sources = SourceStubs.before(stubDir, targetVersion);
         }
@@ -151,6 +152,20 @@ public final class MixinCheck {
                         jarPackages.add(slash < 0 ? "" : cn.name.substring(0, slash));
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * The separately released mods the layer declares in depends (-Dcb.depJars / -Dcb.layerModJson, {@link DepJars}, as
+     * wiring-check reads them): a name the layer resolves in one of them resolves against its jar, as against a game
+     * library; a jar the layer does not declare is a problem. The game jar and its libraries win for a class both carry.
+     */
+    private void indexDependencies() throws IOException {
+        for (ClassNode cn : DepJars.read(problems).values()) {
+            if (jar.putIfAbsent(cn.name, cn) == null) {
+                int slash = cn.name.lastIndexOf('/');
+                jarPackages.add(slash < 0 ? "" : cn.name.substring(0, slash));
             }
         }
     }

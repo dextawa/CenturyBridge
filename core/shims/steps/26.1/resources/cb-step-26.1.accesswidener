@@ -202,3 +202,5 @@ accessible	field	com/mojang/blaze3d/opengl/GlCommandEncoder	device	Lcom/mojang/b
 accessible	field	net/minecraft/client/renderer/LevelRenderer	levelRenderState	Lnet/minecraft/client/renderer/state/level/LevelRenderState;
 # 26.1 AbstractPiglinModel.getDefaultEarAngleInDegrees is package-private abstract: a 1.21.11 subclass gets it filled (swall, rt/CbWallPiglinParts)
 accessible	method	net/minecraft/client/model/monster/piglin/AbstractPiglinModel	getDefaultEarAngleInDegrees	()F
+# 1.21.11 renderLevel culled with the frustum of the caller's culling projection (swall, rt/CbWallLevelRender)
+accessible	field	net/minecraft/client/Camera	cullFrustum	Lnet/minecraft/client/renderer/culling/Frustum;

@@ -17,6 +17,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v26_1.facade.LightTexture;
 import top.dext.centurybridge.step.v26_1.facade.PanoramicScreenshotParameters;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
+import top.dext.centurybridge.step.v26_1.rt.CbWallDepthFar;
 
 /**
  * 1.21.11 GameRenderer members 26.1 moved elsewhere, given back on GameRenderer itself (covers), so a
@@ -25,7 +27,8 @@ import top.dext.centurybridge.step.v26_1.facade.PanoramicScreenshotParameters;
  * <li>getRenderDistance() / getDepthFar() / getProjectionMatrix(fov): 1.21.11's formulas (render distance
  *     in blocks; the far plane the larger of four render distances and the cloud range; a perspective of
  *     the window's aspect from 0.05 to it). 26.1's Camera computes the same far plane; the projection
- *     takes the GPU device's depth range as 26.1's does.</li>
+ *     takes the GPU device's depth range as 26.1's does. Camera.update takes its far plane from getDepthFar()
+ *     (mixin/CbWallCameraDepthFarMixin), as 1.21.11's renderer did.</li>
  * <li>pick(partialTicks): 26.1 moved it to Minecraft (same body).</li>
  * <li>updateCamera(deltaTracker): 26.1's Camera.update.</li>
  * <li>isPanoramicMode() and the panoramic screenshot parameters: kept by 26.1's Camera
@@ -35,7 +38,7 @@ import top.dext.centurybridge.step.v26_1.facade.PanoramicScreenshotParameters;
  * </ul>
  */
 @Mixin(GameRenderer.class)
-public abstract class CbWallGameRendererMixin {
+public abstract class CbWallGameRendererMixin implements CbWallDepthFar {
 
     @Shadow
     @Final
@@ -63,10 +66,14 @@ public abstract class CbWallGameRendererMixin {
     @Unique
     private PanoramicScreenshotParameters cb$panoramic;
 
+    @CbVanillaReads("CbWallCameraDepthFarMixin: Camera.update takes the far plane from getDepthFar(), which reads this")
     public float getRenderDistance() {
         return (float) (this.minecraft.options.getEffectiveRenderDistance() * 16);
     }
 
+    @CbVanillaReads("CbWallCameraDepthFarMixin: Camera.update takes its far plane (depthFar: the projection's and the "
+        + "culling frustum's far distance, the camera render state's depthFar) from this")
+    @Override
     public float getDepthFar() {
         return Math.max(getRenderDistance() * 4.0F, (float) (this.minecraft.options.cloudRange().get() * 16));
     }

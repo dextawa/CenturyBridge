@@ -3,7 +3,8 @@
 # V -> W on beta2 and measure the step there with step_check.sh -- no Java runs on this machine.
 #
 # Uploads the sources as they are in the working tree (core/src, core/shims, core/segments,
-# core/tools, build.sh; not data, not build output) to ~/cbwork/agents/<name>/, compiles the engine,
+# core/tools, core/mods (the separately released mods layers depend on) with core/natives (the records their
+# natives are checked against), build.sh; not data, not build output) to ~/cbwork/agents/<name>/, compiles the engine,
 # builds the step's layer (step 1.20.1 -> 1.20.2 is the 1.20.2 tree with shims-1.20.2.json; every
 # later step is core/shims/steps/<W> with core/segments/steps/<V>__<W>.json) with build.sh's gates,
 # then runs ~/cbwork/step_check.sh on it. Prints the build gates' verdicts and the step's open count;
@@ -19,7 +20,7 @@ SSH="ssh -o BatchMode=yes -o ConnectTimeout=30 -o ServerAliveInterval=30 -o Serv
 TMP="${TMPDIR:-/tmp}/cb-remote-$NAME"
 mkdir -p "$TMP"
 rm -f "$TMP/up.tar"
-tar --force-local --exclude=__pycache__ -cf "$TMP/up.tar" core/src core/shims core/segments core/tools build.sh
+tar --force-local --exclude=__pycache__ -cf "$TMP/up.tar" core/src core/shims core/segments core/tools core/mods core/natives build.sh
 $SSH "mkdir -p ~/cbwork/agents/$NAME; rm -f ~/cbwork/agents/$NAME/wall.tsv"
 scp -q -P 20022 -o BatchMode=yes "$TMP/up.tar" "dext@beta2.dext.top:cbwork/agents/$NAME/up.tar"
 # CB_WALL_TABLE=<local candidate table>: uploaded beside the tree and exported in the remote shell, so

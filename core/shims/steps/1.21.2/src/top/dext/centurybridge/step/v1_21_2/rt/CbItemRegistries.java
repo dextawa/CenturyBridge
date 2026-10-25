@@ -196,6 +196,103 @@ public final class CbItemRegistries {
         return class_6885.method_45924((class_7876) self, tag);
     }
 
+    // ---- bindTags as MappedRegistry's restored member, on 1.21.2's tag reload path ----
+
+    /**
+     * The PendingTags whose apply() CbItemRegistryPendingTagsMixin is handing to the registry's bindTags right now
+     * (vanilla's reload: ReloadableServerResources / the client's tag collector apply each registry's load result).
+     */
+    private static final ThreadLocal<Object> ROUTED = new ThreadLocal<>();
+
+    /** the PendingTags whose apply() runs as 1.21.2 wrote it (the route steps aside) */
+    private static final ThreadLocal<Object> DIRECT = new ThreadLocal<>();
+
+    /** MappedRegistry's anonymous PendingTags (class_2370$3): its registry, load result and named sets */
+    public interface PendingTagsAccess {
+        class_2370<?> cb$registry();
+
+        @SuppressWarnings("rawtypes")
+        Map cb$pending();
+
+        @SuppressWarnings("rawtypes")
+        com.google.common.collect.ImmutableMap cb$named();
+
+        @SuppressWarnings("rawtypes")
+        void cb$setNamed(com.google.common.collect.ImmutableMap named);
+    }
+
+    /** MappedRegistry's private createTag(tag) (CbItemRegistryFrozenAccess) */
+    public interface CreateTag {
+        @SuppressWarnings("rawtypes")
+        class_6885.class_6888 cb$createTag(class_6862 tag);
+    }
+
+    /**
+     * PendingTags.apply() at its head: whether 1.21.2's own body runs (true), or the bind went through the
+     * registry's bindTags(map) -- 1.21.1's read path (ReloadableServerResources.updateRegistryTags and the client's
+     * TagCollector called registry.bindTags(load result)) -- which then applied it (false).
+     */
+    public static boolean applyRuns(Object pending) {
+        if (DIRECT.get() == pending || Boolean.getBoolean("cb.step1_21_2.noTagRoute")) {
+            return true; // the measurement switch: 1.21.2's reload with no route, for comparison
+        }
+        PendingTagsAccess p = (PendingTagsAccess) pending;
+        ROUTED.set(pending);
+        try {
+            ((LegacyBindTags) p.cb$registry()).method_40257(p.cb$pending());
+        } finally {
+            if (ROUTED.get() == pending) {
+                ROUTED.remove();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * MappedRegistry.bindTags(map), the restored member's body. On vanilla's reload path (the routed PendingTags of
+     * this registry) the load result is applied as 1.21.2 does -- the same PendingTags, so the named sets its lookup
+     * already handed out are the ones bound; when a mod's mixin on bindTags changed the map (lists replaced, tags
+     * added or dropped), its map becomes the load result first, and tags it added get named sets of their own.
+     * Called any other way (a mod's own call), 1.21.1's bindTags on 1.21.2 ({@link #super_method_40257}).
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void bindTags(class_2370 self, Map tags) {
+        Object cur = ROUTED.get();
+        if (cur instanceof PendingTagsAccess p && p.cb$registry() == self) {
+            ROUTED.remove();
+            Map pending = p.cb$pending();
+            if (tags != pending) {
+                Map copy = new java.util.HashMap(tags);
+                pending.clear();
+                pending.putAll(copy);
+            }
+            com.google.common.collect.ImmutableMap named = p.cb$named();
+            if (!named.keySet().containsAll(pending.keySet())) {
+                com.google.common.collect.ImmutableMap.Builder b = com.google.common.collect.ImmutableMap.builder();
+                b.putAll(named);
+                for (Object k : pending.keySet()) {
+                    if (!named.containsKey(k)) {
+                        b.put(k, ((CreateTag) self).cb$createTag((class_6862) k));
+                    }
+                }
+                p.cb$setNamed(b.build());
+            }
+            applyDirect(cur);
+            return;
+        }
+        super_method_40257(self, tags);
+    }
+
+    private static void applyDirect(Object pending) {
+        Object was = DIRECT.get();
+        DIRECT.set(pending);
+        try {
+            ((class_2378.class_10106<?>) pending).method_62696();
+        } finally {
+            DIRECT.set(was);
+        }
+    }
+
     /** bindTags(map) */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static void method_40257(class_2378 self, Map tags) {
@@ -217,7 +314,8 @@ public final class CbItemRegistries {
             tags.forEach((k, v) -> ((class_2385) mapped).method_62681((class_6862) k, (List) v));
             return;
         }
-        self.method_62683(new class_3503.class_6863(self.method_46765(), tags)).method_62696();
+        // applied as 1.21.2 does, past the route: a subclass's super.bindTags must not come back to its override
+        applyDirect(self.method_62683(new class_3503.class_6863(self.method_46765(), tags)));
     }
 
     /** resetTags() */
