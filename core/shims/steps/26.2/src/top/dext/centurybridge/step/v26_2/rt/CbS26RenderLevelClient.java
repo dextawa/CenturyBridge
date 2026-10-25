@@ -5,9 +5,11 @@ import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.chunk.ChunkSectionsToRender;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.world.level.Level;
 import org.joml.Matrix4fc;
 import org.joml.Vector4f;
 
@@ -28,5 +30,18 @@ public final class CbS26RenderLevelClient {
             CameraRenderState camera, Matrix4fc projection, GpuBufferSlice fog, Vector4f fogColor, boolean renderSky,
             ChunkSectionsToRender chunkSections) {
         self.render(allocator, deltaTracker, renderOutline, camera, projection, fog, fogColor, renderSky);
+    }
+
+    /**
+     * 26.1.2 WeatherEffectRenderer.extractRenderState(Level, ticks, partialTick, cameraPos, state) took any Level;
+     * 26.2's takes the ClientLevel it always was on the client (LevelExtractor passes Minecraft's level). A level that
+     * is not a ClientLevel has no 26.2 weather to extract: the cast fails with its own message.
+     */
+    public static ClientLevel toClientLevel(Level level) {
+        if (level instanceof ClientLevel client) {
+            return client;
+        }
+        throw new ClassCastException("WeatherEffectRenderer.extractRenderState: 26.2 extracts weather of a ClientLevel only, got "
+            + (level == null ? "null" : level.getClass().getName()));
     }
 }
