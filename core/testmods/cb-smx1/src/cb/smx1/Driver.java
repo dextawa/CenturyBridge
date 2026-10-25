@@ -18,6 +18,11 @@ public final class Driver {
     public static volatile boolean forceLuck;
     public static volatile boolean forceLiquid;
     public static volatile boolean forceWater;
+    public static final String PROBE_SHAPED = "cb_smx1:route_probe";
+    public static final String PROBE_SMELT = "cb_smx1:route_probe_smelt";
+    public static volatile int defaultCookingTime = -1;
+    /** -Dcenturybridge.legacyJsonRoute=false: the layer reads recipes with 1.20.2's codecs; the reader mixins never run */
+    private static final boolean ROUTE = !"false".equals(System.getProperty("centurybridge.legacyJsonRoute"));
     private static int ok;
     private static int fail;
 
@@ -35,6 +40,68 @@ public final class Driver {
             fail++;
         }
         System.out.println("CB-SMX1 " + (cond ? "ok " : "FAIL ") + c + " " + detail);
+    }
+
+    private static net.minecraft.class_1860<?> recipe(net.minecraft.server.MinecraftServer server, String id) {
+        for (net.minecraft.class_1860<?> r : server.method_3772().method_8126()) {
+            if (id.equals(r.method_8114().toString())) {
+                return r;
+            }
+        }
+        return null;
+    }
+
+    private static void checkRecipeProbes(net.minecraft.server.MinecraftServer server, String phase) {
+        net.minecraft.class_1860<?> shaped = recipe(server, PROBE_SHAPED);
+        if (!(shaped instanceof net.minecraft.class_1869 s)) {
+            check("recipe-reader-shaped-" + phase, false, PROBE_SHAPED + " loaded as " + shaped);
+        } else {
+            int count = s.method_8110(server.method_30611()).method_7947();
+            String group = s.method_8112();
+            boolean expected = ROUTE ? count == 42 && "cbsmx1-group".equals(group) : count == 1 && "".equals(group);
+            check("recipe-reader-shaped-" + phase, expected, "route " + ROUTE + ": result count " + count + ", group '" + group
+                + "' (RETURN handler ran " + COUNT.getOrDefault("shaped-reader-return", 0) + ", group redirect "
+                + COUNT.getOrDefault("shaped-reader-group-redirect", 0) + " time(s))");
+        }
+        net.minecraft.class_1860<?> smelt = recipe(server, PROBE_SMELT);
+        if (!(smelt instanceof net.minecraft.class_1874 c)) {
+            check("recipe-reader-cooking-" + phase, false, PROBE_SMELT + " loaded as " + smelt);
+        } else {
+            int time = c.method_8167();
+            boolean expected = ROUTE ? time == 7 && defaultCookingTime == 200 : time == 200;
+            check("recipe-reader-cooking-" + phase, expected, "route " + ROUTE + ": cooking time " + time
+                + ", default seen by the redirect " + defaultCookingTime + ", experience " + c.method_8171()
+                + " (HEAD handler ran " + COUNT.getOrDefault("cooking-reader-head", 0) + ", time redirect "
+                + COUNT.getOrDefault("cooking-reader-time-redirect", 0) + " time(s))");
+        }
+    }
+
+    /** sha-256 over every loaded recipe outside this mod: id, serializer, network form, sorted by id */
+    private static String recipeFingerprint(net.minecraft.server.MinecraftServer server) throws Exception {
+        java.util.TreeMap<String, byte[]> forms = new java.util.TreeMap<>();
+        for (net.minecraft.class_1860<?> r : server.method_3772().method_8126()) {
+            String id = r.method_8114().toString();
+            if (id.startsWith("cb_smx1:")) {
+                continue;
+            }
+            net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
+            @SuppressWarnings("unchecked")
+            net.minecraft.class_1865<net.minecraft.class_1860<?>> ser = (net.minecraft.class_1865<net.minecraft.class_1860<?>>) r.method_8119();
+            ser.method_8124(buf, r);
+            byte[] bytes = new byte[buf.readableBytes()];
+            buf.readBytes(bytes);
+            forms.put(id + "|" + net.minecraft.class_7923.field_41189.method_10221(ser), bytes);
+        }
+        java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+        for (java.util.Map.Entry<String, byte[]> e : forms.entrySet()) {
+            md.update(e.getKey().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            md.update(e.getValue());
+        }
+        StringBuilder hex = new StringBuilder();
+        for (byte b : md.digest()) {
+            hex.append(String.format("%02x", b));
+        }
+        return "n=" + forms.size() + " sha=" + hex;
     }
 
     public static void run(net.minecraft.server.MinecraftServer server) {
@@ -117,6 +184,27 @@ public final class Driver {
                 + redirected + " (redirect ran " + COUNT.getOrDefault("navigation-water-redirect", 0) + " time(s))");
         } catch (Throwable t) {
             check("navigation-in-liquid-head", false, "threw " + t);
+        }
+        // ---- recipe readers: what vanilla loaded went through the 1.20.1 readers (and their mixins) when the route is on
+        try {
+            String start = recipeFingerprint(server);
+            checkRecipeProbes(server, "start");
+            // every vanilla shaped / cooking recipe went through the restored readers (route on), none did (route off)
+            int shapedReads = COUNT.getOrDefault("shaped-reader-return-all", 0);
+            int cookingReads = COUNT.getOrDefault("cooking-reader-head-all", 0);
+            check("recipe-readers-all", ROUTE ? shapedReads > 500 && cookingReads > 100 : shapedReads == 0 && cookingReads == 0,
+                "route " + ROUTE + ": shaped reader returned " + shapedReads + " time(s), cooking reader entered " + cookingReads + " time(s)");
+            java.util.concurrent.CompletableFuture<Void> reload = server.method_29439(server.method_3836().method_29210());
+            server.method_18857(reload::isDone);
+            reload.join();
+            String after = recipeFingerprint(server);
+            checkRecipeProbes(server, "reload");
+            System.out.println("CB-SMX1 fingerprint recipes route=" + ROUTE + " start " + start);
+            System.out.println("CB-SMX1 fingerprint recipes route=" + ROUTE + " reload " + after);
+            check("recipe-fingerprint-reload", start.equals(after), "start " + start + ", after /reload " + after);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            check("recipe-readers", false, "threw " + t);
         }
         System.out.println("CB-SMX1 summary ok=" + ok + " fail=" + fail);
     }

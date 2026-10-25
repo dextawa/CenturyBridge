@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:smelting",
+  "cb_smx1_probe": true,
+  "ingredient": {"item": "minecraft:cobblestone"},
+  "result": "minecraft:stone",
+  "experience": 0.25
+}

@@ -113,5 +113,15 @@
   "net/minecraft/class_761$class_762": "net/minecraft/class_8679$class_762",
   "net/minecraft/class_60$class_5641": "net/minecraft/class_5641"
  },
- "_smx1_classRenames_basis": "package-private 1.20.1 classes 1.20.2 moved under another outer class (or to the top level) with the same intermediary id and their members (javap -p of both: DefaultPlayerSkin.ModelType -> PlayerSkin.Model, ClientPacketListener.DeferredPacket -> ClientCommonPacketListenerImpl's, ChatReportScreen's reason list -> AbstractReportScreen's, LevelRenderer's RenderInfoMap / RenderChunkStorage / RenderChunkInfo -> SectionOcclusionGraph's, CompositeFunction's inner class -> the top-level one); nothing outside a mixin can name a package-private class, so only mixins follow"
+ "_smx1_classRenames_basis": "package-private 1.20.1 classes 1.20.2 moved under another outer class (or to the top level) with the same intermediary id and their members (javap -p of both: DefaultPlayerSkin.ModelType -> PlayerSkin.Model, ClientPacketListener.DeferredPacket -> ClientCommonPacketListenerImpl's, ChatReportScreen's reason list -> AbstractReportScreen's, LevelRenderer's RenderInfoMap / RenderChunkStorage / RenderChunkInfo -> SectionOcclusionGraph's, CompositeFunction's inner class -> the top-level one); nothing outside a mixin can name a package-private class, so only mixins follow",
+ "_smx1_covers_basis": "the vanilla recipe serializers' 1.20.1 read(id, json), members again: the layer's CbRecipeJson* mixins restore them with 1.20.1's bodies and 1.20.2's RecipeManager reads through them (CbRecipeJsonVanillaMixin), so mods' calls and super calls link to them as on 1.20.1",
+ "covers": [
+  "net/minecraft/class_1866.method_45443(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3955;",
+  "net/minecraft/class_1867$class_1868.method_8142(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1867;",
+  "net/minecraft/class_1869$class_1870.method_8164(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1869;",
+  "net/minecraft/class_3957.method_17736(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1874;",
+  "net/minecraft/class_3972$class_3973.method_17881(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3972;",
+  "net/minecraft/class_8060$class_8061.method_48455(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_8060;",
+  "net/minecraft/class_8062$class_8063.method_48459(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_8062;"
+ ]
 }

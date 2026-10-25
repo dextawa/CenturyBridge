@@ -12,8 +12,10 @@ here from core/segments/damage/1.20.1__1.20.2.damage.tsv against the two release
            which the recipe base class claims when its constructor returns (CbRecipeIdClaim).
   readers  the vanilla serializers' read(id, json) / read(id, buf): a converted subclass that
            overrides them gets an adapter interface plus the 1.20.2 shapes vanilla calls (codec(),
-           read(buf)) synthesized to reach its own readers; calls run the subclass's reader when it
-           has one, vanilla's otherwise; its super calls run vanilla's own implementation on it.
+           read(buf)) synthesized to reach its own readers. read(id, buf) calls run the subclass's
+           reader when it has one, vanilla's otherwise, and its super calls run vanilla's own
+           implementation on it; read(id, json) is a member of the vanilla serializers again (the
+           layer's CbRecipeJson* mixins), so its calls and super calls are left to link there.
   entries  a method whose Recipe parameter or return became RecipeEntry: calls (and a mod's
            super calls) are reshaped in place, the recipe converted to the entry vanilla holds for
            it and back; a mod override of the old shape gets the new shape synthesized, forwarding.
@@ -224,6 +226,7 @@ def main():
             continue
         sers.append((o, j, b, bnew))
     write_serializers(sers, moj)
+    dropped = collections.defaultdict(list)
     for o, j, b, bnew in sers:
         s = simple(o, moj)
         jt, bt = f"{PKG}/CbLegacySerializers${s}Json", f"{PKG}/CbLegacySerializers${s}Buf"
@@ -233,9 +236,11 @@ def main():
         arrays["adapterHooks"].append({
             "under": o, "adapter": bt, "requires": [b[0] + b[1]],
             "synth": [{"new": b[0] + bnew, "call": f"{PKG}/CbRecipeSerializers.legacyRead(L{bt};{BUF}){split_args(bnew)[1]}"}]})
-        wiring["instanceRedirects"][f"{o}.{j[0]}{j[1]}"] = f"{PKG}/CbRecipeSerializers"
+        # read(id, json) is a member of the vanilla serializer again (the layer's CbRecipeJson* mixins, 1.20.1's
+        # body; 1.20.2's RecipeManager reads through it): calls and super calls link to it as they did on 1.20.1
+        dropped["instanceRedirects"].append(f"{o}.{j[0]}{j[1]}")
+        dropped["superRedirects"].append(f"{o}.{j[0]}{j[1]}")
         wiring["instanceRedirects"][f"{o}.{b[0]}{b[1]}"] = f"{PKG}/CbRecipeSerializers"
-        wiring["superRedirects"][f"{o}.{j[0]}{j[1]}"] = f"{PKG}/CbRecipeSerializers#super_{j[0]}"
         wiring["superRedirects"][f"{o}.{b[0]}{b[1]}"] = f"{PKG}/CbRecipeSerializers#super_{b[0]}"
 
     # ------------------------------------------------------------------ Recipe <-> RecipeEntry
@@ -280,7 +285,7 @@ def main():
                              "own super call is reshaped to the new shape (callReshapes), so nothing comes back here")
             arrays["overrideHooks"].append(hook)
 
-    merge(wiring, arrays)
+    merge(wiring, arrays, dropped)
     for line in report:
         print("  !", line)
     print(f"ctors: {len(wiring['superCtorReshapes'])} super reshapes, {len(wiring['ctorRedirects'])} factories; "
@@ -350,25 +355,12 @@ def write_serializers(sers, moj):
         return self.{b[0]}(CbRecipeSerializerSupport.currentId(), buf);
     }}
 
-    /** serializer.read(id, json): the serializer's own reader when it declares one, vanilla's otherwise */
-    public static {jr} {j[0]}({cls} self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {{
-        if (self instanceof CbLegacySerializers.{jt} own) {{
-            return own.{j[0]}(id, json);
-        }}
-        return ({jr}) CbRecipeSerializerSupport.decode(self.method_53736(), id, json);
-    }}
-
     /** serializer.read(id, buf): the serializer's own reader when it declares one, vanilla's otherwise */
     public static {br} {b[0]}({cls} self, net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {{
         if (self instanceof CbLegacySerializers.{bt} own) {{
             return own.{b[0]}(id, buf);
         }}
         return CbRecipeSerializerSupport.withId(id, () -> self.{b[0]}(buf));
-    }}
-
-    /** super.read(id, json) in a subclass: vanilla's codec, the one this serializer was built with */
-    public static {jr} super_{j[0]}({cls} self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {{
-        return CbRecipeSerializerSupport.decode(CbRecipeSerializerSupport.superCodec({cls}.class, self), id, json);
     }}
 
     /** super.read(id, buf) in a subclass: vanilla's reader, run on this serializer */
@@ -420,10 +412,13 @@ public final class CbRecipeSerializers {{
 """)
 
 
-def merge(wiring, arrays):
+def merge(wiring, arrays, dropped):
     frag = {}
     if os.path.exists(FRAGMENT):
         frag = json.load(open(FRAGMENT, encoding="utf-8"))
+    for sec, keys in dropped.items():
+        for k in keys:
+            frag.get(sec, {}).pop(k, None)
     for sec, entries in wiring.items():
         frag.setdefault(sec, {}).update(entries)
     for sec, items in arrays.items():
@@ -431,8 +426,10 @@ def merge(wiring, arrays):
 
         def ident(x):
             return (x.get("under"), x.get("adapter"), x.get("old"), x.get("onlyUnder"))
-        mine = {ident(x) for x in items}
-        frag[sec] = [x for x in have if ident(x) not in mine] + items
+        mine = {ident(x): x for x in items}
+        # in place, so a regeneration that changes nothing leaves the fragment as it was
+        kept = [mine.pop(ident(x)) if ident(x) in mine else x for x in have]
+        frag[sec] = kept + [x for x in items if ident(x) in mine]
     with open(FRAGMENT, "w", encoding="utf-8", newline="\n") as f:
         json.dump(frag, f, indent=1, ensure_ascii=False)
         f.write("\n")
