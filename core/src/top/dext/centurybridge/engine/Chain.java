@@ -137,6 +137,22 @@ public final class Chain {
     public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
 
     /**
+     * How a V method's answer and the W method's answer turn into each other for an @Inject whose selector
+     * MixinBridge moved to a W method returning another type ("returnConverters"): key "owner.name(desc)" (V,
+     * on the class or a V supertype of the mixin's target), value {"toV": "OWNER#name(desc)", "toW":
+     * "OWNER#name(desc)", "with": [W argument indices], "basis": why}. toV takes W's answer and returns V's as
+     * the converted jar spells it; toW the reverse; each then takes the W target's arguments listed in "with"
+     * (InteractionResultHolder <-> InteractionResult needs the player and hand). The W-shaped handler gives the
+     * mod's handler a CallbackInfoReturnable of V's answer (toV of W's) and hands back what it set (toW).
+     * Converters must accept what they produce (a null passes without a call). Without an entry, numeric
+     * primitives convert as Java does and a callReshapes "ret conv" with an override hook's unwrap pair up;
+     * otherwise the handler runs with the return untouched and the row stays partial.
+     */
+    public record ReturnConverter(String[] toV, String[] toW, int[] with, String basis) {}
+
+    public final java.util.Map<String, ReturnConverter> returnConverters = new java.util.HashMap<>();
+
+    /**
      * The class or interface a {@link #methodRenames} key is on for a site naming {@code owner}, in JVM
      * resolution order: the owner and its superclasses, then (an instance member only: an interface's
      * static is not inherited) their superinterfaces breadth first, injected ones included. A vanilla
@@ -2702,6 +2718,23 @@ public final class Chain {
                 var fr = root.getAsJsonObject("fieldRenames");
                 for (String k : fr.keySet()) {
                     c.fieldRenames.put(k, fr.get(k).getAsString());
+                }
+            }
+            if (root.has("returnConverters")) {
+                var rcs = root.getAsJsonObject("returnConverters");
+                for (String k : rcs.keySet()) {
+                    var o = rcs.getAsJsonObject(k);
+                    String where = "returnConverters " + k;
+                    int[] with = new int[0];
+                    if (o.has("with")) {
+                        var wa = o.getAsJsonArray("with");
+                        with = new int[wa.size()];
+                        for (int i = 0; i < with.length; i++) {
+                            with[i] = wa.get(i).getAsInt();
+                        }
+                    }
+                    c.returnConverters.put(k, new ReturnConverter(parseStaticRef(where, o.get("toV").getAsString()),
+                        parseStaticRef(where, o.get("toW").getAsString()), with, o.has("basis") ? o.get("basis").getAsString() : ""));
                 }
             }
             if (root.has("mixinTargets")) {

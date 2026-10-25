@@ -820,6 +820,37 @@ public final class WiringCheck {
                                                   : "()Lnet/minecraft/class_7225$class_7874;";
             wantMethod("lookupRt", root.get("lookupRt").getAsString(), "cbLookup", methodDesc(desc));
         }
+        // returnConverters: both converters exist with their exact descriptors, toV and toW undo each other's
+        // types (toV: W's answer first, toW: V's answer first, each returning the other), and a basis is given
+        if (root.has("returnConverters")) {
+            for (var e : root.getAsJsonObject("returnConverters").entrySet()) {
+                checked++;
+                var o = e.getValue().getAsJsonObject();
+                String where = "returnConverters " + e.getKey();
+                if (!o.has("toV") || !o.has("toW") || !o.has("basis")) {
+                    problems.add(where + ": needs \"toV\", \"toW\" and \"basis\"");
+                    continue;
+                }
+                String tv = o.get("toV").getAsString().trim();
+                String tw = o.get("toW").getAsString().trim();
+                int pv = tv.indexOf('(');
+                int pw = tw.indexOf('(');
+                if (pv <= 0 || pw <= 0) {
+                    problems.add(where + ": a converter is not OWNER#name(desc)");
+                    continue;
+                }
+                wantMethod(where + " toV", tv.substring(0, pv), null, methodDesc(tv.substring(pv)));
+                wantMethod(where + " toW", tw.substring(0, pw), null, methodDesc(tw.substring(pw)));
+                org.objectweb.asm.Type[] av = org.objectweb.asm.Type.getArgumentTypes(tv.substring(pv));
+                org.objectweb.asm.Type[] aw = org.objectweb.asm.Type.getArgumentTypes(tw.substring(pw));
+                org.objectweb.asm.Type rv = org.objectweb.asm.Type.getReturnType(tv.substring(pv));
+                org.objectweb.asm.Type rw = org.objectweb.asm.Type.getReturnType(tw.substring(pw));
+                int with = o.has("with") ? o.getAsJsonArray("with").size() : 0;
+                if (av.length != 1 + with || aw.length != 1 + with || !av[0].equals(rw) || !aw[0].equals(rv)) {
+                    problems.add(where + ": toV must be (W answer, with..)V answer and toW (V answer, with..)W answer");
+                }
+            }
+        }
         // convertHooks (the override side of a same-shape reshape): the member is one the target's
         // `under` has with that very descriptor, and every converter exists with its exact descriptor
         java.util.Set<String> convertHooked = new java.util.HashSet<>();
