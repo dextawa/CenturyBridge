@@ -37,10 +37,12 @@ import net.minecraft.class_8785;
  * names) both read the JSON; only where their answers differ -- a mixin on the restored member changed it -- is the
  * restored member's answer what vanilla gets. Unmixed, vanilla gets exactly the codec's recipe.
  *
- * The private statics 1.20.1's readers called (ShapedRecipe.keyFromJson / patternFromJson / shrink /
- * dissolvePattern / itemStackFromJson, ShapelessRecipe.Serializer.itemsFromJson, Ingredient.fromJson) are gone from
- * 1.20.2, which keeps their code in the serializers' codecs; they are here with 1.20.1's checks and messages, the
- * pieces 1.20.2 still has as codecs (Ingredient, the result stack) decoded with those codecs.
+ * The statics 1.20.1's readers called (ShapedRecipe.keyFromJson / patternFromJson / dissolvePattern /
+ * itemStackFromJson / itemFromJson, ShapelessRecipe.Serializer.itemsFromJson, Ingredient.fromJson) are gone from
+ * 1.20.2, which keeps their code in the serializers' codecs. They are restored on their classes as private statics
+ * (CbRecipeJsonShapedStatics, CbRecipeJsonShapeless, CbRecipeJsonIngredientStatics), which the restored readers call;
+ * the copies here, the same bodies, are what the readers' unmixable copies call. Ingredient entries are decoded with
+ * 1.20.2's ingredient codec in both. ShapedRecipe.shrink stays 1.20.2's (shrink(List), the same code): both call it.
  *
  * Only serializers whose codec() no non-CenturyBridge subclass overrides are consulted (a subclass's own codec is
  * what it reads with), and none with -Dcenturybridge.legacyJsonRoute=false.
@@ -166,9 +168,23 @@ public final class CbRecipeJson {
 
     // ------------------------------------------------------------------ 1.20.1's private statics
 
-    /** 1.20.1 Ingredient.fromJson(json, canBeEmpty): 1.20.2's ingredient codec (Statics, the converted call's target) */
+    /** the entries of an ingredient read by 1.20.2's ingredient codec (Statics, the converted Ingredient.fromJson call's target) */
     public static class_1856 ingredient(JsonElement json, boolean canBeEmpty) {
         return Statics.method_8102(json, canBeEmpty);
+    }
+
+    /** the unmixable copy of Ingredient's restored fromJson(json, canBeEmpty) (CbRecipeJsonIngredientStatics.method_8102) */
+    public static class_1856 goldenIngredient(JsonElement json, boolean canBeEmpty) {
+        if (json == null || json.isJsonNull()) {
+            throw new JsonSyntaxException("Item cannot be null");
+        }
+        if (json.isJsonArray() && json.getAsJsonArray().size() == 0 && !canBeEmpty) {
+            throw new JsonSyntaxException("Item array cannot be empty, at least one item must be defined");
+        }
+        if (!json.isJsonObject() && !json.isJsonArray()) {
+            throw new JsonSyntaxException("Expected item to be object or array of objects");
+        }
+        return ingredient(json, canBeEmpty);
     }
 
     /** 1.20.1 ShapedRecipe.keyFromJson(json) */
@@ -181,7 +197,7 @@ public final class CbRecipeJson {
             if (" ".equals(entry.getKey())) {
                 throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
             }
-            map.put(entry.getKey(), ingredient(entry.getValue(), false));
+            map.put(entry.getKey(), goldenIngredient(entry.getValue(), false));
         }
         map.put(" ", class_1856.field_9017);
         return map;
@@ -209,52 +225,6 @@ public final class CbRecipeJson {
         return rows;
     }
 
-    /** 1.20.1 ShapedRecipe.shrink(rows): the rows without the blank border */
-    public static String[] shrink(String... rows) {
-        int first = Integer.MAX_VALUE;
-        int last = 0;
-        int blankTop = 0;
-        int blankBottom = 0;
-        for (int i = 0; i < rows.length; ++i) {
-            String row = rows[i];
-            first = Math.min(first, firstNonSpace(row));
-            int rowLast = lastNonSpace(row);
-            last = Math.max(last, rowLast);
-            if (rowLast < 0) {
-                if (blankTop == i) {
-                    ++blankTop;
-                }
-                ++blankBottom;
-            } else {
-                blankBottom = 0;
-            }
-        }
-        if (rows.length == blankBottom) {
-            return new String[0];
-        }
-        String[] out = new String[rows.length - blankBottom - blankTop];
-        for (int i = 0; i < out.length; ++i) {
-            out[i] = rows[i + blankTop].substring(first, last + 1);
-        }
-        return out;
-    }
-
-    private static int firstNonSpace(String row) {
-        int i = 0;
-        while (i < row.length() && row.charAt(i) == ' ') {
-            ++i;
-        }
-        return i;
-    }
-
-    private static int lastNonSpace(String row) {
-        int i = row.length() - 1;
-        while (i >= 0 && row.charAt(i) == ' ') {
-            --i;
-        }
-        return i;
-    }
-
     /** 1.20.1 ShapedRecipe.dissolvePattern(rows, key, width, height) */
     public static class_2371<class_1856> dissolvePattern(String[] rows, Map<String, class_1856> key, int width, int height) {
         class_2371<class_1856> list = class_2371.method_10213(width * height, class_1856.field_9017);
@@ -277,23 +247,35 @@ public final class CbRecipeJson {
         return list;
     }
 
-    /**
-     * 1.20.1 ShapedRecipe.itemStackFromJson(json): 1.20.1 refused a "data" entry; the item (not air) and count
-     * (at least 1, default 1) are read by 1.20.2's result-stack codec, the one its crafting recipes decode with
-     */
+    /** 1.20.1 ShapedRecipe.itemStackFromJson(json) */
     public static class_1799 itemStackFromJson(JsonObject json) {
+        net.minecraft.class_1792 item = itemFromJson(json);
         if (json.has("data")) {
             throw new JsonParseException("Disallowed data tag found");
         }
-        return class_8785.field_46092.parse(JsonOps.INSTANCE, json).result()
-            .orElseThrow(() -> new JsonSyntaxException("Invalid result stack: " + json));
+        int count = class_3518.method_15282(json, "count", 1);
+        if (count < 1) {
+            throw new JsonSyntaxException("Invalid output count: " + count);
+        }
+        return new class_1799(item, count);
+    }
+
+    /** 1.20.1 ShapedRecipe.itemFromJson(json) */
+    public static net.minecraft.class_1792 itemFromJson(JsonObject json) {
+        String id = class_3518.method_15265(json, "item");
+        net.minecraft.class_1792 item = class_7923.field_41178.method_17966(class_2960.method_12829(id))
+            .orElseThrow(() -> new JsonSyntaxException("Unknown item '" + id + "'"));
+        if (item == net.minecraft.class_1802.field_8162) {
+            throw new JsonSyntaxException("Empty ingredient not allowed here");
+        }
+        return item;
     }
 
     /** 1.20.1 ShapelessRecipe.Serializer.itemsFromJson(array): the non-empty ingredients */
     public static class_2371<class_1856> itemsFromJson(JsonArray array) {
         class_2371<class_1856> list = class_2371.method_10211();
         for (int i = 0; i < array.size(); ++i) {
-            class_1856 ingredient = ingredient(array.get(i), false);
+            class_1856 ingredient = goldenIngredient(array.get(i), false);
             if (!ingredient.method_8103()) {
                 list.add(ingredient);
             }

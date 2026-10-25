@@ -211,6 +211,18 @@ public final class Driver {
             System.out.println("CB-SMX1 fingerprint recipes route=" + ROUTE + " start " + start);
             System.out.println("CB-SMX1 fingerprint recipes route=" + ROUTE + " reload " + after);
             check("recipe-fingerprint-reload", start.equals(after), "start " + start + ", after /reload " + after);
+            // the restored private static ShapedRecipe.keyFromJson and Ingredient.fromJson, mixed by this mod
+            net.minecraft.class_1860<?> statics = recipe(server, "cb_smx1:static_probe");
+            boolean diamond = statics != null && statics.method_8117().size() == 2
+                && statics.method_8117().get(1).method_8093(new net.minecraft.class_1799(net.minecraft.class_1802.field_8477));
+            boolean stick = statics != null && statics.method_8117().size() == 2
+                && statics.method_8117().get(1).method_8093(new net.minecraft.class_1799(net.minecraft.class_1802.field_8600));
+            check("recipe-static-key", ROUTE ? diamond && !stick : stick && !diamond, "route " + ROUTE + ": cb_smx1:static_probe's second slot takes diamond "
+                + diamond + ", stick " + stick + " (keyFromJson handler ran " + COUNT.getOrDefault("shaped-key-return-all", 0)
+                + " time(s), probe " + COUNT.getOrDefault("shaped-key-probe", 0) + ")");
+            int ingredientReads = COUNT.getOrDefault("ingredient-from-json-all", 0);
+            check("recipe-static-ingredient", ROUTE ? ingredientReads > 1000 : ingredientReads == 0,
+                "route " + ROUTE + ": Ingredient.fromJson handler ran " + ingredientReads + " time(s)");
         } catch (Throwable t) {
             t.printStackTrace();
             check("recipe-readers", false, "threw " + t);

@@ -26,4 +26,11 @@ public @interface CbVanillaReads {
     int PRIORITY = 1;
 
     String value();
+
+    /**
+     * When vanilla's path takes only part of the member (its answer and the checks around a call it cannot reproduce),
+     * what it carries, "<injector>@<At value>" ("Inject@HEAD", "ModifyReturnValue@RETURN"); any other injector on the
+     * member stays open ("restored-member: vanilla path partial"). Absent = the whole member.
+     */
+    String[] carries() default {};
 }

@@ -17,7 +17,9 @@
     "ShapedReaderMixin",
     "CookingReaderMixin",
     "StatTypeKeyMixin",
-    "EffectAttributesMixin"
+    "EffectAttributesMixin",
+    "ShapedKeyMixin",
+    "IngredientJsonMixin"
   ],
   "injectors": {
     "defaultRequire": 1
