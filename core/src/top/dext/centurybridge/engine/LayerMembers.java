@@ -29,7 +29,9 @@ import org.objectweb.asm.tree.MethodNode;
  * {@code @CbVanillaReads("<LayerMixin> <how>")} (any annotation type named CbVanillaReads under
  * top/dext/centurybridge; class retention), naming the layer mixin that routes W's read through it. MixinJudge
  * counts an injector on a restored member as bridged only when the marker is there and names a mixin class of
- * the layer; otherwise the row stays open, "restored-member: vanilla path unmixed".
+ * the layer; otherwise the row stays open, "restored-member: vanilla path unmixed". A marker whose route carries
+ * only part of the member (vanilla takes its answer, not its body) lists what it carries in {@code carries}
+ * ("Inject@HEAD", ...); any other injector on it stays open, "restored-member: vanilla path partial".
  *
  * Merged: public, concrete, non-synthetic methods (no constructors) of a class carrying @Mixin, other than
  * @Shadow / @Overwrite / @Unique / injector handlers / accessors and invokers.
@@ -166,6 +168,45 @@ public final class LayerMembers {
             }
         }
         return null;
+    }
+
+    /**
+     * what of a restored member vanilla's W read path carries, when the route carries only part of it: the
+     * CbVanillaReads marker's {@code carries} entries, each "<injector annotation simple name>@<@At value>"
+     * ("Inject@HEAD", "ModifyReturnValue@RETURN"). null = the marker carries the whole member (no carries
+     * element): vanilla runs the restored body itself, so every injector that applies to it changes vanilla.
+     */
+    public List<String> carries(MethodNode m) {
+        for (AnnotationNode a : MixinRepair.annotations(m)) {
+            if (a.desc.startsWith("Ltop/dext/centurybridge/") && a.desc.endsWith("/CbVanillaReads;")) {
+                Object c = MixinRepair.values(a).get("carries");
+                return c == null ? null : MixinRepair.strings(c);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * whether an injector (its annotation) is one the marker's carries entries name: every @At it has is listed
+     * under its annotation's simple name, and it has at least one (a constant-only or slice-bounded injector acts
+     * inside the restored body, which a partial route does not run)
+     */
+    public static boolean carried(List<String> carries, AnnotationNode an, Map<String, Object> v) {
+        if (v.get("constant") != null || v.get("slice") != null) {
+            return false;
+        }
+        String kind = an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
+        Object at = v.get("at");
+        List<Object> ats = at instanceof List<?> l ? new ArrayList<>(l) : at == null ? List.of() : List.of(at);
+        if (ats.isEmpty()) {
+            return false;
+        }
+        for (Object o : ats) {
+            if (!(o instanceof Map<?, ?> am) || !carries.contains(kind + "@" + am.get("value"))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static AnnotationNode annotation(List<AnnotationNode> l, String desc) {

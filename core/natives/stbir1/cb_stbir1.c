@@ -1,6 +1,7 @@
 /*
  * cb_stbir1.c: stb_image_resize v0.97 (the copy LWJGL 3.3.3 builds into lwjgl_stb, byte-identical; see SHA256SUMS) behind
- * JNI entry points of CenturyBridge's wall layer class top.dext.centurybridge.step.v26_1.rt.CbLibStbir1$Native.
+ * JNI entry points of top.dext.centurybridge.stbir1.STBImageResize$Native (the Fabric mod centurybridge-stbir1, which
+ * CenturyBridge's 1.21.11 -> 26.1 layer depends on; its source tree is core/mods/stbir1).
  *
  * LWJGL 3.4.1 (Minecraft 26.1) replaced stb_image_resize with stb_image_resize2, which resizes differently (other kernels
  * and rounding, other edge-mode numbers, no >4-channel or mid-alpha layouts, no uint32): a 1.21.11 mod's resize is given
@@ -39,8 +40,8 @@ typedef void *jclass_;
 #define STB_IMAGE_RESIZE_STATIC
 #include "stb_image_resize.h"
 
-#define CB_FN(name) CB_JNIEXPORT jint CB_JNICALL Java_top_dext_centurybridge_step_v26_11_rt_CbLibStbir1_00024Native_##name
-/* JNI name mangling: "_" in the package (v26_1) is "_1", the "$" of the nested class is "_00024" */
+#define CB_FN(name) CB_JNIEXPORT jint CB_JNICALL Java_top_dext_centurybridge_stbir1_STBImageResize_00024Native_##name
+/* JNI name mangling: the "$" of the nested class is "_00024", a "_" in a method name is "_1" */
 #define P(type, a) ((type)(uintptr_t)(a))
 
 CB_FN(nstbir_1resize_1uint8)(JNIEnv_ *env, jclass_ clazz, jlong in, jint iw, jint ih, jint is, jlong out, jint ow, jint oh, jint os,

@@ -2515,7 +2515,8 @@
   "net/minecraft/class_338.method_75803(Lnet/minecraft/class_12225;IIZ)V",
   "net/minecraft/class_840.method_3594()F",
   "net/minecraft/class_840.method_35793()F",
-  "net/minecraft/class_840.method_34589()Lnet/minecraft/class_1921;"
+  "net/minecraft/class_840.method_34589()Lnet/minecraft/class_1921;",
+  "net/minecraft/class_1297.method_5692(Lnet/minecraft/class_6862;D)Z"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -3298,6 +3299,88 @@
     -1
    ],
    "basis": "swall: GlStateManager._colorMask(red, green, blue, alpha) became _colorMask(mask), the same GL state call from the same command encoder; the four flags are one bit mask now"
+  },
+  "net/minecraft/class_338.method_1805(Lnet/minecraft/class_338$class_12233;IIZ)V": {
+   "to": "extractRenderState(Lnet/minecraft/class_338$class_12233;IILnet/minecraft/class_338$DisplayMode;)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "ChatComponent's private chat drawing (access, height, tickCount, focused) is 26.1's private extractRenderState(access, height, tickCount, DisplayMode): the same body, the focused flag read off the mode (foreground)"
+  },
+  "net/minecraft/class_7743.method_45655(Lnet/minecraft/class_332;)V": {
+   "to": "extractSignText(Lnet/minecraft/class_332;Lorg/joml/Vector2f;)V",
+   "args": [
+    0
+   ],
+   "basis": "AbstractSignEditScreen's sign text drawing (renderSignText) is 26.1's extractSignText(graphics, scale): the same body, the text scale now passed in"
+  },
+  "net/minecraft/class_5682.method_62009(Lnet/minecraft/class_327;Lnet/minecraft/class_332;III)V": {
+   "to": "extractSelectedItemTooltip(Lnet/minecraft/class_327;Lnet/minecraft/class_332;III)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "ClientBundleTooltip.renderSelectedItemTooltip is 26.1's extractSelectedItemTooltip, same arguments and body"
+  },
+  "net/minecraft/class_5682.method_62017(Lnet/minecraft/class_327;IIIILnet/minecraft/class_332;)V": {
+   "to": "extractBundleWithItemsTooltip(Lnet/minecraft/class_327;IIIILnet/minecraft/class_332;Lorg/apache/commons/lang3/math/Fraction;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "basis": "ClientBundleTooltip.renderBundleWithItemsTooltip is 26.1's extractBundleWithItemsTooltip; 26.1 passes the bundle's weight as a Fraction it read inside before"
+  },
+  "net/minecraft/class_5682.method_62006(IIILjava/util/List;ILnet/minecraft/class_327;Lnet/minecraft/class_332;)V": {
+   "to": "extractSlot(IIILjava/util/List;ILnet/minecraft/class_327;Lnet/minecraft/class_332;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "ClientBundleTooltip.renderSlot is 26.1's extractSlot, same arguments and body"
+  },
+  "net/minecraft/class_310.method_1511()V": {
+   "to": "pickBlockOrEntity()V",
+   "args": [],
+   "basis": "Minecraft.pickBlock is 26.1's pickBlockOrEntity, the same body (middle-click pick)"
+  },
+  "net/minecraft/class_4910.method_25660(Lnet/minecraft/class_2248;Lnet/minecraft/class_2960;)V": {
+   "to": "createAirLikeBlock(Lnet/minecraft/class_2248;Lnet/minecraft/client/resources/model/sprite/Material;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "BlockModelGenerators.createAirLikeBlock(block, particle texture id) is 26.1's createAirLikeBlock(block, particle Material): the same body, the texture as a Material"
+  },
+  "net/minecraft/class_775.method_40079(Lnet/minecraft/class_1920;Lnet/minecraft/class_3611;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)F": {
+   "to": "getHeight(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_3611;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)F",
+   "args": [
+    -1,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "LiquidBlockRenderer's private fluid height is 26.1's FluidRenderer.getHeight with the same body; its level is 26.1's client BlockAndTintGetter"
+  },
+  "net/minecraft/class_4184.method_36425()Lnet/minecraft/class_4184$class_6355;": {
+   "to": "method_36425(F)Lnet/minecraft/class_4184$class_6355;",
+   "args": [],
+   "basis": "Camera.getNearPlane() is 26.1's getNearPlane(fov): the same body (the near plane's four corners from the camera's axes), the field of view now passed in by its caller instead of read from the options and the near distance read from the camera's projection instead of the 0.05 constant; vanilla calls it from getFluidInCamera, as 1.21.11 did"
   }
  },
  "lambdaAdapters": {
@@ -3317,5 +3400,14 @@
  "instanceFieldSetters": {
   "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#setDisplayBlockState",
   "net/minecraft/class_11966.field_62726:Ljava/util/EnumSet;": "top/dext/centurybridge/step/v26_1/rt/CbWallEndPortalStates#setFacesToShow"
+ },
+ "fieldRenames": {
+  "net/minecraft/class_4643$class_4644.field_29283:Lnet/minecraft/class_4651;": "belowTrunkProvider",
+  "net/minecraft/class_2454.field_40647:Lnet/minecraft/class_7800;": "craftingCategory",
+  "net/minecraft/class_2454.field_40648:Lnet/minecraft/class_7709;": "cookingCategory",
+  "net/minecraft/class_3002.field_13441:Lnet/minecraft/class_2960;": "customId",
+  "net/minecraft/class_10500.field_55427:Lnet/minecraft/class_4730;": "sprite",
+  "net/minecraft/class_10511.field_55447:Lnet/minecraft/class_4730;": "sprite",
+  "net/minecraft/class_9955.field_53056:Lnet/minecraft/class_4063;": "prevCloudStatus"
  }
 }

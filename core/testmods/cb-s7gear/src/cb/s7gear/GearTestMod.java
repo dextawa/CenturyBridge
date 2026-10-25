@@ -207,6 +207,8 @@ public class GearTestMod implements ModInitializer {
         section("datagen", () -> datagen(server));
         section("restoredMixins", GearTestMod::restoredMixins);
         section("restoredMixinsRecipes", () -> restoredMixinsRecipes(server));
+        section("tagReload", () -> tagReload(server));
+        section("equipmentReads", () -> equipmentReads(server));
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -980,6 +982,87 @@ public class GearTestMod implements ModInitializer {
         String provided = written.getOrDefault("data/cb_s7gear/tags/item/provided.json", "");
         check(provided.contains("\"replace\": true") && provided.contains("minecraft:gravel"),
             "FabricProvidedTagBuilder.setReplace / removeAll: " + provided);
+    }
+
+    /** what BindTagsMixin saw of each item-registry bind (tag count, planks present) */
+    public static final List<String> SEEN_BINDS = java.util.Collections.synchronizedList(new ArrayList<>());
+
+    static final class_6862<class_1792> MIXIN_BOUND = class_6862.method_40092(net.minecraft.class_7924.field_41197,
+        class_2960.method_60655("cbs7gear", "mixin_bound"));
+
+    /** every minecraft: tag of the item and block registries with its members, sorted: the bound tag contents */
+    static String tagFingerprint() {
+        List<String> lines = new ArrayList<>();
+        for (class_2378<?> reg : List.<class_2378<?>>of(class_7923.field_41178, class_7923.field_41175)) {
+            reg.method_40272().forEach(p -> {
+                if (!p.getFirst().comp_327().method_12836().equals("minecraft")) {
+                    return;
+                }
+                List<String> ids = new ArrayList<>();
+                p.getSecond().method_40239().forEach(h -> ids.add(String.valueOf(h.method_40230().map(k -> k.method_29177()).orElse(null))));
+                java.util.Collections.sort(ids);
+                lines.add(reg.method_30517().method_29177() + " " + p.getFirst().comp_327() + "=" + String.join(",", ids));
+            });
+        }
+        java.util.Collections.sort(lines);
+        return lines.size() + " tags, hash " + Integer.toHexString(String.join("|", lines).hashCode());
+    }
+
+    /**
+     * BindTagsMixin (a 1.21.1 mixin on MappedRegistry.bindTags) against vanilla's tag loading: at startup and after a
+     * /reload it sees vanilla's bind of the item tags and its own tag is bound; the minecraft: tag contents are printed
+     * (CB-TAGTEST fingerprint) to compare with a boot whose layer route is off (-Dcb.step1_21_2.noTagRoute=true)
+     */
+    static void tagReload(MinecraftServer server) {
+        boolean routeOff = Boolean.getBoolean("cb.step1_21_2.noTagRoute");
+        System.out.println("CB-TAGTEST startup fingerprint " + tagFingerprint() + (routeOff ? " (route off)" : ""));
+        int before = SEEN_BINDS.size();
+        boolean bound = class_7923.field_41178.method_47983(class_1802.field_8600).method_40220(MIXIN_BOUND);
+        if (!routeOff) {
+            check(before > 0 && SEEN_BINDS.get(0).endsWith(" planks"),
+                "mixin on MappedRegistry.bindTags: sees vanilla's item tag bind at startup: " + SEEN_BINDS);
+            check(bound, "mixin on MappedRegistry.bindTags: the tag it adds (cbs7gear:mixin_bound) is bound to the stick");
+        }
+        server.method_29439(server.method_3836().method_29210()).thenRun(() -> {
+            System.out.println("CB-TAGTEST reload fingerprint " + tagFingerprint() + (routeOff ? " (route off)" : ""));
+            if (!routeOff) {
+                boolean seen = SEEN_BINDS.size() > before && SEEN_BINDS.get(SEEN_BINDS.size() - 1).endsWith(" planks");
+                boolean still = class_7923.field_41178.method_47983(class_1802.field_8600).method_40220(MIXIN_BOUND);
+                System.out.println("CB-TAGTEST " + (seen ? "ok   " : "FAIL ") + "after /reload the mixin saw vanilla's item tag bind again: " + SEEN_BINDS);
+                System.out.println("CB-TAGTEST " + (still ? "ok   " : "FAIL ") + "after /reload cbs7gear:mixin_bound is bound to the stick");
+                System.out.println("CB-TAGTEST " + (class_1802.field_8118.method_40131().method_40220(net.minecraft.class_3489.field_15537) ? "ok   " : "FAIL ")
+                    + "after /reload vanilla's own tags hold (oak planks in #planks)");
+            }
+            System.out.println("CB-TAGTEST DONE");
+        });
+    }
+
+    /** the equip sound 1.21.2's onEquipItem plays: the stack's EQUIPPABLE.equipSound (read by reflection: no 1.21.1 API) */
+    static Object equipSound(class_1799 stack) throws Exception {
+        Object type = Class.forName("net.minecraft.class_9334").getField("field_54196").get(null);
+        Object eq = class_1799.class.getMethod("method_57824", Class.forName("net.minecraft.class_9331")).invoke(stack, type);
+        return eq == null ? null : eq.getClass().getMethod("comp_3175").invoke(eq);
+    }
+
+    /**
+     * ArmorEquipMixin / ShieldEquipMixin (1.21.1 mixins on ArmorItem / ShieldItem getEquipmentSlot and getEquipSound)
+     * against 1.21.2's own reads: LivingEntity.getEquipmentSlotForItem and the EQUIPPABLE sound onEquipItem plays
+     */
+    static void equipmentReads(MinecraftServer server) throws Exception {
+        class_3222 player = player(server);
+        check(player.method_32326(new class_1799(class_1802.field_8267)) == class_1304.field_6174,
+            "mixin on ArmorItem.getEquipmentSlot: vanilla's getEquipmentSlotForItem puts the leather helmet on the chest");
+        check(player.method_32326(new class_1799(class_1802.field_8743)) == class_1304.field_6169,
+            "an unmixed armor item (iron helmet) still goes to the head");
+        check(player.method_32326(new class_1799(class_1802.field_8058)) == class_1304.field_6174,
+            "an unmixed armor item (diamond chestplate) still goes to the chest");
+        check(player.method_32326(new class_1799(class_1802.field_8255)) == class_1304.field_6169,
+            "mixin on ShieldItem.getEquipmentSlot: vanilla's getEquipmentSlotForItem puts the shield on the head");
+        check(equipSound(new class_1799(class_1802.field_8753)) == net.minecraft.class_3417.field_14966,
+            "mixin on ArmorItem.getEquipSound: the equip sound vanilla plays for golden boots is the elytra's: "
+                + equipSound(new class_1799(class_1802.field_8753)));
+        check(equipSound(new class_1799(class_1802.field_8660)) == net.minecraft.class_3417.field_14862,
+            "an unmixed armor item (iron boots) keeps its own equip sound: " + equipSound(new class_1799(class_1802.field_8660)));
     }
 
 }

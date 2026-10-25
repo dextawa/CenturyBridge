@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import top.dext.centurybridge.step.v26_1.rt.CbWallContainerBackground;
 
 /**
@@ -30,6 +31,14 @@ public abstract class CbWallContainerScreenBgMixin extends Screen implements CbW
         renderBg(graphics, partialTick, mouseX, mouseY);
     }
 
+    /**
+     * 1.21.11 AbstractContainerScreen.renderBackground (class_465.method_25420): 26.1's AbstractContainerScreen declares
+     * no extractBackground, so this override sits between Screen's and every container screen's: vanilla's
+     * Screen.extractRenderStateWithTooltipAndSubtitles calls extractBackground, and 26.1's container screens
+     * (ContainerScreen, AbstractRecipeBookScreen's subclasses, ...) call super.extractBackground first.
+     */
+    @CbVanillaReads("CbWallContainerScreenBgMixin: Screen.extractRenderStateWithTooltipAndSubtitles calls extractBackground, "
+        + "and 26.1's container screens' own extractBackground call super into this override before drawing their texture")
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         if (CbWallContainerBackground.textureOnly(this)) {

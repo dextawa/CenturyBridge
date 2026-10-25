@@ -484,6 +484,11 @@ public final class MixinJudge {
                     // (--source in the names W's members have, i.e. not past the wall; proven by name), a mixin on it
                     // changed only its callers in V too, as it does now
                     why = "restored-member: vanilla path unmixed";
+                } else if (why == null && restoring != null && restoring.carries(wm) != null
+                        && !LayerMembers.carried(restoring.carries(wm), an, MixinRepair.values(an))) {
+                    // vanilla's read path reaches the restored member only for what the marker names (its answer
+                    // at HEAD/RETURN, say), not the body this injector acts inside or on
+                    why = "restored-member: vanilla path partial";
                 }
                 if (why == null) {
                     return null;

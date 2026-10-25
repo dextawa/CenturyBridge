@@ -5,7 +5,10 @@
   "minVersion": "0.8",
   "mixins": [
     "EnchantValueMixin",
-    "IngredientItemsMixin"
+    "IngredientItemsMixin",
+    "BindTagsMixin",
+    "ArmorEquipMixin",
+    "ShieldEquipMixin"
   ],
   "injectors": {
     "defaultRequire": 1
