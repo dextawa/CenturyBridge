@@ -1223,8 +1223,14 @@ class Table:
                 same_simple = w in same_named
                 unique_name = same_simple and len(same_named) == 1
                 # a simple name corrected in its spelling (26.2: InstantenousMobEffect -> InstantaneousMobEffect,
-                # one letter) corroborates as the same name does
+                # one letter) only corroborates bytecode evidence, never decides on its own: the pair must
+                # already be the best member overlap (dice >= 0.6, ahead of the next candidate) AND have
+                # code saying so -- a body that is the same code (same_bodies), a body elsewhere voting for
+                # the pair, or three members or more matched by name and descriptor. What the name buys is
+                # only the margin rule (d - second >= 0.25) of the name-free member clause below.
                 near_simple = not same_simple and spelling_fix(simple(c), simple(w))
+                near_evidence = near_simple and d >= 0.6 and second < d and (
+                    m >= 3 or nv >= 1 or self.same_bodies(c, w) >= 1)
                 # A move is a claim that the class IS the other one (every reference follows it), so a
                 # wrong one merges two types: the evidence must be specific. Bodies that are the same
                 # code naming it (votes) are; members are when there are enough of them and nothing
@@ -1253,7 +1259,7 @@ class Table:
                         child is not None or
                         (unanimous and nv >= 2 and d >= 0.25 and second < d) or
                         (same_simple and d >= 0.4 and m >= 1 and second < d) or
-                        (near_simple and d >= 0.6 and m >= 1 and second < d) or
+                        near_evidence or
                         (unique_name and m >= 1 and (d >= 0.25 or unanimous)) or
                         (d >= 0.6 and m >= 3 and d - second >= 0.25) or
                         (followed and (d >= 0.3 or t + nw == 0 or unanimous))):
@@ -1261,6 +1267,7 @@ class Table:
                     self.claimed[w] = c
                     self.ren_basis["class " + c] = (f"members {m}/{t} vs {nw} (dice {d:.2f}, 2nd {second:.2f}), "
                                                    f"body votes {nv}/{votes_all}" + (", follows its outer class" if followed else "")
+                                                   + (", simple name a spelling correction" if near_simple else "")
                                                    + (parent if child is not None else ""))
                     changed += 1
                 else:
