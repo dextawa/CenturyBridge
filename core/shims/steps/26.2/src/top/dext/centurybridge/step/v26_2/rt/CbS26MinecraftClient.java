@@ -96,4 +96,20 @@ public final class CbS26MinecraftClient {
     public static Identifier ALT_FONT() {
         return ALT_FONT;
     }
+
+    /**
+     * 26.1.2 Minecraft.destroy(): "Stopping!", the narrator destroyed, the level left, the screen removed, close();
+     * finally the time source back to System::nanoTime and the process exited (status 0) unless a delayed crash was
+     * pending. 26.2's exitWorldAndClose is that body without the narrator (26.2's close() destroys it) and without the
+     * ending: 26.2's Main shuts the process down after it. 26.2 has no delayed crash (its crash path exits at once), so
+     * the layer always exits, as 26.1.2 did with none pending.
+     */
+    public static void destroy(Minecraft self) {
+        try {
+            self.exitWorldAndClose();
+        } finally {
+            net.minecraft.util.Util.setTimeSource(System::nanoTime);
+            System.exit(0);
+        }
+    }
 }

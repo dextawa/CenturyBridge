@@ -1,0 +1,328 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_1130.method_14586(Ljava/net/SocketAddress;Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_2561;": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Ljava/net/SocketAddress;Lnet/minecraft/class_11560;)Lnet/minecraft/class_2561;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_1132.method_19466(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3174.method_14582(Lcom/mojang/authlib/GameProfile;)V": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3174.method_14587(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3174.method_14604(Lcom/mojang/authlib/GameProfile;)V": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3174.method_14609(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3176.method_19466(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3312.method_14508(Lcom/mojang/authlib/GameProfile;)V": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3324.method_14569(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3324.method_14582(Lcom/mojang/authlib/GameProfile;)V": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3324.method_14586(Ljava/net/SocketAddress;Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_2561;": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Ljava/net/SocketAddress;Lnet/minecraft/class_11560;)Lnet/minecraft/class_2561;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3324.method_14587(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3324.method_14604(Lcom/mojang/authlib/GameProfile;)V": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3324.method_14609(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3326.method_14619(Lcom/mojang/authlib/GameProfile;)Ljava/lang/String;": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Ljava/lang/String;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3326.method_14620(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3335.method_14649(Lcom/mojang/authlib/GameProfile;)Ljava/lang/String;": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Ljava/lang/String;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3335.method_14650(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3337.method_14652(Lcom/mojang/authlib/GameProfile;)Ljava/lang/String;": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Ljava/lang/String;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3337.method_14653(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_6306.method_19466(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/server/MinecraftServer.method_19466(Lcom/mojang/authlib/GameProfile;)Z": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/server/MinecraftServer.method_3835(Lcom/mojang/authlib/GameProfile;)I": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)I",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  }
+ },
+ "fieldGetters": {
+  "net/minecraft/server/MinecraftServer.field_35641:Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles"
+ },
+ "overrideHooks": [
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14508(Lnet/minecraft/class_11560;)V",
+   "old": "method_14508(Lcom/mojang/authlib/GameProfile;)V",
+   "onlyUnder": "net/minecraft/class_3312",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14569(Lnet/minecraft/class_11560;)Z",
+   "old": "method_14569(Lcom/mojang/authlib/GameProfile;)Z",
+   "onlyUnder": "net/minecraft/class_3324",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14582(Lnet/minecraft/class_11560;)V",
+   "old": "method_14582(Lcom/mojang/authlib/GameProfile;)V",
+   "onlyUnder": "net/minecraft/class_3324",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14586(Ljava/net/SocketAddress;Lnet/minecraft/class_11560;)Lnet/minecraft/class_2561;",
+   "old": "method_14586(Ljava/net/SocketAddress;Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_2561;",
+   "onlyUnder": "net/minecraft/class_3324",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14587(Lnet/minecraft/class_11560;)Z",
+   "old": "method_14587(Lcom/mojang/authlib/GameProfile;)Z",
+   "onlyUnder": "net/minecraft/class_3324",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14604(Lnet/minecraft/class_11560;)V",
+   "old": "method_14604(Lcom/mojang/authlib/GameProfile;)V",
+   "onlyUnder": "net/minecraft/class_3324",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14609(Lnet/minecraft/class_11560;)Z",
+   "old": "method_14609(Lcom/mojang/authlib/GameProfile;)Z",
+   "onlyUnder": "net/minecraft/class_3324",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14619(Lnet/minecraft/class_11560;)Ljava/lang/String;",
+   "old": "method_14619(Lcom/mojang/authlib/GameProfile;)Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_3326",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14620(Lnet/minecraft/class_11560;)Z",
+   "old": "method_14620(Lcom/mojang/authlib/GameProfile;)Z",
+   "onlyUnder": "net/minecraft/class_3326",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14649(Lnet/minecraft/class_11560;)Ljava/lang/String;",
+   "old": "method_14649(Lcom/mojang/authlib/GameProfile;)Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_3335",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14650(Lnet/minecraft/class_11560;)Z",
+   "old": "method_14650(Lcom/mojang/authlib/GameProfile;)Z",
+   "onlyUnder": "net/minecraft/class_3335",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14652(Lnet/minecraft/class_11560;)Ljava/lang/String;",
+   "old": "method_14652(Lcom/mojang/authlib/GameProfile;)Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_3337",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14653(Lnet/minecraft/class_11560;)Z",
+   "old": "method_14653(Lcom/mojang/authlib/GameProfile;)Z",
+   "onlyUnder": "net/minecraft/class_3337",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_19466(Lnet/minecraft/class_11560;)Z",
+   "old": "method_19466(Lcom/mojang/authlib/GameProfile;)Z",
+   "onlyUnder": "net/minecraft/server/MinecraftServer",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  },
+  {
+   "basis": "s9 profile: vanilla calls the NameAndId shape; the old override gets a GameProfile (CbProfiles.toProfile: the online player's own, else id and name)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_3835(Lnet/minecraft/class_11560;)I",
+   "old": "method_3835(Lcom/mojang/authlib/GameProfile;)I",
+   "onlyUnder": "net/minecraft/server/MinecraftServer",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbProfiles.toProfile(Lnet/minecraft/class_11560;)Lcom/mojang/authlib/GameProfile;"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_3327.<init>(Lcom/mojang/authlib/GameProfile;IZ)V": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;IZ)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_3336.<init>(Lcom/mojang/authlib/GameProfile;)V": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  },
+  "net/minecraft/class_3336.<init>(Lcom/mojang/authlib/GameProfile;Ljava/util/Date;Ljava/lang/String;Ljava/util/Date;Ljava/lang/String;)V": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;Ljava/util/Date;Ljava/lang/String;Ljava/util/Date;Ljava/lang/String;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_3340.<init>(Lcom/mojang/authlib/GameProfile;)V": {
+   "basis": "s9 profile: 1.21.9 takes the id and name (NameAndId) where 1.21.8 took the GameProfile",
+   "desc": "(Lnet/minecraft/class_11560;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfiles#toNameAndId(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_11560;"
+   ]
+  }
+ }
+}

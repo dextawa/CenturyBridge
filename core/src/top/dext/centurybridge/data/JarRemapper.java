@@ -76,6 +76,97 @@ public final class JarRemapper {
         public final java.util.Map<String, String[]> jarSupers = new java.util.HashMap<>();
 
         /**
+         * The input jar's mixins (class name as in the input -> its @Mixin targets, value and targets alike) and the
+         * members each declares @Shadow / @Overwrite: filled by {@link #remapWithTable} before the rename, empty for
+         * every other consumer. A mixin built without a refmap names the target's members by their intermediary ids
+         * in its own declarations (a @Shadow field_11515) and in its own references to them (getfield
+         * Mixin.field_11515): the owner is the mixin class, which no table row names, so they kept the token across
+         * the wall -- for CenturyBridge's climbed layers always (their classes keep token names on purpose), for a
+         * mod's whenever the id is ambiguous in the bare-name map -- and Mixin refused the shadow at apply ("not
+         * located in the target class ... No refMap loaded"). With these, a member of a mixin class whose id the
+         * table holds for one of the mixin's targets takes that target's name, and a declared @Shadow / @Overwrite
+         * the targets do not hold falls back to the bare-name map as a mod's member does.
+         */
+        public final java.util.Map<String, java.util.List<String>> mixinTargets = new java.util.HashMap<>();
+        public final java.util.Map<String, java.util.Set<String>> mixinShadows = new java.util.HashMap<>();
+
+        /**
+         * The source release's methods (intermediary owner -> id -> its descriptors), when the conversion has the
+         * source code jar ({@link #loadSource}). A selector naming a method by id alone was unique in intermediary
+         * (every method its own id) and need not be in mojang names: 1.21.11's BlockItem has method_7710 (instance)
+         * and method_7714 (static), both updateCustomBlockEntityTag on 26.1, and Mixin takes the first method of a
+         * bare name -- a @Redirect aimed at the static's call scanned the instance method and found nothing
+         * (Critical injection failure, the server did not start). Such a selector gets the descriptor its id had.
+         */
+        public java.util.Map<String, java.util.Map<String, java.util.Set<String>>> sourceMethods;
+
+        public void loadSource(Path sourceJar) throws IOException {
+            sourceMethods = new java.util.HashMap<>();
+            try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(sourceJar))) {
+                ZipEntry e;
+                while ((e = zin.getNextEntry()) != null) {
+                    if (!e.getName().endsWith(".class")) {
+                        continue;
+                    }
+                    ClassReader cr = new ClassReader(zin.readAllBytes());
+                    String owner = cr.getClassName();
+                    cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                        @Override
+                        public org.objectweb.asm.MethodVisitor visitMethod(int acc, String n, String d, String s, String[] x) {
+                            if (n.startsWith("method_") || n.startsWith("comp_")) {
+                                sourceMethods.computeIfAbsent(owner, k -> new java.util.HashMap<>())
+                                    .computeIfAbsent(n, k -> new java.util.TreeSet<>()).add(d);
+                            }
+                            return null;
+                        }
+                    }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                }
+            }
+        }
+
+        /**
+         * The descriptor to write after a bare method id of {@code owner} renamed to {@code moj}: its source
+         * descriptor, renamed, when the target class has more than one method of that name; null otherwise.
+         */
+        String disambiguation(String owner, String id, String moj) {
+            if (sourceMethods == null || targetMethods == null || id.startsWith("field_")) {
+                return null;
+            }
+            java.util.Set<String> descs = sourceMethods.getOrDefault(owner, java.util.Map.of()).get(id);
+            if (descs == null || descs.size() != 1) {
+                return null;
+            }
+            Remapper r = remapper();
+            java.util.Set<String> ms = targetMethods.get(r.map(owner));
+            if (ms == null) {
+                return null;
+            }
+            int same = 0;
+            for (String nd : ms) {
+                if (nd.startsWith(moj + "(")) {
+                    same++;
+                }
+            }
+            return same > 1 ? r.mapMethodDesc(descs.iterator().next()) : null;
+        }
+
+        /** the target's name for a member of mixin {@code owner}, or null when it is not a mixin member the table maps */
+        String mixinMember(String owner, String name) {
+            java.util.List<String> targets = mixinTargets.get(owner);
+            if (targets == null) {
+                return null;
+            }
+            for (String t : targets) {
+                String hit = byOwner.get(t + "." + name);
+                if (hit != null) {
+                    return hit;
+                }
+            }
+            java.util.Set<String> shadows = mixinShadows.get(owner);
+            return shadows != null && shadows.contains(name) ? members.get(name) : null;
+        }
+
+        /**
          * Tokens only the step's facade classes declare keep their names across the wall. A class the
          * step retires into a CB facade ({@code classRenames} to a top/dext/centurybridge/ class) keeps
          * its members' intermediary names -- the facade declares them so, and a reference naming the
@@ -233,6 +324,11 @@ public final class JarRemapper {
                 }
 
                 private String member(String owner, String name) {
+                    // a mixin's own member standing for one of its target's (mixinTargets)
+                    String mx = mixinMember(owner, name);
+                    if (mx != null) {
+                        return mx;
+                    }
                     // our runtime classes (Statics, facades, tombstones) keep their
                     // token-named members: the converter wired call sites to them
                     // by exactly that name, and nothing in the game maps them
@@ -375,6 +471,9 @@ public final class JarRemapper {
 
     /** as above, with a loaded table (the conversion's, facade tokens kept: {@link Table#keepFacadeTokens}) */
     public static void remapWithTable(Table table, Path inJar, Path outJar, Path targetJar) throws IOException {
+        try (java.io.InputStream in = Files.newInputStream(inJar)) {
+            collectMixins(table, in);
+        }
         if (targetJar != null && Files.exists(targetJar)) {
             table.targetKinds = loadKinds(targetJar);
             loadTarget(table, targetJar);
@@ -395,23 +494,131 @@ public final class JarRemapper {
      * owner a preceding "L<owner>;" names), then class names.
      */
     static String renameText(String text, Table table) {
+        return renameText(text, table, null);
+    }
+
+    /**
+     * As above; {@code context}: the @Mixin targets of the class whose annotation the text is (null: none). An id
+     * written without an owner (an @Accessor / @Invoker value, a method= selector) is looked up under each target
+     * first, as the class files' pass looks up the mixin's own members ({@link Table#mixinMember}); a dotted class
+     * name (Mixin's targets = "net.minecraft.class_N$class_M") is renamed like the internal form.
+     */
+    static String renameText(String text, Table table, java.util.List<String> context) {
         Remapper remapper = table.remapper();
         text = MEMBER_TOKEN.matcher(text).replaceAll(mr -> {
             String owner = mr.group(1);
             String id = mr.group(2);
             String desc = mr.group(3);
             String moj = owner != null ? table.byOwner.get(owner + "." + id) : null;
+            String ctxOwner = null;
+            if (owner == null && context != null) {
+                for (String t : context) {
+                    String hit = table.byOwner.get(t + "." + id);
+                    if (hit != null) {
+                        moj = hit;
+                        ctxOwner = t;
+                        break;
+                    }
+                }
+            }
             if (moj == null) {
                 moj = table.members.getOrDefault(id, id);
             }
-            if (owner != null && desc != null && table.targetMethods != null && !id.startsWith("field_")) {
+            String descOwner = owner != null ? owner : ctxOwner;
+            if (descOwner != null && desc != null && table.targetMethods != null && !id.startsWith("field_")) {
                 // a reused id resolves by the descriptor written after it, as the class files' pass does
-                moj = remapper.mapMethodName(owner, id, desc);
+                moj = remapper.mapMethodName(descOwner, id, desc);
+            }
+            if (descOwner != null && desc == null) {
+                // a bare id that was unique in intermediary and is not in the target's names: Mixin would take
+                // the first method of the name (Table.sourceMethods)
+                String d = table.disambiguation(descOwner, id, moj);
+                if (d != null) {
+                    desc = d;
+                }
             }
             return java.util.regex.Matcher.quoteReplacement((owner != null ? "L" + owner + ";" : "") + moj + (desc != null ? desc : ""));
         });
+        text = DOTTED_CLASS_TOKEN.matcher(text).replaceAll(mr -> java.util.regex.Matcher.quoteReplacement(
+            remapper.map(mr.group().replace('.', '/')).replace('/', '.')));
         return CLASS_TOKEN.matcher(text).replaceAll(
             mr -> java.util.regex.Matcher.quoteReplacement(remapper.map(mr.group())));
+    }
+
+    /** an intermediary class name in Mixin's dotted form (@Mixin targets strings) */
+    private static final java.util.regex.Pattern DOTTED_CLASS_TOKEN =
+        java.util.regex.Pattern.compile("net\\.minecraft\\.class_\\d+(?:\\$[\\w$]+)?");
+
+    /**
+     * The input jar's mixin classes, their targets and their @Shadow / @Overwrite members ({@link Table#mixinTargets}),
+     * nested jars included (they take the same table).
+     */
+    private static void collectMixins(Table table, java.io.InputStream in) throws IOException {
+        ZipInputStream zin = new ZipInputStream(in);
+        ZipEntry e;
+        while ((e = zin.getNextEntry()) != null) {
+            String n = e.getName();
+            if (n.startsWith("META-INF/jars/") && n.endsWith(".jar")) {
+                collectMixins(table, new java.io.ByteArrayInputStream(zin.readAllBytes()));
+                continue;
+            }
+            if (!n.endsWith(".class")) {
+                continue;
+            }
+            org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+            new ClassReader(zin.readAllBytes()).accept(cn, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+            org.objectweb.asm.tree.AnnotationNode mixin = annotation(cn.invisibleAnnotations, MIXIN_DESC);
+            if (mixin == null) {
+                mixin = annotation(cn.visibleAnnotations, MIXIN_DESC);
+            }
+            if (mixin == null || mixin.values == null) {
+                continue;
+            }
+            java.util.List<String> targets = new java.util.ArrayList<>();
+            for (int i = 0; i + 1 < mixin.values.size(); i += 2) {
+                Object v = mixin.values.get(i + 1);
+                if (v instanceof java.util.List<?> l) {
+                    for (Object o : l) {
+                        if (o instanceof org.objectweb.asm.Type t) {
+                            targets.add(t.getInternalName());
+                        } else if (o instanceof String s && "targets".equals(mixin.values.get(i))) {
+                            targets.add(s.replace('.', '/'));
+                        }
+                    }
+                }
+            }
+            java.util.Set<String> shadows = new java.util.HashSet<>();
+            for (org.objectweb.asm.tree.FieldNode f : cn.fields) {
+                if (shadowOrOverwrite(f.visibleAnnotations) || shadowOrOverwrite(f.invisibleAnnotations)) {
+                    shadows.add(f.name);
+                }
+            }
+            for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                if (shadowOrOverwrite(m.visibleAnnotations) || shadowOrOverwrite(m.invisibleAnnotations)) {
+                    shadows.add(m.name);
+                }
+            }
+            table.mixinTargets.put(cn.name, targets);
+            table.mixinShadows.put(cn.name, shadows);
+        }
+    }
+
+    private static final String MIXIN_DESC = "Lorg/spongepowered/asm/mixin/Mixin;";
+
+    private static org.objectweb.asm.tree.AnnotationNode annotation(java.util.List<org.objectweb.asm.tree.AnnotationNode> l, String desc) {
+        if (l != null) {
+            for (org.objectweb.asm.tree.AnnotationNode a : l) {
+                if (a.desc.equals(desc)) {
+                    return a;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static boolean shadowOrOverwrite(java.util.List<org.objectweb.asm.tree.AnnotationNode> l) {
+        return annotation(l, "Lorg/spongepowered/asm/mixin/Shadow;") != null
+            || annotation(l, "Lorg/spongepowered/asm/mixin/Overwrite;") != null;
     }
 
     /**
@@ -424,10 +631,12 @@ public final class JarRemapper {
     private static org.objectweb.asm.ClassVisitor mixinStrings(org.objectweb.asm.ClassVisitor next, Table table) {
         java.util.function.Function<org.objectweb.asm.AnnotationVisitor, org.objectweb.asm.AnnotationVisitor>[] wrap =
             new java.util.function.Function[1];
+        // the class being visited: its @Mixin targets are the owner of an id its annotations write without one
+        java.util.List<String>[] context = new java.util.List[1];
         wrap[0] = av -> new org.objectweb.asm.AnnotationVisitor(org.objectweb.asm.Opcodes.ASM9, av) {
             @Override
             public void visit(String name, Object value) {
-                super.visit(name, value instanceof String s ? renameText(s, table) : value);
+                super.visit(name, value instanceof String s ? renameText(s, table, context[0]) : value);
             }
 
             @Override
@@ -446,6 +655,12 @@ public final class JarRemapper {
             (desc, av) -> av != null && (desc.startsWith("Lorg/spongepowered/asm/mixin/")
                 || desc.startsWith("Lcom/llamalad7/mixinextras/")) ? wrap[0].apply(av) : av;
         return new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9, next) {
+            @Override
+            public void visit(int version, int access, String name, String sig, String superName, String[] ifs) {
+                context[0] = table.mixinTargets.get(name);
+                super.visit(version, access, name, sig, superName, ifs);
+            }
+
             @Override
             public org.objectweb.asm.AnnotationVisitor visitAnnotation(String desc, boolean visible) {
                 return top.apply(desc, super.visitAnnotation(desc, visible));

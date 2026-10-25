@@ -1,0 +1,15 @@
+{
+ "returnConverters": {
+  "net/minecraft/class_1792.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": {
+   "toV": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults#holder(Lnet/minecraft/class_1269;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Ltop/dext/centurybridge/step/v1_21_2/facade/InteractionResultHolder;",
+   "toW": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults#result(Ltop/dext/centurybridge/step/v1_21_2/facade/InteractionResultHolder;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+   "with": [1, 2],
+   "basis": "Item.use answers InteractionResultHolder<ItemStack> in 1.21.1 and InteractionResult in 1.21.2; the same pair the Item.use override hook uses (CbItemResults.holder: the result's kind with the Success's stack or the hand's; CbItemResults.result: the holder as 1.21.2's result, the hand set as 1.21.1's game modes set it)"
+  },
+  "net/minecraft/class_4970.method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;": {
+   "toV": "top/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult#fromResult(Lnet/minecraft/class_1269;)Ltop/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult;",
+   "toW": "top/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult#toResult(Ltop/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult;)Lnet/minecraft/class_1269;",
+   "basis": "BlockBehaviour.useItemOn answers ItemInteractionResult in 1.21.1 and InteractionResult in 1.21.2 (TRY_WITH_EMPTY_HAND for PASS_TO_DEFAULT_BLOCK_INTERACTION, PASS for SKIP_DEFAULT); the facade's own pair, the one its useItemOn bridges use"
+  }
+ }
+}

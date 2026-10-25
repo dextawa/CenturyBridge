@@ -24,7 +24,9 @@ Ledgered (each reason is what mixin-cause verified; nothing else is):
                            the API side's work, and call-handling injectors were never searched for a stand-in
   target-moved-up-anchor   W dropped the override (MixinBridge restores it as a super call for HEAD / RETURN);
                            an anchor of V's override body has no code to stand in
-Left open (mechanisms or a step agent's judgment): the API side still open (target-api), members moved up,
+Left open (mechanisms or a step agent's judgment): moved code (moved-private-member: another W class holds the
+member's id or its code; class-moved: the class id under another outer class), the API side still open
+(target-api), members moved up,
 reshaped or only similar, anchors moved into callees with several call sites, wired anchors, counts and
 ordinals, constants with a candidate, renamed vanilla classes.
 

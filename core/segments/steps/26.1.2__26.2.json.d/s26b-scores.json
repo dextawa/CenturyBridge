@@ -1,0 +1,9 @@
+{
+  "_s26b_scores": "s26b, queue item 5: DisplaySlot.teamColorToSlot moved onto TeamColor.displaySlot() (javap of both)",
+  "staticRedirects": {
+    "net/minecraft/world/scores/DisplaySlot.teamColorToSlot(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/world/scores/DisplaySlot;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team"
+  },
+  "_redirects_basis": {
+    "net/minecraft/world/scores/DisplaySlot.teamColorToSlot(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/world/scores/DisplaySlot;": "26.1.2 switched on the ChatFormatting's ordinal: the sixteen colours to TEAM_<colour>, the formats and RESET to null (a null argument throws); 26.2 holds each slot on the TeamColor of the same name (displaySlot())"
+  }
+}

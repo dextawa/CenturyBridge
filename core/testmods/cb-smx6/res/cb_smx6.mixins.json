@@ -6,7 +6,12 @@
   "mixins": [
     "ServerDriverMixin",
     "TridentChannelingMixin",
-    "TridentAccess"
+    "TridentAccess",
+    "VillagerBookMixin",
+    "EffectTemplateMixin",
+    "OozingMixin",
+    "RecipeCacheEntryMixin",
+    "UtilOsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

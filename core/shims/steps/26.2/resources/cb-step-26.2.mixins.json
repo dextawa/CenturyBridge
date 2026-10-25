@@ -11,13 +11,24 @@
     "CbS26ProcessorRegistryMixin",
     "CbS26PlayerAdvancementsMixin",
     "CbS26FlyingAnimalMixin",
-    "CbS26BedTypeMixin"
+    "CbS26BedTypeMixin",
+    "CbS26SurfaceRulesMixin",
+    "CbS26RegistryContentsMixin",
+    "CbS26BlockFallOnMixin",
+    "CbS26SlimeFallOnMixin",
+    "CbS26BedFallOnMixin",
+    "CbS26EntityFallOnMixin"
   ],
   "client": [
     "CbS26BedLayersMixin",
     "CbS26BedRendererMixin",
     "CbS26BedSpecialMixin",
-    "CbS26BedSpritesMixin"
+    "CbS26BedSpritesMixin",
+    "CbS26SignLayersMixin",
+    "CbS26SignStateMixin",
+    "CbS26StandingSignMixin",
+    "CbS26HangingSignMixin",
+    "CbS26SignSubmitMixin"
   ],
   "server": [],
   "injectors": {
