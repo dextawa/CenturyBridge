@@ -231,6 +231,23 @@
       "basis": "BreakingItemParticle(level, x, y, z, stack): javap -c both (0.77): super(level, x, y, z, 0, 0, 0), the particle sprite set from the item's model, gravity 1, quad size halved; 1.21.4 takes the sprite from an ItemStackRenderState"
     }
   },
+  "callReshapes": {
+    "net/minecraft/class_761.method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_765;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V": {
+      "desc": "(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V",
+      "ops": ["keep", "drop", "keep", "keep", "keep"],
+      "basis": "LevelRenderer.addWeatherPass (private; mods reach it by invoker/shadow): the light texture V handed to the pass is the game renderer's own, which 1.21.4's pass reads itself (javap: the lambda no longer captures it)"
+    },
+    "net/minecraft/class_761.method_62201(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;Lnet/minecraft/class_765;FLnet/minecraft/class_9958;)V": {
+      "desc": "(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;FLnet/minecraft/class_9958;)V",
+      "ops": ["keep", "keep", "drop", "keep", "keep"],
+      "basis": "LevelRenderer.addParticlesPass (private): as addWeatherPass, the light texture is no longer passed (javap)"
+    },
+    "net/minecraft/class_8055.method_48578(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;F)V": {
+      "desc": "(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;)V",
+      "ops": ["keep", "keep", "keep", "keep", "drop"],
+      "basis": "TrimMaterials.register(context, key, item, style, itemModelIndex) (private static): 1.21.4 has no item model index for trim materials (item models select by material key), so the index has nothing to go to"
+    }
+  },
   "mixinLedger": {
     "net/minecraft/class_10328.<clinit>()V": "CreakingAnimation: 1.21.4 re-authored all creaking animations (javap <clinit>: 1058 -> 1969 significant instructions, similarity 0.24; Keyframe constructions 102 -> 192; a fourth definition, field_55089, added). V's keyframe constants and their ordinals have no counterparts in the new tables",
     "net/minecraft/class_382.method_2025(ZFFLorg/joml/Matrix4f;Lnet/minecraft/class_4588;II)V @ CONSTANT floatValue=0.0": "BakedSheetGlyph.render: V's float 0.0 sites #2..#5 (javap offsets 81/126/171/216) are the depth of the four addVertex(matrix, x, y, 0) calls; 1.21.4 passes its new z parameter there (fload), so those V sites are removed; sites #0/#1 stand"
