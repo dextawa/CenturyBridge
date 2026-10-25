@@ -1,0 +1,18 @@
+{
+  "_s26b_misc": "s26b, queue item 5: SystemToast.multiline, CrashReportCategory.formatLocation(x, y, z), AdvancementTab.extractTooltips (javap of both)",
+  "staticRedirects": {
+    "net/minecraft/client/gui/components/toasts/SystemToast.multiline(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/components/toasts/SystemToast$SystemToastId;Lnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/Component;)Lnet/minecraft/client/gui/components/toasts/SystemToast;": "top/dext/centurybridge/step/v26_2/rt/CbS26ToastsClient",
+    "net/minecraft/CrashReportCategory.formatLocation(DDD)Ljava/lang/String;": "top/dext/centurybridge/step/v26_2/rt/CbS26CrashReport"
+  },
+  "_redirects_basis": {
+    "net/minecraft/client/gui/components/toasts/SystemToast.multiline(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/components/toasts/SystemToast$SystemToastId;Lnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/Component;)Lnet/minecraft/client/gui/components/toasts/SystemToast;": "26.1.2: lines = minecraft.font.split(message, 200); new SystemToast(id, title, lines, max(200, widest line) + 30), the title one line. 26.2 dropped the method and that constructor; its toast wraps title and message at 200 and sizes on both (recalculateWidth: max(160, widest) + 30). The layer builds 26.2's toast and sets 26.1.2's title line, message lines and width",
+    "net/minecraft/CrashReportCategory.formatLocation(DDD)Ljava/lang/String;": "26.1.2: String.format(Locale.ROOT, \"%.2f,%.2f,%.2f\", x, y, z); 26.2 keeps only the LevelHeightAccessor forms"
+  },
+  "mixinTargets": {
+    "net/minecraft/client/gui/screens/advancements/AdvancementTab.extractTooltips(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIII)V": {
+      "to": "extractTooltips(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II)V",
+      "args": [0, -1, -1, 1, 2],
+      "basis": "javap: both fill the fade overlay, then draw the hovered widget's hover at the scroll offset and (x, y); 26.1.2 found the hovered widget from the mouse (mouseX, mouseY: isMouseOver over the widgets) and stepped the fade, 26.2 keeps the hovered widget in a field set elsewhere. 26.2's (graphics, x, y) are 26.1.2's arguments 0, 3, 4; anchors on the widget loop and the fade step do not follow"
+    }
+  }
+}
