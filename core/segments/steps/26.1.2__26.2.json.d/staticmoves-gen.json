@@ -2,14 +2,7 @@
  "_staticmoves_generated": "core/tools/gen_static_moves.py ... 26.1.2 26.2: static members W moved to another class, each by same code (method) or same initializer (field); regenerate, never hand-edit",
  "staticRedirects": {
   "net/minecraft/client/gui/Gui.getMobEffectSprite(Lnet/minecraft/core/Holder;)Lnet/minecraft/resources/Identifier;": "net/minecraft/client/gui/Hud",
-  "net/minecraft/client/renderer/LevelRenderer.getLightCoords(Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/core/BlockPos;)I": "net/minecraft/util/LightCoordsUtil",
-  "net/minecraft/client/renderer/blockentity/BedRenderer.modelTransform(Lnet/minecraft/core/Direction;)Lcom/mojang/math/Transformation;": "net/minecraft/client/renderer/blockentity/ShulkerBoxRenderer",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isCircleMostlyEmbeddedInStone(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/core/BlockPos;I)Z": "net/minecraft/world/level/levelgen/feature/SpeleothemUtils",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isEmptyOrWater(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z": "net/minecraft/world/level/levelgen/feature/SpeleothemUtils",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isEmptyOrWater(Lnet/minecraft/world/level/block/state/BlockState;)Z": "net/minecraft/world/level/levelgen/feature/SpeleothemUtils",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isEmptyOrWaterOrLava(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z": "net/minecraft/world/level/levelgen/feature/SpeleothemUtils",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isEmptyOrWaterOrLava(Lnet/minecraft/world/level/block/state/BlockState;)Z": "net/minecraft/world/level/levelgen/feature/SpeleothemUtils",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isNeitherEmptyNorWater(Lnet/minecraft/world/level/block/state/BlockState;)Z": "net/minecraft/world/level/levelgen/feature/SpeleothemUtils"
+  "net/minecraft/client/renderer/LevelRenderer.getLightCoords(Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/core/BlockPos;)I": "net/minecraft/util/LightCoordsUtil"
  },
  "fieldRedirects": {
   "net/minecraft/client/gui/Gui.NAUSEA_LOCATION:Lnet/minecraft/resources/Identifier;": "net/minecraft/client/gui/Hud",
@@ -227,7 +220,6 @@
   "net/minecraft/client/renderer/LevelRenderer.NEARBY_SECTION_DISTANCE_IN_BLOCKS:I": "net/minecraft/client/renderer/LevelRenderer -> net/minecraft/client/renderer/chunk/SectionRenderDispatcher: same constant value ('int', 32)",
   "net/minecraft/client/renderer/LevelRenderer.SECTION_SIZE:I": "net/minecraft/client/renderer/LevelRenderer -> net/minecraft/core/SectionPos: same constant value ('int', 16)",
   "net/minecraft/client/renderer/LevelRenderer.getLightCoords(Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/core/BlockPos;)I": "net/minecraft/client/renderer/LevelRenderer -> net/minecraft/util/LightCoordsUtil: same code",
-  "net/minecraft/client/renderer/blockentity/BedRenderer.modelTransform(Lnet/minecraft/core/Direction;)Lcom/mojang/math/Transformation;": "net/minecraft/client/renderer/blockentity/BedRenderer -> net/minecraft/client/renderer/blockentity/ShulkerBoxRenderer: same code",
   "net/minecraft/world/entity/EntityType.ACACIA_BOAT:Lnet/minecraft/world/entity/EntityType;": "net/minecraft/world/entity/EntityType -> net/minecraft/world/entity/EntityTypes: registered under the same id [\"acacia_boat\"], same type",
   "net/minecraft/world/entity/EntityType.ACACIA_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;": "net/minecraft/world/entity/EntityType -> net/minecraft/world/entity/EntityTypes: registered under the same id [\"acacia_chest_boat\"], same type",
   "net/minecraft/world/entity/EntityType.ALLAY:Lnet/minecraft/world/entity/EntityType;": "net/minecraft/world/entity/EntityType -> net/minecraft/world/entity/EntityTypes: registered under the same id [\"allay\"], same type",
@@ -432,12 +424,6 @@
   "net/minecraft/world/level/block/entity/BlockEntityType.TEST_INSTANCE_BLOCK:Lnet/minecraft/world/level/block/entity/BlockEntityType;": "net/minecraft/world/level/block/entity/BlockEntityType -> net/minecraft/world/level/block/entity/BlockEntityTypes: registered under the same id [\"test_instance_block\"], same type",
   "net/minecraft/world/level/block/entity/BlockEntityType.TRAPPED_CHEST:Lnet/minecraft/world/level/block/entity/BlockEntityType;": "net/minecraft/world/level/block/entity/BlockEntityType -> net/minecraft/world/level/block/entity/BlockEntityTypes: registered under the same id [\"trapped_chest\"], same type",
   "net/minecraft/world/level/block/entity/BlockEntityType.TRIAL_SPAWNER:Lnet/minecraft/world/level/block/entity/BlockEntityType;": "net/minecraft/world/level/block/entity/BlockEntityType -> net/minecraft/world/level/block/entity/BlockEntityTypes: registered under the same id [\"trial_spawner\"], same type",
-  "net/minecraft/world/level/block/entity/BlockEntityType.VAULT:Lnet/minecraft/world/level/block/entity/BlockEntityType;": "net/minecraft/world/level/block/entity/BlockEntityType -> net/minecraft/world/level/block/entity/BlockEntityTypes: registered under the same id [\"vault\"], same type",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isCircleMostlyEmbeddedInStone(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/core/BlockPos;I)Z": "net/minecraft/world/level/levelgen/feature/DripstoneUtils -> net/minecraft/world/level/levelgen/feature/SpeleothemUtils: same code",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isEmptyOrWater(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z": "net/minecraft/world/level/levelgen/feature/DripstoneUtils -> net/minecraft/world/level/levelgen/feature/SpeleothemUtils: same code",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isEmptyOrWater(Lnet/minecraft/world/level/block/state/BlockState;)Z": "net/minecraft/world/level/levelgen/feature/DripstoneUtils -> net/minecraft/world/level/levelgen/feature/SpeleothemUtils: same code",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isEmptyOrWaterOrLava(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z": "net/minecraft/world/level/levelgen/feature/DripstoneUtils -> net/minecraft/world/level/levelgen/feature/SpeleothemUtils: same code",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isEmptyOrWaterOrLava(Lnet/minecraft/world/level/block/state/BlockState;)Z": "net/minecraft/world/level/levelgen/feature/DripstoneUtils -> net/minecraft/world/level/levelgen/feature/SpeleothemUtils: same code",
-  "net/minecraft/world/level/levelgen/feature/DripstoneUtils.isNeitherEmptyNorWater(Lnet/minecraft/world/level/block/state/BlockState;)Z": "net/minecraft/world/level/levelgen/feature/DripstoneUtils -> net/minecraft/world/level/levelgen/feature/SpeleothemUtils: same code"
+  "net/minecraft/world/level/block/entity/BlockEntityType.VAULT:Lnet/minecraft/world/level/block/entity/BlockEntityType;": "net/minecraft/world/level/block/entity/BlockEntityType -> net/minecraft/world/level/block/entity/BlockEntityTypes: registered under the same id [\"vault\"], same type"
  }
 }

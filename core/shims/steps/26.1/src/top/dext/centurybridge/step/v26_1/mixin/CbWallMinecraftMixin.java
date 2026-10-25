@@ -34,9 +34,10 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallGameRenderer;
  *     ItemFeatureRenderer's).</li>
  * <li>getChatStatus(): 1.21.11's ChatStatus (facade/ChatStatus) from the same sources, in the same order:
  *     chat hidden in the options, chat not allowed by the launcher, chat not allowed by the account.</li>
- * <li>noRender: 1.21.11's public flag that made runTick skip the game renderer for a frame; 26.1's runTick
- *     runs it as update, extract and render, each skipped while it is set (the runTick call sites only, as
- *     1.21.11 gated only its runTick's); opening a screen clears it, as 1.21.11's setScreen did.</li>
+ * <li>noRender: 1.21.11's public flag that made runTick skip the game renderer for a frame; 26.1 runs the
+ *     game renderer as update, extract and render in renderFrame(boolean), which runTick calls; each is
+ *     skipped while the flag is set (only those call sites, as 1.21.11 gated only its runTick's); opening a
+ *     screen clears it, as 1.21.11's setScreen did.</li>
  * </ul>
  */
 @Environment(EnvType.CLIENT)
@@ -83,7 +84,7 @@ public abstract class CbWallMinecraftMixin extends ReentrantBlockableEventLoop<R
         return !this.userProperties().flag(UserApiService.UserFlag.CHAT_ALLOWED) ? ChatStatus.DISABLED_BY_PROFILE : ChatStatus.ENABLED;
     }
 
-    @Redirect(method = "runTick", at = @At(value = "INVOKE",
+    @Redirect(method = "renderFrame", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/GameRenderer;update(Lnet/minecraft/client/DeltaTracker;Z)V"))
     private void cb$update(GameRenderer renderer, DeltaTracker deltaTracker, boolean renderLevel) {
         if (!this.noRender) {
@@ -91,7 +92,7 @@ public abstract class CbWallMinecraftMixin extends ReentrantBlockableEventLoop<R
         }
     }
 
-    @Redirect(method = "runTick", at = @At(value = "INVOKE",
+    @Redirect(method = "renderFrame", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/GameRenderer;extract(Lnet/minecraft/client/DeltaTracker;Z)V"))
     private void cb$extract(GameRenderer renderer, DeltaTracker deltaTracker, boolean renderLevel) {
         if (!this.noRender) {
@@ -99,7 +100,7 @@ public abstract class CbWallMinecraftMixin extends ReentrantBlockableEventLoop<R
         }
     }
 
-    @Redirect(method = "runTick", at = @At(value = "INVOKE",
+    @Redirect(method = "renderFrame", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/GameRenderer;render(Lnet/minecraft/client/DeltaTracker;Z)V"))
     private void cb$render(GameRenderer renderer, DeltaTracker deltaTracker, boolean renderLevel) {
         if (!this.noRender) {

@@ -1,0 +1,51 @@
+{
+ "_s26_beds": "26.1.2 -> 26.2 beds (s26b, queue item 3): 26.2 draws its beds as block models (blockstates/<colour>_bed.json -> models/block/<colour>_bed_head|foot, parent template_bed_head|foot; items a composite of the two) and dropped the bed block entity, its renderer, the item model type minecraft:bed, the bed layers and the bed atlas. A 26.1.2 mod's bed was drawn from its block entity by BedRenderer; the layer keeps that path for the beds such a mod makes (see rt/CbS26Beds, rt/CbS26BedsClient, facade/Bed*)",
+ "classRenames": {
+  "net/minecraft/world/level/block/entity/BedBlockEntity": "top/dext/centurybridge/step/v26_2/facade/BedBlockEntity",
+  "net/minecraft/client/renderer/blockentity/BedRenderer": "top/dext/centurybridge/step/v26_2/facade/BedRenderer",
+  "net/minecraft/client/renderer/special/BedSpecialRenderer": "top/dext/centurybridge/step/v26_2/facade/BedSpecialRenderer",
+  "net/minecraft/client/renderer/special/BedSpecialRenderer$Unbaked": "top/dext/centurybridge/step/v26_2/facade/BedSpecialRenderer$Unbaked"
+ },
+ "_classRenames_basis": {
+  "net/minecraft/world/level/block/entity/BedBlockEntity": "26.2 has no bed block entity; the facade is 26.1.2's class body (javap), of the layer's BED type",
+  "net/minecraft/client/renderer/blockentity/BedRenderer": "26.2 has no bed renderer; the facade is 26.1.2's body on the 26.2 members that took the same calls (bed layers and sprites given back by rt/CbS26BedsClient)",
+  "net/minecraft/client/renderer/special/BedSpecialRenderer": "26.2 has no bed special renderer; 26.1.2's body over facade/BedRenderer",
+  "net/minecraft/client/renderer/special/BedSpecialRenderer$Unbaked": "26.1.2's record and MAP_CODEC, registered as item model type minecraft:bed (mixin/CbS26BedSpecialMixin)"
+ },
+ "superRenames": {
+  "net/minecraft/world/level/block/BedBlock": "top/dext/centurybridge/step/v26_2/facade/BedBlock"
+ },
+ "_superRenames_basis": {
+  "net/minecraft/world/level/block/BedBlock": "26.2's BedBlock is no EntityBlock (newBlockEntity gone, javap); a 26.1.2 mod's subclass extends facade/BedBlock: 26.2's BedBlock that still makes 26.1.2's bed block entity, so its renderer draws it as on 26.1.2. 26.2's own beds are untouched"
+ },
+ "ctorRedirects": {
+  "net/minecraft/world/level/block/BedBlock.<init>(Lnet/minecraft/world/item/DyeColor;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Beds#cbNewBedBlock"
+ },
+ "_ctorRedirects_basis": {
+  "net/minecraft/world/level/block/BedBlock.<init>(Lnet/minecraft/world/item/DyeColor;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V": "a 26.1.2 mod's own new BedBlock(color, properties) was an EntityBlock with a bed block entity (26.1.2 BedBlock implements EntityBlock); it gets facade/BedBlock, a 26.2 BedBlock that still is one"
+ },
+ "instanceRedirects": {
+  "net/minecraft/world/level/block/BedBlock.newBlockEntity(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;": "top/dext/centurybridge/step/v26_2/rt/CbS26Beds"
+ },
+ "_instanceRedirects_basis": {
+  "net/minecraft/world/level/block/BedBlock.newBlockEntity(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;": "the bed's own newBlockEntity where it is an EntityBlock (a mod's bed, facade/BedBlock), else 26.1.2's body new BedBlockEntity(pos, state, color); a mod's super call goes to the facade (superRenames)"
+ },
+ "fieldGetters": {
+  "net/minecraft/world/level/block/entity/BlockEntityType.BED:Lnet/minecraft/world/level/block/entity/BlockEntityType;": "top/dext/centurybridge/step/v26_2/rt/CbS26Beds#BED",
+  "net/minecraft/data/AtlasIds.BEDS:Lnet/minecraft/resources/Identifier;": "top/dext/centurybridge/step/v26_2/rt/CbS26Beds#AtlasIds_BEDS",
+  "net/minecraft/client/model/geom/ModelLayers.BED_HEAD:Lnet/minecraft/client/model/geom/ModelLayerLocation;": "top/dext/centurybridge/step/v26_2/rt/CbS26BedsClient#BED_HEAD",
+  "net/minecraft/client/model/geom/ModelLayers.BED_FOOT:Lnet/minecraft/client/model/geom/ModelLayerLocation;": "top/dext/centurybridge/step/v26_2/rt/CbS26BedsClient#BED_FOOT",
+  "net/minecraft/client/renderer/Sheets.BED_SHEET:Lnet/minecraft/resources/Identifier;": "top/dext/centurybridge/step/v26_2/rt/CbS26BedsClient#BED_SHEET",
+  "net/minecraft/client/renderer/Sheets.BED_MAPPER:Lnet/minecraft/client/renderer/SpriteMapper;": "top/dext/centurybridge/step/v26_2/rt/CbS26BedsClient#BED_MAPPER",
+  "net/minecraft/client/data/models/model/ModelTemplates.BED_INVENTORY:Lnet/minecraft/client/data/models/model/ModelTemplate;": "top/dext/centurybridge/step/v26_2/rt/CbS26BedsClient#BED_INVENTORY"
+ },
+ "staticRedirects": {
+  "net/minecraft/client/renderer/Sheets.getBedSprite(Lnet/minecraft/world/item/DyeColor;)Lnet/minecraft/client/resources/model/sprite/SpriteId;": "top/dext/centurybridge/step/v26_2/rt/CbS26BedsClient",
+  "net/minecraft/client/renderer/Sheets.createBedSprite(Lnet/minecraft/world/item/DyeColor;)Lnet/minecraft/client/resources/model/sprite/SpriteId;": "top/dext/centurybridge/step/v26_2/rt/CbS26BedsClient",
+  "net/minecraft/client/renderer/Sheets.colorToResourceSprite(Lnet/minecraft/world/item/DyeColor;)Lnet/minecraft/resources/Identifier;": "top/dext/centurybridge/step/v26_2/rt/CbS26BedsClient"
+ },
+ "_fieldGetters_basis": {
+  "BlockEntityType.BED": "26.1.2's type, registered as minecraft:bed with the sixteen vanilla beds valid (mixin/CbS26BedTypeMixin)",
+  "Sheets / AtlasIds / ModelLayers": "26.2 has no bed atlas or bed layers: the layer's resources add 26.1.2's entity/bed source to the block atlas (atlases/blocks.json), and its layers are added to 26.2's layer definitions (mixin/CbS26BedLayersMixin); see rt/CbS26BedsClient"
+ }
+}

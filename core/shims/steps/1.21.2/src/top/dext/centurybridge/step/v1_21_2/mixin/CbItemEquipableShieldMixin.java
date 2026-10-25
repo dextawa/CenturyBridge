@@ -9,7 +9,7 @@ import top.dext.centurybridge.step.v1_21_2.facade.Equipable;
  * 1.21.1's ShieldItem was an Equipable (the off hand, the generic equip sound); 1.21.2 equips it by its use and the off hand slot. Implementing the facade again gives
  * 1.21.1 callers its answers (Equipable.get, instanceof, the interface calls).
  */
-@Mixin(class_1819.class)
+@Mixin(value = class_1819.class, priority = top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads.PRIORITY)
 public abstract class CbItemEquipableShieldMixin implements Equipable {
 
     /** getEquipmentSlot(): OFFHAND */
