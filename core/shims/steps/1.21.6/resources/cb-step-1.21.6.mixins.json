@@ -7,7 +7,9 @@
     "CbRenderAttachedViewMixin",
     "CbRecipeBookRestoredMixin",
     "CbRecipeBookSettingsRestoredMixin",
-    "CbRecipeBookRouteMixin"
+    "CbRecipeBookRouteMixin",
+    "CbHorseJumpRestoredMixin",
+    "CbHorseJumpRouteMixin"
   ],
   "client": [
     "CbRenderAttachedRegionMixin",

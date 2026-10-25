@@ -276,6 +276,20 @@ public class S6bTestMod implements ModInitializer {
             "fabric-keybindings-v0 / rendering-data-attachment-v1 / commands: dependencies renamed onto the layer");
     }
 
+    /** a 1.21.5 Horse subclass using AbstractHorse's protected jump flag */
+    static class CbHorse extends net.minecraft.class_1498 {
+        CbHorse(class_1299<? extends net.minecraft.class_1498> type, class_1937 level) {
+            super(type, level);
+        }
+
+        boolean flagThroughField() {
+            this.field_6968 = true;
+            boolean seen = this.method_6763();
+            this.method_6758(false);
+            return seen && !this.field_6968;
+        }
+    }
+
     /** a 1.21.5 FlyingMob subclass */
     static class CbFlyer extends net.minecraft.class_1307 {
         CbFlyer(class_1299<? extends net.minecraft.class_1307> type, class_1937 level) {
@@ -317,6 +331,12 @@ public class S6bTestMod implements ModInitializer {
         boolean up = horse.method_6736();
         horse.method_6737(false);
         check(up && !horse.method_6736(), "AbstractHorse.setStanding(true/false) sets and clears standing");
+        horse.method_6758(true);
+        boolean jumping = horse.method_6763();
+        horse.method_6758(false);
+        CbHorse mine = new CbHorse(class_1299.field_6139, level);
+        check(jumping && !horse.method_6763() && mine.flagThroughField(),
+            "AbstractHorse.setIsJumping / isJumping and the protected isJumping field from a subclass");
 
         // SimpleContainer / PlayerEnderChestContainer ListTag forms, Abilities CompoundTag form
         net.minecraft.class_7225.class_7874 regs = level.method_30349();
