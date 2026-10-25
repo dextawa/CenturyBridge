@@ -2,7 +2,10 @@
  "classRenames": {
   "net/minecraft/class_2561$class_2562": "top/dext/centurybridge/step/v1_21_6/facade/ComponentSerializer",
   "net/minecraft/class_3530": "top/dext/centurybridge/step/v1_21_6/facade/LowerCaseEnumTypeAdapterFactory",
-  "net/minecraft/class_2995$class_2996": "top/dext/centurybridge/step/v1_21_6/facade/ServerScoreboardMethod"
+  "net/minecraft/class_2995$class_2996": "top/dext/centurybridge/step/v1_21_6/facade/ServerScoreboardMethod",
+  "net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap": "top/dext/centurybridge/step/v1_21_6/facade/fapi/BlockRenderLayerMap",
+  "net/fabricmc/fabric/api/command/v1/CommandRegistrationCallback": "top/dext/centurybridge/step/v1_21_6/facade/fapi/CommandRegistrationCallbackV1",
+  "net/fabricmc/fabric/api/registry/CommandRegistry": "top/dext/centurybridge/step/v1_21_6/facade/fapi/CommandRegistry"
  },
  "instanceRedirects": {
   "net/minecraft/class_8942.method_54946(Ljava/lang/String;)Lnet/minecraft/class_8942;": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#forChild",
@@ -184,5 +187,11 @@
   "net/minecraft/class_3518.method_47994(Lcom/google/gson/Gson;Ljava/lang/String;Ljava/lang/Class;Z)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_47994",
   "net/minecraft/class_3518.method_15298(Ljava/lang/String;Z)Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_15298",
   "net/minecraft/class_3518.method_15274(Ljava/io/Reader;Z)Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_15274"
- }
+ },
+ "depRenames": {
+  "fabric-blockrenderlayer-v1": "centurybridge_step_1_21_6@*",
+  "fabric-command-api-v1": "centurybridge_step_1_21_6@*",
+  "fabric-commands-v0": "centurybridge_step_1_21_6@*"
+ },
+ "_depRenames_basis": "1.21.6's Fabric API (0.128.2+1.21.6) no longer ships fabric-blockrenderlayer-v1, fabric-command-api-v1 and fabric-commands-v0, which 1.21.5's (0.128.2+1.21.5) did (META-INF/jars of both); this step's layer gives their APIs back (facade/fapi), so a mod's dependency on them is met by the layer"
 }

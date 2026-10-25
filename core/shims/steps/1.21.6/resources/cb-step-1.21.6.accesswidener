@@ -41,3 +41,12 @@ accessible method net/minecraft/class_1921$class_4688$class_4689 method_23617 (Z
 accessible method net/minecraft/class_332 method_70848 (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_11231;IIIIILjava/lang/Integer;)V
 # CbGson: GsonHelper's own Gson, which 1.21.5's lenient parse used
 accessible field net/minecraft/class_3518 field_15657 Lcom/google/gson/Gson;
+# CbChunkTypes: 1.21.5's translucent chunk render type rebuilt
+accessible method net/minecraft/class_1921 method_24049 (Ljava/lang/String;IZZLcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+accessible method net/minecraft/class_1921$class_4688$class_4689 method_23608 (Lnet/minecraft/class_4668$class_4676;)Lnet/minecraft/class_1921$class_4688$class_4689;
+accessible method net/minecraft/class_1921$class_4688$class_4689 method_23610 (Lnet/minecraft/class_4668$class_4678;)Lnet/minecraft/class_1921$class_4688$class_4689;
+accessible field net/minecraft/class_4668 field_21383 Lnet/minecraft/class_4668$class_4676;
+accessible field net/minecraft/class_4668 field_21376 Lnet/minecraft/class_4668$class_4683;
+accessible field net/minecraft/class_4668 field_25280 Lnet/minecraft/class_4668$class_4678;
+# CommandRegistry (fabric-commands-v0 facade): whether a command selection includes dedicated servers
+accessible field net/minecraft/class_2170$class_5364 field_25423 Z
