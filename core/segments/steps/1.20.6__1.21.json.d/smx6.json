@@ -30,6 +30,23 @@
     1
    ],
    "basis": "Sheep.makeContainer(dye, dye) is 1.21's makeCraftInput(dye, dye) (javap: the same two dye items for the crafting lookup in getOffspringColor; 1.21 builds a CraftingInput of them where 1.20.6 filled a CraftingContainer)"
+  },
+  "com/mojang/blaze3d/systems/RenderSystem._setShaderFogColor(FFFF)V": {
+   "to": "setShaderFogColor(FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "RenderSystem._setShaderFogColor was inlined into 1.21's public setShaderFogColor(FFFF) (javap: the same four shaderFogColor[i] = arg stores, now after assertOnRenderThread; 1.20.6's only callers were setShaderFogColor(FFFF) and an unreferenced lambda)"
+  },
+  "net/minecraft/class_2300.method_45915(Lnet/minecraft/class_2168;)Ljava/util/List;": {
+   "to": "method_9816(Lnet/minecraft/class_2168;)Ljava/util/List;",
+   "args": [
+    0
+   ],
+   "basis": "EntitySelector.findEntitiesRaw was inlined into 1.21's findEntities (javap: the same checkPermissions, includesEntities/findPlayers branch, playerName and entityUUID lookups, currentEntity test, addEntities over the level(s) and sortAndLimit; 1.20.6's only caller, findEntities, filtered its result by enabled feature flags afterwards, which 1.21 tests inline)"
   }
  },
  "fieldRenames": {
@@ -41,9 +58,10 @@
   "net/minecraft/class_4618$class_4586.field_20897:Lnet/minecraft/class_4588;": "comp_2851",
   "net/minecraft/class_296.field_1615:Lnet/minecraft/class_296$class_297;": "comp_2844",
   "net/minecraft/class_296.field_1614:Lnet/minecraft/class_296$class_298;": "comp_2845",
-  "net/minecraft/class_1091.field_5406:Ljava/lang/String;": "comp_2876"
+  "net/minecraft/class_1091.field_5406:Ljava/lang/String;": "comp_2876",
+  "net/minecraft/class_3193.field_16428:Ljava/util/concurrent/CompletableFuture;": "field_51858"
  },
- "_smx6_fieldRenames_basis": "private / package fields 1.21 kept under a new id (only mixins reach them): ChunkMap.worldGenContext (set in the constructor, final in 1.21), BufferBuilder.mode (final in 1.21: one builder per begin), and the classes 1.21 made records whose components carry the same values (MultiLineLabel.TextAndWidth text / width, VertexMultiConsumer.Multiple delegates, OutlineBufferSource.EntityOutlineGenerator delegate, VertexFormatElement type / usage, ModelResourceLocation variant); javap of both classes: same type, the same writes in the constructor and the same reads",
+ "_smx6_fieldRenames_basis": "private / package fields 1.21 kept under a new id (only mixins reach them): ChunkMap.worldGenContext (set in the constructor, final in 1.21), BufferBuilder.mode (final in 1.21: one builder per begin), and the classes 1.21 made records whose components carry the same values (MultiLineLabel.TextAndWidth text / width, VertexMultiConsumer.Multiple delegates, OutlineBufferSource.EntityOutlineGenerator delegate, VertexFormatElement type / usage, ModelResourceLocation variant); javap of both classes: same type, the same writes in the constructor and the same reads ChunkHolder.chunkToSave is 1.21's saveSync (javap: both start as completedFuture(null), both are what getChunkToSave/method_14000 returns and both are thenCombine-d with each pending save; 1.21 types it CompletableFuture<?>, the same change vanilla's own method_14000 carries).",
  "mixinLedger": {
   "net/minecraft/class_1893": "1.21 enchantments are data-driven: the game reads them from data/minecraft/enchantment/*.json (RegistryDataLoader); Enchantments.<clinit> only makes ResourceKeys, and the definitions 1.20.6's <clinit> built (new XEnchantment(..), Enchantment.definition / dynamicCost / EquipmentSlot arrays, ItemTags) live in Enchantments.method_60184 (bootstrap), which W's runtime never runs (javap: VanillaRegistries.method_46817 is reached only from Commands.method_30852 (IDE-only command validation) and OverworldBiomeBuilder.method_46678 (behind the SharedConstants.field_34371 debug flag), never from the enchantment registry load). register(String, Enchantment) method_8235 became bootstrap's register(BootstrapContext, ResourceKey, Builder), datagen only. No W code runs V's code",
   "net/minecraft/class_3763.method_6078(Lnet/minecraft/class_1282;)V": "Raider.die: 1.21 removed the branch that gave the killer of a raid captain Bad Omen (V offsets 65-317: feature flag test, getRaidAt, the captain's banner (getItemBySlot HEAD vs Raid.getLeaderBannerInstance), the wolf-owner killer, the BAD_OMEN getEffect / removeEffect / clamp / new MobEffectInstance / addEffect, the gamerule test); W's body ends after removeFromRaid with super.die (javap: 66 bytes), the captain drops an ominous bottle through its loot table instead. Every open row of the member is an anchor of that branch, including V sites #1+ of hasActiveRaid / level() / iconst_0 and both iconst_1 (the 'into callee' match is PatrollingMonster.die's own constant, which V's super call already had)",
