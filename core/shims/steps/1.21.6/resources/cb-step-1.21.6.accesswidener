@@ -32,3 +32,10 @@ accessible field net/minecraft/class_8966 field_47380 D
 accessible field net/minecraft/class_8966 field_47381 D
 mutable field net/minecraft/class_6595 field_34768 Ljava/lang/String;
 # ---- END GENERATED (s6b) ----
+# CbGuiTypes / CbGuiFill: 1.21.5's GUI render types rebuilt on 1.21.6's, their pipeline, the two-colour fill
+accessible method net/minecraft/class_1921 method_24048 (Ljava/lang/String;ILcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+accessible class net/minecraft/class_1921$class_4687
+accessible field net/minecraft/class_1921$class_4687 field_56922 Lcom/mojang/blaze3d/pipeline/RenderPipeline;
+accessible method net/minecraft/class_1921$class_4688$class_4689 method_34577 (Lnet/minecraft/class_4668$class_5939;)Lnet/minecraft/class_1921$class_4688$class_4689;
+accessible method net/minecraft/class_1921$class_4688$class_4689 method_23617 (Z)Lnet/minecraft/class_1921$class_4688;
+accessible method net/minecraft/class_332 method_70848 (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_11231;IIIIILjava/lang/Integer;)V
