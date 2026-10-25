@@ -87,6 +87,34 @@ public class S26TestMod implements ModInitializer {
     }
 
     /** a 26.1.2 structure processor: extends the abstract class, getType(), processBlock with the original info */
+    /** a 26.1.2 trigger keeping its own listeners (26.1.2's CriterionTrigger contract) */
+    static class OwnTrigger implements net.minecraft.advancements.CriterionTrigger<net.minecraft.advancements.criterion.ImpossibleTrigger.TriggerInstance> {
+        final java.util.Map<net.minecraft.server.PlayerAdvancements, java.util.Set<Listener<net.minecraft.advancements.criterion.ImpossibleTrigger.TriggerInstance>>> players = new java.util.HashMap<>();
+
+        @Override
+        public void addPlayerListener(net.minecraft.server.PlayerAdvancements pa, Listener<net.minecraft.advancements.criterion.ImpossibleTrigger.TriggerInstance> l) {
+            players.computeIfAbsent(pa, k -> new java.util.HashSet<>()).add(l);
+        }
+
+        @Override
+        public void removePlayerListener(net.minecraft.server.PlayerAdvancements pa, Listener<net.minecraft.advancements.criterion.ImpossibleTrigger.TriggerInstance> l) {
+            java.util.Set<Listener<net.minecraft.advancements.criterion.ImpossibleTrigger.TriggerInstance>> set = players.get(pa);
+            if (set != null) {
+                set.remove(l);
+            }
+        }
+
+        @Override
+        public void removePlayerListeners(net.minecraft.server.PlayerAdvancements pa) {
+            players.remove(pa);
+        }
+
+        @Override
+        public com.mojang.serialization.Codec<net.minecraft.advancements.criterion.ImpossibleTrigger.TriggerInstance> codec() {
+            return net.minecraft.advancements.criterion.ImpossibleTrigger.TriggerInstance.CODEC;
+        }
+    }
+
     static class StoneProc extends net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor {
         static final com.mojang.serialization.MapCodec<StoneProc> CODEC = com.mojang.serialization.MapCodec.unit(StoneProc::new);
         static net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType<StoneProc> TYPE;
@@ -131,6 +159,7 @@ public class S26TestMod implements ModInitializer {
     @Override
     public void onInitialize() {
         RegConstChecks.run();
+        BedChecks.run();
 
         // static members 26.2 moved to another class (gen_static_moves.py)
         check("moved.EntityType.PIG", describe(EntityType.PIG), "value\tminecraft:entity_type\tminecraft:pig");
@@ -358,6 +387,99 @@ public class S26TestMod implements ModInitializer {
         var params = new net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket.Parameters(pteam);
         check("packet.teamParameters", params.getColor() == net.minecraft.ChatFormatting.GOLD && (params.getOptions() & 1) == 1
             && params.getNametagVisibility() == net.minecraft.world.scores.Team.Visibility.ALWAYS, params.getColor());
+
+        // SimpleRandomFeatureConfiguration on 26.2's CompositeFeatureConfiguration
+        net.minecraft.core.HolderSet<net.minecraft.world.level.levelgen.placement.PlacedFeature> none = net.minecraft.core.HolderSet.direct();
+        var simple = new net.minecraft.world.level.levelgen.feature.configurations.SimpleRandomFeatureConfiguration(none);
+        check("feature.simpleRandom", simple.features == none && simple.getSubFeatures().count() == 0, simple);
+
+        // generic drift (rt/CbS26Generic): PlayerTeam.Packed colour as Optional<ChatFormatting>
+        var gpacked = new net.minecraft.world.scores.PlayerTeam.Packed("cbs26k", Optional.empty(), Optional.of(net.minecraft.ChatFormatting.RED),
+            true, true, net.minecraft.network.chat.Component.empty(), net.minecraft.network.chat.Component.empty(),
+            net.minecraft.world.scores.Team.Visibility.ALWAYS, net.minecraft.world.scores.Team.Visibility.ALWAYS,
+            net.minecraft.world.scores.Team.CollisionRule.ALWAYS, List.of());
+        Optional<net.minecraft.ChatFormatting> pc = gpacked.color();
+        check("generic.packedColor", pc.isPresent() && pc.get() == net.minecraft.ChatFormatting.RED, pc);
+        check("generic.densityCodec", net.minecraft.world.level.levelgen.DensityFunction.CODEC != null
+            && net.minecraft.world.level.levelgen.DensityFunction.DIRECT_CODEC != null
+            && net.minecraft.world.level.levelgen.DensityFunction.HOLDER_HELPER_CODEC != null, "codecs");
+        java.util.Set<org.apache.commons.lang3.tuple.Pair<String, net.minecraft.util.profiling.metrics.MetricCategory>> charted =
+            net.minecraft.util.profiling.InactiveProfiler.INSTANCE.getChartedPaths();
+        check("generic.chartedPaths", charted.isEmpty(), charted);
+
+        // CubicSpline (rt/CbS26Spline): value transformer, apply, mapAll
+        net.minecraft.util.BoundedFloatFunction<Float> coord = new net.minecraft.util.BoundedFloatFunction<>() {
+            public float apply(Float f) { return f; }
+            public float minValue() { return -10f; }
+            public float maxValue() { return 10f; }
+        };
+        net.minecraft.util.BoundedFloatFunction<Float> twice = new net.minecraft.util.BoundedFloatFunction<>() {
+            public float apply(Float f) { return f * 2f; }
+            public float minValue() { return -20f; }
+            public float maxValue() { return 20f; }
+        };
+        net.minecraft.util.CubicSpline<Float, net.minecraft.util.BoundedFloatFunction<Float>> spline =
+            net.minecraft.util.CubicSpline.builder(coord, twice).addPoint(0f, 0f).addPoint(1f, 1f).build();
+        if (spline instanceof net.minecraft.util.CubicSpline.Multipoint<Float, net.minecraft.util.BoundedFloatFunction<Float>> mp) {
+            float mid = mp.apply(0.5f), end = mp.apply(1f);
+            check("spline.apply", Math.abs(mid - 1f) < 1e-4 && Math.abs(end - 2f) < 1e-4, mid + "," + end);
+            var mapped = mp.mapAll(c -> c);
+            check("spline.mapAll", mapped instanceof net.minecraft.util.CubicSpline.Multipoint<?, ?> m2
+                && Math.abs(((net.minecraft.util.CubicSpline.Multipoint<Float, ?>) m2).apply(1f) - 2f) < 1e-4, mapped);
+        } else {
+            check("spline.apply", false, spline);
+        }
+        var cst = (net.minecraft.util.CubicSpline.Constant<Float, net.minecraft.util.BoundedFloatFunction<Float>>) net.minecraft.util.CubicSpline.<Float, net.minecraft.util.BoundedFloatFunction<Float>>constant(3f);
+        check("spline.constant", cst.apply(0f) == 3f, cst);
+
+        // CriterionTrigger listeners (rt/CbS26Triggers): the Listener record, a trigger keeping its own listeners
+        var inst = new net.minecraft.advancements.criterion.ImpossibleTrigger.TriggerInstance();
+        var lst = new net.minecraft.advancements.CriterionTrigger.Listener<>(inst, null, "cbs26");
+        check("trigger.listener", lst.trigger() == inst && "cbs26".equals(lst.criterion())
+            && lst.equals(new net.minecraft.advancements.CriterionTrigger.Listener<>(inst, null, "cbs26")), lst);
+        OwnTrigger own = new OwnTrigger();
+        own.addPlayerListener(null, lst);
+        net.minecraft.advancements.CriterionTrigger<net.minecraft.advancements.criterion.ImpossibleTrigger.TriggerInstance> asTrigger = own;
+        asTrigger.removePlayerListener(null, lst);
+        boolean legacy = false;
+        for (Class<?> i : own.getClass().getInterfaces()) {
+            legacy |= i.getName().endsWith("CbS26Triggers$Legacy");
+        }
+        check("trigger.ownListeners", legacy && own.players.get(null).isEmpty(), own.players);
+
+        // EntityPredicate on 26.2's map of parts (rt/CbS26EntityPredicates)
+        {
+            var light = net.minecraft.advancements.criterion.LightningBoltPredicate.blockSetOnFire(net.minecraft.advancements.criterion.MinMaxBounds.Ints.exactly(2));
+            var loc = new net.minecraft.advancements.criterion.EntityPredicate.LocationWrapper(Optional.empty(), Optional.empty(), Optional.empty());
+            var ep = new net.minecraft.advancements.criterion.EntityPredicate(Optional.empty(), Optional.empty(), Optional.empty(), loc,
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.of(light), Optional.of(5),
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.of("cbteam"), Optional.empty(),
+                net.minecraft.advancements.criterion.DataComponentMatchers.ANY);
+            check("entityPredicate.parts", ep.team().equals(Optional.of("cbteam")) && ep.periodicTick().equals(Optional.of(5))
+                && ep.subPredicate().equals(Optional.of(light)) && ep.entityType().isEmpty() && ep.location().located().isEmpty()
+                && ep.components().isEmpty(), ep);
+            check("entityPredicate.codec", light.codec() == net.minecraft.advancements.criterion.LightningBoltPredicate.CODEC
+                && net.minecraft.advancements.criterion.EntitySubPredicates.LIGHTNING == net.minecraft.advancements.criterion.LightningBoltPredicate.CODEC,
+                light.codec());
+            var json = net.minecraft.advancements.criterion.EntitySubPredicate.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, light);
+            check("entityPredicate.subCodec", json.result().map(j -> j.toString().contains("\"type\":\"minecraft:lightning\"")).orElse(false), json);
+            var back = json.result().flatMap(j -> net.minecraft.advancements.criterion.EntitySubPredicate.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE, j).result());
+            check("entityPredicate.subCodecBack", back.equals(Optional.of(light)), back);
+            var eff = net.minecraft.advancements.criterion.MobEffectsPredicate.Builder.effects().and(MobEffects.SPEED).build();
+            check("mobEffects.build", eff.isPresent(), eff);
+        }
+        // FlyingAnimal, LootData, ColorArgument
+        check("flyingAnimal", net.minecraft.world.entity.animal.FlyingAnimal.class.isAssignableFrom(net.minecraft.world.entity.animal.bee.Bee.class)
+            && net.minecraft.world.entity.animal.FlyingAnimal.class.isAssignableFrom(net.minecraft.world.entity.animal.parrot.Parrot.class), "Bee/Parrot");
+        check("lootData", net.minecraft.data.loot.packs.LootData.WOOL_ITEM_BY_DYE.get(net.minecraft.world.item.DyeColor.RED) == Blocks.RED_WOOL
+            && net.minecraft.data.loot.packs.LootData.WOOL_ITEM_BY_DYE.size() == 16, net.minecraft.data.loot.packs.LootData.WOOL_ITEM_BY_DYE.size());
+        try {
+            var col = net.minecraft.commands.arguments.ColorArgument.color().parse(new com.mojang.brigadier.StringReader("reset"));
+            var col2 = net.minecraft.commands.arguments.ColorArgument.color().parse(new com.mojang.brigadier.StringReader("dark_aqua"));
+            check("colorArgument", col == net.minecraft.ChatFormatting.RESET && col2 == net.minecraft.ChatFormatting.DARK_AQUA, col + "," + col2);
+        } catch (Exception e) {
+            check("colorArgument", false, e);
+        }
 
         System.out.println("CB-S26 DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS: " + FAILS));
     }
