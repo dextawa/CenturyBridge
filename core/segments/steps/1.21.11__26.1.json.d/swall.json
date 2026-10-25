@@ -2515,7 +2515,8 @@
   "net/minecraft/class_338.method_75803(Lnet/minecraft/class_12225;IIZ)V",
   "net/minecraft/class_840.method_3594()F",
   "net/minecraft/class_840.method_35793()F",
-  "net/minecraft/class_840.method_34589()Lnet/minecraft/class_1921;"
+  "net/minecraft/class_840.method_34589()Lnet/minecraft/class_1921;",
+  "net/minecraft/class_1297.method_5692(Lnet/minecraft/class_6862;D)Z"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -3375,6 +3376,11 @@
     4
    ],
    "basis": "LiquidBlockRenderer's private fluid height is 26.1's FluidRenderer.getHeight with the same body; its level is 26.1's client BlockAndTintGetter"
+  },
+  "net/minecraft/class_4184.method_36425()Lnet/minecraft/class_4184$class_6355;": {
+   "to": "method_36425(F)Lnet/minecraft/class_4184$class_6355;",
+   "args": [],
+   "basis": "Camera.getNearPlane() is 26.1's getNearPlane(fov): the same body (the near plane's four corners from the camera's axes), the field of view now passed in by its caller instead of read from the options and the near distance read from the camera's projection instead of the 0.05 constant; vanilla calls it from getFluidInCamera, as 1.21.11 did"
   }
  },
  "lambdaAdapters": {

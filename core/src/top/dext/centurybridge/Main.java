@@ -265,6 +265,10 @@ public final class Main {
                                                                 : Path.of("data/jars/client-" + args[3] + ".jar");
             if (Files.exists(code)) {
                 wallRepair = new top.dext.centurybridge.engine.MixinRepair(code);
+                // the layer is built against W's real names, the names the jar has by now: a selector on a member
+                // the layer restores finds it there (LayerMembers), as chain.mixinRepair does before the wall,
+                // instead of the injector being disabled as "target gone"
+                wallRepair.layerMembers = chain.layerMembers;
                 chain.injectorsJudgedPastWall = true;
                 System.out.println("mixin anchors past the wall: checked against " + code);
             } else {
