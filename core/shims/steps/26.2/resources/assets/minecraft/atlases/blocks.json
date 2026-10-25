@@ -1,0 +1,12 @@
+{
+  "sources": [
+    {
+      "type": "centurybridge:legacy_beds"
+    },
+    {
+      "type": "minecraft:directory",
+      "prefix": "entity/bed/",
+      "source": "entity/bed"
+    }
+  ]
+}

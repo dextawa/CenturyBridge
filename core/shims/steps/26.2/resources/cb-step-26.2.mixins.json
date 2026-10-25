@@ -10,9 +10,15 @@
     "CbS26ProcessorOriginalMixin",
     "CbS26ProcessorRegistryMixin",
     "CbS26PlayerAdvancementsMixin",
-    "CbS26FlyingAnimalMixin"
+    "CbS26FlyingAnimalMixin",
+    "CbS26BedTypeMixin"
   ],
-  "client": [],
+  "client": [
+    "CbS26BedLayersMixin",
+    "CbS26BedRendererMixin",
+    "CbS26BedSpecialMixin",
+    "CbS26BedSpritesMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

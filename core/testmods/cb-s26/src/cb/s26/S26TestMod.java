@@ -159,6 +159,7 @@ public class S26TestMod implements ModInitializer {
     @Override
     public void onInitialize() {
         RegConstChecks.run();
+        BedChecks.run();
 
         // static members 26.2 moved to another class (gen_static_moves.py)
         check("moved.EntityType.PIG", describe(EntityType.PIG), "value\tminecraft:entity_type\tminecraft:pig");
