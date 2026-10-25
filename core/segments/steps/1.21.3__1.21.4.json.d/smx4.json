@@ -214,6 +214,21 @@
       "to": "method_65809(Lnet/minecraft/class_3300;)Lnet/minecraft/class_10539;",
       "args": [0],
       "basis": "LoadingOverlay.LogoTexture.getTextureImage -> loadContents: javap -c both: the vanilla pack's MOJANG_STUDIOS_LOGO_LOCATION opened and read as a NativeImage with blur on; 1.21.4 answers a TextureContents instead of a TextureImage"
+    },
+    "net/minecraft/class_4942.method_48524(Lnet/minecraft/class_2960;Ljava/util/Map;)Lcom/google/gson/JsonObject;": {
+      "to": "method_65503(Ljava/util/Map;)Lcom/google/gson/JsonElement;",
+      "args": [-1, 0],
+      "basis": "ModelTemplate.createBaseTemplate(id, slots): javap -c both (1.00): the JSON object with parent and the textures map built from the slots; V's id was not read; 1.21.4 answers it as a JsonElement (the same JsonObject)"
+    },
+    "net/minecraft/class_916.method_56858(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_1087;ZLnet/minecraft/class_5819;)V": {
+      "to": "method_56858(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10428;Lnet/minecraft/class_5819;)V",
+      "args": [-1, 0, 1, 2, -1, -1, -1, 4],
+      "basis": "ItemEntityRenderer.renderMultipleFromCount (static both): javap -c both (0.83): the same per-copy loop with the ground transform scale offsets and random spread, drawing each copy; 1.21.4 reads count, seed, 3D-ness and transform from an ItemClusterRenderState instead of the renderer, stack and model"
+    },
+    "net/minecraft/class_647.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1799;)V": {
+      "to": "<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_10444;)V",
+      "args": [0, 1, 2, 3, -1],
+      "basis": "BreakingItemParticle(level, x, y, z, stack): javap -c both (0.77): super(level, x, y, z, 0, 0, 0), the particle sprite set from the item's model, gravity 1, quad size halved; 1.21.4 takes the sprite from an ItemStackRenderState"
     }
   },
   "mixinLedger": {
