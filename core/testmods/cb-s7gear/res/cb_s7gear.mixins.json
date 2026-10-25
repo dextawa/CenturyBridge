@@ -13,7 +13,9 @@
     "TridentValueMixin",
     "ItemDescriptionIdMixin",
     "PotionDescriptionIdMixin",
-    "CompassDescriptionIdMixin"
+    "CompassDescriptionIdMixin",
+    "MaceRepairMixin",
+    "TotemEnchantableMixin"
   ],
   "injectors": {
     "defaultRequire": 1

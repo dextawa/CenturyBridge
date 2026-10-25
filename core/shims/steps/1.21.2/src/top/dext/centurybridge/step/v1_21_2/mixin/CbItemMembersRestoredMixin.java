@@ -13,7 +13,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
  */
 @Mixin(value = class_1792.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbItemMembersRestoredMixin implements CbItemMembers.ItemEnchantmentValue, CbItemMembers.ItemRepair,
-        CbItemMembers.ItemDescriptionId {
+        CbItemMembers.ItemDescriptionId, CbItemMembers.ItemEnchantable {
 
     /**
      * 1.21.1's Item.getEnchantmentValue(), restored: what the item's built components say (0 without ENCHANTABLE).
@@ -41,5 +41,12 @@ public abstract class CbItemMembersRestoredMixin implements CbItemMembers.ItemEn
     @Override
     public String method_7866(class_1799 stack) {
         return CbItemMembers.super_method_7866((class_1792) (Object) this, stack);
+    }
+
+    /** 1.21.1's Item.isEnchantable(stack), restored with its body: a stack of one with MAX_DAMAGE */
+    @CbVanillaReads("CbItemStackMembersMixin: ItemStack.isEnchantable() answers from it where it answers otherwise than its body")
+    @Override
+    public boolean method_7870(class_1799 stack) {
+        return stack.method_7914() == 1 && stack.method_57826(net.minecraft.class_9334.field_50072);
     }
 }
