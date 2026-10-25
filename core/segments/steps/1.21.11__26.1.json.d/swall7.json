@@ -1,0 +1,32 @@
+{
+  "staticRedirects": {
+    "net/minecraft/class_12329.method_76478()Lnet/minecraft/class_12329$class_12330;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#timelineBuilder",
+    "net/minecraft/class_4571.method_35559(Lnet/minecraft/class_42;)Lnet/minecraft/class_4571$class_6164;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#time"
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_12329.method_76481(Lnet/minecraft/class_1937;)J": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#getCurrentTicks",
+    "net/minecraft/class_12329.method_76485(Lnet/minecraft/class_1937;)J": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#getTotalTicks",
+    "net/minecraft/class_12329.method_76479(Lnet/minecraft/class_12197;Ljava/util/function/LongSupplier;)Lnet/minecraft/class_12328;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#createTrackSampler",
+    "net/minecraft/class_12327.method_76473(Lnet/minecraft/class_12197;Ljava/util/Optional;Ljava/util/function/LongSupplier;)Lnet/minecraft/class_12328;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#bakeSampler",
+    "net/minecraft/class_12205$class_12314.method_76420(Lnet/minecraft/class_6880;Ljava/util/function/LongSupplier;)Lnet/minecraft/class_12205$class_12314;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#addTimelineLayer"
+  },
+  "ctorRedirects": {
+    "net/minecraft/class_12328.<init>(Ljava/util/Optional;Lnet/minecraft/class_12212;Lnet/minecraft/class_12306;Lnet/minecraft/class_12210;Ljava/util/function/LongSupplier;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#newAttributeTrackSampler",
+    "net/minecraft/class_4571.<init>(Ljava/util/Optional;Lnet/minecraft/class_42;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#newTimeCheck",
+    "net/minecraft/class_4571$class_6164.<init>(Lnet/minecraft/class_42;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#newTimeCheckBuilder",
+    "net/minecraft/class_12192.<init>(Lcom/mojang/serialization/Codec;Ljava/util/Map;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_12210;Lnet/minecraft/class_12210;Lnet/minecraft/class_12210;Lnet/minecraft/class_12210;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#newAttributeType"
+  },
+  "superCtorReshapes": {
+    "net/minecraft/class_12328.<init>(Ljava/util/Optional;Lnet/minecraft/class_12212;Lnet/minecraft/class_12306;Lnet/minecraft/class_12210;Ljava/util/function/LongSupplier;)V": {
+      "desc": "(Lnet/minecraft/class_6880;Ljava/util/Optional;Lnet/minecraft/class_12212;Lnet/minecraft/class_12306;Lnet/minecraft/class_12210;Lnet/minecraft/world/clock/ClockManager;)V",
+      "ops": ["push top/dext/centurybridge/step/v26_1/rt/CbWallClocks#overworldClock()Lnet/minecraft/class_6880;", "keep", "keep", "keep", "keep",
+              "conv top/dext/centurybridge/step/v26_1/rt/CbWallClocks#clockManager(Ljava/util/function/LongSupplier;)Lnet/minecraft/world/clock/ClockManager;"],
+      "basis": "1.21.11's sampler read the day time the caller supplied; 26.1's reads its clock through a ClockManager: the overworld clock (1.21.11's day time) and a ClockManager answering the supplier"
+    },
+    "net/minecraft/class_4571$class_6164.<init>(Lnet/minecraft/class_42;)V": {
+      "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_42;)V",
+      "ops": ["push top/dext/centurybridge/step/v26_1/rt/CbWallClocks#overworldClock()Lnet/minecraft/class_6880;", "keep"],
+      "basis": "1.21.11's TimeCheck tested Level.getDayTime(), the overworld's day time; 26.1 names the clock: the overworld clock"
+    }
+  }
+}
