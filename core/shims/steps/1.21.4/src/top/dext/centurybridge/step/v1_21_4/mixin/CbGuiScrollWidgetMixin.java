@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import top.dext.centurybridge.step.v1_21_4.rt.CbGuiScroll;
 import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
@@ -50,8 +50,14 @@ public abstract class CbGuiScrollWidgetMixin {
             && x < (double) (self.method_46426() + self.method_25368()) && y < (double) (self.method_46427() + self.method_25364());
     }
 
-    @Redirect(method = "method_25402", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_339;method_25405(DD)Z"))
-    private boolean cb$legacyClicked(net.minecraft.class_339 widget, double x, double y) {
+    /**
+     * 1.21.4's mouseClicked stores isMouseOver's answer (the call stays vanilla's, so a mod's own mixin on it still
+     * applies); the stored answer is then 1.21.3's clicked where that decides: a 1.21.3 class overriding clicked, or an
+     * answer otherwise than clicked's own box test (a 1.21.3 mod's mixin on clicked). Otherwise isMouseOver's answer stands.
+     */
+    @ModifyVariable(method = "method_25402", at = @At("STORE"), ordinal = 0)
+    private boolean cb$legacyClicked(boolean over, double x, double y, int button) {
+        net.minecraft.class_339 widget = (net.minecraft.class_339) (Object) this;
         if (widget instanceof CbGuiScroll.CbLegacyClicked) {
             return this.method_25361(x, y);
         }
@@ -59,6 +65,6 @@ public abstract class CbGuiScrollWidgetMixin {
         if (clicked != cb$box(widget, x, y)) {
             return clicked; // a 1.21.3 mixin on clicked answered otherwise: 1.21.3's mouseClicked took that answer
         }
-        return widget.method_25405(x, y);
+        return over;
     }
 }

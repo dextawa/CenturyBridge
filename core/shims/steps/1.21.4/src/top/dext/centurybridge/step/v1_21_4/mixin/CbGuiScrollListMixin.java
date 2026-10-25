@@ -11,12 +11,12 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbGuiScroll;
 
 /**
  * AbstractSelectionList's 1.21.3 scrolling surface on 1.21.4, where the list scrolls as an AbstractScrollArea.
- * Each old method is given back on the list; those 1.21.4 renamed answer through the new name (a 1.21.3
- * override of them is renamed to it, overrideRenames), the rest through the adapters of {@link CbGuiScroll}:
+ * The old methods 1.21.4 renamed are not given back: getScrollAmount / setScrollAmount / clampScrollAmount /
+ * getMaxScroll / scrollbarVisible / getScrollbarPosition are scrollAmount / setScrollAmount / refreshScrollAmount /
+ * maxScrollAmount / scrollbarVisible / scrollBarX, and a 1.21.3 mod's overrides (overrideRenames), calls (methodRenames)
+ * and mixins (which follow methodRenames) all meet on the new name, the one 1.21.4's own code calls. The rest are given
+ * back on the list, through the adapters of {@link CbGuiScroll}:
  * <ul>
- * <li>getScrollAmount / setScrollAmount / clampScrollAmount / getMaxScroll / scrollbarVisible /
- *     getScrollbarPosition are scrollAmount / setScrollAmount / refreshScrollAmount / maxScrollAmount /
- *     scrollbarVisible / scrollBarX;</li>
  * <li>isValidMouseClick: 1.21.3's mouseClicked refused a press it refused first; a list overriding it is asked so again
  *     (not renamed onto isValidClickButton, which 1.21.4's scroll bar asks: a list overriding both keeps both);</li>
  * <li>getMaxPosition is contentHeight less the 4 pixels 1.21.4 adds to it; updateScrollingState is
@@ -57,11 +57,6 @@ public abstract class CbGuiScrollListMixin extends net.minecraft.class_9017 {
         return (net.minecraft.class_350<?>) (Object) this;
     }
 
-    /** was getScrollAmount() (method_25341) */
-    public double method_25341() {
-        return this.method_44387();
-    }
-
     /** was setClampedScrollAmount(double) (method_60321): the amount clamped to 0..maxScroll */
     public void method_60321(double amount) {
         if (this instanceof CbGuiScroll.CbLegacyClampedScroll legacy && CbGuiScroll.enter(this, CbGuiScroll.CLAMPED_SCROLL)) {
@@ -89,34 +84,9 @@ public abstract class CbGuiScrollListMixin extends net.minecraft.class_9017 {
         super.method_44382(amount);
     }
 
-    /** was setScrollAmount(double) (method_25307) */
-    public void method_25307(double amount) {
-        this.method_44382(amount);
-    }
-
-    /** was clampScrollAmount() (method_60322) */
-    public void method_60322() {
-        this.method_65506();
-    }
-
-    /** was getMaxScroll() (method_25331) */
-    public int method_25331() {
-        return this.method_44390();
-    }
-
     /** was getMaxPosition() (method_25317): rows times their height plus the header; contentHeight adds 4 */
     protected int method_25317() {
         return this.method_44395() - 4;
-    }
-
-    /** was scrollbarVisible() (method_57717) */
-    protected boolean method_57717() {
-        return this.method_44392();
-    }
-
-    /** was getScrollbarPosition() (method_25329) */
-    protected int method_25329() {
-        return this.method_65507();
     }
 
     /** was getDefaultScrollbarPosition() (method_57718): right of the rows, past the scroll bar's gap */
