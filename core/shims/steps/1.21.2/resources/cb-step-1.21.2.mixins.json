@@ -90,6 +90,8 @@
     "CbItemRecipeManagerAccess",
     "CbItemRegistryFrozenAccess",
     "CbItemRegistryMixin",
+    "CbItemRegistryPendingTagsAccess",
+    "CbItemRegistryPendingTagsMixin",
     "CbItemServerThreadMixin",
     "CbItemShapedRecipeAccess",
     "CbItemShapelessRecipeAccess",
