@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.s9cull.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["NarrowFrustumMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

@@ -158,7 +158,8 @@
   "net/minecraft/class_572.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
   "net/minecraft/class_575.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
   "net/minecraft/class_617.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
-  "net/minecraft/class_7308.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient"
+  "net/minecraft/class_7308.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
+  "net/minecraft/class_761.method_32133(Lnet/minecraft/class_243;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbCullFrustum"
  },
  "interfaceCallRedirects": {
   "net/minecraft/class_3881.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient"

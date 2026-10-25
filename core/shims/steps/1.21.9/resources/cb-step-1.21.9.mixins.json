@@ -8,7 +8,8 @@
   ],
   "client": [
     "CbBlockEntityDispatchMixin",
-    "CbBlockEntityStateMixin"
+    "CbBlockEntityStateMixin",
+    "CbCullFrustumMixin"
   ],
   "server": [],
   "injectors": {
