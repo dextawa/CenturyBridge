@@ -11,6 +11,39 @@ accessible field net/minecraft/class_7920 field_62914 Ljava/lang/String;
 accessible field net/minecraft/class_757 field_61732 Lnet/minecraft/class_11658;
 # the server's cached respawn data, refreshed after a 1.21.8 setSpawn on the overworld's data (CbSpawn.method_187)
 accessible method net/minecraft/server/MinecraftServer method_74946 ()V
+# particles (rt/CbParticles): SingleQuadParticle's colour, alpha, roll, sprite and quad code for 1.21.8 callers; 1.21.8's particle RenderTypes
+accessible field net/minecraft/class_3940 field_62633 F
+accessible field net/minecraft/class_3940 field_62634 F
+accessible field net/minecraft/class_3940 field_62635 F
+accessible field net/minecraft/class_3940 field_62636 F
+accessible field net/minecraft/class_3940 field_62637 F
+accessible field net/minecraft/class_3940 field_62638 F
+accessible field net/minecraft/class_703 field_3843 Z
+accessible field net/minecraft/class_703 field_3866 I
+accessible field net/minecraft/class_703 field_3847 I
+accessible field net/minecraft/class_703 field_3840 Lnet/minecraft/class_5819;
+accessible field net/minecraft/class_310 field_62565 Lnet/minecraft/class_11939;
+accessible field net/minecraft/class_11939 field_62627 Ljava/util/Map;
+accessible field net/minecraft/class_702 field_3834 Lnet/minecraft/class_638;
+accessible field net/minecraft/class_702 field_3830 Ljava/util/Map;
+accessible field net/minecraft/class_702 field_62618 Lnet/minecraft/class_11939;
+accessible field net/minecraft/class_647$class_10417 field_55268 Lnet/minecraft/class_10444;
+accessible method net/minecraft/class_3940 method_74307 (Lnet/minecraft/class_1058;)V
+accessible method net/minecraft/class_3940 method_74308 (F)V
+accessible method net/minecraft/class_3940 method_74255 ()Lnet/minecraft/class_3940$class_11941;
+accessible method net/minecraft/class_3940 method_60373 (Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;Lorg/joml/Quaternionf;F)V
+accessible method net/minecraft/class_3940 method_60375 (Lnet/minecraft/class_11944;Lorg/joml/Quaternionf;FFFF)V
+accessible method net/minecraft/class_1921 method_24049 (Ljava/lang/String;IZZLcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+accessible class net/minecraft/class_1921$class_4687
+accessible class net/minecraft/class_1921$class_4688
+accessible class net/minecraft/class_1921$class_4688$class_4689
+accessible class net/minecraft/class_4668$class_4683
+accessible class net/minecraft/class_4668$class_4676
+accessible class net/minecraft/class_4668$class_5939
+accessible method net/minecraft/class_1921$class_4688$class_4689 method_34577 (Lnet/minecraft/class_4668$class_5939;)Lnet/minecraft/class_1921$class_4688$class_4689;
+accessible method net/minecraft/class_1921$class_4688$class_4689 method_23608 (Lnet/minecraft/class_4668$class_4676;)Lnet/minecraft/class_1921$class_4688$class_4689;
+accessible method net/minecraft/class_1921$class_4688$class_4689 method_23617 (Z)Lnet/minecraft/class_1921$class_4688;
+accessible field net/minecraft/class_4668 field_21383 Lnet/minecraft/class_4668$class_4676;
 
 # ---- BEGIN GENERATED (all): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
