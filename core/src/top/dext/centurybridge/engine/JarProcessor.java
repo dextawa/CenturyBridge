@@ -2526,6 +2526,7 @@ public final class JarProcessor {
             }
         }
         stripConfigs(entries, triage, deadMixins);
+        MixinRepair.dropMixed(entries, deadMixins); // a stripped mixin mixes no restored member
         markConfigsOptional(entries, triage);
         if (bridged != null) {
             // a member MixinBridge carried counts once its mixin survived triage and repair kept its injector
@@ -2927,6 +2928,7 @@ public final class JarProcessor {
         boolean changed = false;
         Map<String, byte[]> before = new HashMap<>(entries);
         MixinRepair.Outcome out = repair.repair(entries);
+        MixinRepair.dropMixed(entries, out.fatal()); // earlier steps' lines of a mixin stripped here
         for (String r : out.repairs()) {
             rpt.notes.add(tag + "mixin repaired past the wall: " + r);
         }
