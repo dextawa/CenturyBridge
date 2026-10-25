@@ -58,3 +58,5 @@ accessible class net/minecraft/class_4668$class_5940$class_10542
 accessible field net/minecraft/class_4668$class_5940$class_10542 comp_3462 Lnet/minecraft/class_2960;
 # CbScreens: the panorama cube map 1.21.6 keeps in GameRenderer
 accessible field net/minecraft/class_757 field_60579 Lnet/minecraft/class_751;
+# CbHorses: AbstractHorse.setFlag, for 1.21.5's flag-only setStanding(boolean)
+accessible method net/minecraft/class_1496 method_6769 (IZ)V

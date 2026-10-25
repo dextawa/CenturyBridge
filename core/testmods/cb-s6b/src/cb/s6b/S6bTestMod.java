@@ -162,6 +162,12 @@ public class S6bTestMod implements ModInitializer {
             check(false, "fapi threw " + e);
         }
         try {
+            tail(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "tail threw " + e);
+        }
+        try {
             problems();
         } catch (Throwable e) {
             e.printStackTrace();
@@ -245,6 +251,54 @@ public class S6bTestMod implements ModInitializer {
         // (fabric-client-tags-api-v1 -> fabric-tag-api-v1); the call itself is a client check (client_checks/s6b.md).
         check(net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("fabric-tag-api-v1"),
             "fabric-client-tags-api-v1: dependency resolves to fabric-tag-api-v1");
+    }
+
+    /** a 1.21.5 FlyingMob subclass */
+    static class CbFlyer extends net.minecraft.class_1307 {
+        CbFlyer(class_1299<? extends net.minecraft.class_1307> type, class_1937 level) {
+            super(type, level);
+        }
+    }
+
+    static void tail(class_3218 level) {
+        // FlyingMob: 1.21.5's travel in the air is moveRelative(0.02) then x0.91; a vanilla ghast is a FlyingMob
+        CbFlyer flyer = new CbFlyer(class_1299.field_6107, level);
+        flyer.method_5814(0.5, 300.0, 0.5);
+        flyer.method_18799(net.minecraft.class_243.field_1353);
+        flyer.method_36456(0.0F);
+        flyer.method_6091(new net.minecraft.class_243(0.0, 0.0, 1.0));
+        double dz = flyer.method_18798().field_1350;
+        check(Math.abs(dz - 0.02 * 0.91) < 1.0E-6, "FlyingMob.travel in air: z speed " + dz + " = 0.02 x 0.91");
+        check(!flyer.method_6101(), "FlyingMob.onClimbable false");
+        Object ghast = new net.minecraft.class_1571(class_1299.field_6107, level);
+        check(ghast instanceof net.minecraft.class_1307, "a vanilla Ghast is instanceof FlyingMob, as in 1.21.5");
+        check(flyer instanceof net.minecraft.class_1307, "the mod's flyer is instanceof FlyingMob");
+
+        // AttributeInstance save / load (1.21.5's CompoundTag form)
+        net.minecraft.class_1324 inst = new net.minecraft.class_1324(net.minecraft.class_5134.field_23716, i -> { });
+        inst.method_6192(30.0);
+        net.minecraft.class_2960 mid = net.minecraft.class_2960.method_60655("cb", "m");
+        inst.method_26837(new net.minecraft.class_1322(mid, 2.0, net.minecraft.class_1322.class_1323.field_6328));
+        class_2487 at = inst.method_26839();
+        check(at.method_68563("base", -1.0) == 30.0 && at.method_10545("id") && at.method_10545("modifiers"),
+            "AttributeInstance.save writes id, base 30 and modifiers: " + at);
+        net.minecraft.class_1324 back = new net.minecraft.class_1324(net.minecraft.class_5134.field_23716, i -> { });
+        back.method_26833(at);
+        check(back.method_6201() == 30.0 && back.method_6196(mid) && back.method_6194() == 32.0,
+            "AttributeInstance.load restores base 30 and the +2 modifier (value " + back.method_6194() + ")");
+        check("id".equals(net.minecraft.class_1324.field_52007), "AttributeInstance.ID_FIELD");
+
+        // AbstractHorse.setStanding(boolean): the flag only
+        net.minecraft.class_1498 horse = new net.minecraft.class_1498(class_1299.field_6139, level);
+        horse.method_6737(true);
+        boolean up = horse.method_6736();
+        horse.method_6737(false);
+        check(up && !horse.method_6736(), "AbstractHorse.setStanding(true/false) sets and clears standing");
+
+        // ClientboundChangeDifficultyPacket accessors
+        net.minecraft.class_2632 pkt = new net.minecraft.class_2632(net.minecraft.class_1267.field_5807, true);
+        check(pkt.method_11342() == net.minecraft.class_1267.field_5807 && pkt.method_11340(),
+            "ClientboundChangeDifficultyPacket.getDifficulty / isLocked");
     }
 
     static void problems() {
