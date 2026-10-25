@@ -2529,7 +2529,12 @@
   "net/minecraft/class_1799.method_27320(Lnet/minecraft/class_1297;)V",
   "net/minecraft/class_1799.method_7945()Lnet/minecraft/class_1533;",
   "net/minecraft/class_1799.method_27319()Lnet/minecraft/class_1297;",
-  "net/minecraft/class_1542.method_5674(Lnet/minecraft/class_2940;)V"
+  "net/minecraft/class_1542.method_5674(Lnet/minecraft/class_2940;)V",
+  "net/minecraft/class_1309.method_5973(Lnet/minecraft/class_1299;)Z",
+  "net/minecraft/class_1308.method_5973(Lnet/minecraft/class_1299;)Z",
+  "net/minecraft/class_1439.method_5973(Lnet/minecraft/class_1299;)Z",
+  "net/minecraft/class_8949.method_5973(Lnet/minecraft/class_1299;)Z",
+  "net/minecraft/class_1593.method_5973(Lnet/minecraft/class_1299;)Z"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
