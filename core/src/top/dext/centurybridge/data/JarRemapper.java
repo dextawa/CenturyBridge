@@ -74,6 +74,14 @@ public final class JarRemapper {
         public java.util.Map<String, java.util.Set<String>> targetMethods;
         public java.util.Map<String, String[]> targetSupers;
         public final java.util.Map<String, String[]> jarSupers = new java.util.HashMap<>();
+        /**
+         * The input jar's CenturyBridge mixin classes -> the game classes each targets (input names): a layer mixin's
+         * own members stand for its targets' members (@Shadow, @Overwrite, an override merged into the target), so
+         * they cross the wall under the names the target declares, not as CB-owned tokens ({@link #remapper}).
+         */
+        public final java.util.Map<String, java.util.List<String>> mixinTargets = new java.util.HashMap<>();
+        /** per CB mixin class, the member names that are its own: @Unique members, methods of CB interfaces it implements */
+        public final java.util.Map<String, java.util.Set<String>> mixinOwn = new java.util.HashMap<>();
 
         /**
          * Tokens only the step's facade classes declare keep their names across the wall. A class the
@@ -233,6 +241,18 @@ public final class JarRemapper {
                 }
 
                 private String member(String owner, String name) {
+                    // a layer mixin's member is its target's: @Shadow / @Overwrite / a merged override take the
+                    // name the target declares, the way a mod mixin's do (an id no target has stays as it is)
+                    java.util.List<String> targets = mixinTargets.get(owner);
+                    if (targets != null && !mixinOwn.getOrDefault(owner, java.util.Set.of()).contains(name)) {
+                        for (String t : targets) {
+                            String hit = byOwner.get(t + "." + name);
+                            if (hit != null) {
+                                return hit;
+                            }
+                        }
+                        return members.getOrDefault(name, name);
+                    }
                     // our runtime classes (Statics, facades, tombstones) keep their
                     // token-named members: the converter wired call sites to them
                     // by exactly that name, and nothing in the game maps them
@@ -266,6 +286,10 @@ public final class JarRemapper {
                  */
                 private String byDescriptor(String owner, String name, String desc, String m) {
                     java.util.Set<String> cand = candidates.get(name);
+                    java.util.List<String> targets = mixinTargets.get(owner);
+                    if (targets != null && targets.size() == 1) {
+                        owner = targets.get(0); // a layer mixin's member resolves on its target
+                    }
                     if (cand == null || cand.size() < 2 || owner.startsWith("top/dext/centurybridge/")) {
                         return m;
                     }
@@ -380,6 +404,7 @@ public final class JarRemapper {
             loadTarget(table, targetJar);
             loadJarSupers(table, inJar);
         }
+        loadLayerMixins(table, inJar);
         int nClasses;
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar));
              ZipOutputStream zout = new ZipOutputStream(Files.newOutputStream(outJar))) {
@@ -755,6 +780,89 @@ public final class JarRemapper {
         }
         table.targetMethods = methods;
         table.targetSupers = supers;
+    }
+
+    /**
+     * The input jar's CenturyBridge mixin classes ({@link Table#mixinTargets}, {@link Table#mixinOwn}). A layer climbed
+     * across the wall is W-era code like a mod: its mixins' @Shadow fields and methods carry the intermediary ids of
+     * their targets' members. Kept as CB-owned tokens they named nothing on 26.1 ("@Shadow field field_5885 was not
+     * located in the target class MobEffect" at mixin apply, in every climbed layer below 26.1).
+     */
+    private static void loadLayerMixins(Table table, Path jar) throws IOException {
+        java.util.Map<String, org.objectweb.asm.tree.ClassNode> cb = new java.util.HashMap<>();
+        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(jar))) {
+            ZipEntry e;
+            while ((e = zin.getNextEntry()) != null) {
+                String n = e.getName();
+                if (n.endsWith(".class") && (n.startsWith("top/dext/centurybridge/") || n.startsWith("centurybridge/"))) {
+                    org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+                    new ClassReader(zin.readAllBytes()).accept(cn, ClassReader.SKIP_CODE);
+                    cb.put(cn.name, cn);
+                }
+            }
+        }
+        for (org.objectweb.asm.tree.ClassNode cn : cb.values()) {
+            org.objectweb.asm.tree.AnnotationNode mx = null;
+            for (java.util.List<org.objectweb.asm.tree.AnnotationNode> l : java.util.Arrays.asList(cn.invisibleAnnotations, cn.visibleAnnotations)) {
+                if (l != null) {
+                    for (org.objectweb.asm.tree.AnnotationNode a : l) {
+                        if (a.desc.equals("Lorg/spongepowered/asm/mixin/Mixin;")) {
+                            mx = a;
+                        }
+                    }
+                }
+            }
+            if (mx == null || mx.values == null) {
+                continue;
+            }
+            java.util.List<String> targets = new java.util.ArrayList<>();
+            for (int i = 0; i + 1 < mx.values.size(); i += 2) {
+                Object v = mx.values.get(i + 1);
+                for (Object o : v instanceof java.util.List<?> l ? l : java.util.List.of(v)) {
+                    if (o instanceof org.objectweb.asm.Type t) {
+                        targets.add(t.getInternalName());
+                    } else if (o instanceof String t && "targets".equals(mx.values.get(i))) {
+                        targets.add(t.replace('.', '/'));
+                    }
+                }
+            }
+            if (targets.isEmpty()) {
+                continue;
+            }
+            java.util.Set<String> own = new java.util.HashSet<>();
+            for (org.objectweb.asm.tree.FieldNode f : cn.fields) {
+                if (unique(f.invisibleAnnotations) || unique(f.visibleAnnotations)) {
+                    own.add(f.name);
+                }
+            }
+            for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                if (unique(m.invisibleAnnotations) || unique(m.visibleAnnotations)) {
+                    own.add(m.name);
+                }
+            }
+            // a method of a CB interface the mixin implements (rt/CbWallPick.pick): its callers name the interface
+            for (String i : cn.interfaces) {
+                org.objectweb.asm.tree.ClassNode in = cb.get(i);
+                if (in != null) {
+                    for (org.objectweb.asm.tree.MethodNode m : in.methods) {
+                        own.add(m.name);
+                    }
+                }
+            }
+            table.mixinTargets.put(cn.name, targets);
+            table.mixinOwn.put(cn.name, own);
+        }
+    }
+
+    private static boolean unique(java.util.List<org.objectweb.asm.tree.AnnotationNode> l) {
+        if (l != null) {
+            for (org.objectweb.asm.tree.AnnotationNode a : l) {
+                if (a.desc.equals("Lorg/spongepowered/asm/mixin/Unique;")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /** the input jar's classes' supertypes, renamed as the jar will be ({@link Table#jarSupers}) */
