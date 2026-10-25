@@ -35,6 +35,7 @@
     "CbDataTexturedModelAccess",
     "CbEquipDispatcherAccess",
     "CbEquipMinecraftMixin",
+    "CbEntityModelSetReloadMixin",
     "CbFapiItemResolverMixin",
     "CbFapiItemStateMixin",
     "CbFapiPickMixin",
