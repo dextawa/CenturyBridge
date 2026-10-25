@@ -481,6 +481,11 @@ public final class MixinJudge {
                     // it applies, but W's own code never reads the restored member: the mod's mixin changes
                     // nothing vanilla does (LayerMembers)
                     why = "restored-member: vanilla path unmixed";
+                } else if (why == null && restoring != null && restoring.carries(wm) != null
+                        && !LayerMembers.carried(restoring.carries(wm), an, MixinRepair.values(an))) {
+                    // vanilla's read path reaches the restored member only for what the marker names (its answer
+                    // at HEAD/RETURN, say), not the body this injector acts inside or on
+                    why = "restored-member: vanilla path partial";
                 }
                 if (why == null) {
                     return null;
