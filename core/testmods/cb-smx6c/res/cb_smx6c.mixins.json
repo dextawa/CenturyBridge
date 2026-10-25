@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.smx6c.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": ["FaceBakeryMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

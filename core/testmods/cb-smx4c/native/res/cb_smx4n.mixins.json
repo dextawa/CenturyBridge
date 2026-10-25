@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.smx4n.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["RegisterMixin", "TextureManagerAccess", "WidgetMouseMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

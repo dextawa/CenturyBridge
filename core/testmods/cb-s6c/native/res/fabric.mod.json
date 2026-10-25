@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s6n",
+  "version": "1.0.0",
+  "name": "CB s6b native 1.21.6 probe",
+  "environment": "client",
+  "mixins": ["cb_s6n.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.6" }
+}

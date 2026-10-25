@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s5c",
+  "version": "1.0.0",
+  "name": "CB s5 client checks",
+  "description": "1.21.4-era client checks for s5 (client inventoryTick, tooltip, break sound); tally CB-S5C n/n, then the client stops",
+  "environment": "client",
+  "entrypoints": { "main": ["cb.s5c.S5cItems"], "client": ["cb.s5c.S5cClient"] },
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.4" }
+}
