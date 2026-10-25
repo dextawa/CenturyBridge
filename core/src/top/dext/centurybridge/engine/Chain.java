@@ -841,16 +841,32 @@ public final class Chain {
     public boolean linksOnTarget(String owner, String name, String desc, boolean isStatic) {
         String o = classRenames.getOrDefault(owner, owner);
         String d = renamedDesc(desc);
-        java.util.List<String> names = new java.util.ArrayList<>(java.util.List.of(name));
-        for (String anc : selfAndSupers(owner)) {
-            String w = wallMethodFwd.get(anc + "." + name);
-            if (w != null) {
-                names.add(w);
-                break;
+        java.util.List<String> shapes = new java.util.ArrayList<>();
+        if (wallMethodFwd.isEmpty()) {
+            shapes.add(name + d); // one namespace: the call keeps its name
+        } else {
+            // past the wall the converted call is spelled with the member's wall name (the table lists it on its root
+            // declaration); the target index holds a mapped member's mojang name with its mojang descriptor, an
+            // unmapped one's with the descriptor translated back. A member the table does not name keeps an
+            // intermediary name nothing on the target declares
+            String w = null;
+            for (String anc : selfAndSupers(owner)) {
+                w = wallMethodFwd.get(anc + "." + name);
+                if (w != null) {
+                    break;
+                }
             }
+            if (w == null) {
+                return false;
+            }
+            java.util.regex.Matcher m = java.util.regex.Pattern.compile("L([^;]+);").matcher(d);
+            String fd = m.replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
+                wallClassFwd.getOrDefault(mr.group(1), mr.group(1))) + ";");
+            shapes.add(w + fd);
+            shapes.add(w + d);
         }
-        for (String n : names) {
-            String hit = resolveOnTargetJvm(o, n + d);
+        for (String sh : shapes) {
+            String hit = resolveOnTargetJvm(o, sh);
             if (hit != null && hit.endsWith(" static") == isStatic) {
                 return true;
             }
@@ -1419,6 +1435,9 @@ public final class Chain {
                         // spelling it that way (mojang-mapped bundled jar, whose
                         // descriptors are mojang-named as well) resolves too
                         decls.add(me.getKey() + d);
+                        if (idx.statics.contains(e.getKey() + "." + me.getKey() + d)) {
+                            targetStaticMethods.add(owner + "." + me.getKey() + d);
+                        }
                     }
                     if (name.equals("<init>")) {
                         targetCtors.computeIfAbsent(owner, k -> new java.util.HashSet<>()).add(bd);
