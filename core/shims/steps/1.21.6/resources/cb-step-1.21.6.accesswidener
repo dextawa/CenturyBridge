@@ -50,3 +50,11 @@ accessible field net/minecraft/class_4668 field_21376 Lnet/minecraft/class_4668$
 accessible field net/minecraft/class_4668 field_25280 Lnet/minecraft/class_4668$class_4678;
 # CommandRegistry (fabric-commands-v0 facade): whether a command selection includes dedicated servers
 accessible field net/minecraft/class_2170$class_5364 field_25423 Z
+# CbGuiTextures: the textures a 1.21.5 render type bound (its composite state's texture shard)
+accessible field net/minecraft/class_1921$class_4687 field_21403 Lnet/minecraft/class_1921$class_4688;
+accessible field net/minecraft/class_1921$class_4688 field_21406 Lnet/minecraft/class_4668$class_5939;
+accessible method net/minecraft/class_4668$class_5939 method_23564 ()Ljava/util/Optional;
+accessible class net/minecraft/class_4668$class_5940$class_10542
+accessible field net/minecraft/class_4668$class_5940$class_10542 comp_3462 Lnet/minecraft/class_2960;
+# CbScreens: the panorama cube map 1.21.6 keeps in GameRenderer
+accessible field net/minecraft/class_757 field_60579 Lnet/minecraft/class_751;

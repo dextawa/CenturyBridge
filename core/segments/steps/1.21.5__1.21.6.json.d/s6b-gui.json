@@ -16,7 +16,13 @@
   "net/minecraft/class_332.method_25292(IIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_25292",
   "net/minecraft/class_332.method_25301(IIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_25301",
   "net/minecraft/class_332.method_33284(IIIIIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_33284",
-  "net/minecraft/class_332.method_51740(Lnet/minecraft/class_1921;IIIIIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_51740"
+  "net/minecraft/class_332.method_51740(Lnet/minecraft/class_1921;IIIIIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_51740",
+  "net/minecraft/class_332.method_57709(Lnet/minecraft/class_1921;IIIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTextures#method_57709",
+  "net/minecraft/class_327.method_27521(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw#method_27521",
+  "net/minecraft/class_327.method_27522(Lnet/minecraft/class_2561;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw#method_27522",
+  "net/minecraft/class_327.method_22942(Lnet/minecraft/class_5481;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw#method_22942",
+  "net/minecraft/class_327.method_30882(Lnet/minecraft/class_2561;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;IIZ)I": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw#method_30882",
+  "net/minecraft/class_332.method_51429(Lnet/minecraft/class_1799;IIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_51429"
  },
  "overrideHooks": [
   {
@@ -95,6 +101,39 @@
     "method_60649(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIII)V"
    ],
    "basis": "1.21.5 drawString answered the x where the text ended; 1.21.6's answers nothing (vanilla's call of the new shape drops the old override's answer). A super call draws with 1.21.5's colour adjustment (alpha-less colours opaque) and answers 1.21.5's end x (CbGuiText)"
+  },
+  {
+   "old": "method_27521(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I",
+   "new": "method_27521(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)V",
+   "onlyUnder": "net/minecraft/class_327",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw.superString(Ltop/dext/centurybridge/step/v1_21_6/rt/CbFontDraw$SuperString;Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw$SuperString",
+   "superAccessors": [
+    "method_27521(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)V"
+   ],
+   "basis": "1.21.5 Font.drawInBatch answered the x where the text ended and made alpha-less colours opaque; 1.21.6's answers nothing and takes the colour as given. A super call draws with 1.21.5's colour adjustment and answers 1.21.5's end x (CbFontDraw)"
+  },
+  {
+   "old": "method_27522(Lnet/minecraft/class_2561;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I",
+   "new": "method_27522(Lnet/minecraft/class_2561;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)V",
+   "onlyUnder": "net/minecraft/class_327",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw.superComponent(Ltop/dext/centurybridge/step/v1_21_6/rt/CbFontDraw$SuperComponent;Lnet/minecraft/class_2561;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw$SuperComponent",
+   "superAccessors": [
+    "method_27522(Lnet/minecraft/class_2561;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)V"
+   ],
+   "basis": "1.21.5 Font.drawInBatch answered the x where the text ended and made alpha-less colours opaque; 1.21.6's answers nothing and takes the colour as given. A super call draws with 1.21.5's colour adjustment and answers 1.21.5's end x (CbFontDraw)"
+  },
+  {
+   "old": "method_22942(Lnet/minecraft/class_5481;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I",
+   "new": "method_22942(Lnet/minecraft/class_5481;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)V",
+   "onlyUnder": "net/minecraft/class_327",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw.superSequence(Ltop/dext/centurybridge/step/v1_21_6/rt/CbFontDraw$SuperSequence;Lnet/minecraft/class_5481;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw$SuperSequence",
+   "superAccessors": [
+    "method_22942(Lnet/minecraft/class_5481;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)V"
+   ],
+   "basis": "1.21.5 Font.drawInBatch answered the x where the text ended and made alpha-less colours opaque; 1.21.6's answers nothing and takes the colour as given. A super call draws with 1.21.5's colour adjustment and answers 1.21.5's end x (CbFontDraw)"
   }
  ],
  "callReshapes": {
@@ -234,6 +273,37 @@
     "keep:6"
    ],
    "basis": "1.21.5 blitSprite(function, sprite, ..) applied the function to the sprite's atlas; 1.21.6 takes that render type's pipeline"
+  },
+  "net/minecraft/class_332.method_51436(Lnet/minecraft/class_327;Ljava/util/List;Lnet/minecraft/class_8000;II)V": {
+   "desc": "(Lnet/minecraft/class_327;Ljava/util/List;Lnet/minecraft/class_8000;IIZ)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#tooltipKeepsFirst()Z"
+   ],
+   "basis": "1.21.5 drew the tooltip at once (z 400, over the frame); 1.21.6 defers it to the frame's end, the boolean saying whether it replaces one already deferred; every 1.21.5 tooltip call 1.21.6 kept passes false (javap)"
+  },
+  "net/minecraft/class_8002.method_47946(Lnet/minecraft/class_332;IIIIILnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_332;IIIILnet/minecraft/class_2960;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:6"
+   ],
+   "basis": "1.21.5 TooltipRenderUtil.renderTooltipBackground(g, x, y, w, h, z, sprite) pushed the pose, translated by z and blitted the background and frame sprites; 1.21.6's (g, x, y, w, h, sprite) blits the same sprites without the z translation (javap); the GUI has no depth"
+  },
+  "net/minecraft/class_8030.method_65185(Lorg/joml/Matrix4f;)Lnet/minecraft/class_8030;": {
+   "desc": "(Lorg/joml/Matrix3x2f;)Lnet/minecraft/class_8030;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_6/rt/CbScreens#guiMatrix(Lorg/joml/Matrix4f;)Lorg/joml/Matrix3x2f;"
+   ],
+   "basis": "1.21.5 transformAxisAligned transformed the corners as (x, y, 0) through the Matrix4f; 1.21.6 takes the GUI's Matrix3x2f and transforms (x, y) the same way; the 4x4's XY part is that matrix (CbScreens.guiMatrix)"
   }
  },
  "staticRedirects": {
@@ -249,5 +319,24 @@
   "net/minecraft/class_1921.method_51787()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_51787",
   "net/minecraft/class_1921.method_62287()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_62287",
   "net/minecraft/class_1921.method_23583()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbChunkTypes#method_23583"
- }
+ },
+ "methodRenames": {
+  "net/minecraft/class_332.method_51452()V": "method_71048"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_332.field_44931:F": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill",
+  "net/minecraft/class_332.field_44932:F": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill",
+  "net/minecraft/class_327.field_35427:I": "top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw",
+  "net/minecraft/class_437.field_49508:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v1_21_6/rt/CbScreens",
+  "net/minecraft/class_437.field_49509:Lnet/minecraft/class_766;": "top/dext/centurybridge/step/v1_21_6/rt/CbScreens",
+  "net/minecraft/class_465.field_32322:I": "top/dext/centurybridge/step/v1_21_6/rt/CbScreens"
+ },
+ "covers": [
+  "net/minecraft/class_437.method_47414(Ljava/util/List;)V",
+  "net/minecraft/class_437.method_47942(Ljava/util/List;Lnet/minecraft/class_8000;Z)V",
+  "net/minecraft/class_437.method_47415(Lnet/minecraft/class_2561;)V",
+  "net/minecraft/class_437.method_47412(Lnet/minecraft/class_7919;Lnet/minecraft/class_8000;Z)V",
+  "net/minecraft/class_437.method_59840()V",
+  "net/minecraft/class_437.method_57734()V"
+ ]
 }

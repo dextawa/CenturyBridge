@@ -13,6 +13,35 @@ public final class CbGuiFill {
     private CbGuiFill() {
     }
 
+    /**
+     * renderItem(stack, x, y, seed, z): 1.21.5 was renderItem(player, level, stack, x, y, seed, z); 1.21.6's
+     * renderItem(stack, x, y, seed) is the same call without z (both pass Minecraft.player and .level, javap). z is
+     * dropped: the GUI has no depth.
+     */
+    public static void method_51429(net.minecraft.class_332 g, net.minecraft.class_1799 stack, int x, int y, int seed, int z) {
+        g.method_51428(stack, x, y, seed);
+    }
+
+    /** GuiGraphics.MAX_GUI_Z of 1.21.5 (1.21.6's GUI has no depth; the constant is 1.21.5's) */
+    public static float field_44931() {
+        return 10000.0F;
+    }
+
+    /** GuiGraphics.MIN_GUI_Z of 1.21.5 */
+    public static float field_44932() {
+        return -10000.0F;
+    }
+
+    /**
+     * renderTooltip(Font, List&lt;FormattedCharSequence&gt;, positioner, x, y): 1.21.5 drew the tooltip at once at z 400,
+     * over the rest of the frame; 1.21.6 defers tooltips to the end of the frame for that, and every 1.21.5 tooltip call
+     * it kept passes "replace" false (javap: renderTooltip(.., List&lt;Component&gt;, ..) and the others call the deferring
+     * method with iconst_0), so the call is 1.21.6's with false.
+     */
+    public static boolean tooltipKeepsFirst() {
+        return false;
+    }
+
     /** blitSprite(Function, sprite id, texW, texH, u, v, x, y, w, h): 1.21.5 drew it white */
     public static int white() {
         return -1;

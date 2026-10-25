@@ -10,7 +10,12 @@
   "net/fabricmc/fabric/api/client/keybinding/FabricKeyBinding$Builder": "top/dext/centurybridge/step/v1_21_6/facade/fapi/FabricKeyBinding$Builder",
   "net/fabricmc/fabric/api/client/keybinding/KeyBindingRegistry": "top/dext/centurybridge/step/v1_21_6/facade/fapi/KeyBindingRegistry",
   "net/fabricmc/fabric/api/rendering/data/v1/RenderAttachedBlockView": "top/dext/centurybridge/step/v1_21_6/facade/fapi/RenderAttachedBlockView",
-  "net/fabricmc/fabric/api/rendering/data/v1/RenderAttachmentBlockEntity": "net/fabricmc/fabric/api/blockview/v2/RenderDataBlockEntity"
+  "net/fabricmc/fabric/api/rendering/data/v1/RenderAttachmentBlockEntity": "net/fabricmc/fabric/api/blockview/v2/RenderDataBlockEntity",
+  "net/minecraft/class_9080": "top/dext/centurybridge/step/v1_21_6/facade/LayeredDraw",
+  "net/minecraft/class_9080$class_9081": "top/dext/centurybridge/step/v1_21_6/facade/LayeredDraw$Layer",
+  "net/fabricmc/fabric/api/client/rendering/v1/IdentifiedLayer": "top/dext/centurybridge/step/v1_21_6/facade/fapi/IdentifiedLayer",
+  "net/fabricmc/fabric/api/client/rendering/v1/LayeredDrawerWrapper": "top/dext/centurybridge/step/v1_21_6/facade/fapi/LayeredDrawerWrapper",
+  "net/fabricmc/fabric/api/client/rendering/v1/HudLayerRegistrationCallback": "top/dext/centurybridge/step/v1_21_6/facade/fapi/HudLayerRegistrationCallback"
  },
  "instanceRedirects": {
   "net/minecraft/class_8942.method_54946(Ljava/lang/String;)Lnet/minecraft/class_8942;": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#forChild",
