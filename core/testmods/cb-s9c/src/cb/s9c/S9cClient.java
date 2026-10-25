@@ -158,13 +158,27 @@ public class S9cClient implements ClientModInitializer {
             check("3a.chestSubclass", BE_CHEST.get() > 0, "chest renderer subclass calls " + BE_CHEST.get());
             check("3a.lambda", BE_LAMBDA.get() > 0, "furnace lambda renderer calls " + BE_LAMBDA.get());
 
-            run(server, () -> server.method_30002().method_29199(18000));
-            Thread.sleep(4000);
+            // a roof and three walls over the scene (open towards the player): the packed light passed to render drops
+            run(server, () -> {
+                class_3218 lvl = server.method_30002();
+                for (int dx = -4; dx <= 4; dx++) {
+                    for (int dz = -7; dz <= -1; dz++) {
+                        lvl.method_8501(new class_2338(at[0] + dx, at[1] + 4, at[2] + dz), class_2246.field_10340.method_9564());
+                        for (int dy = 0; dy <= 3; dy++) {
+                            if (dx == -4 || dx == 4 || dz == -7) {
+                                lvl.method_8501(new class_2338(at[0] + dx, at[1] + dy, at[2] + dz), class_2246.field_10340.method_9564());
+                            }
+                        }
+                    }
+                }
+                lvl.method_29199(18000);
+            });
+            Thread.sleep(5000);
             int nightLight = lastEntityLight;
             shot(mc, "cb-s9c-night.png");
             check("2a.lightFollows", dayLight != nightLight && dayLight >= 0 && nightLight >= 0,
-                "packed light passed to render: day " + Integer.toHexString(dayLight) + ", night " + Integer.toHexString(nightLight)
-                    + " (screenshot cb-s9c-night.png: quad dark like the zombie)");
+                "packed light passed to render: open sky " + Integer.toHexString(dayLight) + ", under the roof " + Integer.toHexString(nightLight)
+                    + " (screenshot cb-s9c-night.png, night under a roof: quad dark like the zombie)");
             run(server, () -> server.method_30002().method_29199(6000));
             run(mc, () -> zombie.method_5834(true));
             Thread.sleep(3000);
