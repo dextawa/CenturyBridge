@@ -22,6 +22,9 @@
 #
 # Environment:
 #   CB_CLIMB=1|0          climb the jars from 1.20.1 (default 1) or use them as they are
+#   CB_FROM=<V>           with CB_CLIMB=1: the jars are V-era mods and climb from V (default 1.20.1)
+#   CB_NATIVE_MODS="<jar> ..."  with CB_CLIMB=1: T-native mods on beta2 (paths relative to ~/cbwork), copied in
+#                         unconverted beside the climbed ones (climb_mods.sh)
 #   CB_FAPI=1|0           with CB_CLIMB=0: add T's Fabric API (default 1; a climb always has it)
 #   CB_REUSE_LAYERS=1     keep agents/<name>/wt-T/runtime-T when it exists (default: rebuild the layers
 #                         in wt-T, a copy of the uploaded tree per target)
@@ -75,7 +78,7 @@ if [ "${1:-}" != __remote ] && [ "${1:-}" != __inner ]; then
     retry $SSH "rm -rf ~/$RUN && mkdir -p ~/$RUN/in"
     for j in "$@"; do retry $SCP "$j" "dext@beta2.dext.top:$RUN/in/"; done
     ENV=""
-    for v in CB_CLIMB CB_FAPI CB_REUSE_LAYERS CB_SHOTS CB_EXIT_WAIT CB_READY CB_WAIT CB_WORLD CB_GREP CB_CLIENTS CB_CLIENT_RT CB_ASSETS CB_JAVA; do
+    for v in CB_CLIMB CB_FROM CB_NATIVE_MODS CB_FAPI CB_REUSE_LAYERS CB_SHOTS CB_EXIT_WAIT CB_READY CB_WAIT CB_WORLD CB_GREP CB_CLIENTS CB_CLIENT_RT CB_ASSETS CB_JAVA; do
         [ -n "${!v+set}" ] && ENV="$ENV $v=$(printf '%q' "${!v}")"
     done
     # started/ is made before the launch (mkdir is atomic): an ssh drop after the launch must not make
@@ -175,7 +178,7 @@ PYEOF
                 || { tail -8 "$OUT/layers.log"; end "===RESULT: LAYERS FAILED==="; }
             echo "   $(grep -c '^layer' "$OUT/layers.log") layers in $((SECONDS - S)) s"
         fi
-        echo "== climb: ${#IN[@]} mod(s) 1.20.1 -> $T"
+        echo "== climb: ${#IN[@]} mod(s) ${CB_FROM:-1.20.1} -> $T"
         bash "$AG/core/tools/climb_mods.sh" "$WT" "$T" "$RUN/conv" "$MODS" "${IN[@]}" || end "===RESULT: CLIMB FAILED==="
         cp "$RUN/conv/climb.log" "$OUT/climb.log"
     else
