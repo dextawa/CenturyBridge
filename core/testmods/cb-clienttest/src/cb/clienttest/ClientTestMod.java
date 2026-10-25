@@ -55,21 +55,26 @@ public class ClientTestMod implements ClientModInitializer {
         try {
             class_310 mc = class_310.method_1551();
             long until = System.currentTimeMillis() + 240_000;
+            boolean world = true;
             while (!onRender(() -> mc.field_1724 != null && mc.field_1687 != null)) {
                 if (System.currentTimeMillis() > until) {
-                    Tally.fail("join", "no world joined within 240 s");
-                    finish(mc);
-                    return;
+                    world = false;
+                    break;
                 }
                 Thread.sleep(500);
             }
-            Tally.ok("join", "player in world");
-            Thread.sleep(5000); // chunks around the player
-            onRender(() -> {
-                mc.field_1724.method_36456(0f);
-                mc.field_1724.method_36457(10f);
-                return null;
-            });
+            if (world) {
+                Tally.ok("join", "player in world");
+                Thread.sleep(5000); // chunks around the player
+                onRender(() -> {
+                    mc.field_1724.method_36456(0f);
+                    mc.field_1724.method_36457(10f);
+                    return null;
+                });
+            } else {
+                // the checks that need no player still run (over whatever screen is up), the rest never run
+                Tally.fail("join", "no world joined within 240 s; checks needing a player are skipped");
+            }
             onRender(() -> {
                 fontChecks(mc.field_1772);
                 renderTypeChecks();
@@ -79,6 +84,10 @@ public class ClientTestMod implements ClientModInitializer {
                 Frames.settle("font.");
                 Frames.settle("rt.");
             });
+            if (!world) {
+                finish(mc);
+                return;
+            }
             screenPhase(mc, "container", () -> new TestContainerScreen(mc.field_1724.field_7498, mc.field_1724.method_31548()), () -> {
                 Tally.check("container.renderBg", TestContainerScreen.bgCalls > 0, TestContainerScreen.bgCalls + " calls");
                 Tally.check("container.renderLabels", TestContainerScreen.labelCalls > 0, TestContainerScreen.labelCalls + " calls");
