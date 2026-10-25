@@ -223,7 +223,11 @@ public class S5cClient implements ClientModInitializer {
                 vanOk &= van.indexOf(l) == van.lastIndexOf(l) || l.isEmpty();
             }
             check("tooltip.vanillaSword", vanOk, "lines " + van);
-            List<String> adv = on(mc, () -> lines(mc, new class_1799(sword), class_1836.field_41071));
+            List<String> adv = on(mc, () -> {
+                class_1799 damaged = new class_1799(sword);
+                damaged.method_7974(5); // advanced tooltips show durability only for a damaged stack
+                return lines(mc, damaged, class_1836.field_41071);
+            });
             int ai = adv.indexOf("cb-s5 tooltip");
             int dur = -1, idl = -1;
             for (int i = 0; i < adv.size(); i++) {
@@ -308,9 +312,16 @@ public class S5cClient implements ClientModInitializer {
         finish(class_310.method_1551());
     }
 
+    /** the break-related sounds heard (ambient sounds left out) */
     static String last() {
         synchronized (SOUNDS) {
-            return SOUNDS.toString();
+            List<String> l = new ArrayList<>();
+            for (String x : SOUNDS) {
+                if (x.contains("break") || x.contains("anvil")) {
+                    l.add(x);
+                }
+            }
+            return l.toString();
         }
     }
 
