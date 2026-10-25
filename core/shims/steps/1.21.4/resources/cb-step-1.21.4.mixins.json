@@ -95,6 +95,7 @@
     "CbTextureAbstractMixin",
     "CbTextureAnimationMixin",
     "CbTextureAtlasMixin",
+    "CbTextureLoadMixin",
     "CbTextureManagerMixin",
     "CbTextureReloadableMixin",
     "CbTextureSkinDownloaderAccess"

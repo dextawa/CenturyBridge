@@ -31,6 +31,25 @@ public abstract class CbTextureManagerMixin implements CbTextures.CbTextureManag
     @Final
     private net.minecraft.class_3300 field_5287;
 
+    /**
+     * 1.21.3's register(id, texture) loaded the texture first (loadTexture: texture.load(resourceManager)); 1.21.4's
+     * register of a texture that does not reload from contents does so again, through the 1.21.3 load the layer restores
+     * on DynamicTexture, TextureAtlas and FontTexture (CbTextureLoadMixin; 1.21.3's bodies, empty). With no mod mixin
+     * the load does nothing and register goes on unchanged: vanilla is unchanged. A ReloadableTexture is loaded from its
+     * contents by 1.21.4 (registerAndLoad / reload); a texture CbTextures.register already loaded is not loaded again.
+     */
+    @Inject(method = "method_4616", at = @At("HEAD"), cancellable = true)
+    private void cb$loadOnRegister(net.minecraft.class_2960 id, net.minecraft.class_1044 texture, CallbackInfo ci) {
+        if (texture instanceof net.minecraft.class_10537 || CbTextures.loaded()) {
+            return;
+        }
+        net.minecraft.class_1044 loaded = CbTextures.loadOnRegister(cb$self(), id, texture);
+        if (loaded != texture) {
+            ci.cancel();
+            CbTextures.registerLoaded(cb$self(), id, loaded);
+        }
+    }
+
     /** 1.21.3 prebakedTextures: register(name, texture)'s counter per name */
     private final Map<String, Integer> cb$dynamicIds = new HashMap<>();
 
