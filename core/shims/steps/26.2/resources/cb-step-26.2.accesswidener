@@ -1,5 +1,5 @@
 accessWidener	v2	official
-# s26: hand-wired members (rt/CbS26Selector: EntitySelectorParser flags on 26.2 option states; rt/CbS26ChatFormatting: getChar; rt/CbS26Entity; rt/CbS26Dripstone: SpeleothemUtils members 26.2 added protected; rt/CbS26MinecraftClient: Gui.screen, ChatComponent.commandHistory; rt/CbS26Triggers: PlayerAdvancements trigger listeners; rt/CbS26EntityPredicates: EntityPredicate parts, MobEffectsPredicate.Builder effects; rt/CbS26Beds: bed properties' bounce restitution; rt/CbS26Enchanting: EnchantRandomlyFunction.Builder options; rt/CbS26DebugClient: GameRenderer's debug crosshair renderer; rt/CbS26SurfaceRules: the surface rule Condition and Context.getBiome; rt/CbS26CommandEncoderClient and 26.1.2 callers: CommandEncoder.isInRenderPass, public in 26.1.2; rt/CbS26ToastsClient: SystemToast lines and width)
+# s26: hand-wired members (rt/CbS26Selector: EntitySelectorParser flags on 26.2 option states; rt/CbS26ChatFormatting: getChar; rt/CbS26Entity; rt/CbS26Dripstone: SpeleothemUtils members 26.2 added protected; rt/CbS26MinecraftClient: Gui.screen, ChatComponent.commandHistory; rt/CbS26Triggers: PlayerAdvancements trigger listeners; rt/CbS26EntityPredicates: EntityPredicate parts, MobEffectsPredicate.Builder effects; rt/CbS26Beds: bed properties' bounce restitution; rt/CbS26Enchanting: EnchantRandomlyFunction.Builder options; rt/CbS26DebugClient: GameRenderer's debug crosshair renderer; rt/CbS26SurfaceRules: the surface rule Condition and Context.getBiome; rt/CbS26CommandEncoderClient and 26.1.2 callers: CommandEncoder.isInRenderPass, public in 26.1.2; rt/CbS26ToastsClient: SystemToast lines and width; rt/CbS26Receivers: Gui.minecraft, GameRenderer.minecraft and Hud.minecraft; rt/CbS26OptionsClient: Options.minecraft for hideGui, the objects holding mixinReceivers W receivers)
 accessible class net/minecraft/commands/arguments/selector/options/InvertableSetOptionState$Limitation
 accessible field net/minecraft/commands/arguments/selector/options/InvertableSetOptionState state Lnet/minecraft/commands/arguments/selector/options/InvertableSetOptionState$Limitation;
 accessible field net/minecraft/commands/arguments/selector/options/SetOnceOptionState hasValue Z
@@ -27,6 +27,10 @@ accessible method com/mojang/blaze3d/systems/CommandEncoder isInRenderPass ()Z
 accessible field net/minecraft/client/gui/components/toasts/SystemToast titleLines Ljava/util/List;
 accessible field net/minecraft/client/gui/components/toasts/SystemToast messageLines Ljava/util/List;
 accessible field net/minecraft/client/gui/components/toasts/SystemToast width I
+accessible field net/minecraft/client/gui/Gui minecraft Lnet/minecraft/client/Minecraft;
+accessible field net/minecraft/client/renderer/GameRenderer minecraft Lnet/minecraft/client/Minecraft;
+accessible field net/minecraft/client/gui/Hud minecraft Lnet/minecraft/client/Minecraft;
+accessible field net/minecraft/client/Options minecraft Lnet/minecraft/client/Minecraft;
 
 # ---- BEGIN GENERATED (s26): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
