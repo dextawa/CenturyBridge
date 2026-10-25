@@ -1,5 +1,5 @@
 {
- "_generated": "core/tools/gen_s5_nbt.py -- regenerate, never hand-edit",
+ "_s5_nbt_generated": "core/tools/gen_s5_nbt.py -- regenerate, never hand-edit",
  "callReshapes": {
   "net/minecraft/class_2487.method_10571(Ljava/lang/String;)B": {
    "desc": "(Ljava/lang/String;)Ljava/util/Optional;",

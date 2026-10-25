@@ -1,0 +1,9 @@
+{
+  "_s26b_loot": "s26b, queue item 5: EntityLootSubProvider.createSheepDispatchPool's colour map (26.1.2) vs ColorCollection (26.2) (javap of both)",
+  "staticRedirects": {
+    "net/minecraft/data/loot/EntityLootSubProvider.createSheepDispatchPool(Ljava/util/Map;)Lnet/minecraft/world/level/storage/loot/LootPool$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityLoot"
+  },
+  "_redirects_basis": {
+    "net/minecraft/data/loot/EntityLootSubProvider.createSheepDispatchPool(Ljava/util/Map;)Lnet/minecraft/world/level/storage/loot/LootPool$Builder;": "26.1.2 made one alternative per map entry, in the map's order (a map without some colours had no alternative for them); 26.2 makes one per DyeColor.VALUES from a ColorCollection. The layer keeps 26.1.2's per-entry loop and builds each alternative as 26.2 does (the exact SHEEP_COLOR component and SheepPredicate.hasWool, which 26.1.2 put in DataComponentMatchers and a sub-predicate)"
+  }
+}

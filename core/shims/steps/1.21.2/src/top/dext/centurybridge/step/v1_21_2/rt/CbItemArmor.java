@@ -12,6 +12,9 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 import net.minecraft.class_1304;
 import net.minecraft.class_1738;
+import net.minecraft.class_1799;
+import net.minecraft.class_1320;
+import net.minecraft.class_5134;
 import net.minecraft.class_1740;
 import net.minecraft.class_1741;
 import net.minecraft.class_1792;
@@ -304,6 +307,33 @@ public final class CbItemArmor {
         int method_7687();
     }
 
+    /** 1.21.1's ArmorItem.getDefense() / getToughness(), restored on ArmorItem by CbItemArmorMixin */
+    public interface ArmorValues {
+        int method_7687();
+
+        float method_26353();
+    }
+
+    /**
+     * a value Mob.canReplaceCurrentItem compares (1.21.2: the stack's apparent ARMOR / ARMOR_TOUGHNESS) as 1.21.1's
+     * Mob read it from an ArmorItem -- the restored getDefense() / getToughness() -- where that answers otherwise than
+     * its body (a mod's mixin, or a 1.21.1 class's override); else 1.21.2's value
+     */
+    public static double mobArmorRead(class_1799 stack, class_6880<class_1320> attribute, double w) {
+        if (!(stack.method_7909() instanceof class_1738 item)) {
+            return w;
+        }
+        if (attribute == class_5134.field_23724) {
+            int m = ((ArmorValues) (Object) item).method_7687();
+            return m != body_method_7687(item) ? m : w;
+        }
+        if (attribute == class_5134.field_23725) {
+            float m = ((ArmorValues) (Object) item).method_26353();
+            return m != body_method_26353(item) ? m : w;
+        }
+        return w;
+    }
+
     public interface LegacyToughness {
         float method_26353();
     }
@@ -371,6 +401,9 @@ public final class CbItemArmor {
 
     /** getDefense(): the material's defense for the type (1.21.1 read its fields, not getMaterial()) */
     private static int call_method_7687(class_1792 item) {
+        if (item instanceof class_1738) {
+            return ((ArmorValues) (Object) item).method_7687(); // the restored member, a 1.21.1 class's override included
+        }
         return item instanceof LegacyDefense l ? l.method_7687() : body_method_7687(item);
     }
 
@@ -397,6 +430,9 @@ public final class CbItemArmor {
 
     /** getToughness() */
     private static float call_method_26353(class_1792 item) {
+        if (item instanceof class_1738) {
+            return ((ArmorValues) (Object) item).method_26353(); // the restored member, a 1.21.1 class's override included
+        }
         return item instanceof LegacyToughness l ? l.method_26353() : body_method_26353(item);
     }
 

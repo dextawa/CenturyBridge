@@ -20,7 +20,8 @@
     "ItemDescriptionMixin",
     "EatingSoundMixin",
     "PlaySoundRecorderMixin",
-    "OrCreateDescriptionIdMixin"
+    "OrCreateDescriptionIdMixin",
+    "ArmorDefenseMixin"
   ],
   "injectors": {
     "defaultRequire": 1

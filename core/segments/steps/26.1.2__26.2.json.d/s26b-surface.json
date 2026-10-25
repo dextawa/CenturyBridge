@@ -1,0 +1,58 @@
+{
+  "_s26b_surface": "s26b, queue item 5: 26.1.2's surface rule API on 26.2 (rt/CbS26SurfaceRules; javap of both)",
+  "staticRedirects": {
+    "net/minecraft/world/level/levelgen/SurfaceRules.isBiome([Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource;": "top/dext/centurybridge/step/v26_2/rt/CbS26SurfaceRules",
+    "net/minecraft/data/worldgen/SurfaceRuleData.overworld()Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": "top/dext/centurybridge/step/v26_2/rt/CbS26SurfaceRules",
+    "net/minecraft/data/worldgen/SurfaceRuleData.overworldLike(ZZZ)Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": "top/dext/centurybridge/step/v26_2/rt/CbS26SurfaceRules",
+    "net/minecraft/data/worldgen/SurfaceRuleData.nether()Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": "top/dext/centurybridge/step/v26_2/rt/CbS26SurfaceRules"
+  },
+  "_redirects_basis": {
+    "net/minecraft/world/level/levelgen/SurfaceRules.isBiome([Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource;": "26.1.2's BiomeConditionSource kept the keys and tested the biome at the position by key (Holder.is(Set.copyOf(keys)::contains)), encoded as a biome_is list of keys; 26.2's resolves the keys through a biome HolderGetter when built. The layer's condition is 26.1.2's, its codec registered as centurybridge:biome_is",
+    "net/minecraft/data/worldgen/SurfaceRuleData.overworld()Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": "26.1.2: overworldLike(true, false, true); 26.2: overworld(getter) = overworldLike(getter, true, false, true). The layer builds 26.2's rules with its key getter, which SurfaceRules.isBiome turns into 26.1.2's key conditions (mixin/CbS26SurfaceRulesMixin); SurfaceRuleData uses the getter only through isBiome",
+    "net/minecraft/data/worldgen/SurfaceRuleData.overworldLike(ZZZ)Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": "26.2's body is 26.1.2's (isBiome given the getter, noiseCondition named noiseCondition2d) plus 26.2's sulfur cave rules; built as overworld()",
+    "net/minecraft/data/worldgen/SurfaceRuleData.nether()Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": "26.2's nether(getter) uses the getter only through isBiome; built as overworld()"
+  },
+  "instanceRedirects": {
+    "net/minecraft/world/level/levelgen/SurfaceSystem.buildSurface(Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/biome/BiomeManager;Lnet/minecraft/core/Registry;ZLnet/minecraft/world/level/levelgen/WorldGenerationContext;Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SurfaceRules"
+  },
+  "_instance_basis": {
+    "net/minecraft/world/level/levelgen/SurfaceSystem.buildSurface(Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/biome/BiomeManager;Lnet/minecraft/core/Registry;ZLnet/minecraft/world/level/levelgen/WorldGenerationContext;Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;)V": "javap: the same body (similarity 0.96); 26.2 takes the chunk's possible biomes (NoiseBasedChunkGenerator.collectPossibleBiomes) where 26.1.2 took the biome registry, and reads them only to settle a biome condition early (BiomeConditionSource.canNeverMatch / willAlwaysMatch). The layer passes every biome of the registry, a superset, so each condition still tests the biome at the position. A 26.1.2 override of buildSurface stays open: 26.2's possible-biome set does not give back the registry"
+  },
+  "callReshapes": {
+    "net/minecraft/world/level/levelgen/SurfaceRules$ConditionSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "desc": "()Lcom/mojang/serialization/MapCodec;",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v26_2/rt/CbS26SurfaceRules#toKeyDispatch(Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/util/KeyDispatchDataCodec;",
+      "basis": "26.1.2's codec() answered a KeyDispatchDataCodec of the MapCodec 26.2's codec() answers (MATERIAL_CONDITION held the MapCodec in both)"
+    },
+    "net/minecraft/world/level/levelgen/SurfaceRules$RuleSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
+      "desc": "()Lcom/mojang/serialization/MapCodec;",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v26_2/rt/CbS26SurfaceRules#toKeyDispatch(Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/util/KeyDispatchDataCodec;",
+      "basis": "as ConditionSource.codec (MATERIAL_RULE held the MapCodec in both)"
+    }
+  },
+  "overrideHooks": [
+    {
+      "old": "codec()Lnet/minecraft/util/KeyDispatchDataCodec;",
+      "new": "codec()Lcom/mojang/serialization/MapCodec;",
+      "onlyUnder": "net/minecraft/world/level/levelgen/SurfaceRules$ConditionSource",
+      "unwrap": "top/dext/centurybridge/step/v26_2/rt/CbS26SurfaceRules.toMapCodec(Lnet/minecraft/util/KeyDispatchDataCodec;)Lcom/mojang/serialization/MapCodec;",
+      "basis": "a 26.1.2 condition's codec() answers 26.2's dispatch with the MapCodec its KeyDispatchDataCodec holds, the codec 26.1.2's dispatch read (codec().codec()); the method is abstract, so there is no super call"
+    },
+    {
+      "old": "codec()Lnet/minecraft/util/KeyDispatchDataCodec;",
+      "new": "codec()Lcom/mojang/serialization/MapCodec;",
+      "onlyUnder": "net/minecraft/world/level/levelgen/SurfaceRules$RuleSource",
+      "unwrap": "top/dext/centurybridge/step/v26_2/rt/CbS26SurfaceRules.toMapCodec(Lnet/minecraft/util/KeyDispatchDataCodec;)Lcom/mojang/serialization/MapCodec;",
+      "basis": "as ConditionSource.codec"
+    }
+  ],
+  "mixinTargets": {
+    "net/minecraft/data/worldgen/SurfaceRuleData.overworldLike(ZZZ)Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": {
+      "to": "overworldLike(Lnet/minecraft/core/HolderGetter;ZZZ)Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;",
+      "args": [1, 2, 3],
+      "basis": "javap: 26.2's body is 26.1.2's (similarity 0.87: isBiome given the getter, noiseCondition2d) plus the sulfur cave rules; the three flags are the same; the layer's overworldLike(ZZZ) and 26.2's vanilla callers both run it"
+    }
+  }
+}
