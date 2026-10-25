@@ -104,7 +104,7 @@ public final class CbItemMembers {
     }
 
     /**
-     * 1.21.1's Item.getEnchantmentValue(), restored on every Item by CbItemMembersMixin: a call dispatches to a
+     * 1.21.1's Item.getEnchantmentValue(), restored on every Item by CbItemMembersRestoredMixin: a call dispatches to a
      * 1.21.1 class's override or to the restored body -- with whatever a mod's 1.21.1 mixin on it does
      */
     public interface ItemEnchantmentValue {
@@ -112,7 +112,7 @@ public final class CbItemMembers {
     }
 
     /**
-     * 1.21.1's Item.isValidRepairItem(stack, ingredient), restored on every Item by CbItemMembersMixin (and as the
+     * 1.21.1's Item.isValidRepairItem(stack, ingredient), restored on every Item by CbItemMembersRestoredMixin (and as the
      * overrides of ArmorItem / ShieldItem / MaceItem, CbItemRepairOverridesMixin)
      */
     public interface ItemRepair {
@@ -227,13 +227,64 @@ public final class CbItemMembers {
         return class_3417.field_20614.comp_349();
     }
 
-    /** getDescriptionId(stack): the class's own, else the item's description id (1.21.1's Item answered that) */
+    /**
+     * getDescriptionId(stack): the restored member (ItemDescriptionId) -- a 1.21.1 class's override, a restored
+     * vanilla override (Cb{Compass,Potion,TippedArrow,Shield}DescriptionIdMixin) or Item's body, with whatever a mod's mixin on it does
+     */
     public static String method_7866(class_1792 item, class_1799 stack) {
-        return item instanceof LegacyDescriptionId l ? l.method_7866(stack) : super_method_7866(item, stack);
+        return ((ItemDescriptionId) (Object) item).method_7866(stack);
     }
 
     public static String super_method_7866(class_1792 item, class_1799 stack) {
         return item.method_7876();
+    }
+
+    /**
+     * 1.21.1's Item.getDescriptionId(stack), restored on every Item by CbItemMembersRestoredMixin (and as the overrides of
+     * CompassItem / PotionItem / TippedArrowItem / ShieldItem, Cb{Compass,Potion,TippedArrow,Shield}DescriptionIdMixin)
+     */
+    public interface ItemDescriptionId {
+        String method_7866(class_1799 stack);
+    }
+
+    /**
+     * 1.21.1's getDescriptionId(stack) bodies of the vanilla classes that overrode it (the restored members' bodies in
+     * Cb{Compass,Potion,TippedArrow,Shield}DescriptionIdMixin), what the restored members
+     * answer without a mod's mixin: CompassItem named a lodestone-tracking compass item.minecraft.lodestone_compass;
+     * PotionItem and TippedArrowItem appended ".effect." and the potion's name (Potion.getName); ShieldItem appended
+     * its base colour's name; every other item its description id. Those classes are unrelated, so testing them in
+     * turn is their virtual dispatch.
+     */
+    public static String vanilla_method_7866(class_1792 item, class_1799 stack) {
+        if (item instanceof net.minecraft.class_1759) {
+            return stack.method_57826(class_9334.field_49614) ? "item.minecraft.lodestone_compass" : item.method_7876();
+        }
+        if (item instanceof net.minecraft.class_1812 || item instanceof net.minecraft.class_1833) {
+            net.minecraft.class_1844 contents = stack.method_57825(class_9334.field_49651, net.minecraft.class_1844.field_49274);
+            return CbItemPotions.getName(contents.comp_2378(), item.method_7876() + ".effect.");
+        }
+        if (item instanceof net.minecraft.class_1819) {
+            net.minecraft.class_1767 base = stack.method_57824(class_9334.field_49620);
+            return base != null ? item.method_7876() + "." + base.method_7792() : item.method_7876();
+        }
+        return item.method_7876();
+    }
+
+    /**
+     * Item.getName(stack) as 1.21.1 answered it where a mod changed the answer: translatable(getDescriptionId(stack))
+     * when the stack carries no ITEM_NAME of its own (1.21.1's ItemStack.getHoverName took that first) and either
+     * the item's class is a 1.21.1 one overriding getDescriptionId(stack) or the restored member answers otherwise
+     * than its body (a mod's mixin on it); else null -- 1.21.2's own getName stands
+     */
+    public static class_2561 nameRead(class_1792 item, class_1799 stack) {
+        if (stack.method_57380().method_57845(class_9334.field_50239) != null) {
+            return null;
+        }
+        String m = ((ItemDescriptionId) (Object) item).method_7866(stack);
+        if (item instanceof LegacyDescriptionId || !m.equals(vanilla_method_7866(item, stack))) {
+            return class_2561.method_43471(m);
+        }
+        return null;
     }
 
     /** getDescription(): the class's own, else translatable(getDescriptionId()) -- 1.21.2's getName() */

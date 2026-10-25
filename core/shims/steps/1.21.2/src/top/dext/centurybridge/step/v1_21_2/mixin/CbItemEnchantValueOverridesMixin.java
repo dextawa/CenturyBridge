@@ -17,7 +17,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
  * component from the same values). Vanilla's enchanting reads go through it (CbItemEnchantableReadsMixin) and follow
  * it only where it answers otherwise -- a mod's mixin.
  */
-@Mixin({class_1738.class, class_1835.class, class_1811.class, class_1787.class, class_9362.class})
+@Mixin(value = {class_1738.class, class_1835.class, class_1811.class, class_1787.class, class_9362.class}, priority = CbVanillaReads.PRIORITY)
 public abstract class CbItemEnchantValueOverridesMixin {
 
     /** getEnchantmentValue() */

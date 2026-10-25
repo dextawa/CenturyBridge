@@ -210,6 +210,7 @@ public class GearTestMod implements ModInitializer {
         section("tagReload", () -> tagReload(server));
         section("equipmentReads", () -> equipmentReads(server));
         section("overrideReads", GearTestMod::overrideReads);
+        section("nameReads", GearTestMod::nameReads);
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -1092,6 +1093,35 @@ public class GearTestMod implements ModInitializer {
         check(!anvilRepairs(new class_1799(class_1802.field_8058), new class_1799(class_1802.field_8620))
                 && anvilRepairs(new class_1799(class_1802.field_8058), new class_1799(class_1802.field_8477)),
             "an unmixed armor item (diamond chestplate) repairs with diamonds, not iron");
+    }
+
+    /** the translation key of a stack's hover name, "" when it is not translatable */
+    static String nameKey(class_1799 stack) {
+        return stack.method_7964().method_10851() instanceof net.minecraft.class_2588 t ? t.method_11022() : "";
+    }
+
+    static void nameReads() {
+        check(nameKey(new class_1799(item("stick"))).equals("cb.s7gear.stick"),
+            "mixin on Item.getDescriptionId(stack): the stick's name is cb.s7gear.stick: " + nameKey(new class_1799(item("stick"))));
+        check(nameKey(new class_1799(item("apple"))).equals("item.minecraft.apple"),
+            "an unmixed item (apple) keeps its name: " + nameKey(new class_1799(item("apple"))));
+        check(nameKey(new class_1799(item("potion"))).equals("item.minecraft.potion.effect.empty.cbmixed"),
+            "mixin on PotionItem.getDescriptionId(stack): the potion's name: " + nameKey(new class_1799(item("potion"))));
+        check(nameKey(new class_1799(item("splash_potion"))).equals("item.minecraft.splash_potion.effect.empty.cbmixed"),
+            "a splash potion inherits PotionItem's (mixed) getDescriptionId: " + nameKey(new class_1799(item("splash_potion"))));
+        check(new class_1799(item("potion")).method_7922().equals("item.minecraft.potion.effect.empty.cbmixed"),
+            "ItemStack.getDescriptionId asks the mixed member: " + new class_1799(item("potion")).method_7922());
+        check(nameKey(new class_1799(item("tipped_arrow"))).equals("item.minecraft.tipped_arrow.effect.empty"),
+            "an unmixed tipped arrow keeps 1.21.2's name: " + nameKey(new class_1799(item("tipped_arrow"))));
+        check(nameKey(new class_1799(item("compass"))).equals("item.minecraft.lodestone_compass"),
+            "redirect in CompassItem.getDescriptionId(stack): a plain compass is named a lodestone compass: "
+                + nameKey(new class_1799(item("compass"))));
+        class_1799 shield = new class_1799(item("shield"));
+        shield.method_57379(class_9334.field_49620, net.minecraft.class_1767.method_7793("red", null));
+        check(nameKey(shield).equals("item.minecraft.shield.red"), "an unmixed red shield keeps its name: " + nameKey(shield));
+        class_1799 named = new class_1799(item("stick"));
+        named.method_57379(class_9334.field_50239, net.minecraft.class_2561.method_43470("own"));
+        check(nameKey(named).equals(""), "a stick with its own ITEM_NAME keeps it (1.21.1's getHoverName took it first)");
     }
 
 }

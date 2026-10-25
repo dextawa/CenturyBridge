@@ -1,7 +1,5 @@
 package top.dext.centurybridge.step.v1_21_2.mixin;
 
-import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
-
 import net.minecraft.class_1792;
 import net.minecraft.class_1799;
 import net.minecraft.class_2561;
@@ -21,34 +19,15 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemMembers;
  * Item for a converted 1.21.1 item class overriding members 1.21.2 turned into components (CbItemMembers):
  * its default components answer ENCHANTABLE / ATTRIBUTE_MODIFIERS by its overrides, and getName(stack) --
  * 1.21.1's translatable(getDescriptionId(stack)) when the stack has no ITEM_NAME of its own -- asks its
- * getDescriptionId(stack) override.
+ * getDescriptionId(stack) override. The 1.21.1 members it restores are in CbItemMembersRestoredMixin.
  */
 @Mixin(class_1792.class)
-public abstract class CbItemMembersMixin implements CbItemMembers.ItemEnchantmentValue, CbItemMembers.ItemRepair {
+public abstract class CbItemMembersMixin {
 
     @Shadow
     @Final
     @Mutable
     private class_9323 field_49263;
-
-    /**
-     * 1.21.1's Item.getEnchantmentValue(), restored: what the item's built components say (0 without ENCHANTABLE).
-     * A 1.21.1 class's own getEnchantmentValue overrides it; 1.21.2's EnchantmentHelper reads ENCHANTABLE through
-     * it, so a mod's 1.21.1 mixin on it changes enchanting as it did on 1.21.1.
-     */
-    @CbVanillaReads("CbItemEnchantableReadsMixin: EnchantmentHelper.getEnchantmentCost / selectEnchantment take the "
-        + "ENCHANTABLE they read from Item.getEnchantmentValue() unless the stack sets its own")
-    @Override
-    public int method_7837() {
-        return CbItemMembers.super_method_7837((class_1792) (Object) this);
-    }
-
-    /** 1.21.1's Item.isValidRepairItem(stack, ingredient), restored: the REPAIRABLE the item was built with (CbItemMembers) */
-    @top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads("CbItemStackMembersMixin: ItemStack.isValidRepairItem (AnvilMenu's repair check) answers from it")
-    @Override
-    public boolean method_7878(net.minecraft.class_1799 stack, net.minecraft.class_1799 ingredient) {
-        return CbItemMembers.super_method_7878((class_1792) (Object) this, stack, ingredient);
-    }
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void cb$memberComponents(class_1792.class_1793 props, CallbackInfo ci) {
@@ -86,12 +65,15 @@ public abstract class CbItemMembersMixin implements CbItemMembers.ItemEnchantmen
         }
     }
 
-    /** getName(stack): a 1.21.1 class's getDescriptionId(stack) override names the stack */
+    /**
+     * getName(stack): 1.21.1's translatable(getDescriptionId(stack)) where a 1.21.1 class's override or a mod's
+     * mixin on the restored member answers (CbItemMembers.nameRead); otherwise 1.21.2's ITEM_NAME stands
+     */
     @Inject(method = "method_7864", at = @At("HEAD"), cancellable = true)
     private void cb$name(class_1799 stack, CallbackInfoReturnable<class_2561> cir) {
-        if ((Object) this instanceof CbItemMembers.LegacyDescriptionId l
-                && stack.method_57380().method_57845(net.minecraft.class_9334.field_50239) == null) {
-            cir.setReturnValue(class_2561.method_43471(l.method_7866(stack)));
+        class_2561 name = CbItemMembers.nameRead((class_1792) (Object) this, stack);
+        if (name != null) {
+            cir.setReturnValue(name);
         }
     }
 }

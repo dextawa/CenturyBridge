@@ -10,7 +10,10 @@
     "ArmorEquipMixin",
     "ShieldEquipMixin",
     "ArmorValuesMixin",
-    "TridentValueMixin"
+    "TridentValueMixin",
+    "ItemDescriptionIdMixin",
+    "PotionDescriptionIdMixin",
+    "CompassDescriptionIdMixin"
   ],
   "injectors": {
     "defaultRequire": 1

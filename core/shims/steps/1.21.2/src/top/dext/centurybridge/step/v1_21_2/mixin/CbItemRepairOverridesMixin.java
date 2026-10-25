@@ -16,7 +16,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
  * isValidRepairItem (the anvil's check) goes through it (CbItemStackMembersMixin) and follows it only where it
  * answers otherwise -- a mod's mixin.
  */
-@Mixin({class_1738.class, class_1819.class, class_9362.class})
+@Mixin(value = {class_1738.class, class_1819.class, class_9362.class}, priority = CbVanillaReads.PRIORITY)
 public abstract class CbItemRepairOverridesMixin {
 
     /** isValidRepairItem(stack, ingredient) */
