@@ -127,7 +127,63 @@ public final class CbItemMembers {
     public static Boolean repairRead(class_1799 stack, class_1799 ingredient) {
         class_1792 item = stack.method_7909();
         boolean m = ((ItemRepair) (Object) item).method_7878(stack, ingredient);
-        return m != super_method_7878(item, stack, ingredient) ? m : null;
+        return m != vanilla_method_7878(item, stack, ingredient) ? m : null;
+    }
+
+    /**
+     * the restored isValidRepairItem(stack, ingredient) bodies (CbItemRepairOverridesMixin, CbItemShieldRepairMixin,
+     * CbItemMaceMembersMixin, CbItemMembersRestoredMixin), what the restored member answers without a mod's mixin:
+     * ShieldItem planks or its super body, MaceItem a breeze rod, every other item the REPAIRABLE it was built with.
+     * ShieldItem and MaceItem are unrelated, so testing them in turn is their virtual dispatch.
+     */
+    public static boolean vanilla_method_7878(class_1792 item, class_1799 stack, class_1799 ingredient) {
+        if (item instanceof net.minecraft.class_1819) {
+            return ingredient.method_31573(net.minecraft.class_3489.field_15537) || super_method_7878(item, stack, ingredient);
+        }
+        if (item instanceof net.minecraft.class_9362) {
+            return ingredient.method_31574(net.minecraft.class_1802.field_49821);
+        }
+        return super_method_7878(item, stack, ingredient);
+    }
+
+    /**
+     * the restored getEnchantmentValue() bodies (CbItemEnchantValueOverridesMixin, CbItemEnchantValueOneMixin,
+     * CbItemMaceMembersMixin, CbItemMembersRestoredMixin), what the restored member answers without a mod's mixin:
+     * 1.21.1's TridentItem / ProjectileWeaponItem / FishingRodItem 1, MaceItem 15, every other item (ArmorItem's
+     * material value included) the ENCHANTABLE it was built with. Those classes are unrelated, so testing them in turn
+     * is their virtual dispatch.
+     */
+    public static int vanilla_method_7837(class_1792 item) {
+        if (item instanceof net.minecraft.class_1835 || item instanceof net.minecraft.class_1811
+                || item instanceof net.minecraft.class_1787) {
+            return 1;
+        }
+        if (item instanceof net.minecraft.class_9362) {
+            return 15;
+        }
+        return super_method_7837(item);
+    }
+
+    /**
+     * 1.21.1's Item.isEnchantable(stack), restored on every Item by CbItemMembersRestoredMixin: a call dispatches to a
+     * 1.21.1 class's override or to the restored body -- with whatever a mod's 1.21.1 mixin on it does
+     */
+    public interface ItemEnchantable {
+        boolean method_7870(class_1799 stack);
+    }
+
+    /**
+     * ItemStack.isEnchantable() of an item whose class 1.21.1 did not override isEnchantable(stack) in a mod: 1.21.1's
+     * answer (the restored member, and no enchantments yet) where the member answers otherwise than its body (a mod's
+     * mixin on it), else null (1.21.2's ENCHANTABLE answer stands)
+     */
+    public static Boolean enchantableStackRead(class_1799 stack) {
+        boolean m = ((ItemEnchantable) (Object) stack.method_7909()).method_7870(stack);
+        if (m == super_method_7870(stack.method_7909(), stack)) {
+            return null;
+        }
+        net.minecraft.class_9304 e = stack.method_57824(class_9334.field_49633);
+        return m && e != null && e.method_57543();
     }
 
     /**
@@ -142,6 +198,9 @@ public final class CbItemMembers {
             return read;
         }
         int v = method_7837(item);
+        if (!(item instanceof LegacyEnchantmentValue) && v == vanilla_method_7837(item)) {
+            return read; // the restored member answers its own body: 1.21.2's component stands
+        }
         if (v <= 0) {
             return null;
         }
@@ -164,14 +223,14 @@ public final class CbItemMembers {
     }
 
     /**
-     * isEnchantable(stack): 1.21.1's Item answered a stack of one with MAX_DAMAGE -- on 1.21.2 its ENCHANTABLE
-     * component is the item's verdict, and a damageable 1.21.1 item has one by its enchantment value
+     * isEnchantable(stack): the item's restored 1.21.1 member (CbItemMembersRestoredMixin) -- 1.21.1's Item answered a
+     * stack of one with MAX_DAMAGE; 1.21.2's ItemStack.isEnchantable() follows it only where a mod changed it
+     * (enchantableStackRead)
      */
     public static boolean method_7870(class_1792 item, class_1799 stack) {
-        if (item instanceof LegacyEnchantable l) {
-            return l.method_7870(stack);
-        }
-        return super_method_7870(item, stack);
+        // the restored member (ItemEnchantable): a 1.21.1 class's override or the body, with whatever a mod's mixin on
+        // it does
+        return ((ItemEnchantable) (Object) item).method_7870(stack);
     }
 
     /** 1.21.1's Item.isEnchantable(stack): a single damageable stack */

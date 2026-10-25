@@ -1093,6 +1093,18 @@ public class GearTestMod implements ModInitializer {
         check(!anvilRepairs(new class_1799(class_1802.field_8058), new class_1799(class_1802.field_8620))
                 && anvilRepairs(new class_1799(class_1802.field_8058), new class_1799(class_1802.field_8477)),
             "an unmixed armor item (diamond chestplate) repairs with diamonds, not iron");
+        check(anvilRepairs(new class_1799(item("mace")), new class_1799(class_1802.field_8477))
+                && anvilRepairs(new class_1799(item("mace")), new class_1799(item("breeze_rod"))),
+            "redirect in MaceItem.isValidRepairItem: vanilla's anvil check repairs a mace with a diamond, and still a breeze rod");
+        check(!anvilRepairs(new class_1799(item("shield")), new class_1799(class_1802.field_8477)),
+            "an unmixed shield does not repair with a diamond");
+        check(net.minecraft.class_1890.method_8227(r, 2, 15, new class_1799(item("bow"))) > 0,
+            "an unmixed restored override (bow, 1) still costs more than 0");
+        check(new class_1799(item("totem_of_undying")).method_7923(),
+            "redirect in Item.isEnchantable(stack): vanilla's ItemStack.isEnchantable takes a totem of undying");
+        check(!new class_1799(item("stick")).method_7923() && !new class_1799(item("saddle")).method_7923(),
+            "a stick (stacks to 64) and a saddle (not redirected) are still not enchantable");
+        check(new class_1799(item("diamond_sword")).method_7923(), "an unmixed sword is still enchantable");
     }
 
     /** the translation key of a stack's hover name, "" when it is not translatable */
