@@ -1,5 +1,5 @@
 {
- "_basis": "s9 fapi: Fabric API 0.136 (1.21.8) -> 0.134 (1.21.9) members, judged by javap of both releases' modules (D:/tmp/s9/fapi9)",
+ "_fapi_basis": "s9 fapi: Fabric API 0.136 (1.21.8) -> 0.134 (1.21.9) members, judged by javap of both releases' modules (D:/tmp/s9/fapi9)",
  "callReshapes": {
   "net/fabricmc/fabric/api/entity/FakePlayer.method_5873(Lnet/minecraft/class_1297;Z)Z": {
    "basis": "s9 fapi: FakePlayer declares startRiding; it gained sendEventsAndTriggers with Entity's (1.21.8 always sent them: CbClimb.sendEvents)",
@@ -62,6 +62,16 @@
     "keep:2",
     "keep:0",
     "keep:3"
+   ]
+  },
+  "net/fabricmc/fabric/api/entity/FakePlayer.method_64578(FF)V": {
+   "basis": "s9 fapi: a call through FakePlayer (a Fabric API class over ServerPlayer) of forceSetRotation(yRot, xRot); the engine does not walk a library owner up to ServerPlayer's reshape, so it is keyed here too (absolute angles, CbAvatar.absolute)",
+   "desc": "(FZFZ)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbAvatar#absolute()Z",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbAvatar#absolute()Z"
    ]
   }
  },

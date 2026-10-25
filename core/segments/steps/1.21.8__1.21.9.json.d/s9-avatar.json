@@ -1,0 +1,159 @@
+{
+ "_avatar_basis": "s9 avatar: 1.21.9's Avatar (class_11890) under Player holds what players and mannequins share; shoulder data moved to ServerPlayer, the cloak and bob to the client's ClientAvatarState (javap of both releases)",
+ "fieldRenames": {
+  "net/minecraft/class_1657.field_46174:Lnet/minecraft/class_1306;": "field_62509",
+  "net/minecraft/class_1657.field_46175:I": "field_62510",
+  "net/minecraft/class_1657.field_30651:F": "field_62511",
+  "net/minecraft/class_1657.field_47821:Lnet/minecraft/class_243;": "field_62512",
+  "net/minecraft/class_1657.field_30648:F": "field_63007",
+  "net/minecraft/class_1657.field_30649:F": "field_63008",
+  "net/minecraft/class_1657.field_30650:F": "field_63009",
+  "net/minecraft/class_1657.field_18135:Lnet/minecraft/class_4048;": "field_63010",
+  "net/minecraft/class_1657.field_7488:Lnet/minecraft/class_2940;": "field_62513",
+  "net/minecraft/class_1657.field_7518:Lnet/minecraft/class_2940;": "field_62514"
+ },
+ "methodRenames": {
+  "net/minecraft/class_1657.method_7283(Lnet/minecraft/class_1306;)V": "method_74090",
+  "net/minecraft/class_1657.method_7348(Lnet/minecraft/class_1664;)Z": "method_74091"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1657.method_7327()Lnet/minecraft/class_269;": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.method_7356()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.method_7308()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.method_7273(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.method_7345(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.method_7298(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_1657.field_7500:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7521:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7499:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7524:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7502:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7522:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7483:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7505:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_1657.field_7500:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7521:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7499:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7524:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7502:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7522:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7483:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_1657.field_7505:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar"
+ },
+ "overrideHooks": [
+  {
+   "basis": "s9 avatar: setMainArm is Avatar's (javap: the same body); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "old": "method_7283(Lnet/minecraft/class_1306;)V",
+   "new": "method_74090(Lnet/minecraft/class_1306;)V",
+   "onlyUnder": "net/minecraft/class_1657"
+  },
+  {
+   "basis": "s9 avatar: isModelPartShown is Avatar's (javap: the same body); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "old": "method_7348(Lnet/minecraft/class_1664;)Z",
+   "new": "method_74091(Lnet/minecraft/class_1664;)Z",
+   "onlyUnder": "net/minecraft/class_1657"
+  },
+  {
+   "basis": "s9 avatar: getShoulderEntityLeft is ServerPlayer's (javap: the same body); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "old": "method_7356()Lnet/minecraft/class_2487;",
+   "new": "method_74074()Lnet/minecraft/class_2487;",
+   "onlyUnder": "net/minecraft/class_3222"
+  },
+  {
+   "basis": "s9 avatar: getShoulderEntityRight is ServerPlayer's (javap: the same body); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "old": "method_7308()Lnet/minecraft/class_2487;",
+   "new": "method_74075()Lnet/minecraft/class_2487;",
+   "onlyUnder": "net/minecraft/class_3222"
+  },
+  {
+   "basis": "s9 avatar: setShoulderEntityLeft is ServerPlayer's (javap: the same body); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "old": "method_7273(Lnet/minecraft/class_2487;)V",
+   "new": "method_74076(Lnet/minecraft/class_2487;)V",
+   "onlyUnder": "net/minecraft/class_3222"
+  },
+  {
+   "basis": "s9 avatar: setShoulderEntityRight is ServerPlayer's (javap: the same body); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "old": "method_7345(Lnet/minecraft/class_2487;)V",
+   "new": "method_74077(Lnet/minecraft/class_2487;)V",
+   "onlyUnder": "net/minecraft/class_3222"
+  },
+  {
+   "basis": "s9 avatar: setEntityOnShoulder is ServerPlayer's (javap: the same body); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "old": "method_7298(Lnet/minecraft/class_2487;)Z",
+   "new": "method_74073(Lnet/minecraft/class_2487;)Z",
+   "onlyUnder": "net/minecraft/class_3222"
+  }
+ ],
+ "callReshapes": {
+  "net/minecraft/class_1297.method_5874(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;)Z": {
+   "basis": "s9 avatar: Entity.killedEntity takes the source that killed the entity; 1.21.8 code's call passes the killed entity's last damage source (CbFapiCommon.killingSource)",
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbFapiCommon#killingSource(Lnet/minecraft/class_1309;)Lnet/minecraft/class_1282;"
+   ]
+  },
+  "net/minecraft/class_1642.method_5874(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;)Z": {
+   "basis": "s9 avatar: Entity.killedEntity takes the source that killed the entity; 1.21.8 code's call passes the killed entity's last damage source (CbFapiCommon.killingSource)",
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbFapiCommon#killingSource(Lnet/minecraft/class_1309;)Lnet/minecraft/class_1282;"
+   ]
+  },
+  "net/minecraft/class_1657.method_5874(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;)Z": {
+   "basis": "s9 avatar: Entity.killedEntity takes the source that killed the entity; 1.21.8 code's call passes the killed entity's last damage source (CbFapiCommon.killingSource)",
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbFapiCommon#killingSource(Lnet/minecraft/class_1309;)Lnet/minecraft/class_1282;"
+   ]
+  },
+  "net/minecraft/class_1297.method_64578(FF)V": {
+   "basis": "s9 avatar: Entity.forceSetRotation(yRot, relativeY, xRot, relativeX); 1.21.8's angles were absolute (javap: 1.21.9 applies them through PositionMoveRotation with the relative set of the flags)",
+   "desc": "(FZFZ)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbAvatar#absolute()Z",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbAvatar#absolute()Z"
+   ]
+  },
+  "net/minecraft/class_3222.method_64578(FF)V": {
+   "basis": "s9 avatar: Entity.forceSetRotation(yRot, relativeY, xRot, relativeX); 1.21.8's angles were absolute (javap: 1.21.9 applies them through PositionMoveRotation with the relative set of the flags)",
+   "desc": "(FZFZ)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbAvatar#absolute()Z",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbAvatar#absolute()Z"
+   ]
+  }
+ },
+ "frameDefaults": {
+  "method_5874(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;)Z": {
+   "2": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar#killedSource(Lnet/minecraft/class_1297;Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;)Lnet/minecraft/class_1282;"
+  },
+  "method_64578(FF)V": {
+   "1": "zero: false = absolute, as 1.21.8's forceSetRotation took the angles",
+   "3": "zero: false = absolute, as 1.21.8's forceSetRotation took the angles"
+  }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_10265.<init>(FF)V": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar#rotationPacket"
+ }
+}

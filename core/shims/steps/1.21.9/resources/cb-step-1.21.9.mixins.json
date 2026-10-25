@@ -11,6 +11,7 @@
   "client": [
     "CbBlockEntityDispatchMixin",
     "CbBlockEntityStateMixin",
+    "CbClientAvatarMixin",
     "CbCullFrustumMixin",
     "CbParticleEngineMixin"
   ],
