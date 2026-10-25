@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "cb.smx6v.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "ServerDriverMixin",
+    "TridentAccess"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

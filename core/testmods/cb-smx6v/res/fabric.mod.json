@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx6v",
+  "version": "1.0.0",
+  "name": "CB smx6 channeling control",
+  "description": "native 1.21 driver without a channeling mixin: 1.21's own channeling bolts per hit (control for cb-smx6)",
+  "environment": "*",
+  "mixins": ["cb_smx6v.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21" }
+}

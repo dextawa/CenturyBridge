@@ -42,6 +42,36 @@
     0
    ],
    "basis": "JukeboxBlockEntity.notifyItemChangedInJukebox(entity, hasRecord) is 1.21's onSongChanged-side setHasRecordBlockState(hasRecord) (javap: the same still-this-block-state test, setValue(JukeboxBlock.HAS_RECORD) with flag 2 and BLOCK_CHANGE game event; 1.21 builds the game event context from the state alone, so the entity argument has no W counterpart)"
+  },
+  "net/minecraft/class_898.method_3956(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_1297;F)V": {
+   "to": "method_3956(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_1297;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "EntityRenderDispatcher.renderHitbox(poseStack, consumer, entity, partialTick) is 1.21's renderHitbox(poseStack, consumer, entity, partialTick, r, g, b) (javap: the same bounding-box draw, multipart loop and eye-height box; the 1.20.6 float, slot 3, is read at the same sites by 1.21's slot 3; 1.21's three new floats are the box colour, which 1.20.6 hardcoded as 1.0F; the view-vector line moved into method_61171)"
+  },
+  "net/minecraft/class_759.method_49340(Lnet/minecraft/class_4587;FLnet/minecraft/class_1306;Lnet/minecraft/class_1799;F)V": {
+   "to": "method_49340(Lnet/minecraft/class_4587;FLnet/minecraft/class_1306;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;F)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    5
+   ],
+   "basis": "ItemInHandRenderer.renderOneHandedMap(poseStack, equipProgress, arm, stack, swingProgress) is 1.21's with the player inserted before swingProgress (javap: 0.93 of the instruction sequence equal; 1.20.6 read minecraft.player where 1.21 reads the player argument; the trailing float, V slot 5, is W slot 6 at the same sites)"
+  },
+  "net/minecraft/class_3485.method_44236(Ljava/nio/file/Path;Ljava/lang/String;Ljava/lang/String;)Ljava/util/stream/Stream;": {
+   "to": "method_44236(Ljava/nio/file/Path;Ljava/lang/String;Ljava/lang/String;Ljava/util/function/Consumer;)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "StructureTemplateManager.listFolderContents(folder, namespace, extension) is 1.21's listFolderContents(folder, namespace, extension, output) (javap: both walk the folder for files ending in the extension and map them to ids through the same lambda capturing the namespace and the path relativiser; 1.20.6 returned the Stream, 1.21 hands each id to the Consumer: handlers touching the return value are refused by MixinBridge's return check)"
   }
  },
  "fieldRenames": {
