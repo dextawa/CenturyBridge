@@ -1,0 +1,64 @@
+{
+  "mixinTargets": {
+    "net/minecraft/class_9975.method_62304(IFLnet/minecraft/class_289;Lnet/minecraft/class_4587;)V": {
+      "to": "method_62304(IFLnet/minecraft/class_4597;Lnet/minecraft/class_4587;)V",
+      "args": [0, 1, -1, 3],
+      "basis": "SkyRenderer.renderSun: javap -c both: the same four textured vertices at +-20/-100 from SUN_LOCATION; 1.21.4 takes them from a MultiBufferSource instead of beginning a Tesselator buffer"
+    },
+    "net/minecraft/class_9975.method_62303(FLnet/minecraft/class_289;Lnet/minecraft/class_4587;)V": {
+      "to": "method_62303(FLnet/minecraft/class_4597;Lnet/minecraft/class_4587;)V",
+      "args": [0, -1, 2],
+      "basis": "SkyRenderer.renderMoon: javap -c both: the same moon-phase quad (30/100, MOON_LOCATION); the Tesselator buffer became a MultiBufferSource buffer"
+    },
+    "net/minecraft/class_9975.method_62309(Lnet/minecraft/class_289;F)Lnet/minecraft/class_9801;": {
+      "to": "method_62309(Lnet/minecraft/class_4588;F)V",
+      "args": [-1, 1],
+      "basis": "SkyRenderer.buildSkyDisc: javap -c both: the same signum*512 fan of vertices every 45 degrees; 1.21.4 writes into the caller's VertexConsumer instead of beginning and building a MeshData"
+    },
+    "net/minecraft/class_4603.method_23068(Lnet/minecraft/class_1058;Lnet/minecraft/class_4587;)V": {
+      "to": "method_23068(Lnet/minecraft/class_1058;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V",
+      "args": [0, 1],
+      "basis": "ScreenEffectRenderer.renderTex: javap -c both: the same 0.1-tinted sprite quad at -1..1/-0.5; 1.21.4 draws it through a MultiBufferSource buffer"
+    },
+    "net/minecraft/class_4603.method_23070(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;)V": {
+      "to": "method_23070(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V",
+      "args": [-1, 0],
+      "basis": "ScreenEffectRenderer.renderFire: javap -c both: the same two fire-sprite quads (FIRE_1 sprite uv, 0.9 alpha, rotate 10 / -10); V's body never reads its Minecraft argument"
+    },
+    "net/minecraft/class_4603.method_23069(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;)V": {
+      "to": "method_23069(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V",
+      "args": [0, 1],
+      "basis": "ScreenEffectRenderer.renderWater: javap -c both: the same UNDERWATER_LOCATION quad scrolled by the player's rotation and brightness at the eye position"
+    },
+    "net/minecraft/class_9976.method_62320(Lnet/minecraft/class_765;Lnet/minecraft/class_243;IFLjava/util/List;Ljava/util/List;)V": {
+      "to": "method_62320(Lnet/minecraft/class_4597;Lnet/minecraft/class_243;IFLjava/util/List;Ljava/util/List;)V",
+      "args": [-1, 1, 2, 3, 4, 5],
+      "basis": "WeatherEffectRenderer.render: javap -c both: rain columns then snow columns through renderInstances with the same texture and fancy check; 1.21.4 takes buffers from a MultiBufferSource instead of turning the LightTexture on"
+    },
+    "net/minecraft/class_9976.method_62318(Lnet/minecraft/class_289;Ljava/util/List;Lnet/minecraft/class_243;FIF)V": {
+      "to": "method_62318(Lnet/minecraft/class_4588;Ljava/util/List;Lnet/minecraft/class_243;FIF)V",
+      "args": [-1, 1, 2, 3, 4, 5],
+      "basis": "WeatherEffectRenderer.renderInstances: javap -c both: the same per-column quad loop; 1.21.4 writes into the caller's VertexConsumer instead of beginning and drawing a Tesselator buffer"
+    },
+    "net/minecraft/class_3255.method_14392(Lnet/minecraft/class_3270;Ljava/io/InputStream;)Ljava/lang/Object;": {
+      "to": "method_14392(Lnet/minecraft/class_7677;Ljava/io/InputStream;)Ljava/lang/Object;",
+      "args": [-1, 1],
+      "basis": "AbstractPackResources.getMetadataFromStream: javap -c both: the same JSON read, missing-section check and 'Couldn't load {} metadata' error; the section serializer became a MetadataSectionType (name + codec)"
+    },
+    "net/minecraft/class_1007.method_64258(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": {
+      "to": "method_64258(Lnet/minecraft/class_742;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;",
+      "args": [-1, 1],
+      "basis": "PlayerRenderer.getArmPose(state, arm): javap -c both: main/off hand poses through getArmPose(.., InteractionHand), two-handed check, main arm; 1.21.4 reads them from the player instead of its render state"
+    },
+    "net/minecraft/class_1665.method_63669()V": {
+      "to": "method_63669(F)V",
+      "args": [],
+      "basis": "AbstractArrow.applyInertia: javap -c both: setDeltaMovement(getDeltaMovement().scale(inertia)); 1.21.4's caller passes the inertia (water inertia or 0.99) V computed inside"
+    },
+    "net/minecraft/class_1606.method_33332()Lnet/minecraft/class_238;": {
+      "to": "method_65341(Lnet/minecraft/class_243;)Lnet/minecraft/class_238;",
+      "args": [],
+      "basis": "Shulker.makeBoundingBox: javap -c both: getProgressAabb(peek, attach face opposite, ...) at the position; 1.21.4 takes the position as an argument (Entity.makeBoundingBox(Vec3))"
+    }
+  }
+}
