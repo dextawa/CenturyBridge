@@ -22,7 +22,8 @@
   "net/minecraft/class_1657.method_7308()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
   "net/minecraft/class_1657.method_7273(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
   "net/minecraft/class_1657.method_7345(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
-  "net/minecraft/class_1657.method_7298(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar"
+  "net/minecraft/class_1657.method_7298(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_742.method_49339(F)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatarClient"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_1657.field_7500:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
@@ -32,7 +33,11 @@
   "net/minecraft/class_1657.field_7502:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
   "net/minecraft/class_1657.field_7522:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
   "net/minecraft/class_1657.field_7483:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
-  "net/minecraft/class_1657.field_7505:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar"
+  "net/minecraft/class_1657.field_7505:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_742.field_17892:Lnet/minecraft/class_638;": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatarClient",
+  "net/minecraft/class_742.field_42906:Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatarClient",
+  "net/minecraft/class_742.field_53038:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatarClient",
+  "net/minecraft/class_742.field_53039:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatarClient"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_1657.field_7500:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
@@ -42,7 +47,10 @@
   "net/minecraft/class_1657.field_7502:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
   "net/minecraft/class_1657.field_7522:D": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
   "net/minecraft/class_1657.field_7483:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
-  "net/minecraft/class_1657.field_7505:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar"
+  "net/minecraft/class_1657.field_7505:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatar",
+  "net/minecraft/class_742.field_42906:Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatarClient",
+  "net/minecraft/class_742.field_53038:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatarClient",
+  "net/minecraft/class_742.field_53039:F": "top/dext/centurybridge/step/v1_21_9/rt/CbAvatarClient"
  },
  "overrideHooks": [
   {
