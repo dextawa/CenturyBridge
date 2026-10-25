@@ -62,6 +62,27 @@ public final class Driver {
         return n;
     }
 
+    /** cb-smx6's books(): the librarian's level-1 enchanted-book offer per seed, "seed=key:level" off the book */
+    private static String books(class_3218 level, long[] seeds) {
+        net.minecraft.class_1646 villager = new net.minecraft.class_1646(class_1299.field_6077, level);
+        net.minecraft.class_3853.class_1652[] trades = net.minecraft.class_3853.field_17067.get(net.minecraft.class_3852.field_17060).get(1);
+        StringBuilder out = new StringBuilder();
+        for (long seed : seeds) {
+            for (net.minecraft.class_3853.class_1652 t : trades) {
+                net.minecraft.class_1914 offer = t.method_7246(villager, net.minecraft.class_5819.method_43049(seed));
+                if (offer == null || offer.method_8250().method_7909() != class_1802.field_8598) {
+                    continue;
+                }
+                net.minecraft.class_9304 e = net.minecraft.class_1890.method_57532(offer.method_8250());
+                for (net.minecraft.class_6880<net.minecraft.class_1887> h : e.method_57534()) {
+                    out.append(seed).append('=').append(h.method_40230().get().method_29177()).append(':').append(e.method_57536(h)).append(' ');
+                }
+            }
+        }
+        villager.method_31472();
+        return out.toString().trim();
+    }
+
     public static void run(net.minecraft.server.MinecraftServer server) {
         boolean layer = net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("centurybridge")
             || net.fabricmc.loader.api.FabricLoader.getInstance().getAllMods().stream()
@@ -82,6 +103,9 @@ public final class Driver {
             level.method_8496(0.0F);
             n = hit(level, 32, true);
             report(tag + " clear-no-strike", n == 0, "clear weather: " + n + " bolt(s)");
+            String books = books(level, new long[] {1L, 2L, 3L, 4L, 5L, 42L});
+            report(tag + " books", !books.isEmpty(), books);
+            System.out.println("CB-SMX6V books " + tag + " " + books);
         } catch (Throwable t) {
             report(tag + " exception", false, String.valueOf(t));
             t.printStackTrace();
