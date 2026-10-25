@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "cb.swall.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "MobAttackTypeMixin",
+    "EntityAttackRangeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
