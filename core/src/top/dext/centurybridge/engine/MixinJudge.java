@@ -146,8 +146,12 @@ public final class MixinJudge {
         Map<String, Integer> byUsage = new TreeMap<>();
         Map<String, Integer> layerCounts = new java.util.TreeMap<>();
         Map<String, Integer> openByUsage = new TreeMap<>();
-        try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(out, StandardCharsets.UTF_8))) {
+        // closed rows the layer holds, by category: what an audit of the layer-held rule samples from
+        Path layerOut = out.resolveSibling(out.getFileName().toString().replaceFirst("[.]tsv$", "") + "-layer.tsv");
+        try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(out, StandardCharsets.UTF_8));
+             PrintWriter lw = new PrintWriter(Files.newBufferedWriter(layerOut, StandardCharsets.UTF_8))) {
             w.println("usage\towner\ttarget\tanchor\tordinal\tvcount\tfate");
+            lw.println("usage\towner\ttarget\tanchor\tordinal\tvcount\tlayer");
             for (Map.Entry<String, List<String[]>> e : byClass.entrySet()) {
                 ClassNode mx = j.mixin(e.getKey());
                 for (String[] r : e.getValue()) {
@@ -175,6 +179,9 @@ public final class MixinJudge {
                     }
                     if (j.rowLayer != null) {
                         layerCounts.merge(j.rowLayer, 1, Integer::sum);
+                        if (why == null) {
+                            lw.println(String.join("\t", r[2], r[3], r[4], r[5], r[6], r[7], j.rowLayer));
+                        }
                     }
                     if (why != null) {
                         open++;

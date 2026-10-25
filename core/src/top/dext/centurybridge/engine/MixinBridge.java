@@ -1793,7 +1793,7 @@ final class MixinBridge {
                         } else {
                             MixinRepair.setMethodSelector(an, idx, nm);
                         }
-                        MixinRepair.applyDescend(d, h, an);
+                        MixinRepair.applyDescend(d, h, an, mx);
                         changed = true;
                         injected("@" + kind + " " + sn + "." + h.name, where + " => " + d.callee().name + d.callee().desc
                             + (d.ordinal() >= 0 ? " #" + d.ordinal() : "") + " (" + fate.how() + " gives " + fate.name() + fate.desc()
@@ -3653,7 +3653,7 @@ final class MixinBridge {
     }
 
     /** handler arguments carrying MixinExtras sugar (@Local, @Share...) */
-    private static int sugarCount(MethodNode h) {
+    static int sugarCount(MethodNode h) {
         int n = 0;
         int params = Type.getArgumentTypes(h.desc).length;
         for (int i = 0; i < params; i++) {
@@ -3689,7 +3689,7 @@ final class MixinBridge {
     }
 
     /** does an @Inject handler take parameters after its CallbackInfo (captured locals) */
-    private static boolean capturesLocals(MethodNode h) {
+    static boolean capturesLocals(MethodNode h) {
         Type[] hp = Type.getArgumentTypes(h.desc);
         for (int i = 0; i < hp.length; i++) {
             if (hp[i].getDescriptor().equals(CI) || hp[i].getDescriptor().equals(CIR)) {
