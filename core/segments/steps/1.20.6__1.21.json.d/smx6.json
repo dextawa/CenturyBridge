@@ -1,0 +1,45 @@
+{
+ "methodRenames": {
+  "net/minecraft/class_7538.method_44478()V": "method_53586"
+ },
+ "_smx6_methodRenames_basis": {
+  "net/minecraft/class_7538.method_44478()V": "ChatReportScreen.onReportChanged: 1.20.6's private method_44478 is 1.21's protected override method_53586 of AbstractReportScreen's (javap: the same send-button active / tooltip code over field_46021's report, the same callers onReasonChosen / onCommentChanged / onSelectedMessagesChanged; 1.21's init reaches it through the superclass)"
+ },
+ "mixinTargets": {
+  "net/minecraft/class_4392.method_21269()V": {
+   "to": "method_25419()V",
+   "args": [],
+   "basis": "RealmsDownloadLatestWorldScreen.backButtonClicked is 1.21's onClose (javap: the same finished/callback/error test and setScreen(lastScreen), after the cancelled = true its 1.20.6 callers keyPressed(ESC) and the cancel button set before calling it; 1.21 reaches onClose from both)"
+  },
+  "net/minecraft/class_746.method_18654()V": {
+   "to": "method_60887(Z)V",
+   "args": [],
+   "basis": "LocalPlayer.handleNetherPortalClient is 1.21's handleConfusionTransitionEffect(useConfusion) (javap: the same screen closing, confusion intensity rise and decay; 1.21 drives it from the portal processor, whose CONFUSION transition only the nether portal has)"
+  },
+  "net/minecraft/class_437.method_25428(Z)V": {
+   "to": "method_61039(Ljava/net/URI;Z)V",
+   "args": [1],
+   "basis": "Screen.confirmLink(accepted) is 1.21's confirmLink(uri, accepted) (javap: open the link when accepted, then setScreen(this); 1.20.6 kept the uri in field_22784 and opened it through openLink, 1.21 takes it as an argument)"
+  },
+  "net/minecraft/class_1472.method_17690(Lnet/minecraft/class_1767;Lnet/minecraft/class_1767;)Lnet/minecraft/class_8566;": {
+   "to": "method_59936(Lnet/minecraft/class_1767;Lnet/minecraft/class_1767;)Lnet/minecraft/class_9694;",
+   "args": [0, 1],
+   "basis": "Sheep.makeContainer(dye, dye) is 1.21's makeCraftInput(dye, dye) (javap: the same two dye items for the crafting lookup in getOffspringColor; 1.21 builds a CraftingInput of them where 1.20.6 filled a CraftingContainer)"
+  }
+ },
+ "fieldRenames": {
+  "net/minecraft/class_3898.field_49171:Lnet/minecraft/class_9312;": "field_51861",
+  "net/minecraft/class_287.field_1567:Lnet/minecraft/class_293$class_5596;": "field_52073",
+  "net/minecraft/class_5489$class_5490.field_26532:I": "comp_2878",
+  "net/minecraft/class_5489$class_5490.field_26531:Lnet/minecraft/class_5481;": "comp_2877",
+  "net/minecraft/class_4720$class_6189.field_32053:[Lnet/minecraft/class_4588;": "comp_2847",
+  "net/minecraft/class_4618$class_4586.field_20897:Lnet/minecraft/class_4588;": "comp_2851",
+  "net/minecraft/class_296.field_1615:Lnet/minecraft/class_296$class_297;": "comp_2844",
+  "net/minecraft/class_296.field_1614:Lnet/minecraft/class_296$class_298;": "comp_2845",
+  "net/minecraft/class_1091.field_5406:Ljava/lang/String;": "comp_2876"
+ },
+ "_smx6_fieldRenames_basis": "private / package fields 1.21 kept under a new id (only mixins reach them): ChunkMap.worldGenContext (set in the constructor, final in 1.21), BufferBuilder.mode (final in 1.21: one builder per begin), and the classes 1.21 made records whose components carry the same values (MultiLineLabel.TextAndWidth text / width, VertexMultiConsumer.Multiple delegates, OutlineBufferSource.EntityOutlineGenerator delegate, VertexFormatElement type / usage, ModelResourceLocation variant); javap of both classes: same type, the same writes in the constructor and the same reads",
+ "mixinLedger": {
+  "net/minecraft/class_1893": "1.21 enchantments are data-driven: the game reads them from data/minecraft/enchantment/*.json (RegistryDataLoader); Enchantments.<clinit> only makes ResourceKeys, and the definitions 1.20.6's <clinit> built (new XEnchantment(..), Enchantment.definition / dynamicCost / EquipmentSlot arrays, ItemTags) live in Enchantments.method_60184 (bootstrap), which W's runtime never runs (javap: VanillaRegistries.method_46817 is reached only from Commands.method_30852 (IDE-only command validation) and OverworldBiomeBuilder.method_46678 (behind the SharedConstants.field_34371 debug flag), never from the enchantment registry load). register(String, Enchantment) method_8235 became bootstrap's register(BootstrapContext, ResourceKey, Builder), datagen only. No W code runs V's code"
+ }
+}
