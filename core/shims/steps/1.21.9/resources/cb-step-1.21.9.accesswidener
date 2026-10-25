@@ -7,6 +7,8 @@ accessible method net/minecraft/class_309 method_1466 (JILnet/minecraft/class_11
 accessible field net/minecraft/class_11906 field_62592 Z
 # PlayerSkin.Model.id() (1.21.8) is PlayerModelType's legacy services id (CbSkins)
 accessible field net/minecraft/class_7920 field_62914 Ljava/lang/String;
+# the frame's camera for 1.21.8 renderer calls that bring no collector (CbSubmit.currentCamera)
+accessible field net/minecraft/class_757 field_61732 Lnet/minecraft/class_11658;
 
 # ---- BEGIN GENERATED (all): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same

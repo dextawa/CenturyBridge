@@ -4,5 +4,19 @@
  },
  "fieldRedirects": {
   "net/minecraft/class_310.field_1703:Z": "net/minecraft/class_11906#field_62592"
- }
+ },
+ "methodRenames": {
+  "net/minecraft/class_4597.getBuffer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;": "method_73477",
+  "net/minecraft/class_4597$class_4598.getBuffer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;": "method_73477",
+  "net/minecraft/class_4618.getBuffer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;": "method_73477"
+ },
+ "overrideRenames": [
+  {
+   "old": "getBuffer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;",
+   "new": "method_73477",
+   "onlyUnder": "net/minecraft/class_4597",
+   "superCalls": "rename",
+   "basis": "s9: MultiBufferSource.getBuffer (intermediary left it unmapped in 1.21.8) is method_73477 in 1.21.9, same descriptor and contract; a 1.21.8 implementation (and its lambdas, through methodRenames) answers under the new name"
+  }
+ ]
 }

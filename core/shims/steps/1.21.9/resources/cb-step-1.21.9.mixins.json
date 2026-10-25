@@ -6,7 +6,10 @@
   "mixins": [
     "CbProfilesServerMixin"
   ],
-  "client": [],
+  "client": [
+    "CbBlockEntityDispatchMixin",
+    "CbBlockEntityStateMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1
