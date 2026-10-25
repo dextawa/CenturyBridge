@@ -2,10 +2,10 @@
 # boot6b.sh <tag>: step-6b real-server check -- cb-s6b (compiled against 1.21.5) converted 1.21.5 -> 1.21.6 with this
 # agent's engine and wiring, booted on a Fabric 1.21.6 server (the agent's own copy, srv-1.21.6, made on first use with
 # Fabric's server launcher) with Fabric API and this agent's step layer. Run on beta2 from ~/cbwork after remote_step
-# built the layer (agents/s6b/build/centurybridge-0.3.0+1.21.6.jar).
+# built the layer (agents/<CB_AGENT, default s6b>/build/centurybridge-0.3.0+1.21.6.jar).
 set -uo pipefail
 cd ~/cbwork
-WD=agents/s6b; TAG="$1"
+WD=agents/${CB_AGENT:-s6b}; TAG="$1"
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 JAVAC=~/cbtest/jdk-25.0.4.1+1/bin/javac
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')

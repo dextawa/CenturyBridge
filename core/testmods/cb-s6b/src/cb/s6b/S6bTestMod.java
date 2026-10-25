@@ -248,9 +248,14 @@ public class S6bTestMod implements ModInitializer {
             class_2246.field_10034.method_9564())).getRenderAttachmentData() == null,
             "rendering-data-attachment-v1: a vanilla block entity answers null");
         // ClientTags is @Environment(CLIENT) in both releases: the server only proves the dependency resolves
-        // (fabric-client-tags-api-v1 -> fabric-tag-api-v1); the call itself is a client check (client_checks/s6b.md).
-        check(net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("fabric-tag-api-v1"),
-            "fabric-client-tags-api-v1: dependency resolves to fabric-tag-api-v1");
+        // (1.21.6's fabric-tag-api-v1 provides fabric-client-tags-api-v1 itself); the call is a client check
+        // (client_checks/s6b.md). fabric-keybindings-v0 is client-only as well: this mod loading proves its
+        // dependency (">=0.2.0") is met by the layer.
+        check(net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("fabric-client-tags-api-v1"),
+            "fabric-client-tags-api-v1: dependency resolves natively (fabric-tag-api-v1 provides it)");
+        check(net.fabricmc.loader.api.FabricLoader.getInstance().getModContainer("cb_s6b").get().getMetadata()
+            .getDependencies().stream().anyMatch(d -> d.getModId().equals("centurybridge_step_1_21_6")),
+            "fabric-keybindings-v0 / rendering-data-attachment-v1 / commands: dependencies renamed onto the layer");
     }
 
     /** a 1.21.5 FlyingMob subclass */

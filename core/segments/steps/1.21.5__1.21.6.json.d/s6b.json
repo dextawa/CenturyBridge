@@ -237,10 +237,9 @@
   "fabric-command-api-v1": "centurybridge_step_1_21_6@*",
   "fabric-commands-v0": "centurybridge_step_1_21_6@*",
   "fabric-keybindings-v0": "centurybridge_step_1_21_6@*",
-  "fabric-rendering-data-attachment-v1": "centurybridge_step_1_21_6@*",
-  "fabric-client-tags-api-v1": "fabric-tag-api-v1@*"
+  "fabric-rendering-data-attachment-v1": "centurybridge_step_1_21_6@*"
  },
- "_depRenames_basis": "1.21.6's Fabric API (0.128.2+1.21.6) no longer ships fabric-blockrenderlayer-v1, fabric-command-api-v1, fabric-commands-v0, fabric-keybindings-v0, fabric-rendering-data-attachment-v1 and fabric-client-tags-api-v1, which 1.21.5's (0.128.2+1.21.5) did (META-INF/jars of both). This step's layer gives the first five back (facade/fapi; RenderAttachmentBlockEntity is block-view-api-v2's RenderDataBlockEntity under 1.21.5's method name), so a dependency on them is met by the layer; ClientTags moved unchanged into fabric-tag-api-v1 (same class, same four members, javap), so fabric-client-tags-api-v1 is met by fabric-tag-api-v1",
+ "_depRenames_basis": "1.21.6's Fabric API (0.128.2+1.21.6) no longer ships fabric-blockrenderlayer-v1, fabric-command-api-v1, fabric-commands-v0, fabric-keybindings-v0 and fabric-rendering-data-attachment-v1, which 1.21.5's (0.128.2+1.21.5) did (META-INF/jars of both; fapi_modules.py). This step's layer gives them back (facade/fapi; RenderAttachmentBlockEntity is block-view-api-v2's RenderDataBlockEntity under 1.21.5's method name), so a dependency on them is met by the layer. fabric-client-tags-api-v1 needs no rename: 1.21.6's fabric-tag-api-v1 provides that id itself (its fabric.mod.json \"provides\") and carries ClientTags unchanged (same class, same four members, javap)",
  "instanceOfRedirects": {
   "net/minecraft/class_1307": "top/dext/centurybridge/step/v1_21_6/rt/CbMobs#isFlyingMob"
  },
