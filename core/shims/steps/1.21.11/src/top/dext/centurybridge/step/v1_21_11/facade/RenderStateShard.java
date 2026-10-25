@@ -270,8 +270,26 @@ public abstract class RenderStateShard {
         public final OptionalDouble field_21392;
 
         public LineStateShard(OptionalDouble width) {
-            super("line_width", RenderStateShard::none, RenderStateShard::none);
+            super("line_width", () -> setupLineWidth(width), () -> clearLineWidth(width));
             this.field_21392 = width;
+        }
+
+        /** 1.21.10's setup: the width, or the window-scaled one (2.5 at 1920 pixels wide, at least 2.5) */
+        private static void setupLineWidth(OptionalDouble width) {
+            if (!java.util.Objects.equals(width, OptionalDouble.of(1.0))) {
+                if (width.isPresent()) {
+                    top.dext.centurybridge.step.v1_21_11.rt.CbRenderSystem.lineWidth((float) width.getAsDouble());
+                } else {
+                    top.dext.centurybridge.step.v1_21_11.rt.CbRenderSystem.lineWidth(Math.max(2.5F,
+                        net.minecraft.class_310.method_1551().method_22683().method_4489() / 1920.0F * 2.5F));
+                }
+            }
+        }
+
+        private static void clearLineWidth(OptionalDouble width) {
+            if (!java.util.Objects.equals(width, OptionalDouble.of(1.0))) {
+                top.dext.centurybridge.step.v1_21_11.rt.CbRenderSystem.lineWidth(1.0F);
+            }
         }
 
         @Override
@@ -314,8 +332,11 @@ public abstract class RenderStateShard {
             this.cb$transform = null;
         }
 
+        /** a vanilla texturing: 1.21.10's runnables set the texture matrix (1.21.11's TextureTransform computes it) and reset it */
         public TexturingStateShard(class_12250 transform) {
-            super(transform.toString(), RenderStateShard::none, RenderStateShard::none);
+            super(transform.toString(),
+                () -> top.dext.centurybridge.step.v1_21_11.rt.CbRenderSystem.setTextureMatrix(transform.method_76030()),
+                top.dext.centurybridge.step.v1_21_11.rt.CbRenderSystem::resetTextureMatrix);
             this.cb$transform = transform;
         }
     }

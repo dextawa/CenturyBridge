@@ -18,6 +18,9 @@ import net.minecraft.server.MinecraftServer;
 public final class Driver {
     public static volatile boolean forceKeep;
     public static volatile int boolSets;
+    public static volatile int argSets;
+    public static volatile boolean loudResult;
+    public static volatile boolean loudSerialize;
     private static int ok;
     private static int fail;
 
@@ -106,14 +109,23 @@ public final class Driver {
         check("assignFrom", rules.method_8355(class_1928.field_19389) && rules.method_8356(class_1928.field_19399) == 9
             && query(server, "gamerule random_tick_speed") == 9, rules.method_8356(class_1928.field_19399));
         cmd(server, "gamerule keep_inventory false");
-        // a mod mixin on BooleanValue.set sees 1.21.11's own writes (the game rule command), once each
+        // the game rule command writes through Value.setFromArgument, as 1.21.10's did (a mod mixin on it sees each
+        // command write once; BooleanValue.set is not what 1.21.10's command called); a negated rule's command
+        // goes through the 1.21.10 value's set (its argument has the other meaning)
         int sets = boolSets;
+        int args = argSets;
         cmd(server, "gamerule mob_griefing false");
         cmd(server, "gamerule raids true");
         cmd(server, "gamerule random_tick_speed 4");
-        check("mixin-vanilla-write", boolSets == sets + 2 && !rules.method_8355(class_1928.field_19388) && !rules.method_8355(class_1928.field_19422)
-            && rules.method_8356(class_1928.field_19399) == 4, "boolean sets " + (boolSets - sets));
+        check("mixin-command-write", argSets == args + 2 && boolSets == sets + 1 && !rules.method_8355(class_1928.field_19388)
+            && !rules.method_8355(class_1928.field_19422) && rules.method_8356(class_1928.field_19399) == 4,
+            "setFromArgument " + (argSets - args) + " set " + (boolSets - sets));
         cmd(server, "gamerule mob_griefing true");
+        // a mod mixin on BooleanValue.getCommandResult changes what the game rule command returns
+        loudResult = true;
+        int loud = query(server, "gamerule keep_inventory");
+        loudResult = false;
+        check("mixin-command-result", loud == 7 && query(server, "gamerule keep_inventory") == 0, "loud " + loud);
         // mod rules
         check("hasRegistration", GameRuleRegistry.hasRegistration("cbS11Flag") && GameRuleRegistry.hasRegistration("keepInventory")
             && !GameRuleRegistry.hasRegistration("noSuchRule"), "flag/keepInventory/none");
