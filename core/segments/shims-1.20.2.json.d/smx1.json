@@ -86,6 +86,7 @@
   "net/minecraft/class_7538.field_39569:Lnet/minecraft/class_2561;": "field_46013",
   "net/minecraft/class_7538.field_39570:Lnet/minecraft/class_2561;": "field_46014",
   "net/minecraft/class_7538.field_39571:Lnet/minecraft/class_2561;": "field_46015",
+  "net/minecraft/class_761$class_6600.field_34818:Lnet/minecraft/class_761$class_5972;": "field_45627",
   "net/minecraft/class_8129.field_42477:Lnet/minecraft/class_6862;": "comp_1836",
   "net/minecraft/class_8129.field_42478:Z": "comp_1837",
   "net/minecraft/class_94$class_100.field_1017:I": "comp_1852",
@@ -99,5 +100,15 @@
   "net/minecraft/class_2342.method_10122()Lnet/minecraft/class_2338;": "comp_1968",
   "net/minecraft/class_2342.method_10120()Lnet/minecraft/class_2680;": "comp_1969"
  },
- "_smx1_methodRenames_basis": "BlockSource: 1.20.1's interface getters getLevel / getPos / getBlockState are 1.20.2's record accessors level() / pos() / state() of the same value (the record's canonical constructor stores what BlockSourceImpl's getters answered); vanilla's dispense behaviours call the accessors where 1.20.1 called the getters, so a mod's @At INVOKE on a getter follows to the accessor call"
+ "_smx1_methodRenames_basis": "BlockSource: 1.20.1's interface getters getLevel / getPos / getBlockState are 1.20.2's record accessors level() / pos() / state() of the same value (the record's canonical constructor stores what BlockSourceImpl's getters answered); vanilla's dispense behaviours call the accessors where 1.20.1 called the getters, so a mod's @At INVOKE on a getter follows to the accessor call",
+ "classRenames": {
+  "net/minecraft/class_1068$class_7920": "net/minecraft/class_8685$class_7920",
+  "net/minecraft/class_634$class_8137": "net/minecraft/class_8673$class_8137",
+  "net/minecraft/class_7538$class_7539": "net/minecraft/class_8768$class_7539",
+  "net/minecraft/class_761$class_5972": "net/minecraft/class_8679$class_5972",
+  "net/minecraft/class_761$class_6600": "net/minecraft/class_8679$class_6600",
+  "net/minecraft/class_761$class_762": "net/minecraft/class_8679$class_762",
+  "net/minecraft/class_60$class_5641": "net/minecraft/class_5641"
+ },
+ "_smx1_classRenames_basis": "package-private 1.20.1 classes 1.20.2 moved under another outer class (or to the top level) with the same intermediary id and their members (javap -p of both: DefaultPlayerSkin.ModelType -> PlayerSkin.Model, ClientPacketListener.DeferredPacket -> ClientCommonPacketListenerImpl's, ChatReportScreen's reason list -> AbstractReportScreen's, LevelRenderer's RenderInfoMap / RenderChunkStorage / RenderChunkInfo -> SectionOcclusionGraph's, CompositeFunction's inner class -> the top-level one); nothing outside a mixin can name a package-private class, so only mixins follow"
 }
