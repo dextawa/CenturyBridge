@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * 1.20.1 -> 1.20.2: PlayerAdvancementTracker.getProgress takes AdvancementEntry
  * now; the legacy Advancement overload resolves the advancement's holder (CbAdvNodes.holderOf).
  */
-@Mixin(class_2985.class)
+@Mixin(value = class_2985.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class PlayerAdvancementTrackerBridge {
 
     public class_167 method_12882(class_161 advancement) {

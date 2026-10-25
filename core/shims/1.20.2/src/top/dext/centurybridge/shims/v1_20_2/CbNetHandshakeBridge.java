@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * the intent leads to (the record's own method_52273). For converted calls and a subclass's super
  * calls (extendable again); vanilla 1.20.2 reads the components.
  */
-@Mixin(class_2889.class)
+@Mixin(value = class_2889.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetHandshakeBridge {
 
     /** was getIntendedState() */

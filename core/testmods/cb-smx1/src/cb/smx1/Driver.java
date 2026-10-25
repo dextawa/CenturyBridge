@@ -17,6 +17,7 @@ public final class Driver {
     public static final ThreadLocal<Boolean> ON_DRIVER = ThreadLocal.withInitial(() -> false);
     public static volatile boolean forceLuck;
     public static volatile boolean forceLiquid;
+    public static volatile boolean forceWater;
     private static int ok;
     private static int fail;
 
@@ -105,6 +106,15 @@ public final class Driver {
             }
             check("navigation-in-liquid-head", !plain && forced, "zombie in mid-air canUpdatePath " + plain + ", with isInLiquid forced " + forced
                 + " (handler ran " + COUNT.getOrDefault("navigation-in-liquid-head", 0) + " time(s))");
+            forceWater = true;
+            boolean redirected;
+            try {
+                redirected = nav.cbsmx1$canUpdatePath();
+            } finally {
+                forceWater = false;
+            }
+            check("navigation-water-redirect", !plain && redirected, "with the isInWaterOrBubble call inside isInLiquid redirected: canUpdatePath "
+                + redirected + " (redirect ran " + COUNT.getOrDefault("navigation-water-redirect", 0) + " time(s))");
         } catch (Throwable t) {
             check("navigation-in-liquid-head", false, "threw " + t);
         }

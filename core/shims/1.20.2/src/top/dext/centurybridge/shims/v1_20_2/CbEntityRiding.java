@@ -15,7 +15,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbRiding;
  * neither; a converted override reaches 1.20.2's riding through the override hooks
  * (CbRiding.vehicleAttachment / passengerOffset).
  */
-@Mixin(class_1297.class)
+@Mixin(value = class_1297.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbEntityRiding implements CbLegacyRiding {
 
     @Shadow

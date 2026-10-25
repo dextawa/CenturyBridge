@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * rest into a CommonPlayerSpawnInfo record. The 1.20.1 getters answer from it, for converted calls
  * and a subclass's super calls (the class is extendable again); vanilla 1.20.2 reads the record.
  */
-@Mixin(class_2724.class)
+@Mixin(value = class_2724.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetRespawnBridge {
 
     /** was getDimensionType() */

@@ -16,7 +16,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
  * CbEntityPoseVanillaMixin answers through canEnterPose (see also CbEntityPose). Declared public;
  * 1.20.1's were protected.
  */
-@Mixin(class_1297.class)
+@Mixin(value = class_1297.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityPoseLegacy implements CbLegacyPose {
 
     @CbVanillaReads("CbEntityPoseVanillaMixin: Player.canPlayerFitWithinBlocksAndEntitiesWhen answers through it")

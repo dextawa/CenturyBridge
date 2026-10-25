@@ -12,7 +12,8 @@
     "NbtIoMixin",
     "AdvancementListMixin",
     "NavigationMixin",
-    "NavigationInvoker"
+    "NavigationInvoker",
+    "NavigationRedirectMixin"
   ],
   "injectors": {
     "defaultRequire": 1
