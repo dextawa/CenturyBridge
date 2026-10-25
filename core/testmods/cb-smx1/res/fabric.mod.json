@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx1",
+  "version": "1.0.0",
+  "name": "CB smx1 Mixin Test",
+  "description": "1.20.1-era mixins on members step 1 moves for mixins (mixinTargets, fieldRenames)",
+  "environment": "*",
+  "mixins": ["cb_smx1.mixins.json"],
+  "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.1" }
+}

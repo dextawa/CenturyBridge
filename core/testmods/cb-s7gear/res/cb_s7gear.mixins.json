@@ -6,7 +6,9 @@
   "mixins": [
     "EnchantValueMixin",
     "IngredientItemsMixin",
-    "BindTagsMixin"
+    "BindTagsMixin",
+    "ArmorEquipMixin",
+    "ShieldEquipMixin"
   ],
   "injectors": {
     "defaultRequire": 1

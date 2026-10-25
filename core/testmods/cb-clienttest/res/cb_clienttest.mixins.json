@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "cb.clienttest.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "ContainerRenderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

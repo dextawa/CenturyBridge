@@ -13,6 +13,7 @@ import top.dext.centurybridge.step.v1_21_2.facade.Equipable;
 public abstract class CbItemEquipableShieldMixin implements Equipable {
 
     /** getEquipmentSlot(): OFFHAND */
+    @top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads("CbItemMembersMixin: the item's EQUIPPABLE (CbItemMemberComponents) follows it, which LivingEntity.getEquipmentSlotForItem / onEquipItem, the dispenser and Item.use read")
     @Override
     public class_1304 method_7685() {
         return class_1304.field_6171;
