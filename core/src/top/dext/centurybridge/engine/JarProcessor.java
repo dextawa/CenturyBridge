@@ -225,8 +225,12 @@ public final class JarProcessor {
             for (int i = 0; i < oa.length; i++) {
                 int src = map[i];
                 mv.visitVarInsn(na[src].getOpcode(Opcodes.ILOAD), slotOf[src]);
-                if (!na[src].equals(oa[i]) && h.wrapName != null) {
-                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.wrapOwner, h.wrapName, h.wrapDesc, false);
+                String[] w = na[src].equals(oa[i]) ? null : h.wrapFor(na[src], oa[i]);
+                if (w == null && !na[src].equals(oa[i]) && h.wraps.size() == 1) {
+                    w = h.wraps.get(0); // a single wrap is applied as written (its parameter may be a supertype)
+                }
+                if (w != null) {
+                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, w[0], w[1], w[2], false);
                 } else if (!na[src].equals(oa[i]) && h.narrow && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
                     mv.visitTypeInsn(Opcodes.CHECKCAST, oa[i].getInternalName());
                 }
