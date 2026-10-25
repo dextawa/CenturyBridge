@@ -239,7 +239,8 @@
   "net/minecraft/class_10860.mapBuffer(Lcom/mojang/blaze3d/buffers/GpuBuffer;ZZ)Lcom/mojang/blaze3d/buffers/GpuBuffer$MappedView;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#mapBuffer",
   "net/minecraft/class_10860.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#writeToTexture",
   "net/minecraft/class_1041.method_15998(Lnet/minecraft/class_10219;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#updateDisplay",
-  "net/minecraft/class_761.method_22710(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelRender#renderLevel"
+  "net/minecraft/class_761.method_22710(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelRender#renderLevel",
+  "net/minecraft/class_1799.method_40133()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemStacks#getTags"
  },
  "overrideHooks": [
   {
@@ -838,7 +839,8 @@
   "net/minecraft/class_11279": "top/dext/centurybridge/step/v26_1/facade/CachedPerspectiveProjectionMatrixBuffer",
   "net/minecraft/class_582": "net/minecraft/client/model/animal/feline/AdultFelineModel",
   "net/minecraft/class_3680": "net/minecraft/client/model/animal/feline/AdultCatModel",
-  "net/minecraft/class_9949": "net/minecraft/client/model/animal/feline/AdultOcelotModel"
+  "net/minecraft/class_9949": "net/minecraft/client/model/animal/feline/AdultOcelotModel",
+  "net/minecraft/class_9891": "top/dext/centurybridge/step/v26_1/facade/EmptyBlockAndTintGetter"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -2522,7 +2524,12 @@
   "net/minecraft/class_11681.method_72998(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_776;Lnet/minecraft/class_4618;)V",
   "net/minecraft/class_3485.method_15085(Lnet/minecraft/class_2960;Ljava/lang/String;)Ljava/nio/file/Path;",
   "net/minecraft/class_3485.method_21891(Lnet/minecraft/class_2487;)Lnet/minecraft/class_3499;",
-  "net/minecraft/class_9976.method_62320(Lnet/minecraft/class_4597;Lnet/minecraft/class_243;Lnet/minecraft/class_12077;)V"
+  "net/minecraft/class_9976.method_62320(Lnet/minecraft/class_4597;Lnet/minecraft/class_243;Lnet/minecraft/class_12077;)V",
+  "net/minecraft/class_1799.method_7961()Z",
+  "net/minecraft/class_1799.method_27320(Lnet/minecraft/class_1297;)V",
+  "net/minecraft/class_1799.method_7945()Lnet/minecraft/class_1533;",
+  "net/minecraft/class_1799.method_27319()Lnet/minecraft/class_1297;",
+  "net/minecraft/class_1542.method_5674(Lnet/minecraft/class_2940;)V"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -3192,7 +3199,9 @@
   "net/minecraft/class_624.field_52948:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$WolfModel#BABY_TRANSFORMER",
   "net/minecraft/class_7751.field_52883:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$CamelModel#BABY_TRANSFORMER",
   "net/minecraft/class_8185.field_52938:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$SnifferModel#BABY_TRANSFORMER",
-  "net/minecraft/class_9082.field_52867:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ArmadilloModel#BABY_TRANSFORMER"
+  "net/minecraft/class_9082.field_52867:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ArmadilloModel#BABY_TRANSFORMER",
+  "net/minecraft/class_1799.field_49747:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemStacks#SINGLE_ITEM_CODEC",
+  "net/minecraft/class_1799.field_49267:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemStacks#SIMPLE_ITEM_CODEC"
  },
  "mixinTargets": {
   "net/minecraft/class_2564.method_10881(Lnet/minecraft/class_2168;Lnet/minecraft/class_2561;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;": {

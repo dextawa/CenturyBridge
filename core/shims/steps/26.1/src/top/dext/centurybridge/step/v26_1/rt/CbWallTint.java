@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.LevelReader;
+import top.dext.centurybridge.step.v26_1.facade.EmptyBlockAndTintGetter;
 
 /**
  * 1.21.11's BlockAndTintGetter (net/minecraft/class_1920) on 26.1, where it split in two:
@@ -21,7 +22,8 @@ import net.minecraft.world.level.LevelReader;
  * This class keeps no reference to the client type; the client half is CbWallTintClient, reached only on
  * the client. What 1.21.11 answered on the other implementations is kept: ServerLevel, WorldGenRegion and
  * the other server-side BlockAndTintGetters returned 1.0 from getShade, and every LevelReader tinted with
- * its default getBlockTint (the resolver's colour of the biome at the position).
+ * its default getBlockTint (the resolver's colour of the biome at the position), and 1.21.11's
+ * EmptyBlockAndTintGetter (facade) answers its own 1.0 and -1.
  */
 public final class CbWallTint {
 
@@ -32,6 +34,9 @@ public final class CbWallTint {
 
     /** 1.21.11 BlockAndTintGetter.getShade(Direction, boolean) */
     public static float getShade(BlockAndLightGetter level, Direction direction, boolean shade) {
+        if (level instanceof EmptyBlockAndTintGetter empty) {
+            return empty.getShade(direction, shade);
+        }
         if (CLIENT) {
             Float f = CbWallTintClient.shade(level, direction, shade);
             if (f != null) {
@@ -43,6 +48,9 @@ public final class CbWallTint {
 
     /** 1.21.11 BlockAndTintGetter.getBlockTint(BlockPos, ColorResolver) */
     public static int getBlockTint(BlockAndLightGetter level, BlockPos pos, ColorResolver resolver) {
+        if (level instanceof EmptyBlockAndTintGetter empty) {
+            return empty.getBlockTint(pos, resolver);
+        }
         if (CLIENT) {
             Integer c = CbWallTintClient.tint(level, pos, resolver);
             if (c != null) {
