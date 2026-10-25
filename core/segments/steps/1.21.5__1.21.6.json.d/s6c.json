@@ -2,9 +2,12 @@
  "covers": [
   "net/minecraft/class_3441.method_14902()Lnet/minecraft/class_2487;",
   "net/minecraft/class_3441.method_14901(Lnet/minecraft/class_2487;Ljava/util/function/Predicate;)V",
-  "net/minecraft/class_5411.method_30189(Lnet/minecraft/class_2487;)V"
+  "net/minecraft/class_5411.method_30189(Lnet/minecraft/class_2487;)V",
+  "net/minecraft/class_1496.method_6763()Z",
+  "net/minecraft/class_1496.method_6758(Z)V",
+  "net/minecraft/class_1496.field_6968:Z"
  ],
- "_covers_basis": "1.21.5 members the layer restores on the game class (CbRecipeBookRestoredMixin / CbRecipeBookSettingsRestoredMixin) with 1.21.5's bodies; vanilla's 1.21.6 player save / load asks them (CbRecipeBookRouteMixin)",
+ "_covers_basis": "1.21.5 members the layer restores on the game class with 1.21.5's bodies: ServerRecipeBook.toNbt / fromNbt and RecipeBookSettings.write (CbRecipeBookRestoredMixin / CbRecipeBookSettingsRestoredMixin; vanilla's 1.21.6 player save / load asks them, CbRecipeBookRouteMixin), AbstractHorse's jump flag field, isJumping and setIsJumping (CbHorseJumpRestoredMixin; set and read on 1.21.6's jump paths, CbHorseJumpRouteMixin)",
  "classRenames": {
   "net/minecraft/class_7648": "top/dext/centurybridge/step/v1_21_6/facade/PacketSendListener",
   "net/minecraft/class_10738": "top/dext/centurybridge/step/v1_21_6/facade/TerracottaBlock"
