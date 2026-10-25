@@ -3,6 +3,6 @@
   "package": "cb.smx1n.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "mixins": ["ShapedCodecMixin", "EffectAttributesMixin", "AdvancementJsonMixin"],
+  "mixins": ["ShapedCodecMixin", "EffectAttributesMixin", "AdvancementJsonMixin", "ItemPredicateJsonMixin"],
   "injectors": { "defaultRequire": 1 }
 }

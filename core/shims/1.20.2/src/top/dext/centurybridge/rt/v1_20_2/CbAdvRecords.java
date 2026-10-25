@@ -58,6 +58,20 @@ public final class CbAdvRecords {
         return potion == null ? Optional.empty() : Optional.of(potion.method_53211());
     }
 
+    /** 1.20.1's ItemPredicate(tag, items, count, durability, enchantments, storedEnchantments, potion, nbt), as 1.20.2's record */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_2073 itemPredicate(net.minecraft.class_6862<net.minecraft.class_1792> tag, Set<net.minecraft.class_1792> items,
+            net.minecraft.class_2096.class_2100 count, net.minecraft.class_2096.class_2100 durability, net.minecraft.class_2035[] enchantments,
+            net.minecraft.class_2035[] stored, net.minecraft.class_1842 potion, net.minecraft.class_2105 nbt) {
+        return new net.minecraft.class_2073((Optional) tag(tag), items(items), count, durability, enchantments(enchantments),
+            enchantments(stored), potion(potion), CbAdvAny.nbt(nbt));
+    }
+
+    /** 1.20.1's EnchantmentPredicate(enchantment, levels), as 1.20.2's record: a null enchantment is any enchantment */
+    public static net.minecraft.class_2035 enchantmentPredicate(net.minecraft.class_1887 enchantment, net.minecraft.class_2096.class_2100 levels) {
+        return enchantment == null ? new net.minecraft.class_2035(Optional.empty(), levels) : new net.minecraft.class_2035(enchantment, levels);
+    }
+
     /** ItemPredicate's enchantment conditions (an array; NONE is empty) */
     public static List<net.minecraft.class_2035> enchantments(net.minecraft.class_2035[] e) {
         return e == null ? List.of() : List.copyOf(Arrays.asList(e));
