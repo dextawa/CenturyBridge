@@ -108,6 +108,13 @@
    ],
    "basis": "1.20.2 made the loot / predicate classes codec records: the one constructor holds 1.20.1's body (same field stores; arrays became Lists, Item / Block / BlockEntityType / Potion / Enchantment became Holders)"
   },
+  "net/minecraft/class_163.method_711(Ljava/util/Map;)V": {
+   "to": "method_53691(Ljava/util/Collection;)V",
+   "args": [
+    -1
+   ],
+   "basis": "AdvancementList.add(Map<ResourceLocation, Advancement.Builder>) -> AdvancementTree.addAll(Collection<AdvancementHolder>): the same topological insert of roots and tasks with the listener's onAddAdvancementRoot / onAddAdvancementTask; 1.20.2 builds the holders before the call and moved the per-entry insert into tryInsert (method_53692)"
+  },
   "net/minecraft/class_1856.method_8089()Lcom/google/gson/JsonElement;": {
    "to": "method_8089(Z)Lcom/google/gson/JsonElement;",
    "args": [],
@@ -224,6 +231,15 @@
     4
    ],
    "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2507.method_10626(Ljava/io/DataInput;ILnet/minecraft/class_2505;)Lnet/minecraft/class_2520;": {
+   "to": "method_10626(Ljava/io/DataInput;Lnet/minecraft/class_2505;)Lnet/minecraft/class_2520;",
+   "args": [
+    0,
+    -1,
+    1
+   ],
+   "basis": "NbtIo.readUnnamedTag: the same private method with its only caller read(DataInput, NbtAccounter); 1.20.2 dropped the depth (1.20.1's caller always passed 0; the accounter tracks depth now) and moved the guarded load into readTagSafe (method_52892), which it calls"
   },
   "net/minecraft/class_2525.method_10310(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3611;)Z": {
    "to": "method_10310(Lnet/minecraft/class_1657;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3611;)Z",

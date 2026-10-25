@@ -65,6 +65,16 @@ JUDGED = {
     "net/minecraft/class_5739$class_5740.<init>(JLnet/minecraft/class_5712;Lnet/minecraft/class_243;)V":
         ("<init>(JLnet/minecraft/class_5321;Lnet/minecraft/class_243;)V",
          "GameEventListenerRenderer.TrackedGameEvent's record constructor (similarity 1.00); the event is a ResourceKey now"),
+    "net/minecraft/class_163.method_711(Ljava/util/Map;)V":
+        ("method_53691(Ljava/util/Collection;)V",
+         "AdvancementList.add(Map<ResourceLocation, Advancement.Builder>) -> AdvancementTree.addAll(Collection<AdvancementHolder>): "
+         "the same topological insert of roots and tasks with the listener's onAddAdvancementRoot / onAddAdvancementTask; 1.20.2 "
+         "builds the holders before the call and moved the per-entry insert into tryInsert (method_53692)"),
+    "net/minecraft/class_2507.method_10626(Ljava/io/DataInput;ILnet/minecraft/class_2505;)Lnet/minecraft/class_2520;":
+        ("method_10626(Ljava/io/DataInput;Lnet/minecraft/class_2505;)Lnet/minecraft/class_2520;",
+         "NbtIo.readUnnamedTag: the same private method with its only caller read(DataInput, NbtAccounter); 1.20.2 dropped "
+         "the depth (1.20.1's caller always passed 0; the accounter tracks depth now) and moved the guarded load into "
+         "readTagSafe (method_52892), which it calls"),
 }
 for _k, _to in {
     "net/minecraft/class_55.<init>([Lnet/minecraft/class_79;[Lnet/minecraft/class_5341;[Lnet/minecraft/class_117;Lnet/minecraft/class_5658;Lnet/minecraft/class_5658;)V":
