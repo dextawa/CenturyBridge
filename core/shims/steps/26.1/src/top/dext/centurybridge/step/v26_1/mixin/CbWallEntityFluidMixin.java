@@ -36,7 +36,9 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallEntityFluids;
  * (rt/CbWallEntityFluids) and its height answered by getFluidHeight(tag), where 26.1 answers 0.
  *
  * Known difference: inside vanilla's path the push itself is vanilla's (EntityFluidInteraction's current, over the
- * fluid interaction box): a mod changing the speed argument or the push code of the 1.21.11 body does not change it.
+ * fluid interaction box) and so is the height: a mod changing the speed argument, the push or the measurement of the
+ * 1.21.11 body does not change them there. The marker carries only the answer (HEAD / RETURN injectors); the rest
+ * stays open as "vanilla path partial".
  */
 @Mixin(Entity.class)
 public abstract class CbWallEntityFluidMixin {
@@ -61,8 +63,10 @@ public abstract class CbWallEntityFluidMixin {
     public abstract Level level();
 
     /** 1.21.11 Entity.updateFluidHeightAndDoFluidPushing (class_1297.method_5692) */
-    @CbVanillaReads("CbWallEntityFluidMixin: updateFluidInteraction takes its isInFluid(WATER) / isInFluid(LAVA) "
-        + "answers from this method (cb$water / cb$lava) and pushes when it answers true")
+    @CbVanillaReads(value = "CbWallEntityFluidMixin: updateFluidInteraction takes its isInFluid(WATER) / isInFluid(LAVA) "
+        + "answers from this method (cb$water / cb$lava) and pushes when it answers true; inside that call the body "
+        + "returns vanilla's measurement, so only what decides the answer is carried, not the speed or the push",
+        carries = {"Inject@HEAD", "Inject@RETURN", "ModifyReturnValue@RETURN"})
     public boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tag, double speed) {
         Entity self = (Entity) (Object) this;
         if (!CbWallEntityFluids.tracked(tag)) {

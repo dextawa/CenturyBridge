@@ -1,0 +1,14 @@
+{
+ "schemaVersion": 1,
+ "id": "centurybridge-stbir1",
+ "version": "1.0.0+stb0.97",
+ "name": "CenturyBridge STBImageResize v1",
+ "description": "LWJGL 3.3.3's STBImageResize (stb_image_resize v0.97) with its own native code, for Minecraft 26.1 and later, whose LWJGL ships stb_image_resize2 instead. Needed by CenturyBridge for mods written for 1.21.11 and earlier.",
+ "authors": ["dext"],
+ "license": ["MIT", "BSD-3-Clause", "Unlicense"],
+ "environment": "*",
+ "depends": {
+  "fabricloader": ">=0.15.0",
+  "minecraft": ">=26.1"
+ }
+}

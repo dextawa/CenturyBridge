@@ -101,6 +101,31 @@ CLASSES="$OUT/classes-$VERSION"
 rm -rf "$CLASSES"
 mkdir -p "$CLASSES" "$OUT"
 
+# Mods the layer depends on that CenturyBridge releases separately (core/mods/<mod>: fabric.mod.json "depends" names
+# their id; centurybridge-stbir1 for the wall layer): built with their own build.sh into $OUT/deps/, put on the compile
+# classpath, and handed to the wiring gate (-Dcb.depJars), since wiring may point converted call sites at their public
+# classes (DepJars.java: only jars whose mod id the layer declares count). They are not packaged into the layer: the player installs them as their own mods.
+DEP_JARS=""
+# (each core/mods/<mod>/build.sh <outDir> writes <outDir>/<id>-<version>.jar)
+while read -r dep DJ; do
+    mkdir -p "$OUT/deps"
+    CB_DATA="$DATA" bash "$dep/build.sh" "$OUT/deps" > "$OUT/deps/build-$(basename "$dep").log" 2>&1 \
+        || { cat "$OUT/deps/build-$(basename "$dep").log"; echo "build aborted: dependency $dep"; exit 1; }
+    tail -1 "$OUT/deps/build-$(basename "$dep").log"
+    DJ="$OUT/deps/$DJ"
+    [ -f "$DJ" ] || { echo "build aborted: $dep/build.sh did not write $DJ"; exit 1; }
+    CP="$CP$SEP$DJ"
+    DEP_JARS="${DEP_JARS:+$DEP_JARS$SEP}$DJ"
+done < <(python3 - "$SHIM/resources/fabric.mod.json" <<'PYDEP'
+import glob, json, os, sys
+deps = json.load(open(sys.argv[1], encoding="utf-8")).get("depends", {})
+for fmj in sorted(glob.glob("core/mods/*/resources/fabric.mod.json")):
+    m = json.load(open(fmj, encoding="utf-8"))
+    if m["id"] in deps:
+        print(os.path.dirname(os.path.dirname(fmj)), f"{m['id']}-{m['version']}.jar")
+PYDEP
+)
+
 # A mixin listed in the config but missing from src is fatal at PREPARE, before
 # a single class loads -- worse than a compile error, because the build looks
 # clean and the game dies on launch. Catch it here.
@@ -232,7 +257,7 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$
 # interface the target's Fabric API injects into it is judged on that interface
 # (-Dcb.fapi: the modules the shims compiled against). Wiring keyed on a game library
 # type is judged against the target's libraries (-Dcb.libs).
-java $SRC_STUBS -Dcb.fapi="$FAPI" -Dcb.libs="$LIBS" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "$WIRING" "$NAMETABLE" "$STUB" \
+java $SRC_STUBS -Dcb.fapi="$FAPI" -Dcb.libs="$LIBS" -Dcb.depJars="$DEP_JARS" -Dcb.layerModJson="$SHIM/resources/fabric.mod.json" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "$WIRING" "$NAMETABLE" "$STUB" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: dangling redirect wiring"; exit 1; }
 
@@ -243,7 +268,7 @@ java $SRC_STUBS -Dcb.fapi="$FAPI" -Dcb.libs="$LIBS" -cp "core/build/classes$SEP$
 # implemented interface (name AND descriptor), and the original member -- read
 # from the older stubs in data/jars -- must not be static, since a covered call
 # site keeps its invokestatic and no mixin may add a non-private static.
-java $SRC_STUBS -Dcb.libs="$LIBS" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
+java $SRC_STUBS -Dcb.libs="$LIBS" -Dcb.depJars="$DEP_JARS" -Dcb.layerModJson="$SHIM/resources/fabric.mod.json" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 

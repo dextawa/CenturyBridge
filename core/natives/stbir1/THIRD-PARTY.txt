@@ -1,4 +1,4 @@
-Third-party code in the CenturyBridge 26.1 step layer: the native library cb_lwjgl_stbir1 ({os}/{arch}/top/dext/centurybridge/stbir1/)
+Third-party code in the Fabric mod centurybridge-stbir1: the native library cb_lwjgl_stbir1 ({os}/{arch}/top/dext/centurybridge/stbir1/)
 is built from stb_image_resize v0.97 (https://github.com/nothings/stb, by Jorge L Rodriguez and Sean Barrett), the copy
 LWJGL 3.3.3 ships (sha256 6a0e75adbabb48df9031c2e39ccd97437bb226fe31e7d4a01c7bf70a18d32ec6), unmodified; sources and the
 reproducible build in CenturyBridge's core/natives/stbir1/. Its licence, as stated at the end of that file:

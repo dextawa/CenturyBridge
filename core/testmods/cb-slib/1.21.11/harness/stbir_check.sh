@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# stbir_check.sh <workDir>: the wall layer's STBImageResize (rt/CbLibStbir1 + the cb_lwjgl_stbir1 natives) against
-# LWJGL 3.3.3 itself, on beta2 linux x64, run from ~/cbwork after remote_step.sh has built <workDir>'s 26.1 layer.
+# stbir_check.sh <workDir>: the wall step's STBImageResize (the mod centurybridge-stbir1: its STBImageResize class + the
+# cb_lwjgl_stbir1 natives, core/mods/stbir1) against LWJGL 3.3.3 itself, on beta2 linux x64, run from ~/cbwork after
+# remote_step.sh has built <workDir>'s 26.1 layer (build.sh builds the mods a layer depends on into build/deps/).
 #   A: StbirHarness compiled against 1.21.11's LWJGL 3.3.3, run there with LWJGL's own 3.3.3 natives (Maven) -- the reference.
-#   B: the same jar converted 1.21.11 -> 26.1 by <workDir>'s engine and wiring, run on 26.1's LWJGL 3.4.1 with the layer jar.
+#   B: the same jar converted 1.21.11 -> 26.1 by <workDir>'s engine and wiring, run on 26.1's LWJGL 3.4.1 with the layer jar
+#      and the centurybridge-stbir1 jar.
 # A and B must write byte-identical out.bin / out.txt.
 set -euo pipefail
 cd ~/cbwork
@@ -23,11 +25,12 @@ done
 "$JDK/java" -Xmx4g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" 1.21.11 26.1 \
     $X/conv $X/cb-stbir-harness.jar > $X/convert.log 2>&1 || { tail -5 $X/convert.log; exit 1; }
 CONV=$(ls $X/conv/*+26.1.jar | head -1)
+STBIR1=$(ls $WD/build/deps/centurybridge-stbir1-*.jar | head -1)
 "$JDK/java" -Dorg.lwjgl.util.Debug=true -Dorg.lwjgl.system.SharedLibraryExtractPath=$X/b/ext \
-    -cp $CONV:$WD/build/centurybridge-0.3.0+26.1.jar:$W/lwjgl/3.4.1/lwjgl-3.4.1.jar:$W/lwjgl/3.4.1/lwjgl-3.4.1-natives-linux.jar:$W/lwjgl-stb/3.4.1/lwjgl-stb-3.4.1.jar:$W/lwjgl-stb/3.4.1/lwjgl-stb-3.4.1-natives-linux.jar \
+    -cp $CONV:$WD/build/centurybridge-0.3.0+26.1.jar:$STBIR1:$W/lwjgl/3.4.1/lwjgl-3.4.1.jar:$W/lwjgl/3.4.1/lwjgl-3.4.1-natives-linux.jar:$W/lwjgl-stb/3.4.1/lwjgl-stb-3.4.1.jar:$W/lwjgl-stb/3.4.1/lwjgl-stb-3.4.1-natives-linux.jar \
     cb.slib.StbirHarness $X/b/out 2>&1 | grep -E 'STBIR|stbir1|ERROR|Exception' | head
 H=$(unzip -p $CONV cb/slib/StbirHarness.class | strings)
-echo "converted harness: $(grep -c CbLibStbir1 <<< "$H") reference(s) to CbLibStbir1, $(grep -c 'org/lwjgl/stb/STBImageResize' <<< "$H") to STBImageResize"
+echo "converted harness: $(grep -c 'top/dext/centurybridge/stbir1/STBImageResize' <<< "$H") reference(s) to centurybridge-stbir1, $(grep -c 'org/lwjgl/stb/STBImageResize' <<< "$H") to LWJGL's STBImageResize"
 cmp $X/a/out.bin $X/b/out.bin && echo "out.bin byte-identical ($(stat -c %s $X/a/out.bin) bytes)"
 cmp $X/a/out.txt $X/b/out.txt && echo "out.txt byte-identical: $(wc -l < $X/a/out.txt) calls, $(grep -c false $X/a/out.txt || true) returned false"
 sha256sum $X/a/out.bin $X/b/out.bin
