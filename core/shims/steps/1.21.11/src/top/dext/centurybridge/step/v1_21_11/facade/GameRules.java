@@ -293,10 +293,12 @@ public final class GameRules {
             this.cb$set(BoolArgumentType.getBool(context, name));
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRulesMixin: 1.21.11's GameRules.get(rule) of a rule a 1.21.10 boolean key stands for reads the key's value through getBoolean, which answers this value's get()")
         public boolean method_20753() {
             return this.cb$rules != null ? (Boolean) this.cb$read() : this.field_19411;
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRulesMixin: 1.21.11's GameRules.set(rule, value, server) of a rule one 1.21.10 boolean key stands for is this value's set (CbGameRules.routeWrite; negated for the three disable rules)")
         public void method_20758(boolean value, MinecraftServer server) {
             if (this.cb$rules != null) {
                 this.cb$write(value, server);
@@ -337,6 +339,7 @@ public final class GameRules {
             return new BooleanValue(this.field_19417, this.method_20753());
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRulesMixin: 1.21.11's GameRules.setAll(other, server) runs the restored assignFrom, which sets each boolean key's value from other's through this")
         public void method_27326(BooleanValue other, MinecraftServer server) {
             if (this.cb$rules != null) {
                 this.cb$write(other.method_20753(), server);
@@ -397,10 +400,12 @@ public final class GameRules {
             this.cb$set(IntegerArgumentType.getInteger(context, name));
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRulesMixin: 1.21.11's GameRules.get(rule) of a rule a 1.21.10 integer key stands for reads the key's value through getInt, which answers this value's get()")
         public int method_20763() {
             return this.cb$rules != null ? (Integer) this.cb$read() : this.field_19412;
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRulesMixin: 1.21.11's GameRules.set(rule, value, server) of a rule a 1.21.10 integer key stands for is this value's set (CbGameRules.routeWrite)")
         public void method_35236(int value, MinecraftServer server) {
             if (this.cb$rules != null) {
                 this.cb$write(value, server);
@@ -462,6 +467,7 @@ public final class GameRules {
             return new IntegerValue(this.field_19417, this.method_20763());
         }
 
+        @top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads("CbGameRulesMixin: 1.21.11's GameRules.setAll(other, server) runs the restored assignFrom, which sets each integer key's value from other's through this")
         public void method_27331(IntegerValue other, MinecraftServer server) {
             if (this.cb$rules != null) {
                 this.cb$write(other.method_20763(), server);
