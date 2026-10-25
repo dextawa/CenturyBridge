@@ -295,6 +295,32 @@ public class S6bTestMod implements ModInitializer {
         horse.method_6737(false);
         check(up && !horse.method_6736(), "AbstractHorse.setStanding(true/false) sets and clears standing");
 
+        // SimpleContainer / PlayerEnderChestContainer ListTag forms, Abilities CompoundTag form
+        net.minecraft.class_7225.class_7874 regs = level.method_30349();
+        net.minecraft.class_1277 box = new net.minecraft.class_1277(3);
+        box.method_5447(1, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 5));
+        net.minecraft.class_2499 items = box.method_7660(regs);
+        net.minecraft.class_1277 box2 = new net.minecraft.class_1277(3);
+        box2.method_7659(items, regs);
+        check(items.size() == 1 && box2.method_5438(0).method_7909() == net.minecraft.class_1802.field_8600 && box2.method_5438(0).method_7947() == 5,
+            "SimpleContainer.createTag / fromTag round trip (compacted, as 1.21.5): " + items);
+        net.minecraft.class_1730 ender = new net.minecraft.class_1730();
+        ender.method_5447(4, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 2));
+        net.minecraft.class_2499 slots = ender.method_7660(regs);
+        net.minecraft.class_1730 ender2 = new net.minecraft.class_1730();
+        ender2.method_7659(slots, regs);
+        check(slots.size() == 1 && slots.method_68582(0).method_68562("Slot", (byte) -1) == 4 && ender2.method_5438(4).method_7947() == 2,
+            "PlayerEnderChestContainer.createTag / fromTag keep the slot: " + slots);
+        net.minecraft.class_1656 ab = new net.minecraft.class_1656();
+        ab.field_7479 = true;
+        ab.method_7248(0.2F);
+        class_2487 abt = new class_2487();
+        ab.method_7251(abt);
+        net.minecraft.class_1656 ab2 = new net.minecraft.class_1656();
+        ab2.method_7249(abt);
+        check(abt.method_68568("abilities").method_68566("flying", false) && ab2.field_7479 && ab2.method_7252() == 0.2F && ab2.field_7476,
+            "Abilities.addSaveData / loadSaveData: " + abt);
+
         // ClientboundChangeDifficultyPacket accessors
         net.minecraft.class_2632 pkt = new net.minecraft.class_2632(net.minecraft.class_1267.field_5807, true);
         check(pkt.method_11342() == net.minecraft.class_1267.field_5807 && pkt.method_11340(),

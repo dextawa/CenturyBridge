@@ -29,7 +29,15 @@
   "net/minecraft/class_29.method_55789(Lnet/minecraft/class_1657;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayers#load",
   "net/minecraft/class_1324.method_26839()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_6/rt/CbAttributes#method_26839",
   "net/minecraft/class_1324.method_26833(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbAttributes#method_26833",
-  "net/minecraft/class_1496.method_6737(Z)V": "top/dext/centurybridge/step/v1_21_6/rt/CbHorses#method_6737"
+  "net/minecraft/class_1496.method_6737(Z)V": "top/dext/centurybridge/step/v1_21_6/rt/CbHorses#method_6737",
+  "net/minecraft/class_1277.method_7659(Lnet/minecraft/class_2499;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbContainers#method_7659",
+  "net/minecraft/class_1277.method_7660(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_21_6/rt/CbContainers#method_7660",
+  "net/minecraft/class_1656.method_7251(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayerData#method_7251",
+  "net/minecraft/class_1656.method_7249(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayerData#method_7249",
+  "net/minecraft/class_1661.method_7384(Lnet/minecraft/class_2499;)Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayerData#method_7384",
+  "net/minecraft/class_1661.method_7397(Lnet/minecraft/class_2499;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayerData#method_7397",
+  "net/minecraft/class_1730.method_7659(Lnet/minecraft/class_2499;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbContainers#enderFromTag",
+  "net/minecraft/class_1730.method_7660(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_21_6/rt/CbContainers#enderCreateTag"
  },
  "superCtorReshapes": {
   "net/minecraft/class_1657.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;FLcom/mojang/authlib/GameProfile;)V": {
