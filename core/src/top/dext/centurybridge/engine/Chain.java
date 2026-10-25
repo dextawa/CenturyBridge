@@ -1184,7 +1184,10 @@ public final class Chain {
      */
     public void loadTargetCtors(Path stubJar, Path interToMojangTsv) throws IOException {
         java.util.Map<String, String> back = new java.util.HashMap<>();
-        java.util.Map<String, String> memberBack = new java.util.HashMap<>();
+        // "mojOwner.mojName" -> every "interOwner.interName" the table renames to it: overloads share the
+        // mojang name (MappedRegistry.validateWrite is method_45939 and method_40274), and after the wall
+        // rename Mixin finds a member by that name and descriptor, so each of their ids is declared
+        java.util.Map<String, java.util.List<String>> memberBack = new java.util.HashMap<>();
         java.util.Map<String, String> fieldBack = new java.util.HashMap<>();
         java.util.Map<String, String> fwd = new java.util.HashMap<>();
         if (interToMojangTsv != null && java.nio.file.Files.exists(interToMojangTsv)) {
@@ -1195,7 +1198,7 @@ public final class Chain {
                     fwd.put(p[1], p[2]);
                     wallClassFwd.put(p[1], p[2]);
                 } else if (p.length >= 3 && p[0].equals("M")) {
-                    memberBack.put(p[2], p[1]); // "mojOwner.mojName" -> "interOwner.interName"
+                    memberBack.computeIfAbsent(p[2], k -> new java.util.ArrayList<>()).add(p[1]);
                     // "interOwner.interName" -> mojang simple name, for AW rewrite
                     wallMethodFwd.put(p[1], p[2].substring(p[2].lastIndexOf('.') + 1));
                 } else if (p.length >= 3 && p[0].equals("F")) {
@@ -1227,25 +1230,26 @@ public final class Chain {
             String owner = back.getOrDefault(e.getKey(), e.getKey());
             java.util.Set<String> decls = targetDecls.computeIfAbsent(owner, k -> new java.util.HashSet<>());
             for (var me : e.getValue().entrySet()) {
-                String name = me.getKey();
+                java.util.List<String> names = List.of(me.getKey());
                 if (!back.isEmpty()) {
                     // the wall table lists each member once, on its ROOT declaration; an
                     // override on a subclass shares the intermediary name, so climb the
                     // (source-era) hierarchy until an ancestor's mapping is found
-                    String mapped = memberBack.get(e.getKey() + "." + name);
+                    java.util.List<String> mapped = memberBack.get(e.getKey() + "." + me.getKey());
                     if (mapped == null) {
                         for (String anc : selfAndSupers(owner)) {
                             String mojAnc = fwd.get(anc);
-                            mapped = mojAnc == null ? null : memberBack.get(mojAnc + "." + name);
+                            mapped = mojAnc == null ? null : memberBack.get(mojAnc + "." + me.getKey());
                             if (mapped != null) {
                                 break;
                             }
                         }
                     }
                     if (mapped != null) {
-                        name = mapped.substring(mapped.lastIndexOf('.') + 1);
+                        names = mapped.stream().map(m -> m.substring(m.lastIndexOf('.') + 1)).toList();
                     }
                 }
+                for (String name : names)
                 for (String d : me.getValue()) {
                     String bd = back.isEmpty() ? d
                         : cls.matcher(d).replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
@@ -1282,7 +1286,8 @@ public final class Chain {
                     if (mapped == null) {
                         // a record component's field shares its accessor's name; the
                         // table lists it once, as the method (comp_NNNN)
-                        mapped = memberBack.get(e.getKey() + "." + name);
+                        java.util.List<String> comp = memberBack.get(e.getKey() + "." + name);
+                        mapped = comp == null ? null : comp.get(0);
                     }
                     if (mapped != null) {
                         name = mapped.substring(mapped.lastIndexOf('.') + 1);
