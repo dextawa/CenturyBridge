@@ -5,5 +5,6 @@
  "name": "CB s26 control (native 26.2)",
  "environment": "*",
  "entrypoints": { "main": ["cb.s26v.S26VTestMod"] },
+ "mixins": ["cb_s26v.mixins.json"],
  "depends": { "fabricloader": ">=0.14.0", "minecraft": "26.2", "fabric-lifecycle-events-v1": "*" }
 }

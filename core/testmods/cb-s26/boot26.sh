@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
-# boot26.sh <tag>: real-server check for s26, run on beta2 from ~/cbwork after remote_step.sh built this agent's
+# boot26.sh <tag> [native]: real-server check for s26, run on beta2 from ~/cbwork after remote_step.sh built this agent's
 # engine and layer (agents/s26/core/build/classes, agents/s26/build/centurybridge-0.3.0+26.2.jar). Compiles
 # core/testmods/cb-s26 against 26.1.2 (its client jar: Mojang names, as a 26.1.2 mod's build sees it), converts it
 # 26.1.2 -> 26.2 with this agent's engine and wiring, and boots a Fabric 26.2 server (the agent's own copy,
 # agents/s26/srv: fabric-server.jar, libraries and versions of ~/cbtest/server-26.2) with Fabric API, the layer and
-# the converted mod.
+# the converted mod. With "native", the native 26.2 control mod (agents/s26/tmv/cb-s26v.jar, built by
+# core/testmods/cb-s26v/boot.sh) is loaded beside it, so the checks can see its mixins on 26.2 methods still fire.
 set -uo pipefail
 cd ~/cbwork
-WD=agents/s26; TAG="$1"
+WD=agents/s26; TAG="$1"; NATIVE="${2:-}"
 JDK=~/cbtest/jdk-25.0.4.1+1/bin
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
 TM=$WD/tm
@@ -33,6 +34,10 @@ rm -rf "$SRV/mods" "$SRV/world-$TAG" "$SRV/logs" && mkdir -p "$SRV/mods"
 cp data/runtime/client-26.2/mods/fabric-api-*.jar "$SRV/mods/"
 cp $WD/build/centurybridge-0.3.0+26.2.jar "$SRV/mods/"
 cp "$CONV"/conv/*+26.2.jar "$SRV/mods/"
+if [ "$NATIVE" = native ]; then
+    [ -f "$WD/tmv/cb-s26v.jar" ] || { echo "no $WD/tmv/cb-s26v.jar (run cb-s26v/boot.sh once)"; exit 1; }
+    cp "$WD/tmv/cb-s26v.jar" "$SRV/mods/"
+fi
 cp "$SRV/server.properties.orig" "$SRV/server.properties"
 sed -i "s/^level-name=.*/level-name=world-$TAG/" "$SRV/server.properties"
 echo "mods: $(ls "$SRV/mods" | tr '\n' ' ')"
