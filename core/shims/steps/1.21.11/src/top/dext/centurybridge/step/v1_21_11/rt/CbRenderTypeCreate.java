@@ -132,6 +132,28 @@ public final class CbRenderTypeCreate {
         return debugSectionQuads;
     }
 
+    private static class_1921 lineStrip;
+
+    /**
+     * RenderType.lineStrip() / LINE_STRIP: "line_strip" with 1.21.10's state (window-scaled line width, view-offset
+     * layering, item entity target) on 1.21.11's LINES pipeline, which is 1.21.10's LINE_STRIP pipeline (LINES_SNIPPET)
+     * in the mode 1.21.11 still has; its vertices become segments (rt/CbLineStrip).
+     */
+    public static synchronized class_1921 method_34572() {
+        if (lineStrip == null) {
+            lineStrip = method_24048("line_strip", 1536, net.minecraft.class_10799.field_56833, CompositeState.method_23598()
+                .method_23609(new RenderStateShard.LineStateShard(java.util.OptionalDouble.empty()))
+                .method_23607(RenderStateShard.field_22241).method_23610(RenderStateShard.field_25643).method_23617(false));
+            CbLineStrip.register(lineStrip);
+        }
+        return lineStrip;
+    }
+
+    /** RenderType.LINE_STRIP */
+    public static class_1921 field_29456() {
+        return method_34572();
+    }
+
     /** RenderType.LINES */
     public static class_1921 field_21695() {
         return class_12249.method_76015();
