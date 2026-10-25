@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_sclimb",
+ "version": "1.0.0",
+ "name": "CB sclimb tag-removal climb test",
+ "description": "1.20.1-era data-only mod: a block tag file whose fabric:remove (fabric-tag-api-v1) takes dirt out of a tag listing stone and dirt. Checked on a climbed server with execute if block before and after a datapack reload (cmds-tagremove.txt).",
+ "environment": "*",
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.1", "fabric-api": "*" }
+}

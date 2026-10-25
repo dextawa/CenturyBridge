@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * two attributes. Vanilla 1.20.2 never calls it, so a subclass overriding it is not told of the
  * phase changes vanilla makes on its own.
  */
-@Mixin(class_2535.class)
+@Mixin(value = class_2535.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetConnectionBridge {
 
     @Shadow

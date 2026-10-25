@@ -715,8 +715,11 @@ public final class WiringCheck {
                         }
                     } else {
                         String nd = methodDesc(s.desc);
-                        if (!libMethod(owner, nn, nd)) {
-                            problems.add(sec + " " + e.getKey() + ": " + owner + "." + nn + nd + " is no method of the target's Fabric API");
+                        // a Fabric API class the step renames onto one of the layer's own (an API the target's
+                        // Fabric API dropped, given back by the layer): the renamed member is the layer's
+                        if (classes.containsKey(owner) ? !layerDeclares(owner, nn, nd) : !libMethod(owner, nn, nd)) {
+                            problems.add(sec + " " + e.getKey() + ": " + owner + "." + nn + nd
+                                + (classes.containsKey(owner) ? " is no method of the layer" : " is no method of the target's Fabric API"));
                         }
                     }
                 }
@@ -819,6 +822,37 @@ public final class WiringCheck {
             String desc = root.has("lookupDesc") ? root.get("lookupDesc").getAsString()
                                                   : "()Lnet/minecraft/class_7225$class_7874;";
             wantMethod("lookupRt", root.get("lookupRt").getAsString(), "cbLookup", methodDesc(desc));
+        }
+        // returnConverters: both converters exist with their exact descriptors, toV and toW undo each other's
+        // types (toV: W's answer first, toW: V's answer first, each returning the other), and a basis is given
+        if (root.has("returnConverters")) {
+            for (var e : root.getAsJsonObject("returnConverters").entrySet()) {
+                checked++;
+                var o = e.getValue().getAsJsonObject();
+                String where = "returnConverters " + e.getKey();
+                if (!o.has("toV") || !o.has("toW") || !o.has("basis")) {
+                    problems.add(where + ": needs \"toV\", \"toW\" and \"basis\"");
+                    continue;
+                }
+                String tv = o.get("toV").getAsString().trim();
+                String tw = o.get("toW").getAsString().trim();
+                int pv = tv.indexOf('(');
+                int pw = tw.indexOf('(');
+                if (pv <= 0 || pw <= 0) {
+                    problems.add(where + ": a converter is not OWNER#name(desc)");
+                    continue;
+                }
+                wantMethod(where + " toV", tv.substring(0, pv), null, methodDesc(tv.substring(pv)));
+                wantMethod(where + " toW", tw.substring(0, pw), null, methodDesc(tw.substring(pw)));
+                org.objectweb.asm.Type[] av = org.objectweb.asm.Type.getArgumentTypes(tv.substring(pv));
+                org.objectweb.asm.Type[] aw = org.objectweb.asm.Type.getArgumentTypes(tw.substring(pw));
+                org.objectweb.asm.Type rv = org.objectweb.asm.Type.getReturnType(tv.substring(pv));
+                org.objectweb.asm.Type rw = org.objectweb.asm.Type.getReturnType(tw.substring(pw));
+                int with = o.has("with") ? o.getAsJsonArray("with").size() : 0;
+                if (av.length != 1 + with || aw.length != 1 + with || !av[0].equals(rw) || !aw[0].equals(rv)) {
+                    problems.add(where + ": toV must be (W answer, with..)V answer and toW (V answer, with..)W answer");
+                }
+            }
         }
         // convertHooks (the override side of a same-shape reshape): the member is one the target's
         // `under` has with that very descriptor, and every converter exists with its exact descriptor
@@ -1000,12 +1034,19 @@ public final class WiringCheck {
                     if (!o.has(key)) {
                         continue;
                     }
-                    // "owner.name(desc)R"
-                    String w = o.get(key).getAsString();
-                    int paren = w.indexOf('(');
-                    int dot = w.lastIndexOf('.', paren);
-                    wantMethod(where + " " + key, w.substring(0, dot) + "#" + w.substring(dot + 1, paren),
-                        null, methodDesc(w.substring(paren)));
+                    // "owner.name(desc)R", or (wrap) a list of them
+                    List<String> ws = new ArrayList<>();
+                    if (o.get(key).isJsonArray()) {
+                        o.getAsJsonArray(key).forEach(x -> ws.add(x.getAsString()));
+                    } else {
+                        ws.add(o.get(key).getAsString());
+                    }
+                    for (String w : ws) {
+                        int paren = w.indexOf('(');
+                        int dot = w.lastIndexOf('.', paren);
+                        wantMethod(where + " " + key, w.substring(0, dot) + "#" + w.substring(dot + 1, paren),
+                            null, methodDesc(w.substring(paren)));
+                    }
                 }
                 if (o.has("guard")) {
                     String g = o.get("guard").getAsString();
@@ -1307,6 +1348,30 @@ public final class WiringCheck {
     }
 
     /** whether the target's Fabric API (or the game) declares name+desc on owner or a supertype */
+    /** the layer's compiled class {@code owner}, or a supertype the layer compiled, declares name+desc */
+    private boolean layerDeclares(String owner, String name, String desc) {
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            ClassNode cn = classes.get(todo.poll());
+            if (cn == null || !seen.add(cn.name)) {
+                continue;
+            }
+            for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                if (m.name.equals(name) && m.desc.equals(desc)) {
+                    return true;
+                }
+            }
+            if (cn.superName != null) {
+                todo.add(cn.superName);
+            }
+            if (cn.interfaces != null) {
+                todo.addAll(cn.interfaces);
+            }
+        }
+        return false;
+    }
+
     private boolean libMethod(String owner, String name, String desc) {
         return libMember(owner, n -> n.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc)));
     }

@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * (The riding offsets that used to live here moved to CbEntityRiding, which answers
  * 1.20.1's per-class formulas and reconnects converted overrides to 1.20.2's riding.)
  */
-@Mixin(class_1297.class)
+@Mixin(value = class_1297.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class EntityBridge {
 
     /** 1.20.1 updateTrackedPositionAndAngles lost its trailing interpolate flag */

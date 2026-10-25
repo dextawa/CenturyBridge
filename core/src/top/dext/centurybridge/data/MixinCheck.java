@@ -11,10 +11,15 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Type;
+import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.FieldNode;
+import org.objectweb.asm.tree.LdcInsnNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.TypeInsnNode;
 
 /**
  * Static check of everything Mixin resolves by NAME at PREPARE/apply time --
@@ -36,7 +41,39 @@ import org.objectweb.asm.tree.MethodNode;
  *   covers                 a mixin declares the exact old shape, with the
  *                          static-ness of the ORIGINAL member (older stubs)
  *
+ * And, in the target method's BODY (the release's code jar: the intermediary
+ * stubs carry no code, so -Dcb.codeJar names it; without it the target jar is
+ * read, which has code past the wall), what Mixin does at apply:
+ *   injection points       every @At of type INVOKE / INVOKE_ASSIGN / FIELD / NEW
+ *                          / INVOKE_STRING (HEAD / RETURN / TAIL too) is matched
+ *                          against the instructions as Mixin's own InjectionPoint
+ *                          classes match them: target owner/name/desc, opcode,
+ *                          ordinal, args (ldc=, class=), and the injector's
+ *                          slices (from = first match, to = last match). An
+ *                          injector whose matches add up to less than its
+ *                          require (the annotation's, else the mixin config's
+ *                          injectors.defaultRequire, else Mixin's 0) is the
+ *                          "Critical injection failure ... Scanned 0 target(s)"
+ *                          that takes the game down; a require-0 injector that
+ *                          matches nothing is listed as silent (the mixin
+ *                          applies, the feature is gone). A method selector
+ *                          resolving does not mean its call is still in there.
+ *   handler signatures     @Inject: (target args, CallbackInfo[Returnable]) or
+ *                          (CallbackInfo[Returnable]) alone, plus captured locals;
+ *                          @Redirect: Injector.validateParams over the matched
+ *                          instruction's shape (receiver + call args -> return,
+ *                          field get/put, constructor) followed by a prefix of the
+ *                          target's arguments, @Coerce honoured; @ModifyArg: the
+ *                          argument type in and out, or every call argument in.
+ *                          A name-only selector keeps resolving after a later
+ *                          release changed the target's descriptor; the handler
+ *                          no longer fits and Mixin throws InvalidInjectionException.
+ * Point types this does not model (STORE, LOAD, CONSTANT, JUMP, ...) and targets
+ * without code in the code source are counted and listed as unscanned, never
+ * passed silently.
+ *
  *   mixin-check <compiledShimDir> <targetJar> [<shims.json> [<inter-to-mojang.tsv> [<stubDir> <targetVersion>]]]
+ *   -Dcb.codeJar=<jar with code>   -Dcb.mixinConfigDir=<dir with *.mixins.json>   -Dcb.fapi=<processedMods>
  */
 public final class MixinCheck {
 
@@ -78,8 +115,12 @@ public final class MixinCheck {
                            Path stubDir, String targetVersion) throws IOException {
         MixinCheck c = new MixinCheck();
         c.index(targetJar);
+        c.indexFabricApi();
         c.indexLibraries();
         c.indexDependencies();
+        c.indexCode(targetJar);
+        c.indexExtraJars();
+        c.readMixinConfigs(classesDir);
         if (stubDir != null && targetVersion != null) {
             c.sources = SourceStubs.before(stubDir, targetVersion);
         }
@@ -101,13 +142,24 @@ public final class MixinCheck {
             }
         }
         int mixins = 0;
+        List<ClassNode> own = new ArrayList<>();
         try (var stream = Files.walk(classesDir)) {
             for (Path p : (Iterable<Path>) stream.filter(f -> f.toString().endsWith(".class"))::iterator) {
+                byte[] b = Files.readAllBytes(p);
                 ClassNode cn = new ClassNode();
-                new ClassReader(Files.readAllBytes(p)).accept(cn, ClassReader.SKIP_CODE);
-                if (c.check(cn)) {
-                    mixins++;
+                new ClassReader(b).accept(cn, ClassReader.SKIP_CODE);
+                own.add(cn);
+                // the layer's own classes are targets too (a mixin the climb retargeted onto a facade it ships);
+                // the game jar wins for a name both have
+                if (find(cn.invisibleAnnotations, MIXIN) == null && find(cn.visibleAnnotations, MIXIN) == null
+                        && c.jar.putIfAbsent(cn.name, cn) == null) {
+                    c.codeBytes.putIfAbsent(cn.name, b);
                 }
+            }
+        }
+        for (ClassNode cn : own) {
+            if (c.check(cn)) {
+                mixins++;
             }
         }
         if (shimsJson != null && top.dext.centurybridge.engine.Wiring.exists(shimsJson)) {
@@ -118,6 +170,25 @@ public final class MixinCheck {
             + ", " + c.problems.size() + " unresolved targets");
         for (String s : c.problems) {
             System.out.println("    " + s);
+        }
+        System.out.println("mixin-check bodies (" + c.codeSource + "): " + c.scanned + " injectors scanned, "
+            + c.silent.size() + " silent (require 0, nothing matched), " + c.unscanned.size() + " unscanned");
+        for (String s : c.silent) {
+            System.out.println("    silent: " + s);
+        }
+        for (String s : c.unscanned) {
+            System.out.println("    unscanned: " + s);
+        }
+        if (!c.unlisted.isEmpty()) {
+            java.util.Collections.sort(c.unlisted);
+            System.out.println("mixin-check: " + c.unlisted.size() + " mixin classes no config lists (never applied, not checked)");
+            for (String s : c.unlisted) {
+                System.out.println("    unlisted: " + s);
+            }
+        }
+        String sitesOut = System.getProperty("cb.redirectSites");
+        if (sitesOut != null && !sitesOut.isEmpty()) {
+            Files.write(Path.of(sitesOut), c.redirectSites);
         }
         if (!c.problems.isEmpty()) {
             System.exit(1);
@@ -170,6 +241,154 @@ public final class MixinCheck {
         }
     }
 
+    /**
+     * The target's Fabric API (-Dcb.fapi=<its processedMods>, as wiring-check reads it): a mixin may target a Fabric API
+     * class, and an @At may name one; both resolve against its modules, bodies included. The game jar wins.
+     */
+    private void indexFabricApi() throws IOException {
+        String fapi = System.getProperty("cb.fapi");
+        if (fapi == null || fapi.isEmpty() || !Files.isDirectory(Path.of(fapi))) {
+            return;
+        }
+        try (var s = Files.list(Path.of(fapi))) {
+            for (Path j : (Iterable<Path>) s.filter(f -> f.toString().endsWith(".jar")).sorted()::iterator) {
+                try (var z = new java.util.zip.ZipFile(j.toFile())) {
+                    for (var en : java.util.Collections.list(z.entries())) {
+                        if (!en.getName().endsWith(".class") || !en.getName().startsWith("net/fabricmc/")) {
+                            continue;
+                        }
+                        byte[] b = z.getInputStream(en).readAllBytes();
+                        ClassNode cn = new ClassNode();
+                        new ClassReader(b).accept(cn, ClassReader.SKIP_CODE);
+                        if (jar.putIfAbsent(cn.name, cn) == null) {
+                            codeBytes.put(cn.name, b);
+                            int slash = cn.name.lastIndexOf('/');
+                            jarPackages.add(slash < 0 ? "" : cn.name.substring(0, slash));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // ---- method bodies: what an injector actually finds at apply ----
+
+    /** class bytes with code, by internal name: the release's code jar (or the target jar), plus Fabric API's */
+    private final Map<String, byte[]> codeBytes = new HashMap<>();
+    private final Map<String, ClassNode> codeNodes = new HashMap<>();
+    private String codeSource = "no code";
+    private int scanned;
+    private final List<String> silent = new ArrayList<>();
+    private final List<String> unscanned = new ArrayList<>();
+    private final List<String> unlisted = new ArrayList<>();
+
+    /**
+     * Other mods' jars installed beside the checked one (-Dcb.extraJars=<jar>[<path separator><jar>...]): a mixin may
+     * target their classes (a climbed layer's mixin retargeted onto a later layer's facade), bodies included.
+     */
+    private void indexExtraJars() throws IOException {
+        String extra = System.getProperty("cb.extraJars");
+        if (extra == null || extra.isEmpty()) {
+            return;
+        }
+        for (String j : extra.split(java.io.File.pathSeparator)) {
+            if (j.isEmpty()) {
+                continue;
+            }
+            try (var z = new java.util.zip.ZipFile(j)) {
+                for (var en : java.util.Collections.list(z.entries())) {
+                    if (!en.getName().endsWith(".class") || en.getName().startsWith("META-INF/")) {
+                        continue;
+                    }
+                    byte[] b = z.getInputStream(en).readAllBytes();
+                    ClassNode cn = new ClassNode();
+                    new ClassReader(b).accept(cn, ClassReader.SKIP_CODE);
+                    if (jar.putIfAbsent(cn.name, cn) == null) {
+                        codeBytes.putIfAbsent(cn.name, b);
+                    }
+                }
+            }
+        }
+    }
+    /** mixin internal name -> its config's injectors.defaultRequire (Mixin's own default is 0) */
+    private final Map<String, Integer> defaultRequire = new HashMap<>();
+    private String currentMixin;
+
+    private void indexCode(Path targetJar) throws IOException {
+        String cj = System.getProperty("cb.codeJar");
+        Path code = cj != null && !cj.isEmpty() ? Path.of(cj) : targetJar;
+        if (!Files.exists(code)) {
+            problems.add("code jar " + code + " not found: injection points cannot be matched");
+            return;
+        }
+        codeSource = code.getFileName().toString();
+        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(code))) {
+            ZipEntry e;
+            while ((e = zin.getNextEntry()) != null) {
+                if (e.getName().endsWith(".class")) {
+                    byte[] b = zin.readAllBytes();
+                    String n = e.getName().substring(0, e.getName().length() - 6);
+                    codeBytes.put(n, b); // the game's code wins over a Fabric API class of the same name
+                }
+            }
+        }
+    }
+
+    private ClassNode codeClass(String name) {
+        return codeNodes.computeIfAbsent(name, n -> {
+            byte[] b = codeBytes.get(n);
+            if (b == null) {
+                return null;
+            }
+            ClassNode cn = new ClassNode();
+            new ClassReader(b).accept(cn, 0);
+            return cn;
+        });
+    }
+
+    /**
+     * The mixin configs (every *.json with a "package" next to the classes, and -Dcb.mixinConfigDir): which mixin a
+     * config lists, and the config's injectors.defaultRequire -- the require of every injector that sets none.
+     */
+    private void readMixinConfigs(Path classesDir) throws IOException {
+        List<Path> dirs = new ArrayList<>();
+        dirs.add(classesDir);
+        String extra = System.getProperty("cb.mixinConfigDir");
+        if (extra != null && !extra.isEmpty() && Files.isDirectory(Path.of(extra))) {
+            dirs.add(Path.of(extra));
+        }
+        for (Path d : dirs) {
+            List<Path> jsons;
+            try (var s = Files.list(d)) {
+                jsons = s.filter(f -> f.toString().endsWith(".json")).toList();
+            }
+            for (Path j : jsons) {
+                com.google.gson.JsonObject o;
+                try {
+                    var el = com.google.gson.JsonParser.parseString(Files.readString(j));
+                    if (!el.isJsonObject() || !el.getAsJsonObject().has("package")) {
+                        continue;
+                    }
+                    o = el.getAsJsonObject();
+                } catch (RuntimeException ex) {
+                    continue; // not a mixin config
+                }
+                String pkg = o.get("package").getAsString().replace('.', '/');
+                int req = 0;
+                if (o.has("injectors") && o.getAsJsonObject("injectors").has("defaultRequire")) {
+                    req = o.getAsJsonObject("injectors").get("defaultRequire").getAsInt();
+                }
+                for (String sec : new String[] {"mixins", "client", "server"}) {
+                    if (o.has(sec) && o.get(sec).isJsonArray()) {
+                        for (var m : o.getAsJsonArray(sec)) {
+                            defaultRequire.put(pkg + "/" + m.getAsString().replace('.', '/'), req);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void index(Path targetJar) throws IOException {
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(targetJar))) {
             ZipEntry e;
@@ -195,6 +414,12 @@ public final class MixinCheck {
         if (mixin == null) {
             return false;
         }
+        // with mixin configs at hand, a mixin no config lists is never applied (the climb's converter delists the
+        // ones it cannot carry): listed apart, not judged as if it loaded
+        if (!defaultRequire.isEmpty() && !defaultRequire.containsKey(cn.name)) {
+            unlisted.add(cn.name.substring(cn.name.lastIndexOf('/') + 1));
+            return false;
+        }
         List<String> targets = new ArrayList<>();
         Object value = get(mixin, "value");
         if (value instanceof List<?> l) {
@@ -213,6 +438,7 @@ public final class MixinCheck {
         String me = cn.name.substring(cn.name.lastIndexOf('/') + 1);
         mixinTargets.put(cn.name, targets);
         mixinNodes.put(cn.name, cn);
+        currentMixin = cn.name;
         // MixinApplicatorStandard.checkMethodVisibility: a whole-game crash at apply
         if ((cn.access & org.objectweb.asm.Opcodes.ACC_INTERFACE) == 0) {
             for (MethodNode m : cn.methods) {
@@ -452,6 +678,12 @@ public final class MixinCheck {
                     // binds the constructor taking the invoker's arguments
                     String want = "<init>".equals(name)
                         ? m.desc.substring(0, m.desc.lastIndexOf(')') + 1) + "V" : m.desc;
+                    // a selector with its descriptor (the climb's converter writes "name(desc)ret" when it renames an
+                    // invoked method): name and descriptor as given -- a 1.21.2 client applied one on BlockBehaviour without a WARN
+                    if (name != null && name.contains("(") && !name.startsWith("<init>")) {
+                        want = name.substring(name.indexOf('('));
+                        name = name.substring(0, name.indexOf('('));
+                    }
                     if ("<init>".equals(name)) {
                         // Mixin applies a constructor invoker only when it returns the target class itself
                         // (not a supertype) and the target declares that constructor (constructors are not
@@ -548,6 +780,467 @@ public final class MixinCheck {
                 problems.add(me + ": @At target \"" + sel + "\" unresolved (" + m.name + ")");
             }
         }
+        scanBodies(me, m, a, target);
+    }
+
+    private static final String INJECT = "Lorg/spongepowered/asm/mixin/injection/Inject;";
+    private static final String REDIRECT = "Lorg/spongepowered/asm/mixin/injection/Redirect;";
+    private static final String MODIFY_ARG = "Lorg/spongepowered/asm/mixin/injection/ModifyArg;";
+    private static final String COERCE = "Lorg/spongepowered/asm/mixin/injection/Coerce;";
+    private static final Type CI = Type.getObjectType("org/spongepowered/asm/mixin/injection/callback/CallbackInfo");
+    private static final Type CIR = Type.getObjectType("org/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable");
+    /** injectors whose @At points are matched here (ModifyConstant has none; MixinExtras is not used by the layers) */
+    private static final java.util.Set<String> AT_INJECTORS = java.util.Set.of(INJECT, REDIRECT, MODIFY_ARG,
+        "Lorg/spongepowered/asm/mixin/injection/ModifyArgs;", "Lorg/spongepowered/asm/mixin/injection/ModifyVariable;");
+
+    /**
+     * What the injector finds in the target method's body: the instructions its @At points match (summed over every
+     * target method and point, as Mixin counts injections against require), and whether the handler's descriptor fits
+     * each target / matched instruction the way Mixin's injectors check it at apply.
+     */
+    private void scanBodies(String me, MethodNode h, AnnotationNode a, ClassNode target) {
+        if (!AT_INJECTORS.contains(a.desc)) {
+            return;
+        }
+        String what = me + ": " + short_(a.desc) + " " + h.name + " in " + target.name;
+        if (codeBytes.isEmpty()) {
+            unscanned.add(what + " (no code source)");
+            return;
+        }
+        ClassNode code = codeClass(target.name);
+        if (code == null) {
+            unscanned.add(what + " (target class has no code in " + codeSource + ")");
+            return;
+        }
+        List<MethodNode> tms = targetMethods(a, code);
+        if (tms.isEmpty()) {
+            return; // the selector itself is reported above
+        }
+        List<AnnotationNode> ats = new ArrayList<>();
+        Object at = get(a, "at");
+        if (at instanceof AnnotationNode an) {
+            ats.add(an);
+        } else if (at instanceof List<?> l) {
+            for (Object o : l) {
+                if (o instanceof AnnotationNode an) {
+                    ats.add(an);
+                }
+            }
+        }
+        Map<String, AnnotationNode> slices = new HashMap<>();
+        Object sl = get(a, "slice");
+        for (Object o : sl instanceof List<?> l ? l : sl == null ? List.of() : List.of(sl)) {
+            if (o instanceof AnnotationNode s) {
+                slices.put(str(get(s, "id")) == null ? "" : str(get(s, "id")), s);
+            }
+        }
+        boolean handlerStatic = (h.access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0;
+        int found = 0;
+        boolean unknown = false;
+        for (MethodNode tm : tms) {
+            if (tm.instructions == null || tm.instructions.size() == 0) {
+                problems.add(what + "." + tm.name + tm.desc + ": target method has no body (abstract/native): nothing to inject into");
+                continue;
+            }
+            boolean targetStatic = (tm.access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0;
+            if (targetStatic && !handlerStatic) {
+                problems.add(what + "." + tm.name + tm.desc + ": non-static handler on a static target");
+            }
+            if (a.desc.equals(INJECT)) {
+                checkCallback(what, h, a, tm);
+            }
+            for (AnnotationNode an : ats) {
+                List<AbstractInsnNode> hits = match(an, tm, slices, a.desc.endsWith("ModifyVariable;") ? Type.getReturnType(h.desc) : null);
+                if (hits == null) {
+                    unknown = true;
+                    continue;
+                }
+                found += hits.size();
+                if (a.desc.equals(REDIRECT)) {
+                    for (AbstractInsnNode insn : hits) {
+                        redirectSites.add(target.name + "\t" + tm.name + tm.desc + "\t" + tm.instructions.indexOf(insn) + "\t"
+                            + insnText(insn) + "\t" + currentMixin + "." + h.name);
+                    }
+                }
+                if (a.desc.equals(REDIRECT) || a.desc.equals(MODIFY_ARG)) {
+                    java.util.Set<String> shapes = new java.util.HashSet<>();
+                    for (AbstractInsnNode insn : hits) {
+                        String err = a.desc.equals(REDIRECT) ? checkRedirect(h, tm, insn, an) : checkModifyArg(h, a, tm, insn);
+                        if (err != null && shapes.add(err)) {
+                            problems.add(what + "." + tm.name + tm.desc + ": handler " + h.desc + " " + err);
+                        }
+                    }
+                }
+            }
+        }
+        scanned++;
+        Object r = get(a, "require");
+        int require = r instanceof Integer i && i >= 0 ? i : defaultRequire.getOrDefault(currentMixin, 0);
+        if (found >= Math.max(require, 1)) {
+            return;
+        }
+        String pts = ats.stream().map(an -> str(get(an, "value")) + (get(an, "target") != null ? " " + get(an, "target") : ""))
+            .collect(java.util.stream.Collectors.joining(", "));
+        if (unknown) {
+            unscanned.add(what + " [" + pts + "]: point type not modelled, " + found + " matched by the rest");
+        } else if (found < require) {
+            problems.add(what + ": " + found + " injection point(s) matched, require " + require + " [" + pts + "] in "
+                + tms.stream().map(t -> t.name + t.desc).collect(java.util.stream.Collectors.joining(", "))
+                + " (Critical injection failure at apply)");
+        } else {
+            silent.add(what + " [" + pts + "]: 0 matched (require 0: applies, does nothing)");
+        }
+    }
+
+    /** the target methods a selector picks: name-only without '*' is the first method of that name, as Mixin selects */
+    private static List<MethodNode> targetMethods(AnnotationNode a, ClassNode code) {
+        List<MethodNode> out = new ArrayList<>();
+        Object methods = get(a, "method");
+        if (!(methods instanceof List<?> l)) {
+            return out;
+        }
+        for (Object o : l) {
+            String sel = o.toString();
+            if (sel.startsWith("L") && sel.indexOf(';') > 0 && (sel.indexOf('(') < 0 || sel.indexOf(';') < sel.indexOf('('))) {
+                sel = sel.substring(sel.indexOf(';') + 1);
+            }
+            String name = sel.contains("(") ? sel.substring(0, sel.indexOf('(')) : sel;
+            String desc = sel.contains("(") ? sel.substring(sel.indexOf('(')) : null;
+            boolean all = name.endsWith("*");
+            if (all) {
+                name = name.substring(0, name.length() - 1);
+            }
+            for (MethodNode m : code.methods) {
+                boolean nameOk = all ? m.name.startsWith(name) : m.name.equals(name);
+                if (nameOk && (desc == null || m.desc.equals(desc)) && !out.contains(m)) {
+                    out.add(m);
+                    if (!all && desc == null) {
+                        break;
+                    }
+                }
+            }
+        }
+        return out;
+    }
+
+    /** a member selector as Mixin's MemberInfo reads it: [Lowner;|owner.]name[(desc)ret | :desc]; nulls match anything */
+    private record Sel(String owner, String name, String desc) {
+        static Sel parse(String s) {
+            String owner = null;
+            String rest = s;
+            int semi = s.indexOf(';');
+            int paren = s.indexOf('(');
+            int colon = s.indexOf(':');
+            int end = paren >= 0 ? paren : colon >= 0 ? colon : s.length();
+            if (s.startsWith("L") && semi > 0 && semi < end) {
+                owner = s.substring(1, semi);
+                rest = s.substring(semi + 1);
+            } else if (s.lastIndexOf('.', end - 1) > 0) {
+                int dot = s.lastIndexOf('.', end - 1);
+                owner = s.substring(0, dot).replace('.', '/');
+                rest = s.substring(dot + 1);
+            }
+            String name = rest;
+            String desc = null;
+            if (rest.contains("(")) {
+                name = rest.substring(0, rest.indexOf('('));
+                desc = rest.substring(rest.indexOf('('));
+            } else if (rest.contains(":")) {
+                name = rest.substring(0, rest.indexOf(':'));
+                desc = rest.substring(rest.indexOf(':') + 1);
+            }
+            return new Sel(owner, name.isEmpty() ? null : name, desc);
+        }
+
+        boolean matches(String o, String n, String d) {
+            return (owner == null || owner.equals(o)) && (name == null || name.equals(n)) && (desc == null || desc.equals(d));
+        }
+    }
+
+    private static String arg(AnnotationNode at, String key) {
+        if (get(at, "args") instanceof List<?> l) {
+            for (Object o : l) {
+                String s = o.toString();
+                if (s.startsWith(key + "=")) {
+                    return s.substring(key.length() + 1);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * The instructions one @At picks in {@code tm} (null: a point type not modelled here). Ordinal counts among the
+     * matches inside the slice, as Mixin's InjectionPoint.find does.
+     */
+    private List<AbstractInsnNode> match(AnnotationNode at, MethodNode tm, Map<String, AnnotationNode> slices, Type local) {
+        int from = 0;
+        int to = tm.instructions.size() - 1;
+        String sliceId = str(get(at, "slice"));
+        AnnotationNode slice = slices.get(sliceId == null ? "" : sliceId);
+        if (slice != null) {
+            if (get(slice, "from") instanceof AnnotationNode f) {
+                List<AbstractInsnNode> m = match(f, tm, Map.of(), null);
+                if (m == null) {
+                    return null;
+                }
+                from = m.isEmpty() ? Integer.MAX_VALUE : tm.instructions.indexOf(m.get(0));
+            }
+            if (get(slice, "to") instanceof AnnotationNode t) {
+                List<AbstractInsnNode> m = match(t, tm, Map.of(), null);
+                if (m == null) {
+                    return null;
+                }
+                to = m.isEmpty() ? -1 : tm.instructions.indexOf(m.get(m.size() - 1));
+            }
+        }
+        String value = str(get(at, "value"));
+        String target = str(get(at, "target"));
+        Object ordO = get(at, "ordinal");
+        int ordinal = ordO instanceof Integer i ? i : -1;
+        Object opO = get(at, "opcode");
+        int opcode = opO instanceof Integer i ? i : -1;
+        Sel sel = target == null || target.isEmpty() ? new Sel(null, null, null) : Sel.parse(target);
+        List<AbstractInsnNode> hits = new ArrayList<>();
+        AbstractInsnNode[] insns = tm.instructions.toArray();
+        AbstractInsnNode lastReturn = null;
+        for (int i = Math.max(from, 0); i <= to && i < insns.length; i++) {
+            AbstractInsnNode n = insns[i];
+            boolean hit;
+            switch (value == null ? "" : value) {
+                case "HEAD" -> hit = hits.isEmpty() && n.getOpcode() >= 0;
+                case "RETURN" -> hit = n.getOpcode() >= org.objectweb.asm.Opcodes.IRETURN && n.getOpcode() <= org.objectweb.asm.Opcodes.RETURN;
+                case "TAIL" -> {
+                    if (n.getOpcode() >= org.objectweb.asm.Opcodes.IRETURN && n.getOpcode() <= org.objectweb.asm.Opcodes.RETURN) {
+                        lastReturn = n;
+                    }
+                    hit = false;
+                }
+                case "INVOKE", "INVOKE_ASSIGN" -> hit = n instanceof MethodInsnNode mi && sel.matches(mi.owner, mi.name, mi.desc)
+                    && (value.equals("INVOKE") || Type.getReturnType(mi.desc).getSort() != Type.VOID);
+                case "INVOKE_STRING" -> {
+                    String ldc = arg(at, "ldc");
+                    AbstractInsnNode prev = n.getPrevious();
+                    while (prev != null && prev.getOpcode() < 0) {
+                        prev = prev.getPrevious();
+                    }
+                    hit = n instanceof MethodInsnNode mi && sel.matches(mi.owner, mi.name, mi.desc)
+                        && mi.desc.equals("(Ljava/lang/String;)V")
+                        && prev instanceof LdcInsnNode l && l.cst instanceof String s && s.equals(ldc);
+                }
+                case "FIELD" -> hit = n instanceof FieldInsnNode fi && sel.matches(fi.owner, fi.name, fi.desc)
+                    && (opcode < 0 || fi.getOpcode() == opcode);
+                case "NEW" -> {
+                    String cls = arg(at, "class");
+                    String want = cls != null ? cls.replace('.', '/') : sel.owner != null ? sel.owner
+                        : target == null ? null : target.startsWith("L") && target.endsWith(";")
+                            ? target.substring(1, target.length() - 1) : target;
+                    hit = n instanceof TypeInsnNode ti && ti.getOpcode() == org.objectweb.asm.Opcodes.NEW
+                        && (want == null || want.equals(ti.desc))
+                        && (sel.desc == null || ctorAfter(ti) != null && ctorAfter(ti).desc.equals(sel.desc));
+                }
+                case "STORE", "LOAD" -> {
+                    // which local the ModifyVariable discriminator picks needs the frames Mixin computes: not modelled.
+                    // Only the sound bound is: no store/load instruction of the handler type's kind at all = 0 matched.
+                    if (local == null) {
+                        return null;
+                    }
+                    int op = local.getOpcode(value.equals("STORE") ? org.objectweb.asm.Opcodes.ISTORE : org.objectweb.asm.Opcodes.ILOAD);
+                    if (n.getOpcode() == op) {
+                        return null;
+                    }
+                    hit = false;
+                }
+                default -> {
+                    return null;
+                }
+            }
+            if (hit) {
+                hits.add(n);
+            }
+        }
+        if ("TAIL".equals(value) && lastReturn != null) {
+            hits.add(lastReturn);
+        }
+        if (ordinal >= 0) {
+            return ordinal < hits.size() ? List.of(hits.get(ordinal)) : List.of();
+        }
+        return hits;
+    }
+
+    /** the constructor call that completes a NEW: the next INVOKESPECIAL <init> of the type at the same nesting */
+    private static MethodInsnNode ctorAfter(TypeInsnNode n) {
+        int depth = 0;
+        for (AbstractInsnNode i = n.getNext(); i != null; i = i.getNext()) {
+            if (i instanceof TypeInsnNode t && t.getOpcode() == org.objectweb.asm.Opcodes.NEW && t.desc.equals(n.desc)) {
+                depth++;
+            } else if (i instanceof MethodInsnNode mi && mi.getOpcode() == org.objectweb.asm.Opcodes.INVOKESPECIAL
+                    && mi.name.equals("<init>") && mi.owner.equals(n.desc)) {
+                if (depth == 0) {
+                    return mi;
+                }
+                depth--;
+            }
+        }
+        return null;
+    }
+
+    /** CallbackInjector / Callback.checkDescriptor: exact (args, CI), or (CI) alone, or (args, CI, locals...) when capturing */
+    private void checkCallback(String what, MethodNode h, AnnotationNode a, MethodNode tm) {
+        Type[] targs = Type.getArgumentTypes(tm.desc);
+        Type ci = Type.getReturnType(tm.desc).getSort() == Type.VOID ? CI : CIR;
+        Type[] hargs = Type.getArgumentTypes(h.desc);
+        List<Type> full = new ArrayList<>(List.of(targs));
+        full.add(ci);
+        boolean locals = get(a, "locals") != null;
+        boolean ok = Type.getReturnType(h.desc).getSort() == Type.VOID
+            && (sameArgs(h, hargs, full, false)
+                || (hargs.length == 1 && hargs[0].equals(ci))
+                || (locals && sameArgs(h, hargs, full, true)));
+        if (!ok) {
+            problems.add(what + "." + tm.name + tm.desc + ": handler " + h.desc + " is not (target args, "
+                + ci.getClassName().substring(ci.getClassName().lastIndexOf('.') + 1) + ") -- Invalid descriptor at apply");
+        }
+    }
+
+    /**
+     * Callback.checkDescriptor's comparison: equal types, or a @Coerce'd non-array reference parameter (Mixin then
+     * checks the target type is assignable to it -- not repeated here); {@code prefix}: captured locals may follow.
+     */
+    private static boolean sameArgs(MethodNode h, Type[] hargs, List<Type> want, boolean prefix) {
+        if (prefix ? hargs.length < want.size() : hargs.length != want.size()) {
+            return false;
+        }
+        for (int i = 0; i < want.size(); i++) {
+            if (!hargs[i].equals(want.get(i)) && !(hargs[i].getSort() == Type.OBJECT && coerced(h, i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Every instruction a @Redirect takes over, one line each: target class, method, instruction index in the
+     * release's code, the instruction, the redirecting mixin.handler. Written to -Dcb.redirectSites=<file> so a
+     * caller can find two mods / layers redirecting one call site (Mixin keeps the first, skips the other with a
+     * "@Redirect conflict" WARN, and a required one then fails its injection check).
+     */
+    private final List<String> redirectSites = new ArrayList<>();
+
+    private static String insnText(AbstractInsnNode insn) {
+        if (insn instanceof MethodInsnNode mi) {
+            return mi.owner + "." + mi.name + mi.desc;
+        }
+        if (insn instanceof FieldInsnNode fi) {
+            return fi.owner + "." + fi.name + ":" + fi.desc;
+        }
+        if (insn instanceof TypeInsnNode ti) {
+            return "new " + ti.desc;
+        }
+        return "opcode " + insn.getOpcode();
+    }
+
+    private static boolean coerced(MethodNode h, int index) {
+        if (index < 0) {
+            return find(h.invisibleAnnotations, COERCE) != null;
+        }
+        return h.invisibleParameterAnnotations != null && index < h.invisibleParameterAnnotations.length
+            && find(h.invisibleParameterAnnotations[index], COERCE) != null;
+    }
+
+    /** Injector.validateParams: return type, then the instruction's arguments, then a prefix of the target's arguments */
+    private static String validate(MethodNode h, MethodNode tm, Type ret, List<Type> args) {
+        Type hret = Type.getReturnType(h.desc);
+        if (!hret.equals(ret) && !coerced(h, -1)) {
+            return "returns " + hret.getDescriptor() + ", expected " + ret.getDescriptor();
+        }
+        Type[] hargs = Type.getArgumentTypes(h.desc);
+        if (hargs.length < args.size()) {
+            return "has too few arguments, expected " + args.get(hargs.length).getDescriptor() + " at index " + hargs.length;
+        }
+        for (int i = 0; i < args.size(); i++) {
+            if (!hargs[i].equals(args.get(i)) && !coerced(h, i)) {
+                return "has " + hargs[i].getDescriptor() + " at index " + i + ", expected " + args.get(i).getDescriptor();
+            }
+        }
+        Type[] targs = Type.getArgumentTypes(tm.desc);
+        for (int i = args.size(), j = 0; i < hargs.length; i++, j++) {
+            if (j >= targs.length) {
+                return "has " + (hargs.length - i) + " unexpected additional argument(s)";
+            }
+            if (!hargs[i].equals(targs[j]) && !coerced(h, i)) {
+                return "captures " + hargs[i].getDescriptor() + " at index " + i + ", target argument is " + targs[j].getDescriptor();
+            }
+        }
+        return null;
+    }
+
+    /** RedirectInjector: the shape of the redirected instruction */
+    private static String checkRedirect(MethodNode h, MethodNode tm, AbstractInsnNode insn, AnnotationNode at) {
+        List<Type> args = new ArrayList<>();
+        Type ret;
+        if (insn instanceof MethodInsnNode mi) {
+            if (mi.getOpcode() != org.objectweb.asm.Opcodes.INVOKESTATIC) {
+                args.add(Type.getObjectType(mi.owner));
+            }
+            args.addAll(List.of(Type.getArgumentTypes(mi.desc)));
+            ret = Type.getReturnType(mi.desc);
+        } else if (insn instanceof FieldInsnNode fi) {
+            if (arg(at, "array") != null) {
+                return null; // array element redirects: not modelled
+            }
+            Type ft = Type.getType(fi.desc);
+            switch (fi.getOpcode()) {
+                case org.objectweb.asm.Opcodes.GETFIELD -> { args.add(Type.getObjectType(fi.owner)); ret = ft; }
+                case org.objectweb.asm.Opcodes.GETSTATIC -> ret = ft;
+                case org.objectweb.asm.Opcodes.PUTFIELD -> { args.add(Type.getObjectType(fi.owner)); args.add(ft); ret = Type.VOID_TYPE; }
+                default -> { args.add(ft); ret = Type.VOID_TYPE; }
+            }
+        } else if (insn instanceof TypeInsnNode ti) {
+            MethodInsnNode ctor = ctorAfter(ti);
+            if (ctor == null) {
+                return null;
+            }
+            args.addAll(List.of(Type.getArgumentTypes(ctor.desc)));
+            ret = Type.getObjectType(ti.desc);
+        } else {
+            return null;
+        }
+        return validate(h, tm, ret, args);
+    }
+
+    /** ModifyArgInjector: (T)T for the chosen argument, or every call argument in and the chosen one out */
+    private static String checkModifyArg(MethodNode h, AnnotationNode a, MethodNode tm, AbstractInsnNode insn) {
+        if (!(insn instanceof MethodInsnNode mi)) {
+            return null;
+        }
+        Type[] cargs = Type.getArgumentTypes(mi.desc);
+        Type hret = Type.getReturnType(h.desc);
+        int index = get(a, "index") instanceof Integer i ? i : -1;
+        if (index < 0) {
+            for (int i = 0; i < cargs.length; i++) {
+                if (cargs[i].equals(hret)) {
+                    if (index >= 0) {
+                        return "matches several arguments of " + mi.name + mi.desc + " (set index)";
+                    }
+                    index = i;
+                }
+            }
+            if (index < 0) {
+                return "returns " + hret.getDescriptor() + ", which no argument of " + mi.name + mi.desc + " has";
+            }
+        }
+        if (index >= cargs.length) {
+            return "index " + index + " out of range for " + mi.name + mi.desc;
+        }
+        if (!cargs[index].equals(hret)) {
+            return "returns " + hret.getDescriptor() + ", argument " + index + " of " + mi.name + mi.desc + " is " + cargs[index].getDescriptor();
+        }
+        Type[] hargs = Type.getArgumentTypes(h.desc);
+        if (hargs.length == 1) {
+            return hargs[0].equals(cargs[index]) ? null : "takes " + hargs[0].getDescriptor() + ", argument is " + cargs[index].getDescriptor();
+        }
+        return validate(h, tm, hret, List.of(cargs));
     }
 
     // ---- helpers ----

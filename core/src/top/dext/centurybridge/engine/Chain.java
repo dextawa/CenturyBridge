@@ -137,6 +137,22 @@ public final class Chain {
     public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
 
     /**
+     * How a V method's answer and the W method's answer turn into each other for an @Inject whose selector
+     * MixinBridge moved to a W method returning another type ("returnConverters"): key "owner.name(desc)" (V,
+     * on the class or a V supertype of the mixin's target), value {"toV": "OWNER#name(desc)", "toW":
+     * "OWNER#name(desc)", "with": [W argument indices], "basis": why}. toV takes W's answer and returns V's as
+     * the converted jar spells it; toW the reverse; each then takes the W target's arguments listed in "with"
+     * (InteractionResultHolder <-> InteractionResult needs the player and hand). The W-shaped handler gives the
+     * mod's handler a CallbackInfoReturnable of V's answer (toV of W's) and hands back what it set (toW).
+     * Converters must accept what they produce (a null passes without a call). Without an entry, numeric
+     * primitives convert as Java does and a callReshapes "ret conv" with an override hook's unwrap pair up;
+     * otherwise the handler runs with the return untouched and the row stays partial.
+     */
+    public record ReturnConverter(String[] toV, String[] toW, int[] with, String basis) {}
+
+    public final java.util.Map<String, ReturnConverter> returnConverters = new java.util.HashMap<>();
+
+    /**
      * The class or interface a {@link #methodRenames} key is on for a site naming {@code owner}, in JVM
      * resolution order: the owner and its superclasses, then (an instance member only: an interface's
      * static is not inherited) their superinterfaces breadth first, injected ones included. A vanilla
@@ -460,8 +476,28 @@ public final class Chain {
      */
     public static final class OverrideHook {
         public String oldName, oldDesc, newName, newDesc;
-        /** "owner.name(desc)" static that converts the new-typed argument to the old type. */
+        /**
+         * "owner.name(desc)" static that converts the new-typed argument to the old type ("wrap": one static,
+         * or a list). With a list ({@link #wraps}) each old argument whose type differs from the new argument
+         * it comes from takes the static whose (only) parameter is that new type and whose return is the old
+         * type -- one new argument can feed several old ones (1.21.6: BlockEntity.loadAdditional(ValueInput)
+         * gives 1.21.5's loadAdditional(CompoundTag, HolderLookup.Provider) both the tag and the lookup from
+         * the one ValueInput, args [0, 0]). These fields hold the first entry.
+         */
         public String wrapOwner, wrapName, wrapDesc;
+        /** every "wrap" static, {owner, name, desc}, in wiring order (the first is {@link #wrapOwner}...) */
+        public final java.util.List<String[]> wraps = new java.util.ArrayList<>();
+
+        /** the wrap static taking {@code from} to {@code to}, or null */
+        public String[] wrapFor(org.objectweb.asm.Type from, org.objectweb.asm.Type to) {
+            for (String[] w : wraps) {
+                if (java.util.Arrays.equals(org.objectweb.asm.Type.getArgumentTypes(w[2]), new org.objectweb.asm.Type[] {from})
+                        && org.objectweb.asm.Type.getReturnType(w[2]).equals(to)) {
+                    return w;
+                }
+            }
+            return null;
+        }
         /**
          * "owner.name(desc)" static that converts the OLD override's return
          * value to the NEW return type (Item.use: TypedActionResult facade ->
@@ -2374,12 +2410,23 @@ public final class Chain {
                     h.newName = nsig[0];
                     h.newDesc = nsig[1];
                     if (o.has("wrap")) {
-                        String w = o.get("wrap").getAsString();
-                        int dot = w.lastIndexOf('.', w.indexOf('('));
-                        h.wrapOwner = w.substring(0, dot);
-                        String[] wsig = splitSig(w.substring(dot + 1));
-                        h.wrapName = wsig[0];
-                        h.wrapDesc = wsig[1];
+                        var wel = o.get("wrap");
+                        java.util.List<String> ws = new java.util.ArrayList<>();
+                        if (wel.isJsonArray()) {
+                            for (var x : wel.getAsJsonArray()) {
+                                ws.add(x.getAsString());
+                            }
+                        } else {
+                            ws.add(wel.getAsString());
+                        }
+                        for (String w : ws) {
+                            int dot = w.lastIndexOf('.', w.indexOf('('));
+                            String[] wsig = splitSig(w.substring(dot + 1));
+                            h.wraps.add(new String[] {w.substring(0, dot), wsig[0], wsig[1]});
+                        }
+                        h.wrapOwner = h.wraps.get(0)[0];
+                        h.wrapName = h.wraps.get(0)[1];
+                        h.wrapDesc = h.wraps.get(0)[2];
                     }
                     if (o.has("unwrap")) {
                         String u = o.get("unwrap").getAsString();
@@ -2702,6 +2749,23 @@ public final class Chain {
                 var fr = root.getAsJsonObject("fieldRenames");
                 for (String k : fr.keySet()) {
                     c.fieldRenames.put(k, fr.get(k).getAsString());
+                }
+            }
+            if (root.has("returnConverters")) {
+                var rcs = root.getAsJsonObject("returnConverters");
+                for (String k : rcs.keySet()) {
+                    var o = rcs.getAsJsonObject(k);
+                    String where = "returnConverters " + k;
+                    int[] with = new int[0];
+                    if (o.has("with")) {
+                        var wa = o.getAsJsonArray("with");
+                        with = new int[wa.size()];
+                        for (int i = 0; i < with.length; i++) {
+                            with[i] = wa.get(i).getAsInt();
+                        }
+                    }
+                    c.returnConverters.put(k, new ReturnConverter(parseStaticRef(where, o.get("toV").getAsString()),
+                        parseStaticRef(where, o.get("toW").getAsString()), with, o.has("basis") ? o.get("basis").getAsString() : ""));
                 }
             }
             if (root.has("mixinTargets")) {

@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * other file -- so the tag is returned as read, which is what passing no fix type means in 1.20.2
  * (Fabric API's PersistentStateManagerMixin answers a null type the same way).
  */
-@Mixin(net.minecraft.class_26.class)
+@Mixin(value = net.minecraft.class_26.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbSavedDataReadCover {
 
     @Shadow

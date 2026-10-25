@@ -8,7 +8,20 @@
     "IngredientItemsMixin",
     "BindTagsMixin",
     "ArmorEquipMixin",
-    "ShieldEquipMixin"
+    "ShieldEquipMixin",
+    "ArmorValuesMixin",
+    "TridentValueMixin",
+    "ItemDescriptionIdMixin",
+    "PotionDescriptionIdMixin",
+    "CompassDescriptionIdMixin",
+    "MaceRepairMixin",
+    "TotemEnchantableMixin",
+    "RemainingItemsMixin",
+    "ItemDescriptionMixin",
+    "EatingSoundMixin",
+    "PlaySoundRecorderMixin",
+    "OrCreateDescriptionIdMixin",
+    "ArmorDefenseMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -15,5 +15,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
 public @interface CbVanillaReads {
+    /**
+     * The priority of a layer mixin that restores members: below every mod's. Mixin lets an injector anchored
+     * anywhere but HEAD / RETURN / TAIL (an INVOKE, FIELD, CONSTANT, NEW ... site, a @Redirect) into a method another
+     * mixin merged only when the merging mixin's priority is lower than the injecting one's
+     * (InjectionPoint.checkPriority); at the default 1000 a mod's 1.20.1 @Redirect into the restored body fails
+     * ("cannot inject into ... merged by"). Such a mixin holds only the restored members (and the trampolines into
+     * them); its injectors into 1.20.2's own methods stay in a mixin of default priority.
+     */
+    int PRIORITY = 1;
+
     String value();
 }

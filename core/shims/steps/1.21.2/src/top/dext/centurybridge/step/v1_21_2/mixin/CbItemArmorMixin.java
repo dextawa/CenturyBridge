@@ -16,8 +16,8 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemArmor;
  * 1.21.2's ArmorItem keeps the material and type it was built with (1.21.2 drops both after putting them into
  * the components): 1.21.1's getMaterial / getType / getDefense / ... read them (CbItemArmor).
  */
-@Mixin(class_1738.class)
-public abstract class CbItemArmorMixin implements CbItemArmor.ArmorFields, Equipable {
+@Mixin(value = class_1738.class, priority = top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads.PRIORITY)
+public abstract class CbItemArmorMixin implements CbItemArmor.ArmorFields, Equipable, CbItemArmor.ArmorValues {
 
     @Unique
     private class_1741 cb$material;
@@ -53,5 +53,19 @@ public abstract class CbItemArmorMixin implements CbItemArmor.ArmorFields, Equip
     @Override
     public net.minecraft.class_6880<net.minecraft.class_3414> method_31570() {
         return CbItemArmor.method_31570((class_1738) (Object) this);
+    }
+
+    /** 1.21.1's ArmorItem.getDefense(): the material's defense for the type */
+    @top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads("CbItemMobArmorMixin: Mob.canReplaceCurrentItem compares armor by it where it answers otherwise than its body")
+    @Override
+    public int method_7687() {
+        return CbItemArmor.super_method_7686((class_1738) (Object) this).comp_349().method_48403(this.cb$type);
+    }
+
+    /** 1.21.1's ArmorItem.getToughness(): the material's toughness */
+    @top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads("CbItemMobArmorMixin: Mob.canReplaceCurrentItem compares armor by it where it answers otherwise than its body")
+    @Override
+    public float method_26353() {
+        return CbItemArmor.super_method_7686((class_1738) (Object) this).comp_349().comp_2303();
     }
 }

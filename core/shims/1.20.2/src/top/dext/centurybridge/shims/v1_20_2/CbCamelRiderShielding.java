@@ -8,7 +8,7 @@ import top.dext.centurybridge.facade.v1_20_2.class_7997;
  * 1.20.1's LivingEntity.getMeleeAttackReferencePosition raises its riders by it, and a converted
  * subclass's override of getRiderShieldingHeight overrides this.
  */
-@Mixin(net.minecraft.class_7689.class)
+@Mixin(value = net.minecraft.class_7689.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbCamelRiderShielding implements class_7997 {
 
     @Override

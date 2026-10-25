@@ -1,0 +1,17 @@
+{
+  "classRenames": {
+    "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricTagFile": "net/fabricmc/fabric/api/tag/v1/FabricTagFile",
+    "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiTags$TagFileHooks": "net/fabricmc/fabric/impl/tag/TagFileHooks"
+  },
+  "methodRenames": {
+    "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiTags$TagFileHooks.cb$setRemove(Ljava/util/List;)V": "fabric_setRemove"
+  },
+  "retiredClasses": {
+    "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricTagFile": "native returns: the 1.21.2 step gave back 1.21.1's fabric-tag-api-v1 FabricTagFile under CB's name because 1.21.2's Fabric API lacks the module's tag removal; 1.21.11's Fabric API ships it again (fabric-tag-api-v1 1.3.0): interface FabricTagFile with the one default method remove()Ljava/util/List; (signature ()Ljava/util/List<Lnet/minecraft/class_3497;>;), the facade's shape, injected into class_7475; converted mods' references move to it at this step (classRenames)",
+    "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiTags": "native returns: the 1.21.1 tag-removal state (removal entries per tag, the tag being built, the \"fabric:remove\" codec field) that 1.21.11's TagRemovalInternals keeps again with the same key",
+    "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiTags$TagFileHooks": "native returns: 1.21.11's TagFileHooks (fabric_setRemove(List), the same one-method shape) is what 1.21.11's TagFileMixin makes every TagFile implement; the 1.21.2 layer's datagen half (CbItemTagProviderMixin, which stays: 1.21.11's datagen API is FabricProvidedTagBuilder, not the 1.21.1 FabricTagBuilder it serves) sets a generated file's removals through it from this step on (classRenames + methodRenames cb$setRemove -> fabric_setRemove)",
+    "top/dext/centurybridge/step/v1_21_2/mixin/CbRestFapiTagFileMixin": "native returns: 1.21.11's TagFileMixin makes TagFile a FabricTagFile and TagFileHooks and replaces its codec with one reading \"fabric:remove\"; left in place both would replace the codec, and on 26.1 the climbed copy's @Redirect of RecordCodecBuilder.create in TagFile.<clinit> collides with the 26.1 layer's CbFapiTagFileMixin (one is skipped, its require-1 check fails)",
+    "top/dext/centurybridge/step/v1_21_2/mixin/CbRestFapiTagLoaderMixin": "native returns: 1.21.11's TagLoaderMixin records and applies the removals in TagLoader.load / build / tryBuildTag; left in place both would apply every removal, and on 26.1 the climbed copy's @Redirects of fileToId, sourcePackId and TagEntry.build collide with the 26.1 layer's CbFapiTagLoaderMixin (Mixin skips one, the other's require-1 check fails: no world loads)",
+    "top/dext/centurybridge/step/v1_21_2/mixin/CbRestTagEntryAccessor": "native returns: TagEntry.id / tag read by the retired CbRestFapiTags only; 1.21.11's TagEntryAccessor reads them for the native removal"
+  }
+}

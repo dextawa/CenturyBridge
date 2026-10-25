@@ -118,6 +118,20 @@ public final class MixinRepair {
         return named;
     }
 
+    /** every class of the code jar (bodies, no frames), in jar order; unreadable entries skipped */
+    public void forEachClass(java.util.function.Consumer<ClassNode> f) {
+        for (ZipEntry e : java.util.Collections.list(code.entries())) {
+            if (!e.getName().endsWith(".class")) continue;
+            try {
+                ClassNode cn = new ClassNode();
+                new ClassReader(code.getInputStream(e).readAllBytes()).accept(cn, ClassReader.SKIP_FRAMES);
+                f.accept(cn);
+            } catch (IOException | RuntimeException ex) {
+                // an unreadable entry holds no method to compare
+            }
+        }
+    }
+
     /** does the code jar declare the class (its entry only, nothing parsed) */
     public boolean declares(String owner) {
         return cache.get(owner) != null || code.getEntry(owner + ".class") != null || layerEntry(owner) != null;
@@ -458,6 +472,9 @@ public final class MixinRepair {
                         }
                         if (cands.isEmpty()) cands = restored(restoredByTarget, owner, s); // an override MixinBridge put back
                         if (cands.isEmpty()) cands = layerMembers.match(owner, s); // a member the layer restores (LayerMembers)
+                        if (cands.isEmpty() && s.desc != null && !renamed.apply(s.desc).equals(s.desc)) {
+                            cands = layerMembers.match(owner, new Sel(s.owner, s.name, renamed.apply(s.desc), s.wildcard)); // as the step renames its types
+                        }
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
                         if (cands.isEmpty()) {
@@ -514,7 +531,7 @@ public final class MixinRepair {
                                 fixNotes.add("descend-site " + where + " " + anchors.get(0) + " => " + d.callee().name + d.callee().desc
                                     + (d.ordinal() >= 0 ? " #" + d.ordinal() : "") + (d.makeStatic() ? " (handler made static)" : "")
                                     + (d.toCir() ? " (callback as CallbackInfoReturnable)" : "")
-                                    + " (V's site by context; the callee is private, called from one site)");
+                                    + " (V's site by context; the callee is " + d.how() + ")");
                                 fixes.add(() -> {
                                     if (d.makeStatic()) makeStatic(handler);
                                     if (d.toCir()) toReturnable(handler);
@@ -588,7 +605,13 @@ public final class MixinRepair {
 
     // ------------------------------------------------------------------ descend by site
 
-    record Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic) {}
+    /** sibling: the callee is not reached from the target but is another entry point of the same framework class */
+    record Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic, boolean sibling) {
+        String how() {
+            return sibling ? "another entry point of the same framework class, called from nowhere in its own class"
+                : "called from one site";
+        }
+    }
 
     /** the descend's handler and annotation changes (the selector is the caller's to set) */
     static void applyDescend(Descend d, MethodNode handler, AnnotationNode an) {
@@ -649,6 +672,15 @@ public final class MixinRepair {
         }
         List<MethodNode> places = new ArrayList<>(parent.keySet());
         places.add(0, wm);
+        // V's target overrode a framework class's hook (SimplePreparableReloadListener.apply); W split its code over
+        // that class's hooks (RecipeManager: parsing in prepare, storing in apply). Another hook of the same
+        // framework class, called from nowhere in W's own class, runs once where V's target ran once
+        List<MethodNode> siblings = siblingHooks(vc, vm, tc, wm);
+        for (MethodNode sb : siblings) {
+            if (!places.contains(sb)) {
+                places.add(sb);
+            }
+        }
         MethodNode into = null;
         int[] ords = new int[sites.size()];
         for (int k = 0; k < sites.size(); k++) {
@@ -688,7 +720,7 @@ public final class MixinRepair {
             into = found;
             ords[k] = fj;
         }
-        for (MethodNode m = into; m != wm; m = parent.get(m)) {
+        for (MethodNode m = into; m != wm && !siblings.contains(into); m = parent.get(m)) {
             int calls = (m.access & Opcodes.ACC_PRIVATE) != 0 ? callSites(tc, m) : jarCallSites(tc.name, m);
             if (calls != 1) {
                 why.add(m.name + m.desc + " holds V's site but is called from " + calls + " sites");
@@ -728,7 +760,7 @@ public final class MixinRepair {
             }
             ordinal = -1;
         }
-        return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic);
+        return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, siblings.contains(into));
     }
 
     /**
@@ -748,6 +780,77 @@ public final class MixinRepair {
     }
 
     /** calls of m within its class, method references (invokedynamic handles) included */
+    /**
+     * The other hooks of the framework class V's method vm overrides: methods of W's class tc overriding a method
+     * declared by that same class (looked up in W), not vm's W counterpart wm, not called by any method of tc
+     * itself, non-static and not synthetic. Empty when vm overrides nothing (V's code model) or nothing qualifies.
+     */
+    private List<MethodNode> siblingHooks(ClassNode vc, MethodNode vm, ClassNode tc, MethodNode wm) {
+        List<MethodNode> out = new ArrayList<>();
+        if (source == null || (vm.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) != 0 || vm.name.startsWith("<")) return out;
+        String fw = declaringSuper(source, vc, hookName(vc, vm), vm.desc);
+        if (fw == null || !fw.startsWith("net/minecraft/")) return out;
+        for (MethodNode m : tc.methods) {
+            if (m == wm || m.name.startsWith("<") || (m.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE | Opcodes.ACC_SYNTHETIC
+                    | Opcodes.ACC_ABSTRACT | Opcodes.ACC_BRIDGE)) != 0) continue;
+            if (fw.equals(declaringSuper(this, tc, hookName(tc, m), m.desc)) && callsBesidesBridges(tc, m) == 0) out.add(m);
+        }
+        return out;
+    }
+
+    /** calls of m from the methods of its class, its synthetic bridges left out (they are the hook itself) */
+    private static int callsBesidesBridges(ClassNode tc, MethodNode m) {
+        int n = 0;
+        for (MethodNode c : tc.methods) {
+            if ((c.access & (Opcodes.ACC_SYNTHETIC | Opcodes.ACC_BRIDGE)) == (Opcodes.ACC_SYNTHETIC | Opcodes.ACC_BRIDGE) || c.instructions == null) continue;
+            for (AbstractInsnNode in : c.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.owner.equals(tc.name) && mi.name.equals(m.name) && mi.desc.equals(m.desc)) n++;
+                if (in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode id) {
+                    for (Object a : id.bsmArgs) {
+                        if (a instanceof org.objectweb.asm.Handle h && h.getOwner().equals(tc.name) && h.getName().equals(m.name)) n++;
+                    }
+                }
+            }
+        }
+        return n;
+    }
+
+    /**
+     * the name a method overrides its framework hook by: its own, or -- a typed override of a generic hook
+     * (RecipeManager.apply(Map, ..)) -- the name of the class's synthetic bridge forwarding to it (apply(Object, ..))
+     */
+    private static String hookName(ClassNode c, MethodNode m) {
+        for (MethodNode b : c.methods) {
+            if ((b.access & (Opcodes.ACC_SYNTHETIC | Opcodes.ACC_BRIDGE)) == 0 || b == m || b.instructions == null) continue;
+            for (AbstractInsnNode in : b.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.owner.equals(c.name) && mi.name.equals(m.name) && mi.desc.equals(m.desc)
+                        && !b.name.equals(m.name)) {
+                    return b.name;
+                }
+            }
+        }
+        return m.name;
+    }
+
+    /**
+     * the nearest superclass of c (in the given code model) declaring a non-private, non-static method of that
+     * intermediary name, or null. By name: an override of a generic hook has another descriptor than the declared
+     * one (RecipeManager.apply(Map, ..) for SimplePreparableReloadListener.apply(Object, ..)), and intermediary
+     * gives every member of one override family the same name
+     */
+    private static String declaringSuper(MixinRepair model, ClassNode c, String name, String desc) {
+        if (!name.startsWith("method_")) return null;
+        for (String s = c.superName; s != null; ) {
+            ClassNode sc = model.target(s);
+            if (sc == null) return null;
+            for (MethodNode m : sc.methods) {
+                if (m.name.equals(name) && (m.access & (Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC)) == 0) return sc.name;
+            }
+            s = sc.superName;
+        }
+        return null;
+    }
+
     private static int callSites(ClassNode tc, MethodNode m) {
         int n = 0;
         for (MethodNode c : tc.methods) {
@@ -1461,7 +1564,7 @@ public final class MixinRepair {
         return true;
     }
 
-    private static boolean touchesThisFree(MethodNode h) {
+    static boolean touchesThisFree(MethodNode h) {
         if (h.instructions == null) return true;
         for (AbstractInsnNode in : h.instructions) {
             if (in instanceof VarInsnNode vi && vi.var == 0) return false;

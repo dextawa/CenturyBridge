@@ -420,14 +420,6 @@
    "ret": "pop",
    "basis": "mechanical: same values; return value popped"
   },
-  "net/minecraft/class_3331.method_14635(Ljava/lang/Object;)V": {
-   "desc": "(Ljava/lang/Object;)Z",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "pop",
-   "basis": "mechanical: same values; return value popped"
-  },
   "net/minecraft/class_3331.method_14638(Lnet/minecraft/class_3330;)V": {
    "desc": "(Lnet/minecraft/class_3330;)Z",
    "ops": [
@@ -2416,15 +2408,6 @@
    "frames": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had"
-  },
-  {
-   "old": "method_25306()V",
-   "new": "method_25306(Lnet/minecraft/class_11907;)V",
-   "args": [],
-   "onlyUnder": "net/minecraft/class_4264",
-   "frames": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_11907; not passed"
   },
   {
    "old": "method_44396(Lnet/minecraft/class_332;)V",

@@ -16,6 +16,8 @@ public final class Driver {
     private static final Map<String, Integer> COUNT = new ConcurrentHashMap<>();
     public static final ThreadLocal<Boolean> ON_DRIVER = ThreadLocal.withInitial(() -> false);
     public static volatile boolean forceLuck;
+    public static volatile boolean forceLiquid;
+    public static volatile boolean forceWater;
     private static int ok;
     private static int fail;
 
@@ -88,6 +90,33 @@ public final class Driver {
             check("nbt-read-head", reads == 1 && back.method_10550("cb") == 7, "handler ran " + reads + " time(s), read back cb=" + back.method_10550("cb"));
         } catch (Throwable t) {
             check("nbt-read-head", false, "threw " + t);
+        }
+        // ---- a cancelling HEAD injector on PathNavigation.isInLiquid: a mob in mid-air may update its path
+        try {
+            net.minecraft.class_1308 zombie = (net.minecraft.class_1308) net.minecraft.class_1299.field_6051.method_5883(server.method_30002());
+            zombie.method_5814(0.5, 300.0, 0.5);
+            cb.smx1.mixin.NavigationInvoker nav = (cb.smx1.mixin.NavigationInvoker) zombie.method_5942();
+            boolean plain = nav.cbsmx1$canUpdatePath();
+            forceLiquid = true;
+            boolean forced;
+            try {
+                forced = nav.cbsmx1$canUpdatePath();
+            } finally {
+                forceLiquid = false;
+            }
+            check("navigation-in-liquid-head", !plain && forced, "zombie in mid-air canUpdatePath " + plain + ", with isInLiquid forced " + forced
+                + " (handler ran " + COUNT.getOrDefault("navigation-in-liquid-head", 0) + " time(s))");
+            forceWater = true;
+            boolean redirected;
+            try {
+                redirected = nav.cbsmx1$canUpdatePath();
+            } finally {
+                forceWater = false;
+            }
+            check("navigation-water-redirect", !plain && redirected, "with the isInWaterOrBubble call inside isInLiquid redirected: canUpdatePath "
+                + redirected + " (redirect ran " + COUNT.getOrDefault("navigation-water-redirect", 0) + " time(s))");
+        } catch (Throwable t) {
+            check("navigation-in-liquid-head", false, "threw " + t);
         }
         System.out.println("CB-SMX1 summary ok=" + ok + " fail=" + fail);
     }

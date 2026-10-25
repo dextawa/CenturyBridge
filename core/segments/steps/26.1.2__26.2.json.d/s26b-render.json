@@ -1,0 +1,182 @@
+{
+  "_s26b_render": "s26b, queue item 5: 26.1.2 client render API that 26.2 reshaped, given back in the layer (javap of client-26.1.2.jar / client-26.2.jar)",
+  "instanceRedirects": {
+    "net/minecraft/client/renderer/rendertype/RenderType.draw(Lcom/mojang/blaze3d/vertex/MeshData;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26ImmediateDraw",
+    "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateVertexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "top/dext/centurybridge/step/v26_2/rt/CbS26ImmediateDraw",
+    "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateIndexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "top/dext/centurybridge/step/v26_2/rt/CbS26ImmediateDraw",
+    "net/minecraft/client/renderer/LevelRenderer.renderLevel(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;ZLnet/minecraft/client/renderer/chunk/ChunkSectionsToRender;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26RenderLevelClient",
+    "net/minecraft/client/gui/components/DebugScreenOverlay.render3dCrosshair(Lnet/minecraft/client/renderer/state/level/CameraRenderState;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26DebugClient"
+  },
+  "mixinTargets": {
+    "net/minecraft/client/renderer/LevelRenderer.renderLevel(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;ZLnet/minecraft/client/renderer/chunk/ChunkSectionsToRender;)V": {
+      "to": "render(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V",
+      "args": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        -1
+      ],
+      "basis": "javap: the frame's level render, called from the same GameRenderer.renderLevel site (26.1.2 @412 renderLevel, 26.2 @405 render) with the same first eight values; the same frame graph (importExternal main, the translucent/item_entity/particles/weather/clouds targets, addMainPass, post chains), body similarity 0.65; 26.2 also submits and prepares the features here and computes the chunk sections itself (prepareChunkRenders(projection) @361), which 26.1.2's caller passed in"
+    },
+    "net/minecraft/client/renderer/WeatherEffectRenderer.extractRenderState(Lnet/minecraft/world/level/Level;IFLnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/level/WeatherRenderState;)V": {
+      "to": "extractRenderState(Lnet/minecraft/client/multiplayer/ClientLevel;FLnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/level/WeatherRenderState;)V",
+      "args": [
+        0,
+        -1,
+        1,
+        2,
+        3
+      ],
+      "basis": "the callReshapes entry's judgment: the same body; the tick argument has no W argument (26.2 reads level.getGameTime())"
+    },
+    "net/minecraft/client/renderer/WeatherEffectRenderer.createRainColumnInstance(Lnet/minecraft/util/RandomSource;IIIIIIF)Lnet/minecraft/client/renderer/WeatherEffectRenderer$ColumnInstance;": {
+      "to": "createRainColumnInstance(Lnet/minecraft/util/RandomSource;JIIIIIF)Lnet/minecraft/client/renderer/WeatherEffectRenderer$ColumnInstance;",
+      "args": [
+        0,
+        -1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "basis": "javap: the same column computation, called from the same extractRenderState site; the tick is a long (level.getGameTime()) where 26.1.2 passed LevelRenderer's int tick counter"
+    },
+    "net/minecraft/client/renderer/WeatherEffectRenderer.createSnowColumnInstance(Lnet/minecraft/util/RandomSource;IIIIIIF)Lnet/minecraft/client/renderer/WeatherEffectRenderer$ColumnInstance;": {
+      "to": "createSnowColumnInstance(Lnet/minecraft/util/RandomSource;JIIIIIF)Lnet/minecraft/client/renderer/WeatherEffectRenderer$ColumnInstance;",
+      "args": [
+        0,
+        -1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "basis": "javap: the same column computation, called from the same extractRenderState site; the tick is a long (level.getGameTime()) where 26.1.2 passed LevelRenderer's int tick counter"
+    },
+    "com/mojang/blaze3d/opengl/GlCommandEncoder.executeDraw(Lcom/mojang/blaze3d/opengl/GlRenderPass;IIILcom/mojang/blaze3d/vertex/VertexFormat$IndexType;I)V": {
+      "to": "executeDraw(Lcom/mojang/blaze3d/opengl/GlRenderPass;IIILcom/mojang/blaze3d/IndexType;II)V",
+      "args": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "basis": "javap: the same draw (trySetup, the buffer checks now validateDraw, vertex array binding, drawFromBuffers) with renderPass, baseVertex, firstIndex, drawCount, indexType, instanceCount in the same order; 26.2 adds firstInstance"
+    }
+  },
+  "_instanceRedirects_basis": {
+    "net/minecraft/client/renderer/rendertype/RenderType.draw(Lcom/mojang/blaze3d/vertex/MeshData;)V": "26.2 split it into RenderType.prepare() (the same state: pipeline, output target, layering + texture transforms in writeDynamicTransforms, scissor, textures) and PreparedRenderType.drawFromBuffer(vertex, index, indexType, baseVertex, firstIndex, indexCount) (the same render pass); the layer uploads the mesh and draws it as 26.1.2 did",
+    "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateVertexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "26.2 dropped the per-format immediate buffers (its renderers keep their own, e.g. WeatherEffectRenderer: createBuffer, then writeToBuffer); the layer keeps one per format with 26.1.2's uploadToBuffer rule (new when absent or too small, else rewritten), usage VERTEX|COPY_DST",
+    "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateIndexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "as uploadImmediateVertexBuffer, usage INDEX|COPY_DST",
+    "net/minecraft/client/renderer/LevelRenderer.renderLevel(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;ZLnet/minecraft/client/renderer/chunk/ChunkSectionsToRender;)V": "26.2 LevelRenderer.render with the first eight arguments; it computes the chunk sections from the same projection (see CbS26RenderLevelClient)",
+    "net/minecraft/client/gui/components/DebugScreenOverlay.render3dCrosshair(Lnet/minecraft/client/renderer/state/level/CameraRenderState;I)V": "26.2 moved it to DebugCrosshairRenderer.render(camera, guiScale), held by GameRenderer and called at the same GameRenderer site (javap; body similarity 0.62, the buffer built once)"
+  },
+  "callReshapes": {
+    "net/minecraft/client/renderer/WeatherEffectRenderer.extractRenderState(Lnet/minecraft/world/level/Level;IFLnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/level/WeatherRenderState;)V": {
+      "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;FLnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/level/WeatherRenderState;)V",
+      "ops": [
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26RenderLevelClient#toClientLevel(Lnet/minecraft/world/level/Level;)Lnet/minecraft/client/multiplayer/ClientLevel;",
+        "drop",
+        "keep",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: the same extraction (rain level, radius loop, heightmap, precipitation, light coords, rain and snow columns), similarity 0.85; 26.2 takes the ClientLevel LevelExtractor always passed and reads the animation tick from level.getGameTime() where 26.1.2 took LevelRenderer's tick counter (both advance once per client tick)"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.clearColorTexture(Lcom/mojang/blaze3d/textures/GpuTexture;I)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.clearColorAndDepthTextures(Lcom/mojang/blaze3d/textures/GpuTexture;ILcom/mojang/blaze3d/textures/GpuTexture;D)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;Lcom/mojang/blaze3d/textures/GpuTexture;D)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.clearColorAndDepthTextures(Lcom/mojang/blaze3d/textures/GpuTexture;ILcom/mojang/blaze3d/textures/GpuTexture;DIIII)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;Lcom/mojang/blaze3d/textures/GpuTexture;DIIII)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/opengl/GlCommandEncoder.clearColorTexture(Lcom/mojang/blaze3d/textures/GpuTexture;I)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/opengl/GlCommandEncoder.clearColorAndDepthTextures(Lcom/mojang/blaze3d/textures/GpuTexture;ILcom/mojang/blaze3d/textures/GpuTexture;D)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;Lcom/mojang/blaze3d/textures/GpuTexture;D)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/opengl/GlCommandEncoder.clearColorAndDepthTextures(Lcom/mojang/blaze3d/textures/GpuTexture;ILcom/mojang/blaze3d/textures/GpuTexture;DIIII)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;Lcom/mojang/blaze3d/textures/GpuTexture;DIIII)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.createRenderPass(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalInt;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalDouble;)Lcom/mojang/blaze3d/systems/RenderPass;": {
+      "desc": "(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/Optional;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalDouble;)Lcom/mojang/blaze3d/systems/RenderPass;",
+      "ops": [
+        "keep",
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#clearColor(Ljava/util/OptionalInt;)Ljava/util/Optional;",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: the same validation and backend render pass; the optional ARGB clear colour is an Optional<Vector4fc> (ARGB.vector4fFromARGB32), 26.2's five-argument overload adds the full-texture RenderArea 26.1.2's pass implied"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.createRenderPass(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalInt;)Lcom/mojang/blaze3d/systems/RenderPass;": {
+      "desc": "(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/Optional;)Lcom/mojang/blaze3d/systems/RenderPass;",
+      "ops": [
+        "keep",
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#clearColor(Ljava/util/OptionalInt;)Ljava/util/Optional;"
+      ],
+      "basis": "javap: the same validation and backend render pass; the optional ARGB clear colour is an Optional<Vector4fc> (ARGB.vector4fFromARGB32), 26.2's five-argument overload adds the full-texture RenderArea 26.1.2's pass implied"
+    }
+  }
+}

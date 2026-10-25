@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * packets when it sends them. 1.20.2 tracks views as a whole and does not call this; a chunk map is
  * created by the server level alone, so a subclass override has no way in either.
  */
-@Mixin(class_3898.class)
+@Mixin(value = class_3898.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbChunkMapLegacy {
 
     @Shadow

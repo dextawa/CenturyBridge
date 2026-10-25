@@ -1,0 +1,11 @@
+{
+  "classRenames": {
+    "top/dext/centurybridge/compat/fapi/tag/v1/FabricTagFile": "net/fabricmc/fabric/api/tag/v1/FabricTagFile"
+  },
+  "retiredClasses": {
+    "top/dext/centurybridge/compat/fapi/tag/": "native returns: step 1 gave back 1.20.1's fabric-tag-api-v1 (0.92.12) FabricTagFile under CB's name because 1.20.2's Fabric API lacks the module; 1.21.1's Fabric API ships it again (fabric-tag-api-v1 0.116.15): interface FabricTagFile with the one default method remove()Ljava/util/List; (signature ()Ljava/util/List<Lnet/minecraft/class_3497;>;), the same shape as CB's copy, injected into class_7475 as in 1.20.1; converted mods' references move to it at this step (classRenames)",
+    "top/dext/centurybridge/compat/fapi/impl/tag/": "native returns: the 1.20.1 tag-removal implementation (CbFapiTagRemoval: the TagFile codec's optional \"fabric:remove\" list and its resolution while the tag group builds; CbFapiTagFileHooks) that 1.21.1's TagRemovalInternals / TagFileMixin / TagGroupLoaderMixin implement again with the same \"fabric:remove\" key",
+    "top/dext/centurybridge/shims/v1_20_2/CbFapiTagFileRemoval": "native returns: 1.21.1's TagFileMixin makes every TagFile a FabricTagFile and replaces the TagFile codec with one reading \"fabric:remove\"; left in place both would replace the codec",
+    "top/dext/centurybridge/shims/v1_20_2/CbFapiTagGroupLoaderRemoval": "native returns: 1.21.1's TagGroupLoaderMixin records and applies the removals in TagLoader.method_33174 / method_18242 / method_43952; left in place the climbed copy keeps @Redirects on method_33174 / method_43952 calls that the 1.21.2 layer's CbRestFapiTagLoaderMixin redirects too (a @Redirect conflict: Mixin skips the later one and its require-1 check fails, TagLoader does not transform, no world loads), and on 1.21.1 itself both would apply every removal"
+  }
+}

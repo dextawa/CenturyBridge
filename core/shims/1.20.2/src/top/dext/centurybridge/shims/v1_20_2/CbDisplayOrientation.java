@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Unique;
  * 1.20.2 renders from the rotation itself; a converted override is marked by an adapter hook
  * (CbLegacyDisplayOrientation) and drawn with again (CbDisplayRendererOrientation).
  */
-@Mixin(class_8113.class)
+@Mixin(value = class_8113.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbDisplayOrientation {
 
     @Unique

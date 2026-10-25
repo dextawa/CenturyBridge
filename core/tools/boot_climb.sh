@@ -20,16 +20,36 @@ cp "$SRV/server.properties.orig" "$SRV/server.properties"
 sed -i "s/^level-name=.*/level-name=world-$TAG/" "$SRV/server.properties"
 LOG="$SRV/boot-$TAG.log"
 cd "$SRV"
-timeout 300 "$JAVA" -Xmx6g -jar fabric-server.jar nogui > "$LOG" 2>&1 < /dev/null &
-PID=$!
+# CB_BOOT_CMDS=<file>: console commands typed once the server is Done, one per line ("#sleep <s>" waits), e.g. a
+# datapack reload and the checks around it; the server's answers land in the log. Without it the console is closed.
+CMDS="${CB_BOOT_CMDS:-}"
+[ -z "$CMDS" ] || [ -f "$CMDS" ] || { echo "no command file $CMDS"; exit 1; }
+if [ -n "$CMDS" ]; then
+    FIFO="$SRV/console-$TAG.fifo"
+    rm -f "$FIFO" && mkfifo "$FIFO"
+    timeout 420 "$JAVA" -Xmx6g -jar fabric-server.jar nogui > "$LOG" 2>&1 < "$FIFO" &
+    PID=$!
+    exec 7> "$FIFO"
+else
+    timeout 300 "$JAVA" -Xmx6g -jar fabric-server.jar nogui > "$LOG" 2>&1 < /dev/null &
+    PID=$!
+fi
 for i in $(seq 1 140); do
     sleep 2
     grep -qaE 'Done \(|Minecraft has crashed|Crash report|A mod crashed|Incompatible|Failed to start|Exception in thread "main"' "$LOG" && break
 done
 sleep 1
+if [ -n "$CMDS" ] && grep -qa 'Done (' "$LOG"; then
+    while IFS= read -r c || [ -n "$c" ]; do
+        case "$c" in "#sleep "*) sleep "${c#\#sleep }";; ""|"#"*) ;; *) echo "$c" >&7; sleep 1;; esac
+    done < "$CMDS"
+    sleep 3
+fi
 grep -qa 'Done (' "$LOG" && echo "===RESULT: DONE===" || echo "===RESULT: NOT DONE==="
 grep -anE 'Done \(|/ERROR|Caused by|Exception|crashed|Incompatible|Loading [0-9]+ mods|NoClassDefFound|NoSuchMethod|AbstractMethod|VerifyError|IncompatibleClassChange|Mixin apply' "$LOG" \
     | grep -viE 'Error loading class' | head -40
+[ -z "$CMDS" ] || grep -aE 'CBTEST|Reloading|reload|Failed to' "$LOG" | head -40
 kill $PID 2>/dev/null   # timeout passes the signal on to the server
 wait $PID 2>/dev/null
+[ -z "$CMDS" ] || { exec 7>&-; rm -f "$FIFO"; }
 echo "===END==="

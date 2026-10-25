@@ -42,6 +42,118 @@
     0
    ],
    "basis": "JukeboxBlockEntity.notifyItemChangedInJukebox(entity, hasRecord) is 1.21's onSongChanged-side setHasRecordBlockState(hasRecord) (javap: the same still-this-block-state test, setValue(JukeboxBlock.HAS_RECORD) with flag 2 and BLOCK_CHANGE game event; 1.21 builds the game event context from the state alone, so the entity argument has no W counterpart)"
+  },
+  "net/minecraft/class_898.method_3956(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_1297;F)V": {
+   "to": "method_3956(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_1297;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "EntityRenderDispatcher.renderHitbox(poseStack, consumer, entity, partialTick) is 1.21's renderHitbox(poseStack, consumer, entity, partialTick, r, g, b) (javap: the same bounding-box draw, multipart loop and eye-height box; the 1.20.6 float, slot 3, is read at the same sites by 1.21's slot 3; 1.21's three new floats are the box colour, which 1.20.6 hardcoded as 1.0F; the view-vector line moved into method_61171)"
+  },
+  "net/minecraft/class_759.method_49340(Lnet/minecraft/class_4587;FLnet/minecraft/class_1306;Lnet/minecraft/class_1799;F)V": {
+   "to": "method_49340(Lnet/minecraft/class_4587;FLnet/minecraft/class_1306;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;F)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    5
+   ],
+   "basis": "ItemInHandRenderer.renderOneHandedMap(poseStack, equipProgress, arm, stack, swingProgress) is 1.21's with the player inserted before swingProgress (javap: 0.93 of the instruction sequence equal; 1.20.6 read minecraft.player where 1.21 reads the player argument; the trailing float, V slot 5, is W slot 6 at the same sites)"
+  },
+  "net/minecraft/class_3485.method_44236(Ljava/nio/file/Path;Ljava/lang/String;Ljava/lang/String;)Ljava/util/stream/Stream;": {
+   "to": "method_44236(Ljava/nio/file/Path;Ljava/lang/String;Ljava/lang/String;Ljava/util/function/Consumer;)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "StructureTemplateManager.listFolderContents(folder, namespace, extension) is 1.21's listFolderContents(folder, namespace, extension, output) (javap: both walk the folder for files ending in the extension and map them to ids through the same lambda capturing the namespace and the path relativiser; 1.20.6 returned the Stream, 1.21 hands each id to the Consumer: handlers touching the return value are refused by MixinBridge's return check)"
+  },
+  "net/minecraft/class_3193.method_39967(Ljava/lang/String;Ljava/util/concurrent/CompletableFuture;)V": {
+   "to": "method_39967(Ljava/util/concurrent/CompletableFuture;)V",
+   "args": [
+    -1,
+    0
+   ],
+   "basis": "ChunkHolder.addSaveDependency(reason, future) is 1.21's addSaveDependency(future) (javap: both chain the future into the holder's save-sync future; 1.21 dropped the debug reason and its ChunkSaveDebug record, so the reason argument has no W counterpart)"
+  },
+  "net/minecraft/class_4388.method_21217(Lnet/minecraft/class_437;)V": {
+   "to": "method_21217()V",
+   "args": [
+    -1
+   ],
+   "basis": "RealmsConfigureWorldScreen.openTheWorld(lastScreen) is 1.21's openTheWorld() (javap: the same body; 1.21 reads the screen from getNewScreen (method_21219) instead of the argument, so the argument has no W counterpart)"
+  },
+  "net/minecraft/class_4388.method_21218(ZLnet/minecraft/class_437;)V": {
+   "to": "method_21218(Z)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "RealmsConfigureWorldScreen.closeTheWorld/stateChanged(flag, lastScreen) is 1.21's (flag) (javap: identical body, 1.21 reads the screen from getNewScreen (method_21219) instead of the argument)"
+  },
+  "net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZLnet/minecraft/class_2960;)Lnet/minecraft/class_777;": {
+   "to": "method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;Z)Lnet/minecraft/class_777;",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    -1
+   ],
+   "basis": "FaceBakery.bakeQuad(..., shade, modelLocation) is 1.21's bakeQuad(..., shade) (javap: the same body, BlockElementFace field reads became record accessor calls; 1.21 dropped the model location, so that argument has no W counterpart)"
+  },
+  "net/minecraft/class_3853$class_1648.<init>(I)V": {
+   "to": "<init>(ILnet/minecraft/class_6862;)V",
+   "args": [
+    0
+   ],
+   "basis": "VillagerTrades.EnchantBookForEmeralds(villagerXp) became (villagerXp, tradeableTag) (javap: both delegate with minLevel 0 / maxLevel MAX_VALUE to the 4-argument constructor that stores the fields; the enchantment list became the tag 1.21 passes)"
+  },
+  "net/minecraft/class_3853$class_1648.<init>(I[Lnet/minecraft/class_1887;)V": {
+   "to": "<init>(ILnet/minecraft/class_6862;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "EnchantBookForEmeralds(villagerXp, enchantments...) is 1.21's (villagerXp, tradeableTag) (javap: the same delegation with minLevel 0 / maxLevel MAX_VALUE); an Enchantment array is not a TagKey, so handlers taking it are not carried"
+  },
+  "net/minecraft/class_3853$class_1648.<init>(III[Lnet/minecraft/class_1887;)V": {
+   "to": "<init>(IIILnet/minecraft/class_6862;)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "EnchantBookForEmeralds(villagerXp, minLevel, maxLevel, enchantments...) is 1.21's (villagerXp, minLevel, maxLevel, tradeableTag) (javap: the same field stores; the list became the tag)"
+  },
+  "net/minecraft/class_3853$class_4164.<init>(Lnet/minecraft/class_9306;ILnet/minecraft/class_1799;IIF)V": {
+   "to": "<init>(Lnet/minecraft/class_9306;ILnet/minecraft/class_1799;IIFLjava/util/Optional;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "basis": "VillagerTrades.ItemsAndEmeraldsToItems(cost, emeraldCost, result, maxUses, xp, priceMultiplier) gained 1.21's trailing enchantment-provider Optional (javap: the same field stores plus the new one)"
+  },
+  "net/minecraft/class_1324.method_27304(Ljava/util/UUID;)Z": {
+   "to": "method_6200(Lnet/minecraft/class_2960;)Z",
+   "args": [
+    -1
+   ],
+   "basis": "AttributeInstance.removePermanentModifier(UUID) is 1.21's removeModifier(ResourceLocation) returning boolean (javap: the same remove from the permanent and the by-id maps and from the operation map, null -> false, setDirty, true; 1.21 merged 1.20.6's void removeModifier(UUID) into it); a UUID is not a ResourceLocation, so handlers taking the argument are not carried"
   }
  },
  "fieldRenames": {
@@ -59,7 +171,6 @@
  },
  "_smx6_fieldRenames_basis": "private / package fields 1.21 kept under a new id (only mixins reach them): ChunkMap.worldGenContext (set in the constructor, final in 1.21), BufferBuilder.mode (final in 1.21: one builder per begin), and the classes 1.21 made records whose components carry the same values (MultiLineLabel.TextAndWidth text / width, VertexMultiConsumer.Multiple delegates, OutlineBufferSource.EntityOutlineGenerator delegate, VertexFormatElement type / usage, ModelResourceLocation variant); javap of both classes: same type, the same writes in the constructor and the same reads ChunkHolder.chunkToSave is 1.21's saveSync (javap: both start as completedFuture(null), both are what getChunkToSave/method_14000 returns and both are thenCombine-d with each pending save; 1.21 types it CompletableFuture<?>, the same change vanilla's own method_14000 carries). EnchantRandomlyFunction.enchantments (Optional<HolderSet<Enchantment>>) is 1.21's options (javap: the same constructor store at offset 7, the same codec getter, read by run() as the candidate set; 1.21 adds onlyCompatible beside it).",
  "mixinLedger": {
-  "net/minecraft/class_3763.method_6078(Lnet/minecraft/class_1282;)V": "Raider.die: 1.21 removed the branch that gave the killer of a raid captain Bad Omen (V offsets 65-317: feature flag test, getRaidAt, the captain's banner (getItemBySlot HEAD vs Raid.getLeaderBannerInstance), the wolf-owner killer, the BAD_OMEN getEffect / removeEffect / clamp / new MobEffectInstance / addEffect, the gamerule test); W's body ends after removeFromRaid with super.die (javap: 66 bytes), the captain drops an ominous bottle through its loot table instead. Every open row of the member is an anchor of that branch, including V sites #1+ of hasActiveRaid / level() / iconst_0 and both iconst_1 (the 'into callee' match is PatrollingMonster.die's own constant, which V's super call already had)",
   "net/minecraft/class_276.method_1233(IIZ)V @ FIELD Lnet/minecraft/class_276;field_1477:I": "RenderTarget._blitToScreen: 1.21 draws the blit as a unit quad (positions 0/1, POSITION format) for the blit shader and no longer sets an orthographic projection, the shader's model-view / projection uniforms, per-vertex UV and colour or the target's width/height into the vertices (javap: W's body is 150 bytes, none of these instructions in it or the methods it calls); V's site has no counterpart",
   "net/minecraft/class_276.method_1233(IIZ)V @ FIELD Lnet/minecraft/class_276;field_1480:I": "RenderTarget._blitToScreen: 1.21 draws the blit as a unit quad (positions 0/1, POSITION format) for the blit shader and no longer sets an orthographic projection, the shader's model-view / projection uniforms, per-vertex UV and colour or the target's width/height into the vertices (javap: W's body is 150 bytes, none of these instructions in it or the methods it calls); V's site has no counterpart",
   "net/minecraft/class_276.method_1233(IIZ)V @ FIELD Lnet/minecraft/class_276;field_1481:I": "RenderTarget._blitToScreen: 1.21 draws the blit as a unit quad (positions 0/1, POSITION format) for the blit shader and no longer sets an orthographic projection, the shader's model-view / projection uniforms, per-vertex UV and colour or the target's width/height into the vertices (javap: W's body is 150 bytes, none of these instructions in it or the methods it calls); V's site has no counterpart",
@@ -110,7 +221,6 @@
   "net/minecraft/class_1530.method_6888()Z @ INVOKE Lnet/minecraft/class_1530;method_6897()I": "HangingEntity.survives: 1.21 tests the blocks of getSupportBox (method_59941) through BlockPos.betweenClosedStream(..).allMatch(lambda); 1.20.6's own grid walk over the entity's width/height in blocks (getWidth / getHeight, Math.max(1, ../16), pos.relative(direction.getOpposite()), getCounterClockWise, a MutableBlockPos set / move(direction, ..) / move(UP, ..)) is gone (javap: none of these in W's body, its lambda or getSupportBox); the per-block test itself moved into the lambda and is not ledgered here",
   "net/minecraft/class_4074.method_18663(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1058; @ FIELD Lnet/minecraft/class_7701;field_46779:Lnet/minecraft/class_7696;": "FeatureFlags.UPDATE_1_21 (field_46779) is gone from 1.21 (javap: FeatureFlags declares no field_46779): 1.21 shipped the update, so every requiredFeatures(UPDATE_1_21) on its blocks / items / entity types / effects / potions and every isEnabled(UPDATE_1_21) test 1.20.6 made (Raid, Raider, BadOmenMobEffect, MobEffectTextureManager) is dropped, the gated code running unconditionally; FeatureFlags.<clinit> no longer registers it. No W instruction reads the flag",
   "net/minecraft/class_1299.<clinit>()V @ FIELD Lnet/minecraft/class_7701;field_46779:Lnet/minecraft/class_7696;": "FeatureFlags.UPDATE_1_21 (field_46779) is gone from 1.21 (javap: FeatureFlags declares no field_46779): 1.21 shipped the update, so every requiredFeatures(UPDATE_1_21) on its blocks / items / entity types / effects / potions and every isEnabled(UPDATE_1_21) test 1.20.6 made (Raid, Raider, BadOmenMobEffect, MobEffectTextureManager) is dropped, the gated code running unconditionally; FeatureFlags.<clinit> no longer registers it. No W instruction reads the flag",
-  "net/minecraft/class_3763.method_6078(Lnet/minecraft/class_1282;)V @ FIELD Lnet/minecraft/class_7701;field_46779:Lnet/minecraft/class_7696;": "FeatureFlags.UPDATE_1_21 (field_46779) is gone from 1.21 (javap: FeatureFlags declares no field_46779): 1.21 shipped the update, so every requiredFeatures(UPDATE_1_21) on its blocks / items / entity types / effects / potions and every isEnabled(UPDATE_1_21) test 1.20.6 made (Raid, Raider, BadOmenMobEffect, MobEffectTextureManager) is dropped, the gated code running unconditionally; FeatureFlags.<clinit> no longer registers it. No W instruction reads the flag",
   "net/minecraft/class_3765.method_16518(Lnet/minecraft/class_3222;)Z @ FIELD Lnet/minecraft/class_7701;field_46779:Lnet/minecraft/class_7696;": "FeatureFlags.UPDATE_1_21 (field_46779) is gone from 1.21 (javap: FeatureFlags declares no field_46779): 1.21 shipped the update, so every requiredFeatures(UPDATE_1_21) on its blocks / items / entity types / effects / potions and every isEnabled(UPDATE_1_21) test 1.20.6 made (Raid, Raider, BadOmenMobEffect, MobEffectTextureManager) is dropped, the gated code running unconditionally; FeatureFlags.<clinit> no longer registers it. No W instruction reads the flag",
   "net/minecraft/class_1294.<clinit>()V @ FIELD Lnet/minecraft/class_7701;field_46779:Lnet/minecraft/class_7696;": "FeatureFlags.UPDATE_1_21 (field_46779) is gone from 1.21 (javap: FeatureFlags declares no field_46779): 1.21 shipped the update, so every requiredFeatures(UPDATE_1_21) on its blocks / items / entity types / effects / potions and every isEnabled(UPDATE_1_21) test 1.20.6 made (Raid, Raider, BadOmenMobEffect, MobEffectTextureManager) is dropped, the gated code running unconditionally; FeatureFlags.<clinit> no longer registers it. No W instruction reads the flag",
   "net/minecraft/class_1802.<clinit>()V @ FIELD Lnet/minecraft/class_7701;field_46779:Lnet/minecraft/class_7696;": "FeatureFlags.UPDATE_1_21 (field_46779) is gone from 1.21 (javap: FeatureFlags declares no field_46779): 1.21 shipped the update, so every requiredFeatures(UPDATE_1_21) on its blocks / items / entity types / effects / potions and every isEnabled(UPDATE_1_21) test 1.20.6 made (Raid, Raider, BadOmenMobEffect, MobEffectTextureManager) is dropped, the gated code running unconditionally; FeatureFlags.<clinit> no longer registers it. No W instruction reads the flag",
@@ -157,6 +267,8 @@
   "net/minecraft/class_313.method_1615()V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
   "net/minecraft/class_313.method_1619(Lnet/minecraft/class_319;)I @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
   "net/minecraft/class_323.<init>(Lnet/minecraft/class_3676;)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
-  "net/minecraft/class_323.method_1680(J)Lnet/minecraft/class_313; @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check"
+  "net/minecraft/class_323.method_1680(J)Lnet/minecraft/class_313; @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
+  "net/minecraft/class_3898.method_37904()V": "removed outright: ChunkMap.debugReloadGenerator (re-encoded the level's ChunkGenerator through ChunkGenerator.CODEC and replaced it) had one caller in 1.20.6, ResetChunksCommand (class_6608, a development command), which 1.21 deleted. javap over the whole 1.21 jar: no method_37904, no ResetChunksCommand, and ChunkGenerator.CODEC (class_2794.field_24746) is used only by ChunkGenerator and LevelStem, never by ChunkMap. No method holds its code or its caller's need, so a mixin on it has no hook point",
+  "net/minecraft/class_3898.method_20441(Lnet/minecraft/class_1923;)V": "removed outright: ChunkMap.releaseLightTicket(pos) queued distanceManager.removeTicket(TicketType.LIGHT, pos, ...) (lambda method_20443). Its one caller was ThreadedLevelLightEngine.lightChunk (method_17309). In 1.21 the LIGHT ticket type is gone: TicketType class_3230 has no field_19270, and no 1.21 class references it. ThreadedLevelLightEngine's only call into ChunkMap is method_17604, and no method_20441 is left anywhere (javap over the whole 1.21 jar). 1.21's generation tasks hold their chunks without tickets, so no method holds its code or its caller's need"
  }
 }

@@ -33,7 +33,7 @@ import org.objectweb.asm.tree.MethodNode;
  * only part of the member (vanilla takes its answer, not its body) lists what it carries in {@code carries}
  * ("Inject@HEAD", ...); any other injector on it stays open, "restored-member: vanilla path partial".
  *
- * Merged: public, concrete, non-synthetic methods (no constructors) of a class carrying @Mixin, other than
+ * Merged: concrete, non-synthetic methods of any access (as V declared the member) (no constructors) of a class carrying @Mixin, other than
  * @Shadow / @Overwrite / @Unique / injector handlers / accessors and invokers.
  */
 public final class LayerMembers {
@@ -105,7 +105,10 @@ public final class LayerMembers {
     }
 
     private static boolean merged(MethodNode m) {
-        if (m.name.startsWith("<") || (m.access & Opcodes.ACC_PUBLIC) == 0
+        // any access: a restored V member keeps V's access (protected / package-private; making it public would break
+        // V subclasses overriding it with V's access), and a private one is merged too (Mixin refuses non-private
+        // statics: 1.21.11's private static AbstractFurnaceBlockEntity.burn). A selector only meets one under V's name
+        if (m.name.startsWith("<")
                 || (m.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_SYNTHETIC | Opcodes.ACC_BRIDGE)) != 0) {
             return false;
         }

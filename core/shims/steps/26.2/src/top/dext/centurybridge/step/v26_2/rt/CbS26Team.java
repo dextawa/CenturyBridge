@@ -52,6 +52,16 @@ public final class CbS26Team {
         return Optional.of(TeamColor.valueOf(f.name()));
     }
 
+    /**
+     * DisplaySlot.teamColorToSlot (26.1.2, gone in 26.2): the sixteen colours answer their TEAM_ slot, a format or
+     * RESET answers null; a null argument threw (26.1.2 switched on its ordinal). 26.2 keeps the slot on the
+     * TeamColor of the same name (TeamColor.displaySlot()).
+     */
+    public static net.minecraft.world.scores.DisplaySlot teamColorToSlot(ChatFormatting f) {
+        f.ordinal();
+        return toTeamColor(f).map(TeamColor::displaySlot).orElse(null);
+    }
+
     public static ChatFormatting toFormatting(Optional<TeamColor> c) {
         return c.map(t -> ChatFormatting.valueOf(t.name())).orElse(ChatFormatting.RESET);
     }

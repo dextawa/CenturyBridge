@@ -10,7 +10,10 @@
     "BeaconAccess",
     "RandomChanceAccess",
     "NbtIoMixin",
-    "AdvancementListMixin"
+    "AdvancementListMixin",
+    "NavigationMixin",
+    "NavigationInvoker",
+    "NavigationRedirectMixin"
   ],
   "injectors": {
     "defaultRequire": 1

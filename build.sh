@@ -268,7 +268,13 @@ java $SRC_STUBS -Dcb.fapi="$FAPI" -Dcb.libs="$LIBS" -Dcb.depJars="$DEP_JARS" -Dc
 # implemented interface (name AND descriptor), and the original member -- read
 # from the older stubs in data/jars -- must not be static, since a covered call
 # site keeps its invokestatic and no mixin may add a non-private static.
-java $SRC_STUBS -Dcb.libs="$LIBS" -Dcb.depJars="$DEP_JARS" -Dcb.layerModJson="$SHIM/resources/fabric.mod.json" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
+# Injection points are matched in the target method's body (the intermediary stubs have no code: the release's
+# code jar; past the wall the plain jar), against the require the mixin config gives: a selector that resolves
+# while its @At call moved elsewhere is a "Critical injection failure" at the first boot, and a handler whose
+# descriptor no longer fits the target is an InvalidInjectionException (MixinCheck's javadoc).
+case "$VERSION" in 26.*) CODE_JAR_DEFAULT="$DATA/jars/client-$VERSION.jar" ;; *) CODE_JAR_DEFAULT="$DATA/jars/client-$VERSION-intermediary-code.jar" ;; esac
+java $SRC_STUBS -Dcb.libs="$LIBS" -Dcb.fapi="$FAPI" -Dcb.codeJar="${CB_CODE_JAR:-$CODE_JAR_DEFAULT}" -Dcb.mixinConfigDir="$SHIM/resources" \
+    -Dcb.depJars="$DEP_JARS" -Dcb.layerModJson="$SHIM/resources/fabric.mod.json" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 

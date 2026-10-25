@@ -35,6 +35,7 @@
     "CbDataTexturedModelAccess",
     "CbEquipDispatcherAccess",
     "CbEquipMinecraftMixin",
+    "CbEntityModelSetReloadMixin",
     "CbFapiItemResolverMixin",
     "CbFapiItemStateMixin",
     "CbFapiPickMixin",
@@ -43,6 +44,7 @@
     "CbGuiScrollAreaAccess",
     "CbGuiScrollListMixin",
     "CbGuiScrollTextAreaMixin",
+    "CbGuiItemDrawMixin",
     "CbGuiScrollWidgetMixin",
     "CbItemConditionsMixin",
     "CbItemLayerAccess",
@@ -94,6 +96,7 @@
     "CbTextureAbstractMixin",
     "CbTextureAnimationMixin",
     "CbTextureAtlasMixin",
+    "CbTextureLoadMixin",
     "CbTextureManagerMixin",
     "CbTextureReloadableMixin",
     "CbTextureSkinDownloaderAccess"
