@@ -93,5 +93,11 @@
   "net/minecraft/class_94$class_95.field_1014:I": "comp_1848"
  },
  "_smx1_fieldRenames_movedUp_basis": "ClientPacketListener / ServerGamePacketListenerImpl fields 1.20.2 moved up into ClientCommonPacketListenerImpl / ServerCommonPacketListenerImpl as protected fields (the super constructor stores connection, minecraft, serverData, telemetryManager, postDisconnectScreen = 1.20.1's callbackScreen; MinecraftServer; LATENCY_CHECK_INTERVAL 15000 both); the private keep-alive fields moved up stay private (a mixin on the subclass cannot reach them) and are not wired; ServerGamePacketListenerImpl.connection -> ServerCommonPacketListenerImpl's; ChatReportScreen's lastScreen / reportingContext (the new AbstractReportScreen constructor stores the same parameters) and its observed-what / select-reason / more-comments labels (the same labels under 1.20.2's gui.abuseReport.* keys, protected there; the other labels stayed private and are not wired)",
- "_smx1_fieldRenames_records_basis": "classes 1.20.2 made records with several fields of one type (MapDecoration x / y / rot): each 1.20.1 field maps to the record component its constructor parameter is stored into, the parameter order being the same on both"
+ "_smx1_fieldRenames_records_basis": "classes 1.20.2 made records with several fields of one type (MapDecoration x / y / rot): each 1.20.1 field maps to the record component its constructor parameter is stored into, the parameter order being the same on both",
+ "methodRenames": {
+  "net/minecraft/class_2342.method_10207()Lnet/minecraft/class_3218;": "comp_1967",
+  "net/minecraft/class_2342.method_10122()Lnet/minecraft/class_2338;": "comp_1968",
+  "net/minecraft/class_2342.method_10120()Lnet/minecraft/class_2680;": "comp_1969"
+ },
+ "_smx1_methodRenames_basis": "BlockSource: 1.20.1's interface getters getLevel / getPos / getBlockState are 1.20.2's record accessors level() / pos() / state() of the same value (the record's canonical constructor stores what BlockSourceImpl's getters answered); vanilla's dispense behaviours call the accessors where 1.20.1 called the getters, so a mod's @At INVOKE on a getter follows to the accessor call"
 }

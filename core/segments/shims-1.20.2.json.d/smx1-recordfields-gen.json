@@ -16,5 +16,6 @@
   "net/minecraft/class_5662.field_27929:Lnet/minecraft/class_5658;": "comp_1901",
   "net/minecraft/class_5699$class_5839.field_28868:Lcom/mojang/serialization/Codec;": "comp_1928",
   "net/minecraft/class_5699$class_5839.field_28869:Lcom/mojang/serialization/Codec;": "comp_1929"
- }
+ },
+ "methodRenames": {}
 }

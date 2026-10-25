@@ -5,7 +5,9 @@ A pair is emitted only when the 1.20.1 class has one constructor and 1.20.2's re
 parameter types in the same order, 1.20.1's constructor stores parameter i (unchanged: load, putfield) into the field
 and 1.20.2's into the component, both of the same descriptor, and 1.20.2 no longer declares the 1.20.1 field. A record
 component holds the value the constructor was given, as the 1.20.1 field did; a mixin's shadow / accessor / FIELD
-anchor on the old field then names the component. Owners: every class the step's mixin damage table names (targets
+anchor on the old field then names the component. A 1.20.1 getter whose body is that field's read (aload_0; getfield;
+return) and which 1.20.2 no longer declares becomes the component's accessor (methodRenames: same value, same
+descriptor), so mods' calls and a mixin's @At INVOKE on it name the accessor 1.20.2's code calls. Owners: every class the step's mixin damage table names (targets
 and anchor owners). Keys other fragments already wire are left to them.
 
   python3 core/tools/gen_smx1_record_fields.py <damage-mixin tsv(.gz)> core/segments/shims-1.20.2.json.d/smx1-recordfields-gen.json
@@ -80,13 +82,32 @@ def ctors(txt, cls):
     return res
 
 
+CALL_SECTIONS = ("methodRenames", "staticRedirects", "instanceRedirects", "callReshapes", "interfaceCallRedirects", "superRedirects")
+
+
 def wired():
-    keys = set()
+    """(fieldRenames keys, keys of the sections that rewrite calls) other fragments wire"""
+    fields, calls = set(), set()
     for p in [WIRING] + sorted(glob.glob(WIRING + ".d/*.json")):
         if p.endswith("smx1-recordfields-gen.json"):
             continue
-        keys |= set(json.load(open(p, encoding="utf-8")).get("fieldRenames", {}))
-    return keys
+        d = json.load(open(p, encoding="utf-8"))
+        fields |= set(d.get("fieldRenames", {}))
+        for sec in CALL_SECTIONS:
+            calls |= set(d.get(sec, {}))
+    return fields, calls
+
+
+def getters(txt):
+    """{(name, desc): field} for each instance method whose body is aload_0; getfield field; xreturn"""
+    out = {}
+    for m in re.finditer(r"\n  public (?:final )?[\w$.<>\[\], ?]+ (method_\d+)\(\);\n    Code:\n((?: *\d+: .*\n){3})", txt):
+        lines = m.group(2).strip().split("\n")
+        if "aload_0" in lines[0] and "getfield" in lines[1] and re.search(r"[ailfd]?return$", lines[2].strip()):
+            fm = re.search(r"// Field (\w+):(\S+)", lines[1])
+            if fm and "/" not in fm.group(1):
+                out[(m.group(1), fm.group(2))] = fm.group(1)
+    return out
 
 
 def main():
@@ -95,8 +116,8 @@ def main():
     wtxt = javap(W, cls)
     recs = [c for c in cls if "extends java.lang.Record" in wtxt.get(c, "")]
     vtxt = javap(V, recs)
-    have = wired()
-    res = {}
+    have, calls = wired()
+    res, ren = {}, {}
     for c in recs:
         v, w = vtxt.get(c, ""), wtxt.get(c, "")
         vc, wc = ctors(v, c), ctors(w, c)
@@ -113,12 +134,21 @@ def main():
             key = f"{c}.{f}:{d}"
             if key not in have:
                 res[key] = wstore[i][0]
+        # 1.20.1's getter of a field that became a component -> the component's accessor (same descriptor), when
+        # 1.20.2 no longer declares the getter and no other fragment rewrites calls to it
+        comp = {f: wstore[i][0] for i, f, d in vc[0][1] if i in wstore and wstore[i][1] == d}
+        wmethods = set(re.findall(r" (\w+)\((?:.*?)\);\n", w))
+        for (name, desc), f in getters(v).items():
+            if f in comp and name not in wmethods and re.search(r"public [\w$.<>\[\], ?]+ " + comp[f] + r"\(\);", w):
+                key = f"{c}.{name}(){desc}"
+                if key not in calls:
+                    ren[key] = comp[f]
     root = {"_smx1_recordfields_basis": "gen_smx1_record_fields.py (both constructors' bytecode); regenerate, never hand-edit",
-            "fieldRenames": dict(sorted(res.items()))}
+            "fieldRenames": dict(sorted(res.items())), "methodRenames": dict(sorted(ren.items()))}
     with open(out, "w", encoding="utf-8", newline="\n") as o:
         json.dump(root, o, indent=1)
         o.write("\n")
-    print(f"{len(res)} record fields over {len(recs)} classes made records (of {len(cls)} owners) -> {out}")
+    print(f"{len(res)} record fields, {len(ren)} getters over {len(recs)} classes made records (of {len(cls)} owners) -> {out}")
 
 
 if __name__ == "__main__":
