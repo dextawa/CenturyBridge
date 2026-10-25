@@ -261,7 +261,9 @@
   "net/minecraft/class_9326.method_57845(Lnet/minecraft/class_9331;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#get",
   "net/minecraft/class_10192.method_64015(Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#canBeEquippedBy",
   "net/minecraft/class_2050.method_8925(Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#matches",
-  "net/minecraft/class_1267.method_5460()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#getKey"
+  "net/minecraft/class_1267.method_5460()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#getKey",
+  "net/minecraft/class_185.method_821()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#getIcon",
+  "net/minecraft/class_161$class_162.method_20416(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_189;ZZZ)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#display"
  },
  "overrideHooks": [
   {
@@ -592,6 +594,14 @@
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "onlyUnder": "net/minecraft/class_2392",
    "basis": "1.21.11 ItemParticleOption.getItem() answered the ItemStack, 26.1's its ItemStackTemplate: the template of the stack the mod's override answers"
+  },
+  {
+   "old": "method_821()Lnet/minecraft/class_1799;",
+   "new": "getIcon()Lnet/minecraft/world/item/ItemStackTemplate;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons.unwrap(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "onlyUnder": "net/minecraft/class_185",
+   "basis": "1.21.11 DisplayInfo.getIcon() answered the ItemStack, 26.1's its ItemStackTemplate: the template of the stack the mod's override answers"
   }
  ],
  "frameDefaults": {
@@ -908,7 +918,8 @@
   "net/minecraft/class_1041.<init>(Lnet/minecraft/class_3678;Lnet/minecraft/class_323;Lnet/minecraft/class_543;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#newWindow",
   "net/minecraft/class_2392.<init>(Lnet/minecraft/class_2396;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#itemParticle",
   "net/minecraft/class_10710.<init>(Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#instrumentComponent",
-  "net/minecraft/class_10711.<init>(Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#providesTrimMaterial"
+  "net/minecraft/class_10711.<init>(Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#providesTrimMaterial",
+  "net/minecraft/class_185.<init>(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/Optional;Lnet/minecraft/class_189;ZZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#displayInfo"
  },
  "adapterHooks": [
   {
@@ -1367,7 +1378,14 @@
   "net/minecraft/class_3767.method_67380(Lnet/minecraft/class_6880;)Lnet/minecraft/class_10741;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#getType",
   "net/minecraft/class_7261.method_42228(Lnet/minecraft/class_7260;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#updateActivity",
   "net/minecraft/class_9278.method_57439(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9278;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#of",
-  "net/minecraft/class_9793.method_60753(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#fromStack"
+  "net/minecraft/class_9793.method_60753(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#fromStack",
+  "net/minecraft/class_1703.method_7617(Ljava/util/Set;ILnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#getQuickCraftPlaceCount",
+  "net/minecraft/class_5801.method_33725(Lnet/minecraft/class_5539;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#canPlaceAt",
+  "net/minecraft/class_2258.method_34268(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#updateColumn",
+  "net/minecraft/class_9698.method_60007(Lnet/minecraft/class_176;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallEnchantCodecs#conditionCodec",
+  "net/minecraft/class_9698.method_60004(Lcom/mojang/serialization/Codec;Lnet/minecraft/class_176;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallEnchantCodecs#codec",
+  "net/minecraft/class_9710.method_60203(Lcom/mojang/serialization/Codec;Lnet/minecraft/class_176;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallEnchantCodecs#targetedCodec",
+  "net/minecraft/class_9710.method_60208(Lcom/mojang/serialization/Codec;Lnet/minecraft/class_176;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallEnchantCodecs#equipmentDropsCodec"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -2260,6 +2278,24 @@
     1
    ],
    "basis": "1.21.11 ItemParticleOption took the ItemStack, 26.1 its ItemStackTemplate; the subclass's getItem() answers the stack it passed (mixin/CbWallItemParticleStackMixin keeps it)"
+  },
+  "net/minecraft/class_185.<init>(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/Optional;Lnet/minecraft/class_189;ZZZ)V": {
+   "desc": "(Lnet/minecraft/world/item/ItemStackTemplate;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/Optional;Lnet/minecraft/class_189;ZZZ)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#superTemplate(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#superIcon(Lnet/minecraft/class_185;Lnet/minecraft/class_1799;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.11 DisplayInfo took the icon ItemStack, 26.1 its ItemStackTemplate; the subclass's getIcon() answers the stack it passed (mixin/CbWallDisplayInfoIconMixin keeps it)"
   }
  },
  "fieldGetters": {
@@ -2523,7 +2559,8 @@
   "net/minecraft/class_11661.method_73480(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#superSubmitItem",
   "net/minecraft/class_11788.method_73480(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#superSubmitItem",
   "net/minecraft/class_10444.method_65603(Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#pickParticleIcon",
-  "net/minecraft/class_2392.method_10289()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#superGetItem"
+  "net/minecraft/class_2392.method_10289()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#superGetItem",
+  "net/minecraft/class_185.method_821()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#superGetIcon"
  },
  "covers": [
   "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
@@ -2925,6 +2962,63 @@
     "push top/dext/centurybridge/step/v26_1/rt/CbWallFrames#zombieAttributesReason()Lnet/minecraft/class_3730;"
    ],
    "basis": "26.1 Zombie.handleAttributes(difficulty, reason) resets the health to the maximum unless the reason is a conversion, load or dimension travel; 1.21.11's never did: CONVERSION (CbWallFrames, the hook's frame default)"
+  },
+  "net/minecraft/class_8062.method_64996(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "drop",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 SmithingTrimRecipe.applyTrim(base, addition, pattern): 1.21.11's body, the material read from the addition's PROVIDES_TRIM_MATERIAL component instead of looked up in the registries passed"
+  },
+  "net/minecraft/class_4625.method_23376(Lnet/minecraft/class_1936;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4635;ILnet/minecraft/class_2338$class_2339;)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4635;ILnet/minecraft/class_2338$class_2339;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_1936;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1's AbstractHugeMushroomFeature takes the WorldGenLevel 1.21.11's LevelAccessor always was (its place() handed on the context's level)"
+  },
+  "net/minecraft/class_4625.method_23374(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4635;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4635;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_1936;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1's AbstractHugeMushroomFeature takes the WorldGenLevel 1.21.11's LevelAccessor always was (its place() handed on the context's level)"
+  },
+  "net/minecraft/class_4625.method_23375(Lnet/minecraft/class_1936;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4635;)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4635;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_1936;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1's AbstractHugeMushroomFeature takes the WorldGenLevel 1.21.11's LevelAccessor always was (its place() handed on the context's level)"
+  },
+  "net/minecraft/class_3059.method_23375(Lnet/minecraft/class_1936;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4635;)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4635;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_1936;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1's AbstractHugeMushroomFeature takes the WorldGenLevel 1.21.11's LevelAccessor always was (its place() handed on the context's level)"
   }
  },
  "instanceFieldGetters": {

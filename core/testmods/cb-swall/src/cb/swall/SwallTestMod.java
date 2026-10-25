@@ -828,6 +828,8 @@ public class SwallTestMod implements ModInitializer {
             itemMembers();
             serverStatics(server);
             componentMembers();
+            displayIcons();
+            blockStatics(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1564,6 +1566,83 @@ public class SwallTestMod implements ModInitializer {
                 && trim.method_67212(null).get().method_40225(net.minecraft.class_8055.field_42009), horn);
         } catch (Throwable t) {
             check("componentMembers", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** a 1.21.11 DisplayInfo subclass: super(icon, ...), getIcon() override calling super */
+    private static final class TwoIcon extends net.minecraft.class_185 {
+        TwoIcon(net.minecraft.class_1799 icon) {
+            super(icon, net.minecraft.class_2561.method_43470("t"), net.minecraft.class_2561.method_43470("d"), Optional.empty(),
+                net.minecraft.class_189.field_1254, true, true, false);
+        }
+
+        @Override
+        public net.minecraft.class_1799 method_821() {
+            return super.method_821().method_46651(2);
+        }
+
+        net.minecraft.class_1799 base() {
+            return super.method_821();
+        }
+    }
+
+    /** 1.21.11 DisplayInfo(icon, ...) / getIcon() / Advancement.Builder.display(icon, ...) (rt/CbWallDisplayIcons) */
+    private static void displayIcons() {
+        try {
+            net.minecraft.class_1799 icon = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477);
+            net.minecraft.class_185 info = new net.minecraft.class_185(icon, net.minecraft.class_2561.method_43470("t"),
+                net.minecraft.class_2561.method_43470("d"), Optional.empty(), net.minecraft.class_189.field_1254, true, true, false);
+            check("displayInfo.icon", info.method_821() == icon && info.method_821() == icon, info.method_821());
+            TwoIcon sub = new TwoIcon(icon);
+            net.minecraft.class_1799 subIcon = sub.method_821();
+            check("displayInfo.subclass", subIcon.method_7947() == 2 && sub.base() == icon, subIcon);
+            net.minecraft.class_161.class_162 builder = net.minecraft.class_161.class_162.method_707().method_20416(icon,
+                net.minecraft.class_2561.method_43470("t"), net.minecraft.class_2561.method_43470("d"), null,
+                net.minecraft.class_189.field_1254, true, true, false);
+            check("advancementBuilder.display", builder != null, "");
+        } catch (Throwable t) {
+            check("displayInfo.icon", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** a 1.21.11 BigDripleafBlock subclass reaching the protected static canPlaceAt(level, pos, state) */
+    private abstract static class DripleafAccess extends net.minecraft.class_5801 {
+        DripleafAccess() {
+            super(null);
+        }
+
+        static boolean canPlace(net.minecraft.class_5539 level, net.minecraft.class_2338 pos, net.minecraft.class_2680 state) {
+            return method_33725(level, pos, state);
+        }
+    }
+
+    /** CbWallServerStatics block/menu statics, CbWallEnchantCodecs */
+    private static void blockStatics(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            java.util.Set<net.minecraft.class_1735> slots = new java.util.HashSet<>();
+            slots.add(null);
+            slots.add(new net.minecraft.class_1735(null, 0, 0, 0));
+            net.minecraft.class_1799 carried = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477, 9);
+            check("menu.quickCraftPlaceCount", net.minecraft.class_1703.method_7617(slots, 0, carried) == 4
+                && net.minecraft.class_1703.method_7617(slots, 1, carried) == 1
+                && net.minecraft.class_1703.method_7617(slots, 2, carried) == 64, "");
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(0, 64, 0);
+            check("bigDripleaf.canPlaceAt", DripleafAccess.canPlace(level, pos, net.minecraft.class_2246.field_10124.method_9564())
+                && !DripleafAccess.canPlace(level, pos, net.minecraft.class_2246.field_10340.method_9564())
+                && !DripleafAccess.canPlace(level, new net.minecraft.class_2338(0, 4000, 0), net.minecraft.class_2246.field_10124.method_9564()), "");
+            net.minecraft.class_2258.method_34268(level, new net.minecraft.class_2338(0, 300, 0), net.minecraft.class_2246.field_10124.method_9564());
+            check("bubbleColumn.updateColumn", true, "");
+            com.mojang.serialization.Codec<net.minecraft.class_5341> cond = net.minecraft.class_9698.method_60007(net.minecraft.class_173.field_51802);
+            com.google.gson.JsonObject ok = com.google.gson.JsonParser.parseString("{\"condition\":\"minecraft:random_chance\",\"chance\":0.5}").getAsJsonObject();
+            check("enchantCodec.condition", cond.parse(JsonOps.INSTANCE, ok).result().isPresent(), cond.parse(JsonOps.INSTANCE, ok));
+            check("enchantCodec.effects", net.minecraft.class_9698.method_60004(Codec.INT, net.minecraft.class_173.field_51802) != null
+                && net.minecraft.class_9710.method_60203(Codec.INT, net.minecraft.class_173.field_51802) != null
+                && net.minecraft.class_9710.method_60208(Codec.INT, net.minecraft.class_173.field_51802) != null, "");
+        } catch (Throwable t) {
+            check("blockStatics", false, t);
             t.printStackTrace();
         }
     }
