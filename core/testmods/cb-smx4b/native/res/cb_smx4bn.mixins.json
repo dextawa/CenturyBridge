@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "package": "cb.smx4bn.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "ServerDriverMixin",
+    "NativeArrowMixin",
+    "NativeHurtEquipmentMixin",
+    "NativeMakeSoundMixin",
+    "NativeEntitySoundMixin",
+    "NativeBreakSlotMixin",
+    "NativeFireballItemMixin",
+    "NativeThrowableItemMixin",
+    "PlayerInvoker",
+    "PiglinInvoker"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

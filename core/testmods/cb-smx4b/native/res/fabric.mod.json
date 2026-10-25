@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx4bn",
+  "version": "1.0.0",
+  "name": "CB smx4b native 1.20.5 Mixin Test",
+  "description": "1.20.5 mixins (not converted) on the 1.20.5 methods step 1.20.4 -> 1.20.5 routes: they must keep firing",
+  "environment": "*",
+  "mixins": ["cb_smx4bn.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.20.5" }
+}
