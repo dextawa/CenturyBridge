@@ -61,7 +61,7 @@ if [ "${1:-}" != __remote ] && [ "${1:-}" != __inner ]; then
     retry() { local i; for i in 1 2 3 4 5; do "$@" && return 0; echo "(beta2 unreachable, retrying)"; sleep 20; done; return 1; }
     if [ "${CB_UPLOAD:-1}" != 0 ]; then
         rm -f "$TMP/up.tar"
-        tar --force-local --exclude=__pycache__ -cf "$TMP/up.tar" core/src core/shims core/segments core/tools $([ -d core/mods ] && echo core/mods) build.sh
+        tar --force-local --exclude=__pycache__ -cf "$TMP/up.tar" core/src core/shims core/segments core/tools $(for d in core/mods core/natives; do [ -d $d ] && echo $d; done) build.sh
         retry $SSH "mkdir -p ~/$AG"
         retry $SCP "$TMP/up.tar" "dext@beta2.dext.top:$AG/up.tar"
         retry $SSH "set -e; cd ~/$AG && rm -rf core build.sh && tar xf up.tar && rm up.tar
