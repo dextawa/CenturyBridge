@@ -28,7 +28,11 @@
     "CbS26SignStateMixin",
     "CbS26StandingSignMixin",
     "CbS26HangingSignMixin",
-    "CbS26SignSubmitMixin"
+    "CbS26SignSubmitMixin",
+    "CbS26RenderBuffersMixin",
+    "CbS26LevelFlushMixin",
+    "CbS26GameFlushMixin",
+    "CbS26GuiFlushMixin"
   ],
   "server": [],
   "injectors": {

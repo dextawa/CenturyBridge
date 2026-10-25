@@ -5,7 +5,13 @@
     "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateVertexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "top/dext/centurybridge/step/v26_2/rt/CbS26ImmediateDraw",
     "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateIndexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "top/dext/centurybridge/step/v26_2/rt/CbS26ImmediateDraw",
     "net/minecraft/client/renderer/LevelRenderer.renderLevel(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;ZLnet/minecraft/client/renderer/chunk/ChunkSectionsToRender;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26RenderLevelClient",
-    "net/minecraft/client/gui/components/DebugScreenOverlay.render3dCrosshair(Lnet/minecraft/client/renderer/state/level/CameraRenderState;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26DebugClient"
+    "net/minecraft/client/gui/components/DebugScreenOverlay.render3dCrosshair(Lnet/minecraft/client/renderer/state/level/CameraRenderState;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26DebugClient",
+    "com/mojang/blaze3d/systems/CommandEncoder.mapBuffer(Lcom/mojang/blaze3d/buffers/GpuBuffer;ZZ)Lcom/mojang/blaze3d/buffers/GpuBuffer$MappedView;": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient",
+    "com/mojang/blaze3d/systems/CommandEncoder.mapBuffer(Lcom/mojang/blaze3d/buffers/GpuBufferSlice;ZZ)Lcom/mojang/blaze3d/buffers/GpuBuffer$MappedView;": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient",
+    "com/mojang/blaze3d/systems/CommandEncoder.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIIIIIII)V": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient",
+    "com/mojang/blaze3d/systems/CommandEncoder.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/ByteBuffer;Lcom/mojang/blaze3d/platform/NativeImage$Format;IIIIII)V": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient",
+    "com/mojang/blaze3d/systems/CommandEncoder.timerQueryBegin()Lcom/mojang/blaze3d/systems/GpuQuery;": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient",
+    "com/mojang/blaze3d/systems/CommandEncoder.timerQueryEnd(Lcom/mojang/blaze3d/systems/GpuQuery;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient"
   },
   "mixinTargets": {
     "net/minecraft/client/renderer/LevelRenderer.renderLevel(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;ZLnet/minecraft/client/renderer/chunk/ChunkSectionsToRender;)V": {
@@ -80,7 +86,13 @@
     "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateVertexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "26.2 dropped the per-format immediate buffers (its renderers keep their own, e.g. WeatherEffectRenderer: createBuffer, then writeToBuffer); the layer keeps one per format with 26.1.2's uploadToBuffer rule (new when absent or too small, else rewritten), usage VERTEX|COPY_DST",
     "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateIndexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "as uploadImmediateVertexBuffer, usage INDEX|COPY_DST",
     "net/minecraft/client/renderer/LevelRenderer.renderLevel(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;ZLnet/minecraft/client/renderer/chunk/ChunkSectionsToRender;)V": "26.2 LevelRenderer.render with the first eight arguments; it computes the chunk sections from the same projection (see CbS26RenderLevelClient)",
-    "net/minecraft/client/gui/components/DebugScreenOverlay.render3dCrosshair(Lnet/minecraft/client/renderer/state/level/CameraRenderState;I)V": "26.2 moved it to DebugCrosshairRenderer.render(camera, guiScale), held by GameRenderer and called at the same GameRenderer site (javap; body similarity 0.62, the buffer built once)"
+    "net/minecraft/client/gui/components/DebugScreenOverlay.render3dCrosshair(Lnet/minecraft/client/renderer/state/level/CameraRenderState;I)V": "26.2 moved it to DebugCrosshairRenderer.render(camera, guiScale), held by GameRenderer and called at the same GameRenderer site (javap; body similarity 0.62, the buffer built once)",
+    "com/mojang/blaze3d/systems/CommandEncoder.mapBuffer(Lcom/mojang/blaze3d/buffers/GpuBuffer;ZZ)Lcom/mojang/blaze3d/buffers/GpuBuffer$MappedView;": "26.1.2 checked no render pass was open, then mapped through the backend with the buffer's checks (closed, read or write, MAP_READ / MAP_WRITE usage); 26.2 maps on the buffer itself (GpuBuffer.map, the same checks) into GpuBufferSlice.MappedView, the record that replaced the MappedView interface (same data() and close())",
+    "com/mojang/blaze3d/systems/CommandEncoder.mapBuffer(Lcom/mojang/blaze3d/buffers/GpuBufferSlice;ZZ)Lcom/mojang/blaze3d/buffers/GpuBuffer$MappedView;": "as mapBuffer(GpuBuffer, ...), through GpuBufferSlice.map",
+    "com/mojang/blaze3d/systems/CommandEncoder.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIIIIIII)V": "26.1.2 wrote the image's width x height region at (sourceX, sourceY) to (destX, destY) of the mip level / layer; 26.2 writes a whole image at (destX, destY). The whole image goes as it is, a region through a copy of it (NativeImage.copyRect into an image of the region's size)",
+    "com/mojang/blaze3d/systems/CommandEncoder.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/ByteBuffer;Lcom/mojang/blaze3d/platform/NativeImage$Format;IIIIII)V": "26.1.2 took the pixels' NativeImage.Format (it sized the buffer by format.components() and uploaded in that format); 26.2 sizes by the texture format's block size and has no conversion: a format of the same pixel size goes as it is, another is refused with the reason",
+    "com/mojang/blaze3d/systems/CommandEncoder.timerQueryBegin()Lcom/mojang/blaze3d/systems/GpuQuery;": "26.1.2: one GL_TIME_ELAPSED query at a time (render thread), its value the elapsed nanoseconds once available; 26.2 has timestamp query pools (GpuDevice.createTimestampQueryPool, CommandEncoder.writeTimestamp): a pool of two, the first timestamp now, the second at timerQueryEnd, the value their difference",
+    "com/mojang/blaze3d/systems/CommandEncoder.timerQueryEnd(Lcom/mojang/blaze3d/systems/GpuQuery;)V": "26.1.2 refused a query that was not the active one ('Mismatched or duplicate GpuQuery when ending timerQuery'); the layer writes the second timestamp of the active one"
   },
   "callReshapes": {
     "net/minecraft/client/renderer/WeatherEffectRenderer.extractRenderState(Lnet/minecraft/world/level/Level;IFLnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/level/WeatherRenderState;)V": {
@@ -178,5 +190,11 @@
       ],
       "basis": "javap: the same validation and backend render pass; the optional ARGB clear colour is an Optional<Vector4fc> (ARGB.vector4fFromARGB32), 26.2's five-argument overload adds the full-texture RenderArea 26.1.2's pass implied"
     }
+  },
+  "classRenames": {
+    "com/mojang/blaze3d/buffers/GpuBuffer$MappedView": "top/dext/centurybridge/step/v26_2/facade/GpuBufferViews$MappedView"
+  },
+  "_classRenames_basis": {
+    "com/mojang/blaze3d/buffers/GpuBuffer$MappedView": "26.1.2's interface (data(), close()); 26.2 replaced it by the record GpuBufferSlice.MappedView with the same two members; the facade interface is 26.1.2's, 26.2's views handed out through it (facade/GpuBufferViews.of)"
   }
 }
