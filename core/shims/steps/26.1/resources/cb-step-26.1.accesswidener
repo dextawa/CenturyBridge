@@ -236,3 +236,5 @@ accessible	method	net/minecraft/world/entity/monster/breeze/BreezeAi	getActiviti
 accessible	method	net/minecraft/world/entity/monster/creaking/CreakingAi	getActivities	(Lnet/minecraft/world/entity/monster/creaking/Creaking;)Ljava/util/List;
 accessible	method	net/minecraft/world/entity/monster/hoglin/HoglinAi	getActivities	()Ljava/util/List;
 accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	getActivities	(Lnet/minecraft/world/entity/monster/warden/Warden;)Ljava/util/List;
+# 1.21.11 StructureTemplateManager.readStructure(tag) is 26.1's TemplateSource.readStructure (swall, CbWallStructureTemplateManagerMixin)
+accessible	method	net/minecraft/world/level/levelgen/structure/templatesystem/loader/TemplateSource	readStructure	(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;
