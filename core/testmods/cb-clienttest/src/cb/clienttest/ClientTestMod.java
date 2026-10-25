@@ -48,9 +48,9 @@ public class ClientTestMod implements ClientModInitializer {
     public void onInitializeClient() {
         Tally.declare("join", "font.lineHeight", "font.width", "font.widthComponent", "font.plainSubstrByWidth",
             "font.split", "font.wordWrapHeight", "rt.getters", "rt.memoized",
-            "model.playerSetAllVisible", "item.model", "item.name", "audio.devices", "audio.debugString", "audio.play",
+            "model.playerSetAllVisible", "model.bakeMixin", "model.materialMixin", "item.model", "item.name", "audio.devices", "audio.debugString", "audio.play",
             "gui.backdrop", "gui.fill", "gui.fillGradient", "gui.blit", "gui.drawString", "gui.drawCentered",
-            "gui.pose", "gui.scissor", "gui.outline", "gui.item", "gui.entity", "gui.modItem", "gui.tooltip",
+            "gui.pose", "gui.scissor", "gui.outline", "gui.item", "mixin.itemRender", "gui.entity", "gui.modItem", "gui.tooltip",
             "layer.render", "be.endPortal", "be.skull", "model.piglinParts", "model.piglinSubclass",
             "font.drawInBatch", "font.outline",
             "rt.gui", "rt.entitySolid", "rt.entityCutoutNoCull", "rt.entityTranslucent", "rt.entitySmoothCutout",
@@ -63,7 +63,10 @@ public class ClientTestMod implements ClientModInitializer {
             "mixin.containerRender.chest", "mixin.renderBackground.chest",
             "mixin.containerRender.furnace", "mixin.renderBackground.furnace",
             "chat.hud", "camera.partialTick", "camera.position", "camera.nearPlane",
-            "chat.screen", "chat.clickable",
+            "chat.screen", "chat.clickable", "skin.default",
+            "input.keyPressed", "input.keyReleased", "input.modifierHelpers", "input.selectAll", "input.charTyped",
+            "input.editBox", "input.mouseClicked", "input.widgetOnClick", "input.mouseDragged", "input.mouseReleased",
+            "input.widgetKey",
             "screenshot.gui", "screenshot.container", "screenshot.inventorySub", "screenshot.inventory",
             "screenshot.chest", "screenshot.furnace", "screenshot.world", "screenshot.chat");
         Thread t = new Thread(ClientTestMod::drive, "cb-clienttest");
@@ -99,12 +102,14 @@ public class ClientTestMod implements ClientModInitializer {
             attempt("rt.getters", ClientTestMod::renderTypeChecks);
             attempt("model.playerSetAllVisible", () -> Checks.playerModel(mc));
             attempt("item.model", () -> Checks.itemResources(mc));
+            attempt("model.bakeMixin", () -> Checks.blockModelMixins(mc));
             attempt("audio.devices", () -> Checks.audio(mc));
             screenPhase(mc, "gui", GuiScreen::new, () -> {
                 Frames.settle("gui.");
                 Frames.settle("layer.");
                 Frames.settle("be.");
                 Frames.settle("model.");
+                Frames.settle("mixin.");
             }, () -> {
                 Frames.settle("font.");
                 Frames.settle("rt.");
@@ -155,6 +160,8 @@ public class ClientTestMod implements ClientModInitializer {
                 Tally.check("chat.screen", heads > 0, heads + " ChatComponent.render calls under the chat screen");
                 Checks.chatClickable(mc);
             }, null);
+            attempt("skin.default", () -> Checks.skin(mc));
+            inputPhase(mc);
             finish(mc);
         } catch (Throwable t) {
             Tally.log("driver died: " + t);
@@ -165,6 +172,31 @@ public class ClientTestMod implements ClientModInitializer {
                 Tally.log("stop failed: " + t2);
             }
         }
+    }
+
+    /** s9 check 1 as 1.20.1 has it: real X input (played by boot_client_remote.sh) into InputScreen */
+    private static void inputPhase(class_310 mc) throws Exception {
+        Tally.log("phase input");
+        InputScreen in = onRender(() -> {
+            InputScreen s = new InputScreen();
+            mc.method_1507(s);
+            return s;
+        });
+        Thread.sleep(1500);
+        Tally.log("input ready: " + InputScreen.SEQUENCE);
+        long until = System.currentTimeMillis() + 90_000;
+        while (!in.done && System.currentTimeMillis() < until) {
+            Thread.sleep(250);
+        }
+        Thread.sleep(1000);
+        attempt("input.keyPressed", () -> {
+            Checks.input(in);
+            in.method_25395(in.button);
+            in.button.method_25404(257, 0, 0);
+            Tally.check("input.widgetKey", in.buttonPresses == 1, "Button.keyPressed(Enter) from the mod pressed it "
+                + in.buttonPresses + " times");
+            mc.method_1507(null);
+        });
     }
 
     interface ScreenMaker {

@@ -22,7 +22,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbNetRealmsAccess;
  * setTitle; the screen was an ErrorCallback), and the hand-over of the screen to a 1.20.1 task when the
  * screen is made, before the task's thread starts -- 1.20.1's constructor called task.setScreen(this).
  */
-@Mixin(class_4398.class)
+@Mixin(value = class_4398.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetRealmsTaskScreenBridge extends class_4905 implements class_5221, CbNetRealmsAccess.TaskScreen {
 
     @Shadow
@@ -63,13 +63,5 @@ public abstract class CbNetRealmsTaskScreenBridge extends class_4905 implements 
     @Override
     public void method_21292(class_2561 title) {
         method_53797(title);
-    }
-
-    @Inject(method = "<init>", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/class_4358;method_53808()Lnet/minecraft/class_2561;"), require = 1)
-    private void cb$handOver(class_437 lastScreen, class_4358 task, CallbackInfo ci) {
-        if (task instanceof CbNetLegacyTask) {
-            ((CbNetRealmsAccess.Task) task).method_21066((class_4398) (Object) this);
-        }
     }
 }

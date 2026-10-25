@@ -7,7 +7,12 @@
     "ServerDriverMixin",
     "TridentChannelingMixin",
     "TridentAccess",
-    "VillagerBookMixin"
+    "VillagerBookMixin",
+    "EffectTemplateMixin",
+    "OozingMixin",
+    "RecipeCacheEntryMixin",
+    "UtilOsMixin",
+    "EnchantBookInvoker"
   ],
   "injectors": {
     "defaultRequire": 1

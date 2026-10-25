@@ -83,6 +83,42 @@ public final class Driver {
         return out.toString().trim();
     }
 
+    /** cb-smx6's speed(): a pig's movement speed with Speed (amplifier 0) applied through LivingEntity.addEffect */
+    private static double speed(class_3218 level) {
+        net.minecraft.class_1452 pig = net.minecraft.class_1299.field_6093.method_5883(level);
+        net.minecraft.class_2338 spawn = level.method_43126();
+        pig.method_5808(spawn.method_10263() + 0.5, 100.0, spawn.method_10260() + 0.5, 0.0F, 0.0F);
+        pig.method_6092(new net.minecraft.class_1293(net.minecraft.class_1294.field_5904, 200, 0));
+        double v = pig.method_45325(net.minecraft.class_5134.field_23719);
+        pig.method_31472();
+        return v;
+    }
+
+    /** a zombie under Oozing removed as killed at the surface beside spawn: the slimes it left within 4 blocks */
+    private static int oozing(net.minecraft.class_3218 level, int dx) {
+        net.minecraft.class_2338 spawn = level.method_43126();
+        net.minecraft.class_2338 pos = level.method_8598(net.minecraft.class_2902.class_2903.field_13197, spawn.method_10069(dx, 0, 24));
+        net.minecraft.class_1642 zombie = net.minecraft.class_1299.field_6051.method_5883(level);
+        zombie.method_5808(pos.method_10263() + 0.5, pos.method_10264(), pos.method_10260() + 0.5, 0.0F, 0.0F);
+        level.method_8649(zombie);
+        zombie.method_6092(new net.minecraft.class_1293(net.minecraft.class_1294.field_50120, 200, 0));
+        zombie.method_5650(net.minecraft.class_1297.class_5529.field_26998);
+        java.util.List<net.minecraft.class_1621> slimes = level.method_18023(net.minecraft.class_1299.field_6069, new net.minecraft.class_238(pos).method_1014(4.0), e -> true);
+        int n = slimes.size();
+        for (net.minecraft.class_1621 s : slimes) {
+            s.method_31472();
+        }
+        return n;
+    }
+
+    /** cb-smx6's recipe(): the recipe a RecipeCache answers for a 3x3 grid holding one item in its first slot */
+    private static String recipe(net.minecraft.class_8884 cache, class_3218 level, net.minecraft.class_1792 item) {
+        java.util.List<class_1799> items = new java.util.ArrayList<>(java.util.Collections.nCopies(9, class_1799.field_8037));
+        items.set(0, new class_1799(item));
+        java.util.Optional<net.minecraft.class_8786<net.minecraft.class_3955>> r = cache.method_54470(level, net.minecraft.class_9694.method_59986(3, 3, items));
+        return r.isPresent() ? String.valueOf(r.get().comp_1932()) : "none";
+    }
+
     public static void run(net.minecraft.server.MinecraftServer server) {
         boolean layer = net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("centurybridge")
             || net.fabricmc.loader.api.FabricLoader.getInstance().getAllMods().stream()
@@ -106,6 +142,17 @@ public final class Driver {
             String books = books(level, new long[] {1L, 2L, 3L, 4L, 5L, 42L});
             report(tag + " books", !books.isEmpty(), books);
             System.out.println("CB-SMX6V books " + tag + " " + books);
+            double sp = speed(level);
+            report(tag + " effect-speed", Math.abs(sp - 0.3) < 1e-6, "Speed I on a pig: speed " + sp);
+            System.out.println("CB-SMX6V speed " + tag + " " + sp);
+            int slimes = oozing(level, 0);
+            report(tag + " oozing", slimes == 2, "Oozing zombie killed: " + slimes + " slime(s)");
+            System.out.println("CB-SMX6V oozing " + tag + " " + slimes);
+            net.minecraft.class_8884 cache = new net.minecraft.class_8884(1);
+            String recipes = recipe(cache, level, class_1802.field_8583) + " " + recipe(cache, level, class_1802.field_8583) + " "
+                + recipe(cache, level, class_1802.field_20391);
+            report(tag + " recipes", recipes.equals("minecraft:oak_planks minecraft:oak_planks minecraft:stone_button"), recipes);
+            System.out.println("CB-SMX6V recipes " + tag + " " + recipes);
         } catch (Throwable t) {
             report(tag + " exception", false, String.valueOf(t));
             t.printStackTrace();

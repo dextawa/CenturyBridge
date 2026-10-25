@@ -40,6 +40,7 @@ public class GuiScreen extends class_437 {
     static final class_2960 PIGLIN = new class_2960("textures/entity/piglin/piglin.png");
 
     private int layerDelta = -1;
+    private int itemRendersBefore, itemRenderDelta = -1;
     private int piglinSetups = -1;
     private CbEndPortal.Renderer portal;
     private CbEndPortal.Entity portalEntity;
@@ -109,12 +110,21 @@ public class GuiScreen extends class_437 {
             return null;
         });
         Frames.step("gui.item", () -> {
+            itemRendersBefore = ModelProbe.itemRenders;
             ctx.method_51427(new class_1799(class_1802.field_8802), 10, 115);
             ctx.method_51427(new class_1799(class_1802.field_8367), 30, 115); // foil
             class_1799 stack = new class_1799(class_1802.field_8270, 64);
             ctx.method_51427(stack, 50, 115);
             ctx.method_51431(font, stack, 50, 115);
+            itemRenderDelta = ModelProbe.itemRenders - itemRendersBefore;
             return null;
+        });
+        Frames.step("mixin.itemRender", () -> {
+            if (itemRenderDelta != 3) {
+                throw new AssertionError("the mod's ItemRenderer.render HEAD injector ran " + itemRenderDelta
+                    + " times for the 3 items drawn");
+            }
+            return "once per item drawn";
         });
         Frames.step("gui.entity", () -> {
             if (mc.field_1724 == null) {

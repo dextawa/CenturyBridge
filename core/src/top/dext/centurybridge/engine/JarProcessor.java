@@ -225,8 +225,12 @@ public final class JarProcessor {
             for (int i = 0; i < oa.length; i++) {
                 int src = map[i];
                 mv.visitVarInsn(na[src].getOpcode(Opcodes.ILOAD), slotOf[src]);
-                if (!na[src].equals(oa[i]) && h.wrapName != null) {
-                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.wrapOwner, h.wrapName, h.wrapDesc, false);
+                String[] w = na[src].equals(oa[i]) ? null : h.wrapFor(na[src], oa[i]);
+                if (w == null && !na[src].equals(oa[i]) && h.wraps.size() == 1) {
+                    w = h.wraps.get(0); // a single wrap is applied as written (its parameter may be a supertype)
+                }
+                if (w != null) {
+                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, w[0], w[1], w[2], false);
                 } else if (!na[src].equals(oa[i]) && h.narrow && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
                     mv.visitTypeInsn(Opcodes.CHECKCAST, oa[i].getInternalName());
                 }
@@ -1930,6 +1934,36 @@ public final class JarProcessor {
         return out;
     }
 
+    /** the first of {@code types} the class's code casts to, tests with instanceof or calls a method of; null if none */
+    private static String usesAny(byte[] bytes, Set<String> types) {
+        String[] hit = {null};
+        try {
+            new ClassReader(bytes).accept(new ClassVisitor(Opcodes.ASM9) {
+                @Override
+                public MethodVisitor visitMethod(int acc, String n, String d, String s, String[] x) {
+                    return new MethodVisitor(Opcodes.ASM9) {
+                        @Override
+                        public void visitTypeInsn(int op, String type) {
+                            if (hit[0] == null && (op == Opcodes.CHECKCAST || op == Opcodes.INSTANCEOF) && types.contains(type)) {
+                                hit[0] = type;
+                            }
+                        }
+
+                        @Override
+                        public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
+                            if (hit[0] == null && types.contains(owner)) {
+                                hit[0] = owner;
+                            }
+                        }
+                    };
+                }
+            }, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        } catch (RuntimeException e) {
+            return null; // not a class file after all
+        }
+        return hit[0];
+    }
+
     private static LayerIndex indexLayer(Map<String, byte[]> entries) {
         LayerIndex idx = new LayerIndex();
         for (Map.Entry<String, byte[]> e : entries.entrySet()) {
@@ -2451,6 +2485,34 @@ public final class JarProcessor {
                         rpt.strippedMixins.add(tag + shortName(cls) + " -- extends stripped mixin " + shortName(sup));
                         grew = true;
                         break;
+                    }
+                }
+            }
+        }
+        // a stripped mixin's interfaces are no longer merged onto its target: code of the jar that casts to one
+        // or calls through one throws ClassCastException where it runs (1.21.2's CbRenderState922Mixin casting
+        // to W897 once CbRenderState897Mixin is stripped at 1.21.9). The rest of such a mixin still applies and
+        // works, so it stays; each use is reported for the step that broke it
+        {
+            Set<String> orphaned = new HashSet<>();
+            for (String dead : deadMixins) {
+                for (String i : layer.interfacesOf.getOrDefault(dead, List.of())) {
+                    if (layer.superOf.containsKey(i)) orphaned.add(i); // the jar's own interface
+                }
+            }
+            for (String live : triage.configOfClass().keySet()) {
+                if (!deadMixins.contains(live)) orphaned.removeAll(layer.interfacesOf.getOrDefault(live, List.of()));
+            }
+            if (!orphaned.isEmpty()) {
+                for (Map.Entry<String, byte[]> en : new java.util.TreeMap<>(entries).entrySet()) {
+                    String n = en.getKey();
+                    if (!n.endsWith(".class")) continue;
+                    String cls = n.substring(0, n.length() - 6);
+                    if (deadMixins.contains(cls) || orphaned.contains(cls)) continue;
+                    String used = usesAny(en.getValue(), orphaned);
+                    if (used != null) {
+                        rpt.notes.add(tag + "uses an interface only a stripped mixin merged (ClassCastException where it runs): "
+                            + shortName(cls) + " -> " + shortName(used));
                     }
                 }
             }

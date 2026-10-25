@@ -14,11 +14,8 @@ import top.dext.centurybridge.rt.v1_20_2.CbLegacyNineSlice;
  * 1.20.2's tab sprites by CbGuiLegacyTextures) at the row it picks. Tab buttons that do not override it
  * draw as 1.20.2 does; the same art.
  */
-@Mixin(net.minecraft.class_8209.class)
-public abstract class CbGuiTabButtonBridge {
-
-    private static final net.minecraft.class_2960 CB_SHEET = new net.minecraft.class_2960("textures/gui/tab_button.png");
-    private static final CbGuiOverrides.Hook CB_TEXTURE_Y = new CbGuiOverrides.Hook(net.minecraft.class_8209.class, "method_49607");
+@Mixin(value = net.minecraft.class_8209.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
+public abstract class CbGuiTabButtonBridge implements top.dext.centurybridge.rt.v1_20_2.CbGuiRestoredAccess.TabButton {
 
     /** 1.20.1 TabButton.getTextureY() */
     protected int method_49607() {
@@ -34,13 +31,8 @@ public abstract class CbGuiTabButtonBridge {
         return row * 24;
     }
 
-    @Redirect(method = "method_48579", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/class_332;method_52706(Lnet/minecraft/class_2960;IIII)V"))
-    private void cb$sheetRow(net.minecraft.class_332 graphics, net.minecraft.class_2960 sprite, int x, int y, int width, int height) {
-        if (CB_TEXTURE_Y.in(this)) {
-            ((CbLegacyNineSlice) graphics).method_48587(CB_SHEET, x, y, width, height, 2, 2, 2, 0, 130, 24, 0, this.method_49607());
-        } else {
-            graphics.method_52706(sprite, x, y, width, height);
-        }
+    @Override
+    public int cb$textureY() {
+        return this.method_49607();
     }
 }

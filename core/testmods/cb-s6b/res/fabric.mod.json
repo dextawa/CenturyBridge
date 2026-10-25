@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s6b",
+ "version": "1.0.0",
+ "name": "CB s6b Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.s6b.S6bTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.5" }
+}

@@ -17,7 +17,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbNet;
  * components and never calls them. A query on a channel 1.20.2 does not know keeps its bytes, as
  * 1.20.1 did, unless Fabric API's networking -- which does the same with its own payload -- is loaded.
  */
-@Mixin(class_2899.class)
+@Mixin(value = class_2899.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetQueryRequestBridge {
 
     /** was getQueryId() */
@@ -33,12 +33,5 @@ public abstract class CbNetQueryRequestBridge {
     /** was getPayload(): the packet's own buffer, the same object on every call */
     public class_2540 method_36177() {
         return CbNet.cbQueryData(this, ((class_2899) (Object) this).comp_1568());
-    }
-
-    @Inject(method = "method_52287", at = @At("HEAD"), cancellable = true)
-    private static void cb$retainUnknown(class_2960 channel, class_2540 buf, CallbackInfoReturnable<class_8595> cir) {
-        if (!CbNet.FABRIC_RETAINS_PAYLOADS) {
-            cir.setReturnValue(CbNet.cbRetainQuery(channel, buf));
-        }
     }
 }

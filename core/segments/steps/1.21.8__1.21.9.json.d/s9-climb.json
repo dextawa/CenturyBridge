@@ -1,0 +1,175 @@
+{
+ "_climb_basis": "ResolvableProfile: new ResolvableProfile(profile) is ResolvableProfile.createResolved(profile) (1.21.8's constructor made a resolved profile of it); gameProfile() is partialProfile(), the same profile for a resolved one",
+ "callReshapes": {
+  "net/minecraft/class_1297.method_5873(Lnet/minecraft/class_1297;Z)Z": {
+   "basis": "s9 climb: Entity.startRiding(vehicle, force) gained sendEventsAndTriggers; 1.21.8 always sent the mount game event and ran the riding triggers (CbClimb.sendEvents)",
+   "desc": "(Lnet/minecraft/class_1297;ZZ)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#sendEvents()Z"
+   ]
+  },
+  "net/minecraft/class_1308.method_5873(Lnet/minecraft/class_1297;Z)Z": {
+   "basis": "s9 climb: Entity.startRiding(vehicle, force) gained sendEventsAndTriggers; 1.21.8 always sent the mount game event and ran the riding triggers (CbClimb.sendEvents)",
+   "desc": "(Lnet/minecraft/class_1297;ZZ)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#sendEvents()Z"
+   ]
+  },
+  "net/minecraft/class_1606.method_5873(Lnet/minecraft/class_1297;Z)Z": {
+   "basis": "s9 climb: Entity.startRiding(vehicle, force) gained sendEventsAndTriggers; 1.21.8 always sent the mount game event and ran the riding triggers (CbClimb.sendEvents)",
+   "desc": "(Lnet/minecraft/class_1297;ZZ)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#sendEvents()Z"
+   ]
+  },
+  "net/minecraft/class_2814.method_39956(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2837;": {
+   "basis": "s9 climb: 1.21.9's palettes keep no resize handler (each idFor call takes one), so copy has none to hand on; 1.21.8's copy(resize) handed the copy the one given",
+   "desc": "()Lnet/minecraft/class_2837;",
+   "ops": [
+    "drop"
+   ]
+  },
+  "net/minecraft/class_2834.method_39956(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2837;": {
+   "basis": "s9 climb: 1.21.9's palettes keep no resize handler (each idFor call takes one), so copy has none to hand on; 1.21.8's copy(resize) handed the copy the one given",
+   "desc": "()Lnet/minecraft/class_2837;",
+   "ops": [
+    "drop"
+   ]
+  },
+  "net/minecraft/class_2837.method_39956(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2837;": {
+   "basis": "s9 climb: 1.21.9's palettes keep no resize handler (each idFor call takes one), so copy has none to hand on; 1.21.8's copy(resize) handed the copy the one given",
+   "desc": "()Lnet/minecraft/class_2837;",
+   "ops": [
+    "drop"
+   ]
+  },
+  "net/minecraft/class_2852.method_61794(Lnet/minecraft/class_5539;Lnet/minecraft/class_5455;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2852;": {
+   "basis": "s9 climb: SerializableChunkData.parse takes the PalettedContainerFactory 1.21.9 builds from the same registries (PalettedContainerFactory.create(registries))",
+   "desc": "(Lnet/minecraft/class_5539;Lnet/minecraft/class_11897;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2852;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbClimb#containers(Lnet/minecraft/class_5455;)Lnet/minecraft/class_11897;",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_3222.method_5873(Lnet/minecraft/class_1297;Z)Z": {
+   "basis": "s9 climb: Entity.startRiding(vehicle, force) gained sendEventsAndTriggers; 1.21.8 always sent the mount game event and ran the riding triggers (CbClimb.sendEvents)",
+   "desc": "(Lnet/minecraft/class_1297;ZZ)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#sendEvents()Z"
+   ]
+  },
+  "net/minecraft/class_4482$class_9309.comp_2431()Lnet/minecraft/class_9279;": {
+   "basis": "s9 climb: Occupant.entityData() for 1.21.8 code is the saved tag with its id (CbClimb.toCustom)",
+   "desc": "()Lnet/minecraft/class_11580;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbClimb#toCustom(Lnet/minecraft/class_11580;)Lnet/minecraft/class_9279;"
+  },
+  "net/minecraft/class_4836.method_5873(Lnet/minecraft/class_1297;Z)Z": {
+   "basis": "s9 climb: Entity.startRiding(vehicle, force) gained sendEventsAndTriggers; 1.21.8 always sent the mount game event and ran the riding triggers (CbClimb.sendEvents)",
+   "desc": "(Lnet/minecraft/class_1297;ZZ)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#sendEvents()Z"
+   ]
+  },
+  "net/minecraft/class_746.method_5873(Lnet/minecraft/class_1297;Z)Z": {
+   "basis": "s9 climb: Entity.startRiding(vehicle, force) gained sendEventsAndTriggers; 1.21.8 always sent the mount game event and ran the riding triggers (CbClimb.sendEvents)",
+   "desc": "(Lnet/minecraft/class_1297;ZZ)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#sendEvents()Z"
+   ]
+  }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_9296.<init>(Lcom/mojang/authlib/GameProfile;)V": "net/minecraft/class_9296#method_73307"
+ },
+ "frameDefaults": {
+  "method_5873(Lnet/minecraft/class_1297;Z)Z": {
+   "2": "top/dext/centurybridge/step/v1_21_9/rt/CbClimb#sendEvents()Z"
+  }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_3806.field_16811:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbClimb"
+ },
+ "methodRenames": {
+  "net/minecraft/class_9296.comp_2413()Lcom/mojang/authlib/GameProfile;": "method_73313"
+ },
+ "overrideHooks": [
+  {
+   "args": [
+    0,
+    1
+   ],
+   "basis": "s9 climb: vanilla calls startRiding(vehicle, force, sendEvents); the old override gets (vehicle, force), its super call passes on the value vanilla passed",
+   "frames": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_5873(Lnet/minecraft/class_1297;ZZ)Z",
+   "old": "method_5873(Lnet/minecraft/class_1297;Z)Z",
+   "onlyUnder": "net/minecraft/class_1297",
+   "superCalls": "rewrite"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_4482$class_9309.<init>(Lnet/minecraft/class_9279;II)V": {
+   "basis": "s9 climb: a bee occupant's data is TypedEntityData (type beside the tag) where 1.21.8 kept the saved tag with its id (CbClimb.toTyped)",
+   "desc": "(Lnet/minecraft/class_11580;II)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbClimb#toTyped(Lnet/minecraft/class_9279;)Lnet/minecraft/class_11580;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4520.<init>(Lnet/minecraft/class_4520$class_9116;Ljava/util/Collection;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;Lnet/minecraft/class_4520$class_9117;Lnet/minecraft/class_4520$class_9117;Z)V": {
+   "basis": "s9 climb: GameTestRunner's new last flag (clearing between batches, 1.21.9's opt-in) is off, as 1.21.9's builder leaves it and 1.21.8 never cleared",
+   "desc": "(Lnet/minecraft/class_4520$class_9116;Ljava/util/Collection;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;Lnet/minecraft/class_4520$class_9117;Lnet/minecraft/class_4520$class_9117;ZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#no()Z"
+   ]
+  },
+  "net/minecraft/class_542$class_547.<init>(Lnet/minecraft/class_320;Lcom/mojang/authlib/properties/PropertyMap;Lcom/mojang/authlib/properties/PropertyMap;Ljava/net/Proxy;)V": {
+   "basis": "s9 climb: GameConfig.UserData keeps the user and proxy; 1.21.9's client reads no user or profile property maps from its launch arguments (it fetches the profile itself)",
+   "desc": "(Lnet/minecraft/class_320;Ljava/net/Proxy;)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_5434.<init>(Lnet/minecraft/class_3195$class_7302;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_6122;ZLjava/util/Optional;ILjava/util/List;Lnet/minecraft/class_9778;Lnet/minecraft/class_9822;)V": {
+   "basis": "s9 climb: JigsawStructure's maxDistanceFromCenter is a MaxDistance (horizontal, vertical); 1.21.8's one distance bounded both (MaxDistance(d))",
+   "desc": "(Lnet/minecraft/class_3195$class_7302;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_6122;ZLjava/util/Optional;Lnet/minecraft/class_5434$class_11600;Ljava/util/List;Lnet/minecraft/class_9778;Lnet/minecraft/class_9822;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbClimb#maxDistance(I)Lnet/minecraft/class_5434$class_11600;",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  }
+ }
+}

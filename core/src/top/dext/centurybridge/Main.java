@@ -206,6 +206,11 @@ public final class Main {
                 System.out.println("WARNING: no layer jar (" + surfaces + "): every facade-only token keeps its intermediary name");
             }
             wallTable = top.dext.centurybridge.data.JarRemapper.loadTable(renameTable).keepFacadeTokens(chain.classRenames, declared);
+            // the wall table's source names are 1.21.11's: a bare method id in a mixin selector gets its 1.21.11
+            // descriptor where the target class has several methods of the new name (Table.sourceMethods)
+            if (Files.exists(codeOf("1.21.11"))) {
+                wallTable.loadSource(codeOf("1.21.11"));
+            }
         }
         if (lj != null && Files.exists(Path.of(lj))) {
             chain.layerJar = Path.of(lj);
@@ -241,6 +246,7 @@ public final class Main {
                 chain.mixinRepair = new top.dext.centurybridge.engine.MixinRepair(codeJar);
                 chain.mixinRepair.renamed = chain::renamedDesc;
                 chain.mixinRepair.layerMembers = chain.layerMembers;
+                chain.mixinRepair.classRenames = chain.classRenames; // anchor-facade: what restored bodies call
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");

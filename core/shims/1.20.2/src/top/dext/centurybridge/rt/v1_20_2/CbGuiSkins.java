@@ -66,7 +66,7 @@ public final class CbGuiSkins {
     /**
      * superCtorReshapes conv: 1.20.1 User kept the UUID as the string it was given and parsed it on
      * demand (getProfileId: null when it is no UUID); 1.20.2 keeps the parsed UUID. The string rides to the
-     * constructor (CbGuiUserBridge keeps it, so getUuid() returns it as 1.20.1 did).
+     * constructor (CbGuiUserBridgeHooks keeps it, so getUuid() returns it as 1.20.1 did).
      */
     public static java.util.UUID cbUuid(String uuid) {
         PENDING_UUID.set(uuid);

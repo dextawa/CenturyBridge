@@ -1,0 +1,182 @@
+{
+ "_s11_gamerules_basis": "s11 game rules (1.21.10 -> 1.21.11): 1.21.11 replaced GameRules' nested Key/Type/Value classes by registered GameRule<T> objects whose values a GameRuleMap holds; the 1.21.10 classes are the layer's facade/GameRules, bound to 1.21.11's GameRules (rt/CbGameRules); 1.21.11's Fabric API replaced GameRuleFactory/GameRuleRegistry/DoubleRule/EnumRule by GameRuleBuilder (compat/fapi/gamerule/v1, registering through it)",
+ "classRenames": {
+  "net/minecraft/class_1928$class_4313": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$Key",
+  "net/minecraft/class_1928$class_4314": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$Type",
+  "net/minecraft/class_1928$class_4315": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$Value",
+  "net/minecraft/class_1928$class_4310": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$BooleanValue",
+  "net/minecraft/class_1928$class_4312": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$IntegerValue",
+  "net/minecraft/class_1928$class_5198": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$Category",
+  "net/minecraft/class_1928$class_4311": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$GameRuleTypeVisitor",
+  "net/minecraft/class_1928$class_5199": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$VisitorCaller",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/GameRuleFactory",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleRegistry": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/GameRuleRegistry",
+  "net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/FabricGameRuleVisitor",
+  "net/fabricmc/fabric/api/gamerule/v1/rule/DoubleRule": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/rule/DoubleRule",
+  "net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/rule/EnumRule",
+  "net/fabricmc/fabric/api/gamerule/v1/rule/ValidateableRule": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/rule/ValidateableRule",
+  "net/minecraft/class_11844$class_11846": "top/dext/centurybridge/step/v1_21_11/facade/GameRulesService$TypedRule",
+  "net/minecraft/class_11844$class_11847": "top/dext/centurybridge/step/v1_21_11/facade/GameRulesService$UntypedRule",
+  "net/minecraft/class_11844$class_11845": "net/minecraft/class_11845",
+  "net/minecraft/class_11987": "top/dext/centurybridge/step/v1_21_11/facade/GameRulesService$RpcGameRules",
+  "net/minecraft/class_10665$class_10668$class_10669": "top/dext/centurybridge/step/v1_21_11/facade/SetGameRulesEntry"
+ },
+ "instanceRedirects": {
+  "net/minecraft/server/MinecraftServer.method_74058(Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/class_11829.method_73754(Lnet/minecraft/class_11844$class_11847;Lnet/minecraft/class_11838;)Lnet/minecraft/class_11844$class_11846;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc",
+  "net/minecraft/class_11829.method_73755(Lnet/minecraft/class_1928$class_4313;)Lnet/minecraft/class_1928$class_4315;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc",
+  "net/minecraft/class_11829.method_73757(Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)Lnet/minecraft/class_11844$class_11846;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc",
+  "net/minecraft/class_11871.method_73667(Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc",
+  "net/minecraft/class_10665$class_10668.comp_3552()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc",
+  "net/minecraft/class_10665$class_10668.comp_3553()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1928.method_66702(Lnet/minecraft/class_1928$class_4313;)Lnet/minecraft/class_1928$class_4314;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/class_1928.method_66703(Ljava/lang/Class;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/class_1928.method_61725(Lnet/minecraft/class_7699;)Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory.getCategory(Lnet/minecraft/class_1928$class_4313;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiGameRules",
+  "net/minecraft/class_11844.method_73875(Lnet/minecraft/class_11827;Lnet/minecraft/class_11844$class_11847;Lnet/minecraft/class_11838;)Lnet/minecraft/class_11844$class_11846;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc",
+  "net/minecraft/class_11844.method_73876(Lnet/minecraft/class_11827;Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)Lnet/minecraft/class_11844$class_11846;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc",
+  "net/minecraft/class_10665$class_10668.method_67063(Lnet/minecraft/class_1928$class_4313;Ljava/lang/Object;)Lnet/minecraft/class_10665$class_10668$class_10669;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1928.<init>(Lnet/minecraft/class_7699;Lcom/mojang/serialization/DynamicLike;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules#newGameRules",
+  "net/minecraft/class_5235$class_5236.<init>(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_1928$class_4310;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesClient#booleanEntry",
+  "net/minecraft/class_5235$class_5239.<init>(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_1928$class_4312;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesClient#integerEntry",
+  "net/minecraft/class_10665$class_10668.<init>(Ljava/util/List;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc#newSetGameRules"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_1928.field_30963:I": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_5235$class_5236.<init>(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_1928$class_4310;)V": {
+   "desc": "(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_12279;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv:4 top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesClient#booleanRule(Lnet/minecraft/class_1928$class_4310;)Lnet/minecraft/class_12279;"
+   ],
+   "basis": "1.21.11's boolean row takes the rule the 1.21.10 value stands for (CbGameRules.ruleOf)"
+  },
+  "net/minecraft/class_5235$class_5239.<init>(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_1928$class_4312;)V": {
+   "desc": "(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_12279;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv:4 top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesClient#integerRule(Lnet/minecraft/class_1928$class_4312;)Lnet/minecraft/class_12279;"
+   ],
+   "basis": "1.21.11's integer row takes the rule the 1.21.10 value stands for (CbGameRules.ruleOf)"
+  },
+  "net/minecraft/class_1928.<init>(Lnet/minecraft/class_7699;Lcom/mojang/serialization/DynamicLike;)V": {
+   "desc": "(Lnet/minecraft/class_7699;)V",
+   "ops": [
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules#loadInto(Lnet/minecraft/class_1928;Lcom/mojang/serialization/DynamicLike;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "1.21.11's GameRules(features) has every rule at its default; 1.21.10's (features, dynamic) then read each rule from its id (CbGameRules.loadInto)"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_74058(Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)V",
+   "new": "method_74058(Lnet/minecraft/class_12279;Ljava/lang/Object;)V",
+   "onlyUnder": "net/minecraft/server/MinecraftServer",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$LegacyServer",
+   "bridge": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc.serverBridge(Ltop/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$LegacyServer;Lnet/minecraft/class_12279;Ljava/lang/Object;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc.superServer(Ltop/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$SuperServer;Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$SuperServer",
+   "superAccessors": [
+    "method_74058(Lnet/minecraft/class_12279;Ljava/lang/Object;)V"
+   ],
+   "basis": "1.21.11 tells the server a rule and its value; a 1.21.10 server override is told each 1.21.10 key of the rule with the live value; its super call is 1.21.11's onGameRuleChanged"
+  },
+  {
+   "old": "method_73667(Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)V",
+   "new": "method_73667(Lnet/minecraft/class_12279;Ljava/lang/Object;)V",
+   "onlyUnder": "net/minecraft/class_11871",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$LegacyNotification",
+   "bridge": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc.notifyBridge(Ltop/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$LegacyNotification;Lnet/minecraft/class_12279;Ljava/lang/Object;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc.superNotify(Ltop/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$SuperNotification;Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$SuperNotification",
+   "superAccessors": [
+    "method_73667(Lnet/minecraft/class_12279;Ljava/lang/Object;)V"
+   ],
+   "basis": "NotificationService.onGameRuleChanged names the rule and its value since 1.21.11; a 1.21.10 implementation is told each 1.21.10 key of the rule"
+  },
+  {
+   "old": "method_73754(Lnet/minecraft/class_11844$class_11847;Lnet/minecraft/class_11838;)Lnet/minecraft/class_11844$class_11846;",
+   "new": "method_73754(Lnet/minecraft/class_11844$class_12254;Lnet/minecraft/class_11838;)Lnet/minecraft/class_11844$class_12254;",
+   "onlyUnder": "net/minecraft/class_11829",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$LegacyUpdate",
+   "bridge": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc.updateBridge(Ltop/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$LegacyUpdate;Lnet/minecraft/class_11844$class_12254;Lnet/minecraft/class_11838;)Lnet/minecraft/class_11844$class_12254;",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc.superUpdate(Ltop/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$SuperService;Lnet/minecraft/class_11844$class_11847;Lnet/minecraft/class_11838;)Lnet/minecraft/class_11844$class_11846;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$SuperService",
+   "superAccessors": [
+    "method_73754(Lnet/minecraft/class_11844$class_12254;Lnet/minecraft/class_11838;)Lnet/minecraft/class_11844$class_12254;",
+    "method_73755(Lnet/minecraft/class_12279;)Ljava/lang/Object;",
+    "method_73757(Lnet/minecraft/class_12279;Ljava/lang/Object;)Lnet/minecraft/class_11844$class_12254;"
+   ],
+   "basis": "MinecraftGameRuleService.updateGameRule takes and answers GameRuleUpdate since 1.21.11; a 1.21.10 implementation is asked per 1.21.10 key of the rule"
+  },
+  {
+   "old": "method_73755(Lnet/minecraft/class_1928$class_4313;)Lnet/minecraft/class_1928$class_4315;",
+   "new": "method_73755(Lnet/minecraft/class_12279;)Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_11829",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$LegacyGet",
+   "bridge": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc.getBridge(Ltop/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$LegacyGet;Lnet/minecraft/class_12279;)Ljava/lang/Object;",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc.superGet(Ltop/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$SuperService;Lnet/minecraft/class_1928$class_4313;)Lnet/minecraft/class_1928$class_4315;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$SuperService",
+   "superAccessors": [
+    "method_73754(Lnet/minecraft/class_11844$class_12254;Lnet/minecraft/class_11838;)Lnet/minecraft/class_11844$class_12254;",
+    "method_73755(Lnet/minecraft/class_12279;)Ljava/lang/Object;",
+    "method_73757(Lnet/minecraft/class_12279;Ljava/lang/Object;)Lnet/minecraft/class_11844$class_12254;"
+   ],
+   "basis": "MinecraftGameRuleService.getRuleValue takes a GameRule and answers its value since 1.21.11"
+  },
+  {
+   "old": "method_73757(Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)Lnet/minecraft/class_11844$class_11846;",
+   "new": "method_73757(Lnet/minecraft/class_12279;Ljava/lang/Object;)Lnet/minecraft/class_11844$class_12254;",
+   "onlyUnder": "net/minecraft/class_11829",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$LegacyTyped",
+   "bridge": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc.typedBridge(Ltop/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$LegacyTyped;Lnet/minecraft/class_12279;Ljava/lang/Object;)Lnet/minecraft/class_11844$class_12254;",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc.superTyped(Ltop/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$SuperService;Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)Lnet/minecraft/class_11844$class_11846;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesRpc$SuperService",
+   "superAccessors": [
+    "method_73754(Lnet/minecraft/class_11844$class_12254;Lnet/minecraft/class_11838;)Lnet/minecraft/class_11844$class_12254;",
+    "method_73755(Lnet/minecraft/class_12279;)Ljava/lang/Object;",
+    "method_73757(Lnet/minecraft/class_12279;Ljava/lang/Object;)Lnet/minecraft/class_11844$class_12254;"
+   ],
+   "basis": "MinecraftGameRuleService.getTypedRule takes a GameRule and its value since 1.21.11"
+  }
+ ],
+ "covers": [
+  "net/minecraft/class_1928.method_20746(Lnet/minecraft/class_1928$class_4313;)Lnet/minecraft/class_1928$class_4315;",
+  "net/minecraft/class_1928.method_8355(Lnet/minecraft/class_1928$class_4313;)Z",
+  "net/minecraft/class_1928.method_8356(Lnet/minecraft/class_1928$class_4313;)I",
+  "net/minecraft/class_1928.method_8358()Lnet/minecraft/class_2487;",
+  "net/minecraft/class_1928.method_20744(Lnet/minecraft/class_1928$class_4311;)V",
+  "net/minecraft/class_1928.method_27322(Lnet/minecraft/class_1928;Lnet/minecraft/server/MinecraftServer;)V",
+  "net/minecraft/server/MinecraftServer.method_3767()Lnet/minecraft/class_1928;"
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_11871",
+   "method": "method_74998()V",
+   "call": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules.serverActivityOccured(Lnet/minecraft/class_11871;)V",
+   "basis": "1.21.11 added NotificationService.serverActivityOccured (abstract); 1.21.10 sent no such notification, so a 1.21.10 implementation does nothing on it"
+  }
+ ]
+}

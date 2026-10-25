@@ -23,25 +23,12 @@ public final class CbRecipeSerializers {
         return self.method_45444(CbRecipeSerializerSupport.currentId(), buf);
     }
 
-    /** serializer.read(id, json): the serializer's own reader when it declares one, vanilla's otherwise */
-    public static net.minecraft.class_3955 method_45443(net.minecraft.class_1866 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        if (self instanceof CbLegacySerializers.SimpleCraftingRecipeSerializerJson own) {
-            return own.method_45443(id, json);
-        }
-        return (net.minecraft.class_3955) CbRecipeSerializerSupport.decode(self.method_53736(), id, json);
-    }
-
     /** serializer.read(id, buf): the serializer's own reader when it declares one, vanilla's otherwise */
     public static net.minecraft.class_3955 method_45444(net.minecraft.class_1866 self, net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
         if (self instanceof CbLegacySerializers.SimpleCraftingRecipeSerializerBuf own) {
             return own.method_45444(id, buf);
         }
         return CbRecipeSerializerSupport.withId(id, () -> self.method_45444(buf));
-    }
-
-    /** super.read(id, json) in a subclass: vanilla's codec, the one this serializer was built with */
-    public static net.minecraft.class_3955 super_method_45443(net.minecraft.class_1866 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        return CbRecipeSerializerSupport.decode(CbRecipeSerializerSupport.superCodec(net.minecraft.class_1866.class, self), id, json);
     }
 
     /** super.read(id, buf) in a subclass: vanilla's reader, run on this serializer */
@@ -69,25 +56,12 @@ public final class CbRecipeSerializers {
         return self.method_8141(CbRecipeSerializerSupport.currentId(), buf);
     }
 
-    /** serializer.read(id, json): the serializer's own reader when it declares one, vanilla's otherwise */
-    public static net.minecraft.class_1867 method_8142(net.minecraft.class_1867.class_1868 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        if (self instanceof CbLegacySerializers.ShapelessRecipe_SerializerJson own) {
-            return own.method_8142(id, json);
-        }
-        return (net.minecraft.class_1867) CbRecipeSerializerSupport.decode(self.method_53736(), id, json);
-    }
-
     /** serializer.read(id, buf): the serializer's own reader when it declares one, vanilla's otherwise */
     public static net.minecraft.class_1867 method_8141(net.minecraft.class_1867.class_1868 self, net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
         if (self instanceof CbLegacySerializers.ShapelessRecipe_SerializerBuf own) {
             return own.method_8141(id, buf);
         }
         return CbRecipeSerializerSupport.withId(id, () -> self.method_8141(buf));
-    }
-
-    /** super.read(id, json) in a subclass: vanilla's codec, the one this serializer was built with */
-    public static net.minecraft.class_1867 super_method_8142(net.minecraft.class_1867.class_1868 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        return CbRecipeSerializerSupport.decode(CbRecipeSerializerSupport.superCodec(net.minecraft.class_1867.class_1868.class, self), id, json);
     }
 
     /** super.read(id, buf) in a subclass: vanilla's reader, run on this serializer */
@@ -115,25 +89,12 @@ public final class CbRecipeSerializers {
         return self.method_8163(CbRecipeSerializerSupport.currentId(), buf);
     }
 
-    /** serializer.read(id, json): the serializer's own reader when it declares one, vanilla's otherwise */
-    public static net.minecraft.class_1869 method_8164(net.minecraft.class_1869.class_1870 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        if (self instanceof CbLegacySerializers.ShapedRecipe_SerializerJson own) {
-            return own.method_8164(id, json);
-        }
-        return (net.minecraft.class_1869) CbRecipeSerializerSupport.decode(self.method_53736(), id, json);
-    }
-
     /** serializer.read(id, buf): the serializer's own reader when it declares one, vanilla's otherwise */
     public static net.minecraft.class_1869 method_8163(net.minecraft.class_1869.class_1870 self, net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
         if (self instanceof CbLegacySerializers.ShapedRecipe_SerializerBuf own) {
             return own.method_8163(id, buf);
         }
         return CbRecipeSerializerSupport.withId(id, () -> self.method_8163(buf));
-    }
-
-    /** super.read(id, json) in a subclass: vanilla's codec, the one this serializer was built with */
-    public static net.minecraft.class_1869 super_method_8164(net.minecraft.class_1869.class_1870 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        return CbRecipeSerializerSupport.decode(CbRecipeSerializerSupport.superCodec(net.minecraft.class_1869.class_1870.class, self), id, json);
     }
 
     /** super.read(id, buf) in a subclass: vanilla's reader, run on this serializer */
@@ -161,25 +122,12 @@ public final class CbRecipeSerializers {
         return self.method_17737(CbRecipeSerializerSupport.currentId(), buf);
     }
 
-    /** serializer.read(id, json): the serializer's own reader when it declares one, vanilla's otherwise */
-    public static net.minecraft.class_1874 method_17736(net.minecraft.class_3957 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        if (self instanceof CbLegacySerializers.SimpleCookingSerializerJson own) {
-            return own.method_17736(id, json);
-        }
-        return (net.minecraft.class_1874) CbRecipeSerializerSupport.decode(self.method_53736(), id, json);
-    }
-
     /** serializer.read(id, buf): the serializer's own reader when it declares one, vanilla's otherwise */
     public static net.minecraft.class_1874 method_17737(net.minecraft.class_3957 self, net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
         if (self instanceof CbLegacySerializers.SimpleCookingSerializerBuf own) {
             return own.method_17737(id, buf);
         }
         return CbRecipeSerializerSupport.withId(id, () -> self.method_17737(buf));
-    }
-
-    /** super.read(id, json) in a subclass: vanilla's codec, the one this serializer was built with */
-    public static net.minecraft.class_1874 super_method_17736(net.minecraft.class_3957 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        return CbRecipeSerializerSupport.decode(CbRecipeSerializerSupport.superCodec(net.minecraft.class_3957.class, self), id, json);
     }
 
     /** super.read(id, buf) in a subclass: vanilla's reader, run on this serializer */
@@ -207,25 +155,12 @@ public final class CbRecipeSerializers {
         return self.method_17882(CbRecipeSerializerSupport.currentId(), buf);
     }
 
-    /** serializer.read(id, json): the serializer's own reader when it declares one, vanilla's otherwise */
-    public static net.minecraft.class_3972 method_17881(net.minecraft.class_3972.class_3973 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        if (self instanceof CbLegacySerializers.SingleItemRecipe_SerializerJson own) {
-            return own.method_17881(id, json);
-        }
-        return (net.minecraft.class_3972) CbRecipeSerializerSupport.decode(self.method_53736(), id, json);
-    }
-
     /** serializer.read(id, buf): the serializer's own reader when it declares one, vanilla's otherwise */
     public static net.minecraft.class_3972 method_17882(net.minecraft.class_3972.class_3973 self, net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
         if (self instanceof CbLegacySerializers.SingleItemRecipe_SerializerBuf own) {
             return own.method_17882(id, buf);
         }
         return CbRecipeSerializerSupport.withId(id, () -> self.method_17882(buf));
-    }
-
-    /** super.read(id, json) in a subclass: vanilla's codec, the one this serializer was built with */
-    public static net.minecraft.class_3972 super_method_17881(net.minecraft.class_3972.class_3973 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        return CbRecipeSerializerSupport.decode(CbRecipeSerializerSupport.superCodec(net.minecraft.class_3972.class_3973.class, self), id, json);
     }
 
     /** super.read(id, buf) in a subclass: vanilla's reader, run on this serializer */
@@ -253,25 +188,12 @@ public final class CbRecipeSerializers {
         return self.method_48456(CbRecipeSerializerSupport.currentId(), buf);
     }
 
-    /** serializer.read(id, json): the serializer's own reader when it declares one, vanilla's otherwise */
-    public static net.minecraft.class_8060 method_48455(net.minecraft.class_8060.class_8061 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        if (self instanceof CbLegacySerializers.SmithingTransformRecipe_SerializerJson own) {
-            return own.method_48455(id, json);
-        }
-        return (net.minecraft.class_8060) CbRecipeSerializerSupport.decode(self.method_53736(), id, json);
-    }
-
     /** serializer.read(id, buf): the serializer's own reader when it declares one, vanilla's otherwise */
     public static net.minecraft.class_8060 method_48456(net.minecraft.class_8060.class_8061 self, net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
         if (self instanceof CbLegacySerializers.SmithingTransformRecipe_SerializerBuf own) {
             return own.method_48456(id, buf);
         }
         return CbRecipeSerializerSupport.withId(id, () -> self.method_48456(buf));
-    }
-
-    /** super.read(id, json) in a subclass: vanilla's codec, the one this serializer was built with */
-    public static net.minecraft.class_8060 super_method_48455(net.minecraft.class_8060.class_8061 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        return CbRecipeSerializerSupport.decode(CbRecipeSerializerSupport.superCodec(net.minecraft.class_8060.class_8061.class, self), id, json);
     }
 
     /** super.read(id, buf) in a subclass: vanilla's reader, run on this serializer */
@@ -299,25 +221,12 @@ public final class CbRecipeSerializers {
         return self.method_48460(CbRecipeSerializerSupport.currentId(), buf);
     }
 
-    /** serializer.read(id, json): the serializer's own reader when it declares one, vanilla's otherwise */
-    public static net.minecraft.class_8062 method_48459(net.minecraft.class_8062.class_8063 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        if (self instanceof CbLegacySerializers.SmithingTrimRecipe_SerializerJson own) {
-            return own.method_48459(id, json);
-        }
-        return (net.minecraft.class_8062) CbRecipeSerializerSupport.decode(self.method_53736(), id, json);
-    }
-
     /** serializer.read(id, buf): the serializer's own reader when it declares one, vanilla's otherwise */
     public static net.minecraft.class_8062 method_48460(net.minecraft.class_8062.class_8063 self, net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
         if (self instanceof CbLegacySerializers.SmithingTrimRecipe_SerializerBuf own) {
             return own.method_48460(id, buf);
         }
         return CbRecipeSerializerSupport.withId(id, () -> self.method_48460(buf));
-    }
-
-    /** super.read(id, json) in a subclass: vanilla's codec, the one this serializer was built with */
-    public static net.minecraft.class_8062 super_method_48459(net.minecraft.class_8062.class_8063 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        return CbRecipeSerializerSupport.decode(CbRecipeSerializerSupport.superCodec(net.minecraft.class_8062.class_8063.class, self), id, json);
     }
 
     /** super.read(id, buf) in a subclass: vanilla's reader, run on this serializer */

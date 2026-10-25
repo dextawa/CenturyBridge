@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "cb.s11.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": ["ServerDriverMixin", "RulesReadMixin", "RuleSetMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

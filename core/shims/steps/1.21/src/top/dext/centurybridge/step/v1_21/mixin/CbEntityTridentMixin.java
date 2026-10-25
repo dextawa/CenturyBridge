@@ -25,7 +25,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
  * or a 1.20.6 subclass's override, decides the strike as on 1.20.6; with neither, the answer is the enchantment's
  * presence and 1.21 runs as it does.
  */
-@Mixin(class_1685.class)
+@Mixin(value = class_1685.class, priority = 1)
 public abstract class CbEntityTridentMixin implements CbEntityEnchanting.TridentHit, CbEntityEnchanting.LegacyChanneling {
 
     @Unique

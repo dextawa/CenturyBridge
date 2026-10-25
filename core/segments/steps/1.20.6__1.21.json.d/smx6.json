@@ -73,28 +73,6 @@
    ],
    "basis": "StructureTemplateManager.listFolderContents(folder, namespace, extension) is 1.21's listFolderContents(folder, namespace, extension, output) (javap: both walk the folder for files ending in the extension and map them to ids through the same lambda capturing the namespace and the path relativiser; 1.20.6 returned the Stream, 1.21 hands each id to the Consumer: handlers touching the return value are refused by MixinBridge's return check)"
   },
-  "net/minecraft/class_1291$class_8634.method_52522(Ljava/lang/String;I)Lnet/minecraft/class_1322;": {
-   "to": "method_52522(I)Lnet/minecraft/class_1322;",
-   "args": [
-    -1,
-    0
-   ],
-   "basis": "MobEffect.AttributeTemplate.create(name, amplifier) is 1.21's create(amplifier) (javap: the same AttributeModifier built from the template's id, amount * (amplifier + 1) and operation; 1.21's modifier has no name, the id replaced the UUID, so the name argument has no W counterpart)"
-  },
-  "net/minecraft/class_156$class_158.method_674(Ljava/net/URL;)[Ljava/lang/String;": {
-   "to": "method_674(Ljava/net/URI;)[Ljava/lang/String;",
-   "args": [
-    -1
-   ],
-   "basis": "Util.OS.getOpenUrlArguments(URL) is 1.21's getOpenUriArguments(URI) (javap: the same per-OS command arrays from toString and the protocol/scheme test); a URL is not a URI, so handlers taking the argument are not carried"
-  },
-  "net/minecraft/class_8884$class_8885.method_54472(Ljava/util/List;)Z": {
-   "to": "method_54472(Lnet/minecraft/class_9694;)Z",
-   "args": [
-    -1
-   ],
-   "basis": "RecipeCache.Entry.matches(List<ItemStack>) is 1.21's matches(CraftingInput) (javap: the same size test and per-slot ItemStack.isSameItemSameComponents loop, now against the input's width/height); a List is not a CraftingInput, so handlers taking the argument are not carried"
-  },
   "net/minecraft/class_3193.method_39967(Ljava/lang/String;Ljava/util/concurrent/CompletableFuture;)V": {
    "to": "method_39967(Ljava/util/concurrent/CompletableFuture;)V",
    "args": [
@@ -117,15 +95,6 @@
     -1
    ],
    "basis": "RealmsConfigureWorldScreen.closeTheWorld/stateChanged(flag, lastScreen) is 1.21's (flag) (javap: identical body, 1.21 reads the screen from getNewScreen (method_21219) instead of the argument)"
-  },
-  "net/minecraft/class_9456.method_59652(III)I": {
-   "to": "method_59652(ILnet/minecraft/class_9456$class_9775;I)I",
-   "args": [
-    0,
-    -1,
-    2
-   ],
-   "basis": "OozingMobEffect.numberOfSlimesToSpawn(maxEntityCramming, nearbySlimes, spawnCount) is 1.21's (maxEntityCramming, NearbySlimes, spawnCount) (javap: the same computation from arguments 0 and 2; the nearby-slime count became a counting function, with an early return below 1), so argument 1 has no W counterpart"
   },
   "net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZLnet/minecraft/class_2960;)Lnet/minecraft/class_777;": {
    "to": "method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;Z)Lnet/minecraft/class_777;",
@@ -187,6 +156,12 @@
    "basis": "AttributeInstance.removePermanentModifier(UUID) is 1.21's removeModifier(ResourceLocation) returning boolean (javap: the same remove from the permanent and the by-id maps and from the operation map, null -> false, setDirty, true; 1.21 merged 1.20.6's void removeModifier(UUID) into it); a UUID is not a ResourceLocation, so handlers taking the argument are not carried"
   }
  },
+ "ctorRedirects": {
+  "net/minecraft/class_3853$class_1648.<init>(I)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNew",
+  "net/minecraft/class_3853$class_1648.<init>(I[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNewListed",
+  "net/minecraft/class_3853$class_1648.<init>(III[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNewRanged"
+ },
+ "_smx6_ctorRedirects_basis": "VillagerTrades.EnchantBookForEmeralds: 1.20.6's three constructors (a list of offerable enchantments) as factories over 1.21's (an enchantment tag): (xp) is 1.21's (xp, #tradeable), the tag 1.21's own default librarian trade uses for what 1.20.6 filtered by isTradeable; the explicit-list forms build on #tradeable and keep the list on the trade for the restored 1.20.6 pick (CbVillagerEnchantBookMixin). The class is package-private, so the factories serve a 1.20.6 mod's constructor @Invoker (MixinBridge's constructor-invoker bridging)",
  "fieldRenames": {
   "net/minecraft/class_3898.field_49171:Lnet/minecraft/class_9312;": "field_51861",
   "net/minecraft/class_287.field_1567:Lnet/minecraft/class_293$class_5596;": "field_52073",
@@ -298,6 +273,8 @@
   "net/minecraft/class_313.method_1615()V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
   "net/minecraft/class_313.method_1619(Lnet/minecraft/class_319;)I @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
   "net/minecraft/class_323.<init>(Lnet/minecraft/class_3676;)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
-  "net/minecraft/class_323.method_1680(J)Lnet/minecraft/class_313; @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check"
+  "net/minecraft/class_323.method_1680(J)Lnet/minecraft/class_313; @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
+  "net/minecraft/class_3898.method_37904()V": "removed outright: ChunkMap.debugReloadGenerator (re-encoded the level's ChunkGenerator through ChunkGenerator.CODEC and replaced it) had one caller in 1.20.6, ResetChunksCommand (class_6608, a development command), which 1.21 deleted. javap over the whole 1.21 jar: no method_37904, no ResetChunksCommand, and ChunkGenerator.CODEC (class_2794.field_24746) is used only by ChunkGenerator and LevelStem, never by ChunkMap. No method holds its code or its caller's need, so a mixin on it has no hook point",
+  "net/minecraft/class_3898.method_20441(Lnet/minecraft/class_1923;)V": "removed outright: ChunkMap.releaseLightTicket(pos) queued distanceManager.removeTicket(TicketType.LIGHT, pos, ...) (lambda method_20443). Its one caller was ThreadedLevelLightEngine.lightChunk (method_17309). In 1.21 the LIGHT ticket type is gone: TicketType class_3230 has no field_19270, and no 1.21 class references it. ThreadedLevelLightEngine's only call into ChunkMap is method_17604, and no method_20441 is left anywhere (javap over the whole 1.21 jar). 1.21's generation tasks hold their chunks without tickets, so no method holds its code or its caller's need"
  }
 }

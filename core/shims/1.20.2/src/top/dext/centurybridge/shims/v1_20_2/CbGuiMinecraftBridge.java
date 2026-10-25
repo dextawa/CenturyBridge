@@ -23,8 +23,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
  * here.</li>
  * </ul>
  */
-@Mixin(net.minecraft.class_310.class)
-public abstract class CbGuiMinecraftBridge implements top.dext.centurybridge.rt.v1_20_2.CbRealmsFlag {
+@Mixin(value = net.minecraft.class_310.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
+public abstract class CbGuiMinecraftBridge implements top.dext.centurybridge.rt.v1_20_2.CbRealmsFlag, top.dext.centurybridge.rt.v1_20_2.CbGuiRestoredAccess.FrameTimer {
 
     /** frameTimer */
     public final top.dext.centurybridge.facade.v1_20_2.class_3517 field_1688 = new top.dext.centurybridge.facade.v1_20_2.class_3517();
@@ -37,11 +37,9 @@ public abstract class CbGuiMinecraftBridge implements top.dext.centurybridge.rt.
         return this.field_1688;
     }
 
-    /** the frame duration 1.20.1 pushed into frameTimer, as 1.20.2 logs it */
-    @ModifyArg(method = "method_1523", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_340;method_53534(J)V"))
-    private long cb$logFrame(long nanos) {
-        this.field_1688.method_15247(nanos);
-        return nanos;
+    @Override
+    public top.dext.centurybridge.facade.v1_20_2.class_3517 cb$frameTimer() {
+        return this.field_1688;
     }
 
     /** 1.20.1 clearResourcePacksOnError(error, message) */

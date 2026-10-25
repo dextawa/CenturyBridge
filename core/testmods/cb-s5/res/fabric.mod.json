@@ -1,0 +1,17 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s5",
+ "version": "1.0.0",
+ "name": "CB s5 step test (1.21.4 -> 1.21.5)",
+ "environment": "*",
+ "entrypoints": {
+  "main": [
+   "cb.s5.S5TestMod"
+  ]
+ },
+ "depends": {
+  "fabricloader": ">=0.14.0",
+  "minecraft": "1.21.4",
+  "fabric-events-interaction-v0": "*"
+ }
+}

@@ -33,7 +33,7 @@ import org.objectweb.asm.tree.MethodNode;
  * only part of the member (vanilla takes its answer, not its body) lists what it carries in {@code carries}
  * ("Inject@HEAD", ...); any other injector on it stays open, "restored-member: vanilla path partial".
  *
- * Merged: public, concrete, non-synthetic methods (no constructors) of a class carrying @Mixin, other than
+ * Merged: concrete, non-synthetic methods of any access (as V declared the member) (no constructors) of a class carrying @Mixin, other than
  * @Shadow / @Overwrite / @Unique / injector handlers / accessors and invokers.
  */
 public final class LayerMembers {
@@ -47,6 +47,8 @@ public final class LayerMembers {
 
     /** restored members by game class */
     private final Map<String, List<MethodNode>> byTarget = new HashMap<>();
+    /** the @Mixin priority of the layer mixin that merges each restored member (Mixin's default 1000) */
+    private final Map<MethodNode, Integer> priority = new java.util.IdentityHashMap<>();
     /** the layer's mixin classes */
     private final Set<String> mixins = new HashSet<>();
 
@@ -92,10 +94,13 @@ public final class LayerMembers {
                         targets.add(t.replace('.', '/'));
                     }
                 }
+                int prio = MixinRepair.values(mx).get("priority") instanceof Integer p ? p : DEFAULT_PRIORITY;
                 for (MethodNode m : cn.methods) {
                     if (merged(m)) {
                         for (String t : targets) {
-                            out.byTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(m);
+                            MethodNode a = applied(m, cn.name, t);
+                            out.byTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
+                            out.priority.put(a, prio);
                         }
                     }
                 }
@@ -104,8 +109,25 @@ public final class LayerMembers {
         return out;
     }
 
+    /**
+     * the member as Mixin merges it onto one target: Mixin rewrites the mixin class's own name to the target's at
+     * apply (this.x(..), @Shadow field reads, the type in descriptors), so a restored body compiled against the
+     * mixin class runs as calls on the game class -- V's anchors. Matching reads that view, not the layer jar's
+     */
+    static MethodNode applied(MethodNode m, String mixin, String target) {
+        MethodNode out = new MethodNode(m.access, m.name, m.desc, m.signature,
+            m.exceptions == null ? null : m.exceptions.toArray(new String[0]));
+        m.accept(new org.objectweb.asm.commons.MethodRemapper(out,
+            new org.objectweb.asm.commons.SimpleRemapper(mixin, target)));
+        out.desc = new org.objectweb.asm.commons.SimpleRemapper(mixin, target).mapMethodDesc(m.desc);
+        return out;
+    }
+
     private static boolean merged(MethodNode m) {
-        if (m.name.startsWith("<") || (m.access & Opcodes.ACC_PUBLIC) == 0
+        // any access: a restored V member keeps V's access (protected / package-private; making it public would break
+        // V subclasses overriding it with V's access), and a private one is merged too (Mixin refuses non-private
+        // statics: 1.21.11's private static AbstractFurnaceBlockEntity.burn). A selector only meets one under V's name
+        if (m.name.startsWith("<")
                 || (m.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_SYNTHETIC | Opcodes.ACC_BRIDGE)) != 0) {
             return false;
         }
@@ -115,6 +137,40 @@ public final class LayerMembers {
             }
         }
         return true;
+    }
+
+    /** Mixin's default mixin priority */
+    public static final int DEFAULT_PRIORITY = 1000;
+
+    /**
+     * whether Mixin lets an injector of a mixin at {@code mixinPriority} apply to a restored member: Mixin injects
+     * into a method another mixin merged only when the merging mixin's priority is below the injector's
+     * (InjectionPoint.checkPriority: mergedPriority < mixinPriority), except HEAD / RETURN / TAIL, which always may
+     * (MethodHead, BeforeReturn, BeforeFinalReturn override it); a constant-only injector has no such point
+     */
+    public boolean injectable(MethodNode m, int mixinPriority, Map<String, Object> v) {
+        if (priority.getOrDefault(m, DEFAULT_PRIORITY) < mixinPriority) {
+            return true;
+        }
+        if (v.get("constant") != null) {
+            return false;
+        }
+        Object at = v.get("at");
+        List<Object> ats = at instanceof List<?> l ? new ArrayList<>(l) : at == null ? List.of() : List.of(at);
+        if (ats.isEmpty()) {
+            return false;
+        }
+        for (Object o : ats) {
+            Object val = o instanceof Map<?, ?> am ? am.get("value") : null;
+            if (!"HEAD".equals(val) && !"RETURN".equals(val) && !"TAIL".equals(val)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int priority(MethodNode m) {
+        return priority.getOrDefault(m, DEFAULT_PRIORITY);
     }
 
     /** the restored members of a game class a selector names */

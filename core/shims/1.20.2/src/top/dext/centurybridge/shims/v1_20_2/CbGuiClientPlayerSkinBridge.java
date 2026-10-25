@@ -21,18 +21,8 @@ import top.dext.centurybridge.rt.v1_20_2.CbGuiOverrides;
  * combined them -- the cape only while isCapeLoaded, the elytra only while isElytraLoaded. Players of
  * every other class get 1.20.2's value untouched.
  */
-@Mixin(net.minecraft.class_742.class)
-public abstract class CbGuiClientPlayerSkinBridge {
-
-    private static final CbGuiOverrides.Hook[] CB_GETTERS = {
-        new CbGuiOverrides.Hook(net.minecraft.class_742.class, "method_3125"),
-        new CbGuiOverrides.Hook(net.minecraft.class_742.class, "method_3127"),
-        new CbGuiOverrides.Hook(net.minecraft.class_742.class, "method_3117"),
-        new CbGuiOverrides.Hook(net.minecraft.class_742.class, "method_3119"),
-        new CbGuiOverrides.Hook(net.minecraft.class_742.class, "method_3126"),
-        new CbGuiOverrides.Hook(net.minecraft.class_742.class, "method_3122"),
-        new CbGuiOverrides.Hook(net.minecraft.class_742.class, "method_3121"),
-    };
+@Mixin(value = net.minecraft.class_742.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
+public abstract class CbGuiClientPlayerSkinBridge implements top.dext.centurybridge.rt.v1_20_2.CbGuiRestoredAccess.SkinGetters {
 
     @Shadow
     protected abstract net.minecraft.class_640 method_3123();
@@ -80,18 +70,5 @@ public abstract class CbGuiClientPlayerSkinBridge {
     public String method_3121() {
         net.minecraft.class_640 entry = this.method_3123();
         return (entry == null ? net.minecraft.class_1068.method_4648(this.cb$uuid()) : entry.method_52810()).comp_1629().method_52856();
-    }
-
-    @Inject(method = "method_52814", at = @At("RETURN"), cancellable = true)
-    private void cb$legacyGetters(CallbackInfoReturnable<net.minecraft.class_8685> cir) {
-        for (CbGuiOverrides.Hook h : CB_GETTERS) {
-            if (h.in(this)) {
-                net.minecraft.class_8685 skin = cir.getReturnValue();
-                cir.setReturnValue(new net.minecraft.class_8685(this.method_3117(), skin.comp_1911(),
-                    this.method_3125() ? this.method_3119() : null, this.method_3126() ? this.method_3122() : null,
-                    net.minecraft.class_8685.class_7920.method_52857(this.method_3121()), skin.comp_1630()));
-                return;
-            }
-        }
     }
 }

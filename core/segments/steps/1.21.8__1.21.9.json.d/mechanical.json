@@ -420,14 +420,6 @@
    "ret": "pop",
    "basis": "mechanical: same values; return value popped"
   },
-  "net/minecraft/class_3331.method_14635(Ljava/lang/Object;)V": {
-   "desc": "(Ljava/lang/Object;)Z",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "pop",
-   "basis": "mechanical: same values; return value popped"
-  },
   "net/minecraft/class_3331.method_14638(Lnet/minecraft/class_3330;)V": {
    "desc": "(Lnet/minecraft/class_3330;)Z",
    "ops": [
@@ -582,13 +574,6 @@
    ],
    "basis": "mechanical: same values"
   },
-  "net/minecraft/class_2816.method_39956(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2837;": {
-   "desc": "()Lnet/minecraft/class_2837;",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2835;: no body of V reads it, but net/minecraft/class_2837 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
   "net/minecraft/class_2837$class_6559.create(ILnet/minecraft/class_2359;Lnet/minecraft/class_2835;Ljava/util/List;)Lnet/minecraft/class_2837;": {
    "desc": "(ILjava/util/List;)Lnet/minecraft/class_2837;",
    "ops": [
@@ -598,13 +583,6 @@
     "drop:2"
    ],
    "basis": "mechanical: same values; dropped Lnet/minecraft/class_2359;,Lnet/minecraft/class_2835;: no body of V reads it, but net/minecraft/class_2837$class_6559 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_6564.method_39956(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2837;": {
-   "desc": "()Lnet/minecraft/class_2837;",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2835;: no body of V reads it, but net/minecraft/class_2837 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   }
  },
  "superCtorReshapes": {
@@ -2427,18 +2405,6 @@
    "frames": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; new I,I not passed"
-  },
-  {
-   "old": "method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V",
-   "new": "method_2803(Lnet/minecraft/class_10017;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V",
-   "args": [
-    1,
-    2
-   ],
-   "onlyUnder": "net/minecraft/class_3881",
-   "frames": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_10017; not passed"
   },
   {
    "old": "method_65191(Lnet/minecraft/class_4587;)V",

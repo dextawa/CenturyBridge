@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smixin3",
+  "version": "1.0.0",
+  "name": "CB smixin3 guarded-descend test",
+  "environment": "*",
+  "entrypoints": { "main": ["cb.smixin3.Driver"] },
+  "mixins": ["cb_smixin3.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "26.1.2", "fabric-lifecycle-events-v1": "*" }
+}
