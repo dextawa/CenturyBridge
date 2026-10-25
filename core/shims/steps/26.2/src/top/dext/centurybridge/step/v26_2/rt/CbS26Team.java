@@ -123,4 +123,23 @@ public final class CbS26Team {
             net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket.Parameters p) {
         return p.nameTagVisibility();
     }
+
+    // ---- ColorArgument (26.2: TeamColorArgument, answering TeamColor) ----
+
+    /** 26.1.2's ColorArgument.getColor: the parsed argument (26.2's parser hands a TeamColor) as its ChatFormatting */
+    public static ChatFormatting getColor(com.mojang.brigadier.context.CommandContext<?> context, String name) {
+        Object v = context.getArgument(name, Object.class);
+        return v instanceof TeamColor c ? ChatFormatting.valueOf(c.name()) : (ChatFormatting) v;
+    }
+
+    /** 26.1.2's ColorArgument.parse: any ChatFormatting that is not a format (the colours and RESET) */
+    public static ChatFormatting parse(net.minecraft.commands.arguments.TeamColorArgument argument, com.mojang.brigadier.StringReader reader)
+            throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        String s = reader.readUnquotedString();
+        ChatFormatting f = CbS26ChatFormatting.getByName(s);
+        if (f != null && !CbS26ChatFormatting.isFormat(f)) {
+            return f;
+        }
+        throw net.minecraft.commands.arguments.TeamColorArgument.ERROR_INVALID_VALUE.createWithContext(reader, s);
+    }
 }

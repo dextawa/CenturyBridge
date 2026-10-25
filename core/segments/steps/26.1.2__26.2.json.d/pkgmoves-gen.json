@@ -989,7 +989,7 @@
   "net/minecraft/advancements/criterion/GameTypePredicate": {
    "to": "net/minecraft/advancements/predicates/GameTypePredicate",
    "kept": 10,
-   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.27), body votes 0/0"
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.14), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/ImpossibleTrigger": {
    "to": "net/minecraft/advancements/triggers/ImpossibleTrigger",
@@ -1405,7 +1405,7 @@
   "net/minecraft/advancements/criterion/StatePropertiesPredicate$PropertyMatcher": {
    "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$PropertyMatcher",
    "kept": 8,
-   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.60), body votes 0/0"
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.40), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/StatePropertiesPredicate$RangedMatcher": {
    "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$RangedMatcher",
@@ -1500,7 +1500,7 @@
   "net/minecraft/client/gui/Gui$1DisplayEntry": {
    "to": "net/minecraft/client/gui/Hud$1DisplayEntry",
    "kept": 7,
-   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.33), body votes 0/0"
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.40), body votes 0/0"
   },
   "net/minecraft/client/gui/Gui$ContextualInfo": {
    "to": "net/minecraft/client/gui/Hud$ContextualInfo",
@@ -1535,7 +1535,7 @@
   "net/minecraft/client/gui/contextualbar/LocatorBarRenderer": {
    "to": "net/minecraft/client/gui/contextualbar/LocatorBar",
    "kept": 3,
-   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.05), body votes 0/0"
+   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.02), body votes 0/0"
   },
   "net/minecraft/client/renderer/LevelRenderer$BrightnessGetter": {
    "to": "net/minecraft/util/LightCoordsUtil$BrightnessGetter",
@@ -1562,7 +1562,7 @@
   "net/minecraft/client/renderer/SubmitNodeStorage$FlameSubmit": {
    "to": "net/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit",
    "kept": 7,
-   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.24), body votes 0/0"
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.18), body votes 0/0"
   },
   "net/minecraft/client/renderer/SubmitNodeStorage$ItemSubmit": {
    "to": "net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit",
@@ -1572,7 +1572,7 @@
   "net/minecraft/client/renderer/SubmitNodeStorage$LeashSubmit": {
    "to": "net/minecraft/client/renderer/feature/LeashFeatureRenderer$Submit",
    "kept": 6,
-   "basis": "members 4.0/4 vs 5 (dice 0.89, 2nd 0.25), body votes 0/0"
+   "basis": "members 4.0/4 vs 5 (dice 0.89, 2nd 0.18), body votes 0/0"
   },
   "net/minecraft/client/renderer/SubmitNodeStorage$ModelSubmit": {
    "to": "net/minecraft/client/renderer/feature/ModelFeatureRenderer$Submit",
@@ -1590,12 +1590,12 @@
    "missing": [
     "<init>(Lorg/joml/Matrix4fc;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V"
    ],
-   "basis": "members 4.0/4 vs 8 (dice 0.67, 2nd 0.18), body votes 0/0"
+   "basis": "members 4.0/4 vs 8 (dice 0.67, 2nd 0.36), body votes 0/0"
   },
   "net/minecraft/client/renderer/SubmitNodeStorage$ShadowSubmit": {
    "to": "net/minecraft/client/renderer/feature/ShadowFeatureRenderer$Submit",
    "kept": 7,
-   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.24), body votes 0/0"
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.17), body votes 0/0"
   },
   "net/minecraft/client/renderer/chunk/CompileTaskDynamicQueue": {
    "to": "net/minecraft/client/renderer/chunk/SectionTaskDynamicQueue",
@@ -1634,7 +1634,7 @@
   "net/minecraft/util/CubicSpline$1Point": {
    "to": "net/minecraft/util/CubicSpline$Multipoint$Point",
    "kept": 7,
-   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.25), body votes 0/0"
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.17), body votes 0/0"
   },
   "net/minecraft/world/effect/InstantenousMobEffect": {
    "to": "net/minecraft/world/effect/InstantaneousMobEffect",
@@ -1642,7 +1642,7 @@
    "missing": [
     "isInstantenous()Z"
    ],
-   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0, simple name a spelling correction"
   },
   "net/minecraft/world/entity/animal/Bucketable": {
    "to": "net/minecraft/world/entity/Bucketable",

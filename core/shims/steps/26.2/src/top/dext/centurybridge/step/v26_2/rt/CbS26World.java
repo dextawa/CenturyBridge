@@ -19,4 +19,10 @@ public final class CbS26World {
     public static Vec3 getBottomCenter(BlockPos pos) {
         return Vec3.atBottomCenterOf(pos);
     }
+
+    /** 26.1.2 SimpleRandomFeatureConfiguration.features (a public field): 26.2's CompositeFeatureConfiguration.features() */
+    public static net.minecraft.core.HolderSet<net.minecraft.world.level.levelgen.placement.PlacedFeature> features(
+            net.minecraft.world.level.levelgen.feature.configurations.CompositeFeatureConfiguration c) {
+        return c.features();
+    }
 }
