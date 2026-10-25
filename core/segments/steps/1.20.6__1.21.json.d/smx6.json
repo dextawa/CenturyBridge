@@ -47,6 +47,14 @@
     0
    ],
    "basis": "EntitySelector.findEntitiesRaw was inlined into 1.21's findEntities (javap: the same checkPermissions, includesEntities/findPlayers branch, playerName and entityUUID lookups, currentEntity test, addEntities over the level(s) and sortAndLimit; 1.20.6's only caller, findEntities, filtered its result by enabled feature flags afterwards, which 1.21 tests inline)"
+  },
+  "net/minecraft/class_2619.method_49209(Lnet/minecraft/class_1297;Z)V": {
+   "to": "method_60782(Z)V",
+   "args": [
+    -1,
+    0
+   ],
+   "basis": "JukeboxBlockEntity.notifyItemChangedInJukebox(entity, hasRecord) is 1.21's onSongChanged-side setHasRecordBlockState(hasRecord) (javap: the same still-this-block-state test, setValue(JukeboxBlock.HAS_RECORD) with flag 2 and BLOCK_CHANGE game event; 1.21 builds the game event context from the state alone, so the entity argument has no W counterpart)"
   }
  },
  "fieldRenames": {
