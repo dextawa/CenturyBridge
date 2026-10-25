@@ -111,6 +111,14 @@ public final class Driver {
         return n;
     }
 
+    /** cb-smx6's recipe(): the recipe a RecipeCache answers for a 3x3 grid holding one item in its first slot */
+    private static String recipe(net.minecraft.class_8884 cache, class_3218 level, net.minecraft.class_1792 item) {
+        java.util.List<class_1799> items = new java.util.ArrayList<>(java.util.Collections.nCopies(9, class_1799.field_8037));
+        items.set(0, new class_1799(item));
+        java.util.Optional<net.minecraft.class_8786<net.minecraft.class_3955>> r = cache.method_54470(level, net.minecraft.class_9694.method_59986(3, 3, items));
+        return r.isPresent() ? String.valueOf(r.get().comp_1932()) : "none";
+    }
+
     public static void run(net.minecraft.server.MinecraftServer server) {
         boolean layer = net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("centurybridge")
             || net.fabricmc.loader.api.FabricLoader.getInstance().getAllMods().stream()
@@ -140,6 +148,11 @@ public final class Driver {
             int slimes = oozing(level, 0);
             report(tag + " oozing", slimes == 2, "Oozing zombie killed: " + slimes + " slime(s)");
             System.out.println("CB-SMX6V oozing " + tag + " " + slimes);
+            net.minecraft.class_8884 cache = new net.minecraft.class_8884(1);
+            String recipes = recipe(cache, level, class_1802.field_8583) + " " + recipe(cache, level, class_1802.field_8583) + " "
+                + recipe(cache, level, class_1802.field_20391);
+            report(tag + " recipes", recipes.equals("minecraft:oak_planks minecraft:oak_planks minecraft:stone_button"), recipes);
+            System.out.println("CB-SMX6V recipes " + tag + " " + recipes);
         } catch (Throwable t) {
             report(tag + " exception", false, String.valueOf(t));
             t.printStackTrace();

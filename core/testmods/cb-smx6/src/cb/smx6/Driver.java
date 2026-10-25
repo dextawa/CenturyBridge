@@ -36,6 +36,9 @@ public final class Driver {
     public static volatile int slimesCramming;
     public static volatile int slimesSpawnCount;
     public static volatile boolean noSlimes;
+    public static volatile int matchesAsked;
+    public static volatile int matchesSize;
+    public static volatile boolean forceMatch;
     private static int ok;
     private static int fail;
 
@@ -131,6 +134,15 @@ public final class Driver {
         return n;
     }
 
+    /** the recipe a RecipeCache answers for a 3x3 grid holding one item in its first slot, by id, or "none" */
+    private static String recipe(net.minecraft.class_8884 cache, class_3218 level, net.minecraft.class_1792 item) {
+        net.minecraft.class_2371<class_1799> items = net.minecraft.class_2371.method_10213(9, class_1799.field_8037);
+        items.set(0, new class_1799(item));
+        net.minecraft.class_1715 grid = new net.minecraft.class_1715(null, 3, 3, items);
+        java.util.Optional<net.minecraft.class_8786<net.minecraft.class_3955>> r = cache.method_54470(level, grid);
+        return r.isPresent() ? String.valueOf(r.get().comp_1932()) : "none";
+    }
+
     public static void run(net.minecraft.server.MinecraftServer server) {
         System.out.println("CB-SMX6 start");
         class_3218 level = server.method_30002();
@@ -212,6 +224,27 @@ public final class Driver {
             slimes = oozing(level, 8);
             noSlimes = false;
             check("oozing-none", slimes == 0 && slimesAsked == 1, "mod answers 0: " + slimes + " slime(s), asked " + slimesAsked);
+            // ---- RecipeCache.Entry.matches(List): RecipeCacheEntryMixin
+            forceMatch = false;
+            net.minecraft.class_8884 cache = new net.minecraft.class_8884(1);
+            String first = recipe(cache, level, class_1802.field_8583);
+            matchesAsked = 0;
+            matchesSize = -1;
+            String again = recipe(cache, level, class_1802.field_8583);
+            int againAsked = matchesAsked;
+            int againSize = matchesSize;
+            String stone = recipe(cache, level, class_1802.field_20391);
+            check("recipe-passive", "minecraft:oak_planks".equals(first) && "minecraft:oak_planks".equals(again) && againAsked == 1
+                && "minecraft:stone_button".equals(stone), "log " + first + ", log again " + again + " (matches asked " + againAsked
+                + ", list size " + againSize + "), stone " + stone);
+            cache = new net.minecraft.class_8884(1);
+            recipe(cache, level, class_1802.field_8583);
+            forceMatch = true;
+            matchesAsked = 0;
+            String forced = recipe(cache, level, class_1802.field_20391);
+            forceMatch = false;
+            check("recipe-forced", "minecraft:oak_planks".equals(forced) && matchesAsked == 1,
+                "matches forced true: stone answered " + forced + " from the cache, matches asked " + matchesAsked);
         } catch (Throwable t) {
             check("exception", false, String.valueOf(t));
             t.printStackTrace();
@@ -220,6 +253,7 @@ public final class Driver {
             forceMending = false;
             doubleEffect = false;
             noSlimes = false;
+            forceMatch = false;
         }
         System.out.println("CB-SMX6 summary ok=" + ok + " fail=" + fail);
     }

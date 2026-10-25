@@ -73,20 +73,6 @@
    ],
    "basis": "StructureTemplateManager.listFolderContents(folder, namespace, extension) is 1.21's listFolderContents(folder, namespace, extension, output) (javap: both walk the folder for files ending in the extension and map them to ids through the same lambda capturing the namespace and the path relativiser; 1.20.6 returned the Stream, 1.21 hands each id to the Consumer: handlers touching the return value are refused by MixinBridge's return check)"
   },
-  "net/minecraft/class_156$class_158.method_674(Ljava/net/URL;)[Ljava/lang/String;": {
-   "to": "method_674(Ljava/net/URI;)[Ljava/lang/String;",
-   "args": [
-    -1
-   ],
-   "basis": "Util.OS.getOpenUrlArguments(URL) is 1.21's getOpenUriArguments(URI) (javap: the same per-OS command arrays from toString and the protocol/scheme test); a URL is not a URI, so handlers taking the argument are not carried"
-  },
-  "net/minecraft/class_8884$class_8885.method_54472(Ljava/util/List;)Z": {
-   "to": "method_54472(Lnet/minecraft/class_9694;)Z",
-   "args": [
-    -1
-   ],
-   "basis": "RecipeCache.Entry.matches(List<ItemStack>) is 1.21's matches(CraftingInput) (javap: the same size test and per-slot ItemStack.isSameItemSameComponents loop, now against the input's width/height); a List is not a CraftingInput, so handlers taking the argument are not carried"
-  },
   "net/minecraft/class_3193.method_39967(Ljava/lang/String;Ljava/util/concurrent/CompletableFuture;)V": {
    "to": "method_39967(Ljava/util/concurrent/CompletableFuture;)V",
    "args": [
@@ -168,6 +154,13 @@
     -1
    ],
    "basis": "AttributeInstance.removePermanentModifier(UUID) is 1.21's removeModifier(ResourceLocation) returning boolean (javap: the same remove from the permanent and the by-id maps and from the operation map, null -> false, setDirty, true; 1.21 merged 1.20.6's void removeModifier(UUID) into it); a UUID is not a ResourceLocation, so handlers taking the argument are not carried"
+  },
+  "net/minecraft/class_156$class_158.method_674(Ljava/net/URL;)[Ljava/lang/String;": {
+   "to": "method_674(Ljava/net/URI;)[Ljava/lang/String;",
+   "args": [
+    -1
+   ],
+   "basis": "Util.OS.getOpenUrlArguments(URL) is 1.21's getOpenUriArguments(URI) (javap: the same per-OS command arrays from toString and the protocol/scheme test); a URL is not a URI, so handlers taking the argument are not carried"
   }
  },
  "fieldRenames": {

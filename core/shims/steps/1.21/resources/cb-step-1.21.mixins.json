@@ -74,6 +74,8 @@
     "CbMobEffectMixin",
     "CbMobEffectTemplateMixin",
     "CbOozingMixin",
+    "CbRecipeCacheEntryMixin",
+    "CbRecipeCacheMixin",
     "CbWorldButtonAccessor",
     "CbWorldDataFixersMixin",
     "CbWorldLeverInvoker",

@@ -9,7 +9,8 @@
     "TridentAccess",
     "VillagerBookMixin",
     "EffectTemplateMixin",
-    "OozingMixin"
+    "OozingMixin",
+    "RecipeCacheEntryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
