@@ -709,69 +709,72 @@ public final class Chain {
     public final java.util.Set<String> targetFinalMethods = new java.util.HashSet<>();
     /** target-stub methods declared static, "owner.name(desc)" in the analysis namespace */
     public final java.util.Set<String> targetStaticMethods = new java.util.HashSet<>();
+    /** target classes declared abstract (interfaces included) */
+    public final java.util.Set<String> targetAbstractClasses = new java.util.HashSet<>();
 
     /**
-     * The target release's Fabric API classes (its processedMods), in the analysis namespace like the target stub:
-     * declarations ("name(desc)"), statics, superclass and interfaces. The interfaces Fabric API injects into vanilla
-     * classes are in {@link #targetInterfacesOf}; their members are declared here.
+     * The target as the JVM sees it, in its own namespace (mojang names past the wall): the target stub's index and
+     * the target release's Fabric API classes (processedMods, jar-in-jar included). {@link #wallRemapper} spells a
+     * converted reference the way the wall rename writes it (null: one namespace).
      */
+    public top.dext.centurybridge.data.StubDiff.Index targetRaw;
+    public org.objectweb.asm.commons.Remapper wallRemapper;
     public final java.util.Map<String, java.util.Set<String>> targetLibDecls = new java.util.HashMap<>();
     public final java.util.Set<String> targetLibStatics = new java.util.HashSet<>();
+    public final java.util.Set<String> targetLibAbstracts = new java.util.HashSet<>();
+    public final java.util.Map<String, Integer> targetLibAccess = new java.util.HashMap<>();
     public final java.util.Map<String, String> targetLibSuperOf = new java.util.HashMap<>();
     public final java.util.Map<String, java.util.List<String>> targetLibInterfacesOf = new java.util.HashMap<>();
 
+    /** index the target stub as it is (its own namespace) for JVM-style resolution */
+    public void loadTargetRaw(Path stubJar) throws IOException {
+        targetRaw = top.dext.centurybridge.data.StubDiff.index(stubJar);
+    }
+
     /** read the target's Fabric API classes (every jar under processedMods, jar-in-jar included) */
-    public void loadTargetLibraryDecls(Path processedMods, Path wallTable) throws IOException {
+    public void loadTargetLibraryDecls(Path processedMods) throws IOException {
         if (processedMods == null || !Files.isDirectory(processedMods)) {
             return;
         }
-        java.util.Map<String, String> back = new java.util.HashMap<>();
-        if (wallTable != null && Files.exists(wallTable)) {
-            for (String ln : Files.readAllLines(wallTable)) {
-                String[] p = ln.split("\t");
-                if (p.length >= 3 && p[0].equals("C")) {
-                    back.put(p[2], p[1]);
-                }
-            }
-        }
-        java.util.regex.Pattern cls = java.util.regex.Pattern.compile("L([^;]+);");
         try (var st = Files.walk(processedMods)) {
             for (Path j : st.filter(f -> f.toString().endsWith(".jar")).toList()) {
                 try (var in = Files.newInputStream(j)) {
-                    readLibJar(in, back, cls);
+                    readLibJar(in);
                 }
             }
         }
     }
 
-    private void readLibJar(java.io.InputStream raw, java.util.Map<String, String> back, java.util.regex.Pattern cls) throws IOException {
+    private void readLibJar(java.io.InputStream raw) throws IOException {
         java.util.zip.ZipInputStream z = new java.util.zip.ZipInputStream(raw);
         for (java.util.zip.ZipEntry e; (e = z.getNextEntry()) != null; ) {
             if (e.getName().endsWith(".jar")) {
-                readLibJar(new java.io.ByteArrayInputStream(z.readAllBytes()), back, cls);
+                readLibJar(new java.io.ByteArrayInputStream(z.readAllBytes()));
                 continue;
             }
             if (!e.getName().endsWith(".class")) {
                 continue;
             }
             org.objectweb.asm.ClassReader cr = new org.objectweb.asm.ClassReader(z.readAllBytes());
-            String owner = back.getOrDefault(cr.getClassName(), cr.getClassName());
-            if (targetClasses.contains(owner)) {
+            String owner = cr.getClassName();
+            if (targetRaw != null && targetRaw.classAccess.containsKey(owner)) {
                 continue; // a game class: the stub's
             }
+            targetLibAccess.put(owner, cr.getAccess());
             if (cr.getSuperName() != null) {
-                targetLibSuperOf.put(owner, back.getOrDefault(cr.getSuperName(), cr.getSuperName()));
+                targetLibSuperOf.put(owner, cr.getSuperName());
             }
-            targetLibInterfacesOf.put(owner, java.util.Arrays.stream(cr.getInterfaces()).map(i -> back.getOrDefault(i, i)).toList());
+            targetLibInterfacesOf.put(owner, java.util.List.of(cr.getInterfaces()));
             java.util.Set<String> decls = targetLibDecls.computeIfAbsent(owner, k -> new java.util.HashSet<>());
             cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
                 @Override
                 public org.objectweb.asm.MethodVisitor visitMethod(int access, String name, String desc, String sig, String[] ex) {
-                    String bd = back.isEmpty() ? desc : cls.matcher(desc).replaceAll(mr -> "L"
-                        + java.util.regex.Matcher.quoteReplacement(back.getOrDefault(mr.group(1), mr.group(1))) + ";");
-                    decls.add(name + bd);
+                    decls.add(name + desc);
                     if ((access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0) {
-                        targetLibStatics.add(owner + "." + name + bd);
+                        targetLibStatics.add(owner + "." + name + desc);
+                    }
+                    if ((access & org.objectweb.asm.Opcodes.ACC_ABSTRACT) != 0) {
+                        targetLibAbstracts.add(owner + "." + name + desc);
                     }
                     return null;
                 }
@@ -779,31 +782,56 @@ public final class Chain {
         }
     }
 
-    /**
-     * Where the JVM resolves owner.name(desc) on the target: the class itself, then its superclasses, then its
-     * superinterfaces (vanilla's, with the interfaces the target's Fabric API injects, and Fabric API's own classes),
-     * as link resolution does. "decl" + (static ? " static" : ""), or null when nothing declares it (or the
-     * hierarchy leaves what is known: a JDK class is asked through reflection).
-     */
-    public String resolveOnTargetJvm(String owner, String shape) {
-        if (targetDecls.isEmpty()) {
-            return null;
+    /** the injected interfaces of a target class, in the target's namespace */
+    private final java.util.Map<String, java.util.List<String>> targetInjectedRaw = new java.util.HashMap<>();
+
+    private java.util.List<String> rawInterfaces(String c) {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        if (targetRaw != null) out.addAll(targetRaw.interfacesOf.getOrDefault(c, java.util.List.of()));
+        out.addAll(targetLibInterfacesOf.getOrDefault(c, java.util.List.of()));
+        out.addAll(targetInjectedRaw.getOrDefault(c, java.util.List.of()));
+        return out;
+    }
+
+    private String rawSuper(String c) {
+        if (targetRaw != null && targetRaw.superOf.containsKey(c)) return targetRaw.superOf.get(c);
+        return targetLibSuperOf.get(c);
+    }
+
+    private Integer rawAccess(String c) {
+        if (targetRaw != null && targetRaw.classAccess.containsKey(c)) return targetRaw.classAccess.get(c);
+        return targetLibAccess.get(c);
+    }
+
+    /** "decl[ abstract][ static]" when c declares name+desc (target namespace), else null */
+    private String rawDeclared(String c, String name, String desc) {
+        String k = c + "." + name + desc;
+        if (targetRaw != null && targetRaw.methods.getOrDefault(c, java.util.Map.of()).getOrDefault(name, java.util.Set.of()).contains(desc)) {
+            return c + (targetRaw.abstracts.contains(k) ? " abstract" : "") + (targetRaw.statics.contains(k) ? " static" : "");
         }
+        if (targetLibDecls.getOrDefault(c, java.util.Set.of()).contains(name + desc)) {
+            return c + (targetLibAbstracts.contains(k) ? " abstract" : "") + (targetLibStatics.contains(k) ? " static" : "");
+        }
+        return null;
+    }
+
+    /**
+     * Where the JVM resolves owner.name(desc) on the target, in the target's namespace: the class, its superclasses,
+     * then its superinterfaces (vanilla's, the interfaces the target's Fabric API injects, Fabric API's own); a JDK
+     * class through reflection. "decl[ abstract][ static]", or null.
+     */
+    public String resolveOnTargetJvm(String owner, String name, String desc) {
         java.util.List<String> ifaces = new java.util.ArrayList<>();
         java.util.Set<String> seen = new java.util.HashSet<>();
-        for (String c = owner; c != null && seen.add(c); ) {
-            String hit = declaredHere(c, shape);
+        for (String c = owner; c != null && seen.add(c); c = rawSuper(c)) {
+            if (c.startsWith("java/")) {
+                return Boolean.TRUE.equals(jdkDeclares(c, name + desc)) ? c : null;
+            }
+            String hit = rawDeclared(c, name, desc);
             if (hit != null) {
                 return hit;
             }
-            ifaces.addAll(targetInterfacesOf.getOrDefault(c, targetLibInterfacesOf.getOrDefault(c, java.util.List.of())));
-            if (c.startsWith("java/")) {
-                if (Boolean.TRUE.equals(jdkDeclares(c, shape))) {
-                    return c;
-                }
-                break; // jdkDeclares walked its superclasses and interfaces
-            }
-            c = targetSuperOf.containsKey(c) ? targetSuperOf.get(c) : targetLibSuperOf.get(c);
+            ifaces.addAll(rawInterfaces(c));
         }
         java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(ifaces);
         while (!todo.isEmpty()) {
@@ -811,67 +839,45 @@ public final class Chain {
             if (!seen.add(i)) {
                 continue;
             }
-            String hit = declaredHere(i, shape);
+            String hit = rawDeclared(i, name, desc);
             if (hit != null) {
                 return hit;
             }
-            todo.addAll(targetInterfacesOf.getOrDefault(i, targetLibInterfacesOf.getOrDefault(i, java.util.List.of())));
-        }
-        return null;
-    }
-
-    private String declaredHere(String c, String shape) {
-        if (targetDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
-            return c + (targetStaticMethods.contains(c + "." + shape) ? " static" : "");
-        }
-        if (targetLibDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
-            return c + (targetLibStatics.contains(c + "." + shape) ? " static" : "");
+            todo.addAll(rawInterfaces(i));
         }
         return null;
     }
 
     /**
      * Whether a call the source release made (owner.name(desc), analysis names) links on the target as the converted
-     * jar spells it: the step's classRenames applied to owner and descriptor, and past the wall the member's
-     * wall name (the table lists it on its root declaration in the source hierarchy). Resolved JVM-style
-     * (resolveOnTargetJvm), with the call kind's static-ness. A member the target moved up into a superclass or an
-     * interface default (26.1: Player.isIgnoringFallDamageFromCurrentImpulse into LivingEntity) still links, so
-     * it is neither dead nor a tombstone.
+     * jar spells it: the step's classRenames on owner and descriptor, then past the wall the wall rename (the same
+     * remapper the conversion applies). Resolved JVM-style in the target's namespace, with the call kind's
+     * static-ness; an abstract declaration counts only for a call through an abstract class or interface (a concrete
+     * owner selecting it is an AbstractMethodError). A member the target moved up into a superclass or an interface
+     * default (26.1: Player.isIgnoringFallDamageFromCurrentImpulse into LivingEntity) links, so it is not dead.
      */
     public boolean linksOnTarget(String owner, String name, String desc, boolean isStatic) {
+        if (targetRaw == null) {
+            return false;
+        }
         String o = classRenames.getOrDefault(owner, owner);
         String d = renamedDesc(desc);
-        java.util.List<String> shapes = new java.util.ArrayList<>();
-        if (wallMethodFwd.isEmpty()) {
-            shapes.add(name + d); // one namespace: the call keeps its name
-        } else {
-            // past the wall the converted call is spelled with the member's wall name (the table lists it on its root
-            // declaration); the target index holds a mapped member's mojang name with its mojang descriptor, an
-            // unmapped one's with the descriptor translated back. A member the table does not name keeps an
-            // intermediary name nothing on the target declares
-            String w = null;
-            for (String anc : selfAndSupers(owner)) {
-                w = wallMethodFwd.get(anc + "." + name);
-                if (w != null) {
-                    break;
-                }
-            }
-            if (w == null) {
-                return false;
-            }
-            java.util.regex.Matcher m = java.util.regex.Pattern.compile("L([^;]+);").matcher(d);
-            String fd = m.replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
-                wallClassFwd.getOrDefault(mr.group(1), mr.group(1))) + ";");
-            shapes.add(w + fd);
-            shapes.add(w + d);
+        String n = name;
+        if (wallRemapper != null) {
+            n = wallRemapper.mapMethodName(o, name, d);
+            d = wallRemapper.mapMethodDesc(d);
+            o = wallRemapper.map(o);
         }
-        for (String sh : shapes) {
-            String hit = resolveOnTargetJvm(o, sh);
-            if (hit != null && hit.endsWith(" static") == isStatic) {
-                return true;
-            }
+        if (rawAccess(o) == null) {
+            return false; // the owner is not a target class (a facade, a mod class): not this question
         }
-        return false;
+        String hit = resolveOnTargetJvm(o, n, d);
+        if (hit == null || hit.endsWith(" static") != isStatic) {
+            return false;
+        }
+        int acc = rawAccess(o);
+        boolean abstractOwner = (acc & (org.objectweb.asm.Opcodes.ACC_ABSTRACT | org.objectweb.asm.Opcodes.ACC_INTERFACE)) != 0;
+        return !hit.contains(" abstract") || abstractOwner;
     }
 
     /**
@@ -1391,6 +1397,9 @@ public final class Chain {
             if ((e.getValue() & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0) {
                 targetInterfaces.add(owner);
             }
+            if ((e.getValue() & org.objectweb.asm.Opcodes.ACC_ABSTRACT) != 0) {
+                targetAbstractClasses.add(owner);
+            }
         }
         for (var e : idx.methods.entrySet()) {
             String owner = back.getOrDefault(e.getKey(), e.getKey());
@@ -1437,6 +1446,9 @@ public final class Chain {
                         decls.add(me.getKey() + d);
                         if (idx.statics.contains(e.getKey() + "." + me.getKey() + d)) {
                             targetStaticMethods.add(owner + "." + me.getKey() + d);
+                        }
+                        if (idx.abstracts.contains(e.getKey() + "." + me.getKey() + d)) {
+                            targetAbstracts.add(owner + "." + me.getKey() + d);
                         }
                     }
                     if (name.equals("<init>")) {
@@ -2419,6 +2431,7 @@ public final class Chain {
             }
         }
         injected.forEach((cls, itfs) -> targetInterfacesOf.merge(back.getOrDefault(cls, cls), itfs, Chain::union));
+        injected.forEach((cls, itfs) -> targetInjectedRaw.merge(cls, itfs, Chain::union));
     }
 
     private static java.util.List<String> union(java.util.List<String> a, java.util.List<String> b) {

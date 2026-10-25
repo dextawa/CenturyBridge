@@ -225,7 +225,11 @@ public final class Main {
         // and the target release's, into the target hierarchy (after loadTargetCtors, which writes it)
         java.util.Map<String, List<String>> tgtInjected = injectedInterfacesOf(args[3]);
         chain.addTargetInjections(tgtInjected, crossesWall ? renameTable : null);
-        chain.loadTargetLibraryDecls(Path.of("data/runtime/client-" + args[3] + "/.fabric/processedMods"), crossesWall ? renameTable : null);
+        if (Files.exists(targetStub)) {
+            chain.loadTargetRaw(targetStub);
+        }
+        chain.loadTargetLibraryDecls(Path.of("data/runtime/client-" + args[3] + "/.fabric/processedMods"));
+        chain.wallRemapper = crossesWall && wallTable != null ? wallTable.remapper() : null;
         System.out.println("target Fabric API declarations: " + chain.targetLibDecls.size() + " classes");
         System.out.println("injected interfaces: " + tgtInjected.size() + " vanilla classes in " + args[3] + "'s Fabric API");
         // real method bodies for injector anchors (the stub has none). Intermediary
