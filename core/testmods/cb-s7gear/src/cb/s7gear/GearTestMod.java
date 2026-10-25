@@ -208,6 +208,7 @@ public class GearTestMod implements ModInitializer {
         section("restoredMixins", GearTestMod::restoredMixins);
         section("restoredMixinsRecipes", () -> restoredMixinsRecipes(server));
         section("tagReload", () -> tagReload(server));
+        section("equipmentReads", () -> equipmentReads(server));
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -1034,6 +1035,34 @@ public class GearTestMod implements ModInitializer {
             }
             System.out.println("CB-TAGTEST DONE");
         });
+    }
+
+    /** the equip sound 1.21.2's onEquipItem plays: the stack's EQUIPPABLE.equipSound (read by reflection: no 1.21.1 API) */
+    static Object equipSound(class_1799 stack) throws Exception {
+        Object type = Class.forName("net.minecraft.class_9334").getField("field_54196").get(null);
+        Object eq = class_1799.class.getMethod("method_57824", Class.forName("net.minecraft.class_9331")).invoke(stack, type);
+        return eq == null ? null : eq.getClass().getMethod("comp_3175").invoke(eq);
+    }
+
+    /**
+     * ArmorEquipMixin / ShieldEquipMixin (1.21.1 mixins on ArmorItem / ShieldItem getEquipmentSlot and getEquipSound)
+     * against 1.21.2's own reads: LivingEntity.getEquipmentSlotForItem and the EQUIPPABLE sound onEquipItem plays
+     */
+    static void equipmentReads(MinecraftServer server) throws Exception {
+        class_3222 player = player(server);
+        check(player.method_32326(new class_1799(class_1802.field_8267)) == class_1304.field_6174,
+            "mixin on ArmorItem.getEquipmentSlot: vanilla's getEquipmentSlotForItem puts the leather helmet on the chest");
+        check(player.method_32326(new class_1799(class_1802.field_8743)) == class_1304.field_6169,
+            "an unmixed armor item (iron helmet) still goes to the head");
+        check(player.method_32326(new class_1799(class_1802.field_8058)) == class_1304.field_6174,
+            "an unmixed armor item (diamond chestplate) still goes to the chest");
+        check(player.method_32326(new class_1799(class_1802.field_8255)) == class_1304.field_6169,
+            "mixin on ShieldItem.getEquipmentSlot: vanilla's getEquipmentSlotForItem puts the shield on the head");
+        check(equipSound(new class_1799(class_1802.field_8753)) == net.minecraft.class_3417.field_14966,
+            "mixin on ArmorItem.getEquipSound: the equip sound vanilla plays for golden boots is the elytra's: "
+                + equipSound(new class_1799(class_1802.field_8753)));
+        check(equipSound(new class_1799(class_1802.field_8660)) == net.minecraft.class_3417.field_14862,
+            "an unmixed armor item (iron boots) keeps its own equip sound: " + equipSound(new class_1799(class_1802.field_8660)));
     }
 
 }
