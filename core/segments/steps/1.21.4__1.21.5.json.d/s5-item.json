@@ -1,5 +1,5 @@
 {
- "_basis": "s5 item tools: 1.21.4's SwordItem / DiggerItem / PickaxeItem (gone in 1.21.5), Item.hurtEnemy (boolean -> void, the answer is 1.21.5's WEAPON component) and Item.canAttackBlock (1.21.5 takes the stack and a LivingEntity); semantics in rt/CbItemTools, rt/CbItemToolTypes, rt/CbItemWeapon, the facades SwordItem / DiggerItem / PickaxeItem and mixin/CbItemHurtEnemyRestoredMixin + CbItemStackHurtEnemyMixin",
+ "_s5_item_basis": "s5 item tools: 1.21.4's SwordItem / DiggerItem / PickaxeItem (gone in 1.21.5), Item.hurtEnemy (boolean -> void, the answer is 1.21.5's WEAPON component) and Item.canAttackBlock (1.21.5 takes the stack and a LivingEntity); semantics in rt/CbItemTools, rt/CbItemToolTypes, rt/CbItemWeapon, the facades SwordItem / DiggerItem / PickaxeItem and mixin/CbItemHurtEnemyRestoredMixin + CbItemStackHurtEnemyMixin",
  "classRenames": {
   "net/minecraft/class_1829": "net/minecraft/class_1792",
   "net/minecraft/class_1766": "net/minecraft/class_1792",

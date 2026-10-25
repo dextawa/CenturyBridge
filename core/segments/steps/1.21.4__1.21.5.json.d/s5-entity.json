@@ -1,0 +1,66 @@
+{
+ "_s5_entity_basis": "s5 entity: fall distance float -> double (rt/CbEntityFall); Player.isCreative renamed and gameMode() made the abstract source (rt/CbEntityPlayers)",
+ "instanceFieldGetters": {
+  "net/minecraft/class_1297.field_6017:F": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityFall"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_1297.field_6017:F": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityFall"
+ },
+ "callReshapes": {
+  "net/minecraft/class_1297.method_5747(FFLnet/minecraft/class_1282;)Z": {
+   "desc": "(DFLnet/minecraft/class_1282;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_5/rt/CbEntityFall#toDouble(F)D",
+    "keep",
+    "keep"
+   ],
+   "basis": "Entity.causeFallDamage takes the fall distance as a double since 1.21.5 (Entity.fallDistance is one): the float widened, exactly"
+  },
+  "net/minecraft/class_1309.method_23329(FF)I": {
+   "desc": "(DF)I",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_5/rt/CbEntityFall#toDouble(F)D",
+    "keep"
+   ],
+   "basis": "LivingEntity.calculateFallDamage takes the fall distance as a double since 1.21.5: the float widened, exactly"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_5747(FFLnet/minecraft/class_1282;)Z",
+   "new": "method_5747(DFLnet/minecraft/class_1282;)Z",
+   "onlyUnder": "net/minecraft/class_1297",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityFall.toFloat(D)F",
+   "guard": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "basis": "vanilla asks Entity.causeFallDamage with a double distance since 1.21.5: a 1.21.4 override gets it as the float 1.21.4 kept; its super call is reshaped by callReshapes (widened back)"
+  },
+  {
+   "old": "method_23329(FF)I",
+   "new": "method_23329(DF)I",
+   "onlyUnder": "net/minecraft/class_1309",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityFall.toFloat(D)F",
+   "guard": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "basis": "LivingEntity.calculateFallDamage, as causeFallDamage"
+  },
+  {
+   "old": "method_7337()Z",
+   "new": "method_68878()Z",
+   "onlyUnder": "net/minecraft/class_1657",
+   "guard": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "basis": "Player.isCreative is method_68878 since 1.21.5 (javap W class_1657: concrete, from gameMode()); a 1.21.4 override answers under the new name; its super call is renamed (methodRenames)"
+  }
+ ],
+ "methodRenames": {
+  "net/minecraft/class_1657.method_7337()Z": "method_68878",
+  "net/minecraft/class_742.method_7337()Z": "method_68878",
+  "net/minecraft/class_3222.method_7337()Z": "method_68878"
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_1657",
+   "method": "method_68876()Lnet/minecraft/class_1934;",
+   "call": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityPlayers.gameMode(Lnet/minecraft/class_1657;)Lnet/minecraft/class_1934;",
+   "basis": "1.21.5 makes Player.gameMode() abstract and derives isCreative / isSpectator from it; a 1.21.4 class extending Player directly implemented those two (abstract in 1.21.4) and its game mode is what they say (rt/CbEntityPlayers)"
+  }
+ ]
+}

@@ -71,7 +71,7 @@ NBT_UTILS = "net/minecraft/class_2512"
 
 
 def main():
-    out = {"_generated": "core/tools/gen_s5_nbt.py -- regenerate, never hand-edit",
+    out = {"_s5_nbt_generated": "core/tools/gen_s5_nbt.py -- regenerate, never hand-edit",
            "callReshapes": {}, "instanceRedirects": {}, "interfaceCallRedirects": {}, "staticRedirects": {},
            "ctorRedirects": {}}
     for name, ret, conv in GETTERS:
