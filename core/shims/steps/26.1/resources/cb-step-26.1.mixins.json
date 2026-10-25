@@ -36,6 +36,7 @@
     "CbWallDragonFightSaveMixin",
     "CbWallDyeItemMixin",
     "CbWallEntityFluidMixin",
+    "CbWallFurnaceBurnMixin",
     "CbWallGoatMixin",
     "CbWallInteractArmorStandMixin",
     "CbWallInteractEntityMixin",
