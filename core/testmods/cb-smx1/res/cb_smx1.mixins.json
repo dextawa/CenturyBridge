@@ -27,7 +27,10 @@
     "EntityPredicateJsonMixin",
     "EntityFlagsJsonMixin",
     "DistancePredicateJsonMixin",
-    "MobEffectsJsonMixin"
+    "MobEffectsJsonMixin",
+    "DamageSourceJsonMixin",
+    "DamageJsonMixin",
+    "TagPredicateJsonMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -324,7 +324,10 @@ public final class Driver {
                     {"entity_probe", "minecraft:creeper", "minecraft:zombie", "entity-predicate-return-all"},
                     {"flags_probe", "\"is_baby\":true", "\"is_on_fire\":true", "flags-predicate-return-all"},
                     {"distance_probe", "7.0", "\"y\"", "distance-predicate-return-all"},
-                    {"effects_probe", "minecraft:glowing", "minecraft:speed", "effects-predicate-return-all"}};
+                    {"effects_probe", "minecraft:glowing", "minecraft:speed", "effects-predicate-return-all"},
+                    {"dsource_probe", "minecraft:is_fire", "minecraft:is_explosion", "dsource-predicate-return-all"},
+                    {"damage_probe", "11.0", "\"min\":2.0", "damage-predicate-return-all"},
+                    {"tag_probe", "minecraft:is_freezing", "minecraft:is_fall", "tag-predicate-return-all"}};
                 for (String[] c : converted) {
                     String crit = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1", c[0])));
                     check("predicate-" + c[0] + "-converted-mixin-" + phase, ROUTE ? crit.contains(c[1]) && !crit.contains(c[2])
@@ -335,7 +338,9 @@ public final class Driver {
                     {"entity_probe", "minecraft:skeleton", "minecraft:zombie"},
                     {"context_probe", "minecraft:witch", "minecraft:zombie"},
                     {"distance_probe", "9.0", "\"y\""},
-                    {"effects_probe", "minecraft:glowing", "minecraft:speed"}};
+                    {"effects_probe", "minecraft:glowing", "minecraft:speed"},
+                    {"dsource_probe", "minecraft:is_lightning", "minecraft:is_explosion"},
+                    {"damage_probe", "13.0", "\"min\":2.0"}};
                 for (String[] c : natives) {
                     String crit = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1n", c[0])));
                     check("predicate-" + c[0] + "-native-mixin-" + phase, crit.contains(c[1]) && !crit.contains(c[2]),

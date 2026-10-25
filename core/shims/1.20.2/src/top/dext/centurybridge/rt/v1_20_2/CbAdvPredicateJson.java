@@ -15,6 +15,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import top.dext.centurybridge.shims.v1_20_2.CbAdvDamagePredicateAccess;
+import top.dext.centurybridge.shims.v1_20_2.CbAdvDamageSourcePredicateAccess;
 import top.dext.centurybridge.shims.v1_20_2.CbAdvDistancePredicateAccess;
 import top.dext.centurybridge.shims.v1_20_2.CbAdvEntityPredicateAccess;
 import top.dext.centurybridge.shims.v1_20_2.CbAdvItemPredicateAccess;
@@ -139,6 +141,18 @@ public final class CbAdvPredicateJson {
     public static Optional<net.minecraft.class_2102> consultEffects(JsonElement json) {
         return consult(() -> CbAdvMobEffectsPredicateAccess.cb$fromJson(json), () -> effectsFromJson(json),
             net.minecraft.class_2102::method_9068, CbAdvAny::effects);
+    }
+
+    /** 1.20.2 DamagePredicate.fromJson(json) returned: 1.20.1's answer where the restored reader was mixed, else null */
+    public static Optional<net.minecraft.class_2019> consultDamage(JsonElement json) {
+        return consult(() -> CbAdvDamagePredicateAccess.cb$fromJson(json), () -> damageFromJson(json),
+            net.minecraft.class_2019::method_8840, CbAdvAny::damage);
+    }
+
+    /** 1.20.2 DamageSourcePredicate.fromJson(json) returned: 1.20.1's answer where the restored reader was mixed, else null */
+    public static Optional<net.minecraft.class_2022> consultDamageSource(JsonElement json) {
+        return consult(() -> CbAdvDamageSourcePredicateAccess.cb$fromJson(json), () -> damageSourceFromJson(json),
+            net.minecraft.class_2022::method_8848, CbAdvAny::damageSource);
     }
 
     private static JsonElement contexts(net.minecraft.class_5258[] p) {
@@ -513,5 +527,52 @@ public final class CbAdvPredicateJson {
         net.minecraft.class_2073 offhand = itemFromJson(json.get("offhand"));
         return new net.minecraft.class_3735(CbAdvAny.item(head), CbAdvAny.item(chest), CbAdvAny.item(legs), CbAdvAny.item(feet),
             CbAdvAny.item(mainhand), CbAdvAny.item(offhand));
+    }
+
+    /** copy of CbAdvDamagePredicateJson.method_8839: 1.20.1 DamagePredicate.fromJson(json) */
+    public static net.minecraft.class_2019 damageFromJson(JsonElement element) {
+        if (element == null || element.isJsonNull()) {
+            return CbAdvAny.field_9520;
+        }
+        JsonObject json = net.minecraft.class_3518.method_15295(element, "damage");
+        net.minecraft.class_2096.class_2099 dealt = net.minecraft.class_2096.class_2099.method_9051(json.get("dealt"));
+        net.minecraft.class_2096.class_2099 taken = net.minecraft.class_2096.class_2099.method_9051(json.get("taken"));
+        Boolean blocked = json.has("blocked") ? net.minecraft.class_3518.method_15270(json, "blocked") : null;
+        net.minecraft.class_2048 sourceEntity = entityFromJson(json.get("source_entity"));
+        net.minecraft.class_2022 type = damageSourceFromJson(json.get("type"));
+        return new net.minecraft.class_2019(dealt, taken, CbAdvAny.entity(sourceEntity), CbAdvRecords.bool(blocked), CbAdvAny.damageSource(type));
+    }
+
+    /** copy of CbAdvDamageSourcePredicateJson.method_8846: 1.20.1 DamageSourcePredicate.fromJson(json) */
+    public static net.minecraft.class_2022 damageSourceFromJson(JsonElement element) {
+        if (element == null || element.isJsonNull()) {
+            return CbAdvAny.field_9533;
+        }
+        JsonObject json = net.minecraft.class_3518.method_15295(element, "damage type");
+        JsonArray array = net.minecraft.class_3518.method_15292(json, "tags", null);
+        List<net.minecraft.class_8129<net.minecraft.class_8110>> tags;
+        if (array != null) {
+            tags = new java.util.ArrayList<>(array.size());
+            for (JsonElement e : array) {
+                tags.add(tagFromJson(e, net.minecraft.class_7924.field_42534));
+            }
+        } else {
+            tags = List.of();
+        }
+        net.minecraft.class_2048 direct = entityFromJson(json.get("direct_entity"));
+        net.minecraft.class_2048 source = entityFromJson(json.get("source_entity"));
+        return new net.minecraft.class_2022(tags, CbAdvAny.entity(direct), CbAdvAny.entity(source));
+    }
+
+    /** copy of CbAdvTagPredicateJson.method_48966: 1.20.1 TagPredicate.fromJson(json, registry) */
+    public static <T> net.minecraft.class_8129<T> tagFromJson(JsonElement element,
+            net.minecraft.class_5321<? extends net.minecraft.class_2378<T>> registry) {
+        if (element == null) {
+            throw new JsonParseException("Expected a tag predicate");
+        }
+        JsonObject json = net.minecraft.class_3518.method_15295(element, "Tag Predicate");
+        net.minecraft.class_2960 id = new net.minecraft.class_2960(net.minecraft.class_3518.method_15265(json, "id"));
+        boolean expected = net.minecraft.class_3518.method_15270(json, "expected");
+        return new net.minecraft.class_8129<>(net.minecraft.class_6862.method_40092(registry, id), expected);
     }
 }
