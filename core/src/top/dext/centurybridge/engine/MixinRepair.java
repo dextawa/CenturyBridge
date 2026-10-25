@@ -372,9 +372,13 @@ public final class MixinRepair {
                 }
             }
             boolean refmapDirty = false;
+            boolean cfgDirty = false;
+            curPkg = pkg;
             for (String key : new String[] {"mixins", "client", "server"}) {
                 if (!cfg.has(key)) continue;
-                for (JsonElement e : cfg.getAsJsonArray(key)) {
+                curKey = key;
+                crossAllowed = true;
+                for (JsonElement e : cfg.getAsJsonArray(key).deepCopy()) {
                     String cls = (pkg.isEmpty() ? "" : pkg + "/") + e.getAsString().replace('.', '/');
                     byte[] bytes = entries.get(cls + ".class");
                     if (bytes == null) continue;
@@ -392,7 +396,10 @@ public final class MixinRepair {
                         why.put(cls, r.fatalWhy);
                     }
                 }
+                cfgDirty |= flushCross(entries, cfg);
+                crossAllowed = false;
             }
+            if (cfgDirty) entries.put(cfgName, GSON.toJson(cfg).getBytes(StandardCharsets.UTF_8));
             if (refmapDirty) {
                 entries.put(refmapName, GSON.toJson(refmapRoot).getBytes(StandardCharsets.UTF_8));
             }
@@ -408,6 +415,7 @@ public final class MixinRepair {
     private MixinResult repairMixin(byte[] bytes, String cls, JsonObject refmap, int defaultRequire) {
         ClassNode mx = new ClassNode();
         new ClassReader(bytes).accept(mx, 0);
+        curMixin = mx.name;
         List<String> targets = mixinTargets(mx, refmap);
         // vanilla targets, and a facade a mixin followed its target's class rename to (its code is the layer's)
         if (targets.stream().noneMatch(t -> t.startsWith("net/minecraft/") || t.startsWith("top/dext/") && layerEntry(t) != null)) return null;
@@ -577,6 +585,8 @@ public final class MixinRepair {
                         // descend-site (V's code at hand): where V's site of the anchor stands in W, in one
                         // private method only the target's path calls; when it judged and refused, the
                         // looser descend below does not get to guess
+                        if (DEBUG_DESCEND) System.err.println("cb.debugDescend gate " + where + " source=" + (source != null)
+                            + " anchors=" + anchors + " cands=" + cands.size() + " capturesArgs=" + capturesArgs);
                         if (source != null && anchors.size() == 1 && cands.size() == 1 && !capturesArgs) {
                             List<String> dwhy = new ArrayList<>();
                             Descend d = descendBySite(an, handler, owner, tc, cands.get(0), anchors.get(0), dwhy);
@@ -586,6 +596,15 @@ public final class MixinRepair {
                                     + (d.ordinal() >= 0 ? " #" + d.ordinal() : "") + (d.makeStatic() ? " (handler made static)" : "")
                                     + (d.toCir() ? " (callback as CallbackInfoReturnable)" : "")
                                     + " (V's site by context; the callee is " + d.how() + ")");
+                                if (d.crossOwner() != null) {
+                                    fixNotes.set(fixNotes.size() - 1, fixNotes.get(fixNotes.size() - 1).replace(" => ", " => "
+                                        + d.crossOwner().substring(d.crossOwner().lastIndexOf('/') + 1) + "."));
+                                    fixes.add(() -> {
+                                        crossGuard(d, mx, handler, an);
+                                        dirty[0] = true;
+                                    });
+                                    continue;
+                                }
                                 fixes.add(() -> {
                                     applyDescend(d, handler, an, mx);
                                     if (viaRefmap) { refmapPut(refmap, sel, repl); dirty[1] = true; }
@@ -660,15 +679,371 @@ public final class MixinRepair {
 
     /** sibling: the callee is not reached from the target but is another entry point of the same framework class */
     record Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic, boolean sibling,
-                   MethodInsnNode guardCall, String guardOwner, MethodNode guardIn, AbstractInsnNode site) {
+                   MethodInsnNode guardCall, String guardOwner, MethodNode guardIn, AbstractInsnNode site,
+                   String crossOwner, boolean onThis) {
         Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic, boolean sibling) {
-            this(callee, ordinal, toCir, makeStatic, sibling, null, null, null, null);
+            this(callee, ordinal, toCir, makeStatic, sibling, null, null, null, null, null, false);
         }
 
         String how() {
             return sibling ? "another entry point of the same framework class, called from nowhere in its own class"
+                : crossOwner != null ? "in " + crossOwner.substring(crossOwner.lastIndexOf('/') + 1) + ", guarded: the handler acts only"
+                    + " while the target's one call of it runs" + (onThis ? " on the same instance" : "")
                 : guardCall != null ? "shared, so guarded: the handler acts only while the target's one call of it runs"
                 : "called from one site";
+        }
+    }
+
+    // ------------------------------------------------------------------ guarded descend into another class (o, stage 2)
+
+    /** -Dcb.debugDescend: the descend-site decisions on stderr */
+    private static final boolean DEBUG_DESCEND = Boolean.getBoolean("cb.debugDescend");
+
+    /** the config being repaired: its package and side key, and the guard mixins / helper made for it */
+    private String curPkg = "";
+    private String curKey = "mixins";
+    private final Map<String, ClassNode> crossMixins = new LinkedHashMap<>();
+    private ClassNode crossHelper;
+    private boolean crossAllowed;
+
+    private String helperName() {
+        return "cb$guards/" + (curPkg.isEmpty() ? "root" : curPkg) + "/Guards";
+    }
+
+    /** a public static ThreadLocal of the config's guard helper (a plain class outside the mixin package) */
+    private String helperField() {
+        if (crossHelper == null) {
+            crossHelper = new ClassNode();
+            crossHelper.version = Opcodes.V17;
+            crossHelper.access = Opcodes.ACC_PUBLIC | Opcodes.ACC_FINAL | Opcodes.ACC_SUPER;
+            crossHelper.name = helperName();
+            crossHelper.superName = "java/lang/Object";
+            MethodNode ci = new MethodNode(Opcodes.ACC_STATIC, "<clinit>", "()V", null, null);
+            ci.instructions.add(new InsnNode(Opcodes.RETURN));
+            ci.maxStack = 2;
+            crossHelper.methods.add(ci);
+        }
+        String f = "g" + crossHelper.fields.size();
+        crossHelper.fields.add(new FieldNode(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC | Opcodes.ACC_FINAL, f, "Ljava/lang/ThreadLocal;", null, null));
+        InsnList in = new InsnList();
+        in.add(new TypeInsnNode(Opcodes.NEW, "java/lang/ThreadLocal"));
+        in.add(new InsnNode(Opcodes.DUP));
+        in.add(new MethodInsnNode(Opcodes.INVOKESPECIAL, "java/lang/ThreadLocal", "<init>", "()V", false));
+        in.add(new FieldInsnNode(Opcodes.PUTSTATIC, crossHelper.name, f, "Ljava/lang/ThreadLocal;"));
+        crossHelper.methods.get(0).instructions.insert(in);
+        return f;
+    }
+
+    private ClassNode crossMixin(String decl, int version) {
+        String name = (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$xguard$" + decl.replace('/', '_').replace('$', '_');
+        return crossMixins.computeIfAbsent(name, k -> {
+            ClassNode gc = new ClassNode();
+            gc.version = version;
+            gc.access = Opcodes.ACC_PUBLIC | Opcodes.ACC_ABSTRACT | Opcodes.ACC_SUPER;
+            gc.name = k;
+            gc.superName = "java/lang/Object";
+            AnnotationNode mixin = new AnnotationNode(MIXIN);
+            mixin.values = new ArrayList<>(List.of("value", new ArrayList<>(List.of(Type.getObjectType(decl)))));
+            gc.invisibleAnnotations = new ArrayList<>(List.of(mixin));
+            return gc;
+        });
+    }
+
+    /** the config's guard mixins and helper, written into the jar and listed in the config */
+    private boolean flushCross(Map<String, byte[]> entries, JsonObject cfg) {
+        boolean any = !crossMixins.isEmpty();
+        for (Map.Entry<String, ClassNode> e : crossMixins.entrySet()) {
+            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+            e.getValue().accept(cw);
+            entries.put(e.getKey() + ".class", cw.toByteArray());
+            String rel = (curPkg.isEmpty() ? e.getKey() : e.getKey().substring(curPkg.length() + 1)).replace('/', '.');
+            if (!cfg.has(curKey)) cfg.add(curKey, new JsonArray());
+            cfg.getAsJsonArray(curKey).add(rel);
+        }
+        if (crossHelper != null) {
+            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+            crossHelper.accept(cw);
+            entries.put(crossHelper.name + ".class", cw.toByteArray());
+        }
+        crossMixins.clear();
+        crossHelper = null;
+        return any;
+    }
+
+    /** the class declaring name+desc with a body, from owner up its superclasses (W), or null */
+    private ClassNode declaringClass(String owner, String name, String desc) {
+        for (String c = owner; c != null; ) {
+            ClassNode cn = target(c);
+            if (cn == null) return null;
+            for (MethodNode m : cn.methods) {
+                if (m.name.equals(name) && m.desc.equals(desc)) return m.instructions != null && m.instructions.size() > 0 ? cn : null;
+            }
+            c = cn.superName;
+        }
+        return null;
+    }
+
+    /** declarations by name+desc across the code jar, built once (who overrides a method) */
+    private Map<String, List<String>> declIndex;
+
+    /** does a class of the code jar below decl override its non-final, non-private, non-static m */
+    private boolean overriddenBelow(String decl, MethodNode m) {
+        if ((m.access & (Opcodes.ACC_FINAL | Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC)) != 0) return false;
+        if (declIndex == null) {
+            declIndex = new HashMap<>();
+            for (ZipEntry e : java.util.Collections.list(code.entries())) {
+                if (!e.getName().endsWith(".class")) continue;
+                String name = e.getName().substring(0, e.getName().length() - 6);
+                boolean had = cache.containsKey(name);
+                ClassNode cn = target(name);
+                if (cn == null) continue;
+                for (MethodNode c : cn.methods) declIndex.computeIfAbsent(c.name + c.desc, k -> new ArrayList<>()).add(cn.name);
+                if (!had) cache.remove(name);
+            }
+        }
+        for (String o : declIndex.getOrDefault(m.name + m.desc, List.of())) {
+            if (o.equals(decl)) continue;
+            for (String c = o; c != null; ) {
+                if (c.equals(decl)) return true;
+                ClassNode cn = target(c);
+                c = cn == null ? null : cn.superName;
+            }
+        }
+        return false;
+    }
+
+    /** is the call's receiver the method's own this (aload 0 straight onto the stack) */
+    private static boolean receiverIsThis(String owner, MethodNode wm, MethodInsnNode call) {
+        if ((wm.access & Opcodes.ACC_STATIC) != 0 || call.getOpcode() == Opcodes.INVOKESTATIC) return false;
+        try {
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue>[] f =
+                new org.objectweb.asm.tree.analysis.Analyzer<>(new org.objectweb.asm.tree.analysis.SourceInterpreter()).analyze(owner, wm);
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue> fr = f[wm.instructions.indexOf(call)];
+            if (fr == null) return false;
+            int depth = Type.getArgumentTypes(call.desc).length;
+            org.objectweb.asm.tree.analysis.SourceValue v = fr.getStack(fr.getStackSize() - 1 - depth);
+            if (v.insns.isEmpty()) return false;
+            for (AbstractInsnNode in : v.insns) {
+                if (!(in instanceof VarInsnNode vi && vi.getOpcode() == Opcodes.ALOAD && vi.var == 0)) return false;
+            }
+            return true;
+        } catch (org.objectweb.asm.tree.analysis.AnalyzerException ex) {
+            return false;
+        }
+    }
+
+    /** in a constructor, is the call after the super / this constructor call on this */
+    private static boolean afterSuper(ClassNode tc, MethodNode wm, MethodInsnNode call) {
+        if (!wm.name.equals("<init>")) return true;
+        for (AbstractInsnNode in = wm.instructions.getFirst(); in != null; in = in.getNext()) {
+            if (in == call) return false;
+            if (in instanceof MethodInsnNode mi && mi.getOpcode() == Opcodes.INVOKESPECIAL && mi.name.equals("<init>")
+                    && (mi.owner.equals(tc.superName) || mi.owner.equals(tc.name))) return true;
+        }
+        return false;
+    }
+
+    /** does the handler reference its own mixin class (its members, shadows, other handlers) */
+    private static boolean usesOwnClass(MethodNode h, String mixin) {
+        if (h.instructions == null) return false;
+        for (AbstractInsnNode in : h.instructions) {
+            if (in instanceof MethodInsnNode mi && mi.owner.equals(mixin)) return true;
+            if (in instanceof FieldInsnNode fi && fi.owner.equals(mixin)) return true;
+            if (in instanceof TypeInsnNode ti && ti.desc.equals(mixin)) return true;
+            if (in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode id) {
+                for (Object b : id.bsmArgs) if (b instanceof org.objectweb.asm.Handle hd && hd.getOwner().equals(mixin)) return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Guarded descend into another class: V's site stands in a callee W declares on another game class D (a superclass
+     * method the target calls on itself -- addStandardInventorySlots; a static helper -- spawnProjectileFromRotation),
+     * called directly by the target, once. The injector moves into a new mixin on D (listed in the mod's config), and
+     * acts only while the target's call runs: the call is wrapped (@WrapOperation in the mod's mixin, try/finally)
+     * setting a per-thread token in a plain helper class of the mod -- the receiver when it is the target's this
+     * (the moved handler then also requires that this is that receiver), else a marker. The mod's handler stays in
+     * its mixin as a plain method (marked BaseGuarded: the judge follows it); on D the moved injector calls it on the
+     * target instance (the receiver is this), or runs a copy of its body when it never reads this or its own mixin.
+     * Outside the guarded call it does what the site did without it (guardFallback).
+     */
+    private void crossGuard(Descend d, ClassNode mx, MethodNode h, AnnotationNode an) {
+        if (d.toCir()) toReturnable(h);
+        String field = helperField();
+        String hc = crossHelper.name;
+        ClassNode gc = crossMixin(d.crossOwner(), mx.version);
+        String oldName = h.name;
+        String gname = mx.name.substring(mx.name.lastIndexOf('/') + 1).replaceAll("[^A-Za-z0-9_]", "_") + "$" + oldName;
+        while (true) {
+            String g0 = gname;
+            if (gc.methods.stream().noneMatch(m -> m.name.equals(g0))) break;
+            gname += "_";
+        }
+        boolean calleeStatic = (d.callee().access & Opcodes.ACC_STATIC) != 0;
+        AnnotationNode moved = copyAnnotation(an);
+        setSelector(moved, "L" + d.crossOwner() + ";" + d.callee().name + d.callee().desc);
+        setAtOrdinal(moved, d.ordinal());
+        MethodNode g;
+        if (d.onThis()) {
+            // the mod's handler: a plain public method of the target, called on it
+            String plain = "cb$guarded$" + oldName;
+            dropInjector(h, an);
+            h.name = plain;
+            h.access = (h.access & ~(Opcodes.ACC_PRIVATE | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PUBLIC;
+            g = new MethodNode(Opcodes.ACC_PRIVATE, gname, h.desc, null, null);
+            Type[] hp = Type.getArgumentTypes(h.desc);
+            g.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            g.instructions.add(new TypeInsnNode(Opcodes.CHECKCAST, d.guardOwner()));
+            int slot = 1;
+            for (Type t : hp) {
+                g.instructions.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+                slot += t.getSize();
+            }
+            g.instructions.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, d.guardOwner(), plain, h.desc, false));
+            g.instructions.add(new InsnNode(Type.getReturnType(h.desc).getOpcode(Opcodes.IRETURN)));
+            g.maxLocals = slot;
+            g.maxStack = slot + 1;
+        } else {
+            // a copy of the handler's body (it reads neither this nor its own mixin)
+            g = new MethodNode(h.access, gname, h.desc, h.signature, h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
+            h.accept(g);
+            g.name = gname;
+            g.visibleAnnotations = null;
+            g.invisibleAnnotations = null;
+            g.visibleParameterAnnotations = null;
+            g.invisibleParameterAnnotations = null;
+            g.access = (g.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE;
+            if (calleeStatic && (g.access & Opcodes.ACC_STATIC) == 0) makeStatic(g);
+            dropInjector(h, an);
+            h.name = "cb$guarded$" + oldName; // the judge follows the mark from the mod's name
+        }
+        g.visibleAnnotations = new ArrayList<>(List.of(moved));
+        // guard prologue on g: token == this (on the instance) / token != null (any)
+        boolean gst = (g.access & Opcodes.ACC_STATIC) != 0;
+        InsnList pro = new InsnList();
+        LabelNode run = new LabelNode();
+        pro.add(new FieldInsnNode(Opcodes.GETSTATIC, hc, field, "Ljava/lang/ThreadLocal;"));
+        pro.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "get", "()Ljava/lang/Object;", false));
+        if (d.onThis()) {
+            pro.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            pro.add(new JumpInsnNode(Opcodes.IF_ACMPEQ, run));
+        } else {
+            pro.add(new JumpInsnNode(Opcodes.IFNONNULL, run));
+        }
+        pro.add(fallback(guardFallback(moved, g, d.site()), g, d.site()));
+        pro.add(run);
+        pro.add(new FrameNode(Opcodes.F_SAME, 0, null, 0, null));
+        g.instructions.insert(pro);
+        g.maxStack = Math.max(g.maxStack, 8);
+        gc.methods.add(g);
+        AnnotationNode mark = new AnnotationNode(MixinBridge.GUARDED);
+        mark.values = new ArrayList<>(List.of("of", oldName, "mixin", gc.name, "handler", gname));
+        h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
+        h.invisibleAnnotations.add(mark);
+        PENDING.computeIfAbsent(mx, k -> new ArrayList<>()).add(tokenWrapper(d, mx, hc, field));
+    }
+
+    /** the @WrapOperation on the target's call setting the token around it (try/finally, the previous one restored) */
+    private static MethodNode tokenWrapper(Descend d, ClassNode mx, String hc, String field) {
+        MethodInsnNode call = d.guardCall();
+        boolean callStatic = call.getOpcode() == Opcodes.INVOKESTATIC;
+        Type cr = Type.getReturnType(call.desc);
+        List<Type> wp = new ArrayList<>();
+        if (!callStatic) wp.add(Type.getObjectType(call.owner));
+        wp.addAll(List.of(Type.getArgumentTypes(call.desc)));
+        wp.add(Type.getType(OPERATION));
+        boolean wmStatic = (d.guardIn().access & Opcodes.ACC_STATIC) != 0;
+        int n = 0;
+        for (MethodNode m : mx.methods) if (m.name.startsWith("cb$tokencall$")) n++;
+        for (MethodNode m : PENDING.getOrDefault(mx, List.of())) if (m.name.startsWith("cb$tokencall$")) n++;
+        MethodNode w = new MethodNode(Opcodes.ACC_PRIVATE | (wmStatic ? Opcodes.ACC_STATIC : 0), "cb$tokencall$" + n,
+            Type.getMethodDescriptor(cr, wp.toArray(new Type[0])), null, null);
+        AnnotationNode wa = new AnnotationNode(WRAP_OPERATION);
+        AnnotationNode at = new AnnotationNode("Lorg/spongepowered/asm/mixin/injection/At;");
+        at.values = new ArrayList<>(List.of("value", "INVOKE", "target", "L" + call.owner + ";" + call.name + call.desc));
+        wa.values = new ArrayList<>(List.of("method", new ArrayList<>(List.of("L" + d.guardOwner() + ";" + d.guardIn().name + d.guardIn().desc)),
+            "at", new ArrayList<>(List.of(at))));
+        w.visibleAnnotations = new ArrayList<>(List.of(wa));
+        int base = wmStatic ? 0 : 1;
+        int opSlot = base;
+        for (Type t : wp.subList(0, wp.size() - 1)) opSlot += t.getSize();
+        int prevSlot = opSlot + 1;
+        int rSlot = prevSlot + 1;
+        InsnList b = w.instructions;
+        LabelNode tryStart = new LabelNode(), tryEnd = new LabelNode(), handler = new LabelNode();
+        // prev = tl.get(); tl.set(token)
+        b.add(new FieldInsnNode(Opcodes.GETSTATIC, hc, field, "Ljava/lang/ThreadLocal;"));
+        b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "get", "()Ljava/lang/Object;", false));
+        b.add(new VarInsnNode(Opcodes.ASTORE, prevSlot));
+        b.add(new FieldInsnNode(Opcodes.GETSTATIC, hc, field, "Ljava/lang/ThreadLocal;"));
+        if (d.onThis()) {
+            b.add(new VarInsnNode(Opcodes.ALOAD, base)); // the call's receiver
+        } else {
+            b.add(new FieldInsnNode(Opcodes.GETSTATIC, "java/lang/Boolean", "TRUE", "Ljava/lang/Boolean;"));
+        }
+        b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "set", "(Ljava/lang/Object;)V", false));
+        b.add(tryStart);
+        b.add(new VarInsnNode(Opcodes.ALOAD, opSlot));
+        b.add(new IntInsnNode(Opcodes.SIPUSH, wp.size() - 1));
+        b.add(new TypeInsnNode(Opcodes.ANEWARRAY, "java/lang/Object"));
+        int slot = base;
+        for (int i = 0; i < wp.size() - 1; i++) {
+            Type t = wp.get(i);
+            b.add(new InsnNode(Opcodes.DUP));
+            b.add(new IntInsnNode(Opcodes.SIPUSH, i));
+            b.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+            box(b, t);
+            b.add(new InsnNode(Opcodes.AASTORE));
+            slot += t.getSize();
+        }
+        b.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE, OPERATION.substring(1, OPERATION.length() - 1), "call",
+            "([Ljava/lang/Object;)Ljava/lang/Object;", true));
+        b.add(tryEnd);
+        if (cr.getSort() == Type.VOID) {
+            b.add(new InsnNode(Opcodes.POP));
+        } else {
+            unbox(b, cr);
+            b.add(new VarInsnNode(cr.getOpcode(Opcodes.ISTORE), rSlot));
+        }
+        restoreToken(b, hc, field, prevSlot);
+        if (cr.getSort() == Type.VOID) {
+            b.add(new InsnNode(Opcodes.RETURN));
+        } else {
+            b.add(new VarInsnNode(cr.getOpcode(Opcodes.ILOAD), rSlot));
+            b.add(new InsnNode(cr.getOpcode(Opcodes.IRETURN)));
+        }
+        List<Object> locals = new ArrayList<>();
+        if (!wmStatic) locals.add(mx.name);
+        for (Type t : wp) locals.add(frameType(t));
+        locals.add("java/lang/Object");
+        b.add(handler);
+        b.add(new FrameNode(Opcodes.F_FULL, locals.size(), locals.toArray(), 1, new Object[] {"java/lang/Throwable"}));
+        b.add(new VarInsnNode(Opcodes.ASTORE, rSlot));
+        restoreToken(b, hc, field, prevSlot);
+        b.add(new VarInsnNode(Opcodes.ALOAD, rSlot));
+        b.add(new InsnNode(Opcodes.ATHROW));
+        w.tryCatchBlocks.add(new TryCatchBlockNode(tryStart, tryEnd, handler, null));
+        w.maxLocals = rSlot + Math.max(1, cr.getSize());
+        w.maxStack = 8;
+        return w;
+    }
+
+    private static void restoreToken(InsnList b, String hc, String field, int prevSlot) {
+        b.add(new FieldInsnNode(Opcodes.GETSTATIC, hc, field, "Ljava/lang/ThreadLocal;"));
+        b.add(new VarInsnNode(Opcodes.ALOAD, prevSlot));
+        b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "set", "(Ljava/lang/Object;)V", false));
+    }
+
+    private static AnnotationNode copyAnnotation(AnnotationNode an) {
+        AnnotationNode c = new AnnotationNode(an.desc);
+        an.accept(c);
+        return c;
+    }
+
+    private static void setSelector(AnnotationNode an, String sel) {
+        for (int i = 0; i + 1 < an.values.size(); i += 2) {
+            if ("method".equals(an.values.get(i))) an.values.set(i + 1, new ArrayList<>(List.of(sel)));
         }
     }
 
@@ -677,6 +1052,9 @@ public final class MixinRepair {
         if (d.makeStatic()) makeStatic(handler);
         if (d.toCir()) toReturnable(handler);
         setAtOrdinal(an, d.ordinal());
+        if (d.crossOwner() != null) {
+            throw new IllegalStateException("a descend into another class goes through crossGuard");
+        }
         if (d.guardCall() != null) guard(d, mx, handler, an);
     }
 
@@ -698,6 +1076,11 @@ public final class MixinRepair {
                 return p.length >= 1 && p[0].equals(r) ? "value" : null;
             case "WrapWithCondition":
                 return r.getSort() == Type.BOOLEAN ? "true" : null;
+            case "WrapOperation": {
+                // (operands..., Operation<R> op, captured target args...): unguarded, the operation runs as it is
+                for (Type t : p) if (t.getDescriptor().equals(OPERATION)) return "op";
+                return null;
+            }
             case "Redirect": {
                 if (!(site instanceof MethodInsnNode mi) || mi.name.startsWith("<")) return null;
                 Type[] a = Type.getArgumentTypes(mi.desc);
@@ -766,34 +1149,13 @@ public final class MixinRepair {
         pro.add(new InsnNode(Opcodes.POP));
         pro.add(fall);
         pro.add(new FrameNode(Opcodes.F_SAME, 0, null, 0, null));
-        int slot0 = st ? 0 : 1;
-        switch (mode) {
-            case "return" -> pro.add(new InsnNode(Opcodes.RETURN));
-            case "value" -> {
-                pro.add(new VarInsnNode(hp[0].getOpcode(Opcodes.ILOAD), slot0));
-                pro.add(new InsnNode(hr.getOpcode(Opcodes.IRETURN)));
-            }
-            case "true" -> {
-                pro.add(new InsnNode(Opcodes.ICONST_1));
-                pro.add(new InsnNode(Opcodes.IRETURN));
-            }
-            default -> { // call
-                MethodInsnNode mi = (MethodInsnNode) d.site();
-                int slot = slot0;
-                for (Type t : hp) {
-                    pro.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
-                    slot += t.getSize();
-                }
-                pro.add(new MethodInsnNode(mi.getOpcode(), mi.owner, mi.name, mi.desc, mi.itf));
-                pro.add(new InsnNode(hr.getOpcode(Opcodes.IRETURN)));
-            }
-        }
+        pro.add(fallback(mode, h, d.site()));
         pro.add(run);
         pro.add(new FrameNode(Opcodes.F_SAME, 0, null, 0, null));
         h.instructions.insert(pro);
         int argSize = 0;
         for (Type t : hp) argSize += t.getSize();
-        h.maxStack = Math.max(h.maxStack, Math.max(3, argSize + 1));
+        h.maxStack = Math.max(h.maxStack, Math.max(6, argSize + 1));
 
         // the guard: @WrapOperation on the target's one call of the callee
         MethodInsnNode call = d.guardCall();
@@ -900,6 +1262,64 @@ public final class MixinRepair {
         h.invisibleAnnotations.add(mark);
     }
 
+    /** what the site did without the handler, as the handler's early exit (guardFallback's mode) */
+    static InsnList fallback(String mode, MethodNode h, AbstractInsnNode site) {
+        InsnList pro = new InsnList();
+        boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        Type hr = Type.getReturnType(h.desc);
+        int slot0 = st ? 0 : 1;
+        switch (mode) {
+            case "return" -> pro.add(new InsnNode(Opcodes.RETURN));
+            case "value" -> {
+                pro.add(new VarInsnNode(hp[0].getOpcode(Opcodes.ILOAD), slot0));
+                pro.add(new InsnNode(hr.getOpcode(Opcodes.IRETURN)));
+            }
+            case "true" -> {
+                pro.add(new InsnNode(Opcodes.ICONST_1));
+                pro.add(new InsnNode(Opcodes.IRETURN));
+            }
+            case "op" -> {
+                int opi = 0;
+                while (!hp[opi].getDescriptor().equals(OPERATION)) opi++;
+                int slot = slot0;
+                int opSlot = slot0;
+                for (int i = 0; i < opi; i++) opSlot += hp[i].getSize();
+                pro.add(new VarInsnNode(Opcodes.ALOAD, opSlot));
+                pro.add(new IntInsnNode(Opcodes.SIPUSH, opi));
+                pro.add(new TypeInsnNode(Opcodes.ANEWARRAY, "java/lang/Object"));
+                for (int i = 0; i < opi; i++) {
+                    pro.add(new InsnNode(Opcodes.DUP));
+                    pro.add(new IntInsnNode(Opcodes.SIPUSH, i));
+                    pro.add(new VarInsnNode(hp[i].getOpcode(Opcodes.ILOAD), slot));
+                    box(pro, hp[i]);
+                    pro.add(new InsnNode(Opcodes.AASTORE));
+                    slot += hp[i].getSize();
+                }
+                pro.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE, OPERATION.substring(1, OPERATION.length() - 1), "call",
+                    "([Ljava/lang/Object;)Ljava/lang/Object;", true));
+                if (hr.getSort() == Type.VOID) {
+                    pro.add(new InsnNode(Opcodes.POP));
+                    pro.add(new InsnNode(Opcodes.RETURN));
+                } else {
+                    unbox(pro, hr);
+                    pro.add(new InsnNode(hr.getOpcode(Opcodes.IRETURN)));
+                }
+            }
+            default -> { // call
+                MethodInsnNode mi = (MethodInsnNode) site;
+                int slot = slot0;
+                for (Type t : hp) {
+                    pro.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+                    slot += t.getSize();
+                }
+                pro.add(new MethodInsnNode(mi.getOpcode(), mi.owner, mi.name, mi.desc, mi.itf));
+                pro.add(new InsnNode(hr.getOpcode(Opcodes.IRETURN)));
+            }
+        }
+        return pro;
+    }
+
     /** methods guard() made for a mixin, added by flushGuards once its handlers are no longer being walked */
     private static final Map<ClassNode, List<MethodNode>> PENDING =
         java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
@@ -984,6 +1404,7 @@ public final class MixinRepair {
                           Anchor a, List<String> why) {
         if (!a.role.equals("main") || a.kind.equals("LOCAL") || a == POSITIONAL) return null;
         List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> matchesAnchor(in, a));
+        if (DEBUG_DESCEND) System.err.println("cb.debugDescend site " + vm.name + vm.desc + " " + a + " V occurrences " + vo.size());
         if (vo.isEmpty() || a.ordinal >= vo.size()) return null;
         List<Integer> sites = new ArrayList<>();
         if (a.ordinal >= 0) sites.add(a.ordinal);
@@ -1005,6 +1426,27 @@ public final class MixinRepair {
         }
         List<MethodNode> places = new ArrayList<>(parent.keySet());
         places.add(0, wm);
+        // stage 2: a callee W declares on another game class, called by the target directly (the guard decides
+        // whether that is the target's call)
+        Map<MethodNode, String> crossOf = new java.util.IdentityHashMap<>();
+        Map<MethodNode, MethodInsnNode> crossCall = new java.util.IdentityHashMap<>();
+        if (crossAllowed && wm.instructions != null) {
+            for (AbstractInsnNode in : wm.instructions) {
+                if (!(in instanceof MethodInsnNode mi) || mi.owner.equals(tc.name) || mi.name.startsWith("<")
+                        || !Chain.minecraftOwned(mi.owner)) continue;
+                ClassNode dc = declaringClass(mi.owner, mi.name, mi.desc);
+                if (dc == null || dc.name.equals(tc.name)) continue;
+                MethodNode dm = null;
+                for (MethodNode m : dc.methods) if (m.name.equals(mi.name) && m.desc.equals(mi.desc)) dm = m;
+                if (dm == null || crossOf.containsKey(dm)) {
+                    if (dm != null) crossCall.put(dm, null); // called twice: no single call to guard
+                    continue;
+                }
+                crossOf.put(dm, dc.name);
+                crossCall.put(dm, mi);
+                places.add(dm);
+            }
+        }
         // V's target overrode a framework class's hook (SimplePreparableReloadListener.apply); W split its code over
         // that class's hooks (RecipeManager: parsing in prepare, storing in apply). Another hook of the same
         // framework class, called from nowhere in W's own class, runs once where V's target ran once
@@ -1026,7 +1468,8 @@ public final class MixinRepair {
                 // another method than V's own: a context of 3 or more, no alignment (audit: a 1-wide
                 // context matched index 0 of another statement's argument array)
                 int j = c == wm ? SiteMatch.match(vm, vo, c, wo)[sites.get(k)] : SiteMatch.match(vm, vo, c, wo, 3, false)[sites.get(k)];
-                if (j >= 0 && c != wm && ownSite(vc, c, wo.get(j), a)) {
+                ClassNode vOwn = crossOf.containsKey(c) ? source.target(crossOf.get(c)) : vc;
+                if (j >= 0 && c != wm && vOwn != null && ownSite(vOwn, c, wo.get(j), a)) {
                     j = -1; // V's own copy of that callee already held this site: it is not where the target's went
                 }
                 if (j >= 0) {
@@ -1052,6 +1495,9 @@ public final class MixinRepair {
             }
             into = found;
             ords[k] = fj;
+        }
+        if (crossOf.containsKey(into)) {
+            return crossDescend(an, handler, tc, vm, wm, a, into, crossOf.get(into), crossCall.get(into), sites, ords, why);
         }
         MethodInsnNode guardCall = null;
         for (MethodNode m = into; m != wm && !siblings.contains(into); m = parent.get(m)) {
@@ -1104,10 +1550,79 @@ public final class MixinRepair {
                 why.add(into.name + into.desc + " is shared; guarded descend skipped: no fallback for this handler's shape");
                 return null;
             }
-            return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, false, guardCall, tc.name, wm, site);
+            return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, false, guardCall, tc.name, wm, site, null, false);
         }
         return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, siblings.contains(into));
     }
+
+    /** the descend into another class's callee (stage 2), or null with the reason counted */
+    private Descend crossDescend(AnnotationNode an, MethodNode handler, ClassNode tc, MethodNode vm, MethodNode wm, Anchor a,
+                                 MethodNode into, String decl, MethodInsnNode call, List<Integer> sites, int[] ords, List<String> why) {
+        String pre = into.name + into.desc + " of " + decl.substring(decl.lastIndexOf('/') + 1) + " holds V's site; guarded descend skipped: ";
+        String kind = an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
+        String skip = null;
+        if (call == null) skip = "the target calls it more than once";
+        else if (wm.name.equals("<clinit>")) skip = "static initializer";
+        else if (!afterSuper(tc, wm, call)) skip = "the call precedes the constructor's super call";
+        else if ((tc.access & Opcodes.ACC_INTERFACE) != 0) skip = "the target class is an interface";
+        else if (MixinBridge.capturesLocals(handler)) skip = "the handler captures locals";
+        else if (MixinBridge.sugarCount(handler) > 0) skip = "the handler takes sugar parameters";
+        else if (cancels(handler)) skip = "the handler cancels";
+        else if (overriddenBelow(decl, into)) skip = "a subclass overrides the callee (the call may not run this body)";
+        if (skip != null) {
+            why.add(pre + skip);
+            return null;
+        }
+        boolean calleeStatic = (into.access & Opcodes.ACC_STATIC) != 0;
+        boolean handlerStatic = (handler.access & Opcodes.ACC_STATIC) != 0;
+        boolean onThis = !calleeStatic && receiverIsThis(tc.name, wm, call) && !handlerStatic;
+        if (onThis) {
+            // the on-instance path (superclass method called on this) has no case on the measured steps yet and no
+            // real-server proof: not taken until it has one
+            why.add(pre + "the callee runs on the target's instance (on-instance guard not yet proven on a server)");
+            return null;
+        }
+        if (!onThis && (!handlerStatic && !touchesThisFree(handler) || usesOwnClass(handler, curMixin))) {
+            why.add(pre + "the handler reads this or its own mixin, and the callee does not run on the target's instance");
+            return null;
+        }
+        if (!onThis && !calleeStatic && handlerStatic) {
+            why.add(pre + "a static handler for an instance callee");
+            return null;
+        }
+        boolean toCir = false;
+        if (an.desc.equals(INJECT)) {
+            boolean wantCir = Type.getReturnType(into.desc).getSort() != Type.VOID;
+            boolean hasCir = handler.desc.contains(CIR);
+            if (hasCir && !Type.getReturnType(into.desc).equals(Type.getReturnType(vm.desc))) {
+                why.add(pre + "the handler takes the target's return value");
+                return null;
+            }
+            toCir = wantCir && !hasCir;
+        }
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(into, in -> matchesAnchor(in, a));
+        int ordinal;
+        if (sites.size() == 1) {
+            ordinal = a.ordinal >= 0 || wo.size() > 1 ? ords[0] : -1;
+        } else {
+            Set<Integer> got = new java.util.HashSet<>();
+            for (int o : ords) got.add(o);
+            if (got.size() != wo.size()) {
+                why.add(pre + "V's sites are some of the callee's occurrences, not all");
+                return null;
+            }
+            ordinal = -1;
+        }
+        AbstractInsnNode site = wo.get(ordinal >= 0 ? ordinal : 0);
+        if (guardFallback(an, handler, site) == null) {
+            why.add(pre + "no fallback for this handler's shape (@" + kind + ")");
+            return null;
+        }
+        return new Descend(into, ordinal, toCir, false, false, call, tc.name, wm, site, decl, onThis);
+    }
+
+    /** the mixin a handler belongs to, set while a mixin is repaired (usesOwnClass) */
+    private String curMixin = "";
 
     /** the one call of m in wm (owner tc or a subclass), or null */
     private static MethodInsnNode callOf(MethodNode wm, ClassNode tc, MethodNode m) {
@@ -1129,7 +1644,10 @@ public final class MixinRepair {
     private String guardable(AnnotationNode an, MethodNode handler, ClassNode tc, MethodNode wm, MethodNode m, MethodNode into,
                              Map<MethodNode, MethodNode> parent, Anchor a) {
         if (m != into || parent.get(into) != wm) return "the callee is not called by the target directly";
-        if (wm.name.startsWith("<") || into.name.startsWith("<")) return "constructor or static initializer";
+        if (into.name.startsWith("<")) return "the callee is a constructor or static initializer";
+        if (wm.name.equals("<clinit>")) return "static initializer";
+        MethodInsnNode one = callOf(wm, tc, into);
+        if (one != null && !afterSuper(tc, wm, one)) return "the call precedes the constructor's super call";
         if (wm.instructions == null) return "target has no body";
         int n = 0;
         for (AbstractInsnNode in : wm.instructions) {
@@ -1144,7 +1662,6 @@ public final class MixinRepair {
         }
         if (n != 1) return "the target calls the callee " + n + " times";
         String kind = an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
-        if (kind.equals("WrapOperation")) return "@WrapOperation (no fallback in stage 1)";
         if ((tc.access & Opcodes.ACC_INTERFACE) != 0) return "the target class is an interface";
         if (MixinBridge.capturesLocals(handler)) return "the handler captures locals";
         if (MixinBridge.sugarCount(handler) > 0) return "the handler takes sugar parameters";
@@ -1940,6 +2457,21 @@ public final class MixinRepair {
      */
     static boolean capturesTargetArgs(AnnotationNode an, MethodNode h, List<Anchor> anchors) {
         if (!capturesTargetArgs(an, h)) return false;
+        if (anchors != null && anchors.size() == 1 && anchors.get(0).kind.equals("FIELD") && anchors.get(0).desc != null
+                && anchors.get(0).owner != null) {
+            // a field access handled itself: (receiver of an instance field) (the value written, for a put), an Operation
+            // after them for @WrapOperation; nothing else
+            Anchor a = anchors.get(0);
+            List<Type> hp = new ArrayList<>(List.of(Type.getArgumentTypes(h.desc)));
+            boolean wrap = an.desc.endsWith("/WrapOperation;");
+            if (!wrap && !an.desc.endsWith("/Redirect;")) return true;
+            if (wrap) {
+                if (hp.isEmpty() || !hp.get(hp.size() - 1).getDescriptor().equals(OPERATION)) return true;
+                hp.remove(hp.size() - 1);
+            }
+            if (!hp.isEmpty() && hp.get(0).getDescriptor().equals(Type.getObjectType(a.owner).getDescriptor())) hp.remove(0);
+            return !(hp.isEmpty() || hp.size() == 1 && hp.get(0).getDescriptor().equals(a.desc));
+        }
         if (anchors == null || anchors.size() != 1 || !anchors.get(0).kind.equals("INVOKE") || anchors.get(0).desc == null) return true;
         Anchor a = anchors.get(0);
         if (a.name.equals("<init>")) return true;
