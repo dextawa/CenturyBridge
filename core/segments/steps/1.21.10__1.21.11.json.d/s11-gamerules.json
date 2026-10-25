@@ -1,0 +1,69 @@
+{
+ "_s11_gamerules_basis": "s11 game rules (1.21.10 -> 1.21.11): 1.21.11 replaced GameRules' nested Key/Type/Value classes by registered GameRule<T> objects whose values a GameRuleMap holds; the 1.21.10 classes are the layer's facade/GameRules, bound to 1.21.11's GameRules (rt/CbGameRules); 1.21.11's Fabric API replaced GameRuleFactory/GameRuleRegistry/DoubleRule/EnumRule by GameRuleBuilder (compat/fapi/gamerule/v1, registering through it)",
+ "classRenames": {
+  "net/minecraft/class_1928$class_4313": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$Key",
+  "net/minecraft/class_1928$class_4314": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$Type",
+  "net/minecraft/class_1928$class_4315": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$Value",
+  "net/minecraft/class_1928$class_4310": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$BooleanValue",
+  "net/minecraft/class_1928$class_4312": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$IntegerValue",
+  "net/minecraft/class_1928$class_5198": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$Category",
+  "net/minecraft/class_1928$class_4311": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$GameRuleTypeVisitor",
+  "net/minecraft/class_1928$class_5199": "top/dext/centurybridge/step/v1_21_11/facade/GameRules$VisitorCaller",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/GameRuleFactory",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleRegistry": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/GameRuleRegistry",
+  "net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/FabricGameRuleVisitor",
+  "net/fabricmc/fabric/api/gamerule/v1/rule/DoubleRule": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/rule/DoubleRule",
+  "net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/rule/EnumRule",
+  "net/fabricmc/fabric/api/gamerule/v1/rule/ValidateableRule": "top/dext/centurybridge/step/v1_21_11/compat/fapi/gamerule/v1/rule/ValidateableRule"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1928.method_20746(Lnet/minecraft/class_1928$class_4313;)Lnet/minecraft/class_1928$class_4315;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/class_1928.method_8355(Lnet/minecraft/class_1928$class_4313;)Z": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/class_1928.method_8356(Lnet/minecraft/class_1928$class_4313;)I": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/class_1928.method_8358()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/class_1928.method_20744(Lnet/minecraft/class_1928$class_4311;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/server/MinecraftServer.method_3767()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/server/MinecraftServer.method_74058(Ljava/lang/String;Lnet/minecraft/class_1928$class_4315;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1928.method_66702(Lnet/minecraft/class_1928$class_4313;)Lnet/minecraft/class_1928$class_4314;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/class_1928.method_66703(Ljava/lang/Class;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/minecraft/class_1928.method_61725(Lnet/minecraft/class_7699;)Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules",
+  "net/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory.getCategory(Lnet/minecraft/class_1928$class_4313;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiGameRules"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1928.<init>(Lnet/minecraft/class_7699;Lcom/mojang/serialization/DynamicLike;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules#newGameRules",
+  "net/minecraft/class_5235$class_5236.<init>(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_1928$class_4310;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesClient#booleanEntry",
+  "net/minecraft/class_5235$class_5239.<init>(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_1928$class_4312;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesClient#integerEntry"
+ },
+ "methodRenames": {
+  "net/minecraft/class_1928.method_27322(Lnet/minecraft/class_1928;Lnet/minecraft/server/MinecraftServer;)V": "method_76192"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_1928.field_30963:I": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_5235$class_5236.<init>(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_1928$class_4310;)V": {
+   "desc": "(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_12279;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv:4 top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesClient#booleanRule(Lnet/minecraft/class_1928$class_4310;)Lnet/minecraft/class_12279;"
+   ],
+   "basis": "1.21.11's boolean row takes the rule the 1.21.10 value stands for (CbGameRules.ruleOf)"
+  },
+  "net/minecraft/class_5235$class_5239.<init>(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_1928$class_4312;)V": {
+   "desc": "(Lnet/minecraft/class_5235;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_12279;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv:4 top/dext/centurybridge/step/v1_21_11/rt/CbGameRulesClient#integerRule(Lnet/minecraft/class_1928$class_4312;)Lnet/minecraft/class_12279;"
+   ],
+   "basis": "1.21.11's integer row takes the rule the 1.21.10 value stands for (CbGameRules.ruleOf)"
+  }
+ }
+}
