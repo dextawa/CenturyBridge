@@ -24,6 +24,12 @@ public final class Driver {
     /** -Dcenturybridge.legacyJsonRoute=false: the layer reads recipes with 1.20.2's codecs; the reader mixins never run */
     private static final boolean ROUTE = !"false".equals(System.getProperty("centurybridge.legacyJsonRoute"));
     public static final String PROBE_STAT_KEY = "stat_type.minecraft.killed";
+    /** the modifier EffectAttributesMixin puts on the attack damage with Strength */
+    public static final java.util.UUID EFFECT_MODIFIER = java.util.UUID.fromString("6c1f9a52-3f0e-4c1e-9d55-0c2b5e0a1b02");
+    /** the modifier cb-smx1n (a native 1.20.2 mod) puts on the movement speed with Speed */
+    private static final java.util.UUID NATIVE_MODIFIER = java.util.UUID.fromString("6c1f9a52-3f0e-4c1e-9d55-0c2b5e0a1b01");
+    /** -Dcenturybridge.legacyEffectAttributeRoute=false: the restored attribute hooks are never consulted */
+    private static final boolean EFFECT_ROUTE = !"false".equals(System.getProperty("centurybridge.legacyEffectAttributeRoute"));
     /** -Dcenturybridge.legacyStatNameRoute=false: getDisplayName() answers 1.20.2's name, never asking getTranslationKey() */
     private static final boolean STAT_ROUTE = !"false".equals(System.getProperty("centurybridge.legacyStatNameRoute"));
     private static int ok;
@@ -233,6 +239,62 @@ public final class Driver {
         } catch (Throwable t) {
             t.printStackTrace();
             check("stat-type-name-probe", false, "threw " + t);
+        }
+        // ---- the native 1.20.2 mod (cb-smx1n): its mixin on ShapedRecipe.Serializer.codec() still decides its recipe
+        try {
+            net.minecraft.class_1860<?> nat = recipe(server, "cb_smx1n:native_probe");
+            int count = nat == null ? -1 : nat.method_8110(server.method_30611()).method_7947();
+            check("native-codec-mixin", count == 9, "route " + ROUTE + ": cb_smx1n:native_probe makes " + count + " (9 = the native codec mixin acted)");
+        } catch (Throwable t) {
+            t.printStackTrace();
+            check("native-codec-mixin", false, "threw " + t);
+        }
+        // ---- effect attributes: the converted mixin on 1.20.1's add/removeAttributeModifiers acts (route on), the native
+        // mixin on 1.20.2's add/remove acts either way, every other effect leaves the attributes as with the route off
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            net.minecraft.class_1642 zombie = new net.minecraft.class_1642(level);
+            zombie.method_6092(new net.minecraft.class_1293(net.minecraft.class_1294.field_5910, 600, 1));
+            net.minecraft.class_1324 damage = zombie.method_5996(net.minecraft.class_5134.field_23721);
+            boolean vAdded = damage.method_6199(EFFECT_MODIFIER) != null;
+            int strength = damage.method_6195().size();
+            zombie.method_6016(net.minecraft.class_1294.field_5910);
+            boolean vRemoved = damage.method_6199(EFFECT_MODIFIER) == null;
+            check("effect-converted-mixin", (EFFECT_ROUTE ? vAdded : !vAdded) && vRemoved, "route " + EFFECT_ROUTE + ": Strength put cbsmx1-v on "
+                + vAdded + " (" + strength + " attack damage modifier(s)), took it off " + vRemoved + " (restored add ran "
+                + COUNT.getOrDefault("effect-add-all", 0) + ", remove " + COUNT.getOrDefault("effect-remove-all", 0) + " time(s))");
+            zombie.method_6092(new net.minecraft.class_1293(net.minecraft.class_1294.field_5904, 600, 0));
+            net.minecraft.class_1324 speed = zombie.method_5996(net.minecraft.class_5134.field_23719);
+            boolean nAdded = speed.method_6199(NATIVE_MODIFIER) != null;
+            int speeds = speed.method_6195().size();
+            zombie.method_6016(net.minecraft.class_1294.field_5904);
+            boolean nRemoved = speed.method_6199(NATIVE_MODIFIER) == null;
+            check("effect-native-mixin", nAdded && nRemoved && speeds == 2, "route " + EFFECT_ROUTE + ": Speed put cbsmx1-native on " + nAdded
+                + " (" + speeds + " movement speed modifier(s)), took it off " + nRemoved);
+            // every other effect, amplifiers 0 and 2, on a fresh zombie: the attributes after adding and after removing it
+            StringBuilder states = new StringBuilder();
+            for (net.minecraft.class_1291 effect : net.minecraft.class_7923.field_41174) {
+                if (effect == net.minecraft.class_1294.field_5910 || effect == net.minecraft.class_1294.field_5904 || effect.method_5561()) {
+                    continue;
+                }
+                for (int amp : new int[] {0, 2}) {
+                    net.minecraft.class_1642 z = new net.minecraft.class_1642(level);
+                    z.method_6092(new net.minecraft.class_1293(effect, 600, amp));
+                    states.append(net.minecraft.class_7923.field_41174.method_10221(effect)).append('/').append(amp).append(' ')
+                        .append(z.method_6127().method_26855()).append(" -> ");
+                    z.method_6016(effect);
+                    states.append(z.method_6127().method_26855()).append(';');
+                }
+            }
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+            StringBuilder hex = new StringBuilder();
+            for (byte b : md.digest(states.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8))) {
+                hex.append(String.format("%02x", b));
+            }
+            System.out.println("CB-SMX1 fingerprint effect-attributes route=" + EFFECT_ROUTE + " sha=" + hex + " length=" + states.length());
+        } catch (Throwable t) {
+            t.printStackTrace();
+            check("effect-converted-mixin", false, "threw " + t);
         }
         System.out.println("CB-SMX1 summary ok=" + ok + " fail=" + fail);
     }

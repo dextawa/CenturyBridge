@@ -23,7 +23,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 @Mixin(value = class_1867.class_1868.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRecipeJsonShapeless implements CbRecipeJson.Reader {
 
-    @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson decodes shapeless recipes by calling it")
+    @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson consults it, against its unmixed copy cb$goldenJson, for every shapeless recipe the codec decoded")
     public class_1867 method_8142(class_2960 id, JsonObject json) {
         String group = class_3518.method_15253(json, "group", "");
         class_7710 category = class_7710.field_40252.method_47920(class_3518.method_15253(json, "category", null), class_7710.field_40251);
@@ -36,6 +36,22 @@ public abstract class CbRecipeJsonShapeless implements CbRecipeJson.Reader {
         }
         class_1799 result = CbRecipeJson.itemStackFromJson(class_3518.method_15296(json, "result"));
         return CbRecipeIds.remember(new class_1867(group, category, result, ingredients), id);
+    }
+
+    /** the same 1.20.1 body under a CenturyBridge name: what method_8142 answers unmixed (CbRecipeJson.consult) */
+    @Override
+    public net.minecraft.class_1860<?> cb$goldenJson(class_2960 id, JsonObject json) {
+        String group = class_3518.method_15253(json, "group", "");
+        class_7710 category = class_7710.field_40252.method_47920(class_3518.method_15253(json, "category", null), class_7710.field_40251);
+        class_2371<class_1856> ingredients = CbRecipeJson.itemsFromJson(class_3518.method_15261(json, "ingredients"));
+        if (ingredients.isEmpty()) {
+            throw new JsonParseException("No ingredients for shapeless recipe");
+        }
+        if (ingredients.size() > 9) {
+            throw new JsonParseException("Too many ingredients for shapeless recipe");
+        }
+        class_1799 result = CbRecipeJson.itemStackFromJson(class_3518.method_15296(json, "result"));
+        return new class_1867(group, category, result, ingredients);
     }
 
     @Override

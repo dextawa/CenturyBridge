@@ -19,12 +19,21 @@ import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 @Mixin(value = class_8062.class_8063.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRecipeJsonSmithingTrim implements CbRecipeJson.Reader {
 
-    @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson decodes smithing trim recipes by calling it")
+    @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson consults it, against its unmixed copy cb$goldenJson, for every smithing trim recipe the codec decoded")
     public class_8062 method_48459(class_2960 id, JsonObject json) {
         class_1856 template = CbRecipeJson.ingredient(class_3518.method_52226(json, "template"), true);
         class_1856 base = CbRecipeJson.ingredient(class_3518.method_52226(json, "base"), true);
         class_1856 addition = CbRecipeJson.ingredient(class_3518.method_52226(json, "addition"), true);
         return CbRecipeIds.remember(SmithingTrimRecipeCtor.cb$new(template, base, addition), id);
+    }
+
+    /** the same 1.20.1 body under a CenturyBridge name: what method_48459 answers unmixed (CbRecipeJson.consult) */
+    @Override
+    public net.minecraft.class_1860<?> cb$goldenJson(class_2960 id, JsonObject json) {
+        class_1856 template = CbRecipeJson.ingredient(class_3518.method_52226(json, "template"), true);
+        class_1856 base = CbRecipeJson.ingredient(class_3518.method_52226(json, "base"), true);
+        class_1856 addition = CbRecipeJson.ingredient(class_3518.method_52226(json, "addition"), true);
+        return SmithingTrimRecipeCtor.cb$new(template, base, addition);
     }
 
     @Override

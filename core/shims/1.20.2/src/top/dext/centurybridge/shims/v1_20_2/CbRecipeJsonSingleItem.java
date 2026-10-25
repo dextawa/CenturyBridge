@@ -30,8 +30,26 @@ public abstract class CbRecipeJsonSingleItem implements CbRecipeJson.Reader {
     @Final
     private com.mojang.serialization.Codec<class_3972> field_46107;
 
-    @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson decodes stonecutting recipes by calling it")
+    @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson consults it, against its unmixed copy cb$goldenJson, for every stonecutting recipe the codec decoded")
     public class_3972 method_17881(class_2960 id, JsonObject json) {
+        String group = class_3518.method_15253(json, "group", "");
+        class_1856 ingredient;
+        if (class_3518.method_15264(json, "ingredient")) {
+            ingredient = CbRecipeJson.ingredient(class_3518.method_15261(json, "ingredient"), false);
+        } else {
+            ingredient = CbRecipeJson.ingredient(class_3518.method_15296(json, "ingredient"), false);
+        }
+        String resultId = class_3518.method_15265(json, "result");
+        int count = class_3518.method_15260(json, "count");
+        class_1799 result = new class_1799(class_7923.field_41178.method_10223(new class_2960(resultId)), count);
+        // factory.create(group, ingredient, result), run with the id as the one being decoded (a converted 1.20.1
+        // factory takes it from there)
+        return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.singleItem(this.field_46107, group, ingredient, result));
+    }
+
+    /** the same 1.20.1 body under a CenturyBridge name: what method_17881 answers unmixed (CbRecipeJson.consult) */
+    @Override
+    public net.minecraft.class_1860<?> cb$goldenJson(class_2960 id, JsonObject json) {
         String group = class_3518.method_15253(json, "group", "");
         class_1856 ingredient;
         if (class_3518.method_15264(json, "ingredient")) {

@@ -27,8 +27,15 @@ public abstract class CbRecipeJsonSpecial implements CbRecipeJson.Reader {
     @Final
     private class_1866.class_7711<class_3955> field_9046;
 
-    @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson decodes special crafting recipes by calling it")
+    @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson consults it, against its unmixed copy cb$goldenJson, for every special crafting recipe the codec decoded")
     public class_3955 method_45443(class_2960 id, JsonObject json) {
+        class_7710 category = class_7710.field_40252.method_47920(class_3518.method_15253(json, "category", null), class_7710.field_40251);
+        return CbRecipeSerializerSupport.withId(id, () -> this.field_9046.create(category));
+    }
+
+    /** the same 1.20.1 body under a CenturyBridge name: what method_45443 answers unmixed (CbRecipeJson.consult) */
+    @Override
+    public net.minecraft.class_1860<?> cb$goldenJson(class_2960 id, JsonObject json) {
         class_7710 category = class_7710.field_40252.method_47920(class_3518.method_15253(json, "category", null), class_7710.field_40251);
         return CbRecipeSerializerSupport.withId(id, () -> this.field_9046.create(category));
     }

@@ -52,8 +52,8 @@ public final class CbStatTypes {
     }
 
     /**
-     * Vanilla's display name read goes through the restored getTranslationKey() for every stat type whose 1.20.2
-     * name is exactly what 1.20.1 computed from it (-Dcenturybridge.legacyStatNameRoute=false turns it off).
+     * Vanilla's display name read consults the restored getTranslationKey() for every stat type whose 1.20.2 name is
+     * exactly what 1.20.1 computed from it (-Dcenturybridge.legacyStatNameRoute=false turns it off).
      */
     public static final boolean ROUTE = !"false".equals(System.getProperty("centurybridge.legacyStatNameRoute"));
 
@@ -68,8 +68,14 @@ public final class CbStatTypes {
                 || !name.method_10855().isEmpty() || !name.method_10866().method_10967()) {
             return false;
         }
+        String key = goldenTranslationKey(type);
+        return key != null && tr.method_11022().equals(key);
+    }
+
+    /** 1.20.1 StatType.getTranslationKey()'s body, unmixable: "stat_type." + the registry id, ':' as '.'; null unregistered */
+    public static String goldenTranslationKey(class_3448<?> type) {
         net.minecraft.class_2960 id = net.minecraft.class_7923.field_41193.method_10221(type);
-        return id != null && tr.method_11022().equals("stat_type." + id.toString().replace(':', '.'));
+        return id == null ? null : "stat_type." + id.toString().replace(':', '.');
     }
 
     /** StatType (CbStatTypeLegacy): 1.20.1 getTranslationKey(), called virtually (a converted subclass's override answers) */

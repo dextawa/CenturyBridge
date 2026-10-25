@@ -26,36 +26,41 @@ import net.minecraft.class_8785;
 
 /**
  * 1.20.1's JSON recipe readers on 1.20.2. The vanilla serializers get their 1.20.1 read(id, json) back as members
- * (CbRecipeJson* mixins, 1.20.1 bodies), and 1.20.2's RecipeManager reads every recipe of such a serializer through
- * that member (CbRecipeJsonVanillaMixin: the codec it decodes with calls the member), so a 1.20.1 mod's mixin on a
- * serializer's read(id, json) changes what vanilla loads, as on 1.20.1.
+ * (CbRecipeJson* mixins, 1.20.1 bodies), so a 1.20.1 mod's mixin on a serializer's read(id, json) can change what
+ * vanilla loads, as on 1.20.1.
+ *
+ * Vanilla's path stays 1.20.2's: RecipeManager.fromJson decodes every recipe with its serializer's codec(), so a
+ * 1.20.2-era mod's mixin on that path (codec(), the codec's lambdas, RecipeManager.fromJson) acts as it does without
+ * CenturyBridge. The restored reader is consulted inside that path, after the codec has decoded the recipe
+ * (CbRecipeJsonVanillaMixin -> {@link #consult}): the serializer's restored member, which a converted mod's mixin may
+ * change, and an unmixable copy of the same 1.20.1 body (Reader.cb$goldenJson, a CenturyBridge name no 1.20.1 mixin
+ * names) both read the JSON; only where their answers differ -- a mixin on the restored member changed it -- is the
+ * restored member's answer what vanilla gets. Unmixed, vanilla gets exactly the codec's recipe.
  *
  * The private statics 1.20.1's readers called (ShapedRecipe.keyFromJson / patternFromJson / shrink /
  * dissolvePattern / itemStackFromJson, ShapelessRecipe.Serializer.itemsFromJson, Ingredient.fromJson) are gone from
  * 1.20.2, which keeps their code in the serializers' codecs; they are here with 1.20.1's checks and messages, the
- * pieces 1.20.2 still has as codecs (Ingredient, the result stack) decoded with those codecs, so what 1.20.2 (and
- * Fabric API's custom ingredients) makes of an ingredient or a result is what the restored readers make of it.
+ * pieces 1.20.2 still has as codecs (Ingredient, the result stack) decoded with those codecs.
  *
- * The route is off for a serializer whose codec() a non-CenturyBridge subclass overrides (its codec is what it reads
- * with), and entirely with -Dcenturybridge.legacyJsonRoute=false, which leaves every vanilla read on 1.20.2's codecs.
- * While it is on, a 1.20.2-era mod's mixin into a vanilla serializer's own codec (its RecordCodecBuilder lambdas) is
- * not what reads that serializer's recipes: the 1.20.1 reader is. The pieces 1.20.2 shares between serializers
- * (Ingredient's codecs, the result-stack codec) are still read with 1.20.2's codecs, mixins included.
+ * Only serializers whose codec() no non-CenturyBridge subclass overrides are consulted (a subclass's own codec is
+ * what it reads with), and none with -Dcenturybridge.legacyJsonRoute=false.
  */
 public final class CbRecipeJson {
 
 
-    /** -Dcenturybridge.legacyJsonRoute=false: vanilla reads recipes with 1.20.2's codecs, never the restored readers */
+    /** -Dcenturybridge.legacyJsonRoute=false: the restored readers are never consulted */
     public static final boolean ROUTE = !"false".equals(System.getProperty("centurybridge.legacyJsonRoute"));
 
     private static final Map<Class<?>, Boolean> ROUTED = Collections.synchronizedMap(new WeakHashMap<>());
 
-    private static final Map<Object, Codec<?>> CODECS = Collections.synchronizedMap(new WeakHashMap<>());
-
-    /** a vanilla serializer with its 1.20.1 read(id, json) back: that member, called virtually (a subclass's override answers) */
+    /** a vanilla serializer with its 1.20.1 read(id, json) back */
     public interface Reader {
 
+        /** the restored member, called virtually (a subclass's override answers; a mod's mixin on it acts) */
         class_1860<?> cb$readJson(class_2960 id, JsonObject json);
+
+        /** the same 1.20.1 body, under a name no 1.20.1 mixin selects: what the restored member answers unmixed */
+        class_1860<?> cb$goldenJson(class_2960 id, JsonObject json);
     }
 
     /** SimpleCookingSerializer: 1.20.1's defaultCookingTime field, set from the constructor argument 1.20.2 keeps in its codec only */
@@ -65,21 +70,65 @@ public final class CbRecipeJson {
     }
 
     /**
-     * the codec RecipeManager.fromJson decodes {@code serializer}'s recipes with: one that calls the serializer's
-     * 1.20.1 read(id, json) when the route is on for it, the serializer's own codec otherwise
+     * RecipeManager.fromJson(id, json) has decoded {@code read} with the serializer's codec. The answer vanilla keeps:
+     * {@code read}, unless the serializer's restored read(id, json) answers otherwise than its unmixed copy -- then
+     * that answer (or its exception), as 1.20.1's RecipeManager.fromJson returned serializer.fromJson(id, json).
      */
-    public static Codec<?> vanillaCodec(class_1865<?> serializer) {
-        Codec<?> own = serializer.method_53736();
-        if (!(serializer instanceof Reader reader) || !routed(serializer.getClass())) {
-            return own;
+    public static class_1860<?> consult(class_1860<?> read, class_2960 id, JsonObject json) {
+        if (!ROUTE || read == null) {
+            return read;
         }
-        return CODECS.computeIfAbsent(serializer, s -> CbRecipeSerializerSupport.codecOf(s, reader::cb$readJson));
+        class_1865<?> serializer = read.method_8119();
+        if (!(serializer instanceof Reader reader) || !routed(serializer.getClass())) {
+            return read;
+        }
+        Object mixed;
+        try {
+            mixed = reader.cb$readJson(id, json);
+        } catch (RuntimeException e) {
+            mixed = e;
+        }
+        Object golden;
+        try {
+            golden = reader.cb$goldenJson(id, json);
+        } catch (RuntimeException e) {
+            golden = e;
+        }
+        if (same(serializer, mixed, golden)) {
+            return read;
+        }
+        if (mixed instanceof RuntimeException e) {
+            throw e;
+        }
+        return (class_1860<?>) mixed;
+    }
+
+    /** two answers of a reader: the same exception (class, message) or recipes of one class with the same network form */
+    private static boolean same(class_1865<?> serializer, Object a, Object b) {
+        if (a instanceof RuntimeException ea || b instanceof RuntimeException) {
+            return a instanceof RuntimeException x && b instanceof RuntimeException y && x.getClass() == y.getClass()
+                && java.util.Objects.equals(x.getMessage(), y.getMessage());
+        }
+        if (a == null || b == null || a.getClass() != b.getClass()) {
+            return a == b;
+        }
+        return java.util.Arrays.equals(network(serializer, (class_1860<?>) a), network(serializer, (class_1860<?>) b));
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static byte[] network(class_1865 serializer, class_1860<?> recipe) {
+        net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
+        try {
+            serializer.method_8124(buf, recipe);
+            byte[] out = new byte[buf.readableBytes()];
+            buf.readBytes(out);
+            return out;
+        } finally {
+            buf.release();
+        }
     }
 
     private static boolean routed(Class<?> cls) {
-        if (!ROUTE) {
-            return false;
-        }
         return ROUTED.computeIfAbsent(cls, CbRecipeJson::decide);
     }
 
@@ -92,7 +141,7 @@ public final class CbRecipeJson {
             return false;
         }
         // a subclass's own codec(): what it reads with -- unless it is the one CenturyBridge synthesized into a
-        // converted 1.20.1 subclass, which calls that subclass's read(id, json) as the route does
+        // converted 1.20.1 subclass, which calls that subclass's read(id, json)
         for (Class<?> c = cls; c != vanilla; c = c.getSuperclass()) {
             try {
                 c.getDeclaredMethod("method_53736");

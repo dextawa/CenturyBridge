@@ -37,7 +37,11 @@ public abstract class CbRecipeJsonCooking implements CbRecipeJson.Reader, CbReci
     /** 1.20.1 defaultCookingTime */
     private int field_17551;
 
-    @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson decodes cooking recipes by calling it")
+    /** the constructor's defaultCookingTime: what field_17551 holds unless a mod's accessor wrote it */
+    @org.spongepowered.asm.mixin.Unique
+    private int cb$constructedCookingTime;
+
+    @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson consults it, against its unmixed copy cb$goldenJson, for every cooking recipe the codec decoded")
     public class_1874 method_17736(class_2960 id, JsonObject json) {
         String group = class_3518.method_15253(json, "group", "");
         class_7709 category = class_7709.field_40245.method_47920(class_3518.method_15253(json, "category", null), class_7709.field_40244);
@@ -55,6 +59,25 @@ public abstract class CbRecipeJsonCooking implements CbRecipeJson.Reader, CbReci
         return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.cooking(this.field_46105, group, category, ingredient, result, experience, cookingTime));
     }
 
+    /** the same 1.20.1 body under a CenturyBridge name: what method_17736 answers unmixed (CbRecipeJson.consult) */
+    @Override
+    public net.minecraft.class_1860<?> cb$goldenJson(class_2960 id, JsonObject json) {
+        String group = class_3518.method_15253(json, "group", "");
+        class_7709 category = class_7709.field_40245.method_47920(class_3518.method_15253(json, "category", null), class_7709.field_40244);
+        JsonElement element = class_3518.method_15264(json, "ingredient")
+            ? class_3518.method_15261(json, "ingredient") : class_3518.method_15296(json, "ingredient");
+        class_1856 ingredient = CbRecipeJson.ingredient(element, false);
+        String resultId = class_3518.method_15265(json, "result");
+        class_2960 resultKey = new class_2960(resultId);
+        class_1799 result = new class_1799(class_7923.field_41178.method_17966(resultKey)
+            .orElseThrow(() -> new IllegalStateException("Item: " + resultId + " does not exist")));
+        float experience = class_3518.method_15277(json, "experience", 0.0F);
+        int cookingTime = class_3518.method_15282(json, "cookingtime", this.cb$constructedCookingTime);
+        // factory.create(group, category, ingredient, result, experience, cookingTime), run with the id as the one
+        // being decoded (a converted 1.20.1 factory takes it from there)
+        return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.cooking(this.field_46105, group, category, ingredient, result, experience, cookingTime));
+    }
+
     @Override
     public class_1860<?> cb$readJson(class_2960 id, JsonObject json) {
         return this.method_17736(id, json);
@@ -63,5 +86,6 @@ public abstract class CbRecipeJsonCooking implements CbRecipeJson.Reader, CbReci
     @Override
     public void cb$setDefaultCookingTime(int defaultCookingTime) {
         this.field_17551 = defaultCookingTime;
+        this.cb$constructedCookingTime = defaultCookingTime;
     }
 }

@@ -16,7 +16,8 @@
     "NavigationRedirectMixin",
     "ShapedReaderMixin",
     "CookingReaderMixin",
-    "StatTypeKeyMixin"
+    "StatTypeKeyMixin",
+    "EffectAttributesMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -119,6 +119,41 @@ public final class CbEffects {
         return modifier.method_6186() * (double) (amplifier + 1);
     }
 
+    /**
+     * An entry of an effect's modifier map read as 1.20.1 read it: a 1.20.1 modifier stays one (a 1.20.1 mod's
+     * mixin may answer one where the map is read), a 1.20.2 template is the 1.20.1 modifier it stands for.
+     */
+    public static class_1322 modifierOf(class_1291 effect, Object entry) {
+        return entry instanceof class_1322 modifier ? modifier : baseModifier(effect, (class_8630) entry);
+    }
+
+    /**
+     * The unmixed copy of the restored 1.20.1 addAttributeModifiers (StatusEffectBridge.method_5555), for an effect
+     * of no 1.20.1 override (CbEffectAttributeRoute): the same steps under a name no 1.20.1 mixin selects, the value
+     * being 1.20.1's default getAttributeModifierValue.
+     */
+    public static void goldenAddAttributeModifiers(class_1291 effect, class_5131 attributes, int amplifier) {
+        for (Map.Entry<class_1320, class_8630> e : ((CbEffectModifierMap) effect).cb$modifierMap().entrySet()) {
+            class_1324 instance = attributes.method_26842(e.getKey());
+            if (instance != null) {
+                class_1322 modifier = baseModifier(effect, e.getValue());
+                instance.method_6200(modifier.method_6189());
+                instance.method_26837(new class_1322(modifier.method_6189(), effect.method_5567() + " " + amplifier,
+                    attributeModifierValue(amplifier, modifier), modifier.method_6182()));
+            }
+        }
+    }
+
+    /** the unmixed copy of the restored 1.20.1 removeAttributeModifiers (StatusEffectBridge.method_5562) */
+    public static void goldenRemoveAttributeModifiers(class_1291 effect, class_5131 attributes) {
+        for (Map.Entry<class_1320, class_8630> e : ((CbEffectModifierMap) effect).cb$modifierMap().entrySet()) {
+            class_1324 instance = attributes.method_26842(e.getKey());
+            if (instance != null) {
+                instance.method_6200(baseModifier(effect, e.getValue()).method_6189());
+            }
+        }
+    }
+
     // ---- getAttributeModifiers(): Map<Attribute, AttributeModifier> (1.20.1) and
     // Map<Attribute, AttributeModifierTemplate> (1.20.2)
 

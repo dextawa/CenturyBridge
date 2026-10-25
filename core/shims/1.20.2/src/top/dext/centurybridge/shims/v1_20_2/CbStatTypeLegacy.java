@@ -23,7 +23,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbStatTypes;
 @Mixin(value = class_3448.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbStatTypeLegacy implements CbStatTypes.Legacy {
 
-    @top.dext.centurybridge.rt.v1_20_2.CbVanillaReads("CbStatTypeLegacyHooks: StatType.getDisplayName() answers the translation of it, asked once, as 1.20.1 did")
+    @top.dext.centurybridge.rt.v1_20_2.CbVanillaReads("CbStatTypeLegacyHooks: StatType.getDisplayName() consults it once, against its unmixed copy; a changed key is the name")
     public String method_14957() {
         return "stat_type." + class_7923.field_41193.method_10221((class_3448<?>) (Object) this).toString().replace(':', '.');
     }

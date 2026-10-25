@@ -8,7 +8,10 @@
 # inside the bodies change the mod's own probe recipes data/cb_smx1/recipes/*; every other recipe is fingerprinted at
 # startup and after /reload, to compare a boot with -Dcenturybridge.legacyJsonRoute=false), and StatType.getTranslationKey
 # (a RETURN injector renames the "minecraft:killed" key; getDisplayName must show it, and every other stat type's name
-# is printed to compare with -Dcenturybridge.legacyStatNameRoute=false). ServerDriverMixin runs Driver
+# is printed to compare with -Dcenturybridge.legacyStatNameRoute=false), MobEffect add/removeAttributeModifiers (Strength
+# gets a modifier of the mod's own; every other effect's attributes are fingerprinted against
+# -Dcenturybridge.legacyEffectAttributeRoute=false), and cb-smx1n's native 1.20.2 mixins still acting (boot cb-smx1n beside it:
+# CB_NATIVE_MODS). ServerDriverMixin runs Driver
 # once the world is loaded: "CB-SMX1 ok|FAIL <case> <detail>", ending "CB-SMX1 summary ok=N fail=M".
 #
 #   bash core/testmods/cb-smx1/build.sh <out.jar>     (from the repository root; javac only;
