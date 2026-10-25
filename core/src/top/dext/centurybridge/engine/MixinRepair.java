@@ -334,8 +334,9 @@ public final class MixinRepair {
 
     /**
      * The step's W (set by Main): the release whose layer restores the members {@link #layerMembers} holds. A kept
-     * injector or overwrite on such a member is written to the jar as {@link #MIXED_DIR}{@code <W>.txt}, one line
-     * per member, "{@code <owner>.<name><desc>	<mixin class>}" in the layer's own names (past the wall: W's real
+     * injector on such a member is written to the jar as {@link #MIXED_DIR}{@code <W>.txt}, one line per member
+     * and mixin, three tab-separated columns "{@code <owner>.<name><desc>}", the mixin class, its config section
+     * ("mixins" / "client" / "server": a client-section mixin does not apply on a dedicated server), in the layer's own names (past the wall: W's real
      * names) -- the conversion-time signal "a converted mod mixed this restored member" (smx4 (l)). A layer route
      * that cannot compare answers consults the restored member only when a loaded mod's jar lists it (the layer
      * reads every jar's file through its class loader's getResources), and otherwise leaves W's own path exactly
@@ -345,6 +346,8 @@ public final class MixinRepair {
     public static final String MIXED_DIR = "META-INF/centurybridge/mixed/";
     /** restored members kept injectors / overwrites select, by mixin class (one repair() run) */
     private final Map<String, Set<String>> mixedByMixin = new LinkedHashMap<>();
+    /** the config section each of those mixins is listed in ("mixins" / "client" / "server") */
+    private final Map<String, String> mixedSide = new HashMap<>();
 
     /** drop the mixed-member lines of mixins the conversion stripped, in every step's file of the jar */
     public static void dropMixed(Map<String, byte[]> entries, Set<String> dead) {
@@ -379,7 +382,7 @@ public final class MixinRepair {
         }
         for (Map.Entry<String, Set<String>> e : mixedByMixin.entrySet()) {
             if (fatal.contains(e.getKey())) continue;
-            for (String k : e.getValue()) lines.add(k + "\t" + e.getKey());
+            for (String k : e.getValue()) lines.add(k + "\t" + e.getKey() + "\t" + mixedSide.getOrDefault(e.getKey(), "mixins"));
         }
         if (lines.isEmpty()) return;
         entries.put(name, (String.join("\n", lines) + "\n").getBytes(StandardCharsets.UTF_8));
@@ -389,11 +392,13 @@ public final class MixinRepair {
         for (MethodNode m : cands) {
             mixedByMixin.computeIfAbsent(mixin, k -> new java.util.TreeSet<>()).add(owner + "." + m.name + m.desc);
         }
+        if (curKey != null) mixedSide.put(mixin, curKey);
     }
 
     /** rewrites mixin classes / refmaps in {@code entries} in place */
     public Outcome repair(Map<String, byte[]> entries) {
         mixedByMixin.clear();
+        mixedSide.clear();
         Set<String> fatal = new LinkedHashSet<>();
         Map<String, String> why = new LinkedHashMap<>();
         List<String> repairs = new ArrayList<>();
