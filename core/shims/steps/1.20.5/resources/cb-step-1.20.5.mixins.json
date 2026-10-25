@@ -380,6 +380,9 @@
     "CbRestThrownTridentMixin",
     "CbRestWalkNodeEvaluatorMixin",
     "CbRestWitherBossMixin",
+    "CbRouteArmorMixin",
+    "CbRouteArrowMixin",
+    "CbRouteBreakMixin",
     "CbSpawnEggAccessor",
     "CbTooltipLevelAccessor"
   ],
