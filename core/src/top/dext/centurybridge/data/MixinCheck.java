@@ -186,6 +186,10 @@ public final class MixinCheck {
                 System.out.println("    unlisted: " + s);
             }
         }
+        String sitesOut = System.getProperty("cb.redirectSites");
+        if (sitesOut != null && !sitesOut.isEmpty()) {
+            Files.write(Path.of(sitesOut), c.redirectSites);
+        }
         if (!c.problems.isEmpty()) {
             System.exit(1);
         }
@@ -852,6 +856,12 @@ public final class MixinCheck {
                     continue;
                 }
                 found += hits.size();
+                if (a.desc.equals(REDIRECT)) {
+                    for (AbstractInsnNode insn : hits) {
+                        redirectSites.add(target.name + "\t" + tm.name + tm.desc + "\t" + tm.instructions.indexOf(insn) + "\t"
+                            + insnText(insn) + "\t" + currentMixin + "." + h.name);
+                    }
+                }
                 if (a.desc.equals(REDIRECT) || a.desc.equals(MODIFY_ARG)) {
                     java.util.Set<String> shapes = new java.util.HashSet<>();
                     for (AbstractInsnNode insn : hits) {
@@ -1107,6 +1117,27 @@ public final class MixinCheck {
             }
         }
         return true;
+    }
+
+    /**
+     * Every instruction a @Redirect takes over, one line each: target class, method, instruction index in the
+     * release's code, the instruction, the redirecting mixin.handler. Written to -Dcb.redirectSites=<file> so a
+     * caller can find two mods / layers redirecting one call site (Mixin keeps the first, skips the other with a
+     * "@Redirect conflict" WARN, and a required one then fails its injection check).
+     */
+    private final List<String> redirectSites = new ArrayList<>();
+
+    private static String insnText(AbstractInsnNode insn) {
+        if (insn instanceof MethodInsnNode mi) {
+            return mi.owner + "." + mi.name + mi.desc;
+        }
+        if (insn instanceof FieldInsnNode fi) {
+            return fi.owner + "." + fi.name + ":" + fi.desc;
+        }
+        if (insn instanceof TypeInsnNode ti) {
+            return "new " + ti.desc;
+        }
+        return "opcode " + insn.getOpcode();
     }
 
     private static boolean coerced(MethodNode h, int index) {
