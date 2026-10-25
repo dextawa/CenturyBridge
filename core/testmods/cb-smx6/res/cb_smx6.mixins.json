@@ -10,7 +10,8 @@
     "VillagerBookMixin",
     "EffectTemplateMixin",
     "OozingMixin",
-    "RecipeCacheEntryMixin"
+    "RecipeCacheEntryMixin",
+    "UtilOsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

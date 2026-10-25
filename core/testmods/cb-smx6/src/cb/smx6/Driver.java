@@ -39,6 +39,8 @@ public final class Driver {
     public static volatile int matchesAsked;
     public static volatile int matchesSize;
     public static volatile boolean forceMatch;
+    public static volatile int openAsked;
+    public static volatile String openUrl;
     private static int ok;
     private static int fail;
 
@@ -245,6 +247,12 @@ public final class Driver {
             forceMatch = false;
             check("recipe-forced", "minecraft:oak_planks".equals(forced) && matchesAsked == 1,
                 "matches forced true: stone answered " + forced + " from the cache, matches asked " + matchesAsked);
+            // ---- Util.OS.getOpenUrlArguments(URL): UtilOsMixin (answers "true", so nothing opens)
+            openAsked = 0;
+            openUrl = null;
+            net.minecraft.class_156.method_668().method_673(new java.net.URI("https://example.com/cb-smx6?q=1"));
+            check("open-url", openAsked == 1 && "https://example.com/cb-smx6?q=1".equals(openUrl),
+                "Util.getPlatform().openUri: getOpenUrlArguments asked " + openAsked + " time(s) with " + openUrl);
         } catch (Throwable t) {
             check("exception", false, String.valueOf(t));
             t.printStackTrace();
