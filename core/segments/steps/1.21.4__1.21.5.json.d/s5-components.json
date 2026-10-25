@@ -1,0 +1,50 @@
+{
+ "_s5_components_basis": "DataComponentHolder / DataComponentMap get, getOrDefault, getTyped renamed onto 1.21.5's DataComponentGetter (same descriptors and bodies, javap)",
+ "methodRenames": {
+  "net/minecraft/class_9322.method_57824(Lnet/minecraft/class_9331;)Ljava/lang/Object;": "method_58694",
+  "net/minecraft/class_9322.method_57825(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": "method_58695",
+  "net/minecraft/class_9323.method_57829(Lnet/minecraft/class_9331;)Ljava/lang/Object;": "method_58694",
+  "net/minecraft/class_9323.method_57830(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": "method_58695",
+  "net/minecraft/class_9323.method_57834(Lnet/minecraft/class_9331;)Lnet/minecraft/class_9336;": "method_66876",
+  "net/minecraft/class_9335.method_57829(Lnet/minecraft/class_9331;)Ljava/lang/Object;": "method_58694",
+  "net/minecraft/class_9335.method_57830(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": "method_58695",
+  "net/minecraft/class_9335.method_57834(Lnet/minecraft/class_9331;)Lnet/minecraft/class_9336;": "method_66876"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_57824(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+   "new": "method_58694(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_9322",
+   "guard": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "basis": "1.21.5 moved the component getters up into DataComponentGetter (class_9473) under new names, same shape and body (javap V class_9322/class_9323 vs W class_9473: get, getOrDefault, getTyped); a 1.21.4 implementation answers under the new name"
+  },
+  {
+   "old": "method_57825(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+   "new": "method_58695(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_9322",
+   "guard": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "basis": "1.21.5 moved the component getters up into DataComponentGetter (class_9473) under new names, same shape and body (javap V class_9322/class_9323 vs W class_9473: get, getOrDefault, getTyped); a 1.21.4 implementation answers under the new name"
+  },
+  {
+   "old": "method_57829(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+   "new": "method_58694(Lnet/minecraft/class_9331;)Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_9323",
+   "guard": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "basis": "1.21.5 moved the component getters up into DataComponentGetter (class_9473) under new names, same shape and body (javap V class_9322/class_9323 vs W class_9473: get, getOrDefault, getTyped); a 1.21.4 implementation answers under the new name"
+  },
+  {
+   "old": "method_57830(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+   "new": "method_58695(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_9323",
+   "guard": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "basis": "1.21.5 moved the component getters up into DataComponentGetter (class_9473) under new names, same shape and body (javap V class_9322/class_9323 vs W class_9473: get, getOrDefault, getTyped); a 1.21.4 implementation answers under the new name"
+  },
+  {
+   "old": "method_57834(Lnet/minecraft/class_9331;)Lnet/minecraft/class_9336;",
+   "new": "method_66876(Lnet/minecraft/class_9331;)Lnet/minecraft/class_9336;",
+   "onlyUnder": "net/minecraft/class_9323",
+   "guard": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "basis": "1.21.5 moved the component getters up into DataComponentGetter (class_9473) under new names, same shape and body (javap V class_9322/class_9323 vs W class_9473: get, getOrDefault, getTyped); a 1.21.4 implementation answers under the new name"
+  }
+ ]
+}
