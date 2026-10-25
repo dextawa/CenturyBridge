@@ -59,6 +59,108 @@
       "to": "method_65341(Lnet/minecraft/class_243;)Lnet/minecraft/class_238;",
       "args": [],
       "basis": "Shulker.makeBoundingBox: javap -c both: getProgressAabb(peek, attach face opposite, ...) at the position; 1.21.4 takes the position as an argument (Entity.makeBoundingBox(Vec3))"
+    },
+    "net/minecraft/class_4915.method_25733(Lnet/minecraft/class_1792;Lnet/minecraft/class_4942;)V": {
+      "to": "method_65442(Lnet/minecraft/class_1792;Lnet/minecraft/class_4942;)V",
+      "args": [0, 1],
+      "basis": "ItemModelGenerators.generateFlatItem(item, template): javap -c both: the item's model from the template and the item's own texture; 1.21.4 also writes the item definition pointing at it. Called 302 times by V's run, 283 by W's (the rest became W's new item-model forms)"
+    },
+    "net/minecraft/class_4915.method_25732(Lnet/minecraft/class_1792;Lnet/minecraft/class_1792;Lnet/minecraft/class_4942;)V": {
+      "to": "method_65441(Lnet/minecraft/class_1792;Lnet/minecraft/class_1792;Lnet/minecraft/class_4942;)V",
+      "args": [0, 1, 2],
+      "basis": "ItemModelGenerators.generateFlatItem(item, textureItem, template): javap -c both: the item's model from the template and the other item's texture; 1.21.4 also writes the item definition. 2 call sites in both"
+    },
+    "net/minecraft/class_4915.method_48517(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V": {
+      "to": "method_48517(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)Lnet/minecraft/class_2960;",
+      "args": [0, 1, 2],
+      "basis": "ItemModelGenerators.generateLayeredItem(id, layer0, layer1): javap -c both: TWO_LAYERED_ITEM with layered(layer0, layer1) into the model output; 1.21.4 answers the id it wrote"
+    },
+    "net/minecraft/class_1011.method_4321(IIIIIIIZZZZ)V": {
+      "to": "method_4321(IIIIIIIZ)V",
+      "args": [0, 1, 2, 3, 4, 5, 6, -1, -1, -1, 7],
+      "basis": "NativeImage._upload: javap -c both: the same pixel-store setup and glTexSubImage2D upload, closing the image when its last flag says so (V local 11 / W local 8); 1.21.4 dropped the blur / clamp / mipmap flags (filtering moved to the texture)"
+    },
+    "net/minecraft/class_1011.method_22619(IIIIIIIZZZZ)V": {
+      "to": "method_22619(IIIIIIIZ)V",
+      "args": [0, 1, 2, 3, 4, 5, 6, -1, -1, -1, 7],
+      "basis": "NativeImage.upload: javap -c both: on the render thread _upload, else recordRenderCall of it, with the same arguments less the three dropped filter flags"
+    },
+    "net/minecraft/class_8055.method_48578(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;F)V": {
+      "to": "method_48578(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;)V",
+      "args": [0, 1, 2, 3, -1],
+      "basis": "TrimMaterials.register(context, key, item, style, itemModelIndex): javap -c both: register(.., Map.of()); 1.21.4 dropped the item model index"
+    },
+    "net/minecraft/class_8055.method_48443(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;FLjava/util/Map;)V": {
+      "to": "method_48443(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;Ljava/util/Map;)V",
+      "args": [0, 1, 2, 3, -1, -1],
+      "basis": "TrimMaterials.register(.., overrides): javap -c both: TrimMaterial.create and context.register; the item model index was dropped and the override map is keyed by equipment asset keys instead of ids, so it is not handed over as V's"
+    },
+    "net/minecraft/class_8054.method_48438(Ljava/lang/String;Lnet/minecraft/class_1792;FLnet/minecraft/class_2561;Ljava/util/Map;)Lnet/minecraft/class_8054;": {
+      "to": "method_48438(Ljava/lang/String;Lnet/minecraft/class_1792;Lnet/minecraft/class_2561;Ljava/util/Map;)Lnet/minecraft/class_8054;",
+      "args": [0, 1, -1, 2, -1],
+      "basis": "TrimMaterial.create(suffix, item, itemModelIndex, description, overrides): javap -c both: new TrimMaterial(suffix, BuiltInRegistries.ITEM.wrapAsHolder(item), .., description); the index was dropped and the override map's keys changed type (ids -> equipment asset keys)"
+    },
+    "net/minecraft/class_4915$class_8072.<init>(Ljava/lang/String;FLjava/util/Map;)V": {
+      "to": "<init>(Ljava/lang/String;Lnet/minecraft/class_5321;Ljava/util/Map;)V",
+      "args": [0, -1, -1],
+      "basis": "ItemModelGenerators.TrimMaterialData record constructor: name kept; the item model index became the material key and the override map's keys changed type"
+    },
+    "net/minecraft/class_1088$class_7778.<init>(Lnet/minecraft/class_1088;Lnet/minecraft/class_1088$class_9826;Lnet/minecraft/class_1091;)V": {
+      "to": "<init>(Lnet/minecraft/class_1088;Lnet/minecraft/class_1088$class_9826;Lnet/minecraft/class_10525;)V",
+      "args": [0, 1, -1],
+      "basis": "ModelBakery.ModelBakerImpl constructor: outer bakery and texture getter kept; the ModelResourceLocation became a ModelDebugName (both only name the model for missing-texture logs)"
+    },
+    "net/minecraft/class_8096.<init>(Ljava/util/List;)V": {
+      "to": "<init>(Ljava/util/List;Lnet/minecraft/class_8133;)V",
+      "args": [0],
+      "basis": "SwitchGrid constructor: javap -c both: stores the switch list; 1.21.4 also stores a layout"
+    },
+    "net/minecraft/class_9887.<init>(Ljava/util/List;Ljava/util/List;Ljava/util/List;)V": {
+      "to": "<init>(Ljava/util/List;Lit/unimi/dsi/fastutil/ints/IntList;)V",
+      "args": [0, -1, -1],
+      "basis": "PlacementInfo constructor: javap -c both: stores the ingredient list; 1.21.4 replaced the slot-info and unpacked placement lists by one IntList of slots"
+    },
+    "net/minecraft/class_1462$class_9869.<init>(Ljava/lang/String;ILjava/lang/String;F)V": {
+      "to": "<init>(Ljava/lang/String;ILjava/lang/String;IF)V",
+      "args": [0, 1, 2, 4],
+      "basis": "Salmon.Variant enum constructor: javap -c both: name and bounding-box scale stored; 1.21.4 added an int"
+    },
+    "net/minecraft/class_7662.method_45174(Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7662;": {
+      "to": "method_45174(Lnet/minecraft/class_7677;Ljava/lang/Object;)Lnet/minecraft/class_7662;",
+      "args": [-1, 1],
+      "basis": "BuiltInMetadata.of(section, value): javap -c both: new BuiltInMetadata(Map.of(section, value)) (4/4 instructions); the serializer became a MetadataSectionType"
+    },
+    "net/minecraft/class_8150.method_33332()Lnet/minecraft/class_238;": {
+      "to": "method_65341(Lnet/minecraft/class_243;)Lnet/minecraft/class_238;",
+      "args": [],
+      "basis": "Interaction.makeBoundingBox: javap -c both: getDimensions().makeBoundingBox(position); 1.21.4 takes the position as an argument (Entity.makeBoundingBox(Vec3))"
     }
+  },
+  "fieldRenames": {
+    "net/minecraft/class_2609.field_11981:I": "field_55574",
+    "net/minecraft/class_2609.field_11989:I": "field_55576",
+    "net/minecraft/class_1092.field_20278:Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "field_55476",
+    "net/minecraft/class_898.field_54173:Lnet/minecraft/class_10201;": "field_55290",
+    "net/minecraft/class_4915.field_42087:Ljava/util/List;": "field_55244",
+    "net/minecraft/class_813.field_4326:Lnet/minecraft/class_2960;": "comp_3379",
+    "net/minecraft/class_813.field_4328:Lnet/minecraft/class_4590;": "comp_3380",
+    "net/minecraft/class_813.field_4327:Z": "comp_3381",
+    "net/minecraft/class_813.field_4325:I": "comp_3382",
+    "net/minecraft/class_3888.field_17159:Lnet/minecraft/class_3888$class_3889;": "comp_3458",
+    "net/minecraft/class_2735.field_12463:I": "comp_3325",
+    "net/minecraft/class_1080.field_5341:I": "comp_3451",
+    "net/minecraft/class_1079.field_5334:I": "comp_3456",
+    "net/minecraft/class_1079.field_5335:Z": "comp_3457"
+  },
+  "_smx4_fieldRenames_basis": {
+    "class_2609": "AbstractFurnaceBlockEntity litTime / litDuration -> litTimeRemaining / litTotalTime: same type, same methods read and write them by the same opcodes (mixin-cause 'same uses'; javap)",
+    "class_1092": "ModelManager.modelGroups: the only Object2IntMap<BlockState> field in both",
+    "class_898": "EntityRenderDispatcher's equipment model set: the only class_10201 field in both, final, set in the constructor",
+    "class_4915": "ItemModelGenerators.TRIM_MATERIAL_MODELS: the only static List<TrimMaterialData> in both",
+    "class_813": "Variant became a record: modelLocation / rotation / uvLock / weight in V's getter order are the record's four components in order (javap getters)",
+    "class_3888": "VillagerMetadataSection became a record: hat is its one component",
+    "class_2735": "ClientboundSetHeldSlotPacket became a record: slot is its one component",
+    "class_1080": "AnimationFrame became a record: index (V getIndex reads field_5341) is component 0; the time became Optional<Integer>, not renamed",
+    "class_1079": "AnimationMetadataSection became a record: defaultFrameTime (V getDefaultFrameTime reads field_5334) and interpolatedFrames (field_5335) are its int and boolean components; frame width/height became Optional<Integer>, not renamed"
   }
 }
