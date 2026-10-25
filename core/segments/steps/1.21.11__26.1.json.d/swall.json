@@ -263,7 +263,8 @@
   "net/minecraft/class_2050.method_8925(Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#matches",
   "net/minecraft/class_1267.method_5460()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#getKey",
   "net/minecraft/class_185.method_821()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#getIcon",
-  "net/minecraft/class_161$class_162.method_20416(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_189;ZZZ)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#display"
+  "net/minecraft/class_161$class_162.method_20416(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_189;ZZZ)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#display",
+  "net/minecraft/class_11228.method_70879()V": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#incrementFrameNumber"
  },
  "overrideHooks": [
   {
@@ -879,7 +880,9 @@
   "net/minecraft/class_582": "net/minecraft/client/model/animal/feline/AdultFelineModel",
   "net/minecraft/class_3680": "net/minecraft/client/model/animal/feline/AdultCatModel",
   "net/minecraft/class_9949": "net/minecraft/client/model/animal/feline/AdultOcelotModel",
-  "net/minecraft/class_9891": "top/dext/centurybridge/step/v26_1/facade/EmptyBlockAndTintGetter"
+  "net/minecraft/class_9891": "top/dext/centurybridge/step/v26_1/facade/EmptyBlockAndTintGetter",
+  "net/minecraft/class_11615": "top/dext/centurybridge/step/v26_1/facade/DebugEntryLookingAtBlock",
+  "net/minecraft/class_11617": "top/dext/centurybridge/step/v26_1/facade/DebugEntryLookingAtFluid"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -1248,7 +1251,11 @@
   "net/minecraft/class_11279.field_60069:F": "1.21.11 private zFar: the facade keeps it as cb$zFar; only an access widener on the dead class ever reached it",
   "net/minecraft/class_11279.field_60070:I": "1.21.11 private last width: the 26.1 Projection keeps it; only an access widener on the dead class ever reached it",
   "net/minecraft/class_11279.field_60071:I": "1.21.11 private last height: the 26.1 Projection keeps it; only an access widener on the dead class ever reached it",
-  "net/minecraft/class_11279.field_60072:F": "1.21.11 private last fov: the 26.1 Projection keeps it; only an access widener on the dead class ever reached it"
+  "net/minecraft/class_11279.field_60072:F": "1.21.11 private last fov: the 26.1 Projection keeps it; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11615.method_72755(Ljava/util/Map$Entry;)Ljava/lang/String;": "1.21.11 private helper (one property line): the facade's DebugEntryLookingAt.property does the same; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11615.field_61544:Lnet/minecraft/class_2960;": "1.21.11 private static final group id: the facade keeps it as DebugEntryLookingAt.group (the same identifier); only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11617.method_72757(Ljava/util/Map$Entry;)Ljava/lang/String;": "1.21.11 private helper (one property line): the facade's DebugEntryLookingAt.property does the same; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_11617.field_61546:Lnet/minecraft/class_2960;": "1.21.11 private static final group id: the facade keeps it as DebugEntryLookingAt.group (the same identifier); only an access widener on the dead class ever reached it"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -3897,7 +3904,8 @@
   "net/minecraft/class_4225.method_38722()Ljava/lang/String;": "currentDeviceName",
   "net/minecraft/class_437.method_47413(Lnet/minecraft/class_332;IIF)V": "extractRenderStateWithTooltipAndSubtitles",
   "net/minecraft/class_1007.method_4213(Lnet/minecraft/class_10055;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_12075;)V": "submitNameDisplay",
-  "net/minecraft/class_9931.method_61986(Lnet/minecraft/class_332;)V": "extractRenderState"
+  "net/minecraft/class_9931.method_61986(Lnet/minecraft/class_332;)V": "extractRenderState",
+  "net/minecraft/class_4717.method_44932(Lnet/minecraft/class_332;)V": "extractUsage"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#setDisplayBlockState",
