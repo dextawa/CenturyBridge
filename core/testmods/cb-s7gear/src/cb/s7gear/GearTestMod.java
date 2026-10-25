@@ -212,6 +212,7 @@ public class GearTestMod implements ModInitializer {
         section("overrideReads", GearTestMod::overrideReads);
         section("nameReads", GearTestMod::nameReads);
         section("remainingReads", () -> remainingReads(server));
+        section("soundReads", () -> soundReads(server));
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -1131,6 +1132,29 @@ public class GearTestMod implements ModInitializer {
             "an unmixed remainder (sugar from honey: the glass bottle) stays: " + sugar);
     }
 
+    /** the last sound an entity played (PlaySoundRecorderMixin) */
+    public static volatile net.minecraft.class_3414 lastSound;
+
+    /** the sound 1.21.2's Consumable.emitParticlesAndSounds plays for a zombie eating the stack */
+    static net.minecraft.class_2960 eatSound(MinecraftServer server, class_1799 stack) throws Exception {
+        Object consumable = stack.method_57824((net.minecraft.class_9331<?>) class_9334.class.getField("field_53964").get(null));
+        net.minecraft.class_1642 zombie = new net.minecraft.class_1642(server.method_30002());
+        lastSound = null;
+        consumable.getClass().getMethod("method_62843", net.minecraft.class_5819.class, net.minecraft.class_1309.class, class_1799.class, int.class)
+            .invoke(consumable, net.minecraft.class_5819.method_43049(1L), zombie, stack, 0);
+        return lastSound == null ? null : lastSound.method_14833();
+    }
+
+    static void soundReads(MinecraftServer server) throws Exception {
+        net.minecraft.class_2960 cookie = eatSound(server, new class_1799(item("cookie")));
+        check(cookie != null && cookie.method_12832().equals("block.anvil.land"),
+            "mixin on Item.getEatingSound: vanilla's eating sound of a cookie is the anvil landing: " + cookie);
+        net.minecraft.class_2960 bread = eatSound(server, new class_1799(item("bread")));
+        check(bread != null && bread.method_12832().equals("entity.generic.eat"), "an unmixed food (bread) keeps the eating sound: " + bread);
+        net.minecraft.class_2960 potion = eatSound(server, new class_1799(item("potion")));
+        check(potion != null && potion.method_12832().equals("entity.generic.drink"), "an unmixed drink (potion) keeps the drinking sound: " + potion);
+    }
+
     /** the translation key of a stack's hover name, "" when it is not translatable */
     static String nameKey(class_1799 stack) {
         return stack.method_7964().method_10851() instanceof net.minecraft.class_2588 t ? t.method_11022() : "";
@@ -1158,6 +1182,17 @@ public class GearTestMod implements ModInitializer {
         class_1799 named = new class_1799(item("stick"));
         named.method_57379(class_9334.field_50239, net.minecraft.class_2561.method_43470("own"));
         check(nameKey(named).equals(""), "a stick with its own ITEM_NAME keeps it (1.21.1's getHoverName took it first)");
+        try {
+            java.lang.reflect.Method getName = class_1792.class.getMethod("method_63680");
+            net.minecraft.class_2561 carrot = (net.minecraft.class_2561) getName.invoke(item("carrot"));
+            net.minecraft.class_2561 potato = (net.minecraft.class_2561) getName.invoke(item("potato"));
+            check(carrot.getString().equals("cb carrot"),
+                "redirect in Item.getDescription(): 1.21.2's Item.getName() of a carrot is cb carrot: " + carrot);
+            check(potato.method_10851() instanceof net.minecraft.class_2588 t && t.method_11022().equals("item.minecraft.potato"),
+                "an unmixed item (potato) keeps 1.21.2's name: " + potato);
+        } catch (ReflectiveOperationException e) {
+            check(false, "Item.getName(): " + e);
+        }
     }
 
 }

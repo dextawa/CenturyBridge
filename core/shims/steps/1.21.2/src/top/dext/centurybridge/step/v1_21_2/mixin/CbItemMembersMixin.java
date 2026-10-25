@@ -76,4 +76,16 @@ public abstract class CbItemMembersMixin {
             cir.setReturnValue(name);
         }
     }
+
+    /**
+     * getName(): 1.21.1's getDescription() where a 1.21.1 class overrides it or a mod's mixin on the restored member
+     * answers otherwise than its body (CbItemMembers.descriptionRead); otherwise 1.21.2's ITEM_NAME stands
+     */
+    @Inject(method = "method_63680", at = @At("HEAD"), cancellable = true)
+    private void cb$description(CallbackInfoReturnable<class_2561> cir) {
+        class_2561 name = CbItemMembers.descriptionRead((class_1792) (Object) this);
+        if (name != null) {
+            cir.setReturnValue(name);
+        }
+    }
 }

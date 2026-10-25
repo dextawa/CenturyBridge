@@ -13,7 +13,8 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
  */
 @Mixin(value = class_1792.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbItemMembersRestoredMixin implements CbItemMembers.ItemEnchantmentValue, CbItemMembers.ItemRepair,
-        CbItemMembers.ItemDescriptionId, CbItemMembers.ItemEnchantable {
+        CbItemMembers.ItemDescriptionId, CbItemMembers.ItemEnchantable,
+        CbItemMembers.ItemDescription, CbItemMembers.ItemSounds {
 
     /**
      * 1.21.1's Item.getEnchantmentValue(), restored: what the item's built components say (0 without ENCHANTABLE).
@@ -48,5 +49,28 @@ public abstract class CbItemMembersRestoredMixin implements CbItemMembers.ItemEn
     @Override
     public boolean method_7870(class_1799 stack) {
         return stack.method_7914() == 1 && stack.method_57826(net.minecraft.class_9334.field_50072);
+    }
+
+    /** 1.21.1's Item.getDescription(), restored with its body: translatable(getDescriptionId()) */
+    @CbVanillaReads("CbItemMembersMixin: Item.getName() (1.21.2's, final) answers from it where it answers otherwise than its body")
+    @Override
+    public net.minecraft.class_2561 method_7848() {
+        return net.minecraft.class_2561.method_43471(((class_1792) (Object) this).method_7876());
+    }
+
+    /** 1.21.1's Item.getEatingSound(), restored with its body: GENERIC_EAT */
+    @CbVanillaReads("CbItemConsumeSoundMixin: Consumable.emitParticlesAndSounds plays ItemStack.getEatingSound() (CbItemStackSoundsMixin, "
+        + "which asks this) where it answers otherwise than its body")
+    @Override
+    public net.minecraft.class_3414 method_21830() {
+        return net.minecraft.class_3417.field_20614.comp_349();
+    }
+
+    /** 1.21.1's Item.getDrinkingSound(), restored with its body: GENERIC_DRINK */
+    @CbVanillaReads("CbItemConsumeSoundMixin: Consumable.emitParticlesAndSounds plays ItemStack.getDrinkingSound() (CbItemStackSoundsMixin, "
+        + "which asks this) where it answers otherwise than its body")
+    @Override
+    public net.minecraft.class_3414 method_21831() {
+        return net.minecraft.class_3417.field_20613.comp_349();
     }
 }
