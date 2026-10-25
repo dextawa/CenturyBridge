@@ -31,7 +31,7 @@ import org.objectweb.asm.tree.MethodNode;
  * counts an injector on a restored member as bridged only when the marker is there and names a mixin class of
  * the layer; otherwise the row stays open, "restored-member: vanilla path unmixed".
  *
- * Merged: public, concrete, non-synthetic methods (no constructors) of a class carrying @Mixin, other than
+ * Merged: non-private (public, protected or package-private, as V declared the member), concrete, non-synthetic methods (no constructors) of a class carrying @Mixin, other than
  * @Shadow / @Overwrite / @Unique / injector handlers / accessors and invokers.
  */
 public final class LayerMembers {
@@ -103,7 +103,9 @@ public final class LayerMembers {
     }
 
     private static boolean merged(MethodNode m) {
-        if (m.name.startsWith("<") || (m.access & Opcodes.ACC_PUBLIC) == 0
+        // private ones are the layer mixin's own helpers; a restored V member keeps V's access, protected or
+        // package-private included (making it public would break V subclasses overriding it with V's access)
+        if (m.name.startsWith("<") || (m.access & Opcodes.ACC_PRIVATE) != 0
                 || (m.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_SYNTHETIC | Opcodes.ACC_BRIDGE)) != 0) {
             return false;
         }
