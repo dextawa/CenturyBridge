@@ -12,7 +12,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbLegacyMeleeReference;
  * getPerceivedTargetDistanceSquareForMeleeAttack (the nearer of the target's position and its
  * melee reference position). 1.20.2 calls neither; see CbMelee.
  */
-@Mixin(class_1308.class)
+@Mixin(value = class_1308.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbMobMeleeRange implements CbLegacyMeleeRange {
 
     @Override

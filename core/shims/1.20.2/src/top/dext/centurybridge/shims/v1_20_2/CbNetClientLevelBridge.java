@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * added the new one to the entity storage. (Vanilla 1.20.2 only calls addEntity(entity); for a mod
  * subclass overriding the 1.20.1 methods see CbNetClient.cbAddEntity.)
  */
-@Mixin(class_638.class)
+@Mixin(value = class_638.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetClientLevelBridge {
 
     @Shadow

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * 1.20.1 -> 1.20.2: AdvancementManager.get now returns PlacedAdvancement;
  * the legacy overload unwraps back to the Advancement record.
  */
-@Mixin(class_163.class)
+@Mixin(value = class_163.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class AdvancementManagerBridge {
 
     public class_161 method_716(class_2960 id) {
