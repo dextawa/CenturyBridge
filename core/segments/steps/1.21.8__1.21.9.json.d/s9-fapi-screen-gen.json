@@ -1,0 +1,361 @@
+{
+ "callReshapes": {
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyPress.allowKeyPress(Lnet/minecraft/class_437;III)Z": {
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.AllowKeyPress.allowKeyPress takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyRelease.allowKeyRelease(Lnet/minecraft/class_437;III)Z": {
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.AllowKeyRelease.allowKeyRelease takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseClick.allowMouseClick(Lnet/minecraft/class_437;DDI)Z": {
+   "basis": "s9 fapi screen: ScreenMouseEvents.AllowMouseClick.allowMouseClick takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseRelease.allowMouseRelease(Lnet/minecraft/class_437;DDI)Z": {
+   "basis": "s9 fapi screen: ScreenMouseEvents.AllowMouseRelease.allowMouseRelease takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseDrag.allowMouseDrag(Lnet/minecraft/class_437;DDIDD)Z": {
+   "basis": "s9 fapi screen: ScreenMouseEvents.AllowMouseDrag.allowMouseDrag takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:4",
+    "keep:5"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyPress.beforeKeyPress(Lnet/minecraft/class_437;III)V": {
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.BeforeKeyPress.beforeKeyPress takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyRelease.beforeKeyRelease(Lnet/minecraft/class_437;III)V": {
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.BeforeKeyRelease.beforeKeyRelease takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseClick.beforeMouseClick(Lnet/minecraft/class_437;DDI)V": {
+   "basis": "s9 fapi screen: ScreenMouseEvents.BeforeMouseClick.beforeMouseClick takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseRelease.beforeMouseRelease(Lnet/minecraft/class_437;DDI)V": {
+   "basis": "s9 fapi screen: ScreenMouseEvents.BeforeMouseRelease.beforeMouseRelease takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseDrag.beforeMouseDrag(Lnet/minecraft/class_437;DDIDD)V": {
+   "basis": "s9 fapi screen: ScreenMouseEvents.BeforeMouseDrag.beforeMouseDrag takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DD)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:4",
+    "keep:5"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyPress.afterKeyPress(Lnet/minecraft/class_437;III)V": {
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.AfterKeyPress.afterKeyPress takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyRelease.afterKeyRelease(Lnet/minecraft/class_437;III)V": {
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.AfterKeyRelease.afterKeyRelease takes 1.21.9's input record (CbInput)",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseClick.afterMouseClick(Lnet/minecraft/class_437;DDI)V": {
+   "basis": "s9 fapi screen: ScreenMouseEvents.AfterMouseClick.afterMouseClick takes 1.21.9's input record (CbInput); a 1.21.8 caller had nothing consumed and takes no answer",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#notConsumed()Z"
+   ],
+   "ret": "pop"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseRelease.afterMouseRelease(Lnet/minecraft/class_437;DDI)V": {
+   "basis": "s9 fapi screen: ScreenMouseEvents.AfterMouseRelease.afterMouseRelease takes 1.21.9's input record (CbInput); a 1.21.8 caller had nothing consumed and takes no answer",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#notConsumed()Z"
+   ],
+   "ret": "pop"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseDrag.afterMouseDrag(Lnet/minecraft/class_437;DDIDD)V": {
+   "basis": "s9 fapi screen: ScreenMouseEvents.AfterMouseDrag.afterMouseDrag takes 1.21.9's input record (CbInput); a 1.21.8 caller had nothing consumed and takes no answer",
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DDZ)Z",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:4",
+    "keep:5",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#notConsumed()Z"
+   ],
+   "ret": "pop"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseScroll.afterMouseScroll(Lnet/minecraft/class_437;DDDD)V": {
+   "basis": "s9 fapi screen: ScreenMouseEvents.AfterMouseScroll.afterMouseScroll takes 1.21.9's input record (CbInput); a 1.21.8 caller had nothing consumed and takes no answer",
+   "desc": "(Lnet/minecraft/class_437;DDDDZ)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#notConsumed()Z"
+   ],
+   "ret": "pop"
+  }
+ },
+ "overrideHooks": [
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowKeyPress",
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.AllowKeyPress.allowKeyPress takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAllowKeyPress(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowKeyPress;Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "allowKeyPress(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)Z",
+   "old": "allowKeyPress(Lnet/minecraft/class_437;III)Z",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyPress"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowKeyRelease",
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.AllowKeyRelease.allowKeyRelease takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAllowKeyRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowKeyRelease;Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "allowKeyRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)Z",
+   "old": "allowKeyRelease(Lnet/minecraft/class_437;III)Z",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyRelease"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseClick",
+   "basis": "s9 fapi screen: ScreenMouseEvents.AllowMouseClick.allowMouseClick takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAllowMouseClick(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseClick;Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "allowMouseClick(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)Z",
+   "old": "allowMouseClick(Lnet/minecraft/class_437;DDI)Z",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseClick"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseRelease",
+   "basis": "s9 fapi screen: ScreenMouseEvents.AllowMouseRelease.allowMouseRelease takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAllowMouseRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseRelease;Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "allowMouseRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)Z",
+   "old": "allowMouseRelease(Lnet/minecraft/class_437;DDI)Z",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseRelease"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseDrag",
+   "basis": "s9 fapi screen: ScreenMouseEvents.AllowMouseDrag.allowMouseDrag takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAllowMouseDrag(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseDrag;Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DD)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "allowMouseDrag(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DD)Z",
+   "old": "allowMouseDrag(Lnet/minecraft/class_437;DDIDD)Z",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseDrag"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeKeyPress",
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.BeforeKeyPress.beforeKeyPress takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbBeforeKeyPress(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeKeyPress;Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "beforeKeyPress(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "old": "beforeKeyPress(Lnet/minecraft/class_437;III)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyPress"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeKeyRelease",
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.BeforeKeyRelease.beforeKeyRelease takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbBeforeKeyRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeKeyRelease;Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "beforeKeyRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "old": "beforeKeyRelease(Lnet/minecraft/class_437;III)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyRelease"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseClick",
+   "basis": "s9 fapi screen: ScreenMouseEvents.BeforeMouseClick.beforeMouseClick takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbBeforeMouseClick(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseClick;Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "beforeMouseClick(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)V",
+   "old": "beforeMouseClick(Lnet/minecraft/class_437;DDI)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseClick"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseRelease",
+   "basis": "s9 fapi screen: ScreenMouseEvents.BeforeMouseRelease.beforeMouseRelease takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbBeforeMouseRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseRelease;Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "beforeMouseRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)V",
+   "old": "beforeMouseRelease(Lnet/minecraft/class_437;DDI)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseRelease"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseDrag",
+   "basis": "s9 fapi screen: ScreenMouseEvents.BeforeMouseDrag.beforeMouseDrag takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbBeforeMouseDrag(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseDrag;Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DD)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "beforeMouseDrag(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DD)V",
+   "old": "beforeMouseDrag(Lnet/minecraft/class_437;DDIDD)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseDrag"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterKeyPress",
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.AfterKeyPress.afterKeyPress takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAfterKeyPress(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterKeyPress;Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "afterKeyPress(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "old": "afterKeyPress(Lnet/minecraft/class_437;III)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyPress"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterKeyRelease",
+   "basis": "s9 fapi screen: ScreenKeyboardEvents.AfterKeyRelease.afterKeyRelease takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAfterKeyRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterKeyRelease;Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "afterKeyRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V",
+   "old": "afterKeyRelease(Lnet/minecraft/class_437;III)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyRelease"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseClick",
+   "basis": "s9 fapi screen: ScreenMouseEvents.AfterMouseClick.afterMouseClick takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values and answers false (it could not consume)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAfterMouseClick(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseClick;Lnet/minecraft/class_437;Lnet/minecraft/class_11909;Z)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "afterMouseClick(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;Z)Z",
+   "old": "afterMouseClick(Lnet/minecraft/class_437;DDI)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseClick"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseRelease",
+   "basis": "s9 fapi screen: ScreenMouseEvents.AfterMouseRelease.afterMouseRelease takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values and answers false (it could not consume)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAfterMouseRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseRelease;Lnet/minecraft/class_437;Lnet/minecraft/class_11909;Z)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "afterMouseRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;Z)Z",
+   "old": "afterMouseRelease(Lnet/minecraft/class_437;DDI)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseRelease"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseDrag",
+   "basis": "s9 fapi screen: ScreenMouseEvents.AfterMouseDrag.afterMouseDrag takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values and answers false (it could not consume)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAfterMouseDrag(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseDrag;Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DDZ)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "afterMouseDrag(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DDZ)Z",
+   "old": "afterMouseDrag(Lnet/minecraft/class_437;DDIDD)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseDrag"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseScroll",
+   "basis": "s9 fapi screen: ScreenMouseEvents.AfterMouseScroll.afterMouseScroll takes 1.21.9's input record; the 1.21.8 implementation gets 1.21.8's values and answers false (it could not consume)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents.cbAfterMouseScroll(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseScroll;Lnet/minecraft/class_437;DDDDZ)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "afterMouseScroll(Lnet/minecraft/class_437;DDDDZ)Z",
+   "old": "afterMouseScroll(Lnet/minecraft/class_437;DDDD)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseScroll"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyPress.allowKeyPress(Lnet/minecraft/class_437;III)Z": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAllowKeyPress(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowKeyPress;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyPress;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowKeyPress"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyRelease.allowKeyRelease(Lnet/minecraft/class_437;III)Z": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAllowKeyRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowKeyRelease;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyRelease;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowKeyRelease"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseClick.allowMouseClick(Lnet/minecraft/class_437;DDI)Z": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAllowMouseClick(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseClick;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseClick;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseClick"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseRelease.allowMouseRelease(Lnet/minecraft/class_437;DDI)Z": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAllowMouseRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseRelease;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseRelease;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseRelease"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseDrag.allowMouseDrag(Lnet/minecraft/class_437;DDIDD)Z": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAllowMouseDrag(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseDrag;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseDrag;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAllowMouseDrag"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyPress.beforeKeyPress(Lnet/minecraft/class_437;III)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptBeforeKeyPress(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeKeyPress;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyPress;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeKeyPress"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyRelease.beforeKeyRelease(Lnet/minecraft/class_437;III)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptBeforeKeyRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeKeyRelease;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyRelease;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeKeyRelease"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseClick.beforeMouseClick(Lnet/minecraft/class_437;DDI)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptBeforeMouseClick(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseClick;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseClick;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseClick"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseRelease.beforeMouseRelease(Lnet/minecraft/class_437;DDI)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptBeforeMouseRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseRelease;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseRelease;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseRelease"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseDrag.beforeMouseDrag(Lnet/minecraft/class_437;DDIDD)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptBeforeMouseDrag(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseDrag;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseDrag;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyBeforeMouseDrag"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyPress.afterKeyPress(Lnet/minecraft/class_437;III)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAfterKeyPress(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterKeyPress;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyPress;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterKeyPress"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyRelease.afterKeyRelease(Lnet/minecraft/class_437;III)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAfterKeyRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterKeyRelease;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyRelease;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterKeyRelease"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseClick.afterMouseClick(Lnet/minecraft/class_437;DDI)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAfterMouseClick(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseClick;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseClick;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseClick"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseRelease.afterMouseRelease(Lnet/minecraft/class_437;DDI)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAfterMouseRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseRelease;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseRelease;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseRelease"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseDrag.afterMouseDrag(Lnet/minecraft/class_437;DDIDD)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAfterMouseDrag(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseDrag;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseDrag;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseDrag"
+  },
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseScroll.afterMouseScroll(Lnet/minecraft/class_437;DDDD)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents#adaptAfterMouseScroll(Ltop/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseScroll;)Lnet/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseScroll;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbScreenEvents$LegacyAfterMouseScroll"
+  }
+ }
+}

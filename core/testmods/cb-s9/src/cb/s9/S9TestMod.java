@@ -257,6 +257,62 @@ public class S9TestMod implements ModInitializer {
             check(back.comp_2885().method_10295() == ex.comp_2885().method_10295(), "the explode packet encodes and decodes");
         });
 
+        run("fabric api: AfterKilledOtherEntity (0.136 listener)", () -> {
+            class_3218 level = server.method_30002();
+            int[] seen = new int[1];
+            net.minecraft.class_1309[] got = new net.minecraft.class_1309[1];
+            net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killed) -> {
+                seen[0]++;
+                got[0] = killed;
+            });
+            net.minecraft.class_1308 zombie = (net.minecraft.class_1308) net.minecraft.class_1299.field_6051.method_5883(level, net.minecraft.class_3730.field_16462);
+            net.minecraft.class_1309 pig = (net.minecraft.class_1309) net.minecraft.class_1299.field_6093.method_5883(level, net.minecraft.class_3730.field_16462);
+            zombie.method_5814(0.5, 120.0, 0.5);
+            pig.method_5814(0.5, 120.0, 0.5);
+            level.method_8649(zombie);
+            level.method_8649(pig);
+            pig.method_64397(level, level.method_48963().method_48812(zombie), 1000.0F);
+            check(seen[0] == 1 && got[0] == pig, "the 0.136-shaped listener ran once for the pig the zombie killed (" + seen[0] + ")");
+            zombie.method_31472();
+        });
+
+        run("fabric api: NbtType / FakePlayer / SimpleResourceReloadListener", () -> {
+            check(net.fabricmc.fabric.api.util.NbtType.NUMBER == 99, "NbtType.NUMBER == 99");
+            class_3218 level = server.method_30002();
+            net.fabricmc.fabric.api.entity.FakePlayer fp = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+            net.minecraft.class_1297 pig = net.minecraft.class_1299.field_6093.method_5883(level, net.minecraft.class_3730.field_16462);
+            boolean rode = fp.method_5873(pig, true);
+            check(!rode && fp.method_5854() == null, "FakePlayer.startRiding(vehicle, force) answers false (fake players do not ride), got " + rode);
+            int[] applied = new int[1];
+            net.fabricmc.fabric.api.resource.SimpleResourceReloadListener<String> l = new net.fabricmc.fabric.api.resource.SimpleResourceReloadListener<String>() {
+                @Override
+                public net.minecraft.class_2960 getFabricId() {
+                    return net.minecraft.class_2960.method_60655("cb", "s9");
+                }
+
+                @Override
+                public java.util.concurrent.CompletableFuture<String> load(net.minecraft.class_3300 manager, java.util.concurrent.Executor executor) {
+                    return java.util.concurrent.CompletableFuture.completedFuture("loaded");
+                }
+
+                @Override
+                public java.util.concurrent.CompletableFuture<Void> apply(String data, net.minecraft.class_3300 manager, java.util.concurrent.Executor executor) {
+                    if ("loaded".equals(data)) {
+                        applied[0]++;
+                    }
+                    return java.util.concurrent.CompletableFuture.completedFuture(null);
+                }
+            };
+            net.minecraft.class_3302.class_4045 barrier = new net.minecraft.class_3302.class_4045() {
+                @Override
+                public <T> java.util.concurrent.CompletableFuture<T> method_18352(T value) {
+                    return java.util.concurrent.CompletableFuture.completedFuture(value);
+                }
+            };
+            l.method_25931(barrier, server.method_34864(), Runnable::run, Runnable::run).join();
+            check(applied[0] == 1, "SimpleResourceReloadListener.reload(barrier, manager, ..) loaded and applied (" + applied[0] + ")");
+        });
+
         System.out.println("CB-S9TEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " failed: " + FAILS));
     }
 }
