@@ -840,6 +840,7 @@ public class SwallTestMod implements ModInitializer {
             displayIcons();
             blockStatics(server);
             legacyConstructors(server);
+            timeCommand(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1709,6 +1710,24 @@ public class SwallTestMod implements ModInitializer {
             check("aiConstructors", give != null && spear != null && follow != null, "");
         } catch (Throwable t) {
             check("legacyConstructors", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** 1.21.11 TimeCommand.setTime / addTime (CbWallServerStatics: the overworld clock) */
+    private static void timeCommand(MinecraftServer server) {
+        try {
+            net.minecraft.class_2168 source = server.method_3739();
+            long before = server.method_30002().method_8532();
+            int set = net.minecraft.class_3149.method_13784(source, 1000);
+            long afterSet = server.method_30002().method_8532();
+            int added = net.minecraft.class_3149.method_13788(source, 500);
+            long afterAdd = server.method_30002().method_8532();
+            net.minecraft.class_3149.method_13784(source, (int) (before % 24000L));
+            check("timeCommand.setAdd", set == 1000 && afterSet == 1000L && added == 1500 && afterAdd == 1500L,
+                set + "/" + afterSet + "/" + added + "/" + afterAdd);
+        } catch (Throwable t) {
+            check("timeCommand.setAdd", false, t);
             t.printStackTrace();
         }
     }
