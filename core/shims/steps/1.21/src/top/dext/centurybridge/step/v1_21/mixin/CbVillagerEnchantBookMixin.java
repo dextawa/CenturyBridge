@@ -33,7 +33,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
  * the book as on 1.20.6. With nothing mixed in, the answer is 1.21's: the same tag members in the same order, one
  * random.nextInt(size) draw, none for an empty tag.
  */
-@Mixin(targets = "net.minecraft.class_3853$class_1648")
+@Mixin(targets = "net.minecraft.class_3853$class_1648", priority = 1)
 public abstract class CbVillagerEnchantBookMixin {
 
     @Shadow

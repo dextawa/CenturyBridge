@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /** Util.OS.WINDOWS (class_156$class_158$1): 1.20.6's override of getOpenUrlArguments(URL), restored (see CbUtilOsMixin) */
-@Mixin(targets = "net.minecraft.class_156$class_158$1")
+@Mixin(targets = "net.minecraft.class_156$class_158$1", priority = 1)
 public abstract class CbUtilOsWindowsMixin {
 
     /** 1.20.6 Util.OS.WINDOWS.getOpenUrlArguments(url) */

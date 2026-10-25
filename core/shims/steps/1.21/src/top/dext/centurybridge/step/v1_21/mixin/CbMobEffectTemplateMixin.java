@@ -12,7 +12,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
  * for the amplifier; CbMobEffectMixin routes MobEffect's calls through it with the name 1.20.6 passed
  * (MobEffect.getDescriptionId()), so a 1.20.6 mod's mixin on create sees the call vanilla makes and decides its answer.
  */
-@Mixin(targets = "net.minecraft.class_1291$class_8634")
+@Mixin(targets = "net.minecraft.class_1291$class_8634", priority = 1)
 public abstract class CbMobEffectTemplateMixin implements CbMobEffectTemplates.Restored {
 
     @Shadow

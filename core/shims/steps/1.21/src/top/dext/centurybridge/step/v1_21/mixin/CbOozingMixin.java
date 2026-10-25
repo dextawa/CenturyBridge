@@ -15,7 +15,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
  * mixed in the answer is 1.21's: Mth.clamp(0, cramming - count, spawnCount) for a cramming rule of 1 or more, spawnCount
  * below 1.
  */
-@Mixin(net.minecraft.class_9456.class)
+@Mixin(value = net.minecraft.class_9456.class, priority = 1)
 public abstract class CbOozingMixin {
 
     /**

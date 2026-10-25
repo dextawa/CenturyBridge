@@ -12,7 +12,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
  * pairwise; CbRecipeCacheMixin routes RecipeCache.get's test through the restored method after 1.21's size test, so a
  * 1.20.6 mod's mixin on matches decides whether the cached recipe is reused.
  */
-@Mixin(targets = "net.minecraft.class_8884$class_8885")
+@Mixin(targets = "net.minecraft.class_8884$class_8885", priority = 1)
 public abstract class CbRecipeCacheEntryMixin implements CbRecipeCacheEntries.Restored {
 
     @Shadow

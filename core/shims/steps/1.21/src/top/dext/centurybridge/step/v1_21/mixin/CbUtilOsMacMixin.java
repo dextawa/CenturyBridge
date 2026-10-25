@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /** Util.OS.OSX (class_156$class_158$2): 1.20.6's override of getOpenUrlArguments(URL), restored (see CbUtilOsMixin) */
-@Mixin(targets = "net.minecraft.class_156$class_158$2")
+@Mixin(targets = "net.minecraft.class_156$class_158$2", priority = 1)
 public abstract class CbUtilOsMacMixin {
 
     /** 1.20.6 Util.OS.OSX.getOpenUrlArguments(url) */
