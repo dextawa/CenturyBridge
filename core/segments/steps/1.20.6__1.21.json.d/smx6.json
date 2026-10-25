@@ -1,9 +1,13 @@
 {
  "methodRenames": {
-  "net/minecraft/class_7538.method_44478()V": "method_53586"
+  "net/minecraft/class_7538.method_44478()V": "method_53586",
+  "net/minecraft/class_2300.method_45915(Lnet/minecraft/class_2168;)Ljava/util/List;": "method_9816",
+  "com/mojang/blaze3d/systems/RenderSystem._setShaderFogColor(FFFF)V": "setShaderFogColor"
  },
  "_smx6_methodRenames_basis": {
-  "net/minecraft/class_7538.method_44478()V": "ChatReportScreen.onReportChanged: 1.20.6's private method_44478 is 1.21's protected override method_53586 of AbstractReportScreen's (javap: the same send-button active / tooltip code over field_46021's report, the same callers onReasonChosen / onCommentChanged / onSelectedMessagesChanged; 1.21's init reaches it through the superclass)"
+  "net/minecraft/class_7538.method_44478()V": "ChatReportScreen.onReportChanged: 1.20.6's private method_44478 is 1.21's protected override method_53586 of AbstractReportScreen's (javap: the same send-button active / tooltip code over field_46021's report, the same callers onReasonChosen / onCommentChanged / onSelectedMessagesChanged; 1.21's init reaches it through the superclass)",
+  "net/minecraft/class_2300.method_45915(Lnet/minecraft/class_2168;)Ljava/util/List;": "EntitySelector.findEntitiesRaw was inlined into 1.21's findEntities (javap: the same checkPermissions, includesEntities/findPlayers branch, playerName and entityUUID lookups, currentEntity test, addEntities over the level(s) and sortAndLimit; 1.20.6's only caller, findEntities, filtered its result by enabled feature flags afterwards, which 1.21 tests inline); the descriptor is unchanged, so the rename also carries invokers and shadows",
+  "com/mojang/blaze3d/systems/RenderSystem._setShaderFogColor(FFFF)V": "RenderSystem._setShaderFogColor was inlined into 1.21's public setShaderFogColor(FFFF) (javap: the same four shaderFogColor[i] = arg stores, now after assertOnRenderThread; 1.20.6's only callers were setShaderFogColor(FFFF) and an unreferenced lambda); the descriptor is unchanged, so the rename also carries invokers and shadows"
  },
  "mixinTargets": {
   "net/minecraft/class_4392.method_21269()V": {
@@ -30,23 +34,6 @@
     1
    ],
    "basis": "Sheep.makeContainer(dye, dye) is 1.21's makeCraftInput(dye, dye) (javap: the same two dye items for the crafting lookup in getOffspringColor; 1.21 builds a CraftingInput of them where 1.20.6 filled a CraftingContainer)"
-  },
-  "com/mojang/blaze3d/systems/RenderSystem._setShaderFogColor(FFFF)V": {
-   "to": "setShaderFogColor(FFFF)V",
-   "args": [
-    0,
-    1,
-    2,
-    3
-   ],
-   "basis": "RenderSystem._setShaderFogColor was inlined into 1.21's public setShaderFogColor(FFFF) (javap: the same four shaderFogColor[i] = arg stores, now after assertOnRenderThread; 1.20.6's only callers were setShaderFogColor(FFFF) and an unreferenced lambda)"
-  },
-  "net/minecraft/class_2300.method_45915(Lnet/minecraft/class_2168;)Ljava/util/List;": {
-   "to": "method_9816(Lnet/minecraft/class_2168;)Ljava/util/List;",
-   "args": [
-    0
-   ],
-   "basis": "EntitySelector.findEntitiesRaw was inlined into 1.21's findEntities (javap: the same checkPermissions, includesEntities/findPlayers branch, playerName and entityUUID lookups, currentEntity test, addEntities over the level(s) and sortAndLimit; 1.20.6's only caller, findEntities, filtered its result by enabled feature flags afterwards, which 1.21 tests inline)"
   },
   "net/minecraft/class_2619.method_49209(Lnet/minecraft/class_1297;Z)V": {
    "to": "method_60782(Z)V",
