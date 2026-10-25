@@ -822,6 +822,7 @@ public class SwallTestMod implements ModInitializer {
             furnaceBurn(server);
             emptyTintGetter();
             itemStackMembers(server);
+            attackTypes(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1339,6 +1340,28 @@ public class SwallTestMod implements ModInitializer {
                 held.method_27319() + " / " + dropped.method_6983().method_27319());
         } catch (Throwable t) {
             check("itemStack.representation", false, t);
+        }
+    }
+
+    /** 1.21.11 canAttackType (CbWall*AttackTypeMixin): LivingEntity / Mob / IronGolem / Breeze / Phantom answers */
+    private static void attackTypes(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            net.minecraft.class_3730 cmd = net.minecraft.class_3730.field_16462;
+            net.minecraft.class_1308 zombie = (net.minecraft.class_1308) net.minecraft.class_1299.field_6051.method_5883(level, cmd);
+            net.minecraft.class_1439 golem = (net.minecraft.class_1439) net.minecraft.class_1299.field_6147.method_5883(level, cmd);
+            golem.method_6499(true);
+            net.minecraft.class_1308 breeze = (net.minecraft.class_1308) net.minecraft.class_1299.field_47244.method_5883(level, cmd);
+            net.minecraft.class_1308 phantom = (net.minecraft.class_1308) net.minecraft.class_1299.field_6078.method_5883(level, cmd);
+            net.minecraft.class_1299<?> ghast = net.minecraft.class_1299.field_6107, player = net.minecraft.class_1299.field_6097,
+                creeper = net.minecraft.class_1299.field_6046, z = net.minecraft.class_1299.field_6051;
+            String got = "zombie " + zombie.method_5973(ghast) + zombie.method_5973(player)
+                + " golem " + golem.method_5973(player) + golem.method_5973(creeper) + golem.method_5973(z) + golem.method_5973(ghast)
+                + " breeze " + breeze.method_5973(player) + breeze.method_5973(z)
+                + " phantom " + phantom.method_5973(ghast);
+            check("attackType.answers", got.equals("zombie falsetrue golem falsefalsetruefalse breeze truefalse phantom true"), got);
+        } catch (Throwable t) {
+            check("attackType.answers", false, t);
         }
     }
 
