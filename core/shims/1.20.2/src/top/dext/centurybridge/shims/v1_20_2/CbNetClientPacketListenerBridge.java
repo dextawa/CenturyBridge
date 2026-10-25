@@ -29,17 +29,13 @@ import top.dext.centurybridge.rt.v1_20_2.CbNet;
  * instead of sending them with the join packet. When the handler handles a join packet, the
  * registries it holds for this connection are what that packet carried in 1.20.1 (CbNet.comp_93).
  */
-@Mixin(class_634.class)
+@Mixin(value = class_634.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetClientPacketListenerBridge {
 
     @Shadow
     @Final
     @Mutable
     private class_7699 field_45600;
-
-    @Shadow
-    @Final
-    private class_5455.class_6890 field_25063;
 
     /**
      * was onFeatures(FeaturesS2CPacket). Off the client thread 1.20.1 re-delivered the packet to this
@@ -59,10 +55,5 @@ public abstract class CbNetClientPacketListenerBridge {
             throw class_2987.field_13400;
         }
         field_45600 = class_7701.field_40180.method_45387(packet.comp_1113());
-    }
-
-    @Inject(method = "method_11120", at = @At("HEAD"))
-    private void cb$joinRegistries(class_2678 packet, CallbackInfo ci) {
-        CbNet.cbRecordJoinRegistries(packet, field_25063);
     }
 }

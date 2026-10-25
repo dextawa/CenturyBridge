@@ -14,7 +14,7 @@ import net.minecraft.class_3448;
  * getTranslationKey() ("stat_type." + its registry id, overridable), computed once it was asked
  * -- after registration. 1.20.2's StatType(registry, displayName) takes the name up front. A stat
  * type a converted mod constructs the 1.20.1 way is marked here; its getDisplayName() answers
- * 1.20.1's way again (CbStatTypeLegacy).
+ * 1.20.1's way again (CbStatTypeLegacyHooks).
  */
 public final class CbStatTypes {
 
@@ -49,6 +49,12 @@ public final class CbStatTypes {
 
     public static boolean isLegacy(class_3448<?> type) {
         return LEGACY.containsKey(type);
+    }
+
+    /** StatType (CbStatTypeLegacy): 1.20.1 getTranslationKey(), called virtually (a converted subclass's override answers) */
+    public interface Legacy {
+
+        String method_14957();
     }
 
     private CbStatTypes() {

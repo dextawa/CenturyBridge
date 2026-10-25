@@ -10,7 +10,7 @@ package top.dext.centurybridge.rt.v1_20_2;
  * Both paths are rebuilt on 1.20.2's own construction: the 1.20.1 texture rides along to the
  * ImageWidget(x, y, width, height) constructor that every ImageWidget runs (a mod subclass's super call
  * is reshaped to it, superCtorReshapes; a NEW site goes through the public Texture variant,
- * ctorRedirects), and CbGuiImageWidgetBridge takes it there and gives the widget its 1.20.1 behaviour.
+ * ctorRedirects), and CbGuiImageWidgetBridgeHooks takes it there and gives the widget its 1.20.1 behaviour.
  * The hand-off is per thread and consumed by the very next ImageWidget constructor to finish: the
  * texture is set while the super call's arguments are evaluated, nothing in between constructs another
  * widget.

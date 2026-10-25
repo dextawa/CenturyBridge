@@ -21,6 +21,19 @@ public final class CbNetRealmsAccess {
 
         /** the title a 1.20.1 task gave itself through setTitle, null before it did */
         class_2561 cb$title();
+
+        /** 1.20.1's longRunningMcoTaskScreen field: the screen setScreen handed over, null before */
+        class_4398 cb$screen();
+    }
+
+    /** RealmsMainScreen (CbNetRealmsPopupBridge): 1.20.1's popup state, for the injectors of CbNetRealmsPopupBridgeHooks */
+    public interface Popup {
+
+        /** the server list callback has run (1.20.1 hasFetchedServers = true) */
+        void cb$markServersFetched();
+
+        /** 1.20.1 createdTrial */
+        boolean cb$createdTrial();
     }
 
     /** RealmsLongRunningMcoTaskScreen (CbNetRealmsTaskScreenBridge): its 1.20.1 task-facing methods */
@@ -33,7 +46,7 @@ public final class CbNetRealmsAccess {
         void method_21292(class_2561 title);
     }
 
-    /** RealmsServiceException (CbNetRealmsExceptionBridge) */
+    /** RealmsServiceException (CbNetRealmsExceptionBridgeHooks) */
     public interface Failure {
 
         /** the failure as 1.20.1 described it, fixed when the exception was made */

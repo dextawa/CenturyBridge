@@ -15,7 +15,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbNet;
  * (DiscardedQueryAnswerPayload), so without Fabric API's networking -- which reads it into its own
  * payload -- the response is read the 1.20.1 way.
  */
-@Mixin(class_2913.class)
+@Mixin(value = class_2913.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetQueryAnswerBridge {
 
     /** was getQueryId() */
@@ -26,12 +26,5 @@ public abstract class CbNetQueryAnswerBridge {
     /** was getResponse(): the packet's own (nullable) buffer, the same object on every call */
     public class_2540 method_36179() {
         return CbNet.cbQueryAnswerData(this, ((class_2913) (Object) this).comp_1570());
-    }
-
-    @Inject(method = "method_52290", at = @At("HEAD"), cancellable = true)
-    private static void cb$readAnswer(int queryId, class_2540 buf, CallbackInfoReturnable<class_8594> cir) {
-        if (!CbNet.FABRIC_RETAINS_PAYLOADS) {
-            cir.setReturnValue(CbNet.cbReadQueryAnswer(buf));
-        }
     }
 }

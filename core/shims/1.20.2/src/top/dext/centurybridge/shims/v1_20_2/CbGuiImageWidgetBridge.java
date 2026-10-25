@@ -17,58 +17,20 @@ import top.dext.centurybridge.rt.v1_20_2.CbLegacyImageWidget;
  * and are untouched. The 1.20.1 renderWidget is also what a mod subclass of the now-abstract ImageWidget
  * inherits.
  */
-@Mixin(net.minecraft.class_8208.class)
-public abstract class CbGuiImageWidgetBridge extends net.minecraft.class_339 implements CbLegacyImageWidget {
-
-    @Unique
-    private net.minecraft.class_2960 cb$texture;
+@Mixin(value = net.minecraft.class_8208.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
+public abstract class CbGuiImageWidgetBridge extends net.minecraft.class_339 {
 
     private CbGuiImageWidgetBridge() {
         super(0, 0, 0, 0, null);
-    }
-
-    @Override
-    public net.minecraft.class_2960 cb$legacyTexture() {
-        return this.cb$texture;
-    }
-
-    @Inject(method = "<init>(IIII)V", at = @At("RETURN"))
-    private void cb$takeTexture(int x, int y, int width, int height, CallbackInfo ci) {
-        this.cb$texture = CbGuiImageWidgets.cbTakePending();
     }
 
     /** 1.20.1 ImageWidget.renderWidget (public, as in 1.20.1), inherited by a mod subclass (the 1.20.2
      *  variants override it) */
     @Override
     public void method_48579(net.minecraft.class_332 graphics, int mouseX, int mouseY, float delta) {
-        if (this.cb$texture != null) {
-            CbGuiImageWidgets.cbRender(this, this.cb$texture, graphics);
-        }
-    }
-
-    /** AbstractWidget.isActive, as 1.20.1's ImageWidget inherited it */
-    @Inject(method = "method_37303", at = @At("HEAD"), cancellable = true)
-    private void cb$active(CallbackInfoReturnable<Boolean> cir) {
-        if (this.cb$texture != null) {
-            cir.setReturnValue(this.field_22764 && this.field_22763);
-        }
-    }
-
-    /** AbstractWidget.playDownSound, as 1.20.1's ImageWidget inherited it */
-    @Inject(method = "method_25354", at = @At("HEAD"), cancellable = true)
-    private void cb$clickSound(net.minecraft.class_1144 sounds, CallbackInfo ci) {
-        if (this.cb$texture != null) {
-            sounds.method_4873(net.minecraft.class_1109.method_47978(net.minecraft.class_3417.field_15015, 1.0F));
-            ci.cancel();
-        }
-    }
-
-    /** AbstractWidget.nextFocusPath, as 1.20.1's ImageWidget inherited it */
-    @Inject(method = "method_48205", at = @At("HEAD"), cancellable = true)
-    private void cb$focusable(net.minecraft.class_8023 navigation, CallbackInfoReturnable<net.minecraft.class_8016> cir) {
-        if (this.cb$texture != null) {
-            cir.setReturnValue(!this.field_22763 || !this.field_22764 ? null
-                : !this.method_25370() ? net.minecraft.class_8016.method_48193(this) : null);
+        net.minecraft.class_2960 texture = ((CbLegacyImageWidget) (Object) this).cb$legacyTexture();
+        if (texture != null) {
+            CbGuiImageWidgets.cbRender(this, texture, graphics);
         }
     }
 }

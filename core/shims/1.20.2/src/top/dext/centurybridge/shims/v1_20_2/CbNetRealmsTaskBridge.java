@@ -19,7 +19,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbNetRealmsAccess;
  * generic error screen. Put back for 1.20.1 tasks (the mod classes CbNetLegacyTask marks); a 1.20.2
  * task is left as it is.
  */
-@Mixin(class_4358.class)
+@Mixin(value = class_4358.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetRealmsTaskBridge implements class_5221, CbNetRealmsAccess.Task {
 
     /** was longRunningMcoTaskScreen */
@@ -50,12 +50,8 @@ public abstract class CbNetRealmsTaskBridge implements class_5221, CbNetRealmsAc
         return cb$title;
     }
 
-    /** a 1.20.1 task reports a failure to its screen, as 1.20.1's error(message) did */
-    @Inject(method = "method_21067", at = @At("HEAD"), cancellable = true)
-    private void cb$legacyError(class_2561 message, CallbackInfo ci) {
-        if ((Object) this instanceof CbNetLegacyTask && field_19638 != null) {
-            ((CbNetRealmsAccess.TaskScreen) field_19638).method_21067(message);
-            ci.cancel();
-        }
+    @Override
+    public class_4398 cb$screen() {
+        return field_19638;
     }
 }

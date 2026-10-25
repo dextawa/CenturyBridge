@@ -5,6 +5,7 @@ import net.minecraft.class_310;
 import net.minecraft.class_4325;
 import net.minecraft.class_7580;
 import net.minecraft.class_8656;
+import top.dext.centurybridge.rt.v1_20_2.CbNetRealmsAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -30,14 +31,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * the buy button (render) and the trial button of the popup it opens; they read it here as
  * trialsAvailable && !createdTrial, and the fetcher's update is dropped while the flag is set.
  */
-@Mixin(class_4325.class)
-public abstract class CbNetRealmsPopupBridge {
+@Mixin(value = class_4325.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
+public abstract class CbNetRealmsPopupBridge implements CbNetRealmsAccess.Popup {
 
     @Shadow
     private class_7580 field_39681;
-
-    @Shadow
-    private volatile boolean field_19500;
 
     /** 1.20.1 hasFetchedServers: the server list callback has run */
     @Unique
@@ -64,25 +62,13 @@ public abstract class CbNetRealmsPopupBridge {
         this.cb$createdTrial = createdTrial;
     }
 
-    @Inject(method = "method_44615", at = @At("TAIL"))
-    private void cb$serversFetched(List<?> servers, CallbackInfo ci) {
+    @Override
+    public void cb$markServersFetched() {
         this.cb$fetchedServers = true;
     }
 
-    @Inject(method = "method_52639", at = @At("HEAD"), cancellable = true)
-    private void cb$trialUpdateWhileCreated(Boolean available, CallbackInfo ci) {
-        if (this.cb$createdTrial) {
-            ci.cancel();
-        }
-    }
-
-    @Redirect(method = "method_25394", at = @At(value = "FIELD", target = "Lnet/minecraft/class_4325;field_19500:Z", opcode = 180))
-    private boolean cb$trialBadge(class_4325 self) {
-        return this.field_19500 && !this.cb$createdTrial;
-    }
-
-    @Redirect(method = "method_53791", at = @At(value = "FIELD", target = "Lnet/minecraft/class_4325;field_19500:Z", opcode = 180))
-    private boolean cb$trialOffer(class_4325 self) {
-        return this.field_19500 && !this.cb$createdTrial;
+    @Override
+    public boolean cb$createdTrial() {
+        return this.cb$createdTrial;
     }
 }

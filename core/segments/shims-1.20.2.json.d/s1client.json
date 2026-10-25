@@ -115,7 +115,7 @@
     "keep:0",
     "conv:1,2 top/dext/centurybridge/rt/v1_20_2/CbGuiImageWidgets#cbHeightWithTexture(ILnet/minecraft/class_2960;)I"
    ],
-   "basis": "1.20.1 ImageWidget(width, height, texture) = this(0, 0, width, height, texture); the texture rides to the 1.20.2 (x, y, width, height) constructor, CbGuiImageWidgetBridge takes it there"
+   "basis": "1.20.1 ImageWidget(width, height, texture) = this(0, 0, width, height, texture); the texture rides to the 1.20.2 (x, y, width, height) constructor, CbGuiImageWidgetBridgeHooks takes it there"
   },
   "net/minecraft/class_8208.<init>(IIIILnet/minecraft/class_2960;)V": {
    "desc": "(IIII)V",
@@ -125,7 +125,7 @@
     "keep:2",
     "conv:3,4 top/dext/centurybridge/rt/v1_20_2/CbGuiImageWidgets#cbHeightWithTexture(ILnet/minecraft/class_2960;)I"
    ],
-   "basis": "the texture rides to the 1.20.2 (x, y, width, height) constructor, CbGuiImageWidgetBridge takes it there"
+   "basis": "the texture rides to the 1.20.2 (x, y, width, height) constructor, CbGuiImageWidgetBridgeHooks takes it there"
   },
   "net/minecraft/class_367.<init>(Lnet/minecraft/class_161;)V": {
    "desc": "(Lnet/minecraft/class_8779;)V",
@@ -182,7 +182,7 @@
     "keep",
     "keep"
    ],
-   "basis": "the UUID string parsed as 1.20.1's getProfileId parsed it; the string rides to the constructor (CbGuiUserBridge)"
+   "basis": "the UUID string parsed as 1.20.1's getProfileId parsed it; the string rides to the constructor (CbGuiUserBridgeHooks)"
   },
   "net/minecraft/class_7764.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7771;Lnet/minecraft/class_1011;Lnet/minecraft/class_1079;)V": {
    "desc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_7771;Lnet/minecraft/class_1011;Lnet/minecraft/class_7368;)V",
