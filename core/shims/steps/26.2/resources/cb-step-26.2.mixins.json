@@ -32,7 +32,8 @@
     "CbS26RenderBuffersMixin",
     "CbS26LevelFlushMixin",
     "CbS26GameFlushMixin",
-    "CbS26GuiFlushMixin"
+    "CbS26GuiFlushMixin",
+    "CbS26TesselatorMixin"
   ],
   "server": [],
   "injectors": {

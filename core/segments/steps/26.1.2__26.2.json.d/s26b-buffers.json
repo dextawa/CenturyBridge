@@ -3,12 +3,14 @@
   "classRenames": {
     "net/minecraft/client/renderer/MultiBufferSource": "top/dext/centurybridge/step/v26_2/facade/MultiBufferSource",
     "net/minecraft/client/renderer/MultiBufferSource$BufferSource": "top/dext/centurybridge/step/v26_2/facade/MultiBufferSource$BufferSource",
-    "com/mojang/blaze3d/vertex/VertexMultiConsumer": "top/dext/centurybridge/step/v26_2/facade/VertexMultiConsumer"
+    "com/mojang/blaze3d/vertex/VertexMultiConsumer": "top/dext/centurybridge/step/v26_2/facade/VertexMultiConsumer",
+    "com/mojang/blaze3d/vertex/Tesselator": "top/dext/centurybridge/step/v26_2/facade/Tesselator"
   },
   "_classRenames_basis": {
     "net/minecraft/client/renderer/MultiBufferSource": "26.2 deleted the interface and its BufferSource (its renderers write staged vertex buffers); the facade is 26.1.2's code over 26.2's BufferBuilder / ByteBufferBuilder / MeshData, a batch drawn as 26.1.2's RenderType.draw (rt/CbS26ImmediateDraw). Vanilla 26.2 never hands one out: RenderBuffers.bufferSource() and the other vanilla-held sources stay open until their flush points are routed",
     "net/minecraft/client/renderer/MultiBufferSource$BufferSource": "as MultiBufferSource",
-    "com/mojang/blaze3d/vertex/VertexMultiConsumer": "26.2 deleted it with the buffer sources; the facade is 26.1.2's class (create() throws, create(one) is that consumer, two: Double, more: Multiple, the same delegate twice refused) over 26.2's VertexConsumer, whose abstract members are unchanged"
+    "com/mojang/blaze3d/vertex/VertexMultiConsumer": "26.2 deleted it with the buffer sources; the facade is 26.1.2's class (create() throws, create(one) is that consumer, two: Double, more: Multiple, the same delegate twice refused) over 26.2's VertexConsumer, whose abstract members are unchanged",
+    "com/mojang/blaze3d/vertex/Tesselator": "26.2 deleted it; the facade is 26.1.2's class (a ByteBufferBuilder, 786432 bytes by default, a BufferBuilder per begin; init / getInstance as 26.1.2 checked them) over 26.2's BufferBuilder; the game's instance is made where 26.1.2's Minecraft constructor made it (before the render buffers) and cleared where 26.1.2's RenderSystem.flipFrame cleared it (before presenting the frame), mixin/CbS26TesselatorMixin"
   },
   "instanceRedirects": {
     "net/minecraft/client/gui/Font.drawInBatch(Ljava/lang/String;FFIZLorg/joml/Matrix4fc;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;II)V": "top/dext/centurybridge/step/v26_2/rt/CbS26FontClient",
