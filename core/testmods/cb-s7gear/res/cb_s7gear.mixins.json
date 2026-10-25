@@ -6,7 +6,22 @@
   "mixins": [
     "EnchantValueMixin",
     "IngredientItemsMixin",
-    "BindTagsMixin"
+    "BindTagsMixin",
+    "ArmorEquipMixin",
+    "ShieldEquipMixin",
+    "ArmorValuesMixin",
+    "TridentValueMixin",
+    "ItemDescriptionIdMixin",
+    "PotionDescriptionIdMixin",
+    "CompassDescriptionIdMixin",
+    "MaceRepairMixin",
+    "TotemEnchantableMixin",
+    "RemainingItemsMixin",
+    "ItemDescriptionMixin",
+    "EatingSoundMixin",
+    "PlaySoundRecorderMixin",
+    "OrCreateDescriptionIdMixin",
+    "ArmorDefenseMixin"
   ],
   "injectors": {
     "defaultRequire": 1

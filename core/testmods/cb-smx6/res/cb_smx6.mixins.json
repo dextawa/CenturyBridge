@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "package": "cb.smx6.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "ServerDriverMixin",
+    "TridentChannelingMixin",
+    "TridentAccess",
+    "VillagerBookMixin",
+    "EffectTemplateMixin",
+    "OozingMixin",
+    "RecipeCacheEntryMixin",
+    "UtilOsMixin",
+    "EnchantBookInvoker"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "package": "cb.smx1.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": [
+    "ServerDriverMixin",
+    "LootPoolMixin",
+    "BeaconMixin",
+    "BeaconAccess",
+    "RandomChanceAccess",
+    "NbtIoMixin",
+    "AdvancementListMixin",
+    "NavigationMixin",
+    "NavigationInvoker",
+    "NavigationRedirectMixin",
+    "ShapedReaderMixin",
+    "CookingReaderMixin",
+    "StatTypeKeyMixin",
+    "EffectAttributesMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

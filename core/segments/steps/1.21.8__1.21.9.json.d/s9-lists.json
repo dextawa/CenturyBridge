@@ -1,0 +1,175 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_3330.method_14626()Ljava/lang/Object;": {
+   "basis": "s9 lists: StoredUserEntry.getUser() answers the NameAndId on 1.21.9 (GameProfile on 1.21.8); CbLists.cbKeyOut hands 1.21.8 code a GameProfile (CbProfiles.toProfile), a String user passes",
+   "desc": "()Ljava/lang/Object;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbKeyOut(Ljava/lang/Object;)Ljava/lang/Object;"
+  },
+  "net/minecraft/class_3331.method_14634(Ljava/lang/Object;)Ljava/lang/String;": {
+   "basis": "s9 lists: StoredUserList's key K is NameAndId on 1.21.9 (GameProfile on 1.21.8) for the ops, bans and whitelist; erased, so the descriptor stays (CbLists.cbKeyIn: a GameProfile key becomes its id and name, others pass) -- getKeyForUser(key)",
+   "desc": "(Ljava/lang/Object;)Ljava/lang/String;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbKeyIn(Ljava/lang/Object;)Ljava/lang/Object;"
+   ]
+  },
+  "net/minecraft/class_3331.method_14635(Ljava/lang/Object;)V": {
+   "basis": "s9 lists: StoredUserList's key K is NameAndId on 1.21.9 (GameProfile on 1.21.8) for the ops, bans and whitelist; erased, so the descriptor stays (CbLists.cbKeyIn: a GameProfile key becomes its id and name, others pass) -- remove(key); 1.21.9 answers whether it removed, 1.21.8 code ignores it",
+   "desc": "(Ljava/lang/Object;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbKeyIn(Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "ret": "pop"
+  },
+  "net/minecraft/class_3331.method_14640(Ljava/lang/Object;)Lnet/minecraft/class_3330;": {
+   "basis": "s9 lists: StoredUserList's key K is NameAndId on 1.21.9 (GameProfile on 1.21.8) for the ops, bans and whitelist; erased, so the descriptor stays (CbLists.cbKeyIn: a GameProfile key becomes its id and name, others pass) -- get(key)",
+   "desc": "(Ljava/lang/Object;)Lnet/minecraft/class_3330;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbKeyIn(Ljava/lang/Object;)Ljava/lang/Object;"
+   ]
+  },
+  "net/minecraft/class_3331.method_14644(Ljava/lang/Object;)Z": {
+   "basis": "s9 lists: StoredUserList's key K is NameAndId on 1.21.9 (GameProfile on 1.21.8) for the ops, bans and whitelist; erased, so the descriptor stays (CbLists.cbKeyIn: a GameProfile key becomes its id and name, others pass) -- contains(key)",
+   "desc": "(Ljava/lang/Object;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbKeyIn(Ljava/lang/Object;)Ljava/lang/Object;"
+   ]
+  }
+ },
+ "convertHooks": [
+  {
+   "args": [
+    "top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbKeyOut(Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "s9 lists: vanilla hands a 1.21.8 get override the NameAndId key; the old body gets a GameProfile (CbLists.cbKeyOut)",
+   "member": "method_14640(Ljava/lang/Object;)Lnet/minecraft/class_3330;",
+   "ret": null,
+   "under": "net/minecraft/class_3331"
+  },
+  {
+   "args": [
+    "top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbKeyOut(Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "s9 lists: vanilla hands a 1.21.8 contains override the NameAndId key; the old body gets a GameProfile (CbLists.cbKeyOut)",
+   "member": "method_14644(Ljava/lang/Object;)Z",
+   "ret": null,
+   "under": "net/minecraft/class_3331"
+  },
+  {
+   "args": [
+    "top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbKeyOut(Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "s9 lists: vanilla hands a 1.21.8 getKeyForUser override the NameAndId key; the old body gets a GameProfile (CbLists.cbKeyOut)",
+   "member": "method_14634(Ljava/lang/Object;)Ljava/lang/String;",
+   "ret": null,
+   "under": "net/minecraft/class_3331"
+  },
+  {
+   "args": [],
+   "basis": "s9 lists: a 1.21.8 entry's getUser override answers a GameProfile; vanilla reads the NameAndId (CbLists.cbKeyIn)",
+   "member": "method_14626()Ljava/lang/Object;",
+   "ret": "top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbKeyIn(Ljava/lang/Object;)Ljava/lang/Object;",
+   "under": "net/minecraft/class_3330"
+  }
+ ],
+ "genericWitnesses": {
+  "net/minecraft/class_3326.method_14642(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3330;": {
+   "basis": "s9 lists: createEntry answers an entry object that passes unchanged (the same UserBanListEntry / UserWhiteListEntry / ServerOpListEntry classes); its user is the NameAndId only where 1.21.8 code reads it (getUser, converted) or builds it (the entry constructors, converted)",
+   "by": [
+    "net/minecraft/class_3330.method_14626()Ljava/lang/Object;",
+    "net/minecraft/class_3336.<init>(Lcom/mojang/authlib/GameProfile;)V",
+    "net/minecraft/class_3340.<init>(Lcom/mojang/authlib/GameProfile;)V",
+    "net/minecraft/class_3327.<init>(Lcom/mojang/authlib/GameProfile;IZ)V"
+   ]
+  },
+  "net/minecraft/class_3335.method_14642(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3330;": {
+   "basis": "s9 lists: createEntry answers an entry object that passes unchanged (the same UserBanListEntry / UserWhiteListEntry / ServerOpListEntry classes); its user is the NameAndId only where 1.21.8 code reads it (getUser, converted) or builds it (the entry constructors, converted)",
+   "by": [
+    "net/minecraft/class_3330.method_14626()Ljava/lang/Object;",
+    "net/minecraft/class_3336.<init>(Lcom/mojang/authlib/GameProfile;)V",
+    "net/minecraft/class_3340.<init>(Lcom/mojang/authlib/GameProfile;)V",
+    "net/minecraft/class_3327.<init>(Lcom/mojang/authlib/GameProfile;IZ)V"
+   ]
+  },
+  "net/minecraft/class_3337.method_14642(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3330;": {
+   "basis": "s9 lists: createEntry answers an entry object that passes unchanged (the same UserBanListEntry / UserWhiteListEntry / ServerOpListEntry classes); its user is the NameAndId only where 1.21.8 code reads it (getUser, converted) or builds it (the entry constructors, converted)",
+   "by": [
+    "net/minecraft/class_3330.method_14626()Ljava/lang/Object;",
+    "net/minecraft/class_3336.<init>(Lcom/mojang/authlib/GameProfile;)V",
+    "net/minecraft/class_3340.<init>(Lcom/mojang/authlib/GameProfile;)V",
+    "net/minecraft/class_3327.<init>(Lcom/mojang/authlib/GameProfile;IZ)V"
+   ]
+  }
+ },
+ "overrideHooks": [
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbLists$LegacyAdd",
+   "basis": "s9 lists: a 1.21.8 StoredUserList override of add(entry): 1.21.9 answers false when the entry is already the stored one (CbLists.cbAdd)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbLists.cbAdd(Ltop/dext/centurybridge/step/v1_21_9/rt/CbLists$LegacyAdd;Lnet/minecraft/class_3330;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14633(Lnet/minecraft/class_3330;)Z",
+   "old": "method_14633(Lnet/minecraft/class_3330;)V",
+   "onlyUnder": "net/minecraft/class_3331"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbLists$LegacyRemove",
+   "basis": "s9 lists: a 1.21.8 StoredUserList override of remove(key): 1.21.9 answers whether an entry was stored (the old body gets a GameProfile key) (CbLists.cbRemove)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbLists.cbRemove(Ltop/dext/centurybridge/step/v1_21_9/rt/CbLists$LegacyRemove;Ljava/lang/Object;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14635(Ljava/lang/Object;)Z",
+   "old": "method_14635(Ljava/lang/Object;)V",
+   "onlyUnder": "net/minecraft/class_3331"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbLists$LegacyRemoveEntry",
+   "basis": "s9 lists: a 1.21.8 StoredUserList override of remove(entry): 1.21.9 answers whether an entry was stored under its user (CbLists.cbRemoveEntry)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbLists.cbRemoveEntry(Ltop/dext/centurybridge/step/v1_21_9/rt/CbLists$LegacyRemoveEntry;Lnet/minecraft/class_3330;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_14638(Lnet/minecraft/class_3330;)Z",
+   "old": "method_14638(Lnet/minecraft/class_3330;)V",
+   "onlyUnder": "net/minecraft/class_3331"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_3317.<init>(Ljava/io/File;)V": {
+   "basis": "s9 lists: 1.21.9's lists take the management protocol's NotificationService; a 1.21.8 list notified nobody, so the mod's own list gets the empty service (EmptyNotificationService)",
+   "desc": "(Ljava/io/File;Lnet/minecraft/class_11871;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbNoNotifications()Lnet/minecraft/class_11871;"
+   ]
+  },
+  "net/minecraft/class_3326.<init>(Ljava/io/File;)V": {
+   "basis": "s9 lists: 1.21.9's lists take the management protocol's NotificationService; a 1.21.8 list notified nobody, so the mod's own list gets the empty service (EmptyNotificationService)",
+   "desc": "(Ljava/io/File;Lnet/minecraft/class_11871;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbNoNotifications()Lnet/minecraft/class_11871;"
+   ]
+  },
+  "net/minecraft/class_3331.<init>(Ljava/io/File;)V": {
+   "basis": "s9 lists: 1.21.9's lists take the management protocol's NotificationService; a 1.21.8 list notified nobody, so the mod's own list gets the empty service (EmptyNotificationService)",
+   "desc": "(Ljava/io/File;Lnet/minecraft/class_11871;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbNoNotifications()Lnet/minecraft/class_11871;"
+   ]
+  },
+  "net/minecraft/class_3335.<init>(Ljava/io/File;)V": {
+   "basis": "s9 lists: 1.21.9's lists take the management protocol's NotificationService; a 1.21.8 list notified nobody, so the mod's own list gets the empty service (EmptyNotificationService)",
+   "desc": "(Ljava/io/File;Lnet/minecraft/class_11871;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbNoNotifications()Lnet/minecraft/class_11871;"
+   ]
+  },
+  "net/minecraft/class_3337.<init>(Ljava/io/File;)V": {
+   "basis": "s9 lists: 1.21.9's lists take the management protocol's NotificationService; a 1.21.8 list notified nobody, so the mod's own list gets the empty service (EmptyNotificationService)",
+   "desc": "(Ljava/io/File;Lnet/minecraft/class_11871;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbLists#cbNoNotifications()Lnet/minecraft/class_11871;"
+   ]
+  }
+ }
+}

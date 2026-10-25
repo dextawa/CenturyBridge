@@ -513,7 +513,7 @@ public final class CbNet {
         return packet;
     }
 
-    /** the client handled a join packet with these synced registries (CbNetClientPacketListenerBridge) */
+    /** the client handled a join packet with these synced registries (CbNetClientPacketListenerBridgeHooks) */
     public static void cbRecordJoinRegistries(net.minecraft.class_2678 packet, net.minecraft.class_5455.class_6890 registries) {
         JOIN_REGISTRIES.put(packet, registries);
     }

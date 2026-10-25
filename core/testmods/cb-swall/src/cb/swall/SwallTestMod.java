@@ -818,6 +818,10 @@ public class SwallTestMod implements ModInitializer {
             worldCalls(server);
             legacyStates();
             trades(server);
+            brains(server);
+            furnaceBurn(server);
+            emptyTintGetter();
+            itemStackMembers(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1216,6 +1220,125 @@ public class SwallTestMod implements ModInitializer {
                                                com.mojang.serialization.MapCodec<net.minecraft.class_2680> codec) {
             calls++;
             return new LegacyState(block, values, codec);
+        }
+    }
+
+    /**
+     * 1.21.11's <Mob>Ai.makeBrain statics (rt/CbWallAiBrains): with no mod mixin, the route over the mob's own brain
+     * (on) and over a copy without behaviours (redo) leaves each of the 18 brains as 26.1 built it (off)
+     */
+    private static void brains(MinecraftServer server) {
+        for (net.minecraft.CbSwallBrainProbe.Result r : net.minecraft.CbSwallBrainProbe.all(server.method_30002())) {
+            boolean readable = !r.off().startsWith("unreadable") && !r.off().startsWith("behaviours []");
+            check("brain.makeBrain." + r.mob() + ".on", readable && r.on().equals(r.off()), r.off() + " <> " + r.on());
+            check("brain.makeBrain." + r.mob() + ".redo", readable && r.redo().equals(r.off()), r.off() + " <> " + r.redo());
+            System.out.println("CBTEST BRAIN " + r.mob() + " " + r.off());
+        }
+    }
+
+    /**
+     * 1.21.11's AbstractFurnaceBlockEntity.burn, restored in the layer (mixin/CbWallFurnaceBurnMixin) with vanilla's
+     * serverTick routed through it: a furnace driven by serverTick (class_2609.method_31651) still smelts, marks the
+     * recipe used once per smelt, and turns a bucket in the fuel slot into a water bucket when a wet sponge dries
+     */
+    private static void furnaceBurn(MinecraftServer server) {
+        net.minecraft.class_3218 level = server.method_30002();
+        net.minecraft.class_2680 state = net.minecraft.class_2246.field_10181.method_9564();
+        try {
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(0, 100, 0);
+            net.minecraft.class_3866 be = new net.minecraft.class_3866(pos, state);
+            be.method_31662(level);
+            be.method_5447(0, new net.minecraft.class_1799(net.minecraft.class_1802.field_33400, 2));
+            be.method_5447(1, new net.minecraft.class_1799(net.minecraft.class_1802.field_8713, 1));
+            for (int i = 0; i < 450; i++) {
+                net.minecraft.class_2609.method_31651(level, pos, state, be);
+            }
+            net.minecraft.class_1799 out = be.method_5438(2);
+            int used = be.method_27354(level, new net.minecraft.class_243(0, 100, 0)).size();
+            check("furnace.burn.smelt", out.method_7909() == net.minecraft.class_1802.field_8620 && out.method_7947() == 2
+                && be.method_5438(0).method_7960() && used == 1, out + " input " + be.method_5438(0) + " recipes " + used);
+        } catch (Throwable t) {
+            check("furnace.burn.smelt", false, t);
+        }
+        try {
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(2, 100, 0);
+            net.minecraft.class_3866 be = new net.minecraft.class_3866(pos, state);
+            be.method_31662(level);
+            be.method_5447(0, new net.minecraft.class_1799(net.minecraft.class_1802.field_8554, 1));
+            be.method_5447(1, new net.minecraft.class_1799(net.minecraft.class_1802.field_8713, 1));
+            net.minecraft.class_2609.method_31651(level, pos, state, be);
+            boolean lit = be.method_5438(1).method_7960();
+            be.method_5447(1, new net.minecraft.class_1799(net.minecraft.class_1802.field_8550, 1));
+            for (int i = 0; i < 250; i++) {
+                net.minecraft.class_2609.method_31651(level, pos, state, be);
+            }
+            net.minecraft.class_1799 out = be.method_5438(2);
+            check("furnace.burn.sponge", lit && out.method_7909() == net.minecraft.class_1802.field_8535
+                && be.method_5438(1).method_7909() == net.minecraft.class_1802.field_8705 && be.method_5438(0).method_7960(),
+                out + " fuel " + be.method_5438(1) + " input " + be.method_5438(0));
+        } catch (Throwable t) {
+            check("furnace.burn.sponge", false, t);
+        }
+    }
+
+    /** 1.21.11's EmptyBlockAndTintGetter (facade/EmptyBlockAndTintGetter): its constant and every answer as 1.21.11 */
+    private static void emptyTintGetter() {
+        try {
+            net.minecraft.class_9891 e = net.minecraft.class_9891.field_52611;
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(1, 2, 3);
+            net.minecraft.class_1920 g = e;
+            check("emptyTint.answers", e.method_8320(pos).method_26215() && e.method_8321(pos) == null
+                && e.method_8316(pos).method_15769() && e.method_31605() == 0 && e.method_31607() == 0
+                && e.method_22336() == net.minecraft.class_3568.field_52658
+                && g.method_24852(net.minecraft.class_2350.field_11036, true) == 1.0F
+                && g.method_23752(pos, (biome, x, z) -> 7) == -1
+                && net.minecraft.class_9891.values().length == 1 && net.minecraft.class_9891.valueOf("INSTANCE") == e
+                && e.ordinal() == 0, e);
+        } catch (Throwable t) {
+            check("emptyTint.answers", false, t);
+        }
+    }
+
+    /**
+     * 1.21.11 ItemStack members 26.1 dropped: SINGLE_ITEM_CODEC / SIMPLE_ITEM_CODEC and getTags (rt/CbWallItemStacks),
+     * the entity representation an item frame and an item entity set (CbWallItemStackRepresentationMixin and the
+     * frame / item entity mixins)
+     */
+    private static void itemStackMembers(MinecraftServer server) {
+        try {
+            net.minecraft.class_1799 sword = new net.minecraft.class_1799(net.minecraft.class_1802.field_8802, 3);
+            com.google.gson.JsonElement single = net.minecraft.class_1799.field_49747.encodeStart(JsonOps.INSTANCE, sword).getOrThrow();
+            net.minecraft.class_1799 back = net.minecraft.class_1799.field_49747.parse(JsonOps.INSTANCE, single).getOrThrow();
+            com.google.gson.JsonElement simple = net.minecraft.class_1799.field_49267.encodeStart(JsonOps.INSTANCE, sword).getOrThrow();
+            net.minecraft.class_1799 simpleBack = net.minecraft.class_1799.field_49267.parse(JsonOps.INSTANCE, simple).getOrThrow();
+            check("itemStack.codecs", single.isJsonObject() && single.getAsJsonObject().has("id") && !single.getAsJsonObject().has("count")
+                && back.method_7909() == net.minecraft.class_1802.field_8802 && back.method_7947() == 1
+                && simple.isJsonPrimitive() && simpleBack.method_7909() == net.minecraft.class_1802.field_8802 && simpleBack.method_7947() == 1,
+                single + " / " + simple);
+        } catch (Throwable t) {
+            check("itemStack.codecs", false, t);
+        }
+        try {
+            net.minecraft.class_1799 sword = new net.minecraft.class_1799(net.minecraft.class_1802.field_8802);
+            check("itemStack.getTags", sword.method_40133().anyMatch(t -> t.comp_327().method_12832().equals("swords")),
+                java.util.Arrays.toString(sword.method_40133().toArray()));
+        } catch (Throwable t) {
+            check("itemStack.getTags", false, t);
+        }
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            net.minecraft.class_1533 frame = new net.minecraft.class_1533(level, new net.minecraft.class_2338(0, 100, 0), net.minecraft.class_2350.field_11043);
+            net.minecraft.class_1799 map = new net.minecraft.class_1799(net.minecraft.class_1802.field_8895);
+            boolean before = map.method_7961();
+            frame.method_6935(map);
+            net.minecraft.class_1799 held = frame.method_6940();
+            net.minecraft.class_1542 dropped = new net.minecraft.class_1542(level, 0, 100, 0, new net.minecraft.class_1799(net.minecraft.class_1802.field_8802));
+            check("itemStack.representation", !before && held.method_7961() && held.method_7945() == frame
+                && held.method_27319() == frame && dropped.method_6983().method_27319() == dropped
+                && !dropped.method_6983().method_7961() && net.minecraft.class_1799.field_8037.method_27319() == null,
+                held.method_27319() + " / " + dropped.method_6983().method_27319());
+        } catch (Throwable t) {
+            check("itemStack.representation", false, t);
         }
     }
 

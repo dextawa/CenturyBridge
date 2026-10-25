@@ -1,0 +1,194 @@
+{
+ "_s5_item_basis": "s5 item tools: 1.21.4's SwordItem / DiggerItem / PickaxeItem (gone in 1.21.5), Item.hurtEnemy (boolean -> void, the answer is 1.21.5's WEAPON component) and Item.canAttackBlock (1.21.5 takes the stack and a LivingEntity); semantics in rt/CbItemTools, rt/CbItemToolTypes, rt/CbItemWeapon, the facades SwordItem / DiggerItem / PickaxeItem and mixin/CbItemHurtEnemyRestoredMixin + CbItemStackHurtEnemyMixin",
+ "classRenames": {
+  "net/minecraft/class_1829": "net/minecraft/class_1792",
+  "net/minecraft/class_1766": "net/minecraft/class_1792",
+  "net/minecraft/class_1810": "net/minecraft/class_1792",
+  "net/minecraft/class_1738": "net/minecraft/class_1792",
+  "net/minecraft/class_4059": "net/minecraft/class_1792",
+  "net/minecraft/class_4059$class_9076": "top/dext/centurybridge/step/v1_21_5/facade/AnimalArmorItem$BodyType"
+ },
+ "superRenames": {
+  "net/minecraft/class_1829": "top/dext/centurybridge/step/v1_21_5/facade/SwordItem",
+  "net/minecraft/class_1766": "top/dext/centurybridge/step/v1_21_5/facade/DiggerItem",
+  "net/minecraft/class_1810": "top/dext/centurybridge/step/v1_21_5/facade/PickaxeItem",
+  "net/minecraft/class_1738": "top/dext/centurybridge/step/v1_21_5/facade/ArmorItem",
+  "net/minecraft/class_4059": "top/dext/centurybridge/step/v1_21_5/facade/AnimalArmorItem"
+ },
+ "instanceOfRedirects": {
+  "net/minecraft/class_1829": "top/dext/centurybridge/step/v1_21_5/rt/CbItemToolTypes#isSwordItem",
+  "net/minecraft/class_1766": "top/dext/centurybridge/step/v1_21_5/rt/CbItemToolTypes#isDiggerItem",
+  "net/minecraft/class_1810": "top/dext/centurybridge/step/v1_21_5/rt/CbItemToolTypes#isPickaxeItem",
+  "net/minecraft/class_1738": "top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor#isArmorItem",
+  "net/minecraft/class_4059": "top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor#isAnimalArmorItem"
+ },
+ "checkCastRedirects": {
+  "net/minecraft/class_1829": "top/dext/centurybridge/step/v1_21_5/rt/CbItemToolTypes#castSwordItem",
+  "net/minecraft/class_1766": "top/dext/centurybridge/step/v1_21_5/rt/CbItemToolTypes#castDiggerItem",
+  "net/minecraft/class_1810": "top/dext/centurybridge/step/v1_21_5/rt/CbItemToolTypes#castPickaxeItem",
+  "net/minecraft/class_1738": "top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor#castArmorItem",
+  "net/minecraft/class_4059": "top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor#castAnimalArmorItem"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1829.<init>(Lnet/minecraft/class_9886;FFLnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTools#newSwordItem",
+  "net/minecraft/class_1810.<init>(Lnet/minecraft/class_9886;FFLnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTools#newPickaxeItem",
+  "net/minecraft/class_1738.<init>(Lnet/minecraft/class_1741;Lnet/minecraft/class_8051;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor#newArmorItem",
+  "net/minecraft/class_4059.<init>(Lnet/minecraft/class_1741;Lnet/minecraft/class_4059$class_9076;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor#newAnimalArmorItem",
+  "net/minecraft/class_4059.<init>(Lnet/minecraft/class_1741;Lnet/minecraft/class_4059$class_9076;Lnet/minecraft/class_6880;ZLnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor#newAnimalArmorItemSound"
+ },
+ "callReshapes": {
+  "net/minecraft/class_9886.method_61662(Lnet/minecraft/class_1792$class_1793;FF)Lnet/minecraft/class_1792$class_1793;": {
+   "desc": "(Lnet/minecraft/class_1792$class_1793;FF)Lnet/minecraft/class_1792$class_1793;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbItemTools#legacyProps(Lnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;",
+   "basis": "ToolMaterial.applySwordProperties: 1.21.5's also puts WEAPON(1) on the properties, which 1.21.4's did not (a 1.21.4 item became a weapon only through SwordItem's hurtEnemy / postHurtEnemy, javap V class_9886.method_61662 vs W); the answer loses it (CbItemTools.legacyProps). ToolMaterial is a final record: nothing overrides it"
+  },
+  "net/minecraft/class_9886.method_61663(Lnet/minecraft/class_1792$class_1793;Lnet/minecraft/class_6862;FF)Lnet/minecraft/class_1792$class_1793;": {
+   "desc": "(Lnet/minecraft/class_1792$class_1793;Lnet/minecraft/class_6862;FFF)Lnet/minecraft/class_1792$class_1793;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_5/rt/CbItemTools#noBlockingDisable()F"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbItemTools#legacyProps(Lnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;",
+   "basis": "ToolMaterial.applyToolProperties gained disableBlockingForSeconds, stored only in the WEAPON(2, s) it now adds; 1.21.4's added neither (shield disabling was LivingEntity.canDisableShield's AxeItem test, wear DiggerItem.postHurtEnemy's), so no time and no WEAPON"
+  },
+  "net/minecraft/class_1792.method_7885(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)Z": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1309;)Z",
+   "ops": [
+    "conv:3 top/dext/centurybridge/step/v1_21_5/rt/CbItemTools#mainHand(Lnet/minecraft/class_1657;)Lnet/minecraft/class_1799;",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3 Lnet/minecraft/class_1309;"
+   ],
+   "basis": "Item.canAttackBlock(state, level, pos, player) -> (stack, state, level, pos, entity): every 1.21.4 caller asked the item of the player's main hand stack (javap V class_3225 / class_636), 1.21.5 passes that stack"
+  },
+  "net/minecraft/class_1792.method_54465(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)V",
+   "ops": [
+    "keep:0",
+    "keep:2"
+   ],
+   "basis": "onCraftedPostProcess drops the level: 1.21.5 uses the player's, which every 1.21.4 caller passed (rt/CbItemCraft); a super call of a 1.21.4 override lands on super's 1.21.5 body the same way"
+  },
+  "net/minecraft/class_1799.method_7982(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;I)V": {
+   "desc": "(Lnet/minecraft/class_1657;I)V",
+   "ops": [
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "ItemStack.onCraftedBy(level, player, amount) -> (player, amount): 1.21.4's body passed the level only to Item.onCraftedPostProcess, which 1.21.5 gives the player's level; every 1.21.4 caller passed player.level() (javap V)"
+  },
+  "net/minecraft/class_1799.method_7917(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;IZ)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;Lnet/minecraft/class_1304;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:3 top/dext/centurybridge/step/v1_21_5/rt/CbItemTick#slotOf(Z)Lnet/minecraft/class_1304;"
+   ],
+   "basis": "ItemStack.inventoryTick(level, entity, slot, selected) -> (level, entity, EquipmentSlot): 1.21.5's Inventory.tick passes MAINHAND for the selected slot, null otherwise (javap W class_1661.method_7381); the index has no place (1.21.5's stack passes none to the item; a 1.21.4 override is located by CbItemTick)"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_9424.<init>(Ljava/util/List;FI)V": {
+   "desc": "(Ljava/util/List;FIZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_5/rt/CbItemTools#destroysInCreative()Z"
+   ],
+   "basis": "Tool(rules, speed, damagePerBlock) gained canDestroyBlocksInCreative, which 1.21.5's Item.canAttackBlock reads; on 1.21.4 Item.canAttackBlock answered true whatever the Tool and only the classes overriding it (SwordItem, TridentItem, MaceItem, DebugStickItem) refused creative breaking -- each still does (the facade through its sword Tool, a converted override through the canAttackBlock hook)"
+  },
+  "net/minecraft/class_10192.<init>(Lnet/minecraft/class_1304;Lnet/minecraft/class_6880;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;ZZZ)V": {
+   "desc": "(Lnet/minecraft/class_1304;Lnet/minecraft/class_6880;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;ZZZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor#noEquipOnInteract()Z"
+   ],
+   "basis": "Equippable gained equipOnInteract (1.21.5: right-clicking an entity puts the item on it); 1.21.4 had no such equipping, and 1.21.5's Equippable.Builder defaults it to false"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_7885(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)Z",
+   "new": "method_7885(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1309;)Z",
+   "args": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_1792",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.21.5 asks Item.canAttackBlock with the stack and a LivingEntity; 1.21.4 asked it only for players (ServerPlayerGameMode / MultiPlayerGameMode): a 1.21.4 override is asked when the entity is a player (narrow; any other goes to super), and its super call gets back the stack vanilla passed"
+  },
+  {
+   "old": "method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1792$class_9635;Ljava/util/List;Lnet/minecraft/class_1836;)V",
+   "new": "method_67187(Lnet/minecraft/class_1799;Lnet/minecraft/class_1792$class_9635;Lnet/minecraft/class_10712;Ljava/util/function/Consumer;Lnet/minecraft/class_1836;)V",
+   "onlyUnder": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTooltip$LegacyHoverText",
+   "bridge": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTooltip.hoverText(Ltop/dext/centurybridge/step/v1_21_5/rt/CbItemTooltip$LegacyHoverText;Lnet/minecraft/class_1799;Lnet/minecraft/class_1792$class_9635;Lnet/minecraft/class_10712;Ljava/util/function/Consumer;Lnet/minecraft/class_1836;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTooltip.superHoverText(Ltop/dext/centurybridge/step/v1_21_5/rt/CbItemTooltip$SuperHoverText;Lnet/minecraft/class_1799;Lnet/minecraft/class_1792$class_9635;Ljava/util/List;Lnet/minecraft/class_1836;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTooltip$SuperHoverText",
+   "superAccessors": [
+    "method_67187(Lnet/minecraft/class_1799;Lnet/minecraft/class_1792$class_9635;Lnet/minecraft/class_10712;Ljava/util/function/Consumer;Lnet/minecraft/class_1836;)V"
+   ],
+   "basis": "Item.appendHoverText(stack, context, List lines, flag) -> (stack, context, TooltipDisplay, Consumer lines, flag), called by ItemStack.addDetailsToTooltip where 1.21.4's getTooltipLines called the old one (javap W class_1799.method_67194): the old body fills a list handed to vanilla's consumer; its super call asks super's new shape with vanilla's display (rt/CbItemTooltip)"
+  },
+  {
+   "old": "method_7888(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;IZ)V",
+   "new": "method_7888(Lnet/minecraft/class_1799;Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1304;)V",
+   "onlyUnder": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTick$LegacyInventoryTick",
+   "bridge": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTick.inventoryTick(Ltop/dext/centurybridge/step/v1_21_5/rt/CbItemTick$LegacyInventoryTick;Lnet/minecraft/class_1799;Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1304;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTick.superInventoryTick(Ltop/dext/centurybridge/step/v1_21_5/rt/CbItemTick$SuperInventoryTick;Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;IZ)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTick$SuperInventoryTick",
+   "superAccessors": [
+    "method_7888(Lnet/minecraft/class_1799;Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1304;)V"
+   ],
+   "basis": "Item.inventoryTick(stack, level, entity, int slot, boolean selected) -> (stack, ServerLevel, entity, EquipmentSlot), asked only on the server and for every living entity's equipment (javap W class_1799.method_7917, class_10630.method_67512, class_1661.method_7381); 1.21.4 asked it on both sides for the player's compartments only (V class_1661.method_7381): the old body gets 1.21.4's index and flag for a player's stack, nothing runs for other entities, the client side is CbItemStackTickMixin (rt/CbItemTick)"
+  },
+  {
+   "old": "method_54465(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V",
+   "new": "method_54465(Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)V",
+   "onlyUnder": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_5/rt/CbItemCraft$LegacyCraftedPostProcess",
+   "bridge": "top/dext/centurybridge/step/v1_21_5/rt/CbItemCraft.craftedPostProcess(Ltop/dext/centurybridge/step/v1_21_5/rt/CbItemCraft$LegacyCraftedPostProcess;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)V",
+   "basis": "Item.onCraftedPostProcess(stack, level, player) -> (stack, player): every 1.21.4 caller passed the player's level (javap V ItemStack.onCraftedBy callers: ResultSlot, MerchantResultSlot, FurnaceResultSlot, StonecutterMenu, CartographyTableMenu), 1.21.5's body takes it from the player (rt/CbItemCraft)"
+  }
+ ],
+ "frameDefaults": {
+  "method_7885(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_5/rt/CbItemTools#attackStack(Lnet/minecraft/class_1792;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1799;"
+  }
+ },
+ "covers": [
+  "net/minecraft/class_1792.method_7873(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z",
+  "net/minecraft/class_1792.method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1792$class_9635;Ljava/util/List;Lnet/minecraft/class_1836;)V",
+  "net/minecraft/class_1792.method_7888(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;IZ)V",
+  "net/minecraft/class_1792.method_57336()Lnet/minecraft/class_3414;",
+  "net/minecraft/class_1799.method_57351()Lnet/minecraft/class_3414;"
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_1741.method_63991(Lnet/minecraft/class_1792$class_1793;Lnet/minecraft/class_8051;)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor",
+  "net/minecraft/class_1741.method_63992(Lnet/minecraft/class_1792$class_1793;Lnet/minecraft/class_6885;)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor",
+  "net/minecraft/class_1741.method_64503(Lnet/minecraft/class_1792$class_1793;Lnet/minecraft/class_6880;ZLnet/minecraft/class_6885;)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v1_21_5/rt/CbItemArmor"
+ }
+}

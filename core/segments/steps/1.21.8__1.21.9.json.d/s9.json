@@ -1,0 +1,22 @@
+{
+ "ledger": {
+  "net/minecraft/class_309.method_1466(JIIII)V": "override of KeyboardHandler.keyPress(window, key, scancode, action, modifiers) in a 1.21.8 subclass: 1.21.9 made keyPress(window, action, KeyEvent) private and calls it only from its own GLFW callback lambda (invokespecial on itself), so no override of either shape is ever reached on 1.21.9; Minecraft constructs its own KeyboardHandler (Minecraft.<init>, final field keyboardHandler), so a subclass is never the game's handler. Calls of keyPress are reshaped (s9-input-gen.json, layer access widener opens the 1.21.9 method)"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_310.field_1703:Z": "net/minecraft/class_11906#field_62592"
+ },
+ "methodRenames": {
+  "net/minecraft/class_4597.getBuffer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;": "method_73477",
+  "net/minecraft/class_4597$class_4598.getBuffer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;": "method_73477",
+  "net/minecraft/class_4618.getBuffer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;": "method_73477"
+ },
+ "overrideRenames": [
+  {
+   "old": "getBuffer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;",
+   "new": "method_73477",
+   "onlyUnder": "net/minecraft/class_4597",
+   "superCalls": "rename",
+   "basis": "s9: MultiBufferSource.getBuffer (intermediary left it unmapped in 1.21.8) is method_73477 in 1.21.9, same descriptor and contract; a 1.21.8 implementation (and its lambdas, through methodRenames) answers under the new name"
+  }
+ ]
+}

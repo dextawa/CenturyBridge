@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "cb_smx1_probe": true,
+  "category": "misc",
+  "pattern": [
+    " # ",
+    "#X#"
+  ],
+  "key": {
+    "#": {"item": "minecraft:cobblestone"},
+    "X": {"tag": "minecraft:logs"}
+  },
+  "result": {"item": "minecraft:stone"}
+}

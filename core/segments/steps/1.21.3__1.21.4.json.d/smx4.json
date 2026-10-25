@@ -1,0 +1,315 @@
+{
+  "mixinTargets": {
+    "net/minecraft/class_9975.method_62304(IFLnet/minecraft/class_289;Lnet/minecraft/class_4587;)V": {
+      "to": "method_62304(IFLnet/minecraft/class_4597;Lnet/minecraft/class_4587;)V",
+      "args": [0, 1, -1, 3],
+      "basis": "SkyRenderer.renderSun: javap -c both: the same four textured vertices at +-20/-100 from SUN_LOCATION; 1.21.4 takes them from a MultiBufferSource instead of beginning a Tesselator buffer"
+    },
+    "net/minecraft/class_9975.method_62303(FLnet/minecraft/class_289;Lnet/minecraft/class_4587;)V": {
+      "to": "method_62303(FLnet/minecraft/class_4597;Lnet/minecraft/class_4587;)V",
+      "args": [0, -1, 2],
+      "basis": "SkyRenderer.renderMoon: javap -c both: the same moon-phase quad (30/100, MOON_LOCATION); the Tesselator buffer became a MultiBufferSource buffer"
+    },
+    "net/minecraft/class_9975.method_62309(Lnet/minecraft/class_289;F)Lnet/minecraft/class_9801;": {
+      "to": "method_62309(Lnet/minecraft/class_4588;F)V",
+      "args": [-1, 1],
+      "basis": "SkyRenderer.buildSkyDisc: javap -c both: the same signum*512 fan of vertices every 45 degrees; 1.21.4 writes into the caller's VertexConsumer instead of beginning and building a MeshData"
+    },
+    "net/minecraft/class_4603.method_23068(Lnet/minecraft/class_1058;Lnet/minecraft/class_4587;)V": {
+      "to": "method_23068(Lnet/minecraft/class_1058;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V",
+      "args": [0, 1],
+      "basis": "ScreenEffectRenderer.renderTex: javap -c both: the same 0.1-tinted sprite quad at -1..1/-0.5; 1.21.4 draws it through a MultiBufferSource buffer"
+    },
+    "net/minecraft/class_4603.method_23070(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;)V": {
+      "to": "method_23070(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V",
+      "args": [-1, 0],
+      "basis": "ScreenEffectRenderer.renderFire: javap -c both: the same two fire-sprite quads (FIRE_1 sprite uv, 0.9 alpha, rotate 10 / -10); V's body never reads its Minecraft argument"
+    },
+    "net/minecraft/class_4603.method_23069(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;)V": {
+      "to": "method_23069(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V",
+      "args": [0, 1],
+      "basis": "ScreenEffectRenderer.renderWater: javap -c both: the same UNDERWATER_LOCATION quad scrolled by the player's rotation and brightness at the eye position"
+    },
+    "net/minecraft/class_9976.method_62320(Lnet/minecraft/class_765;Lnet/minecraft/class_243;IFLjava/util/List;Ljava/util/List;)V": {
+      "to": "method_62320(Lnet/minecraft/class_4597;Lnet/minecraft/class_243;IFLjava/util/List;Ljava/util/List;)V",
+      "args": [-1, 1, 2, 3, 4, 5],
+      "basis": "WeatherEffectRenderer.render: javap -c both: rain columns then snow columns through renderInstances with the same texture and fancy check; 1.21.4 takes buffers from a MultiBufferSource instead of turning the LightTexture on"
+    },
+    "net/minecraft/class_9976.method_62318(Lnet/minecraft/class_289;Ljava/util/List;Lnet/minecraft/class_243;FIF)V": {
+      "to": "method_62318(Lnet/minecraft/class_4588;Ljava/util/List;Lnet/minecraft/class_243;FIF)V",
+      "args": [-1, 1, 2, 3, 4, 5],
+      "basis": "WeatherEffectRenderer.renderInstances: javap -c both: the same per-column quad loop; 1.21.4 writes into the caller's VertexConsumer instead of beginning and drawing a Tesselator buffer"
+    },
+    "net/minecraft/class_3255.method_14392(Lnet/minecraft/class_3270;Ljava/io/InputStream;)Ljava/lang/Object;": {
+      "to": "method_14392(Lnet/minecraft/class_7677;Ljava/io/InputStream;)Ljava/lang/Object;",
+      "args": [-1, 1],
+      "basis": "AbstractPackResources.getMetadataFromStream: javap -c both: the same JSON read, missing-section check and 'Couldn't load {} metadata' error; the section serializer became a MetadataSectionType (name + codec)"
+    },
+    "net/minecraft/class_1007.method_64258(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": {
+      "to": "method_64258(Lnet/minecraft/class_742;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;",
+      "args": [-1, 1],
+      "basis": "PlayerRenderer.getArmPose(state, arm): javap -c both: main/off hand poses through getArmPose(.., InteractionHand), two-handed check, main arm; 1.21.4 reads them from the player instead of its render state"
+    },
+    "net/minecraft/class_1665.method_63669()V": {
+      "to": "method_63669(F)V",
+      "args": [],
+      "basis": "AbstractArrow.applyInertia: javap -c both: setDeltaMovement(getDeltaMovement().scale(inertia)); 1.21.4's caller passes the inertia (water inertia or 0.99) V computed inside"
+    },
+    "net/minecraft/class_1606.method_33332()Lnet/minecraft/class_238;": {
+      "to": "method_65341(Lnet/minecraft/class_243;)Lnet/minecraft/class_238;",
+      "args": [],
+      "basis": "Shulker.makeBoundingBox: javap -c both: getProgressAabb(peek, attach face opposite, ...) at the position; 1.21.4 takes the position as an argument (Entity.makeBoundingBox(Vec3))"
+    },
+    "net/minecraft/class_4915.method_25733(Lnet/minecraft/class_1792;Lnet/minecraft/class_4942;)V": {
+      "to": "method_65442(Lnet/minecraft/class_1792;Lnet/minecraft/class_4942;)V",
+      "args": [0, 1],
+      "basis": "ItemModelGenerators.generateFlatItem(item, template): javap -c both: the item's model from the template and the item's own texture; 1.21.4 also writes the item definition pointing at it. Called 302 times by V's run, 283 by W's (the rest became W's new item-model forms)"
+    },
+    "net/minecraft/class_4915.method_25732(Lnet/minecraft/class_1792;Lnet/minecraft/class_1792;Lnet/minecraft/class_4942;)V": {
+      "to": "method_65441(Lnet/minecraft/class_1792;Lnet/minecraft/class_1792;Lnet/minecraft/class_4942;)V",
+      "args": [0, 1, 2],
+      "basis": "ItemModelGenerators.generateFlatItem(item, textureItem, template): javap -c both: the item's model from the template and the other item's texture; 1.21.4 also writes the item definition. 2 call sites in both"
+    },
+    "net/minecraft/class_4915.method_48517(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V": {
+      "to": "method_48517(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)Lnet/minecraft/class_2960;",
+      "args": [0, 1, 2],
+      "basis": "ItemModelGenerators.generateLayeredItem(id, layer0, layer1): javap -c both: TWO_LAYERED_ITEM with layered(layer0, layer1) into the model output; 1.21.4 answers the id it wrote"
+    },
+    "net/minecraft/class_1011.method_4321(IIIIIIIZZZZ)V": {
+      "to": "method_4321(IIIIIIIZ)V",
+      "args": [0, 1, 2, 3, 4, 5, 6, -1, -1, -1, 7],
+      "basis": "NativeImage._upload: javap -c both: the same pixel-store setup and glTexSubImage2D upload, closing the image when its last flag says so (V local 11 / W local 8); 1.21.4 dropped the blur / clamp / mipmap flags (filtering moved to the texture)"
+    },
+    "net/minecraft/class_1011.method_22619(IIIIIIIZZZZ)V": {
+      "to": "method_22619(IIIIIIIZ)V",
+      "args": [0, 1, 2, 3, 4, 5, 6, -1, -1, -1, 7],
+      "basis": "NativeImage.upload: javap -c both: on the render thread _upload, else recordRenderCall of it, with the same arguments less the three dropped filter flags"
+    },
+    "net/minecraft/class_8055.method_48578(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;F)V": {
+      "to": "method_48578(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;)V",
+      "args": [0, 1, 2, 3, -1],
+      "basis": "TrimMaterials.register(context, key, item, style, itemModelIndex): javap -c both: register(.., Map.of()); 1.21.4 dropped the item model index"
+    },
+    "net/minecraft/class_8055.method_48443(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;FLjava/util/Map;)V": {
+      "to": "method_48443(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;Ljava/util/Map;)V",
+      "args": [0, 1, 2, 3, -1, -1],
+      "basis": "TrimMaterials.register(.., overrides): javap -c both: TrimMaterial.create and context.register; the item model index was dropped and the override map is keyed by equipment asset keys instead of ids, so it is not handed over as V's"
+    },
+    "net/minecraft/class_8054.method_48438(Ljava/lang/String;Lnet/minecraft/class_1792;FLnet/minecraft/class_2561;Ljava/util/Map;)Lnet/minecraft/class_8054;": {
+      "to": "method_48438(Ljava/lang/String;Lnet/minecraft/class_1792;Lnet/minecraft/class_2561;Ljava/util/Map;)Lnet/minecraft/class_8054;",
+      "args": [0, 1, -1, 2, -1],
+      "basis": "TrimMaterial.create(suffix, item, itemModelIndex, description, overrides): javap -c both: new TrimMaterial(suffix, BuiltInRegistries.ITEM.wrapAsHolder(item), .., description); the index was dropped and the override map's keys changed type (ids -> equipment asset keys)"
+    },
+    "net/minecraft/class_4915$class_8072.<init>(Ljava/lang/String;FLjava/util/Map;)V": {
+      "to": "<init>(Ljava/lang/String;Lnet/minecraft/class_5321;Ljava/util/Map;)V",
+      "args": [0, -1, -1],
+      "basis": "ItemModelGenerators.TrimMaterialData record constructor: name kept; the item model index became the material key and the override map's keys changed type"
+    },
+    "net/minecraft/class_1088$class_7778.<init>(Lnet/minecraft/class_1088;Lnet/minecraft/class_1088$class_9826;Lnet/minecraft/class_1091;)V": {
+      "to": "<init>(Lnet/minecraft/class_1088;Lnet/minecraft/class_1088$class_9826;Lnet/minecraft/class_10525;)V",
+      "args": [0, 1, -1],
+      "basis": "ModelBakery.ModelBakerImpl constructor: outer bakery and texture getter kept; the ModelResourceLocation became a ModelDebugName (both only name the model for missing-texture logs)"
+    },
+    "net/minecraft/class_8096.<init>(Ljava/util/List;)V": {
+      "to": "<init>(Ljava/util/List;Lnet/minecraft/class_8133;)V",
+      "args": [0],
+      "basis": "SwitchGrid constructor: javap -c both: stores the switch list; 1.21.4 also stores a layout"
+    },
+    "net/minecraft/class_9887.<init>(Ljava/util/List;Ljava/util/List;Ljava/util/List;)V": {
+      "to": "<init>(Ljava/util/List;Lit/unimi/dsi/fastutil/ints/IntList;)V",
+      "args": [0, -1, -1],
+      "basis": "PlacementInfo constructor: javap -c both: stores the ingredient list; 1.21.4 replaced the slot-info and unpacked placement lists by one IntList of slots"
+    },
+    "net/minecraft/class_1462$class_9869.<init>(Ljava/lang/String;ILjava/lang/String;F)V": {
+      "to": "<init>(Ljava/lang/String;ILjava/lang/String;IF)V",
+      "args": [0, 1, 2, 4],
+      "basis": "Salmon.Variant enum constructor: javap -c both: name and bounding-box scale stored; 1.21.4 added an int"
+    },
+    "net/minecraft/class_7662.method_45174(Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7662;": {
+      "to": "method_45174(Lnet/minecraft/class_7677;Ljava/lang/Object;)Lnet/minecraft/class_7662;",
+      "args": [-1, 1],
+      "basis": "BuiltInMetadata.of(section, value): javap -c both: new BuiltInMetadata(Map.of(section, value)) (4/4 instructions); the serializer became a MetadataSectionType"
+    },
+    "net/minecraft/class_8150.method_33332()Lnet/minecraft/class_238;": {
+      "to": "method_65341(Lnet/minecraft/class_243;)Lnet/minecraft/class_238;",
+      "args": [],
+      "basis": "Interaction.makeBoundingBox: javap -c both: getDimensions().makeBoundingBox(position); 1.21.4 takes the position as an argument (Entity.makeBoundingBox(Vec3))"
+    },
+    "net/minecraft/class_2794.method_41044(Lnet/minecraft/class_7059$class_7060;Lnet/minecraft/class_5138;Lnet/minecraft/class_5455;Lnet/minecraft/class_7138;Lnet/minecraft/class_3485;JLnet/minecraft/class_2791;Lnet/minecraft/class_1923;Lnet/minecraft/class_4076;)Z": {
+      "to": "method_41044(Lnet/minecraft/class_7059$class_7060;Lnet/minecraft/class_5138;Lnet/minecraft/class_5455;Lnet/minecraft/class_7138;Lnet/minecraft/class_3485;JLnet/minecraft/class_2791;Lnet/minecraft/class_1923;Lnet/minecraft/class_4076;Lnet/minecraft/class_5321;)Z",
+      "args": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      "basis": "ChunkGenerator.tryGenerateStructure: javap -c both (0.90): structure.generate(..) and the start set on the structure manager; 1.21.4 also passes the dimension key through"
+    },
+    "net/minecraft/class_2818$class_5564.<init>(Lnet/minecraft/class_2818;Lnet/minecraft/class_5562;)V": {
+      "to": "<init>(Lnet/minecraft/class_5562;)V",
+      "args": [-1, 0],
+      "basis": "LevelChunk.RebindableTickingBlockEntityWrapper constructor: javap -c both: stores the ticker (3/3 instructions); 1.21.4 made the class a static nested class, so the outer chunk is no longer passed"
+    },
+    "net/minecraft/class_2408$class_7404.<init>(Lnet/minecraft/class_2408;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_2408$class_7405;)V": {
+      "to": "<init>(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_2408$class_7405;)V",
+      "args": [-1, 0, 1, 2],
+      "basis": "HashCache.CacheUpdater constructor: javap -c both: the same 10 instructions; 1.21.4 made the class a static nested class, so the outer cache is no longer passed"
+    },
+    "net/minecraft/class_382.method_2025(ZFFLorg/joml/Matrix4f;Lnet/minecraft/class_4588;II)V": {
+      "to": "method_2025(ZFFFLorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZI)V",
+      "args": [0, 1, 2, 4, 5, 6, 8],
+      "basis": "BakedSheetGlyph.render(italic, x, y, matrix, buffer, color, light): javap -c both (0.95): the same four glyph vertices; 1.21.4 takes the depth V wrote as 0 and a bold flag; color (V local 6 / W local 7) and light (setLight: V local 7 / W local 9) moved one and two places"
+    },
+    "net/minecraft/class_5697.method_32799(Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+      "to": "method_65576(Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+      "args": [-1, -1, 1, 2, 3, 4],
+      "basis": "PlayerItemInHandLayer.renderItemHeldToEye: javap -c both (0.92): the same head-part transform and spyglass offsets, then the item drawn; 1.21.4 draws an ItemStackRenderState instead of a model and stack"
+    },
+    "net/minecraft/class_761.method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_765;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V": {
+      "to": "method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V",
+      "args": [0, -1, 1, 2, 3],
+      "basis": "LevelRenderer.addWeatherPass: javap -c both: the same frame-pass setup; the light texture is no longer handed to the pass lambda"
+    },
+    "net/minecraft/class_761.method_62201(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;Lnet/minecraft/class_765;FLnet/minecraft/class_9958;)V": {
+      "to": "method_62201(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;FLnet/minecraft/class_9958;)V",
+      "args": [0, 1, -1, 2, 3],
+      "basis": "LevelRenderer.addParticlesPass: javap -c both: the same frame-pass setup; the light texture is no longer handed to the pass lambda"
+    },
+    "net/minecraft/class_988.method_64083(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10043;Lnet/minecraft/class_1799;Lnet/minecraft/class_2960;I)V": {
+      "to": "method_64083(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10043;Lnet/minecraft/class_1799;Lnet/minecraft/class_5321;I)V",
+      "args": [0, 1, 2, 3, -1, 5],
+      "basis": "LlamaDecorLayer.renderEquipment: javap -c both: equipmentRenderer.renderLayers(LLAMA_BODY, ..); the equipment model id became an equipment asset key"
+    },
+    "net/minecraft/class_8197$class_5305.method_49193(Ljava/util/function/Function;Lnet/minecraft/class_6554$class_10317;)Lnet/minecraft/class_6544$class_6547;": {
+      "to": "method_49193(Ljava/util/function/Function;)Lnet/minecraft/class_6544$class_6547;",
+      "args": [0, -1],
+      "basis": "MultiNoiseBiomeSourceParameterList.Preset.generateOverworldBiomes: javap -c both: new OverworldBiomeBuilder().addBiomes(..) into the parameter list; 1.21.4 dropped the winter-drop biome modifier (its biomes are always on)"
+    },
+    "net/minecraft/class_702.method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V": {
+      "to": "method_3049(Lnet/minecraft/class_4184;FLnet/minecraft/class_4597$class_4598;)V",
+      "args": [-1, 0, 1],
+      "basis": "ParticleEngine.render(lightTexture, camera, partialTick): javap -c both: the same loop over RENDER_ORDER render types and their particle queues; 1.21.4 draws each queue through renderParticleType with a BufferSource instead of turning the light texture on and building a Tesselator buffer inline"
+    },
+    "net/minecraft/class_996.method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+      "to": "method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10429;FF)V",
+      "args": [0, 1, 2, 3, 4, 5],
+      "basis": "SnowGolemHeadLayer.render: javap -c both: the same pumpkin-head check, head-part transform, scale 0.625 and carved pumpkin block (outline when invisible and glowing); 1.21.4 reads a SnowGolemRenderState (a LivingEntityRenderState subclass) instead of the head item"
+    },
+    "net/minecraft/class_4004.method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+      "to": "method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10427;FF)V",
+      "args": [0, 1, 2, 3, 4, 5],
+      "basis": "CrossedArmsItemLayer.render: javap -c both: skip when nothing is held, push, the crossed-arms transform (applyTranslation), draw the held item at overlay NO_OVERLAY, pop; 1.21.4 reads a HoldingEntityRenderState (a LivingEntityRenderState subclass)"
+    },
+    "net/minecraft/class_807.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;": {
+      "to": "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+      "args": [0, -1, -1],
+      "basis": "MultiVariant.bake: javap -c both (0.87, 23/23 instructions): one variant baked as it is, else a WeightedBakedModel.Builder over the variants (baker.bake(variant model, variant) with its weight); 1.21.4's bake(baker) is the block-state model bake the model bakery calls. V's sprite getter and state were not read (each variant carries its own rotation)"
+    },
+    "net/minecraft/class_816.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;": {
+      "to": "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+      "args": [0, -1, -1],
+      "basis": "MultiPart.bake: javap -c both (0.94, 18/18): a MultiPartBakedModel.Builder over the selectors, each selector's variant baked; V's sprite getter and state were only handed down to MultiVariant.bake, which did not read them"
+    },
+    "net/minecraft/class_743.method_3129(ZF)V": {
+      "to": "method_3129()V",
+      "args": [-1, -1],
+      "basis": "KeyboardInput.tick(isSneaking, sneakSpeed): javap -c both (0.95): the same key reads into up/down/left/right, jumping and shift, and the forward / left impulses; 1.21.4 moved V's final sneak scaling of the two impulses to LocalPlayer"
+    },
+    "net/minecraft/class_425$class_4070.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": {
+      "to": "method_65809(Lnet/minecraft/class_3300;)Lnet/minecraft/class_10539;",
+      "args": [0],
+      "basis": "LoadingOverlay.LogoTexture.getTextureImage -> loadContents: javap -c both: the vanilla pack's MOJANG_STUDIOS_LOGO_LOCATION opened and read as a NativeImage with blur on; 1.21.4 answers a TextureContents instead of a TextureImage"
+    },
+    "net/minecraft/class_4942.method_48524(Lnet/minecraft/class_2960;Ljava/util/Map;)Lcom/google/gson/JsonObject;": {
+      "to": "method_65503(Ljava/util/Map;)Lcom/google/gson/JsonElement;",
+      "args": [-1, 0],
+      "basis": "ModelTemplate.createBaseTemplate(id, slots): javap -c both (1.00): the JSON object with parent and the textures map built from the slots; V's id was not read; 1.21.4 answers it as a JsonElement (the same JsonObject)"
+    },
+    "net/minecraft/class_916.method_56858(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_1087;ZLnet/minecraft/class_5819;)V": {
+      "to": "method_56858(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10428;Lnet/minecraft/class_5819;)V",
+      "args": [-1, 0, 1, 2, -1, -1, -1, 4],
+      "basis": "ItemEntityRenderer.renderMultipleFromCount (static both): javap -c both (0.83): the same per-copy loop with the ground transform scale offsets and random spread, drawing each copy; 1.21.4 reads count, seed, 3D-ness and transform from an ItemClusterRenderState instead of the renderer, stack and model"
+    },
+    "net/minecraft/class_647.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1799;)V": {
+      "to": "<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_10444;)V",
+      "args": [0, 1, 2, 3, -1],
+      "basis": "BreakingItemParticle(level, x, y, z, stack): javap -c both (0.77): super(level, x, y, z, 0, 0, 0), the particle sprite set from the item's model, gravity 1, quad size halved; 1.21.4 takes the sprite from an ItemStackRenderState"
+    }
+  },
+  "callReshapes": {
+    "net/minecraft/class_761.method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_765;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V": {
+      "desc": "(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V",
+      "ops": ["keep", "drop", "keep", "keep", "keep"],
+      "basis": "LevelRenderer.addWeatherPass (private; mods reach it by invoker/shadow): the light texture V handed to the pass is the game renderer's own, which 1.21.4's pass reads itself (javap: the lambda no longer captures it)"
+    },
+    "net/minecraft/class_761.method_62201(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;Lnet/minecraft/class_765;FLnet/minecraft/class_9958;)V": {
+      "desc": "(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;FLnet/minecraft/class_9958;)V",
+      "ops": ["keep", "keep", "drop", "keep", "keep"],
+      "basis": "LevelRenderer.addParticlesPass (private): as addWeatherPass, the light texture is no longer passed (javap)"
+    },
+    "net/minecraft/class_8055.method_48578(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;F)V": {
+      "desc": "(Lnet/minecraft/class_7891;Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;Lnet/minecraft/class_2583;)V",
+      "ops": ["keep", "keep", "keep", "keep", "drop"],
+      "basis": "TrimMaterials.register(context, key, item, style, itemModelIndex) (private static): 1.21.4 has no item model index for trim materials (item models select by material key), so the index has nothing to go to"
+    }
+  },
+  "mixinLedger": {
+    "net/minecraft/class_10328.<clinit>()V": "CreakingAnimation: 1.21.4 re-authored all creaking animations (javap <clinit>: 1058 -> 1969 significant instructions, similarity 0.24; Keyframe constructions 102 -> 192; a fourth definition, field_55089, added). V's keyframe constants and their ordinals have no counterparts in the new tables",
+    "net/minecraft/class_382.method_2025(ZFFLorg/joml/Matrix4f;Lnet/minecraft/class_4588;II)V @ CONSTANT floatValue=0.0": "BakedSheetGlyph.render: V's float 0.0 sites #2..#5 (javap offsets 81/126/171/216) are the depth of the four addVertex(matrix, x, y, 0) calls; 1.21.4 passes its new z parameter there (fload), so those V sites are removed; sites #0/#1 stand"
+  },
+  "fieldRenames": {
+    "net/minecraft/class_2609.field_11981:I": "field_55574",
+    "net/minecraft/class_2609.field_11989:I": "field_55576",
+    "net/minecraft/class_2609.field_11980:I": "field_55575",
+    "net/minecraft/class_1084.field_5346:Z": "comp_3459",
+    "net/minecraft/class_1084.field_5345:Z": "comp_3460",
+    "net/minecraft/class_2692.field_12323:F": "comp_3348",
+    "net/minecraft/class_2692.field_12321:F": "comp_3349",
+    "net/minecraft/class_2833.field_12898:F": "comp_3351",
+    "net/minecraft/class_2833.field_12896:F": "comp_3352",
+    "net/minecraft/class_7764$class_5791.field_28475:I": "comp_3445",
+    "net/minecraft/class_7764$class_5791.field_28476:I": "comp_3446",
+    "net/minecraft/class_1092.field_20278:Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "field_55476",
+    "net/minecraft/class_898.field_54173:Lnet/minecraft/class_10201;": "field_55290",
+    "net/minecraft/class_4915.field_42087:Ljava/util/List;": "field_55244",
+    "net/minecraft/class_813.field_4326:Lnet/minecraft/class_2960;": "comp_3379",
+    "net/minecraft/class_813.field_4328:Lnet/minecraft/class_4590;": "comp_3380",
+    "net/minecraft/class_813.field_4327:Z": "comp_3381",
+    "net/minecraft/class_813.field_4325:I": "comp_3382",
+    "net/minecraft/class_3888.field_17159:Lnet/minecraft/class_3888$class_3889;": "comp_3458",
+    "net/minecraft/class_2735.field_12463:I": "comp_3325",
+    "net/minecraft/class_1080.field_5341:I": "comp_3451",
+    "net/minecraft/class_1079.field_5334:I": "comp_3456",
+    "net/minecraft/class_1079.field_5335:Z": "comp_3457"
+  },
+  "_smx4_fieldRenames_basis": {
+    "class_2609 field_11980": "AbstractFurnaceBlockEntity litDuration -> litTotalTime (field_55575): set where fuel is consumed in both, and 1.21.4 saves it as lit_total_time (javap)",
+    "class_1084": "TextureMetadataSection became a record: blur (V getBlur method_4696 reads field_5346) is component comp_3459 (codec \"blur\", first constructor argument), clamp (getClamp method_4697 reads field_5345) is comp_3460",
+    "class_2692": "ServerboundMoveVehiclePacket became a record: yRot (V constructor stores Entity.getYRot in field_12323) is comp_3348, xRot (getXRot -> field_12321) is comp_3349 (1.21.4 fromEntity passes getYRot, getXRot in that order); the x/y/z doubles became the Vec3 component, not renamed",
+    "class_2833": "ClientboundMoveVehiclePacket became a record: yRot (field_12898) is comp_3351, xRot (field_12896) is comp_3352 (same constructor order); the doubles became the Vec3 component",
+    "class_7764$class_5791": "SpriteContents.FrameSize became a record (width, height): field_28475 / field_28476 are the constructor's first / second int, as comp_3445 / comp_3446",
+    "class_2609": "AbstractFurnaceBlockEntity litTime / litDuration -> litTimeRemaining / litTotalTime: same type, same methods read and write them by the same opcodes (mixin-cause 'same uses'; javap)",
+    "class_1092": "ModelManager.modelGroups: the only Object2IntMap<BlockState> field in both",
+    "class_898": "EntityRenderDispatcher's equipment model set: the only class_10201 field in both, final, set in the constructor",
+    "class_4915": "ItemModelGenerators.TRIM_MATERIAL_MODELS: the only static List<TrimMaterialData> in both",
+    "class_813": "Variant became a record: modelLocation / rotation / uvLock / weight in V's getter order are the record's four components in order (javap getters)",
+    "class_3888": "VillagerMetadataSection became a record: hat is its one component",
+    "class_2735": "ClientboundSetHeldSlotPacket became a record: slot is its one component",
+    "class_1080": "AnimationFrame became a record: index (V getIndex reads field_5341) is component 0; the time became Optional<Integer>, not renamed",
+    "class_1079": "AnimationMetadataSection became a record: defaultFrameTime (V getDefaultFrameTime reads field_5334) and interpolatedFrames (field_5335) are its int and boolean components; frame width/height became Optional<Integer>, not renamed"
+  },
+  "_smx4_ledgerRemoved_basis": {
+    "net/minecraft/class_1088$class_7778.<init>": "reshaped in place: W constructor (ModelBakery, TextureGetter, class_10525)V, wired by smx4.json mixinTargets",
+    "fields that became record components / were renamed": "class_2609.field_11980, class_1084.field_5345/5346, class_2692.field_12321/12323, class_2833.field_12896/12898, class_7764$class_5791.field_28475/28476: W homes in smx4.json fieldRenames",
+    "_why": "mixin-ledger-gen.json entries removed by hand (queue item 3; gen_mixin_ledger target-private-gone ledgers moved code): the private member W dropped from its class lives on in a member new in 1.21.4 of another class (same significant-instruction sequence, sigs.py ratio >= 0.70, compared side by side). Moved code is never ledgered; these rows stay open until bridged.",
+    "net/minecraft/class_1472.method_59936": "W home: net/minecraft/class_1767.method_65356",
+    "net/minecraft/class_1472.method_6639": "W home: net/minecraft/class_1767.method_65355",
+    "net/minecraft/class_4916.method_25735": "W home: net/minecraft/class_2405.method_65772",
+    "net/minecraft/class_793.method_3439": "W home: net/minecraft/class_10419.method_65546",
+    "net/minecraft/class_8053.method_48577": "W home: net/minecraft/class_10197$class_10199.method_65575",
+    "net/minecraft/class_837.method_49919": "W home: net/minecraft/class_10529.method_65826",
+    "net/minecraft/class_837.method_37312": "W home: net/minecraft/class_10529.method_65827",
+    "net/minecraft/class_837.method_45798": "W home: net/minecraft/class_10529.method_65828",
+    "net/minecraft/class_837.method_49920": "W home: net/minecraft/class_10529.method_65821",
+    "net/minecraft/class_918.method_51795": "W home: net/minecraft/class_10430.method_65583",
+    "net/minecraft/class_1092.method_45896": "W home: net/minecraft/class_10521.method_65929",
+    "net/minecraft/class_793.method_3447": "W home: net/minecraft/class_1093.method_65760",
+    "net/minecraft/class_1049.method_22810": "W home: net/minecraft/class_10537.method_65856",
+    "net/minecraft/class_793$class_795.method_24079": "W home: net/minecraft/class_10419.method_65543"
+  }
+}

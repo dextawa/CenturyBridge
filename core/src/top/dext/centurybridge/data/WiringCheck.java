@@ -41,6 +41,9 @@ import org.objectweb.asm.tree.MethodNode;
  * onto shipped facades. Covers are checked by MixinCheck against the mixin
  * classes (they are overloads added to vanilla classes, not statics).
  *
+ * A target in a separately released mod the layer depends on (-Dcb.depJars / -Dcb.layerModJson, {@link DepJars}) is
+ * judged in that mod's jar by the same rules, public members of public classes only.
+ *
  *   wiring-check &lt;compiledShimDir&gt; &lt;shims.json&gt; [&lt;inter-to-mojang.tsv&gt;] [&lt;target stub jar&gt;]
  */
 public final class WiringCheck {
@@ -56,6 +59,12 @@ public final class WiringCheck {
     private final Map<String, ClassNode> lib = new HashMap<>();
     /** the target's game libraries (-Dcb.libs), class headers only: subtype judgments of library-keyed wiring */
     private final Map<String, ClassNode> gameLibs = new HashMap<>();
+    /**
+     * the separately released mods the layer declares in depends (-Dcb.depJars, {@link DepJars}): a redirect or field
+     * target that is neither a layer class nor a stub class is looked up here, public class and public member only
+     * (another mod's jar: nothing else crosses), with the same exact-descriptor rule
+     */
+    private Map<String, ClassNode> deps = Map.of();
     private final List<String> problems = new ArrayList<>();
     private Remapper facade = new SimpleRemapper(Map.of());
     private Remapper wall;
@@ -171,6 +180,7 @@ public final class WiringCheck {
                 }
             }
         }
+        w.deps = DepJars.read(w.problems);
         var root = top.dext.centurybridge.engine.Wiring.read(shimsJson);
         if (table != null && Files.exists(table)) {
             // as the conversion renames (Main.convert): tokens only the wiring's facades declare keep their names
@@ -705,8 +715,11 @@ public final class WiringCheck {
                         }
                     } else {
                         String nd = methodDesc(s.desc);
-                        if (!libMethod(owner, nn, nd)) {
-                            problems.add(sec + " " + e.getKey() + ": " + owner + "." + nn + nd + " is no method of the target's Fabric API");
+                        // a Fabric API class the step renames onto one of the layer's own (an API the target's
+                        // Fabric API dropped, given back by the layer): the renamed member is the layer's
+                        if (classes.containsKey(owner) ? !layerDeclares(owner, nn, nd) : !libMethod(owner, nn, nd)) {
+                            problems.add(sec + " " + e.getKey() + ": " + owner + "." + nn + nd
+                                + (classes.containsKey(owner) ? " is no method of the layer" : " is no method of the target's Fabric API"));
                         }
                     }
                 }
@@ -809,6 +822,37 @@ public final class WiringCheck {
             String desc = root.has("lookupDesc") ? root.get("lookupDesc").getAsString()
                                                   : "()Lnet/minecraft/class_7225$class_7874;";
             wantMethod("lookupRt", root.get("lookupRt").getAsString(), "cbLookup", methodDesc(desc));
+        }
+        // returnConverters: both converters exist with their exact descriptors, toV and toW undo each other's
+        // types (toV: W's answer first, toW: V's answer first, each returning the other), and a basis is given
+        if (root.has("returnConverters")) {
+            for (var e : root.getAsJsonObject("returnConverters").entrySet()) {
+                checked++;
+                var o = e.getValue().getAsJsonObject();
+                String where = "returnConverters " + e.getKey();
+                if (!o.has("toV") || !o.has("toW") || !o.has("basis")) {
+                    problems.add(where + ": needs \"toV\", \"toW\" and \"basis\"");
+                    continue;
+                }
+                String tv = o.get("toV").getAsString().trim();
+                String tw = o.get("toW").getAsString().trim();
+                int pv = tv.indexOf('(');
+                int pw = tw.indexOf('(');
+                if (pv <= 0 || pw <= 0) {
+                    problems.add(where + ": a converter is not OWNER#name(desc)");
+                    continue;
+                }
+                wantMethod(where + " toV", tv.substring(0, pv), null, methodDesc(tv.substring(pv)));
+                wantMethod(where + " toW", tw.substring(0, pw), null, methodDesc(tw.substring(pw)));
+                org.objectweb.asm.Type[] av = org.objectweb.asm.Type.getArgumentTypes(tv.substring(pv));
+                org.objectweb.asm.Type[] aw = org.objectweb.asm.Type.getArgumentTypes(tw.substring(pw));
+                org.objectweb.asm.Type rv = org.objectweb.asm.Type.getReturnType(tv.substring(pv));
+                org.objectweb.asm.Type rw = org.objectweb.asm.Type.getReturnType(tw.substring(pw));
+                int with = o.has("with") ? o.getAsJsonArray("with").size() : 0;
+                if (av.length != 1 + with || aw.length != 1 + with || !av[0].equals(rw) || !aw[0].equals(rv)) {
+                    problems.add(where + ": toV must be (W answer, with..)V answer and toW (V answer, with..)W answer");
+                }
+            }
         }
         // convertHooks (the override side of a same-shape reshape): the member is one the target's
         // `under` has with that very descriptor, and every converter exists with its exact descriptor
@@ -990,12 +1034,19 @@ public final class WiringCheck {
                     if (!o.has(key)) {
                         continue;
                     }
-                    // "owner.name(desc)R"
-                    String w = o.get(key).getAsString();
-                    int paren = w.indexOf('(');
-                    int dot = w.lastIndexOf('.', paren);
-                    wantMethod(where + " " + key, w.substring(0, dot) + "#" + w.substring(dot + 1, paren),
-                        null, methodDesc(w.substring(paren)));
+                    // "owner.name(desc)R", or (wrap) a list of them
+                    List<String> ws = new ArrayList<>();
+                    if (o.get(key).isJsonArray()) {
+                        o.getAsJsonArray(key).forEach(x -> ws.add(x.getAsString()));
+                    } else {
+                        ws.add(o.get(key).getAsString());
+                    }
+                    for (String w : ws) {
+                        int paren = w.indexOf('(');
+                        int dot = w.lastIndexOf('.', paren);
+                        wantMethod(where + " " + key, w.substring(0, dot) + "#" + w.substring(dot + 1, paren),
+                            null, methodDesc(w.substring(paren)));
+                    }
                 }
                 if (o.has("guard")) {
                     String g = o.get("guard").getAsString();
@@ -1297,6 +1348,30 @@ public final class WiringCheck {
     }
 
     /** whether the target's Fabric API (or the game) declares name+desc on owner or a supertype */
+    /** the layer's compiled class {@code owner}, or a supertype the layer compiled, declares name+desc */
+    private boolean layerDeclares(String owner, String name, String desc) {
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            ClassNode cn = classes.get(todo.poll());
+            if (cn == null || !seen.add(cn.name)) {
+                continue;
+            }
+            for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                if (m.name.equals(name) && m.desc.equals(desc)) {
+                    return true;
+                }
+            }
+            if (cn.superName != null) {
+                todo.add(cn.superName);
+            }
+            if (cn.interfaces != null) {
+                todo.addAll(cn.interfaces);
+            }
+        }
+        return false;
+    }
+
     private boolean libMethod(String owner, String name, String desc) {
         return libMember(owner, n -> n.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc)));
     }
@@ -1390,8 +1465,17 @@ public final class WiringCheck {
             cn = stub.get(cls); // a vanilla owner: see wantField
             if (wall != null && hash < 0 && name != null) name = wall.mapMethodName(cls, name, desc);
         }
+        boolean dep = false;
+        if (cn == null && deps.containsKey(cls)) {
+            cn = deps.get(cls); // a dependency mod's class
+            dep = true;
+        }
         if (cn == null) {
             problems.add(where + " -> " + target + " (no such shim class)");
+            return;
+        }
+        if (dep && (cn.access & Opcodes.ACC_PUBLIC) == 0) {
+            problems.add(where + " -> " + cls + " (dependency mod class not public)");
             return;
         }
         if (name == null) {
@@ -1406,6 +1490,8 @@ public final class WiringCheck {
             if (m.desc.equals(desc)) {
                 if ((m.access & Opcodes.ACC_STATIC) == 0) {
                     problems.add(where + " -> " + cls + "." + name + desc + " (not static)");
+                } else if (dep && (m.access & Opcodes.ACC_PUBLIC) == 0) {
+                    problems.add(where + " -> " + cls + "." + name + desc + " (dependency mod member not public)");
                 }
                 return;
             }
@@ -1427,8 +1513,17 @@ public final class WiringCheck {
             cn = stub.get(cls);
             if (wall != null && hash < 0) name = wall.mapFieldName(cls, name, desc);
         }
+        boolean dep = false;
+        if (cn == null && deps.containsKey(cls)) {
+            cn = deps.get(cls); // a dependency mod's class
+            dep = true;
+        }
         if (cn == null) {
             problems.add(where + " -> " + target + " (no such shim class)");
+            return;
+        }
+        if (dep && (cn.access & Opcodes.ACC_PUBLIC) == 0) {
+            problems.add(where + " -> " + cls + " (dependency mod class not public)");
             return;
         }
         for (FieldNode f : cn.fields) {
@@ -1437,6 +1532,8 @@ public final class WiringCheck {
                     problems.add(where + " -> " + cls + "." + name + " is " + f.desc + ", call site reads " + desc);
                 } else if ((f.access & Opcodes.ACC_STATIC) == 0) {
                     problems.add(where + " -> " + cls + "." + name + " (not static)");
+                } else if (dep && (f.access & Opcodes.ACC_PUBLIC) == 0) {
+                    problems.add(where + " -> " + cls + "." + name + " (dependency mod member not public)");
                 }
                 return;
             }

@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * position's coordinates, for converted calls and a subclass's super calls (extendable again);
  * vanilla 1.20.2 reads pos().
  */
-@Mixin(class_2666.class)
+@Mixin(value = class_2666.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetForgetChunkBridge {
 
     /** was getX() */

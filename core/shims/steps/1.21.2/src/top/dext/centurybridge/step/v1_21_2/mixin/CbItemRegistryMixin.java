@@ -20,7 +20,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
  * binds only those it got) and getOrCreateTag (1.21.1's readers resolve tags through 1.21.2's holder lookups now) are
  * restored for mods only: their vanilla paths are unmixed.
  */
-@Mixin(class_2370.class)
+@Mixin(value = class_2370.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbItemRegistryMixin<T> implements CbItemRegistries.Frozen, CbItemRegistries.LegacyBindTags,
         CbItemRegistries.LegacyResetTags, CbItemRegistries.LegacyGetOrCreateTag {
 

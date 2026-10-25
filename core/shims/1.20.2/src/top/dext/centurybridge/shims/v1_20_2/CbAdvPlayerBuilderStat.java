@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * PlayerPredicate.Builder.addStat(Stat, Ints) of 1.20.1: 1.20.1 put the range under the stat; 1.20.2
  * names the stat by its type and the registered value's holder, the same stat.
  */
-@Mixin(net.minecraft.class_4553.class_4557.class)
+@Mixin(value = net.minecraft.class_4553.class_4557.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbAdvPlayerBuilderStat {
 
     /** addStat(stat, range) */

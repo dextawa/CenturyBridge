@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * handled on the CALLER side instead: the converter redirects the
  * invokestatic to a plain runtime class (backlog B8).
  */
-@Mixin(class_1856.class)
+@Mixin(value = class_1856.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class IngredientBridge {
 
     public JsonElement method_8089() {

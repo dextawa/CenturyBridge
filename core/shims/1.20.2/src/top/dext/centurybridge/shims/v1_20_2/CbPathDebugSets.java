@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * once pathfinding debugging has filled them in, null before -- 1.20.2 keeps them in the path's
  * DebugData record instead.
  */
-@Mixin(class_11.class)
+@Mixin(value = class_11.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbPathDebugSets {
 
     @Shadow

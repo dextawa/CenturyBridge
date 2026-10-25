@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * tick has nothing left to do. Restored as that, for a mod's call and a mod subclass's override and
  * super call. (Its 1.20.1 caller, ChatReportScreen.tick, ticked vanilla's own box.)
  */
-@Mixin(net.minecraft.class_7529.class)
+@Mixin(value = net.minecraft.class_7529.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbGuiMultiLineEditBoxBridge {
 
     /** 1.20.1 MultiLineEditBox.tick() */

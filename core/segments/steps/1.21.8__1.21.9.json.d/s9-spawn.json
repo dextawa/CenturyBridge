@@ -1,0 +1,158 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_5217.method_56126()Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_5217.method_30656()F": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_31.method_56126()Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_31.method_30656()F": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_5268.method_56126()Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_5268.method_30656()F": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_638$class_5271.method_56126()Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbClientSpawn",
+  "net/minecraft/class_638$class_5271.method_30656()F": "top/dext/centurybridge/step/v1_21_9/rt/CbClientSpawn",
+  "net/minecraft/class_5269.method_187(Lnet/minecraft/class_2338;F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_31.method_187(Lnet/minecraft/class_2338;F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_5268.method_187(Lnet/minecraft/class_2338;F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_638$class_5271.method_187(Lnet/minecraft/class_2338;F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClientSpawn",
+  "net/minecraft/class_1937.method_43126()Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_1937.method_43127()F": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_3218.method_8554(Lnet/minecraft/class_2338;F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn"
+ },
+ "superRedirects": {
+  "net/minecraft/class_31.method_56126()Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_31.method_30656()F": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_31.method_187(Lnet/minecraft/class_2338;F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_638$class_5271.method_56126()Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbClientSpawn",
+  "net/minecraft/class_638$class_5271.method_30656()F": "top/dext/centurybridge/step/v1_21_9/rt/CbClientSpawn",
+  "net/minecraft/class_638$class_5271.method_187(Lnet/minecraft/class_2338;F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClientSpawn",
+  "net/minecraft/class_1937.method_43126()Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_1937.method_43127()F": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn",
+  "net/minecraft/class_3218.method_8554(Lnet/minecraft/class_2338;F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_187(Lnet/minecraft/class_2338;F)V",
+   "new": "method_187(Lnet/minecraft/class_5217$class_12064;)V",
+   "onlyUnder": "net/minecraft/class_5269",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn.cbSetSpawn(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySetSpawn;Lnet/minecraft/class_5217$class_12064;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySetSpawn",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "basis": "s9 spawn: WritableLevelData.setSpawn(pos, angle) is setSpawn(RespawnData); the old override gets the position and yaw (its super call goes through CbSpawn: the dimension and pitch stay)"
+  },
+  {
+   "old": "method_8554(Lnet/minecraft/class_2338;F)V",
+   "new": "method_27873(Lnet/minecraft/class_5217$class_12064;)V",
+   "onlyUnder": "net/minecraft/class_3218",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn.cbDefaultSpawn(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacyDefaultSpawn;Lnet/minecraft/class_5217$class_12064;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacyDefaultSpawn",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "basis": "s9 spawn: ServerLevel.setDefaultSpawnPos(pos, angle) is setRespawnData(RespawnData)"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_5217",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySpawn",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "requires": [
+    "method_56126()Lnet/minecraft/class_2338;",
+    "method_30656()F"
+   ],
+   "synth": [
+    {
+     "new": "method_74893()Lnet/minecraft/class_5217$class_12064;",
+     "call": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn.cbRespawnData(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySpawn;)Lnet/minecraft/class_5217$class_12064;"
+    }
+   ],
+   "basis": "s9 spawn: a 1.21.8 LevelData answering getSpawnPos and getSpawnAngle answers getRespawnData with them"
+  },
+  {
+   "under": "net/minecraft/class_5217",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySpawnPos",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "requires": [
+    "method_56126()Lnet/minecraft/class_2338;"
+   ],
+   "synth": [
+    {
+     "new": "method_74893()Lnet/minecraft/class_5217$class_12064;",
+     "call": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn.cbRespawnDataPos(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySpawnPos;)Lnet/minecraft/class_5217$class_12064;"
+    }
+   ],
+   "basis": "s9 spawn: getSpawnPos over what the class answers without it"
+  },
+  {
+   "under": "net/minecraft/class_5217",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySpawnAngle",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "requires": [
+    "method_30656()F"
+   ],
+   "synth": [
+    {
+     "new": "method_74893()Lnet/minecraft/class_5217$class_12064;",
+     "call": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn.cbRespawnDataAngle(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySpawnAngle;)Lnet/minecraft/class_5217$class_12064;"
+    }
+   ],
+   "basis": "s9 spawn: getSpawnAngle over what the class answers without it"
+  },
+  {
+   "under": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySharedSpawn",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "requires": [
+    "method_43126()Lnet/minecraft/class_2338;",
+    "method_43127()F"
+   ],
+   "synth": [
+    {
+     "new": "method_74854()Lnet/minecraft/class_5217$class_12064;",
+     "call": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn.cbLevelRespawnData(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySharedSpawn;)Lnet/minecraft/class_5217$class_12064;"
+    }
+   ],
+   "basis": "s9 spawn: a 1.21.8 Level answering getSharedSpawnPos and getSharedSpawnAngle answers getRespawnData with them"
+  },
+  {
+   "under": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySharedSpawnPos",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "requires": [
+    "method_43126()Lnet/minecraft/class_2338;"
+   ],
+   "synth": [
+    {
+     "new": "method_74854()Lnet/minecraft/class_5217$class_12064;",
+     "call": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn.cbLevelRespawnDataPos(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySharedSpawnPos;)Lnet/minecraft/class_5217$class_12064;"
+    }
+   ],
+   "basis": "s9 spawn: getSharedSpawnPos over what the level answers without it"
+  },
+  {
+   "under": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySharedSpawnAngle",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "requires": [
+    "method_43127()F"
+   ],
+   "synth": [
+    {
+     "new": "method_74854()Lnet/minecraft/class_5217$class_12064;",
+     "call": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn.cbLevelRespawnDataAngle(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSpawn$LegacySharedSpawnAngle;)Lnet/minecraft/class_5217$class_12064;"
+    }
+   ],
+   "basis": "s9 spawn: getSharedSpawnAngle over what the level answers without it"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_1937",
+   "method": "method_74854()Lnet/minecraft/class_5217$class_12064;",
+   "call": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn.cbFillRespawnData(Lnet/minecraft/class_1937;)Lnet/minecraft/class_5217$class_12064;",
+   "basis": "s9 spawn: 1.21.9 demands Level.getRespawnData; a 1.21.8 Level subclass answers its level data's spawn, as 1.21.8's Level did"
+  },
+  {
+   "under": "net/minecraft/class_1937",
+   "method": "method_27873(Lnet/minecraft/class_5217$class_12064;)V",
+   "call": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawn.cbFillSetRespawnData(Lnet/minecraft/class_1937;Lnet/minecraft/class_5217$class_12064;)V",
+   "basis": "s9 spawn: 1.21.9 demands Level.setRespawnData; a 1.21.8 Level subclass sets its level data's spawn (clamped to its border) when it is writable"
+  }
+ ]
+}

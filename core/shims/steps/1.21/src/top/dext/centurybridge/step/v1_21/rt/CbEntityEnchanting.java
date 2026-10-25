@@ -308,19 +308,29 @@ public final class CbEntityEnchanting {
     }
 
     // ------------------------------------------------------------------------------------------------ channeling
-    /** the 1.20.6 isChanneling() a 1.20.6 ThrownTrident subclass of a mod overrides */
+    /**
+     * the 1.20.6 isChanneling(): CbEntityTridentMixin restores it on every ThrownTrident (a mod's 1.20.6 mixin on it
+     * lands there) and a 1.20.6 subclass of a mod overrides it
+     */
     public interface LegacyChanneling {
         boolean method_31551();
     }
 
-    /** the per-trident state of CbEntityTridentMixin's hit: the enchantments it took Channeling off for the call */
+    /**
+     * the per-trident state of CbEntityTridentMixin's hit: the enchantments it took Channeling off for the call, and
+     * isChanneling()'s answer for this hit (asked once, as 1.20.6 asked it once)
+     */
     public interface TridentHit {
         class_9304 cb$heldEnchantments();
 
         void cb$holdEnchantments(class_9304 enchantments);
+
+        Boolean cb$channelingAnswer();
+
+        void cb$channelingAnswer(Boolean answer);
     }
 
-    /** 1.20.6 trident.isChanneling(): the trident's own override, else its stack carries Channeling */
+    /** 1.20.6 trident.isChanneling() as a mod calls it: the restored member, or the trident's own override */
     public static boolean isChanneling(class_1685 trident) {
         if (trident instanceof LegacyChanneling legacy) {
             return legacy.method_31551();
@@ -328,7 +338,7 @@ public final class CbEntityEnchanting {
         return superIsChanneling(trident);
     }
 
-    /** 1.20.6 ThrownTrident.isChanneling(): EnchantmentHelper.hasChanneling(the thrown stack) */
+    /** 1.20.6 ThrownTrident.isChanneling()'s body: EnchantmentHelper.hasChanneling(the thrown stack) */
     public static boolean superIsChanneling(class_1685 trident) {
         return CbEnchantmentHelper.method_8228(trident.method_54759());
     }
@@ -339,27 +349,52 @@ public final class CbEntityEnchanting {
         return weapon != null && class_1890.method_8225(CbEnchantments.cbHolder(CbEnchVanilla.field_9117()), weapon) > 0;
     }
 
+    /** isChanneling()'s answer for the current hit: asked through the trident (mods' mixins run) the first time only */
+    private static boolean answer(class_1685 trident, TridentHit hit) {
+        if (hit.cb$channelingAnswer() == null) {
+            hit.cb$channelingAnswer(((LegacyChanneling) trident).method_31551());
+        }
+        return hit.cb$channelingAnswer();
+    }
+
+    /** Channeling off the weapon for 1.21's effect call (afterWeaponEffects puts it back) */
+    private static void holdChanneling(class_1685 trident, TridentHit hit) {
+        class_1799 weapon = trident.method_59958();
+        hit.cb$holdEnchantments(weapon.method_57824(class_9334.field_49633));
+        class_1890.method_57531(weapon, mutable -> mutable.method_57547(CbEnchantments.cbHolder(CbEnchVanilla.field_9117()), 0));
+    }
+
     /**
-     * Before 1.21 runs a 1.20.6 overriding trident's weapon effects (the post-attack effects of an entity hit, the
-     * hit-block effects): 1.20.6 struck lightning when isChanneling() said so, 1.21 when the weapon carries
-     * Channeling. Where the override says no and the weapon has it, Channeling is taken off the weapon for the
-     * call; where the override says yes and the weapon has none, 1.20.6's own strike follows (afterEntityHit,
-     * afterBlockHit).
+     * Before 1.21 runs the post-attack effects of a trident's entity hit: 1.20.6 struck lightning when, in a
+     * thunderstorm on a server level, isChanneling() said so; 1.21 strikes when the weapon carries Channeling (its
+     * channeling.json post_attack effect, which also requires the thunderstorm). So isChanneling() is asked here
+     * under 1.20.6's condition, and where it says no while the weapon has Channeling, Channeling is taken off the
+     * weapon for the call; where it says yes without the enchantment, 1.20.6's own strike follows (afterEntityHit).
+     * With nothing changing isChanneling() its answer is the enchantment's presence: 1.21's call runs untouched.
      */
     public static void beforeWeaponEffects(class_1685 trident) {
-        if (!(trident instanceof LegacyChanneling legacy) || !(trident instanceof TridentHit hit)) {
+        if (!(trident instanceof TridentHit hit) || !(trident instanceof LegacyChanneling)
+                || !(trident.method_37908() instanceof class_3218 level) || !level.method_8546()) {
             return;
         }
-        if (!legacy.method_31551() && enchanted(trident)) {
-            class_1799 weapon = trident.method_59958();
-            hit.cb$holdEnchantments(weapon.method_57824(class_9334.field_49633));
-            class_1890.method_57531(weapon, mutable -> mutable.method_57547(CbEnchantments.cbHolder(CbEnchVanilla.field_9117()), 0));
+        if (!answer(trident, hit) && enchanted(trident)) {
+            holdChanneling(trident, hit);
         }
     }
 
-    /** a 1.20.6 overriding trident that says it channels where 1.21 would not strike */
-    private static boolean legacyStrike(class_1685 trident) {
-        return trident instanceof LegacyChanneling legacy && legacy.method_31551() && !enchanted(trident);
+    /**
+     * Before 1.21 runs a trident's hit-block effects: 1.20.6 asked isChanneling() from LightningRodBlock.onProjectileHit
+     * only for a lightning rod in a thunderstorm (channeling.json's hit_block effect has the same requirements), so
+     * it is asked under that condition and handled as beforeWeaponEffects does.
+     */
+    public static void beforeBlockEffects(class_1685 trident, class_3218 level, class_2338 pos) {
+        if (!(trident instanceof TridentHit hit) || !(trident instanceof LegacyChanneling) || !level.method_8546()
+                || !(level.method_8320(pos).method_26204() instanceof net.minecraft.class_5554)) {
+            return;
+        }
+        if (!answer(trident, hit) && enchanted(trident)) {
+            holdChanneling(trident, hit);
+        }
     }
 
     /** after the weapon effects: Channeling back on the weapon if it was taken off */
@@ -371,35 +406,45 @@ public final class CbEntityEnchanting {
     }
 
     /**
-     * 1.20.6 ThrownTrident.onHitEntity's strike, for a trident whose override said yes without the enchantment:
-     * in a thunderstorm, a lightning bolt on the target where the sky is open, caused by the throwing player, and
-     * the thunder sound at volume 5.
+     * 1.20.6 ThrownTrident.onHitEntity's strike where 1.21 makes none: in a thunderstorm on a server level, when
+     * isChanneling() (asked once per hit, here if the post-attack effects did not run) says yes and the weapon has no
+     * Channeling, a lightning bolt on the target where the sky is open, caused by the throwing player, and the
+     * thunder sound at volume 5.
      */
     public static void afterEntityHit(class_1685 trident, class_1297 target) {
-        if (!legacyStrike(trident)) {
+        if (!(trident instanceof TridentHit hit) || !(trident instanceof LegacyChanneling)) {
             return;
         }
-        if (trident.method_37908() instanceof class_3218 level && level.method_8546()) {
-            class_2338 pos = target.method_24515();
-            if (level.method_8311(pos)) {
-                strike(level, trident, class_243.method_24955(pos));
-                trident.method_5783(class_3417.field_14896.comp_349(), 5.0F, 1.0F);
+        try {
+            if (trident.method_37908() instanceof class_3218 level && level.method_8546()
+                    && answer(trident, hit) && !enchanted(trident)) {
+                class_2338 pos = target.method_24515();
+                if (level.method_8311(pos)) {
+                    strike(level, trident, class_243.method_24955(pos));
+                    trident.method_5783(class_3417.field_14896.comp_349(), 5.0F, 1.0F);
+                }
             }
+        } finally {
+            hit.cb$channelingAnswer(null);
         }
     }
 
     /**
-     * 1.20.6 LightningRodBlock.onProjectileHit, for a trident whose override said yes without the enchantment: a
-     * lightning rod hit in a thunderstorm under open sky strikes above the rod, with the thunder sound at
-     * volume 5 in the weather source.
+     * 1.20.6 LightningRodBlock.onProjectileHit's strike where 1.21 makes none: when isChanneling() said yes for a
+     * lightning rod hit in a thunderstorm (asked by beforeBlockEffects) and the weapon has no Channeling, under open
+     * sky a strike above the rod, with the thunder sound at volume 5 in the weather source.
      */
     public static void afterBlockHit(class_1685 trident, class_3218 level, class_2338 pos) {
-        if (!legacyStrike(trident)) {
+        if (!(trident instanceof TridentHit hit)) {
             return;
         }
-        if (level.method_8546() && level.method_8320(pos).method_26204() instanceof net.minecraft.class_5554 && level.method_8311(pos)) {
-            strike(level, trident, class_243.method_24955(pos.method_10084()));
-            level.method_8396(null, pos, class_3417.field_14896.comp_349(), class_3419.field_15252, 5.0F, 1.0F);
+        try {
+            if (Boolean.TRUE.equals(hit.cb$channelingAnswer()) && !enchanted(trident) && level.method_8311(pos)) {
+                strike(level, trident, class_243.method_24955(pos.method_10084()));
+                level.method_8396(null, pos, class_3417.field_14896.comp_349(), class_3419.field_15252, 5.0F, 1.0F);
+            }
+        } finally {
+            hit.cb$channelingAnswer(null);
         }
     }
 

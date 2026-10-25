@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * - build(consumer, id): return type moved to AdvancementEntry; old overload
  *   unwraps entry.value() both for the return and the consumer.
  */
-@Mixin(class_161.class_162.class)
+@Mixin(value = class_161.class_162.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class AdvancementBuilderBridge {
 
     /**

@@ -393,6 +393,7 @@ final class MixinBridge {
     }
 
     private static byte[] write(ClassNode cn) {
+        MixinRepair.flushGuards(cn);
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         cn.accept(cw);
         return cw.toByteArray();
@@ -849,13 +850,25 @@ final class MixinBridge {
         }
 
         boolean bridge() {
+            // a mixin of a class the step renames to one of CenturyBridge's (a facade): the facade only holds what
+            // converted mods call; where W vanilla runs the same code, the injectors are also put there (alsoOnW)
+            String origin = facadeOrigin();
+            if (origin != null) {
+                countKeys();
+                keysCounted = true;
+                for (MethodNode m : new ArrayList<>(mx.methods)) {
+                    alsoOnW(m, origin);
+                }
+            }
             if (target == null || !Chain.minecraftOwned(target)) {
-                return false;
+                return changed;
             }
             if (w(target) == null && !chain.targetDecls.containsKey(target)) {
-                return false; // nothing to judge the mixin against
+                return changed; // nothing to judge the mixin against
             }
-            countKeys();
+            if (!keysCounted) {
+                countKeys();
+            }
             for (FieldNode f : new ArrayList<>(mx.fields)) {
                 if (has(f.visibleAnnotations, f.invisibleAnnotations, SHADOW)) {
                     shadowField(f);
@@ -1638,6 +1651,47 @@ final class MixinBridge {
             Selection sel = select(h, an, kind, sels, wt, v(target));
             if (sel != null) {
                 ats(sel, kind);
+            } else {
+                spellRestored(h, an, kind);
+            }
+        }
+
+        /**
+         * A selector left on a member the layer restores whose descriptor names a class the step renames (an
+         * Enchantment parameter that is the facade's in the layer): spelled as the restored member is declared
+         * (Chain.renamedDesc), so MixinRepair and MixinJudge find it -- a mixin aimed at vanilla code keeps V's
+         * names in its strings (MixinClassRenames), and the restored member is the only method with this name there.
+         */
+        private void spellRestored(MethodNode h, AnnotationNode an, String kind) {
+            List<String> sels = MixinRepair.strings(MixinRepair.values(an).get("method"));
+            for (int idx = 0; idx < sels.size(); idx++) {
+                String sel = sels.get(idx);
+                if (sel.startsWith("/") || sel.contains("*")) {
+                    continue;
+                }
+                String mapped = MixinRepair.refmapLookup(table, sel);
+                MixinRepair.Sel s = MixinRepair.Sel.parse(mapped);
+                if (s.desc() == null || s.owner() != null && !s.owner().equals(target)) {
+                    continue;
+                }
+                String rd = chain.renamedDesc(s.desc());
+                if (rd.equals(s.desc()) || !chain.layerMembers.match(target, s).isEmpty()) {
+                    continue;
+                }
+                MixinRepair.Sel r = new MixinRepair.Sel(s.owner(), s.name(), rd, s.wildcard());
+                if (chain.layerMembers.match(target, r).isEmpty()) {
+                    continue;
+                }
+                String nm = respell(mapped, s.name(), rd);
+                if (ownKey(sel)) {
+                    MixinRepair.refmapPut(table, sel, nm);
+                    refmapDirty = true;
+                } else {
+                    MixinRepair.setMethodSelector(an, idx, nm);
+                }
+                changed = true;
+                injected("@" + kind + " " + sn + "." + h.name, "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "."
+                    + s.name() + s.desc() + " => " + s.name() + rd + " (the layer's restored member, its descriptor as the step renames it)");
             }
         }
 
@@ -1664,7 +1718,8 @@ final class MixinBridge {
                 // vanilla calls, nothing moves under it. An unmarked restored member (a delegate onto the code W
                 // kept) is not taken here: the selector follows V's code to W below, and only when nothing
                 // carries it does it stay on the restored member (MixinJudge: "vanilla path unmixed")
-                if (s.desc() != null && chain.layerMembers.match(target, s).stream()
+                if (s.desc() != null && java.util.stream.Stream.concat(chain.layerMembers.match(target, s).stream(),
+                            chain.layerMembers.match(target, new MixinRepair.Sel(s.owner(), s.name(), chain.renamedDesc(s.desc()), s.wildcard())).stream())
                         .anyMatch(m -> chain.layerMembers.vanillaReads(m) != null)) {
                     injected("@" + kind + " " + sn + "." + h.name, "@" + kind + " " + sn + "." + h.name + " -> "
                         + shortName(target) + "." + s.name() + s.desc() + ": the layer's restored member");
@@ -1712,6 +1767,12 @@ final class MixinBridge {
                 }
                 MethodNode wmeth = method(wt, fate.name(), fate.desc());
                 if (wmeth == null) {
+                    // a W-named member a layer mixin declares on the target (an override of an inherited W method,
+                    // say: SmithingTrimRecipe.matches, which 1.21.2 has only as SmithingRecipe's default): at runtime
+                    // the target declares it; MixinJudge decides whether vanilla reaches it
+                    wmeth = chain.layerMembers.member(target, fate.name(), fate.desc());
+                }
+                if (wmeth == null) {
                     left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", which "
                         + shortName(target) + " does not declare in " + chain.to);
                     continue;
@@ -1733,11 +1794,11 @@ final class MixinBridge {
                         } else {
                             MixinRepair.setMethodSelector(an, idx, nm);
                         }
-                        MixinRepair.applyDescend(d, h, an);
+                        MixinRepair.applyDescend(d, h, an, mx);
                         changed = true;
                         injected("@" + kind + " " + sn + "." + h.name, where + " => " + d.callee().name + d.callee().desc
                             + (d.ordinal() >= 0 ? " #" + d.ordinal() : "") + " (" + fate.how() + " gives " + fate.name() + fate.desc()
-                            + "; V's site of the anchor stands in " + d.callee().name + ", called from one site"
+                            + "; V's site of the anchor stands in " + d.callee().name + ", " + d.how()
                             + (d.makeStatic() ? "; handler made static" : "") + (d.toCir() ? "; callback as CallbackInfoReturnable" : "") + ")");
                         return new Selection(h, an, List.of(vmeth), List.of(d.callee()));
                     }
@@ -1758,9 +1819,16 @@ final class MixinBridge {
                     MixinRepair.setMethodSelector(an, idx, nm);
                 }
                 MethodNode handler = p.synth() ? synthesizeInject(h, fate, p) : h;
+                if (p.untouched()) {
+                    handler.invisibleAnnotations = handler.invisibleAnnotations == null ? new ArrayList<>() : handler.invisibleAnnotations;
+                    handler.invisibleAnnotations.add(new AnnotationNode(RETURN_UNTOUCHED));
+                }
                 changed = true;
                 injected("@" + kind + " " + sn + "." + h.name, where + " => " + fate.name() + fate.desc() + " (" + fate.how()
-                    + (p.synth() ? "; a " + chain.to + "-shaped handler forwards to the mod's" : "") + ")");
+                    + (p.synth() ? "; a " + chain.to + "-shaped handler forwards to the mod's" : "")
+                    + (p.rc() != null ? "; the answer converted both ways: " + p.rc().how() : "")
+                    + (p.untouched() ? "; return type " + Type.getReturnType(chain.renamedDesc(vmeth.desc)) + " -> "
+                        + Type.getReturnType(fate.desc()) + " with no converter: partial, the answer untouched" : "") + ")");
                 return new Selection(handler, an, List.of(vmeth), List.of(wmeth));
             }
             return null;
@@ -1823,11 +1891,25 @@ final class MixinBridge {
                     why.add("cancellable, and the target now returns a value: a cancel would answer null where " + chain.from + "'s caller went on");
                     return null;
                 }
-                if (have.equals(CIR) && !vr.equals(wr) && touchesReturnValue(h)) {
-                    why.add("the handler reads or sets the return value, whose type changed");
-                    return null;
+                Type vrr = Type.getReturnType(chain.renamedDesc(vmeth.desc));
+                RetConv rc = null;
+                boolean untouched = false;
+                if (have.equals(CIR) && !vrr.equals(wr)) {
+                    curNumV = vrr;
+                    curNumW = wr;
+                    List<String> rwhy = new ArrayList<>();
+                    rc = retConv(vmeth, vrr, wr, Type.getArgumentTypes(fate.desc()), rwhy);
+                    if (rc == null) {
+                        if (touchesReturnValue(h)) {
+                            why.add("the handler reads or sets the return value, whose type changed (" + vrr + " -> " + wr
+                                + ") and " + rwhy.get(0));
+                            return null;
+                        }
+                        untouched = true;
+                    }
                 }
-                return new Plan(cbChange || capture && (!sameArgs || fate.converts()), capture, wVoid ? CI : CIR, ci);
+                boolean synth = cbChange || capture && (!sameArgs || fate.converts()) || rc != null;
+                return new Plan(synth, capture, wVoid ? CI : CIR, ci, rc, untouched);
             }
             if (kind.equals("ModifyReturnValue") && !vr.equals(wr)) {
                 why.add("the return type changed");
@@ -1850,6 +1932,194 @@ final class MixinBridge {
                 return null;
             }
             return new Plan(false, false, null, -1);
+        }
+
+        /**
+         * The converters between V method vmeth's answer (vr, as the converted jar spells it) and the W target's
+         * (wr), in this order: a returnConverters entry on vmeth's class or a V supertype of the mixin's target;
+         * numeric primitives (Java's conversion); a callReshapes "ret conv" of the member (W -> V) with an override
+         * hook's unwrap (V -> W). Null when none, with why.
+         */
+        private RetConv retConv(MethodNode vmeth, Type vr, Type wr, Type[] wa, List<String> why) {
+            for (String c : vSupers(vk(target))) {
+                Chain.ReturnConverter e = chain.returnConverters.get(c + "." + vmeth.name + vmeth.desc);
+                if (e == null) {
+                    continue;
+                }
+                Type[] tv = Type.getArgumentTypes(e.toV()[2]);
+                Type[] tw = Type.getArgumentTypes(e.toW()[2]);
+                boolean ok = tv.length == 1 + e.with().length && tw.length == tv.length
+                    && Type.getReturnType(e.toV()[2]).equals(vr) && Type.getReturnType(e.toW()[2]).equals(wr)
+                    && tv[0].equals(wr) && tw[0].equals(vr);
+                for (int i = 0; ok && i < e.with().length; i++) {
+                    int j = e.with()[i];
+                    ok = j >= 0 && j < wa.length && tv[i + 1].equals(wa[j]) && tw[i + 1].equals(wa[j]);
+                }
+                if (!ok) {
+                    why.add("returnConverters " + c + "." + vmeth.name + vmeth.desc + " does not fit " + vr + " <-> " + wr);
+                    return null;
+                }
+                return new RetConv(e.toV(), e.toW(), e.with(), false, "returnConverters (" + e.basis() + ")");
+            }
+            if (samePrecisionFamily(vr, wr)) {
+                // float <-> double, int <-> long: the same quantity at another precision. Other numeric pairs are not
+                // taken: a byte became a float when its meaning changed too (packed degrees -> degrees)
+                return new RetConv(null, null, new int[0], true, "numeric " + vr + " <-> " + wr);
+            }
+            String rk = chain.instanceRedirectHome(chain.callReshapeIndex, vk(target), vmeth.name + vmeth.desc);
+            Chain.CallReshape r = rk == null ? null : chain.callReshapes.get(rk + "." + vmeth.name + vmeth.desc);
+            if (r != null && "conv".equals(r.retKind)) {
+                for (Chain.OverrideHook hk : chain.overrideHooksForOld(vmeth.name, vmeth.desc)) {
+                    if (hk.unwrapName != null) {
+                        String[] toV = {r.retOwner, r.retName, r.retDesc};
+                        String[] toW = {hk.unwrapOwner, hk.unwrapName, hk.unwrapDesc};
+                        if (Type.getReturnType(toV[2]).equals(vr) && Type.getArgumentTypes(toV[2]).length == 1
+                                && Type.getArgumentTypes(toV[2])[0].equals(wr) && Type.getReturnType(toW[2]).equals(wr)
+                                && Type.getArgumentTypes(toW[2]).length == 1 && Type.getArgumentTypes(toW[2])[0].equals(vr)) {
+                            return new RetConv(toV, toW, new int[0], false, "the call reshape's ret conv and the override hook's unwrap");
+                        }
+                    }
+                }
+            }
+            why.add("no converter between them (returnConverters, a numeric pair, or a ret conv with an override hook's unwrap)");
+            return null;
+        }
+
+        /** a V class and its V supertypes, nearest first */
+        private List<String> vSupers(String c) {
+            List<String> out = new ArrayList<>();
+            ArrayDeque<String> todo = new ArrayDeque<>(List.of(c));
+            while (!todo.isEmpty()) {
+                String x = todo.poll();
+                if (out.contains(x)) {
+                    continue;
+                }
+                out.add(x);
+                ClassNode cn = v(x);
+                if (cn != null) {
+                    if (cn.superName != null) {
+                        todo.add(cn.superName);
+                    }
+                    todo.addAll(cn.interfaces);
+                }
+            }
+            return out;
+        }
+
+        /**
+         * A static of the jar's helper class turning an answer as the callback holds it (boxed) into the other
+         * side's (boxed): {@code (Object, with..)Object}, a null passing through without a call. toV: W's answer
+         * into V's; else V's into W's. Returns {name, desc}.
+         */
+        private String[] retHelper(RetConv rc, boolean toV, Type[] wa) {
+            StringBuilder d = new StringBuilder("(Ljava/lang/Object;");
+            for (int j : rc.with()) {
+                d.append(wa[j].getDescriptor());
+            }
+            String desc = d.append(")Ljava/lang/Object;").toString();
+            String name = "r" + (helperSeq++) + "$" + sn.replace('$', '_') + (toV ? "$toV" : "$toW");
+            MethodNode m = new MethodNode(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, name, desc, null, null);
+            Type from = rc.numeric() ? null : Type.getArgumentTypes((toV ? rc.toV() : rc.toW())[2])[0];
+            InsnList in = m.instructions;
+            LabelNode go = new LabelNode();
+            in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            in.add(new JumpInsnNode(Opcodes.IFNONNULL, go));
+            in.add(new InsnNode(Opcodes.ACONST_NULL));
+            in.add(new InsnNode(Opcodes.ARETURN));
+            in.add(go);
+            List<Object> locals = new ArrayList<>(List.of("java/lang/Object"));
+            for (int j : rc.with()) {
+                locals.add(JarProcessor.frameType(wa[j]));
+            }
+            in.add(new FrameNode(Opcodes.F_NEW, locals.size(), locals.toArray(), 0, new Object[0]));
+            in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            Type to;
+            if (rc.numeric()) {
+                to = numericTarget(rc, toV);
+                in.add(new TypeInsnNode(Opcodes.CHECKCAST, "java/lang/Number"));
+                in.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/Number", to.getClassName() + "Value", "()" + to.getDescriptor(), false));
+            } else {
+                String[] conv = toV ? rc.toV() : rc.toW();
+                unbox(in, from);
+                int slot = 1;
+                for (int j : rc.with()) {
+                    in.add(new VarInsnNode(wa[j].getOpcode(Opcodes.ILOAD), slot));
+                    slot += wa[j].getSize();
+                }
+                in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, conv[0], conv[1], conv[2], false));
+                to = Type.getReturnType(conv[2]);
+            }
+            box(in, to);
+            in.add(new InsnNode(Opcodes.ARETURN));
+            int ml = 1;
+            for (int j : rc.with()) {
+                ml += wa[j].getSize();
+            }
+            m.maxLocals = ml;
+            m.maxStack = 4 + rc.with().length * 2;
+            helperMethods.add(m);
+            return new String[] {name, desc};
+        }
+
+        /** the numeric pair's target type: V's answer for toV, W's for toW (read off the moved target) */
+        private Type numericTarget(RetConv rc, boolean toV) {
+            return toV ? curNumV : curNumW;
+        }
+
+        /**
+         * {@code (CallbackInfoReturnable w, CallbackInfoReturnable v, with..)V}: when the mod's handler cancelled V's
+         * callback, W's is cancelled too, with V's answer turned into W's when it set one.
+         */
+        private String[] backHelper(RetConv rc, String[] toW, Type[] wa) {
+            String cirT = CIR.substring(1, CIR.length() - 1);
+            String ciT = CI.substring(1, CI.length() - 1);
+            StringBuilder d = new StringBuilder("(" + CIR + CIR);
+            for (int j : rc.with()) {
+                d.append(wa[j].getDescriptor());
+            }
+            String desc = d.append(")V").toString();
+            String name = "r" + (helperSeq++) + "$" + sn.replace('$', '_') + "$back";
+            MethodNode m = new MethodNode(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, name, desc, null, null);
+            int n = 2;
+            List<Object> locals = new ArrayList<>(List.of(cirT, cirT));
+            for (int j : rc.with()) {
+                locals.add(JarProcessor.frameType(wa[j]));
+                n += wa[j].getSize();
+            }
+            InsnList in = m.instructions;
+            LabelNode end = new LabelNode();
+            LabelNode set = new LabelNode();
+            in.add(new VarInsnNode(Opcodes.ALOAD, 1));
+            in.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, ciT, "isCancelled", "()Z", false));
+            in.add(new JumpInsnNode(Opcodes.IFEQ, end));
+            in.add(new VarInsnNode(Opcodes.ALOAD, 1));
+            in.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, cirT, "getReturnValue", "()Ljava/lang/Object;", false));
+            in.add(new VarInsnNode(Opcodes.ASTORE, n));
+            in.add(new VarInsnNode(Opcodes.ALOAD, n));
+            in.add(new JumpInsnNode(Opcodes.IFNONNULL, set));
+            in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            in.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, ciT, "cancel", "()V", false));
+            in.add(new InsnNode(Opcodes.RETURN));
+            in.add(set);
+            List<Object> withN = new ArrayList<>(locals);
+            withN.add("java/lang/Object");
+            in.add(new FrameNode(Opcodes.F_NEW, withN.size(), withN.toArray(), 0, new Object[0]));
+            in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            in.add(new VarInsnNode(Opcodes.ALOAD, n));
+            int slot = 2;
+            for (int j : rc.with()) {
+                in.add(new VarInsnNode(wa[j].getOpcode(Opcodes.ILOAD), slot));
+                slot += wa[j].getSize();
+            }
+            in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, helperName, toW[0], toW[1], false));
+            in.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, cirT, "setReturnValue", "(Ljava/lang/Object;)V", false));
+            in.add(end);
+            in.add(new FrameNode(Opcodes.F_NEW, locals.size(), locals.toArray(), 0, new Object[0]));
+            in.add(new InsnNode(Opcodes.RETURN));
+            m.maxLocals = n + 1;
+            m.maxStack = 4 + rc.with().length * 2;
+            helperMethods.add(m);
+            return new String[] {name, desc};
         }
 
         /** how many handler arguments the injector itself defines (the anchor's), -1 when unknown */
@@ -1912,7 +2182,7 @@ final class MixinBridge {
             String oldDesc = h.desc;
             String del = unique(oldName + "$cb" + step);
             StringBuilder d = new StringBuilder("(");
-            if (p.capture()) {
+            if (p.wArgs()) {
                 for (Type t : wa) {
                     d.append(t.getDescriptor());
                 }
@@ -1937,7 +2207,8 @@ final class MixinBridge {
                 wslot[j] = s;
                 s += wa[j].getSize();
             }
-            int cbSlot = p.capture() ? s : (st ? 0 : 1);
+            int cbSlot = p.wArgs() ? s : (st ? 0 : 1);
+            int vcbSlot = cbSlot + 1;
             InsnList in = syn.instructions;
             LabelNode skip = null;
             for (int i = 0; p.capture() && i < p.ci(); i++) {
@@ -1947,6 +2218,28 @@ final class MixinBridge {
                     in.add(new TypeInsnNode(Opcodes.INSTANCEOF, hp[i].getInternalName()));
                     in.add(new JumpInsnNode(Opcodes.IFEQ, skip));
                 }
+            }
+            String[] back = null;
+            if (p.rc() != null) {
+                // V's callback: the W answer so far as V's (toV), handed back as W's when the mod's handler set one
+                String cirT = CIR.substring(1, CIR.length() - 1);
+                String ciT = CI.substring(1, CI.length() - 1);
+                String[] toV = retHelper(p.rc(), true, wa);
+                back = backHelper(p.rc(), retHelper(p.rc(), false, wa), wa);
+                in.add(new TypeInsnNode(Opcodes.NEW, cirT));
+                in.add(new InsnNode(Opcodes.DUP));
+                in.add(new VarInsnNode(Opcodes.ALOAD, cbSlot));
+                in.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, ciT, "getId", "()Ljava/lang/String;", false));
+                in.add(new VarInsnNode(Opcodes.ALOAD, cbSlot));
+                in.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, ciT, "isCancellable", "()Z", false));
+                in.add(new VarInsnNode(Opcodes.ALOAD, cbSlot));
+                in.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, cirT, "getReturnValue", "()Ljava/lang/Object;", false));
+                for (int j : p.rc().with()) {
+                    in.add(new VarInsnNode(wa[j].getOpcode(Opcodes.ILOAD), wslot[j]));
+                }
+                in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, helperName, toV[0], toV[1], false));
+                in.add(new MethodInsnNode(Opcodes.INVOKESPECIAL, cirT, "<init>", "(Ljava/lang/String;ZLjava/lang/Object;)V", false));
+                in.add(new VarInsnNode(Opcodes.ASTORE, vcbSlot));
             }
             if (!st) {
                 in.add(new VarInsnNode(Opcodes.ALOAD, 0));
@@ -1963,15 +2256,23 @@ final class MixinBridge {
                     in.add(new TypeInsnNode(Opcodes.CHECKCAST, hp[i].getInternalName()));
                 }
             }
-            in.add(new VarInsnNode(Opcodes.ALOAD, cbSlot));
+            in.add(new VarInsnNode(Opcodes.ALOAD, p.rc() != null ? vcbSlot : cbSlot));
             in.add(new MethodInsnNode(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, del, oldDesc, false));
+            if (back != null) {
+                in.add(new VarInsnNode(Opcodes.ALOAD, cbSlot));
+                in.add(new VarInsnNode(Opcodes.ALOAD, vcbSlot));
+                for (int j : p.rc().with()) {
+                    in.add(new VarInsnNode(wa[j].getOpcode(Opcodes.ILOAD), wslot[j]));
+                }
+                in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, helperName, back[0], back[1], false));
+            }
             in.add(new InsnNode(Opcodes.RETURN));
             if (skip != null) {
                 List<Object> locals = new ArrayList<>();
                 if (!st) {
                     locals.add(mx.name);
                 }
-                for (Type t : wa) {
+                for (Type t : p.wArgs() ? wa : new Type[0]) {
                     locals.add(JarProcessor.frameType(t));
                 }
                 locals.add(p.cb().substring(1, p.cb().length() - 1));
@@ -1979,8 +2280,8 @@ final class MixinBridge {
                 in.add(new FrameNode(Opcodes.F_NEW, locals.size(), locals.toArray(), 0, new Object[0]));
                 in.add(new InsnNode(Opcodes.RETURN));
             }
-            syn.maxLocals = s + 1;
-            syn.maxStack = s + 2;
+            syn.maxLocals = s + 2;
+            syn.maxStack = s + 6;
             mx.methods.add(syn);
             return syn;
         }
@@ -2105,6 +2406,13 @@ final class MixinBridge {
                 }
                 if (!af.desc().equals(a.desc()) && !kind.equals("Inject")) {
                     left.add(where + ": the call's shape changed (" + af.how() + "), and @" + kind + " handles the call itself");
+                    continue;
+                }
+                if (RECEIVER_KINDS.contains(kind) && !af.owner().equals(a.owner()) && takesReceiver(sel.v(), a)) {
+                    // the handler takes the call's receiver first, typed as V's owner; W's call is on another object
+                    // (Minecraft.setScreen -> minecraft.gui's Gui.setScreen), which the handler cannot take
+                    left.add(where + ": " + af.how() + " gives " + shortName(af.owner()) + "." + af.name() + af.desc()
+                        + ", a call on another receiver than " + shortName(a.owner()) + ", which @" + kind + "'s handler takes");
                     continue;
                 }
                 if (kind.equals("Inject") && capturesLocals(sel.handler()) || hasSugar(sel.handler(), "Local;")) {
@@ -2524,6 +2832,238 @@ final class MixinBridge {
             return v;
         }
 
+        private boolean keysCounted;
+
+        /** the numeric pair of the @Inject being planned (retHelper reads it) */
+        private Type curNumV, curNumW;
+
+        /**
+         * V's class when this mixin's target is (or becomes, by the step's class rename) a facade: the class
+         * name the mixin was written for. Null for any other mixin, and for interface mixins.
+         */
+        private String facadeOrigin() {
+            if (target == null || itf) {
+                return null;
+            }
+            if (MixinClassRenames.toLayer(target)) {
+                String v = vk(target); // a mixin that followed its class rename onto the facade (Chain.mixinFollow)
+                return v.equals(target) ? null : v;
+            }
+            return MixinClassRenames.toLayer(chain.classRenames.get(target)) && Chain.minecraftOwned(target) ? target : null;
+        }
+
+        /**
+         * follow+W: an injector of a mixin on V class {@code origin}, which the step renames to a facade, also goes
+         * onto the W method holding the same code (wCounterpart) -- the facade sees only converted mods' calls, the W
+         * method is what vanilla runs. A copy of the handler in a mixin of that W class, its selector the W method,
+         * its anchors unchanged (the bodies are the same instructions); the mod's handler is marked
+         * {@link #ALSO_ON_W} with where the copy is (MixinJudge judges both). Refused, and said why: no single W
+         * method holds the code, static-ness differs, the handler reads {@code this} or the mixin's other members
+         * (which stand for the facade's object and state, not the W class's), its anchors are not all in the W
+         * method, or the W class is itself renamed (a class literal would follow the rename).
+         */
+        private void alsoOnW(MethodNode h, String origin) {
+            AnnotationNode an = null;
+            for (AnnotationNode a : MixinRepair.annotations(h)) {
+                if (MixinRepair.values(a).containsKey("method") && !a.desc.equals(SHADOW) && !a.desc.equals(INVOKER)
+                        && !a.desc.equals(ACCESSOR)) {
+                    an = a;
+                    break;
+                }
+            }
+            if (an == null) {
+                return;
+            }
+            String kind = kind(an);
+            String where = "@" + kind + " " + sn + "." + h.name + " -> " + shortName(origin);
+            List<String> sels = MixinRepair.strings(MixinRepair.values(an).get("method"));
+            if (sels.size() != 1) {
+                left.add(where + ": facade-only (follow+W: " + sels.size() + " selectors)");
+                return;
+            }
+            MixinRepair.Sel s = MixinRepair.Sel.parse(MixinRepair.refmapLookup(table, sels.get(0)));
+            ClassNode vraw = v(origin);
+            if (vraw == null || s.desc() == null || s.owner() != null && !s.owner().equals(target) && !s.owner().equals(origin)) {
+                left.add(where + ": facade-only (follow+W: " + chain.from + "'s method not read)");
+                return;
+            }
+            ClassNode vc = vanillaView(vraw);
+            MethodNode vm = null;
+            for (MethodNode m : vraw.methods) {
+                if (m.name.equals(s.name()) && (m.desc.equals(s.desc()) || chain.renamedDesc(m.desc).equals(s.desc()))) {
+                    vm = method(vc, m.name, vanillaDesc(m.desc));
+                }
+            }
+            if (vm == null) {
+                left.add(where + ": facade-only (follow+W: " + s.name() + s.desc() + " not in " + chain.from + "'s class)");
+                return;
+            }
+            List<String> why = new ArrayList<>();
+            String[] cp = wCounterpart(origin, vm, why);
+            if (cp == null) {
+                left.add(where + "." + vm.name + ": facade-only (follow+W: " + why.get(0) + ")");
+                return;
+            }
+            ClassNode yc = w(cp[0]);
+            MethodNode wm = yc == null ? null : method(yc, cp[1], cp[2]);
+            AnnotationNode moved = literalCopy(an, cp[1] + cp[2]);
+            String refuse = null;
+            if (wm == null) {
+                refuse = "W's method not read";
+            } else if (((wm.access ^ vm.access) & Opcodes.ACC_STATIC) != 0) {
+                refuse = "static-ness differs";
+            } else if ((yc.access & Opcodes.ACC_INTERFACE) != 0) {
+                refuse = shortName(cp[0]) + " is an interface";
+            } else if (chain.classRenames.containsKey(cp[0])) {
+                refuse = shortName(cp[0]) + " is itself renamed by the step";
+            } else if ((h.access & Opcodes.ACC_STATIC) == 0 && !MixinRepair.touchesThisFree(h)) {
+                refuse = "the handler reads this, which on the facade is the facade's object";
+            } else if (usesMixinMembers(h)) {
+                refuse = "the handler uses the mixin's other members (the facade's state)";
+            } else {
+                refuse = selfAnchors(moved, vm, origin, wm);
+                List<MixinRepair.Anchor> anchors = refuse != null ? null : wcode(chain).anchors(moved, MixinRepair.values(moved), null);
+                if (refuse == null && anchors == null) {
+                    refuse = "its anchors are not evaluable";
+                } else if (refuse == null && !anchors.isEmpty() && !MixinRepair.anchorsIn(wm, yc, anchors)) {
+                    refuse = "its anchors " + anchors + " are not in " + shortName(cp[0]) + "." + cp[1];
+                }
+            }
+            if (refuse != null) {
+                left.add(where + "." + vm.name + ": facade-only (follow+W onto " + shortName(cp[0]) + "." + cp[1] + cp[2] + ": " + refuse + ")");
+                return;
+            }
+            ClassNode gc = alsoMixin(cp[0]);
+            String gname = shortName(mx.name).replaceAll("[^A-Za-z0-9_]", "_") + "$" + h.name;
+            for (MethodNode m : gc.methods) {
+                if (m.name.equals(gname)) {
+                    gname = gname + "_";
+                }
+            }
+            MethodNode g = new MethodNode(h.access, gname, h.desc, h.signature, exceptions(h));
+            h.accept(g);
+            g.name = gname;
+            g.access = (h.access & Opcodes.ACC_STATIC) | Opcodes.ACC_PRIVATE;
+            List<AnnotationNode> vis = new ArrayList<>();
+            if (g.visibleAnnotations != null) {
+                for (AnnotationNode a : g.visibleAnnotations) {
+                    vis.add(a.desc.equals(an.desc) ? moved : a);
+                }
+            }
+            if (!vis.contains(moved)) {
+                vis.add(moved);
+            }
+            g.visibleAnnotations = vis;
+            if (g.invisibleAnnotations != null) {
+                String ad = an.desc;
+                g.invisibleAnnotations.removeIf(a -> a.desc.equals(ad) || a.desc.startsWith("Ltop/dext/centurybridge/"));
+                if (g.invisibleAnnotations.isEmpty()) {
+                    g.invisibleAnnotations = null;
+                }
+            }
+            gc.methods.add(g);
+            AnnotationNode mark = new AnnotationNode(ALSO_ON_W);
+            mark.values = new ArrayList<>(List.of("mixin", gc.name, "handler", gname));
+            h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
+            h.invisibleAnnotations.add(mark);
+            changed = true;
+            injected("@" + kind + " " + sn + "." + h.name, where + "." + vm.name + vm.desc + " => also " + shortName(cp[0]) + "."
+                + cp[1] + cp[2] + " (follow+W: the step renames " + shortName(origin) + " to a facade, which only converted mods call;"
+                + " W vanilla runs the same code there, " + why.get(0) + ")");
+        }
+
+        /**
+         * The follow+W copy's anchors on the facade class's own members (FastColor$ARGB32.color calling its own
+         * alpha(..)): in W they are the counterpart class's own members, which the identical-instruction test knew
+         * only by kind. Each moves to the W instruction at the same place among the significant instructions (the
+         * bodies are the same sequence); a pinned one to that occurrence, an unpinned one only when every V site
+         * lands on the same W member and W holds it exactly there. Null when done, else why not.
+         */
+        private String selfAnchors(AnnotationNode moved, MethodNode vm, String origin, MethodNode wm) {
+            List<AbstractInsnNode> vs = new ArrayList<>(), ws = new ArrayList<>();
+            for (AbstractInsnNode in : vm.instructions) {
+                if (SiteMatch.sigOf(in) != null) {
+                    vs.add(in);
+                }
+            }
+            for (AbstractInsnNode in : wm.instructions) {
+                if (SiteMatch.sigOf(in) != null) {
+                    ws.add(in);
+                }
+            }
+            for (AnnotationNode at : atNodes(moved)) {
+                MixinRepair.Anchor a = MixinRepair.parseAt(MixinRepair.values(at), null);
+                if (a == null || a.owner() == null || !(a.kind().equals("INVOKE") || a.kind().equals("FIELD"))
+                        || !a.owner().equals(target) && !a.owner().equals(origin)) {
+                    continue;
+                }
+                if (vs.size() != ws.size()) {
+                    return "its anchor " + a + " names the facade's own member, and the bodies do not line up";
+                }
+                List<Integer> sites = new ArrayList<>();
+                for (int i = 0; i < vs.size(); i++) {
+                    AbstractInsnNode in = vs.get(i);
+                    boolean hit = in instanceof MethodInsnNode mi && mi.owner.equals(origin) && mi.name.equals(a.name())
+                        && (a.desc() == null || chain.renamedDesc(mi.desc).equals(a.desc()) || mi.desc.equals(a.desc()))
+                        || in instanceof FieldInsnNode fi && fi.owner.equals(origin) && fi.name.equals(a.name())
+                        && (a.desc() == null || chain.renamedDesc(fi.desc).equals(a.desc()) || fi.desc.equals(a.desc()));
+                    if (hit) {
+                        sites.add(i);
+                    }
+                }
+                if (sites.isEmpty() || a.ordinal() >= sites.size()) {
+                    return "its anchor " + a + " is not in " + chain.from + "'s body";
+                }
+                List<Integer> mine = a.ordinal() >= 0 ? List.of(sites.get(a.ordinal())) : sites;
+                MixinRepair.Anchor na = anchorOf(ws.get(mine.get(0)));
+                for (int i : mine) {
+                    if (!MixinRepair.matchesAnchor(ws.get(i), na)) {
+                        return "its anchor " + a + " stands for different W members";
+                    }
+                }
+                List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, na));
+                String nt = "L" + na.owner() + ";" + na.name() + (na.kind().equals("FIELD") ? ":" : "") + na.desc();
+                setValue(at, "target", nt);
+                if (mine.size() == 1 && (a.ordinal() >= 0 || wo.size() > 1)) {
+                    setValue(at, "ordinal", wo.indexOf(ws.get(mine.get(0))));
+                } else if (mine.size() != wo.size()) {
+                    return "its anchor " + a + ": " + mine.size() + " V sites, " + wo.size() + " W occurrences of " + na;
+                }
+            }
+            return null;
+        }
+        private boolean usesMixinMembers(MethodNode h) {
+            if (h.instructions == null) {
+                return false;
+            }
+            for (AbstractInsnNode in : h.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.owner.equals(mx.name) || in instanceof FieldInsnNode fi && fi.owner.equals(mx.name)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /** the mixin of a W class that follow+W copies of this config section go into (one per class) */
+        private ClassNode alsoMixin(String decl) {
+            String name = (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$alsow$" + step + "$" + curKey + "$"
+                + decl.replace('/', '_').replace('$', '_');
+            ClassNode gc = restorers.get(name);
+            if (gc == null) {
+                gc = new ClassNode();
+                gc.version = mx.version;
+                gc.access = Opcodes.ACC_PUBLIC | Opcodes.ACC_ABSTRACT | Opcodes.ACC_SUPER;
+                gc.name = name;
+                gc.superName = "java/lang/Object";
+                AnnotationNode mixin = new AnnotationNode(MIXIN);
+                mixin.values = new ArrayList<>(List.of("value", List.of(Type.getObjectType(decl))));
+                gc.invisibleAnnotations = new ArrayList<>(List.of(mixin, new AnnotationNode("Lcb/side;")));
+                gc.invisibleAnnotations.get(1).values = new ArrayList<>(List.of("key", curKey));
+                restorers.put(name, gc);
+            }
+            return gc;
+        }
+
         /** the mixin of a superclass that guarded injectors of this config section go into (one per class) */
         private ClassNode guardMixin(String decl) {
             String name = (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$guard$" + step + "$" + curKey + "$"
@@ -2661,7 +3201,26 @@ final class MixinBridge {
         }
     }
 
-    record Plan(boolean synth, boolean capture, String cb, int ci) {}
+    record Plan(boolean synth, boolean capture, String cb, int ci, RetConv rc, boolean untouched) {
+        Plan(boolean synth, boolean capture, String cb, int ci) {
+            this(synth, capture, cb, ci, null, false);
+        }
+
+        /** the W-shaped handler takes W's arguments: the mod's handler captured V's, or a converter needs some */
+        boolean wArgs() {
+            return capture || rc != null && rc.with().length > 0;
+        }
+    }
+
+    /**
+     * How the answer of the V method an @Inject was written for and the answer of the W method it now targets
+     * turn into each other: toV / toW statics (null with numeric: Java's conversion of numeric primitives),
+     * each taking the answer and then the W target's arguments at indices with.
+     */
+    record RetConv(String[] toV, String[] toW, int[] with, boolean numeric, String how) {}
+
+    /** marks an @Inject handler whose target's return type changed with no converter: it runs, the answer untouched */
+    static final String RETURN_UNTOUCHED = "Ltop/dext/centurybridge/ReturnUntouched;";
 
     record Selection(MethodNode handler, AnnotationNode an, List<MethodNode> v, List<MethodNode> w) {}
 
@@ -3095,7 +3654,7 @@ final class MixinBridge {
     }
 
     /** handler arguments carrying MixinExtras sugar (@Local, @Share...) */
-    private static int sugarCount(MethodNode h) {
+    static int sugarCount(MethodNode h) {
         int n = 0;
         int params = Type.getArgumentTypes(h.desc).length;
         for (int i = 0; i < params; i++) {
@@ -3131,7 +3690,7 @@ final class MixinBridge {
     }
 
     /** does an @Inject handler take parameters after its CallbackInfo (captured locals) */
-    private static boolean capturesLocals(MethodNode h) {
+    static boolean capturesLocals(MethodNode h) {
         Type[] hp = Type.getArgumentTypes(h.desc);
         for (int i = 0; i < hp.length; i++) {
             if (hp[i].getDescriptor().equals(CI) || hp[i].getDescriptor().equals(CIR)) {
@@ -3379,6 +3938,48 @@ final class MixinBridge {
         return false;
     }
 
+    /** float/double or int/long: one quantity at two precisions */
+    private static boolean samePrecisionFamily(Type a, Type b) {
+        int x = a.getSort(), y = b.getSort();
+        return x != y && (x == Type.FLOAT || x == Type.DOUBLE) && (y == Type.FLOAT || y == Type.DOUBLE)
+            || x != y && (x == Type.INT || x == Type.LONG) && (y == Type.INT || y == Type.LONG);
+    }
+
+    private static String boxOf(Type t) {
+        return switch (t.getSort()) {
+            case Type.BOOLEAN -> "java/lang/Boolean";
+            case Type.CHAR -> "java/lang/Character";
+            case Type.BYTE -> "java/lang/Byte";
+            case Type.SHORT -> "java/lang/Short";
+            case Type.INT -> "java/lang/Integer";
+            case Type.LONG -> "java/lang/Long";
+            case Type.FLOAT -> "java/lang/Float";
+            case Type.DOUBLE -> "java/lang/Double";
+            default -> null;
+        };
+    }
+
+    /** the boxed value on the stack as t (a primitive unboxed, a reference cast) */
+    private static void unbox(InsnList in, Type t) {
+        String b = boxOf(t);
+        if (b == null) {
+            if (!t.getDescriptor().equals("Ljava/lang/Object;")) {
+                in.add(new TypeInsnNode(Opcodes.CHECKCAST, t.getSort() == Type.ARRAY ? t.getDescriptor() : t.getInternalName()));
+            }
+            return;
+        }
+        in.add(new TypeInsnNode(Opcodes.CHECKCAST, b));
+        in.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, b, t.getClassName() + "Value", "()" + t.getDescriptor(), false));
+    }
+
+    /** the t on the stack boxed (a reference left as it is) */
+    private static void box(InsnList in, Type t) {
+        String b = boxOf(t);
+        if (b != null) {
+            in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, b, "valueOf", "(" + t.getDescriptor() + ")L" + b + ";", false));
+        }
+    }
+
     private static MixinRepair.Anchor withOrdinal(MixinRepair.Anchor a, int ordinal) {
         return new MixinRepair.Anchor(a.kind(), a.owner(), a.name(), a.desc(), a.constant(), ordinal, a.role());
     }
@@ -3386,6 +3987,20 @@ final class MixinBridge {
     private static String constantKey(Object c) {
         return c instanceof Integer ? "intValue" : c instanceof Float ? "floatValue" : c instanceof Long ? "longValue"
             : c instanceof Double ? "doubleValue" : "stringValue";
+    }
+
+    /** injectors whose handler takes the call's receiver (an instance call / field access) as its first argument */
+    private static final Set<String> RECEIVER_KINDS = Set.of("Redirect", "WrapOperation", "WrapWithCondition");
+
+    /** does V's site of the anchor act on an object (an instance call or GETFIELD/PUTFIELD), in the V methods */
+    private static boolean takesReceiver(List<MethodNode> vms, MixinRepair.Anchor a) {
+        for (MethodNode m : vms) {
+            for (AbstractInsnNode in : SiteMatch.occurrences(m, x -> MixinRepair.matchesAnchor(x, a))) {
+                int op = in.getOpcode();
+                return op != Opcodes.INVOKESTATIC && op != Opcodes.GETSTATIC && op != Opcodes.PUTSTATIC;
+            }
+        }
+        return true; // not read: as the anchor's kind suggests, conservatively an instance access
     }
 
     /** injectors baseGuard moves: positional, or handing back the one value they take */
@@ -3396,6 +4011,128 @@ final class MixinBridge {
      * guard mixin and "handler" the guarded injector there (the judge follows it)
      */
     static final String GUARDED = "Ltop/dext/centurybridge/BaseGuarded;";
+
+    /**
+     * marks a mod handler alsoOnW copied onto the W method holding its facade method's code: "mixin" the copy's
+     * mixin class and "handler" the copy (the judge follows it)
+     */
+    static final String ALSO_ON_W = "Ltop/dext/centurybridge/AlsoOnW;";
+
+    /** the step's class renames into vanilla classes only (a facade rename left out) */
+    private Map<String, String> vanillaRenames;
+
+    private Map<String, String> vanillaRenames() {
+        if (vanillaRenames == null) {
+            vanillaRenames = new HashMap<>();
+            chain.classRenames.forEach((f, t) -> {
+                if (!MixinClassRenames.toLayer(t)) {
+                    vanillaRenames.put(f, t);
+                }
+            });
+        }
+        return vanillaRenames;
+    }
+
+    /** V's class with the step's vanilla class renames applied (its facade renames not: W never names a facade) */
+    private ClassNode vanillaView(ClassNode v) {
+        ClassNode out = new ClassNode();
+        v.accept(new org.objectweb.asm.commons.ClassRemapper(out, new org.objectweb.asm.commons.SimpleRemapper(vanillaRenames())));
+        return out;
+    }
+
+    private String vanillaDesc(String desc) {
+        return new org.objectweb.asm.commons.SimpleRemapper(vanillaRenames()).mapMethodDesc(desc);
+    }
+
+    /** W's methods by body: descriptor and significant instructions (own members by kind) -> owner and name (two at most) */
+    private Map<String, List<String[]>> bodyIndex;
+
+    /** does the body reference a game member of another class, a string, or a constant beyond -1..5 / 0, 1, 2 */
+    private static boolean distinctive(MethodNode m, String owner) {
+        for (AbstractInsnNode in : m.instructions) {
+            if (in instanceof MethodInsnNode mi && !mi.owner.equals(owner) && Chain.minecraftOwned(mi.owner)
+                    || in instanceof FieldInsnNode fi && !fi.owner.equals(owner) && Chain.minecraftOwned(fi.owner)
+                    || in instanceof TypeInsnNode ti && !ti.desc.equals(owner) && Chain.minecraftOwned(ti.desc)) {
+                return true;
+            }
+            Object c = SiteMatch.constantOf(in);
+            if (c instanceof String || c instanceof Number n && !(in.getOpcode() >= Opcodes.ICONST_M1 && in.getOpcode() <= Opcodes.DCONST_1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static String bodyKey(MethodNode m, String owner) {
+        List<String> sig = SiteMatch.sigSelf(m, owner);
+        return sig.size() < 3 ? null : m.desc + "#" + String.join("|", sig);
+    }
+
+    /**
+     * The W method holding V method vm's code (vm read with the step's vanilla renames, of V class origin): the one
+     * W method, of a game class and not synthetic, whose descriptor and significant instructions (the class's own
+     * members by kind) are vm's, with three significant instructions at least. Returns {owner, name, desc} with how
+     * it was found in why, or null with why not. A facade descriptor (a type W never names) has no counterpart.
+     */
+    private String[] wCounterpart(String origin, MethodNode vm, List<String> why) {
+        MixinRepair code = wcode(chain);
+        if (code == null) {
+            why.add("no W code at hand");
+            return null;
+        }
+        if (vm.desc.contains("Ltop/dext/")) {
+            why.add("its descriptor names a facade");
+            return null;
+        }
+        if (vm.name.equals("<clinit>")) {
+            why.add("a static initializer: another class's static state is not the facade's");
+            return null;
+        }
+        String key = bodyKey(vm, origin);
+        if (key == null) {
+            why.add("its body is too short to single out (fewer than 3 significant instructions)");
+            return null;
+        }
+        if (!distinctive(vm, origin)) {
+            // same instructions made only of the JDK, the class's own members and small constants say nothing about
+            // which W class carries the code (ChunkTaskPriorityQueueSorter.close and Brain.clearMemories read the same)
+            why.add("its body names nothing distinctive (only the JDK, its own members and small constants)");
+            return null;
+        }
+        if (bodyIndex == null) {
+            Map<String, List<String[]>> idx = new HashMap<>();
+            code.forEachClass(cn -> {
+                if (!Chain.minecraftOwned(cn.name)) {
+                    return;
+                }
+                for (MethodNode m : cn.methods) {
+                    if ((m.access & (Opcodes.ACC_SYNTHETIC | Opcodes.ACC_ABSTRACT)) != 0 || m.instructions == null) {
+                        continue;
+                    }
+                    String k = bodyKey(m, cn.name);
+                    if (k != null) {
+                        List<String[]> l = idx.computeIfAbsent(k, x -> new ArrayList<>(2));
+                        if (l.size() < 2) {
+                            l.add(new String[] {cn.name, m.name});
+                        }
+                    }
+                }
+            });
+            bodyIndex = idx;
+        }
+        List<String[]> hits = bodyIndex.get(key);
+        if (hits == null) {
+            why.add("no W method holds the same instructions");
+            return null;
+        }
+        if (hits.size() > 1) {
+            why.add("several W methods hold the same instructions (" + shortName(hits.get(0)[0]) + "." + hits.get(0)[1] + ", "
+                + shortName(hits.get(1)[0]) + "." + hits.get(1)[1] + ")");
+            return null;
+        }
+        why.add("the same " + SiteMatch.sigSelf(vm, origin).size() + " significant instructions, the only W method holding them");
+        return new String[] {hits.get(0)[0], hits.get(0)[1], vm.desc};
+    }
 
     /** marks a method MixinBridge put back into a mixin as a target override (restoreOverride) */
     static final String RESTORED = "Ltop/dext/centurybridge/RestoredOverride;";

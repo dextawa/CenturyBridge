@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * getId answers the id of the holder naming the record (CbAdvNodes.holderOf); parent and children are the
  * tree node's (CbAdvNodes, instance redirects).
  */
-@Mixin(class_161.class)
+@Mixin(value = class_161.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class AdvancementBridge {
 
     public class_185 method_686() {

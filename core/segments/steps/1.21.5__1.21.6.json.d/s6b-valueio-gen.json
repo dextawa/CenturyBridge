@@ -1,0 +1,503 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_10583.method_66259(Lnet/minecraft/class_2487;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_66259_class_10583",
+  "net/minecraft/class_1273.method_5474(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5474_class_1273",
+  "net/minecraft/class_1297.method_5647(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5647_class_1297",
+  "net/minecraft/class_1297.method_5651(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5651_class_1297",
+  "net/minecraft/class_1297.method_5652(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5652_class_1297",
+  "net/minecraft/class_1297.method_5662(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5662_class_1297",
+  "net/minecraft/class_1297.method_5749(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5749_class_1297",
+  "net/minecraft/class_1297.method_5786(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5786_class_1297",
+  "net/minecraft/class_1702.method_7582(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_7582_class_1702",
+  "net/minecraft/class_1702.method_7584(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_7584_class_1702",
+  "net/minecraft/class_1917.method_8272(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_8272_class_1917",
+  "net/minecraft/class_1917.method_8280(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_8280_class_1917",
+  "net/minecraft/class_1918.method_8297(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_8297_class_1918",
+  "net/minecraft/class_1918.method_8305(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_8305_class_1918",
+  "net/minecraft/class_2586.method_11007(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_11007_class_2586",
+  "net/minecraft/class_2586.method_11014(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_11014_class_2586",
+  "net/minecraft/class_2586.method_38243(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_38243_class_2586",
+  "net/minecraft/class_2586.method_57569(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_57569_class_2586",
+  "net/minecraft/class_2586.method_58690(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_58690_class_2586",
+  "net/minecraft/class_2586.method_58691(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_58691_class_2586",
+  "net/minecraft/class_2627.method_11319(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_11319_class_2627",
+  "net/minecraft/class_3222.method_32748(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_32748_class_3222",
+  "net/minecraft/class_3222.method_64125(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_64125_class_3222",
+  "net/minecraft/class_3222.method_64131(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_64131_class_3222",
+  "net/minecraft/class_5354.method_29512(Lnet/minecraft/class_1937;Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_29512_class_5354",
+  "net/minecraft/class_5354.method_29517(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_29517_class_5354",
+  "net/minecraft/class_6067.method_46399(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_46399_class_6067",
+  "net/minecraft/class_6067.method_46400(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_46400_class_6067",
+  "net/minecraft/class_7128.method_41483(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_41483_class_7128",
+  "net/minecraft/class_7128.method_41486(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_41486_class_7128",
+  "net/minecraft/class_7265.method_42285(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_42285_class_7265",
+  "net/minecraft/class_7265.method_42288(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_42288_class_7265",
+  "net/minecraft/class_8934.method_54871(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_54871_class_8934",
+  "net/minecraft/class_8934.method_54872(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_54872_class_8934",
+  "net/minecraft/class_9817.method_60962(Lnet/minecraft/class_2487;Lnet/minecraft/class_9817$class_9818;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_60962_class_9817",
+  "net/minecraft/class_9817.method_60967(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_60967_class_9817"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_10583.method_66260(Lnet/minecraft/class_2487;Ljava/lang/String;Lnet/minecraft/class_1937;)Lnet/minecraft/class_10583;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_66260_class_10583",
+  "net/minecraft/class_10583.method_66262(Lnet/minecraft/class_2487;Ljava/lang/String;)Lnet/minecraft/class_10583;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_66262_class_10583",
+  "net/minecraft/class_10704.method_67177(Lnet/minecraft/class_2487;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_67177_class_10704",
+  "net/minecraft/class_1262.method_5426(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5426_class_1262",
+  "net/minecraft/class_1262.method_5427(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;ZLnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5427_class_1262",
+  "net/minecraft/class_1262.method_5429(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5429_class_1262",
+  "net/minecraft/class_1273.method_5473(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1273;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5473_class_1273",
+  "net/minecraft/class_1299.method_17684(Lnet/minecraft/class_2487;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_17684_class_1299",
+  "net/minecraft/class_1299.method_17842(Lnet/minecraft/class_2487;Lnet/minecraft/class_1937;Lnet/minecraft/class_3730;Ljava/util/function/Function;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_17842_class_1299",
+  "net/minecraft/class_1299.method_5892(Lnet/minecraft/class_2487;Lnet/minecraft/class_1937;Lnet/minecraft/class_3730;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_5892_class_1299",
+  "net/minecraft/class_1747.method_57338(Lnet/minecraft/class_1799;Lnet/minecraft/class_2591;Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_57338_class_1747",
+  "net/minecraft/class_2586.method_38238(Lnet/minecraft/class_2487;Lnet/minecraft/class_2591;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen#method_38238_class_2586"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_66259(Lnet/minecraft/class_2487;Ljava/lang/String;)V",
+   "new": "method_66259(Lnet/minecraft/class_11372;Ljava/lang/String;)V",
+   "onlyUnder": "net/minecraft/class_10583",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_66259_class_10583(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_66259_class_10583;Lnet/minecraft/class_2487;Ljava/lang/String;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_66259_class_10583",
+   "superAccessors": [
+    "method_66259(Lnet/minecraft/class_11372;Ljava/lang/String;)V"
+   ],
+   "basis": "1.21.5 method_66259(Lnet/minecraft/class_2487;Ljava/lang/String;)V is 1.21.6's method_66259(Lnet/minecraft/class_11372;Ljava/lang/String;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_5647(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;",
+   "new": "method_5647(Lnet/minecraft/class_11372;)V",
+   "onlyUnder": "net/minecraft/class_1297",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_5647_class_1297(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5647_class_1297;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5647_class_1297",
+   "superAccessors": [
+    "method_5647(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_5647(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487; is 1.21.6's method_5647(Lnet/minecraft/class_11372;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_5651(Lnet/minecraft/class_2487;)V",
+   "new": "method_5651(Lnet/minecraft/class_11368;)V",
+   "onlyUnder": "net/minecraft/class_1297",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_5651_class_1297(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5651_class_1297;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5651_class_1297",
+   "superAccessors": [
+    "method_5651(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_5651(Lnet/minecraft/class_2487;)V is 1.21.6's method_5651(Lnet/minecraft/class_11368;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_5652(Lnet/minecraft/class_2487;)V",
+   "new": "method_5652(Lnet/minecraft/class_11372;)V",
+   "onlyUnder": "net/minecraft/class_1297",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_5652_class_1297(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5652_class_1297;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5652_class_1297",
+   "superAccessors": [
+    "method_5652(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_5652(Lnet/minecraft/class_2487;)V is 1.21.6's method_5652(Lnet/minecraft/class_11372;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_5662(Lnet/minecraft/class_2487;)Z",
+   "new": "method_5662(Lnet/minecraft/class_11372;)Z",
+   "onlyUnder": "net/minecraft/class_1297",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_5662_class_1297(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5662_class_1297;Lnet/minecraft/class_2487;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5662_class_1297",
+   "superAccessors": [
+    "method_5662(Lnet/minecraft/class_11372;)Z"
+   ],
+   "basis": "1.21.5 method_5662(Lnet/minecraft/class_2487;)Z is 1.21.6's method_5662(Lnet/minecraft/class_11372;)Z: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_5749(Lnet/minecraft/class_2487;)V",
+   "new": "method_5749(Lnet/minecraft/class_11368;)V",
+   "onlyUnder": "net/minecraft/class_1297",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_5749_class_1297(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5749_class_1297;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5749_class_1297",
+   "superAccessors": [
+    "method_5749(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_5749(Lnet/minecraft/class_2487;)V is 1.21.6's method_5749(Lnet/minecraft/class_11368;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_5786(Lnet/minecraft/class_2487;)Z",
+   "new": "method_5786(Lnet/minecraft/class_11372;)Z",
+   "onlyUnder": "net/minecraft/class_1297",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_5786_class_1297(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5786_class_1297;Lnet/minecraft/class_2487;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_5786_class_1297",
+   "superAccessors": [
+    "method_5786(Lnet/minecraft/class_11372;)Z"
+   ],
+   "basis": "1.21.5 method_5786(Lnet/minecraft/class_2487;)Z is 1.21.6's method_5786(Lnet/minecraft/class_11372;)Z: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_7582(Lnet/minecraft/class_2487;)V",
+   "new": "method_7582(Lnet/minecraft/class_11372;)V",
+   "onlyUnder": "net/minecraft/class_1702",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_7582_class_1702(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_7582_class_1702;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_7582_class_1702",
+   "superAccessors": [
+    "method_7582(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_7582(Lnet/minecraft/class_2487;)V is 1.21.6's method_7582(Lnet/minecraft/class_11372;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_7584(Lnet/minecraft/class_2487;)V",
+   "new": "method_7584(Lnet/minecraft/class_11368;)V",
+   "onlyUnder": "net/minecraft/class_1702",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_7584_class_1702(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_7584_class_1702;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_7584_class_1702",
+   "superAccessors": [
+    "method_7584(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_7584(Lnet/minecraft/class_2487;)V is 1.21.6's method_7584(Lnet/minecraft/class_11368;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_8272(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;",
+   "new": "method_8272(Lnet/minecraft/class_11372;)V",
+   "onlyUnder": "net/minecraft/class_1917",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_8272_class_1917(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_8272_class_1917;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_8272_class_1917",
+   "superAccessors": [
+    "method_8272(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_8272(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487; is 1.21.6's method_8272(Lnet/minecraft/class_11372;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_8280(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2487;)V",
+   "new": "method_8280(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_11368;)V",
+   "onlyUnder": "net/minecraft/class_1917",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_8280_class_1917(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_8280_class_1917;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_8280_class_1917",
+   "superAccessors": [
+    "method_8280(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_8280(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2487;)V is 1.21.6's method_8280(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_11368;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_8297(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;",
+   "new": "method_8297(Lnet/minecraft/class_11372;)V",
+   "args": [
+    0,
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_1918",
+   "wrap": [
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.lookup(Lnet/minecraft/class_11372;)Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_8297_class_1918(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_8297_class_1918;Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_8297_class_1918",
+   "superAccessors": [
+    "method_8297(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_8297(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487; is 1.21.6's method_8297(Lnet/minecraft/class_11372;)V: the view's own CompoundTag and lookup; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_8305(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "new": "method_8305(Lnet/minecraft/class_11368;)V",
+   "args": [
+    0,
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_1918",
+   "wrap": [
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.lookup(Lnet/minecraft/class_11368;)Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_8305_class_1918(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_8305_class_1918;Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_8305_class_1918",
+   "superAccessors": [
+    "method_8305(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_8305(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V is 1.21.6's method_8305(Lnet/minecraft/class_11368;)V: the view's own CompoundTag and lookup; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_11007(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "new": "method_11007(Lnet/minecraft/class_11372;)V",
+   "args": [
+    0,
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2586",
+   "wrap": [
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.lookup(Lnet/minecraft/class_11372;)Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_11007_class_2586(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_11007_class_2586;Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_11007_class_2586",
+   "superAccessors": [
+    "method_11007(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_11007(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V is 1.21.6's method_11007(Lnet/minecraft/class_11372;)V: the view's own CompoundTag and lookup; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_11014(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "new": "method_11014(Lnet/minecraft/class_11368;)V",
+   "args": [
+    0,
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2586",
+   "wrap": [
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.lookup(Lnet/minecraft/class_11368;)Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_11014_class_2586(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_11014_class_2586;Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_11014_class_2586",
+   "superAccessors": [
+    "method_11014(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_11014(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V is 1.21.6's method_11014(Lnet/minecraft/class_11368;)V: the view's own CompoundTag and lookup; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_57569(Lnet/minecraft/class_2487;)V",
+   "new": "method_57569(Lnet/minecraft/class_11372;)V",
+   "onlyUnder": "net/minecraft/class_2586",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_57569_class_2586(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_57569_class_2586;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_57569_class_2586",
+   "superAccessors": [
+    "method_57569(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_57569(Lnet/minecraft/class_2487;)V is 1.21.6's method_57569(Lnet/minecraft/class_11372;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_11319(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "new": "method_11319(Lnet/minecraft/class_11368;)V",
+   "args": [
+    0,
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2627",
+   "wrap": [
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.lookup(Lnet/minecraft/class_11368;)Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_11319_class_2627(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_11319_class_2627;Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_11319_class_2627",
+   "superAccessors": [
+    "method_11319(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_11319(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V is 1.21.6's method_11319(Lnet/minecraft/class_11368;)V: the view's own CompoundTag and lookup; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_32748(Lnet/minecraft/class_2487;)V",
+   "new": "method_32748(Lnet/minecraft/class_11368;)V",
+   "onlyUnder": "net/minecraft/class_3222",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_32748_class_3222(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_32748_class_3222;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_32748_class_3222",
+   "superAccessors": [
+    "method_32748(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_32748(Lnet/minecraft/class_2487;)V is 1.21.6's method_32748(Lnet/minecraft/class_11368;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_64125(Lnet/minecraft/class_2487;)V",
+   "new": "method_64125(Lnet/minecraft/class_11368;)V",
+   "onlyUnder": "net/minecraft/class_3222",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_64125_class_3222(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_64125_class_3222;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_64125_class_3222",
+   "superAccessors": [
+    "method_64125(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_64125(Lnet/minecraft/class_2487;)V is 1.21.6's method_64125(Lnet/minecraft/class_11368;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_64131(Lnet/minecraft/class_2487;)V",
+   "new": "method_64131(Lnet/minecraft/class_11368;)V",
+   "onlyUnder": "net/minecraft/class_3222",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_64131_class_3222(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_64131_class_3222;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_64131_class_3222",
+   "superAccessors": [
+    "method_64131(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_64131(Lnet/minecraft/class_2487;)V is 1.21.6's method_64131(Lnet/minecraft/class_11368;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_29512(Lnet/minecraft/class_1937;Lnet/minecraft/class_2487;)V",
+   "new": "method_29512(Lnet/minecraft/class_1937;Lnet/minecraft/class_11368;)V",
+   "onlyUnder": "net/minecraft/class_5354",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_29512_class_5354(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_29512_class_5354;Lnet/minecraft/class_1937;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_29512_class_5354",
+   "superAccessors": [
+    "method_29512(Lnet/minecraft/class_1937;Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_29512(Lnet/minecraft/class_1937;Lnet/minecraft/class_2487;)V is 1.21.6's method_29512(Lnet/minecraft/class_1937;Lnet/minecraft/class_11368;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_29517(Lnet/minecraft/class_2487;)V",
+   "new": "method_29517(Lnet/minecraft/class_11372;)V",
+   "onlyUnder": "net/minecraft/class_5354",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_29517_class_5354(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_29517_class_5354;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_29517_class_5354",
+   "superAccessors": [
+    "method_29517(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_29517(Lnet/minecraft/class_2487;)V is 1.21.6's method_29517(Lnet/minecraft/class_11372;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_46399(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "new": "method_46399(Lnet/minecraft/class_11372;)V",
+   "args": [
+    0,
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_6067",
+   "wrap": [
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.lookup(Lnet/minecraft/class_11372;)Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_46399_class_6067(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_46399_class_6067;Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_46399_class_6067",
+   "superAccessors": [
+    "method_46399(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_46399(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V is 1.21.6's method_46399(Lnet/minecraft/class_11372;)V: the view's own CompoundTag and lookup; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_46400(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "new": "method_46400(Lnet/minecraft/class_11368;)V",
+   "args": [
+    0,
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_6067",
+   "wrap": [
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.lookup(Lnet/minecraft/class_11368;)Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_46400_class_6067(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_46400_class_6067;Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_46400_class_6067",
+   "superAccessors": [
+    "method_46400(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_46400(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V is 1.21.6's method_46400(Lnet/minecraft/class_11368;)V: the view's own CompoundTag and lookup; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_41483(Lnet/minecraft/class_2487;)V",
+   "new": "method_41483(Lnet/minecraft/class_11368;)V",
+   "onlyUnder": "net/minecraft/class_7128",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_41483_class_7128(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_41483_class_7128;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_41483_class_7128",
+   "superAccessors": [
+    "method_41483(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_41483(Lnet/minecraft/class_2487;)V is 1.21.6's method_41483(Lnet/minecraft/class_11368;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_41486(Lnet/minecraft/class_2487;)V",
+   "new": "method_41486(Lnet/minecraft/class_11372;)V",
+   "onlyUnder": "net/minecraft/class_7128",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_41486_class_7128(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_41486_class_7128;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_41486_class_7128",
+   "superAccessors": [
+    "method_41486(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_41486(Lnet/minecraft/class_2487;)V is 1.21.6's method_41486(Lnet/minecraft/class_11372;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_42285(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "new": "method_42285(Lnet/minecraft/class_11368;)V",
+   "args": [
+    0,
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_7265",
+   "wrap": [
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.lookup(Lnet/minecraft/class_11368;)Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_42285_class_7265(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_42285_class_7265;Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_42285_class_7265",
+   "superAccessors": [
+    "method_42285(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_42285(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V is 1.21.6's method_42285(Lnet/minecraft/class_11368;)V: the view's own CompoundTag and lookup; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_42288(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "new": "method_42288(Lnet/minecraft/class_11372;)V",
+   "args": [
+    0,
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_7265",
+   "wrap": [
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+    "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.lookup(Lnet/minecraft/class_11372;)Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_42288_class_7265(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_42288_class_7265;Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_42288_class_7265",
+   "superAccessors": [
+    "method_42288(Lnet/minecraft/class_11372;)V"
+   ],
+   "basis": "1.21.5 method_42288(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V is 1.21.6's method_42288(Lnet/minecraft/class_11372;)V: the view's own CompoundTag and lookup; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_54871(Lnet/minecraft/class_2487;)Z",
+   "new": "method_54871(Lnet/minecraft/class_11368;)Z",
+   "onlyUnder": "net/minecraft/class_8934",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_54871_class_8934(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_54871_class_8934;Lnet/minecraft/class_2487;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_54871_class_8934",
+   "superAccessors": [
+    "method_54871(Lnet/minecraft/class_11368;)Z"
+   ],
+   "basis": "1.21.5 method_54871(Lnet/minecraft/class_2487;)Z is 1.21.6's method_54871(Lnet/minecraft/class_11368;)Z: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_54872(Lnet/minecraft/class_2487;)Z",
+   "new": "method_54872(Lnet/minecraft/class_11372;)Z",
+   "onlyUnder": "net/minecraft/class_8934",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_54872_class_8934(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_54872_class_8934;Lnet/minecraft/class_2487;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_54872_class_8934",
+   "superAccessors": [
+    "method_54872(Lnet/minecraft/class_11372;)Z"
+   ],
+   "basis": "1.21.5 method_54872(Lnet/minecraft/class_2487;)Z is 1.21.6's method_54872(Lnet/minecraft/class_11372;)Z: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_60962(Lnet/minecraft/class_2487;Lnet/minecraft/class_9817$class_9818;)V",
+   "new": "method_60962(Lnet/minecraft/class_11372;Lnet/minecraft/class_9817$class_9818;)V",
+   "onlyUnder": "net/minecraft/class_9817",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11372;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_60962_class_9817(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_60962_class_9817;Lnet/minecraft/class_2487;Lnet/minecraft/class_9817$class_9818;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_60962_class_9817",
+   "superAccessors": [
+    "method_60962(Lnet/minecraft/class_11372;Lnet/minecraft/class_9817$class_9818;)V"
+   ],
+   "basis": "1.21.5 method_60962(Lnet/minecraft/class_2487;Lnet/minecraft/class_9817$class_9818;)V is 1.21.6's method_60962(Lnet/minecraft/class_11372;Lnet/minecraft/class_9817$class_9818;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  },
+  {
+   "old": "method_60967(Lnet/minecraft/class_2487;)V",
+   "new": "method_60967(Lnet/minecraft/class_11368;)V",
+   "onlyUnder": "net/minecraft/class_9817",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIo.tag(Lnet/minecraft/class_11368;)Lnet/minecraft/class_2487;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen.super$method_60967_class_9817(Ltop/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_60967_class_9817;Lnet/minecraft/class_2487;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbValueIoGen$S_method_60967_class_9817",
+   "superAccessors": [
+    "method_60967(Lnet/minecraft/class_11368;)V"
+   ],
+   "basis": "1.21.5 method_60967(Lnet/minecraft/class_2487;)V is 1.21.6's method_60967(Lnet/minecraft/class_11368;)V: the view's own CompoundTag; super calls reach super's new shape with vanilla's view (CbValueIo)"
+  }
+ ]
+}

@@ -9,6 +9,9 @@ import net.minecraft.client.renderer.Lightmap;
 import net.minecraft.client.renderer.LightmapRenderStateExtractor;
 import net.minecraft.client.renderer.state.GameRenderState;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.EntityHitResult;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Final;
@@ -18,6 +21,7 @@ import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v26_1.facade.LightTexture;
 import top.dext.centurybridge.step.v26_1.facade.PanoramicScreenshotParameters;
 import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
+import top.dext.centurybridge.step.v26_1.rt.CbWallPick;
 import top.dext.centurybridge.step.v26_1.rt.CbWallDepthFar;
 
 /**
@@ -29,7 +33,8 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallDepthFar;
  *     the window's aspect from 0.05 to it). 26.1's Camera computes the same far plane; the projection
  *     takes the GPU device's depth range as 26.1's does. Camera.update takes its far plane from getDepthFar()
  *     (mixin/CbWallCameraDepthFarMixin), as 1.21.11's renderer did.</li>
- * <li>pick(partialTicks): 26.1 moved it to Minecraft (same body).</li>
+ * <li>pick(partialTicks): 26.1 moved it to Minecraft (same body); Minecraft's calls go through this one
+ * (CbWallMinecraftPickMixin).</li>
  * <li>updateCamera(deltaTracker): 26.1's Camera.update.</li>
  * <li>isPanoramicMode() and the panoramic screenshot parameters: kept by 26.1's Camera
  *     (enablePanoramicMode, panoramicForwards).</li>
@@ -38,7 +43,7 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallDepthFar;
  * </ul>
  */
 @Mixin(GameRenderer.class)
-public abstract class CbWallGameRendererMixin implements CbWallDepthFar {
+public abstract class CbWallGameRendererMixin implements CbWallDepthFar, CbWallPick {
 
     @Shadow
     @Final
@@ -84,8 +89,21 @@ public abstract class CbWallGameRendererMixin implements CbWallDepthFar {
                 0.05F, getDepthFar(), RenderSystem.getDevice().isZZeroToOne());
     }
 
+    /** 1.21.11 GameRenderer.pick (class_757.method_3190), the body 26.1 moved to Minecraft.pick */
+    @CbVanillaReads("CbWallMinecraftPickMixin: Minecraft.tick and renderFrame pick through this method")
+    @Override
     public void pick(float partialTicks) {
-        ((CbWallMinecraftAccess) this.minecraft).cb$pick(partialTicks);
+        Entity camera = this.minecraft.getCameraEntity();
+        if (camera == null) {
+            return;
+        }
+        if (this.minecraft.level == null || this.minecraft.player == null) {
+            return;
+        }
+        Profiler.get().push("pick");
+        this.minecraft.hitResult = this.minecraft.player.raycastHitResult(partialTicks, camera);
+        this.minecraft.crosshairPickEntity = this.minecraft.hitResult instanceof EntityHitResult hit ? hit.getEntity() : null;
+        Profiler.get().pop();
     }
 
     public void updateCamera(DeltaTracker deltaTracker) {

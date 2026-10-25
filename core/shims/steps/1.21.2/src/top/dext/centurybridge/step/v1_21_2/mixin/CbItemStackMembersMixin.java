@@ -20,21 +20,37 @@ public abstract class CbItemStackMembersMixin {
     @Shadow
     public abstract class_1792 method_7909();
 
-    /** isEnchantable(): 1.21.1's -- the item's isEnchantable(stack), and an empty ENCHANTMENTS component */
+    /**
+     * isEnchantable(): 1.21.1's -- the item's isEnchantable(stack), and an empty ENCHANTMENTS component -- for a 1.21.1
+     * class's override, or where a mod's mixin makes the restored member answer otherwise than its body
+     */
     @Inject(method = "method_7923", at = @At("HEAD"), cancellable = true)
     private void cb$enchantable(CallbackInfoReturnable<Boolean> cir) {
         if (method_7909() instanceof CbItemMembers.LegacyEnchantable l) {
             class_1799 self = (class_1799) (Object) this;
             net.minecraft.class_9304 e = self.method_57824(net.minecraft.class_9334.field_49633);
             cir.setReturnValue(l.method_7870(self) && e != null && e.method_57543());
+            return;
+        }
+        Boolean restored = CbItemMembers.enchantableStackRead((class_1799) (Object) this);
+        if (restored != null) {
+            cir.setReturnValue(restored); // a mod's mixin on the restored isEnchantable(stack)
         }
     }
 
-    /** isValidRepairItem(ingredient): the item's 1.21.1 isValidRepairItem(stack, ingredient) */
+    /**
+     * isValidRepairItem(ingredient): the item's 1.21.1 isValidRepairItem(stack, ingredient) -- a 1.21.1 class's override,
+     * or the restored member where a mod's mixin makes it answer otherwise than its body
+     */
     @Inject(method = "method_61655", at = @At("HEAD"), cancellable = true)
     private void cb$repair(class_1799 ingredient, CallbackInfoReturnable<Boolean> cir) {
         if (method_7909() instanceof CbItemMembers.LegacyRepairItem l) {
             cir.setReturnValue(l.method_7878((class_1799) (Object) this, ingredient));
+            return;
+        }
+        Boolean restored = CbItemMembers.repairRead((class_1799) (Object) this, ingredient);
+        if (restored != null) {
+            cir.setReturnValue(restored); // a mod's mixin on the restored isValidRepairItem
         }
     }
 }

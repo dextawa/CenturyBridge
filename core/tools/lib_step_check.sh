@@ -32,8 +32,10 @@ python3 probe/probe_report.py "$OUT/probe-$V.jar.index.tsv" "$OUT/self/probe-$V.
 [ -f "$OUT/control/link-findings.tsv" ] || { echo "control link-check failed"; tail -5 "$OUT/control.log"; exit 1; }
 "$JAVA" -Xmx16g -Dcb.wiring="$WIRING" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/conv" \
     "$OUT/probe-$V.jar" > "$OUT/convert.log" 2>&1 || { echo "convert failed"; tail -5 "$OUT/convert.log"; exit 1; }
+# the separately released mods the layer depends on (build.sh built them into build/deps/): on the runtime like the layer
+DEPS=$(ls "$WD"/build/deps/*.jar 2>/dev/null)
 "$JAVA" -Xmx16g -Dcb.linkcheck.perSite=true -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/lc" "$OUT/conv/full-audit.tsv" "$OUT/conv" -- \
-    "$WD/build/centurybridge-0.3.0+$W.jar" "$(jar_of "$W")" $FAPI "$(libdir "$W")" > "$OUT/linkcheck.log" 2>&1
+    "$WD/build/centurybridge-0.3.0+$W.jar" $DEPS "$(jar_of "$W")" $FAPI "$(libdir "$W")" > "$OUT/linkcheck.log" 2>&1
 python3 probe/probe_report.py "$OUT/probe-$V.jar.index.tsv" "$(ls "$OUT"/conv/*.jar | head -1)" "$OUT/lc/link-findings.tsv" \
     "$OUT/report.tsv" > /dev/null 2>&1
 [ -f "$OUT/lc/link-findings.tsv" ] && [ -f "$OUT/report.tsv" ] || { echo "link-check failed"; tail -5 "$OUT/linkcheck.log"; exit 1; }

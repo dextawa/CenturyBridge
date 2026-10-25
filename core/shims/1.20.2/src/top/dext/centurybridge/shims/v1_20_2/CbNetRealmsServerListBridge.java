@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * 1.20.2's return nothing (the list is Iterable now). The 1.20.1 bodies, on the same fields 1.20.2
  * keeps. A subclass's 1.20.1 overrides are reached from 1.20.2's shapes by overrideHooks.
  */
-@Mixin(class_7580.class)
+@Mixin(value = class_7580.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetRealmsServerListBridge {
 
     @Shadow

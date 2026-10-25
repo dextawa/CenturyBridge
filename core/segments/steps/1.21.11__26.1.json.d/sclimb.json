@@ -1,0 +1,9 @@
+{
+  "classRenames": {
+    "net/fabricmc/fabric/impl/tag/TagFileHooks": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagFileHooks"
+  },
+  "methodRenames": {
+    "net/fabricmc/fabric/impl/tag/TagFileHooks.fabric_setRemove(Ljava/util/List;)V": "cb$setRemove"
+  },
+  "_sclimb_tagFileHooks_basis": "26.1's Fabric API dropped tag removal (swfapi: the 26.1 layer gives it back, CbFapiTagFileMixin making every TagFile a CbFapiTagFileHooks). 1.21.11's fabric-tag-api-v1 TagFileHooks (fabric_setRemove(List)) was the hook a generated tag file's removals were set through; the climbed 1.21.2 layer's datagen half reaches it there (steps/1.21.10__1.21.11.json.d/sclimb.json). From 26.1 on that hook is the 26.1 layer's CbFapiTagFileHooks, the same one-method shape (cb$setRemove(List<TagEntry>)), so references move to it."
+}
