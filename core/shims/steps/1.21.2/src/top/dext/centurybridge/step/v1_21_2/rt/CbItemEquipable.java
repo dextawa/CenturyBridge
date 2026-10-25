@@ -58,6 +58,49 @@ public final class CbItemEquipable {
         return null;
     }
 
+    /**
+     * 1.21.1's vanilla Equipable items, exactly (ArmorItem, AnimalArmorItem, ShieldItem): 1.21.2 equips them from the
+     * EQUIPPABLE they were built with, and their restored getEquipmentSlot() / getEquipSound() (CbItemArmorMixin,
+     * CbItemAnimalArmorMixin, CbItemEquipableShieldMixin) are what a mod's mixin targets. Their components are
+     * CbItemMemberComponents too ({@link #vanillaEquippable}).
+     */
+    public static boolean restoredVanilla(class_1792 item) {
+        Class<?> c = item.getClass();
+        return c == class_1738.class || c == class_4059.class || c == class_1819.class;
+    }
+
+    /**
+     * EQUIPPABLE of a {@link #restoredVanilla} item as 1.21.2's readers see it (LivingEntity.getEquipmentSlotForItem,
+     * onEquipItem's sound, the dispenser, Item.use's swap, armor rendering -- where 1.21.1 asked Equipable.get(stack)
+     * .getEquipmentSlot() / getEquipSound()): while the restored getters answer what the layer's own 1.21.1 bodies
+     * answer, the component the item was built with, unchanged; when they answer otherwise (a mod's mixin on them),
+     * the built component with their slot and sound ({@link #equippable})
+     */
+    public static class_10192 vanillaEquippable(class_1792 item, class_10192 built) {
+        if (item instanceof CbItemArmor.ArmorFields f && (f.cb$armorType() == null || f.cb$armorMaterial() == null)) {
+            return built; // read while the armor item is still being constructed: its material / type are not kept yet
+        }
+        Equipable e = (Equipable) item;
+        class_1304 slot = e.method_7685();
+        class_6880<class_3414> sound = e.method_31570();
+        class_1304 bodySlot;
+        class_6880<class_3414> bodySound;
+        if (item instanceof class_1738 a) {
+            bodySlot = CbItemArmor.super_method_7685(a);
+            bodySound = CbItemArmor.super_method_31570(a);
+        } else if (item instanceof class_4059 a) {
+            bodySlot = CbItemArmor.super_method_7685(a);
+            bodySound = CbItemArmor.super_method_31570(a);
+        } else {
+            bodySlot = class_1304.field_6171; // ShieldItem: OFFHAND and Equipable's default sound (CbItemEquipableShieldMixin)
+            bodySound = class_3417.field_14883;
+        }
+        if (slot == bodySlot && sound == bodySound) {
+            return built;
+        }
+        return equippable(item, built);
+    }
+
     /** EQUIPPABLE of a converted 1.21.1 Equipable: its getEquipmentSlot() and getEquipSound() over what the item built */
     public static class_10192 equippable(class_1792 item, class_10192 built) {
         Equipable e = source(item);
