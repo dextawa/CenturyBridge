@@ -172,6 +172,9 @@ public final class Chain {
      */
     public final java.util.Map<String, String> mixinMoves = new java.util.HashMap<>();
 
+    /** "splitRenames": a V interface W made a final record, kept in two spellings in mods (SplitRename) */
+    public final java.util.Map<String, SplitRename.Split> splitRenames = new java.util.HashMap<>();
+
     /**
      * How a V method's answer and the W method's answer turn into each other for an @Inject whose selector
      * MixinBridge moved to a W method returning another type ("returnConverters"): key "owner.name(desc)" (V,
@@ -3114,6 +3117,15 @@ public final class Chain {
                     String where = "mixinReceivers " + k;
                     c.mixinReceivers.put(k, new MixinReceiver(parseStaticRef(where, o.get("toV").getAsString()),
                         parseStaticRef(where, o.get("toW").getAsString()), o.has("basis") ? o.get("basis").getAsString() : ""));
+                }
+            }
+            if (root.has("splitRenames")) {
+                var sr = root.getAsJsonObject("splitRenames");
+                for (String k : sr.keySet()) {
+                    var o = sr.getAsJsonObject(k);
+                    String where = "splitRenames " + k;
+                    c.splitRenames.put(k, new SplitRename.Split(k, o.get("facade").getAsString(),
+                        parseStaticRef(where, o.get("toW").getAsString()), parseStaticRef(where, o.get("toV").getAsString())));
                 }
             }
             if (root.has("mixinMoves")) {
