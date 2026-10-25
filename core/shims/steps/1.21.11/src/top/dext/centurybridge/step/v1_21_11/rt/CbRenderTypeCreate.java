@@ -89,6 +89,71 @@ public final class CbRenderTypeCreate {
         });
     }
 
+    // ---- render types whose pipelines 1.21.11 deleted, rebuilt from 1.21.10's definitions (RenderPipelines' clinit,
+    // RenderType's clinit; javap of both): the snippets they use are 1.21.11's, with 1.21.10's depth write where
+    // 1.21.11's DEBUG_FILLED_SNIPPET changed it (it adds withDepthWrite(false)); the shaders (core/position_color)
+    // and vertex modes (DEBUG_LINE_STRIP, QUADS) 1.21.11 still has.
+
+    private static final RenderPipeline DEBUG_LINE_STRIP = RenderPipeline.builder(net.minecraft.class_10799.field_60125)
+        .withLocation("pipeline/debug_line_strip").withVertexShader("core/position_color").withFragmentShader("core/position_color")
+        .withCull(false).withVertexFormat(net.minecraft.class_290.field_1576, com.mojang.blaze3d.vertex.VertexFormat.class_5596.field_29345)
+        .build();
+    private static final RenderPipeline DEBUG_STRUCTURE_QUADS = RenderPipeline.builder(net.minecraft.class_10799.field_56860)
+        .withLocation("pipeline/debug_structure_quads").withCull(false).withDepthWrite(false).build();
+    private static final RenderPipeline DEBUG_SECTION_QUADS = RenderPipeline.builder(net.minecraft.class_10799.field_56860)
+        .withLocation("pipeline/debug_section_quads").withDepthWrite(true).build();
+
+    private static final java.util.function.Function<Double, class_1921> DEBUG_LINE_STRIP_TYPES = net.minecraft.class_156.method_34866(
+        (Double width) -> method_24048("debug_line_strip", 1536, DEBUG_LINE_STRIP, CompositeState.method_23598()
+            .method_23609(new RenderStateShard.LineStateShard(java.util.OptionalDouble.of(width))).method_23617(false)));
+    private static class_1921 debugStructureQuads;
+    private static class_1921 debugSectionQuads;
+
+    /** RenderType.debugLineStrip(width): 1.21.10's memoized "debug_line_strip" type of that line width */
+    public static class_1921 method_49043(double width) {
+        return DEBUG_LINE_STRIP_TYPES.apply(width);
+    }
+
+    /** RenderType.debugStructureQuads(): "debug_structure_quads", sorted on upload */
+    public static synchronized class_1921 method_61045() {
+        if (debugStructureQuads == null) {
+            debugStructureQuads = method_24049("debug_structure_quads", 1536, false, true, DEBUG_STRUCTURE_QUADS,
+                CompositeState.method_23598().method_23617(false));
+        }
+        return debugStructureQuads;
+    }
+
+    /** RenderType.debugSectionQuads(): "debug_section_quads", view-offset layering, sorted on upload */
+    public static synchronized class_1921 method_51456() {
+        if (debugSectionQuads == null) {
+            debugSectionQuads = method_24049("debug_section_quads", 1536, false, true, DEBUG_SECTION_QUADS,
+                CompositeState.method_23598().method_23607(RenderStateShard.field_22241).method_23617(false));
+        }
+        return debugSectionQuads;
+    }
+
+    private static class_1921 lineStrip;
+
+    /**
+     * RenderType.lineStrip() / LINE_STRIP: "line_strip" with 1.21.10's state (window-scaled line width, view-offset
+     * layering, item entity target) on 1.21.11's LINES pipeline, which is 1.21.10's LINE_STRIP pipeline (LINES_SNIPPET)
+     * in the mode 1.21.11 still has; its vertices become segments (rt/CbLineStrip).
+     */
+    public static synchronized class_1921 method_34572() {
+        if (lineStrip == null) {
+            lineStrip = method_24048("line_strip", 1536, net.minecraft.class_10799.field_56833, CompositeState.method_23598()
+                .method_23609(new RenderStateShard.LineStateShard(java.util.OptionalDouble.empty()))
+                .method_23607(RenderStateShard.field_22241).method_23610(RenderStateShard.field_25643).method_23617(false));
+            CbLineStrip.register(lineStrip);
+        }
+        return lineStrip;
+    }
+
+    /** RenderType.LINE_STRIP */
+    public static class_1921 field_29456() {
+        return method_34572();
+    }
+
     /** RenderType.LINES */
     public static class_1921 field_21695() {
         return class_12249.method_76015();

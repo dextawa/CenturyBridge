@@ -7,20 +7,33 @@ import net.minecraft.class_4597;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import top.dext.centurybridge.step.v1_21_11.rt.CbLineStrip;
 import top.dext.centurybridge.step.v1_21_11.rt.CbLineWidth;
 import top.dext.centurybridge.step.v1_21_11.rt.CbLineWidthTarget;
 
 /**
  * MultiBufferSource.BufferSource.getBuffer(renderType): tells the BufferBuilder it hands out the line width 1.21.10
- * drew that render type's lines at (rt/CbLineWidth; none for render types no 1.21.10 line shard stands behind).
+ * drew that render type's lines at (rt/CbLineWidth; none for render types no 1.21.10 line shard stands behind), and
+ * for 1.21.10's line strip render type (which only converted mods use) hands out the consumer that turns the strip
+ * into segments (rt/CbLineStrip), whose last segment is written when the batch is drawn.
  */
 @Mixin(class_4597.class_4598.class)
 public abstract class CbLineWidthBufferSourceMixin {
-    @Inject(method = "method_73477", at = @At("RETURN"))
+    @Inject(method = "method_73477", at = @At("RETURN"), cancellable = true)
     private void cb$lineWidth(class_1921 type, CallbackInfoReturnable<class_4588> cir) {
         if (cir.getReturnValue() instanceof class_287 b) {
             ((CbLineWidthTarget) b).cb$lineWidth(CbLineWidth.width(type));
+            class_4588 strip = CbLineStrip.consumer(type, b);
+            if (strip != null) {
+                cir.setReturnValue(strip);
+            }
         }
+    }
+
+    @Inject(method = "method_60893", at = @At("HEAD"))
+    private void cb$endStrip(class_1921 type, class_287 builder, CallbackInfo ci) {
+        CbLineStrip.flush(builder);
     }
 }
