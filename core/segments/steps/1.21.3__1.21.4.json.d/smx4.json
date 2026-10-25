@@ -134,6 +134,51 @@
       "to": "method_65341(Lnet/minecraft/class_243;)Lnet/minecraft/class_238;",
       "args": [],
       "basis": "Interaction.makeBoundingBox: javap -c both: getDimensions().makeBoundingBox(position); 1.21.4 takes the position as an argument (Entity.makeBoundingBox(Vec3))"
+    },
+    "net/minecraft/class_2794.method_41044(Lnet/minecraft/class_7059$class_7060;Lnet/minecraft/class_5138;Lnet/minecraft/class_5455;Lnet/minecraft/class_7138;Lnet/minecraft/class_3485;JLnet/minecraft/class_2791;Lnet/minecraft/class_1923;Lnet/minecraft/class_4076;)Z": {
+      "to": "method_41044(Lnet/minecraft/class_7059$class_7060;Lnet/minecraft/class_5138;Lnet/minecraft/class_5455;Lnet/minecraft/class_7138;Lnet/minecraft/class_3485;JLnet/minecraft/class_2791;Lnet/minecraft/class_1923;Lnet/minecraft/class_4076;Lnet/minecraft/class_5321;)Z",
+      "args": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      "basis": "ChunkGenerator.tryGenerateStructure: javap -c both (0.90): structure.generate(..) and the start set on the structure manager; 1.21.4 also passes the dimension key through"
+    },
+    "net/minecraft/class_2818$class_5564.<init>(Lnet/minecraft/class_2818;Lnet/minecraft/class_5562;)V": {
+      "to": "<init>(Lnet/minecraft/class_5562;)V",
+      "args": [-1, 0],
+      "basis": "LevelChunk.RebindableTickingBlockEntityWrapper constructor: javap -c both: stores the ticker (3/3 instructions); 1.21.4 made the class a static nested class, so the outer chunk is no longer passed"
+    },
+    "net/minecraft/class_2408$class_7404.<init>(Lnet/minecraft/class_2408;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_2408$class_7405;)V": {
+      "to": "<init>(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_2408$class_7405;)V",
+      "args": [-1, 0, 1, 2],
+      "basis": "HashCache.CacheUpdater constructor: javap -c both: the same 10 instructions; 1.21.4 made the class a static nested class, so the outer cache is no longer passed"
+    },
+    "net/minecraft/class_382.method_2025(ZFFLorg/joml/Matrix4f;Lnet/minecraft/class_4588;II)V": {
+      "to": "method_2025(ZFFFLorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZI)V",
+      "args": [0, 1, 2, 4, 5, 6, 8],
+      "basis": "BakedSheetGlyph.render(italic, x, y, matrix, buffer, color, light): javap -c both (0.95): the same four glyph vertices; 1.21.4 takes the depth V wrote as 0 and a bold flag; color (V local 6 / W local 7) and light (setLight: V local 7 / W local 9) moved one and two places"
+    },
+    "net/minecraft/class_5697.method_32799(Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+      "to": "method_65576(Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+      "args": [-1, -1, 1, 2, 3, 4],
+      "basis": "PlayerItemInHandLayer.renderItemHeldToEye: javap -c both (0.92): the same head-part transform and spyglass offsets, then the item drawn; 1.21.4 draws an ItemStackRenderState instead of a model and stack"
+    },
+    "net/minecraft/class_761.method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_765;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V": {
+      "to": "method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V",
+      "args": [0, -1, 1, 2, 3],
+      "basis": "LevelRenderer.addWeatherPass: javap -c both: the same frame-pass setup; the light texture is no longer handed to the pass lambda"
+    },
+    "net/minecraft/class_761.method_62201(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;Lnet/minecraft/class_765;FLnet/minecraft/class_9958;)V": {
+      "to": "method_62201(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;FLnet/minecraft/class_9958;)V",
+      "args": [0, 1, -1, 2, 3],
+      "basis": "LevelRenderer.addParticlesPass: javap -c both: the same frame-pass setup; the light texture is no longer handed to the pass lambda"
+    },
+    "net/minecraft/class_988.method_64083(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10043;Lnet/minecraft/class_1799;Lnet/minecraft/class_2960;I)V": {
+      "to": "method_64083(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10043;Lnet/minecraft/class_1799;Lnet/minecraft/class_5321;I)V",
+      "args": [0, 1, 2, 3, -1, 5],
+      "basis": "LlamaDecorLayer.renderEquipment: javap -c both: equipmentRenderer.renderLayers(LLAMA_BODY, ..); the equipment model id became an equipment asset key"
+    },
+    "net/minecraft/class_8197$class_5305.method_49193(Ljava/util/function/Function;Lnet/minecraft/class_6554$class_10317;)Lnet/minecraft/class_6544$class_6547;": {
+      "to": "method_49193(Ljava/util/function/Function;)Lnet/minecraft/class_6544$class_6547;",
+      "args": [0, -1],
+      "basis": "MultiNoiseBiomeSourceParameterList.Preset.generateOverworldBiomes: javap -c both: new OverworldBiomeBuilder().addBiomes(..) into the parameter list; 1.21.4 dropped the winter-drop biome modifier (its biomes are always on)"
     }
   },
   "fieldRenames": {
