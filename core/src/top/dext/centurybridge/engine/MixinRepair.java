@@ -332,8 +332,73 @@ public final class MixinRepair {
 
     // ------------------------------------------------------------------ entry
 
+    /**
+     * The step's W (set by Main): the release whose layer restores the members {@link #layerMembers} holds. A kept
+     * injector on such a member is written to the jar as {@link #MIXED_DIR}{@code <W>.txt}, one line per member
+     * and mixin, three tab-separated columns "{@code <owner>.<name><desc>}", the mixin class, its config section
+     * ("mixins" / "client" / "server": a client-section mixin does not apply on a dedicated server), in the layer's own names (past the wall: W's real
+     * names) -- the conversion-time signal "a converted mod mixed this restored member" (smx4 (l)). A layer route
+     * that cannot compare answers consults the restored member only when a loaded mod's jar lists it (the layer
+     * reads every jar's file through its class loader's getResources), and otherwise leaves W's own path exactly
+     * as it is. Lines of mixins stripped later in the conversion are dropped ({@link #dropMixed})
+     */
+    public String stepTo;
+    public static final String MIXED_DIR = "META-INF/centurybridge/mixed/";
+    /** restored members kept injectors / overwrites select, by mixin class (one repair() run) */
+    private final Map<String, Set<String>> mixedByMixin = new LinkedHashMap<>();
+    /** the config section each of those mixins is listed in ("mixins" / "client" / "server") */
+    private final Map<String, String> mixedSide = new HashMap<>();
+
+    /** drop the mixed-member lines of mixins the conversion stripped, in every step's file of the jar */
+    public static void dropMixed(Map<String, byte[]> entries, Set<String> dead) {
+        if (dead.isEmpty()) return;
+        for (Map.Entry<String, byte[]> e : new ArrayList<>(entries.entrySet())) {
+            if (!e.getKey().startsWith(MIXED_DIR) || !e.getKey().endsWith(".txt")) continue;
+            StringBuilder b = new StringBuilder();
+            boolean cut = false;
+            for (String line : new String(e.getValue(), StandardCharsets.UTF_8).split("\n")) {
+                String[] f = line.split("\t");
+                if (f.length > 1 && dead.contains(f[1])) {
+                    cut = true;
+                } else if (!line.isBlank()) {
+                    b.append(line).append('\n');
+                }
+            }
+            if (!cut) continue;
+            if (b.length() == 0) entries.remove(e.getKey());
+            else entries.put(e.getKey(), b.toString().getBytes(StandardCharsets.UTF_8));
+        }
+    }
+
+    /** writes this run's mixed members (mixins not fatal here) to the step's file, merged with what it holds */
+    private void writeMixed(Map<String, byte[]> entries, Set<String> fatal) {
+        if (stepTo == null || mixedByMixin.isEmpty()) return;
+        String name = MIXED_DIR + stepTo + ".txt";
+        Set<String> lines = new java.util.TreeSet<>();
+        if (entries.get(name) != null) {
+            for (String l : new String(entries.get(name), StandardCharsets.UTF_8).split("\n")) {
+                if (!l.isBlank()) lines.add(l);
+            }
+        }
+        for (Map.Entry<String, Set<String>> e : mixedByMixin.entrySet()) {
+            if (fatal.contains(e.getKey())) continue;
+            for (String k : e.getValue()) lines.add(k + "\t" + e.getKey() + "\t" + mixedSide.getOrDefault(e.getKey(), "mixins"));
+        }
+        if (lines.isEmpty()) return;
+        entries.put(name, (String.join("\n", lines) + "\n").getBytes(StandardCharsets.UTF_8));
+    }
+
+    private void mixed(String mixin, String owner, List<MethodNode> cands) {
+        for (MethodNode m : cands) {
+            mixedByMixin.computeIfAbsent(mixin, k -> new java.util.TreeSet<>()).add(owner + "." + m.name + m.desc);
+        }
+        if (curKey != null) mixedSide.put(mixin, curKey);
+    }
+
     /** rewrites mixin classes / refmaps in {@code entries} in place */
     public Outcome repair(Map<String, byte[]> entries) {
+        mixedByMixin.clear();
+        mixedSide.clear();
         Set<String> fatal = new LinkedHashSet<>();
         Map<String, String> why = new LinkedHashMap<>();
         List<String> repairs = new ArrayList<>();
@@ -404,6 +469,7 @@ public final class MixinRepair {
                 entries.put(refmapName, GSON.toJson(refmapRoot).getBytes(StandardCharsets.UTF_8));
             }
         }
+        writeMixed(entries, fatal);
         return new Outcome(fatal, why, repairs, disabledAll);
     }
 
@@ -537,6 +603,9 @@ public final class MixinRepair {
                             continue;
                         }
                         if (anchors == null || anchors.isEmpty() || cands.stream().anyMatch(m -> anchorsIn(m, tc, anchors))) {
+                            if (cands.stream().allMatch(layerMembers::isMember)) {
+                                mixed(mx.name, owner, cands); // a converted mod mixes the layer's restored member
+                            }
                             live = true;
                             break;
                         }
@@ -561,8 +630,10 @@ public final class MixinRepair {
                                     String value = "L" + fo + ";" + a0.name + (a0.kind.equals("FIELD") ? ":" : "") + fd;
                                     fixNotes.add("anchor-facade " + where + " " + a0 + " => " + value
                                         + " (the restored body calls the facade the step renames " + a0.owner + " to)");
+                                    List<MethodNode> fc = cands;
                                     fixes.add(() -> {
                                         if (setAtTarget(an, refmap, value)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
+                                        mixed(mx.name, owner, fc);
                                     });
                                     continue;
                                 }

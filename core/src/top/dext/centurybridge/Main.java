@@ -225,6 +225,12 @@ public final class Main {
         // and the target release's, into the target hierarchy (after loadTargetCtors, which writes it)
         java.util.Map<String, List<String>> tgtInjected = injectedInterfacesOf(args[3]);
         chain.addTargetInjections(tgtInjected, crossesWall ? renameTable : null);
+        if (Files.exists(targetStub)) {
+            chain.loadTargetRaw(targetStub);
+        }
+        chain.loadTargetLibraryDecls(Path.of("data/runtime/client-" + args[3] + "/.fabric/processedMods"));
+        chain.wallRemapper = crossesWall && wallTable != null ? wallTable.remapper() : null;
+        System.out.println("target Fabric API declarations: " + chain.targetLibDecls.size() + " classes");
         System.out.println("injected interfaces: " + tgtInjected.size() + " vanilla classes in " + args[3] + "'s Fabric API");
         // real method bodies for injector anchors (the stub has none). Intermediary
         // era only: past the wall the refmaps are renamed later in the pipeline.
@@ -247,6 +253,7 @@ public final class Main {
                 chain.mixinRepair.renamed = chain::renamedDesc;
                 chain.mixinRepair.layerMembers = chain.layerMembers;
                 chain.mixinRepair.classRenames = chain.classRenames; // anchor-facade: what restored bodies call
+                chain.mixinRepair.stepTo = args[3]; // the mixed-member signal (MixinRepair.MIXED_DIR)
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");
@@ -275,6 +282,7 @@ public final class Main {
                 // the layer restores finds it there (LayerMembers), as chain.mixinRepair does before the wall,
                 // instead of the injector being disabled as "target gone"
                 wallRepair.layerMembers = chain.layerMembers;
+                wallRepair.stepTo = args[3];
                 chain.injectorsJudgedPastWall = true;
                 System.out.println("mixin anchors past the wall: checked against " + code);
             } else {
