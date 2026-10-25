@@ -11,7 +11,8 @@
     "EffectTemplateMixin",
     "OozingMixin",
     "RecipeCacheEntryMixin",
-    "UtilOsMixin"
+    "UtilOsMixin",
+    "EnchantBookInvoker"
   ],
   "injectors": {
     "defaultRequire": 1

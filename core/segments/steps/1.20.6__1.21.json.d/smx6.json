@@ -156,6 +156,12 @@
    "basis": "AttributeInstance.removePermanentModifier(UUID) is 1.21's removeModifier(ResourceLocation) returning boolean (javap: the same remove from the permanent and the by-id maps and from the operation map, null -> false, setDirty, true; 1.21 merged 1.20.6's void removeModifier(UUID) into it); a UUID is not a ResourceLocation, so handlers taking the argument are not carried"
   }
  },
+ "ctorRedirects": {
+  "net/minecraft/class_3853$class_1648.<init>(I)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNew",
+  "net/minecraft/class_3853$class_1648.<init>(I[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNewListed",
+  "net/minecraft/class_3853$class_1648.<init>(III[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNewRanged"
+ },
+ "_smx6_ctorRedirects_basis": "VillagerTrades.EnchantBookForEmeralds: 1.20.6's three constructors (a list of offerable enchantments) as factories over 1.21's (an enchantment tag): (xp) is 1.21's (xp, #tradeable), the tag 1.21's own default librarian trade uses for what 1.20.6 filtered by isTradeable; the explicit-list forms build on #tradeable and keep the list on the trade for the restored 1.20.6 pick (CbVillagerEnchantBookMixin). The class is package-private, so the factories serve a 1.20.6 mod's constructor @Invoker (MixinBridge's constructor-invoker bridging)",
  "fieldRenames": {
   "net/minecraft/class_3898.field_49171:Lnet/minecraft/class_9312;": "field_51861",
   "net/minecraft/class_287.field_1567:Lnet/minecraft/class_293$class_5596;": "field_52073",

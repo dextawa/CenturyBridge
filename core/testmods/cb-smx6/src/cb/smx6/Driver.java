@@ -145,6 +145,26 @@ public final class Driver {
         return r.isPresent() ? String.valueOf(r.get().comp_1932()) : "none";
     }
 
+    /** the enchantment on the book a trade offers (a fresh seeded random), by registry key and level, or "none" */
+    private static String bookOf(class_3218 level, net.minecraft.class_3853.class_1652 trade, long seed) {
+        net.minecraft.class_1646 villager = new net.minecraft.class_1646(class_1299.field_6077, level);
+        try {
+            net.minecraft.class_1914 offer = trade.method_7246(villager, net.minecraft.class_5819.method_43049(seed));
+            if (offer == null || offer.method_8250().method_7909() != class_1802.field_8598) {
+                return "none";
+            }
+            net.minecraft.class_9304 e = net.minecraft.class_1890.method_57532(offer.method_8250());
+            StringBuilder out = new StringBuilder();
+            for (net.minecraft.class_6880<net.minecraft.class_1887> h : e.method_57534()) {
+                net.minecraft.class_1887 en = h.comp_349();
+                out.append(net.minecraft.class_7923.field_41176.method_10221(en)).append(':').append(e.method_57536(en)).append(' ');
+            }
+            return out.toString().trim();
+        } finally {
+            villager.method_31472();
+        }
+    }
+
     public static void run(net.minecraft.server.MinecraftServer server) {
         System.out.println("CB-SMX6 start");
         class_3218 level = server.method_30002();
@@ -253,6 +273,14 @@ public final class Driver {
             net.minecraft.class_156.method_668().method_673(new java.net.URI("https://example.com/cb-smx6?q=1"));
             check("open-url", openAsked == 1 && "https://example.com/cb-smx6?q=1".equals(openUrl),
                 "Util.getPlatform().openUri: getOpenUrlArguments asked " + openAsked + " time(s) with " + openUrl);
+            // ---- EnchantBookForEmeralds constructors through a constructor invoker: EnchantBookInvoker
+            String listed = bookOf(level, cb.smx6.mixin.EnchantBookInvoker.cbsmx6$newListed(1, class_1893.field_9099), 3L);
+            check("trade-listed", listed.startsWith("minecraft:silk_touch:"), "(xp, silk_touch): book " + listed);
+            String ranged = bookOf(level, cb.smx6.mixin.EnchantBookInvoker.cbsmx6$newRanged(1, 0, 1, class_1893.field_9101, class_1893.field_9099), 5L);
+            check("trade-ranged", ranged.equals("minecraft:mending:1") || ranged.equals("minecraft:silk_touch:1"),
+                "(xp, 0, 1, mending, silk_touch): book " + ranged);
+            String any = bookOf(level, cb.smx6.mixin.EnchantBookInvoker.cbsmx6$new(1), 1L);
+            check("trade-tradeable", !any.equals("none") && !any.isEmpty(), "(xp): book " + any);
         } catch (Throwable t) {
             check("exception", false, String.valueOf(t));
             t.printStackTrace();

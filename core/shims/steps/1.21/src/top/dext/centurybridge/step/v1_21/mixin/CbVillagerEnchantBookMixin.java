@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21.facade.class_1887;
+import top.dext.centurybridge.step.v1_21.rt.CbEnchantBookTrades;
 import top.dext.centurybridge.step.v1_21.rt.CbEnchantments;
 import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
@@ -34,7 +35,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
  * random.nextInt(size) draw, none for an empty tag.
  */
 @Mixin(targets = "net.minecraft.class_3853$class_1648", priority = 1)
-public abstract class CbVillagerEnchantBookMixin {
+public abstract class CbVillagerEnchantBookMixin implements CbEnchantBookTrades.Explicit {
 
     @Shadow
     @Final
@@ -44,9 +45,24 @@ public abstract class CbVillagerEnchantBookMixin {
     @Unique
     private class_2378<net.minecraft.class_1887> cb$registry;
 
-    /** the tag's members as the 1.20.6 objects (CbEnchantments.cbEnchantment), in the tag's order */
+    /**
+     * the enchantments a 1.20.6 constructor named explicitly (EnchantBookForEmeralds(xp, enchantments...), through
+     * CbEnchantBookTrades' factories), in their order; null for a trade built on 1.21's tag
+     */
+    @Unique
+    private List<class_1887> cb$explicit;
+
+    @Override
+    public void cb$setEnchantments(List<class_1887> enchantments) {
+        this.cb$explicit = List.copyOf(enchantments);
+    }
+
+    /** the tag's members as the 1.20.6 objects (CbEnchantments.cbEnchantment), in the tag's order; a 1.20.6 list, as given */
     @Unique
     private List<class_1887> cb$tradeable() {
+        if (this.cb$explicit != null) {
+            return this.cb$explicit;
+        }
         class_2378<net.minecraft.class_1887> registry = this.cb$registry != null ? this.cb$registry : CbEnchantments.current();
         List<class_1887> out = new ArrayList<>();
         if (registry != null) {

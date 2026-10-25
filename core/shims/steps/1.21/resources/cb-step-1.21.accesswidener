@@ -47,3 +47,6 @@ accessible class net/minecraft/class_9456$class_9775
 # RecipeCache.Entry (a package-private record): CbRecipeCacheMixin routes RecipeCache.get's test through the restored
 # 1.20.6 matches(List), so its handler names the class (smx6)
 accessible class net/minecraft/class_8884$class_8885
+
+# VillagerTrades.EnchantBookForEmeralds (package-private): CbEnchantBookTrades builds it for 1.20.6's constructors (smx6)
+accessible class net/minecraft/class_3853$class_1648
