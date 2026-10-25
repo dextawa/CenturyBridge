@@ -1896,6 +1896,16 @@
     5
    ],
    "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 4 significant instructions in order in W's 10; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_14.method_29579(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z": {
+   "to": "method_29579(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "WalkNodeEvaluator.isDiagonalValid: javap -c both, W reads its arguments 1-3 exactly where V read 1-3 (field_39 / field_41 / field_43 of the same nodes); V's fourth node (the diagonal's own checks, field_42 closed and its type) moved to the caller"
   }
  },
  "_smx4b_fieldRenames_basis": "private fields W keeps under another name in the same class, same type (mixin-cause: only unmatched field of that type; most are 1.20.5 record components, comp_*). Kept when the V field and its W name have a reader/writer method in common, or the W field is a record component of the class; dropped where two V fields would land on one W field or no method uses both",
