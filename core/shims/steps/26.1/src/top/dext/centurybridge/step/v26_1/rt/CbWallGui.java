@@ -21,7 +21,9 @@ import top.dext.centurybridge.step.v26_1.mixin.CbWallGuiAccess;
  *     caller tests for null first, so the null test stays here.</li>
  * <li>GuiRenderer.incrementFrameNumber() counted the frames 1.21.11's GUI item rendering compared to know which
  *     animated items to draw again; 26.1 moved that frame count into the GUI item atlas, which GuiRenderer.endFrame()
- *     advances (vanilla calls it once a frame where 1.21.11 called incrementFrameNumber).</li>
+ *     advances (vanilla calls it once a frame where 1.21.11 called incrementFrameNumber);</li>
+ * <li>OptionsScreen(lastScreen, options): 26.1 takes whether the options are opened in a world; 1.21.11's screen
+ *     decided it from the client level (the world-options / difficulty row shown when a level is loaded).</li>
  * </ul>
  */
 @Environment(EnvType.CLIENT)
@@ -61,5 +63,10 @@ public final class CbWallGui {
     /** 1.21.11 GuiRenderer.incrementFrameNumber() */
     public static void incrementFrameNumber(net.minecraft.client.gui.render.GuiRenderer renderer) {
         renderer.endFrame();
+    }
+
+    /** 1.21.11 OptionsScreen's in-world test: a client level is loaded */
+    public static boolean optionsInWorld() {
+        return Minecraft.getInstance().level != null;
     }
 }

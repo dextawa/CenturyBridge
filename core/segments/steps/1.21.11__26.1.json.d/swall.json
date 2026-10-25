@@ -2383,6 +2383,15 @@
     "push top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#followedBoats()Ljava/lang/Class;"
    ],
    "basis": "1.21.11 FollowBoatGoal became 26.1's FollowPlayerRiddenEntityGoal(mob, entityTypeToFollow), the same body over the class it is given; 1.21.11's followed boats (AbstractBoat)"
+  },
+  "net/minecraft/class_429.<init>(Lnet/minecraft/class_437;Lnet/minecraft/class_315;)V": {
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_315;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallGui#optionsInWorld()Z"
+   ],
+   "basis": "26.1 OptionsScreen(lastScreen, options, inWorld); 1.21.11's screen showed the world row when a client level was loaded (CbWallGui.optionsInWorld)"
   }
  },
  "fieldGetters": {
