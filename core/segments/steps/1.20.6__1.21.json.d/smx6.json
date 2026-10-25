@@ -73,14 +73,6 @@
    ],
    "basis": "StructureTemplateManager.listFolderContents(folder, namespace, extension) is 1.21's listFolderContents(folder, namespace, extension, output) (javap: both walk the folder for files ending in the extension and map them to ids through the same lambda capturing the namespace and the path relativiser; 1.20.6 returned the Stream, 1.21 hands each id to the Consumer: handlers touching the return value are refused by MixinBridge's return check)"
   },
-  "net/minecraft/class_1291$class_8634.method_52522(Ljava/lang/String;I)Lnet/minecraft/class_1322;": {
-   "to": "method_52522(I)Lnet/minecraft/class_1322;",
-   "args": [
-    -1,
-    0
-   ],
-   "basis": "MobEffect.AttributeTemplate.create(name, amplifier) is 1.21's create(amplifier) (javap: the same AttributeModifier built from the template's id, amount * (amplifier + 1) and operation; 1.21's modifier has no name, the id replaced the UUID, so the name argument has no W counterpart)"
-  },
   "net/minecraft/class_156$class_158.method_674(Ljava/net/URL;)[Ljava/lang/String;": {
    "to": "method_674(Ljava/net/URI;)[Ljava/lang/String;",
    "args": [
@@ -298,6 +290,8 @@
   "net/minecraft/class_313.method_1615()V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
   "net/minecraft/class_313.method_1619(Lnet/minecraft/class_319;)I @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
   "net/minecraft/class_323.<init>(Lnet/minecraft/class_3676;)V @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
-  "net/minecraft/class_323.method_1680(J)Lnet/minecraft/class_313; @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check"
+  "net/minecraft/class_323.method_1680(J)Lnet/minecraft/class_313; @ INVOKE Lcom/mojang/blaze3d/systems/RenderSystem;assertInInitPhase()V": "1.21 deleted RenderSystem.assertInInitPhase and every call to it, no stand-in (javap: no reference left in the 1.21 client jar, and this method's 1.21 body calls no RenderSystem assert at all); the code it guarded runs unchanged without a check",
+  "net/minecraft/class_3898.method_37904()V": "removed outright: ChunkMap.debugReloadGenerator (re-encoded the level's ChunkGenerator through ChunkGenerator.CODEC and replaced it) had one caller in 1.20.6, ResetChunksCommand (class_6608, a development command), which 1.21 deleted. javap over the whole 1.21 jar: no method_37904, no ResetChunksCommand, and ChunkGenerator.CODEC (class_2794.field_24746) is used only by ChunkGenerator and LevelStem, never by ChunkMap. No method holds its code or its caller's need, so a mixin on it has no hook point",
+  "net/minecraft/class_3898.method_20441(Lnet/minecraft/class_1923;)V": "removed outright: ChunkMap.releaseLightTicket(pos) queued distanceManager.removeTicket(TicketType.LIGHT, pos, ...) (lambda method_20443). Its one caller was ThreadedLevelLightEngine.lightChunk (method_17309). In 1.21 the LIGHT ticket type is gone: TicketType class_3230 has no field_19270, and no 1.21 class references it. ThreadedLevelLightEngine's only call into ChunkMap is method_17604, and no method_20441 is left anywhere (javap over the whole 1.21 jar). 1.21's generation tasks hold their chunks without tickets, so no method holds its code or its caller's need"
  }
 }
