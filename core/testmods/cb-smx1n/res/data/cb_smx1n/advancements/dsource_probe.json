@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "dsource_probe": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "killing_blow": {
+          "tags": [
+            {
+              "id": "minecraft:is_explosion",
+              "expected": true
+            }
+          ],
+          "cbsmx1n_dsource_probe": true
+        }
+      }
+    }
+  }
+}

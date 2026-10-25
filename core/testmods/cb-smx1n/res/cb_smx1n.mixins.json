@@ -3,6 +3,7 @@
   "package": "cb.smx1n.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "mixins": ["ShapedCodecMixin", "EffectAttributesMixin", "AdvancementJsonMixin", "ItemPredicateJsonMixin", "LocationPredicateJsonMixin", "StatePropertiesJsonMixin"],
+  "mixins": ["ShapedCodecMixin", "EffectAttributesMixin", "AdvancementJsonMixin", "ItemPredicateJsonMixin", "LocationPredicateJsonMixin", "StatePropertiesJsonMixin", "EntityPredicateJsonMixin", "EntityContextJsonMixin",
+    "DistancePredicateJsonMixin", "MobEffectsJsonMixin", "DamageSourceJsonMixin", "DamageJsonMixin"],
   "injectors": { "defaultRequire": 1 }
 }
