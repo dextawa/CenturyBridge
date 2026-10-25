@@ -168,6 +168,24 @@ public class S6bTestMod implements ModInitializer {
             check(false, "tail threw " + e);
         }
         try {
+            packets();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "packets threw " + e);
+        }
+        try {
+            terracotta(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "terracotta threw " + e);
+        }
+        try {
+            recipeBook(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "recipeBook threw " + e);
+        }
+        try {
             problems();
         } catch (Throwable e) {
             e.printStackTrace();
@@ -344,6 +362,119 @@ public class S6bTestMod implements ModInitializer {
         net.minecraft.class_2632 pkt = new net.minecraft.class_2632(net.minecraft.class_1267.field_5807, true);
         check(pkt.method_11342() == net.minecraft.class_1267.field_5807 && pkt.method_11340(),
             "ClientboundChangeDifficultyPacket.getDifficulty / isLocked");
+    }
+
+    /** a 1.21.5 Connection subclass overriding send(packet, listener) and calling super */
+    static class CbConnection extends net.minecraft.class_2535 {
+        int sends;
+
+        CbConnection() {
+            super(net.minecraft.class_2598.field_11942);
+        }
+
+        @Override
+        public void method_10752(net.minecraft.class_2596<?> packet, net.minecraft.class_7648 listener) {
+            sends++;
+            super.method_10752(packet, listener);
+        }
+    }
+
+    /** PacketSendListener: 1.21.5's listener objects on a Connection over a netty EmbeddedChannel (writes succeed) */
+    static void packets() {
+        int[] ran = new int[3];
+        net.minecraft.class_7648 run = net.minecraft.class_7648.method_45084(() -> ran[0]++);
+        net.minecraft.class_7648 fallback = net.minecraft.class_7648.method_45085(() -> {
+            ran[1]++;
+            return new net.minecraft.class_2670(7L);
+        });
+        net.minecraft.class_7648 custom = new net.minecraft.class_7648() {
+            @Override
+            public void method_45083() {
+                ran[2]++;
+            }
+        };
+        check(run.method_45086() == null && ran[0] == 1, "PacketSendListener.thenRun: onFailure runs the runnable and answers null");
+        check(fallback.method_45086() instanceof net.minecraft.class_2670 && ran[1] == 1, "PacketSendListener.exceptionallySend: onFailure answers the packet");
+        ran[0] = ran[1] = 0;
+        net.minecraft.class_2535 conn = new net.minecraft.class_2535(net.minecraft.class_2598.field_11942);
+        io.netty.channel.embedded.EmbeddedChannel ch = new io.netty.channel.embedded.EmbeddedChannel(conn);
+        conn.method_10752(new net.minecraft.class_2670(1L), run);
+        conn.method_52906(new net.minecraft.class_2670(2L), custom, true);
+        conn.method_10752(new net.minecraft.class_2670(3L), fallback);
+        ch.runPendingTasks();
+        int written = 0;
+        while (ch.readOutbound() != null) {
+            written++;
+        }
+        check(ran[0] == 1 && ran[2] == 1 && ran[1] == 0 && written == 3,
+            "Connection.send with 1.21.5 listeners: onSuccess ran for thenRun and a custom listener, no fallback (" + ran[0] + "," + ran[2] + "," + ran[1] + ", written " + written + ")");
+        CbConnection mine = new CbConnection();
+        io.netty.channel.embedded.EmbeddedChannel ch2 = new io.netty.channel.embedded.EmbeddedChannel(mine);
+        ran[0] = 0;
+        mine.method_10752(new net.minecraft.class_2670(4L), run);
+        mine.method_10743(new net.minecraft.class_2670(5L));
+        ch2.runPendingTasks();
+        check(mine.sends == 2 && ran[0] == 1 && ch2.readOutbound() != null,
+            "Connection subclass: its send(packet, listener) override is reached by a direct call and by 1.21.6's send(packet) (sends " + mine.sends + ")");
+    }
+
+    /** a 1.21.5 TerracottaBlock subclass */
+    static class CbTerracotta extends net.minecraft.class_10738 {
+        CbTerracotta(net.minecraft.class_4970.class_2251 p) {
+            super(p);
+        }
+    }
+
+    /**
+     * TerracottaBlock (removed in 1.21.6): its codec and the subclass load (a block cannot be built once the block
+     * registry is frozen, in 1.21.5 as well); AmbientDesertBlockSoundsPlayer; SAND_WIND
+     */
+    static void terracotta(class_3218 level) {
+        check(net.minecraft.class_10738.field_56466 != null && net.minecraft.class_2248.class.isAssignableFrom(CbTerracotta.class),
+            "TerracottaBlock: CODEC and a subclass of it (a Block)");
+        net.minecraft.class_5819 rnd = net.minecraft.class_5819.method_43049(1L);
+        for (int i = 0; i < 2000; i++) {
+            net.minecraft.class_10739.method_67408(net.minecraft.class_2246.field_10415.method_9564(), level, new class_2338(0, -60, 0), rnd);
+        }
+        check(true, "AmbientDesertBlockSoundsPlayer.playAmbientBlockSounds runs");
+        check("minecraft:block.sand.wind".equals(net.minecraft.class_3417.field_56417.comp_3319().toString()), "SoundEvents.SAND_WIND id");
+    }
+
+    public static String recipeExtra = "";
+
+    /** ServerRecipeBook / RecipeBookSettings 1.21.5 tag form; the mod's mixin on toNbt / fromNbt on the player's save path */
+    static void recipeBook(class_3218 level) {
+        net.minecraft.class_5321<net.minecraft.class_1860<?>> planks = net.minecraft.class_5321.method_29179(
+            net.minecraft.class_7924.field_52178, net.minecraft.class_2960.method_60655("minecraft", "oak_planks"));
+        net.minecraft.class_3441 book = new net.minecraft.class_3441((k, c) -> { });
+        book.method_64588(planks);
+        book.method_14884(net.minecraft.class_5421.field_25764, true);
+        class_2487 tag = book.method_14902();
+        check(tag.method_68569("recipes").size() == 1 && tag.method_68566("isFurnaceGuiOpen", false)
+            && tag.method_10545("isGuiOpen") && "kept".equals(tag.method_68564("cb_s6b_extra", "")),
+            "ServerRecipeBook.toNbt: 1.21.5 keys, the recipe, the mod mixin's extra: " + tag);
+        net.minecraft.class_3441 back = new net.minecraft.class_3441((k, c) -> { });
+        recipeExtra = "";
+        back.method_14901(tag, k -> true);
+        check(back.method_64593(planks) && back.method_14887(net.minecraft.class_5421.field_25764) && "kept".equals(recipeExtra),
+            "ServerRecipeBook.fromNbt restores recipe and setting; the mod mixin's TAIL ran");
+        net.minecraft.class_5411 s = net.minecraft.class_5411.method_30183(tag);
+        class_2487 st = new class_2487();
+        s.method_30189(st);
+        check(s.method_30180(net.minecraft.class_5421.field_25764) && st.method_68566("isFurnaceGuiOpen", false) && st.method_10545("isSmokerFilteringCraftable"),
+            "RecipeBookSettings.read / write (all 8 keys): " + st);
+
+        // the player's save path: 1.21.6's ServerPlayer save, routed past the mixed toNbt
+        net.minecraft.class_3222 player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+        player.method_14253().method_64588(planks);
+        class_2487 saved = player.method_5647(new class_2487());
+        class_2487 rb = saved.method_68568("recipeBook");
+        check("kept".equals(rb.method_68564("cb_s6b_extra", "")) && rb.method_68569("recipes").size() >= 1,
+            "player save (1.21.6 path): the mod mixin's extra in \"recipeBook\" through the route: " + rb.method_68564("cb_s6b_extra", "-"));
+        recipeExtra = "";
+        player.method_5651(saved);
+        check("kept".equals(recipeExtra) && player.method_14253().method_64593(planks),
+            "player load (1.21.6 path): the mod mixin on fromNbt saw the saved extra; the book has the recipe");
     }
 
     static void problems() {

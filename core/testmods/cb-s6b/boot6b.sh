@@ -21,9 +21,9 @@ mkdir -p $WD/boot; B=$WD/boot/$TAG; rm -rf "$B" && mkdir -p "$B/cls"
 FV=$WD/boot/fapi-1.21.5; if [ ! -d "$FV" ]; then mkdir -p "$FV" && (cd "$FV" && unzip -qo ~/cbwork/data/runtime/client-1.21.5/mods/fabric-api-*.jar 'META-INF/jars/*'); fi
 CP="data/jars/client-1.21.5-intermediary.jar:$(ls $FV/META-INF/jars/*.jar | tr '\n' ':'):$(find data/runtime/server-1.21.6/libraries data/runtime/client-1.21.6/libraries -name '*.jar' | tr '\n' ':')"
 "$JAVAC" -nowarn -proc:none --release 21 -cp "$CP" -d "$B/cls" $(find $WD/core/testmods/cb-s6b/src -name '*.java') 2>&1 | grep -v '^Note\|^注' | head -20
-cp $WD/core/testmods/cb-s6b/res/fabric.mod.json "$B/cls/"
+cp $WD/core/testmods/cb-s6b/res/* "$B/cls/"
 (cd "$B/cls" && "${JAVA%java}jar" cf ../cb-s6b.jar .)
-"$JAVA" -Xmx4g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" 1.21.5 1.21.6 "$B/conv" "$B/cb-s6b.jar" \
+"$JAVA" -Xmx4g -Dcb.layerJar=$WD/build/centurybridge-0.3.0+1.21.6.jar -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" 1.21.5 1.21.6 "$B/conv" "$B/cb-s6b.jar" \
     > "$B/climb.log" 2>&1 || { echo "climb failed"; tail -5 "$B/climb.log"; exit 1; }
 rm -rf "$SRV/mods" "$SRV/world-$TAG" && mkdir -p "$SRV/mods"
 cp data/runtime/client-1.21.6/mods/fabric-api-*.jar "$SRV/mods/"

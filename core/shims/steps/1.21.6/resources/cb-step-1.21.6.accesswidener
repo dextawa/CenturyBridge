@@ -60,3 +60,5 @@ accessible field net/minecraft/class_4668$class_5940$class_10542 comp_3462 Lnet/
 accessible field net/minecraft/class_757 field_60579 Lnet/minecraft/class_751;
 # CbHorses: AbstractHorse.setFlag, for 1.21.5's flag-only setStanding(boolean)
 accessible method net/minecraft/class_1496 method_6769 (IZ)V
+# CbRecipeBooks: ServerRecipeBook's private copy-in, to give a player's book a fresh 1.21.5 book's state before fromNbt
+accessible method net/minecraft/class_3441 method_71342 (Lnet/minecraft/class_3441$class_11328;)V
