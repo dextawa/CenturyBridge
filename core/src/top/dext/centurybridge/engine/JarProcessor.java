@@ -2437,8 +2437,14 @@ public final class JarProcessor {
         // across it the refmaps take their names later, see repairPastWall)
         MixinBridge.Result bridged = null;
         // a mixin of a class the step renames into a class W adds in its place goes there first (Chain.mixinFollow)
-        for (String moved : MixinClassRenames.followTargets(entries, chain.mixinFollow(), chain.classRenames)) {
+        List<String> followed = MixinClassRenames.followTargets(entries, chain.mixinFollow(), chain.classRenames);
+        for (String moved : followed) {
             rpt.notes.add(tag + "mixin follows its target's class rename: " + shortName(moved));
+        }
+        // a followed split class (mixinSplits): this-as-V-class and casts to interfaces now merged onto the new class
+        for (String n : MixinSplitAdapt.run(entries, chain, followed, "centurybridge/gen/MixinSplits_" + jarTag + "_"
+                + chain.to.replace('.', '_') + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count()))) {
+            rpt.notes.add(tag + n);
         }
         if (MixinBridge.applies(chain)) {
             bridged = MixinBridge.run(entries, chain,

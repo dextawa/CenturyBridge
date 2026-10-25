@@ -1,0 +1,1 @@
+{"schemaVersion": 1, "id": "cb_c10", "version": "1", "environment": "client", "mixins": ["cb_c10.mixins.json"], "depends": {"minecraft": "26.1.2"}}

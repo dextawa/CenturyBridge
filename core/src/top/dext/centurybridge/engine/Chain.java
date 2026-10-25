@@ -137,6 +137,42 @@ public final class Chain {
     public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
 
     /**
+     * A V class W split into two classes, V's members all standing on the new one ("mixinSplits"): key the V
+     * class, value {"to": the W class holding V's members (a class V lacks), "self": [field hops "owner.name:desc"
+     * from an instance of "to" to the W instance of V's class name], "back": [field hops the other way], "basis"}.
+     * 26.2 Gui -> Hud: V's Gui methods and fields stand on Hud under the same names; W's Gui holds the Hud
+     * (Gui.hud), the Hud the Minecraft whose gui is that Gui (Hud.minecraft, Minecraft.gui). A mod mixin of V's
+     * class follows onto "to" (Chain.mixinFollow) and is judged there; "(V class)(Object) this" in its code takes
+     * the "self" hops; a cast of a V-class instance to one of the jar's mixin interfaces now merged onto "to"
+     * takes the "back" hops (an instanceof-tested adapter, JarProcessor). Mods' plain calls are not touched.
+     */
+    public record MixinSplit(String to, java.util.List<String[]> self, java.util.List<String[]> back, String basis) {}
+
+    public final java.util.Map<String, MixinSplit> mixinSplits = new java.util.HashMap<>();
+
+    /**
+     * A call W makes on an object V's receiver holds ("mixinReceivers", key "V owner>W owner"): V
+     * {@code minecraft.setScreen(s)}, W {@code minecraft.gui.setScreen(s)}. A @Redirect / @WrapOperation /
+     * @WrapWithCondition on V's call follows to W's when the wiring gives both ways between the receivers:
+     * "toW" {@code (V)W} (the held object, what the step's redirect body reads) and "toV" {@code (W)V} (the object
+     * holding it; for 26.2's client singletons the instance whose field is the W receiver, checked). MixinBridge
+     * gives the handler a W-shaped front taking W's receiver as V's (toV), and an Operation the mod calls with V's
+     * receiver reaches W's call on toW of it. "basis": why the two undo each other.
+     */
+    public record MixinReceiver(String[] toV, String[] toW, String basis) {}
+
+    public final java.util.Map<String, MixinReceiver> mixinReceivers = new java.util.HashMap<>();
+
+    /**
+     * A static V method whose code W keeps, the same, in a static method of another class ("mixinMoves", judged by
+     * an area agent from both bodies): key "V owner.name(desc)", value {"to": "W owner.name(desc)", "basis"}.
+     * 1.21.11 moved RenderType's static factories to RenderTypes. MixinRepair moves an injector selecting the V
+     * method onto a mixin of the W class it adds (same descriptor, a static handler that reads nothing of its own
+     * mixin), its anchors judged in the W body. Mods' plain calls are the staticRedirects' business.
+     */
+    public final java.util.Map<String, String> mixinMoves = new java.util.HashMap<>();
+
+    /**
      * How a V method's answer and the W method's answer turn into each other for an @Inject whose selector
      * MixinBridge moved to a W method returning another type ("returnConverters"): key "owner.name(desc)" (V,
      * on the class or a V supertype of the mixin's target), value {"toV": "OWNER#name(desc)", "toW":
@@ -1237,6 +1273,17 @@ public final class Chain {
                     out.put(from, to); // a facade holding V's code (the layer jar answers for it in W's model)
                 }
             });
+            // a class W split in two (26.2 Gui -> Gui + Hud): V's class keeps no member of its own on W's class of
+            // that name, so its mixins follow onto the class that holds V's members ("mixinSplits")
+            mixinSplits.forEach((from, sp) -> {
+                if (out.containsKey(from)) {
+                    System.out.println("WARNING: mixinSplits " + from + ": the class also follows a class rename; the split is not used");
+                } else if (w.declares(sp.to()) && !sourceCode.declares(sp.to()) && sourceCode.declares(from)) {
+                    out.put(from, sp.to());
+                } else {
+                    System.out.println("WARNING: mixinSplits " + from + " -> " + sp.to() + ": needs a W class V lacks and a V class; not used");
+                }
+            });
             sourceCode.aliases(out, classRenames);
         }
         mixinFollow = out;
@@ -1605,6 +1652,53 @@ public final class Chain {
         }
         for (org.objectweb.asm.tree.MethodNode m : layerMembers.byName(o, n)) {
             if ((d == null || m.desc.equals(d)) && layerMembers.priority(m) < mixinPriority) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** the layer jar's classes read for facadeDeclares, by name (null value: not in the jar) */
+    private final java.util.Map<String, org.objectweb.asm.tree.ClassNode> facadeClasses = new java.util.HashMap<>();
+
+    /**
+     * whether the facade the step renames a V class to (classRenames into CenturyBridge's classes, the layer jar)
+     * declares the member, kind 'm' or 'f': a mixin of the V class targets the facade at runtime (the ClassRemapper
+     * renames its @Mixin class literal), and the facade declares V's names -- a rewrite facade too (s11 C4:
+     * GameRules$BooleanValue), whose mixins Chain.mixinFollow does not carry
+     */
+    public boolean facadeDeclares(String owner, char kind, String name, String desc) {
+        String f = classRenames.get(owner);
+        if (f == null || !f.startsWith("top/dext/") || layerJar == null || desc == null) {
+            return false;
+        }
+        org.objectweb.asm.tree.ClassNode cn = facadeClasses.computeIfAbsent(f, n -> {
+            try (java.util.zip.ZipFile z = new java.util.zip.ZipFile(layerJar.toFile())) {
+                java.util.zip.ZipEntry e = z.getEntry(n + ".class");
+                if (e == null) {
+                    return null;
+                }
+                org.objectweb.asm.tree.ClassNode c = new org.objectweb.asm.tree.ClassNode();
+                new org.objectweb.asm.ClassReader(z.getInputStream(e).readAllBytes()).accept(c, org.objectweb.asm.ClassReader.SKIP_CODE);
+                return c;
+            } catch (IOException ex) {
+                return null;
+            }
+        });
+        if (cn == null) {
+            return false;
+        }
+        String d = renamedDesc(desc);
+        if (kind == 'f') {
+            for (org.objectweb.asm.tree.FieldNode x : cn.fields) {
+                if (x.name.equals(name) && (x.desc.equals(desc) || x.desc.equals(d))) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        for (org.objectweb.asm.tree.MethodNode x : cn.methods) {
+            if (x.name.equals(name) && (x.desc.equals(desc) || x.desc.equals(d))) {
                 return true;
             }
         }
@@ -3010,6 +3104,41 @@ public final class Chain {
                         }
                     }
                     c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs,
+                        o.has("basis") ? o.get("basis").getAsString() : ""));
+                }
+            }
+            if (root.has("mixinReceivers")) {
+                var mrs = root.getAsJsonObject("mixinReceivers");
+                for (String k : mrs.keySet()) {
+                    var o = mrs.getAsJsonObject(k);
+                    String where = "mixinReceivers " + k;
+                    c.mixinReceivers.put(k, new MixinReceiver(parseStaticRef(where, o.get("toV").getAsString()),
+                        parseStaticRef(where, o.get("toW").getAsString()), o.has("basis") ? o.get("basis").getAsString() : ""));
+                }
+            }
+            if (root.has("mixinMoves")) {
+                var mm = root.getAsJsonObject("mixinMoves");
+                for (String k : mm.keySet()) {
+                    c.mixinMoves.put(k, mm.getAsJsonObject(k).get("to").getAsString());
+                }
+            }
+            if (root.has("mixinSplits")) {
+                var ms = root.getAsJsonObject("mixinSplits");
+                for (String k : ms.keySet()) {
+                    var o = ms.getAsJsonObject(k);
+                    java.util.function.Function<String, java.util.List<String[]>> hops = n -> {
+                        java.util.List<String[]> l = new java.util.ArrayList<>();
+                        if (o.has(n)) {
+                            for (var e : o.getAsJsonArray(n)) {
+                                String h = e.getAsString(); // owner.name:desc
+                                int dot = h.lastIndexOf('.', h.indexOf(':'));
+                                int col = h.indexOf(':');
+                                l.add(new String[] {h.substring(0, dot), h.substring(dot + 1, col), h.substring(col + 1)});
+                            }
+                        }
+                        return l;
+                    };
+                    c.mixinSplits.put(k, new MixinSplit(o.get("to").getAsString(), hops.apply("self"), hops.apply("back"),
                         o.has("basis") ? o.get("basis").getAsString() : ""));
                 }
             }

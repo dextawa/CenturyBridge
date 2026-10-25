@@ -854,6 +854,32 @@ public final class WiringCheck {
                 }
             }
         }
+        // mixinReceivers: "V>W" with toV (W)V and toW (V)W, both existing with their exact descriptors, and a basis
+        if (root.has("mixinReceivers")) {
+            for (var e : root.getAsJsonObject("mixinReceivers").entrySet()) {
+                checked++;
+                var o = e.getValue().getAsJsonObject();
+                String where = "mixinReceivers " + e.getKey();
+                String[] k = e.getKey().split(">");
+                if (k.length != 2 || !o.has("toV") || !o.has("toW") || !o.has("basis")) {
+                    problems.add(where + ": key \"V owner>W owner\" with \"toV\", \"toW\" and \"basis\"");
+                    continue;
+                }
+                String tv = o.get("toV").getAsString().trim();
+                String tw = o.get("toW").getAsString().trim();
+                int pv = tv.indexOf('(');
+                int pw = tw.indexOf('(');
+                if (pv <= 0 || pw <= 0) {
+                    problems.add(where + ": a converter is not OWNER#name(desc)");
+                    continue;
+                }
+                wantMethod(where + " toV", tv.substring(0, pv), null, methodDesc(tv.substring(pv)));
+                wantMethod(where + " toW", tw.substring(0, pw), null, methodDesc(tw.substring(pw)));
+                if (!tv.substring(pv).equals("(L" + k[1] + ";)L" + k[0] + ";") || !tw.substring(pw).equals("(L" + k[0] + ";)L" + k[1] + ";")) {
+                    problems.add(where + ": toV must be (L" + k[1] + ";)L" + k[0] + "; and toW (L" + k[0] + ";)L" + k[1] + ";");
+                }
+            }
+        }
         // convertHooks (the override side of a same-shape reshape): the member is one the target's
         // `under` has with that very descriptor, and every converter exists with its exact descriptor
         java.util.Set<String> convertHooked = new java.util.HashSet<>();
