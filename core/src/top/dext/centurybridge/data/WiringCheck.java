@@ -715,8 +715,11 @@ public final class WiringCheck {
                         }
                     } else {
                         String nd = methodDesc(s.desc);
-                        if (!libMethod(owner, nn, nd)) {
-                            problems.add(sec + " " + e.getKey() + ": " + owner + "." + nn + nd + " is no method of the target's Fabric API");
+                        // a Fabric API class the step renames onto one of the layer's own (an API the target's
+                        // Fabric API dropped, given back by the layer): the renamed member is the layer's
+                        if (classes.containsKey(owner) ? !layerDeclares(owner, nn, nd) : !libMethod(owner, nn, nd)) {
+                            problems.add(sec + " " + e.getKey() + ": " + owner + "." + nn + nd
+                                + (classes.containsKey(owner) ? " is no method of the layer" : " is no method of the target's Fabric API"));
                         }
                     }
                 }
@@ -1307,6 +1310,30 @@ public final class WiringCheck {
     }
 
     /** whether the target's Fabric API (or the game) declares name+desc on owner or a supertype */
+    /** the layer's compiled class {@code owner}, or a supertype the layer compiled, declares name+desc */
+    private boolean layerDeclares(String owner, String name, String desc) {
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            ClassNode cn = classes.get(todo.poll());
+            if (cn == null || !seen.add(cn.name)) {
+                continue;
+            }
+            for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                if (m.name.equals(name) && m.desc.equals(desc)) {
+                    return true;
+                }
+            }
+            if (cn.superName != null) {
+                todo.add(cn.superName);
+            }
+            if (cn.interfaces != null) {
+                todo.addAll(cn.interfaces);
+            }
+        }
+        return false;
+    }
+
     private boolean libMethod(String owner, String name, String desc) {
         return libMember(owner, n -> n.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc)));
     }
