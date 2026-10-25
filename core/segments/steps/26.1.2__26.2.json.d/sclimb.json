@@ -1,0 +1,18 @@
+{
+  "classRenames": {
+    "top/dext/centurybridge/step/v26_1/compat/fapi/tag/v1/FabricTagFile": "net/fabricmc/fabric/api/tag/v1/FabricTagFile",
+    "top/dext/centurybridge/step/v26_1/rt/CbFapiTagFileHooks": "net/fabricmc/fabric/impl/tag/TagFileHooks"
+  },
+  "methodRenames": {
+    "top/dext/centurybridge/step/v26_1/rt/CbFapiTagFileHooks.cb$setRemove(Ljava/util/List;)V": "fabric_setRemove"
+  },
+  "retiredClasses": {
+    "top/dext/centurybridge/step/v26_1/compat/fapi/tag/v1/FabricTagFile": "native returns: the 26.1 layer gave back 1.21.11's fabric-tag-api-v1 FabricTagFile under CB's name because 26.1's Fabric API dropped tag removal; 26.2's Fabric API ships it again (fabric-tag-api-v1 2.1.4): interface net/fabricmc/fabric/api/tag/v1/FabricTagFile with the one default method remove()Ljava/util/List; (List<TagEntry>), the facade's shape, made a TagFile interface by its TagFileMixin; converted mods' references move to it at this step (classRenames)",
+    "top/dext/centurybridge/step/v26_1/rt/CbFapiTagFileHooks": "native returns: 26.2's TagFileHooks (fabric_setRemove(List<TagEntry>), the same one-method shape) is what 26.2's TagFileMixin makes every TagFile implement (classRenames + methodRenames cb$setRemove -> fabric_setRemove)",
+    "top/dext/centurybridge/step/v26_1/rt/CbFapiTagRemovals": "native returns: the tag-removal state (removal entries per tag, the tag being built, the \"fabric:remove\" codec field) that 26.2's TagRemovalInternals and TagLoaderMixin keep again",
+    "top/dext/centurybridge/step/v26_1/mixin/CbFapiTagFileMixin": "native returns: 26.2's TagFileMixin makes TagFile a FabricTagFile and TagFileHooks and wraps its codec (@ModifyExpressionValue of RecordCodecBuilder.create in <clinit>) with one reading \"fabric:remove\"; left in place this copy's @Redirect of the same call would add the field a second time and both mixins would merge remove() into TagFile (one silently wins). Its constructor inject only handed datagen removals over from CbFapiTagsProviderMixin, retired with it: 26.2's TagsProviderMixin writes removals natively",
+    "top/dext/centurybridge/step/v26_1/mixin/CbFapiTagLoaderMixin": "native returns: 26.2's TagLoaderMixin records and applies the removals in TagLoader.load / build (lambda$build$0 / lambda$build$1); left in place both would apply every removal, one provider per release",
+    "top/dext/centurybridge/step/v26_1/mixin/CbFapiTagEntryAccess": "native returns: TagEntry.id / tag read by the retired CbFapiTagRemovals only; 26.2's TagEntryAccessor reads them for the native removal",
+    "top/dext/centurybridge/step/v26_1/mixin/CbFapiTagsProviderMixin": "native returns: handed a builder's removals to the retired CbFapiTagFileMixin's constructor inject, its only reader; 26.2's TagsProviderMixin (lambda$run$5, around new TagFile(List, boolean)) writes \"fabric:remove\" natively. The datagen entry points of the 26.1 layer (CbFapiTagDatagen, CbFapiTagBuilderMixin) stay: a climbed mod's 1.21.11 FabricProvidedTagBuilder.remove calls still land there, and their removals are not written on 26.2 until those calls move to 26.2's FabricTagAppender (datagen only, never runs in play)"
+  }
+}
