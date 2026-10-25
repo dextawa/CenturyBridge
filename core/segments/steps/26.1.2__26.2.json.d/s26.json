@@ -11,7 +11,8 @@
   "com/mojang/blaze3d/platform/SourceFactor": "com/mojang/blaze3d/platform/BlendFactor",
   "com/mojang/blaze3d/platform/DestFactor": "com/mojang/blaze3d/platform/BlendFactor",
   "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket": "net/minecraft/network/protocol/game/ServerboundSpectatorActionPacket",
-  "net/minecraft/world/level/levelgen/feature/configurations/SimpleRandomFeatureConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/CompositeFeatureConfiguration"
+  "net/minecraft/world/level/levelgen/feature/configurations/SimpleRandomFeatureConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/CompositeFeatureConfiguration",
+  "net/minecraft/util/CubicSpline$CoordinateVisitor": "top/dext/centurybridge/step/v26_2/facade/CubicSplineVisitor"
  },
  "_classRenames_basis": {
   "net/minecraft/util/Tuple": "26.2 deleted Tuple (no class of 26.2 holds its members; its callers use DFU Pair); the layer's facade is 26.1.2's class as it was",
@@ -58,7 +59,8 @@
   "net/minecraft/data/BlockFamilies.WAXED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_CUT_COPPER",
   "net/minecraft/data/BlockFamilies.WAXED_EXPOSED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_EXPOSED_CUT_COPPER",
   "net/minecraft/data/BlockFamilies.WAXED_WEATHERED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_WEATHERED_CUT_COPPER",
-  "net/minecraft/data/BlockFamilies.WAXED_OXIDIZED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_OXIDIZED_CUT_COPPER"
+  "net/minecraft/data/BlockFamilies.WAXED_OXIDIZED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_OXIDIZED_CUT_COPPER",
+  "net/minecraft/world/level/levelgen/DensityFunction.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Generic#densityFunctionCodec"
  },
  "instanceRedirects": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasNameEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
@@ -135,7 +137,13 @@
   "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getOptions()I": "top/dext/centurybridge/step/v26_2/rt/CbS26Team#parametersOptions",
   "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getColor()Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team#parametersColor",
   "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getNametagVisibility()Lnet/minecraft/world/scores/Team$Visibility;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team#parametersNametagVisibility",
-  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket.entityId()I": "top/dext/centurybridge/step/v26_2/rt/CbS26Packets#spectateEntityId"
+  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket.entityId()I": "top/dext/centurybridge/step/v26_2/rt/CbS26Packets#spectateEntityId",
+  "net/minecraft/util/CubicSpline$Constant.apply(Ljava/lang/Object;)F": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
+  "net/minecraft/util/CubicSpline$Multipoint.apply(Ljava/lang/Object;)F": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
+  "net/minecraft/util/CubicSpline.mapAll(Lnet/minecraft/util/CubicSpline$CoordinateVisitor;)Lnet/minecraft/util/CubicSpline;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
+  "net/minecraft/util/CubicSpline$Constant.mapAll(Lnet/minecraft/util/CubicSpline$CoordinateVisitor;)Lnet/minecraft/util/CubicSpline;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
+  "net/minecraft/util/CubicSpline$Multipoint.mapAll(Lnet/minecraft/util/CubicSpline$CoordinateVisitor;)Lnet/minecraft/util/CubicSpline;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
+  "net/minecraft/util/CubicSpline.apply(Ljava/lang/Object;)F": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline"
  },
  "_instanceRedirects_basis": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.*": "26.2 replaced the parser's option booleans by option-state objects (nameOption() ... advancementsOption()); rt/CbS26Selector reads and sets the same facts on them (see its javadoc)",
@@ -162,7 +170,9 @@
   "net/minecraft/client/Minecraft.useShaderTransparency()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#useShaderTransparency",
   "net/minecraft/client/Minecraft.renderNames()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26MinecraftClient#renderNames",
   "com/mojang/blaze3d/platform/DestFactor.values()[Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Blend#destValues",
-  "com/mojang/blaze3d/platform/DestFactor.valueOf(Ljava/lang/String;)Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Blend#destValueOf"
+  "com/mojang/blaze3d/platform/DestFactor.valueOf(Ljava/lang/String;)Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Blend#destValueOf",
+  "net/minecraft/util/CubicSpline.builder(Lnet/minecraft/util/BoundedFloatFunction;Lnet/minecraft/util/BoundedFloatFunction;)Lnet/minecraft/util/CubicSpline$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
+  "net/minecraft/data/worldgen/TerrainProvider.buildErosionOffsetSpline(Lnet/minecraft/util/BoundedFloatFunction;Lnet/minecraft/util/BoundedFloatFunction;FFFFFFZZLnet/minecraft/util/BoundedFloatFunction;)Lnet/minecraft/util/CubicSpline;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline"
  },
  "callReshapes": {
   "net/minecraft/world/entity/EntityType.spawn(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Consumer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;": {
@@ -229,6 +239,36 @@
     "conv top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#toListener(Ljava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance$ValueUpdateListener;"
    ],
    "basis": "26.2 takes the value-changed callback as OptionInstance.ValueUpdateListener where 26.1.2 took a Consumer (rt/CbS26OptionsClient adapts it)"
+  },
+  "net/minecraft/world/scores/PlayerTeam$Packed.color()Ljava/util/Optional;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_2/rt/CbS26Generic#toFormattings(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "generic drift: 26.2's Optional<TeamColor> handed out as 26.1.2's Optional<ChatFormatting> (Packed is a record: no override)"
+  },
+  "net/minecraft/util/profiling/ProfileCollector.getChartedPaths()Ljava/util/Set;": {
+   "desc": "()Ljava/util/Set;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_2/rt/CbS26Generic#toApachePairs(Ljava/util/Set;)Ljava/util/Set;",
+   "basis": "generic drift: the charted paths are com.mojang.datafixers.util.Pair on 26.2 where 26.1.2 had org.apache.commons.lang3.tuple.Pair (same first/second)"
+  },
+  "net/minecraft/client/renderer/rendertype/LayeringTransform.getModifier()Ljava/util/function/Consumer;": {
+   "desc": "()Ljava/util/function/Consumer;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_2/rt/CbS26Generic#toStackModifier(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;",
+   "basis": "generic drift: 26.2's Consumer<Matrix4f> handed out as 26.1.2's Consumer<Matrix4fStack> (a stack is a Matrix4f, so it takes one as it is; a wrapped 26.1.2 modifier comes back unwrapped)"
+  },
+  "net/minecraft/util/profiling/ActiveProfiler.getChartedPaths()Ljava/util/Set;": {
+   "desc": "()Ljava/util/Set;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_2/rt/CbS26Generic#toApachePairs(Ljava/util/Set;)Ljava/util/Set;",
+   "basis": "as ProfileCollector.getChartedPaths, called through the implementing class"
+  },
+  "net/minecraft/util/profiling/InactiveProfiler.getChartedPaths()Ljava/util/Set;": {
+   "desc": "()Ljava/util/Set;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_2/rt/CbS26Generic#toApachePairs(Ljava/util/Set;)Ljava/util/Set;",
+   "basis": "as ProfileCollector.getChartedPaths, called through the implementing class"
   }
  },
  "instanceFieldGetters": {
@@ -368,7 +408,8 @@
   "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket.<init>(I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Packets#cbNewSpectate"
  },
  "fieldRenames": {
-  "net/minecraft/world/level/levelgen/feature/Feature.POINTED_DRIPSTONE:Lnet/minecraft/world/level/levelgen/feature/Feature;": "SPELEOTHEM"
+  "net/minecraft/world/level/levelgen/feature/Feature.POINTED_DRIPSTONE:Lnet/minecraft/world/level/levelgen/feature/Feature;": "SPELEOTHEM",
+  "net/minecraft/world/level/levelgen/DensityFunction.HOLDER_HELPER_CODEC:Lcom/mojang/serialization/Codec;": "CODEC"
  },
  "superCtorReshapes": {
   "net/minecraft/world/level/block/PointedDripstoneBlock.<init>(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V": {
@@ -419,6 +460,31 @@
     "conv top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#toListener(Ljava/util/function/Consumer;)Lnet/minecraft/client/OptionInstance$ValueUpdateListener;"
    ],
    "basis": "26.2 takes the value-changed callback as OptionInstance.ValueUpdateListener where 26.1.2 took a Consumer (rt/CbS26OptionsClient adapts it)"
+  },
+  "net/minecraft/world/scores/PlayerTeam$Packed.<init>(Ljava/lang/String;Ljava/util/Optional;Ljava/util/Optional;ZZLnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/Component;Lnet/minecraft/world/scores/Team$Visibility;Lnet/minecraft/world/scores/Team$Visibility;Lnet/minecraft/world/scores/Team$CollisionRule;Ljava/util/List;)V": {
+   "desc": "(Ljava/lang/String;Ljava/util/Optional;Ljava/util/Optional;ZZLnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/Component;Lnet/minecraft/world/scores/Team$Visibility;Lnet/minecraft/world/scores/Team$Visibility;Lnet/minecraft/world/scores/Team$CollisionRule;Ljava/util/List;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26Generic#toTeamColors(Ljava/util/Optional;)Ljava/util/Optional;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "generic drift: the colour is Optional<TeamColor> on 26.2 where 26.1.2 had Optional<ChatFormatting>; a format or RESET is no colour (rt/CbS26Generic)"
+  },
+  "net/minecraft/client/renderer/rendertype/LayeringTransform.<init>(Ljava/lang/String;Ljava/util/function/Consumer;)V": {
+   "desc": "(Ljava/lang/String;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26Generic#toMatrixModifier(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
+   ],
+   "basis": "generic drift: 26.2 hands the modifier a Matrix4f where 26.1.2 handed the model-view Matrix4fStack; the 26.1.2 modifier runs on a stack holding the matrix, the result written back"
   }
  },
  "methodRenames": {
@@ -434,7 +500,8 @@
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.<init>(FFFF)V": "a 26.1.2 class extending PointedDripstoneConfiguration (super(...) included): 26.2's SpeleothemConfiguration that the class became is a final record (javap 26.2), and 26.2's Feature reads its configuration by casting to that record (SpeleothemFeature / SpeleothemClusterFeature.place), so a subclass outside the record could not reach 26.2's feature either; construction, fields and CODEC are bridged (rt/CbS26Dripstone), a subclass fails to load (IncompatibleClassChangeError: cannot inherit from final class)",
   "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.<init>(Lnet/minecraft/tags/TagKey;)V": "a 26.1.2 class extending ProtectedBlockProcessor (super(tag) included): 26.2's ProtectedBlockProcessor is a final record of a HolderSet (javap 26.2); construction, cannotReplace, processBlock and CODEC (26.1.2's {value: #tag} shape, rt/CbS26Processors) are bridged, a subclass fails to load (cannot inherit from final class)",
   "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.<init>(Lnet/minecraft/network/RegistryFriendlyByteBuf;)V": "a 26.1.2 class extending ClientboundSetPlayerTeamPacket.Parameters (super(buf) included): 26.2's Parameters is a final record (javap 26.2); reading, writing and the getters are bridged (rt/CbS26Team), a subclass fails to load",
-  "net/minecraft/world/level/levelgen/feature/configurations/SimpleRandomFeatureConfiguration.<init>(Lnet/minecraft/core/HolderSet;)V": "a 26.1.2 class extending SimpleRandomFeatureConfiguration (super(features) included): 26.2's CompositeFeatureConfiguration is a final record that Feature.SIMPLE_RANDOM_SELECTOR casts to; construction, features, getSubFeatures and CODEC are bridged, a subclass fails to load"
+  "net/minecraft/world/level/levelgen/feature/configurations/SimpleRandomFeatureConfiguration.<init>(Lnet/minecraft/core/HolderSet;)V": "a 26.1.2 class extending SimpleRandomFeatureConfiguration (super(features) included): 26.2's CompositeFeatureConfiguration is a final record that Feature.SIMPLE_RANDOM_SELECTOR casts to; construction, features, getSubFeatures and CODEC are bridged, a subclass fails to load",
+  "net/minecraft/util/CubicSpline": "a 26.1.2 class implementing CubicSpline itself: 26.2's CubicSpline is closed in practice, every consumer (CubicSpline.sample, asSampler, the codec) type-switches over Multipoint and Constant and throws MatchException for anything else (javap 26.2), and the interface lost apply/mapAll for mapCoordinates(UnaryOperator), so vanilla could never sample a third implementation; calls on the two vanilla splines are bridged (rt/CbS26Spline)"
  },
  "_methodRenames_basis": {
   "net/minecraft/world/level/levelgen/feature/DripstoneUtils.getDripstoneHeight(DDDD)D": "wall_table found the rename (same code); DripstoneUtils is renamed here by hand, its class pairing being undecided there",
@@ -471,5 +538,33 @@
  },
  "_superRenames_basis": {
   "net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessor": "26.2 turned the abstract class into an interface with processBlock(level, pos, pivot, originalPos, current, settings) and codec(); a 26.1.2 subclass extends the facade, which implements 26.2's interface over the subclass's 26.1.2 processBlock(.., originalInfo, ..) and getType()"
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/client/renderer/rendertype/LayeringTransform",
+   "member": "getModifier()Ljava/util/function/Consumer;",
+   "args": [],
+   "ret": "top/dext/centurybridge/step/v26_2/rt/CbS26Generic#toMatrixModifier(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;",
+   "basis": "a 26.1.2 subclass's modifier (written for a Matrix4fStack) as 26.2's Consumer<Matrix4f>"
+  },
+  {
+   "under": "net/minecraft/util/profiling/ProfileCollector",
+   "member": "getChartedPaths()Ljava/util/Set;",
+   "args": [],
+   "ret": "top/dext/centurybridge/step/v26_2/rt/CbS26Generic#toDfuPairs(Ljava/util/Set;)Ljava/util/Set;",
+   "basis": "a 26.1.2 collector's apache Pairs as 26.2's DataFixerUpper Pairs"
+  }
+ ],
+ "fieldRedirects": {
+  "net/minecraft/world/level/levelgen/DensityFunction.DIRECT_CODEC:Lcom/mojang/serialization/Codec;": "net/minecraft/world/level/levelgen/DensityFunctions"
+ },
+ "_densityFunction_basis": "26.1.2's DensityFunction: DIRECT_CODEC was DensityFunctions.DIRECT_CODEC; CODEC = RegistryFileCodec.create(DENSITY_FUNCTION, DIRECT_CODEC) (a Holder codec, rebuilt so in rt/CbS26Generic); HOLDER_HELPER_CODEC = CODEC.xmap(HolderHolder) is what 26.2 calls CODEC (javap of both static initializers)",
+ "genericWitnesses": {
+  "net/minecraft/core/registries/Registries.STRUCTURE_PROCESSOR:Lnet/minecraft/resources/ResourceKey;": {
+   "by": [
+    "net/minecraft/core/registries/BuiltInRegistries.STRUCTURE_PROCESSOR:Lnet/minecraft/core/Registry;"
+   ],
+   "basis": "phantom key: ResourceKey types no value of its own and passes unchanged; the registry of StructureProcessorType it named on 26.1.2 is the layer's mirror (rt/CbS26Processors.Mirror, under this same key), which BuiltInRegistries.STRUCTURE_PROCESSOR answers to 26.1.2 code and which registers each type's codec into 26.2's registry"
+  }
  }
 }

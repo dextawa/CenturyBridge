@@ -364,6 +364,45 @@ public class S26TestMod implements ModInitializer {
         var simple = new net.minecraft.world.level.levelgen.feature.configurations.SimpleRandomFeatureConfiguration(none);
         check("feature.simpleRandom", simple.features == none && simple.getSubFeatures().count() == 0, simple);
 
+        // generic drift (rt/CbS26Generic): PlayerTeam.Packed colour as Optional<ChatFormatting>
+        var gpacked = new net.minecraft.world.scores.PlayerTeam.Packed("cbs26k", Optional.empty(), Optional.of(net.minecraft.ChatFormatting.RED),
+            true, true, net.minecraft.network.chat.Component.empty(), net.minecraft.network.chat.Component.empty(),
+            net.minecraft.world.scores.Team.Visibility.ALWAYS, net.minecraft.world.scores.Team.Visibility.ALWAYS,
+            net.minecraft.world.scores.Team.CollisionRule.ALWAYS, List.of());
+        Optional<net.minecraft.ChatFormatting> pc = gpacked.color();
+        check("generic.packedColor", pc.isPresent() && pc.get() == net.minecraft.ChatFormatting.RED, pc);
+        check("generic.densityCodec", net.minecraft.world.level.levelgen.DensityFunction.CODEC != null
+            && net.minecraft.world.level.levelgen.DensityFunction.DIRECT_CODEC != null
+            && net.minecraft.world.level.levelgen.DensityFunction.HOLDER_HELPER_CODEC != null, "codecs");
+        java.util.Set<org.apache.commons.lang3.tuple.Pair<String, net.minecraft.util.profiling.metrics.MetricCategory>> charted =
+            net.minecraft.util.profiling.InactiveProfiler.INSTANCE.getChartedPaths();
+        check("generic.chartedPaths", charted.isEmpty(), charted);
+
+        // CubicSpline (rt/CbS26Spline): value transformer, apply, mapAll
+        net.minecraft.util.BoundedFloatFunction<Float> coord = new net.minecraft.util.BoundedFloatFunction<>() {
+            public float apply(Float f) { return f; }
+            public float minValue() { return -10f; }
+            public float maxValue() { return 10f; }
+        };
+        net.minecraft.util.BoundedFloatFunction<Float> twice = new net.minecraft.util.BoundedFloatFunction<>() {
+            public float apply(Float f) { return f * 2f; }
+            public float minValue() { return -20f; }
+            public float maxValue() { return 20f; }
+        };
+        net.minecraft.util.CubicSpline<Float, net.minecraft.util.BoundedFloatFunction<Float>> spline =
+            net.minecraft.util.CubicSpline.builder(coord, twice).addPoint(0f, 0f).addPoint(1f, 1f).build();
+        if (spline instanceof net.minecraft.util.CubicSpline.Multipoint<Float, net.minecraft.util.BoundedFloatFunction<Float>> mp) {
+            float mid = mp.apply(0.5f), end = mp.apply(1f);
+            check("spline.apply", Math.abs(mid - 1f) < 1e-4 && Math.abs(end - 2f) < 1e-4, mid + "," + end);
+            var mapped = mp.mapAll(c -> c);
+            check("spline.mapAll", mapped instanceof net.minecraft.util.CubicSpline.Multipoint<?, ?> m2
+                && Math.abs(((net.minecraft.util.CubicSpline.Multipoint<Float, ?>) m2).apply(1f) - 2f) < 1e-4, mapped);
+        } else {
+            check("spline.apply", false, spline);
+        }
+        var cst = (net.minecraft.util.CubicSpline.Constant<Float, net.minecraft.util.BoundedFloatFunction<Float>>) net.minecraft.util.CubicSpline.<Float, net.minecraft.util.BoundedFloatFunction<Float>>constant(3f);
+        check("spline.constant", cst.apply(0f) == 3f, cst);
+
         System.out.println("CB-S26 DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS: " + FAILS));
     }
 }
