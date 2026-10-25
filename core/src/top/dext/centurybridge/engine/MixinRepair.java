@@ -643,6 +643,7 @@ public final class MixinRepair {
                 }
             }
         }
+        flushGuards(mx);
         classChanged |= dirty[0];
         refmapChanged |= dirty[1];
         byte[] out = null;
@@ -720,17 +721,20 @@ public final class MixinRepair {
         String mode = guardFallback(an, h, d.site());
         int n = 0;
         for (FieldNode f : mx.fields) if (f.name.startsWith("cb$guard$")) n++;
+        // the guard's methods join the mixin after its handlers were walked (flushGuards): callers iterate mx.methods
         String field = "cb$guard$" + n;
         FieldNode fn = new FieldNode(Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_FINAL, field, "Ljava/lang/ThreadLocal;", null, null);
         fn.invisibleAnnotations = new ArrayList<>(List.of(new AnnotationNode(UNIQUE)));
         mx.fields.add(fn);
         MethodNode clinit = null;
+        List<MethodNode> pending = PENDING.computeIfAbsent(mx, k -> new ArrayList<>());
         for (MethodNode m : mx.methods) if (m.name.equals("<clinit>")) clinit = m;
+        for (MethodNode m : pending) if (m.name.equals("<clinit>")) clinit = m;
         if (clinit == null) {
             clinit = new MethodNode(Opcodes.ACC_STATIC, "<clinit>", "()V", null, null);
             clinit.instructions.add(new InsnNode(Opcodes.RETURN));
             clinit.maxStack = 0;
-            mx.methods.add(clinit);
+            pending.add(clinit);
         }
         InsnList ci = new InsnList();
         ci.add(new TypeInsnNode(Opcodes.NEW, "java/lang/ThreadLocal"));
@@ -888,12 +892,21 @@ public final class MixinRepair {
         w.tryCatchBlocks.add(new TryCatchBlockNode(tryStart, tryEnd, handler, null));
         w.maxLocals = rSlot + Math.max(1, cr.getSize());
         w.maxStack = 8;
-        mx.methods.add(w);
+        pending.add(w);
         AnnotationNode mark = new AnnotationNode(CALL_GUARDED);
         mark.values = new ArrayList<>(List.of("in", d.guardOwner() + "." + d.guardIn().name + d.guardIn().desc,
             "call", call.owner + "." + call.name + call.desc, "wrap", wname));
         h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
         h.invisibleAnnotations.add(mark);
+    }
+
+    /** methods guard() made for a mixin, added by flushGuards once its handlers are no longer being walked */
+    private static final Map<ClassNode, List<MethodNode>> PENDING =
+        java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
+
+    static void flushGuards(ClassNode mx) {
+        List<MethodNode> p = PENDING.remove(mx);
+        if (p != null) mx.methods.addAll(p);
     }
 
     private static void decrement(InsnList b, int cSlot) {
