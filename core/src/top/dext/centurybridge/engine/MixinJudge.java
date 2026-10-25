@@ -144,6 +144,7 @@ public final class MixinJudge {
         int judged = 0;
         int open = 0;
         Map<String, Integer> byUsage = new TreeMap<>();
+        Map<String, Integer> layerCounts = new java.util.TreeMap<>();
         Map<String, Integer> openByUsage = new TreeMap<>();
         try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(out, StandardCharsets.UTF_8))) {
             w.println("usage\towner\ttarget\tanchor\tordinal\tvcount\tfate");
@@ -169,7 +170,11 @@ public final class MixinJudge {
                         j.rowTarget = sr[4];
                         j.rowAnchor = sr[5];
                         j.rowOrdinal = Integer.parseInt(r[6]);
+                        j.rowLayer = null;
                         why = j.judgeMember(mx, ts.size() == 1 ? ts.get(0) : r[3], name, Integer.parseInt(r[7]), new HashSet<>());
+                    }
+                    if (j.rowLayer != null) {
+                        layerCounts.merge(j.rowLayer, 1, Integer::sum);
                     }
                     if (why != null) {
                         open++;
@@ -184,6 +189,12 @@ public final class MixinJudge {
         for (Map.Entry<String, Integer> e : byUsage.entrySet()) {
             System.out.printf("  %-18s %7d / %7d%n", e.getKey(), openByUsage.getOrDefault(e.getKey(), 0), e.getValue());
         }
+        System.out.println("  layer-held rows (facade class or restored member; MixinJudge.layerHeld): follow+W "
+            + layerCounts.getOrDefault("follow+W", 0) + ", facade-only-unreached " + layerCounts.getOrDefault("facade-only-unreached", 0)
+            + ", facade-only-open " + layerCounts.getOrDefault("facade-only-open", 0) + "; restored vanilla-reads "
+            + layerCounts.getOrDefault("restored-vanilla-reads", 0) + ", restored-unreached " + layerCounts.getOrDefault("restored-unreached", 0)
+            + ", restored-open " + layerCounts.getOrDefault("restored-open", 0) + "; partial, return untouched "
+            + layerCounts.getOrDefault("partial-return", 0));
     }
 
     static String key(String[] r) {
@@ -477,13 +488,14 @@ public final class MixinJudge {
             }
             for (MethodNode wm : cands) {
                 String why = fits(h, an, wm, st, anchors, vcount, oc);
-                if (why == null && restoring != null && restoring.vanillaReads(wm) == null
-                        && (source == null || !sourceRows.isEmpty() || source.invokes(wm.name))) {
-                    // it applies, but W's own code never reads the restored member where V's read it: the mod's
-                    // mixin changes nothing vanilla does (LayerMembers). When V's own code never called it either
-                    // (--source in the names W's members have, i.e. not past the wall; proven by name), a mixin on it
-                    // changed only its callers in V too, as it does now
-                    why = "restored-member: vanilla path unmixed";
+                if (why == null && (restoring != null || oc.name.startsWith("top/dext/"))) {
+                    why = layerHeld(h, wm, restoring, vcount);
+                }
+                if (why == null && MixinRepair.annotations(h).stream().anyMatch(a -> a.desc.equals(MixinBridge.RETURN_UNTOUCHED))) {
+                    // the target's answer changed type with no converter: the handler runs, but a callback reading or
+                    // setting the answer would not work (MixinBridge refuses those); never counted fully bridged
+                    rowLayer = "partial-return";
+                    why = "partial: return untouched only";
                 }
                 if (why == null) {
                     return null;
@@ -492,6 +504,72 @@ public final class MixinJudge {
             }
         }
         return first != null ? first : "no selector";
+    }
+
+    /** the layer-held category of the row being judged (layerHeld), tallied per row; null: none */
+    private String rowLayer;
+
+    /**
+     * One rule for an injector that applies to a member the layer holds -- a member a layer mixin restores on a W
+     * class (LayerMembers), or a method of a facade (a class the step renames to one of CenturyBridge's). The member
+     * holds V's code for converted mods' calls; whether the mod's mixin changes what vanilla does is the question.
+     * Bridged when
+     * <ul><li>a layer route sends vanilla's W read path through it (@CbVanillaReads naming a layer mixin: restored
+     * members), or
+     * <li>the injector also applies to the W method holding the same code (MixinBridge.alsoOnW's copy, marked
+     * AlsoOnW, judged on its own target: facades), or
+     * <li>V's own code never called the member (by name, in V's code; not past the wall, where V's names are not
+     * W's): the mixin changed only mods' calls on V too, as it does now.</ul>
+     * Otherwise open: "facade-only: vanilla path unmixed" / "restored-member: vanilla path unmixed".
+     */
+    private String layerHeld(MethodNode h, MethodNode wm, LayerMembers restoring, int vcount) {
+        boolean facade = restoring == null;
+        if (!facade && restoring.vanillaReads(wm) != null) {
+            rowLayer = "restored-vanilla-reads";
+            return null;
+        }
+        if (facade) {
+            for (AnnotationNode a : MixinRepair.annotations(h)) {
+                if (!a.desc.equals(MixinBridge.ALSO_ON_W)) {
+                    continue;
+                }
+                Map<String, Object> v = MixinRepair.values(a);
+                String why = judgeCopy(String.valueOf(v.get("mixin")), String.valueOf(v.get("handler")), vcount);
+                rowLayer = why == null ? "follow+W" : "facade-only-open";
+                return why == null ? null : "facade-only: the W copy " + why;
+            }
+        }
+        boolean unreached = source != null && sourceRows.isEmpty() && !source.invokes(wm.name);
+        if (unreached) {
+            rowLayer = facade ? "facade-only-unreached" : "restored-unreached";
+            return null;
+        }
+        rowLayer = facade ? "facade-only-open" : "restored-open";
+        return facade ? "facade-only: vanilla path unmixed" : "restored-member: vanilla path unmixed";
+    }
+
+    /** the follow+W copy of a handler, judged on its own mixin's target: null when it applies */
+    private String judgeCopy(String mixinName, String handler, int vcount) {
+        ClassNode gm = mixin(mixinName);
+        if (gm == null) {
+            return "gone (its mixin is not in the jar)";
+        }
+        List<String> ts = MixinRepair.mixinTargets(gm, null);
+        ClassNode tc = ts.size() == 1 ? targetClass(ts.get(0)) : null;
+        if (tc == null) {
+            return "has no target class";
+        }
+        for (MethodNode g : gm.methods) {
+            if (g.name.equals(handler)) {
+                for (AnnotationNode an : MixinRepair.annotations(g)) {
+                    if (MixinRepair.values(an).containsKey("method")) {
+                        return judgeInjector(gm, tc, g, an, vcount, null);
+                    }
+                }
+                return "was disabled";
+            }
+        }
+        return "is gone";
     }
 
     private String fits(MethodNode h, AnnotationNode an, MethodNode wm, boolean st, List<MixinRepair.Anchor> anchors, int vcount,

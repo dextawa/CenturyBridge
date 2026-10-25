@@ -118,6 +118,20 @@ public final class MixinRepair {
         return named;
     }
 
+    /** every class of the code jar (bodies, no frames), in jar order; unreadable entries skipped */
+    public void forEachClass(java.util.function.Consumer<ClassNode> f) {
+        for (ZipEntry e : java.util.Collections.list(code.entries())) {
+            if (!e.getName().endsWith(".class")) continue;
+            try {
+                ClassNode cn = new ClassNode();
+                new ClassReader(code.getInputStream(e).readAllBytes()).accept(cn, ClassReader.SKIP_FRAMES);
+                f.accept(cn);
+            } catch (IOException | RuntimeException ex) {
+                // an unreadable entry holds no method to compare
+            }
+        }
+    }
+
     /** does the code jar declare the class (its entry only, nothing parsed) */
     public boolean declares(String owner) {
         return cache.get(owner) != null || code.getEntry(owner + ".class") != null || layerEntry(owner) != null;
@@ -1461,7 +1475,7 @@ public final class MixinRepair {
         return true;
     }
 
-    private static boolean touchesThisFree(MethodNode h) {
+    static boolean touchesThisFree(MethodNode h) {
         if (h.instructions == null) return true;
         for (AbstractInsnNode in : h.instructions) {
             if (in instanceof VarInsnNode vi && vi.var == 0) return false;
