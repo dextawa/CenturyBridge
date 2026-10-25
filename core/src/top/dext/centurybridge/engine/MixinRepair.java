@@ -207,30 +207,54 @@ public final class MixinRepair {
      * unrelated class counts too: an answer of false is the proven one.
      */
     public synchronized boolean invokes(String name) {
+        index();
+        return invokedUnproven || invokedNames.contains(name);
+    }
+
+    /** the methods ("owner.name desc") calling a method of this name ("?" for a method reference); null if unproven */
+    private Map<String, Set<String>> callersByName;
+
+    public synchronized Set<String> callers(String name) {
+        index();
+        return invokedUnproven ? null : callersByName.getOrDefault(name, Set.of());
+    }
+
+    private void index() {
         if (invokedNames == null) {
             Set<String> out = new java.util.HashSet<>();
+            Map<String, Set<String>> by = new HashMap<>();
+            callersByName = by;
             for (ZipEntry e : java.util.Collections.list(code.entries())) {
                 if (!e.getName().endsWith(".class")) continue;
                 try {
+                    String cls = e.getName().substring(0, e.getName().length() - 6);
                     new ClassReader(code.getInputStream(e).readAllBytes()).accept(new org.objectweb.asm.ClassVisitor(Opcodes.ASM9) {
                         @Override
                         public org.objectweb.asm.MethodVisitor visitMethod(int access, String n, String d, String sig, String[] ex) {
+                            String caller = cls + "." + n + d;
                             return new org.objectweb.asm.MethodVisitor(Opcodes.ASM9) {
                                 @Override
                                 public void visitMethodInsn(int op, String owner, String mn, String md, boolean itf) {
                                     out.add(mn);
+                                    by.computeIfAbsent(mn, k -> new java.util.HashSet<>()).add(caller);
                                 }
 
                                 @Override
                                 public void visitInvokeDynamicInsn(String in, String id, org.objectweb.asm.Handle bsm, Object... args) {
                                     for (Object a : args) {
-                                        if (a instanceof org.objectweb.asm.Handle h) out.add(h.getName());
+                                        if (a instanceof org.objectweb.asm.Handle h) {
+                                            out.add(h.getName());
+                                            by.computeIfAbsent(h.getName(), k -> new java.util.HashSet<>()).add("?");
+                                        }
                                     }
                                 }
 
                                 @Override
                                 public void visitLdcInsn(Object v) {
-                                    if (v instanceof org.objectweb.asm.Handle h) out.add(h.getName());
+                                    if (v instanceof org.objectweb.asm.Handle h) {
+                                        out.add(h.getName());
+                                        by.computeIfAbsent(h.getName(), k -> new java.util.HashSet<>()).add("?");
+                                    }
                                 }
                             };
                         }
@@ -241,7 +265,6 @@ public final class MixinRepair {
             }
             invokedNames = out;
         }
-        return invokedUnproven || invokedNames.contains(name);
     }
 
     public ClassNode target(String owner) {
