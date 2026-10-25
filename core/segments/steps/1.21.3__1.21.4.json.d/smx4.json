@@ -181,6 +181,10 @@
       "basis": "MultiNoiseBiomeSourceParameterList.Preset.generateOverworldBiomes: javap -c both: new OverworldBiomeBuilder().addBiomes(..) into the parameter list; 1.21.4 dropped the winter-drop biome modifier (its biomes are always on)"
     }
   },
+  "mixinLedger": {
+    "net/minecraft/class_10328.<clinit>()V": "CreakingAnimation: 1.21.4 re-authored all creaking animations (javap <clinit>: 1058 -> 1969 significant instructions, similarity 0.24; Keyframe constructions 102 -> 192; a fourth definition, field_55089, added). V's keyframe constants and their ordinals have no counterparts in the new tables",
+    "net/minecraft/class_382.method_2025(ZFFLorg/joml/Matrix4f;Lnet/minecraft/class_4588;II)V @ CONSTANT floatValue=0.0": "BakedSheetGlyph.render: V's float 0.0 sites #2..#5 (javap offsets 81/126/171/216) are the depth of the four addVertex(matrix, x, y, 0) calls; 1.21.4 passes its new z parameter there (fload), so those V sites are removed; sites #0/#1 stand"
+  },
   "fieldRenames": {
     "net/minecraft/class_2609.field_11981:I": "field_55574",
     "net/minecraft/class_2609.field_11989:I": "field_55576",
