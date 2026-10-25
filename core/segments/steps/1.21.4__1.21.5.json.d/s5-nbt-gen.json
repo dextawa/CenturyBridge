@@ -1,0 +1,162 @@
+{
+ "_s5_nbt_generated": "core/tools/gen_s5_nbt.py -- regenerate, never hand-edit",
+ "callReshapes": {
+  "net/minecraft/class_2487.method_10571(Ljava/lang/String;)B": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#optByte(Ljava/util/Optional;)B",
+   "basis": "CompoundTag.method_10571 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.optByte)"
+  },
+  "net/minecraft/class_2487.method_10568(Ljava/lang/String;)S": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#optShort(Ljava/util/Optional;)S",
+   "basis": "CompoundTag.method_10568 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.optShort)"
+  },
+  "net/minecraft/class_2487.method_10550(Ljava/lang/String;)I": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#optInt(Ljava/util/Optional;)I",
+   "basis": "CompoundTag.method_10550 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.optInt)"
+  },
+  "net/minecraft/class_2487.method_10537(Ljava/lang/String;)J": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#optLong(Ljava/util/Optional;)J",
+   "basis": "CompoundTag.method_10537 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.optLong)"
+  },
+  "net/minecraft/class_2487.method_10583(Ljava/lang/String;)F": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#optFloat(Ljava/util/Optional;)F",
+   "basis": "CompoundTag.method_10583 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.optFloat)"
+  },
+  "net/minecraft/class_2487.method_10574(Ljava/lang/String;)D": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#optDouble(Ljava/util/Optional;)D",
+   "basis": "CompoundTag.method_10574 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.optDouble)"
+  },
+  "net/minecraft/class_2487.method_10558(Ljava/lang/String;)Ljava/lang/String;": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#optString(Ljava/util/Optional;)Ljava/lang/String;",
+   "basis": "CompoundTag.method_10558 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.optString)"
+  },
+  "net/minecraft/class_2487.method_10577(Ljava/lang/String;)Z": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#optBoolean(Ljava/util/Optional;)Z",
+   "basis": "CompoundTag.method_10577 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.optBoolean)"
+  },
+  "net/minecraft/class_2487.method_10547(Ljava/lang/String;)[B": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#byteArray(Ljava/util/Optional;)[B",
+   "basis": "CompoundTag.method_10547 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.byteArray)"
+  },
+  "net/minecraft/class_2487.method_10561(Ljava/lang/String;)[I": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#intArray(Ljava/util/Optional;)[I",
+   "basis": "CompoundTag.method_10561 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.intArray)"
+  },
+  "net/minecraft/class_2487.method_10565(Ljava/lang/String;)[J": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#longArray(Ljava/util/Optional;)[J",
+   "basis": "CompoundTag.method_10565 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.longArray)"
+  },
+  "net/minecraft/class_2487.method_10562(Ljava/lang/String;)Lnet/minecraft/class_2487;": {
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbNbt#optCompound(Ljava/util/Optional;)Lnet/minecraft/class_2487;",
+   "basis": "CompoundTag.method_10562 answers an Optional since 1.21.5, empty where 1.21.4's body answered its fallback (rt/CbNbt.optCompound)"
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2487.method_10540(Ljava/lang/String;)B": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2487.method_10573(Ljava/lang/String;I)Z": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2487.method_10554(Ljava/lang/String;I)Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2487.method_25926(Ljava/lang/String;)Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2487.method_25927(Ljava/lang/String;Ljava/util/UUID;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2487.method_25928(Ljava/lang/String;)Z": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2487.method_36110(Ljava/lang/String;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2487.method_10572(Ljava/lang/String;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2487.method_10538(Ljava/lang/String;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_10602(I)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_10603(I)Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_10609(I)S": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_10600(I)I": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_36111(I)[I": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_36112(I)[J": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_10611(I)D": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_10604(I)F": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_10608(I)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_10601()B": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2479.method_10601()B": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2495.method_10601()B": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2501.method_10601()B": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2483.method_10601()B": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2483.method_10606(ILnet/minecraft/class_2520;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_10606(ILnet/minecraft/class_2520;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2479.method_10606(ILnet/minecraft/class_2520;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2495.method_10606(ILnet/minecraft/class_2520;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2501.method_10606(ILnet/minecraft/class_2520;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2483.method_10531(ILnet/minecraft/class_2520;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2499.method_10531(ILnet/minecraft/class_2520;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2479.method_10531(ILnet/minecraft/class_2520;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2495.method_10531(ILnet/minecraft/class_2520;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2501.method_10531(ILnet/minecraft/class_2520;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2479.method_17803(ILnet/minecraft/class_2481;)Lnet/minecraft/class_2481;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2479.method_17805(ILnet/minecraft/class_2481;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2495.method_17806(ILnet/minecraft/class_2497;)Lnet/minecraft/class_2497;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2495.method_17808(ILnet/minecraft/class_2497;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2501.method_17810(ILnet/minecraft/class_2503;)Lnet/minecraft/class_2503;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2501.method_17812(ILnet/minecraft/class_2503;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2519.method_10714()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt"
+ },
+ "interfaceCallRedirects": {
+  "net/minecraft/class_2520.method_10714()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_2512.method_25929(Ljava/util/UUID;)Lnet/minecraft/class_2495;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2512.method_25930(Lnet/minecraft/class_2520;)Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2512.method_10691(Lnet/minecraft/class_2487;Ljava/lang/String;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2512.method_10692(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt",
+  "net/minecraft/class_2522.method_10718(Ljava/lang/String;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_2479.<init>(Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt#newByteArray",
+  "net/minecraft/class_2495.<init>(Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt#newIntArray",
+  "net/minecraft/class_2501.<init>(Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt#newLongArray",
+  "net/minecraft/class_2501.<init>(Lit/unimi/dsi/fastutil/longs/LongSet;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt#newLongArraySet"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_2520.field_33263:B": "top/dext/centurybridge/step/v1_21_5/rt/CbNbt"
+ }
+}

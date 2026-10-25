@@ -15,7 +15,13 @@
     "PotionDescriptionIdMixin",
     "CompassDescriptionIdMixin",
     "MaceRepairMixin",
-    "TotemEnchantableMixin"
+    "TotemEnchantableMixin",
+    "RemainingItemsMixin",
+    "ItemDescriptionMixin",
+    "EatingSoundMixin",
+    "PlaySoundRecorderMixin",
+    "OrCreateDescriptionIdMixin",
+    "ArmorDefenseMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,43 @@
+{
+ "classRenames": {
+  "net/minecraft/class_8685$class_7920": "net/minecraft/class_7920"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_8685$class_7920.method_52857(Ljava/lang/String;)Lnet/minecraft/class_8685$class_7920;": "top/dext/centurybridge/step/v1_21_9/rt/CbSkins"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_8685$class_7920.method_52856()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbSkins",
+  "net/minecraft/class_8685.comp_1911()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbSkins",
+  "net/minecraft/class_1071.method_52858(Lcom/mojang/authlib/GameProfile;)Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_9/rt/CbClientSkins",
+  "net/minecraft/class_1071.method_52862(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_8685;": "top/dext/centurybridge/step/v1_21_9/rt/CbClientSkins",
+  "net/minecraft/class_1071.method_72180(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_8685;)Lnet/minecraft/class_8685;": "top/dext/centurybridge/step/v1_21_9/rt/CbClientSkins"
+ },
+ "callReshapes": {
+  "net/minecraft/class_8685.comp_1626()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_12079$class_12081;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbSkins#texturePath(Lnet/minecraft/class_12079$class_12081;)Lnet/minecraft/class_2960;",
+   "basis": "s9 skin: PlayerSkin.texture() is body(), a ClientAsset.Texture whose texturePath() is the id 1.21.8 bound"
+  },
+  "net/minecraft/class_8685.comp_1627()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_12079$class_12081;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbSkins#texturePath(Lnet/minecraft/class_12079$class_12081;)Lnet/minecraft/class_2960;",
+   "basis": "s9 skin: PlayerSkin.capeTexture() is cape(), nullable as in 1.21.8"
+  },
+  "net/minecraft/class_8685.comp_1628()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_12079$class_12081;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbSkins#texturePath(Lnet/minecraft/class_12079$class_12081;)Lnet/minecraft/class_2960;",
+   "basis": "s9 skin: PlayerSkin.elytraTexture() is elytra(), nullable as in 1.21.8"
+  }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_8685.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_8685$class_7920;Z)V": "top/dext/centurybridge/step/v1_21_9/rt/CbSkins#create"
+ },
+ "ledger": {
+  "net/minecraft/class_1071.method_52858(Lcom/mojang/authlib/GameProfile;)Ljava/util/function/Supplier;": "override of SkinManager.lookupInsecure in a 1.21.8 subclass: 1.21.9 removed it (vanilla asks createLookup(profile, requireSecure)), and Minecraft builds its own SkinManager into a final field (Minecraft.<init>), so a subclass is never the game's skin manager; calls are served by CbClientSkins (1.21.9's lookup without the signature requirement)",
+  "net/minecraft/class_1071.method_52862(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_8685;": "override of SkinManager.getInsecureSkin in a 1.21.8 subclass: removed in 1.21.9, no vanilla caller, and the game's SkinManager is Minecraft's own (final field); calls are served by CbClientSkins with 1.21.8's body",
+  "net/minecraft/class_1071.method_72180(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_8685;)Lnet/minecraft/class_8685;": "override of SkinManager.getInsecureSkin(profile, fallback) in a 1.21.8 subclass: removed in 1.21.9, no vanilla caller, and the game's SkinManager is Minecraft's own (final field); calls are served by CbClientSkins with 1.21.8's body"
+ }
+}

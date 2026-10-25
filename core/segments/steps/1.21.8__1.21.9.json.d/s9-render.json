@@ -1,0 +1,40 @@
+{
+ "overrideHooks": [
+  {
+   "old": "method_3569(Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_243;)V",
+   "new": "method_3569(Lnet/minecraft/class_11954;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_12075;)V",
+   "onlyUnder": "net/minecraft/class_827",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders.cbSubmit(Ltop/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders$Legacy;Lnet/minecraft/class_11954;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_12075;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders$Legacy",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders.cbSuperRender(Ltop/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders$Super;Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_243;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders$Super",
+   "superAccessors": [
+    "method_74335()Lnet/minecraft/class_11954;",
+    "method_74331(Lnet/minecraft/class_2586;Lnet/minecraft/class_11954;FLnet/minecraft/class_243;Lnet/minecraft/class_11683$class_11792;)V",
+    "method_3569(Lnet/minecraft/class_11954;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_12075;)V"
+   ],
+   "basis": "s9 render: 1.21.9's submit runs a 1.21.8 renderer's render with the block entity, partial tick and camera position the dispatcher stamped on the state (CbBlockEntityDispatchMixin), drawing into a CbSubmit.Capture; a subclass's super.render(..) runs the vanilla renderer's own extraction and submission"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_827",
+   "method": "method_74335()Lnet/minecraft/class_11954;",
+   "call": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders.cbCreate(Lnet/minecraft/class_827;)Lnet/minecraft/class_11954;",
+   "basis": "s9 render: 1.21.9 demands createRenderState; a 1.21.8 renderer implementing the interface itself renders from a plain BlockEntityRenderState (the dispatcher stamps it with what render needs)"
+  }
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_827.method_3569(Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders",
+  "net/minecraft/class_822.method_3569(Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders",
+  "net/minecraft/class_826.method_3569(Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders",
+  "net/minecraft/class_838.method_3569(Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_827.method_3569(Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_243;)V": {
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders$LegacyFn",
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders#adapt(Ltop/dext/centurybridge/step/v1_21_9/rt/CbBlockEntityRenders$LegacyFn;)Lnet/minecraft/class_827;"
+  }
+ }
+}

@@ -189,6 +189,10 @@ public final class CbModelLoading {
     /** BlockStateModelLoader's 1.21.3 state (CbModelStateLoaderMixin) */
     public interface CbLegacyStateLoader {
         void cb$setMissingModel(net.minecraft.class_1100 missingModel);
+
+        /** 1.21.3's loadBlockStateDefinitions(id, stateDefinition, definitions), restored (CbModelStateLoaderMixin) */
+        net.minecraft.class_9824.class_10095 method_62627(net.minecraft.class_2960 id,
+                net.minecraft.class_2689<net.minecraft.class_2248, net.minecraft.class_2680> definition, java.util.List<?> definitions);
     }
 
     /** after new BlockStateModelLoader(missingModel): the loader keeps the model 1.21.3 loaded definitions with */
