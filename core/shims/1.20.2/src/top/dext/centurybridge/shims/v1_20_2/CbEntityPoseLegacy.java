@@ -7,22 +7,26 @@ import net.minecraft.class_4048;
 import net.minecraft.class_4050;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.rt.v1_20_2.CbLegacyPose;
+import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 
 /**
  * 1.20.1's Entity.canEnterPose / getBoundingBoxForPose back (s1misc pose bridge), 1.20.1 bodies:
  * the box the entity's dimensions in that pose span at its position, and whether the level has
- * room for it (deflated by 1.0E-7). 1.20.2's player tests its own copy of that; see
- * CbEntityPose. Declared public; 1.20.1's were protected.
+ * room for it (deflated by 1.0E-7). 1.20.2's player tests its own copy of that, which
+ * CbEntityPoseVanillaMixin answers through canEnterPose (see also CbEntityPose). Declared public;
+ * 1.20.1's were protected.
  */
-@Mixin(class_1297.class)
+@Mixin(value = class_1297.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityPoseLegacy implements CbLegacyPose {
 
+    @CbVanillaReads("CbEntityPoseVanillaMixin: Player.canPlayerFitWithinBlocksAndEntitiesWhen answers through it")
     @Override
     public boolean method_20233(class_4050 pose) {
         class_1297 self = (class_1297) (Object) this;
         return self.method_37908().method_8587(self, this.method_20343(pose).method_1011(1.0E-7));
     }
 
+    @CbVanillaReads("CbEntityPoseVanillaMixin: Player.canPlayerFitWithinBlocksAndEntitiesWhen answers through canEnterPose, which tests it")
     @Override
     public class_238 method_20343(class_4050 pose) {
         class_1297 self = (class_1297) (Object) this;

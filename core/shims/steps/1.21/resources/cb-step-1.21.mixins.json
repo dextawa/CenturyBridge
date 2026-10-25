@@ -70,6 +70,7 @@
     "CbNetConnectionAccess",
     "CbNetServerUseItemMixin",
     "CbServersMixin",
+    "CbVillagerEnchantBookMixin",
     "CbWorldButtonAccessor",
     "CbWorldDataFixersMixin",
     "CbWorldLeverInvoker",

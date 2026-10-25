@@ -1650,6 +1650,47 @@ final class MixinBridge {
             Selection sel = select(h, an, kind, sels, wt, v(target));
             if (sel != null) {
                 ats(sel, kind);
+            } else {
+                spellRestored(h, an, kind);
+            }
+        }
+
+        /**
+         * A selector left on a member the layer restores whose descriptor names a class the step renames (an
+         * Enchantment parameter that is the facade's in the layer): spelled as the restored member is declared
+         * (Chain.renamedDesc), so MixinRepair and MixinJudge find it -- a mixin aimed at vanilla code keeps V's
+         * names in its strings (MixinClassRenames), and the restored member is the only method with this name there.
+         */
+        private void spellRestored(MethodNode h, AnnotationNode an, String kind) {
+            List<String> sels = MixinRepair.strings(MixinRepair.values(an).get("method"));
+            for (int idx = 0; idx < sels.size(); idx++) {
+                String sel = sels.get(idx);
+                if (sel.startsWith("/") || sel.contains("*")) {
+                    continue;
+                }
+                String mapped = MixinRepair.refmapLookup(table, sel);
+                MixinRepair.Sel s = MixinRepair.Sel.parse(mapped);
+                if (s.desc() == null || s.owner() != null && !s.owner().equals(target)) {
+                    continue;
+                }
+                String rd = chain.renamedDesc(s.desc());
+                if (rd.equals(s.desc()) || !chain.layerMembers.match(target, s).isEmpty()) {
+                    continue;
+                }
+                MixinRepair.Sel r = new MixinRepair.Sel(s.owner(), s.name(), rd, s.wildcard());
+                if (chain.layerMembers.match(target, r).isEmpty()) {
+                    continue;
+                }
+                String nm = respell(mapped, s.name(), rd);
+                if (ownKey(sel)) {
+                    MixinRepair.refmapPut(table, sel, nm);
+                    refmapDirty = true;
+                } else {
+                    MixinRepair.setMethodSelector(an, idx, nm);
+                }
+                changed = true;
+                injected("@" + kind + " " + sn + "." + h.name, "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "."
+                    + s.name() + s.desc() + " => " + s.name() + rd + " (the layer's restored member, its descriptor as the step renames it)");
             }
         }
 
@@ -1676,7 +1717,8 @@ final class MixinBridge {
                 // vanilla calls, nothing moves under it. An unmarked restored member (a delegate onto the code W
                 // kept) is not taken here: the selector follows V's code to W below, and only when nothing
                 // carries it does it stay on the restored member (MixinJudge: "vanilla path unmixed")
-                if (s.desc() != null && chain.layerMembers.match(target, s).stream()
+                if (s.desc() != null && java.util.stream.Stream.concat(chain.layerMembers.match(target, s).stream(),
+                            chain.layerMembers.match(target, new MixinRepair.Sel(s.owner(), s.name(), chain.renamedDesc(s.desc()), s.wildcard())).stream())
                         .anyMatch(m -> chain.layerMembers.vanillaReads(m) != null)) {
                     injected("@" + kind + " " + sn + "." + h.name, "@" + kind + " " + sn + "." + h.name + " -> "
                         + shortName(target) + "." + s.name() + s.desc() + ": the layer's restored member");
@@ -2357,6 +2399,13 @@ final class MixinBridge {
                 }
                 if (!af.desc().equals(a.desc()) && !kind.equals("Inject")) {
                     left.add(where + ": the call's shape changed (" + af.how() + "), and @" + kind + " handles the call itself");
+                    continue;
+                }
+                if (RECEIVER_KINDS.contains(kind) && !af.owner().equals(a.owner()) && takesReceiver(sel.v(), a)) {
+                    // the handler takes the call's receiver first, typed as V's owner; W's call is on another object
+                    // (Minecraft.setScreen -> minecraft.gui's Gui.setScreen), which the handler cannot take
+                    left.add(where + ": " + af.how() + " gives " + shortName(af.owner()) + "." + af.name() + af.desc()
+                        + ", a call on another receiver than " + shortName(a.owner()) + ", which @" + kind + "'s handler takes");
                     continue;
                 }
                 if (kind.equals("Inject") && capturesLocals(sel.handler()) || hasSugar(sel.handler(), "Local;")) {
@@ -3931,6 +3980,20 @@ final class MixinBridge {
     private static String constantKey(Object c) {
         return c instanceof Integer ? "intValue" : c instanceof Float ? "floatValue" : c instanceof Long ? "longValue"
             : c instanceof Double ? "doubleValue" : "stringValue";
+    }
+
+    /** injectors whose handler takes the call's receiver (an instance call / field access) as its first argument */
+    private static final Set<String> RECEIVER_KINDS = Set.of("Redirect", "WrapOperation", "WrapWithCondition");
+
+    /** does V's site of the anchor act on an object (an instance call or GETFIELD/PUTFIELD), in the V methods */
+    private static boolean takesReceiver(List<MethodNode> vms, MixinRepair.Anchor a) {
+        for (MethodNode m : vms) {
+            for (AbstractInsnNode in : SiteMatch.occurrences(m, x -> MixinRepair.matchesAnchor(x, a))) {
+                int op = in.getOpcode();
+                return op != Opcodes.INVOKESTATIC && op != Opcodes.GETSTATIC && op != Opcodes.PUTSTATIC;
+            }
+        }
+        return true; // not read: as the anchor's kind suggests, conservatively an instance access
     }
 
     /** injectors baseGuard moves: positional, or handing back the one value they take */

@@ -232,7 +232,37 @@ public final class CbItemRecipeManager {
 
     public static <I extends class_9695, T extends class_1860<I>> class_2371<class_1799> method_8128(class_1863 rm,
             class_3956<T> type, I input, class_1937 level) {
-        return rm instanceof LegacyRemainingFor l ? l.method_8128(type, input, level) : super_method_8128(rm, type, input, level);
+        // the restored member (RemainingItemsFor): a 1.21.1 subclass's override or the body, with whatever a mod's mixin
+        // on it does
+        return ((RemainingItemsFor) rm).method_8128(type, input, level);
+    }
+
+    /**
+     * 1.21.1's RecipeManager.getRemainingItemsFor(type, input, level), restored on RecipeManager by
+     * CbItemRecipeManagerRestoredMixin
+     */
+    public interface RemainingItemsFor {
+        <I extends class_9695, T extends class_1860<I>> class_2371<class_1799> method_8128(class_3956<T> type, I input, class_1937 level);
+    }
+
+    /**
+     * ResultSlot.getRemainingItems(input, level) on a server level as 1.21.1's ResultSlot.onTake asked it -- the
+     * restored getRemainingItemsFor(CRAFTING, input, level) -- where that answers otherwise than its body (a mod's mixin
+     * on it, or a 1.21.1 subclass overriding it); else null (1.21.2's own answer stands)
+     */
+    public static class_2371<class_1799> remainingRead(class_1863 rm, net.minecraft.class_9694 input, class_1937 level) {
+        class_2371<class_1799> m = ((RemainingItemsFor) rm).method_8128(class_3956.field_17545, input, level);
+        class_2371<class_1799> b = super_method_8128(rm, class_3956.field_17545, input, level);
+        if (m.size() == b.size()) {
+            boolean same = true;
+            for (int i = 0; i < m.size() && same; i++) {
+                same = class_1799.method_7973(m.get(i), b.get(i));
+            }
+            if (same) {
+                return null;
+            }
+        }
+        return m;
     }
 
     public static Optional<class_8786<?>> method_8130(class_1863 rm, class_2960 id) {

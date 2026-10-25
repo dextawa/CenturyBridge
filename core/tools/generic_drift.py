@@ -13,7 +13,7 @@ element read or written as X is still an X), X<?> is raw X, and a bound that mov
 values still flow is none either (Class<? extends Entity> handed where Class<? extends
 SyncedDataHolder> is wanted).
 
-Two more differences are none, both read off the signatures alone:
+Three more differences are none, all read off the signatures alone:
   A. Bound-only: with every class type parameter compared by its place instead of its erasure the
      two signatures agree -- only a parameter's declared bound moved (LootDataType<T>: Object ->
      Validatable, registryKey() answering ResourceKey<Registry<T>> on both sides): every value has
@@ -26,7 +26,15 @@ Two more differences are none, both read off the signatures alone:
      BabyFollowAdult.create answering OneShot<LivingEntity> where V answered OneShot<AgeableMob> is
      safe to the caller). A use it cannot classify (a class outside the jar, java.util.List, an
      array, a method type parameter bounded by it) counts both ways and keeps the row.
---dropped <tsv> lists the rows (or positions) these two rules took, with the rule.
+  C. Removed type parameter (DROP in main): W's class declares V's type parameters minus some, in
+     order and by name (26.2: CubicSpline<C, I> -> CubicSpline<I>, its Builder / Multipoint / Constant
+     alike). With the removed parameters' arguments taken out of V's signature the two agree, and
+     the taken arguments name no type variable the member still uses elsewhere: the values are the
+     same objects (a CubicSpline is a CubicSpline). Only where the removed parameter types no value
+     W still links: no kept parameter is bounded by it bare, every V instance member using it
+     outside those argument positions is gone from W (26.1.2's apply(C) -- damage the probe's table
+     carries), and no V supertype whose arguments use it is still a W supertype.
+--dropped <tsv> lists the rows (or positions) these rules took, with the rule.
 
 Columns past the signatures: the game classes of V's type arguments W no longer has (the row then
 depends on how that class's death is bridged: renamed to a W class, the drift may vanish; a facade
@@ -329,6 +337,66 @@ def strip_phantom(sig, phantom):
             out.append(c)
             i += 1
     return "".join(out)
+
+
+def drop_type_args(sig, drop):
+    """Rule C's rewrite: a type signature with the type arguments at drop[binary name] (indices) taken out
+    of each such class's argument list, and the type-variable names those taken arguments named"""
+    gone = set()
+
+    def tvars(node, acc):
+        if node[0] == "T":
+            acc.add(node[1])
+        elif node[0] == "[":
+            tvars(node[1], acc)
+        elif node[0] == "L":
+            for a in node[2]:
+                tvars(a, acc)
+
+    def ty(i):
+        c = sig[i]
+        if c in "+-[":
+            s, e = ty(i + 1)
+            return c + s, e
+        if c == "*" or c in "ZBCSIJFDV":
+            return c, i + 1
+        if c == "T":
+            e = sig.index(";", i)
+            return sig[i:e + 1], e + 1
+        j, name, parts = i + 1, "", ["L"]
+        while True:
+            k = j
+            while sig[k] not in "<;.":
+                k += 1
+            seg = sig[j:k]
+            name = seg if not name else name + "$" + seg
+            parts.append(seg)
+            j = k
+            if sig[j] == "<":
+                j += 1
+                idx, args, rm = 0, [], drop.get(name, ())
+                while sig[j] != ">":
+                    e = type_end(sig, j)
+                    if idx in rm:
+                        tvars(parse_type(sig, j)[0], gone)
+                    else:
+                        args.append(ty(j)[0])
+                    j, idx = e, idx + 1
+                j += 1
+                if args:
+                    parts.append("<" + "".join(args) + ">")
+            if sig[j] == ".":
+                parts.append(".")
+                j += 1
+                continue
+            parts.append(";")
+            return "".join(parts), j + 1
+    return ty(0)[0], gone
+
+
+def sig_tvars(sig):
+    """the type-variable names a type signature uses"""
+    return set(re.findall(r"(?<![^<;()\[+\-:])T([^;<>:]+);", sig))
 
 
 def _skip_args(sig, i):
@@ -663,6 +731,79 @@ def main():
     # arguments on it are no drift; V code reaches its values through its V members, diffed apart
     NG = {tcls(n) for n, c in V.items() if not (c.signature and c.signature.startswith("<"))}
 
+    # Rule C: a class type parameter W removed (CubicSpline<C, I> -> CubicSpline<I>): V's binary name ->
+    # the indices of its formal parameters W no longer declares, where W's parameters are V's minus
+    # those (in order, by name). Taken only where the removed parameter types no value W still links:
+    #   - no kept parameter is bounded by it bare (its erasure would depend on it);
+    #   - every V member of the class that uses it outside the removed argument positions is gone from
+    #     W (that member's damage is in the probe's table, not hidden here: 26.1.2's apply(C));
+    #   - no V supertype whose arguments use it is still a W supertype (26.1.2's CubicSpline is a
+    #     BoundedFloatFunction<C>; 26.2's is none).
+    def formal_names(c):
+        return formal_params(c.signature) if c is not None and c.signature else []
+
+    def super_sigs(c):
+        """the supertype signatures after a class signature's formal section"""
+        s = c.signature or ""
+        i = _skip_args(s, 0) if s.startswith("<") else 0
+        out = []
+        while i < len(s):
+            e = type_end(s, i)
+            out.append(s[i:e])
+            i = e
+        return out
+
+    DROP = {}
+    for n, vc in V.items():
+        if tcls(n) not in W:
+            continue
+        pv, pw = formal_names(vc), formal_names(W.get(tcls(n)))
+        if not pv or len(pw) >= len(pv):
+            continue
+        keep, k = [], 0
+        for i, p in enumerate(pv):
+            if k < len(pw) and p == pw[k]:
+                keep.append(i)
+                k += 1
+        if k == len(pw):
+            DROP[n] = tuple(i for i in range(len(pv)) if i not in keep)
+
+    def drop_ok(n):
+        vc, wc = V[n], W[tcls(n)]
+        removed = {formal_params(vc.signature)[i] for i in DROP[n]}
+        for p, bounds in formal_list(vc.signature):
+            if p not in removed and any(sig_tvars(b) & removed and b.startswith("T") for b in bounds):
+                return False
+        wm = {(m.name, m.desc) for m in wc.methods} | {(f[0], f[1]) for f in wc.fields}
+        for m in vc.methods:
+            if m.signature and not m.access & ACC_STATIC and (tmember(mmap, n, m.name), tdesc(m.desc)) in wm:
+                parts = classfile.split_signature(m.signature) or ([], "V")
+                if any(sig_tvars(drop_type_args(t, DROP)[0]) & removed for t in list(parts[0]) + [parts[1]]):
+                    return False
+        for nm, ds, acc, sig in vc.fields:
+            if sig and not acc & ACC_STATIC and (tmember(fmap, n, nm), tdesc(ds)) in wm \
+                    and sig_tvars(drop_type_args(sig, DROP)[0]) & removed:
+                return False
+        wsup = {re.sub(r"<.*", "", t)[1:].rstrip(";") for t in super_sigs(wc)} if wc.signature else \
+            set(([wc.super] if wc.super else []) + list(wc.interfaces))
+        for t in super_sigs(vc):
+            if sig_tvars(drop_type_args(t, DROP)[0]) & removed and tcls(re.sub(r"<.*", "", t)[1:].rstrip(";")) in wsup:
+                return False
+        return True
+    DROP = {n: ix for n, ix in DROP.items() if drop_ok(n)}
+
+    def dropped_param(x, y, cls, bx, by, vsig):
+        """Rule C: with the removed type parameters' arguments taken out of V's x, x and W's y agree, and
+        what those arguments named types nothing else of the member"""
+        x2, gone = drop_type_args(x, DROP)
+        if x2 == x:
+            return False
+        parts = classfile.split_signature(vsig) if vsig else ([x], "V")
+        rest = set()
+        for t in list(parts[0]) + [parts[1]]:
+            rest |= sig_tvars(drop_type_args(t, DROP)[0])
+        return not gone & rest and not drifts(x2, y, cls, bx, by)
+
     def class_bounds(classes, name):
         """the type parameters in scope in a class: its own, then its outer classes' (a nested class
         that is not static can use them)"""
@@ -859,13 +1000,15 @@ def main():
         })
 
     def judge(u, hit, bx, by, mvars, a_ok, vsig, wsig, vct, wct):
-        """the drifted positions of one usage the earlier rules keep, then those rules A and B drop
+        """the drifted positions of one usage the earlier rules keep, then those rules C, A and B drop
         (each position with the rule that took it)"""
         hit = [h for h in hit if not safe(h[1], h[2], tcls, h[3], bx, by, infer=False)
                and not (u != "override" and caller_typed(h[1], h[2], tcls, bx, by, mvars))]
         keep, took = [], []
         for h in hit:
-            if a_ok and u not in ("new", "super") and bound_only(h[1], h[2], tcls, bx, by, vsig, wsig, vct, wct):
+            if dropped_param(h[1], h[2], tcls, bx, by, vsig):
+                took.append((h[0], "C"))
+            elif a_ok and u not in ("new", "super") and bound_only(h[1], h[2], tcls, bx, by, vsig, wsig, vct, wct):
                 took.append((h[0], "A"))
             elif safe(h[1], h[2], tcls, h[3], bx, by):
                 took.append((h[0], "B"))

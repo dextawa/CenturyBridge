@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * the 1.20.2 wiring already listed this cover but no mixin provided it --
  * found by the real-client fixture run, not by the audit.)
  */
-@Mixin(class_437.class)
+@Mixin(value = class_437.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class ScreenBridge {
 
     public void method_25420(class_332 context) {

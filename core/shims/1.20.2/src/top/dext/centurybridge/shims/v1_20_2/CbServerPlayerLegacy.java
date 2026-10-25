@@ -27,7 +27,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbServerPlayers;
  * A converted player overriding trackChunk / untrackChunk is sent chunks through the override
  * again (CbPlayerChunkSenderLegacy).
  */
-@Mixin(class_3222.class)
+@Mixin(value = class_3222.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbServerPlayerLegacy {
 
     private class_3222 cb$self() {

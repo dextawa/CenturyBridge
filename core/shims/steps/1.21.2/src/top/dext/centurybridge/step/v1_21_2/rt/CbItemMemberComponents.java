@@ -13,7 +13,9 @@ import net.minecraft.class_9334;
  * getEnchantmentValue() and getDefaultAttributeModifiers(), and EQUIPPABLE where 1.21.1 asked an Equipable item or
  * block (CbItemEquipable). Every other component is the item's built one.
  * Installed by CbItemMembersMixin only for a class that overrides one of those members, at the end of its
- * construction; the overrides are asked on each read, as 1.21.1 asked them.
+ * construction; the overrides are asked on each read, as 1.21.1 asked them. 1.21.1's vanilla Equipable items
+ * (ArmorItem, AnimalArmorItem, ShieldItem) get it too: their EQUIPPABLE follows their restored getters only when
+ * those answer otherwise than the layer's 1.21.1 bodies (a mod's mixin; CbItemEquipable.vanillaEquippable).
  */
 public final class CbItemMemberComponents implements class_9323 {
 
@@ -28,7 +30,7 @@ public final class CbItemMemberComponents implements class_9323 {
     /** whether a class overrides a 1.21.1 member these components answer */
     public static boolean needed(class_1792 item) {
         return item instanceof CbItemMembers.LegacyEnchantmentValue || item instanceof CbItemMembers.LegacyDefaultModifiers
-            || CbItemEquipable.needed(item);
+            || CbItemEquipable.needed(item) || CbItemEquipable.restoredVanilla(item);
     }
 
     @Override
@@ -43,6 +45,9 @@ public final class CbItemMemberComponents implements class_9323 {
         }
         if (type == class_9334.field_54196 && CbItemEquipable.needed(item)) {
             return (T) CbItemEquipable.equippable(item, built.method_57829(class_9334.field_54196));
+        }
+        if (type == class_9334.field_54196 && CbItemEquipable.restoredVanilla(item)) {
+            return (T) CbItemEquipable.vanillaEquippable(item, built.method_57829(class_9334.field_54196));
         }
         return built.method_57829(type);
     }
@@ -61,6 +66,8 @@ public final class CbItemMemberComponents implements class_9323 {
             keys.add(class_9334.field_49636);
         }
         if (CbItemEquipable.needed(item)) {
+            keys.add(class_9334.field_54196);
+        } else if (CbItemEquipable.restoredVanilla(item) && method_57829(class_9334.field_54196) != null) {
             keys.add(class_9334.field_54196);
         }
         return keys;

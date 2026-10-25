@@ -41,6 +41,9 @@ import org.objectweb.asm.tree.MethodNode;
  * onto shipped facades. Covers are checked by MixinCheck against the mixin
  * classes (they are overloads added to vanilla classes, not statics).
  *
+ * A target in a separately released mod the layer depends on (-Dcb.depJars / -Dcb.layerModJson, {@link DepJars}) is
+ * judged in that mod's jar by the same rules, public members of public classes only.
+ *
  *   wiring-check &lt;compiledShimDir&gt; &lt;shims.json&gt; [&lt;inter-to-mojang.tsv&gt;] [&lt;target stub jar&gt;]
  */
 public final class WiringCheck {
@@ -56,6 +59,12 @@ public final class WiringCheck {
     private final Map<String, ClassNode> lib = new HashMap<>();
     /** the target's game libraries (-Dcb.libs), class headers only: subtype judgments of library-keyed wiring */
     private final Map<String, ClassNode> gameLibs = new HashMap<>();
+    /**
+     * the separately released mods the layer declares in depends (-Dcb.depJars, {@link DepJars}): a redirect or field
+     * target that is neither a layer class nor a stub class is looked up here, public class and public member only
+     * (another mod's jar: nothing else crosses), with the same exact-descriptor rule
+     */
+    private Map<String, ClassNode> deps = Map.of();
     private final List<String> problems = new ArrayList<>();
     private Remapper facade = new SimpleRemapper(Map.of());
     private Remapper wall;
@@ -171,6 +180,7 @@ public final class WiringCheck {
                 }
             }
         }
+        w.deps = DepJars.read(w.problems);
         var root = top.dext.centurybridge.engine.Wiring.read(shimsJson);
         if (table != null && Files.exists(table)) {
             // as the conversion renames (Main.convert): tokens only the wiring's facades declare keep their names
@@ -1421,8 +1431,17 @@ public final class WiringCheck {
             cn = stub.get(cls); // a vanilla owner: see wantField
             if (wall != null && hash < 0 && name != null) name = wall.mapMethodName(cls, name, desc);
         }
+        boolean dep = false;
+        if (cn == null && deps.containsKey(cls)) {
+            cn = deps.get(cls); // a dependency mod's class
+            dep = true;
+        }
         if (cn == null) {
             problems.add(where + " -> " + target + " (no such shim class)");
+            return;
+        }
+        if (dep && (cn.access & Opcodes.ACC_PUBLIC) == 0) {
+            problems.add(where + " -> " + cls + " (dependency mod class not public)");
             return;
         }
         if (name == null) {
@@ -1437,6 +1456,8 @@ public final class WiringCheck {
             if (m.desc.equals(desc)) {
                 if ((m.access & Opcodes.ACC_STATIC) == 0) {
                     problems.add(where + " -> " + cls + "." + name + desc + " (not static)");
+                } else if (dep && (m.access & Opcodes.ACC_PUBLIC) == 0) {
+                    problems.add(where + " -> " + cls + "." + name + desc + " (dependency mod member not public)");
                 }
                 return;
             }
@@ -1458,8 +1479,17 @@ public final class WiringCheck {
             cn = stub.get(cls);
             if (wall != null && hash < 0) name = wall.mapFieldName(cls, name, desc);
         }
+        boolean dep = false;
+        if (cn == null && deps.containsKey(cls)) {
+            cn = deps.get(cls); // a dependency mod's class
+            dep = true;
+        }
         if (cn == null) {
             problems.add(where + " -> " + target + " (no such shim class)");
+            return;
+        }
+        if (dep && (cn.access & Opcodes.ACC_PUBLIC) == 0) {
+            problems.add(where + " -> " + cls + " (dependency mod class not public)");
             return;
         }
         for (FieldNode f : cn.fields) {
@@ -1468,6 +1498,8 @@ public final class WiringCheck {
                     problems.add(where + " -> " + cls + "." + name + " is " + f.desc + ", call site reads " + desc);
                 } else if ((f.access & Opcodes.ACC_STATIC) == 0) {
                     problems.add(where + " -> " + cls + "." + name + " (not static)");
+                } else if (dep && (f.access & Opcodes.ACC_PUBLIC) == 0) {
+                    problems.add(where + " -> " + cls + "." + name + " (dependency mod member not public)");
                 }
                 return;
             }

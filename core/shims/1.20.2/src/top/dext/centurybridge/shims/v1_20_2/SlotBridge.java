@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * parameter. Old single-arg overload delegates with the current stack as the
  * previous value (matching the old implicit semantics). Work order: L2 x18.
  */
-@Mixin(class_1735.class)
+@Mixin(value = class_1735.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class SlotBridge {
 
     public void method_48931(class_1799 stack) {

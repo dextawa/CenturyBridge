@@ -24,14 +24,20 @@ Ledgered (each reason is what mixin-cause verified; nothing else is):
                            the API side's work, and call-handling injectors were never searched for a stand-in
   target-moved-up-anchor   W dropped the override (MixinBridge restores it as a super call for HEAD / RETURN);
                            an anchor of V's override body has no code to stand in
-Left open (mechanisms or a step agent's judgment): the API side still open (target-api), members moved up,
+Left open (mechanisms or a step agent's judgment): moved code (moved-private-member: another W class holds the
+member's id or its code; class-moved: the class id under another outer class), the API side still open
+(target-api), members moved up,
 reshaped or only similar, anchors moved into callees with several call sites, wired anchors, counts and
 ordinals, constants with a candidate, renamed vanilla classes.
 
-  python gen_mixin_ledger.py [--strict] <cause-mixin.tsv> <out fragment.json>
+  python gen_mixin_ledger.py [--strict] [--keep-open <keys.json>] <cause-mixin.tsv> <out fragment.json>
       (--strict leaves rows on members the wiring speaks of open: facade classes, redirects, covers, reshapes)
       writes {"mixinLedger": {key: reason}}: key "<owner>" (class), "<owner>.<target>" (member) or
       "<owner>.<target> @ <anchor>" (one anchor of a member)
+      (--keep-open, opt-in: a step agent's judgment that some rows are moved code, not removed code -- e.g. behaviour
+      W runs from data -- so the generated ledger must never write them down. keys.json is {"keepOpen": [key, ...]}
+      or a plain list, keys in the same three forms; a row is skipped when its owner, its member or its anchor key is
+      listed. Keep the keys file beside the fragment so regeneration stays reproducible.)
   python gen_mixin_ledger.py --count <open-mixin.tsv> <wiring.json>
       prints how many open rows the wiring's mixinLedger (base file and fragments) covers
 """
@@ -74,7 +80,16 @@ def key_of(kind, owner, target, anchor):
 WIRED = ("class-renamed-to-layer", "target-wired")
 
 
-def generate(cause_tsv, out, strict=False):
+def keep_open_keys(path):
+    if path is None:
+        return set()
+    with open(path, encoding="utf-8") as f:
+        j = json.load(f)
+    return set(j.get("keepOpen", []) if isinstance(j, dict) else j)
+
+
+def generate(cause_tsv, out, strict=False, keep_open=None):
+    keep = keep_open_keys(keep_open)
     led = {}
     by = collections.Counter()
     with open(cause_tsv, encoding="utf-8") as f:
@@ -85,6 +100,9 @@ def generate(cause_tsv, out, strict=False):
             if len(r) < len(head):
                 continue  # a broken line (evidence text with a line break)
             if strict and r[ix["cause"]].startswith(WIRED):
+                continue
+            o, t, a = r[ix["owner"]], r[ix["target"]], r[ix["anchor"]]
+            if o in keep or f"{o}.{t}" in keep or f"{o}.{t} @ {a}" in keep:
                 continue
             kind, why = reason(r[ix["cause"]], r[ix["mojang"]], r[ix["target"]], r[ix["anchor"]], r[ix["evidence"]], r[ix["usage"]])
             if kind is None:
@@ -128,7 +146,14 @@ def count(open_tsv, wiring):
 if __name__ == "__main__":
     if sys.argv[1] == "--count":
         count(sys.argv[2], sys.argv[3])
-    elif sys.argv[1] == "--strict":
-        generate(sys.argv[2], sys.argv[3], strict=True)
     else:
-        generate(sys.argv[1], sys.argv[2])
+        args = sys.argv[1:]
+        strict = "--strict" in args
+        if strict:
+            args.remove("--strict")
+        keep_open = None
+        if "--keep-open" in args:
+            i = args.index("--keep-open")
+            keep_open = args[i + 1]
+            del args[i:i + 2]
+        generate(args[0], args[1], strict=strict, keep_open=keep_open)

@@ -1,0 +1,17 @@
+{
+  "sources": [
+    {
+      "type": "centurybridge:legacy_beds"
+    },
+    {
+      "type": "minecraft:directory",
+      "prefix": "entity/bed/",
+      "source": "entity/bed"
+    },
+    {
+      "type": "minecraft:directory",
+      "prefix": "entity/signs/",
+      "source": "entity/signs"
+    }
+  ]
+}

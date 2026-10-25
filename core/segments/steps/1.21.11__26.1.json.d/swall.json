@@ -1321,7 +1321,9 @@
   "com/mojang/blaze3d/systems/RenderSystem.initBackendSystem()Lnet/minecraft/class_7576$class_7577;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#initBackendSystem",
   "com/mojang/blaze3d/systems/RenderSystem.initRenderer(JIZLnet/minecraft/class_12289;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#initRenderer",
   "com/mojang/blaze3d/platform/GLX._initGlfw()Ljava/util/function/LongSupplier;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#initGlfw",
-  "com/mojang/blaze3d/platform/GLX.make(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#make"
+  "com/mojang/blaze3d/platform/GLX.make(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#make",
+  "net/minecraft/class_3255.method_14392(Lnet/minecraft/class_7677;Ljava/io/InputStream;Lnet/minecraft/class_9224;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallPackResources#getMetadataFromStream",
+  "net/minecraft/class_7296.method_43393(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGiveItems#throwItem"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -2515,7 +2517,12 @@
   "net/minecraft/class_338.method_75803(Lnet/minecraft/class_12225;IIZ)V",
   "net/minecraft/class_840.method_3594()F",
   "net/minecraft/class_840.method_35793()F",
-  "net/minecraft/class_840.method_34589()Lnet/minecraft/class_1921;"
+  "net/minecraft/class_840.method_34589()Lnet/minecraft/class_1921;",
+  "net/minecraft/class_1297.method_5692(Lnet/minecraft/class_6862;D)Z",
+  "net/minecraft/class_11681.method_72998(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_776;Lnet/minecraft/class_4618;)V",
+  "net/minecraft/class_3485.method_15085(Lnet/minecraft/class_2960;Ljava/lang/String;)Ljava/nio/file/Path;",
+  "net/minecraft/class_3485.method_21891(Lnet/minecraft/class_2487;)Lnet/minecraft/class_3499;",
+  "net/minecraft/class_9976.method_62320(Lnet/minecraft/class_4597;Lnet/minecraft/class_243;Lnet/minecraft/class_12077;)V"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -3298,6 +3305,230 @@
     -1
    ],
    "basis": "swall: GlStateManager._colorMask(red, green, blue, alpha) became _colorMask(mask), the same GL state call from the same command encoder; the four flags are one bit mask now"
+  },
+  "net/minecraft/class_338.method_1805(Lnet/minecraft/class_338$class_12233;IIZ)V": {
+   "to": "extractRenderState(Lnet/minecraft/class_338$class_12233;IILnet/minecraft/class_338$DisplayMode;)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "ChatComponent's private chat drawing (access, height, tickCount, focused) is 26.1's private extractRenderState(access, height, tickCount, DisplayMode): the same body, the focused flag read off the mode (foreground)"
+  },
+  "net/minecraft/class_7743.method_45655(Lnet/minecraft/class_332;)V": {
+   "to": "extractSignText(Lnet/minecraft/class_332;Lorg/joml/Vector2f;)V",
+   "args": [
+    0
+   ],
+   "basis": "AbstractSignEditScreen's sign text drawing (renderSignText) is 26.1's extractSignText(graphics, scale): the same body, the text scale now passed in"
+  },
+  "net/minecraft/class_5682.method_62009(Lnet/minecraft/class_327;Lnet/minecraft/class_332;III)V": {
+   "to": "extractSelectedItemTooltip(Lnet/minecraft/class_327;Lnet/minecraft/class_332;III)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "ClientBundleTooltip.renderSelectedItemTooltip is 26.1's extractSelectedItemTooltip, same arguments and body"
+  },
+  "net/minecraft/class_5682.method_62017(Lnet/minecraft/class_327;IIIILnet/minecraft/class_332;)V": {
+   "to": "extractBundleWithItemsTooltip(Lnet/minecraft/class_327;IIIILnet/minecraft/class_332;Lorg/apache/commons/lang3/math/Fraction;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "basis": "ClientBundleTooltip.renderBundleWithItemsTooltip is 26.1's extractBundleWithItemsTooltip; 26.1 passes the bundle's weight as a Fraction it read inside before"
+  },
+  "net/minecraft/class_5682.method_62006(IIILjava/util/List;ILnet/minecraft/class_327;Lnet/minecraft/class_332;)V": {
+   "to": "extractSlot(IIILjava/util/List;ILnet/minecraft/class_327;Lnet/minecraft/class_332;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "ClientBundleTooltip.renderSlot is 26.1's extractSlot, same arguments and body"
+  },
+  "net/minecraft/class_310.method_1511()V": {
+   "to": "pickBlockOrEntity()V",
+   "args": [],
+   "basis": "Minecraft.pickBlock is 26.1's pickBlockOrEntity, the same body (middle-click pick)"
+  },
+  "net/minecraft/class_4910.method_25660(Lnet/minecraft/class_2248;Lnet/minecraft/class_2960;)V": {
+   "to": "createAirLikeBlock(Lnet/minecraft/class_2248;Lnet/minecraft/client/resources/model/sprite/Material;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "BlockModelGenerators.createAirLikeBlock(block, particle texture id) is 26.1's createAirLikeBlock(block, particle Material): the same body, the texture as a Material"
+  },
+  "net/minecraft/class_775.method_40079(Lnet/minecraft/class_1920;Lnet/minecraft/class_3611;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)F": {
+   "to": "getHeight(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_3611;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)F",
+   "args": [
+    -1,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "LiquidBlockRenderer's private fluid height is 26.1's FluidRenderer.getHeight with the same body; its level is 26.1's client BlockAndTintGetter"
+  },
+  "net/minecraft/class_4184.method_36425()Lnet/minecraft/class_4184$class_6355;": {
+   "to": "method_36425(F)Lnet/minecraft/class_4184$class_6355;",
+   "args": [],
+   "basis": "Camera.getNearPlane() is 26.1's getNearPlane(fov): the same body (the near plane's four corners from the camera's axes), the field of view now passed in by its caller instead of read from the options and the near distance read from the camera's projection instead of the 0.05 constant; vanilla calls it from getFluidInCamera, as 1.21.11 did"
+  },
+  "net/minecraft/class_31.method_158(Lnet/minecraft/class_5455;Lnet/minecraft/class_2487;Lnet/minecraft/class_2487;)V": {
+   "to": "method_158(Lnet/minecraft/class_2487;Ljava/util/UUID;)V",
+   "args": [
+    -1,
+    0,
+    -1
+   ],
+   "basis": "PrimaryLevelData.setTagData(registries, levelTag, playerTag) is 26.1's setTagData(levelTag, singleplayerUuid): the same method writing level.dat's Data tag (server brands, Bukkit/was-modded flags, data packs, version, game type, spawn, time, level name, difficulty, data configuration); 26.1 moved world generation settings, game rules and the player tag out of it (the player is now referred to by UUID), so the registries and the player tag have no counterpart"
+  },
+  "net/minecraft/class_2609.method_11192(Lnet/minecraft/class_5455;Lnet/minecraft/class_8786;Lnet/minecraft/class_9696;Lnet/minecraft/class_2371;I)Z": {
+   "to": "method_11192(Lnet/minecraft/class_2371;ILnet/minecraft/class_1799;)Z",
+   "args": [
+    -1,
+    -1,
+    -1,
+    0,
+    1
+   ],
+   "basis": "AbstractFurnaceBlockEntity.canBurn(registries, recipe, input, items, maxStackSize) is 26.1's canBurn(items, maxStackSize, result): the same test (input slot not empty, result slot empty or the same item with room under min(maxStackSize, its max stack size)); 26.1's caller assembles the recipe's result and passes it, so the registries, recipe and input have no counterpart"
+  },
+  "net/minecraft/class_757.method_3198(Lnet/minecraft/class_4587;F)V": {
+   "to": "method_3198(Lnet/minecraft/class_12075;Lnet/minecraft/class_4587;)V",
+   "args": [
+    1,
+    -1
+   ],
+   "basis": "GameRenderer.bobHurt(poseStack, partialTick) is 26.1's bobHurt(cameraRenderState, poseStack): the same rotations (death tilt, hurt shake by damage tilt strength), the camera entity's values now read from the camera render state extracted with the partial tick"
+  },
+  "net/minecraft/class_757.method_3186(Lnet/minecraft/class_4587;F)V": {
+   "to": "method_3186(Lnet/minecraft/class_12075;Lnet/minecraft/class_4587;)V",
+   "args": [
+    1,
+    -1
+   ],
+   "basis": "GameRenderer.bobView(poseStack, partialTick) is 26.1's bobView(cameraRenderState, poseStack): the same translate and two rotations from the walk distance and bob, now read from the camera render state extracted with the partial tick"
+  },
+  "net/minecraft/class_757.method_3172(FZLorg/joml/Matrix4f;)V": {
+   "to": "method_3172(Lnet/minecraft/class_12075;FLorg/joml/Matrix4fc;)V",
+   "args": [
+    1,
+    -1,
+    -1
+   ],
+   "basis": "GameRenderer.renderItemInHand(partialTick, sleeping, projection) is 26.1's renderItemInHand(cameraRenderState, partialTick, projection): the same body (feature flush, pose stack, bobHurt/bobView, renderHandsWithItems with the partial tick); the sleeping flag is now the camera render state's; the projection is a Matrix4fc on 26.1, not the Matrix4f a 1.21.11 handler takes, so a handler taking it is not served"
+  },
+  "net/minecraft/class_5682.method_62021()Lnet/minecraft/class_2561;": {
+   "to": "method_62021(Lorg/apache/commons/lang3/math/Fraction;)Lnet/minecraft/class_2561;",
+   "args": [],
+   "basis": "ClientBundleTooltip.getProgressBarFillText() is 26.1's getProgressBarFillText(weight): the same comparisons of the bundle's weight (empty / full), the weight now passed in instead of read from the contents"
+  },
+  "net/minecraft/class_5682.method_62020()I": {
+   "to": "method_62020(Lorg/apache/commons/lang3/math/Fraction;)I",
+   "args": [],
+   "basis": "ClientBundleTooltip.getProgressBarFill() is 26.1's getProgressBarFill(weight): the same mulAndTruncate and clamp of the bundle's weight, the weight now passed in"
+  },
+  "net/minecraft/class_5682.method_63509()Lnet/minecraft/class_2960;": {
+   "to": "method_63509(Lorg/apache/commons/lang3/math/Fraction;)Lnet/minecraft/class_2960;",
+   "args": [],
+   "basis": "ClientBundleTooltip.getProgressBarTexture() is 26.1's getProgressBarTexture(weight): the same comparison of the bundle's weight picking the full or filled bar sprite, the weight now passed in"
+  },
+  "net/minecraft/class_1041.method_4485(ZLnet/minecraft/class_10219;)V": {
+   "to": "method_4485(Z)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "Window.updateFullscreen(vsync, tracyFrameCapture) is 26.1's updateFullscreen(vsync): the same body (set the monitor mode, resize the GUI, update vsync, log a failure); 26.1 no longer pushes a display frame there, so the Tracy capture has no counterpart"
+  },
+  "net/minecraft/class_9976.method_62320(Lnet/minecraft/class_4597;Lnet/minecraft/class_243;Lnet/minecraft/class_12077;)V": {
+   "to": "method_62320(Lnet/minecraft/class_243;Lnet/minecraft/class_12077;)V",
+   "args": [
+    -1,
+    0,
+    1
+   ],
+   "basis": "WeatherEffectRenderer.render(bufferSource, cameraPos, state) is 26.1's render(cameraPos, state): the same rain and snow column drawing from the weather render state, now through its own render pass instead of the buffer source's consumers, which has no counterpart"
+  },
+  "net/minecraft/class_1007.method_4213(Lnet/minecraft/class_10055;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_12075;)V": {
+   "to": "method_3926(Lnet/minecraft/class_10055;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_12075;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "AvatarRenderer.submitNameTag(state, poseStack, collector, camera) is 26.1's typed submitNameDisplay(AvatarRenderState, ..) (the override EntityRenderer.submitNameDisplay's bridge calls; named by EntityRenderer's id in the analysis namespace): the same body; calls and overrides are renamed (methodRenames)"
+  },
+  "net/minecraft/class_8062.method_64996(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1799;": {
+   "to": "method_64996(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1799;",
+   "args": [
+    -1,
+    0,
+    1,
+    2
+   ],
+   "basis": "SmithingTrimRecipe.applyTrim(registries, base, addition, pattern) is 26.1's applyTrim(base, addition, pattern): the same body (the trim material of the addition, a copy of the base with the trim set unless it already has it); 26.1 reads the material from the addition's PROVIDES_TRIM_MATERIAL component instead of looking it up in the registries"
+  },
+  "net/minecraft/class_4625.method_23374(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4635;)Z": {
+   "to": "method_23374(Lnet/minecraft/class_5281;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4635;)Z",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "AbstractHugeMushroomFeature.isValidPosition(level, origin, height, cursor, config) is 26.1's isValidPosition with the level a WorldGenLevel (a LevelAccessor): the same height bounds, placement test of the block below and air/leaves test over the cap radius"
+  },
+  "net/minecraft/class_340.method_67545(Lnet/minecraft/class_4184;)V": {
+   "to": "method_67545(Lnet/minecraft/class_12075;I)V",
+   "args": [
+    -1
+   ],
+   "basis": "DebugScreenOverlay.render3dCrosshair(camera) is 26.1's render3dCrosshair(cameraRenderState, guiScale): the same model-view rotation by the camera's angles, gui scale and crosshair render pass, the angles now read from the camera render state and the scale passed in"
+  },
+  "net/minecraft/class_3675.method_15986(Lnet/minecraft/class_1041;Lorg/lwjgl/glfw/GLFWKeyCallbackI;Lorg/lwjgl/glfw/GLFWCharModsCallbackI;)V": {
+   "to": "method_15986(Lnet/minecraft/class_1041;Lorg/lwjgl/glfw/GLFWKeyCallbackI;Lorg/lwjgl/glfw/GLFWCharCallbackI;Lorg/lwjgl/glfw/GLFWPreeditCallbackI;Lorg/lwjgl/glfw/GLFWIMEStatusCallbackI;)V",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "InputConstants.setupKeyboardCallbacks(window, key, charMods) is 26.1's setupKeyboardCallbacks(window, key, char, preedit, imeStatus): the same installation of the window's key callback; 26.1 installs a char callback (not char-mods) and the IME callbacks, so the char-mods callback has no counterpart"
+  },
+  "net/minecraft/class_4603.method_23067(ZFLnet/minecraft/class_11659;)V": {
+   "to": "method_23067(ZZFLnet/minecraft/class_11659;Z)V",
+   "args": [
+    1,
+    2,
+    3
+   ],
+   "basis": "ScreenEffectRenderer.renderScreenEffect(sleeping, partialTick, collector) is 26.1's renderScreenEffect(firstPerson, sleeping, partialTick, collector, skipItemActivation): the same overlays (in-wall block, water, fire, then the item activation animation unless the last flag is set), the first-person test now passed in"
+  },
+  "net/minecraft/class_572.method_72853(Ljava/util/function/Function;Lnet/minecraft/class_5605;Lnet/minecraft/class_5605;)Lnet/minecraft/class_11677;": {
+   "to": "createArmorMeshSet(Ljava/util/function/Function;Ljava/util/Map;Lnet/minecraft/class_5605;Lnet/minecraft/class_5605;)Lnet/minecraft/class_11677;",
+   "args": [
+    0,
+    2,
+    3
+   ],
+   "basis": "HumanoidModel.createArmorMeshSet(meshFactory, inner, outer) is 26.1's createArmorMeshSet(meshFactory, partsBySlot, inner, outer): the same four meshes with the parts each slot keeps, the parts per slot now passed in instead of written in the body The four-argument overload was born at 26.1 and shares its mojang name with two 1.21.11 ids, so it keeps that name in the analysis namespace (WallInverse)."
   }
  },
  "lambdaAdapters": {
@@ -3312,10 +3543,22 @@
   "net/minecraft/class_11689.method_73014(Lnet/minecraft/class_11788;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_327;)V": "renderTranslucent",
   "net/minecraft/class_846.method_22761()V": "uploadGlobalGeomBuffersToGPU",
   "net/minecraft/class_4225.method_38722()Ljava/lang/String;": "currentDeviceName",
-  "net/minecraft/class_437.method_47413(Lnet/minecraft/class_332;IIF)V": "extractRenderStateWithTooltipAndSubtitles"
+  "net/minecraft/class_437.method_47413(Lnet/minecraft/class_332;IIF)V": "extractRenderStateWithTooltipAndSubtitles",
+  "net/minecraft/class_1007.method_4213(Lnet/minecraft/class_10055;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_12075;)V": "submitNameDisplay",
+  "net/minecraft/class_9931.method_61986(Lnet/minecraft/class_332;)V": "extractRenderState"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#setDisplayBlockState",
   "net/minecraft/class_11966.field_62726:Ljava/util/EnumSet;": "top/dext/centurybridge/step/v26_1/rt/CbWallEndPortalStates#setFacesToShow"
+ },
+ "fieldRenames": {
+  "net/minecraft/class_4643$class_4644.field_29283:Lnet/minecraft/class_4651;": "belowTrunkProvider",
+  "net/minecraft/class_2454.field_40647:Lnet/minecraft/class_7800;": "craftingCategory",
+  "net/minecraft/class_2454.field_40648:Lnet/minecraft/class_7709;": "cookingCategory",
+  "net/minecraft/class_3002.field_13441:Lnet/minecraft/class_2960;": "customId",
+  "net/minecraft/class_10500.field_55427:Lnet/minecraft/class_4730;": "sprite",
+  "net/minecraft/class_10511.field_55447:Lnet/minecraft/class_4730;": "sprite",
+  "net/minecraft/class_9955.field_53056:Lnet/minecraft/class_4063;": "prevCloudStatus",
+  "net/minecraft/class_3485.field_31684:Ljava/lang/String;": "STRUCTURE_DIRECTORY_NAME"
  }
 }

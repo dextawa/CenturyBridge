@@ -10,7 +10,11 @@ get-static / call-static and their -inherited / -protected forms) whose owner W 
   method  a W class X (not the owner, not one of its supertypes) declares a static method of that name and
           translated descriptor whose body is V's body instruction for instruction, class names translated
           through the step's classRenames (pkgmoves-gen.json) and V's owner read as X (a moved helper calls
-          its moved siblings). -> staticRedirects key -> X
+          its moved siblings). The static fields of the owner the body reads must hold the same in X too: their
+          <clinit> stretches the same, and the owner's members those stretches name (a lambda's method
+          included) the same code (deep_same: 26.1.2 BedRenderer.modelTransform and 26.2
+          ShulkerBoxRenderer.modelTransform are both TRANSFORMATIONS.get(facing), over maps built by different
+          transforms). -> staticRedirects key -> X
   field   X declares a static field of that name and translated descriptor, and the stretch of X.<clinit>
           computing it (from the previous PUTSTATIC to X's own field, to its own PUTSTATIC) is V's stretch in
           the owner's <clinit> instruction for instruction under the same translation; or, when the stretches
@@ -164,6 +168,59 @@ def main():
             stretch_cache[(id(jar), c)] = stretches(jar[c])
         return stretch_cache[(id(jar), c)]
 
+    def own_refs(ins, owner):
+        """the members of owner a stretch of code names (fields read or written, methods called or referenced by
+        a handle, a lambda's handle inside an invokedynamic included): kind, name, descriptor"""
+        out = set()
+
+        def walk(x):
+            if isinstance(x, tuple) and x:
+                if x[0] == "ref" and x[2] == owner:
+                    out.add(("F" if x[1] == "F" else "M", x[3], x[4]))
+                elif x[0] == "mhandle" and x[2] == owner:
+                    out.add(("F" if not x[4].startswith("(") else "M", x[3], x[4]))
+                else:
+                    for a in x:
+                        walk(a)
+        for _, a in ins or ():
+            walk(a)
+        return out
+
+    def deep_same(kind, name, desc, home, X, seen, state_only=True):
+        """V's member of home and W's of X are the same, and so is the state of home its code reads (read as
+        X's): a body that is the same instructions over its own class's static fields is the same code only where
+        those fields hold the same -- their initializer stretches the same, and every member of home those
+        stretches name (a lambda's method included) the same too (26.1.2 BedRenderer.modelTransform and 26.2
+        ShulkerBoxRenderer.modelTransform both answer TRANSFORMATIONS.get(facing); the two maps are built by
+        different createModelTransform bodies). A method body's calls to its own class's methods are not
+        followed (state_only): W's method of that name is W's counterpart, which may differ by W's own API
+        (26.2 LightCoordsUtil.getLightCoords(level, pos) calls its 4-argument form, whose emissiveRendering() lost
+        its arguments)."""
+        if (kind, name, desc) in seen:
+            return True
+        seen.add((kind, name, desc))
+        wname, wdesc = mren.get(home + "." + name, name), td(desc)
+        if kind == "M":
+            vm = next((m for m in V[home].methods if m.name == name and m.desc == desc), None)
+            wm = next((m for m in W[X].methods if m.name == wname and m.desc == wdesc), None) if X in W else None
+            if vm is None or wm is None or not same(vm.insns, wm.insns, home, X):
+                return False
+            vins = vm.insns
+        else:
+            vf = next((m for m in V[home].fields if m.name == name and m.desc == desc), None)
+            wf = next((m for m in W[X].fields if m.name == wname and m.desc == wdesc), None) if X in W else None
+            if vf is None or wf is None:
+                return False
+            vs, wsx = st(V, home).get(name), st(W, X).get(wname)
+            if vs is None or wsx is None:
+                return vs is None and wsx is None and vf.const == wf.const
+            if not same(vs, wsx, home, X):
+                return False
+            vins = vs
+            state_only = False
+        return all(deep_same(k, n, d, home, X, seen, state_only) for k, n, d in own_refs(vins, home)
+                   if k == "F" or not state_only)
+
     rows = set()
     for line in open(f"core/segments/damage/{step}.damage.tsv", encoding="utf-8"):
         f = line.rstrip("\n").split("\t")
@@ -195,7 +252,10 @@ def main():
             wm = next(m for m in (W[X].fields if kind == "F" else W[X].methods) if m.name == name and m.desc == wdesc)
             if kind == "M":
                 if same(vm.insns, wm.insns, home, X):
-                    ok.append((X, "same code"))
+                    if deep_same("M", name, desc, home, X, set()):
+                        ok.append((X, "same code"))
+                    else:
+                        why[X] = "same instructions over members of the class that differ"
                 else:
                     why[X] = "body differs"
             else:

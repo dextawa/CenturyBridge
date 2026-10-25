@@ -1,0 +1,29 @@
+{
+ "staticRedirects": {
+  "net/minecraft/class_10280.method_64632()Lnet/minecraft/class_4095$class_5303;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#creakingAi_brainProvider",
+  "net/minecraft/class_10280.method_64639(Lnet/minecraft/class_10275;Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#creakingAi_makeBrain",
+  "net/minecraft/class_11192.method_70705()Lnet/minecraft/class_4095$class_5303;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#happyGhastAi_brainProvider",
+  "net/minecraft/class_11192.method_70707(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#happyGhastAi_makeBrain",
+  "net/minecraft/class_11574.method_72479()Lnet/minecraft/class_4095$class_5303;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#copperGolemAi_brainProvider",
+  "net/minecraft/class_11574.method_72481(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#copperGolemAi_makeBrain",
+  "net/minecraft/class_12118.method_75167()Lnet/minecraft/class_4095$class_5303;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#nautilusAi_brainProvider",
+  "net/minecraft/class_12118.method_75172(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#nautilusAi_makeBrain",
+  "net/minecraft/class_12120.method_75185()Lnet/minecraft/class_4095$class_5303;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#zombieNautilusAi_brainProvider",
+  "net/minecraft/class_12120.method_75188(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#zombieNautilusAi_makeBrain",
+  "net/minecraft/class_4835.method_24668(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#hoglinAi_makeBrain",
+  "net/minecraft/class_4838.method_24732(Lnet/minecraft/class_4836;Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#piglinAi_makeBrain",
+  "net/minecraft/class_5420.method_30252(Lnet/minecraft/class_5419;Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#piglinBruteAi_makeBrain",
+  "net/minecraft/class_5768.method_33243(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#axolotlAi_makeBrain",
+  "net/minecraft/class_6054.method_35183(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#goatAi_makeBrain",
+  "net/minecraft/class_7107.method_41368(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#frogAi_makeBrain",
+  "net/minecraft/class_7111.method_41400(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#tadpoleAi_makeBrain",
+  "net/minecraft/class_7261.method_42230(Lnet/minecraft/class_7260;Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#wardenAi_makeBrain",
+  "net/minecraft/class_7299.method_42660(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#allayAi_makeBrain",
+  "net/minecraft/class_7691.method_45363()Lnet/minecraft/class_4095$class_5303;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#camelAi_brainProvider",
+  "net/minecraft/class_7691.method_45365(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#camelAi_makeBrain",
+  "net/minecraft/class_8155.method_49152(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#snifferAi_makeBrain",
+  "net/minecraft/class_8950.method_55016(Lnet/minecraft/class_8949;Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#breezeAi_makeBrain",
+  "net/minecraft/class_9071.method_55728()Lnet/minecraft/class_4095$class_5303;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#armadilloAi_brainProvider",
+  "net/minecraft/class_9071.method_55731(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallAiBrains#armadilloAi_makeBrain"
+ }
+}

@@ -472,6 +472,9 @@ public final class MixinRepair {
                         }
                         if (cands.isEmpty()) cands = restored(restoredByTarget, owner, s); // an override MixinBridge put back
                         if (cands.isEmpty()) cands = layerMembers.match(owner, s); // a member the layer restores (LayerMembers)
+                        if (cands.isEmpty() && s.desc != null && !renamed.apply(s.desc).equals(s.desc)) {
+                            cands = layerMembers.match(owner, new Sel(s.owner, s.name, renamed.apply(s.desc), s.wildcard)); // as the step renames its types
+                        }
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
                         if (cands.isEmpty()) {

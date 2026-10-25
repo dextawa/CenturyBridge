@@ -818,6 +818,8 @@ public class SwallTestMod implements ModInitializer {
             worldCalls(server);
             legacyStates();
             trades(server);
+            brains(server);
+            furnaceBurn(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1216,6 +1218,64 @@ public class SwallTestMod implements ModInitializer {
                                                com.mojang.serialization.MapCodec<net.minecraft.class_2680> codec) {
             calls++;
             return new LegacyState(block, values, codec);
+        }
+    }
+
+    /**
+     * 1.21.11's <Mob>Ai.makeBrain statics (rt/CbWallAiBrains): with no mod mixin, the route over the mob's own brain
+     * (on) and over a copy without behaviours (redo) leaves each of the 18 brains as 26.1 built it (off)
+     */
+    private static void brains(MinecraftServer server) {
+        for (net.minecraft.CbSwallBrainProbe.Result r : net.minecraft.CbSwallBrainProbe.all(server.method_30002())) {
+            boolean readable = !r.off().startsWith("unreadable") && !r.off().startsWith("behaviours []");
+            check("brain.makeBrain." + r.mob() + ".on", readable && r.on().equals(r.off()), r.off() + " <> " + r.on());
+            check("brain.makeBrain." + r.mob() + ".redo", readable && r.redo().equals(r.off()), r.off() + " <> " + r.redo());
+            System.out.println("CBTEST BRAIN " + r.mob() + " " + r.off());
+        }
+    }
+
+    /**
+     * 1.21.11's AbstractFurnaceBlockEntity.burn, restored in the layer (mixin/CbWallFurnaceBurnMixin) with vanilla's
+     * serverTick routed through it: a furnace driven by serverTick (class_2609.method_31651) still smelts, marks the
+     * recipe used once per smelt, and turns a bucket in the fuel slot into a water bucket when a wet sponge dries
+     */
+    private static void furnaceBurn(MinecraftServer server) {
+        net.minecraft.class_3218 level = server.method_30002();
+        net.minecraft.class_2680 state = net.minecraft.class_2246.field_10181.method_9564();
+        try {
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(0, 100, 0);
+            net.minecraft.class_3866 be = new net.minecraft.class_3866(pos, state);
+            be.method_31662(level);
+            be.method_5447(0, new net.minecraft.class_1799(net.minecraft.class_1802.field_33400, 2));
+            be.method_5447(1, new net.minecraft.class_1799(net.minecraft.class_1802.field_8713, 1));
+            for (int i = 0; i < 450; i++) {
+                net.minecraft.class_2609.method_31651(level, pos, state, be);
+            }
+            net.minecraft.class_1799 out = be.method_5438(2);
+            int used = be.method_27354(level, new net.minecraft.class_243(0, 100, 0)).size();
+            check("furnace.burn.smelt", out.method_7909() == net.minecraft.class_1802.field_8620 && out.method_7947() == 2
+                && be.method_5438(0).method_7960() && used == 1, out + " input " + be.method_5438(0) + " recipes " + used);
+        } catch (Throwable t) {
+            check("furnace.burn.smelt", false, t);
+        }
+        try {
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(2, 100, 0);
+            net.minecraft.class_3866 be = new net.minecraft.class_3866(pos, state);
+            be.method_31662(level);
+            be.method_5447(0, new net.minecraft.class_1799(net.minecraft.class_1802.field_8554, 1));
+            be.method_5447(1, new net.minecraft.class_1799(net.minecraft.class_1802.field_8713, 1));
+            net.minecraft.class_2609.method_31651(level, pos, state, be);
+            boolean lit = be.method_5438(1).method_7960();
+            be.method_5447(1, new net.minecraft.class_1799(net.minecraft.class_1802.field_8550, 1));
+            for (int i = 0; i < 250; i++) {
+                net.minecraft.class_2609.method_31651(level, pos, state, be);
+            }
+            net.minecraft.class_1799 out = be.method_5438(2);
+            check("furnace.burn.sponge", lit && out.method_7909() == net.minecraft.class_1802.field_8535
+                && be.method_5438(1).method_7909() == net.minecraft.class_1802.field_8705 && be.method_5438(0).method_7960(),
+                out + " fuel " + be.method_5438(1) + " input " + be.method_5438(0));
+        } catch (Throwable t) {
+            check("furnace.burn.sponge", false, t);
         }
     }
 

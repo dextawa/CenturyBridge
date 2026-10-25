@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * record components. Careful: old method_10120 returned the BLOCK STATE, not
  * the position. Work order: L3 x~20 each.
  */
-@Mixin(class_2342.class)
+@Mixin(value = class_2342.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class BlockPointerBridge {
 
     private class_2342 self() {

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "cb.clienttest.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "ChatRenderMixin",
+    "ContainerRenderMixin",
+    "PlayerRendererMixin",
+    "ScreenBackgroundMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

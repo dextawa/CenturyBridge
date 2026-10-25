@@ -50,8 +50,11 @@ import top.dext.centurybridge.engine.Wiring;
  *   target-private-reshape  same name, another descriptor (private, unwired)
  *   target-private-similar  one W member of the same kind is singled out by body similarity (not
  *                      identical): a candidate, to be judged
- *   target-private-gone     no counterpart
+ *   moved-private-member    another W class declares the member's own intermediary id, or (methods) a class W's
+ *                           class reaches holds its code by body: moved, never removed
+ *   target-private-gone     no counterpart, in the class or elsewhere
  *   target-moved-up    W declares it on a supertype (a @Shadow / injector on the subclass cannot see it)
+ *   class-moved             the class's intermediary id stands under another outer class in W
  *   class-renamed / class-gone   the target class
  * Anchor causes (the target method stands, an @At does not, or not as often):
  *   anchor-wired       the anchor member is in the step's wiring (rename/reshape/redirect)
@@ -112,6 +115,33 @@ public final class MixinCause {
                     return null;
                 }
             });
+        }
+
+        /** member id (method_N / field_N / comp_N) -> the classes declaring it; class id (last class_N segment) -> classes */
+        private Map<String, List<String>> ids;
+
+        Map<String, List<String>> ids() {
+            if (ids != null) return ids;
+            Map<String, List<String>> out = new HashMap<>();
+            for (ZipEntry e : java.util.Collections.list(zip.entries())) {
+                if (!e.getName().endsWith(".class")) continue;
+                try {
+                    ClassNode cn = new ClassNode();
+                    new ClassReader(zip.getInputStream(e).readAllBytes()).accept(cn, ClassReader.SKIP_CODE);
+                    String last = cn.name.substring(Math.max(cn.name.lastIndexOf('/'), cn.name.lastIndexOf('$')) + 1);
+                    if (last.startsWith("class_")) out.computeIfAbsent("C:" + last, k -> new ArrayList<>()).add(cn.name);
+                    for (MethodNode m : cn.methods) {
+                        if (m.name.startsWith("method_") || m.name.startsWith("comp_")) out.computeIfAbsent("M:" + m.name, k -> new ArrayList<>()).add(cn.name);
+                    }
+                    for (FieldNode f : cn.fields) {
+                        if (f.name.startsWith("field_") || f.name.startsWith("comp_")) out.computeIfAbsent("F:" + f.name, k -> new ArrayList<>()).add(cn.name);
+                    }
+                } catch (IOException | RuntimeException ex) {
+                    // an unreadable entry declares nothing we can name
+                }
+            }
+            ids = out;
+            return out;
         }
 
         MethodNode method(String owner, String name, String desc) {
@@ -358,6 +388,8 @@ public final class MixinCause {
             }
             // intermediary names are stable across releases: a class W lacks is gone; a mojang name may only
             // have been renamed (a classRenames entry the step lacks)
+            String moved = movedClass(r.owner());
+            if (moved != null) return new Verdict("class-moved", r.owner() + " -> " + moved + " (same intermediary id under another outer class)");
             return new Verdict(r.owner().matches("net/minecraft/class_\\d+(\\$.*)?") ? "class-gone" : "class-missing-unwired", r.owner());
         }
         if (vc == null) return new Verdict("triage-no-v-class", r.owner());
@@ -430,7 +462,75 @@ public final class MixinCause {
         if (sameDesc.size() == 1) {
             return new Verdict("target-private-rename-candidate", sameDesc.get(0).name + sameDesc.get(0).desc + " (only unmatched method of the descriptor)");
         }
+        String moved = movedMember(owner, vm.name, false);
+        if (moved == null) moved = movedBody(owner, vm);
+        if (moved != null) return new Verdict("moved-private-member", vm.name + vm.desc + " in " + moved);
         return new Verdict("target-private-gone", access(vm.access) + " " + vm.name + vm.desc);
+    }
+
+    /** the W class now holding a V class's intermediary id (class_N) under another name, or null */
+    private String movedClass(String owner) {
+        String last = owner.substring(Math.max(owner.lastIndexOf('/'), owner.lastIndexOf('$')) + 1);
+        if (!last.startsWith("class_")) return null;
+        List<String> hits = w.ids().getOrDefault("C:" + last, List.of());
+        return hits.size() == 1 && !hits.get(0).equals(owner) ? hits.get(0) : null;
+    }
+
+    /**
+     * Another W class declaring the V member's own intermediary id: a private member keeps its id when Mojang
+     * moves it (a field pulled up into ServerCommonPacketListenerImpl, a record component); ids are per member,
+     * not per class. Null when no other class, or several, declare it.
+     */
+    private String movedMember(String owner, String name, boolean field) {
+        if (!(name.startsWith(field ? "field_" : "method_") || name.startsWith("comp_"))) return null;
+        List<String> hits = new ArrayList<>(w.ids().getOrDefault((field ? "F:" : "M:") + name, List.of()));
+        hits.remove(owner);
+        return hits.size() == 1 ? hits.get(0) + " (same intermediary id)" : null;
+    }
+
+    /**
+     * A W method holding the V method's code in another class the W class reaches (its supertypes, the types of
+     * its fields, the classes its code allocates or calls) under a new id: body similarity (own members by kind)
+     * at least 0.75 and 0.15 ahead of the next, same static-ness, five significant instructions at least.
+     * DebugScreenOverlay.drawChart -> the chart classes 1.20.2 made.
+     */
+    private String movedBody(String owner, MethodNode vm) {
+        if (vm.name.startsWith("<") || vm.instructions == null) return null;
+        List<String> vs = SiteMatch.sigSelf(vm, owner);
+        if (vs.size() < 5) return null;
+        ClassNode wc = w.get(owner);
+        Set<String> reach = new java.util.LinkedHashSet<>();
+        for (String c = wc.superName; c != null && reach.size() < 64; ) {
+            reach.add(c);
+            ClassNode sc = w.get(c);
+            c = sc == null ? null : sc.superName;
+        }
+        for (FieldNode f : wc.fields) {
+            org.objectweb.asm.Type t = org.objectweb.asm.Type.getType(f.desc);
+            if (t.getSort() == org.objectweb.asm.Type.OBJECT) reach.add(t.getInternalName());
+        }
+        for (MethodNode m : wc.methods) {
+            if (m.instructions == null) continue;
+            for (AbstractInsnNode in : m.instructions) {
+                if (in instanceof MethodInsnNode mi) reach.add(mi.owner);
+                else if (in instanceof TypeInsnNode ti && in.getOpcode() == Opcodes.NEW) reach.add(ti.desc);
+            }
+        }
+        reach.remove(owner);
+        String best = null;
+        double bs = 0, second = 0;
+        for (String c : reach) {
+            if (!c.startsWith("net/minecraft/") && !c.startsWith("com/mojang/blaze3d/")) continue;
+            ClassNode cn = w.get(c);
+            if (cn == null) continue;
+            for (MethodNode m : cn.methods) {
+                if (m.instructions == null || m.name.startsWith("<") || (m.access & Opcodes.ACC_SYNTHETIC) != 0
+                        || (m.access & Opcodes.ACC_STATIC) != (vm.access & Opcodes.ACC_STATIC)) continue;
+                double sc = similarity(vs, SiteMatch.sigSelf(m, c));
+                if (sc > bs) { second = bs; bs = sc; best = c + "." + m.name + m.desc; } else if (sc > second) second = sc;
+            }
+        }
+        return best != null && bs >= 0.75 && bs - second >= 0.15 ? best + String.format(" (same code by body, %.2f, next %.2f)", bs, second) : null;
     }
 
     private Verdict privateField(String owner, FieldNode vf) {
@@ -457,6 +557,8 @@ public final class MixinCause {
             if (!vnames.contains(f.name) && f.desc.equals(vf.desc) && (f.access & Opcodes.ACC_STATIC) == (vf.access & Opcodes.ACC_STATIC)) cand.add(f);
         }
         if (cand.size() == 1) return new Verdict("target-private-rename-candidate", cand.get(0).name + ":" + cand.get(0).desc + " (only unmatched field of the type)");
+        String moved = movedMember(owner, vf.name, true);
+        if (moved != null) return new Verdict("moved-private-member", vf.name + ":" + vf.desc + " in " + moved);
         return new Verdict("target-private-gone", access(vf.access) + " " + vf.name + ":" + vf.desc);
     }
 

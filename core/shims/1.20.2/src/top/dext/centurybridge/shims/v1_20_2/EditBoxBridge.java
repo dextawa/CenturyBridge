@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * exists. A no-op preserves old callers (the cursor-blink state it used to
  * advance is now time-derived). Client only. Work order: L3 x18.
  */
-@Mixin(class_342.class)
+@Mixin(value = class_342.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class EditBoxBridge {
 
     public void method_1865() {

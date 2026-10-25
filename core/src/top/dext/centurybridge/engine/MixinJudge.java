@@ -193,6 +193,7 @@ public final class MixinJudge {
             + layerCounts.getOrDefault("follow+W", 0) + ", facade-only-unreached " + layerCounts.getOrDefault("facade-only-unreached", 0)
             + ", facade-only-open " + layerCounts.getOrDefault("facade-only-open", 0) + "; restored vanilla-reads "
             + layerCounts.getOrDefault("restored-vanilla-reads", 0) + ", restored-unreached " + layerCounts.getOrDefault("restored-unreached", 0)
+            + ", restored-partial " + layerCounts.getOrDefault("restored-partial", 0)
             + ", restored-open " + layerCounts.getOrDefault("restored-open", 0) + "; partial, return untouched "
             + layerCounts.getOrDefault("partial-return", 0));
     }
@@ -489,7 +490,7 @@ public final class MixinJudge {
             for (MethodNode wm : cands) {
                 String why = fits(h, an, wm, st, anchors, vcount, oc);
                 if (why == null && (restoring != null || oc.name.startsWith("top/dext/"))) {
-                    why = layerHeld(h, wm, restoring, vcount);
+                    why = layerHeld(h, an, wm, restoring, vcount);
                 }
                 if (why == null && MixinRepair.annotations(h).stream().anyMatch(a -> a.desc.equals(MixinBridge.RETURN_UNTOUCHED))) {
                     // the target's answer changed type with no converter: the handler runs, but a callback reading or
@@ -522,9 +523,15 @@ public final class MixinJudge {
      * W's): the mixin changed only mods' calls on V too, as it does now.</ul>
      * Otherwise open: "facade-only: vanilla path unmixed" / "restored-member: vanilla path unmixed".
      */
-    private String layerHeld(MethodNode h, MethodNode wm, LayerMembers restoring, int vcount) {
+    private String layerHeld(MethodNode h, AnnotationNode an, MethodNode wm, LayerMembers restoring, int vcount) {
         boolean facade = restoring == null;
         if (!facade && restoring.vanillaReads(wm) != null) {
+            if (restoring.carries(wm) != null && !LayerMembers.carried(restoring.carries(wm), an, MixinRepair.values(an))) {
+                // vanilla's read path reaches the restored member only for what the marker names (its answer at
+                // HEAD/RETURN, say), not the body this injector acts inside or on (swall's "carries")
+                rowLayer = "restored-partial";
+                return "restored-member: vanilla path partial";
+            }
             rowLayer = "restored-vanilla-reads";
             return null;
         }
