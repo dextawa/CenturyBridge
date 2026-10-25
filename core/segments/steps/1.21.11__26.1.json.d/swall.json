@@ -263,7 +263,8 @@
   "net/minecraft/class_2050.method_8925(Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#matches",
   "net/minecraft/class_1267.method_5460()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#getKey",
   "net/minecraft/class_185.method_821()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#getIcon",
-  "net/minecraft/class_161$class_162.method_20416(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_189;ZZZ)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#display"
+  "net/minecraft/class_161$class_162.method_20416(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_189;ZZZ)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#display",
+  "net/minecraft/class_11228.method_70879()V": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#incrementFrameNumber"
  },
  "overrideHooks": [
   {
@@ -3897,7 +3898,8 @@
   "net/minecraft/class_4225.method_38722()Ljava/lang/String;": "currentDeviceName",
   "net/minecraft/class_437.method_47413(Lnet/minecraft/class_332;IIF)V": "extractRenderStateWithTooltipAndSubtitles",
   "net/minecraft/class_1007.method_4213(Lnet/minecraft/class_10055;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_12075;)V": "submitNameDisplay",
-  "net/minecraft/class_9931.method_61986(Lnet/minecraft/class_332;)V": "extractRenderState"
+  "net/minecraft/class_9931.method_61986(Lnet/minecraft/class_332;)V": "extractRenderState",
+  "net/minecraft/class_4717.method_44932(Lnet/minecraft/class_332;)V": "extractUsage"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_10045.field_53487:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallMinecarts#setDisplayBlockState",
