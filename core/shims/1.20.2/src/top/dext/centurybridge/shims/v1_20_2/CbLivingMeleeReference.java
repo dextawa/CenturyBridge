@@ -14,7 +14,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbLegacyMeleeReference;
  * restored perceived-distance method reaches it through the trampoline, which calls it virtually
  * so a converted subclass's (protected) override is selected.
  */
-@Mixin(class_1309.class)
+@Mixin(value = class_1309.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbLivingMeleeReference implements CbLegacyMeleeReference {
 
     @Override

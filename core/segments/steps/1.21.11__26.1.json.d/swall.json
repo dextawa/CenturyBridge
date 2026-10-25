@@ -3474,6 +3474,61 @@
     3
    ],
    "basis": "AvatarRenderer.submitNameTag(state, poseStack, collector, camera) is 26.1's typed submitNameDisplay(AvatarRenderState, ..) (the override EntityRenderer.submitNameDisplay's bridge calls; named by EntityRenderer's id in the analysis namespace): the same body; calls and overrides are renamed (methodRenames)"
+  },
+  "net/minecraft/class_8062.method_64996(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1799;": {
+   "to": "method_64996(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1799;",
+   "args": [
+    -1,
+    0,
+    1,
+    2
+   ],
+   "basis": "SmithingTrimRecipe.applyTrim(registries, base, addition, pattern) is 26.1's applyTrim(base, addition, pattern): the same body (the trim material of the addition, a copy of the base with the trim set unless it already has it); 26.1 reads the material from the addition's PROVIDES_TRIM_MATERIAL component instead of looking it up in the registries"
+  },
+  "net/minecraft/class_4625.method_23374(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4635;)Z": {
+   "to": "method_23374(Lnet/minecraft/class_5281;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4635;)Z",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "AbstractHugeMushroomFeature.isValidPosition(level, origin, height, cursor, config) is 26.1's isValidPosition with the level a WorldGenLevel (a LevelAccessor): the same height bounds, placement test of the block below and air/leaves test over the cap radius"
+  },
+  "net/minecraft/class_340.method_67545(Lnet/minecraft/class_4184;)V": {
+   "to": "method_67545(Lnet/minecraft/class_12075;I)V",
+   "args": [
+    -1
+   ],
+   "basis": "DebugScreenOverlay.render3dCrosshair(camera) is 26.1's render3dCrosshair(cameraRenderState, guiScale): the same model-view rotation by the camera's angles, gui scale and crosshair render pass, the angles now read from the camera render state and the scale passed in"
+  },
+  "net/minecraft/class_3675.method_15986(Lnet/minecraft/class_1041;Lorg/lwjgl/glfw/GLFWKeyCallbackI;Lorg/lwjgl/glfw/GLFWCharModsCallbackI;)V": {
+   "to": "method_15986(Lnet/minecraft/class_1041;Lorg/lwjgl/glfw/GLFWKeyCallbackI;Lorg/lwjgl/glfw/GLFWCharCallbackI;Lorg/lwjgl/glfw/GLFWPreeditCallbackI;Lorg/lwjgl/glfw/GLFWIMEStatusCallbackI;)V",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "InputConstants.setupKeyboardCallbacks(window, key, charMods) is 26.1's setupKeyboardCallbacks(window, key, char, preedit, imeStatus): the same installation of the window's key callback; 26.1 installs a char callback (not char-mods) and the IME callbacks, so the char-mods callback has no counterpart"
+  },
+  "net/minecraft/class_4603.method_23067(ZFLnet/minecraft/class_11659;)V": {
+   "to": "method_23067(ZZFLnet/minecraft/class_11659;Z)V",
+   "args": [
+    1,
+    2,
+    3
+   ],
+   "basis": "ScreenEffectRenderer.renderScreenEffect(sleeping, partialTick, collector) is 26.1's renderScreenEffect(firstPerson, sleeping, partialTick, collector, skipItemActivation): the same overlays (in-wall block, water, fire, then the item activation animation unless the last flag is set), the first-person test now passed in"
+  },
+  "net/minecraft/class_572.method_72853(Ljava/util/function/Function;Lnet/minecraft/class_5605;Lnet/minecraft/class_5605;)Lnet/minecraft/class_11677;": {
+   "to": "createArmorMeshSet(Ljava/util/function/Function;Ljava/util/Map;Lnet/minecraft/class_5605;Lnet/minecraft/class_5605;)Lnet/minecraft/class_11677;",
+   "args": [
+    0,
+    2,
+    3
+   ],
+   "basis": "HumanoidModel.createArmorMeshSet(meshFactory, inner, outer) is 26.1's createArmorMeshSet(meshFactory, partsBySlot, inner, outer): the same four meshes with the parts each slot keeps, the parts per slot now passed in instead of written in the body The four-argument overload was born at 26.1 and shares its mojang name with two 1.21.11 ids, so it keeps that name in the analysis namespace (WallInverse)."
   }
  },
  "lambdaAdapters": {

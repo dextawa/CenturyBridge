@@ -15,7 +15,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbLegacySuspiciousEffectHolder;
  * from exactly those (the field, not the overridable getSuspiciousEffects, which a converted
  * subclass answers through these).
  */
-@Mixin(class_2356.class)
+@Mixin(value = class_2356.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbFlowerBlockLegacy implements CbLegacySuspiciousEffectHolder {
 
     @Shadow

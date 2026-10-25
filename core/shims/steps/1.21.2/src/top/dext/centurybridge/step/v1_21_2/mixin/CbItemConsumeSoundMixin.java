@@ -12,9 +12,10 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import top.dext.centurybridge.step.v1_21_2.rt.CbItemMembers;
 
 /**
- * Consumable.emitParticlesAndSounds: the sound of eating / drinking a converted 1.21.1 item whose class
- * overrides getEatingSound() / getDrinkingSound() (CbItemMembers) -- 1.21.1's LivingEntity asked those
- * where 1.21.2 reads the component's sound (or an OverrideConsumeSound entity's).
+ * Consumable.emitParticlesAndSounds: the sound of eating / drinking as 1.21.1's LivingEntity asked the stack -- its
+ * restored getEatingSound() / getDrinkingSound() (CbItemStackSoundsMixin), where that answers otherwise than 1.21.1's
+ * Item body: a 1.21.1 class's override or a mod's mixin (CbItemMembers.consumeSound). Otherwise 1.21.2 reads the
+ * component's sound (or an OverrideConsumeSound entity's).
  */
 @Mixin(class_10124.class)
 public abstract class CbItemConsumeSoundMixin {

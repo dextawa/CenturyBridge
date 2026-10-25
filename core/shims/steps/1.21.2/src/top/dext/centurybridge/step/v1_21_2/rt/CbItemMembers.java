@@ -127,7 +127,63 @@ public final class CbItemMembers {
     public static Boolean repairRead(class_1799 stack, class_1799 ingredient) {
         class_1792 item = stack.method_7909();
         boolean m = ((ItemRepair) (Object) item).method_7878(stack, ingredient);
-        return m != super_method_7878(item, stack, ingredient) ? m : null;
+        return m != vanilla_method_7878(item, stack, ingredient) ? m : null;
+    }
+
+    /**
+     * the restored isValidRepairItem(stack, ingredient) bodies (CbItemRepairOverridesMixin, CbItemShieldRepairMixin,
+     * CbItemMaceMembersMixin, CbItemMembersRestoredMixin), what the restored member answers without a mod's mixin:
+     * ShieldItem planks or its super body, MaceItem a breeze rod, every other item the REPAIRABLE it was built with.
+     * ShieldItem and MaceItem are unrelated, so testing them in turn is their virtual dispatch.
+     */
+    public static boolean vanilla_method_7878(class_1792 item, class_1799 stack, class_1799 ingredient) {
+        if (item instanceof net.minecraft.class_1819) {
+            return ingredient.method_31573(net.minecraft.class_3489.field_15537) || super_method_7878(item, stack, ingredient);
+        }
+        if (item instanceof net.minecraft.class_9362) {
+            return ingredient.method_31574(net.minecraft.class_1802.field_49821);
+        }
+        return super_method_7878(item, stack, ingredient);
+    }
+
+    /**
+     * the restored getEnchantmentValue() bodies (CbItemEnchantValueOverridesMixin, CbItemEnchantValueOneMixin,
+     * CbItemMaceMembersMixin, CbItemMembersRestoredMixin), what the restored member answers without a mod's mixin:
+     * 1.21.1's TridentItem / ProjectileWeaponItem / FishingRodItem 1, MaceItem 15, every other item (ArmorItem's
+     * material value included) the ENCHANTABLE it was built with. Those classes are unrelated, so testing them in turn
+     * is their virtual dispatch.
+     */
+    public static int vanilla_method_7837(class_1792 item) {
+        if (item instanceof net.minecraft.class_1835 || item instanceof net.minecraft.class_1811
+                || item instanceof net.minecraft.class_1787) {
+            return 1;
+        }
+        if (item instanceof net.minecraft.class_9362) {
+            return 15;
+        }
+        return super_method_7837(item);
+    }
+
+    /**
+     * 1.21.1's Item.isEnchantable(stack), restored on every Item by CbItemMembersRestoredMixin: a call dispatches to a
+     * 1.21.1 class's override or to the restored body -- with whatever a mod's 1.21.1 mixin on it does
+     */
+    public interface ItemEnchantable {
+        boolean method_7870(class_1799 stack);
+    }
+
+    /**
+     * ItemStack.isEnchantable() of an item whose class 1.21.1 did not override isEnchantable(stack) in a mod: 1.21.1's
+     * answer (the restored member, and no enchantments yet) where the member answers otherwise than its body (a mod's
+     * mixin on it), else null (1.21.2's ENCHANTABLE answer stands)
+     */
+    public static Boolean enchantableStackRead(class_1799 stack) {
+        boolean m = ((ItemEnchantable) (Object) stack.method_7909()).method_7870(stack);
+        if (m == super_method_7870(stack.method_7909(), stack)) {
+            return null;
+        }
+        net.minecraft.class_9304 e = stack.method_57824(class_9334.field_49633);
+        return m && e != null && e.method_57543();
     }
 
     /**
@@ -142,6 +198,9 @@ public final class CbItemMembers {
             return read;
         }
         int v = method_7837(item);
+        if (!(item instanceof LegacyEnchantmentValue) && v == vanilla_method_7837(item)) {
+            return read; // the restored member answers its own body: 1.21.2's component stands
+        }
         if (v <= 0) {
             return null;
         }
@@ -164,14 +223,14 @@ public final class CbItemMembers {
     }
 
     /**
-     * isEnchantable(stack): 1.21.1's Item answered a stack of one with MAX_DAMAGE -- on 1.21.2 its ENCHANTABLE
-     * component is the item's verdict, and a damageable 1.21.1 item has one by its enchantment value
+     * isEnchantable(stack): the item's restored 1.21.1 member (CbItemMembersRestoredMixin) -- 1.21.1's Item answered a
+     * stack of one with MAX_DAMAGE; 1.21.2's ItemStack.isEnchantable() follows it only where a mod changed it
+     * (enchantableStackRead)
      */
     public static boolean method_7870(class_1792 item, class_1799 stack) {
-        if (item instanceof LegacyEnchantable l) {
-            return l.method_7870(stack);
-        }
-        return super_method_7870(item, stack);
+        // the restored member (ItemEnchantable): a 1.21.1 class's override or the body, with whatever a mod's mixin on
+        // it does
+        return ((ItemEnchantable) (Object) item).method_7870(stack);
     }
 
     /** 1.21.1's Item.isEnchantable(stack): a single damageable stack */
@@ -209,18 +268,38 @@ public final class CbItemMembers {
         return m == null ? class_9285.field_49326 : m;
     }
 
-    /** getDrinkingSound(): the class's own, else 1.21.1's GENERIC_DRINK */
+    /**
+     * getDrinkingSound(): the restored member (ItemSounds) -- a 1.21.1 class's override or 1.21.1's GENERIC_DRINK, with
+     * whatever a mod's mixin on it does
+     */
     public static class_3414 method_21831(class_1792 item) {
-        return item instanceof LegacyDrinkingSound l ? l.method_21831() : super_method_21831(item);
+        return ((ItemSounds) (Object) item).method_21831();
+    }
+
+    /** 1.21.1's Item.getEatingSound() / getDrinkingSound(), restored on every Item by CbItemMembersRestoredMixin */
+    public interface ItemSounds {
+        class_3414 method_21830();
+
+        class_3414 method_21831();
+    }
+
+    /** 1.21.1's ItemStack.getEatingSound() / getDrinkingSound(), restored on ItemStack by CbItemStackSoundsMixin */
+    public interface StackSounds {
+        class_3414 method_21832();
+
+        class_3414 method_21833();
     }
 
     public static class_3414 super_method_21831(class_1792 item) {
         return class_3417.field_20613.comp_349();
     }
 
-    /** getEatingSound(): the class's own, else 1.21.1's GENERIC_EAT */
+    /**
+     * getEatingSound(): the restored member (ItemSounds) -- a 1.21.1 class's override or 1.21.1's GENERIC_EAT, with
+     * whatever a mod's mixin on it does
+     */
     public static class_3414 method_21830(class_1792 item) {
-        return item instanceof LegacyEatingSound l ? l.method_21830() : super_method_21830(item);
+        return ((ItemSounds) (Object) item).method_21830();
     }
 
     public static class_3414 super_method_21830(class_1792 item) {
@@ -253,21 +332,23 @@ public final class CbItemMembers {
      * answer without a mod's mixin: CompassItem named a lodestone-tracking compass item.minecraft.lodestone_compass;
      * PotionItem and TippedArrowItem appended ".effect." and the potion's name (Potion.getName); ShieldItem appended
      * its base colour's name; every other item its description id. Those classes are unrelated, so testing them in
-     * turn is their virtual dispatch.
+     * turn is their virtual dispatch. The description id is the field's (super_method_7869), not getDescriptionId(),
+     * which a mod's mixin on getOrCreateDescriptionId() or a 1.21.1 class's override may answer otherwise -- a
+     * difference 1.21.1's getName(stack) showed.
      */
     public static String vanilla_method_7866(class_1792 item, class_1799 stack) {
         if (item instanceof net.minecraft.class_1759) {
-            return stack.method_57826(class_9334.field_49614) ? "item.minecraft.lodestone_compass" : item.method_7876();
+            return stack.method_57826(class_9334.field_49614) ? "item.minecraft.lodestone_compass" : super_method_7869(item);
         }
         if (item instanceof net.minecraft.class_1812 || item instanceof net.minecraft.class_1833) {
             net.minecraft.class_1844 contents = stack.method_57825(class_9334.field_49651, net.minecraft.class_1844.field_49274);
-            return CbItemPotions.getName(contents.comp_2378(), item.method_7876() + ".effect.");
+            return CbItemPotions.getName(contents.comp_2378(), super_method_7869(item) + ".effect.");
         }
         if (item instanceof net.minecraft.class_1819) {
             net.minecraft.class_1767 base = stack.method_57824(class_9334.field_49620);
-            return base != null ? item.method_7876() + "." + base.method_7792() : item.method_7876();
+            return base != null ? super_method_7869(item) + "." + base.method_7792() : super_method_7869(item);
         }
-        return item.method_7876();
+        return super_method_7869(item);
     }
 
     /**
@@ -281,15 +362,42 @@ public final class CbItemMembers {
             return null;
         }
         String m = ((ItemDescriptionId) (Object) item).method_7866(stack);
+        if (m == null) {
+            return null; // an item without its id yet (CbPendingIdsItems): 1.21.2's answer
+        }
         if (item instanceof LegacyDescriptionId || !m.equals(vanilla_method_7866(item, stack))) {
             return class_2561.method_43471(m);
         }
         return null;
     }
 
-    /** getDescription(): the class's own, else translatable(getDescriptionId()) -- 1.21.2's getName() */
+    /**
+     * getDescription(): the restored member (ItemDescription) -- a 1.21.1 class's override or the body,
+     * translatable(getDescriptionId()), with whatever a mod's mixin on it does
+     */
     public static class_2561 method_7848(class_1792 item) {
-        return item instanceof LegacyDescription l ? l.method_7848() : super_method_7848(item);
+        return ((ItemDescription) (Object) item).method_7848();
+    }
+
+    /** 1.21.1's Item.getDescription(), restored on every Item by CbItemMembersRestoredMixin */
+    public interface ItemDescription {
+        class_2561 method_7848();
+    }
+
+    /**
+     * Item.getName() (1.21.2's, final) as 1.21.1 answered the same question with getDescription(): a 1.21.1 class's
+     * override, or the restored member where it answers otherwise than its body (a mod's mixin on it); else null --
+     * 1.21.2's ITEM_NAME stands
+     */
+    public static class_2561 descriptionRead(class_1792 item) {
+        if (item instanceof LegacyDescription l) {
+            return l.method_7848();
+        }
+        class_2561 m = ((ItemDescription) (Object) item).method_7848();
+        String id = super_method_7869(item);
+        // the body's answer from the description id field: getDescriptionId() inside it may answer otherwise (a mod's
+        // mixin on getOrCreateDescriptionId(), a 1.21.1 class's override), which 1.21.1's getDescription() showed
+        return id == null || m.equals(class_2561.method_43471(id)) ? null : m;
     }
 
     public static class_2561 super_method_7848(class_1792 item) {
@@ -298,7 +406,29 @@ public final class CbItemMembers {
 
     /** getOrCreateDescriptionId(): the class's own, else 1.21.2's description id, made at construction (CbPendingIds) */
     public static String method_7869(class_1792 item) {
-        return item instanceof LegacyOrCreateDescriptionId l ? l.method_7869() : super_method_7869(item);
+        // the restored member (ItemOrCreateDescriptionId): a 1.21.1 class's override or the body, with whatever a mod's
+        // mixin on it does
+        return ((ItemOrCreateDescriptionId) (Object) item).method_7869();
+    }
+
+    /** 1.21.1's Item.getOrCreateDescriptionId(), restored on every Item by CbItemMembersRestoredMixin */
+    public interface ItemOrCreateDescriptionId {
+        String method_7869();
+    }
+
+    /**
+     * Item.getDescriptionId() (1.21.2's, final) of an item whose class 1.21.1 did not override it: 1.21.1's
+     * getDescriptionId() answered getOrCreateDescriptionId() -- the restored member -- where that answers otherwise than
+     * the description id field (a mod's mixin on it); else null, the field stands. An item without its id yet (a
+     * converted item before registration, CbPendingIdsItems) keeps 1.21.2's answer.
+     */
+    public static String orCreateDescriptionIdRead(class_1792 item) {
+        String b = super_method_7869(item);
+        if (b == null) {
+            return null;
+        }
+        String m = ((ItemOrCreateDescriptionId) (Object) item).method_7869();
+        return b.equals(m) ? null : m;
     }
 
     /** 1.21.1's Item.getOrCreateDescriptionId(): "item." + the registry id, made once -- 1.21.2's descriptionId field */
@@ -354,14 +484,14 @@ public final class CbItemMembers {
         return method_7866(stack.method_7909(), stack);
     }
 
-    /** ItemStack.getDrinkingSound() */
+    /** ItemStack.getDrinkingSound(): the restored member (StackSounds) */
     public static class_3414 method_21832(class_1799 stack) {
-        return method_21831(stack.method_7909());
+        return ((StackSounds) (Object) stack).method_21832();
     }
 
-    /** ItemStack.getEatingSound() */
+    /** ItemStack.getEatingSound(): the restored member (StackSounds) */
     public static class_3414 method_21833(class_1799 stack) {
-        return method_21830(stack.method_7909());
+        return ((StackSounds) (Object) stack).method_21833();
     }
 
     /** ItemStack.hurtEnemy(target, player): 1.21.2's hurtEnemy(target, attacker) with the player as attacker */
@@ -385,13 +515,20 @@ public final class CbItemMembers {
         return built;
     }
 
-    /** sound of a consumption as 1.21.1's class answered it, or null to keep the component's */
+    /**
+     * sound of a consumption as 1.21.1's LivingEntity asked the stack -- its restored getDrinkingSound() for a drinking
+     * animation, else getEatingSound() -- where that answers otherwise than 1.21.1's Item body (GENERIC_DRINK /
+     * GENERIC_EAT): a 1.21.1 class's override or a mod's mixin on the restored member; else null to keep the
+     * component's
+     */
     public static class_3414 consumeSound(class_1799 stack, net.minecraft.class_1839 animation) {
         class_1792 item = stack.method_7909();
         if (animation == net.minecraft.class_1839.field_8946) {
-            return item instanceof LegacyDrinkingSound l ? l.method_21831() : null;
+            class_3414 m = ((StackSounds) (Object) stack).method_21832();
+            return m != super_method_21831(item) ? m : null;
         }
-        return item instanceof LegacyEatingSound l ? l.method_21830() : null;
+        class_3414 m = ((StackSounds) (Object) stack).method_21833();
+        return m != super_method_21830(item) ? m : null;
     }
 
     private CbItemMembers() {

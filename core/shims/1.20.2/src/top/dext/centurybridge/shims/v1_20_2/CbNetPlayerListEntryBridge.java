@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Unique;
  * subclass overriding any of them has vanilla's getSkinTextures() rebuilt from them
  * (CbNetClient.cbSkin).
  */
-@Mixin(class_640.class)
+@Mixin(value = class_640.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetPlayerListEntryBridge {
 
     @Unique

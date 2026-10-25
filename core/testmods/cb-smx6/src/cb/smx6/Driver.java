@@ -25,6 +25,9 @@ import net.minecraft.class_3966;
 public final class Driver {
     public static volatile boolean cancelChanneling;
     public static volatile int asked;
+    public static volatile boolean forceMending;
+    public static volatile int bookAsked;
+    public static volatile net.minecraft.class_1887 lastPick;
     private static int ok;
     private static int fail;
 
@@ -67,6 +70,31 @@ public final class Driver {
         return n;
     }
 
+    /**
+     * the librarian's level-1 enchanted-book offer for each seed (a fresh seeded random per call): "seed=key:level"
+     * read off the book (getEnchantmentsForCrafting), with what the pick answered
+     */
+    private static String books(class_3218 level, long[] seeds) {
+        net.minecraft.class_1646 villager = new net.minecraft.class_1646(class_1299.field_6077, level);
+        net.minecraft.class_3853.class_1652[] trades = net.minecraft.class_3853.field_17067.get(net.minecraft.class_3852.field_17060).get(1);
+        StringBuilder out = new StringBuilder();
+        for (long seed : seeds) {
+            for (net.minecraft.class_3853.class_1652 t : trades) {
+                lastPick = null;
+                net.minecraft.class_1914 offer = t.method_7246(villager, net.minecraft.class_5819.method_43049(seed));
+                if (offer == null || offer.method_8250().method_7909() != class_1802.field_8598) {
+                    continue;
+                }
+                net.minecraft.class_9304 e = net.minecraft.class_1890.method_57532(offer.method_8250());
+                String key = lastPick == null ? "?" : String.valueOf(net.minecraft.class_7923.field_41176.method_10221(lastPick));
+                int lvl = lastPick == null ? -1 : e.method_57536(lastPick);
+                out.append(seed).append('=').append(key).append(':').append(lvl).append(' ');
+            }
+        }
+        villager.method_31472();
+        return out.toString().trim();
+    }
+
     public static void run(net.minecraft.server.MinecraftServer server) {
         System.out.println("CB-SMX6 start");
         class_3218 level = server.method_30002();
@@ -96,11 +124,38 @@ public final class Driver {
             asked = 0;
             n = hit(level, 32, true);
             check("clear-not-asked", n == 0 && asked == 0, "clear weather: " + n + " bolt(s), isChanneling asked " + asked + " time(s) (1.20.6: not asked)");
+            // ---- the librarian's enchanted book: VillagerBookMixin on the 1.20.6 pick
+            long[] seeds = {1L, 2L, 3L, 4L, 5L, 42L};
+            forceMending = false;
+            bookAsked = 0;
+            String passive = books(level, seeds);
+            check("book-passive", bookAsked == seeds.length && !passive.contains("?") && !passive.contains(":0") && !passive.contains(":-1"),
+                "mixin passive, pick asked " + bookAsked + " time(s): " + passive);
+            System.out.println("CB-SMX6 books " + passive);
+            forceMending = true;
+            bookAsked = 0;
+            net.minecraft.class_1646 villager = new net.minecraft.class_1646(class_1299.field_6077, level);
+            int mending = 0;
+            int bookOffers = 0;
+            for (net.minecraft.class_3853.class_1652 t : net.minecraft.class_3853.field_17067.get(net.minecraft.class_3852.field_17060).get(1)) {
+                net.minecraft.class_1914 offer = t.method_7246(villager, net.minecraft.class_5819.method_43049(7L));
+                if (offer != null && offer.method_8250().method_7909() == class_1802.field_8598) {
+                    bookOffers++;
+                    if (net.minecraft.class_1890.method_57532(offer.method_8250()).method_57536(class_1893.field_9101) > 0) {
+                        mending++;
+                    }
+                }
+            }
+            villager.method_31472();
+            forceMending = false;
+            check("book-forced-mending", bookOffers == 1 && mending == 1, "pick forced to Mending: " + mending + " of " + bookOffers
+                + " book offer(s) carry Mending, pick asked " + bookAsked);
         } catch (Throwable t) {
             check("exception", false, String.valueOf(t));
             t.printStackTrace();
         } finally {
             cancelChanneling = false;
+            forceMending = false;
         }
         System.out.println("CB-SMX6 summary ok=" + ok + " fail=" + fail);
     }

@@ -15,7 +15,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
  * Entity.isInLiquid reads in the navigations back through it. Declared public; 1.20.1's was protected. The cb$ methods are the
  * trampolines CbNavigation reaches the navigation through.
  */
-@Mixin(class_1408.class)
+@Mixin(value = class_1408.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbNavigationLegacy implements CbLegacyNavigation {
 
     @Shadow

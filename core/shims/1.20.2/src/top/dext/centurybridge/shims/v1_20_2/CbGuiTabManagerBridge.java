@@ -9,7 +9,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbTickableTab;
  * vanilla world-creation tabs, whose ticks only advanced their text boxes' cursor blink -- which 1.20.2
  * derives from time -- so nothing in vanilla 1.20.2 needs it; a mod screen ticking its TabManager does.
  */
-@Mixin(net.minecraft.class_8088.class)
+@Mixin(value = net.minecraft.class_8088.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbGuiTabManagerBridge {
 
     /** 1.20.1 TabManager.tickCurrent() */

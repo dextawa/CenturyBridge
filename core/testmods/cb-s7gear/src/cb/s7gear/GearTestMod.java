@@ -211,6 +211,8 @@ public class GearTestMod implements ModInitializer {
         section("equipmentReads", () -> equipmentReads(server));
         section("overrideReads", GearTestMod::overrideReads);
         section("nameReads", GearTestMod::nameReads);
+        section("remainingReads", () -> remainingReads(server));
+        section("soundReads", () -> soundReads(server));
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -1093,6 +1095,64 @@ public class GearTestMod implements ModInitializer {
         check(!anvilRepairs(new class_1799(class_1802.field_8058), new class_1799(class_1802.field_8620))
                 && anvilRepairs(new class_1799(class_1802.field_8058), new class_1799(class_1802.field_8477)),
             "an unmixed armor item (diamond chestplate) repairs with diamonds, not iron");
+        check(anvilRepairs(new class_1799(item("mace")), new class_1799(class_1802.field_8477))
+                && anvilRepairs(new class_1799(item("mace")), new class_1799(item("breeze_rod"))),
+            "redirect in MaceItem.isValidRepairItem: vanilla's anvil check repairs a mace with a diamond, and still a breeze rod");
+        check(!anvilRepairs(new class_1799(item("shield")), new class_1799(class_1802.field_8477)),
+            "an unmixed shield does not repair with a diamond");
+        check(net.minecraft.class_1890.method_8227(r, 2, 15, new class_1799(item("bow"))) > 0,
+            "an unmixed restored override (bow, 1) still costs more than 0");
+        check(new class_1799(item("totem_of_undying")).method_7923(),
+            "redirect in Item.isEnchantable(stack): vanilla's ItemStack.isEnchantable takes a totem of undying");
+        check(!new class_1799(item("stick")).method_7923() && !new class_1799(item("saddle")).method_7923(),
+            "a stick (stacks to 64) and a saddle (not redirected) are still not enchantable");
+        check(new class_1799(item("diamond_sword")).method_7923(), "an unmixed sword is still enchantable");
+    }
+
+    /** what the crafting result slot leaves in the grid (1.21.2's ResultSlot.getRemainingItems, through RemainingItemsMixin) */
+    @SuppressWarnings("unchecked")
+    static List<class_1799> remaining(MinecraftServer server, int w, int h, List<class_1799> grid) throws Exception {
+        net.minecraft.class_1734 slot = new net.minecraft.class_1734(player(server), null, null, 0, 0, 0);
+        java.lang.reflect.Method m = net.minecraft.class_1734.class.getDeclaredMethod("method_64650",
+            net.minecraft.class_9694.class, net.minecraft.class_1937.class);
+        m.setAccessible(true);
+        return (List<class_1799>) m.invoke(slot, net.minecraft.class_9694.method_59986(w, h, grid), server.method_30002());
+    }
+
+    static void remainingReads(MinecraftServer server) throws Exception {
+        class_1799 milk = new class_1799(item("milk_bucket"));
+        List<class_1799> cake = remaining(server, 3, 3, List.of(milk, milk.method_7972(), milk.method_7972(),
+            new class_1799(item("sugar")), new class_1799(item("egg")), new class_1799(item("sugar")),
+            new class_1799(item("wheat")), new class_1799(item("wheat")), new class_1799(item("wheat"))));
+        check(cake.size() == 9 && cake.get(0).method_31574(item("water_bucket")) && cake.get(2).method_31574(item("water_bucket"))
+                && cake.get(4).method_7960(),
+            "mixin on RecipeManager.getRemainingItemsFor: vanilla's crafting result slot leaves water buckets from a cake: " + cake);
+        List<class_1799> sugar = remaining(server, 1, 1, List.of(new class_1799(item("honey_bottle"))));
+        check(sugar.size() == 1 && sugar.get(0).method_31574(item("glass_bottle")),
+            "an unmixed remainder (sugar from honey: the glass bottle) stays: " + sugar);
+    }
+
+    /** the last sound an entity played (PlaySoundRecorderMixin) */
+    public static volatile net.minecraft.class_3414 lastSound;
+
+    /** the sound 1.21.2's Consumable.emitParticlesAndSounds plays for a zombie eating the stack */
+    static net.minecraft.class_2960 eatSound(MinecraftServer server, class_1799 stack) throws Exception {
+        Object consumable = stack.method_57824((net.minecraft.class_9331<?>) class_9334.class.getField("field_53964").get(null));
+        net.minecraft.class_1642 zombie = new net.minecraft.class_1642(server.method_30002());
+        lastSound = null;
+        consumable.getClass().getMethod("method_62843", net.minecraft.class_5819.class, net.minecraft.class_1309.class, class_1799.class, int.class)
+            .invoke(consumable, net.minecraft.class_5819.method_43049(1L), zombie, stack, 0);
+        return lastSound == null ? null : lastSound.method_14833();
+    }
+
+    static void soundReads(MinecraftServer server) throws Exception {
+        net.minecraft.class_2960 cookie = eatSound(server, new class_1799(item("cookie")));
+        check(cookie != null && cookie.method_12832().equals("block.anvil.land"),
+            "mixin on Item.getEatingSound: vanilla's eating sound of a cookie is the anvil landing: " + cookie);
+        net.minecraft.class_2960 bread = eatSound(server, new class_1799(item("bread")));
+        check(bread != null && bread.method_12832().equals("entity.generic.eat"), "an unmixed food (bread) keeps the eating sound: " + bread);
+        net.minecraft.class_2960 potion = eatSound(server, new class_1799(item("potion")));
+        check(potion != null && potion.method_12832().equals("entity.generic.drink"), "an unmixed drink (potion) keeps the drinking sound: " + potion);
     }
 
     /** the translation key of a stack's hover name, "" when it is not translatable */
@@ -1122,6 +1182,22 @@ public class GearTestMod implements ModInitializer {
         class_1799 named = new class_1799(item("stick"));
         named.method_57379(class_9334.field_50239, net.minecraft.class_2561.method_43470("own"));
         check(nameKey(named).equals(""), "a stick with its own ITEM_NAME keeps it (1.21.1's getHoverName took it first)");
+        check(item("beetroot").method_7876().equals("cb.s7gear.beetroot"),
+            "mixin on Item.getOrCreateDescriptionId: vanilla's getDescriptionId of beetroot: " + item("beetroot").method_7876());
+        check(nameKey(new class_1799(item("beetroot"))).equals("cb.s7gear.beetroot"),
+            "the beetroot stack is named from it, as 1.21.1's getName(stack) did: " + nameKey(new class_1799(item("beetroot"))));
+        check(item("carrot").method_7876().equals("item.minecraft.carrot"), "an unmixed item (carrot) keeps its description id");
+        try {
+            java.lang.reflect.Method getName = class_1792.class.getMethod("method_63680");
+            net.minecraft.class_2561 carrot = (net.minecraft.class_2561) getName.invoke(item("carrot"));
+            net.minecraft.class_2561 potato = (net.minecraft.class_2561) getName.invoke(item("potato"));
+            check(carrot.getString().equals("cb carrot"),
+                "redirect in Item.getDescription(): 1.21.2's Item.getName() of a carrot is cb carrot: " + carrot);
+            check(potato.method_10851() instanceof net.minecraft.class_2588 t && t.method_11022().equals("item.minecraft.potato"),
+                "an unmixed item (potato) keeps 1.21.2's name: " + potato);
+        } catch (ReflectiveOperationException e) {
+            check(false, "Item.getName(): " + e);
+        }
     }
 
 }

@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * BlockPredicate.Builder.of(Iterable) of 1.20.1 (1.20.2 takes a Collection): 1.20.1 kept
  * ImmutableSet.copyOf(blocks); 1.20.2's builder holds the blocks' holder set.
  */
-@Mixin(net.minecraft.class_4550.class_4710.class)
+@Mixin(value = net.minecraft.class_4550.class_4710.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbAdvBlockBuilderOf {
 
     @Shadow

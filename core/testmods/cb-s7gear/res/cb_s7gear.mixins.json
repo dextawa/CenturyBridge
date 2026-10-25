@@ -13,7 +13,14 @@
     "TridentValueMixin",
     "ItemDescriptionIdMixin",
     "PotionDescriptionIdMixin",
-    "CompassDescriptionIdMixin"
+    "CompassDescriptionIdMixin",
+    "MaceRepairMixin",
+    "TotemEnchantableMixin",
+    "RemainingItemsMixin",
+    "ItemDescriptionMixin",
+    "EatingSoundMixin",
+    "PlaySoundRecorderMixin",
+    "OrCreateDescriptionIdMixin"
   ],
   "injectors": {
     "defaultRequire": 1
