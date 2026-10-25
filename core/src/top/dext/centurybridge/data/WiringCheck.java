@@ -1031,12 +1031,19 @@ public final class WiringCheck {
                     if (!o.has(key)) {
                         continue;
                     }
-                    // "owner.name(desc)R"
-                    String w = o.get(key).getAsString();
-                    int paren = w.indexOf('(');
-                    int dot = w.lastIndexOf('.', paren);
-                    wantMethod(where + " " + key, w.substring(0, dot) + "#" + w.substring(dot + 1, paren),
-                        null, methodDesc(w.substring(paren)));
+                    // "owner.name(desc)R", or (wrap) a list of them
+                    List<String> ws = new ArrayList<>();
+                    if (o.get(key).isJsonArray()) {
+                        o.getAsJsonArray(key).forEach(x -> ws.add(x.getAsString()));
+                    } else {
+                        ws.add(o.get(key).getAsString());
+                    }
+                    for (String w : ws) {
+                        int paren = w.indexOf('(');
+                        int dot = w.lastIndexOf('.', paren);
+                        wantMethod(where + " " + key, w.substring(0, dot) + "#" + w.substring(dot + 1, paren),
+                            null, methodDesc(w.substring(paren)));
+                    }
                 }
                 if (o.has("guard")) {
                     String g = o.get("guard").getAsString();

@@ -476,8 +476,28 @@ public final class Chain {
      */
     public static final class OverrideHook {
         public String oldName, oldDesc, newName, newDesc;
-        /** "owner.name(desc)" static that converts the new-typed argument to the old type. */
+        /**
+         * "owner.name(desc)" static that converts the new-typed argument to the old type ("wrap": one static,
+         * or a list). With a list ({@link #wraps}) each old argument whose type differs from the new argument
+         * it comes from takes the static whose (only) parameter is that new type and whose return is the old
+         * type -- one new argument can feed several old ones (1.21.6: BlockEntity.loadAdditional(ValueInput)
+         * gives 1.21.5's loadAdditional(CompoundTag, HolderLookup.Provider) both the tag and the lookup from
+         * the one ValueInput, args [0, 0]). These fields hold the first entry.
+         */
         public String wrapOwner, wrapName, wrapDesc;
+        /** every "wrap" static, {owner, name, desc}, in wiring order (the first is {@link #wrapOwner}...) */
+        public final java.util.List<String[]> wraps = new java.util.ArrayList<>();
+
+        /** the wrap static taking {@code from} to {@code to}, or null */
+        public String[] wrapFor(org.objectweb.asm.Type from, org.objectweb.asm.Type to) {
+            for (String[] w : wraps) {
+                if (java.util.Arrays.equals(org.objectweb.asm.Type.getArgumentTypes(w[2]), new org.objectweb.asm.Type[] {from})
+                        && org.objectweb.asm.Type.getReturnType(w[2]).equals(to)) {
+                    return w;
+                }
+            }
+            return null;
+        }
         /**
          * "owner.name(desc)" static that converts the OLD override's return
          * value to the NEW return type (Item.use: TypedActionResult facade ->
@@ -2390,12 +2410,23 @@ public final class Chain {
                     h.newName = nsig[0];
                     h.newDesc = nsig[1];
                     if (o.has("wrap")) {
-                        String w = o.get("wrap").getAsString();
-                        int dot = w.lastIndexOf('.', w.indexOf('('));
-                        h.wrapOwner = w.substring(0, dot);
-                        String[] wsig = splitSig(w.substring(dot + 1));
-                        h.wrapName = wsig[0];
-                        h.wrapDesc = wsig[1];
+                        var wel = o.get("wrap");
+                        java.util.List<String> ws = new java.util.ArrayList<>();
+                        if (wel.isJsonArray()) {
+                            for (var x : wel.getAsJsonArray()) {
+                                ws.add(x.getAsString());
+                            }
+                        } else {
+                            ws.add(wel.getAsString());
+                        }
+                        for (String w : ws) {
+                            int dot = w.lastIndexOf('.', w.indexOf('('));
+                            String[] wsig = splitSig(w.substring(dot + 1));
+                            h.wraps.add(new String[] {w.substring(0, dot), wsig[0], wsig[1]});
+                        }
+                        h.wrapOwner = h.wraps.get(0)[0];
+                        h.wrapName = h.wraps.get(0)[1];
+                        h.wrapDesc = h.wraps.get(0)[2];
                     }
                     if (o.has("unwrap")) {
                         String u = o.get("unwrap").getAsString();
