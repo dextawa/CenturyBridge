@@ -684,8 +684,10 @@ public final class MixinRepair {
                                     + (d.toCir() ? " (callback as CallbackInfoReturnable)" : "")
                                     + " (V's site by context; the callee is " + d.how() + ")");
                                 if (d.crossOwner() != null) {
+                                    MethodNode via = depth2Of.get(d.callee());
                                     fixNotes.set(fixNotes.size() - 1, fixNotes.get(fixNotes.size() - 1).replace(" => ", " => "
-                                        + d.crossOwner().substring(d.crossOwner().lastIndexOf('/') + 1) + "."));
+                                        + d.crossOwner().substring(d.crossOwner().lastIndexOf('/') + 1) + ".")
+                                        + (via != null ? " (depth 2, under " + via.name + via.desc + ")" : ""));
                                     fixes.add(() -> {
                                         crossGuard(d, mx, handler, an);
                                         dirty[0] = true;
@@ -1584,6 +1586,23 @@ public final class MixinRepair {
                 places.add(dm);
             }
         }
+        // depth 2 under another class's callee: a method of that callee's own class it calls exactly once (W moved V's
+        // code one call further down there). The guard is still the target's one call of the depth-1 callee: the
+        // handler acts only while that call runs, and the depth-1 callee reaches this method once in it
+        if (crossAllowed && DEPTH2) {
+            for (MethodNode dm : new ArrayList<>(crossOf.keySet())) {
+                MethodInsnNode c1 = crossCall.get(dm);
+                ClassNode dcn = c1 == null ? null : target(crossOf.get(dm));
+                if (dcn == null || dm.name.startsWith("<") || overriddenBelow(dcn.name, dm)) continue;
+                for (MethodNode c2 : callees(dm, dcn)) {
+                    if (places.contains(c2) || crossOf.containsKey(c2) || c2.name.startsWith("<") || callCount(dm, dcn.name, c2) != 1) continue;
+                    crossOf.put(c2, dcn.name);
+                    crossCall.put(c2, c1);
+                    depth2Of.put(c2, dm);
+                    places.add(c2);
+                }
+            }
+        }
         // V's target overrode a framework class's hook (SimplePreparableReloadListener.apply); W split its code over
         // that class's hooks (RecipeManager: parsing in prepare, storing in apply). Another hook of the same
         // framework class, called from nowhere in W's own class, runs once where V's target ran once
@@ -1690,6 +1709,23 @@ public final class MixinRepair {
             return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, false, guardCall, tc.name, wm, site, null, false);
         }
         return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, siblings.contains(into));
+    }
+
+    /** -Dcb.descendDepth2=false: no descend under another class's callee (depth 2 of stage 2) */
+    private static final boolean DEPTH2 = !"false".equals(System.getProperty("cb.descendDepth2"));
+
+    /** a depth-2 callee of stage 2 -> the depth-1 callee it stands under (for the repair note) */
+    private final Map<MethodNode, MethodNode> depth2Of = new java.util.IdentityHashMap<>();
+
+    /** how many calls of c (owner o) m makes */
+    private static int callCount(MethodNode m, String o, MethodNode c) {
+        int n = 0;
+        if (m.instructions != null) {
+            for (AbstractInsnNode in : m.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.owner.equals(o) && mi.name.equals(c.name) && mi.desc.equals(c.desc)) n++;
+            }
+        }
+        return n;
     }
 
     /** the descend into another class's callee (stage 2), or null with the reason counted */
