@@ -15,7 +15,8 @@
     "PotionDescriptionIdMixin",
     "CompassDescriptionIdMixin",
     "MaceRepairMixin",
-    "TotemEnchantableMixin"
+    "TotemEnchantableMixin",
+    "RemainingItemsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

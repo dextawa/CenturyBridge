@@ -211,6 +211,7 @@ public class GearTestMod implements ModInitializer {
         section("equipmentReads", () -> equipmentReads(server));
         section("overrideReads", GearTestMod::overrideReads);
         section("nameReads", GearTestMod::nameReads);
+        section("remainingReads", () -> remainingReads(server));
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -1105,6 +1106,29 @@ public class GearTestMod implements ModInitializer {
         check(!new class_1799(item("stick")).method_7923() && !new class_1799(item("saddle")).method_7923(),
             "a stick (stacks to 64) and a saddle (not redirected) are still not enchantable");
         check(new class_1799(item("diamond_sword")).method_7923(), "an unmixed sword is still enchantable");
+    }
+
+    /** what the crafting result slot leaves in the grid (1.21.2's ResultSlot.getRemainingItems, through RemainingItemsMixin) */
+    @SuppressWarnings("unchecked")
+    static List<class_1799> remaining(MinecraftServer server, int w, int h, List<class_1799> grid) throws Exception {
+        net.minecraft.class_1734 slot = new net.minecraft.class_1734(player(server), null, null, 0, 0, 0);
+        java.lang.reflect.Method m = net.minecraft.class_1734.class.getDeclaredMethod("method_64650",
+            net.minecraft.class_9694.class, net.minecraft.class_1937.class);
+        m.setAccessible(true);
+        return (List<class_1799>) m.invoke(slot, net.minecraft.class_9694.method_59986(w, h, grid), server.method_30002());
+    }
+
+    static void remainingReads(MinecraftServer server) throws Exception {
+        class_1799 milk = new class_1799(item("milk_bucket"));
+        List<class_1799> cake = remaining(server, 3, 3, List.of(milk, milk.method_7972(), milk.method_7972(),
+            new class_1799(item("sugar")), new class_1799(item("egg")), new class_1799(item("sugar")),
+            new class_1799(item("wheat")), new class_1799(item("wheat")), new class_1799(item("wheat"))));
+        check(cake.size() == 9 && cake.get(0).method_31574(item("water_bucket")) && cake.get(2).method_31574(item("water_bucket"))
+                && cake.get(4).method_7960(),
+            "mixin on RecipeManager.getRemainingItemsFor: vanilla's crafting result slot leaves water buckets from a cake: " + cake);
+        List<class_1799> sugar = remaining(server, 1, 1, List.of(new class_1799(item("honey_bottle"))));
+        check(sugar.size() == 1 && sugar.get(0).method_31574(item("glass_bottle")),
+            "an unmixed remainder (sugar from honey: the glass bottle) stays: " + sugar);
     }
 
     /** the translation key of a stack's hover name, "" when it is not translatable */
