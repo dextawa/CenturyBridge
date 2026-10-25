@@ -33,6 +33,7 @@ public class S6bTestMod implements ModInitializer {
     static int checks;
     static int saves;
     static int reads;
+    static Boolean v1Dedicated;
 
     static void check(boolean ok, String what) {
         checks++;
@@ -96,8 +97,26 @@ public class S6bTestMod implements ModInitializer {
         }
     }
 
+    /** a 1.21.5 block entity overriding fabric-rendering-data-attachment-v1's getRenderAttachmentData */
+    static class DataChest extends class_2595 {
+        DataChest() {
+            super(class_2338.field_10980, class_2246.field_10034.method_9564());
+        }
+
+        public Object getRenderAttachmentData() {
+            return "cb-data";
+        }
+    }
+
     @Override
     public void onInitialize() {
+        // removed Fabric API modules: fabric-commands-v0 and fabric-command-api-v1 (this mod depends on both)
+        net.fabricmc.fabric.api.registry.CommandRegistry.INSTANCE.register(false,
+            d -> d.register(net.minecraft.class_2170.method_9247("cbv0")));
+        net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback.EVENT.register((d, dedicated) -> {
+            v1Dedicated = dedicated;
+            d.register(net.minecraft.class_2170.method_9247("cbv1"));
+        });
         Thread t = new Thread(() -> {
             for (int i = 0; i < 600; i++) {
                 try {
@@ -135,6 +154,12 @@ public class S6bTestMod implements ModInitializer {
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "text threw " + e);
+        }
+        try {
+            fapi(server, level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "fapi threw " + e);
         }
         try {
             problems();
@@ -200,6 +225,26 @@ public class S6bTestMod implements ModInitializer {
             threw = true;
         }
         check(threw, "Component.Serializer.fromJson(\"null\") throws JsonParseException as 1.21.5 did");
+    }
+
+    static void fapi(MinecraftServer server, class_3218 level) {
+        com.mojang.brigadier.tree.RootCommandNode<?> root = server.method_3734().method_9235().getRoot();
+        check(root.getChild("cbv0") != null, "fabric-commands-v0: CommandRegistry.register reaches the dispatcher");
+        check(root.getChild("cbv1") != null, "fabric-command-api-v1: CommandRegistrationCallback reaches the dispatcher");
+        check(Boolean.TRUE.equals(v1Dedicated), "fabric-command-api-v1: dedicated is true on a dedicated server (" + v1Dedicated + ")");
+        Object none = ((net.fabricmc.fabric.api.rendering.data.v1.RenderAttachedBlockView) level)
+            .getBlockEntityRenderAttachment(new class_2338(0, -60, 0));
+        check(none == null, "rendering-data-attachment-v1: a level is a RenderAttachedBlockView; no block entity -> null");
+        DataChest chest = new DataChest();
+        check("cb-data".equals(((net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity) chest).getRenderAttachmentData()),
+            "rendering-data-attachment-v1: the mod's getRenderAttachmentData through the interface");
+        check(((net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity) new class_2595(class_2338.field_10980,
+            class_2246.field_10034.method_9564())).getRenderAttachmentData() == null,
+            "rendering-data-attachment-v1: a vanilla block entity answers null");
+        // ClientTags is @Environment(CLIENT) in both releases: the server only proves the dependency resolves
+        // (fabric-client-tags-api-v1 -> fabric-tag-api-v1); the call itself is a client check (client_checks/s6b.md).
+        check(net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("fabric-tag-api-v1"),
+            "fabric-client-tags-api-v1: dependency resolves to fabric-tag-api-v1");
     }
 
     static void problems() {
