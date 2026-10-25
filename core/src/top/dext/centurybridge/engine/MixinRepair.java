@@ -584,6 +584,22 @@ public final class MixinRepair {
                         }
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
+                        if (cands.isEmpty() && s.desc != null && mixinMoves.containsKey(owner + "." + s.name + s.desc)) {
+                            // the static moved, the same code, to another W class (mixinMoves): onto a mixin of that class
+                            String why0 = movable(mx, handler, an, anchors, mixinMoves.get(owner + "." + s.name + s.desc));
+                            if (why0 == null) {
+                                String to = mixinMoves.get(owner + "." + s.name + s.desc);
+                                fixNotes.add("move " + where + " => " + to + " (mixinMoves: the same code in another class)");
+                                fixes.add(() -> {
+                                    moveInjector(mx, handler, an, to);
+                                    dirty[0] = true;
+                                });
+                            } else if (deadWhy == null) {
+                                deadWhy = "target gone: @" + kind + " " + where + " (mixinMoves to "
+                                    + mixinMoves.get(owner + "." + s.name + s.desc) + ": " + why0 + ")";
+                            }
+                            continue;
+                        }
                         if (cands.isEmpty()) {
                             Sel byName = new Sel(s.owner, s.name, null, s.wildcard || s.name.equals("<init>"));
                             List<MethodNode> named = byName.match(tc);
@@ -1104,6 +1120,56 @@ public final class MixinRepair {
         b.add(new FieldInsnNode(Opcodes.GETSTATIC, hc, field, "Ljava/lang/ThreadLocal;"));
         b.add(new VarInsnNode(Opcodes.ALOAD, prevSlot));
         b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "set", "(Ljava/lang/Object;)V", false));
+    }
+
+    /** why an injector cannot move onto a mixin of the class a mixinMoves entry names, or null */
+    private String movable(ClassNode mx, MethodNode h, AnnotationNode an, List<Anchor> anchors, String to) {
+        if (!crossAllowed) return "not in a config being repaired";
+        int dot = to.indexOf('.');
+        int paren = to.indexOf('(');
+        if (dot <= 0 || paren <= dot) return "not owner.name(desc)";
+        ClassNode wc = target(to.substring(0, dot));
+        List<MethodNode> wms = wc == null ? List.of() : new Sel(null, to.substring(dot + 1, paren), to.substring(paren), false).match(wc);
+        MethodNode wm = wms.size() == 1 ? wms.get(0) : null;
+        if (wm == null) return "not a method of the target";
+        if ((wm.access & Opcodes.ACC_STATIC) == 0 || (h.access & Opcodes.ACC_STATIC) == 0) return "not a static target with a static handler";
+        if (usesOwnClass(h, mx.name)) return "the handler uses its own mixin's members";
+        if (anchors == null) return "an anchor not statically evaluable";
+        if (!anchors.isEmpty() && !anchorsIn(wm, wc, anchors)) return "its anchor is not in the moved method " + anchors;
+        return null;
+    }
+
+    /**
+     * the injector onto a mixin of the W class (the config's cb$xguard$ mixin of it): a copy of the static handler
+     * selecting the W method; the mod's handler stays a plain method marked like a guarded one, so MixinJudge
+     * judges the copy where it now stands
+     */
+    private void moveInjector(ClassNode mx, MethodNode h, AnnotationNode an, String to) {
+        int dot = to.indexOf('.');
+        String wOwner = to.substring(0, dot);
+        ClassNode gc = crossMixin(wOwner, mx.version);
+        String oldName = h.name;
+        String gname = mx.name.substring(mx.name.lastIndexOf('/') + 1).replaceAll("[^A-Za-z0-9_]", "_") + "$" + oldName;
+        while (true) {
+            String g0 = gname;
+            if (gc.methods.stream().noneMatch(m -> m.name.equals(g0))) break;
+            gname += "_";
+        }
+        AnnotationNode moved = copyAnnotation(an);
+        setSelector(moved, "L" + wOwner + ";" + to.substring(dot + 1));
+        MethodNode g = new MethodNode(h.access, gname, h.desc, h.signature, h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
+        h.accept(g);
+        g.name = gname;
+        g.visibleAnnotations = new ArrayList<>(List.of(moved));
+        g.invisibleAnnotations = null;
+        g.access = (g.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE;
+        gc.methods.add(g);
+        dropInjector(h, an);
+        h.name = "cb$guarded$" + oldName; // the judge follows the mark from the mod's name
+        AnnotationNode mark = new AnnotationNode(MixinBridge.GUARDED);
+        mark.values = new ArrayList<>(List.of("of", oldName, "mixin", gc.name, "handler", gname));
+        h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
+        h.invisibleAnnotations.add(mark);
     }
 
     private static AnnotationNode copyAnnotation(AnnotationNode an) {
@@ -2048,6 +2114,8 @@ public final class MixinRepair {
     public LayerMembers layerMembers = LayerMembers.none();
     /** the step's classRenames (W side: a restored body calls the facade a V class is renamed to) */
     public Map<String, String> classRenames = Map.of();
+    /** Chain.mixinMoves: "V owner.name(desc)" -> "W owner.name(desc)" of a static W keeps in another class */
+    public Map<String, String> mixinMoves = Map.of();
 
     /** overrides MixinBridge.restoreOverride put back (restoring mixins of the jar being repaired), by target */
     private Map<String, List<MethodNode>> restoredByTarget = Map.of();
