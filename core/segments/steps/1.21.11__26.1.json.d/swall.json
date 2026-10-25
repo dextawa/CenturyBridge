@@ -240,7 +240,12 @@
   "net/minecraft/class_10860.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#writeToTexture",
   "net/minecraft/class_1041.method_15998(Lnet/minecraft/class_10219;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#updateDisplay",
   "net/minecraft/class_761.method_22710(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelRender#renderLevel",
-  "net/minecraft/class_1799.method_40133()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemStacks#getTags"
+  "net/minecraft/class_1799.method_40133()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemStacks#getTags",
+  "net/minecraft/class_2392.method_10289()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#getItem",
+  "net/minecraft/class_9302.method_57519()Lnet/minecraft/class_9302;": "top/dext/centurybridge/step/v26_1/rt/CbWallBooks#tryCraftCopy",
+  "net/minecraft/class_9302.method_57521(Lnet/minecraft/class_2168;Lnet/minecraft/class_1657;)Lnet/minecraft/class_9302;": "top/dext/centurybridge/step/v26_1/rt/CbWallBooks#resolve",
+  "net/minecraft/class_1792.method_7858()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemMembers#getCraftingRemainder",
+  "net/minecraft/class_1792.method_63680()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemMembers#getName"
  },
  "overrideHooks": [
   {
@@ -563,6 +568,14 @@
    "wrap": "top/dext/centurybridge/step/v26_1/rt/CbWallClientRecords.mutable(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "a 1.21.11 PlainTextRenderable's renderSprite gets 26.1's pose as a Matrix4f (the same matrix when it is one)"
+  },
+  {
+   "old": "method_10289()Lnet/minecraft/class_1799;",
+   "new": "getItem()Lnet/minecraft/world/item/ItemStackTemplate;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems.unwrap(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "onlyUnder": "net/minecraft/class_2392",
+   "basis": "1.21.11 ItemParticleOption.getItem() answered the ItemStack, 26.1's its ItemStackTemplate: the template of the stack the mod's override answers"
   }
  ],
  "frameDefaults": {
@@ -876,7 +889,8 @@
   "com/mojang/blaze3d/vertex/VertexFormatElement.<init>(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;Lcom/mojang/blaze3d/vertex/VertexFormatElement$Usage;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallVertexFormats#element",
   "net/minecraft/class_3990.<init>(Lnet/minecraft/class_5268;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#newSpawner",
   "net/minecraft/class_11661$class_11668.<init>(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#itemSubmit",
-  "net/minecraft/class_1041.<init>(Lnet/minecraft/class_3678;Lnet/minecraft/class_323;Lnet/minecraft/class_543;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#newWindow"
+  "net/minecraft/class_1041.<init>(Lnet/minecraft/class_3678;Lnet/minecraft/class_323;Lnet/minecraft/class_543;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#newWindow",
+  "net/minecraft/class_2392.<init>(Lnet/minecraft/class_2396;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#itemParticle"
  },
  "adapterHooks": [
   {
@@ -1325,7 +1339,8 @@
   "com/mojang/blaze3d/platform/GLX._initGlfw()Ljava/util/function/LongSupplier;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#initGlfw",
   "com/mojang/blaze3d/platform/GLX.make(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#make",
   "net/minecraft/class_3255.method_14392(Lnet/minecraft/class_7677;Ljava/io/InputStream;Lnet/minecraft/class_9224;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallPackResources#getMetadataFromStream",
-  "net/minecraft/class_7296.method_43393(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGiveItems#throwItem"
+  "net/minecraft/class_7296.method_43393(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGiveItems#throwItem",
+  "net/minecraft/class_9302.method_66337(Lnet/minecraft/class_1799;Lnet/minecraft/class_2168;Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBooks#resolveForItem"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -2206,6 +2221,18 @@
     "keep"
    ],
    "basis": "26.1 RenderPass.Draw has a base vertex after the index count; 1.21.11's multi-draws drew every Draw from vertex 0 (GlCommandEncoder.executeDrawMultiple)"
+  },
+  "net/minecraft/class_2392.<init>(Lnet/minecraft/class_2396;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_2396;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#superTemplate(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#superStack(Lnet/minecraft/class_2392;Lnet/minecraft/class_1799;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "1.21.11 ItemParticleOption took the ItemStack, 26.1 its ItemStackTemplate; the subclass's getItem() answers the stack it passed (mixin/CbWallItemParticleStackMixin keeps it)"
   }
  },
  "fieldGetters": {
@@ -2446,7 +2473,8 @@
   "net/minecraft/class_3537.method_16453(DDDDDZ)D": "top/dext/centurybridge/step/v26_1/rt/CbWallNoise#superGetValue",
   "net/minecraft/class_11661.method_73480(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#superSubmitItem",
   "net/minecraft/class_11788.method_73480(Lnet/minecraft/class_4587;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#superSubmitItem",
-  "net/minecraft/class_10444.method_65603(Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#pickParticleIcon"
+  "net/minecraft/class_10444.method_65603(Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#pickParticleIcon",
+  "net/minecraft/class_2392.method_10289()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#superGetItem"
  },
  "covers": [
   "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
@@ -3206,7 +3234,8 @@
   "net/minecraft/class_8185.field_52938:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$SnifferModel#BABY_TRANSFORMER",
   "net/minecraft/class_9082.field_52867:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ArmadilloModel#BABY_TRANSFORMER",
   "net/minecraft/class_1799.field_49747:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemStacks#SINGLE_ITEM_CODEC",
-  "net/minecraft/class_1799.field_49267:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemStacks#SIMPLE_ITEM_CODEC"
+  "net/minecraft/class_1799.field_49267:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemStacks#SIMPLE_ITEM_CODEC",
+  "net/minecraft/class_9302.field_49380:I": "top/dext/centurybridge/step/v26_1/rt/CbWallBooks#MAX_CRAFTABLE_GENERATION"
  },
  "mixinTargets": {
   "net/minecraft/class_2564.method_10881(Lnet/minecraft/class_2168;Lnet/minecraft/class_2561;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;": {
