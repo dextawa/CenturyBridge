@@ -1,0 +1,8 @@
+{
+  "criteria": {
+    "has_probe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": ["minecraft:stick"], "cb_smx1_item_probe": true}]}
+    }
+  }
+}

@@ -85,6 +85,18 @@ public final class Driver {
         }
     }
 
+    /** an advancement's criteria as they write themselves (Criterion.serializeToJson), sorted by name */
+    private static String criteriaJson(net.minecraft.class_161 a) {
+        if (a == null) {
+            return "missing";
+        }
+        java.util.TreeMap<String, String> out = new java.util.TreeMap<>();
+        for (java.util.Map.Entry<String, net.minecraft.class_175> e : a.method_682().entrySet()) {
+            out.put(e.getKey(), String.valueOf(e.getValue().method_773()));
+        }
+        return out.toString();
+    }
+
     /** sha-256 over every loaded recipe outside this mod: id, serializer, network form, sorted by id */
     private static String recipeFingerprint(net.minecraft.server.MinecraftServer server) throws Exception {
         java.util.TreeMap<String, byte[]> forms = new java.util.TreeMap<>();
@@ -271,6 +283,21 @@ public final class Driver {
                 net.minecraft.class_161 nat = advancements.method_12896(new net.minecraft.class_2960("cb_smx1n", "native_probe"));
                 check("advancement-native-mixin-" + phase, nat != null && nat.method_51697(), "route " + ROUTE
                     + ": cb_smx1n:native_probe sends telemetry " + (nat != null && nat.method_51697()) + " (true = the native mixin acted)");
+                // the item conditions of the probes' inventory_changed criteria, as the criteria write them
+                String itemProbe = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1", "item_probe")));
+                check("predicate-item-converted-mixin-" + phase, ROUTE ? itemProbe.contains("minecraft:diamond") && !itemProbe.contains("minecraft:stick")
+                    : itemProbe.contains("minecraft:stick") && !itemProbe.contains("minecraft:diamond"), "route " + ROUTE
+                    + ": cb_smx1:item_probe criteria " + itemProbe + " (ItemPredicate.fromJson handler returned "
+                    + COUNT.getOrDefault("item-predicate-return-all", 0) + " time(s))");
+                String itemProbe2 = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1", "item_probe2")));
+                check("predicate-item-converted-mixin-single-" + phase, ROUTE ? itemProbe2.contains("minecraft:diamond") && !itemProbe2.contains("minecraft:stick")
+                    : itemProbe2.contains("minecraft:stick") && !itemProbe2.contains("minecraft:diamond"), "route " + ROUTE
+                    + ": cb_smx1:item_probe2 (enchanted_item) criteria " + itemProbe2);
+                for (String n : new String[] {"item_probe", "items_probe"}) {
+                    String nativeItem = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1n", n)));
+                    check("predicate-item-native-mixin-" + n + "-" + phase, nativeItem.contains("minecraft:emerald") && !nativeItem.contains("minecraft:stick"),
+                        "route " + ROUTE + ": cb_smx1n:" + n + " criteria " + nativeItem + " (emerald = the native mixin acted)");
+                }
                 java.util.TreeMap<String, String> forms = new java.util.TreeMap<>();
                 for (net.minecraft.class_161 a : advancements.method_12893()) {
                     String id = a.method_688().toString();
@@ -279,7 +306,7 @@ public final class Driver {
                     }
                     forms.put(id, (a.method_687() == null ? "-" : a.method_687().method_688().toString()) + "|" + a.method_691().method_747() + "|"
                         + new java.util.TreeSet<>(a.method_682().keySet()) + "|" + java.util.Arrays.deepToString(a.method_680()) + "|"
-                        + a.method_51697() + "|" + (a.method_686() == null ? "-" : a.method_686().method_811().getString()));
+                        + a.method_51697() + "|" + (a.method_686() == null ? "-" : a.method_686().method_811().getString()) + "|" + criteriaJson(a));
                 }
                 java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
                 StringBuilder hex = new StringBuilder();

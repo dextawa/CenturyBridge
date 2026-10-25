@@ -257,6 +257,9 @@ public final class CbGameRules {
         } finally {
             WRITING.remove();
         }
+        if (server != null) {
+            NOTIFIED.set(new Object[]{rules, key});
+        }
     }
 
     /** a 1.21.10 value's own write in progress on this thread (routeWrite lets 1.21.11's set through) */
@@ -292,7 +295,13 @@ public final class CbGameRules {
         PROBE.set(p);
         try {
             AssignRoute a = ASSIGN.get();
-            if (a != null && a.rules == rules && has(a.other, rule)) {
+            Object[] c = COMMAND.get();
+            if (c != null && c[1] == rule && e.kind != Kind.INVERT) {
+                // 1.21.10's command: setFromArgument(context, "value") (its argument is the rule's own value for
+                // the rules a 1.21.10 key stands for as is; a negated rule's argument has the other meaning)
+                COMMAND.remove();
+                v.method_20780((com.mojang.brigadier.context.CommandContext) c[0], "value");
+            } else if (a != null && a.rules == rules && has(a.other, rule)) {
                 v.method_27337(live(a.other, e.key), server); // 1.21.10's assignFrom set each value through setFrom
             } else if (e.kind == Kind.INT) {
                 ((GameRules.IntegerValue) v).method_35236((Integer) given, server);
@@ -321,10 +330,37 @@ public final class CbGameRules {
     /** a bound value's onChanged(server): 1.21.11's game rule hook with the rule's current value */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static void changed(class_1928 rules, GameRules.Key<?> key, MinecraftServer server) {
-        if (server != null) {
-            Entry e = entry(key);
-            server.method_74058((class_12279) e.rule, raw(rules, e.rule));
+        if (server == null) {
+            return;
         }
+        Probe p = PROBE.get();
+        if (p != null && p.rules == rules && p.key == key) {
+            return; // inside 1.21.11's set, which notifies the server right after
+        }
+        Object[] n = NOTIFIED.get();
+        if (n != null && n[0] == rules && n[1] == key) {
+            NOTIFIED.remove();
+            return; // the write that preceded this onChanged went through 1.21.11's set, which notified the server
+        }
+        Entry e = entry(key);
+        server.method_74058((class_12279) e.rule, raw(rules, e.rule));
+    }
+
+    /** the last 1.21.10 write on this thread that 1.21.11's set already notified the server of (rules, key) */
+    private static final ThreadLocal<Object[]> NOTIFIED = new ThreadLocal<>();
+
+    /**
+     * 1.21.11's game rule command (GameRuleCommand.setRule) in progress on this thread, with its rule: routeWrite runs
+     * the 1.21.10 value's setFromArgument(context, "value") for it, as 1.21.10's command did (CbGameRuleCommandMixin).
+     */
+    private static final ThreadLocal<Object[]> COMMAND = new ThreadLocal<>();
+
+    public static void commandStart(com.mojang.brigadier.context.CommandContext<?> context, class_12279<?> rule) {
+        COMMAND.set(new Object[]{context, rule});
+    }
+
+    public static void commandEnd() {
+        COMMAND.remove();
     }
 
     // ---- 1.21.10 GameRules members (restored on GameRules by CbGameRulesMixin, whose bodies these are)
@@ -622,6 +658,112 @@ public final class CbGameRules {
     private static <T> void visitW(net.minecraft.class_4311 visitor, class_12279<T> rule) {
         visitor.method_20762(rule);
         rule.method_76145(visitor);
+    }
+
+    /**
+     * 1.21.11's GameRule.serialize(value) / getCommandResult(value) / deserialize(string) (the game rule command's
+     * answers, saving, the rule argument's parse) consulting the 1.21.10 value of the key the rule stands for: a
+     * value of its own holding the given value, whose serialize / getCommandResult / deserialize a mod's 1.21.10
+     * mixin may change; its answer is taken only where it differs from what those bodies answer (unmixed: exactly
+     * 1.21.11's). Negated rules translate the meaning both ways. Not routed: rules no single boolean / integer key
+     * stands for.
+     */
+    private static Entry single(class_12279<?> rule) {
+        List<Entry> es = BY_RULE.get(rule);
+        if (es == null || es.size() != 1) {
+            return null;
+        }
+        Entry e = es.get(0);
+        return e.kind == Kind.BOOL || e.kind == Kind.INVERT || e.kind == Kind.INT ? e : null;
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static GameRules.Value own(Entry e, Object vValue) {
+        GameRules.Value v = e.type.method_20773();
+        if (e.kind == Kind.INT) {
+            ((GameRules.IntegerValue) v).field_19412 = (Integer) vValue;
+        } else {
+            ((GameRules.BooleanValue) v).field_19411 = (Boolean) vValue;
+        }
+        return v;
+    }
+
+    private static Object toV(Entry e, Object w) {
+        return e.kind == Kind.INVERT ? !(Boolean) w : w;
+    }
+
+    public static String routeSerialize(class_12279<?> rule, Object w, String answer) {
+        Entry e = single(rule);
+        if (e == null || w == null) {
+            return answer;
+        }
+        Object v = toV(e, w);
+        String mixed = own(e, v).method_20779();
+        if (mixed.equals(v.toString())) {
+            return answer;
+        }
+        if (e.kind == Kind.INVERT && (mixed.equals("true") || mixed.equals("false"))) {
+            return Boolean.toString(!Boolean.parseBoolean(mixed));
+        }
+        return mixed;
+    }
+
+    public static int routeCommandResult(class_12279<?> rule, Object w, int answer) {
+        Entry e = single(rule);
+        if (e == null || w == null) {
+            return answer;
+        }
+        Object v = toV(e, w);
+        int body = e.kind == Kind.INT ? (Integer) v : ((Boolean) v ? 1 : 0);
+        int mixed = own(e, v).method_20781();
+        if (mixed == body) {
+            return answer;
+        }
+        return e.kind == Kind.INVERT && (mixed == 0 || mixed == 1) ? 1 - mixed : mixed;
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static DataResult routeDeserialize(class_12279<?> rule, String s, DataResult answer) {
+        Entry e = single(rule);
+        if (e == null || s == null) {
+            return answer;
+        }
+        String vs = s;
+        if (e.kind == Kind.INVERT && (s.equals("true") || s.equals("false"))) {
+            vs = Boolean.toString(!Boolean.parseBoolean(s));
+        }
+        Object body;
+        if (e.kind == Kind.INT) {
+            int n = 0;
+            if (!vs.isEmpty()) {
+                try {
+                    n = Integer.parseInt(vs);
+                } catch (NumberFormatException x) {
+                    n = 0;
+                }
+            }
+            body = n;
+        } else {
+            body = Boolean.parseBoolean(vs);
+        }
+        GameRules.Value v = own(e, body);
+        v.cb$deserialize(vs);
+        Object mixed = e.kind == Kind.INT ? (Object) ((GameRules.IntegerValue) v).field_19412 : (Object) ((GameRules.BooleanValue) v).field_19411;
+        if (mixed.equals(body)) {
+            return answer;
+        }
+        return DataResult.success(e.kind == Kind.INVERT ? !(Boolean) mixed : mixed);
+    }
+
+    /** 1.21.11's GameRule.getDescriptionId() consulting the 1.21.10 key's getDescriptionId (taken where it differs) */
+    public static String routeDescriptionId(class_12279<?> rule, String answer) {
+        List<Entry> es = BY_RULE.get(rule);
+        if (es == null || es.size() != 1) {
+            return answer;
+        }
+        GameRules.Key<?> k = es.get(0).key;
+        String mixed = k.method_27334();
+        return mixed.equals("gamerule." + k.method_20771()) ? answer : mixed;
     }
 
     /** NotificationService.serverActivityOccured(), which a 1.21.10 implementation never had: 1.21.10 sent no such notification */

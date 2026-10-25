@@ -1,0 +1,1702 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_10335$class_10336.method_64913(Lnet/minecraft/class_10339;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_10339;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_10748$class_10749.method_67471(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_3937$class_3938.method_17579(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_3937$class_3995.method_18820(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_3940.method_3074(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V": {
+   "basis": "s9 particles: 1.21.9's quad code writes to a QuadParticleRenderState; a 1.21.8 caller's consumer becomes one drawing into it (CbParticles.immediate)",
+   "desc": "(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;F)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbParticles#immediate(Lnet/minecraft/class_4588;)Lnet/minecraft/class_11944;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_3940.method_60373(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;Lorg/joml/Quaternionf;F)V": {
+   "basis": "s9 particles: 1.21.9's quad code writes to a QuadParticleRenderState; a 1.21.8 caller's consumer becomes one drawing into it (CbParticles.immediate)",
+   "desc": "(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;Lorg/joml/Quaternionf;F)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbParticles#immediate(Lnet/minecraft/class_4588;)Lnet/minecraft/class_11944;",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4792$class_4793.method_24463(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_4956$class_4957.method_25994(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_4956$class_7210.method_41948(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_4974$class_4975.method_26268(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_5165$class_5166.method_27150(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_5685$class_5686.method_32690(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_5734$class_5735.method_33075(Lnet/minecraft/class_5743;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_5743;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_5734.method_3074(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V": {
+   "basis": "s9 particles: 1.21.9's quad code writes to a QuadParticleRenderState; a 1.21.8 caller's consumer becomes one drawing into it (CbParticles.immediate)",
+   "desc": "(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;F)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbParticles#immediate(Lnet/minecraft/class_4588;)Lnet/minecraft/class_11944;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_5737$class_5738.method_33080(Lnet/minecraft/class_5745;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_5745;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_5737.method_3074(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V": {
+   "basis": "s9 particles: 1.21.9's quad code writes to a QuadParticleRenderState; a 1.21.8 caller's consumer becomes one drawing into it (CbParticles.immediate)",
+   "desc": "(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;F)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbParticles#immediate(Lnet/minecraft/class_4588;)Lnet/minecraft/class_11944;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_5786$class_5956.method_34748(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_5786$class_5957.method_34749(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_5786$class_5958.method_34750(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_5786$class_5959.method_34751(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_5786$class_5960.method_34752(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_645$class_646.method_3006(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_647$class_648.method_3007(Lnet/minecraft/class_2392;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2392;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_647$class_649.method_3008(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_647$class_650.method_3009(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_647$class_9478.method_58747(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_653$class_654.method_3011(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_655$class_656.method_3012(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_657$class_3939.method_17580(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_657$class_658.method_3013(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_657$class_659.method_3014(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_661$class_662.method_3016(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_668$class_669.method_3020(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_668$class_670.method_3021(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_668$class_9212.method_56832(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_668.method_3074(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V": {
+   "basis": "s9 particles: 1.21.9's quad code writes to a QuadParticleRenderState; a 1.21.8 caller's consumer becomes one drawing into it (CbParticles.immediate)",
+   "desc": "(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;F)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbParticles#immediate(Lnet/minecraft/class_4588;)Lnet/minecraft/class_11944;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_671$class_672.method_3022(Lnet/minecraft/class_2390;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2390;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_673$class_674.method_3023(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_6734$class_6735.method_39196(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_675$class_676.method_3024(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_677$class_678.method_3074(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V": {
+   "basis": "s9 particles: 1.21.9's quad code writes to a QuadParticleRenderState; a 1.21.8 caller's consumer becomes one drawing into it (CbParticles.immediate)",
+   "desc": "(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;F)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbParticles#immediate(Lnet/minecraft/class_4588;)Lnet/minecraft/class_11944;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_677$class_679.method_3025(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_677$class_680.method_3074(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V": {
+   "basis": "s9 particles: 1.21.9's quad code writes to a QuadParticleRenderState; a 1.21.8 caller's consumer becomes one drawing into it (CbParticles.immediate)",
+   "desc": "(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;F)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbParticles#immediate(Lnet/minecraft/class_4588;)Lnet/minecraft/class_11944;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_682$class_683.method_3033(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_684$class_685.method_3034(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_684$class_686.method_3035(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_687$class_5613.method_32131(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_687$class_688.method_3036(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_689$class_690.method_3037(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_691$class_692.method_3038(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_694$class_695.method_3039(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_696$class_697.method_3040(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_698$class_699.method_3041(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_704$class_705.method_3088(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_704$class_706.method_3089(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_707.method_3090(Lnet/minecraft/class_2394;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2394;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_709$class_710.method_3094(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_711$class_714.method_3098(Lnet/minecraft/class_9381;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_9381;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_711$class_715.method_3099(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_711$class_716.method_3100(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_717$class_718.method_3101(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_719$class_720.method_3102(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_7206$class_7207.method_41946(Lnet/minecraft/class_7227;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_7227;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_7208$class_7209.method_41947(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_721$class_722.method_3103(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_723$class_4795.method_24464(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_723$class_4796.method_24465(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_723$class_4797.method_24466(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_723$class_5877.method_34024(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_725$class_5788.method_33427(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_725$class_726.method_3105(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_727$class_10334.method_64912(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_727$class_728.method_3109(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_727$class_9482.method_58751(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_7281$class_7282.method_42587(Lnet/minecraft/class_7290;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_7290;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_7281.method_3074(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V": {
+   "basis": "s9 particles: 1.21.9's quad code writes to a QuadParticleRenderState; a 1.21.8 caller's consumer becomes one drawing into it (CbParticles.immediate)",
+   "desc": "(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;F)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbParticles#immediate(Lnet/minecraft/class_4588;)Lnet/minecraft/class_11944;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_729$class_3991.method_18044(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_729$class_730.method_3110(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_729$class_731.method_3111(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_729$class_732.method_3112(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_729$class_8254.method_49917(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_734$class_735.method_3113(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_736$class_737.method_3114(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_738$class_739.method_3115(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_740$class_741.method_3116(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_7452$class_7453.method_43785(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_8253$class_10379.method_65196(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_8253$class_10380.method_65197(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_8253$class_10604.method_66537(Lnet/minecraft/class_9381;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_9381;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_8845$class_8846.method_54387(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_8899$class_8900.method_54635(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_8977$class_8978.method_55243(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_8977$class_9481.method_58749(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_8979$class_8980.method_55244(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_8982$class_8983.method_55248(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  },
+  "net/minecraft/class_9479$class_9480.method_58748(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "basis": "s9 particles: createParticle takes the RandomSource the particle draws from; 1.21.8's providers drew from level.random",
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+   ]
+  }
+ },
+ "frameDefaults": {
+  "method_17579(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_17580(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_18044(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_18820(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_24463(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_24464(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_24465(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_24466(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_25994(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_26268(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_27150(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3006(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3007(Lnet/minecraft/class_2392;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3008(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3009(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3011(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3012(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3013(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3014(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3016(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3020(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3021(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3022(Lnet/minecraft/class_2390;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3023(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3024(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3025(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3033(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3034(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3035(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3036(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3037(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3038(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3039(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3040(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3041(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3088(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3089(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3094(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3098(Lnet/minecraft/class_9381;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3099(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3100(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3101(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3102(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3103(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3105(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3109(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3110(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3111(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3112(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3113(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3114(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3115(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_3116(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_32131(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_32690(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_33075(Lnet/minecraft/class_5743;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_33080(Lnet/minecraft/class_5745;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_33427(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_34024(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_34748(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_34749(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_34750(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_34751(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_34752(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_39196(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_41948(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_42587(Lnet/minecraft/class_7290;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_43785(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_49917(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_54387(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_54635(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_55243(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_55244(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_55248(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_56832(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_58747(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_58748(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_58749(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_58751(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_64912(Lnet/minecraft/class_2388;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_64913(Lnet/minecraft/class_10339;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_65196(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_65197(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_66537(Lnet/minecraft/class_9381;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  },
+  "method_67471(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+  }
+ },
+ "superRedirects": {
+  "net/minecraft/class_10335.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_10748.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_3937.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_3998.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_4794.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_4956.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_5685.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_5736.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_5737.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_5786.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_645.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_647.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_653.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_655.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_657.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_661.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_663.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_666.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_668.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_673.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_6734.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_677$class_678.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_682.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_684.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_687.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_691.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_693.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_694.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_698.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_704.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_708.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_709.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_711.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_7206.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_7208.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_723.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_727.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_7281.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_729.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_736.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_738.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_740.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_8253.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_8977.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_8982.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers",
+  "net/minecraft/class_9479.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleSupers"
+ }
+}

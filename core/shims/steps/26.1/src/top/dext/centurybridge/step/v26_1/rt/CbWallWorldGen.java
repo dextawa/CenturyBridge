@@ -1,5 +1,6 @@
 package top.dext.centurybridge.step.v26_1.rt;
 
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.WorldGenLevel;
 
@@ -19,6 +20,17 @@ public final class CbWallWorldGen {
             return (WorldGenLevel) reader;
         }
         throw new IllegalArgumentException("26.1 tree placement needs a WorldGenLevel; 1.21.11 code passed " + reader.getClass().getName());
+    }
+
+    /**
+     * the argument as the WorldGenLevel 26.1's huge mushroom feature takes where 1.21.11's took a LevelAccessor
+     * (1.21.11's place() always handed on its context's WorldGenLevel)
+     */
+    public static WorldGenLevel worldGenLevel(LevelAccessor level) {
+        if (level == null || level instanceof WorldGenLevel) {
+            return (WorldGenLevel) level;
+        }
+        throw new IllegalArgumentException("26.1 huge mushroom placement needs a WorldGenLevel; 1.21.11 code passed " + level.getClass().getName());
     }
 
     /**

@@ -2,6 +2,8 @@ package top.dext.centurybridge.step.v26_1.rt;
 
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import java.util.Set;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -12,6 +14,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raids;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.util.Mth;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BubbleColumnBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
@@ -32,7 +41,17 @@ import net.minecraft.world.phys.AABB;
  *     under Raids.TYPE (ServerLevel reads them so), which is therefore the type for every dimension;</li>
  * <li>WardenAi.updateActivity(warden): 26.1 takes the warden's brain;</li>
  * <li>Player.isWithinAttackRange(box, buffer) / setIgnoreFallDamageFromCurrentImpulse(ignore): 26.1's with the
- *     active item / the current impact position.</li>
+ *     active item / the current impact position;</li>
+ * <li>AbstractContainerMenu.getQuickCraftPlaceCount(slots, type, carried): 1.21.11's body (26.1 dropped it);</li>
+ * <li>BigDripleafBlock.canPlaceAt(level, pos, state): inside the build height and replaceable (air, water, small
+ *     dripleaf) -- 1.21.11's body (26.1's canPlaceAt(level, pos) tests other things);</li>
+ * <li>BubbleColumnBlock.updateColumn(level, pos, state): 26.1's with the bubble column block it names;</li>
+ * <li>FollowBoatGoal(mob): 26.1's FollowPlayerRiddenEntityGoal following what 1.21.11's followed, boats
+ *     (AbstractBoat), with the same body otherwise;</li>
+ * <li>TimeCommand.setTime(source, time) / addTime(source, time): 1.21.11 set every level's day time, which only the
+ *     overworld's level data kept (the other levels' derived data ignored it) -- 26.1's overworld clock
+ *     (CbWallLevelData.setOverworldTime); then the time synchronisation, the "commands.time.set" feedback and the
+ *     day time of the source's level within the day, as 1.21.11 answered.</li>
  * </ul>
  */
 public final class CbWallServerStatics {
@@ -102,5 +121,52 @@ public final class CbWallServerStatics {
      */
     public static void setIgnoreFallDamageFromCurrentImpulse(Player player, boolean ignore) {
         player.setIgnoreFallDamageFromCurrentImpulse(ignore, player.currentImpulseImpactPos);
+    }
+
+    /** 1.21.11 AbstractContainerMenu.getQuickCraftPlaceCount(slots, type, carried) */
+    public static int getQuickCraftPlaceCount(Set<Slot> slots, int type, ItemStack carried) {
+        return switch (type) {
+            case 0 -> Mth.floor((float) carried.getCount() / (float) slots.size());
+            case 1 -> 1;
+            case 2 -> carried.getMaxStackSize();
+            default -> carried.getCount();
+        };
+    }
+
+    /** 1.21.11 BigDripleafBlock.canPlaceAt(level, pos, state) */
+    public static boolean canPlaceAt(LevelHeightAccessor level, BlockPos pos, BlockState state) {
+        return !level.isOutsideBuildHeight(pos) && (state.isAir() || state.is(Blocks.WATER) || state.is(Blocks.SMALL_DRIPLEAF));
+    }
+
+    /** 1.21.11 BubbleColumnBlock.updateColumn(level, pos, state) */
+    public static void updateColumn(LevelAccessor level, BlockPos pos, BlockState state) {
+        BubbleColumnBlock.updateColumn(Blocks.BUBBLE_COLUMN, level, pos, state);
+    }
+
+    /** the entity class 1.21.11's FollowBoatGoal followed (super(mob) of a 1.21.11 subclass, and new FollowBoatGoal(mob)) */
+    public static Class<? extends net.minecraft.world.entity.Entity> followedBoats() {
+        return net.minecraft.world.entity.vehicle.boat.AbstractBoat.class;
+    }
+
+    /** 1.21.11 TimeCommand.setTime(source, time) */
+    public static int setTime(net.minecraft.commands.CommandSourceStack source, int time) {
+        CbWallLevelData.setOverworldTime(source.getServer(), time);
+        source.getServer().forceGameTimeSynchronization();
+        source.sendSuccess(() -> net.minecraft.network.chat.Component.translatable("commands.time.set", time), true);
+        return dayTime(source);
+    }
+
+    /** 1.21.11 TimeCommand.addTime(source, time) */
+    public static int addTime(net.minecraft.commands.CommandSourceStack source, int time) {
+        CbWallLevelData.setOverworldTime(source.getServer(), source.getServer().overworld().getOverworldClockTime() + time);
+        source.getServer().forceGameTimeSynchronization();
+        int result = dayTime(source);
+        source.sendSuccess(() -> net.minecraft.network.chat.Component.translatable("commands.time.set", result), true);
+        return result;
+    }
+
+    /** 1.21.11 TimeCommand.getDayTime(level) of the source's level: its day time within the day */
+    private static int dayTime(net.minecraft.commands.CommandSourceStack source) {
+        return (int) (source.getLevel().getOverworldClockTime() % 24000L);
     }
 }

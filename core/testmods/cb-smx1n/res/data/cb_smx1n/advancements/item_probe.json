@@ -1,0 +1,8 @@
+{
+  "criteria": {
+    "enchanted_probe": {
+      "trigger": "minecraft:enchanted_item",
+      "conditions": {"item": {"items": ["minecraft:stick"], "cbsmx1n_item_probe": true}}
+    }
+  }
+}

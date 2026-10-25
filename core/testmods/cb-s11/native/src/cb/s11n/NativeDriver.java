@@ -19,6 +19,9 @@ public final class NativeDriver implements ModInitializer {
     public static volatile int setTails;
     public static volatile Object lastSet;
     public static volatile boolean forceKeep;
+    public static volatile int serializeHeads;
+    public static volatile int serializeReturns;
+    public static volatile String lastSerialized;
     private static int ok;
     private static int fail;
 
@@ -96,5 +99,18 @@ public final class NativeDriver implements ModInitializer {
         check("native-with-legacy-mixin", Boolean.TRUE.equals(mv) && getHeads == h + 1 && getReturns == r + 1
             && Boolean.TRUE.equals(lastReturn), "value " + mv + " heads " + (getHeads - h) + " returns " + (getReturns - r));
         check("native-unmixed-again", Boolean.FALSE.equals(rules.method_76185(class_1928.field_19389)), "keepInventory off");
+
+        // 1.21.11's GameRule.serialize consults the 1.21.10 BooleanValue.serialize cb-s11 mixes (only while it answers
+        // otherwise than its body)
+        int zh = serializeHeads;
+        int zr = serializeReturns;
+        String plain = class_1928.field_19389.method_76146(true);
+        boolean sawPlain = "true".equals(lastSerialized);
+        driver("loudSerialize", true);
+        String loud = class_1928.field_19389.method_76146(true);
+        driver("loudSerialize", false);
+        check("native-serialize-route", "true".equals(plain) && "yes".equals(loud) && sawPlain
+            && serializeHeads == zh + 2 && serializeReturns == zr + 2,
+            "plain " + plain + " loud " + loud + " native heads " + (serializeHeads - zh) + " returns " + (serializeReturns - zr));
     }
 }

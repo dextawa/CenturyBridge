@@ -20,7 +20,8 @@
     "EffectAttributesMixin",
     "ShapedKeyMixin",
     "IngredientJsonMixin",
-    "AdvancementBuilderJsonMixin"
+    "AdvancementBuilderJsonMixin",
+    "ItemPredicateJsonMixin"
   ],
   "injectors": {
     "defaultRequire": 1

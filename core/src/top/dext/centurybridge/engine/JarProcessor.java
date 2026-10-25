@@ -2490,10 +2490,13 @@ public final class JarProcessor {
             }
         }
         // a stripped mixin's interfaces are no longer merged onto its target: code of the jar that casts to one
-        // or calls through one throws ClassCastException where it runs (1.21.2's CbRenderState922Mixin casting
-        // to W897 once CbRenderState897Mixin is stripped at 1.21.9). The rest of such a mixin still applies and
-        // works, so it stays; each use is reported for the step that broke it
-        {
+        // or calls through one throws ClassCastException wherever it runs (1.21.2 boot: cb-1.20.2's
+        // CbRecipeJsonCookingHooks casting the cooking serializer to CbRecipeJson$CookingTime in its constructor
+        // once CbRecipeJsonCooking is stripped at 1.20.5). Mixin applies a mixin whole, so such a mixin is
+        // stripped with the reason, like one extending a stripped mixin; any other class using it is reported
+        boolean orphans = true;
+        while (orphans) {
+            orphans = false;
             Set<String> orphaned = new HashSet<>();
             for (String dead : deadMixins) {
                 for (String i : layer.interfacesOf.getOrDefault(dead, List.of())) {
@@ -2503,17 +2506,22 @@ public final class JarProcessor {
             for (String live : triage.configOfClass().keySet()) {
                 if (!deadMixins.contains(live)) orphaned.removeAll(layer.interfacesOf.getOrDefault(live, List.of()));
             }
-            if (!orphaned.isEmpty()) {
-                for (Map.Entry<String, byte[]> en : new java.util.TreeMap<>(entries).entrySet()) {
-                    String n = en.getKey();
-                    if (!n.endsWith(".class")) continue;
-                    String cls = n.substring(0, n.length() - 6);
-                    if (deadMixins.contains(cls) || orphaned.contains(cls)) continue;
-                    String used = usesAny(en.getValue(), orphaned);
-                    if (used != null) {
-                        rpt.notes.add(tag + "uses an interface only a stripped mixin merged (ClassCastException where it runs): "
-                            + shortName(cls) + " -> " + shortName(used));
-                    }
+            for (Map.Entry<String, byte[]> en : new java.util.TreeMap<>(entries).entrySet()) {
+                String n = en.getKey();
+                if (orphaned.isEmpty() || !n.endsWith(".class")) continue;
+                String cls = n.substring(0, n.length() - 6);
+                if (deadMixins.contains(cls) || orphaned.contains(cls)) continue;
+                String used = usesAny(en.getValue(), orphaned);
+                if (used == null) continue;
+                if (triage.configOfClass().containsKey(cls)) {
+                    deadMixins.add(cls);
+                    rpt.strippedMixins.add(tag + shortName(cls) + " -- uses " + shortName(used)
+                        + ", which only a stripped mixin merged onto the target (ClassCastException where it runs)");
+                    orphans = true;
+                } else {
+                    String note = tag + "uses an interface only a stripped mixin merged (ClassCastException where it runs): "
+                        + shortName(cls) + " -> " + shortName(used);
+                    if (!rpt.notes.contains(note)) rpt.notes.add(note);
                 }
             }
         }

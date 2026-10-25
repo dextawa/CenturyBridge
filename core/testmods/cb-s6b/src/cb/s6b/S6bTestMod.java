@@ -33,6 +33,7 @@ public class S6bTestMod implements ModInitializer {
     static int checks;
     static int saves;
     static int reads;
+    static Boolean v1Dedicated;
 
     static void check(boolean ok, String what) {
         checks++;
@@ -96,8 +97,26 @@ public class S6bTestMod implements ModInitializer {
         }
     }
 
+    /** a 1.21.5 block entity overriding fabric-rendering-data-attachment-v1's getRenderAttachmentData */
+    static class DataChest extends class_2595 {
+        DataChest() {
+            super(class_2338.field_10980, class_2246.field_10034.method_9564());
+        }
+
+        public Object getRenderAttachmentData() {
+            return "cb-data";
+        }
+    }
+
     @Override
     public void onInitialize() {
+        // removed Fabric API modules: fabric-commands-v0 and fabric-command-api-v1 (this mod depends on both)
+        net.fabricmc.fabric.api.registry.CommandRegistry.INSTANCE.register(false,
+            d -> d.register(net.minecraft.class_2170.method_9247("cbv0")));
+        net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback.EVENT.register((d, dedicated) -> {
+            v1Dedicated = dedicated;
+            d.register(net.minecraft.class_2170.method_9247("cbv1"));
+        });
         Thread t = new Thread(() -> {
             for (int i = 0; i < 600; i++) {
                 try {
@@ -135,6 +154,18 @@ public class S6bTestMod implements ModInitializer {
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "text threw " + e);
+        }
+        try {
+            fapi(server, level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "fapi threw " + e);
+        }
+        try {
+            tail(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "tail threw " + e);
         }
         try {
             problems();
@@ -200,6 +231,100 @@ public class S6bTestMod implements ModInitializer {
             threw = true;
         }
         check(threw, "Component.Serializer.fromJson(\"null\") throws JsonParseException as 1.21.5 did");
+    }
+
+    static void fapi(MinecraftServer server, class_3218 level) {
+        com.mojang.brigadier.tree.RootCommandNode<?> root = server.method_3734().method_9235().getRoot();
+        check(root.getChild("cbv0") != null, "fabric-commands-v0: CommandRegistry.register reaches the dispatcher");
+        check(root.getChild("cbv1") != null, "fabric-command-api-v1: CommandRegistrationCallback reaches the dispatcher");
+        check(Boolean.TRUE.equals(v1Dedicated), "fabric-command-api-v1: dedicated is true on a dedicated server (" + v1Dedicated + ")");
+        Object none = ((net.fabricmc.fabric.api.rendering.data.v1.RenderAttachedBlockView) level)
+            .getBlockEntityRenderAttachment(new class_2338(0, -60, 0));
+        check(none == null, "rendering-data-attachment-v1: a level is a RenderAttachedBlockView; no block entity -> null");
+        DataChest chest = new DataChest();
+        check("cb-data".equals(((net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity) chest).getRenderAttachmentData()),
+            "rendering-data-attachment-v1: the mod's getRenderAttachmentData through the interface");
+        check(((net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity) new class_2595(class_2338.field_10980,
+            class_2246.field_10034.method_9564())).getRenderAttachmentData() == null,
+            "rendering-data-attachment-v1: a vanilla block entity answers null");
+        // ClientTags is @Environment(CLIENT) in both releases: the server only proves the dependency resolves
+        // (fabric-client-tags-api-v1 -> fabric-tag-api-v1); the call itself is a client check (client_checks/s6b.md).
+        check(net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("fabric-tag-api-v1"),
+            "fabric-client-tags-api-v1: dependency resolves to fabric-tag-api-v1");
+    }
+
+    /** a 1.21.5 FlyingMob subclass */
+    static class CbFlyer extends net.minecraft.class_1307 {
+        CbFlyer(class_1299<? extends net.minecraft.class_1307> type, class_1937 level) {
+            super(type, level);
+        }
+    }
+
+    static void tail(class_3218 level) {
+        // FlyingMob: 1.21.5's travel in the air is moveRelative(0.02) then x0.91; a vanilla ghast is a FlyingMob
+        CbFlyer flyer = new CbFlyer(class_1299.field_6107, level);
+        flyer.method_5814(0.5, 300.0, 0.5);
+        flyer.method_18799(net.minecraft.class_243.field_1353);
+        flyer.method_36456(0.0F);
+        flyer.method_6091(new net.minecraft.class_243(0.0, 0.0, 1.0));
+        double dz = flyer.method_18798().field_1350;
+        check(Math.abs(dz - 0.02 * 0.91) < 1.0E-6, "FlyingMob.travel in air: z speed " + dz + " = 0.02 x 0.91");
+        check(!flyer.method_6101(), "FlyingMob.onClimbable false");
+        Object ghast = new net.minecraft.class_1571(class_1299.field_6107, level);
+        check(ghast instanceof net.minecraft.class_1307, "a vanilla Ghast is instanceof FlyingMob, as in 1.21.5");
+        check(flyer instanceof net.minecraft.class_1307, "the mod's flyer is instanceof FlyingMob");
+
+        // AttributeInstance save / load (1.21.5's CompoundTag form)
+        net.minecraft.class_1324 inst = new net.minecraft.class_1324(net.minecraft.class_5134.field_23716, i -> { });
+        inst.method_6192(30.0);
+        net.minecraft.class_2960 mid = net.minecraft.class_2960.method_60655("cb", "m");
+        inst.method_26837(new net.minecraft.class_1322(mid, 2.0, net.minecraft.class_1322.class_1323.field_6328));
+        class_2487 at = inst.method_26839();
+        check(at.method_68563("base", -1.0) == 30.0 && at.method_10545("id") && at.method_10545("modifiers"),
+            "AttributeInstance.save writes id, base 30 and modifiers: " + at);
+        net.minecraft.class_1324 back = new net.minecraft.class_1324(net.minecraft.class_5134.field_23716, i -> { });
+        back.method_26833(at);
+        check(back.method_6201() == 30.0 && back.method_6196(mid) && back.method_6194() == 32.0,
+            "AttributeInstance.load restores base 30 and the +2 modifier (value " + back.method_6194() + ")");
+        check("id".equals(net.minecraft.class_1324.field_52007), "AttributeInstance.ID_FIELD");
+
+        // AbstractHorse.setStanding(boolean): the flag only
+        net.minecraft.class_1498 horse = new net.minecraft.class_1498(class_1299.field_6139, level);
+        horse.method_6737(true);
+        boolean up = horse.method_6736();
+        horse.method_6737(false);
+        check(up && !horse.method_6736(), "AbstractHorse.setStanding(true/false) sets and clears standing");
+
+        // SimpleContainer / PlayerEnderChestContainer ListTag forms, Abilities CompoundTag form
+        net.minecraft.class_7225.class_7874 regs = level.method_30349();
+        net.minecraft.class_1277 box = new net.minecraft.class_1277(3);
+        box.method_5447(1, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 5));
+        net.minecraft.class_2499 items = box.method_7660(regs);
+        net.minecraft.class_1277 box2 = new net.minecraft.class_1277(3);
+        box2.method_7659(items, regs);
+        check(items.size() == 1 && box2.method_5438(0).method_7909() == net.minecraft.class_1802.field_8600 && box2.method_5438(0).method_7947() == 5,
+            "SimpleContainer.createTag / fromTag round trip (compacted, as 1.21.5): " + items);
+        net.minecraft.class_1730 ender = new net.minecraft.class_1730();
+        ender.method_5447(4, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 2));
+        net.minecraft.class_2499 slots = ender.method_7660(regs);
+        net.minecraft.class_1730 ender2 = new net.minecraft.class_1730();
+        ender2.method_7659(slots, regs);
+        check(slots.size() == 1 && slots.method_68582(0).method_68562("Slot", (byte) -1) == 4 && ender2.method_5438(4).method_7947() == 2,
+            "PlayerEnderChestContainer.createTag / fromTag keep the slot: " + slots);
+        net.minecraft.class_1656 ab = new net.minecraft.class_1656();
+        ab.field_7479 = true;
+        ab.method_7248(0.2F);
+        class_2487 abt = new class_2487();
+        ab.method_7251(abt);
+        net.minecraft.class_1656 ab2 = new net.minecraft.class_1656();
+        ab2.method_7249(abt);
+        check(abt.method_68568("abilities").method_68566("flying", false) && ab2.field_7479 && ab2.method_7252() == 0.2F && ab2.field_7476,
+            "Abilities.addSaveData / loadSaveData: " + abt);
+
+        // ClientboundChangeDifficultyPacket accessors
+        net.minecraft.class_2632 pkt = new net.minecraft.class_2632(net.minecraft.class_1267.field_5807, true);
+        check(pkt.method_11342() == net.minecraft.class_1267.field_5807 && pkt.method_11340(),
+            "ClientboundChangeDifficultyPacket.getDifficulty / isLocked");
     }
 
     static void problems() {

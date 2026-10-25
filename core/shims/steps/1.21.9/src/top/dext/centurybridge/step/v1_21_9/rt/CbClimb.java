@@ -75,4 +75,21 @@ public final class CbClimb {
         MinecraftServer s = CbProfiles.cbServer();
         return s == null || s.method_3767().method_8355(class_1928.field_62435);
     }
+
+    // ------------------------------------------------------------------ explosions (1.21.9 added block particles)
+
+    /**
+     * Level.explode(.., smallParticle, largeParticle, sound) / its override hook's frame default: 1.21.9 takes a weighted
+     * list of block particles the client scatters over the blast (vanilla passes Level's default list); 1.21.8's
+     * explosion scattered none, so 1.21.8 code passes the empty list
+     */
+    public static net.minecraft.class_6012<net.minecraft.class_11749> noExplosionParticles() {
+        return net.minecraft.class_6012.method_34990();
+    }
+
+    /** new ClientboundExplodePacket(center, knockback, particle, sound): no block particles (radius 0, none of them), as 1.21.8's packet */
+    public static net.minecraft.class_2664 explodePacket(net.minecraft.class_243 center, java.util.Optional<net.minecraft.class_243> knockback,
+            net.minecraft.class_2394 particle, net.minecraft.class_6880<net.minecraft.class_3414> sound) {
+        return new net.minecraft.class_2664(center, 0.0F, 0, knockback, CbParticleOptions.current(particle), sound, noExplosionParticles());
+    }
 }

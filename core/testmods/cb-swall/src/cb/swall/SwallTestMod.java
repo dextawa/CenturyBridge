@@ -58,6 +58,15 @@ public class SwallTestMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        // blocks are built while the block registry still makes intrusive holders (before it freezes)
+        try {
+            legacyStem = net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41175,
+                net.minecraft.class_2960.method_60655("cbswall", "legacy_stem"), new LegacyStem());
+            legacyRoots = net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41175,
+                net.minecraft.class_2960.method_60655("cbswall", "legacy_roots"), new LegacyRoots());
+        } catch (Throwable t) {
+            legacyBlocksFailure = t;
+        }
         // ---- ExpirableValue, no server needed
         class_4831<String> ev = class_4831.method_24636("x", 3L);
         ev.method_24913();
@@ -828,6 +837,10 @@ public class SwallTestMod implements ModInitializer {
             itemMembers();
             serverStatics(server);
             componentMembers();
+            displayIcons();
+            blockStatics(server);
+            legacyConstructors(server);
+            timeCommand(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1564,6 +1577,157 @@ public class SwallTestMod implements ModInitializer {
                 && trim.method_67212(null).get().method_40225(net.minecraft.class_8055.field_42009), horn);
         } catch (Throwable t) {
             check("componentMembers", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** a 1.21.11 DisplayInfo subclass: super(icon, ...), getIcon() override calling super */
+    private static final class TwoIcon extends net.minecraft.class_185 {
+        TwoIcon(net.minecraft.class_1799 icon) {
+            super(icon, net.minecraft.class_2561.method_43470("t"), net.minecraft.class_2561.method_43470("d"), Optional.empty(),
+                net.minecraft.class_189.field_1254, true, true, false);
+        }
+
+        @Override
+        public net.minecraft.class_1799 method_821() {
+            return super.method_821().method_46651(2);
+        }
+
+        net.minecraft.class_1799 base() {
+            return super.method_821();
+        }
+    }
+
+    /** 1.21.11 DisplayInfo(icon, ...) / getIcon() / Advancement.Builder.display(icon, ...) (rt/CbWallDisplayIcons) */
+    private static void displayIcons() {
+        try {
+            net.minecraft.class_1799 icon = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477);
+            net.minecraft.class_185 info = new net.minecraft.class_185(icon, net.minecraft.class_2561.method_43470("t"),
+                net.minecraft.class_2561.method_43470("d"), Optional.empty(), net.minecraft.class_189.field_1254, true, true, false);
+            check("displayInfo.icon", info.method_821() == icon && info.method_821() == icon, info.method_821());
+            TwoIcon sub = new TwoIcon(icon);
+            net.minecraft.class_1799 subIcon = sub.method_821();
+            check("displayInfo.subclass", subIcon.method_7947() == 2 && sub.base() == icon, subIcon);
+            net.minecraft.class_161.class_162 builder = net.minecraft.class_161.class_162.method_707().method_20416(icon,
+                net.minecraft.class_2561.method_43470("t"), net.minecraft.class_2561.method_43470("d"), null,
+                net.minecraft.class_189.field_1254, true, true, false);
+            check("advancementBuilder.display", builder != null, "");
+        } catch (Throwable t) {
+            check("displayInfo.icon", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** a 1.21.11 BigDripleafBlock subclass reaching the protected static canPlaceAt(level, pos, state) */
+    private abstract static class DripleafAccess extends net.minecraft.class_5801 {
+        DripleafAccess() {
+            super(null);
+        }
+
+        static boolean canPlace(net.minecraft.class_5539 level, net.minecraft.class_2338 pos, net.minecraft.class_2680 state) {
+            return method_33725(level, pos, state);
+        }
+    }
+
+    /** CbWallServerStatics block/menu statics, CbWallEnchantCodecs */
+    private static void blockStatics(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            java.util.Set<net.minecraft.class_1735> slots = new java.util.HashSet<>();
+            slots.add(null);
+            slots.add(new net.minecraft.class_1735(null, 0, 0, 0));
+            net.minecraft.class_1799 carried = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477, 9);
+            check("menu.quickCraftPlaceCount", net.minecraft.class_1703.method_7617(slots, 0, carried) == 4
+                && net.minecraft.class_1703.method_7617(slots, 1, carried) == 1
+                && net.minecraft.class_1703.method_7617(slots, 2, carried) == 64, "");
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(0, 64, 0);
+            check("bigDripleaf.canPlaceAt", DripleafAccess.canPlace(level, pos, net.minecraft.class_2246.field_10124.method_9564())
+                && !DripleafAccess.canPlace(level, pos, net.minecraft.class_2246.field_10340.method_9564())
+                && !DripleafAccess.canPlace(level, new net.minecraft.class_2338(0, 4000, 0), net.minecraft.class_2246.field_10124.method_9564()), "");
+            net.minecraft.class_2258.method_34268(level, new net.minecraft.class_2338(0, 300, 0), net.minecraft.class_2246.field_10124.method_9564());
+            check("bubbleColumn.updateColumn", true, "");
+            com.mojang.serialization.Codec<net.minecraft.class_5341> cond = net.minecraft.class_9698.method_60007(net.minecraft.class_173.field_51802);
+            com.google.gson.JsonObject ok = com.google.gson.JsonParser.parseString("{\"condition\":\"minecraft:random_chance\",\"chance\":0.5}").getAsJsonObject();
+            check("enchantCodec.condition", cond.parse(JsonOps.INSTANCE, ok).result().isPresent(), cond.parse(JsonOps.INSTANCE, ok));
+            check("enchantCodec.effects", net.minecraft.class_9698.method_60004(Codec.INT, net.minecraft.class_173.field_51802) != null
+                && net.minecraft.class_9710.method_60203(Codec.INT, net.minecraft.class_173.field_51802) != null
+                && net.minecraft.class_9710.method_60208(Codec.INT, net.minecraft.class_173.field_51802) != null, "");
+        } catch (Throwable t) {
+            check("blockStatics", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    private static net.minecraft.class_4970.class_2251 testProps(String name) {
+        return net.minecraft.class_4970.class_2251.method_9637().method_63500(net.minecraft.class_5321.method_29179(
+            net.minecraft.class_7924.field_41254, net.minecraft.class_2960.method_60655("cbswall", name)));
+    }
+
+    private static LegacyStem legacyStem;
+    private static LegacyRoots legacyRoots;
+    private static Throwable legacyBlocksFailure;
+
+    /** a 1.21.11 StemBlock subclass: super(fruit, attachedStem, seed, properties) */
+    private static final class LegacyStem extends net.minecraft.class_2513 {
+        LegacyStem() {
+            super(net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41254, net.minecraft.class_2960.method_60655("minecraft", "pumpkin")),
+                net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41254, net.minecraft.class_2960.method_60655("minecraft", "attached_pumpkin_stem")),
+                net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41197, net.minecraft.class_2960.method_60655("minecraft", "pumpkin_seeds")),
+                testProps("legacy_stem"));
+        }
+
+        boolean placeOn(net.minecraft.class_2248 block) {
+            return method_9695(block.method_9564(), null, net.minecraft.class_2338.field_10980);
+        }
+    }
+
+    /** a 1.21.11 RootsBlock subclass: super(properties) */
+    private static final class LegacyRoots extends net.minecraft.class_4774 {
+        LegacyRoots() {
+            super(testProps("legacy_roots"));
+        }
+
+        boolean placeOn(net.minecraft.class_2248 block) {
+            return method_9695(block.method_9564(), null, net.minecraft.class_2338.field_10980);
+        }
+    }
+
+    /** super-ctor reshapes and factories of 1.21.11 constructors 26.1 reshaped (CbWallBlockSupports, CbWallGiveItems, ...) */
+    private static void legacyConstructors(MinecraftServer server) {
+        try {
+            if (legacyBlocksFailure != null) {
+                throw legacyBlocksFailure;
+            }
+            LegacyStem stem = legacyStem;
+            check("stemBlock.support", stem.placeOn(net.minecraft.class_2246.field_10362) && !stem.placeOn(net.minecraft.class_2246.field_10219), "");
+            LegacyRoots roots = legacyRoots;
+            check("rootsBlock.support", roots.placeOn(net.minecraft.class_2246.field_22120) && roots.placeOn(net.minecraft.class_2246.field_10219)
+                && !roots.placeOn(net.minecraft.class_2246.field_10102), "");
+            Object give = new net.minecraft.class_7296<>(e -> Optional.empty(), 1.0F, 10);
+            Object spear = new net.minecraft.class_12359(1.0, 1.0, 4.0F, 9.0F);
+            net.minecraft.class_1642 zombie = new net.minecraft.class_1642(server.method_30002());
+            Object follow = new net.minecraft.class_1346(zombie);
+            check("aiConstructors", give != null && spear != null && follow != null, "");
+        } catch (Throwable t) {
+            check("legacyConstructors", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** 1.21.11 TimeCommand.setTime / addTime (CbWallServerStatics: the overworld clock) */
+    private static void timeCommand(MinecraftServer server) {
+        try {
+            net.minecraft.class_2168 source = server.method_3739();
+            long before = server.method_30002().method_8532();
+            int set = net.minecraft.class_3149.method_13784(source, 1000);
+            long afterSet = server.method_30002().method_8532();
+            int added = net.minecraft.class_3149.method_13788(source, 500);
+            long afterAdd = server.method_30002().method_8532();
+            net.minecraft.class_3149.method_13784(source, (int) (before % 24000L));
+            check("timeCommand.setAdd", set == 1000 && afterSet == 1000L && added == 1500 && afterAdd == 1500L,
+                set + "/" + afterSet + "/" + added + "/" + afterAdd);
+        } catch (Throwable t) {
+            check("timeCommand.setAdd", false, t);
             t.printStackTrace();
         }
     }

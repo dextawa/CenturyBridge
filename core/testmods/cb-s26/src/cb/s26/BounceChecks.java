@@ -67,6 +67,12 @@ final class BounceChecks {
                 S26TestMod.check("bounce.run", false, e);
                 e.printStackTrace(System.out);
             }
+            try {
+                MiscChecks.run(server.overworld());
+            } catch (RuntimeException | LinkageError e) {
+                S26TestMod.check("misc.run", false, e);
+                e.printStackTrace(System.out);
+            }
             S26TestMod.done("SERVER");
         });
     }
