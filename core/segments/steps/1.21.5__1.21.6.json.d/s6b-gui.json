@@ -304,6 +304,24 @@
     "conv:0 top/dext/centurybridge/step/v1_21_6/rt/CbScreens#guiMatrix(Lorg/joml/Matrix4f;)Lorg/joml/Matrix3x2f;"
    ],
    "basis": "1.21.5 transformAxisAligned transformed the corners as (x, y, 0) through the Matrix4f; 1.21.6 takes the GUI's Matrix3x2f and transforms (x, y) the same way; the 4x4's XY part is that matrix (CbScreens.guiMatrix)"
+  },
+  "net/minecraft/class_7530.method_44414(Ljava/lang/String;)V": {
+   "desc": "(Ljava/lang/String;Z)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbWidgets#force()Z"
+   ],
+   "basis": "1.21.5 MultilineTextField.setValue(String) always set the value; 1.21.6's setValue(String, force) skips one overflowing its new line limit unless forced (javap); force true is 1.21.5's behaviour (CbWidgets)"
+  },
+  "net/minecraft/class_8519.method_51453(Lnet/minecraft/class_332;ILnet/minecraft/class_327;I)V": {
+   "desc": "(Lnet/minecraft/class_332;ILnet/minecraft/class_327;F)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v1_21_6/rt/CbWidgets#splashAlpha(I)F"
+   ],
+   "basis": "1.21.5 SplashRenderer.render drew 0xFFFF00 | alphaMask (Font.adjustColor: alpha below 4 opaque); 1.21.6 takes the alpha as a float, ARGB.color(alpha, 0xFFFFFF00), same transform otherwise (javap); CbWidgets.splashAlpha"
   }
  },
  "staticRedirects": {
@@ -338,5 +356,33 @@
   "net/minecraft/class_437.method_47412(Lnet/minecraft/class_7919;Lnet/minecraft/class_8000;Z)V",
   "net/minecraft/class_437.method_59840()V",
   "net/minecraft/class_437.method_57734()V"
- ]
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_7529.<init>(Lnet/minecraft/class_327;IIIILnet/minecraft/class_2561;Lnet/minecraft/class_2561;)V": {
+   "desc": "(Lnet/minecraft/class_327;IIIILnet/minecraft/class_2561;Lnet/minecraft/class_2561;IZIZZ)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbWidgets#editTextColor()I",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbWidgets#editTextShadow()Z",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbWidgets#editCursorColor()I",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbWidgets#editBackground()Z",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbWidgets#editDecorations()Z"
+   ],
+   "basis": "1.21.5 MultiLineEditBox drew text -2039584 with shadow, cursor -3092272, background and decorations; 1.21.6's constructor takes these, and its builder's defaults are the same values (javap)"
+  },
+  "net/minecraft/class_374.<init>(Lnet/minecraft/class_310;)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_315;)V",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_21_6/rt/CbWidgets#options(Lnet/minecraft/class_310;)Lnet/minecraft/class_315;"
+   ],
+   "basis": "1.21.6 ToastManager also takes the options it reads its notification-display setting from; Minecraft passes its own options (javap)"
+  }
+ }
 }
