@@ -45,6 +45,9 @@ accessible field net/minecraft/class_11902 field_62573 D
 accessible field net/minecraft/class_11902 field_62574 D
 accessible field net/minecraft/class_11902 field_62575 D
 accessible field net/minecraft/class_11902 field_62576 D
+accessible field net/minecraft/class_11902 field_62568 Lnet/minecraft/class_243;
+accessible field net/minecraft/class_11902 field_62577 F
+accessible field net/minecraft/class_11902 field_62578 F
 accessible method net/minecraft/class_3940 method_74307 (Lnet/minecraft/class_1058;)V
 accessible method net/minecraft/class_3940 method_74308 (F)V
 accessible method net/minecraft/class_3940 method_74255 ()Lnet/minecraft/class_3940$class_11941;
