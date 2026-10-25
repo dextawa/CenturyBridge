@@ -278,5 +278,22 @@
     "class_2735": "ClientboundSetHeldSlotPacket became a record: slot is its one component",
     "class_1080": "AnimationFrame became a record: index (V getIndex reads field_5341) is component 0; the time became Optional<Integer>, not renamed",
     "class_1079": "AnimationMetadataSection became a record: defaultFrameTime (V getDefaultFrameTime reads field_5334) and interpolatedFrames (field_5335) are its int and boolean components; frame width/height became Optional<Integer>, not renamed"
+  },
+  "_smx4_ledgerRemoved_basis": {
+    "_why": "mixin-ledger-gen.json entries removed by hand (queue item 3; gen_mixin_ledger target-private-gone ledgers moved code): the private member W dropped from its class lives on in a member new in 1.21.4 of another class (same significant-instruction sequence, sigs.py ratio >= 0.70, compared side by side). Moved code is never ledgered; these rows stay open until bridged.",
+    "net/minecraft/class_1472.method_59936": "W home: net/minecraft/class_1767.method_65356",
+    "net/minecraft/class_1472.method_6639": "W home: net/minecraft/class_1767.method_65355",
+    "net/minecraft/class_4916.method_25735": "W home: net/minecraft/class_2405.method_65772",
+    "net/minecraft/class_793.method_3439": "W home: net/minecraft/class_10419.method_65546",
+    "net/minecraft/class_8053.method_48577": "W home: net/minecraft/class_10197$class_10199.method_65575",
+    "net/minecraft/class_837.method_49919": "W home: net/minecraft/class_10529.method_65826",
+    "net/minecraft/class_837.method_37312": "W home: net/minecraft/class_10529.method_65827",
+    "net/minecraft/class_837.method_45798": "W home: net/minecraft/class_10529.method_65828",
+    "net/minecraft/class_837.method_49920": "W home: net/minecraft/class_10529.method_65821",
+    "net/minecraft/class_918.method_51795": "W home: net/minecraft/class_10430.method_65583",
+    "net/minecraft/class_1092.method_45896": "W home: net/minecraft/class_10521.method_65929",
+    "net/minecraft/class_793.method_3447": "W home: net/minecraft/class_1093.method_65760",
+    "net/minecraft/class_1049.method_22810": "W home: net/minecraft/class_10537.method_65856",
+    "net/minecraft/class_793$class_795.method_24079": "W home: net/minecraft/class_10419.method_65543"
   }
 }
