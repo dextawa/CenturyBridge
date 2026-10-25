@@ -595,13 +595,33 @@ public final class MixinJudge {
                 return why == null ? null : "facade-only: the W copy " + why;
             }
         }
-        boolean unreached = source != null && sourceRows.isEmpty() && !source.invokes(wm.name);
+        boolean unreached = source != null && sourceRows.isEmpty() && (!source.invokes(wm.name)
+            || !facade && onlyRestoredCallers(source.callers(wm.name), restoring));
         if (unreached) {
             rowLayer = facade ? "facade-only-unreached" : "restored-unreached";
             return null;
         }
         rowLayer = facade ? "facade-only-open" : "restored-open";
         return facade ? "facade-only: vanilla path unmixed" : "restored-member: vanilla path unmixed";
+    }
+
+    /**
+     * every V call of the name stands in a member the same layer restores (s26b C12: Strider's navigation
+     * hasValidPathType super-calls GroundPathNavigation's, both restored, and nothing else in V asks either): the
+     * call is the restored code's own, not vanilla W reaching the member. A method reference, or an unreadable
+     * class, counts as reaching it
+     */
+    private static boolean onlyRestoredCallers(Set<String> callers, LayerMembers restoring) {
+        if (callers == null || callers.isEmpty() || restoring == null) {
+            return false;
+        }
+        for (String c : callers) {
+            int dot = c.lastIndexOf('.', c.indexOf('('));
+            if (c.equals("?") || dot <= 0 || restoring.member(c.substring(0, dot), c.substring(dot + 1, c.indexOf('(')), c.substring(c.indexOf('('))) == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /** whether a supertype of the W class (W's code, not the layer's) declares an overridable name+desc */

@@ -207,30 +207,54 @@ public final class MixinRepair {
      * unrelated class counts too: an answer of false is the proven one.
      */
     public synchronized boolean invokes(String name) {
+        index();
+        return invokedUnproven || invokedNames.contains(name);
+    }
+
+    /** the methods ("owner.name desc") calling a method of this name ("?" for a method reference); null if unproven */
+    private Map<String, Set<String>> callersByName;
+
+    public synchronized Set<String> callers(String name) {
+        index();
+        return invokedUnproven ? null : callersByName.getOrDefault(name, Set.of());
+    }
+
+    private void index() {
         if (invokedNames == null) {
             Set<String> out = new java.util.HashSet<>();
+            Map<String, Set<String>> by = new HashMap<>();
+            callersByName = by;
             for (ZipEntry e : java.util.Collections.list(code.entries())) {
                 if (!e.getName().endsWith(".class")) continue;
                 try {
+                    String cls = e.getName().substring(0, e.getName().length() - 6);
                     new ClassReader(code.getInputStream(e).readAllBytes()).accept(new org.objectweb.asm.ClassVisitor(Opcodes.ASM9) {
                         @Override
                         public org.objectweb.asm.MethodVisitor visitMethod(int access, String n, String d, String sig, String[] ex) {
+                            String caller = cls + "." + n + d;
                             return new org.objectweb.asm.MethodVisitor(Opcodes.ASM9) {
                                 @Override
                                 public void visitMethodInsn(int op, String owner, String mn, String md, boolean itf) {
                                     out.add(mn);
+                                    by.computeIfAbsent(mn, k -> new java.util.HashSet<>()).add(caller);
                                 }
 
                                 @Override
                                 public void visitInvokeDynamicInsn(String in, String id, org.objectweb.asm.Handle bsm, Object... args) {
                                     for (Object a : args) {
-                                        if (a instanceof org.objectweb.asm.Handle h) out.add(h.getName());
+                                        if (a instanceof org.objectweb.asm.Handle h) {
+                                            out.add(h.getName());
+                                            by.computeIfAbsent(h.getName(), k -> new java.util.HashSet<>()).add("?");
+                                        }
                                     }
                                 }
 
                                 @Override
                                 public void visitLdcInsn(Object v) {
-                                    if (v instanceof org.objectweb.asm.Handle h) out.add(h.getName());
+                                    if (v instanceof org.objectweb.asm.Handle h) {
+                                        out.add(h.getName());
+                                        by.computeIfAbsent(h.getName(), k -> new java.util.HashSet<>()).add("?");
+                                    }
                                 }
                             };
                         }
@@ -241,7 +265,6 @@ public final class MixinRepair {
             }
             invokedNames = out;
         }
-        return invokedUnproven || invokedNames.contains(name);
     }
 
     public ClassNode target(String owner) {
@@ -684,8 +707,10 @@ public final class MixinRepair {
                                     + (d.toCir() ? " (callback as CallbackInfoReturnable)" : "")
                                     + " (V's site by context; the callee is " + d.how() + ")");
                                 if (d.crossOwner() != null) {
+                                    MethodNode via = depth2Of.get(d.callee());
                                     fixNotes.set(fixNotes.size() - 1, fixNotes.get(fixNotes.size() - 1).replace(" => ", " => "
-                                        + d.crossOwner().substring(d.crossOwner().lastIndexOf('/') + 1) + "."));
+                                        + d.crossOwner().substring(d.crossOwner().lastIndexOf('/') + 1) + ".")
+                                        + (via != null ? " (depth 2, under " + via.name + via.desc + ")" : ""));
                                     fixes.add(() -> {
                                         crossGuard(d, mx, handler, an);
                                         dirty[0] = true;
@@ -1132,7 +1157,12 @@ public final class MixinRepair {
         List<MethodNode> wms = wc == null ? List.of() : new Sel(null, to.substring(dot + 1, paren), to.substring(paren), false).match(wc);
         MethodNode wm = wms.size() == 1 ? wms.get(0) : null;
         if (wm == null) return "not a method of the target";
-        if ((wm.access & Opcodes.ACC_STATIC) == 0 || (h.access & Opcodes.ACC_STATIC) == 0) return "not a static target with a static handler";
+        boolean ws = (wm.access & Opcodes.ACC_STATIC) != 0;
+        boolean hs = (h.access & Opcodes.ACC_STATIC) != 0;
+        if (ws != hs) return ws ? "a static target with an instance handler" : "an instance target with a static handler";
+        // an instance method moved to another class runs on another object: the handler may not read its own
+        // instance (s9: ParticleEngine.registerProviders -> ParticleResources.registerProviders)
+        if (!hs && !touchesThisFree(h)) return "the handler reads this, which is another object in the moved method";
         if (usesOwnClass(h, mx.name)) return "the handler uses its own mixin's members";
         if (anchors == null) return "an anchor not statically evaluable";
         if (!anchors.isEmpty() && !anchorsIn(wm, wc, anchors)) return "its anchor is not in the moved method " + anchors;
@@ -1584,6 +1614,23 @@ public final class MixinRepair {
                 places.add(dm);
             }
         }
+        // depth 2 under another class's callee: a method of that callee's own class it calls exactly once (W moved V's
+        // code one call further down there). The guard is still the target's one call of the depth-1 callee: the
+        // handler acts only while that call runs, and the depth-1 callee reaches this method once in it
+        if (crossAllowed && DEPTH2) {
+            for (MethodNode dm : new ArrayList<>(crossOf.keySet())) {
+                MethodInsnNode c1 = crossCall.get(dm);
+                ClassNode dcn = c1 == null ? null : target(crossOf.get(dm));
+                if (dcn == null || dm.name.startsWith("<") || overriddenBelow(dcn.name, dm)) continue;
+                for (MethodNode c2 : callees(dm, dcn)) {
+                    if (places.contains(c2) || crossOf.containsKey(c2) || c2.name.startsWith("<") || callCount(dm, dcn.name, c2) != 1) continue;
+                    crossOf.put(c2, dcn.name);
+                    crossCall.put(c2, c1);
+                    depth2Of.put(c2, dm);
+                    places.add(c2);
+                }
+            }
+        }
         // V's target overrode a framework class's hook (SimplePreparableReloadListener.apply); W split its code over
         // that class's hooks (RecipeManager: parsing in prepare, storing in apply). Another hook of the same
         // framework class, called from nowhere in W's own class, runs once where V's target ran once
@@ -1690,6 +1737,23 @@ public final class MixinRepair {
             return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, false, guardCall, tc.name, wm, site, null, false);
         }
         return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, siblings.contains(into));
+    }
+
+    /** -Dcb.descendDepth2=false: no descend under another class's callee (depth 2 of stage 2) */
+    private static final boolean DEPTH2 = !"false".equals(System.getProperty("cb.descendDepth2"));
+
+    /** a depth-2 callee of stage 2 -> the depth-1 callee it stands under (for the repair note) */
+    private final Map<MethodNode, MethodNode> depth2Of = new java.util.IdentityHashMap<>();
+
+    /** how many calls of c (owner o) m makes */
+    private static int callCount(MethodNode m, String o, MethodNode c) {
+        int n = 0;
+        if (m.instructions != null) {
+            for (AbstractInsnNode in : m.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.owner.equals(o) && mi.name.equals(c.name) && mi.desc.equals(c.desc)) n++;
+            }
+        }
+        return n;
     }
 
     /** the descend into another class's callee (stage 2), or null with the reason counted */
