@@ -723,16 +723,9 @@ public final class MixinCause {
         return out;
     }
 
+    /** SiteMatch's measure, the one MixinBridge's body follow uses */
     private static double similarity(List<String> a, List<String> b) {
-        if (a.isEmpty() && b.isEmpty()) return 1;
-        int n = a.size(), m = b.size();
-        if ((long) n * m > 4_000_000L) return 0;
-        int[] prev = new int[m + 1], cur = new int[m + 1];
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) cur[j] = a.get(i - 1).equals(b.get(j - 1)) ? prev[j - 1] + 1 : Math.max(prev[j], cur[j - 1]);
-            int[] t = prev; prev = cur; cur = t;
-        }
-        return 2.0 * prev[m] / (n + m);
+        return SiteMatch.similarity(a, b);
     }
 
     /** a body instruction by instruction, references to the class's own non-API members normalised */
