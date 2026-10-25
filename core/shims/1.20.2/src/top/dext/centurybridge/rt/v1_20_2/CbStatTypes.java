@@ -51,6 +51,27 @@ public final class CbStatTypes {
         return LEGACY.containsKey(type);
     }
 
+    /**
+     * Vanilla's display name read goes through the restored getTranslationKey() for every stat type whose 1.20.2
+     * name is exactly what 1.20.1 computed from it (-Dcenturybridge.legacyStatNameRoute=false turns it off).
+     */
+    public static final boolean ROUTE = !"false".equals(System.getProperty("centurybridge.legacyStatNameRoute"));
+
+    /**
+     * Whether a stat type's 1.20.2 display name is 1.20.1's: the plain translation of "stat_type." + its registry
+     * id with ':' as '.' (1.20.1's getTranslationKey() body, computed here, not through the restored member a
+     * mod's mixin may change), no arguments, siblings or style. 1.20.2's Stats.makeRegistryStatType names every
+     * vanilla stat type so; a name made any other way (a native mod's) keeps 1.20.2's answer.
+     */
+    public static boolean vanillaFormula(class_3448<?> type, class_2561 name) {
+        if (name == null || !(name.method_10851() instanceof net.minecraft.class_2588 tr) || tr.method_11023().length != 0
+                || !name.method_10855().isEmpty() || !name.method_10866().method_10967()) {
+            return false;
+        }
+        net.minecraft.class_2960 id = net.minecraft.class_7923.field_41193.method_10221(type);
+        return id != null && tr.method_11022().equals("stat_type." + id.toString().replace(':', '.'));
+    }
+
     /** StatType (CbStatTypeLegacy): 1.20.1 getTranslationKey(), called virtually (a converted subclass's override answers) */
     public interface Legacy {
 

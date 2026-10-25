@@ -15,7 +15,8 @@
     "NavigationInvoker",
     "NavigationRedirectMixin",
     "ShapedReaderMixin",
-    "CookingReaderMixin"
+    "CookingReaderMixin",
+    "StatTypeKeyMixin"
   ],
   "injectors": {
     "defaultRequire": 1

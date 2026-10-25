@@ -23,6 +23,9 @@ public final class Driver {
     public static volatile int defaultCookingTime = -1;
     /** -Dcenturybridge.legacyJsonRoute=false: the layer reads recipes with 1.20.2's codecs; the reader mixins never run */
     private static final boolean ROUTE = !"false".equals(System.getProperty("centurybridge.legacyJsonRoute"));
+    public static final String PROBE_STAT_KEY = "stat_type.minecraft.killed";
+    /** -Dcenturybridge.legacyStatNameRoute=false: getDisplayName() answers 1.20.2's name, never asking getTranslationKey() */
+    private static final boolean STAT_ROUTE = !"false".equals(System.getProperty("centurybridge.legacyStatNameRoute"));
     private static int ok;
     private static int fail;
 
@@ -205,6 +208,31 @@ public final class Driver {
         } catch (Throwable t) {
             t.printStackTrace();
             check("recipe-readers", false, "threw " + t);
+        }
+        // ---- stat type names: getDisplayName() is the translation of getTranslationKey() (route on), so the key
+        // mixin renames "minecraft:killed" only; every other stat type's name is the same with the route on and off
+        try {
+            StringBuilder names = new StringBuilder();
+            String probe = null;
+            for (net.minecraft.class_3448<?> type : net.minecraft.class_7923.field_41193) {
+                net.minecraft.class_2561 name = type.method_30739();
+                String key = name.method_10851() instanceof net.minecraft.class_2588 tr ? tr.method_11022() : "<" + name.method_10851() + ">";
+                String id = String.valueOf(net.minecraft.class_7923.field_41193.method_10221(type));
+                if ("minecraft:killed".equals(id)) {
+                    probe = key;
+                } else {
+                    names.append(id).append('=').append(key).append('|').append(name.method_10855().size())
+                        .append('|').append(name.method_10866().method_10967()).append(';');
+                }
+            }
+            String expected = STAT_ROUTE ? PROBE_STAT_KEY + ".cbsmx1" : PROBE_STAT_KEY;
+            check("stat-type-name-probe", expected.equals(probe), "route " + STAT_ROUTE + ": minecraft:killed is named '" + probe
+                + "' (key handler ran " + COUNT.getOrDefault("stat-type-key-all", 0) + " time(s), renamed "
+                + COUNT.getOrDefault("stat-type-key", 0) + ")");
+            System.out.println("CB-SMX1 fingerprint stat-types route=" + STAT_ROUTE + " " + names);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            check("stat-type-name-probe", false, "threw " + t);
         }
         System.out.println("CB-SMX1 summary ok=" + ok + " fail=" + fail);
     }
