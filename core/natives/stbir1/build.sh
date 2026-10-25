@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
-# build.sh <toolchainDir> <outDir>: reproducible build of cb_stbir1, CenturyBridge's copy of stb_image_resize v0.97 (the wall
-# layer's STBImageResize; see cb_stbir1.c and rt/CbLibStbir1). Run on beta2 only (linux x86_64), from the repository root:
+# build.sh <toolchainDir> <outDir> [--record]: reproducible build of cb_stbir1, CenturyBridge's copy of stb_image_resize v0.97
+# (the natives of the Fabric mod centurybridge-stbir1, core/mods/stbir1; see cb_stbir1.c and its STBImageResize class).
+# Run on beta2 only (linux x86_64), from the repository root:
 #
-#   bash core/natives/stbir1/build.sh ~/cbwork/agents/<name>/toolchain core/shims/steps/26.1/natives
+#   bash core/natives/stbir1/build.sh ~/cbwork/agents/<name>/toolchain core/mods/stbir1/natives
 #
 # - The toolchain is zig $ZIG_VERSION, downloaded into <toolchainDir> once and checked against ziglang.org's published
 #   sha256 (https://ziglang.org/download/index.json); it never enters the repository.
 # - The sources are checked against SHA256SUMS before building: stb_image_resize.h must be byte-identical to the copy
 #   LWJGL 3.3.3 builds into lwjgl_stb (github.com/LWJGL/lwjgl3, tag 3.3.3, modules/lwjgl/stb/src/main/c/stb_image_resize.h).
 # - One library per platform 26.1 ships LWJGL natives for (Mojang's 26.1 version JSON: linux x64, macos x64 / arm64,
-#   windows x64 / x86 / arm64), at the classpath path LWJGL's Library.loadSystem looks for
+#   windows x64 / x86 / arm64), plus linux arm64 (not in Mojang's JSON; launchers that run the game there supply
+#   LWJGL's own linux-arm64 natives, whose Platform maps it to linux/arm64), at the classpath path LWJGL's Library.loadSystem looks for
 #   (<os>/<arch>/top/dext/centurybridge/stbir1/<platform library name>). The library is named cb_lwjgl_stbir1 because
 #   loadSystem searches the per-platform path only for names containing "lwjgl" (any other name only at the jar root,
 #   where the macOS and Windows builds would collide).
@@ -40,6 +42,7 @@ export ZIG_GLOBAL_CACHE_DIR="$TC/cache" ZIG_LOCAL_CACHE_DIR="$TC/cache"
 
 # zig target, LWJGL os/arch, library file name
 TARGETS="x86_64-linux-gnu.2.17 linux/x64 libcb_lwjgl_stbir1.so
+aarch64-linux-gnu.2.17 linux/arm64 libcb_lwjgl_stbir1.so
 x86_64-macos.10.15 macos/x64 libcb_lwjgl_stbir1.dylib
 aarch64-macos.11.0 macos/arm64 libcb_lwjgl_stbir1.dylib
 x86_64-windows-gnu windows/x64 cb_lwjgl_stbir1.dll
