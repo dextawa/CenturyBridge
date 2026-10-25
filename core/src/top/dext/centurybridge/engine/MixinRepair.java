@@ -1576,6 +1576,12 @@ public final class MixinRepair {
         boolean calleeStatic = (into.access & Opcodes.ACC_STATIC) != 0;
         boolean handlerStatic = (handler.access & Opcodes.ACC_STATIC) != 0;
         boolean onThis = !calleeStatic && receiverIsThis(tc.name, wm, call) && !handlerStatic;
+        if (onThis) {
+            // the on-instance path (superclass method called on this) has no case on the measured steps yet and no
+            // real-server proof: not taken until it has one
+            why.add(pre + "the callee runs on the target's instance (on-instance guard not yet proven on a server)");
+            return null;
+        }
         if (!onThis && (!handlerStatic && !touchesThisFree(handler) || usesOwnClass(handler, curMixin))) {
             why.add(pre + "the handler reads this or its own mixin, and the callee does not run on the target's instance");
             return null;
