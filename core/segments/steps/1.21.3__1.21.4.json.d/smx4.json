@@ -194,6 +194,26 @@
       "to": "method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10427;FF)V",
       "args": [0, 1, 2, 3, 4, 5],
       "basis": "CrossedArmsItemLayer.render: javap -c both: skip when nothing is held, push, the crossed-arms transform (applyTranslation), draw the held item at overlay NO_OVERLAY, pop; 1.21.4 reads a HoldingEntityRenderState (a LivingEntityRenderState subclass)"
+    },
+    "net/minecraft/class_807.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;": {
+      "to": "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+      "args": [0, -1, -1],
+      "basis": "MultiVariant.bake: javap -c both (0.87, 23/23 instructions): one variant baked as it is, else a WeightedBakedModel.Builder over the variants (baker.bake(variant model, variant) with its weight); 1.21.4's bake(baker) is the block-state model bake the model bakery calls. V's sprite getter and state were not read (each variant carries its own rotation)"
+    },
+    "net/minecraft/class_816.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;": {
+      "to": "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+      "args": [0, -1, -1],
+      "basis": "MultiPart.bake: javap -c both (0.94, 18/18): a MultiPartBakedModel.Builder over the selectors, each selector's variant baked; V's sprite getter and state were only handed down to MultiVariant.bake, which did not read them"
+    },
+    "net/minecraft/class_743.method_3129(ZF)V": {
+      "to": "method_3129()V",
+      "args": [-1, -1],
+      "basis": "KeyboardInput.tick(isSneaking, sneakSpeed): javap -c both (0.95): the same key reads into up/down/left/right, jumping and shift, and the forward / left impulses; 1.21.4 moved V's final sneak scaling of the two impulses to LocalPlayer"
+    },
+    "net/minecraft/class_425$class_4070.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": {
+      "to": "method_65809(Lnet/minecraft/class_3300;)Lnet/minecraft/class_10539;",
+      "args": [0],
+      "basis": "LoadingOverlay.LogoTexture.getTextureImage -> loadContents: javap -c both: the vanilla pack's MOJANG_STUDIOS_LOGO_LOCATION opened and read as a NativeImage with blur on; 1.21.4 answers a TextureContents instead of a TextureImage"
     }
   },
   "mixinLedger": {
