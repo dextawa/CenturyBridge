@@ -126,6 +126,27 @@ public final class CbAdvRecords {
             CbAdvAny.entity(vehicle), CbAdvAny.entity(passenger), CbAdvAny.entity(target), Optional.ofNullable(team));
     }
 
+    /**
+     * 1.20.1's PlayerPredicate(level, gameType, stats, recipes, advancements, lookingAt), as 1.20.2's record: a null game
+     * type and an ANY looking_at absent, each stat -> bounds entry a stat matcher (statMatcher), in the map's order
+     */
+    public static net.minecraft.class_4553 playerPredicate(net.minecraft.class_2096.class_2100 level, net.minecraft.class_1934 gameType,
+            java.util.Map<net.minecraft.class_3445<?>, net.minecraft.class_2096.class_2100> stats,
+            it.unimi.dsi.fastutil.objects.Object2BooleanMap<net.minecraft.class_2960> recipes,
+            java.util.Map<net.minecraft.class_2960, net.minecraft.class_4553.class_4556> advancements, net.minecraft.class_2048 lookingAt) {
+        List<net.minecraft.class_4553.class_8749<?>> matchers = new java.util.ArrayList<>(stats.size());
+        for (java.util.Map.Entry<net.minecraft.class_3445<?>, net.minecraft.class_2096.class_2100> e : stats.entrySet()) {
+            matchers.add(statMatcher(e.getKey(), e.getValue()));
+        }
+        return new net.minecraft.class_4553(level, Optional.ofNullable(gameType), matchers, recipes, advancements, CbAdvAny.entity(lookingAt));
+    }
+
+    /** a 1.20.1 stat condition (the stat, its bounds) as 1.20.2's stat matcher: the stat's type, its value's holder, the bounds */
+    public static <T> net.minecraft.class_4553.class_8749<T> statMatcher(net.minecraft.class_3445<T> stat, net.minecraft.class_2096.class_2100 value) {
+        net.minecraft.class_3448<T> type = stat.method_14949();
+        return new net.minecraft.class_4553.class_8749<>(type, type.method_14959().method_47983(stat.method_14951()), value);
+    }
+
     /** ItemPredicate's enchantment conditions (an array; NONE is empty) */
     public static List<net.minecraft.class_2035> enchantments(net.minecraft.class_2035[] e) {
         return e == null ? List.of() : List.copyOf(Arrays.asList(e));

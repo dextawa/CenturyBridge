@@ -327,7 +327,11 @@ public final class Driver {
                     {"effects_probe", "minecraft:glowing", "minecraft:speed", "effects-predicate-return-all"},
                     {"dsource_probe", "minecraft:is_fire", "minecraft:is_explosion", "dsource-predicate-return-all"},
                     {"damage_probe", "11.0", "\"min\":2.0", "damage-predicate-return-all"},
-                    {"tag_probe", "minecraft:is_freezing", "minecraft:is_fall", "tag-predicate-return-all"}};
+                    {"tag_probe", "minecraft:is_freezing", "minecraft:is_fall", "tag-predicate-return-all"},
+                    {"player_probe", "creative", "survival", "player-predicate-return-all"},
+                    {"lightning_probe", "\"min\":3", "\"min\":1", "lightning-predicate-return-all"},
+                    {"fishing_probe", "\"in_open_water\":false", "\"in_open_water\":true", "fishing-predicate-return-all"},
+                    {"slime_probe", "\"min\":4", "\"min\":1", "slime-predicate-return-all"}};
                 for (String[] c : converted) {
                     String crit = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1", c[0])));
                     check("predicate-" + c[0] + "-converted-mixin-" + phase, ROUTE ? crit.contains(c[1]) && !crit.contains(c[2])

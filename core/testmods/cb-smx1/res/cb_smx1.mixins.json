@@ -30,7 +30,11 @@
     "MobEffectsJsonMixin",
     "DamageSourceJsonMixin",
     "DamageJsonMixin",
-    "TagPredicateJsonMixin"
+    "TagPredicateJsonMixin",
+    "PlayerPredicateJsonMixin",
+    "LightningPredicateJsonMixin",
+    "FishingHookPredicateJsonMixin",
+    "SlimePredicateJsonMixin"
   ],
   "injectors": {
     "defaultRequire": 1

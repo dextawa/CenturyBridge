@@ -17,7 +17,7 @@ import net.minecraft.class_5258;
 import net.minecraft.class_7376;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.rt.v1_20_2.CbAdvAny;
-import top.dext.centurybridge.rt.v1_20_2.CbAdvJson;
+import top.dext.centurybridge.rt.v1_20_2.CbAdvPredicateJson;
 import top.dext.centurybridge.rt.v1_20_2.CbAdvRecords;
 import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 
@@ -29,8 +29,9 @@ import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
  * fromJson(json, name, context) (method_51705), fromJsonArray (method_51707) and fromElement (method_51706: a loot
  * condition array through ContextAwarePredicate's restored fromElement, else an entity predicate wrapped as one).
  *
- * Not restored yet: EntitySubPredicate.fromJson (type_specific; an interface static, and its types' readers), so the
- * restored reader decodes type_specific as the layer's EntitySubPredicate.fromJson bridge does (CbAdvJson.method_43097).
+ * type_specific goes through CbAdvPredicateJson.subPredicateFromJson: 1.20.1's EntitySubPredicate.fromJson, an interface
+ * static the layer does not restore on the interface (CASE 12), with the "player", "lightning", "fishing_hook" and "slime"
+ * types read by their restored 1.20.1 readers.
  *
  * 1.20.2's EntityPredicate.fromJson / fromJson(json, name, context) / fromJsonArray consult these
  * (CbAdvEntityPredicateConsult) against their unmixable copies (CbAdvPredicateJson).
@@ -53,7 +54,7 @@ public abstract class CbAdvEntityPredicateJson {
         class_2105 nbt = CbAdvNbtPredicateAccess.cb$fromJson(json.get("nbt"));
         class_2040 flags = CbAdvEntityFlagsPredicateAccess.cb$fromJson(json.get("flags"));
         class_3735 equipment = CbAdvEquipmentPredicateAccess.cb$fromJson(json.get("equipment"));
-        class_7376 typeSpecific = CbAdvJson.method_43097(json.get("type_specific"));
+        class_7376 typeSpecific = CbAdvPredicateJson.subPredicateFromJson(json.get("type_specific"));
         class_2048 vehicle = method_8913(json.get("vehicle"));
         class_2048 passenger = method_8913(json.get("passenger"));
         class_2048 target = method_8913(json.get("targeted_entity"));

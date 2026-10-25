@@ -19,9 +19,13 @@ import top.dext.centurybridge.shims.v1_20_2.CbAdvDamagePredicateAccess;
 import top.dext.centurybridge.shims.v1_20_2.CbAdvDamageSourcePredicateAccess;
 import top.dext.centurybridge.shims.v1_20_2.CbAdvDistancePredicateAccess;
 import top.dext.centurybridge.shims.v1_20_2.CbAdvEntityPredicateAccess;
+import top.dext.centurybridge.shims.v1_20_2.CbAdvFishingHookAccess;
 import top.dext.centurybridge.shims.v1_20_2.CbAdvItemPredicateAccess;
+import top.dext.centurybridge.shims.v1_20_2.CbAdvLightningAccess;
 import top.dext.centurybridge.shims.v1_20_2.CbAdvLocationPredicateAccess;
 import top.dext.centurybridge.shims.v1_20_2.CbAdvMobEffectsPredicateAccess;
+import top.dext.centurybridge.shims.v1_20_2.CbAdvPlayerPredicateAccess;
+import top.dext.centurybridge.shims.v1_20_2.CbAdvSlimeAccess;
 import top.dext.centurybridge.shims.v1_20_2.CbAdvStatePropertiesAccess;
 
 /**
@@ -161,6 +165,45 @@ public final class CbAdvPredicateJson {
             out.add(e.method_27804());
         }
         return out;
+    }
+
+    // ------------------------------------------------------------------ EntitySubPredicate.fromJson, both ways
+
+    /**
+     * 1.20.1's EntitySubPredicate.fromJson(json) (an interface static: not restored on the interface, CASE 12), as the
+     * restored EntityPredicate.fromJson calls it: ANY for null or a missing type, 1.20.1's message for an unknown one, and
+     * the types whose 1.20.1 readers the layer restores -- player, lightning, fishing_hook, slime -- through those restored
+     * readers, so a converted mod's mixin on one of them reaches vanilla's path; the others ("any", the variant types)
+     * through 1.20.2's dispatch codec as the layer's bridge reads them (CbAdvJson.method_43097).
+     */
+    public static net.minecraft.class_7376 subPredicateFromJson(JsonElement element) {
+        return subPredicate(element, false);
+    }
+
+    /** the same with the restored readers' unmixable copies (goldenness all the way down) */
+    public static net.minecraft.class_7376 goldenSubPredicateFromJson(JsonElement element) {
+        return subPredicate(element, true);
+    }
+
+    private static net.minecraft.class_7376 subPredicate(JsonElement element, boolean golden) {
+        if (element == null || element.isJsonNull()) {
+            return CbAdvJson.field_38723;
+        }
+        JsonObject json = net.minecraft.class_3518.method_15295(element, "type_specific");
+        String type = net.minecraft.class_3518.method_15253(json, "type", null);
+        if (type == null) {
+            return CbAdvJson.field_38723;
+        }
+        if (!net.minecraft.class_7376.class_7378.field_38731.containsKey(type)) {
+            throw new JsonSyntaxException("Unknown sub-predicate type: " + type);
+        }
+        return switch (type) {
+            case "player" -> golden ? playerFromJson(json) : CbAdvPlayerPredicateAccess.cb$fromJson(json);
+            case "lightning" -> golden ? lightningFromJson(json) : CbAdvLightningAccess.cb$fromJson(json);
+            case "fishing_hook" -> golden ? fishingHookFromJson(json) : CbAdvFishingHookAccess.cb$fromJson(json);
+            case "slime" -> golden ? slimeFromJson(json) : CbAdvSlimeAccess.cb$fromJson(json);
+            default -> CbAdvJson.method_43097(element);
+        };
     }
 
     // ------------------------------------------------------------------ the unmixable copies (CbAdv*PredicateJson's bodies)
@@ -389,7 +432,7 @@ public final class CbAdvPredicateJson {
         net.minecraft.class_2105 nbt = nbtFromJson(json.get("nbt"));
         net.minecraft.class_2040 flags = flagsFromJson(json.get("flags"));
         net.minecraft.class_3735 equipment = equipmentFromJson(json.get("equipment"));
-        net.minecraft.class_7376 typeSpecific = CbAdvJson.method_43097(json.get("type_specific"));
+        net.minecraft.class_7376 typeSpecific = goldenSubPredicateFromJson(json.get("type_specific"));
         net.minecraft.class_2048 vehicle = entityFromJson(json.get("vehicle"));
         net.minecraft.class_2048 passenger = entityFromJson(json.get("passenger"));
         net.minecraft.class_2048 target = entityFromJson(json.get("targeted_entity"));
@@ -574,5 +617,80 @@ public final class CbAdvPredicateJson {
         net.minecraft.class_2960 id = new net.minecraft.class_2960(net.minecraft.class_3518.method_15265(json, "id"));
         boolean expected = net.minecraft.class_3518.method_15270(json, "expected");
         return new net.minecraft.class_8129<>(net.minecraft.class_6862.method_40092(registry, id), expected);
+    }
+
+    /** copy of CbAdvPlayerPredicateJson.method_22499: 1.20.1 PlayerPredicate.fromJson(json) */
+    public static net.minecraft.class_4553 playerFromJson(JsonObject json) {
+        net.minecraft.class_2096.class_2100 level = net.minecraft.class_2096.class_2100.method_9056(json.get("level"));
+        net.minecraft.class_1934 gamemode = net.minecraft.class_1934.method_8378(net.minecraft.class_3518.method_15253(json, "gamemode", ""), null);
+        Map<net.minecraft.class_3445<?>, net.minecraft.class_2096.class_2100> stats = com.google.common.collect.Maps.newHashMap();
+        JsonArray array = net.minecraft.class_3518.method_15292(json, "stats", null);
+        if (array != null) {
+            for (JsonElement e : array) {
+                JsonObject entry = net.minecraft.class_3518.method_15295(e, "stats entry");
+                net.minecraft.class_2960 typeId = new net.minecraft.class_2960(net.minecraft.class_3518.method_15265(entry, "type"));
+                net.minecraft.class_3448<?> type = net.minecraft.class_7923.field_41193.method_10223(typeId);
+                if (type == null) {
+                    throw new JsonParseException("Invalid stat type: " + typeId);
+                }
+                net.minecraft.class_2960 statId = new net.minecraft.class_2960(net.minecraft.class_3518.method_15265(entry, "stat"));
+                net.minecraft.class_3445<?> stat = stat(type, statId);
+                net.minecraft.class_2096.class_2100 value = net.minecraft.class_2096.class_2100.method_9056(entry.get("value"));
+                stats.put(stat, value);
+            }
+        }
+        it.unimi.dsi.fastutil.objects.Object2BooleanMap<net.minecraft.class_2960> recipes = new it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap<>();
+        for (Map.Entry<String, JsonElement> e : net.minecraft.class_3518.method_15281(json, "recipes", new JsonObject()).entrySet()) {
+            recipes.put(new net.minecraft.class_2960(e.getKey()), net.minecraft.class_3518.method_15268(e.getValue(), "recipe present"));
+        }
+        Map<net.minecraft.class_2960, net.minecraft.class_4553.class_4556> advancements = com.google.common.collect.Maps.newHashMap();
+        for (Map.Entry<String, JsonElement> e : net.minecraft.class_3518.method_15281(json, "advancements", new JsonObject()).entrySet()) {
+            advancements.put(new net.minecraft.class_2960(e.getKey()), advancementPredicateFromJson(e.getValue()));
+        }
+        net.minecraft.class_2048 lookingAt = entityFromJson(json.get("looking_at"));
+        return CbAdvRecords.playerPredicate(level, gamemode, stats, recipes, advancements, lookingAt);
+    }
+
+    /** copy of CbAdvPlayerPredicateJson.method_22503: 1.20.1 PlayerPredicate.advancementPredicateFromJson(json) */
+    public static net.minecraft.class_4553.class_4556 advancementPredicateFromJson(JsonElement json) {
+        if (json.isJsonPrimitive()) {
+            return new net.minecraft.class_4553.class_4555(json.getAsBoolean());
+        }
+        it.unimi.dsi.fastutil.objects.Object2BooleanMap<String> criteria = new it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap<>();
+        for (Map.Entry<String, JsonElement> e : net.minecraft.class_3518.method_15295(json, "criterion data").entrySet()) {
+            boolean test = net.minecraft.class_3518.method_15268(e.getValue(), "criterion test");
+            criteria.put(e.getKey(), test);
+        }
+        return new net.minecraft.class_4553.class_4554(criteria);
+    }
+
+    /** copy of CbAdvPlayerPredicateJson.method_22496: 1.20.1 PlayerPredicate.getStat(type, id) */
+    public static <T> net.minecraft.class_3445<T> stat(net.minecraft.class_3448<T> type, net.minecraft.class_2960 id) {
+        net.minecraft.class_2378<T> registry = type.method_14959();
+        T value = registry.method_10223(id);
+        if (value == null) {
+            throw new JsonParseException("Unknown object " + id + " for stat type " + net.minecraft.class_7923.field_41193.method_10221(type));
+        }
+        return type.method_14956(value);
+    }
+
+    /** copy of CbAdvLightningJson.method_37238: 1.20.1 LightningBoltPredicate.fromJson(json) */
+    public static net.minecraft.class_6404 lightningFromJson(JsonObject json) {
+        net.minecraft.class_2096.class_2100 blocksSetOnFire = net.minecraft.class_2096.class_2100.method_9056(json.get("blocks_set_on_fire"));
+        net.minecraft.class_2048 entityStruck = entityFromJson(json.get("entity_struck"));
+        return new net.minecraft.class_6404(blocksSetOnFire, CbAdvAny.entity(entityStruck));
+    }
+
+    /** copy of CbAdvFishingHookJson.method_26094: 1.20.1 FishingHookPredicate.fromJson(json) */
+    public static net.minecraft.class_4965 fishingHookFromJson(JsonObject json) {
+        if (json.get("in_open_water") != null) {
+            return new net.minecraft.class_4965(Optional.of(net.minecraft.class_3518.method_15268(json.get("in_open_water"), "in_open_water")));
+        }
+        return net.minecraft.class_4965.field_23137;
+    }
+
+    /** copy of CbAdvSlimeJson.method_43158: 1.20.1 SlimePredicate.fromJson(json) */
+    public static net.minecraft.class_7383 slimeFromJson(JsonObject json) {
+        return new net.minecraft.class_7383(net.minecraft.class_2096.class_2100.method_9056(json.get("size")));
     }
 }
