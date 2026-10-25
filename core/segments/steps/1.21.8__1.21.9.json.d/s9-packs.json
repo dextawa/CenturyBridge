@@ -1,0 +1,153 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_3272.comp_1582()Ljava/util/Optional;": {
+   "basis": "s9 packs: PackMetadataSection.supportedFormats() as the range's majors",
+   "desc": "()Lnet/minecraft/class_6497;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#supportedOut(Lnet/minecraft/class_6497;)Ljava/util/Optional;"
+  },
+  "net/minecraft/class_3281.method_14436(Lnet/minecraft/class_6497;I)Lnet/minecraft/class_3281;": {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- PackCompatibility.forVersion(range, version)",
+   "desc": "(Lnet/minecraft/class_6497;Lnet/minecraft/class_11555;)Lnet/minecraft/class_3281;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#range(Lnet/minecraft/class_6497;)Lnet/minecraft/class_6497;",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#format(I)Lnet/minecraft/class_11555;"
+   ]
+  },
+  "net/minecraft/class_3288.method_45274(Lnet/minecraft/class_9224;Lnet/minecraft/class_3288$class_7680;I)Lnet/minecraft/class_3288$class_7679;": {
+   "basis": "s9 packs: Pack.readPackMetadata also takes the pack type; 1.21.8's int was WorldVersion.packVersion(type), so the type is the one whose current format has that major (and the format that current one)",
+   "desc": "(Lnet/minecraft/class_9224;Lnet/minecraft/class_3288$class_7680;Lnet/minecraft/class_11555;Lnet/minecraft/class_3264;)Lnet/minecraft/class_3288$class_7679;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#currentFormat(I)Lnet/minecraft/class_11555;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#type(I)Lnet/minecraft/class_3264;"
+   ]
+  },
+  "net/minecraft/class_6489$class_11175.comp_4028()I": {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- WorldVersion.Simple's resource / data pack version",
+   "desc": "()Lnet/minecraft/class_11555;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#major(Lnet/minecraft/class_11555;)I"
+  },
+  "net/minecraft/class_6489$class_11175.comp_4029()I": {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- WorldVersion.Simple's resource / data pack version",
+   "desc": "()Lnet/minecraft/class_11555;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#major(Lnet/minecraft/class_11555;)I"
+  },
+  "net/minecraft/class_6489$class_11175.method_70592(Lnet/minecraft/class_3264;)I": {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- WorldVersion.packVersion(type)",
+   "desc": "(Lnet/minecraft/class_3264;)Lnet/minecraft/class_11555;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#major(Lnet/minecraft/class_11555;)I"
+  },
+  "net/minecraft/class_6489.method_70592(Lnet/minecraft/class_3264;)I": {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- WorldVersion.packVersion(type)",
+   "desc": "(Lnet/minecraft/class_3264;)Lnet/minecraft/class_11555;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#major(Lnet/minecraft/class_11555;)I"
+  },
+  "net/minecraft/class_8617$class_8618.comp_1578()Lnet/minecraft/class_6497;": {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- OverlayEntry.format() as an Integer range",
+   "desc": "()Lnet/minecraft/class_6497;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#range(Lnet/minecraft/class_6497;)Lnet/minecraft/class_6497;"
+  },
+  "net/minecraft/class_8617$class_8618.method_52432(I)Z": {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- OverlayEntry.isApplicable(version)",
+   "desc": "(Lnet/minecraft/class_11555;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#format(I)Lnet/minecraft/class_11555;"
+   ]
+  },
+  "net/minecraft/class_8617.method_52427(I)Ljava/util/List;": {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- OverlayMetadataSection.overlaysForVersion(version)",
+   "desc": "(Lnet/minecraft/class_11555;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#format(I)Lnet/minecraft/class_11555;"
+   ]
+  }
+ },
+ "classRenames": {
+  "net/minecraft/class_7368$class_8622": "top/dext/centurybridge/step/v1_21_9/facade/ResourceMetadataBuilder"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_7368$class_8622.field_45058:Lcom/google/common/collect/ImmutableMap$Builder;": "Builder's private section map: the facade keeps its own (a LinkedHashMap read only by build()); private, so no 1.21.8 code outside the class reached it"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_3272.field_14202:Lnet/minecraft/class_7677;": "net/minecraft/class_3272#field_61157"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_3272.comp_1581()I": "top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats",
+  "net/minecraft/class_4080.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_9/rt/CbReload"
+ },
+ "interfaceCallRedirects": {
+  "net/minecraft/class_3302.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_9/rt/CbReload",
+  "net/minecraft/class_7368.method_52446(Ljava/util/Collection;)Lnet/minecraft/class_7368;": "top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_3302.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbReload#adapt(Ltop/dext/centurybridge/step/v1_21_9/rt/CbReload$LegacyReload;)Lnet/minecraft/class_3302;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbReload$LegacyReload"
+  }
+ },
+ "overrideHooks": [
+  {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- a 1.21.8 WorldVersion's packVersion answers the major; vanilla reads PackFormat(major, 0)",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_70592(Lnet/minecraft/class_3264;)Lnet/minecraft/class_11555;",
+   "old": "method_70592(Lnet/minecraft/class_3264;)I",
+   "onlyUnder": "net/minecraft/class_6489",
+   "unwrap": "top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats.format(I)Lnet/minecraft/class_11555;"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbReload$LegacyReload",
+   "basis": "s9 packs: PreparableReloadListener.reload(barrier, manager, background, game) is reload(SharedState, background, barrier, game) on 1.21.9; a 1.21.8 listener gets the state's resource manager (all it had) and the same barrier and executors (CbReload.cbReload)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbReload.cbReload(Ltop/dext/centurybridge/step/v1_21_9/rt/CbReload$LegacyReload;Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;Lnet/minecraft/class_3302$class_4045;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25931(Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;Lnet/minecraft/class_3302$class_4045;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "old": "method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "onlyUnder": "net/minecraft/class_3302"
+  }
+ ],
+ "staticRedirects": {
+  "net/minecraft/class_3255.method_14392(Lnet/minecraft/class_7677;Ljava/io/InputStream;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_3272.<init>(Lnet/minecraft/class_2561;ILjava/util/Optional;)V": {
+   "basis": "s9 packs: PackMetadataSection keeps the supported range of PackFormats; 1.21.8 accepted its supported range when given, else exactly the declared format",
+   "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_6497;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2 top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#supported(ILjava/util/Optional;)Lnet/minecraft/class_6497;"
+   ]
+  },
+  "net/minecraft/class_6489$class_11175.<init>(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_6595;IIILjava/util/Date;Z)V": {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- WorldVersion.Simple's pack versions",
+   "desc": "(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_6595;ILnet/minecraft/class_11555;Lnet/minecraft/class_11555;Ljava/util/Date;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#format(I)Lnet/minecraft/class_11555;",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#format(I)Lnet/minecraft/class_11555;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_8617$class_8618.<init>(Lnet/minecraft/class_6497;Ljava/lang/String;)V": {
+   "basis": "s9 packs: 1.21.9 counts pack formats as PackFormat (major.minor); 1.21.8's ints are majors (CbPackFormats.major / format) -- OverlayEntry's formats range: InclusiveRange<Integer> on 1.21.8, <PackFormat> on 1.21.9 (erased; CbPackFormats.range converts adaptively)",
+   "desc": "(Lnet/minecraft/class_6497;Ljava/lang/String;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbPackFormats#range(Lnet/minecraft/class_6497;)Lnet/minecraft/class_6497;",
+    "keep"
+   ]
+  }
+ }
+}

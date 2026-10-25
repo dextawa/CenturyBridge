@@ -1,0 +1,287 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_4730.method_24145(Lnet/minecraft/class_4597;Ljava/util/function/Function;)Lnet/minecraft/class_4588;": {
+   "basis": "s9 climb: Material.buffer looks its sprite up in the MaterialSet it is given; 1.21.8 looked it up in the game's atlases, which 1.21.9's game AtlasManager holds",
+   "desc": "(Lnet/minecraft/class_11701;Lnet/minecraft/class_4597;Ljava/util/function/Function;)Lnet/minecraft/class_4588;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#materials()Lnet/minecraft/class_11701;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4730.method_30001(Lnet/minecraft/class_4597;Ljava/util/function/Function;ZZ)Lnet/minecraft/class_4588;": {
+   "basis": "s9 climb: Material.buffer looks its sprite up in the MaterialSet it is given; 1.21.8 looked it up in the game's atlases, which 1.21.9's game AtlasManager holds",
+   "desc": "(Lnet/minecraft/class_11701;Lnet/minecraft/class_4597;Ljava/util/function/Function;ZZ)Lnet/minecraft/class_4588;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#materials()Lnet/minecraft/class_11701;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_507.method_2598(DDIIIII)Z": {
+   "basis": "s9 climb: RecipeBookComponent.hasClickedOutside: 1.21.8's body never read the mouse button (dropped by 1.21.9)",
+   "desc": "(DDIIII)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ]
+  },
+  "net/minecraft/class_8684.create(Ljava/util/Collection;)Lnet/minecraft/class_8684;": {
+   "basis": "s9 climb: SpriteResourceLoader.create takes a Set of the same section types",
+   "desc": "(Ljava/util/Set;)Lnet/minecraft/class_8684;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#sections(Ljava/util/Collection;)Ljava/util/Set;"
+   ]
+  },
+  "net/minecraft/class_957.method_23190(Lnet/minecraft/class_776;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IZ)V": {
+   "basis": "s9 climb: TntMinecartRenderer.renderWhiteSolidBlock submits the block to a SubmitNodeCollector (CbSubmit.collector over the caller's buffers) where 1.21.8 drew it with the given BlockRenderDispatcher into the buffers; no outline, as 1.21.8 drew none",
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IZI)V",
+   "ops": [
+    "drop",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#noOutline()I"
+   ]
+  },
+  "net/minecraft/class_9974.method_62292(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDDDDFFFF)V": {
+   "basis": "s9 climb: ShapeRenderer takes the PoseStack's top pose (1.21.8 took the stack and drew with last())",
+   "desc": "(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;DDDDDDFFFF)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#pose(Lnet/minecraft/class_4587;)Lnet/minecraft/class_4587$class_4665;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_9974.method_62293(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDDDDFFFFFFF)V": {
+   "basis": "s9 climb: ShapeRenderer takes the PoseStack's top pose (1.21.8 took the stack and drew with last())",
+   "desc": "(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;DDDDDDFFFFFFF)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#pose(Lnet/minecraft/class_4587;)Lnet/minecraft/class_4587$class_4665;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_9974.method_62295(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_238;FFFF)V": {
+   "basis": "s9 climb: ShapeRenderer takes the PoseStack's top pose (1.21.8 took the stack and drew with last())",
+   "desc": "(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;Lnet/minecraft/class_238;FFFF)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#pose(Lnet/minecraft/class_4587;)Lnet/minecraft/class_4587$class_4665;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_9974.method_62297(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_2350;FFFFFFFFFF)V": {
+   "basis": "s9 climb: ShapeRenderer.renderFace takes the matrix 1.21.8 took from poseStack.last().pose()",
+   "desc": "(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;Lnet/minecraft/class_2350;FFFFFFFFFF)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#matrix(Lnet/minecraft/class_4587;)Lorg/joml/Matrix4f;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_9975.method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;FI)V": {
+   "basis": "s9 climb: SkyRenderer.renderSunriseAndSunset draws the same fan through its own mesh and pipeline on 1.21.9; 1.21.8 wrote it into the given buffer source, which has no part in 1.21.9's draw",
+   "desc": "(Lnet/minecraft/class_4587;FI)V",
+   "ops": [
+    "keep",
+    "drop",
+    "keep",
+    "keep"
+   ]
+  }
+ },
+ "fieldGetters": {
+  "net/minecraft/class_7766.field_45632:Ljava/util/Set;": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient"
+ },
+ "frameDefaults": {
+  "method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": {
+   "0": "zero: the 1.21.8 models a mod model extends (HumanoidModel, IllagerModel, AllayModel, VexModel) read no state in translateToHand, on 1.21.8 or 1.21.9"
+  }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_276.field_1477:I": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
+  "net/minecraft/class_276.field_1480:I": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
+  "net/minecraft/class_437$class_6390.field_33825:Lnet/minecraft/class_6379;": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
+  "net/minecraft/class_437$class_6390.field_33826:I": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
+  "net/minecraft/class_437$class_6390.field_33827:Lnet/minecraft/class_6379$class_6380;": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_276.field_1477:I": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
+  "net/minecraft/class_276.field_1480:I": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_572.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
+  "net/minecraft/class_575.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
+  "net/minecraft/class_617.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient",
+  "net/minecraft/class_7308.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient"
+ },
+ "interfaceCallRedirects": {
+  "net/minecraft/class_3881.method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient"
+ },
+ "methodRenames": {
+  "net/minecraft/class_2096$class_2099.comp_1805()Ljava/util/Optional;": "method_74106",
+  "net/minecraft/class_2096$class_2099.comp_1806()Ljava/util/Optional;": "method_74107",
+  "net/minecraft/class_2096$class_2100.comp_1805()Ljava/util/Optional;": "method_74106",
+  "net/minecraft/class_2096$class_2100.comp_1806()Ljava/util/Optional;": "method_74107",
+  "net/minecraft/class_2096.comp_1805()Ljava/util/Optional;": "method_74106",
+  "net/minecraft/class_2096.comp_1806()Ljava/util/Optional;": "method_74107"
+ },
+ "overrideHooks": [
+  {
+   "args": [
+    1,
+    2
+   ],
+   "basis": "s9 climb: vanilla calls translateToHand(state, arm, pose); a 1.21.8 model's own override gets (arm, pose) -- 1.21.8 handed it no state -- and its super call passes on the state vanilla passed",
+   "frames": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_2803(Lnet/minecraft/class_10017;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V",
+   "old": "method_2803(Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;)V",
+   "onlyUnder": "net/minecraft/class_3881",
+   "superCalls": "rewrite"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient$LegacySunrise",
+   "basis": "s9 climb: a 1.21.8 renderSunriseAndSunset override gets the game's main buffer source, ended after it, as 1.21.8's LevelRenderer handed it (CbClimbClient.cbSunrise)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient.cbSunrise(Ltop/dext/centurybridge/step/v1_21_9/rt/CbClimbClient$LegacySunrise;Lnet/minecraft/class_4587;FI)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_62306(Lnet/minecraft/class_4587;FI)V",
+   "old": "method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;FI)V",
+   "onlyUnder": "net/minecraft/class_9975"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient$LegacyClickedOutside",
+   "basis": "s9 climb: a 1.21.8 hasClickedOutside override gets the button of the click being handled (CbInput.currentButton), which 1.21.9 no longer passes",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient.cbClickedOutside(Ltop/dext/centurybridge/step/v1_21_9/rt/CbClimbClient$LegacyClickedOutside;DDIIII)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_2598(DDIIII)Z",
+   "old": "method_2598(DDIIIII)Z",
+   "onlyUnder": "net/minecraft/class_507"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_330.<init>(Lnet/minecraft/class_9443;Lnet/minecraft/class_10093;)V": {
+   "basis": "s9 climb: MapRenderer reads the map decoration atlas from the AtlasManager (MapDecorationTextureManager, its 1.21.8 owner, is gone; the game's AtlasManager holds the same atlas)",
+   "desc": "(Lnet/minecraft/class_11697;Lnet/minecraft/class_10093;)V",
+   "ops": [
+    "drop",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#atlasManager()Lnet/minecraft/class_11697;",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_5617$class_5618.<init>(Lnet/minecraft/class_898;Lnet/minecraft/class_10442;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_3300;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;Lnet/minecraft/class_327;)V": {
+   "basis": "s9 climb: EntityRendererProvider.Context also carries the AtlasManager and the player skin render cache; 1.21.8 renderers reached the atlases through the game, and these are the game's own (what EntityRenderDispatcher passes)",
+   "desc": "(Lnet/minecraft/class_898;Lnet/minecraft/class_10442;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_3300;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;Lnet/minecraft/class_11697;Lnet/minecraft/class_327;Lnet/minecraft/class_11786;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#atlasManager()Lnet/minecraft/class_11697;",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#skinCache()Lnet/minecraft/class_11786;"
+   ]
+  },
+  "net/minecraft/class_809.<init>(Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;)V": {
+   "basis": "s9 climb: ItemTransforms gained the ON_SHELF display context; 1.21.8 had none, and 1.21.9's loader gives a model without it the identity transform",
+   "desc": "(Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#noTransform()Lnet/minecraft/class_804;"
+   ]
+  },
+  "net/minecraft/class_8675.<init>(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7975;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_7699;Ljava/lang/String;Lnet/minecraft/class_642;Lnet/minecraft/class_437;Ljava/util/Map;Lnet/minecraft/class_338$class_9477;Ljava/util/Map;Lnet/minecraft/class_9782;)V": {
+   "basis": "s9 climb: CommonListenerCookie also carries the level load tracker, the player infos handed over from configuration and the insecure-chat-warning flag; a cookie made the 1.21.8 way starts as 1.21.9's login listener does (a new tracker, no players, no warning seen)",
+   "desc": "(Lnet/minecraft/class_11653;Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7975;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_7699;Ljava/lang/String;Lnet/minecraft/class_642;Lnet/minecraft/class_437;Ljava/util/Map;Lnet/minecraft/class_338$class_9477;Ljava/util/Map;Lnet/minecraft/class_9782;Ljava/util/Map;Z)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#loadTracker()Lnet/minecraft/class_11653;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#noPlayers()Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#no()Z"
+   ]
+  },
+  "net/minecraft/class_970.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_572;Lnet/minecraft/class_572;Lnet/minecraft/class_10197;)V": {
+   "basis": "s9 climb: HumanoidArmorLayer takes an ArmorModelSet (head, chest, legs, feet); 1.21.8 used the inner model for legs and the outer one for the rest",
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_11677;Lnet/minecraft/class_10197;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2 top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#armorSet(Lnet/minecraft/class_572;Lnet/minecraft/class_572;)Lnet/minecraft/class_11677;",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_970.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_572;Lnet/minecraft/class_572;Lnet/minecraft/class_572;Lnet/minecraft/class_572;Lnet/minecraft/class_10197;)V": {
+   "basis": "s9 climb: HumanoidArmorLayer takes adult and baby ArmorModelSets; 1.21.8 used each inner model for legs and the outer one for the rest",
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_11677;Lnet/minecraft/class_11677;Lnet/minecraft/class_10197;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2 top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#armorSet(Lnet/minecraft/class_572;Lnet/minecraft/class_572;)Lnet/minecraft/class_11677;",
+    "conv:3,4 top/dext/centurybridge/step/v1_21_9/rt/CbClimbClient#armorSet(Lnet/minecraft/class_572;Lnet/minecraft/class_572;)Lnet/minecraft/class_11677;",
+    "keep:5"
+   ]
+  }
+ }
+}
