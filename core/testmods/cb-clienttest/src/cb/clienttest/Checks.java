@@ -3,6 +3,8 @@ package cb.clienttest;
 import com.google.common.collect.Multimap;
 import java.util.Arrays;
 import java.util.List;
+import net.minecraft.class_1058;
+import net.minecraft.class_1059;
 import net.minecraft.class_1087;
 import net.minecraft.class_1109;
 import net.minecraft.class_1144;
@@ -10,6 +12,11 @@ import net.minecraft.class_1304;
 import net.minecraft.class_1799;
 import net.minecraft.class_1829;
 import net.minecraft.class_2246;
+import net.minecraft.class_2350;
+import net.minecraft.class_2680;
+import net.minecraft.class_2960;
+import net.minecraft.class_5819;
+import net.minecraft.class_777;
 import net.minecraft.class_243;
 import net.minecraft.class_2583;
 import net.minecraft.class_310;
@@ -58,6 +65,19 @@ final class Checks {
             model == null ? "no model" : model == missing ? "the missing model" : "baked from the mod's model json");
         String name = pick.method_7964().getString();
         Tally.check("item.name", "CB Pickaxe".equals(name), "\"" + name + "\" (the mod's en_us.json: \"CB Pickaxe\")");
+    }
+
+    /** smx4 checks 1b/1c as 1.20.1 has them: the mod's BlockModel.bake and getMaterial mixins */
+    static void blockModelMixins(class_310 mc) {
+        Tally.check("model.bakeMixin", ModelProbe.bakes > 100, ModelProbe.bakes + " BlockModel.bake returns seen by the mod's injector");
+        class_2680 stone = class_2246.field_10340.method_9564();
+        class_1087 model = mc.method_1541().method_3349(stone);
+        List<?> quads = model.method_4707(stone, class_2350.field_11036, class_5819.method_43047());
+        class_1058 diamond = mc.method_1554().method_24153(class_1059.field_5275).method_4608(new class_2960("block/diamond_block"));
+        boolean swapped = !quads.isEmpty() && ((class_777) quads.get(0)).method_35788() == diamond;
+        Tally.check("model.materialMixin", ModelProbe.stoneMaterials > 0 && swapped, ModelProbe.stoneMaterials
+            + " getMaterial answers replaced on the stone models; stone's top face " + (swapped ? "uses" : "does not use")
+            + " the diamond block sprite (" + quads.size() + " quads)");
     }
 
     /** swall plan item 7: the sound device list, the engine's state, a sound played */

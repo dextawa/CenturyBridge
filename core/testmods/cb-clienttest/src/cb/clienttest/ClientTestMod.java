@@ -48,9 +48,9 @@ public class ClientTestMod implements ClientModInitializer {
     public void onInitializeClient() {
         Tally.declare("join", "font.lineHeight", "font.width", "font.widthComponent", "font.plainSubstrByWidth",
             "font.split", "font.wordWrapHeight", "rt.getters", "rt.memoized",
-            "model.playerSetAllVisible", "item.model", "item.name", "audio.devices", "audio.debugString", "audio.play",
+            "model.playerSetAllVisible", "model.bakeMixin", "model.materialMixin", "item.model", "item.name", "audio.devices", "audio.debugString", "audio.play",
             "gui.backdrop", "gui.fill", "gui.fillGradient", "gui.blit", "gui.drawString", "gui.drawCentered",
-            "gui.pose", "gui.scissor", "gui.outline", "gui.item", "gui.entity", "gui.modItem", "gui.tooltip",
+            "gui.pose", "gui.scissor", "gui.outline", "gui.item", "mixin.itemRender", "gui.entity", "gui.modItem", "gui.tooltip",
             "layer.render", "be.endPortal", "be.skull", "model.piglinParts", "model.piglinSubclass",
             "font.drawInBatch", "font.outline",
             "rt.gui", "rt.entitySolid", "rt.entityCutoutNoCull", "rt.entityTranslucent", "rt.entitySmoothCutout",
@@ -99,12 +99,14 @@ public class ClientTestMod implements ClientModInitializer {
             attempt("rt.getters", ClientTestMod::renderTypeChecks);
             attempt("model.playerSetAllVisible", () -> Checks.playerModel(mc));
             attempt("item.model", () -> Checks.itemResources(mc));
+            attempt("model.bakeMixin", () -> Checks.blockModelMixins(mc));
             attempt("audio.devices", () -> Checks.audio(mc));
             screenPhase(mc, "gui", GuiScreen::new, () -> {
                 Frames.settle("gui.");
                 Frames.settle("layer.");
                 Frames.settle("be.");
                 Frames.settle("model.");
+                Frames.settle("mixin.");
             }, () -> {
                 Frames.settle("font.");
                 Frames.settle("rt.");
