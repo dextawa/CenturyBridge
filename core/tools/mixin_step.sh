@@ -105,6 +105,12 @@ with open(out, "w", encoding="utf-8") as o:
         o.write("\t".join([r[0], r[1], moj(r[1])] + r[2:]) + "\n")
 print("open mixin entries ->", out)
 EOF
+# the conversion-time "mixed restored member" signal (MixinRepair.MIXED_DIR), kept beside the counts
+: > "$OUT/mixin/mixed.tsv"
+for j in "$OUT"/mixin/conv/*.jar; do
+    [ -f "$j" ] && unzip -p "$j" "META-INF/centurybridge/mixed/$W.txt" >> "$OUT/mixin/mixed.tsv" 2>/dev/null || true
+done
+echo "mixed restored members (signal lines): $(wc -l < "$OUT/mixin/mixed.tsv")"
 rm -f "$OUT"/mixin/*.jar "$OUT"/mixin/conv/*.jar "$OUT/mixin/index-wall.tsv"
 # why each open row is open (Main mixin-cause: V's and W's bytecode, the step's wiring, what the converter
 # said about each probe member, the layer's redirect bodies) -> cause-mixin.tsv, and how many of them the
