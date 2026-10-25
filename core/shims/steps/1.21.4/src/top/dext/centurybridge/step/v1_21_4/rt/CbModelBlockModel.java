@@ -32,8 +32,8 @@ import top.dext.centurybridge.step.v1_21_4.facade.ItemOverride;
  *     are reached through statics here: a mod's calls get the chain's answer, its overrides are kept where 1.21.3 asked
  *     them.</li>
  * </ul>
- * Every BlockModel bakes through 1.21.3's bake (CbModelBlockModelMixin.method_3446, inline there so 1.21.3 mixins find its
- * anchors): a mod's subclass through its own overrides, a vanilla model with the same result as 1.21.4's bake.
+ * A mod's subclass of BlockModel bakes as 1.21.3 baked (its own bake, or 1.21.3's bake through its overridden members),
+ * a vanilla model as 1.21.4 bakes.
  */
 @Environment(EnvType.CLIENT)
 public final class CbModelBlockModel {
@@ -345,8 +345,36 @@ public final class CbModelBlockModel {
         return own == null ? net.minecraft.class_804.field_4284 : own.method_3503(context);
     }
 
+    /**
+     * bake(spriteGetter, state, guiLight3d): 1.21.3's body -- the builtin/entity marker's chain is a BuiltInModel, any other a
+     * SimpleBakedModel of the chain's elements, every member asked through the model (a subclass's overrides count)
+     */
+    public static net.minecraft.class_1087 bake(net.minecraft.class_793 model, Function<net.minecraft.class_4730, net.minecraft.class_1058> sprites,
+        net.minecraft.class_3665 state, boolean guiLight3d) {
+        CbLegacyBlockModel m = legacy(model);
+        net.minecraft.class_1058 particle = sprites.apply(m.method_24077(PARTICLE));
+        if (m.method_3431() == CbModelSpecial.blockEntityMarker()) {
+            return new top.dext.centurybridge.step.v1_21_4.facade.BuiltInModel(m.method_3443(), particle, method_24298(model).method_24299());
+        }
+        net.minecraft.class_1093.class_1094 builder = new net.minecraft.class_1093.class_1094(m.method_3444(), method_24298(model).method_24299(),
+            guiLight3d, m.method_3443()).method_4747(particle);
+        for (net.minecraft.class_785 element : m.cb$getElements()) {
+            for (net.minecraft.class_2350 direction : element.field_4230.keySet()) {
+                net.minecraft.class_783 face = element.field_4230.get(direction);
+                net.minecraft.class_1058 sprite = sprites.apply(m.method_24077(face.comp_2869()));
+                if (face.comp_2867() == null) {
+                    builder.method_4748(bakeFace(element, face, sprite, direction, state));
+                } else {
+                    builder.method_4745(net.minecraft.class_2350.method_23225(state.method_3509().method_22936(), face.comp_2867()),
+                        bakeFace(element, face, sprite, direction, state));
+                }
+            }
+        }
+        return builder.method_4746();
+    }
+
     /** 1.21.3 BlockModel.bakeFace (its static FaceBakery's bakeQuad) */
-    public static net.minecraft.class_777 bakeFace(net.minecraft.class_785 element, net.minecraft.class_783 face, net.minecraft.class_1058 sprite,
+    private static net.minecraft.class_777 bakeFace(net.minecraft.class_785 element, net.minecraft.class_783 face, net.minecraft.class_1058 sprite,
         net.minecraft.class_2350 direction, net.minecraft.class_3665 state) {
         return net.minecraft.class_796.method_3468(element.field_4228, element.field_4231, face, sprite, direction, state, element.field_4232,
             element.field_4229, element.field_53159);

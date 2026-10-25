@@ -16,10 +16,4 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface CbVanillaReads {
     String value();
-
-    /**
-     * When the route carries only part of the member (vanilla takes its answer, not its body): the injectors it carries,
-     * each "<injector annotation simple name>@<@At value>" ("Inject@HEAD"). Absent: vanilla runs the restored body itself.
-     */
-    String[] carries() default {};
 }
