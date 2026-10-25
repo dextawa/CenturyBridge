@@ -249,7 +249,19 @@
   "net/minecraft/class_3610.method_40180()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#holder",
   "net/minecraft/class_3610.method_40181()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#getTags",
   "net/minecraft/class_1657.method_76729(Lnet/minecraft/class_238;D)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#isWithinAttackRange",
-  "net/minecraft/class_1657.method_60984(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#setIgnoreFallDamageFromCurrentImpulse"
+  "net/minecraft/class_1657.method_60984(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#setIgnoreFallDamageFromCurrentImpulse",
+  "net/minecraft/class_9288.method_57489()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#stream",
+  "net/minecraft/class_9288.method_59712()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#nonEmptyStream",
+  "net/minecraft/class_9288.method_59715()Ljava/lang/Iterable;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#nonEmptyItemsCopy",
+  "net/minecraft/class_10710.method_67211(Lnet/minecraft/class_7225$class_7874;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#unwrap",
+  "net/minecraft/class_10711.method_67212(Lnet/minecraft/class_7225$class_7874;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#unwrap",
+  "net/minecraft/class_10591.method_66340(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#apply",
+  "net/minecraft/class_10591.method_67389(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#isResultUnchanged",
+  "net/minecraft/class_10591.method_66338()Lnet/minecraft/class_10302;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#display",
+  "net/minecraft/class_9326.method_57845(Lnet/minecraft/class_9331;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#get",
+  "net/minecraft/class_10192.method_64015(Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#canBeEquippedBy",
+  "net/minecraft/class_2050.method_8925(Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#matches",
+  "net/minecraft/class_1267.method_5460()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#getKey"
  },
  "overrideHooks": [
   {
@@ -894,7 +906,9 @@
   "net/minecraft/class_3990.<init>(Lnet/minecraft/class_5268;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrades#newSpawner",
   "net/minecraft/class_11661$class_11668.<init>(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_811;III[ILjava/util/List;Lnet/minecraft/class_1921;Lnet/minecraft/class_10444$class_10445;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemSubmits#itemSubmit",
   "net/minecraft/class_1041.<init>(Lnet/minecraft/class_3678;Lnet/minecraft/class_323;Lnet/minecraft/class_543;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGpu#newWindow",
-  "net/minecraft/class_2392.<init>(Lnet/minecraft/class_2396;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#itemParticle"
+  "net/minecraft/class_2392.<init>(Lnet/minecraft/class_2396;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#itemParticle",
+  "net/minecraft/class_10710.<init>(Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#instrumentComponent",
+  "net/minecraft/class_10711.<init>(Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#providesTrimMaterial"
  },
  "adapterHooks": [
   {
@@ -1351,7 +1365,9 @@
   "net/minecraft/class_4838.method_29534(Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#isZombified",
   "net/minecraft/class_5328.method_33263(Lnet/minecraft/class_1542;Ljava/lang/Iterable;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#onContainerDestroyed",
   "net/minecraft/class_3767.method_67380(Lnet/minecraft/class_6880;)Lnet/minecraft/class_10741;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#getType",
-  "net/minecraft/class_7261.method_42228(Lnet/minecraft/class_7260;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#updateActivity"
+  "net/minecraft/class_7261.method_42228(Lnet/minecraft/class_7260;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerStatics#updateActivity",
+  "net/minecraft/class_9278.method_57439(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9278;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#of",
+  "net/minecraft/class_9793.method_60753(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentMembers#fromStack"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
