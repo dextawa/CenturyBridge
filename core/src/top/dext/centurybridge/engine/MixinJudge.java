@@ -179,8 +179,10 @@ public final class MixinJudge {
                         if (why == null && j.rowLayer == null && ts.stream().anyMatch(t -> t.startsWith("top/dext/"))) {
                             // a shadow / accessor / invoker of a mixin aimed at a facade: it reads and calls the facade's
                             // own members, which stand for V's class only on the instances mods hold (as their own calls
-                            // of the facade do); not a vanilla path. Closed, counted apart (C7)
+                            // of the facade do); not a vanilla path. Never counted closed: open under its own cause,
+                            // reported on its own line (C7; main's decision)
                             j.rowLayer = "facade-access";
+                            why = "facade-access: the facade's own member, not vanilla's";
                         }
                     }
                     if (j.rowLayer != null) {
