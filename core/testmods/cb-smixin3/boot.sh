@@ -11,7 +11,8 @@ JDK=$(ls -d ~/cbtest/jdk-25*/bin | head -1)
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
 TM=$WD/tm; rm -rf "$TM" && mkdir -p "$TM"
 R=data/runtime/client-26.1.2
-CP="data/jars/client-26.1.2.jar:$(find $R/libraries -name '*.jar' | tr '\n' ':')$(find $R/.fabric/processedMods -name '*.jar' 2>/dev/null | tr '\n' ':')"
+ME=$(ls ~/cbtest/server-26.2/.fabric/processedMods/mixinextras-*.jar | head -1)
+CP="$ME:data/jars/client-26.1.2.jar:$(find $R/libraries -name '*.jar' | tr '\n' ':')$(find $R/.fabric/processedMods -name '*.jar' 2>/dev/null | tr '\n' ':')"
 SRC=$WD/core/testmods/cb-smixin3
 for v in test control; do
     mkdir -p "$TM/$v"
@@ -19,8 +20,8 @@ for v in test control; do
         || { echo "compile failed"; tail -20 "$TM/javac-$v.log"; exit 1; }
     cp $SRC/res/* "$TM/$v/"
 done
-rm "$TM/control/cb/smixin3/mixin/GoalSelectorMixin.class"
-sed -i 's/, "GoalSelectorMixin"//' "$TM/control/cb_smixin3.mixins.json"
+rm "$TM/control/cb/smixin3/mixin/GoalSelectorMixin.class" "$TM/control/cb/smixin3/mixin/NoiseRouterDataMixin.class"
+sed -i 's/, "GoalSelectorMixin", "NoiseRouterDataMixin"//' "$TM/control/cb_smixin3.mixins.json"
 sed -i 's/"id": "cb_smixin3"/"id": "cb_smixin3v"/' "$TM/control/fabric.mod.json"
 touch "$TM/control/cb_smixin3_control"
 "$JDK/jar" cf "$TM/cb-smixin3.jar" -C "$TM/test" .
@@ -38,7 +39,7 @@ for m in cb-smixin3 cb-smixin3v; do
         -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert "$WD/core/segments" 26.1.2 26.2 "$CONV/conv" "$TM/$m.jar" \
         > "$CONV/convert.log" 2>&1 || { echo "convert failed"; tail -5 "$CONV/convert.log"; exit 1; }
     echo "== $m: conversion"
-    grep -aE 'removeGoal|guard' "$CONV"/conv/*report* | head -6
+    grep -aE 'removeGoal|peaksAndValleys|guard' "$CONV"/conv/*report* | head -8
     rm -rf "$SRV/mods" "$SRV/world-$TAG" "$SRV/logs" && mkdir -p "$SRV/mods"
     cp data/runtime/client-26.2/mods/fabric-api-*.jar "$SRV/mods/"
     cp $WD/build/centurybridge-0.3.0+26.2.jar "$SRV/mods/"

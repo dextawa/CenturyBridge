@@ -585,6 +585,8 @@ public final class MixinRepair {
                         // descend-site (V's code at hand): where V's site of the anchor stands in W, in one
                         // private method only the target's path calls; when it judged and refused, the
                         // looser descend below does not get to guess
+                        if (DEBUG_DESCEND) System.err.println("cb.debugDescend gate " + where + " source=" + (source != null)
+                            + " anchors=" + anchors + " cands=" + cands.size() + " capturesArgs=" + capturesArgs);
                         if (source != null && anchors.size() == 1 && cands.size() == 1 && !capturesArgs) {
                             List<String> dwhy = new ArrayList<>();
                             Descend d = descendBySite(an, handler, owner, tc, cands.get(0), anchors.get(0), dwhy);
@@ -693,6 +695,9 @@ public final class MixinRepair {
     }
 
     // ------------------------------------------------------------------ guarded descend into another class (o, stage 2)
+
+    /** -Dcb.debugDescend: the descend-site decisions on stderr */
+    private static final boolean DEBUG_DESCEND = Boolean.getBoolean("cb.debugDescend");
 
     /** the config being repaired: its package and side key, and the guard mixins / helper made for it */
     private String curPkg = "";
@@ -1399,6 +1404,7 @@ public final class MixinRepair {
                           Anchor a, List<String> why) {
         if (!a.role.equals("main") || a.kind.equals("LOCAL") || a == POSITIONAL) return null;
         List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> matchesAnchor(in, a));
+        if (DEBUG_DESCEND) System.err.println("cb.debugDescend site " + vm.name + vm.desc + " " + a + " V occurrences " + vo.size());
         if (vo.isEmpty() || a.ordinal >= vo.size()) return null;
         List<Integer> sites = new ArrayList<>();
         if (a.ordinal >= 0) sites.add(a.ordinal);
@@ -1570,7 +1576,7 @@ public final class MixinRepair {
         boolean calleeStatic = (into.access & Opcodes.ACC_STATIC) != 0;
         boolean handlerStatic = (handler.access & Opcodes.ACC_STATIC) != 0;
         boolean onThis = !calleeStatic && receiverIsThis(tc.name, wm, call) && !handlerStatic;
-        if (!onThis && (!touchesThisFree(handler) || usesOwnClass(handler, curMixin))) {
+        if (!onThis && (!handlerStatic && !touchesThisFree(handler) || usesOwnClass(handler, curMixin))) {
             why.add(pre + "the handler reads this or its own mixin, and the callee does not run on the target's instance");
             return null;
         }
@@ -2445,6 +2451,21 @@ public final class MixinRepair {
      */
     static boolean capturesTargetArgs(AnnotationNode an, MethodNode h, List<Anchor> anchors) {
         if (!capturesTargetArgs(an, h)) return false;
+        if (anchors != null && anchors.size() == 1 && anchors.get(0).kind.equals("FIELD") && anchors.get(0).desc != null
+                && anchors.get(0).owner != null) {
+            // a field access handled itself: (receiver of an instance field) (the value written, for a put), an Operation
+            // after them for @WrapOperation; nothing else
+            Anchor a = anchors.get(0);
+            List<Type> hp = new ArrayList<>(List.of(Type.getArgumentTypes(h.desc)));
+            boolean wrap = an.desc.endsWith("/WrapOperation;");
+            if (!wrap && !an.desc.endsWith("/Redirect;")) return true;
+            if (wrap) {
+                if (hp.isEmpty() || !hp.get(hp.size() - 1).getDescriptor().equals(OPERATION)) return true;
+                hp.remove(hp.size() - 1);
+            }
+            if (!hp.isEmpty() && hp.get(0).getDescriptor().equals(Type.getObjectType(a.owner).getDescriptor())) hp.remove(0);
+            return !(hp.isEmpty() || hp.size() == 1 && hp.get(0).getDescriptor().equals(a.desc));
+        }
         if (anchors == null || anchors.size() != 1 || !anchors.get(0).kind.equals("INVOKE") || anchors.get(0).desc == null) return true;
         Anchor a = anchors.get(0);
         if (a.name.equals("<init>")) return true;
