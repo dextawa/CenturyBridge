@@ -3529,6 +3529,80 @@
     3
    ],
    "basis": "HumanoidModel.createArmorMeshSet(meshFactory, inner, outer) is 26.1's createArmorMeshSet(meshFactory, partsBySlot, inner, outer): the same four meshes with the parts each slot keeps, the parts per slot now passed in instead of written in the body The four-argument overload was born at 26.1 and shares its mojang name with two 1.21.11 ids, so it keeps that name in the analysis namespace (WallInverse)."
+  },
+  "net/minecraft/class_961.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_961$class_10651;)V": {
+   "to": "<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5601;Lnet/minecraft/class_961$class_10651;Lnet/minecraft/class_961$class_10651;)V",
+   "args": [
+    0,
+    3
+   ],
+   "basis": "UndeadHorseRenderer(context, type) is 26.1's UndeadHorseRenderer(context, saddleLayerType, saddleLayer, adultType, babyType): 1.21.11's one Type chose both the adult and the baby model, 26.1 passes the adult type and the baby type apart (EntityRenderers passes e.g. SKELETON and SKELETON_BABY); 1.21.11's type is the adult one, the same constant (SKELETON, ZOMBIE, DONKEY, MULE)."
+  },
+  "net/minecraft/class_9991.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_9991$class_10650;)V": {
+   "to": "<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5601;Lnet/minecraft/class_9991$class_10650;Lnet/minecraft/class_9991$class_10650;)V",
+   "args": [
+    0,
+    3
+   ],
+   "basis": "DonkeyRenderer(context, type) is 26.1's DonkeyRenderer(context, saddleLayerType, saddleLayer, adultType, babyType): 1.21.11's one Type chose both the adult and the baby model, 26.1 passes the adult type and the baby type apart (EntityRenderers passes e.g. SKELETON and SKELETON_BABY); 1.21.11's type is the adult one, the same constant (SKELETON, ZOMBIE, DONKEY, MULE)."
+  },
+  "net/minecraft/class_3218.<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5268;Lnet/minecraft/class_5321;Lnet/minecraft/class_5363;ZJLjava/util/List;ZLnet/minecraft/class_8565;)V": {
+   "to": "<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5268;Lnet/minecraft/class_5321;Lnet/minecraft/class_5363;ZJLjava/util/List;Z)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    -1
+   ],
+   "basis": "ServerLevel(server, executor, storage, levelData, dimension, levelStem, isDebug, biomeZoomSeed, customSpawners, tickTime, randomSequences) is 26.1's constructor without the last argument: 26.1 keeps one RandomSequences for the server (MinecraftServer.getRandomSequences) instead of one per level passed in; the first ten arguments are the same values in the same order."
+  },
+  "net/minecraft/class_761.method_72157(Lorg/joml/Matrix4fc;DDD)Lnet/minecraft/class_11532;": {
+   "to": "method_72157(Lorg/joml/Matrix4fc;)Lnet/minecraft/class_11532;",
+   "args": [
+    0,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "LevelRenderer.prepareChunkRenders(modelView, camX, camY, camZ) is 26.1's prepareChunkRenders(modelView): 1.21.11's body never read the three camera coordinates (no dload of slots 2-7; each section's offset comes from its render origin), 26.1 dropped them; the same per-section draws are collected, 26.1 also uploading the global geometry buffers first."
+  },
+  "net/minecraft/class_9955.method_62168(ILnet/minecraft/class_4063;FLnet/minecraft/class_243;JF)V": {
+   "to": "method_62168(ILnet/minecraft/class_4063;FILnet/minecraft/class_243;JF)V",
+   "args": [
+    0,
+    1,
+    2,
+    4,
+    5,
+    6
+   ],
+   "basis": "CloudRenderer.render(color, status, height, cameraPos, gameTime, partialTicks) is 26.1's render(color, status, height, cloudRange, cameraPos, gameTime, partialTicks): 1.21.11 read options.cloudRange() itself at the head of the body, 26.1 is passed it (LevelRenderer); the rest of the body is the same call for call."
+  },
+  "net/minecraft/class_823.method_65555(Lnet/minecraft/class_11701;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIFLnet/minecraft/class_10378;Lnet/minecraft/class_10377;FLnet/minecraft/class_1767;Lnet/minecraft/class_9307;Lnet/minecraft/class_11683$class_11792;I)V": {
+   "to": "method_65555(Lnet/minecraft/class_11701;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_10378;Lnet/minecraft/class_10377;FLnet/minecraft/class_1767;Lnet/minecraft/class_9307;Lnet/minecraft/class_11683$class_11792;I)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    -1,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "basis": "BannerRenderer.submitBanner(sprites, pose, collector, light, overlay, rotation, standModel, flagModel, flagAngle, baseColor, patterns, crumbling, outlineColor) is 26.1's submitBanner without rotation: 1.21.11 applied translate / rotationDegrees(rotation) / scale to the pose at the head of the body, 26.1's callers apply the same placement as a Transformation (TRANSFORMATIONS) before the call; the stand and flag models, the flag angle and the patterns are submitted with the other arguments unchanged."
   }
  },
  "lambdaAdapters": {
