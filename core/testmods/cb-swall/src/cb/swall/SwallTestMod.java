@@ -58,6 +58,15 @@ public class SwallTestMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        // blocks are built while the block registry still makes intrusive holders (before it freezes)
+        try {
+            legacyStem = net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41175,
+                net.minecraft.class_2960.method_60655("cbswall", "legacy_stem"), new LegacyStem());
+            legacyRoots = net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41175,
+                net.minecraft.class_2960.method_60655("cbswall", "legacy_roots"), new LegacyRoots());
+        } catch (Throwable t) {
+            legacyBlocksFailure = t;
+        }
         // ---- ExpirableValue, no server needed
         class_4831<String> ev = class_4831.method_24636("x", 3L);
         ev.method_24913();
@@ -830,6 +839,7 @@ public class SwallTestMod implements ModInitializer {
             componentMembers();
             displayIcons();
             blockStatics(server);
+            legacyConstructors(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1643,6 +1653,62 @@ public class SwallTestMod implements ModInitializer {
                 && net.minecraft.class_9710.method_60208(Codec.INT, net.minecraft.class_173.field_51802) != null, "");
         } catch (Throwable t) {
             check("blockStatics", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    private static net.minecraft.class_4970.class_2251 testProps(String name) {
+        return net.minecraft.class_4970.class_2251.method_9637().method_63500(net.minecraft.class_5321.method_29179(
+            net.minecraft.class_7924.field_41254, net.minecraft.class_2960.method_60655("cbswall", name)));
+    }
+
+    private static LegacyStem legacyStem;
+    private static LegacyRoots legacyRoots;
+    private static Throwable legacyBlocksFailure;
+
+    /** a 1.21.11 StemBlock subclass: super(fruit, attachedStem, seed, properties) */
+    private static final class LegacyStem extends net.minecraft.class_2513 {
+        LegacyStem() {
+            super(net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41254, net.minecraft.class_2960.method_60655("minecraft", "pumpkin")),
+                net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41254, net.minecraft.class_2960.method_60655("minecraft", "attached_pumpkin_stem")),
+                net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41197, net.minecraft.class_2960.method_60655("minecraft", "pumpkin_seeds")),
+                testProps("legacy_stem"));
+        }
+
+        boolean placeOn(net.minecraft.class_2248 block) {
+            return method_9695(block.method_9564(), null, net.minecraft.class_2338.field_10980);
+        }
+    }
+
+    /** a 1.21.11 RootsBlock subclass: super(properties) */
+    private static final class LegacyRoots extends net.minecraft.class_4774 {
+        LegacyRoots() {
+            super(testProps("legacy_roots"));
+        }
+
+        boolean placeOn(net.minecraft.class_2248 block) {
+            return method_9695(block.method_9564(), null, net.minecraft.class_2338.field_10980);
+        }
+    }
+
+    /** super-ctor reshapes and factories of 1.21.11 constructors 26.1 reshaped (CbWallBlockSupports, CbWallGiveItems, ...) */
+    private static void legacyConstructors(MinecraftServer server) {
+        try {
+            if (legacyBlocksFailure != null) {
+                throw legacyBlocksFailure;
+            }
+            LegacyStem stem = legacyStem;
+            check("stemBlock.support", stem.placeOn(net.minecraft.class_2246.field_10362) && !stem.placeOn(net.minecraft.class_2246.field_10219), "");
+            LegacyRoots roots = legacyRoots;
+            check("rootsBlock.support", roots.placeOn(net.minecraft.class_2246.field_22120) && roots.placeOn(net.minecraft.class_2246.field_10219)
+                && !roots.placeOn(net.minecraft.class_2246.field_10102), "");
+            Object give = new net.minecraft.class_7296<>(e -> Optional.empty(), 1.0F, 10);
+            Object spear = new net.minecraft.class_12359(1.0, 1.0, 4.0F, 9.0F);
+            net.minecraft.class_1642 zombie = new net.minecraft.class_1642(server.method_30002());
+            Object follow = new net.minecraft.class_1346(zombie);
+            check("aiConstructors", give != null && spear != null && follow != null, "");
+        } catch (Throwable t) {
+            check("legacyConstructors", false, t);
             t.printStackTrace();
         }
     }
