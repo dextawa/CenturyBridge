@@ -49,6 +49,12 @@ public abstract class CbItemMembersMixin {
         Object self = this;
         if (!(self instanceof CbItemMembers.LegacyDescriptionIdOverride)
                 && !(self instanceof CbItemMembers.LegacyOrCreateDescriptionId)) {
+            // 1.21.1's getDescriptionId() answered getOrCreateDescriptionId(): the restored member where a mod's mixin
+            // makes it answer otherwise than the field
+            String read = CbItemMembers.orCreateDescriptionIdRead((class_1792) self);
+            if (read != null) {
+                cir.setReturnValue(read);
+            }
             return;
         }
         if (!CbItemMembers.enterDescriptionId(self)) {

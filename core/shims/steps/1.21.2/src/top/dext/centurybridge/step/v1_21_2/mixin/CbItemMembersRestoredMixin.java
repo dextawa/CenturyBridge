@@ -14,7 +14,11 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 @Mixin(value = class_1792.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbItemMembersRestoredMixin implements CbItemMembers.ItemEnchantmentValue, CbItemMembers.ItemRepair,
         CbItemMembers.ItemDescriptionId, CbItemMembers.ItemEnchantable,
-        CbItemMembers.ItemDescription, CbItemMembers.ItemSounds {
+        CbItemMembers.ItemDescription, CbItemMembers.ItemSounds, CbItemMembers.ItemOrCreateDescriptionId {
+
+    @org.spongepowered.asm.mixin.Shadow
+    @org.spongepowered.asm.mixin.Final
+    protected String field_8014;
 
     /**
      * 1.21.1's Item.getEnchantmentValue(), restored: what the item's built components say (0 without ENCHANTABLE).
@@ -72,5 +76,19 @@ public abstract class CbItemMembersRestoredMixin implements CbItemMembers.ItemEn
     @Override
     public net.minecraft.class_3414 method_21831() {
         return net.minecraft.class_3417.field_20613.comp_349();
+    }
+
+    /**
+     * 1.21.1's Item.getOrCreateDescriptionId(), restored with its body: the description id field, else "item." and the
+     * registry id. 1.21.1 cached the made id in the field; 1.21.2's field is final and set once the item has its id
+     * (at construction, or at registration for a converted item, CbPendingIdsItems), so the made id is not stored.
+     */
+    @CbVanillaReads("CbItemMembersMixin: Item.getDescriptionId() (1.21.2's, final) answers from it where it answers otherwise than the field")
+    @Override
+    public String method_7869() {
+        if (this.field_8014 == null) {
+            return net.minecraft.class_156.method_646("item", net.minecraft.class_7923.field_41178.method_10221((class_1792) (Object) this));
+        }
+        return this.field_8014;
     }
 }
