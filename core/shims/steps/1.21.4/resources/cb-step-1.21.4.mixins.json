@@ -43,6 +43,7 @@
     "CbGuiScrollAreaAccess",
     "CbGuiScrollListMixin",
     "CbGuiScrollTextAreaMixin",
+    "CbGuiItemDrawMixin",
     "CbGuiScrollWidgetMixin",
     "CbItemConditionsMixin",
     "CbItemLayerAccess",
