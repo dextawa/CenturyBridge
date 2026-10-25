@@ -220,6 +220,43 @@ public class S9TestMod implements ModInitializer {
             }
         });
 
+        run("particles: 1.21.8 types that 1.21.9 gave options", () -> {
+            class_3218 level = server.method_30002();
+            net.minecraft.class_2400 breath = net.minecraft.class_2398.field_11216;
+            check(breath != null && ((net.minecraft.class_2394) breath).method_10295() == breath, "ParticleTypes.DRAGON_BREATH reads as a SimpleParticleType that is its own type");
+            net.minecraft.class_2675 pkt = new net.minecraft.class_2675(breath, false, false, 1.0, 100.0, 2.0, 0F, 0F, 0F, 0F, 3);
+            check(pkt.method_11551() != (Object) breath && pkt.method_11551().method_10295() != (Object) breath,
+                "ClientboundLevelParticlesPacket(DRAGON_BREATH, ..) holds 1.21.9's options, got " + pkt.method_11551().getClass().getName());
+            net.minecraft.class_9129 buf = new net.minecraft.class_9129(io.netty.buffer.Unpooled.buffer(), server.method_30611());
+            net.minecraft.class_2675.field_47935.encode(buf, pkt);
+            net.minecraft.class_2675 back = net.minecraft.class_2675.field_47935.decode(buf);
+            check(back.method_11551().method_10295() == pkt.method_11551().method_10295(),
+                "the packet encodes and decodes to the same particle type (" + net.minecraft.class_7923.field_41180.method_10221(back.method_11551().method_10295()) + ")");
+            int sent = level.method_65096(net.minecraft.class_2398.field_11245, 0.5, 100.0, 0.5, 4, 0.1, 0.1, 0.1, 0.0);
+            check(sent == 0, "ServerLevel.sendParticles(EFFECT, ..) with no players sends to nobody, got " + sent);
+            level.method_65096(net.minecraft.class_2398.field_17909, 0.5, 100.0, 0.5, 1, 0.0, 0.0, 0.0, 0.0);
+            level.method_65096(net.minecraft.class_2398.field_11213, 0.5, 100.0, 0.5, 1, 0.0, 0.0, 0.0, 0.0);
+            check(true, "sendParticles(FLASH / INSTANT_EFFECT, ..) ran");
+            net.minecraft.class_1295 cloud = new net.minecraft.class_1295(level, 0.5, 100.0, 0.5);
+            cloud.method_5608(breath);
+            check(cloud.method_5600() != (Object) breath && cloud.method_5600().method_10295() == pkt.method_11551().method_10295(),
+                "AreaEffectCloud.setParticle(DRAGON_BREATH) keeps 1.21.9's dragon breath options, got " + cloud.method_5600().getClass().getName());
+        });
+
+        run("explosions: no block particles", () -> {
+            class_3218 level = server.method_30002();
+            level.method_8454(null, null, null, 0.5, 200.0, 0.5, 1.0F, false, net.minecraft.class_1937.class_7867.field_40888,
+                net.minecraft.class_2398.field_11236, net.minecraft.class_2398.field_11216, net.minecraft.class_3417.field_15152);
+            check(true, "Level.explode(.., small, DRAGON_BREATH, sound) in the 1.21.8 shape ran");
+            net.minecraft.class_2664 ex = new net.minecraft.class_2664(new net.minecraft.class_243(0.5, 200.0, 0.5), java.util.Optional.empty(),
+                net.minecraft.class_2398.field_11216, net.minecraft.class_3417.field_15152);
+            check(ex.comp_2885() != (Object) net.minecraft.class_2398.field_11216, "new ClientboundExplodePacket(.., DRAGON_BREATH, ..) holds 1.21.9's options");
+            net.minecraft.class_9129 buf = new net.minecraft.class_9129(io.netty.buffer.Unpooled.buffer(), server.method_30611());
+            net.minecraft.class_2664.field_47925.encode(buf, ex);
+            net.minecraft.class_2664 back = net.minecraft.class_2664.field_47925.decode(buf);
+            check(back.comp_2885().method_10295() == ex.comp_2885().method_10295(), "the explode packet encodes and decodes");
+        });
+
         System.out.println("CB-S9TEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " failed: " + FAILS));
     }
 }

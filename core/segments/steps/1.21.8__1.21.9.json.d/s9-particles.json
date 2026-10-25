@@ -1,0 +1,656 @@
+{
+  "adapterHooks": [
+    {
+      "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyRenderType",
+      "basis": "s9 particles: a 1.21.8 single-quad particle's getRenderType answers 1.21.9's getLayer (its sheet's layer) and getGroup (single quads, or a legacy group when it draws itself or its type has no layer)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "requires": [
+        "method_18122()Lnet/minecraft/class_3999;"
+      ],
+      "synth": [
+        {
+          "call": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles.cbLayer(Ltop/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyRenderType;)Lnet/minecraft/class_3940$class_11941;",
+          "new": "method_74255()Lnet/minecraft/class_3940$class_11941;"
+        },
+        {
+          "call": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles.cbGroup(Ltop/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyRenderType;)Lnet/minecraft/class_3999;",
+          "new": "method_74274()Lnet/minecraft/class_3999;"
+        }
+      ],
+      "under": "net/minecraft/class_3940"
+    },
+    {
+      "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyRenderType",
+      "basis": "s9 particles: a 1.21.8 particle that is no single-quad particle answers getGroup with its 1.21.8 type: a legacy group draws it 1.21.8's way (CbParticleGroup)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "requires": [
+        "method_18122()Lnet/minecraft/class_3999;"
+      ],
+      "synth": [
+        {
+          "call": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles.cbGroup(Ltop/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyRenderType;)Lnet/minecraft/class_3999;",
+          "new": "method_74274()Lnet/minecraft/class_3999;"
+        }
+      ],
+      "under": "net/minecraft/class_703"
+    },
+    {
+      "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyRender",
+      "basis": "s9 particles: marks a 1.21.8 particle drawing itself (method_3074): it goes to a legacy group, which hands it a real buffer",
+      "requires": [
+        "method_3074(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V"
+      ],
+      "synth": [],
+      "under": "net/minecraft/class_703"
+    },
+    {
+      "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyQuad",
+      "basis": "s9 particles: marks a 1.21.8 particle drawing itself (method_60373): it goes to a legacy group, which hands it a real buffer",
+      "requires": [
+        "method_60373(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;Lorg/joml/Quaternionf;F)V"
+      ],
+      "synth": [],
+      "under": "net/minecraft/class_703"
+    },
+    {
+      "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyRotatedQuad",
+      "basis": "s9 particles: marks a 1.21.8 particle drawing itself (method_60374): it goes to a legacy group, which hands it a real buffer",
+      "requires": [
+        "method_60374(Lnet/minecraft/class_4588;Lorg/joml/Quaternionf;FFFF)V"
+      ],
+      "synth": [],
+      "under": "net/minecraft/class_703"
+    },
+    {
+      "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyCustom",
+      "basis": "s9 particles: marks a 1.21.8 particle drawing itself (method_65198): it goes to a legacy group, which hands it a real buffer",
+      "requires": [
+        "method_65198(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_4184;F)V"
+      ],
+      "synth": [],
+      "under": "net/minecraft/class_703"
+    },
+    {
+      "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyColor",
+      "basis": "s9 particles: setColor left Particle for SingleQuadParticle; a 1.21.8 particle that is no single-quad particle overriding it is reached by 1.21.8 code's setColor through this interface (CbParticles.method_3084; on a single-quad one the method_74305 override hook reaches it)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "requires": [
+        "method_3084(FFF)V"
+      ],
+      "synth": [],
+      "under": "net/minecraft/class_703"
+    },
+    {
+      "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyAlpha",
+      "basis": "s9 particles: setAlpha left Particle for SingleQuadParticle; as LegacyColor (CbParticles.method_3083; the override is widened to public for the interface)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "requires": [
+        "method_3083(F)V"
+      ],
+      "synth": [],
+      "under": "net/minecraft/class_703"
+    },
+    {
+      "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyPickSprite",
+      "basis": "s9 particles: 1.21.9 dropped TextureSheetParticle.pickSprite (its providers pick the sprite themselves); a 1.21.8 override is reached by 1.21.8 code's pickSprite through this interface (CbParticles.method_18140), a super call runs 1.21.8's body (CbParticleBaseSupers)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "requires": [
+        "method_18140(Lnet/minecraft/class_4002;)V"
+      ],
+      "synth": [],
+      "under": "net/minecraft/class_3940"
+    },
+    {
+      "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyItemState",
+      "basis": "s9 particles: 1.21.9 dropped ItemParticleProvider.calculateState (method_74256 computes the sprite); a 1.21.8 override is reached by 1.21.8 code's calculateState through this interface (CbParticles.method_65524)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "requires": [
+        "method_65524(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;)Lnet/minecraft/class_10444;"
+      ],
+      "synth": [],
+      "under": "net/minecraft/class_647$class_10417"
+    }
+  ],
+  "callReshapes": {
+    "net/minecraft/class_666$class_667.method_3019(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+      "basis": "s9 particles: the provider takes its type's 1.21.9 options (CbParticleOptions.power: what 1.21.8's provider drew) and the RandomSource 1.21.8 took from the level",
+      "desc": "(Lnet/minecraft/class_11978;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions#power(Lnet/minecraft/class_2400;)Lnet/minecraft/class_11978;",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "keep:7",
+        "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+      ]
+    },
+    "net/minecraft/class_677$class_3997.method_18121(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+      "basis": "s9 particles: the provider takes its type's 1.21.9 options (CbParticleOptions.flash: what 1.21.8's provider drew) and the RandomSource 1.21.8 took from the level",
+      "desc": "(Lnet/minecraft/class_9381;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions#flash(Lnet/minecraft/class_2400;)Lnet/minecraft/class_9381;",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "keep:7",
+        "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+      ]
+    },
+    "net/minecraft/class_711$class_713.method_3097(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+      "basis": "s9 particles: the provider takes its type's 1.21.9 options (CbParticleOptions.spell: what 1.21.8's provider drew) and the RandomSource 1.21.8 took from the level",
+      "desc": "(Lnet/minecraft/class_11979;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions#spell(Lnet/minecraft/class_2400;)Lnet/minecraft/class_11979;",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "keep:7",
+        "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+      ]
+    },
+    "net/minecraft/class_1937.method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V": {
+      "basis": "s9 particles: Level.explode takes the block particles the client scatters over the blast; 1.21.8's explosion scattered none (CbClimb.noExplosionParticles); a 1.21.8 particle type that 1.21.9 gave options of their own becomes those options (CbParticleOptions.current)",
+      "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6012;Lnet/minecraft/class_6880;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "keep:7",
+        "keep:8",
+        "conv:9 top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions#current(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2394;",
+        "conv:10 top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions#current(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2394;",
+        "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#noExplosionParticles()Lnet/minecraft/class_6012;",
+        "keep:11"
+      ]
+    },
+    "net/minecraft/class_3218.method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V": {
+      "basis": "s9 particles: Level.explode takes the block particles the client scatters over the blast; 1.21.8's explosion scattered none (CbClimb.noExplosionParticles); a 1.21.8 particle type that 1.21.9 gave options of their own becomes those options (CbParticleOptions.current)",
+      "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6012;Lnet/minecraft/class_6880;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "keep:7",
+        "keep:8",
+        "conv:9 top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions#current(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2394;",
+        "conv:10 top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions#current(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2394;",
+        "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#noExplosionParticles()Lnet/minecraft/class_6012;",
+        "keep:11"
+      ]
+    },
+    "net/minecraft/class_638.method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V": {
+      "basis": "s9 particles: Level.explode takes the block particles the client scatters over the blast; 1.21.8's explosion scattered none (CbClimb.noExplosionParticles); a 1.21.8 particle type that 1.21.9 gave options of their own becomes those options (CbParticleOptions.current)",
+      "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6012;Lnet/minecraft/class_6880;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "keep:7",
+        "keep:8",
+        "conv:9 top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions#current(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2394;",
+        "conv:10 top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions#current(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2394;",
+        "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#noExplosionParticles()Lnet/minecraft/class_6012;",
+        "keep:11"
+      ]
+    },
+    "net/minecraft/class_700$class_701.method_3042(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+      "basis": "s9 particles: MobAppearanceParticle is 1.21.9's ElderGuardianParticle (javap: the same constructor, model layer and render type); its provider's createParticle takes the RandomSource 1.21.8's drew from the level",
+      "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "keep:7",
+        "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#random(Lnet/minecraft/class_638;)Lnet/minecraft/class_5819;"
+      ]
+    }
+  },
+  "classRenames": {
+    "net/minecraft/class_4003": "net/minecraft/class_3940",
+    "net/minecraft/class_700": "net/minecraft/class_11930",
+    "net/minecraft/class_700$class_701": "net/minecraft/class_11930$class_701"
+  },
+  "ctorRedirects": {
+    "net/minecraft/class_3999.<init>(Ljava/lang/String;Lnet/minecraft/class_1921;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#renderType",
+    "net/minecraft/class_702.<init>(Lnet/minecraft/class_638;Lnet/minecraft/class_1060;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleEngine#create",
+    "net/minecraft/class_693.<init>(Lnet/minecraft/class_898;Lnet/minecraft/class_638;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#createPickup",
+    "net/minecraft/class_2664.<init>(Lnet/minecraft/class_243;Ljava/util/Optional;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbClimb#explodePacket"
+  },
+  "fieldGetters": {
+    "net/minecraft/class_3999.field_17827:Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_3999.field_17828:Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_3999.field_17829:Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_3999.field_17831:Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_2398.field_11216:Lnet/minecraft/class_2400;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions",
+    "net/minecraft/class_2398.field_11245:Lnet/minecraft/class_2400;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions",
+    "net/minecraft/class_2398.field_11213:Lnet/minecraft/class_2400;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions",
+    "net/minecraft/class_2398.field_17909:Lnet/minecraft/class_2400;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions"
+  },
+  "fieldRenames": {
+    "net/minecraft/class_4003.field_17886:Lnet/minecraft/class_1058;": "field_62632",
+    "net/minecraft/class_700.field_21792:Lnet/minecraft/class_1921;": "field_62615"
+  },
+  "instanceFieldGetters": {
+    "net/minecraft/class_703.field_3839:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.field_3841:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.field_3842:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.field_3857:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.field_3859:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.field_3861:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles"
+  },
+  "instanceFieldSetters": {
+    "net/minecraft/class_703.field_3839:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.field_3841:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.field_3842:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.field_3857:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.field_3859:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.field_3861:F": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles"
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_3940.method_60374(Lnet/minecraft/class_4588;Lorg/joml/Quaternionf;FFFF)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_3999.comp_3341()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.method_18122()Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.method_3074(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.method_3083(F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.method_3084(FFF)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_703.method_65198(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_4184;F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_4003.method_18140(Lnet/minecraft/class_4002;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_702.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleEngine",
+    "net/minecraft/class_702.method_18829()V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleEngine",
+    "net/minecraft/class_702.method_3046(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleEngine",
+    "net/minecraft/class_702.method_3054(Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleEngine",
+    "net/minecraft/class_702.method_3049(Lnet/minecraft/class_4184;FLnet/minecraft/class_4597$class_4598;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleEngine",
+    "net/minecraft/class_707$class_8187.createParticle(Lnet/minecraft/class_2394;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles",
+    "net/minecraft/class_647$class_10417.method_65524(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;)Lnet/minecraft/class_10444;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles"
+  },
+  "methodRenames": {
+    "net/minecraft/class_4003.method_18141(Lnet/minecraft/class_1058;)V": "method_74307",
+    "net/minecraft/class_4003.method_18142(Lnet/minecraft/class_4002;)V": "method_74306",
+    "net/minecraft/class_5878.method_34045()I": "comp_4820"
+  },
+  "overrideHooks": [
+    {
+      "basis": "s9 particles: vanilla calls the QuadParticleRenderState shape; a 1.21.8 override draws into the consumer behind it (its class draws in a legacy group, through CbParticles.Immediate)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "new": "method_3074(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;F)V",
+      "old": "method_3074(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V",
+      "onlyUnder": "net/minecraft/class_3940",
+      "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles.consumer(Lnet/minecraft/class_11944;)Lnet/minecraft/class_4588;"
+    },
+    {
+      "basis": "s9 particles: vanilla calls the QuadParticleRenderState shape; a 1.21.8 override draws into the consumer behind it (its class draws in a legacy group, through CbParticles.Immediate)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "new": "method_60373(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;Lorg/joml/Quaternionf;F)V",
+      "old": "method_60373(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;Lorg/joml/Quaternionf;F)V",
+      "onlyUnder": "net/minecraft/class_3940",
+      "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles.consumer(Lnet/minecraft/class_11944;)Lnet/minecraft/class_4588;"
+    },
+    {
+      "basis": "s9 particles: vanilla calls the QuadParticleRenderState shape; a 1.21.8 override draws into the consumer behind it (its class draws in a legacy group, through CbParticles.Immediate)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "new": "method_60375(Lnet/minecraft/class_11944;Lorg/joml/Quaternionf;FFFF)V",
+      "old": "method_60374(Lnet/minecraft/class_4588;Lorg/joml/Quaternionf;FFFF)V",
+      "onlyUnder": "net/minecraft/class_3940",
+      "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles.consumer(Lnet/minecraft/class_11944;)Lnet/minecraft/class_4588;"
+    },
+    {
+      "basis": "s9 particles: setColor / setAlpha moved to SingleQuadParticle; vanilla calls the new name, the 1.21.8 override answers it",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "new": "method_74305(FFF)V",
+      "old": "method_3084(FFF)V",
+      "onlyUnder": "net/minecraft/class_3940"
+    },
+    {
+      "basis": "s9 particles: setColor / setAlpha moved to SingleQuadParticle; vanilla calls the new name, the 1.21.8 override answers it",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "new": "method_74308(F)V",
+      "old": "method_3083(F)V",
+      "onlyUnder": "net/minecraft/class_3940"
+    },
+    {
+      "basis": "s9 particles: TextureSheetParticle.setSprite is SingleQuadParticle's under a new name (javap: the same body); vanilla calls the new name, the 1.21.8 override answers it",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "new": "method_74307(Lnet/minecraft/class_1058;)V",
+      "old": "method_18141(Lnet/minecraft/class_1058;)V",
+      "onlyUnder": "net/minecraft/class_3940"
+    },
+    {
+      "basis": "s9 particles: TextureSheetParticle.setSpriteFromAge is SingleQuadParticle's under a new name (javap: the same body); vanilla calls the new name, the 1.21.8 override answers it",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "new": "method_74306(Lnet/minecraft/class_4002;)V",
+      "old": "method_18142(Lnet/minecraft/class_4002;)V",
+      "onlyUnder": "net/minecraft/class_3940"
+    },
+    {
+      "basis": "s9 particles: vanilla calls the provider's 1.21.9 shape; a 1.21.8 override gets the type 1.21.8 passed (CbParticleOptions.legacyPower), the random dropped (1.21.8's providers drew from the level)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "new": "method_3019(Lnet/minecraft/class_11978;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+      "old": "method_3019(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;",
+      "onlyUnder": "net/minecraft/class_666$class_667",
+      "args": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions.legacyPower(Lnet/minecraft/class_11978;)Lnet/minecraft/class_2400;"
+    },
+    {
+      "basis": "s9 particles: vanilla calls the provider's 1.21.9 shape; a 1.21.8 override gets the type 1.21.8 passed (CbParticleOptions.legacyFlash), the random dropped (1.21.8's providers drew from the level)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "new": "method_18121(Lnet/minecraft/class_9381;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+      "old": "method_18121(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;",
+      "onlyUnder": "net/minecraft/class_677$class_3997",
+      "args": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions.legacyFlash(Lnet/minecraft/class_9381;)Lnet/minecraft/class_2400;"
+    },
+    {
+      "basis": "s9 particles: vanilla calls the provider's 1.21.9 shape; a 1.21.8 override gets the type 1.21.8 passed (CbParticleOptions.legacySpell), the random dropped (1.21.8's providers drew from the level)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "new": "method_3097(Lnet/minecraft/class_11979;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+      "old": "method_3097(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;",
+      "onlyUnder": "net/minecraft/class_711$class_713",
+      "args": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleOptions.legacySpell(Lnet/minecraft/class_11979;)Lnet/minecraft/class_2400;"
+    },
+    {
+      "basis": "s9 particles: ParticleProvider.Sprite's createParticle is method_74291 with the RandomSource; vanilla calls it, the 1.21.8 implementation answers (its random was the level's)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "old": "createParticle(Lnet/minecraft/class_2394;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;",
+      "new": "method_74291(Lnet/minecraft/class_2394;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_3940;",
+      "args": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "onlyUnder": "net/minecraft/class_707$class_8187"
+    },
+    {
+      "basis": "s9 particles: 1.21.9's item particle providers take the sprite from method_74256(stack, level, random), which is calculateState plus the state's particle icon; a 1.21.8 override's state gives the sprite (CbParticles.itemSprite)",
+      "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "old": "method_65524(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;)Lnet/minecraft/class_10444;",
+      "new": "method_74256(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;",
+      "args": [
+        0,
+        1
+      ],
+      "unwrap": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles.itemSprite(Lnet/minecraft/class_10444;)Lnet/minecraft/class_1058;",
+      "onlyUnder": "net/minecraft/class_647$class_10417"
+    },
+    {
+      "basis": "s9 particles: MobAppearanceParticle.Provider is ElderGuardianParticle.Provider; vanilla calls createParticle with the RandomSource, the 1.21.8 override answers (frames: its super call gets vanilla's random)",
+      "old": "method_3042(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;",
+      "new": "method_3042(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5819;)Lnet/minecraft/class_703;",
+      "args": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "onlyUnder": "net/minecraft/class_11930$class_701",
+      "frames": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+      "superCalls": "rewrite"
+    }
+  ],
+  "superCtorReshapes": {
+    "net/minecraft/class_3940.<init>(Lnet/minecraft/class_638;DDD)V": {
+      "basis": "s9 particles: 1.21.9's SingleQuadParticle (TextureSheetParticle merged into it) takes its sprite at construction; 1.21.8's started without one until pickSprite / setSprite",
+      "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V",
+      "ops": [
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+      ]
+    },
+    "net/minecraft/class_3940.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+      "basis": "s9 particles: 1.21.9's SingleQuadParticle (TextureSheetParticle merged into it) takes its sprite at construction; 1.21.8's started without one until pickSprite / setSprite",
+      "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+      "ops": [
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+      ]
+    },
+    "net/minecraft/class_4003.<init>(Lnet/minecraft/class_638;DDD)V": {
+      "basis": "s9 particles: 1.21.9's SingleQuadParticle (TextureSheetParticle merged into it) takes its sprite at construction; 1.21.8's started without one until pickSprite / setSprite",
+      "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V",
+      "ops": [
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+      ]
+    },
+    "net/minecraft/class_4003.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+      "basis": "s9 particles: 1.21.9's SingleQuadParticle (TextureSheetParticle merged into it) takes its sprite at construction; 1.21.8's started without one until pickSprite / setSprite",
+      "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+      "ops": [
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+      ]
+    },
+    "net/minecraft/class_702.<init>(Lnet/minecraft/class_638;Lnet/minecraft/class_1060;)V": {
+      "basis": "s9 particles: 1.21.9's engine is built over the game's ParticleResources (sprite sets and providers), which 1.21.8's engine loaded itself over the texture manager",
+      "desc": "(Lnet/minecraft/class_638;Lnet/minecraft/class_11939;)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v1_21_9/rt/CbParticleEngine#resources(Lnet/minecraft/class_1060;)Lnet/minecraft/class_11939;"
+      ]
+    },
+    "net/minecraft/class_693.<init>(Lnet/minecraft/class_898;Lnet/minecraft/class_638;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;)V": {
+      "basis": "s9 particles: 1.21.9's ItemPickupParticle takes the picked-up item's render state and motion where 1.21.8 took the dispatcher and the entity (ClientPacketListener extracts the state at partial tick 1, as CbParticles.pickupState)",
+      "desc": "(Lnet/minecraft/class_638;Lnet/minecraft/class_10017;Lnet/minecraft/class_1297;Lnet/minecraft/class_243;)V",
+      "ops": [
+        "keep:1",
+        "conv:0,2 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#pickupState(Lnet/minecraft/class_898;Lnet/minecraft/class_1297;)Lnet/minecraft/class_10017;",
+        "keep:3",
+        "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#motion(Lnet/minecraft/class_1297;)Lnet/minecraft/class_243;"
+      ]
+    },
+    "net/minecraft/class_647.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_10444;)V": {
+      "basis": "s9 particles: 1.21.9's BreakingItemParticle takes the sprite its 1.21.8 constructor took from the item state (CbParticles.itemSprite: 1.21.8's body)",
+      "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "conv:4 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#itemSprite(Lnet/minecraft/class_10444;)Lnet/minecraft/class_1058;"
+      ]
+    },
+    "net/minecraft/class_8253.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_4002;FFZZFF)V": {
+      "basis": "s9 particles: 1.21.9's FallingLeavesParticle takes the sprite its 1.21.8 constructor picked from the set (CbParticles.leafSprite: 1.21.8's body)",
+      "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;FFZZFF)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "conv:4 top/dext/centurybridge/step/v1_21_9/rt/CbParticles#leafSprite(Lnet/minecraft/class_4002;)Lnet/minecraft/class_1058;",
+        "keep:5",
+        "keep:6",
+        "keep:7",
+        "keep:8",
+        "keep:9",
+        "keep:10"
+      ]
+    },
+    "net/minecraft/class_709.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+      "basis": "s9 particles: 1.21.9's constructor takes the sprite; 1.21.8's started without one until pickSprite / setSprite (as SingleQuadParticle's)",
+      "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+      ]
+    },
+    "net/minecraft/class_4955.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+      "basis": "s9 particles: 1.21.9's constructor takes the sprite; 1.21.8's started without one until pickSprite / setSprite (as SingleQuadParticle's)",
+      "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+      ]
+    },
+    "net/minecraft/class_740.<init>(Lnet/minecraft/class_638;DDD)V": {
+      "basis": "s9 particles: 1.21.9's constructor takes the sprite; 1.21.8's started without one until pickSprite / setSprite (as SingleQuadParticle's)",
+      "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+      ]
+    }
+  },
+  "superRedirects": {
+    "net/minecraft/class_703.method_3084(FFF)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleBaseSupers",
+    "net/minecraft/class_703.method_3083(F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleBaseSupers",
+    "net/minecraft/class_711.method_3083(F)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleBaseSupers",
+    "net/minecraft/class_4003.method_18140(Lnet/minecraft/class_4002;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleBaseSupers",
+    "net/minecraft/class_647$class_10417.method_65524(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;)Lnet/minecraft/class_10444;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleBaseSupers"
+  },
+  "staticRedirects": {
+    "net/minecraft/class_663.method_49316(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49317(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49318(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49319(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49320(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49324(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49325(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49326(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49327(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49328(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49329(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49330(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49331(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49332(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49333(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49334(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles",
+    "net/minecraft/class_663.method_49335(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": "top/dext/centurybridge/step/v1_21_9/rt/CbDripParticles"
+  },
+  "lambdaAdapters": {
+    "net/minecraft/class_707.method_3090(Lnet/minecraft/class_2394;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+      "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#adaptProvider(Ltop/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyProvider;)Lnet/minecraft/class_707;",
+      "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacyProvider"
+    },
+    "net/minecraft/class_707$class_8187.createParticle(Lnet/minecraft/class_2394;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_4003;": {
+      "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#adaptSprite(Ltop/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacySprite;)Lnet/minecraft/class_707$class_8187;",
+      "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles$LegacySprite"
+    }
+  },
+  "abstractFills": [
+    {
+      "under": "net/minecraft/class_4002",
+      "method": "method_74304()Lnet/minecraft/class_1058;",
+      "call": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles.first(Lnet/minecraft/class_4002;)Lnet/minecraft/class_1058;",
+      "basis": "s9 particles: 1.21.9's SpriteSet demands first() (its providers build the particle with the set's first sprite); a 1.21.8 set answers its sprite for age 0 (CbParticles.first)"
+    }
+  ],
+  "mixinTargets": {
+    "net/minecraft/class_693.<init>(Lnet/minecraft/class_898;Lnet/minecraft/class_638;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_243;)V": {
+      "to": "<init>(Lnet/minecraft/class_638;Lnet/minecraft/class_10017;Lnet/minecraft/class_1297;Lnet/minecraft/class_243;)V",
+      "args": [
+        -1,
+        0,
+        -1,
+        2,
+        3
+      ],
+      "basis": "ItemPickupParticle(dispatcher, level, item, target, motion) -> (level, itemRenderState, target, motion): javap, the same body (Particle super at the item's position with the motion, target kept, the life counters set); 1.21.9 keeps the item's extracted state where 1.21.8 kept a safe copy of the entity and the dispatcher"
+    }
+  },
+  "frameDefaults": {
+    "method_3090(Lnet/minecraft/class_2394;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+      "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+    },
+    "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V": {
+      "11": "top/dext/centurybridge/step/v1_21_9/rt/CbClimb#noExplosionParticles()Lnet/minecraft/class_6012;"
+    },
+    "method_3042(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+      "8": "top/dext/centurybridge/step/v1_21_9/rt/CbParticles#frameRandom()Lnet/minecraft/class_5819;"
+    }
+  }
+}
