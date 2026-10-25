@@ -17,7 +17,12 @@
     "CbS26BedLayersMixin",
     "CbS26BedRendererMixin",
     "CbS26BedSpecialMixin",
-    "CbS26BedSpritesMixin"
+    "CbS26BedSpritesMixin",
+    "CbS26SignLayersMixin",
+    "CbS26SignStateMixin",
+    "CbS26StandingSignMixin",
+    "CbS26HangingSignMixin",
+    "CbS26SignSubmitMixin"
   ],
   "server": [],
   "injectors": {
