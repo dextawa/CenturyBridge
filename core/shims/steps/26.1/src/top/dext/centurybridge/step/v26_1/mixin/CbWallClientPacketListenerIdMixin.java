@@ -5,6 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Unique;
 
 /**
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Unique;
  * (class_634.field_16771), the same for the listener's life. 1.21.11's own code read it nowhere else; 26.1 dropped it.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(ClientPacketListener.class)
+@Mixin(value = ClientPacketListener.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallClientPacketListenerIdMixin {
 
     @Unique
