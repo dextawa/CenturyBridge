@@ -707,6 +707,156 @@ public final class Chain {
     public final java.util.Set<String> targetAbstracts = new java.util.HashSet<>();
     /** target-stub methods declared final, "owner.name(desc)" in the analysis namespace */
     public final java.util.Set<String> targetFinalMethods = new java.util.HashSet<>();
+    /** target-stub methods declared static, "owner.name(desc)" in the analysis namespace */
+    public final java.util.Set<String> targetStaticMethods = new java.util.HashSet<>();
+
+    /**
+     * The target release's Fabric API classes (its processedMods), in the analysis namespace like the target stub:
+     * declarations ("name(desc)"), statics, superclass and interfaces. The interfaces Fabric API injects into vanilla
+     * classes are in {@link #targetInterfacesOf}; their members are declared here.
+     */
+    public final java.util.Map<String, java.util.Set<String>> targetLibDecls = new java.util.HashMap<>();
+    public final java.util.Set<String> targetLibStatics = new java.util.HashSet<>();
+    public final java.util.Map<String, String> targetLibSuperOf = new java.util.HashMap<>();
+    public final java.util.Map<String, java.util.List<String>> targetLibInterfacesOf = new java.util.HashMap<>();
+
+    /** read the target's Fabric API classes (every jar under processedMods, jar-in-jar included) */
+    public void loadTargetLibraryDecls(Path processedMods, Path wallTable) throws IOException {
+        if (processedMods == null || !Files.isDirectory(processedMods)) {
+            return;
+        }
+        java.util.Map<String, String> back = new java.util.HashMap<>();
+        if (wallTable != null && Files.exists(wallTable)) {
+            for (String ln : Files.readAllLines(wallTable)) {
+                String[] p = ln.split("\t");
+                if (p.length >= 3 && p[0].equals("C")) {
+                    back.put(p[2], p[1]);
+                }
+            }
+        }
+        java.util.regex.Pattern cls = java.util.regex.Pattern.compile("L([^;]+);");
+        try (var st = Files.walk(processedMods)) {
+            for (Path j : st.filter(f -> f.toString().endsWith(".jar")).toList()) {
+                try (var in = Files.newInputStream(j)) {
+                    readLibJar(in, back, cls);
+                }
+            }
+        }
+    }
+
+    private void readLibJar(java.io.InputStream raw, java.util.Map<String, String> back, java.util.regex.Pattern cls) throws IOException {
+        java.util.zip.ZipInputStream z = new java.util.zip.ZipInputStream(raw);
+        for (java.util.zip.ZipEntry e; (e = z.getNextEntry()) != null; ) {
+            if (e.getName().endsWith(".jar")) {
+                readLibJar(new java.io.ByteArrayInputStream(z.readAllBytes()), back, cls);
+                continue;
+            }
+            if (!e.getName().endsWith(".class")) {
+                continue;
+            }
+            org.objectweb.asm.ClassReader cr = new org.objectweb.asm.ClassReader(z.readAllBytes());
+            String owner = back.getOrDefault(cr.getClassName(), cr.getClassName());
+            if (targetClasses.contains(owner)) {
+                continue; // a game class: the stub's
+            }
+            if (cr.getSuperName() != null) {
+                targetLibSuperOf.put(owner, back.getOrDefault(cr.getSuperName(), cr.getSuperName()));
+            }
+            targetLibInterfacesOf.put(owner, java.util.Arrays.stream(cr.getInterfaces()).map(i -> back.getOrDefault(i, i)).toList());
+            java.util.Set<String> decls = targetLibDecls.computeIfAbsent(owner, k -> new java.util.HashSet<>());
+            cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                @Override
+                public org.objectweb.asm.MethodVisitor visitMethod(int access, String name, String desc, String sig, String[] ex) {
+                    String bd = back.isEmpty() ? desc : cls.matcher(desc).replaceAll(mr -> "L"
+                        + java.util.regex.Matcher.quoteReplacement(back.getOrDefault(mr.group(1), mr.group(1))) + ";");
+                    decls.add(name + bd);
+                    if ((access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0) {
+                        targetLibStatics.add(owner + "." + name + bd);
+                    }
+                    return null;
+                }
+            }, org.objectweb.asm.ClassReader.SKIP_CODE | org.objectweb.asm.ClassReader.SKIP_DEBUG | org.objectweb.asm.ClassReader.SKIP_FRAMES);
+        }
+    }
+
+    /**
+     * Where the JVM resolves owner.name(desc) on the target: the class itself, then its superclasses, then its
+     * superinterfaces (vanilla's, with the interfaces the target's Fabric API injects, and Fabric API's own classes),
+     * as link resolution does. "decl" + (static ? " static" : ""), or null when nothing declares it (or the
+     * hierarchy leaves what is known: a JDK class is asked through reflection).
+     */
+    public String resolveOnTargetJvm(String owner, String shape) {
+        if (targetDecls.isEmpty()) {
+            return null;
+        }
+        java.util.List<String> ifaces = new java.util.ArrayList<>();
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        for (String c = owner; c != null && seen.add(c); ) {
+            String hit = declaredHere(c, shape);
+            if (hit != null) {
+                return hit;
+            }
+            ifaces.addAll(targetInterfacesOf.getOrDefault(c, targetLibInterfacesOf.getOrDefault(c, java.util.List.of())));
+            if (c.startsWith("java/")) {
+                if (Boolean.TRUE.equals(jdkDeclares(c, shape))) {
+                    return c;
+                }
+                break; // jdkDeclares walked its superclasses and interfaces
+            }
+            c = targetSuperOf.containsKey(c) ? targetSuperOf.get(c) : targetLibSuperOf.get(c);
+        }
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(ifaces);
+        while (!todo.isEmpty()) {
+            String i = todo.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            String hit = declaredHere(i, shape);
+            if (hit != null) {
+                return hit;
+            }
+            todo.addAll(targetInterfacesOf.getOrDefault(i, targetLibInterfacesOf.getOrDefault(i, java.util.List.of())));
+        }
+        return null;
+    }
+
+    private String declaredHere(String c, String shape) {
+        if (targetDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
+            return c + (targetStaticMethods.contains(c + "." + shape) ? " static" : "");
+        }
+        if (targetLibDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
+            return c + (targetLibStatics.contains(c + "." + shape) ? " static" : "");
+        }
+        return null;
+    }
+
+    /**
+     * Whether a call the source release made (owner.name(desc), analysis names) links on the target as the converted
+     * jar spells it: the step's classRenames applied to owner and descriptor, and past the wall the member's
+     * wall name (the table lists it on its root declaration in the source hierarchy). Resolved JVM-style
+     * (resolveOnTargetJvm), with the call kind's static-ness. A member the target moved up into a superclass or an
+     * interface default (26.1: Player.isIgnoringFallDamageFromCurrentImpulse into LivingEntity) still links, so
+     * it is neither dead nor a tombstone.
+     */
+    public boolean linksOnTarget(String owner, String name, String desc, boolean isStatic) {
+        String o = classRenames.getOrDefault(owner, owner);
+        String d = renamedDesc(desc);
+        java.util.List<String> names = new java.util.ArrayList<>(java.util.List.of(name));
+        for (String anc : selfAndSupers(owner)) {
+            String w = wallMethodFwd.get(anc + "." + name);
+            if (w != null) {
+                names.add(w);
+                break;
+            }
+        }
+        for (String n : names) {
+            String hit = resolveOnTargetJvm(o, n + d);
+            if (hit != null && hit.endsWith(" static") == isStatic) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Whether the nearest declaration of name+desc up the target superclass chain of these vanilla roots is final:
@@ -1260,6 +1410,9 @@ public final class Chain {
                     }
                     if (idx.finals.contains(e.getKey() + "." + me.getKey() + d)) {
                         targetFinalMethods.add(owner + "." + name + bd);
+                    }
+                    if (idx.statics.contains(e.getKey() + "." + me.getKey() + d)) {
+                        targetStaticMethods.add(owner + "." + name + bd);
                     }
                     if (!name.equals(me.getKey())) {
                         // past the wall the runtime name IS the mojang one: a mixin

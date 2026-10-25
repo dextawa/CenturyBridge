@@ -3680,6 +3680,13 @@ public final class JarProcessor {
                         if (r.level() == Chain.Level.OK) {
                             return;
                         }
+                        // a dead name the target still links JVM-style: the member moved up into a superclass or an
+                        // interface default (or a Fabric API interface injected into the class) under the same shape.
+                        // The call is not dead: it stays, spelled as the converted jar spells it
+                        if (!name.startsWith("<") && chain.linksOnTarget(owner, name, desc, op == Opcodes.INVOKESTATIC)) {
+                            top.dext.centurybridge.data.FullAudit.record(key, "links-on-target");
+                            return;
+                        }
                         String side = chain.sideOf(owner);
                         if (side.equals("datagen")) {
                             rpt.datagenSkipped++; // dev-time bytecode, never executes in play
@@ -4062,6 +4069,12 @@ public final class JarProcessor {
                                     continue;
                                 }
                                 Chain.Issue r = chain.resolveMember('m', h.getName());
+                                if (r.level() != Chain.Level.OK && !h.getName().startsWith("<")
+                                        && chain.linksOnTarget(hOwner, h.getName(), h.getDesc(), h.getTag() == Opcodes.H_INVOKESTATIC)) {
+                                    // as for a call: the target links the reference JVM-style (moved up / interface default)
+                                    top.dext.centurybridge.data.FullAudit.record(key, "links-on-target");
+                                    continue;
+                                }
                                 if (r.level() == Chain.Level.L3 && !h.getName().equals("<init>")
                                         && chain.resolveClass(hOwner).level() == Chain.Level.OK) {
                                     tombstone.put(site, r.boundary());
