@@ -11,58 +11,168 @@
   "mixinTargets": {
     "net/minecraft/client/renderer/LevelRenderer.renderHitOutline(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDLnet/minecraft/client/renderer/state/level/BlockOutlineRenderState;IF)V": {
       "to": "submitHitOutline(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/rendertype/RenderType;Lnet/minecraft/client/renderer/state/level/BlockOutlineRenderState;IFZ)V",
-      "args": [0, -1, -1, -1, -1, 3, 4, 5],
+      "args": [
+        0,
+        -1,
+        -1,
+        -1,
+        -1,
+        3,
+        4,
+        5
+      ],
       "basis": "javap: the same branches (DEBUG_SHAPES; collision, occlusion, interaction shapes at 0.4 alpha; the outline shape with the color argument), each ShapeRenderer.renderShape(pose, buffer, shape, -camX+x ...) now SubmitNodeCollector.submitShapeOutline; called from the same two sites of the same caller (V @77/@149, W @99/@151). The vertex consumer and camera offsets have no W argument"
     },
     "net/minecraft/client/gui/screens/PauseScreen.addFeedbackSubscreenAndCustomDialogButtons(Lnet/minecraft/client/Minecraft;Lnet/minecraft/core/Holder;Lnet/minecraft/client/gui/layouts/GridLayout$RowHelper;)V": {
       "to": "addCustomDialogButtons(Lnet/minecraft/client/Minecraft;Lnet/minecraft/core/Holder;Lnet/minecraft/client/gui/layouts/GridLayout$RowHelper;)V",
-      "args": [0, 1, 2],
+      "args": [
+        0,
+        1,
+        2
+      ],
       "basis": "javap: called at the same point (createPauseMenu's getCustomAdditions().ifPresent lambda); the same dialog-button body (computeExternalTitle, Button.builder, addChild); 26.2 builds the feedback button in createPauseMenu itself, so that one V statement has no counterpart here"
     },
     "net/minecraft/world/item/Items.registerBlock(Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/item/Item;": {
       "to": "registerBlock(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/item/Item;",
-      "args": [1],
+      "args": [
+        1
+      ],
       "basis": "javap: the same body (BlockItem::new into the BiFunction overload); 26.2 passes the BlockItemId the item key now comes from; every vanilla block item registers through the same overload, the per-colour ones from ColorCollection lambdas (lambda$static$167)"
     },
     "net/minecraft/world/item/Items.registerBlock(Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;": {
       "to": "registerBlock(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;",
-      "args": [1, 2],
+      "args": [
+        1,
+        2
+      ],
       "basis": "javap: the same body (BlockItem::new into the BiFunction+Properties overload) with the BlockItemId prepended"
     },
     "net/minecraft/world/item/Items.registerBlock(Lnet/minecraft/world/level/block/Block;Ljava/util/function/UnaryOperator;)Lnet/minecraft/world/item/Item;": {
       "to": "registerBlock(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;Ljava/util/function/UnaryOperator;)Lnet/minecraft/world/item/Item;",
-      "args": [1, 2],
+      "args": [
+        1,
+        2
+      ],
       "basis": "javap: the same body (the operator wrapped into a BiFunction, into the BiFunction overload) with the BlockItemId prepended"
     },
     "net/minecraft/world/item/Items.registerBlock(Lnet/minecraft/world/level/block/Block;[Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/item/Item;": {
       "to": "registerBlock(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;[Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/item/Item;",
-      "args": [1, 2],
+      "args": [
+        1,
+        2
+      ],
       "basis": "javap: the same body (registerBlock of the first, then the alternative blocks mapped into Item.BY_BLOCK in a loop) with the BlockItemId prepended"
     },
     "net/minecraft/world/item/Items.registerBlock(Lnet/minecraft/world/level/block/Block;Ljava/util/function/BiFunction;)Lnet/minecraft/world/item/Item;": {
       "to": "registerBlock(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;Ljava/util/function/BiFunction;)Lnet/minecraft/world/item/Item;",
-      "args": [1, 2],
+      "args": [
+        1,
+        2
+      ],
       "basis": "javap: the same body (new Item.Properties into the three-argument overload) with the BlockItemId prepended"
     },
     "net/minecraft/world/item/Items.registerBlock(Lnet/minecraft/world/level/block/Block;Ljava/util/function/BiFunction;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;": {
       "to": "registerBlock(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;Ljava/util/function/BiFunction;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;",
-      "args": [1, 2, 3],
+      "args": [
+        1,
+        2,
+        3
+      ],
       "basis": "javap: the funnel of every block item, the same body (registerItem(item key, properties -> factory.apply(block, properties.useBlockDescriptionPrefix()), properties)); the item key is BlockItemId.item() where V derived it from the block's holder key (blockIdToItemId)"
     },
     "net/minecraft/world/level/block/Blocks.register(Ljava/lang/String;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;": {
       "to": "register(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;",
-      "args": [-1, 1],
+      "args": [
+        -1,
+        1
+      ],
       "basis": "javap: registration of a plain Block from an id and properties, called by the same blocks; V went through register(String, Block::new, props), 26.2 through register(id.block(), props). The name string has no W argument (the BlockItemId stands for it)"
     },
     "net/minecraft/world/level/block/Blocks.registerStair(Ljava/lang/String;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;": {
       "to": "registerStair(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;",
-      "args": [-1, 1],
+      "args": [
+        -1,
+        1
+      ],
       "basis": "javap: the same body (StairBlock of the base block's default state, Properties.ofFullCopy(base)); the id is a BlockItemId"
     },
     "net/minecraft/world/level/block/Blocks.registerLegacyStair(Ljava/lang/String;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;": {
       "to": "registerLegacyStair(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;",
-      "args": [-1, 1],
+      "args": [
+        -1,
+        1
+      ],
       "basis": "javap: the same body (StairBlock of the base block's default state, Properties.ofLegacyCopy(base)); the id is a BlockItemId"
+    },
+    "net/minecraft/world/entity/ai/behavior/ChargeAttack.dealKnockBack(Lnet/minecraft/world/entity/animal/Animal;Lnet/minecraft/world/entity/LivingEntity;)V": {
+      "to": "dealKnockBack(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/animal/Animal;Lnet/minecraft/world/entity/LivingEntity;)V",
+      "args": [
+        1,
+        2
+      ],
+      "basis": "javap: the same speed/slowness amplifier and clamped speed, then animal.causeExtraKnockback(target, ...); 26.2 adds the ServerLevel in front (the mob-attack damage source for the reshaped causeExtraKnockback). The animal and the target are 26.1.2's arguments 0 and 1"
+    },
+    "net/minecraft/client/gui/screens/advancements/AdvancementsScreen.extractTooltips(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIII)V": {
+      "to": "extractTooltips(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II)V",
+      "args": [
+        0,
+        1,
+        2,
+        -1,
+        -1
+      ],
+      "basis": "javap: the same body (selected tab's tooltips under a pushed pose translated to the window's corner, then the tab titles under the mouse via isMouseOver / setTooltipForNextFrame); 26.1.2 passed the corner as arguments 3 and 4, 26.2 reads leftPos / topPos. Graphics and mouse x/y are arguments 0-2 in both"
+    },
+    "net/minecraft/client/resources/model/cuboid/ItemTransform$Deserializer.getVector3f(Lcom/google/gson/JsonObject;Ljava/lang/String;Lorg/joml/Vector3f;)Lorg/joml/Vector3f;": {
+      "to": "getVector3f(Lcom/google/gson/JsonObject;Ljava/lang/String;Lorg/joml/Vector3fc;)Lorg/joml/Vector3f;",
+      "args": [
+        0,
+        1,
+        -1
+      ],
+      "basis": "javap: the same read of a 3-element JSON array under the key, or a copy of the default; the default is a Vector3fc in 26.2 (the DEFAULT_* constants became Vector3fc), not necessarily a Vector3f, so handlers taking it do not follow"
+    },
+    "net/minecraft/world/entity/EntityType.loadPassengersRecursive(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/storage/ValueInput;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/EntityProcessor;)Lnet/minecraft/world/entity/Entity;": {
+      "to": "loadPassengersRecursive(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/storage/ValueInput;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnRequest;Lnet/minecraft/world/entity/EntityProcessor;)Lnet/minecraft/world/entity/Entity;",
+      "args": [
+        0,
+        1,
+        2,
+        -1,
+        4
+      ],
+      "basis": "javap: the same recursive passenger load (similarity 0.89); 26.2 passes an EntitySpawnRequest where 26.1.2 passed the EntitySpawnReason, the other four arguments in place"
+    },
+    "net/minecraft/client/gui/render/GuiRenderer.draw(Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V": {
+      "to": "draw()V",
+      "args": [
+        -1
+      ],
+      "basis": "javap: the same projection (1000 / 11000 / -11000 planes) and the two executeDrawRange passes over the draws; 26.1.2 handed the fog uniform slice down to executeDrawRange, 26.2 has no fog uniform in the GUI pass"
+    },
+    "net/minecraft/client/gui/render/GuiRenderer.executeDraw(Lnet/minecraft/client/gui/render/GuiRenderer$Draw;Lcom/mojang/blaze3d/systems/RenderPass;Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;)V": {
+      "to": "executeDraw(Lnet/minecraft/client/gui/render/GuiRenderer$Draw;Lcom/mojang/blaze3d/systems/RenderPass;)V",
+      "args": [
+        0,
+        1,
+        -1,
+        -1
+      ],
+      "basis": "javap: the same per-draw pipeline / textures / scissor / indexed draw (similarity 0.75); 26.1.2 passed the shared index buffer and its type, 26.2 takes them from the draw. The draw and the render pass are arguments 0 and 1 in both"
+    },
+    "net/minecraft/client/gui/render/GuiRenderer.executeDrawRange(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/pipeline/RenderTarget;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;II)V": {
+      "to": "executeDrawRange(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/pipeline/RenderTarget;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;II)V",
+      "args": [
+        0,
+        1,
+        -1,
+        2,
+        -1,
+        -1,
+        3,
+        4
+      ],
+      "basis": "javap: the same render pass on the target's colour/depth views, default uniforms, then executeDraw for draws [first, last); 26.1.2 set the \"Fog\" uniform from argument 2 and \"DynamicTransforms\" from argument 3, 26.2 sets only \"DynamicTransforms\" from its argument 2; the index buffer and type (26.1.2 arguments 4, 5) moved into the draws; the range is the last two arguments in both"
     }
   }
 }

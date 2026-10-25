@@ -17,7 +17,10 @@
     "CbS26BlockFallOnMixin",
     "CbS26SlimeFallOnMixin",
     "CbS26BedFallOnMixin",
-    "CbS26EntityFallOnMixin"
+    "CbS26EntityFallOnMixin",
+    "CbS26CrashCategoryMixin",
+    "CbS26GroundNavigationMixin",
+    "CbS26StriderNavigationMixin"
   ],
   "client": [
     "CbS26BedLayersMixin",
