@@ -151,6 +151,19 @@ public final class Chain {
     public final java.util.Map<String, MixinSplit> mixinSplits = new java.util.HashMap<>();
 
     /**
+     * A call W makes on an object V's receiver holds ("mixinReceivers", key "V owner>W owner"): V
+     * {@code minecraft.setScreen(s)}, W {@code minecraft.gui.setScreen(s)}. A @Redirect / @WrapOperation /
+     * @WrapWithCondition on V's call follows to W's when the wiring gives both ways between the receivers:
+     * "toW" {@code (V)W} (the held object, what the step's redirect body reads) and "toV" {@code (W)V} (the object
+     * holding it; for 26.2's client singletons the instance whose field is the W receiver, checked). MixinBridge
+     * gives the handler a W-shaped front taking W's receiver as V's (toV), and an Operation the mod calls with V's
+     * receiver reaches W's call on toW of it. "basis": why the two undo each other.
+     */
+    public record MixinReceiver(String[] toV, String[] toW, String basis) {}
+
+    public final java.util.Map<String, MixinReceiver> mixinReceivers = new java.util.HashMap<>();
+
+    /**
      * How a V method's answer and the W method's answer turn into each other for an @Inject whose selector
      * MixinBridge moved to a W method returning another type ("returnConverters"): key "owner.name(desc)" (V,
      * on the class or a V supertype of the mixin's target), value {"toV": "OWNER#name(desc)", "toW":
@@ -3036,6 +3049,15 @@ public final class Chain {
                     }
                     c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs,
                         o.has("basis") ? o.get("basis").getAsString() : ""));
+                }
+            }
+            if (root.has("mixinReceivers")) {
+                var mrs = root.getAsJsonObject("mixinReceivers");
+                for (String k : mrs.keySet()) {
+                    var o = mrs.getAsJsonObject(k);
+                    String where = "mixinReceivers " + k;
+                    c.mixinReceivers.put(k, new MixinReceiver(parseStaticRef(where, o.get("toV").getAsString()),
+                        parseStaticRef(where, o.get("toW").getAsString()), o.has("basis") ? o.get("basis").getAsString() : ""));
                 }
             }
             if (root.has("mixinSplits")) {
