@@ -16,4 +16,9 @@ public final class CbS26Server {
     public static MinecraftServer.MultiplayerScope lanScope(MinecraftServer self) {
         return MinecraftServer.MultiplayerScope.LAN;
     }
+
+    /** the same scope for a 26.1.2 call of publishServer(gameType, cheats, port) (callReshapes push) */
+    public static MinecraftServer.MultiplayerScope lan() {
+        return MinecraftServer.MultiplayerScope.LAN;
+    }
 }

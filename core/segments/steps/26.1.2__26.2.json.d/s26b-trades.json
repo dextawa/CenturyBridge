@@ -1,0 +1,56 @@
+{
+  "_s26b_trades": "s26b, queue item 5: enchantment options as Optional (26.1.2) vs HolderSet (26.2); publishServer's multiplayer scope (javap of both)",
+  "instanceRedirects": {
+    "net/minecraft/world/level/storage/loot/functions/EnchantRandomlyFunction$Builder.withOptions(Ljava/util/Optional;)Lnet/minecraft/world/level/storage/loot/functions/EnchantRandomlyFunction$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS26Enchanting"
+  },
+  "staticRedirects": {
+    "net/minecraft/world/item/trading/VillagerTrades.enchantedBook(Lnet/minecraft/core/HolderGetter;Ljava/util/Optional;)Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS26Enchanting",
+    "net/minecraft/world/item/trading/VillagerTrades.enchantedItem(Lnet/minecraft/core/HolderGetter;Ljava/util/Optional;Lnet/minecraft/world/item/Item;)Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS26Enchanting"
+  },
+  "_redirects_basis": {
+    "net/minecraft/world/level/storage/loot/functions/EnchantRandomlyFunction$Builder.withOptions(Ljava/util/Optional;)Lnet/minecraft/world/level/storage/loot/functions/EnchantRandomlyFunction$Builder;": "26.1.2 stored the Optional as given (an empty one clears the options); 26.2's withOptions takes the HolderSet and stores Optional.of(set); the builder's options field is still an Optional (opened by the layer's access widener)",
+    "net/minecraft/world/item/trading/VillagerTrades.enchantedBook(Lnet/minecraft/core/HolderGetter;Ljava/util/Optional;)Ljava/util/List;": "26.1.2's body (the same loot functions as 26.2's enchantedBook, options passed through as the Optional)",
+    "net/minecraft/world/item/trading/VillagerTrades.enchantedItem(Lnet/minecraft/core/HolderGetter;Ljava/util/Optional;Lnet/minecraft/world/item/Item;)Ljava/util/List;": "26.1.2's body (the same loot functions as 26.2's enchantedItem; EnchantWithLevelsFunction.Builder keeps withOptions(Optional) on 26.2)"
+  },
+  "mixinTargets": {
+    "net/minecraft/world/item/trading/VillagerTrades.enchantedBook(Lnet/minecraft/core/HolderGetter;Ljava/util/Optional;)Ljava/util/List;": {
+      "to": "enchantedBook(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderSet;)Ljava/util/List;",
+      "args": [
+        0,
+        -1
+      ],
+      "basis": "javap: the same body (EnchantRandomlyFunction.Builder.withOptions, allowingIncompatibleEnchantments, includeAdditionalCostComponent, the stored-enchantments filter with DiscardItem on fail); the same 4 call sites in VillagerTrades, each passing the HolderSet 26.1.2 wrapped in an Optional"
+    },
+    "net/minecraft/world/item/trading/VillagerTrades.enchantedItem(Lnet/minecraft/core/HolderGetter;Ljava/util/Optional;Lnet/minecraft/world/item/Item;)Ljava/util/List;": {
+      "to": "enchantedItem(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderSet;Lnet/minecraft/world/item/Item;)Ljava/util/List;",
+      "args": [
+        0,
+        -1,
+        2
+      ],
+      "basis": "javap: the same body (EnchantWithLevelsFunction between 5 and 19, includeAdditionalCostComponent, the enchantments filter with DiscardItem on fail); the same 17 call sites in VillagerTrades"
+    }
+  },
+  "callReshapes": {
+    "net/minecraft/server/MinecraftServer.publishServer(Lnet/minecraft/world/level/GameType;ZI)Z": {
+      "desc": "(Lnet/minecraft/server/MinecraftServer$MultiplayerScope;Lnet/minecraft/world/level/GameType;ZI)Z",
+      "ops": [
+        "push top/dext/centurybridge/step/v26_2/rt/CbS26Server#lan()Lnet/minecraft/server/MinecraftServer$MultiplayerScope;",
+        "keep",
+        "keep",
+        "keep"
+      ],
+      "basis": "26.1.2's publishServer(gameType, cheats, port) opened the game to LAN, its only scope; 26.2's PublishCommand calls publishServer(MultiplayerScope.LAN, gameType, cheats, port) where 26.1.2's called the old one (javap); mods' calls take the same scope (the override hook in mechanical.json / s26.json frameDefaults already serves overrides)"
+    },
+    "net/minecraft/client/server/IntegratedServer.publishServer(Lnet/minecraft/world/level/GameType;ZI)Z": {
+      "desc": "(Lnet/minecraft/server/MinecraftServer$MultiplayerScope;Lnet/minecraft/world/level/GameType;ZI)Z",
+      "ops": [
+        "push top/dext/centurybridge/step/v26_2/rt/CbS26Server#lan()Lnet/minecraft/server/MinecraftServer$MultiplayerScope;",
+        "keep",
+        "keep",
+        "keep"
+      ],
+      "basis": "26.1.2's publishServer(gameType, cheats, port) opened the game to LAN, its only scope; 26.2's PublishCommand calls publishServer(MultiplayerScope.LAN, gameType, cheats, port) where 26.1.2's called the old one (javap); mods' calls take the same scope (the override hook in mechanical.json / s26.json frameDefaults already serves overrides)"
+    }
+  }
+}
