@@ -393,6 +393,7 @@ final class MixinBridge {
     }
 
     private static byte[] write(ClassNode cn) {
+        MixinRepair.flushGuards(cn);
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         cn.accept(cw);
         return cw.toByteArray();
