@@ -5,7 +5,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.class_1707;
 import net.minecraft.class_1921;
+import net.minecraft.class_2558;
+import net.minecraft.class_2583;
+import net.minecraft.class_3858;
+import net.minecraft.class_3873;
+import net.minecraft.class_408;
+import net.minecraft.class_476;
 import net.minecraft.class_2561;
 import net.minecraft.class_310;
 import net.minecraft.class_318;
@@ -16,9 +23,12 @@ import net.minecraft.class_490;
 /**
  * cb-clienttest: a 1.20.1-era client mod (intermediary names, no Fabric API) that checks the client API a
  * climbed mod uses, on the real client, once a world is joined. A driver thread waits for the player,
- * then runs the phases on the render thread: font measurements and render type getters, the GUI screen
- * (GuiScreen: GuiGraphics, Font, RenderType quads), a mod container screen, a vanilla inventory screen
- * subclass, the vanilla inventory screen under a mod's render mixin, and the world view; each screen
+ * then runs the phases on the render thread: font measurements, render type getters, models, the mod's
+ * item resources, audio, the GUI screen (GuiScreen: GuiGraphics, Font, RenderType quads, the mod's
+ * player layer, end portal renderer subclass, skull, piglin model subclass, tools), the mod's tools, a mod
+ * container screen, a vanilla inventory screen subclass, the vanilla inventory/chest/furnace screens under
+ * the mod's render and renderBackground mixins, the world view (chat HUD), camera and partial tick, and
+ * the chat screen (clickable text); each screen
  * phase ends with a screenshot through the 1.20.1 Screenshot API (screenshots/cb-<phase>.png). Lines:
  * "CB-CLIENTTEST ok|FAIL <check> <detail>", then "CB-CLIENTTEST summary ok=N fail=M" and
  * "CB-CLIENTTEST N/T"; then the client stops itself.
@@ -31,21 +41,31 @@ public class ClientTestMod implements ClientModInitializer {
     static final int REF_WIDTH = 72;      // Font.width("CenturyBridge"), native 1.20.1
     static final int REF_WRAP_LINES = 3;  // Font.split(literal(WRAP), 50).size(), native 1.20.1
     static final long PHASE_MS = 4000;
+    static final String CHAT_LINE = "CB chat line (click me)";
+    static final String CHAT_CMD = "/cbclienttest";
 
     @Override
     public void onInitializeClient() {
         Tally.declare("join", "font.lineHeight", "font.width", "font.widthComponent", "font.plainSubstrByWidth",
             "font.split", "font.wordWrapHeight", "rt.getters", "rt.memoized",
+            "model.playerSetAllVisible", "item.model", "item.name", "audio.devices", "audio.debugString", "audio.play",
             "gui.backdrop", "gui.fill", "gui.fillGradient", "gui.blit", "gui.drawString", "gui.drawCentered",
-            "gui.pose", "gui.scissor", "gui.outline", "gui.item", "gui.entity", "gui.tooltip",
+            "gui.pose", "gui.scissor", "gui.outline", "gui.item", "gui.entity", "gui.modItem", "gui.tooltip",
+            "layer.render", "be.endPortal", "be.skull", "model.piglinParts", "model.piglinSubclass",
             "font.drawInBatch", "font.outline",
             "rt.gui", "rt.entitySolid", "rt.entityCutoutNoCull", "rt.entityTranslucent", "rt.entitySmoothCutout",
             "rt.entityDecal", "rt.itemEntityTranslucentCull", "rt.eyes", "rt.text",
+            "tools.register", "tools.pickaxeMines", "tools.pickaxeSpeed", "tools.durability", "tools.swordDamage",
+            "tools.attributes",
             "container.renderBg", "container.renderLabels", "container.layout",
             "inventorySub.renderBg", "inventorySub.superReturns",
-            "mixin.containerRenderHead", "mixin.containerRenderReturn",
+            "mixin.containerRender.inventory", "mixin.renderBackground.inventory",
+            "mixin.containerRender.chest", "mixin.renderBackground.chest",
+            "mixin.containerRender.furnace", "mixin.renderBackground.furnace",
+            "chat.hud", "camera.partialTick", "camera.position", "camera.nearPlane",
+            "chat.screen", "chat.clickable",
             "screenshot.gui", "screenshot.container", "screenshot.inventorySub", "screenshot.inventory",
-            "screenshot.world");
+            "screenshot.chest", "screenshot.furnace", "screenshot.world", "screenshot.chat");
         Thread t = new Thread(ClientTestMod::drive, "cb-clienttest");
         t.setDaemon(true);
         t.start();
@@ -75,12 +95,17 @@ public class ClientTestMod implements ClientModInitializer {
                 // the checks that need no player still run (over whatever screen is up), the rest never run
                 Tally.fail("join", "no world joined within 240 s; checks needing a player are skipped");
             }
-            onRender(() -> {
-                fontChecks(mc.field_1772);
-                renderTypeChecks();
-                return null;
-            });
-            screenPhase(mc, "gui", GuiScreen::new, () -> Frames.settle("gui."), () -> {
+            attempt("font.lineHeight", () -> fontChecks(mc.field_1772));
+            attempt("rt.getters", ClientTestMod::renderTypeChecks);
+            attempt("model.playerSetAllVisible", () -> Checks.playerModel(mc));
+            attempt("item.model", () -> Checks.itemResources(mc));
+            attempt("audio.devices", () -> Checks.audio(mc));
+            screenPhase(mc, "gui", GuiScreen::new, () -> {
+                Frames.settle("gui.");
+                Frames.settle("layer.");
+                Frames.settle("be.");
+                Frames.settle("model.");
+            }, () -> {
                 Frames.settle("font.");
                 Frames.settle("rt.");
             });
@@ -88,6 +113,7 @@ public class ClientTestMod implements ClientModInitializer {
                 finish(mc);
                 return;
             }
+            attempt("tools.register", Checks::tools);
             screenPhase(mc, "container", () -> new TestContainerScreen(mc.field_1724.field_7498, mc.field_1724.method_31548()), () -> {
                 Tally.check("container.renderBg", TestContainerScreen.bgCalls > 0, TestContainerScreen.bgCalls + " calls");
                 Tally.check("container.renderLabels", TestContainerScreen.labelCalls > 0, TestContainerScreen.labelCalls + " calls");
@@ -100,17 +126,35 @@ public class ClientTestMod implements ClientModInitializer {
                 Tally.check("inventorySub.superReturns", TestInventoryScreen.superReturned == TestInventoryScreen.bgCalls
                     && TestInventoryScreen.bgCalls > 0, TestInventoryScreen.superReturned + "/" + TestInventoryScreen.bgCalls);
             }, null);
+            screenPhase(mc, "inventory", () -> new class_490(mc.field_1724), () -> {
+                Hooks.verdict("mixin.containerRender.inventory", Hooks.CONTAINER_RENDER, class_490.class);
+                Hooks.verdict("mixin.renderBackground.inventory", Hooks.BACKGROUND, class_490.class);
+            }, null);
+            screenPhase(mc, "chest", () -> new class_476(class_1707.method_19248(0, mc.field_1724.method_31548()),
+                    mc.field_1724.method_31548(), class_2561.method_43470("CB chest")), () -> {
+                Hooks.verdict("mixin.containerRender.chest", Hooks.CONTAINER_RENDER, class_476.class);
+                Hooks.verdict("mixin.renderBackground.chest", Hooks.BACKGROUND, class_476.class);
+            }, null);
+            screenPhase(mc, "furnace", () -> new class_3873(new class_3858(0, mc.field_1724.method_31548()),
+                    mc.field_1724.method_31548(), class_2561.method_43470("CB furnace")), () -> {
+                Hooks.verdict("mixin.containerRender.furnace", Hooks.CONTAINER_RENDER, class_3873.class);
+                Hooks.verdict("mixin.renderBackground.furnace", Hooks.BACKGROUND, class_3873.class);
+            }, null);
             onRender(() -> {
-                ContainerProbe.reset();
+                mc.field_1705.method_1743().method_1812(class_2561.method_43470(CHAT_LINE).method_27696(
+                    class_2583.field_24360.method_10958(new class_2558(class_2558.class_2559.field_11745, CHAT_CMD))));
                 return null;
             });
-            screenPhase(mc, "inventory", () -> new class_490(mc.field_1724), () -> {
-                Tally.check("mixin.containerRenderHead", ContainerProbe.heads > 0 && ContainerProbe.lastHead == class_490.class,
-                    ContainerProbe.heads + " calls, last on " + (ContainerProbe.lastHead == null ? "-" : ContainerProbe.lastHead.getName()));
-                Tally.check("mixin.containerRenderReturn", ContainerProbe.rets > 0 && ContainerProbe.rets <= ContainerProbe.heads,
-                    ContainerProbe.rets + " returns / " + ContainerProbe.heads + " heads");
+            screenPhase(mc, "world", () -> null, () -> {
+                int heads = Hooks.heads(Hooks.CHAT);
+                Tally.check("chat.hud", heads > 0, heads + " ChatComponent.render calls with no screen open");
             }, null);
-            screenPhase(mc, "world", () -> null, null, null);
+            Checks.camera(mc);
+            screenPhase(mc, "chat", () -> new class_408(""), () -> {
+                int heads = Hooks.heads(Hooks.CHAT);
+                Tally.check("chat.screen", heads > 0, heads + " ChatComponent.render calls under the chat screen");
+                Checks.chatClickable(mc);
+            }, null);
             finish(mc);
         } catch (Throwable t) {
             Tally.log("driver died: " + t);
@@ -132,6 +176,7 @@ public class ClientTestMod implements ClientModInitializer {
             throws Exception {
         Tally.log("phase " + phase);
         onRender(() -> {
+            Hooks.reset();
             mc.method_1507(maker.make());
             return null;
         });
@@ -211,6 +256,22 @@ public class ClientTestMod implements ClientModInitializer {
             mc.method_1592();
             return null;
         });
+    }
+
+    interface Check {
+        void run() throws Throwable;
+    }
+
+    /** runs checks on the render thread; an exception fails the named check (the first of its group) */
+    static void attempt(String name, Check c) throws Exception {
+        try {
+            onRender(() -> {
+                c.run();
+                return null;
+            });
+        } catch (java.util.concurrent.ExecutionException e) {
+            Tally.error(name, e.getCause());
+        }
     }
 
     interface Call<T> {

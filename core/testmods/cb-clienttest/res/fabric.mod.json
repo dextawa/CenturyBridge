@@ -3,9 +3,9 @@
   "id": "cb_clienttest",
   "version": "1.0.0",
   "name": "CB Client Test",
-  "description": "1.20.1-era client checks run on world join (GUI, fonts, render types, container screens, a container render mixin); tally CB-CLIENTTEST n/n, then the client stops",
+  "description": "1.20.1-era client checks run on world join (GUI, fonts, render types, container screens, mixins, feature renderer, chat, camera, audio, block entity renderers, models, tools); tally CB-CLIENTTEST n/n, then the client stops",
   "environment": "client",
-  "entrypoints": { "client": ["cb.clienttest.ClientTestMod"] },
+  "entrypoints": { "main": ["cb.clienttest.ItemsInit"], "client": ["cb.clienttest.ClientTestMod"] },
   "mixins": ["cb_clienttest.mixins.json"],
   "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.1" }
 }
