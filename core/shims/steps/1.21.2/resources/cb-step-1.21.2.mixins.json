@@ -97,6 +97,8 @@
     "CbItemEnchantValueOneMixin",
     "CbItemMaceMembersMixin",
     "CbItemShieldRepairMixin",
+    "CbItemRecipeManagerRestoredMixin",
+    "CbItemResultSlotRemainingMixin",
     "CbItemCompassDescriptionIdMixin",
     "CbItemPotionDescriptionIdMixin",
     "CbItemTippedArrowDescriptionIdMixin",
