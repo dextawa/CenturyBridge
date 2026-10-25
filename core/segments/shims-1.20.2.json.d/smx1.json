@@ -39,6 +39,7 @@
   "net/minecraft/class_2889.field_13159:Ljava/lang/String;": "comp_1564",
   "net/minecraft/class_2899.field_13188:I": "comp_1567",
   "net/minecraft/class_2913.field_13259:I": "comp_1569",
+  "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "field_45013",
   "net/minecraft/class_3244.field_14148:Lnet/minecraft/server/MinecraftServer;": "field_45012",
   "net/minecraft/class_3244.field_29778:I": "field_45011",
   "net/minecraft/class_3272.field_14201:I": "comp_1581",
@@ -79,13 +80,35 @@
   "net/minecraft/class_634.field_40488:Lnet/minecraft/class_642;": "field_45590",
   "net/minecraft/class_6404.field_33923:Lnet/minecraft/class_2096$class_2100;": "comp_1792",
   "net/minecraft/class_7383.field_38759:Lnet/minecraft/class_2096$class_2100;": "comp_1829",
+  "net/minecraft/class_7538.field_39555:Lnet/minecraft/class_437;": "field_46019",
+  "net/minecraft/class_7538.field_39556:Lnet/minecraft/class_7574;": "field_46020",
   "net/minecraft/class_7538.field_39558:Lnet/minecraft/class_7529;": "field_46033",
+  "net/minecraft/class_7538.field_39569:Lnet/minecraft/class_2561;": "field_46013",
+  "net/minecraft/class_7538.field_39570:Lnet/minecraft/class_2561;": "field_46014",
+  "net/minecraft/class_7538.field_39571:Lnet/minecraft/class_2561;": "field_46015",
+  "net/minecraft/class_761$class_6600.field_34818:Lnet/minecraft/class_761$class_5972;": "field_45627",
   "net/minecraft/class_8129.field_42477:Lnet/minecraft/class_6862;": "comp_1836",
   "net/minecraft/class_8129.field_42478:Z": "comp_1837",
   "net/minecraft/class_94$class_100.field_1017:I": "comp_1852",
   "net/minecraft/class_94$class_95.field_1012:F": "comp_1849",
   "net/minecraft/class_94$class_95.field_1014:I": "comp_1848"
  },
- "_smx1_fieldRenames_movedUp_basis": "ClientPacketListener / ServerGamePacketListenerImpl fields 1.20.2 moved up into ClientCommonPacketListenerImpl / ServerCommonPacketListenerImpl as protected fields (the super constructor stores connection, minecraft, serverData, telemetryManager, postDisconnectScreen = 1.20.1's callbackScreen; MinecraftServer; LATENCY_CHECK_INTERVAL 15000 both); the private keep-alive fields moved up stay private (a mixin on the subclass cannot reach them) and are not wired",
- "_smx1_fieldRenames_records_basis": "classes 1.20.2 made records with several fields of one type (MapDecoration x / y / rot): each 1.20.1 field maps to the record component its constructor parameter is stored into, the parameter order being the same on both"
+ "_smx1_fieldRenames_movedUp_basis": "ClientPacketListener / ServerGamePacketListenerImpl fields 1.20.2 moved up into ClientCommonPacketListenerImpl / ServerCommonPacketListenerImpl as protected fields (the super constructor stores connection, minecraft, serverData, telemetryManager, postDisconnectScreen = 1.20.1's callbackScreen; MinecraftServer; LATENCY_CHECK_INTERVAL 15000 both); the private keep-alive fields moved up stay private (a mixin on the subclass cannot reach them) and are not wired; ServerGamePacketListenerImpl.connection -> ServerCommonPacketListenerImpl's; ChatReportScreen's lastScreen / reportingContext (the new AbstractReportScreen constructor stores the same parameters) and its observed-what / select-reason / more-comments labels (the same labels under 1.20.2's gui.abuseReport.* keys, protected there; the other labels stayed private and are not wired)",
+ "_smx1_fieldRenames_records_basis": "classes 1.20.2 made records with several fields of one type (MapDecoration x / y / rot): each 1.20.1 field maps to the record component its constructor parameter is stored into, the parameter order being the same on both",
+ "methodRenames": {
+  "net/minecraft/class_2342.method_10207()Lnet/minecraft/class_3218;": "comp_1967",
+  "net/minecraft/class_2342.method_10122()Lnet/minecraft/class_2338;": "comp_1968",
+  "net/minecraft/class_2342.method_10120()Lnet/minecraft/class_2680;": "comp_1969"
+ },
+ "_smx1_methodRenames_basis": "BlockSource: 1.20.1's interface getters getLevel / getPos / getBlockState are 1.20.2's record accessors level() / pos() / state() of the same value (the record's canonical constructor stores what BlockSourceImpl's getters answered); vanilla's dispense behaviours call the accessors where 1.20.1 called the getters, so a mod's @At INVOKE on a getter follows to the accessor call",
+ "classRenames": {
+  "net/minecraft/class_1068$class_7920": "net/minecraft/class_8685$class_7920",
+  "net/minecraft/class_634$class_8137": "net/minecraft/class_8673$class_8137",
+  "net/minecraft/class_7538$class_7539": "net/minecraft/class_8768$class_7539",
+  "net/minecraft/class_761$class_5972": "net/minecraft/class_8679$class_5972",
+  "net/minecraft/class_761$class_6600": "net/minecraft/class_8679$class_6600",
+  "net/minecraft/class_761$class_762": "net/minecraft/class_8679$class_762",
+  "net/minecraft/class_60$class_5641": "net/minecraft/class_5641"
+ },
+ "_smx1_classRenames_basis": "package-private 1.20.1 classes 1.20.2 moved under another outer class (or to the top level) with the same intermediary id and their members (javap -p of both: DefaultPlayerSkin.ModelType -> PlayerSkin.Model, ClientPacketListener.DeferredPacket -> ClientCommonPacketListenerImpl's, ChatReportScreen's reason list -> AbstractReportScreen's, LevelRenderer's RenderInfoMap / RenderChunkStorage / RenderChunkInfo -> SectionOcclusionGraph's, CompositeFunction's inner class -> the top-level one); nothing outside a mixin can name a package-private class, so only mixins follow"
 }

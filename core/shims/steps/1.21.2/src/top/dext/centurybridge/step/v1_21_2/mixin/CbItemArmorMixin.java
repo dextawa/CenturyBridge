@@ -16,7 +16,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemArmor;
  * 1.21.2's ArmorItem keeps the material and type it was built with (1.21.2 drops both after putting them into
  * the components): 1.21.1's getMaterial / getType / getDefense / ... read them (CbItemArmor).
  */
-@Mixin(class_1738.class)
+@Mixin(value = class_1738.class, priority = top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads.PRIORITY)
 public abstract class CbItemArmorMixin implements CbItemArmor.ArmorFields, Equipable {
 
     @Unique

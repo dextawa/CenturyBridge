@@ -8,7 +8,12 @@
     "IngredientItemsMixin",
     "BindTagsMixin",
     "ArmorEquipMixin",
-    "ShieldEquipMixin"
+    "ShieldEquipMixin",
+    "ArmorValuesMixin",
+    "TridentValueMixin",
+    "ItemDescriptionIdMixin",
+    "PotionDescriptionIdMixin",
+    "CompassDescriptionIdMixin"
   ],
   "injectors": {
     "defaultRequire": 1

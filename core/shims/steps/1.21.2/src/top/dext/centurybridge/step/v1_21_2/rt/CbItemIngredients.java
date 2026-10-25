@@ -69,14 +69,14 @@ public final class CbItemIngredients {
     }
 
     /**
-     * getItems(): the ingredient's own restored getItems() (CbItemIngredientMixin), so a mod's call goes through the
+     * getItems(): the ingredient's own restored getItems() (CbItemIngredientStacksMixin), so a mod's call goes through the
      * member mods' mixins target
      */
     public static class_1799[] method_8105(class_1856 ingredient) {
         return ((IngredientStacks) (Object) ingredient).method_8105();
     }
 
-    /** 1.21.1's getItems() as a member of Ingredient (CbItemIngredientMixin restores it) */
+    /** 1.21.1's getItems() as a member of Ingredient (CbItemIngredientStacksMixin restores it) */
     public interface IngredientStacks {
         class_1799[] method_8105();
     }

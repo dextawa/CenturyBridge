@@ -19,7 +19,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemArmor;
  * overlay texture: 1.21.1's AnimalArmorItem was an ArmorItem of type BODY, and its getMaterial / getDefense /
  * getTexture / getOverlayTexture / getBodyType read them (CbItemArmor).
  */
-@Mixin(class_4059.class)
+@Mixin(value = class_4059.class, priority = top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads.PRIORITY)
 public abstract class CbItemAnimalArmorMixin implements CbItemArmor.ArmorFields, CbItemArmor.AnimalFields, Equipable {
 
     @Unique

@@ -1,0 +1,21 @@
+{
+ "_smx1_recordfields_basis": "gen_smx1_record_fields.py (both constructors' bytecode); regenerate, never hand-edit",
+ "fieldRenames": {
+  "net/minecraft/class_2025.field_9552:Lnet/minecraft/class_2096$class_2099;": "comp_1745",
+  "net/minecraft/class_2025.field_9554:Lnet/minecraft/class_2096$class_2099;": "comp_1743",
+  "net/minecraft/class_2025.field_9555:Lnet/minecraft/class_2096$class_2099;": "comp_1744",
+  "net/minecraft/class_2025.field_9556:Lnet/minecraft/class_2096$class_2099;": "comp_1747",
+  "net/minecraft/class_2025.field_9557:Lnet/minecraft/class_2096$class_2099;": "comp_1746",
+  "net/minecraft/class_2152.field_9778:Ljava/lang/Float;": "comp_1840",
+  "net/minecraft/class_2152.field_9779:Ljava/lang/Float;": "comp_1841",
+  "net/minecraft/class_225.field_1299:F": "comp_1883",
+  "net/minecraft/class_225.field_1300:F": "comp_1882",
+  "net/minecraft/class_40.field_917:Lnet/minecraft/class_5658;": "comp_1894",
+  "net/minecraft/class_40.field_918:Lnet/minecraft/class_5658;": "comp_1893",
+  "net/minecraft/class_5662.field_27928:Lnet/minecraft/class_5658;": "comp_1900",
+  "net/minecraft/class_5662.field_27929:Lnet/minecraft/class_5658;": "comp_1901",
+  "net/minecraft/class_5699$class_5839.field_28868:Lcom/mojang/serialization/Codec;": "comp_1928",
+  "net/minecraft/class_5699$class_5839.field_28869:Lcom/mojang/serialization/Codec;": "comp_1929"
+ },
+ "methodRenames": {}
+}
