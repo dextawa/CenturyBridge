@@ -9,7 +9,7 @@ cd ~/cbwork
 WD="$1"; T="$2"; TAG="$3"; shift 3
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 # CB_SERVER_DIR: an agent's own copy (cp -r ~/cbtest/server-T ~/cbwork/agents/<name>/), so two boots
-# never share a mods directory
+# never share a mods directory. CB_JVM_ARGS: extra server JVM options (a -D switch a test needs)
 SRV="${CB_SERVER_DIR:-$HOME/cbtest/server-$T}"
 [ -f "$SRV/fabric-server.jar" ] || { echo "no Fabric server at $SRV"; exit 1; }
 # the climb and the mods directory are climb_mods.sh's, shared with the client boot (boot_client_remote.sh)
@@ -20,6 +20,7 @@ cp "$SRV/server.properties.orig" "$SRV/server.properties"
 sed -i "s/^level-name=.*/level-name=world-$TAG/" "$SRV/server.properties"
 LOG="$SRV/boot-$TAG.log"
 cd "$SRV"
+
 # CB_BOOT_CMDS=<file>: console commands typed once the server is Done, one per line ("#sleep <s>" waits), e.g. a
 # datapack reload and the checks around it; the server's answers land in the log. Without it the console is closed.
 CMDS="${CB_BOOT_CMDS:-}"
@@ -27,11 +28,11 @@ CMDS="${CB_BOOT_CMDS:-}"
 if [ -n "$CMDS" ]; then
     FIFO="$SRV/console-$TAG.fifo"
     rm -f "$FIFO" && mkfifo "$FIFO"
-    timeout 420 "$JAVA" -Xmx6g -jar fabric-server.jar nogui > "$LOG" 2>&1 < "$FIFO" &
+    timeout 420 "$JAVA" -Xmx6g ${CB_JVM_ARGS:-} -jar fabric-server.jar nogui > "$LOG" 2>&1 < "$FIFO" &
     PID=$!
     exec 7> "$FIFO"
 else
-    timeout 300 "$JAVA" -Xmx6g -jar fabric-server.jar nogui > "$LOG" 2>&1 < /dev/null &
+    timeout 300 "$JAVA" -Xmx6g ${CB_JVM_ARGS:-} -jar fabric-server.jar nogui > "$LOG" 2>&1 < /dev/null &
     PID=$!
 fi
 for i in $(seq 1 140); do

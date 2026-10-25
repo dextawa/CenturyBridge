@@ -15,7 +15,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbNet;
  * accessors answered from the 1.20.2 record's payload, and an unknown channel's bytes kept where
  * vanilla 1.20.2 skips them (unless Fabric API's networking, which keeps them itself, is loaded).
  */
-@Mixin(class_2817.class)
+@Mixin(value = class_2817.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetCustomPayloadC2SBridge {
 
     /** was getChannel() */
@@ -26,14 +26,5 @@ public abstract class CbNetCustomPayloadC2SBridge {
     /** was getData(): a fresh buffer with the payload's bytes */
     public class_2540 method_36170() {
         return CbNet.cbData(((class_2817) (Object) this).comp_1647());
-    }
-
-    @Inject(method = "method_53026", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/class_2817;method_53027(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_8711;"),
-        cancellable = true)
-    private static void cb$retainUnknown(class_2960 id, class_2540 buf, CallbackInfoReturnable<class_8710> cir) {
-        if (!CbNet.FABRIC_RETAINS_PAYLOADS) {
-            cir.setReturnValue(CbNet.cbRetainUnknown(id, buf, 32767));
-        }
     }
 }

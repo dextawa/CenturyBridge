@@ -23,7 +23,7 @@ public final class CbFrameDefaultsClient {
     /**
      * EditBox.moveCursor / moveCursorTo / moveCursorToStart / moveCursorToEnd -> (.., select): 1.20.1
      * extended the selection by the box's shiftPressed state (Screen.hasShiftDown() as of the box's last
-     * keyPressed), which this layer keeps again (CbGuiEditBoxBridge) and the covered old shapes pass on
+     * keyPressed), which this layer keeps again (CbGuiEditBoxBridgeHooks) and the covered old shapes pass on
      */
     public static boolean editBoxShift(net.minecraft.class_342 self) {
         return ((CbLegacyEditBoxShift) self).cb$legacyShiftPressed();

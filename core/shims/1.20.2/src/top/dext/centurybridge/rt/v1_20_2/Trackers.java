@@ -8,7 +8,7 @@ import net.minecraft.class_8779;
 /**
  * Identity maps rebuilt on each datapack (re)load. 1.20.2 moved ids out of
  * Advancement into wrapper entries; legacy getId()-style calls are answered
- * from here (populated by AdvancementLoaderBridge). Recipe ids live in
+ * from here (populated by AdvancementLoaderBridgeHooks). Recipe ids live in
  * CbRecipeIds.
  */
 public final class Trackers {

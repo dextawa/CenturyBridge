@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  *
  * The texture manager, cache directory and session service are the ones this SkinManager was built with.
  */
-@Mixin(net.minecraft.class_1071.class)
-public abstract class CbGuiSkinManagerBridge {
+@Mixin(value = net.minecraft.class_1071.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
+public abstract class CbGuiSkinManagerBridge implements top.dext.centurybridge.rt.v1_20_2.CbGuiRestoredAccess.SkinManager {
 
     @Unique
     private net.minecraft.class_1060 cb$textures;
@@ -31,9 +31,9 @@ public abstract class CbGuiSkinManagerBridge {
     private com.google.common.cache.LoadingCache<String, java.util.Map<com.mojang.authlib.minecraft.MinecraftProfileTexture.Type,
         com.mojang.authlib.minecraft.MinecraftProfileTexture>> cb$insecure;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
-    private void cb$keep(net.minecraft.class_1060 textures, java.nio.file.Path dir, com.mojang.authlib.minecraft.MinecraftSessionService sessions,
-                         java.util.concurrent.Executor executor, CallbackInfo ci) {
+    @Override
+    public void cb$keepLegacy(net.minecraft.class_1060 textures, java.nio.file.Path dir,
+                              com.mojang.authlib.minecraft.MinecraftSessionService sessions) {
         this.cb$textures = textures;
         this.cb$dir = dir;
         this.cb$sessions = sessions;

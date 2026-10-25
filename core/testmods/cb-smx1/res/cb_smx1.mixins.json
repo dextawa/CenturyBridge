@@ -13,7 +13,11 @@
     "AdvancementListMixin",
     "NavigationMixin",
     "NavigationInvoker",
-    "NavigationRedirectMixin"
+    "NavigationRedirectMixin",
+    "ShapedReaderMixin",
+    "CookingReaderMixin",
+    "StatTypeKeyMixin",
+    "EffectAttributesMixin"
   ],
   "injectors": {
     "defaultRequire": 1

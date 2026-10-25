@@ -8,7 +8,7 @@ import net.minecraft.class_4877;
 /**
  * Added (adapterHooks) to a mod class extending RealmsMainScreen that overrides 1.20.1's instance
  * play(server, screen): 1.20.2's play is static, so nothing overrides it; vanilla's main screen calls
- * it with itself as the screen, and CbNetRealmsMainScreenBridge sends such a call to this override.
+ * it with itself as the screen, and CbNetRealmsMainScreenBridgeHooks sends such a call to this override.
  */
 @Environment(EnvType.CLIENT)
 public interface CbNetLegacyRealmsPlay {

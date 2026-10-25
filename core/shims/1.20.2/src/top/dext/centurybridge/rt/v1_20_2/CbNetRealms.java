@@ -186,7 +186,7 @@ public final class CbNetRealms {
 
     /**
      * The response text RealmsClient.execute is about to parse into the RealmsError of the exception it
-     * throws next (CbNetRealmsClientBridge); 1.20.2 keeps only the parsed result, 1.20.1 kept the text.
+     * throws next (CbNetRealmsClientBridgeHooks); 1.20.2 keeps only the parsed result, 1.20.1 kept the text.
      */
     public static void cbRememberBody(String body) {
         BODY.set(body);
@@ -361,7 +361,7 @@ public final class CbNetRealms {
 
     /**
      * super.play(server, screen) in a subclass's override: vanilla's play, with the override marked
-     * as running so that vanilla's own dispatch to it (CbNetRealmsMainScreenBridge) does not run it
+     * as running so that vanilla's own dispatch to it (CbNetRealmsMainScreenBridgeHooks) does not run it
      * a second time.
      */
     public static void cbSuperPlay(class_4325 self, class_4877 server, class_437 screen) {

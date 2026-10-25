@@ -22,11 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * </ul>
  * Vanilla 1.20.2 lists never clear the flags and do not override the hook: they render unchanged.
  */
-@Mixin(net.minecraft.class_350.class)
-public abstract class CbGuiSelectionListBridge {
-
-    @Shadow
-    protected abstract boolean method_25332(int index);
+@Mixin(value = net.minecraft.class_350.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
+public abstract class CbGuiSelectionListBridge implements top.dext.centurybridge.rt.v1_20_2.CbGuiRestoredAccess.SelectionList {
 
     @Unique
     private boolean cb$renderSelection = true;
@@ -47,22 +44,18 @@ public abstract class CbGuiSelectionListBridge {
     protected void method_25325(net.minecraft.class_332 graphics) {
     }
 
-    @Inject(method = "method_25394", at = @At("HEAD"))
-    private void cb$backgroundHook(net.minecraft.class_332 graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    @Override
+    public boolean cb$renderSelection() {
+        return this.cb$renderSelection;
+    }
+
+    @Override
+    public boolean cb$renderTopAndBottom() {
+        return this.cb$renderTopAndBottom;
+    }
+
+    @Override
+    public void cb$renderBackground(net.minecraft.class_332 graphics) {
         this.method_25325(graphics);
-    }
-
-    @Redirect(method = "method_44397", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_350;method_25332(I)Z"))
-    private boolean cb$selectionShown(net.minecraft.class_350<?> self, int index) {
-        return this.cb$renderSelection && this.method_25332(index);
-    }
-
-    @Redirect(method = "method_25394", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/class_332;method_51740(Lnet/minecraft/class_1921;IIIIIII)V"))
-    private void cb$edgeShadow(net.minecraft.class_332 graphics, net.minecraft.class_1921 layer, int x1, int y1, int x2, int y2,
-                               int colorFrom, int colorTo, int z) {
-        if (this.cb$renderTopAndBottom) {
-            graphics.method_51740(layer, x1, y1, x2, y2, colorFrom, colorTo, z);
-        }
     }
 }

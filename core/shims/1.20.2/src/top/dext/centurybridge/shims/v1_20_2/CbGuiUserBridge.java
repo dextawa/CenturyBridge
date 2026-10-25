@@ -17,10 +17,8 @@ import top.dext.centurybridge.rt.v1_20_2.CbGuiSkins;
  * (authlib's UndashedUuid form). And as in 1.20.1, where getProfileId() parsed getUuid(), a subclass that
  * overrides getUuid() gets its own UUID back from getProfileId().
  */
-@Mixin(net.minecraft.class_320.class)
-public abstract class CbGuiUserBridge {
-
-    private static final CbGuiOverrides.Hook CB_GET_UUID = new CbGuiOverrides.Hook(net.minecraft.class_320.class, "method_1673");
+@Mixin(value = net.minecraft.class_320.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
+public abstract class CbGuiUserBridge implements top.dext.centurybridge.rt.v1_20_2.CbGuiRestoredAccess.User {
 
     @Shadow
     public abstract String method_1676();
@@ -32,12 +30,6 @@ public abstract class CbGuiUserBridge {
     @Unique
     private String cb$uuidString;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
-    private void cb$keepUuidString(String name, java.util.UUID uuid, String accessToken, java.util.Optional<String> xuid,
-                                   java.util.Optional<String> clientId, net.minecraft.class_320.class_321 type, CallbackInfo ci) {
-        this.cb$uuidString = CbGuiSkins.cbTakeUuid();
-    }
-
     /** 1.20.1 getUuid() */
     public String method_1673() {
         if (this.cb$uuidString != null) {
@@ -47,14 +39,12 @@ public abstract class CbGuiUserBridge {
     }
 
     /** 1.20.1 getGameProfile(): the profile id and the user name */
-    public com.mojang.authlib.GameProfile method_1677() {
-        return new com.mojang.authlib.GameProfile(((net.minecraft.class_320) (Object) this).method_44717(), this.method_1676());
+    @Override
+    public void cb$setUuidString(String uuid) {
+        this.cb$uuidString = uuid;
     }
 
-    @Inject(method = "method_44717", at = @At("HEAD"), cancellable = true)
-    private void cb$profileIdFromUuid(CallbackInfoReturnable<java.util.UUID> cir) {
-        if (CB_GET_UUID.in(this)) {
-            cir.setReturnValue(CbGuiSkins.cbParseUuid(this.method_1673()));
-        }
+    public com.mojang.authlib.GameProfile method_1677() {
+        return new com.mojang.authlib.GameProfile(((net.minecraft.class_320) (Object) this).method_44717(), this.method_1676());
     }
 }

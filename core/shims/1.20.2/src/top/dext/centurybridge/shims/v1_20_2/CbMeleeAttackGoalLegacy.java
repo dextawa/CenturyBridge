@@ -23,7 +23,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbMelee;
  * ({@link #cb$legacyAttack}); a vanilla goal driving a converted mob that overrides 1.20.1's
  * melee range keeps 1.20.1's goal test in place of the attack-box test.
  */
-@Mixin(class_1366.class)
+@Mixin(value = class_1366.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbMeleeAttackGoalLegacy implements CbLegacyMeleeGoal {
 
     @Shadow
@@ -59,15 +59,5 @@ public abstract class CbMeleeAttackGoalLegacy implements CbLegacyMeleeGoal {
     @Override
     public double cb$legacyAttackReach(class_1309 target) {
         return this.method_6289(target);
-    }
-
-    /** canPerformAttack(target): a converted mob with its own 1.20.1 melee range is tested as 1.20.1's goal tested it */
-    @Redirect(method = "method_53715", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/class_1314;method_42150(Lnet/minecraft/class_1309;)Z"))
-    private boolean cb$inRange(class_1314 mob, class_1309 target) {
-        if (mob instanceof CbLegacyMeleeRangeOverride legacy) {
-            return CbMelee.goalInRange(this, legacy, target);
-        }
-        return mob.method_42150(target);
     }
 }

@@ -5,6 +5,8 @@
 # filled with Fabric API for T, the climbed CenturyBridge layers of <workDir>/runtime-T
 # (climb_runtime.sh) and the converted mods. Shared by boot_climb.sh (server) and
 # boot_client_remote.sh (client). Run on beta2; paths are relative to ~/cbwork.
+# CB_NATIVE_MODS="<jar> ...": mods native to T, copied in as they are (never converted), e.g. a test mod whose
+# T-era mixins must still act beside the layers.
 set -uo pipefail
 cd ~/cbwork
 WD="$1"; T="$2"; CONV="$3"; MODS="$4"; shift 4
@@ -18,4 +20,8 @@ rm -rf "$MODS" && mkdir -p "$MODS"
 cp data/runtime/client-$T/mods/fabric-api-*.jar "$MODS/"
 cp "$WD/runtime-$T"/*.jar "$MODS/"
 cp "$CONV"/conv/*+"$T".jar "$MODS/"
+for n in ${CB_NATIVE_MODS:-}; do
+    [ -f "$n" ] || { echo "no native mod $n"; exit 1; }
+    cp "$n" "$MODS/"
+done
 echo "mods ($(ls "$MODS" | wc -l)): $(ls "$MODS" | tr '\n' ' ')"

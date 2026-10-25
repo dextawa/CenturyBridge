@@ -14,11 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * place of 1.20.2's sprite drawing, which draws nothing for a button whose sprites were never set.
  * A button given sprites (every 1.20.2 one) never has a sheet texture and draws as 1.20.2 does.
  */
-@Mixin(net.minecraft.class_361.class)
-public abstract class CbGuiStateSwitchingButtonBridge extends net.minecraft.class_339 {
-
-    @Shadow
-    protected boolean field_2194;
+@Mixin(value = net.minecraft.class_361.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
+public abstract class CbGuiStateSwitchingButtonBridge extends net.minecraft.class_339 implements top.dext.centurybridge.rt.v1_20_2.CbGuiRestoredAccess.StateSwitchingSheet {
 
     /** resourceLocation */
     protected net.minecraft.class_2960 field_2193;
@@ -44,22 +41,28 @@ public abstract class CbGuiStateSwitchingButtonBridge extends net.minecraft.clas
         this.field_2193 = texture;
     }
 
-    @Inject(method = "method_48579", at = @At("HEAD"), cancellable = true)
-    private void cb$legacySheet(net.minecraft.class_332 graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (this.field_2193 == null) {
-            return;
-        }
-        com.mojang.blaze3d.systems.RenderSystem.disableDepthTest();
-        int u = this.field_2192;
-        int v = this.field_2191;
-        if (this.field_2194) {
-            u += this.field_2190;
-        }
-        if (this.method_25367()) {
-            v += this.field_2189;
-        }
-        graphics.method_25302(this.field_2193, this.method_46426(), this.method_46427(), u, v, this.field_22758, this.field_22759);
-        com.mojang.blaze3d.systems.RenderSystem.enableDepthTest();
-        ci.cancel();
+    @Override
+    public net.minecraft.class_2960 cb$sheet() {
+        return this.field_2193;
+    }
+
+    @Override
+    public int cb$xTexStart() {
+        return this.field_2192;
+    }
+
+    @Override
+    public int cb$yTexStart() {
+        return this.field_2191;
+    }
+
+    @Override
+    public int cb$xDiffTex() {
+        return this.field_2190;
+    }
+
+    @Override
+    public int cb$yDiffTex() {
+        return this.field_2189;
     }
 }

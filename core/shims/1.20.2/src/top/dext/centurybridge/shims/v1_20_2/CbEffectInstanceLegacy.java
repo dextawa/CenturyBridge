@@ -16,7 +16,7 @@ import top.dext.centurybridge.rt.v1_20_2.CbLegacyEffectInstanceOverride;
  * 1.20.2's tick calls applyEffectTick inline -- for an instance of a converted class overriding
  * applyEffect (CbLegacyEffectInstanceOverride) the tick calls the override again.
  */
-@Mixin(class_1293.class)
+@Mixin(value = class_1293.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbEffectInstanceLegacy {
 
     @Shadow
@@ -34,16 +34,6 @@ public abstract class CbEffectInstanceLegacy {
     public void method_5589(class_1309 entity) {
         if (this.method_48562()) {
             this.field_5896.method_5572(entity, this.field_5893);
-        }
-    }
-
-    @Redirect(method = "method_5585", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/class_1291;method_5572(Lnet/minecraft/class_1309;I)V"))
-    private void cb$applyEffect(class_1291 effect, class_1309 entity, int amplifier) {
-        if ((Object) this instanceof CbLegacyEffectInstanceOverride legacy) {
-            legacy.method_5589(entity);
-        } else {
-            effect.method_5572(entity, amplifier);
         }
     }
 }
