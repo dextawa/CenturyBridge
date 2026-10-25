@@ -8,7 +8,9 @@
     "IngredientItemsMixin",
     "BindTagsMixin",
     "ArmorEquipMixin",
-    "ShieldEquipMixin"
+    "ShieldEquipMixin",
+    "ArmorValuesMixin",
+    "TridentValueMixin"
   ],
   "injectors": {
     "defaultRequire": 1

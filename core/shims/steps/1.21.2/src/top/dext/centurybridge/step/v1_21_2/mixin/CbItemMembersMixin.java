@@ -24,7 +24,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemMembers;
  * getDescriptionId(stack) override.
  */
 @Mixin(class_1792.class)
-public abstract class CbItemMembersMixin implements CbItemMembers.ItemEnchantmentValue {
+public abstract class CbItemMembersMixin implements CbItemMembers.ItemEnchantmentValue, CbItemMembers.ItemRepair {
 
     @Shadow
     @Final
@@ -41,6 +41,13 @@ public abstract class CbItemMembersMixin implements CbItemMembers.ItemEnchantmen
     @Override
     public int method_7837() {
         return CbItemMembers.super_method_7837((class_1792) (Object) this);
+    }
+
+    /** 1.21.1's Item.isValidRepairItem(stack, ingredient), restored: the REPAIRABLE the item was built with (CbItemMembers) */
+    @top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads("CbItemStackMembersMixin: ItemStack.isValidRepairItem (AnvilMenu's repair check) answers from it")
+    @Override
+    public boolean method_7878(net.minecraft.class_1799 stack, net.minecraft.class_1799 ingredient) {
+        return CbItemMembers.super_method_7878((class_1792) (Object) this, stack, ingredient);
     }
 
     @Inject(method = "<init>", at = @At("RETURN"))

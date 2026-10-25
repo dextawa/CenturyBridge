@@ -112,6 +112,25 @@ public final class CbItemMembers {
     }
 
     /**
+     * 1.21.1's Item.isValidRepairItem(stack, ingredient), restored on every Item by CbItemMembersMixin (and as the
+     * overrides of ArmorItem / ShieldItem / MaceItem, CbItemRepairOverridesMixin)
+     */
+    public interface ItemRepair {
+        boolean method_7878(class_1799 stack, class_1799 ingredient);
+    }
+
+    /**
+     * ItemStack.isValidRepairItem(ingredient) of an item whose class 1.21.1 did not override it in a mod: the
+     * restored isValidRepairItem's answer where it differs from the layer's own body (a mod's mixin on it), else null
+     * (1.21.2's own REPAIRABLE answer stands)
+     */
+    public static Boolean repairRead(class_1799 stack, class_1799 ingredient) {
+        class_1792 item = stack.method_7909();
+        boolean m = ((ItemRepair) (Object) item).method_7878(stack, ingredient);
+        return m != super_method_7878(item, stack, ingredient) ? m : null;
+    }
+
+    /**
      * ENCHANTABLE as 1.21.2's EnchantmentHelper reads it (CbItemEnchantableReadsMixin), through the item's
      * restored getEnchantmentValue() as 1.21.1's EnchantmentHelper asked it: absent at 0 (1.21.1's "not
      * enchantable"). A stack carrying an ENCHANTABLE of its own (1.21.2 only; 1.21.1 had no per-stack value) keeps
@@ -160,12 +179,11 @@ public final class CbItemMembers {
         return stack.method_7914() == 1 && stack.method_57826(class_9334.field_50072);
     }
 
-    /** isValidRepairItem(stack, ingredient): the class's own, else 1.21.2's REPAIRABLE answer for the ingredient */
+    /** isValidRepairItem(stack, ingredient): the class's own, else 1.21.2's REPAIRABLE answer for the ingredient (by dispatch) */
     public static boolean method_7878(class_1792 item, class_1799 stack, class_1799 ingredient) {
-        if (item instanceof LegacyRepairItem l) {
-            return l.method_7878(stack, ingredient);
-        }
-        return super_method_7878(item, stack, ingredient);
+        // the restored member (ItemRepair): a 1.21.1 class's override, a restored vanilla override or the body, with
+        // whatever a mod's mixin on it does
+        return ((ItemRepair) (Object) item).method_7878(stack, ingredient);
     }
 
     /**

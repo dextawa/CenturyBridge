@@ -209,6 +209,7 @@ public class GearTestMod implements ModInitializer {
         section("restoredMixinsRecipes", () -> restoredMixinsRecipes(server));
         section("tagReload", () -> tagReload(server));
         section("equipmentReads", () -> equipmentReads(server));
+        section("overrideReads", GearTestMod::overrideReads);
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -1063,6 +1064,34 @@ public class GearTestMod implements ModInitializer {
                 + equipSound(new class_1799(class_1802.field_8753)));
         check(equipSound(new class_1799(class_1802.field_8660)) == net.minecraft.class_3417.field_14862,
             "an unmixed armor item (iron boots) keeps its own equip sound: " + equipSound(new class_1799(class_1802.field_8660)));
+    }
+
+    /** what 1.21.2's anvil asks: ItemStack.isValidRepairItem(ingredient) (read by reflection: no 1.21.1 API) */
+    static boolean anvilRepairs(class_1799 stack, class_1799 ingredient) throws Exception {
+        return (Boolean) class_1799.class.getMethod("method_61655", class_1799.class).invoke(stack, ingredient);
+    }
+
+    /**
+     * ArmorValuesMixin / TridentValueMixin (1.21.1 mixins on the getEnchantmentValue / isValidRepairItem overrides of
+     * ArmorItem and TridentItem) against vanilla's enchanting cost and anvil repair check
+     */
+    static void overrideReads() throws Exception {
+        net.minecraft.class_5819 r = net.minecraft.class_5819.method_43049(7L);
+        check(net.minecraft.class_1890.method_8227(r, 2, 15, new class_1799(class_1802.field_8523)) == 0,
+            "mixin on ArmorItem.getEnchantmentValue: vanilla's enchanting cost of an iron chestplate is 0");
+        check(net.minecraft.class_1890.method_8227(r, 2, 15, new class_1799(class_1802.field_8058)) > 0,
+            "an unmixed armor item (diamond chestplate) still costs more than 0");
+        check(net.minecraft.class_1890.method_8227(r, 2, 15, new class_1799(class_1802.field_8547)) == 0,
+            "mixin on TridentItem.getEnchantmentValue: vanilla's enchanting cost of a trident is 0");
+        check(net.minecraft.class_1890.method_8227(r, 2, 15, new class_1799(class_1802.field_8378)) > 0,
+            "an unmixed item with its own value (fishing rod) still costs more than 0");
+        check(anvilRepairs(new class_1799(class_1802.field_8523), new class_1799(class_1802.field_8477)),
+            "mixin on ArmorItem.isValidRepairItem: vanilla's anvil check repairs an iron chestplate with a diamond");
+        check(anvilRepairs(new class_1799(class_1802.field_8523), new class_1799(class_1802.field_8620)),
+            "the iron chestplate still repairs with iron");
+        check(!anvilRepairs(new class_1799(class_1802.field_8058), new class_1799(class_1802.field_8620))
+                && anvilRepairs(new class_1799(class_1802.field_8058), new class_1799(class_1802.field_8477)),
+            "an unmixed armor item (diamond chestplate) repairs with diamonds, not iron");
     }
 
 }

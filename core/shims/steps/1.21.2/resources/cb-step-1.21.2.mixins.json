@@ -90,6 +90,8 @@
     "CbItemRecipeManagerAccess",
     "CbItemRegistryFrozenAccess",
     "CbItemRegistryMixin",
+    "CbItemEnchantValueOverridesMixin",
+    "CbItemRepairOverridesMixin",
     "CbItemRegistryPendingTagsAccess",
     "CbItemRegistryPendingTagsMixin",
     "CbItemServerThreadMixin",

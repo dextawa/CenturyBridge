@@ -30,11 +30,19 @@ public abstract class CbItemStackMembersMixin {
         }
     }
 
-    /** isValidRepairItem(ingredient): the item's 1.21.1 isValidRepairItem(stack, ingredient) */
+    /**
+     * isValidRepairItem(ingredient): the item's 1.21.1 isValidRepairItem(stack, ingredient) -- a 1.21.1 class's override,
+     * or the restored member where a mod's mixin makes it answer otherwise than its body
+     */
     @Inject(method = "method_61655", at = @At("HEAD"), cancellable = true)
     private void cb$repair(class_1799 ingredient, CallbackInfoReturnable<Boolean> cir) {
         if (method_7909() instanceof CbItemMembers.LegacyRepairItem l) {
             cir.setReturnValue(l.method_7878((class_1799) (Object) this, ingredient));
+            return;
+        }
+        Boolean restored = CbItemMembers.repairRead((class_1799) (Object) this, ingredient);
+        if (restored != null) {
+            cir.setReturnValue(restored); // a mod's mixin on the restored isValidRepairItem
         }
     }
 }
