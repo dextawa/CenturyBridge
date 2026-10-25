@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.s26v.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "S26VRestituteMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
