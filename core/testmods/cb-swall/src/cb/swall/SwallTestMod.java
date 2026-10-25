@@ -827,6 +827,7 @@ public class SwallTestMod implements ModInitializer {
             books(server);
             itemMembers();
             serverStatics(server);
+            componentMembers();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1515,6 +1516,54 @@ public class SwallTestMod implements ModInitializer {
             }
         } catch (Throwable t) {
             check("serverStatics", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** rt/CbWallComponentMembers: 1.21.11 component members over 26.1's */
+    private static void componentMembers() {
+        try {
+            net.minecraft.class_1799 diamond = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477, 2);
+            net.minecraft.class_9288 contents = net.minecraft.class_9288.method_57493(
+                List.of(net.minecraft.class_1799.field_8037, diamond));
+            long all = contents.method_57489().count();
+            long nonEmpty = contents.method_59712().count();
+            int iter = 0;
+            for (net.minecraft.class_1799 st : contents.method_59715()) {
+                iter += st.method_7947();
+            }
+            check("containerContents.streams", all == 2 && nonEmpty == 1 && iter == 2, all + "/" + nonEmpty + "/" + iter);
+            net.minecraft.class_10591 result = new net.minecraft.class_10591(net.minecraft.class_1802.field_8805);
+            net.minecraft.class_1799 named = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477);
+            named.method_57379(net.minecraft.class_9334.field_49631, net.minecraft.class_2561.method_43470("n"));
+            net.minecraft.class_1799 out = result.method_66340(named);
+            check("transmute.apply", out.method_7909() == net.minecraft.class_1802.field_8805
+                && out.method_58694(net.minecraft.class_9334.field_49631) != null && !result.method_67389(named)
+                && result.method_67389(new net.minecraft.class_1799(net.minecraft.class_1802.field_8805))
+                && result.method_66338() != null, out);
+            net.minecraft.class_9278 charged = net.minecraft.class_9278.method_57439(diamond);
+            check("chargedProjectiles.of", !charged.method_57442() && charged.method_57437().get(0).method_7947() == 2, charged);
+            net.minecraft.class_9326 patch = net.minecraft.class_9326.method_57841()
+                .method_57854(net.minecraft.class_9334.field_49631, net.minecraft.class_2561.method_43470("p")).method_57852();
+            check("componentPatch.get", patch.method_57845(net.minecraft.class_9334.field_49631).isPresent()
+                && patch.method_57845(net.minecraft.class_9334.field_54196) == null, patch);
+            net.minecraft.class_10192 eq = new net.minecraft.class_1799(net.minecraft.class_1802.field_8805)
+                .method_58694(net.minecraft.class_9334.field_54196);
+            check("equippable.canBeEquippedBy", eq.method_64015(net.minecraft.class_1299.field_6051), eq);
+            net.minecraft.class_2050 pred = new net.minecraft.class_2050(net.minecraft.class_6885.method_40246(
+                net.minecraft.class_1299.field_6051.method_40124()));
+            check("entityTypePredicate.matches", pred.method_8925(net.minecraft.class_1299.field_6051)
+                && !pred.method_8925(net.minecraft.class_1299.field_6097), pred);
+            check("difficulty.getKey", "easy".equals(net.minecraft.class_1267.field_5805.method_5460()), "");
+            boolean disc = net.minecraft.class_9793.method_60753(null, new net.minecraft.class_1799(net.minecraft.class_1802.field_8144)).isPresent()
+                && net.minecraft.class_9793.method_60753(null, diamond).isEmpty();
+            check("jukeboxSong.fromStack", disc, "");
+            net.minecraft.class_10710 horn = new net.minecraft.class_10710(net.minecraft.class_7445.field_39126);
+            net.minecraft.class_10711 trim = new net.minecraft.class_10711(net.minecraft.class_8055.field_42009);
+            check("component.keyCtors", horn.method_67211(null).get().method_40225(net.minecraft.class_7445.field_39126)
+                && trim.method_67212(null).get().method_40225(net.minecraft.class_8055.field_42009), horn);
+        } catch (Throwable t) {
+            check("componentMembers", false, t);
             t.printStackTrace();
         }
     }
