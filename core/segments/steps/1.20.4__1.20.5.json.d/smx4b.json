@@ -1979,5 +1979,9 @@
   "net/minecraft/class_8490.field_44502:Ljava/lang/String;": "comp_2521",
   "net/minecraft/class_8490.field_44503:Lnet/minecraft/class_8490$class_8491;": "comp_2522",
   "net/minecraft/class_8490.field_45794:Lcom/mojang/serialization/Codec;": "comp_2520"
+ },
+ "_smx4b_methodRenames_basis": "WorldOpenFlows.openWorldLoadLevelData (class_7196.method_54615) is 1.20.5's method_57782, same descriptor: javap -c both, its first 35 significant instructions (data-read screen, readLevelData with the OOM crash report) are identical; 1.20.5 moved the tail (the incompatible / backup / experimental screens) into method_57781, called once from it. Invokers, selectors and anchors follow the name",
+ "methodRenames": {
+  "net/minecraft/class_7196.method_54615(Lnet/minecraft/class_32$class_5143;Ljava/lang/Runnable;)V": "method_57782"
  }
 }
