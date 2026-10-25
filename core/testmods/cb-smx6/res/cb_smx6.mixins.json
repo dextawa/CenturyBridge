@@ -8,7 +8,10 @@
     "TridentChannelingMixin",
     "TridentAccess",
     "VillagerBookMixin",
-    "EffectTemplateMixin"
+    "EffectTemplateMixin",
+    "OozingMixin",
+    "RecipeCacheEntryMixin",
+    "UtilOsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
