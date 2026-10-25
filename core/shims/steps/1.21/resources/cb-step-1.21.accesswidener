@@ -35,3 +35,7 @@ accessible method net/minecraft/class_1799 method_56704 (Lnet/minecraft/class_19
 accessible method net/minecraft/class_1088 method_4726 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
 accessible method net/minecraft/class_1124$class_1125 <init> ()V
 # ---- END GENERATED (s6fin-client) ----
+
+# MobEffect.AttributeTemplate (a package-private record): CbMobEffectMixin routes MobEffect's create calls through the
+# restored 1.20.6 create(name, amplifier), so its handler names the class (smx6)
+accessible class net/minecraft/class_1291$class_8634

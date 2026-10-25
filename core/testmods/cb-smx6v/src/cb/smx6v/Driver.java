@@ -83,6 +83,17 @@ public final class Driver {
         return out.toString().trim();
     }
 
+    /** cb-smx6's speed(): a pig's movement speed with Speed (amplifier 0) applied through LivingEntity.addEffect */
+    private static double speed(class_3218 level) {
+        net.minecraft.class_1452 pig = net.minecraft.class_1299.field_6093.method_5883(level);
+        net.minecraft.class_2338 spawn = level.method_43126();
+        pig.method_5808(spawn.method_10263() + 0.5, 100.0, spawn.method_10260() + 0.5, 0.0F, 0.0F);
+        pig.method_6092(new net.minecraft.class_1293(net.minecraft.class_1294.field_5904, 200, 0));
+        double v = pig.method_45325(net.minecraft.class_5134.field_23719);
+        pig.method_31472();
+        return v;
+    }
+
     public static void run(net.minecraft.server.MinecraftServer server) {
         boolean layer = net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("centurybridge")
             || net.fabricmc.loader.api.FabricLoader.getInstance().getAllMods().stream()
@@ -106,6 +117,9 @@ public final class Driver {
             String books = books(level, new long[] {1L, 2L, 3L, 4L, 5L, 42L});
             report(tag + " books", !books.isEmpty(), books);
             System.out.println("CB-SMX6V books " + tag + " " + books);
+            double sp = speed(level);
+            report(tag + " effect-speed", Math.abs(sp - 0.3) < 1e-6, "Speed I on a pig: speed " + sp);
+            System.out.println("CB-SMX6V speed " + tag + " " + sp);
         } catch (Throwable t) {
             report(tag + " exception", false, String.valueOf(t));
             t.printStackTrace();

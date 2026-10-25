@@ -3,6 +3,8 @@ package cb.clienttest;
 import com.google.common.collect.Multimap;
 import java.util.Arrays;
 import java.util.List;
+import net.minecraft.class_1058;
+import net.minecraft.class_1059;
 import net.minecraft.class_1087;
 import net.minecraft.class_1109;
 import net.minecraft.class_1144;
@@ -10,6 +12,11 @@ import net.minecraft.class_1304;
 import net.minecraft.class_1799;
 import net.minecraft.class_1829;
 import net.minecraft.class_2246;
+import net.minecraft.class_2350;
+import net.minecraft.class_2680;
+import net.minecraft.class_2960;
+import net.minecraft.class_5819;
+import net.minecraft.class_777;
 import net.minecraft.class_243;
 import net.minecraft.class_2583;
 import net.minecraft.class_310;
@@ -58,6 +65,103 @@ final class Checks {
             model == null ? "no model" : model == missing ? "the missing model" : "baked from the mod's model json");
         String name = pick.method_7964().getString();
         Tally.check("item.name", "CB Pickaxe".equals(name), "\"" + name + "\" (the mod's en_us.json: \"CB Pickaxe\")");
+    }
+
+    /** smx4 checks 1b/1c as 1.20.1 has them: the mod's BlockModel.bake and getMaterial mixins */
+    static void blockModelMixins(class_310 mc) {
+        Tally.check("model.bakeMixin", ModelProbe.bakes > 100, ModelProbe.bakes + " BlockModel.bake returns seen by the mod's injector");
+        class_2680 stone = class_2246.field_10340.method_9564();
+        class_1087 model = mc.method_1541().method_3349(stone);
+        List<?> quads = model.method_4707(stone, class_2350.field_11036, class_5819.method_43047());
+        class_1058 diamond = mc.method_1554().method_24153(class_1059.field_5275).method_4608(new class_2960("block/diamond_block"));
+        boolean swapped = !quads.isEmpty() && ((class_777) quads.get(0)).method_35788() == diamond;
+        Tally.check("model.materialMixin", ModelProbe.stoneMaterials > 0 && swapped, ModelProbe.stoneMaterials
+            + " getMaterial answers replaced on the stone models; stone's top face " + (swapped ? "uses" : "does not use")
+            + " the diamond block sprite (" + quads.size() + " quads)");
+    }
+
+    /** s9 check 4b as 1.20.1 has it: the offline player's skin is a default skin texture */
+    static void skin(class_310 mc) {
+        class_2960 loc = mc.method_1582().method_44705(mc.field_1724.method_7334());
+        Tally.check("skin.default", loc != null && loc.method_12832().startsWith("textures/entity/player/"),
+            "getInsecureSkinLocation: " + loc);
+    }
+
+    /** s9 check 1 as 1.20.1 has it: what InputScreen's overrides recorded from the real X input */
+    static void input(InputScreen in) {
+        if (!in.done) {
+            Tally.fail("input.keyPressed", "the input sequence never arrived (no F9): " + in.pressed.size() + " presses");
+            return;
+        }
+        StringBuilder mods = new StringBuilder(), rel = new StringBuilder();
+        java.util.Set<Integer> scancodes = new java.util.HashSet<>();
+        for (int[] p : in.pressed) {
+            if (p[0] == 65) {
+                mods.append(p[2]).append(' ');
+                scancodes.add(p[1]);
+            }
+        }
+        for (int[] p : in.released) {
+            if (p[0] == 65) {
+                rel.append(p[2]).append(' ');
+            }
+        }
+        Tally.check("input.keyPressed", mods.toString().equals("0 1 2 ") && scancodes.size() == 1 && !scancodes.contains(0),
+            "key 65 mods " + mods + "scancodes " + scancodes + " (1.20.1: 0 1 2, one non-zero scancode)");
+        Tally.check("input.keyReleased", rel.toString().equals("0 1 2 "), "key 65 released with mods " + rel + "(1.20.1: 0 1 2)");
+        StringBuilder h = new StringBuilder();
+        for (boolean[] b : in.helpers) {
+            h.append(b[0] ? 'S' : '-').append(b[1] ? 'C' : '-').append(b[2] ? 'A' : '-').append(' ');
+        }
+        Tally.check("input.modifierHelpers", h.toString().equals("--- S-- -CA "),
+            "hasShiftDown/hasControlDown/isSelectAll per A press: " + h + "(1.20.1: --- S-- -CA)");
+        Tally.check("input.selectAll", "aA".equals(in.highlightedAfterSelectAll),
+            "EditBox highlighted after Ctrl+A: \"" + in.highlightedAfterSelectAll + "\" (1.20.1: \"aA\")");
+        StringBuilder ch = new StringBuilder();
+        for (int[] c : in.chars) {
+            ch.append(String.format("%04x/%d ", c[0], c[1]));
+        }
+        Tally.check("input.charTyped", ch.toString().equals("0061/0 0041/1 00e9/0 d83d/0 de00/0 "),
+            "charTyped " + ch + "(1.20.1: 0061/0 0041/1 00e9/0 d83d/0 de00/0)");
+        String value = in.edit.method_1882();
+        Tally.check("input.editBox", new String(Character.toChars(0xe9)).concat(new String(Character.toChars(0x1f600))).equals(value),
+            "EditBox value " + value.codePoints().mapToObj(Integer::toHexString).collect(java.util.stream.Collectors.toList())
+                + " (1.20.1: [e9, 1f600])");
+        double[][] want = {{InputScreen.WIDGET_X + InputScreen.WIDGET_W / 2.0, InputScreen.WIDGET_Y + InputScreen.WIDGET_H / 2.0, 0, 0},
+            {InputScreen.RIGHT_X, InputScreen.RIGHT_Y, 1, 0}, {InputScreen.DRAG_X, InputScreen.DRAG_Y, 0, 0},
+            {InputScreen.SHIFT_X, InputScreen.SHIFT_Y, 0, 1}};
+        Tally.check("input.mouseClicked", matches(in.clicks, want, true), "clicks (x,y,button,shift) " + show(in.clicks));
+        Tally.check("input.widgetOnClick", in.widget.onClicks.size() == 1, in.widget.onClicks.size() + " onClick calls "
+            + show(in.widget.onClicks));
+        Tally.check("input.mouseDragged", in.drags > 0 && Math.abs(in.dragDx - InputScreen.DRAG_DX) <= 2
+            && Math.abs(in.dragDy - InputScreen.DRAG_DY) <= 2, in.drags + " drags, dx " + in.dragDx + ", dy " + in.dragDy
+            + " (moved " + InputScreen.DRAG_DX + ", " + InputScreen.DRAG_DY + ")");
+        Tally.check("input.mouseReleased", matches(in.releases, want, false), "releases (x,y,button) " + show(in.releases));
+    }
+
+    /** the recorded clicks (withShift) or releases against the sequence; the drag releases where it ended */
+    private static boolean matches(List<double[]> got, double[][] want, boolean withShift) {
+        if (got.size() != want.length) {
+            return false;
+        }
+        for (int i = 0; i < want.length; i++) {
+            double[] g = got.get(i);
+            double wx = want[i][0] + (!withShift && i == 2 ? InputScreen.DRAG_DX : 0);
+            double wy = want[i][1] + (!withShift && i == 2 ? InputScreen.DRAG_DY : 0);
+            if (Math.abs(g[0] - wx) > 1.5 || Math.abs(g[1] - wy) > 1.5 || g[2] != want[i][2]
+                || (withShift && g[3] != want[i][3])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static String show(List<double[]> l) {
+        StringBuilder b = new StringBuilder("[");
+        for (double[] d : l) {
+            b.append(Arrays.toString(d));
+        }
+        return b.append(']').toString();
     }
 
     /** swall plan item 7: the sound device list, the engine's state, a sound played */

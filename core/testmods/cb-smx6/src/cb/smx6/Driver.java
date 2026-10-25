@@ -28,6 +28,10 @@ public final class Driver {
     public static volatile boolean forceMending;
     public static volatile int bookAsked;
     public static volatile net.minecraft.class_1887 lastPick;
+    public static volatile int templateAsked;
+    public static volatile String templateName;
+    public static volatile int templateAmplifier;
+    public static volatile boolean doubleEffect;
     private static int ok;
     private static int fail;
 
@@ -95,6 +99,17 @@ public final class Driver {
         return out.toString().trim();
     }
 
+    /** a pig's movement speed with Speed (amplifier 0) applied through LivingEntity.addEffect */
+    private static double speed(class_3218 level) {
+        net.minecraft.class_1452 pig = class_1299.field_6093.method_5883(level);
+        class_2338 spawn = level.method_43126();
+        pig.method_5808(spawn.method_10263() + 0.5, 100.0, spawn.method_10260() + 0.5, 0.0F, 0.0F);
+        pig.method_6092(new net.minecraft.class_1293(net.minecraft.class_1294.field_5904, 200, 0));
+        double v = pig.method_45325(net.minecraft.class_5134.field_23719);
+        pig.method_31472();
+        return v;
+    }
+
     public static void run(net.minecraft.server.MinecraftServer server) {
         System.out.println("CB-SMX6 start");
         class_3218 level = server.method_30002();
@@ -150,12 +165,27 @@ public final class Driver {
             forceMending = false;
             check("book-forced-mending", bookOffers == 1 && mending == 1, "pick forced to Mending: " + mending + " of " + bookOffers
                 + " book offer(s) carry Mending, pick asked " + bookAsked);
+            // ---- MobEffect.AttributeTemplate.create(name, amplifier): EffectTemplateMixin
+            doubleEffect = false;
+            templateAsked = 0;
+            templateName = null;
+            double plain = speed(level);
+            check("effect-passive", templateAsked == 1 && "effect.minecraft.speed".equals(templateName) && templateAmplifier == 0
+                && Math.abs(plain - 0.3) < 1e-6, "Speed I on a pig: speed " + plain + ", create asked " + templateAsked
+                + " time(s) with name=" + templateName + " amplifier=" + templateAmplifier);
+            doubleEffect = true;
+            templateAsked = 0;
+            double doubled = speed(level);
+            doubleEffect = false;
+            check("effect-doubled", templateAsked == 1 && Math.abs(doubled - 0.35) < 1e-6,
+                "modifier amount doubled by the mod: speed " + doubled + " (passive " + plain + "), create asked " + templateAsked);
         } catch (Throwable t) {
             check("exception", false, String.valueOf(t));
             t.printStackTrace();
         } finally {
             cancelChanneling = false;
             forceMending = false;
+            doubleEffect = false;
         }
         System.out.println("CB-SMX6 summary ok=" + ok + " fail=" + fail);
     }

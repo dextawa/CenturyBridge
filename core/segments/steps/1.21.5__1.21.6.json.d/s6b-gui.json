@@ -1,0 +1,253 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_332.method_51433(Lnet/minecraft/class_327;Ljava/lang/String;IIIZ)I": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText#method_51433",
+  "net/minecraft/class_332.method_25303(Lnet/minecraft/class_327;Ljava/lang/String;III)I": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText#method_25303",
+  "net/minecraft/class_332.method_51430(Lnet/minecraft/class_327;Lnet/minecraft/class_5481;IIIZ)I": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText#method_51430",
+  "net/minecraft/class_332.method_35720(Lnet/minecraft/class_327;Lnet/minecraft/class_5481;III)I": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText#method_35720",
+  "net/minecraft/class_332.method_51439(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIZ)I": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText#method_51439",
+  "net/minecraft/class_332.method_27535(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;III)I": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText#method_27535",
+  "net/minecraft/class_332.method_60649(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIII)I": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText#method_60649",
+  "net/minecraft/class_332.method_51448()Lnet/minecraft/class_4587;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiPose#pose",
+  "net/minecraft/class_332.method_48196(Lnet/minecraft/class_1921;IIIIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_48196",
+  "net/minecraft/class_332.method_51739(Lnet/minecraft/class_1921;IIIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_51739",
+  "net/minecraft/class_332.method_51737(IIIIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_51737",
+  "net/minecraft/class_332.method_51738(Lnet/minecraft/class_1921;IIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_51738",
+  "net/minecraft/class_332.method_51742(Lnet/minecraft/class_1921;IIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_51742",
+  "net/minecraft/class_332.method_25292(IIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_25292",
+  "net/minecraft/class_332.method_25301(IIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_25301",
+  "net/minecraft/class_332.method_33284(IIIIIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_33284",
+  "net/minecraft/class_332.method_51740(Lnet/minecraft/class_1921;IIIIIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#method_51740"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_51433(Lnet/minecraft/class_327;Ljava/lang/String;IIIZ)I",
+   "new": "method_51433(Lnet/minecraft/class_327;Ljava/lang/String;IIIZ)V",
+   "onlyUnder": "net/minecraft/class_332",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText.superString(Ltop/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperString;Lnet/minecraft/class_327;Ljava/lang/String;IIIZ)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperString",
+   "superAccessors": [
+    "method_51433(Lnet/minecraft/class_327;Ljava/lang/String;IIIZ)V"
+   ],
+   "basis": "1.21.5 drawString answered the x where the text ended; 1.21.6's answers nothing (vanilla's call of the new shape drops the old override's answer). A super call draws with 1.21.5's colour adjustment (alpha-less colours opaque) and answers 1.21.5's end x (CbGuiText)"
+  },
+  {
+   "old": "method_25303(Lnet/minecraft/class_327;Ljava/lang/String;III)I",
+   "new": "method_25303(Lnet/minecraft/class_327;Ljava/lang/String;III)V",
+   "onlyUnder": "net/minecraft/class_332",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText.superStringShadow(Ltop/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperStringShadow;Lnet/minecraft/class_327;Ljava/lang/String;III)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperStringShadow",
+   "superAccessors": [
+    "method_25303(Lnet/minecraft/class_327;Ljava/lang/String;III)V"
+   ],
+   "basis": "1.21.5 drawString answered the x where the text ended; 1.21.6's answers nothing (vanilla's call of the new shape drops the old override's answer). A super call draws with 1.21.5's colour adjustment (alpha-less colours opaque) and answers 1.21.5's end x (CbGuiText)"
+  },
+  {
+   "old": "method_51430(Lnet/minecraft/class_327;Lnet/minecraft/class_5481;IIIZ)I",
+   "new": "method_51430(Lnet/minecraft/class_327;Lnet/minecraft/class_5481;IIIZ)V",
+   "onlyUnder": "net/minecraft/class_332",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText.superSequence(Ltop/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperSequence;Lnet/minecraft/class_327;Lnet/minecraft/class_5481;IIIZ)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperSequence",
+   "superAccessors": [
+    "method_51430(Lnet/minecraft/class_327;Lnet/minecraft/class_5481;IIIZ)V"
+   ],
+   "basis": "1.21.5 drawString answered the x where the text ended; 1.21.6's answers nothing (vanilla's call of the new shape drops the old override's answer). A super call draws with 1.21.5's colour adjustment (alpha-less colours opaque) and answers 1.21.5's end x (CbGuiText)"
+  },
+  {
+   "old": "method_35720(Lnet/minecraft/class_327;Lnet/minecraft/class_5481;III)I",
+   "new": "method_35720(Lnet/minecraft/class_327;Lnet/minecraft/class_5481;III)V",
+   "onlyUnder": "net/minecraft/class_332",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText.superSequenceShadow(Ltop/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperSequenceShadow;Lnet/minecraft/class_327;Lnet/minecraft/class_5481;III)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperSequenceShadow",
+   "superAccessors": [
+    "method_35720(Lnet/minecraft/class_327;Lnet/minecraft/class_5481;III)V"
+   ],
+   "basis": "1.21.5 drawString answered the x where the text ended; 1.21.6's answers nothing (vanilla's call of the new shape drops the old override's answer). A super call draws with 1.21.5's colour adjustment (alpha-less colours opaque) and answers 1.21.5's end x (CbGuiText)"
+  },
+  {
+   "old": "method_51439(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIZ)I",
+   "new": "method_51439(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIZ)V",
+   "onlyUnder": "net/minecraft/class_332",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText.superComponent(Ltop/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperComponent;Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIZ)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperComponent",
+   "superAccessors": [
+    "method_51439(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIZ)V"
+   ],
+   "basis": "1.21.5 drawString answered the x where the text ended; 1.21.6's answers nothing (vanilla's call of the new shape drops the old override's answer). A super call draws with 1.21.5's colour adjustment (alpha-less colours opaque) and answers 1.21.5's end x (CbGuiText)"
+  },
+  {
+   "old": "method_27535(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;III)I",
+   "new": "method_27535(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;III)V",
+   "onlyUnder": "net/minecraft/class_332",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText.superComponentShadow(Ltop/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperComponentShadow;Lnet/minecraft/class_327;Lnet/minecraft/class_2561;III)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperComponentShadow",
+   "superAccessors": [
+    "method_27535(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;III)V"
+   ],
+   "basis": "1.21.5 drawString answered the x where the text ended; 1.21.6's answers nothing (vanilla's call of the new shape drops the old override's answer). A super call draws with 1.21.5's colour adjustment (alpha-less colours opaque) and answers 1.21.5's end x (CbGuiText)"
+  },
+  {
+   "old": "method_60649(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIII)I",
+   "new": "method_60649(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIII)V",
+   "onlyUnder": "net/minecraft/class_332",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText.superBackdrop(Ltop/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperBackdrop;Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIII)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiText$SuperBackdrop",
+   "superAccessors": [
+    "method_60649(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIII)V"
+   ],
+   "basis": "1.21.5 drawString answered the x where the text ended; 1.21.6's answers nothing (vanilla's call of the new shape drops the old override's answer). A super call draws with 1.21.5's colour adjustment (alpha-less colours opaque) and answers 1.21.5's end x (CbGuiText)"
+  }
+ ],
+ "callReshapes": {
+  "net/minecraft/class_332.method_25290(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIFFIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_2960;IIFFIIII)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#pipeline(Ljava/util/function/Function;Lnet/minecraft/class_2960;)Lcom/mojang/blaze3d/pipeline/RenderPipeline;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "keep:9"
+   ],
+   "basis": "1.21.5 blit took a function from the texture to a render type; 1.21.6 takes that render type's pipeline (CbGuiTypes.pipeline), the rest unchanged"
+  },
+  "net/minecraft/class_332.method_25291(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIFFIIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_2960;IIFFIIIII)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#pipeline(Ljava/util/function/Function;Lnet/minecraft/class_2960;)Lcom/mojang/blaze3d/pipeline/RenderPipeline;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "keep:9",
+    "keep:10"
+   ],
+   "basis": "1.21.5 blit took a function from the texture to a render type; 1.21.6 takes that render type's pipeline (CbGuiTypes.pipeline), the rest unchanged"
+  },
+  "net/minecraft/class_332.method_25293(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIFFIIIIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_2960;IIFFIIIIIII)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#pipeline(Ljava/util/function/Function;Lnet/minecraft/class_2960;)Lcom/mojang/blaze3d/pipeline/RenderPipeline;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "keep:9",
+    "keep:10",
+    "keep:11",
+    "keep:12"
+   ],
+   "basis": "1.21.5 blit took a function from the texture to a render type; 1.21.6 takes that render type's pipeline (CbGuiTypes.pipeline), the rest unchanged"
+  },
+  "net/minecraft/class_332.method_25302(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIFFIIIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_2960;IIFFIIIIII)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#pipeline(Ljava/util/function/Function;Lnet/minecraft/class_2960;)Lcom/mojang/blaze3d/pipeline/RenderPipeline;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "keep:9",
+    "keep:10",
+    "keep:11"
+   ],
+   "basis": "1.21.5 blit took a function from the texture to a render type; 1.21.6 takes that render type's pipeline (CbGuiTypes.pipeline), the rest unchanged"
+  },
+  "net/minecraft/class_332.method_52706(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_2960;IIII)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#pipeline(Ljava/util/function/Function;Lnet/minecraft/class_2960;)Lcom/mojang/blaze3d/pipeline/RenderPipeline;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "1.21.5 blit took a function from the texture to a render type; 1.21.6 takes that render type's pipeline (CbGuiTypes.pipeline), the rest unchanged"
+  },
+  "net/minecraft/class_332.method_52707(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_2960;IIIII)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#pipeline(Ljava/util/function/Function;Lnet/minecraft/class_2960;)Lcom/mojang/blaze3d/pipeline/RenderPipeline;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "1.21.5 blit took a function from the texture to a render type; 1.21.6 takes that render type's pipeline (CbGuiTypes.pipeline), the rest unchanged"
+  },
+  "net/minecraft/class_332.method_52708(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIIIIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_2960;IIIIIIIII)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#pipeline(Ljava/util/function/Function;Lnet/minecraft/class_2960;)Lcom/mojang/blaze3d/pipeline/RenderPipeline;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "keep:9",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#white()I"
+   ],
+   "basis": "1.21.5 blitSprite(function, sprite, texW, texH, u, v, x, y, w, h) drew white (javap: its blit ends in color -1); 1.21.6 takes the pipeline and the colour"
+  },
+  "net/minecraft/class_332.method_52709(Ljava/util/function/Function;Lnet/minecraft/class_1058;IIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_1058;IIII)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#pipeline(Ljava/util/function/Function;Lnet/minecraft/class_1058;)Lcom/mojang/blaze3d/pipeline/RenderPipeline;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "1.21.5 blitSprite(function, sprite, ..) applied the function to the sprite's atlas; 1.21.6 takes that render type's pipeline"
+  },
+  "net/minecraft/class_332.method_52710(Ljava/util/function/Function;Lnet/minecraft/class_1058;IIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_1058;IIIII)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#pipeline(Ljava/util/function/Function;Lnet/minecraft/class_1058;)Lcom/mojang/blaze3d/pipeline/RenderPipeline;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "1.21.5 blitSprite(function, sprite, ..) applied the function to the sprite's atlas; 1.21.6 takes that render type's pipeline"
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1921.method_62275(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_62275",
+  "net/minecraft/class_1921.method_62276(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_62276",
+  "net/minecraft/class_1921.method_62277(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_62277",
+  "net/minecraft/class_1921.method_62279(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_62279",
+  "net/minecraft/class_1921.method_62280(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_62280",
+  "net/minecraft/class_1921.method_51784()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_51784",
+  "net/minecraft/class_1921.method_51785()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_51785",
+  "net/minecraft/class_1921.method_62284()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_62284",
+  "net/minecraft/class_1921.method_51786()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_51786",
+  "net/minecraft/class_1921.method_51787()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_51787",
+  "net/minecraft/class_1921.method_62287()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiTypes#method_62287",
+  "net/minecraft/class_1921.method_23583()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbChunkTypes#method_23583"
+ }
+}

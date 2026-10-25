@@ -1,0 +1,20 @@
+# console commands for boot_climb.sh (CB_BOOT_CMDS): fabric:remove checked at boot and again after a datapack reload
+forceload add 0 0
+#sleep 2
+setblock 0 100 0 minecraft:dirt
+execute if block 0 100 0 #cb_sclimb:removal run say CBTEST FAIL boot: dirt still in #cb_sclimb:removal
+execute unless block 0 100 0 #cb_sclimb:removal run say CBTEST ok boot: fabric:remove took dirt out
+setblock 0 100 0 minecraft:stone
+execute if block 0 100 0 #cb_sclimb:removal run say CBTEST ok boot: stone kept
+execute unless block 0 100 0 #cb_sclimb:removal run say CBTEST FAIL boot: stone missing from #cb_sclimb:removal
+reload
+#sleep 15
+say CBTEST after reload
+setblock 0 100 0 minecraft:dirt
+execute if block 0 100 0 #cb_sclimb:removal run say CBTEST FAIL reload: dirt still in #cb_sclimb:removal
+execute unless block 0 100 0 #cb_sclimb:removal run say CBTEST ok reload: fabric:remove took dirt out
+setblock 0 100 0 minecraft:stone
+execute if block 0 100 0 #cb_sclimb:removal run say CBTEST ok reload: stone kept
+execute unless block 0 100 0 #cb_sclimb:removal run say CBTEST FAIL reload: stone missing from #cb_sclimb:removal
+stop
+#sleep 10

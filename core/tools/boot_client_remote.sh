@@ -23,7 +23,8 @@
 # Environment:
 #   CB_CLIMB=1|0          climb the jars from 1.20.1 (default 1) or use them as they are
 #   CB_FAPI=1|0           with CB_CLIMB=0: add T's Fabric API (default 1; a climb always has it)
-#   CB_REUSE_LAYERS=1     keep agents/<name>/runtime-T when it exists (default: rebuild the layers)
+#   CB_REUSE_LAYERS=1     keep agents/<name>/wt-T/runtime-T when it exists (default: rebuild the layers
+#                         in wt-T, a copy of the uploaded tree per target)
 #   CB_UPLOAD=0           do not re-upload and recompile the tree (mods are always uploaded)
 #   CB_SHOTS="10 25 40"   screenshot offsets in seconds after the ready line (CB_SHOTS="" for none;
 #                         screenshots the mods take into the game's screenshots/ come back as mod-*.png)
@@ -60,7 +61,7 @@ if [ "${1:-}" != __remote ] && [ "${1:-}" != __inner ]; then
     retry() { local i; for i in 1 2 3 4 5; do "$@" && return 0; echo "(beta2 unreachable, retrying)"; sleep 20; done; return 1; }
     if [ "${CB_UPLOAD:-1}" != 0 ]; then
         rm -f "$TMP/up.tar"
-        tar --force-local --exclude=__pycache__ -cf "$TMP/up.tar" core/src core/shims core/segments core/tools build.sh
+        tar --force-local --exclude=__pycache__ -cf "$TMP/up.tar" core/src core/shims core/segments core/tools $(for d in core/mods core/natives; do [ -d $d ] && echo $d; done) build.sh
         retry $SSH "mkdir -p ~/$AG"
         retry $SCP "$TMP/up.tar" "dext@beta2.dext.top:$AG/up.tar"
         retry $SSH "set -e; cd ~/$AG && rm -rf core build.sh && tar xf up.tar && rm up.tar
@@ -158,17 +159,24 @@ PYEOF
     shopt -s nullglob
     IN=("$RUN"/in/*.jar)
     if [ "${CB_CLIMB:-1}" = 1 ]; then
-        if [ "${CB_REUSE_LAYERS:-0}" = 1 ] && [ -d "$AG/runtime-$T" ]; then
-            echo "== layers: reusing $AG/runtime-$T ($(ls "$AG/runtime-$T" | wc -l) jars)"
+        # climb_runtime.sh wipes <workDir>/layers, so each T builds and climbs in its own copy of the
+        # tree, agents/<name>/wt-T (layers/ and runtime-T/ stay there for CB_REUSE_LAYERS), and runs for
+        # different targets can build at the same time
+        WT="$AG/wt-$T"
+        if [ "${CB_REUSE_LAYERS:-0}" = 1 ] && [ -d "$WT/runtime-$T" ]; then
+            echo "== layers: reusing $WT/runtime-$T ($(ls "$WT/runtime-$T" | wc -l) jars)"
         else
-            echo "== layers: climb_runtime.sh $AG $T"
+            echo "== layers: climb_runtime.sh $WT $T"
             S=$SECONDS
-            bash "$AG/core/tools/climb_runtime.sh" "$AG" "$T" > "$OUT/layers.log" 2>&1 \
+            rm -rf "$WT" && mkdir -p "$WT/core" && cp "$AG/build.sh" "$WT/" \
+                && (cd "$AG/core" && tar cf - --exclude=./build/awstub .) | (cd "$WT/core" && tar xf -) \
+                || end "===RESULT: LAYERS FAILED (tree copy)==="
+            bash "$AG/core/tools/climb_runtime.sh" "$WT" "$T" > "$OUT/layers.log" 2>&1 \
                 || { tail -8 "$OUT/layers.log"; end "===RESULT: LAYERS FAILED==="; }
             echo "   $(grep -c '^layer' "$OUT/layers.log") layers in $((SECONDS - S)) s"
         fi
         echo "== climb: ${#IN[@]} mod(s) 1.20.1 -> $T"
-        bash "$AG/core/tools/climb_mods.sh" "$AG" "$T" "$RUN/conv" "$MODS" "${IN[@]}" || end "===RESULT: CLIMB FAILED==="
+        bash "$AG/core/tools/climb_mods.sh" "$WT" "$T" "$RUN/conv" "$MODS" "${IN[@]}" || end "===RESULT: CLIMB FAILED==="
         cp "$RUN/conv/climb.log" "$OUT/climb.log"
     else
         rm -rf "$MODS" && mkdir -p "$MODS"
@@ -270,6 +278,19 @@ S0=$(date +%s.%N)
     --accessToken 0 --username cbtest --width 1280 --height 720 $QP > "$LOG" 2>&1 < /dev/null &
 CPID=$!
 echo "client pid $CPID"
+# real input: a test mod that prints "input ready: <sequence>" gets it played by client_input.py (XTest)
+(
+    n=0
+    while kill -0 "$CPID" 2>/dev/null; do
+        seq=$(grep -a -o 'input ready: .*' "$LOG" | sed -n "$((n + 1))p")
+        if [ -n "$seq" ]; then
+            n=$((n + 1))
+            python3 "$(dirname "$0")/client_input.py" "${seq#input ready: }" >> "$OUT/input.log" 2>&1 \
+                || echo "client_input.py failed" >> "$OUT/input.log"
+        fi
+        sleep 1
+    done
+) &
 PEAK=0
 el() { echo "$(date +%s.%N) $S0" | awk '{printf "%.1f", $1 - $2}'; }
 rss() { local r; r=$(ps -o rss= -p "$CPID" 2>/dev/null | tr -d ' '); [ -n "$r" ] && [ "$r" -gt "$PEAK" ] && PEAK=$r; }

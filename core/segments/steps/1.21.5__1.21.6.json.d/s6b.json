@@ -1,0 +1,197 @@
+{
+ "classRenames": {
+  "net/minecraft/class_2561$class_2562": "top/dext/centurybridge/step/v1_21_6/facade/ComponentSerializer",
+  "net/minecraft/class_3530": "top/dext/centurybridge/step/v1_21_6/facade/LowerCaseEnumTypeAdapterFactory",
+  "net/minecraft/class_2995$class_2996": "top/dext/centurybridge/step/v1_21_6/facade/ServerScoreboardMethod",
+  "net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap": "top/dext/centurybridge/step/v1_21_6/facade/fapi/BlockRenderLayerMap",
+  "net/fabricmc/fabric/api/command/v1/CommandRegistrationCallback": "top/dext/centurybridge/step/v1_21_6/facade/fapi/CommandRegistrationCallbackV1",
+  "net/fabricmc/fabric/api/registry/CommandRegistry": "top/dext/centurybridge/step/v1_21_6/facade/fapi/CommandRegistry"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_8942.method_54946(Ljava/lang/String;)Lnet/minecraft/class_8942;": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#forChild",
+  "net/minecraft/class_8942.method_54947(Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#report",
+  "net/minecraft/class_8942$class_8943.method_54948()Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#get",
+  "net/minecraft/class_8942$class_8943.method_59906()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#getReport",
+  "net/minecraft/class_58.method_364(Ljava/lang/String;)Lnet/minecraft/class_58;": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#forChild",
+  "net/minecraft/class_58.method_51219(Ljava/lang/String;Lnet/minecraft/class_5321;)Lnet/minecraft/class_58;": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#enterElement",
+  "net/minecraft/class_58.method_360(Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems#reportProblem",
+  "net/minecraft/class_29.method_55789(Lnet/minecraft/class_1657;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayers#load"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_1657.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;FLcom/mojang/authlib/GameProfile;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lcom/mojang/authlib/GameProfile;)V",
+   "ops": [
+    "keep:0",
+    "keep:3"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayers#placed(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;F)V",
+   "postArgs": [
+    1,
+    2
+   ],
+   "basis": "1.21.5 Player(level, pos, yRot, profile) ended in moveTo(pos.x + 0.5, pos.y + 1, pos.z + 0.5, yRot, 0); 1.21.6's Player(level, profile) is the same body without that call (javap: both constructors' instructions up to it are equal)"
+  },
+  "net/minecraft/class_6595.<init>(I)V": {
+   "desc": "(ILjava/lang/String;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbVersions#mainSeries()Ljava/lang/String;"
+   ],
+   "basis": "1.21.5 DataVersion(int) was this(version, MAIN_SERIES) (javap); 1.21.6 keeps only the two-argument record constructor"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_54946(Ljava/lang/String;)Lnet/minecraft/class_8942;",
+   "new": "method_54946(Lnet/minecraft/class_8942$class_11336;)Lnet/minecraft/class_8942;",
+   "onlyUnder": "net/minecraft/class_8942",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems.text(Lnet/minecraft/class_8942$class_11336;)Ljava/lang/String;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems.superForChild(Ltop/dext/centurybridge/step/v1_21_6/rt/CbProblems$SuperCollectorChild;Ljava/lang/String;)Lnet/minecraft/class_8942;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems$SuperCollectorChild",
+   "superAccessors": [
+    "method_54946(Lnet/minecraft/class_8942$class_11336;)Lnet/minecraft/class_8942;"
+   ],
+   "basis": "1.21.5 ProblemReporter.forChild(String) is 1.21.6's forChild(PathElement): the element's text, which is what 1.21.5 appended to the path (CbProblems)"
+  },
+  {
+   "old": "method_54947(Ljava/lang/String;)V",
+   "new": "method_54947(Lnet/minecraft/class_8942$class_11337;)V",
+   "onlyUnder": "net/minecraft/class_8942",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems.text(Lnet/minecraft/class_8942$class_11337;)Ljava/lang/String;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems.superReport(Ltop/dext/centurybridge/step/v1_21_6/rt/CbProblems$SuperCollectorReport;Ljava/lang/String;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems$SuperCollectorReport",
+   "superAccessors": [
+    "method_54947(Lnet/minecraft/class_8942$class_11337;)V"
+   ],
+   "basis": "1.21.5 ProblemReporter.report(String) is 1.21.6's report(Problem): the problem's description, what 1.21.5 filed (CbProblems)"
+  },
+  {
+   "old": "method_364(Ljava/lang/String;)Lnet/minecraft/class_58;",
+   "new": "method_364(Lnet/minecraft/class_8942$class_11336;)Lnet/minecraft/class_58;",
+   "onlyUnder": "net/minecraft/class_58",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems.text(Lnet/minecraft/class_8942$class_11336;)Ljava/lang/String;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems.superContextForChild(Ltop/dext/centurybridge/step/v1_21_6/rt/CbProblems$SuperContextChild;Ljava/lang/String;)Lnet/minecraft/class_58;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems$SuperContextChild",
+   "superAccessors": [
+    "method_364(Lnet/minecraft/class_8942$class_11336;)Lnet/minecraft/class_58;"
+   ],
+   "basis": "1.21.5 ValidationContext.forChild(String) is 1.21.6's forChild(PathElement) (CbProblems)"
+  },
+  {
+   "old": "method_51219(Ljava/lang/String;Lnet/minecraft/class_5321;)Lnet/minecraft/class_58;",
+   "new": "method_51219(Lnet/minecraft/class_8942$class_11336;Lnet/minecraft/class_5321;)Lnet/minecraft/class_58;",
+   "onlyUnder": "net/minecraft/class_58",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems.text(Lnet/minecraft/class_8942$class_11336;)Ljava/lang/String;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems.superEnterElement(Ltop/dext/centurybridge/step/v1_21_6/rt/CbProblems$SuperContextElement;Ljava/lang/String;Lnet/minecraft/class_5321;)Lnet/minecraft/class_58;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems$SuperContextElement",
+   "superAccessors": [
+    "method_51219(Lnet/minecraft/class_8942$class_11336;Lnet/minecraft/class_5321;)Lnet/minecraft/class_58;"
+   ],
+   "basis": "1.21.5 ValidationContext.enterElement(String, key) is 1.21.6's enterElement(PathElement, key) (CbProblems)"
+  },
+  {
+   "old": "method_360(Ljava/lang/String;)V",
+   "new": "method_360(Lnet/minecraft/class_8942$class_11337;)V",
+   "onlyUnder": "net/minecraft/class_58",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems.text(Lnet/minecraft/class_8942$class_11337;)Ljava/lang/String;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems.superReportProblem(Ltop/dext/centurybridge/step/v1_21_6/rt/CbProblems$SuperContextReport;Ljava/lang/String;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbProblems$SuperContextReport",
+   "superAccessors": [
+    "method_360(Lnet/minecraft/class_8942$class_11337;)V"
+   ],
+   "basis": "1.21.5 ValidationContext.reportProblem(String) is 1.21.6's reportProblem(Problem) (CbProblems)"
+  }
+ ],
+ "methodRenames": {
+  "net/minecraft/class_6489.method_37912()Lnet/minecraft/class_6595;": "comp_4026",
+  "net/minecraft/class_6489.method_48018()Ljava/lang/String;": "comp_4024",
+  "net/minecraft/class_6489.method_48019()Ljava/lang/String;": "comp_4025",
+  "net/minecraft/class_6489.method_48020()I": "comp_4027",
+  "net/minecraft/class_6489.method_48017(Lnet/minecraft/class_3264;)I": "method_70592",
+  "net/minecraft/class_6489.method_48021()Ljava/util/Date;": "comp_4030",
+  "net/minecraft/class_6489.method_48022()Z": "comp_4031",
+  "net/minecraft/class_5195.method_27279()Lnet/minecraft/class_6880;": "comp_4358",
+  "net/minecraft/class_5195.method_27280()I": "comp_4359",
+  "net/minecraft/class_5195.method_27281()I": "comp_4360",
+  "net/minecraft/class_5195.method_27282()Z": "comp_4361",
+  "net/minecraft/class_6595.method_38494()I": "comp_4038",
+  "net/minecraft/class_6595.method_38492()Ljava/lang/String;": "comp_4039"
+ },
+ "overrideRenames": [
+  {
+   "old": "method_37912()Lnet/minecraft/class_6595;",
+   "new": "comp_4026",
+   "onlyUnder": "net/minecraft/class_6489",
+   "superCalls": "rename",
+   "basis": "1.21.6 made WorldVersion a record-shaped interface: method_37912 is the component accessor comp_4026 (same value: 1.21.5 DetectedVersion read id, name, data version, protocol, pack versions, build time and stability from version.json in that order; javap)"
+  },
+  {
+   "old": "method_48018()Ljava/lang/String;",
+   "new": "comp_4024",
+   "onlyUnder": "net/minecraft/class_6489",
+   "superCalls": "rename",
+   "basis": "1.21.6 made WorldVersion a record-shaped interface: method_48018 is the component accessor comp_4024 (same value: 1.21.5 DetectedVersion read id, name, data version, protocol, pack versions, build time and stability from version.json in that order; javap)"
+  },
+  {
+   "old": "method_48019()Ljava/lang/String;",
+   "new": "comp_4025",
+   "onlyUnder": "net/minecraft/class_6489",
+   "superCalls": "rename",
+   "basis": "1.21.6 made WorldVersion a record-shaped interface: method_48019 is the component accessor comp_4025 (same value: 1.21.5 DetectedVersion read id, name, data version, protocol, pack versions, build time and stability from version.json in that order; javap)"
+  },
+  {
+   "old": "method_48020()I",
+   "new": "comp_4027",
+   "onlyUnder": "net/minecraft/class_6489",
+   "superCalls": "rename",
+   "basis": "1.21.6 made WorldVersion a record-shaped interface: method_48020 is the component accessor comp_4027 (same value: 1.21.5 DetectedVersion read id, name, data version, protocol, pack versions, build time and stability from version.json in that order; javap)"
+  },
+  {
+   "old": "method_48017(Lnet/minecraft/class_3264;)I",
+   "new": "method_70592",
+   "onlyUnder": "net/minecraft/class_6489",
+   "superCalls": "rename",
+   "basis": "1.21.6 made WorldVersion a record-shaped interface: method_48017 is the component accessor method_70592 (same value: 1.21.5 DetectedVersion read id, name, data version, protocol, pack versions, build time and stability from version.json in that order; javap)"
+  },
+  {
+   "old": "method_48021()Ljava/util/Date;",
+   "new": "comp_4030",
+   "onlyUnder": "net/minecraft/class_6489",
+   "superCalls": "rename",
+   "basis": "1.21.6 made WorldVersion a record-shaped interface: method_48021 is the component accessor comp_4030 (same value: 1.21.5 DetectedVersion read id, name, data version, protocol, pack versions, build time and stability from version.json in that order; javap)"
+  },
+  {
+   "old": "method_48022()Z",
+   "new": "comp_4031",
+   "onlyUnder": "net/minecraft/class_6489",
+   "superCalls": "rename",
+   "basis": "1.21.6 made WorldVersion a record-shaped interface: method_48022 is the component accessor comp_4031 (same value: 1.21.5 DetectedVersion read id, name, data version, protocol, pack versions, build time and stability from version.json in that order; javap)"
+  }
+ ],
+ "ledger": {
+  "net/minecraft/class_3797.method_37912()Lnet/minecraft/class_6595;": "1.21.5 DetectedVersion had only private constructors and every factory (tryDetectVersion, BUILT_IN) answered WorldVersion, which is wired; a call naming DetectedVersion needs a receiver cast to it, and 1.21.6 builds versions as WorldVersion records that are no DetectedVersion (javap of both: class_3797 lost its interface), so no 1.21.6 object can stand behind such a receiver",
+  "net/minecraft/class_3797.method_48018()Ljava/lang/String;": "1.21.5 DetectedVersion had only private constructors and every factory (tryDetectVersion, BUILT_IN) answered WorldVersion, which is wired; a call naming DetectedVersion needs a receiver cast to it, and 1.21.6 builds versions as WorldVersion records that are no DetectedVersion (javap of both: class_3797 lost its interface), so no 1.21.6 object can stand behind such a receiver",
+  "net/minecraft/class_3797.method_48019()Ljava/lang/String;": "1.21.5 DetectedVersion had only private constructors and every factory (tryDetectVersion, BUILT_IN) answered WorldVersion, which is wired; a call naming DetectedVersion needs a receiver cast to it, and 1.21.6 builds versions as WorldVersion records that are no DetectedVersion (javap of both: class_3797 lost its interface), so no 1.21.6 object can stand behind such a receiver",
+  "net/minecraft/class_3797.method_48020()I": "1.21.5 DetectedVersion had only private constructors and every factory (tryDetectVersion, BUILT_IN) answered WorldVersion, which is wired; a call naming DetectedVersion needs a receiver cast to it, and 1.21.6 builds versions as WorldVersion records that are no DetectedVersion (javap of both: class_3797 lost its interface), so no 1.21.6 object can stand behind such a receiver",
+  "net/minecraft/class_3797.method_48017(Lnet/minecraft/class_3264;)I": "1.21.5 DetectedVersion had only private constructors and every factory (tryDetectVersion, BUILT_IN) answered WorldVersion, which is wired; a call naming DetectedVersion needs a receiver cast to it, and 1.21.6 builds versions as WorldVersion records that are no DetectedVersion (javap of both: class_3797 lost its interface), so no 1.21.6 object can stand behind such a receiver",
+  "net/minecraft/class_3797.method_48021()Ljava/util/Date;": "1.21.5 DetectedVersion had only private constructors and every factory (tryDetectVersion, BUILT_IN) answered WorldVersion, which is wired; a call naming DetectedVersion needs a receiver cast to it, and 1.21.6 builds versions as WorldVersion records that are no DetectedVersion (javap of both: class_3797 lost its interface), so no 1.21.6 object can stand behind such a receiver",
+  "net/minecraft/class_3797.method_48022()Z": "1.21.5 DetectedVersion had only private constructors and every factory (tryDetectVersion, BUILT_IN) answered WorldVersion, which is wired; a call naming DetectedVersion needs a receiver cast to it, and 1.21.6 builds versions as WorldVersion records that are no DetectedVersion (javap of both: class_3797 lost its interface), so no 1.21.6 object can stand behind such a receiver"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_3518.method_47992(Lcom/google/gson/Gson;Ljava/io/Reader;Lcom/google/gson/reflect/TypeToken;Z)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_47992",
+  "net/minecraft/class_3518.method_47993(Lcom/google/gson/Gson;Ljava/io/Reader;Ljava/lang/Class;Z)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_47993",
+  "net/minecraft/class_3518.method_15267(Lcom/google/gson/Gson;Ljava/io/Reader;Ljava/lang/Class;Z)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_15267",
+  "net/minecraft/class_3518.method_15273(Lcom/google/gson/Gson;Ljava/io/Reader;Lcom/google/gson/reflect/TypeToken;Z)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_15273",
+  "net/minecraft/class_3518.method_15262(Lcom/google/gson/Gson;Ljava/lang/String;Lcom/google/gson/reflect/TypeToken;Z)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_15262",
+  "net/minecraft/class_3518.method_15279(Lcom/google/gson/Gson;Ljava/lang/String;Ljava/lang/Class;Z)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_15279",
+  "net/minecraft/class_3518.method_47994(Lcom/google/gson/Gson;Ljava/lang/String;Ljava/lang/Class;Z)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_47994",
+  "net/minecraft/class_3518.method_15298(Ljava/lang/String;Z)Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_15298",
+  "net/minecraft/class_3518.method_15274(Ljava/io/Reader;Z)Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_21_6/rt/CbGson#method_15274"
+ },
+ "depRenames": {
+  "fabric-blockrenderlayer-v1": "centurybridge_step_1_21_6@*",
+  "fabric-command-api-v1": "centurybridge_step_1_21_6@*",
+  "fabric-commands-v0": "centurybridge_step_1_21_6@*"
+ },
+ "_depRenames_basis": "1.21.6's Fabric API (0.128.2+1.21.6) no longer ships fabric-blockrenderlayer-v1, fabric-command-api-v1 and fabric-commands-v0, which 1.21.5's (0.128.2+1.21.5) did (META-INF/jars of both); this step's layer gives their APIs back (facade/fapi), so a mod's dependency on them is met by the layer"
+}
