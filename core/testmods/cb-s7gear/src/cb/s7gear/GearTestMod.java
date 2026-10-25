@@ -213,6 +213,7 @@ public class GearTestMod implements ModInitializer {
         section("nameReads", GearTestMod::nameReads);
         section("remainingReads", () -> remainingReads(server));
         section("soundReads", () -> soundReads(server));
+        section("mobArmorReads", () -> mobArmorReads(server));
         System.out.println("CB-GEARTEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILED " + FAILS));
     }
 
@@ -1153,6 +1154,25 @@ public class GearTestMod implements ModInitializer {
         check(bread != null && bread.method_12832().equals("entity.generic.eat"), "an unmixed food (bread) keeps the eating sound: " + bread);
         net.minecraft.class_2960 potion = eatSound(server, new class_1799(item("potion")));
         check(potion != null && potion.method_12832().equals("entity.generic.drink"), "an unmixed drink (potion) keeps the drinking sound: " + potion);
+    }
+
+    /** 1.21.2's Mob.canReplaceCurrentItem(new, current, CHEST) of a zombie */
+    static boolean zombieReplaces(MinecraftServer server, class_1799 candidate, class_1799 current) throws Exception {
+        net.minecraft.class_1642 zombie = new net.minecraft.class_1642(server.method_30002());
+        java.lang.reflect.Method m = net.minecraft.class_1308.class.getDeclaredMethod("method_5955", class_1799.class, class_1799.class,
+            net.minecraft.class_1304.class);
+        m.setAccessible(true);
+        return (Boolean) m.invoke(zombie, candidate, current, net.minecraft.class_1304.field_6174);
+    }
+
+    static void mobArmorReads(MinecraftServer server) throws Exception {
+        class_1799 iron = new class_1799(class_1802.field_8523);
+        class_1799 diamond = new class_1799(class_1802.field_8058);
+        class_1799 gold = new class_1799(item("golden_chestplate"));
+        check(zombieReplaces(server, iron, diamond) && !zombieReplaces(server, diamond, iron),
+            "mixin on ArmorItem.getDefense: a mob prefers the iron chestplate (defense 100) to a diamond one");
+        check(!zombieReplaces(server, gold, diamond) && zombieReplaces(server, diamond, gold),
+            "unmixed armor (gold vs diamond): the mob keeps preferring diamond");
     }
 
     /** the translation key of a stack's hover name, "" when it is not translatable */
