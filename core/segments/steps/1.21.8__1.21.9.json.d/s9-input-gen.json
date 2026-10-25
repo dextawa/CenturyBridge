@@ -1,0 +1,1512 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_10260.method_2381(DDIII)Z": {
+   "basis": "s9 input: AbstractContainerScreen.hasClickedOutside lost its button (V's body never read it); an old override gets the button of the click being handled",
+   "desc": "(DDII)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ]
+  },
+  "net/minecraft/class_10260.method_25400(CI)Z": {
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbChar(CI)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_10260.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_10260.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_10415.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_10415.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_11316$class_11317$class_11318.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_11385.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_304.method_1417(II)Z": {
+   "basis": "s9 input: KeyMapping.matches(key, scancode) takes KeyEvent (1.21.9 reads key and scancode only)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKeyCode(II)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_304.method_1433(I)Z": {
+   "basis": "s9 input: KeyMapping.matchesMouse(button) takes MouseButtonEvent (1.21.9 reads the button only)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbButtonEvent(I)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_309.method_1466(JIIII)V": {
+   "basis": "s9 input: KeyboardHandler.keyPress(window, key, scancode, action, modifiers) is keyPress(window, action, KeyEvent); private in 1.21.9, opened by the layer's access widener (vanilla calls it privately, so no override is ever reached)",
+   "desc": "(JILnet/minecraft/class_11908;)V",
+   "ops": [
+    "keep:0",
+    "keep:3",
+    "conv:1,2,4 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_339.method_25348(DD)V": {
+   "basis": "s9 input: AbstractWidget.onClick(x, y) is onClick(MouseButtonEvent, doubleClick); the button of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClickCurrent()Z"
+   ]
+  },
+  "net/minecraft/class_339.method_25349(DDDD)V": {
+   "basis": "s9 input: AbstractWidget.onDrag(x, y, dx, dy) is onDrag(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_339.method_25351(I)Z": {
+   "basis": "s9 input: AbstractWidget.isValidClickButton(button) takes MouseButtonInfo",
+   "desc": "(Lnet/minecraft/class_11910;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbButton(I)Lnet/minecraft/class_11910;"
+   ]
+  },
+  "net/minecraft/class_339.method_25357(DD)V": {
+   "basis": "s9 input: AbstractWidget.onRelease(x, y) is onRelease(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_339.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_339.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_339.method_25406(DDI)Z": {
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_342.method_25348(DD)V": {
+   "basis": "s9 input: AbstractWidget.onClick(x, y) is onClick(MouseButtonEvent, doubleClick); the button of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClickCurrent()Z"
+   ]
+  },
+  "net/minecraft/class_342.method_25400(CI)Z": {
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbChar(CI)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_342.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_357.method_25348(DD)V": {
+   "basis": "s9 input: AbstractWidget.onClick(x, y) is onClick(MouseButtonEvent, doubleClick); the button of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClickCurrent()Z"
+   ]
+  },
+  "net/minecraft/class_357.method_25349(DDDD)V": {
+   "basis": "s9 input: AbstractWidget.onDrag(x, y, dx, dy) is onDrag(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_357.method_25357(DD)V": {
+   "basis": "s9 input: AbstractWidget.onRelease(x, y) is onRelease(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_357.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_364.method_16803(III)Z": {
+   "basis": "s9 input: keyReleased(key, scancode, modifiers) is keyReleased(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_364.method_25400(CI)Z": {
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbChar(CI)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_364.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_364.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_364.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_364.method_25406(DDI)Z": {
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_3675.method_15985(II)Lnet/minecraft/class_3675$class_306;": {
+   "basis": "s9 input: InputConstants.getKey(key, scancode) takes KeyEvent (reads key and scancode only)",
+   "desc": "(Lnet/minecraft/class_11908;)Lnet/minecraft/class_3675$class_306;",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKeyCode(II)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_3728.method_16199(C)Z": {
+   "basis": "s9 input: TextFieldHelper.charTyped(char) takes CharacterEvent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbCharFor(C)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_3728.method_16202(I)Z": {
+   "basis": "s9 input: TextFieldHelper.keyPressed(key) takes KeyEvent; 1.21.8 asked the live keyboard for the modifiers its shortcuts test",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKeyFor(I)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_3742.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_3872.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_3872.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_3979.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_3979.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_405.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4069.method_16803(III)Z": {
+   "basis": "s9 input: keyReleased(key, scancode, modifiers) is keyReleased(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4069.method_25400(CI)Z": {
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbChar(CI)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_4069.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4069.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_4069.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4069.method_25406(DDI)Z": {
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_408.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_408.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_410.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_413$class_4192$class_4193.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_415$class_4190$class_4191.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_418.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4185.method_25306()V": {
+   "basis": "s9 input: AbstractButton.onPress() takes the input that pressed it (CycleButton reads its shift); a call passes the input being handled",
+   "desc": "(Lnet/minecraft/class_11907;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbCurrentInput()Lnet/minecraft/class_11907;"
+   ]
+  },
+  "net/minecraft/class_420.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_423.method_25400(CI)Z": {
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbChar(CI)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_423.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_426$class_4195$class_4194.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_426$class_4195$class_4194.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4264.method_25306()V": {
+   "basis": "s9 input: AbstractButton.onPress() takes the input that pressed it (CycleButton reads its shift); a call passes the input being handled",
+   "desc": "(Lnet/minecraft/class_11907;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbCurrentInput()Lnet/minecraft/class_11907;"
+   ]
+  },
+  "net/minecraft/class_4264.method_25348(DD)V": {
+   "basis": "s9 input: AbstractWidget.onClick(x, y) is onClick(MouseButtonEvent, doubleClick); the button of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClickCurrent()Z"
+   ]
+  },
+  "net/minecraft/class_4264.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4265$class_4266.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4267$class_4269.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4267$class_4270.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4267$class_4270.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4267.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4280$class_4281.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4286.method_25306()V": {
+   "basis": "s9 input: AbstractButton.onPress() takes the input that pressed it (CycleButton reads its shift); a call passes the input being handled",
+   "desc": "(Lnet/minecraft/class_11907;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbCurrentInput()Lnet/minecraft/class_11907;"
+   ]
+  },
+  "net/minecraft/class_430$class_4196$class_432.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_430$class_4196.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4325$class_4330.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4325$class_4330.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4325$class_8202.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4325$class_8202.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4325$class_8840.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4325$class_8840.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_437.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_437.method_25414(Ljava/lang/String;CI)Z": {
+   "basis": "s9 input: Screen.isValidCharacterForName(name, char, cursor) takes a codepoint",
+   "desc": "(Ljava/lang/String;II)Z",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbCodepoint(C)I",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4388.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4398.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4401$class_4403.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4416.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4419$class_4420.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4419$class_4421.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_442.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4426.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_4426.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4427.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_445.method_16803(III)Z": {
+   "basis": "s9 input: keyReleased(key, scancode, modifiers) is keyReleased(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_445.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_446.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_447$class_4200.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_457.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_457.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_457.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_463.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_463.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_465.method_2381(DDIII)Z": {
+   "basis": "s9 input: AbstractContainerScreen.hasClickedOutside lost its button (V's body never read it); an old override gets the button of the click being handled",
+   "desc": "(DDII)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ]
+  },
+  "net/minecraft/class_465.method_2384(II)Z": {
+   "basis": "s9 input: AbstractContainerScreen.checkHotbarKeyPressed(key, scancode) takes KeyEvent (matched through KeyMapping.matches)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKeyCode(II)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_465.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_465.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_465.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_465.method_25406(DDI)Z": {
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_466$class_467.method_25306()V": {
+   "basis": "s9 input: AbstractButton.onPress() takes the input that pressed it (CycleButton reads its shift); a call passes the input being handled",
+   "desc": "(Lnet/minecraft/class_11907;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbCurrentInput()Lnet/minecraft/class_11907;"
+   ]
+  },
+  "net/minecraft/class_466$class_468.method_25306()V": {
+   "basis": "s9 input: AbstractButton.onPress() takes the input that pressed it (CycleButton reads its shift); a call passes the input being handled",
+   "desc": "(Lnet/minecraft/class_11907;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbCurrentInput()Lnet/minecraft/class_11907;"
+   ]
+  },
+  "net/minecraft/class_466$class_469.method_25306()V": {
+   "basis": "s9 input: AbstractButton.onPress() takes the input that pressed it (CycleButton reads its shift); a call passes the input being handled",
+   "desc": "(Lnet/minecraft/class_11907;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbCurrentInput()Lnet/minecraft/class_11907;"
+   ]
+  },
+  "net/minecraft/class_471.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4717$class_464.method_2377(III)Z": {
+   "basis": "s9 input: CommandSuggestions.SuggestionsList.keyPressed takes KeyEvent",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_4717.method_23922(DDI)Z": {
+   "basis": "s9 input: CommandSuggestions.mouseClicked(x, y, button) takes MouseButtonEvent",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_4717.method_23924(III)Z": {
+   "basis": "s9 input: CommandSuggestions.keyPressed(key, scancode, modifiers) takes KeyEvent",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_473.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_481.method_16803(III)Z": {
+   "basis": "s9 input: keyReleased(key, scancode, modifiers) is keyReleased(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_481.method_2381(DDIII)Z": {
+   "basis": "s9 input: AbstractContainerScreen.hasClickedOutside lost its button (V's body never read it); an old override gets the button of the click being handled",
+   "desc": "(DDII)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ]
+  },
+  "net/minecraft/class_481.method_25400(CI)Z": {
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbChar(CI)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_481.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_481.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_481.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_481.method_25406(DDI)Z": {
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_486.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_490.method_25406(DDI)Z": {
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_492.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_492.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_494.method_2381(DDIII)Z": {
+   "basis": "s9 input: AbstractContainerScreen.hasClickedOutside lost its button (V's body never read it); an old override gets the button of the click being handled",
+   "desc": "(DDII)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ]
+  },
+  "net/minecraft/class_494.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_494.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_497$1.method_25400(CI)Z": {
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbChar(CI)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_497.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_500.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_507.method_16803(III)Z": {
+   "basis": "s9 input: keyReleased(key, scancode, modifiers) is keyReleased(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_507.method_25400(CI)Z": {
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbChar(CI)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_507.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_507.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_508.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_513.method_2632(DDIIIII)Z": {
+   "basis": "s9 input: RecipeBookPage.mouseClicked(x, y, button, left, top, width, height) takes MouseButtonEvent and the double-click flag",
+   "desc": "(Lnet/minecraft/class_11909;IIIIZ)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_514.method_25351(I)Z": {
+   "basis": "s9 input: AbstractWidget.isValidClickButton(button) takes MouseButtonInfo",
+   "desc": "(Lnet/minecraft/class_11910;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbButton(I)Lnet/minecraft/class_11910;"
+   ]
+  },
+  "net/minecraft/class_521$class_4271.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_521.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_525.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_528$class_4272.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_528.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_5289.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_5522.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_5676.method_25306()V": {
+   "basis": "s9 input: AbstractButton.onPress() takes the input that pressed it (CycleButton reads its shift); a call passes the input being handled",
+   "desc": "(Lnet/minecraft/class_11907;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbCurrentInput()Lnet/minecraft/class_11907;"
+   ]
+  },
+  "net/minecraft/class_6599.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_6599.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_7528.method_25357(DD)V": {
+   "basis": "s9 input: AbstractWidget.onRelease(x, y) is onRelease(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_7528.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_7528.method_65505(DDI)Z": {
+   "basis": "s9 input: AbstractScrollArea.updateScrolling(x, y, button) takes MouseButtonEvent",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_7529.method_25348(DD)V": {
+   "basis": "s9 input: AbstractWidget.onClick(x, y) is onClick(MouseButtonEvent, doubleClick); the button of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClickCurrent()Z"
+   ]
+  },
+  "net/minecraft/class_7529.method_25349(DDDD)V": {
+   "basis": "s9 input: AbstractWidget.onDrag(x, y, dx, dy) is onDrag(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_7529.method_25400(CI)Z": {
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbChar(CI)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_7529.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_7530.method_44428(I)Z": {
+   "basis": "s9 input: MultilineTextField.keyPressed(key) takes KeyEvent; 1.21.8 asked the live keyboard for the modifiers",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKeyFor(I)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_7538.method_25406(DDI)Z": {
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_7543$class_7544$class_7546.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_7543$class_7544$class_7548.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_7543$class_7544$class_7548.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_7543$class_7544.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_7551$class_7552$class_7553.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_7743.method_25400(CI)Z": {
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent",
+   "desc": "(Lnet/minecraft/class_11905;)Z",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbChar(CI)Lnet/minecraft/class_11905;"
+   ]
+  },
+  "net/minecraft/class_7743.method_25404(III)Z": {
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent)",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKey(III)Lnet/minecraft/class_11908;"
+   ]
+  },
+  "net/minecraft/class_7940.method_25348(DD)V": {
+   "basis": "s9 input: AbstractWidget.onClick(x, y) is onClick(MouseButtonEvent, doubleClick); the button of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClickCurrent()Z"
+   ]
+  },
+  "net/minecraft/class_8765.method_25349(DDDD)V": {
+   "basis": "s9 input: AbstractWidget.onDrag(x, y, dx, dy) is onDrag(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClickAt(DD)Lnet/minecraft/class_11909;",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_8769.method_25406(DDI)Z": {
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_8771.method_25406(DDI)Z": {
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  },
+  "net/minecraft/class_9017.method_25402(DDI)Z": {
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled",
+   "desc": "(Lnet/minecraft/class_11909;Z)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbDoubleClick(I)Z"
+   ]
+  },
+  "net/minecraft/class_9017.method_25403(DDIDD)Z": {
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy)",
+   "desc": "(Lnet/minecraft/class_11909;DD)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_9017.method_25406(DDI)Z": {
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent)",
+   "desc": "(Lnet/minecraft/class_11909;)Z",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbClick(DDI)Lnet/minecraft/class_11909;"
+   ]
+  }
+ },
+ "overrideHooks": [
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyKeyPressed",
+   "basis": "s9 input: keyPressed(key, scancode, modifiers) is keyPressed(KeyEvent); the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbKeyPressed(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyKeyPressed;Lnet/minecraft/class_11908;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25404(Lnet/minecraft/class_11908;)Z",
+   "old": "method_25404(III)Z",
+   "onlyUnder": "net/minecraft/class_364"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyKeyReleased",
+   "basis": "s9 input: keyReleased(key, scancode, modifiers) is keyReleased(KeyEvent); the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbKeyReleased(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyKeyReleased;Lnet/minecraft/class_11908;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_16803(Lnet/minecraft/class_11908;)Z",
+   "old": "method_16803(III)Z",
+   "onlyUnder": "net/minecraft/class_364"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyCharTyped",
+   "basis": "s9 input: charTyped(char, modifiers) is charTyped(CharacterEvent); a supplementary codepoint reaches the old override as the two chars 1.21.8's KeyboardHandler sent; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbCharTyped(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyCharTyped;Lnet/minecraft/class_11905;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25400(Lnet/minecraft/class_11905;)Z",
+   "old": "method_25400(CI)Z",
+   "onlyUnder": "net/minecraft/class_364"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyMouseClicked",
+   "basis": "s9 input: mouseClicked(x, y, button) is mouseClicked(MouseButtonEvent, doubleClick); modifiers and the flag of the click being handled; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbMouseClicked(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyMouseClicked;Lnet/minecraft/class_11909;Z)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25402(Lnet/minecraft/class_11909;Z)Z",
+   "old": "method_25402(DDI)Z",
+   "onlyUnder": "net/minecraft/class_364"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyMouseReleased",
+   "basis": "s9 input: mouseReleased(x, y, button) is mouseReleased(MouseButtonEvent); the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbMouseReleased(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyMouseReleased;Lnet/minecraft/class_11909;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25406(Lnet/minecraft/class_11909;)Z",
+   "old": "method_25406(DDI)Z",
+   "onlyUnder": "net/minecraft/class_364"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyMouseDragged",
+   "basis": "s9 input: mouseDragged(x, y, button, dx, dy) is mouseDragged(MouseButtonEvent, dx, dy); the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbMouseDragged(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyMouseDragged;Lnet/minecraft/class_11909;DD)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25403(Lnet/minecraft/class_11909;DD)Z",
+   "old": "method_25403(DDIDD)Z",
+   "onlyUnder": "net/minecraft/class_364"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyOnClick",
+   "basis": "s9 input: AbstractWidget.onClick(x, y) is onClick(MouseButtonEvent, doubleClick); the button of the click being handled; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbOnClick(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyOnClick;Lnet/minecraft/class_11909;Z)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25348(Lnet/minecraft/class_11909;Z)V",
+   "old": "method_25348(DD)V",
+   "onlyUnder": "net/minecraft/class_339"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyOnRelease",
+   "basis": "s9 input: AbstractWidget.onRelease(x, y) is onRelease(MouseButtonEvent); the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbOnRelease(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyOnRelease;Lnet/minecraft/class_11909;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25357(Lnet/minecraft/class_11909;)V",
+   "old": "method_25357(DD)V",
+   "onlyUnder": "net/minecraft/class_339"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyOnDrag",
+   "basis": "s9 input: AbstractWidget.onDrag(x, y, dx, dy) is onDrag(MouseButtonEvent, dx, dy); the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbOnDrag(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyOnDrag;Lnet/minecraft/class_11909;DD)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25349(Lnet/minecraft/class_11909;DD)V",
+   "old": "method_25349(DDDD)V",
+   "onlyUnder": "net/minecraft/class_339"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyValidClickButton",
+   "basis": "s9 input: AbstractWidget.isValidClickButton(button) takes MouseButtonInfo; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbValidClickButton(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyValidClickButton;Lnet/minecraft/class_11910;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25351(Lnet/minecraft/class_11910;)Z",
+   "old": "method_25351(I)Z",
+   "onlyUnder": "net/minecraft/class_339"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyOnPress",
+   "basis": "s9 input: AbstractButton.onPress() takes the input that pressed it (CycleButton reads its shift); a call passes the input being handled; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbOnPress(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyOnPress;Lnet/minecraft/class_11907;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25306(Lnet/minecraft/class_11907;)V",
+   "old": "method_25306()V",
+   "onlyUnder": "net/minecraft/class_4264"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyKeyMatches",
+   "basis": "s9 input: KeyMapping.matches(key, scancode) takes KeyEvent (1.21.9 reads key and scancode only); the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbKeyMatches(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyKeyMatches;Lnet/minecraft/class_11908;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_1417(Lnet/minecraft/class_11908;)Z",
+   "old": "method_1417(II)Z",
+   "onlyUnder": "net/minecraft/class_304"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyMouseMatches",
+   "basis": "s9 input: KeyMapping.matchesMouse(button) takes MouseButtonEvent (1.21.9 reads the button only); the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbMouseMatches(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyMouseMatches;Lnet/minecraft/class_11909;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_1433(Lnet/minecraft/class_11909;)Z",
+   "old": "method_1433(I)Z",
+   "onlyUnder": "net/minecraft/class_304"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyHelperCharTyped",
+   "basis": "s9 input: TextFieldHelper.charTyped(char) takes CharacterEvent; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbHelperCharTyped(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyHelperCharTyped;Lnet/minecraft/class_11905;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_16199(Lnet/minecraft/class_11905;)Z",
+   "old": "method_16199(C)Z",
+   "onlyUnder": "net/minecraft/class_3728"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyHelperKeyPressed",
+   "basis": "s9 input: TextFieldHelper.keyPressed(key) takes KeyEvent; 1.21.8 asked the live keyboard for the modifiers its shortcuts test; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbHelperKeyPressed(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyHelperKeyPressed;Lnet/minecraft/class_11908;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_16202(Lnet/minecraft/class_11908;)Z",
+   "old": "method_16202(I)Z",
+   "onlyUnder": "net/minecraft/class_3728"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyTextFieldKeyPressed",
+   "basis": "s9 input: MultilineTextField.keyPressed(key) takes KeyEvent; 1.21.8 asked the live keyboard for the modifiers; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbTextFieldKeyPressed(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyTextFieldKeyPressed;Lnet/minecraft/class_11908;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_44428(Lnet/minecraft/class_11908;)Z",
+   "old": "method_44428(I)Z",
+   "onlyUnder": "net/minecraft/class_7530"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacySuggestionsKeyPressed",
+   "basis": "s9 input: CommandSuggestions.keyPressed(key, scancode, modifiers) takes KeyEvent; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbSuggestionsKeyPressed(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacySuggestionsKeyPressed;Lnet/minecraft/class_11908;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_23924(Lnet/minecraft/class_11908;)Z",
+   "old": "method_23924(III)Z",
+   "onlyUnder": "net/minecraft/class_4717"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacySuggestionsMouseClicked",
+   "basis": "s9 input: CommandSuggestions.mouseClicked(x, y, button) takes MouseButtonEvent; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbSuggestionsMouseClicked(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacySuggestionsMouseClicked;Lnet/minecraft/class_11909;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_23922(Lnet/minecraft/class_11909;)Z",
+   "old": "method_23922(DDI)Z",
+   "onlyUnder": "net/minecraft/class_4717"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacySuggestionsListKeyPressed",
+   "basis": "s9 input: CommandSuggestions.SuggestionsList.keyPressed takes KeyEvent; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbSuggestionsListKeyPressed(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacySuggestionsListKeyPressed;Lnet/minecraft/class_11908;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_2377(Lnet/minecraft/class_11908;)Z",
+   "old": "method_2377(III)Z",
+   "onlyUnder": "net/minecraft/class_4717$class_464"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyUpdateScrolling",
+   "basis": "s9 input: AbstractScrollArea.updateScrolling(x, y, button) takes MouseButtonEvent; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbUpdateScrolling(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyUpdateScrolling;Lnet/minecraft/class_11909;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_65505(Lnet/minecraft/class_11909;)Z",
+   "old": "method_65505(DDI)Z",
+   "onlyUnder": "net/minecraft/class_7528"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyHotbarKey",
+   "basis": "s9 input: AbstractContainerScreen.checkHotbarKeyPressed(key, scancode) takes KeyEvent (matched through KeyMapping.matches); the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbHotbarKey(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyHotbarKey;Lnet/minecraft/class_11908;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_2384(Lnet/minecraft/class_11908;)Z",
+   "old": "method_2384(II)Z",
+   "onlyUnder": "net/minecraft/class_465"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyClickedOutside",
+   "basis": "s9 input: AbstractContainerScreen.hasClickedOutside lost its button (V's body never read it); an old override gets the button of the click being handled; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbClickedOutside(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyClickedOutside;DDII)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_2381(DDII)Z",
+   "old": "method_2381(DDIII)Z",
+   "onlyUnder": "net/minecraft/class_465"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyRecipePageClicked",
+   "basis": "s9 input: RecipeBookPage.mouseClicked(x, y, button, left, top, width, height) takes MouseButtonEvent and the double-click flag; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbRecipePageClicked(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyRecipePageClicked;Lnet/minecraft/class_11909;IIIIZ)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_2632(Lnet/minecraft/class_11909;IIIIZ)Z",
+   "old": "method_2632(DDIIIII)Z",
+   "onlyUnder": "net/minecraft/class_513"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyValidNameChar",
+   "basis": "s9 input: Screen.isValidCharacterForName(name, char, cursor) takes a codepoint; the old override gets 1.21.8's values (CbInput)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbInput.cbValidNameChar(Ltop/dext/centurybridge/step/v1_21_9/rt/CbInput$LegacyValidNameChar;Ljava/lang/String;II)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_25414(Ljava/lang/String;II)Z",
+   "old": "method_25414(Ljava/lang/String;CI)Z",
+   "onlyUnder": "net/minecraft/class_437"
+  }
+ ],
+ "staticRedirects": {
+  "net/minecraft/class_437.method_25436(I)Z": "top/dext/centurybridge/step/v1_21_9/rt/CbInput",
+  "net/minecraft/class_437.method_25437(I)Z": "top/dext/centurybridge/step/v1_21_9/rt/CbInput",
+  "net/minecraft/class_437.method_25438(I)Z": "top/dext/centurybridge/step/v1_21_9/rt/CbInput",
+  "net/minecraft/class_437.method_25439(I)Z": "top/dext/centurybridge/step/v1_21_9/rt/CbInput",
+  "net/minecraft/class_437.method_25441()Z": "top/dext/centurybridge/step/v1_21_9/rt/CbInput",
+  "net/minecraft/class_437.method_25442()Z": "top/dext/centurybridge/step/v1_21_9/rt/CbInput",
+  "net/minecraft/class_437.method_25443()Z": "top/dext/centurybridge/step/v1_21_9/rt/CbInput"
+ }
+}
