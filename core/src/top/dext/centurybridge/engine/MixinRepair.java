@@ -67,6 +67,18 @@ import org.objectweb.asm.tree.VarInsnNode;
 public final class MixinRepair {
     private static final Gson GSON = new Gson();
     private static final String MIXIN = "Lorg/spongepowered/asm/mixin/Mixin;";
+
+    /** a class's @Mixin annotation (an empty one when it has none) */
+    static AnnotationNode mixinAnnotation(ClassNode cn) {
+        for (List<AnnotationNode> l : java.util.Arrays.asList(cn.invisibleAnnotations, cn.visibleAnnotations)) {
+            for (AnnotationNode a : l == null ? List.<AnnotationNode>of() : l) {
+                if (a.desc.equals(MIXIN)) {
+                    return a;
+                }
+            }
+        }
+        return new AnnotationNode(MIXIN);
+    }
     private static final String INJECT = "Lorg/spongepowered/asm/mixin/injection/Inject;";
     private static final String CI = "Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;";
     private static final String CIR = "Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;";
@@ -475,6 +487,20 @@ public final class MixinRepair {
                         if (cands.isEmpty() && s.desc != null && !renamed.apply(s.desc).equals(s.desc)) {
                             cands = layerMembers.match(owner, new Sel(s.owner, s.name, renamed.apply(s.desc), s.wildcard)); // as the step renames its types
                         }
+                        if (!cands.isEmpty() && cands.stream().allMatch(layerMembers::isMember)) {
+                            // Mixin refuses an injector into a member another mixin merged at a priority not below
+                            // its own (except HEAD / RETURN / TAIL): InvalidInjectionException at apply. Off, open
+                            int mp = values(mixinAnnotation(mx)).get("priority") instanceof Integer p ? p : LayerMembers.DEFAULT_PRIORITY;
+                            Map<String, Object> vv = v;
+                            List<MethodNode> ok = cands.stream().filter(m -> layerMembers.injectable(m, mp, vv)).toList();
+                            if (ok.isEmpty()) {
+                                if (deadWhy == null) deadWhy = "restored member merged at priority " + layerMembers.priority(cands.get(0))
+                                    + ", not below the mod's " + mp + ": @" + kind + " " + shortName + "." + handler.name + " -> "
+                                    + s.name + (s.desc != null ? s.desc : "");
+                                continue;
+                            }
+                            cands = ok;
+                        }
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
                         if (cands.isEmpty()) {
@@ -505,6 +531,27 @@ public final class MixinRepair {
                             if (deadWhy == null) deadWhy = "anchor gone: @" + kind + " " + where + " " + anchors
                                 + " (the target is an override put back as a super call; its anchor stood in V's own body)";
                             continue;
+                        }
+                        // a restored member's body calls the facade the step renames V's class to (the layer's
+                        // 1.21.1 ArmorMaterial for class_1741), where V's body called V's class: the anchor, kept in
+                        // V's name for a mixin aimed at vanilla (MixinClassRenames.forVanilla), names that call in
+                        // the facade's name at runtime
+                        if (anchors.size() == 1 && cands.stream().allMatch(layerMembers::isMember)) {
+                            Anchor a0 = anchors.get(0);
+                            String fo = a0.owner == null ? null : facadeRenames.get(a0.owner);
+                            if (MixinClassRenames.toLayer(fo) && (a0.kind.equals("INVOKE") || a0.kind.equals("FIELD"))) {
+                                String fd = MixinClassRenames.rename(a0.desc, facadeRenames);
+                                Anchor fa = new Anchor(a0.kind, fo, a0.name, fd, a0.constant, a0.ordinal, a0.role);
+                                if (cands.stream().anyMatch(m -> anchorIn(m, fa))) {
+                                    String value = "L" + fo + ";" + a0.name + (a0.kind.equals("FIELD") ? ":" : "") + fd;
+                                    fixNotes.add("anchor-facade " + where + " " + a0 + " => " + value
+                                        + " (the restored body calls the facade the step renames " + a0.owner + " to)");
+                                    fixes.add(() -> {
+                                        if (setAtTarget(an, refmap, value)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
+                                    });
+                                    continue;
+                                }
+                            }
                         }
                         // @Inject marks a POSITION in the unchanged target: its anchor may
                         // follow the call it named -- re-described (drawTexture grew a

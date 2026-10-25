@@ -194,7 +194,9 @@ public final class MixinJudge {
             + ", facade-only-open " + layerCounts.getOrDefault("facade-only-open", 0) + "; restored vanilla-reads "
             + layerCounts.getOrDefault("restored-vanilla-reads", 0) + ", restored-unreached " + layerCounts.getOrDefault("restored-unreached", 0)
             + ", restored-partial " + layerCounts.getOrDefault("restored-partial", 0)
-            + ", restored-open " + layerCounts.getOrDefault("restored-open", 0) + "; partial, return untouched "
+            + ", restored-open " + layerCounts.getOrDefault("restored-open", 0)
+            + ", restored-override " + layerCounts.getOrDefault("restored-override", 0)
+            + ", restored-priority " + layerCounts.getOrDefault("restored-priority", 0) + "; partial, return untouched "
             + layerCounts.getOrDefault("partial-return", 0));
     }
 
@@ -489,8 +491,16 @@ public final class MixinJudge {
             }
             for (MethodNode wm : cands) {
                 String why = fits(h, an, wm, st, anchors, vcount, oc);
+                int mp = MixinRepair.values(MixinRepair.mixinAnnotation(mx)).get("priority") instanceof Integer p ? p : LayerMembers.DEFAULT_PRIORITY;
+                if (why == null && restoring != null && !restoring.injectable(wm, mp, MixinRepair.values(an))) {
+                    // Mixin refuses: the layer mixin merged the member at a priority not below this mixin's, and the
+                    // injection point is not HEAD / RETURN / TAIL (s7item's server log: "cannot inject into ...
+                    // merged by ... with priority 1000")
+                    rowLayer = "restored-priority";
+                    why = "restored-member: merged at priority " + restoring.priority(wm) + ", not below the mod's " + mp;
+                }
                 if (why == null && (restoring != null || oc.name.startsWith("top/dext/"))) {
-                    why = layerHeld(h, an, wm, restoring, vcount);
+                    why = layerHeld(h, an, wm, restoring, vcount, oc);
                 }
                 if (why == null && MixinRepair.annotations(h).stream().anyMatch(a -> a.desc.equals(MixinBridge.RETURN_UNTOUCHED))) {
                     // the target's answer changed type with no converter: the handler runs, but a callback reading or
@@ -523,8 +533,14 @@ public final class MixinJudge {
      * W's): the mixin changed only mods' calls on V too, as it does now.</ul>
      * Otherwise open: "facade-only: vanilla path unmixed" / "restored-member: vanilla path unmixed".
      */
-    private String layerHeld(MethodNode h, AnnotationNode an, MethodNode wm, LayerMembers restoring, int vcount) {
+    private String layerHeld(MethodNode h, AnnotationNode an, MethodNode wm, LayerMembers restoring, int vcount, ClassNode oc) {
         boolean facade = restoring == null;
+        if (!facade && (wm.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) == 0 && overridesW(oc, wm.name, wm.desc)) {
+            // the restored member overrides a method of the W class's supertypes: vanilla's virtual calls of that
+            // method on this class run it (SmithingTrimRecipe.matches over SmithingRecipe's default)
+            rowLayer = "restored-override";
+            return null;
+        }
         if (!facade && restoring.vanillaReads(wm) != null) {
             if (restoring.carries(wm) != null && !LayerMembers.carried(restoring.carries(wm), an, MixinRepair.values(an))) {
                 // vanilla's read path reaches the restored member only for what the marker names (its answer at
@@ -553,6 +569,33 @@ public final class MixinJudge {
         }
         rowLayer = facade ? "facade-only-open" : "restored-open";
         return facade ? "facade-only: vanilla path unmixed" : "restored-member: vanilla path unmixed";
+    }
+
+    /** whether a supertype of the W class (W's code, not the layer's) declares an overridable name+desc */
+    private boolean overridesW(ClassNode c, String name, String desc) {
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        Set<String> seen = new HashSet<>();
+        if (c.superName != null) todo.add(c.superName);
+        if (c.interfaces != null) todo.addAll(c.interfaces);
+        while (!todo.isEmpty()) {
+            String n = todo.poll();
+            if (!seen.add(n) || n.startsWith("java/")) {
+                continue;
+            }
+            ClassNode s = targetClass(n);
+            if (s == null || s.name.startsWith("top/dext/")) {
+                continue;
+            }
+            for (MethodNode m : s.methods) {
+                if (m.name.equals(name) && m.desc.equals(desc)
+                        && (m.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE | Opcodes.ACC_FINAL)) == 0) {
+                    return true;
+                }
+            }
+            if (s.superName != null) todo.add(s.superName);
+            if (s.interfaces != null) todo.addAll(s.interfaces);
+        }
+        return false;
     }
 
     /** the follow+W copy of a handler, judged on its own mixin's target: null when it applies */

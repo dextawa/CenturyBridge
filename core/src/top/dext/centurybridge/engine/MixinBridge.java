@@ -1766,6 +1766,12 @@ final class MixinBridge {
                 }
                 MethodNode wmeth = method(wt, fate.name(), fate.desc());
                 if (wmeth == null) {
+                    // a W-named member a layer mixin declares on the target (an override of an inherited W method,
+                    // say: SmithingTrimRecipe.matches, which 1.21.2 has only as SmithingRecipe's default): at runtime
+                    // the target declares it; MixinJudge decides whether vanilla reaches it
+                    wmeth = chain.layerMembers.member(target, fate.name(), fate.desc());
+                }
+                if (wmeth == null) {
                     left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", which "
                         + shortName(target) + " does not declare in " + chain.to);
                     continue;
