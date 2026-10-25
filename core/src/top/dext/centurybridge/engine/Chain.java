@@ -137,6 +137,20 @@ public final class Chain {
     public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
 
     /**
+     * A V class W split into two classes, V's members all standing on the new one ("mixinSplits"): key the V
+     * class, value {"to": the W class holding V's members (a class V lacks), "self": [field hops "owner.name:desc"
+     * from an instance of "to" to the W instance of V's class name], "back": [field hops the other way], "basis"}.
+     * 26.2 Gui -> Hud: V's Gui methods and fields stand on Hud under the same names; W's Gui holds the Hud
+     * (Gui.hud), the Hud the Minecraft whose gui is that Gui (Hud.minecraft, Minecraft.gui). A mod mixin of V's
+     * class follows onto "to" (Chain.mixinFollow) and is judged there; "(V class)(Object) this" in its code takes
+     * the "self" hops; a cast of a V-class instance to one of the jar's mixin interfaces now merged onto "to"
+     * takes the "back" hops (an instanceof-tested adapter, JarProcessor). Mods' plain calls are not touched.
+     */
+    public record MixinSplit(String to, java.util.List<String[]> self, java.util.List<String[]> back, String basis) {}
+
+    public final java.util.Map<String, MixinSplit> mixinSplits = new java.util.HashMap<>();
+
+    /**
      * How a V method's answer and the W method's answer turn into each other for an @Inject whose selector
      * MixinBridge moved to a W method returning another type ("returnConverters"): key "owner.name(desc)" (V,
      * on the class or a V supertype of the mixin's target), value {"toV": "OWNER#name(desc)", "toW":
@@ -1235,6 +1249,17 @@ public final class Chain {
                 } else if (minecraftOwned(from) && to.startsWith("top/dext/") && into.get(to) == 1 && sourceCode.declares(from)
                         && vanillaCode(sourceCode.target(from), w.target(to))) {
                     out.put(from, to); // a facade holding V's code (the layer jar answers for it in W's model)
+                }
+            });
+            // a class W split in two (26.2 Gui -> Gui + Hud): V's class keeps no member of its own on W's class of
+            // that name, so its mixins follow onto the class that holds V's members ("mixinSplits")
+            mixinSplits.forEach((from, sp) -> {
+                if (out.containsKey(from)) {
+                    System.out.println("WARNING: mixinSplits " + from + ": the class also follows a class rename; the split is not used");
+                } else if (w.declares(sp.to()) && !sourceCode.declares(sp.to()) && sourceCode.declares(from)) {
+                    out.put(from, sp.to());
+                } else {
+                    System.out.println("WARNING: mixinSplits " + from + " -> " + sp.to() + ": needs a W class V lacks and a V class; not used");
                 }
             });
             sourceCode.aliases(out, classRenames);
@@ -3010,6 +3035,26 @@ public final class Chain {
                         }
                     }
                     c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs,
+                        o.has("basis") ? o.get("basis").getAsString() : ""));
+                }
+            }
+            if (root.has("mixinSplits")) {
+                var ms = root.getAsJsonObject("mixinSplits");
+                for (String k : ms.keySet()) {
+                    var o = ms.getAsJsonObject(k);
+                    java.util.function.Function<String, java.util.List<String[]>> hops = n -> {
+                        java.util.List<String[]> l = new java.util.ArrayList<>();
+                        if (o.has(n)) {
+                            for (var e : o.getAsJsonArray(n)) {
+                                String h = e.getAsString(); // owner.name:desc
+                                int dot = h.lastIndexOf('.', h.indexOf(':'));
+                                int col = h.indexOf(':');
+                                l.add(new String[] {h.substring(0, dot), h.substring(dot + 1, col), h.substring(col + 1)});
+                            }
+                        }
+                        return l;
+                    };
+                    c.mixinSplits.put(k, new MixinSplit(o.get("to").getAsString(), hops.apply("self"), hops.apply("back"),
                         o.has("basis") ? o.get("basis").getAsString() : ""));
                 }
             }
