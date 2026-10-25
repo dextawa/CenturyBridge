@@ -21,7 +21,9 @@
     "ShapedKeyMixin",
     "IngredientJsonMixin",
     "AdvancementBuilderJsonMixin",
-    "ItemPredicateJsonMixin"
+    "ItemPredicateJsonMixin",
+    "LocationPredicateJsonMixin",
+    "StatePropertiesJsonMixin"
   ],
   "injectors": {
     "defaultRequire": 1

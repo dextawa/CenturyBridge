@@ -1,0 +1,8 @@
+{
+  "criteria": {
+    "state_probe": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {"block": "minecraft:oak_log", "state": {"axis": {"min": "cbsmx1n_state_probe"}}}
+    }
+  }
+}

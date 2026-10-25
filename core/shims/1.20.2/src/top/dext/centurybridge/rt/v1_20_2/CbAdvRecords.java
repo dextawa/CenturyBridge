@@ -72,6 +72,43 @@ public final class CbAdvRecords {
         return enchantment == null ? new net.minecraft.class_2035(Optional.empty(), levels) : new net.minecraft.class_2035(enchantment, levels);
     }
 
+    /**
+     * 1.20.1's LocationPredicate(x, y, z, biome, structure, dimension, smokey, light, block, fluid), as 1.20.2's record
+     * (the parts as the constructor's superCtorReshape converts them)
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_2090 locationPredicate(net.minecraft.class_2096.class_2099 x, net.minecraft.class_2096.class_2099 y,
+            net.minecraft.class_2096.class_2099 z, net.minecraft.class_5321<net.minecraft.class_1959> biome,
+            net.minecraft.class_5321<net.minecraft.class_3195> structure, net.minecraft.class_5321<net.minecraft.class_1937> dimension,
+            Boolean smokey, net.minecraft.class_4552 light, net.minecraft.class_4550 block, net.minecraft.class_4551 fluid) {
+        return new net.minecraft.class_2090((Optional) position(x, y, z), (Optional) key(biome), (Optional) key(structure),
+            (Optional) key(dimension), bool(smokey), CbAdvAny.light(light), CbAdvAny.block(block), CbAdvAny.fluid(fluid));
+    }
+
+    /** 1.20.1's BlockPredicate(tag, blocks, state, nbt), as 1.20.2's record */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_4550 blockPredicate(net.minecraft.class_6862<net.minecraft.class_2248> tag, Set<net.minecraft.class_2248> blocks,
+            net.minecraft.class_4559 state, net.minecraft.class_2105 nbt) {
+        return new net.minecraft.class_4550((Optional) tag(tag), blocks(blocks), CbAdvAny.state(state), CbAdvAny.nbt(nbt));
+    }
+
+    /** 1.20.1's FluidPredicate(tag, fluid, state), as 1.20.2's record */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_4551 fluidPredicate(net.minecraft.class_6862<net.minecraft.class_3611> tag, net.minecraft.class_3611 fluid,
+            net.minecraft.class_4559 state) {
+        return new net.minecraft.class_4551((Optional) tag(tag), fluid(fluid), CbAdvAny.state(state));
+    }
+
+    /** 1.20.1's ExactPropertyMatcher(name, value), as 1.20.2's matcher record (the name with an exact value matcher) */
+    public static net.minecraft.class_4559.class_4562 exactProperty(String name, String value) {
+        return new net.minecraft.class_4559.class_4562(name, new net.minecraft.class_4559.class_4561(value));
+    }
+
+    /** 1.20.1's RangedPropertyMatcher(name, min, max) (null: unbounded), as 1.20.2's matcher record */
+    public static net.minecraft.class_4559.class_4562 rangedProperty(String name, String min, String max) {
+        return new net.minecraft.class_4559.class_4562(name, new net.minecraft.class_4559.class_4563(Optional.ofNullable(min), Optional.ofNullable(max)));
+    }
+
     /** ItemPredicate's enchantment conditions (an array; NONE is empty) */
     public static List<net.minecraft.class_2035> enchantments(net.minecraft.class_2035[] e) {
         return e == null ? List.of() : List.copyOf(Arrays.asList(e));

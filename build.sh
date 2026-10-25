@@ -41,8 +41,9 @@ FAPI_JAR="${CB_FAPI_JAR:-$(ls $DATA/runtime/client-$VERSION/mods/fabric-api-*.ja
 # it under the work dir's build/awstub/ (never data/), keyed by a hash of the layer's AW, W's Fabric
 # API jar, the plain stub and the AW-applying code: any of them changing rebuilds it. javac, and the
 # wiring and mixin gates below, all judge against this one stub. CB_STUB set = that stub, as given.
+# Step 1's layer is the 1.20.2 tree (core/shims/1.20.2, its access widener cb.accesswidener): the same.
 case "$SHIM" in
-core/shims/steps/*|*/core/shims/steps/*)
+core/shims/steps/*|*/core/shims/steps/*|core/shims/1.20.2|*/core/shims/1.20.2)
     if [ -z "${CB_STUB:-}" ]; then
         LAYER_AW=$(ls "$SHIM"/resources/*.accesswidener 2>/dev/null | head -1)
         [ -n "$LAYER_AW" ] || { echo "no access widener in $SHIM/resources"; exit 1; }
