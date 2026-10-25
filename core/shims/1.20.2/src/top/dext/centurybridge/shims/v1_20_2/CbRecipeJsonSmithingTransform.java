@@ -23,19 +23,19 @@ public abstract class CbRecipeJsonSmithingTransform implements CbRecipeJson.Read
 
     @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson consults it, against its unmixed copy cb$goldenJson, for every smithing transform recipe the codec decoded")
     public class_8060 method_48455(class_2960 id, JsonObject json) {
-        class_1856 template = CbRecipeJson.ingredient(class_3518.method_52226(json, "template"), true);
-        class_1856 base = CbRecipeJson.ingredient(class_3518.method_52226(json, "base"), true);
-        class_1856 addition = CbRecipeJson.ingredient(class_3518.method_52226(json, "addition"), true);
-        class_1799 result = CbRecipeJson.itemStackFromJson(class_3518.method_15296(json, "result"));
+        class_1856 template = CbRecipeJsonIngredientAccess.cb$fromJson(class_3518.method_52226(json, "template"));
+        class_1856 base = CbRecipeJsonIngredientAccess.cb$fromJson(class_3518.method_52226(json, "base"));
+        class_1856 addition = CbRecipeJsonIngredientAccess.cb$fromJson(class_3518.method_52226(json, "addition"));
+        class_1799 result = CbRecipeJsonShapedAccess.cb$itemStackFromJson(class_3518.method_15296(json, "result"));
         return CbRecipeIds.remember(new class_8060(template, base, addition, result), id);
     }
 
     /** the same 1.20.1 body under a CenturyBridge name: what method_48455 answers unmixed (CbRecipeJson.consult) */
     @Override
     public net.minecraft.class_1860<?> cb$goldenJson(class_2960 id, JsonObject json) {
-        class_1856 template = CbRecipeJson.ingredient(class_3518.method_52226(json, "template"), true);
-        class_1856 base = CbRecipeJson.ingredient(class_3518.method_52226(json, "base"), true);
-        class_1856 addition = CbRecipeJson.ingredient(class_3518.method_52226(json, "addition"), true);
+        class_1856 template = CbRecipeJson.goldenIngredient(class_3518.method_52226(json, "template"), true);
+        class_1856 base = CbRecipeJson.goldenIngredient(class_3518.method_52226(json, "base"), true);
+        class_1856 addition = CbRecipeJson.goldenIngredient(class_3518.method_52226(json, "addition"), true);
         class_1799 result = CbRecipeJson.itemStackFromJson(class_3518.method_15296(json, "result"));
         return new class_8060(template, base, addition, result);
     }

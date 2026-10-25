@@ -35,9 +35,9 @@ public abstract class CbRecipeJsonSingleItem implements CbRecipeJson.Reader {
         String group = class_3518.method_15253(json, "group", "");
         class_1856 ingredient;
         if (class_3518.method_15264(json, "ingredient")) {
-            ingredient = CbRecipeJson.ingredient(class_3518.method_15261(json, "ingredient"), false);
+            ingredient = CbRecipeJsonIngredientAccess.cb$fromJson(class_3518.method_15261(json, "ingredient"), false);
         } else {
-            ingredient = CbRecipeJson.ingredient(class_3518.method_15296(json, "ingredient"), false);
+            ingredient = CbRecipeJsonIngredientAccess.cb$fromJson(class_3518.method_15296(json, "ingredient"), false);
         }
         String resultId = class_3518.method_15265(json, "result");
         int count = class_3518.method_15260(json, "count");
@@ -53,9 +53,9 @@ public abstract class CbRecipeJsonSingleItem implements CbRecipeJson.Reader {
         String group = class_3518.method_15253(json, "group", "");
         class_1856 ingredient;
         if (class_3518.method_15264(json, "ingredient")) {
-            ingredient = CbRecipeJson.ingredient(class_3518.method_15261(json, "ingredient"), false);
+            ingredient = CbRecipeJson.goldenIngredient(class_3518.method_15261(json, "ingredient"), false);
         } else {
-            ingredient = CbRecipeJson.ingredient(class_3518.method_15296(json, "ingredient"), false);
+            ingredient = CbRecipeJson.goldenIngredient(class_3518.method_15296(json, "ingredient"), false);
         }
         String resultId = class_3518.method_15265(json, "result");
         int count = class_3518.method_15260(json, "count");

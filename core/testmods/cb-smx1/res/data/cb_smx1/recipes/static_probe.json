@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ZY"],
+  "key": {
+    "Z": {"item": "minecraft:stick"},
+    "Y": {"item": "minecraft:stick", "cb_smx1_probe_ing": true}
+  },
+  "result": {"item": "minecraft:stone_button"}
+}
