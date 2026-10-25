@@ -1,1 +1,5 @@
 accessWidener	v2	intermediary
+accessible field net/minecraft/class_312 field_61506 J
+accessible field net/minecraft/class_312 field_61507 I
+accessible field net/minecraft/class_312 field_1780 Lnet/minecraft/class_11910;
+accessible method net/minecraft/class_309 method_1466 (JILnet/minecraft/class_11908;)V
