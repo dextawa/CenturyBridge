@@ -278,6 +278,19 @@ S0=$(date +%s.%N)
     --accessToken 0 --username cbtest --width 1280 --height 720 $QP > "$LOG" 2>&1 < /dev/null &
 CPID=$!
 echo "client pid $CPID"
+# real input: a test mod that prints "input ready: <sequence>" gets it played by client_input.py (XTest)
+(
+    n=0
+    while kill -0 "$CPID" 2>/dev/null; do
+        seq=$(grep -a -o 'input ready: .*' "$LOG" | sed -n "$((n + 1))p")
+        if [ -n "$seq" ]; then
+            n=$((n + 1))
+            python3 "$(dirname "$0")/client_input.py" "${seq#input ready: }" >> "$OUT/input.log" 2>&1 \
+                || echo "client_input.py failed" >> "$OUT/input.log"
+        fi
+        sleep 1
+    done
+) &
 PEAK=0
 el() { echo "$(date +%s.%N) $S0" | awk '{printf "%.1f", $1 - $2}'; }
 rss() { local r; r=$(ps -o rss= -p "$CPID" 2>/dev/null | tr -d ' '); [ -n "$r" ] && [ "$r" -gt "$PEAK" ] && PEAK=$r; }

@@ -63,7 +63,10 @@ public class ClientTestMod implements ClientModInitializer {
             "mixin.containerRender.chest", "mixin.renderBackground.chest",
             "mixin.containerRender.furnace", "mixin.renderBackground.furnace",
             "chat.hud", "camera.partialTick", "camera.position", "camera.nearPlane",
-            "chat.screen", "chat.clickable",
+            "chat.screen", "chat.clickable", "skin.default",
+            "input.keyPressed", "input.keyReleased", "input.modifierHelpers", "input.selectAll", "input.charTyped",
+            "input.editBox", "input.mouseClicked", "input.widgetOnClick", "input.mouseDragged", "input.mouseReleased",
+            "input.widgetKey",
             "screenshot.gui", "screenshot.container", "screenshot.inventorySub", "screenshot.inventory",
             "screenshot.chest", "screenshot.furnace", "screenshot.world", "screenshot.chat");
         Thread t = new Thread(ClientTestMod::drive, "cb-clienttest");
@@ -157,6 +160,8 @@ public class ClientTestMod implements ClientModInitializer {
                 Tally.check("chat.screen", heads > 0, heads + " ChatComponent.render calls under the chat screen");
                 Checks.chatClickable(mc);
             }, null);
+            attempt("skin.default", () -> Checks.skin(mc));
+            inputPhase(mc);
             finish(mc);
         } catch (Throwable t) {
             Tally.log("driver died: " + t);
@@ -167,6 +172,31 @@ public class ClientTestMod implements ClientModInitializer {
                 Tally.log("stop failed: " + t2);
             }
         }
+    }
+
+    /** s9 check 1 as 1.20.1 has it: real X input (played by boot_client_remote.sh) into InputScreen */
+    private static void inputPhase(class_310 mc) throws Exception {
+        Tally.log("phase input");
+        InputScreen in = onRender(() -> {
+            InputScreen s = new InputScreen();
+            mc.method_1507(s);
+            return s;
+        });
+        Thread.sleep(1500);
+        Tally.log("input ready: " + InputScreen.SEQUENCE);
+        long until = System.currentTimeMillis() + 90_000;
+        while (!in.done && System.currentTimeMillis() < until) {
+            Thread.sleep(250);
+        }
+        Thread.sleep(1000);
+        attempt("input.keyPressed", () -> {
+            Checks.input(in);
+            in.method_25395(in.button);
+            in.button.method_25404(257, 0, 0);
+            Tally.check("input.widgetKey", in.buttonPresses == 1, "Button.keyPressed(Enter) from the mod pressed it "
+                + in.buttonPresses + " times");
+            mc.method_1507(null);
+        });
     }
 
     interface ScreenMaker {
