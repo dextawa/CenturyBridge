@@ -25,10 +25,16 @@
 #   CB_FAPI=1|0           with CB_CLIMB=0: add T's Fabric API (default 1; a climb always has it)
 #   CB_REUSE_LAYERS=1     keep agents/<name>/runtime-T when it exists (default: rebuild the layers)
 #   CB_UPLOAD=0           do not re-upload and recompile the tree (mods are always uploaded)
-#   CB_SHOTS="10 25 40"   screenshot offsets in seconds after the ready line
-#   CB_READY=<regex>      the ready line; CB_WAIT=300 the seconds to wait for it
-#   CB_WORLD=<save dir>   a world on beta2 (e.g. one a dedicated server of T generated): copied into
-#                         saves/cbworld and entered with --quickPlaySingleplayer cbworld
+#   CB_SHOTS="10 25 40"   screenshot offsets in seconds after the ready line (CB_SHOTS="" for none;
+#                         screenshots the mods take into the game's screenshots/ come back as mod-*.png)
+#   CB_READY=<regex>      the ready line; CB_WAIT=300 the seconds to wait for it. A client test mod's
+#                         tally: CB_READY='CB-CLIENTTEST [0-9]+/[0-9]+' CB_SHOTS="" CB_EXIT_WAIT=30
+#   CB_EXIT_WAIT=<s>      after the ready line and the shots, wait up to this long for the client to stop
+#                         itself (a test mod that quits when done) before killing it (default 0)
+#   CB_WORLD=<save dir>   a world on beta2, copied into saves/cbworld and entered with
+#                         --quickPlaySingleplayer cbworld (the ready line default becomes "joined the
+#                         game"); CB_WORLD=seed:<seed> generates it once with T's vanilla dedicated server
+#                         (peaceful), kept in <clients>/worlds/T-<seed>
 #   CB_GREP=<regex>       the test mods' tally lines for the summary (default 'CB-[A-Z0-9]+')
 #   CB_CLIENTS=<dir>      on beta2: launch runtimes client-T/, asset store assets/, game dirs game-T/
 #                         (default ~/cbwork/agents/<name>/clients); CB_CLIENT_RT / CB_ASSETS override
@@ -68,8 +74,8 @@ if [ "${1:-}" != __remote ] && [ "${1:-}" != __inner ]; then
     retry $SSH "rm -rf ~/$RUN && mkdir -p ~/$RUN/in"
     for j in "$@"; do retry $SCP "$j" "dext@beta2.dext.top:$RUN/in/"; done
     ENV=""
-    for v in CB_CLIMB CB_FAPI CB_REUSE_LAYERS CB_SHOTS CB_READY CB_WAIT CB_WORLD CB_GREP CB_CLIENTS CB_CLIENT_RT CB_ASSETS CB_JAVA; do
-        [ -n "${!v:-}" ] && ENV="$ENV $v=$(printf '%q' "${!v}")"
+    for v in CB_CLIMB CB_FAPI CB_REUSE_LAYERS CB_SHOTS CB_EXIT_WAIT CB_READY CB_WAIT CB_WORLD CB_GREP CB_CLIENTS CB_CLIENT_RT CB_ASSETS CB_JAVA; do
+        [ -n "${!v+set}" ] && ENV="$ENV $v=$(printf '%q' "${!v}")"
     done
     # started/ is made before the launch (mkdir is atomic): an ssh drop after the launch must not make
     # the retry start a second run in the same directories
@@ -99,6 +105,43 @@ if [ "$1" = __remote ]; then
     CLIENTS="${CB_CLIENTS:-$HOME/cbwork/$AG/clients}"
     mkdir -p "$OUT/shots" "$CLIENTS"
     end() { echo "$1"; echo "===END==="; exit 0; }
+    # gen_world <seed>: the world a vanilla dedicated server of T generates from <seed> (peaceful, so the
+    # player stands still), made once and kept in <clients>/worlds/T-<seed>; sets GENERATED. The server
+    # jar comes from Mojang's version manifest into <clients>/server-T.
+    gen_world() {
+        local seed="$1" srv="$CLIENTS/server-$T" dest="$CLIENTS/worlds/$T-$1" port fifo spid i
+        GENERATED="$dest"
+        [ -f "$dest/level.dat" ] && { echo "world: $dest (cached)"; return 0; }
+        mkdir -p "$srv" "$CLIENTS/worlds"
+        if [ ! -f "$srv/server.jar" ]; then
+            python3 - "$T" "$srv/server.jar" <<'PYEOF' || return 1
+import json, sys, urllib.request
+ver, dest = sys.argv[1], sys.argv[2]
+mf = json.load(urllib.request.urlopen("https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"))
+vj = json.load(urllib.request.urlopen(next(v["url"] for v in mf["versions"] if v["id"] == ver)))
+urllib.request.urlretrieve(vj["downloads"]["server"]["url"], dest)
+PYEOF
+        fi
+        port=$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])')
+        rm -rf "$srv/world" "$srv/logs"
+        echo "eula=true" > "$srv/eula.txt"
+        printf '%s\n' "level-name=world" "level-seed=$seed" "online-mode=false" "server-port=$port" \
+            "server-ip=127.0.0.1" "difficulty=peaceful" "spawn-monsters=false" "enable-query=false" \
+            "enable-rcon=false" "max-players=1" > "$srv/server.properties"
+        fifo="$srv/stdin"; rm -f "$fifo"; mkfifo "$fifo"
+        (cd "$srv" && exec "$JAVA" -Xmx2G -jar server.jar nogui < "$fifo" > gen.log 2>&1) &
+        spid=$!
+        exec 7>"$fifo"
+        for i in $(seq 1 150); do sleep 2; grep -qa 'Done (' "$srv/gen.log" && break; kill -0 $spid 2>/dev/null || break; done
+        echo stop >&7
+        for i in $(seq 1 60); do sleep 1; kill -0 $spid 2>/dev/null || break; done
+        kill $spid 2>/dev/null
+        exec 7>&-; rm -f "$fifo"
+        grep -qa 'Done (' "$srv/gen.log" || { tail -15 "$srv/gen.log"; return 1; }
+        rm -f "$srv/world/session.lock"
+        mv "$srv/world" "$dest"
+        echo "world: $dest (generated, seed $seed, port $port)"
+    }
     # one of the shared measurement slots (as remote_step.sh): a climb converts at -Xmx8g, the client
     # takes 4g; held for the whole run
     mkdir -p .slots; SLOT=''
@@ -166,13 +209,18 @@ if [ "$1" = __remote ]; then
     cp -r "$MODS" "$GAME/mods"
     QP=""
     if [ -n "${CB_WORLD:-}" ]; then
-        cp -r "$CB_WORLD" "$GAME/saves/cbworld" || end "===RESULT: NO WORLD $CB_WORLD==="
+        WORLD="$CB_WORLD"
+        case "$WORLD" in
+            seed:*) gen_world "${WORLD#seed:}" || end "===RESULT: WORLD GENERATION FAILED==="; WORLD="$GENERATED" ;;
+        esac
+        cp -r "$WORLD" "$GAME/saves/cbworld" || end "===RESULT: NO WORLD $WORLD==="
         QP="--quickPlaySingleplayer cbworld"
     fi
-    # first-launch screens off, nothing that pauses on a lost focus
+    # first-launch screens off, nothing that pauses on a lost focus; GUI scale 2 (640x360 GUI pixels)
     OPT="$GAME/options.txt"; touch "$OPT"
     for kv in "onboardAccessibility:false" "pauseOnLostFocus:false" "tutorialStep:none" \
-              "skipMultiplayerWarning:true" "joinedFirstServer:true" 'renderClouds:"false"' "narrator:0"; do
+              "skipMultiplayerWarning:true" "joinedFirstServer:true" 'renderClouds:"false"' "narrator:0" \
+              "guiScale:2"; do
         k=${kv%%:*}
         if grep -q "^$k:" "$OPT"; then sed -i "s|^$k:.*|$kv|" "$OPT"; else echo "$kv" >> "$OPT"; fi
     done
@@ -188,6 +236,10 @@ if [ "$1" = __remote ]; then
     xvfb-run -a -s '-screen 0 1280x720x24' bash "$SELF" __inner "$JAVA" "$RT" "$GAME" "$ASSETS" "$AIDX" "$T" "$OUT" "$READY" "$QP" \
         >> "$OUT/summary.txt" 2>&1
     cp "$GAME/logs/latest.log" "$OUT/latest.log" 2>/dev/null
+    # screenshots the mods took themselves (the game's screenshots/ folder)
+    for f in "$GAME"/screenshots/*.png; do
+        convert "$f" -resize 960x540 "$OUT/shots/mod-$(basename "$f")"
+    done
     [ -d "$GAME/crash-reports" ] && cp -r "$GAME/crash-reports" "$OUT/"
     {
         echo "=== fixture"
@@ -236,10 +288,15 @@ done
 echo "ready line ($READY): $STATE at $(el) s"
 if [ "$STATE" = ready ]; then
     AT=0
-    for t in ${CB_SHOTS:-10 25 40}; do
+    for t in ${CB_SHOTS-10 25 40}; do
         while [ "$AT" -lt "$t" ]; do sleep 1; AT=$((AT + 1)); rss; done
-        kill -0 "$CPID" 2>/dev/null || { echo "client exited before +$t s"; STATE=exited; break; }
+        kill -0 "$CPID" 2>/dev/null || { echo "client gone before +$t s"; break; }
         shot "$t"
+    done
+    # CB_EXIT_WAIT: a test mod that stops the client itself gets this long to do it
+    for i in $(seq 1 "${CB_EXIT_WAIT:-0}"); do
+        kill -0 "$CPID" 2>/dev/null || break
+        sleep 1; rss
     done
 else
     sleep 3; shot "$STATE"
@@ -249,8 +306,8 @@ grep -qaE "$FAIL" "$LOG" && STATE=failed
 kill "$CPID" 2>/dev/null; sleep 5; kill -9 "$CPID" 2>/dev/null
 echo "peak RSS $((PEAK / 1024)) MB, alive at the end: $ALIVE"
 case "$STATE" in
-    ready) [ "$ALIVE" = yes ] && echo "RESULT READY ALIVE" || echo "RESULT EXITED" ;;
+    ready) [ "$ALIVE" = yes ] && echo "RESULT READY AND KILLED BY THE SCRIPT" || echo "RESULT READY AND STOPPED ITSELF" ;;
     failed) echo "RESULT CRASHED" ;;
-    exited) echo "RESULT EXITED" ;;
+    exited) echo "RESULT EXITED BEFORE READY" ;;
     *) echo "RESULT NOT READY" ;;
 esac
