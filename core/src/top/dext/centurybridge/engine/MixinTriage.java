@@ -186,7 +186,9 @@ public final class MixinTriage {
                 boolean all = true;
                 for (String o : sp.owner != null ? List.of(sp.owner) : targets) {
                     all &= chain.layerDeclares(o, sp.kind, sp.name, sp.desc, priority[0])
-                        || chain.layerDeclares(o, sp.kind, sp.name, chain.renamedDesc(sp.desc), priority[0]);
+                        || chain.layerDeclares(o, sp.kind, sp.name, chain.renamedDesc(sp.desc), priority[0])
+                        // or the facade the step renames the target to declares it (the mixin applies to the facade)
+                        || chain.facadeDeclares(o, sp.kind, sp.name, sp.desc);
                 }
                 if (all) {
                     return Chain.Issue.OK;

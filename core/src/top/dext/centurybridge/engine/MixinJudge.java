@@ -206,7 +206,9 @@ public final class MixinJudge {
         }
         System.out.println("  layer-held rows (facade class or restored member; MixinJudge.layerHeld): follow+W "
             + layerCounts.getOrDefault("follow+W", 0) + ", facade-only-unreached " + layerCounts.getOrDefault("facade-only-unreached", 0)
-            + ", facade-only-open " + layerCounts.getOrDefault("facade-only-open", 0) + "; restored vanilla-reads "
+            + ", facade-only-open " + layerCounts.getOrDefault("facade-only-open", 0)
+            + ", facade vanilla-reads " + layerCounts.getOrDefault("facade-vanilla-reads", 0)
+            + ", facade-partial " + layerCounts.getOrDefault("facade-partial", 0) + "; restored vanilla-reads "
             + layerCounts.getOrDefault("restored-vanilla-reads", 0) + ", restored-unreached " + layerCounts.getOrDefault("restored-unreached", 0)
             + ", restored-partial " + layerCounts.getOrDefault("restored-partial", 0)
             + ", restored-open " + layerCounts.getOrDefault("restored-open", 0)
@@ -569,6 +571,20 @@ public final class MixinJudge {
             return null;
         }
         if (facade) {
+            // a facade method a layer mixin routes vanilla's W read through (@CbVanillaReads naming one of a
+            // layer's mixins, s11 C3: GameRules$BooleanValue.get under CbGameRulesMixin), read like a restored
+            // member's marker, carries included
+            for (LayerMembers l : restoredLayers) {
+                if (l.vanillaReads(wm) == null) {
+                    continue;
+                }
+                if (l.carries(wm) != null && !LayerMembers.carried(l.carries(wm), an, MixinRepair.values(an))) {
+                    rowLayer = "facade-partial";
+                    return "facade: vanilla path partial";
+                }
+                rowLayer = "facade-vanilla-reads";
+                return null;
+            }
             for (AnnotationNode a : MixinRepair.annotations(h)) {
                 if (!a.desc.equals(MixinBridge.ALSO_ON_W)) {
                     continue;

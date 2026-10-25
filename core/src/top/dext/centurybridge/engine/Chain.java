@@ -1658,6 +1658,53 @@ public final class Chain {
         return false;
     }
 
+    /** the layer jar's classes read for facadeDeclares, by name (null value: not in the jar) */
+    private final java.util.Map<String, org.objectweb.asm.tree.ClassNode> facadeClasses = new java.util.HashMap<>();
+
+    /**
+     * whether the facade the step renames a V class to (classRenames into CenturyBridge's classes, the layer jar)
+     * declares the member, kind 'm' or 'f': a mixin of the V class targets the facade at runtime (the ClassRemapper
+     * renames its @Mixin class literal), and the facade declares V's names -- a rewrite facade too (s11 C4:
+     * GameRules$BooleanValue), whose mixins Chain.mixinFollow does not carry
+     */
+    public boolean facadeDeclares(String owner, char kind, String name, String desc) {
+        String f = classRenames.get(owner);
+        if (f == null || !f.startsWith("top/dext/") || layerJar == null || desc == null) {
+            return false;
+        }
+        org.objectweb.asm.tree.ClassNode cn = facadeClasses.computeIfAbsent(f, n -> {
+            try (java.util.zip.ZipFile z = new java.util.zip.ZipFile(layerJar.toFile())) {
+                java.util.zip.ZipEntry e = z.getEntry(n + ".class");
+                if (e == null) {
+                    return null;
+                }
+                org.objectweb.asm.tree.ClassNode c = new org.objectweb.asm.tree.ClassNode();
+                new org.objectweb.asm.ClassReader(z.getInputStream(e).readAllBytes()).accept(c, org.objectweb.asm.ClassReader.SKIP_CODE);
+                return c;
+            } catch (IOException ex) {
+                return null;
+            }
+        });
+        if (cn == null) {
+            return false;
+        }
+        String d = renamedDesc(desc);
+        if (kind == 'f') {
+            for (org.objectweb.asm.tree.FieldNode x : cn.fields) {
+                if (x.name.equals(name) && (x.desc.equals(desc) || x.desc.equals(d))) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        for (org.objectweb.asm.tree.MethodNode x : cn.methods) {
+            if (x.name.equals(name) && (x.desc.equals(desc) || x.desc.equals(d))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean fieldDeclaredOnTarget(String owner, String name, String desc) {
         java.util.Set<String> decl = targetDecls.get(owner);
         if (decl == null) {
