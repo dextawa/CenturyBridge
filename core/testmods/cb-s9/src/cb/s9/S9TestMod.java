@@ -83,6 +83,20 @@ public class S9TestMod implements ModInitializer {
         }
     }
 
+    /** a 1.21.8 reload listener (the old reload shape) */
+    static final class LegacyListener implements net.minecraft.class_3302 {
+        int calls;
+        Object manager;
+
+        @Override
+        public java.util.concurrent.CompletableFuture<Void> method_25931(net.minecraft.class_3302.class_4045 barrier, net.minecraft.class_3300 manager,
+                java.util.concurrent.Executor background, java.util.concurrent.Executor game) {
+            calls++;
+            this.manager = manager;
+            return barrier.method_18352(null).thenRun(() -> { });
+        }
+    }
+
     static void start(MinecraftServer server) {
         class_3324 players = server.method_3760();
         GameProfile gp = new GameProfile(UUID.fromString("0b5ed7c1-0000-4000-8000-00000000cb59"), "cbs9test");
@@ -148,6 +162,62 @@ public class S9TestMod implements ModInitializer {
                 check(false, "overworld level data is WritableLevelData");
             }
             level.method_8554(before, 0.0F);
+        });
+
+
+        run("riding", () -> {
+            class_3218 level = server.method_30002();
+            net.minecraft.class_1297 rider = net.minecraft.class_1299.field_6093.method_5883(level, net.minecraft.class_3730.field_16462);
+            net.minecraft.class_1297 vehicle = net.minecraft.class_1299.field_6093.method_5883(level, net.minecraft.class_3730.field_16462);
+            check(rider.method_5873(vehicle, true), "Entity.startRiding(vehicle, force) answers true");
+            check(rider.method_5854() == vehicle, "the rider's vehicle is the entity it rode");
+            rider.method_5848();
+            check(rider.method_5854() == null, "stopRiding() leaves no vehicle");
+        });
+
+        run("reload listener", () -> {
+            LegacyListener l = new LegacyListener();
+            net.minecraft.class_3302.class_4045 barrier = new net.minecraft.class_3302.class_4045() {
+                @Override
+                public <T> java.util.concurrent.CompletableFuture<T> method_18352(T value) {
+                    return java.util.concurrent.CompletableFuture.completedFuture(value);
+                }
+            };
+            net.minecraft.class_3302 asListener = l;
+            asListener.method_25931(barrier, server.method_34864(), Runnable::run, Runnable::run).join();
+            check(l.calls == 1, "a 1.21.8 reload(barrier, manager, ..) call reached the 1.21.8 listener's reload (" + l.calls + " calls)");
+            check(l.manager == server.method_34864(), "the listener got the resource manager it was called with");
+        });
+
+        run("packs", () -> {
+            net.minecraft.class_3272 meta = new net.minecraft.class_3272(net.minecraft.class_2561.method_43470("cb"), 64, java.util.Optional.empty());
+            check(meta.comp_1581() == 64, "PackMetadataSection.packFormat() == 64, got " + meta.comp_1581());
+            check(meta.comp_1582().isPresent() && meta.comp_1582().get().comp_1() == 64 && meta.comp_1582().get().comp_2() == 64,
+                "supportedFormats() is 64..64, got " + meta.comp_1582());
+            int data = net.minecraft.class_155.method_16673().method_70592(net.minecraft.class_3264.field_14190);
+            check(data > 81, "WorldVersion.packVersion(SERVER_DATA) is the 1.21.9 data pack major (> 81), got " + data);
+            check(net.minecraft.class_3281.method_14436(new net.minecraft.class_6497<>(data, data), data).method_14437(),
+                "PackCompatibility.forVersion(data..data, data) is compatible");
+        });
+
+        run("bee occupant", () -> {
+            net.minecraft.class_2487 tag = new net.minecraft.class_2487();
+            tag.method_10582("id", "minecraft:bee");
+            tag.method_10569("Age", 7);
+            net.minecraft.class_4482.class_9309 occ = new net.minecraft.class_4482.class_9309(net.minecraft.class_9279.method_57456(tag), 0, 600);
+            net.minecraft.class_2487 back = occ.comp_2431().method_57461();
+            check("minecraft:bee".equals(back.method_10558("id").orElse(null)), "Occupant.entityData() keeps the id, got " + back);
+            check(back.method_10550("Age").orElse(0) == 7, "Occupant.entityData() keeps the bee's own data, got " + back);
+        });
+
+        run("bounds / profile / properties", () -> {
+            net.minecraft.class_2096.class_2100 b = net.minecraft.class_2096.class_2100.method_35287(1, 5);
+            check(b.comp_1805().orElse(-1) == 1 && b.comp_1806().orElse(-1) == 5, "MinMaxBounds.Ints.between(1, 5) min/max, got " + b.comp_1805() + " " + b.comp_1806());
+            net.minecraft.class_9296 rp = new net.minecraft.class_9296(gp);
+            check(gp.getId().equals(rp.comp_2413().getId()), "new ResolvableProfile(profile).gameProfile() is that profile");
+            if (server instanceof net.minecraft.class_3176 ds) {
+                check(ds.method_16705().field_16811, "DedicatedServerProperties.allowNether (the allowNether game rule, on by default)");
+            }
         });
 
         System.out.println("CB-S9TEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " failed: " + FAILS));
