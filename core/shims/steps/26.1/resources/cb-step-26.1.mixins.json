@@ -47,6 +47,7 @@
     "CbWallItemEntityRepresentationMixin",
     "CbWallItemFeaturesMixin",
     "CbWallItemFrameRepresentationMixin",
+    "CbWallItemParticleStackMixin",
     "CbWallItemStackRepresentationMixin",
     "CbWallLevelAccessMixin",
     "CbWallLivingEntityAttackTypeMixin",

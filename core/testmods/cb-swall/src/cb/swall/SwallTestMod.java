@@ -823,6 +823,9 @@ public class SwallTestMod implements ModInitializer {
             emptyTintGetter();
             itemStackMembers(server);
             attackTypes(server);
+            particleItems();
+            books(server);
+            itemMembers();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1362,6 +1365,81 @@ public class SwallTestMod implements ModInitializer {
             check("attackType.answers", got.equals("zombie falsetrue golem falsefalsetruefalse breeze truefalse phantom true"), got);
         } catch (Throwable t) {
             check("attackType.answers", false, t);
+        }
+    }
+
+    /** 1.21.11 ItemParticleOption(type, stack) / getItem() (rt/CbWallParticleItems, CbWallItemParticleStackMixin) */
+    private static void particleItems() {
+        try {
+            net.minecraft.class_1799 stack = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477, 3);
+            net.minecraft.class_2392 option = new net.minecraft.class_2392(net.minecraft.class_2398.field_11218, stack);
+            check("particleItem.sameStack", option.method_10289() == stack && option.method_10289() == stack, option.method_10289());
+            boolean refused;
+            try {
+                new net.minecraft.class_2392(net.minecraft.class_2398.field_11218, net.minecraft.class_1799.field_8037);
+                refused = false;
+            } catch (IllegalArgumentException e) {
+                refused = true;
+            }
+            check("particleItem.emptyRefused", refused, "accepted");
+            net.minecraft.class_2392 sub = new FiveParticle(stack);
+            net.minecraft.class_1799 subItem = sub.method_10289();
+            check("particleItem.subclass", subItem.method_7947() == 5 && subItem.method_7909() == net.minecraft.class_1802.field_8477
+                && ((FiveParticle) sub).base() == stack, subItem);
+        } catch (Throwable t) {
+            check("particleItem.sameStack", false, t);
+        }
+    }
+
+    /** 1.21.11 WrittenBookContent tryCraftCopy / resolve / resolveForItem / MAX_CRAFTABLE_GENERATION (rt/CbWallBooks) */
+    private static void books(MinecraftServer server) {
+        try {
+            List<net.minecraft.class_9262<net.minecraft.class_2561>> pages = List.of(
+                net.minecraft.class_9262.method_57137(net.minecraft.class_2561.method_43470("page")));
+            net.minecraft.class_9302 book = new net.minecraft.class_9302(net.minecraft.class_9262.method_57137("t"), "cb", 0, pages, false);
+            net.minecraft.class_9302 copy = book.method_57519();
+            net.minecraft.class_9302 copy2 = copy.method_57519();
+            check("book.tryCraftCopy", copy.comp_2421() == 1 && copy2.comp_2421() == 2 && copy2.method_57519() == null
+                && net.minecraft.class_9302.field_49380 == 2, copy2);
+            net.minecraft.class_2168 source = server.method_3739();
+            net.minecraft.class_9302 resolved = book.method_57521(source, null);
+            check("book.resolve", resolved != null && resolved.comp_2423()
+                && resolved.method_57525(false).get(0).getString().equals("page"), resolved);
+            net.minecraft.class_1799 item = new net.minecraft.class_1799(net.minecraft.class_1802.field_8360);
+            item.method_57379(net.minecraft.class_9334.field_49606, book);
+            boolean changed = net.minecraft.class_9302.method_66337(item, source, null);
+            check("book.resolveForItem", changed && item.method_58694(net.minecraft.class_9334.field_49606).comp_2423(), item);
+        } catch (Throwable t) {
+            check("book.resolve", false, t);
+        }
+    }
+
+    /** a 1.21.11 ItemParticleOption subclass: super(type, stack), getItem() override calling super */
+    private static final class FiveParticle extends net.minecraft.class_2392 {
+        FiveParticle(net.minecraft.class_1799 stack) {
+            super(net.minecraft.class_2398.field_11218, stack);
+        }
+
+        @Override
+        public net.minecraft.class_1799 method_10289() {
+            return super.method_10289().method_46651(5);
+        }
+
+        net.minecraft.class_1799 base() {
+            return super.method_10289();
+        }
+    }
+
+    /** 1.21.11 Item.getCraftingRemainder() / getName() (rt/CbWallItemMembers) */
+    private static void itemMembers() {
+        try {
+            net.minecraft.class_1799 rem = net.minecraft.class_1802.field_8103.method_7858();
+            net.minecraft.class_1799 none = net.minecraft.class_1802.field_8477.method_7858();
+            check("item.craftingRemainder", rem.method_7909() == net.minecraft.class_1802.field_8550 && none.method_7960(), rem);
+            String name = net.minecraft.class_1802.field_8477.method_63680().getString();
+            check("item.name", name.equals("Diamond"), name);
+        } catch (Throwable t) {
+            check("item.craftingRemainder", false, t);
         }
     }
 
