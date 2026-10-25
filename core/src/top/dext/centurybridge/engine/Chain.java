@@ -825,7 +825,10 @@ public final class Chain {
         java.util.Set<String> seen = new java.util.HashSet<>();
         for (String c = owner; c != null && seen.add(c); c = rawSuper(c)) {
             if (c.startsWith("java/")) {
-                return Boolean.TRUE.equals(jdkDeclares(c, name + desc)) ? c : null;
+                if (Boolean.TRUE.equals(jdkDeclares(c, name + desc))) {
+                    return c;
+                }
+                break; // the JDK's own supertypes are jdkDeclares's; the target's interfaces come next
             }
             String hit = rawDeclared(c, name, desc);
             if (hit != null) {
@@ -872,6 +875,11 @@ public final class Chain {
             return false; // the owner is not a target class (a facade, a mod class): not this question
         }
         String hit = resolveOnTargetJvm(o, n, d);
+        String dbg = System.getProperty("cb.debugLinks");
+        if (dbg != null && (owner + "." + name).contains(dbg)) {
+            System.err.println("cb.debugLinks " + owner + "." + name + desc + " -> " + o + "." + n + d + " : " + hit
+                + " ifaces=" + rawInterfaces(o) + " super=" + rawSuper(o));
+        }
         if (hit == null || hit.endsWith(" static") != isStatic) {
             return false;
         }
