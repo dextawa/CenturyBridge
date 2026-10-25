@@ -27,12 +27,12 @@ public abstract class CbRecipeJsonShaped implements CbRecipeJson.Reader {
     public class_1869 method_8164(class_2960 id, JsonObject json) {
         String group = class_3518.method_15253(json, "group", "");
         class_7710 category = class_7710.field_40252.method_47920(class_3518.method_15253(json, "category", null), class_7710.field_40251);
-        Map<String, class_1856> key = CbRecipeJson.keyFromJson(class_3518.method_15296(json, "key"));
-        String[] pattern = CbRecipeJson.shrink(CbRecipeJson.patternFromJson(class_3518.method_15261(json, "pattern")));
+        Map<String, class_1856> key = CbRecipeJsonShapedAccess.cb$keyFromJson(class_3518.method_15296(json, "key"));
+        String[] pattern = CbRecipeJsonShapedAccess.cb$shrink(java.util.Arrays.asList(CbRecipeJsonShapedAccess.cb$patternFromJson(class_3518.method_15261(json, "pattern"))));
         int width = pattern[0].length();
         int height = pattern.length;
-        class_2371<class_1856> ingredients = CbRecipeJson.dissolvePattern(pattern, key, width, height);
-        class_1799 result = CbRecipeJson.itemStackFromJson(class_3518.method_15296(json, "result"));
+        class_2371<class_1856> ingredients = CbRecipeJsonShapedAccess.cb$dissolvePattern(pattern, key, width, height);
+        class_1799 result = CbRecipeJsonShapedAccess.cb$itemStackFromJson(class_3518.method_15296(json, "result"));
         boolean showNotification = class_3518.method_15258(json, "show_notification", true);
         return CbRecipeIds.remember(new class_1869(group, category, width, height, ingredients, result, showNotification), id);
     }
@@ -43,7 +43,7 @@ public abstract class CbRecipeJsonShaped implements CbRecipeJson.Reader {
         String group = class_3518.method_15253(json, "group", "");
         class_7710 category = class_7710.field_40252.method_47920(class_3518.method_15253(json, "category", null), class_7710.field_40251);
         Map<String, class_1856> key = CbRecipeJson.keyFromJson(class_3518.method_15296(json, "key"));
-        String[] pattern = CbRecipeJson.shrink(CbRecipeJson.patternFromJson(class_3518.method_15261(json, "pattern")));
+        String[] pattern = CbRecipeJsonShapedAccess.cb$shrink(java.util.Arrays.asList(CbRecipeJson.patternFromJson(class_3518.method_15261(json, "pattern"))));
         int width = pattern[0].length();
         int height = pattern.length;
         class_2371<class_1856> ingredients = CbRecipeJson.dissolvePattern(pattern, key, width, height);

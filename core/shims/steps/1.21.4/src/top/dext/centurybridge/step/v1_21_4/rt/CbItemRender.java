@@ -93,8 +93,6 @@ public final class CbItemRender {
         public final net.minecraft.class_1309 entity;
         public final int seed;
         private net.minecraft.class_1087 base;
-        /** the state 1.21.4's GUI already resolved for this stack in the GUI context (guiDraw), drawn as it is */
-        net.minecraft.class_10444 drawn;
 
         StackModel(net.minecraft.class_1799 stack, net.minecraft.class_1937 level, net.minecraft.class_1309 entity, int seed) {
             this.stack = stack;
@@ -175,8 +173,7 @@ public final class CbItemRender {
             return;
         }
         if (model instanceof StackModel m) {
-            boolean gui = m.drawn != null && m.stack == stack && context == net.minecraft.class_811.field_4317 && !leftHand;
-            (gui ? m.drawn : resolve(m, context, leftHand)).method_65604(pose, buffers, light, overlay);
+            resolve(m, context, leftHand).method_65604(pose, buffers, light, overlay);
             return;
         }
         boolean flat = context == net.minecraft.class_811.field_4317 || context == net.minecraft.class_811.field_4318 || context == net.minecraft.class_811.field_4319;
@@ -207,10 +204,6 @@ public final class CbItemRender {
     public static void render(net.minecraft.class_918 renderer, net.minecraft.class_1799 stack, net.minecraft.class_811 context, boolean leftHand,
             net.minecraft.class_4587 pose, net.minecraft.class_4597 buffers, int light, int overlay, net.minecraft.class_1087 model,
             net.minecraft.class_1937 level, net.minecraft.class_1309 entity, int seed) {
-        if (model instanceof StackModel m && m.drawn != null) {
-            render(renderer, stack, context, leftHand, pose, buffers, light, overlay, model); // the GUI's own state (guiDraw)
-            return;
-        }
         if (stack.method_7909() instanceof net.minecraft.class_5537 && net.minecraft.class_5537.method_61642(stack)) {
             if (!stack.method_7960()) {
                 resolve(new StackModel(stack, level, entity, seed), context, leftHand).method_65604(pose, buffers, light, overlay);
@@ -218,39 +211,6 @@ public final class CbItemRender {
             return;
         }
         render(renderer, stack, context, leftHand, pose, buffers, light, overlay, model);
-    }
-
-    /** ItemRenderer's restored 1.21.3 members (CbItemRendererMixin) */
-    public interface CbLegacyItemRenderer {
-        void method_23179(net.minecraft.class_1799 stack, net.minecraft.class_811 context, boolean leftHand, net.minecraft.class_4587 pose,
-                net.minecraft.class_4597 buffers, int light, int overlay, net.minecraft.class_1087 model);
-
-        void method_62477(net.minecraft.class_1799 stack, net.minecraft.class_811 context, boolean leftHand, net.minecraft.class_4587 pose,
-                net.minecraft.class_4597 buffers, int light, int overlay, net.minecraft.class_1087 model, net.minecraft.class_1937 level,
-                net.minecraft.class_1309 entity, int seed);
-
-        net.minecraft.class_1087 method_4019(net.minecraft.class_1799 stack, net.minecraft.class_1937 level, net.minecraft.class_1309 entity, int seed);
-    }
-
-    /**
-     * GuiGraphics.renderItem's draw (CbGuiItemDrawMixin), as 1.21.3's renderItem made it: the model through the item
-     * renderer's getModel, then render(.., model, level, entity, seed) for a stack in the bundles tag, render(.., model)
-     * for any other. The model getModel answers carries the state 1.21.4's GUI resolved, and render draws that state
-     * with 1.21.4's arguments: with no mod mixin the draw is 1.21.4's own call (state.render(pose, buffers, light,
-     * overlay)), nothing else. A mod's getModel returning its own model draws that model the 1.21.3 way.
-     */
-    public static void guiDraw(net.minecraft.class_10444 state, net.minecraft.class_4587 pose, net.minecraft.class_4597 buffers, int light, int overlay,
-            net.minecraft.class_1309 entity, net.minecraft.class_1937 level, net.minecraft.class_1799 stack, int seed) {
-        CbLegacyItemRenderer renderer = (CbLegacyItemRenderer) net.minecraft.class_310.method_1551().method_1480();
-        net.minecraft.class_1087 model = renderer.method_4019(stack, level, entity, seed);
-        if (model instanceof StackModel m && m.stack == stack) {
-            m.drawn = state;
-        }
-        if (stack.method_31573(net.minecraft.class_3489.field_54294)) {
-            renderer.method_62477(stack, net.minecraft.class_811.field_4317, false, pose, buffers, light, overlay, model, level, entity, seed);
-        } else {
-            renderer.method_23179(stack, net.minecraft.class_811.field_4317, false, pose, buffers, light, overlay, model);
-        }
     }
 
     /** the colours of a mod's own model's tint indices: the renderer's ItemColors, else the item colour providers */

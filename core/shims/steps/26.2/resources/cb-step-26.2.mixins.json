@@ -17,7 +17,10 @@
     "CbS26BlockFallOnMixin",
     "CbS26SlimeFallOnMixin",
     "CbS26BedFallOnMixin",
-    "CbS26EntityFallOnMixin"
+    "CbS26EntityFallOnMixin",
+    "CbS26CrashCategoryMixin",
+    "CbS26GroundNavigationMixin",
+    "CbS26StriderNavigationMixin"
   ],
   "client": [
     "CbS26BedLayersMixin",
@@ -32,7 +35,8 @@
     "CbS26RenderBuffersMixin",
     "CbS26LevelFlushMixin",
     "CbS26GameFlushMixin",
-    "CbS26GuiFlushMixin"
+    "CbS26GuiFlushMixin",
+    "CbS26TesselatorMixin"
   ],
   "server": [],
   "injectors": {

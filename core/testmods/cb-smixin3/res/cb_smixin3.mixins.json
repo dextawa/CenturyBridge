@@ -3,6 +3,6 @@
   "package": "cb.smixin3.mixin",
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
-  "mixins": ["MobAccess", "GoalSelectorMixin"],
+  "mixins": ["MobAccess", "GoalSelectorMixin", "NoiseRouterDataMixin"],
   "injectors": { "defaultRequire": 1 }
 }

@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_21_4.rt.CbItemRender;
-import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * ItemRenderer's 1.21.3 model-based methods, given back on 1.21.4 (see {@link CbItemRender}). 1.21.3's renderStatic
@@ -15,29 +14,19 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_918.class)
-public abstract class CbItemRendererMixin implements CbItemRender.CbLegacyItemRenderer {
+public abstract class CbItemRendererMixin {
 
     private net.minecraft.class_918 cb$self() {
         return (net.minecraft.class_918) (Object) this;
     }
 
     /** was render(ItemStack, ItemDisplayContext, boolean, PoseStack, MultiBufferSource, int, int, BakedModel) */
-    @Override
     public void method_23179(net.minecraft.class_1799 stack, net.minecraft.class_811 context, boolean leftHand, net.minecraft.class_4587 pose,
             net.minecraft.class_4597 buffers, int light, int overlay, net.minecraft.class_1087 model) {
         CbItemRender.render(cb$self(), stack, context, leftHand, pose, buffers, light, overlay, model);
     }
 
-    /**
-     * was render(.., BakedModel, Level, LivingEntity, int). 1.21.3's only caller was GuiGraphics.renderItem, for a stack
-     * in the bundles tag; 1.21.4's renderItem calls it there again (CbGuiItemDrawMixin, {@link CbItemRender#guiDraw}).
-     * Its body is not 1.21.3's: 1.21.3 drew an open bundle's back / item / front models through the item model shaper,
-     * which 1.21.4 replaced with the bundle's item model definition (drawn by the GUI's own state), so the route carries
-     * the member's HEAD and RETURN only.
-     */
-    @CbVanillaReads(value = "CbGuiItemDrawMixin: 1.21.4's GuiGraphics.renderItem draws a bundles-tag stack through it (CbItemRender.guiDraw)",
-        carries = {"Inject@HEAD", "Inject@RETURN"})
-    @Override
+    /** was render(.., BakedModel, Level, LivingEntity, int) */
     public void method_62477(net.minecraft.class_1799 stack, net.minecraft.class_811 context, boolean leftHand, net.minecraft.class_4587 pose,
             net.minecraft.class_4597 buffers, int light, int overlay, net.minecraft.class_1087 model, net.minecraft.class_1937 level,
             net.minecraft.class_1309 entity, int seed) {
@@ -45,7 +34,6 @@ public abstract class CbItemRendererMixin implements CbItemRender.CbLegacyItemRe
     }
 
     /** was getModel(ItemStack, Level, LivingEntity, int) */
-    @Override
     public net.minecraft.class_1087 method_4019(net.minecraft.class_1799 stack, net.minecraft.class_1937 level, net.minecraft.class_1309 entity, int seed) {
         return CbItemRender.getModel(cb$self(), stack, level, entity, seed);
     }

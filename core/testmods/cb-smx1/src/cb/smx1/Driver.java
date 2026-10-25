@@ -211,6 +211,18 @@ public final class Driver {
             System.out.println("CB-SMX1 fingerprint recipes route=" + ROUTE + " start " + start);
             System.out.println("CB-SMX1 fingerprint recipes route=" + ROUTE + " reload " + after);
             check("recipe-fingerprint-reload", start.equals(after), "start " + start + ", after /reload " + after);
+            // the restored private static ShapedRecipe.keyFromJson and Ingredient.fromJson, mixed by this mod
+            net.minecraft.class_1860<?> statics = recipe(server, "cb_smx1:static_probe");
+            boolean diamond = statics != null && statics.method_8117().size() == 2
+                && statics.method_8117().get(1).method_8093(new net.minecraft.class_1799(net.minecraft.class_1802.field_8477));
+            boolean stick = statics != null && statics.method_8117().size() == 2
+                && statics.method_8117().get(1).method_8093(new net.minecraft.class_1799(net.minecraft.class_1802.field_8600));
+            check("recipe-static-key", ROUTE ? diamond && !stick : stick && !diamond, "route " + ROUTE + ": cb_smx1:static_probe's second slot takes diamond "
+                + diamond + ", stick " + stick + " (keyFromJson handler ran " + COUNT.getOrDefault("shaped-key-return-all", 0)
+                + " time(s), probe " + COUNT.getOrDefault("shaped-key-probe", 0) + ")");
+            int ingredientReads = COUNT.getOrDefault("ingredient-from-json-all", 0);
+            check("recipe-static-ingredient", ROUTE ? ingredientReads > 1000 : ingredientReads == 0,
+                "route " + ROUTE + ": Ingredient.fromJson handler ran " + ingredientReads + " time(s)");
         } catch (Throwable t) {
             t.printStackTrace();
             check("recipe-readers", false, "threw " + t);
@@ -239,6 +251,46 @@ public final class Driver {
         } catch (Throwable t) {
             t.printStackTrace();
             check("stat-type-name-probe", false, "threw " + t);
+        }
+        // ---- advancements: the converted mixin on 1.20.1's Advancement.Builder.fromJson decides its probe (route on), the
+        // native mixin on 1.20.2's Advancement.fromJson decides its own either way, every other advancement is fingerprinted
+        try {
+            for (String phase : new String[] {"start", "reload"}) {
+                if (phase.equals("reload")) {
+                    java.util.concurrent.CompletableFuture<Void> reload = server.method_29439(server.method_3836().method_29210());
+                    server.method_18857(reload::isDone);
+                    reload.join();
+                }
+                net.minecraft.class_2989 advancements = server.method_3851();
+                net.minecraft.class_161 probe = advancements.method_12896(new net.minecraft.class_2960("cb_smx1", "route_probe"));
+                String rewards = probe == null ? "missing" : String.valueOf(probe.method_691().method_747());
+                boolean seven = rewards.contains("\"experience\":7");
+                check("advancement-converted-mixin-" + phase, ROUTE ? seven : !seven && probe != null, "route " + ROUTE
+                    + ": cb_smx1:route_probe rewards " + rewards + " (Builder.fromJson handler returned "
+                    + COUNT.getOrDefault("advancement-builder-return-all", 0) + " time(s))");
+                net.minecraft.class_161 nat = advancements.method_12896(new net.minecraft.class_2960("cb_smx1n", "native_probe"));
+                check("advancement-native-mixin-" + phase, nat != null && nat.method_51697(), "route " + ROUTE
+                    + ": cb_smx1n:native_probe sends telemetry " + (nat != null && nat.method_51697()) + " (true = the native mixin acted)");
+                java.util.TreeMap<String, String> forms = new java.util.TreeMap<>();
+                for (net.minecraft.class_161 a : advancements.method_12893()) {
+                    String id = a.method_688().toString();
+                    if (id.startsWith("cb_smx1")) {
+                        continue;
+                    }
+                    forms.put(id, (a.method_687() == null ? "-" : a.method_687().method_688().toString()) + "|" + a.method_691().method_747() + "|"
+                        + new java.util.TreeSet<>(a.method_682().keySet()) + "|" + java.util.Arrays.deepToString(a.method_680()) + "|"
+                        + a.method_51697() + "|" + (a.method_686() == null ? "-" : a.method_686().method_811().getString()));
+                }
+                java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+                StringBuilder hex = new StringBuilder();
+                for (byte b : md.digest(forms.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8))) {
+                    hex.append(String.format("%02x", b));
+                }
+                System.out.println("CB-SMX1 fingerprint advancements route=" + ROUTE + " " + phase + " n=" + forms.size() + " sha=" + hex);
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+            check("advancement-converted-mixin", false, "threw " + t);
         }
         // ---- the native 1.20.2 mod (cb-smx1n): its mixin on ShapedRecipe.Serializer.codec() still decides its recipe
         try {

@@ -47,7 +47,7 @@ public abstract class CbRecipeJsonCooking implements CbRecipeJson.Reader, CbReci
         class_7709 category = class_7709.field_40245.method_47920(class_3518.method_15253(json, "category", null), class_7709.field_40244);
         JsonElement element = class_3518.method_15264(json, "ingredient")
             ? class_3518.method_15261(json, "ingredient") : class_3518.method_15296(json, "ingredient");
-        class_1856 ingredient = CbRecipeJson.ingredient(element, false);
+        class_1856 ingredient = CbRecipeJsonIngredientAccess.cb$fromJson(element, false);
         String resultId = class_3518.method_15265(json, "result");
         class_2960 resultKey = new class_2960(resultId);
         class_1799 result = new class_1799(class_7923.field_41178.method_17966(resultKey)
@@ -66,7 +66,7 @@ public abstract class CbRecipeJsonCooking implements CbRecipeJson.Reader, CbReci
         class_7709 category = class_7709.field_40245.method_47920(class_3518.method_15253(json, "category", null), class_7709.field_40244);
         JsonElement element = class_3518.method_15264(json, "ingredient")
             ? class_3518.method_15261(json, "ingredient") : class_3518.method_15296(json, "ingredient");
-        class_1856 ingredient = CbRecipeJson.ingredient(element, false);
+        class_1856 ingredient = CbRecipeJson.goldenIngredient(element, false);
         String resultId = class_3518.method_15265(json, "result");
         class_2960 resultKey = new class_2960(resultId);
         class_1799 result = new class_1799(class_7923.field_41178.method_17966(resultKey)

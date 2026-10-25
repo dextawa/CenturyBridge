@@ -18,9 +18,9 @@ import net.minecraft.world.phys.Vec3;
  *
  * <p>The member is restored on Block, SlimeBlock and BedBlock with 26.1.2's bodies (mixin/CbS26BlockFallOnMixin,
  * CbS26SlimeFallOnMixin, CbS26BedFallOnMixin): a 26.1.2 call or super call links to it, a 26.1.2 class's override
- * overrides it. A block whose class overrides it below 26.2's and the layer's classes ({@link #legacy}) is asked as
- * 26.1.2 asked it: Entity.restituteMovementAfterCollisions takes 26.1.2's path for it (mixin/CbS26EntityFallOnMixin).
- * Every other block keeps 26.2's restitution.
+ * overrides it. A block whose class overrides it below 26.2's and the layer's classes ({@link #legacy}) answers the
+ * vertical movement as 26.1.2 asked it, after 26.2's Entity.restituteMovementAfterCollisions has run in full (so a
+ * 26.2 mod's mixins on it still fire; mixin/CbS26EntityFallOnMixin). Every other block keeps 26.2's restitution.
  */
 public final class CbS26Bounce {
     private CbS26Bounce() {}
@@ -67,15 +67,15 @@ public final class CbS26Bounce {
     }
 
     /**
-     * mixin/CbS26EntityFallOnMixin: 26.1.2's Entity.move after a collision, for a block that overrides the member:
-     * the horizontal movement zeroed on an axis that collided, then the block asked on a vertical collision.
+     * mixin/CbS26EntityFallOnMixin, at the end of 26.2's Entity.restituteMovementAfterCollisions, for a block that
+     * overrides the member: on a vertical collision the vertical movement goes back to what it was before 26.2's
+     * restitution ({@code before}) and the block is asked, as 26.1.2's Entity.move asked it; the horizontal movement
+     * stays what 26.2 (and any mixin on it) made of it.
      */
-    public static void legacyRestitute(Entity entity, Block block, boolean xCollided, boolean zCollided) {
-        if (entity.horizontalCollision) {
-            Vec3 movement = entity.getDeltaMovement();
-            entity.setDeltaMovement(xCollided ? 0.0 : movement.x, movement.y, zCollided ? 0.0 : movement.z);
-        }
+    public static void legacyFallOn(Entity entity, Block block, Vec3 before) {
         if (entity.verticalCollision) {
+            Vec3 movement = entity.getDeltaMovement();
+            entity.setDeltaMovement(movement.x, before.y, movement.z);
             ((FallOn) block).updateEntityMovementAfterFallOn(entity.level(), entity);
         }
     }

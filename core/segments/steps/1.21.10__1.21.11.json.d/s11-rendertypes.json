@@ -1,0 +1,34 @@
+{
+ "_s11_rendertypes_basis": "1.21.11 removed RenderStateShard and RenderType.CompositeState / CompositeRenderType: a render type is built from a RenderSetup (rendertype/RenderSetup). RenderStateShard and CompositeState become facades holding 1.21.10's shards and the 1.21.11 pieces they stand for; RenderType.create(.., pipeline, state) builds 1.21.11's RenderSetup from them (rt/CbRenderTypeCreate). CompositeRenderType -> RenderType: 1.21.11 merged it into RenderType, which declares its members under the same ids (method_23289 outline, method_24295 isOutline, method_23031 format, method_23033 mode; javap of both). LINES / SECONDARY_BLOCK_OUTLINE are what 1.21.10's lines() / secondaryBlockOutline() returned (javap), now RenderTypes.lines() / secondaryBlockOutline(). RenderType.OutlineProperty -> RenderSetup.OutlineProperty: the same enum moved, constants under the same ids (field_21853 NONE, field_21854 IS_OUTLINE, field_21855 AFFECTS_OUTLINE; javap of both).",
+ "classRenames": {
+  "net/minecraft/class_1921$class_4687": "net/minecraft/class_1921",
+  "net/minecraft/class_1921$class_4688": "top/dext/centurybridge/step/v1_21_11/facade/CompositeState",
+  "net/minecraft/class_1921$class_4688$class_4689": "top/dext/centurybridge/step/v1_21_11/facade/CompositeState$Builder",
+  "net/minecraft/class_4668": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard",
+  "net/minecraft/class_4668$class_4670": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$BooleanStateShard",
+  "net/minecraft/class_4668$class_5939": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$EmptyTextureStateShard",
+  "net/minecraft/class_4668$class_4683": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$TextureStateShard",
+  "net/minecraft/class_4668$class_5940": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$MultiTextureStateShard",
+  "net/minecraft/class_4668$class_5940$class_5941": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$MultiTextureStateShard$Builder",
+  "net/minecraft/class_4668$class_5940$class_10542": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$MultiTextureStateShard$Entry",
+  "net/minecraft/class_4668$class_4675": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$LayeringStateShard",
+  "net/minecraft/class_4668$class_4676": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$LightmapStateShard",
+  "net/minecraft/class_4668$class_4679": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$OverlayStateShard",
+  "net/minecraft/class_4668$class_4677": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$LineStateShard",
+  "net/minecraft/class_4668$class_4678": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$OutputStateShard",
+  "net/minecraft/class_4668$class_4684": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$TexturingStateShard",
+  "net/minecraft/class_4668$class_4682": "top/dext/centurybridge/step/v1_21_11/facade/RenderStateShard$OffsetTexturingStateShard",
+  "net/minecraft/class_1921$class_4750": "net/minecraft/class_12247$class_4750"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1921.method_24048(Ljava/lang/String;ILcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
+  "net/minecraft/class_1921.method_24049(Ljava/lang/String;IZZLcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_1921.field_21695:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
+  "net/minecraft/class_1921.field_54857:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_4668.method_23517(F)V": "RenderStateShard's private setupGlintTexturing(scale), which set RenderSystem's texture matrix for the glint shards; 1.21.11 has no global texture matrix (RenderSystem.setTextureMatrix is gone): the glint matrix is TextureTransform's (GLINT_TEXTURING / ENTITY_GLINT_TEXTURING / ARMOR_ENTITY_GLINT_TEXTURING), which the facade's glint shards carry into RenderSetup"
+ }
+}

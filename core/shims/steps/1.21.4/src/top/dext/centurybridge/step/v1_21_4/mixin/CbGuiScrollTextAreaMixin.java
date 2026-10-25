@@ -11,8 +11,9 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbGuiScroll;
 
 /**
  * 1.21.3's AbstractScrollWidget is 1.21.4's AbstractTextAreaWidget (class_10415; the converter renames the class).
- * Its old members 1.21.4 renamed are given back under the old names (a 1.21.3 override is renamed to the new
- * one): innerPadding, totalInnerPadding, renderBorder(GuiGraphics, x, y, w, h), withinContentAreaTopBottom. Two
+ * Its old members 1.21.4 renamed (innerPadding, totalInnerPadding, renderBorder(GuiGraphics, x, y, w, h),
+ * withinContentAreaTopBottom) are not given back: a 1.21.3 mod's overrides (overrideRenames), calls (methodRenames) and
+ * mixins all meet on the 1.21.4 name, which 1.21.4's own code calls. Two
  * have no 1.21.4 counterpart: scrollbarWidth() (1.21.3: 8, never read by vanilla) answers the width of
  * 1.21.4's scroll bar, and withinContentAreaPoint(x, y) answers 1.21.3's rectangle test -- and a widget that
  * overrides it decides its clicks again, as 1.21.3's mouseClicked asked it.
@@ -40,26 +41,6 @@ public abstract class CbGuiScrollTextAreaMixin extends net.minecraft.class_7528 
     /** withinContentAreaTopBottom(top, bottom) */
     @Shadow
     protected abstract boolean method_65510(int top, int bottom);
-
-    /** was innerPadding() (method_44381) */
-    protected int method_44381() {
-        return this.method_65509();
-    }
-
-    /** was totalInnerPadding() (method_44385) */
-    protected int method_44385() {
-        return this.method_65512();
-    }
-
-    /** was renderBorder(GuiGraphics, int, int, int, int) (method_52233) */
-    protected void method_52233(net.minecraft.class_332 graphics, int x, int y, int width, int height) {
-        this.method_65511(graphics, x, y, width, height);
-    }
-
-    /** was withinContentAreaTopBottom(int, int) (method_44383) */
-    protected boolean method_44383(int top, int bottom) {
-        return this.method_65510(top, bottom);
-    }
 
     /** was scrollbarWidth() (method_53532): the scroll bar beside the box (8 in 1.21.3, 6 since 1.21.4) */
     public int method_53532() {

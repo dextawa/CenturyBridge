@@ -157,6 +157,7 @@ public final class MixinCheck {
                 }
             }
         }
+        c.indexMerged(own);
         for (ClassNode cn : own) {
             if (c.check(cn)) {
                 mixins++;
@@ -637,6 +638,61 @@ public final class MixinCheck {
         }
     }
 
+    /** game class -> name+desc -> the lowest priority of a layer class mixin merging a plain method of that shape onto it */
+    private final Map<String, Map<String, Integer>> merged = new HashMap<>();
+    private final Map<String, Integer> priorities = new HashMap<>();
+
+    /**
+     * The plain methods the layer's class mixins merge onto game classes (a restored V member, a private static one
+     * included -- Mixin merges a mixin's private statics under their names): an @Invoker naming one resolves when the
+     * merging mixin applies first (lower priority), as Mixin applies a target's mixins in priority order.
+     */
+    private void indexMerged(List<ClassNode> own) {
+        for (ClassNode cn : own) {
+            AnnotationNode mixin = find(cn.invisibleAnnotations, MIXIN);
+            if (mixin == null) {
+                mixin = find(cn.visibleAnnotations, MIXIN);
+            }
+            if (mixin == null) {
+                continue;
+            }
+            Object pr = get(mixin, "priority");
+            int priority = pr instanceof Integer i ? i : 1000;
+            priorities.put(cn.name, priority);
+            if ((cn.access & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0) {
+                continue;
+            }
+            List<String> targets = new ArrayList<>();
+            if (get(mixin, "value") instanceof List<?> l) {
+                for (Object o : l) {
+                    if (o instanceof Type t) {
+                        targets.add(t.getInternalName());
+                    }
+                }
+            }
+            if (get(mixin, "targets") instanceof List<?> l) {
+                for (Object o : l) {
+                    targets.add(o.toString().replace('.', '/'));
+                }
+            }
+            for (MethodNode m : cn.methods) {
+                if (m.name.startsWith("<") || (m.access & (org.objectweb.asm.Opcodes.ACC_ABSTRACT | org.objectweb.asm.Opcodes.ACC_SYNTHETIC)) != 0
+                        || m.visibleAnnotations != null && !m.visibleAnnotations.isEmpty()
+                        || m.invisibleAnnotations != null && m.invisibleAnnotations.stream().anyMatch(a -> a.desc.startsWith("Lorg/spongepowered/"))) {
+                    continue;
+                }
+                for (String t : targets) {
+                    merged.computeIfAbsent(t, k -> new HashMap<>()).merge(m.name + m.desc, priority, Math::min);
+                }
+            }
+        }
+    }
+
+    private boolean mergedBefore(String target, String nameDesc, String invokerMixin) {
+        Integer by = merged.getOrDefault(target, Map.of()).get(nameDesc);
+        return by != null && by < priorities.getOrDefault(invokerMixin, 1000);
+    }
+
     private void checkMethod(String me, MethodNode m, ClassNode target) {
         List<AnnotationNode> all = new ArrayList<>();
         if (m.visibleAnnotations != null) {
@@ -694,7 +750,7 @@ public final class MixinCheck {
                         } else if (!declaresMethod(target, "<init>", want)) {
                             problems.add(me + ": @Invoker " + m.name + " -> " + target.name + ".<init>" + want + " missing");
                         }
-                    } else if (name == null || !hasMethod(target, name, want)) {
+                    } else if (name == null || !hasMethod(target, name, want) && !mergedBefore(target.name, name + want, currentMixin)) {
                         problems.add(me + ": @Invoker " + m.name + " -> " + target.name + "." + name + want + " missing");
                     }
                 }

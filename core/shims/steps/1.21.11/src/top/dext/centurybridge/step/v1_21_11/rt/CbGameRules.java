@@ -175,9 +175,31 @@ public final class CbGameRules {
 
     /** a bound value's 1.21.10 reading */
     public static Object read(class_1928 rules, GameRules.Key<?> key) {
+        Probe p = PROBE.get();
+        if (p != null && p.reached && p.rules == rules && p.key == key) {
+            return p.value; // the value the restored set is writing (1.21.11's set stores it right after)
+        }
         Entry e = entry(key);
         return fromW(e, raw(rules, e.rule), rules);
     }
+
+    /**
+     * The restored 1.21.10 set / setFrom running inside 1.21.11's GameRules.set (routeWrite): its body does not write,
+     * it hands the value it would write here; 1.21.11's set writes it (or the value a mod's mixin made it).
+     */
+    private static final class Probe {
+        final class_1928 rules;
+        final GameRules.Key<?> key;
+        boolean reached;
+        Object value;
+
+        Probe(class_1928 rules, GameRules.Key<?> key) {
+            this.rules = rules;
+            this.key = key;
+        }
+    }
+
+    private static final ThreadLocal<Probe> PROBE = new ThreadLocal<>();
 
     private static boolean fireAwayWhileOff(class_1928 rules) {
         synchronized (FIRE_AWAY_WHILE_OFF) {
@@ -217,6 +239,12 @@ public final class CbGameRules {
     /** a bound value's 1.21.10 write; 1.21.11's set runs the server's game rule hook when server is not null */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static void write(class_1928 rules, GameRules.Key<?> key, Object v, MinecraftServer server) {
+        Probe p = PROBE.get();
+        if (p != null && !p.reached && p.rules == rules && p.key == key) {
+            p.reached = true;
+            p.value = v;
+            return;
+        }
         Entry e = entry(key);
         Object w = switch (e.kind) {
             case INVERT -> !(Boolean) v;
@@ -235,11 +263,14 @@ public final class CbGameRules {
     private static final ThreadLocal<Boolean> WRITING = new ThreadLocal<>();
 
     /**
-     * 1.21.11's GameRules.set(rule, value, server) through the 1.21.10 value of the key the rule stands for (its set,
-     * which writes back through {@link #write}): a mod's 1.21.10 mixin on BooleanValue.set / IntegerValue.set sees the
-     * game rule command, the edit screen's apply and every other 1.21.11 write, as it saw 1.21.10's. True: done (the
-     * caller cancels 1.21.11's own body). Not routed: the fire spread radius (two 1.21.10 keys, no one value set) and
-     * rules no boolean / integer key stands for.
+     * 1.21.11's GameRules.set(rule, value, server) consulting the restored 1.21.10 set of the key the rule stands for
+     * (BooleanValue.set / IntegerValue.set, or setFrom while 1.21.11's setAll runs: assignRoute), so a mod's 1.21.10
+     * mixin on it sees and can change every 1.21.11 write as on 1.21.10. 1.21.11's set stays the entry point and
+     * writes: the restored body only hands over the value it would write (Probe). Unmixed it hands over exactly the
+     * value given, and 1.21.11's set runs unchanged. True: the caller cancels this call -- a mod's mixin skipped the
+     * 1.21.10 write (nothing is written, as on 1.21.10), or changed the value (1.21.11's set ran again with it).
+     * Not routed: the fire spread radius (two 1.21.10 keys, no one value set) and rules no boolean / integer key
+     * stands for.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static boolean routeWrite(class_1928 rules, class_12279<?> rule, Object value, MinecraftServer server) {
@@ -251,14 +282,38 @@ public final class CbGameRules {
             return false;
         }
         Entry e = es.get(0);
+        if (e.kind != Kind.BOOL && e.kind != Kind.INVERT && e.kind != Kind.INT) {
+            return false;
+        }
+        Object given = e.kind == Kind.INVERT ? !(Boolean) value : value;
         GameRules.Value v = live(rules, e.key);
-        switch (e.kind) {
-            case BOOL -> ((GameRules.BooleanValue) v).method_20758((Boolean) value, server);
-            case INVERT -> ((GameRules.BooleanValue) v).method_20758(!(Boolean) value, server);
-            case INT -> ((GameRules.IntegerValue) v).method_35236((Integer) value, server);
-            default -> {
-                return false;
+        Probe outer = PROBE.get();
+        Probe p = new Probe(rules, e.key);
+        PROBE.set(p);
+        try {
+            AssignRoute a = ASSIGN.get();
+            if (a != null && a.rules == rules && has(a.other, rule)) {
+                v.method_27337(live(a.other, e.key), server); // 1.21.10's assignFrom set each value through setFrom
+            } else if (e.kind == Kind.INT) {
+                ((GameRules.IntegerValue) v).method_35236((Integer) given, server);
+            } else {
+                ((GameRules.BooleanValue) v).method_20758((Boolean) given, server);
             }
+        } finally {
+            PROBE.set(outer);
+        }
+        if (!p.reached) {
+            return true;
+        }
+        if (java.util.Objects.equals(p.value, given)) {
+            return false;
+        }
+        Object w = e.kind == Kind.INVERT ? !(Boolean) p.value : p.value;
+        WRITING.set(Boolean.TRUE);
+        try {
+            rules.method_76186((class_12279) rule, w, server);
+        } finally {
+            WRITING.remove();
         }
         return true;
     }
@@ -366,39 +421,171 @@ public final class CbGameRules {
     }
 
     /**
-     * 1.21.11's GameRules.get(rule) through the restored 1.21.10 readers (CbGameRulesMixin): a rule a 1.21.10 boolean
-     * or integer key stands for is answered by getBoolean / getInt of that key, so a mod's 1.21.10 mixin on those (or
-     * an override in a GameRules subclass) changes what vanilla reads, as it did on 1.21.10; the fire spread radius
-     * from doFireTick and allowFireTicksAwayFromPlayer (GameRuleRegistryFix's mapping, the radius kept where they
-     * agree with it). Null: not routed (a 1.21.11 rule no 1.21.10 key stands for, or a mod double / enum rule).
+     * 1.21.11's GameRules.get(rule) consulting the restored 1.21.10 readers (CbGameRulesMixin): for a rule a 1.21.10
+     * boolean or integer key stands for, getBoolean / getInt of that key (a mod's override in a GameRules subclass and
+     * a mod's 1.21.10 mixin on them apply) against what their bodies answer (read); where those differ the readers'
+     * answer is what vanilla reads, as on 1.21.10; where they agree (unmixed) 1.21.11's own value w is kept. The fire
+     * spread radius from doFireTick and allowFireTicksAwayFromPlayer (GameRuleRegistryFix's mapping, the radius kept
+     * where they agree with it). Called on the value 1.21.11's get looked up, inside its body.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public static Object routeRead(class_1928 rules, class_12279<?> rule) {
+    public static Object routeRead(class_1928 rules, class_12279<?> rule, Object w) {
         List<Entry> es = BY_RULE.get(rule);
-        if (es == null || !has(rules, rule)) {
-            return null;
+        if (w == null || es == null) {
+            return w;
         }
         CbLegacyGameRules legacy = (CbLegacyGameRules) rules;
         if (es.size() == 1) {
             Entry e = es.get(0);
-            return switch (e.kind) {
-                case BOOL -> legacy.method_8355((GameRules.Key) e.key);
-                case INVERT -> !legacy.method_8355((GameRules.Key) e.key);
-                case INT -> legacy.method_8356((GameRules.Key) e.key);
-                default -> null;
-            };
+            switch (e.kind) {
+                case BOOL, INVERT -> {
+                    boolean mixed = legacy.method_8355((GameRules.Key) e.key);
+                    if (mixed == (Boolean) read(rules, e.key)) {
+                        return w;
+                    }
+                    return e.kind == Kind.INVERT ? !mixed : mixed;
+                }
+                case INT -> {
+                    int mixed = legacy.method_8356((GameRules.Key) e.key);
+                    return mixed == (Integer) read(rules, e.key) ? w : (Object) mixed;
+                }
+                default -> {
+                    return w;
+                }
+            }
         }
         boolean tick = true;
         boolean away = false;
+        boolean same = true;
         for (Entry e : es) {
-            if (e.kind == Kind.FIRE_TICK) {
-                tick = legacy.method_8355((GameRules.Key) e.key);
-            } else if (e.kind == Kind.FIRE_AWAY) {
-                away = legacy.method_8355((GameRules.Key) e.key);
+            if (e.kind == Kind.FIRE_TICK || e.kind == Kind.FIRE_AWAY) {
+                boolean mixed = legacy.method_8355((GameRules.Key) e.key);
+                same &= mixed == (Boolean) read(rules, e.key);
+                if (e.kind == Kind.FIRE_TICK) {
+                    tick = mixed;
+                } else {
+                    away = mixed;
+                }
             }
         }
-        int radius = (Integer) raw(rules, rule);
+        if (same) {
+            return w;
+        }
+        int radius = (Integer) w;
         return !tick ? 0 : away ? -1 : radius > 0 ? radius : FIRE_NEAR_PLAYERS;
+    }
+
+    /**
+     * 1.21.11's GameRules.setAll(other, server) through the restored 1.21.10 assignFrom (CbGameRulesMixin): the route
+     * calls assignFrom with this set; its body, reached with it, runs 1.21.11's setAll itself (routeInner), whose
+     * per-rule sets consult each value's setFrom (routeWrite). A mod's mixin that skips assignFrom skips the copy.
+     */
+    public static final class AssignRoute {
+        final class_1928 rules;
+        final class_1928 other;
+        boolean used;
+
+        AssignRoute(class_1928 rules, class_1928 other) {
+            this.rules = rules;
+            this.other = other;
+        }
+    }
+
+    private static final ThreadLocal<AssignRoute> ASSIGN = new ThreadLocal<>();
+    private static final ThreadLocal<Boolean> INNER = new ThreadLocal<>();
+    private static final ThreadLocal<Boolean> INNER_VISIT = new ThreadLocal<>();
+
+    /** HEAD of 1.21.11's setAll: true, the caller cancels (the work ran inside the restored assignFrom, or was skipped) */
+    public static boolean routeAssign(class_1928 rules, class_1928 other, MinecraftServer server) {
+        if (INNER.get() != null) {
+            INNER.remove();
+            return false;
+        }
+        AssignRoute outer = ASSIGN.get();
+        ASSIGN.set(new AssignRoute(rules, other));
+        try {
+            ((CbLegacyGameRules) rules).method_27322(other, server);
+        } finally {
+            ASSIGN.set(outer);
+        }
+        return true;
+    }
+
+    /** the restored assignFrom's body: 1.21.11's setAll when the route called it, else 1.21.10's copy (assignFrom) */
+    public static void assignFromBody(class_1928 rules, class_1928 other, MinecraftServer server) {
+        AssignRoute a = ASSIGN.get();
+        if (a != null && !a.used && a.rules == rules && a.other == other) {
+            a.used = true;
+            INNER.set(Boolean.TRUE);
+            rules.method_76192(other, server);
+            return;
+        }
+        assignFrom(rules, other, server);
+    }
+
+    /**
+     * 1.21.11's GameRules.visitGameRuleTypes(visitor) through the restored 1.21.10 one: the route calls it with a
+     * 1.21.10 visitor handing each key's rule to 1.21.11's visitor (legacyVisitor); its body, reached with that
+     * visitor, runs 1.21.11's visit itself with 1.21.11's visitor. A mod's mixin that skips it skips the visit; one
+     * that wraps the visitor gets 1.21.10's walk through its visitor, then 1.21.11's rules no 1.21.10 key stands for.
+     */
+    public static final class VisitRoute {
+        final class_1928 rules;
+        final net.minecraft.class_4311 visitor;
+        final GameRules.GameRuleTypeVisitor legacy;
+        final java.util.Set<class_12279<?>> seen = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
+        boolean used;
+
+        VisitRoute(class_1928 rules, net.minecraft.class_4311 visitor) {
+            this.rules = rules;
+            this.visitor = visitor;
+            this.legacy = new GameRules.GameRuleTypeVisitor() {
+                @Override
+                public <T extends GameRules.Value<T>> void method_20762(GameRules.Key<T> key, GameRules.Type<T> type) {
+                    Entry e = entry(key);
+                    if (e != null && has(rules, e.rule) && VisitRoute.this.seen.add(e.rule)) {
+                        visitW(visitor, e.rule);
+                    }
+                }
+            };
+        }
+    }
+
+    private static final ThreadLocal<VisitRoute> VISIT = new ThreadLocal<>();
+
+    /** HEAD of 1.21.11's visitGameRuleTypes: true, the caller cancels (the visit ran inside the restored one, or was skipped) */
+    public static boolean routeVisit(class_1928 rules, net.minecraft.class_4311 visitor) {
+        if (INNER_VISIT.get() != null) {
+            INNER_VISIT.remove();
+            return false;
+        }
+        VisitRoute outer = VISIT.get();
+        VisitRoute r = new VisitRoute(rules, visitor);
+        VISIT.set(r);
+        try {
+            ((CbLegacyGameRules) rules).method_20744(r.legacy);
+        } finally {
+            VISIT.set(outer);
+        }
+        return true;
+    }
+
+    /** the restored visitGameRuleTypes' body */
+    public static void visitBody(class_1928 rules, GameRules.GameRuleTypeVisitor visitor) {
+        VisitRoute r = VISIT.get();
+        if (r != null && !r.used && r.rules == rules) {
+            r.used = true;
+            if (visitor == r.legacy) {
+                INNER_VISIT.set(Boolean.TRUE);
+                rules.method_20744(r.visitor);
+                return;
+            }
+            visit(rules, visitor);
+            rules.field_9196.method_76172().stream().filter(x -> !BY_RULE.containsKey(x) && r.seen.add(x))
+                .forEach(x -> visitW(r.visitor, x));
+            return;
+        }
+        visit(rules, visitor);
     }
 
     /** GameRules.getType(key) */
@@ -431,27 +618,6 @@ public final class CbGameRules {
         return server.method_30002().method_64395();
     }
 
-
-    /**
-     * 1.21.11's GameRules.visitGameRuleTypes(visitor) through the restored 1.21.10 one: this GameRules'
-     * visitGameRuleTypes (a mod's override or mixin applies) with a visitor handing the rule of each 1.21.10 key it
-     * visits to 1.21.11's visitor, each rule once (the fire spread radius for doFireTick and
-     * allowFireTicksAwayFromPlayer); then 1.21.11's rules no 1.21.10 key stands for, in 1.21.11's order. Each rule is
-     * visited as 1.21.11's own visit does it: visit(rule), then the rule's callVisitor.
-     */
-    public static void visitW(class_1928 rules, net.minecraft.class_4311 visitor) {
-        java.util.Set<class_12279<?>> seen = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
-        ((CbLegacyGameRules) rules).method_20744(new GameRules.GameRuleTypeVisitor() {
-            @Override
-            public <T extends GameRules.Value<T>> void method_20762(GameRules.Key<T> key, GameRules.Type<T> type) {
-                Entry e = entry(key);
-                if (e != null && has(rules, e.rule) && seen.add(e.rule)) {
-                    visitW(visitor, e.rule);
-                }
-            }
-        });
-        rules.field_9196.method_76172().stream().filter(r -> !BY_RULE.containsKey(r) && seen.add(r)).forEach(r -> visitW(visitor, r));
-    }
 
     private static <T> void visitW(net.minecraft.class_4311 visitor, class_12279<T> rule) {
         visitor.method_20762(rule);

@@ -67,6 +67,12 @@ final class BounceChecks {
                 S26TestMod.check("bounce.run", false, e);
                 e.printStackTrace(System.out);
             }
+            try {
+                MiscChecks.run(server.overworld());
+            } catch (RuntimeException | LinkageError e) {
+                S26TestMod.check("misc.run", false, e);
+                e.printStackTrace(System.out);
+            }
             S26TestMod.done("SERVER");
         });
     }
@@ -78,6 +84,19 @@ final class BounceChecks {
         Vec3 v = e.getDeltaMovement();
         S26TestMod.check("bounce.direct keeps x/z " + block, v.x == 0.3 && v.z == 0.2, v);
         return v.y;
+    }
+
+    /**
+     * the native 26.2 control mod's (cb-s26v, loaded beside this one by boot26.sh ... native) count of
+     * Entity.restituteMovementAfterCollisions calls reaching RETURN; -1 without it
+     */
+    static int nativeRestituteReturns() {
+        try {
+            Class<?> c = Class.forName("cb.s26v.S26VNative", true, BounceChecks.class.getClassLoader());
+            return c.getField("restituteReturns").getInt(null);
+        } catch (ReflectiveOperationException e) {
+            return -1;
+        }
     }
 
     /** lands the entity on a block at pos through Entity.move: from 0.5 above, moving (0, -1, 0) */
@@ -109,10 +128,15 @@ final class BounceChecks {
         level.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
         level.setBlock(pos.above(2), Blocks.AIR.defaultBlockState(), 3);
         before = fallOnCalls;
+        int nativeBefore = nativeRestituteReturns();
         Vec3 v = land(level, pos, stand);
         S26TestMod.check("bounce.mod block landed", fallOnCalls == before + 1 && v.y == 0.5 && v.x == 0.0 && v.z == 0.0,
             "calls " + (fallOnCalls - before) + " " + v);
         S26TestMod.check("bounce.mod block landed on top", stand.getY() == pos.getY() + 1.0, stand.getY());
+        if (nativeBefore >= 0) {
+            // the native 26.2 control mod's RETURN injector on Entity.restituteMovementAfterCollisions still fires for it
+            S26TestMod.check("bounce.native 26.2 mixin on restitute still fires", String.valueOf(nativeRestituteReturns() - nativeBefore), "1");
+        }
         before = fallOnCalls;
         v = land(level, pos, item);
         S26TestMod.check("bounce.mod block landed (item)", fallOnCalls == before + 1 && v.y == 0.5, "calls " + (fallOnCalls - before) + " " + v);

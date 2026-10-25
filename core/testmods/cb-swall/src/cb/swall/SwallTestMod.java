@@ -822,6 +822,14 @@ public class SwallTestMod implements ModInitializer {
             furnaceBurn(server);
             emptyTintGetter();
             itemStackMembers(server);
+            attackTypes(server);
+            particleItems();
+            books(server);
+            itemMembers();
+            serverStatics(server);
+            componentMembers();
+            displayIcons();
+            blockStatics(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1339,6 +1347,316 @@ public class SwallTestMod implements ModInitializer {
                 held.method_27319() + " / " + dropped.method_6983().method_27319());
         } catch (Throwable t) {
             check("itemStack.representation", false, t);
+        }
+    }
+
+    /** 1.21.11 canAttackType (CbWall*AttackTypeMixin): LivingEntity / Mob / IronGolem / Breeze / Phantom answers */
+    private static void attackTypes(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            net.minecraft.class_3730 cmd = net.minecraft.class_3730.field_16462;
+            net.minecraft.class_1308 zombie = (net.minecraft.class_1308) net.minecraft.class_1299.field_6051.method_5883(level, cmd);
+            net.minecraft.class_1439 golem = (net.minecraft.class_1439) net.minecraft.class_1299.field_6147.method_5883(level, cmd);
+            golem.method_6499(true);
+            net.minecraft.class_1308 breeze = (net.minecraft.class_1308) net.minecraft.class_1299.field_47244.method_5883(level, cmd);
+            net.minecraft.class_1308 phantom = (net.minecraft.class_1308) net.minecraft.class_1299.field_6078.method_5883(level, cmd);
+            net.minecraft.class_1299<?> ghast = net.minecraft.class_1299.field_6107, player = net.minecraft.class_1299.field_6097,
+                creeper = net.minecraft.class_1299.field_6046, z = net.minecraft.class_1299.field_6051;
+            String got = "zombie " + zombie.method_5973(ghast) + zombie.method_5973(player)
+                + " golem " + golem.method_5973(player) + golem.method_5973(creeper) + golem.method_5973(z) + golem.method_5973(ghast)
+                + " breeze " + breeze.method_5973(player) + breeze.method_5973(z)
+                + " phantom " + phantom.method_5973(ghast);
+            check("attackType.answers", got.equals("zombie falsetrue golem falsefalsetruefalse breeze truefalse phantom true"), got);
+        } catch (Throwable t) {
+            check("attackType.answers", false, t);
+        }
+    }
+
+    /** 1.21.11 ItemParticleOption(type, stack) / getItem() (rt/CbWallParticleItems, CbWallItemParticleStackMixin) */
+    private static void particleItems() {
+        try {
+            net.minecraft.class_1799 stack = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477, 3);
+            net.minecraft.class_2392 option = new net.minecraft.class_2392(net.minecraft.class_2398.field_11218, stack);
+            check("particleItem.sameStack", option.method_10289() == stack && option.method_10289() == stack, option.method_10289());
+            boolean refused;
+            try {
+                new net.minecraft.class_2392(net.minecraft.class_2398.field_11218, net.minecraft.class_1799.field_8037);
+                refused = false;
+            } catch (IllegalArgumentException e) {
+                refused = true;
+            }
+            check("particleItem.emptyRefused", refused, "accepted");
+            net.minecraft.class_2392 sub = new FiveParticle(stack);
+            net.minecraft.class_1799 subItem = sub.method_10289();
+            check("particleItem.subclass", subItem.method_7947() == 5 && subItem.method_7909() == net.minecraft.class_1802.field_8477
+                && ((FiveParticle) sub).base() == stack, subItem);
+        } catch (Throwable t) {
+            check("particleItem.sameStack", false, t);
+        }
+    }
+
+    /** 1.21.11 WrittenBookContent tryCraftCopy / resolve / resolveForItem / MAX_CRAFTABLE_GENERATION (rt/CbWallBooks) */
+    private static void books(MinecraftServer server) {
+        try {
+            List<net.minecraft.class_9262<net.minecraft.class_2561>> pages = List.of(
+                net.minecraft.class_9262.method_57137(net.minecraft.class_2561.method_43470("page")));
+            net.minecraft.class_9302 book = new net.minecraft.class_9302(net.minecraft.class_9262.method_57137("t"), "cb", 0, pages, false);
+            net.minecraft.class_9302 copy = book.method_57519();
+            net.minecraft.class_9302 copy2 = copy.method_57519();
+            check("book.tryCraftCopy", copy.comp_2421() == 1 && copy2.comp_2421() == 2 && copy2.method_57519() == null
+                && net.minecraft.class_9302.field_49380 == 2, copy2);
+            net.minecraft.class_2168 source = server.method_3739();
+            net.minecraft.class_9302 resolved = book.method_57521(source, null);
+            check("book.resolve", resolved != null && resolved.comp_2423()
+                && resolved.method_57525(false).get(0).getString().equals("page"), resolved);
+            net.minecraft.class_1799 item = new net.minecraft.class_1799(net.minecraft.class_1802.field_8360);
+            item.method_57379(net.minecraft.class_9334.field_49606, book);
+            boolean changed = net.minecraft.class_9302.method_66337(item, source, null);
+            check("book.resolveForItem", changed && item.method_58694(net.minecraft.class_9334.field_49606).comp_2423(), item);
+        } catch (Throwable t) {
+            check("book.resolve", false, t);
+        }
+    }
+
+    /** a 1.21.11 ItemParticleOption subclass: super(type, stack), getItem() override calling super */
+    private static final class FiveParticle extends net.minecraft.class_2392 {
+        FiveParticle(net.minecraft.class_1799 stack) {
+            super(net.minecraft.class_2398.field_11218, stack);
+        }
+
+        @Override
+        public net.minecraft.class_1799 method_10289() {
+            return super.method_10289().method_46651(5);
+        }
+
+        net.minecraft.class_1799 base() {
+            return super.method_10289();
+        }
+    }
+
+    /** 1.21.11 Allay / Piglin SENSOR_TYPES / MEMORY_TYPES read by a subclass (rt/CbWallBrainLists) */
+    private abstract static class AllayLists extends net.minecraft.class_7298 {
+        AllayLists() {
+            super(null, null);
+        }
+
+        static List<?> sensors() {
+            return field_38398;
+        }
+
+        static List<?> memories() {
+            return field_38403;
+        }
+    }
+
+    private abstract static class PiglinLists extends net.minecraft.class_4836 {
+        PiglinLists() {
+            super(null, null);
+        }
+
+        static List<?> sensors() {
+            return field_22376;
+        }
+    }
+
+    /** a 1.21.11 Zombie subclass calling handleAttributes(difficulty) (callReshapes: CONVERSION, no health reset) */
+    private static final class AttrZombie extends net.minecraft.class_1642 {
+        AttrZombie(net.minecraft.class_1937 level) {
+            super(level);
+        }
+
+        void attributes(float difficulty) {
+            method_7205(difficulty);
+        }
+    }
+
+    /** rt/CbWallServerStatics, CbWallBrainLists, CbWallLivingEntityAttackRangeMixin, Zombie.handleAttributes */
+    private static void serverStatics(MinecraftServer server) {
+        try {
+            int packed = net.minecraft.class_8104.method_68888(300, 7);
+            check("brightness.pack", packed == (300 << 4 | 7 << 20) && net.minecraft.class_8104.method_68887(packed) == 300
+                && net.minecraft.class_8104.method_68889(packed) == 7, packed);
+            net.minecraft.class_3610 water = net.minecraft.class_3612.field_15910.method_15785();
+            check("fluidState.holder", water.method_40180().method_40220(net.minecraft.class_3486.field_15517)
+                && water.method_40181().anyMatch(t -> t == net.minecraft.class_3486.field_15517), water);
+            check("piglinAi.isZombified", net.minecraft.class_4838.method_29534(net.minecraft.class_1299.field_6050)
+                && net.minecraft.class_4838.method_29534(net.minecraft.class_1299.field_23696)
+                && !net.minecraft.class_4838.method_29534(net.minecraft.class_1299.field_6051), "");
+            net.minecraft.class_3218 level = server.method_30002();
+            check("raids.type", net.minecraft.class_3767.method_67380(level.method_40134()) == net.minecraft.class_3767.field_56443
+                && net.minecraft.class_3767.field_56444 == net.minecraft.class_3767.field_56443, "");
+            check("brainLists.allay", AllayLists.sensors().size() == 4 && AllayLists.memories().size() == 12
+                && PiglinLists.sensors().size() > 0, AllayLists.sensors());
+            net.minecraft.class_3730 cmd = net.minecraft.class_3730.field_16462;
+            net.minecraft.class_7260 warden = (net.minecraft.class_7260) net.minecraft.class_1299.field_38095.method_5883(level, cmd);
+            net.minecraft.class_7261.method_42228(warden);
+            check("wardenAi.updateActivity", true, "");
+            AttrZombie zombie = new AttrZombie(level);
+            zombie.method_6033(5.0F);
+            zombie.attributes(1.0F);
+            check("zombie.handleAttributes", zombie.method_6032() == 5.0F, zombie.method_6032());
+            net.minecraft.class_12392 range = zombie.method_76693();
+            check("livingEntity.entityAttackRange", range != null && range.equals(net.minecraft.class_12392.method_76734(zombie)), range);
+            net.minecraft.class_1542 itemEntity = new net.minecraft.class_1542(level, 0, 100, 0,
+                new net.minecraft.class_1799(net.minecraft.class_1802.field_8477));
+            net.minecraft.class_5328.method_33263(itemEntity, List.of(new net.minecraft.class_1799(net.minecraft.class_1802.field_8477)));
+            check("itemUtils.onContainerDestroyed", true, "");
+            net.minecraft.class_1657 player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+            check("player.isWithinAttackRange", player.method_76729(player.method_5829().method_1014(1.0), 0.0), player);
+            net.minecraft.class_243 impact = new net.minecraft.class_243(1, 2, 3);
+            player.field_49989 = impact;
+            player.method_60984(true);
+            check("player.setIgnoreFallDamage", player.field_49989 == impact, player.field_49989);
+            player.method_60984(false);
+            try {
+                // isIgnoringFallDamageFromCurrentImpulse: 26.1 declares it on LivingEntity (cases_smixin3/swall.md, inherited-tombstone)
+                player.method_60984(true);
+                check("player.ignoreFallDamage", player.method_61165(), "false");
+                player.method_60984(false);
+            } catch (Throwable t) {
+                check("player.ignoreFallDamage", false, t);
+            }
+        } catch (Throwable t) {
+            check("serverStatics", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** rt/CbWallComponentMembers: 1.21.11 component members over 26.1's */
+    private static void componentMembers() {
+        try {
+            net.minecraft.class_1799 diamond = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477, 2);
+            net.minecraft.class_9288 contents = net.minecraft.class_9288.method_57493(
+                List.of(net.minecraft.class_1799.field_8037, diamond));
+            long all = contents.method_57489().count();
+            long nonEmpty = contents.method_59712().count();
+            int iter = 0;
+            for (net.minecraft.class_1799 st : contents.method_59715()) {
+                iter += st.method_7947();
+            }
+            check("containerContents.streams", all == 2 && nonEmpty == 1 && iter == 2, all + "/" + nonEmpty + "/" + iter);
+            net.minecraft.class_10591 result = new net.minecraft.class_10591(net.minecraft.class_1802.field_8805);
+            net.minecraft.class_1799 named = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477);
+            named.method_57379(net.minecraft.class_9334.field_49631, net.minecraft.class_2561.method_43470("n"));
+            net.minecraft.class_1799 out = result.method_66340(named);
+            check("transmute.apply", out.method_7909() == net.minecraft.class_1802.field_8805
+                && out.method_58694(net.minecraft.class_9334.field_49631) != null && !result.method_67389(named)
+                && result.method_67389(new net.minecraft.class_1799(net.minecraft.class_1802.field_8805))
+                && result.method_66338() != null, out);
+            net.minecraft.class_9278 charged = net.minecraft.class_9278.method_57439(diamond);
+            check("chargedProjectiles.of", !charged.method_57442() && charged.method_57437().get(0).method_7947() == 2, charged);
+            net.minecraft.class_9326 patch = net.minecraft.class_9326.method_57841()
+                .method_57854(net.minecraft.class_9334.field_49631, net.minecraft.class_2561.method_43470("p")).method_57852();
+            check("componentPatch.get", patch.method_57845(net.minecraft.class_9334.field_49631).isPresent()
+                && patch.method_57845(net.minecraft.class_9334.field_54196) == null, patch);
+            net.minecraft.class_10192 eq = new net.minecraft.class_1799(net.minecraft.class_1802.field_8805)
+                .method_58694(net.minecraft.class_9334.field_54196);
+            check("equippable.canBeEquippedBy", eq.method_64015(net.minecraft.class_1299.field_6051), eq);
+            net.minecraft.class_2050 pred = new net.minecraft.class_2050(net.minecraft.class_6885.method_40246(
+                net.minecraft.class_1299.field_6051.method_40124()));
+            check("entityTypePredicate.matches", pred.method_8925(net.minecraft.class_1299.field_6051)
+                && !pred.method_8925(net.minecraft.class_1299.field_6097), pred);
+            check("difficulty.getKey", "easy".equals(net.minecraft.class_1267.field_5805.method_5460()), "");
+            boolean disc = net.minecraft.class_9793.method_60753(null, new net.minecraft.class_1799(net.minecraft.class_1802.field_8144)).isPresent()
+                && net.minecraft.class_9793.method_60753(null, diamond).isEmpty();
+            check("jukeboxSong.fromStack", disc, "");
+            net.minecraft.class_10710 horn = new net.minecraft.class_10710(net.minecraft.class_7445.field_39126);
+            net.minecraft.class_10711 trim = new net.minecraft.class_10711(net.minecraft.class_8055.field_42009);
+            check("component.keyCtors", horn.method_67211(null).get().method_40225(net.minecraft.class_7445.field_39126)
+                && trim.method_67212(null).get().method_40225(net.minecraft.class_8055.field_42009), horn);
+        } catch (Throwable t) {
+            check("componentMembers", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** a 1.21.11 DisplayInfo subclass: super(icon, ...), getIcon() override calling super */
+    private static final class TwoIcon extends net.minecraft.class_185 {
+        TwoIcon(net.minecraft.class_1799 icon) {
+            super(icon, net.minecraft.class_2561.method_43470("t"), net.minecraft.class_2561.method_43470("d"), Optional.empty(),
+                net.minecraft.class_189.field_1254, true, true, false);
+        }
+
+        @Override
+        public net.minecraft.class_1799 method_821() {
+            return super.method_821().method_46651(2);
+        }
+
+        net.minecraft.class_1799 base() {
+            return super.method_821();
+        }
+    }
+
+    /** 1.21.11 DisplayInfo(icon, ...) / getIcon() / Advancement.Builder.display(icon, ...) (rt/CbWallDisplayIcons) */
+    private static void displayIcons() {
+        try {
+            net.minecraft.class_1799 icon = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477);
+            net.minecraft.class_185 info = new net.minecraft.class_185(icon, net.minecraft.class_2561.method_43470("t"),
+                net.minecraft.class_2561.method_43470("d"), Optional.empty(), net.minecraft.class_189.field_1254, true, true, false);
+            check("displayInfo.icon", info.method_821() == icon && info.method_821() == icon, info.method_821());
+            TwoIcon sub = new TwoIcon(icon);
+            net.minecraft.class_1799 subIcon = sub.method_821();
+            check("displayInfo.subclass", subIcon.method_7947() == 2 && sub.base() == icon, subIcon);
+            net.minecraft.class_161.class_162 builder = net.minecraft.class_161.class_162.method_707().method_20416(icon,
+                net.minecraft.class_2561.method_43470("t"), net.minecraft.class_2561.method_43470("d"), null,
+                net.minecraft.class_189.field_1254, true, true, false);
+            check("advancementBuilder.display", builder != null, "");
+        } catch (Throwable t) {
+            check("displayInfo.icon", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** a 1.21.11 BigDripleafBlock subclass reaching the protected static canPlaceAt(level, pos, state) */
+    private abstract static class DripleafAccess extends net.minecraft.class_5801 {
+        DripleafAccess() {
+            super(null);
+        }
+
+        static boolean canPlace(net.minecraft.class_5539 level, net.minecraft.class_2338 pos, net.minecraft.class_2680 state) {
+            return method_33725(level, pos, state);
+        }
+    }
+
+    /** CbWallServerStatics block/menu statics, CbWallEnchantCodecs */
+    private static void blockStatics(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            java.util.Set<net.minecraft.class_1735> slots = new java.util.HashSet<>();
+            slots.add(null);
+            slots.add(new net.minecraft.class_1735(null, 0, 0, 0));
+            net.minecraft.class_1799 carried = new net.minecraft.class_1799(net.minecraft.class_1802.field_8477, 9);
+            check("menu.quickCraftPlaceCount", net.minecraft.class_1703.method_7617(slots, 0, carried) == 4
+                && net.minecraft.class_1703.method_7617(slots, 1, carried) == 1
+                && net.minecraft.class_1703.method_7617(slots, 2, carried) == 64, "");
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(0, 64, 0);
+            check("bigDripleaf.canPlaceAt", DripleafAccess.canPlace(level, pos, net.minecraft.class_2246.field_10124.method_9564())
+                && !DripleafAccess.canPlace(level, pos, net.minecraft.class_2246.field_10340.method_9564())
+                && !DripleafAccess.canPlace(level, new net.minecraft.class_2338(0, 4000, 0), net.minecraft.class_2246.field_10124.method_9564()), "");
+            net.minecraft.class_2258.method_34268(level, new net.minecraft.class_2338(0, 300, 0), net.minecraft.class_2246.field_10124.method_9564());
+            check("bubbleColumn.updateColumn", true, "");
+            com.mojang.serialization.Codec<net.minecraft.class_5341> cond = net.minecraft.class_9698.method_60007(net.minecraft.class_173.field_51802);
+            com.google.gson.JsonObject ok = com.google.gson.JsonParser.parseString("{\"condition\":\"minecraft:random_chance\",\"chance\":0.5}").getAsJsonObject();
+            check("enchantCodec.condition", cond.parse(JsonOps.INSTANCE, ok).result().isPresent(), cond.parse(JsonOps.INSTANCE, ok));
+            check("enchantCodec.effects", net.minecraft.class_9698.method_60004(Codec.INT, net.minecraft.class_173.field_51802) != null
+                && net.minecraft.class_9710.method_60203(Codec.INT, net.minecraft.class_173.field_51802) != null
+                && net.minecraft.class_9710.method_60208(Codec.INT, net.minecraft.class_173.field_51802) != null, "");
+        } catch (Throwable t) {
+            check("blockStatics", false, t);
+            t.printStackTrace();
+        }
+    }
+
+    /** 1.21.11 Item.getCraftingRemainder() / getName() (rt/CbWallItemMembers) */
+    private static void itemMembers() {
+        try {
+            net.minecraft.class_1799 rem = net.minecraft.class_1802.field_8103.method_7858();
+            net.minecraft.class_1799 none = net.minecraft.class_1802.field_8477.method_7858();
+            check("item.craftingRemainder", rem.method_7909() == net.minecraft.class_1802.field_8550 && none.method_7960(), rem);
+            String name = net.minecraft.class_1802.field_8477.method_63680().getString();
+            check("item.name", name.equals("Diamond"), name);
+        } catch (Throwable t) {
+            check("item.craftingRemainder", false, t);
         }
     }
 

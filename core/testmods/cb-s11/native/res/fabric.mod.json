@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s11n",
+  "version": "1.0.0",
+  "name": "CB s11 native 1.21.11 test",
+  "description": "Native 1.21.11 mod whose mixins on GameRules.get / set must keep firing with step 1.21.10 -> 1.21.11's game rule routes on",
+  "environment": "*",
+  "entrypoints": { "main": ["cb.s11n.NativeDriver"] },
+  "mixins": ["cb_s11n.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.11", "fabric-lifecycle-events-v1": "*", "cb_s11": "*" }
+}
