@@ -60,6 +60,18 @@
         7
       ],
       "basis": "javap: the same column computation, called from the same extractRenderState site; the tick is a long (level.getGameTime()) where 26.1.2 passed LevelRenderer's int tick counter"
+    },
+    "com/mojang/blaze3d/opengl/GlCommandEncoder.executeDraw(Lcom/mojang/blaze3d/opengl/GlRenderPass;IIILcom/mojang/blaze3d/vertex/VertexFormat$IndexType;I)V": {
+      "to": "executeDraw(Lcom/mojang/blaze3d/opengl/GlRenderPass;IIILcom/mojang/blaze3d/IndexType;II)V",
+      "args": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "basis": "javap: the same draw (trySetup, the buffer checks now validateDraw, vertex array binding, drawFromBuffers) with renderPass, baseVertex, firstIndex, drawCount, indexType, instanceCount in the same order; 26.2 adds firstInstance"
     }
   },
   "_instanceRedirects_basis": {
@@ -79,6 +91,90 @@
         "keep"
       ],
       "basis": "javap: the same extraction (rain level, radius loop, heightmap, precipitation, light coords, rain and snow columns), similarity 0.85; 26.2 takes the ClientLevel LevelExtractor always passed and reads the animation tick from level.getGameTime() where 26.1.2 took LevelRenderer's tick counter (both advance once per client tick)"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.clearColorTexture(Lcom/mojang/blaze3d/textures/GpuTexture;I)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.clearColorAndDepthTextures(Lcom/mojang/blaze3d/textures/GpuTexture;ILcom/mojang/blaze3d/textures/GpuTexture;D)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;Lcom/mojang/blaze3d/textures/GpuTexture;D)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.clearColorAndDepthTextures(Lcom/mojang/blaze3d/textures/GpuTexture;ILcom/mojang/blaze3d/textures/GpuTexture;DIIII)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;Lcom/mojang/blaze3d/textures/GpuTexture;DIIII)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/opengl/GlCommandEncoder.clearColorTexture(Lcom/mojang/blaze3d/textures/GpuTexture;I)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/opengl/GlCommandEncoder.clearColorAndDepthTextures(Lcom/mojang/blaze3d/textures/GpuTexture;ILcom/mojang/blaze3d/textures/GpuTexture;D)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;Lcom/mojang/blaze3d/textures/GpuTexture;D)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/opengl/GlCommandEncoder.clearColorAndDepthTextures(Lcom/mojang/blaze3d/textures/GpuTexture;ILcom/mojang/blaze3d/textures/GpuTexture;DIIII)V": {
+      "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lorg/joml/Vector4fc;Lcom/mojang/blaze3d/textures/GpuTexture;DIIII)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#color(I)Lorg/joml/Vector4fc;",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: 26.1.2 cleared with glClearColor(ARGB.redFloat(c), greenFloat, blueFloat, alphaFloat) of the int; 26.2 takes those four floats as a Vector4fc (ARGB.vector4fFromARGB32), the rest of the call unchanged"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.createRenderPass(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalInt;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalDouble;)Lcom/mojang/blaze3d/systems/RenderPass;": {
+      "desc": "(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/Optional;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalDouble;)Lcom/mojang/blaze3d/systems/RenderPass;",
+      "ops": [
+        "keep",
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#clearColor(Ljava/util/OptionalInt;)Ljava/util/Optional;",
+        "keep",
+        "keep"
+      ],
+      "basis": "javap: the same validation and backend render pass; the optional ARGB clear colour is an Optional<Vector4fc> (ARGB.vector4fFromARGB32), 26.2's five-argument overload adds the full-texture RenderArea 26.1.2's pass implied"
+    },
+    "com/mojang/blaze3d/systems/CommandEncoder.createRenderPass(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalInt;)Lcom/mojang/blaze3d/systems/RenderPass;": {
+      "desc": "(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/Optional;)Lcom/mojang/blaze3d/systems/RenderPass;",
+      "ops": [
+        "keep",
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient#clearColor(Ljava/util/OptionalInt;)Ljava/util/Optional;"
+      ],
+      "basis": "javap: the same validation and backend render pass; the optional ARGB clear colour is an Optional<Vector4fc> (ARGB.vector4fFromARGB32), 26.2's five-argument overload adds the full-texture RenderArea 26.1.2's pass implied"
     }
   }
 }
