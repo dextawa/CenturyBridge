@@ -347,11 +347,7 @@
   "net/minecraft/class_4942.method_48525(Lnet/minecraft/class_2960;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;Lnet/minecraft/class_4942$class_8073;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_516.method_2656()Z",
   "net/minecraft/class_5599.method_14491(Lnet/minecraft/class_3300;)V",
-  "net/minecraft/class_7528.method_44381()I",
-  "net/minecraft/class_7528.method_44383(II)Z",
-  "net/minecraft/class_7528.method_44385()I",
   "net/minecraft/class_7528.method_44388(DD)Z",
-  "net/minecraft/class_7528.method_52233(Lnet/minecraft/class_332;IIII)V",
   "net/minecraft/class_7528.method_53532()I",
   "net/minecraft/class_793$class_795.method_3452(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Ljava/util/List;",
   "net/minecraft/class_793.method_24077(Ljava/lang/String;)Lnet/minecraft/class_4730;",
@@ -1732,7 +1728,11 @@
   "net/minecraft/class_350.method_57717()Z": "method_44392",
   "net/minecraft/class_350.method_25329()I": "method_65507",
   "net/minecraft/class_521.method_25329()I": "method_65507",
-  "net/minecraft/class_7543$class_7544.method_25307(D)V": "method_44382"
+  "net/minecraft/class_7543$class_7544.method_25307(D)V": "method_44382",
+  "net/minecraft/class_7528.method_44381()I": "method_65509",
+  "net/minecraft/class_7528.method_44385()I": "method_65512",
+  "net/minecraft/class_7528.method_52233(Lnet/minecraft/class_332;IIII)V": "method_65511",
+  "net/minecraft/class_7528.method_44383(II)Z": "method_65510"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_809.field_4305:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
