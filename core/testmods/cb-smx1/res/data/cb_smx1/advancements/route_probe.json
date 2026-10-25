@@ -1,0 +1,6 @@
+{
+  "cb_smx1_probe": true,
+  "criteria": {
+    "cbsmx1_probe": {"trigger": "minecraft:impossible"}
+  }
+}

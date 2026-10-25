@@ -19,7 +19,8 @@
     "StatTypeKeyMixin",
     "EffectAttributesMixin",
     "ShapedKeyMixin",
-    "IngredientJsonMixin"
+    "IngredientJsonMixin",
+    "AdvancementBuilderJsonMixin"
   ],
   "injectors": {
     "defaultRequire": 1
