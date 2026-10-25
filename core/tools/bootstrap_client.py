@@ -65,6 +65,12 @@ def fabric_loader(ver, libdir, cp):
     loader_ver = loaders[0]["loader"]["version"]
     profile = json.loads(fetch(
         FABRIC_META.format(v=ver) + f"/{loader_ver}/profile/json"))
+    # the launcher's merge rule: a profile library replaces the vanilla one with the same
+    # group:artifact (vanilla 1.21.2 lists asm 9.3, Fabric asm 9.10.1; both on the classpath and
+    # Knot refuses to start: "duplicate ASM classes found on classpath")
+    ours = {"/".join(maven_path(lib["name"]).split("/")[:-2]) for lib in profile["libraries"]}
+    cp[:] = [p for p in cp
+             if "/".join(os.path.relpath(p, libdir).replace(os.sep, "/").split("/")[:-2]) not in ours]
     for lib in profile["libraries"]:
         coord = lib["name"]
         base = lib.get("url", "https://maven.fabricmc.net/")

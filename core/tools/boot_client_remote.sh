@@ -192,9 +192,12 @@ if [ "$1" = __remote ]; then
     {
         echo "=== fixture"
         grep -aE "${CB_GREP:-CB-[A-Z0-9]+}" "$OUT/latest.log" 2>/dev/null | head -60
+        echo "=== mixins that failed to apply"
+        grep -aoE 'Mixin apply for mod [^ ]+ failed [^ ]+ from mod [^ ]+ -> [^:]+: [A-Za-z.]+' "$OUT/latest.log" 2>/dev/null \
+            | sed -E 's/Mixin apply for mod ([^ ]+) failed ([^ ]+) from mod [^ ]+ -> ([^:]+): .*\.([A-Za-z]+)$/\2 -> \3 (\4)/' | sort -u
         echo "=== problems"
         grep -anE '/ERROR|Exception|Caused by|NoSuchMethod|NoSuchField|AbstractMethod|IncompatibleClass|IllegalAccess|VerifyError|ClassCast|NoClassDefFound|has crashed|Crash Report|Incompatible mods' "$OUT/latest.log" 2>/dev/null \
-            | grep -viE 'Error loading class|realms|telemetry|authlib|InvalidCredentials|401|user properties|profile key pair|Failed to verify authentication' | head -40
+            | grep -viE 'Error loading class|realms|telemetry|authlib|InvalidCredentials|401|user properties|profile key pair|Failed to verify authentication|Mixin apply for mod|InvalidInjectionException' | cut -c1-400 | head -40
     } >> "$OUT/summary.txt"
     rm -rf "$GAME/mods" "$GAME/saves"
     tail -n +4 "$OUT/summary.txt"
