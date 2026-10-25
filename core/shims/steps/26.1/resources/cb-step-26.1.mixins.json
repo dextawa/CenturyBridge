@@ -32,6 +32,7 @@
     "CbWallCompilableStringAccess",
     "CbWallCriterionValidatorMixin",
     "CbWallCustomRecipeMixin",
+    "CbWallDisplayInfoIconMixin",
     "CbWallDragonFightAccess",
     "CbWallDragonFightLevelMixin",
     "CbWallDragonFightSaveMixin",
