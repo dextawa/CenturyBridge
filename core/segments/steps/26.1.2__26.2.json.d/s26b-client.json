@@ -12,5 +12,12 @@
       "args": [],
       "basis": "javap: 26.2's exitWorldAndClose is 26.1.2's destroy without the narrator.destroy call (moved into close()) and the time-source / System.exit ending (moved to Main); the rest (Stopping!, level.disconnect, disconnectWithProgressScreen, screen.removed, close) is the same in the same order, the screen read through gui.screen(). 26.2's Main calls it where 26.1.2's called destroy, at shutdown; anchors on the moved calls do not follow"
     }
-  }
+  },
+  "instanceFieldGetters": {
+    "net/minecraft/client/Options.hideGui:Z": "top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#hideGui"
+  },
+  "instanceFieldSetters": {
+    "net/minecraft/client/Options.hideGui:Z": "top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#setHideGui"
+  },
+  "_hideGui_basis": "javap: 26.1.2 Options.hideGui (public boolean, flipped by KeyboardHandler's F1, read by Gui.extractRenderState and the hand renderer) is gone in 26.2; F1 calls Hud.toggle(), which flips Hud.isHidden, and Hud.extractRenderState reads isHidden where 26.1.2's Gui read options.hideGui. Reads give that Hud's isHidden(), writes toggle it to the value (options.minecraft.gui.hud: the Options of a Minecraft and its Gui's Hud)"
 }
