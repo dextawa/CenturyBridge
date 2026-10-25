@@ -1286,8 +1286,11 @@ public final class Chain {
                     if (mapped == null) {
                         // a record component's field shares its accessor's name; the
                         // table lists it once, as the method (comp_NNNN)
+                        // (its comp_ id: a method of the same mojang name -- Advancement.name(AdvancementHolder)
+                        // beside the component name -- is another id under that key)
                         java.util.List<String> comp = memberBack.get(e.getKey() + "." + name);
-                        mapped = comp == null ? null : comp.get(0);
+                        mapped = comp == null ? null : comp.stream()
+                            .filter(c -> c.substring(c.lastIndexOf('.') + 1).startsWith("comp_")).findFirst().orElse(null);
                     }
                     if (mapped != null) {
                         name = mapped.substring(mapped.lastIndexOf('.') + 1);
