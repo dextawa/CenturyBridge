@@ -2729,7 +2729,9 @@
   "net/minecraft/class_1439.method_5973(Lnet/minecraft/class_1299;)Z",
   "net/minecraft/class_8949.method_5973(Lnet/minecraft/class_1299;)Z",
   "net/minecraft/class_1593.method_5973(Lnet/minecraft/class_1299;)Z",
-  "net/minecraft/class_1309.method_76693()Lnet/minecraft/class_12392;"
+  "net/minecraft/class_1309.method_76693()Lnet/minecraft/class_12392;",
+  "net/minecraft/class_342.method_1890(Ljava/util/function/Predicate;)V",
+  "net/minecraft/class_634.method_16690()Ljava/util/UUID;"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
