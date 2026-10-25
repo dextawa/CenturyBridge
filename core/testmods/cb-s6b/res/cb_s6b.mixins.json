@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.s6b.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "S6bRecipeBookMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
