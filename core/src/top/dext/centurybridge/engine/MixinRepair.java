@@ -1134,7 +1134,12 @@ public final class MixinRepair {
         List<MethodNode> wms = wc == null ? List.of() : new Sel(null, to.substring(dot + 1, paren), to.substring(paren), false).match(wc);
         MethodNode wm = wms.size() == 1 ? wms.get(0) : null;
         if (wm == null) return "not a method of the target";
-        if ((wm.access & Opcodes.ACC_STATIC) == 0 || (h.access & Opcodes.ACC_STATIC) == 0) return "not a static target with a static handler";
+        boolean ws = (wm.access & Opcodes.ACC_STATIC) != 0;
+        boolean hs = (h.access & Opcodes.ACC_STATIC) != 0;
+        if (ws != hs) return ws ? "a static target with an instance handler" : "an instance target with a static handler";
+        // an instance method moved to another class runs on another object: the handler may not read its own
+        // instance (s9: ParticleEngine.registerProviders -> ParticleResources.registerProviders)
+        if (!hs && !touchesThisFree(h)) return "the handler reads this, which is another object in the moved method";
         if (usesOwnClass(h, mx.name)) return "the handler uses its own mixin's members";
         if (anchors == null) return "an anchor not statically evaluable";
         if (!anchors.isEmpty() && !anchorsIn(wm, wc, anchors)) return "its anchor is not in the moved method " + anchors;
