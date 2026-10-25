@@ -1582,6 +1582,35 @@ public final class Chain {
         return b.toString();
     }
 
+    /**
+     * whether a mixin at {@code mixinPriority} finds a member the step layer's mixins merge onto a game class
+     * (LayerMembers: restored methods and fields), kind 'm' or 'f', desc null for any. Mixin applies a target's
+     * mixins in priority order, so only a member merged by a layer mixin of lower priority is there when the
+     * caller's @Shadow / @Accessor / @Invoker is resolved. The query is in the analysis namespace; past the wall the
+     * layer is built against W's real names, so the member is spelled as the wall renames it
+     */
+    public boolean layerDeclares(String owner, char kind, String name, String desc, int mixinPriority) {
+        String o = owner;
+        String n = name;
+        String d = desc;
+        if (wallRemapper != null) {
+            n = kind == 'f' ? wallRemapper.mapFieldName(owner, name, desc == null ? "" : desc)
+                            : wallRemapper.mapMethodName(owner, name, desc == null ? "()V" : desc);
+            d = desc == null ? null : kind == 'f' ? wallRemapper.mapDesc(desc) : wallRemapper.mapMethodDesc(desc);
+            o = wallRemapper.map(owner);
+        }
+        if (kind == 'f') {
+            org.objectweb.asm.tree.FieldNode f = layerMembers.field(o, n, d);
+            return f != null && layerMembers.fieldPriority(f) < mixinPriority;
+        }
+        for (org.objectweb.asm.tree.MethodNode m : layerMembers.byName(o, n)) {
+            if ((d == null || m.desc.equals(d)) && layerMembers.priority(m) < mixinPriority) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean fieldDeclaredOnTarget(String owner, String name, String desc) {
         java.util.Set<String> decl = targetDecls.get(owner);
         if (decl == null) {

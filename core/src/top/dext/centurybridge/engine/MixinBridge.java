@@ -1065,11 +1065,27 @@ final class MixinBridge {
          * merges the mixin -- and the shadow goes; the step's call wiring then carries those calls
          * like the same call anywhere in the mod's code (JarProcessor runs over mixin classes too).
          */
+        /**
+         * a member the step layer's mixins merge onto the target in this shape (LayerMembers: a restored method or
+         * field) before this mixin applies: at runtime the target declares it, so a @Shadow / @Invoker / @Accessor
+         * naming it stays as written (Mixin resolves it against the merged member)
+         */
+        private boolean restored(char kind, String name, String desc) {
+            AnnotationNode ma = MixinRepair.mixinAnnotation(mx);
+            int mp = ma != null && MixinRepair.values(ma).get("priority") instanceof Integer p ? p : LayerMembers.DEFAULT_PRIORITY;
+            if (chain.layerDeclares(target, kind, name, desc, mp)) {
+                member((kind == 'f' ? "field " : "member ") + sn + " -> " + shortName(target) + "." + name + (kind == 'f' ? ":" : "") + desc
+                    + ": the layer's restored member");
+                return true;
+            }
+            return false;
+        }
+
         void shadowMethod(MethodNode m, AnnotationNode sh) {
             String prefix = str(sh, "prefix", "shadow$");
             String name = m.name.startsWith(prefix) ? m.name.substring(prefix.length()) : m.name;
             Boolean live = wDeclares(target, name, m.desc);
-            if (live == null || live) {
+            if (live == null || live || restored('m', name, m.desc)) {
                 return;
             }
             for (String alias : MixinRepair.strings(MixinRepair.values(sh).get("aliases"))) {
@@ -1123,7 +1139,7 @@ final class MixinBridge {
          */
         void shadowField(FieldNode f) {
             Boolean live = wDeclaresField(target, f.name, f.desc);
-            if (live == null || live) {
+            if (live == null || live || restored('f', f.name, f.desc)) {
                 return;
             }
             boolean isStatic = (f.access & Opcodes.ACC_STATIC) != 0;
@@ -1210,7 +1226,7 @@ final class MixinBridge {
             }
             boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
             Boolean live = wDeclares(target, name, m.desc);
-            if (live == null || live) {
+            if (live == null || live || restored('m', name, m.desc)) {
                 return;
             }
             String what = "invoker " + sn + "." + m.name + m.desc;
@@ -1506,7 +1522,7 @@ final class MixinBridge {
             String fdesc = (getter ? Type.getReturnType(m.desc) : args[0]).getDescriptor();
             boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
             Boolean live = wDeclaresField(target, name, fdesc);
-            if (live == null || live) {
+            if (live == null || live || restored('f', name, fdesc)) {
                 return;
             }
             String what = "accessor " + sn + "." + m.name + m.desc;
@@ -1772,9 +1788,23 @@ final class MixinBridge {
                     // the target declares it; MixinJudge decides whether vanilla reaches it
                     wmeth = chain.layerMembers.member(target, fate.name(), fate.desc());
                 }
+                // the wired member W's target inherits (methodRenames to a member W moved up into a superclass:
+                // 1.21.4 AbstractSelectionList's scroll members on AbstractScrollArea): the override put back as a
+                // call of the inherited one, as restoreOverride does for V's own name -- only for an injector whose
+                // anchors stand in that body (HEAD / RETURN / TAIL); V's inner anchors are not in it
+                MethodNode inheritedFate = null;
+                List<String> rwhy = new ArrayList<>();
+                if (wmeth == null) {
+                    inheritedFate = restoreOverride(fate.name(), fate.desc(), vmeth.access, wt, rwhy, false);
+                    if (inheritedFate != null && anchorGone(an, h, kind, vmeth, inheritedFate, wt) == null) {
+                        wmeth = inheritedFate;
+                    }
+                }
                 if (wmeth == null) {
                     left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", which "
-                        + shortName(target) + " does not declare in " + chain.to);
+                        + shortName(target) + " does not declare in " + chain.to
+                        + (inheritedFate != null ? " (inherited; an anchor inside V's body is not in the restored override)" : "")
+                        + (!rwhy.isEmpty() ? "; " + rwhy.get(0) : ""));
                     continue;
                 }
                 if (((wmeth.access ^ vmeth.access) & Opcodes.ACC_STATIC) != 0) {
@@ -1817,6 +1847,11 @@ final class MixinBridge {
                     refmapDirty = true;
                 } else {
                     MixinRepair.setMethodSelector(an, idx, nm);
+                }
+                if (wmeth == inheritedFate) {
+                    wmeth = restoreOverride(fate.name(), fate.desc(), vmeth.access, wt, new ArrayList<>(), true);
+                    injected("@" + kind + " " + sn + "." + h.name, where + " => " + fate.name() + fate.desc()
+                        + ", which " + chain.to + "'s " + shortName(target) + " inherits: the override restored in the mixin as a call of the inherited one");
                 }
                 MethodNode handler = p.synth() ? synthesizeInject(h, fate, p) : h;
                 if (p.untouched()) {
@@ -3093,6 +3128,15 @@ final class MixinBridge {
          * package; one per mixin and member. Anchors are then judged in it as in any target.
          */
         private MethodNode restoreOverride(MethodNode vmeth, ClassNode wt, List<String> why) {
+            return restoreOverride(vmeth.name, vmeth.desc, vmeth.access, wt, why, true);
+        }
+
+        /**
+         * the override of name+desc, which W's target inherits, as restoreOverride puts it back; {@code add} false:
+         * built but not added to the restoring mixin (to judge the injector against it first)
+         */
+        private MethodNode restoreOverride(String vname, String vdesc, int vaccess, ClassNode wt, List<String> why, boolean add) {
+            MethodNode vmeth = new MethodNode(vaccess, vname, vdesc, null, null);
             if (itf || (vmeth.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE | Opcodes.ACC_ABSTRACT)) != 0
                     || vmeth.name.startsWith("<")) {
                 return null;
@@ -3130,8 +3174,8 @@ final class MixinBridge {
                 return null;
             }
             // super.m(..) as javac writes it: through the direct superclass, the JVM finds the declaration above
-            ClassNode rc = restorer(target, wt.superName);
-            for (MethodNode m : rc.methods) {
+            ClassNode rc = add ? restorer(target, wt.superName) : null;
+            for (MethodNode m : rc == null ? List.<MethodNode>of() : rc.methods) {
                 if (m.name.equals(vmeth.name) && m.desc.equals(vmeth.desc)) {
                     return m;
                 }
@@ -3150,7 +3194,9 @@ final class MixinBridge {
             r.visitInsn(Type.getReturnType(vmeth.desc).getOpcode(Opcodes.IRETURN));
             r.visitMaxs(slot + 1, slot);
             r.visitEnd();
-            rc.methods.add(r);
+            if (rc != null) {
+                rc.methods.add(r);
+            }
             return r;
         }
 

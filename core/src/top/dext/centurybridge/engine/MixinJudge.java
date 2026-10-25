@@ -381,7 +381,7 @@ public final class MixinJudge {
         if (m == null) {
             for (FieldNode f : mx.fields) {
                 if (f.name.equals(name)) {
-                    return judgeShadowField(f, target);
+                    return judgeShadowField(mx, f, target);
                 }
             }
             String guarded = judgeGuarded(mx, name, vcount);
@@ -447,13 +447,13 @@ public final class MixinJudge {
         for (AnnotationNode an : ans) {
             switch (an.desc) {
                 case SHADOW -> {
-                    return declared(tc, m.name, m.desc, st) ? null : methodFate(tc, m.name, m.desc, st, "shadow");
+                    return declared(tc, m.name, m.desc, st) || restoredDecl(mx, tc, 'm', m.name, m.desc, st) ? null : methodFate(tc, m.name, m.desc, st, "shadow");
                 }
                 case ACCESSOR -> {
                     String fname = refName(refmap(mx), str(an));
                     Type[] a = Type.getArgumentTypes(m.desc);
                     String fdesc = a.length == 1 ? a[0].getDescriptor() : Type.getReturnType(m.desc).getDescriptor();
-                    return declaredField(tc, fname, fdesc, st) ? null : fieldFate(tc, fname, fdesc, st);
+                    return declaredField(tc, fname, fdesc, st) || restoredDecl(mx, tc, 'f', fname, fdesc, st) ? null : fieldFate(tc, fname, fdesc, st);
                 }
                 case INVOKER -> {
                     String iname = refName(refmap(mx), str(an));
@@ -461,7 +461,7 @@ public final class MixinJudge {
                         String d = m.desc.substring(0, m.desc.indexOf(')') + 1) + "V";
                         return declared(tc, "<init>", d, false) ? null : methodFate(tc, "<init>", d, false, "constructor");
                     }
-                    return declared(tc, iname, m.desc, st) ? null : methodFate(tc, iname, m.desc, st, "method");
+                    return declared(tc, iname, m.desc, st) || restoredDecl(mx, tc, 'm', iname, m.desc, st) ? null : methodFate(tc, iname, m.desc, st, "method");
                 }
                 default -> {
                     if (MixinRepair.values(an).containsKey("method")) {
@@ -850,13 +850,37 @@ public final class MixinJudge {
         }
     }
 
-    private String judgeShadowField(FieldNode f, String target) {
+    private String judgeShadowField(ClassNode mx, FieldNode f, String target) {
         ClassNode tc = targetClass(target);
         if (tc == null) {
             return "target class gone";
         }
         boolean st = (f.access & Opcodes.ACC_STATIC) != 0;
-        return declaredField(tc, f.name, f.desc, st) ? null : fieldFate(tc, f.name, f.desc, st);
+        return declaredField(tc, f.name, f.desc, st) || restoredDecl(mx, tc, 'f', f.name, f.desc, st) ? null : fieldFate(tc, f.name, f.desc, st);
+    }
+
+    /**
+     * a member a layer's mixin merges onto the target (LayerMembers: restored method or field) with this shape and
+     * static-ness, merged before the probe mixin (a lower @Mixin priority: Mixin applies a target's mixins in
+     * priority order, and a @Shadow / @Accessor / @Invoker resolves against what is merged by then)
+     */
+    private boolean restoredDecl(ClassNode mx, ClassNode tc, char kind, String name, String desc, boolean st) {
+        AnnotationNode ma = MixinRepair.mixinAnnotation(mx);
+        int mp = ma != null && MixinRepair.values(ma).get("priority") instanceof Integer p ? p : LayerMembers.DEFAULT_PRIORITY;
+        for (LayerMembers l : restoredLayers) {
+            if (kind == 'f') {
+                FieldNode f = l.field(tc.name, name, desc);
+                if (f != null && ((f.access & Opcodes.ACC_STATIC) != 0) == st && l.fieldPriority(f) < mp) {
+                    return true;
+                }
+            } else {
+                MethodNode m = l.member(tc.name, name, desc);
+                if (m != null && ((m.access & Opcodes.ACC_STATIC) != 0) == st && l.priority(m) < mp) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /** every call and field access of a plain member resolves; the mixin's own members are judged as such */
@@ -911,7 +935,7 @@ public final class MixinJudge {
                         return "uses field " + fi.name + ", which the mixin lacks";
                     }
                     if (has(own, SHADOW)) {
-                        String why = judgeShadowField(own, target);
+                        String why = judgeShadowField(mx, own, target);
                         if (why != null) {
                             return why;
                         }
