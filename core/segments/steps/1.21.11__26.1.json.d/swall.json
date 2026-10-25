@@ -3464,6 +3464,16 @@
     1
    ],
    "basis": "WeatherEffectRenderer.render(bufferSource, cameraPos, state) is 26.1's render(cameraPos, state): the same rain and snow column drawing from the weather render state, now through its own render pass instead of the buffer source's consumers, which has no counterpart"
+  },
+  "net/minecraft/class_1007.method_4213(Lnet/minecraft/class_10055;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_12075;)V": {
+   "to": "method_3926(Lnet/minecraft/class_10055;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_12075;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "AvatarRenderer.submitNameTag(state, poseStack, collector, camera) is 26.1's typed submitNameDisplay(AvatarRenderState, ..) (the override EntityRenderer.submitNameDisplay's bridge calls; named by EntityRenderer's id in the analysis namespace): the same body; calls and overrides are renamed (methodRenames)"
   }
  },
  "lambdaAdapters": {
