@@ -179,6 +179,21 @@
       "to": "method_49193(Ljava/util/function/Function;)Lnet/minecraft/class_6544$class_6547;",
       "args": [0, -1],
       "basis": "MultiNoiseBiomeSourceParameterList.Preset.generateOverworldBiomes: javap -c both: new OverworldBiomeBuilder().addBiomes(..) into the parameter list; 1.21.4 dropped the winter-drop biome modifier (its biomes are always on)"
+    },
+    "net/minecraft/class_702.method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V": {
+      "to": "method_3049(Lnet/minecraft/class_4184;FLnet/minecraft/class_4597$class_4598;)V",
+      "args": [-1, 0, 1],
+      "basis": "ParticleEngine.render(lightTexture, camera, partialTick): javap -c both: the same loop over RENDER_ORDER render types and their particle queues; 1.21.4 draws each queue through renderParticleType with a BufferSource instead of turning the light texture on and building a Tesselator buffer inline"
+    },
+    "net/minecraft/class_996.method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+      "to": "method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10429;FF)V",
+      "args": [0, 1, 2, 3, 4, 5],
+      "basis": "SnowGolemHeadLayer.render: javap -c both: the same pumpkin-head check, head-part transform, scale 0.625 and carved pumpkin block (outline when invisible and glowing); 1.21.4 reads a SnowGolemRenderState (a LivingEntityRenderState subclass) instead of the head item"
+    },
+    "net/minecraft/class_4004.method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+      "to": "method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10427;FF)V",
+      "args": [0, 1, 2, 3, 4, 5],
+      "basis": "CrossedArmsItemLayer.render: javap -c both: skip when nothing is held, push, the crossed-arms transform (applyTranslation), draw the held item at overlay NO_OVERLAY, pop; 1.21.4 reads a HoldingEntityRenderState (a LivingEntityRenderState subclass)"
     }
   },
   "mixinLedger": {
