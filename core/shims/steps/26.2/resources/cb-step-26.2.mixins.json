@@ -11,7 +11,9 @@
     "CbS26ProcessorRegistryMixin",
     "CbS26PlayerAdvancementsMixin",
     "CbS26FlyingAnimalMixin",
-    "CbS26BedTypeMixin"
+    "CbS26BedTypeMixin",
+    "CbS26SurfaceRulesMixin",
+    "CbS26RegistryContentsMixin"
   ],
   "client": [
     "CbS26BedLayersMixin",
