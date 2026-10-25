@@ -204,3 +204,37 @@ accessible	field	net/minecraft/client/renderer/LevelRenderer	levelRenderState	Ln
 accessible	method	net/minecraft/client/model/monster/piglin/AbstractPiglinModel	getDefaultEarAngleInDegrees	()F
 # 1.21.11 renderLevel culled with the frustum of the caller's culling projection (swall, rt/CbWallLevelRender)
 accessible	field	net/minecraft/client/Camera	cullFrustum	Lnet/minecraft/client/renderer/culling/Frustum;
+# 1.21.11 <Mob>Ai.makeBrain / brainProvider statics read each mob's BRAIN_PROVIDER and getActivities (swall, rt/CbWallAiBrains, core/tools/gen_wall_ai_brains.py)
+accessible	field	net/minecraft/world/entity/ai/Brain	activityRequirements	Ljava/util/Map;
+accessible	field	net/minecraft/world/entity/animal/allay/Allay	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/armadillo/Armadillo	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/axolotl/Axolotl	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/camel/Camel	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/frog/Frog	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/frog/Tadpole	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/goat/Goat	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/golem/CopperGolem	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/happyghast/HappyGhast	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/nautilus/Nautilus	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/nautilus/ZombieNautilus	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/animal/sniffer/Sniffer	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/monster/breeze/Breeze	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/monster/creaking/Creaking	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/monster/hoglin/Hoglin	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/monster/piglin/Piglin	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/monster/piglin/PiglinBrute	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	field	net/minecraft/world/entity/monster/warden/Warden	BRAIN_PROVIDER	Lnet/minecraft/world/entity/ai/Brain$Provider;
+accessible	method	net/minecraft/world/entity/animal/allay/AllayAi	getActivities	()Ljava/util/List;
+accessible	method	net/minecraft/world/entity/animal/armadillo/ArmadilloAi	getActivities	()Ljava/util/List;
+accessible	method	net/minecraft/world/entity/animal/axolotl/AxolotlAi	getActivities	()Ljava/util/List;
+accessible	method	net/minecraft/world/entity/animal/camel/CamelAi	getActivities	()Ljava/util/List;
+accessible	method	net/minecraft/world/entity/animal/frog/FrogAi	getActivities	()Ljava/util/List;
+accessible	method	net/minecraft/world/entity/animal/goat/GoatAi	getActivities	()Ljava/util/List;
+accessible	method	net/minecraft/world/entity/animal/golem/CopperGolemAi	getActivities	()Ljava/util/List;
+accessible	method	net/minecraft/world/entity/animal/happyghast/HappyGhastAi	getActivities	()Ljava/util/List;
+accessible	method	net/minecraft/world/entity/monster/breeze/BreezeAi	getActivities	(Lnet/minecraft/world/entity/monster/breeze/Breeze;)Ljava/util/List;
+accessible	method	net/minecraft/world/entity/monster/creaking/CreakingAi	getActivities	(Lnet/minecraft/world/entity/monster/creaking/Creaking;)Ljava/util/List;
+accessible	method	net/minecraft/world/entity/monster/hoglin/HoglinAi	getActivities	()Ljava/util/List;
+accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	getActivities	(Lnet/minecraft/world/entity/monster/warden/Warden;)Ljava/util/List;
+# 1.21.11 StructureTemplateManager.readStructure(tag) is 26.1's TemplateSource.readStructure (swall, CbWallStructureTemplateManagerMixin)
+accessible	method	net/minecraft/world/level/levelgen/structure/templatesystem/loader/TemplateSource	readStructure	(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;
