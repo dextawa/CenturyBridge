@@ -321,6 +321,20 @@ public class S6bTestMod implements ModInitializer {
         check(abt.method_68568("abilities").method_68566("flying", false) && ab2.field_7479 && ab2.method_7252() == 0.2F && ab2.field_7476,
             "Abilities.addSaveData / loadSaveData: " + abt);
 
+        // Entity / Leashable members
+        net.minecraft.class_1542 item = new net.minecraft.class_1542(level, 0.0, 300.0, 0.0, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600));
+        check(!item.method_30948(), "Entity.canBeCollidedWith(): an item entity is not collidable");
+        net.minecraft.class_243 off = item.method_45321(1.0F);
+        check(off.field_1352 == 0.0 && Math.abs(off.field_1351 - item.method_5751()) < 1.0E-6 && Math.abs(off.field_1350 - item.method_17681() * 0.4F) < 1.0E-6,
+            "Entity.getLeashOffset(float) of a non-leashable entity: " + off);
+        item.field_6017 = 5.0;
+        item.method_18799(net.minecraft.class_243.field_1353);
+        item.method_45318();
+        check(item.field_6017 == 1.0, "Entity.method_45318 caps the fall distance at 1 when not falling fast: " + item.field_6017);
+        net.minecraft.class_10730 cow = new net.minecraft.class_10730(class_1299.field_6085, level);
+        check(((net.minecraft.class_9817) cow).method_60969(), "Leashable.canHaveALeashAttachedToIt() of a fresh cow");
+        check(item.method_5770() == level, "Entity.getCommandSenderWorld()");
+
         // ClientboundChangeDifficultyPacket accessors
         net.minecraft.class_2632 pkt = new net.minecraft.class_2632(net.minecraft.class_1267.field_5807, true);
         check(pkt.method_11342() == net.minecraft.class_1267.field_5807 && pkt.method_11340(),
