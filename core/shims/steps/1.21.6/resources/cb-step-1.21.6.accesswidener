@@ -12,3 +12,23 @@ accessible method net/minecraft/class_1297 method_5652 (Lnet/minecraft/class_113
 accessible method net/minecraft/class_1297 method_5749 (Lnet/minecraft/class_11368;)V
 accessible method net/minecraft/class_2586 method_11007 (Lnet/minecraft/class_11372;)V
 accessible method net/minecraft/class_2586 method_11014 (Lnet/minecraft/class_11368;)V
+
+# ---- BEGIN GENERATED (s6b): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible field net/minecraft/class_2412 field_11294 Ljava/util/List;
+accessible field net/minecraft/class_3222 field_13995 Lnet/minecraft/server/MinecraftServer;
+accessible field net/minecraft/class_8673 field_52155 Lnet/minecraft/class_9782;
+accessible field net/minecraft/class_8966 field_47369 Ljava/lang/String;
+accessible field net/minecraft/class_8966 field_47371 Ljava/util/Set;
+accessible field net/minecraft/class_8966 field_47372 Ljava/util/Set;
+accessible field net/minecraft/class_8966 field_47373 J
+accessible field net/minecraft/class_8966 field_47374 J
+accessible field net/minecraft/class_8966 field_47375 I
+accessible field net/minecraft/class_8966 field_47376 Ljava/util/Optional;
+accessible field net/minecraft/class_8966 field_47377 Ljava/util/Optional;
+accessible field net/minecraft/class_8966 field_47379 Lnet/minecraft/class_1297;
+accessible field net/minecraft/class_8966 field_47380 D
+accessible field net/minecraft/class_8966 field_47381 D
+mutable field net/minecraft/class_6595 field_34768 Ljava/lang/String;
+# ---- END GENERATED (s6b) ----
