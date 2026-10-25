@@ -1,0 +1,13 @@
+{
+  "_s26b_render": "s26b, queue item 5: 26.1.2 client render API that 26.2 reshaped, given back in the layer (javap of client-26.1.2.jar / client-26.2.jar)",
+  "instanceRedirects": {
+    "net/minecraft/client/renderer/rendertype/RenderType.draw(Lcom/mojang/blaze3d/vertex/MeshData;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26ImmediateDraw",
+    "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateVertexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "top/dext/centurybridge/step/v26_2/rt/CbS26ImmediateDraw",
+    "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateIndexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "top/dext/centurybridge/step/v26_2/rt/CbS26ImmediateDraw"
+  },
+  "_instanceRedirects_basis": {
+    "net/minecraft/client/renderer/rendertype/RenderType.draw(Lcom/mojang/blaze3d/vertex/MeshData;)V": "26.2 split it into RenderType.prepare() (the same state: pipeline, output target, layering + texture transforms in writeDynamicTransforms, scissor, textures) and PreparedRenderType.drawFromBuffer(vertex, index, indexType, baseVertex, firstIndex, indexCount) (the same render pass); the layer uploads the mesh and draws it as 26.1.2 did",
+    "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateVertexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "26.2 dropped the per-format immediate buffers (its renderers keep their own, e.g. WeatherEffectRenderer: createBuffer, then writeToBuffer); the layer keeps one per format with 26.1.2's uploadToBuffer rule (new when absent or too small, else rewritten), usage VERTEX|COPY_DST",
+    "com/mojang/blaze3d/vertex/VertexFormat.uploadImmediateIndexBuffer(Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "as uploadImmediateVertexBuffer, usage INDEX|COPY_DST"
+  }
+}
