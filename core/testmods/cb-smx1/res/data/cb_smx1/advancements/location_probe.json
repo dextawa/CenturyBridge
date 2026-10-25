@@ -1,0 +1,8 @@
+{
+  "criteria": {
+    "location_probe": {
+      "trigger": "minecraft:fall_from_height",
+      "conditions": {"start_position": {"dimension": "minecraft:overworld", "cb_smx1_location_probe": true}}
+    }
+  }
+}

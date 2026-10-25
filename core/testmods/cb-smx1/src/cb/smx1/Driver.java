@@ -298,6 +298,26 @@ public final class Driver {
                     check("predicate-item-native-mixin-" + n + "-" + phase, nativeItem.contains("minecraft:emerald") && !nativeItem.contains("minecraft:stick"),
                         "route " + ROUTE + ": cb_smx1n:" + n + " criteria " + nativeItem + " (emerald = the native mixin acted)");
                 }
+                // location / state conditions: fall_from_height's start_position (LocationPredicate.fromJson, and through it
+                // Block / StatePropertiesPredicate), enter_block's state (StatePropertiesPredicate.fromJson)
+                String locProbe = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1", "location_probe")));
+                check("predicate-location-converted-mixin-" + phase, ROUTE ? locProbe.contains("minecraft:the_nether") && !locProbe.contains("minecraft:overworld")
+                    : locProbe.contains("minecraft:overworld") && !locProbe.contains("minecraft:the_nether"), "route " + ROUTE
+                    + ": cb_smx1:location_probe criteria " + locProbe + " (LocationPredicate.fromJson handler returned "
+                    + COUNT.getOrDefault("location-predicate-return-all", 0) + " time(s))");
+                for (String n : new String[] {"state_probe", "state_probe2"}) {
+                    String stateProbe = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1", n)));
+                    check("predicate-state-converted-mixin-" + n + "-" + phase, ROUTE ? stateProbe.contains("\"axis\":\"x\"") && !stateProbe.contains("cb_smx1_state_probe")
+                        : stateProbe.contains("cb_smx1_state_probe") && !stateProbe.contains("\"axis\":\"x\""), "route " + ROUTE
+                        + ": cb_smx1:" + n + " criteria " + stateProbe + " (StatePropertiesPredicate.fromJson handler returned "
+                        + COUNT.getOrDefault("state-predicate-return-all", 0) + " time(s))");
+                }
+                String nativeLoc = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1n", "location_probe")));
+                check("predicate-location-native-mixin-" + phase, nativeLoc.contains("minecraft:the_end") && !nativeLoc.contains("minecraft:overworld"),
+                    "route " + ROUTE + ": cb_smx1n:location_probe criteria " + nativeLoc + " (the_end = the native mixin acted)");
+                String nativeState = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1n", "state_probe")));
+                check("predicate-state-native-mixin-" + phase, nativeState.contains("\"axis\":\"z\"") && !nativeState.contains("cbsmx1n_state_probe"),
+                    "route " + ROUTE + ": cb_smx1n:state_probe criteria " + nativeState + " (axis z = the native mixin acted)");
                 java.util.TreeMap<String, String> forms = new java.util.TreeMap<>();
                 for (net.minecraft.class_161 a : advancements.method_12893()) {
                     String id = a.method_688().toString();
