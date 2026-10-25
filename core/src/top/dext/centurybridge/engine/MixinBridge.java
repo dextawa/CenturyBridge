@@ -1749,7 +1749,7 @@ final class MixinBridge {
                         changed = true;
                         injected("@" + kind + " " + sn + "." + h.name, where + " => " + d.callee().name + d.callee().desc
                             + (d.ordinal() >= 0 ? " #" + d.ordinal() : "") + " (" + fate.how() + " gives " + fate.name() + fate.desc()
-                            + "; V's site of the anchor stands in " + d.callee().name + ", called from one site"
+                            + "; V's site of the anchor stands in " + d.callee().name + ", " + d.how()
                             + (d.makeStatic() ? "; handler made static" : "") + (d.toCir() ? "; callback as CallbackInfoReturnable" : "") + ")");
                         return new Selection(h, an, List.of(vmeth), List.of(d.callee()));
                     }
