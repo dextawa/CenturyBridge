@@ -12,7 +12,12 @@
   "com/mojang/blaze3d/platform/DestFactor": "com/mojang/blaze3d/platform/BlendFactor",
   "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket": "net/minecraft/network/protocol/game/ServerboundSpectatorActionPacket",
   "net/minecraft/world/level/levelgen/feature/configurations/SimpleRandomFeatureConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/CompositeFeatureConfiguration",
-  "net/minecraft/util/CubicSpline$CoordinateVisitor": "top/dext/centurybridge/step/v26_2/facade/CubicSplineVisitor"
+  "net/minecraft/util/CubicSpline$CoordinateVisitor": "top/dext/centurybridge/step/v26_2/facade/CubicSplineVisitor",
+  "net/minecraft/advancements/CriterionTrigger$Listener": "top/dext/centurybridge/step/v26_2/facade/CriterionTriggerListener",
+  "net/minecraft/advancements/criterion/EntityPredicate$LocationWrapper": "top/dext/centurybridge/step/v26_2/facade/EntityPredicateLocationWrapper",
+  "net/minecraft/advancements/criterion/EntitySubPredicates": "net/minecraft/advancements/predicates/entity/EntitySubPredicates",
+  "net/minecraft/world/entity/animal/FlyingAnimal": "top/dext/centurybridge/step/v26_2/facade/FlyingAnimal",
+  "net/minecraft/data/loot/packs/LootData": "top/dext/centurybridge/step/v26_2/facade/LootData"
  },
  "_classRenames_basis": {
   "net/minecraft/util/Tuple": "26.2 deleted Tuple (no class of 26.2 holds its members; its callers use DFU Pair); the layer's facade is 26.1.2's class as it was",
@@ -60,7 +65,21 @@
   "net/minecraft/data/BlockFamilies.WAXED_EXPOSED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_EXPOSED_CUT_COPPER",
   "net/minecraft/data/BlockFamilies.WAXED_WEATHERED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_WEATHERED_CUT_COPPER",
   "net/minecraft/data/BlockFamilies.WAXED_OXIDIZED_CUT_COPPER:Lnet/minecraft/data/BlockFamily;": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockFamilies#WAXED_OXIDIZED_CUT_COPPER",
-  "net/minecraft/world/level/levelgen/DensityFunction.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Generic#densityFunctionCodec"
+  "net/minecraft/world/level/levelgen/DensityFunction.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26Generic#densityFunctionCodec",
+  "net/minecraft/advancements/criterion/LightningBoltPredicate.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#LIGHTNING",
+  "net/minecraft/advancements/criterion/EntitySubPredicates.LIGHTNING:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#LIGHTNING",
+  "net/minecraft/advancements/criterion/FishingHookPredicate.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#FISHING_HOOK",
+  "net/minecraft/advancements/criterion/EntitySubPredicates.FISHING_HOOK:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#FISHING_HOOK",
+  "net/minecraft/advancements/criterion/PlayerPredicate.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#PLAYER",
+  "net/minecraft/advancements/criterion/EntitySubPredicates.PLAYER:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#PLAYER",
+  "net/minecraft/advancements/criterion/SlimePredicate.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#SLIME",
+  "net/minecraft/advancements/criterion/EntitySubPredicates.SLIME:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#SLIME",
+  "net/minecraft/advancements/criterion/RaiderPredicate.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#RAIDER",
+  "net/minecraft/advancements/criterion/EntitySubPredicates.RAIDER:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#RAIDER",
+  "net/minecraft/advancements/criterion/SheepPredicate.CODEC:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#SHEEP",
+  "net/minecraft/advancements/criterion/EntitySubPredicates.SHEEP:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#SHEEP",
+  "net/minecraft/advancements/criterion/EntitySubPredicate.CODEC:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#subPredicateCodec",
+  "net/minecraft/core/registries/BuiltInRegistries.ENTITY_SUB_PREDICATE_TYPE:Lnet/minecraft/core/Registry;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#mirror"
  },
  "instanceRedirects": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.hasNameEquals()Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Selector",
@@ -143,7 +162,42 @@
   "net/minecraft/util/CubicSpline.mapAll(Lnet/minecraft/util/CubicSpline$CoordinateVisitor;)Lnet/minecraft/util/CubicSpline;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
   "net/minecraft/util/CubicSpline$Constant.mapAll(Lnet/minecraft/util/CubicSpline$CoordinateVisitor;)Lnet/minecraft/util/CubicSpline;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
   "net/minecraft/util/CubicSpline$Multipoint.mapAll(Lnet/minecraft/util/CubicSpline$CoordinateVisitor;)Lnet/minecraft/util/CubicSpline;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
-  "net/minecraft/util/CubicSpline.apply(Ljava/lang/Object;)F": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline"
+  "net/minecraft/util/CubicSpline.apply(Ljava/lang/Object;)F": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
+  "net/minecraft/advancements/CriterionTrigger.addPlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers",
+  "net/minecraft/advancements/CriterionTrigger.removePlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers",
+  "net/minecraft/advancements/CriterionTrigger.removePlayerListeners(Lnet/minecraft/server/PlayerAdvancements;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers",
+  "net/minecraft/advancements/criterion/SimpleCriterionTrigger.addPlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers",
+  "net/minecraft/advancements/criterion/SimpleCriterionTrigger.removePlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers",
+  "net/minecraft/advancements/criterion/SimpleCriterionTrigger.removePlayerListeners(Lnet/minecraft/server/PlayerAdvancements;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers",
+  "net/minecraft/advancements/criterion/ImpossibleTrigger.addPlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers",
+  "net/minecraft/advancements/criterion/ImpossibleTrigger.removePlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers",
+  "net/minecraft/advancements/criterion/ImpossibleTrigger.removePlayerListeners(Lnet/minecraft/server/PlayerAdvancements;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers",
+  "net/minecraft/advancements/criterion/EntityPredicate.entityType()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.distanceToPlayer()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.movement()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.effects()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.nbt()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.flags()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.equipment()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.subPredicate()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.periodicTick()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.vehicle()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.passenger()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.targetedEntity()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.team()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.slots()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.location()Lnet/minecraft/advancements/criterion/EntityPredicate$LocationWrapper;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate.components()Lnet/minecraft/advancements/criterion/DataComponentMatchers;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntityPredicate$Builder.subPredicate(Lnet/minecraft/advancements/criterion/EntitySubPredicate;)Lnet/minecraft/advancements/criterion/EntityPredicate$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/EntitySubPredicate.codec()Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/LightningBoltPredicate.codec()Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/FishingHookPredicate.codec()Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/PlayerPredicate.codec()Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/SlimePredicate.codec()Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/RaiderPredicate.codec()Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/SheepPredicate.codec()Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/advancements/criterion/MobEffectsPredicate$Builder.build()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/commands/arguments/ColorArgument.parse(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team"
  },
  "_instanceRedirects_basis": {
   "net/minecraft/commands/arguments/selector/EntitySelectorParser.*": "26.2 replaced the parser's option booleans by option-state objects (nameOption() ... advancementsOption()); rt/CbS26Selector reads and sets the same facts on them (see its javadoc)",
@@ -172,7 +226,9 @@
   "com/mojang/blaze3d/platform/DestFactor.values()[Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Blend#destValues",
   "com/mojang/blaze3d/platform/DestFactor.valueOf(Ljava/lang/String;)Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Blend#destValueOf",
   "net/minecraft/util/CubicSpline.builder(Lnet/minecraft/util/BoundedFloatFunction;Lnet/minecraft/util/BoundedFloatFunction;)Lnet/minecraft/util/CubicSpline$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
-  "net/minecraft/data/worldgen/TerrainProvider.buildErosionOffsetSpline(Lnet/minecraft/util/BoundedFloatFunction;Lnet/minecraft/util/BoundedFloatFunction;FFFFFFZZLnet/minecraft/util/BoundedFloatFunction;)Lnet/minecraft/util/CubicSpline;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline"
+  "net/minecraft/data/worldgen/TerrainProvider.buildErosionOffsetSpline(Lnet/minecraft/util/BoundedFloatFunction;Lnet/minecraft/util/BoundedFloatFunction;FFFFFFZZLnet/minecraft/util/BoundedFloatFunction;)Lnet/minecraft/util/CubicSpline;": "top/dext/centurybridge/step/v26_2/rt/CbS26Spline",
+  "net/minecraft/advancements/criterion/EntitySubPredicates.bootstrap(Lnet/minecraft/core/Registry;)Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates",
+  "net/minecraft/commands/arguments/ColorArgument.getColor(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team"
  },
  "callReshapes": {
   "net/minecraft/world/entity/EntityType.spawn(Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Consumer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntitySpawnReason;ZZ)Lnet/minecraft/world/entity/Entity;": {
@@ -269,6 +325,15 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v26_2/rt/CbS26Generic#toApachePairs(Ljava/util/Set;)Ljava/util/Set;",
    "basis": "as ProfileCollector.getChartedPaths, called through the implementing class"
+  },
+  "net/minecraft/advancements/criterion/PickedUpItemTrigger$TriggerInstance.thrownItemPickedUpByEntity(Lnet/minecraft/advancements/criterion/ContextAwarePredicate;Ljava/util/Optional;Ljava/util/Optional;)Lnet/minecraft/advancements/Criterion;": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)Lnet/minecraft/advancements/Criterion;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_2/rt/CbS26Generic#some(Ljava/lang/Object;)Ljava/util/Optional;",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1.2 wrapped the player predicate in Optional.of itself; 26.2 takes the Optional (javap: both bodies otherwise build the same TriggerInstance)"
   }
  },
  "instanceFieldGetters": {
@@ -370,6 +435,14 @@
    "guard": "top/dext/centurybridge/step/v26_2/rt/Guard",
    "wrap": "top/dext/centurybridge/step/v26_2/rt/CbS26Team.optionsInt(B)I",
    "basis": "26.2 unpacks the team options from a byte (the same two bits); the old override takes an int"
+  },
+  {
+   "old": "build()Ljava/util/Optional;",
+   "new": "build()Lnet/minecraft/advancements/predicates/MobEffectsPredicate;",
+   "args": [],
+   "unwrap": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates.unwrapEffects(Ljava/util/Optional;)Lnet/minecraft/advancements/predicates/MobEffectsPredicate;",
+   "onlyUnder": "net/minecraft/advancements/criterion/MobEffectsPredicate$Builder",
+   "basis": "26.2's MobEffectsPredicate.Builder.build answers the predicate where 26.1.2's answered Optional.of(it) (26.2's EntityPredicate.Builder.effects calls it): a 26.1.2 override's answer unwrapped, an empty one being no effect requirement (an empty effect map matches every entity)"
   }
  ],
  "frameDefaults": {
@@ -405,7 +478,8 @@
   "net/minecraft/world/level/levelgen/feature/configurations/PointedDripstoneConfiguration.<init>(FFFF)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Dripstone#cbNewPointed",
   "net/minecraft/world/level/levelgen/structure/templatesystem/ProtectedBlockProcessor.<init>(Lnet/minecraft/tags/TagKey;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Processors#cbNewProtected",
   "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.<init>(Lnet/minecraft/network/RegistryFriendlyByteBuf;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Team#cbNewParameters",
-  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket.<init>(I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Packets#cbNewSpectate"
+  "net/minecraft/network/protocol/game/ServerboundSpectateEntityPacket.<init>(I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Packets#cbNewSpectate",
+  "net/minecraft/advancements/criterion/EntityPredicate.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/advancements/criterion/EntityPredicate$LocationWrapper;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/advancements/criterion/DataComponentMatchers;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#cbNewEntityPredicate"
  },
  "fieldRenames": {
   "net/minecraft/world/level/levelgen/feature/Feature.POINTED_DRIPSTONE:Lnet/minecraft/world/level/levelgen/feature/Feature;": "SPELEOTHEM",
@@ -565,6 +639,50 @@
     "net/minecraft/core/registries/BuiltInRegistries.STRUCTURE_PROCESSOR:Lnet/minecraft/core/Registry;"
    ],
    "basis": "phantom key: ResourceKey types no value of its own and passes unchanged; the registry of StructureProcessorType it named on 26.1.2 is the layer's mirror (rt/CbS26Processors.Mirror, under this same key), which BuiltInRegistries.STRUCTURE_PROCESSOR answers to 26.1.2 code and which registers each type's codec into 26.2's registry"
+  },
+  "net/minecraft/core/registries/Registries.ENTITY_SUB_PREDICATE_TYPE:Lnet/minecraft/resources/ResourceKey;": {
+   "by": [
+    "net/minecraft/core/registries/BuiltInRegistries.ENTITY_SUB_PREDICATE_TYPE:Lnet/minecraft/core/Registry;"
+   ],
+   "basis": "phantom key: ResourceKey types no value of its own and passes unchanged; the registry of map codecs it named on 26.1.2 is the layer's mirror under this same key (rt/CbS26EntityPredicates.Mirror), which BuiltInRegistries.ENTITY_SUB_PREDICATE_TYPE answers to 26.1.2 code and which registers each map codec's codec into 26.2's registry"
   }
- }
+ },
+ "superRedirects": {
+  "net/minecraft/advancements/criterion/ImpossibleTrigger.addPlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers#impossibleAddSuper",
+  "net/minecraft/advancements/criterion/ImpossibleTrigger.removePlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers#impossibleRemoveSuper",
+  "net/minecraft/advancements/criterion/ImpossibleTrigger.removePlayerListeners(Lnet/minecraft/server/PlayerAdvancements;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers#impossibleRemoveAllSuper",
+  "net/minecraft/advancements/criterion/EntityPredicate$Builder.subPredicate(Lnet/minecraft/advancements/criterion/EntitySubPredicate;)Lnet/minecraft/advancements/criterion/EntityPredicate$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#subPredicateSuper",
+  "net/minecraft/advancements/criterion/MobEffectsPredicate$Builder.build()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates#buildSuper"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/advancements/CriterionTrigger",
+   "adapter": "top/dext/centurybridge/step/v26_2/rt/CbS26Triggers$Legacy",
+   "requires": [
+    "addPlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+    "removePlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+    "removePlayerListeners(Lnet/minecraft/server/PlayerAdvancements;)V"
+   ],
+   "synth": [],
+   "basis": "a 26.1.2 trigger that keeps its own listeners: 26.2's PlayerAdvancements no longer calls the trigger, so mixin/CbS26PlayerAdvancementsMixin hands it them through this adapter where 26.2 registers, removes and clears listeners"
+  },
+  {
+   "under": "net/minecraft/advancements/criterion/EntityPredicate$Builder",
+   "adapter": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates$LegacyBuilder",
+   "requires": [
+    "subPredicate(Lnet/minecraft/advancements/criterion/EntitySubPredicate;)Lnet/minecraft/advancements/criterion/EntityPredicate$Builder;"
+   ],
+   "synth": [],
+   "basis": "a 26.1.2 EntityPredicate.Builder subclass overriding subPredicate (26.2's Builder has none): a call through Builder reaches the override through this adapter (rt/CbS26EntityPredicates.subPredicate)"
+  },
+  {
+   "under": "net/minecraft/advancements/criterion/EntitySubPredicate",
+   "adapter": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityPredicates$LegacySub",
+   "requires": [
+    "codec()Lcom/mojang/serialization/MapCodec;"
+   ],
+   "synth": [],
+   "basis": "a 26.1.2 mod's type-specific sub-predicate keeps its own codec() (26.2's EntitySubPredicate has none): codec() calls and its key in 26.2's EntityPredicate reach it through this adapter"
+  }
+ ]
 }

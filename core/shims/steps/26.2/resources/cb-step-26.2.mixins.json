@@ -8,7 +8,9 @@
     "CbS26TeamColorMixin",
     "CbS26CappedOriginalMixin",
     "CbS26ProcessorOriginalMixin",
-    "CbS26ProcessorRegistryMixin"
+    "CbS26ProcessorRegistryMixin",
+    "CbS26PlayerAdvancementsMixin",
+    "CbS26FlyingAnimalMixin"
   ],
   "client": [],
   "server": [],

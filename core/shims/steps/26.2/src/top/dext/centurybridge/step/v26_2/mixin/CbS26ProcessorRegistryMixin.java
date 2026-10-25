@@ -10,13 +10,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import top.dext.centurybridge.step.v26_2.rt.CbS26EntityPredicates;
 import top.dext.centurybridge.step.v26_2.rt.CbS26Processors;
 
 /**
  * MappedRegistry for 26.2's structure_processor registry, which holds map codecs where 26.1.2's held
  * StructureProcessorTypes: what happens to it -- a registration (whoever made it), freezing (which binds its holders'
  * values), its tags being bound -- happens to the 26.1.2-shaped mirror 26.1.2 code holds (rt/CbS26Processors). Every
- * other registry passes through untouched (the mirror is looked up by identity).
+ * other registry passes through untouched (the mirror is looked up by identity). The mirror of 26.2's
+ * entity_sub_predicate_type (rt/CbS26EntityPredicates) freezes with it too.
  */
 @Mixin(MappedRegistry.class)
 public abstract class CbS26ProcessorRegistryMixin implements CbS26Processors.Frozen {
@@ -37,6 +39,7 @@ public abstract class CbS26ProcessorRegistryMixin implements CbS26Processors.Fro
     @Inject(method = "freeze", at = @At("RETURN"))
     private void cbS26$frozen(CallbackInfoReturnable<?> cir) {
         CbS26Processors.frozen((Registry<?>) (Object) this);
+        CbS26EntityPredicates.frozen((Registry<?>) (Object) this);
     }
 
     @Inject(method = "bindTags", at = @At("RETURN"))

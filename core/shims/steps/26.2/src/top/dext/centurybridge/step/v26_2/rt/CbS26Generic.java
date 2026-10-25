@@ -117,4 +117,9 @@ public final class CbS26Generic {
     public static Codec<Holder<DensityFunction>> densityFunctionCodec() {
         return DENSITY_HOLDER_CODEC;
     }
+
+    /** a value 26.1.2 wrapped in Optional.of itself where 26.2 takes the Optional (PickedUpItemTrigger) */
+    public static Optional<Object> some(Object value) {
+        return Optional.of(value);
+    }
 }
