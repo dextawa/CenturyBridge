@@ -268,18 +268,38 @@ public final class CbItemMembers {
         return m == null ? class_9285.field_49326 : m;
     }
 
-    /** getDrinkingSound(): the class's own, else 1.21.1's GENERIC_DRINK */
+    /**
+     * getDrinkingSound(): the restored member (ItemSounds) -- a 1.21.1 class's override or 1.21.1's GENERIC_DRINK, with
+     * whatever a mod's mixin on it does
+     */
     public static class_3414 method_21831(class_1792 item) {
-        return item instanceof LegacyDrinkingSound l ? l.method_21831() : super_method_21831(item);
+        return ((ItemSounds) (Object) item).method_21831();
+    }
+
+    /** 1.21.1's Item.getEatingSound() / getDrinkingSound(), restored on every Item by CbItemMembersRestoredMixin */
+    public interface ItemSounds {
+        class_3414 method_21830();
+
+        class_3414 method_21831();
+    }
+
+    /** 1.21.1's ItemStack.getEatingSound() / getDrinkingSound(), restored on ItemStack by CbItemStackSoundsMixin */
+    public interface StackSounds {
+        class_3414 method_21832();
+
+        class_3414 method_21833();
     }
 
     public static class_3414 super_method_21831(class_1792 item) {
         return class_3417.field_20613.comp_349();
     }
 
-    /** getEatingSound(): the class's own, else 1.21.1's GENERIC_EAT */
+    /**
+     * getEatingSound(): the restored member (ItemSounds) -- a 1.21.1 class's override or 1.21.1's GENERIC_EAT, with
+     * whatever a mod's mixin on it does
+     */
     public static class_3414 method_21830(class_1792 item) {
-        return item instanceof LegacyEatingSound l ? l.method_21830() : super_method_21830(item);
+        return ((ItemSounds) (Object) item).method_21830();
     }
 
     public static class_3414 super_method_21830(class_1792 item) {
@@ -346,9 +366,30 @@ public final class CbItemMembers {
         return null;
     }
 
-    /** getDescription(): the class's own, else translatable(getDescriptionId()) -- 1.21.2's getName() */
+    /**
+     * getDescription(): the restored member (ItemDescription) -- a 1.21.1 class's override or the body,
+     * translatable(getDescriptionId()), with whatever a mod's mixin on it does
+     */
     public static class_2561 method_7848(class_1792 item) {
-        return item instanceof LegacyDescription l ? l.method_7848() : super_method_7848(item);
+        return ((ItemDescription) (Object) item).method_7848();
+    }
+
+    /** 1.21.1's Item.getDescription(), restored on every Item by CbItemMembersRestoredMixin */
+    public interface ItemDescription {
+        class_2561 method_7848();
+    }
+
+    /**
+     * Item.getName() (1.21.2's, final) as 1.21.1 answered the same question with getDescription(): a 1.21.1 class's
+     * override, or the restored member where it answers otherwise than its body (a mod's mixin on it); else null --
+     * 1.21.2's ITEM_NAME stands
+     */
+    public static class_2561 descriptionRead(class_1792 item) {
+        if (item instanceof LegacyDescription l) {
+            return l.method_7848();
+        }
+        class_2561 m = ((ItemDescription) (Object) item).method_7848();
+        return m.equals(super_method_7848(item)) ? null : m;
     }
 
     public static class_2561 super_method_7848(class_1792 item) {
@@ -413,14 +454,14 @@ public final class CbItemMembers {
         return method_7866(stack.method_7909(), stack);
     }
 
-    /** ItemStack.getDrinkingSound() */
+    /** ItemStack.getDrinkingSound(): the restored member (StackSounds) */
     public static class_3414 method_21832(class_1799 stack) {
-        return method_21831(stack.method_7909());
+        return ((StackSounds) (Object) stack).method_21832();
     }
 
-    /** ItemStack.getEatingSound() */
+    /** ItemStack.getEatingSound(): the restored member (StackSounds) */
     public static class_3414 method_21833(class_1799 stack) {
-        return method_21830(stack.method_7909());
+        return ((StackSounds) (Object) stack).method_21833();
     }
 
     /** ItemStack.hurtEnemy(target, player): 1.21.2's hurtEnemy(target, attacker) with the player as attacker */
@@ -444,13 +485,20 @@ public final class CbItemMembers {
         return built;
     }
 
-    /** sound of a consumption as 1.21.1's class answered it, or null to keep the component's */
+    /**
+     * sound of a consumption as 1.21.1's LivingEntity asked the stack -- its restored getDrinkingSound() for a drinking
+     * animation, else getEatingSound() -- where that answers otherwise than 1.21.1's Item body (GENERIC_DRINK /
+     * GENERIC_EAT): a 1.21.1 class's override or a mod's mixin on the restored member; else null to keep the
+     * component's
+     */
     public static class_3414 consumeSound(class_1799 stack, net.minecraft.class_1839 animation) {
         class_1792 item = stack.method_7909();
         if (animation == net.minecraft.class_1839.field_8946) {
-            return item instanceof LegacyDrinkingSound l ? l.method_21831() : null;
+            class_3414 m = ((StackSounds) (Object) stack).method_21832();
+            return m != super_method_21831(item) ? m : null;
         }
-        return item instanceof LegacyEatingSound l ? l.method_21830() : null;
+        class_3414 m = ((StackSounds) (Object) stack).method_21833();
+        return m != super_method_21830(item) ? m : null;
     }
 
     private CbItemMembers() {

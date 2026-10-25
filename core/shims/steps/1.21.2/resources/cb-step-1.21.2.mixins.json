@@ -99,6 +99,7 @@
     "CbItemShieldRepairMixin",
     "CbItemRecipeManagerRestoredMixin",
     "CbItemResultSlotRemainingMixin",
+    "CbItemStackSoundsMixin",
     "CbItemCompassDescriptionIdMixin",
     "CbItemPotionDescriptionIdMixin",
     "CbItemTippedArrowDescriptionIdMixin",

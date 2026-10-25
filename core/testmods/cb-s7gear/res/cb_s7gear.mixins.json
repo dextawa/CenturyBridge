@@ -16,7 +16,10 @@
     "CompassDescriptionIdMixin",
     "MaceRepairMixin",
     "TotemEnchantableMixin",
-    "RemainingItemsMixin"
+    "RemainingItemsMixin",
+    "ItemDescriptionMixin",
+    "EatingSoundMixin",
+    "PlaySoundRecorderMixin"
   ],
   "injectors": {
     "defaultRequire": 1
