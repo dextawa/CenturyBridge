@@ -109,6 +109,23 @@ public final class CbAdvRecords {
         return new net.minecraft.class_4559.class_4562(name, new net.minecraft.class_4559.class_4563(Optional.ofNullable(min), Optional.ofNullable(max)));
     }
 
+    /**
+     * the EntityPredicate 1.20.1's EntityPredicate.Builder built from these parts (fromJson's: every part set, ANY being
+     * 1.20.1's "any"), as 1.20.2's record: ANY parts absent (EntityTypePredicate.ANY, EntitySubPredicate.ANY included),
+     * a null team absent
+     */
+    public static net.minecraft.class_2048 entityPredicate(net.minecraft.class_2050 type, net.minecraft.class_2025 distance,
+            net.minecraft.class_2090 location, net.minecraft.class_2090 steppingOn, net.minecraft.class_2102 effects, net.minecraft.class_2105 nbt,
+            net.minecraft.class_2040 flags, net.minecraft.class_3735 equipment, net.minecraft.class_7376 typeSpecific,
+            net.minecraft.class_2048 vehicle, net.minecraft.class_2048 passenger, net.minecraft.class_2048 target, String team) {
+        return new net.minecraft.class_2048(
+            type == null || type == CbAdvAny.field_9609 ? Optional.empty() : Optional.of(type),
+            CbAdvAny.distance(distance), CbAdvAny.location(location), CbAdvAny.location(steppingOn), CbAdvAny.effects(effects),
+            CbAdvAny.nbt(nbt), CbAdvAny.flags(flags), CbAdvAny.equipment(equipment),
+            typeSpecific == null || typeSpecific == CbAdvJson.field_38723 ? Optional.empty() : Optional.of(typeSpecific),
+            CbAdvAny.entity(vehicle), CbAdvAny.entity(passenger), CbAdvAny.entity(target), Optional.ofNullable(team));
+    }
+
     /** ItemPredicate's enchantment conditions (an array; NONE is empty) */
     public static List<net.minecraft.class_2035> enchantments(net.minecraft.class_2035[] e) {
         return e == null ? List.of() : List.copyOf(Arrays.asList(e));

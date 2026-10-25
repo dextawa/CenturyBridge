@@ -23,7 +23,11 @@
     "AdvancementBuilderJsonMixin",
     "ItemPredicateJsonMixin",
     "LocationPredicateJsonMixin",
-    "StatePropertiesJsonMixin"
+    "StatePropertiesJsonMixin",
+    "EntityPredicateJsonMixin",
+    "EntityFlagsJsonMixin",
+    "DistancePredicateJsonMixin",
+    "MobEffectsJsonMixin"
   ],
   "injectors": {
     "defaultRequire": 1

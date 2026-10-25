@@ -1,0 +1,13 @@
+{
+  "criteria": {
+    "context_probe": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:zombie",
+          "cbsmx1n_context_probe": true
+        }
+      }
+    }
+  }
+}
