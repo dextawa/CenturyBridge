@@ -12,6 +12,12 @@
     "net/minecraft/data/worldgen/SurfaceRuleData.overworldLike(ZZZ)Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": "26.2's body is 26.1.2's (isBiome given the getter, noiseCondition named noiseCondition2d) plus 26.2's sulfur cave rules; built as overworld()",
     "net/minecraft/data/worldgen/SurfaceRuleData.nether()Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;": "26.2's nether(getter) uses the getter only through isBiome; built as overworld()"
   },
+  "instanceRedirects": {
+    "net/minecraft/world/level/levelgen/SurfaceSystem.buildSurface(Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/biome/BiomeManager;Lnet/minecraft/core/Registry;ZLnet/minecraft/world/level/levelgen/WorldGenerationContext;Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26SurfaceRules"
+  },
+  "_instance_basis": {
+    "net/minecraft/world/level/levelgen/SurfaceSystem.buildSurface(Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/biome/BiomeManager;Lnet/minecraft/core/Registry;ZLnet/minecraft/world/level/levelgen/WorldGenerationContext;Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;)V": "javap: the same body (similarity 0.96); 26.2 takes the chunk's possible biomes (NoiseBasedChunkGenerator.collectPossibleBiomes) where 26.1.2 took the biome registry, and reads them only to settle a biome condition early (BiomeConditionSource.canNeverMatch / willAlwaysMatch). The layer passes every biome of the registry, a superset, so each condition still tests the biome at the position. A 26.1.2 override of buildSurface stays open: 26.2's possible-biome set does not give back the registry"
+  },
   "callReshapes": {
     "net/minecraft/world/level/levelgen/SurfaceRules$ConditionSource.codec()Lnet/minecraft/util/KeyDispatchDataCodec;": {
       "desc": "()Lcom/mojang/serialization/MapCodec;",

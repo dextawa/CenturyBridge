@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
@@ -17,7 +18,13 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeManager;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.levelgen.NoiseChunk;
+import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.SurfaceSystem;
+import net.minecraft.world.level.levelgen.WorldGenerationContext;
 
 /**
  * 26.1.2's surface rule API on 26.2 (javap of both).
@@ -71,6 +78,19 @@ public final class CbS26SurfaceRules {
     /** 26.1.2 SurfaceRuleData.nether() */
     public static SurfaceRules.RuleSource nether() {
         return SurfaceRuleData.nether(KEYS);
+    }
+
+    /**
+     * 26.1.2 SurfaceSystem.buildSurface(randomState, biomeManager, biomes, ...): 26.2 takes the chunk's possible
+     * biomes instead of the biome registry, and reads them only to settle a biome condition early (none of its biomes
+     * possible: never; every possible biome one of its: always). Every biome of the registry is a superset of the
+     * chunk's possible ones, so each condition tests the biome at the position as 26.1.2's did.
+     */
+    public static void buildSurface(SurfaceSystem self, RandomState randomState, BiomeManager biomeManager,
+                                    Registry<Biome> biomes, boolean useLegacyRandom, WorldGenerationContext context,
+                                    ChunkAccess chunk, NoiseChunk noiseChunk, SurfaceRules.RuleSource ruleSource) {
+        Set<Holder<Biome>> possible = biomes.listElements().<Holder<Biome>>map(h -> h).collect(Collectors.toUnmodifiableSet());
+        self.buildSurface(randomState, biomeManager, useLegacyRandom, context, chunk, noiseChunk, ruleSource, possible);
     }
 
     /** The getter of 26.1.2's key conditions: SurfaceRules.isBiome given it answers a {@link BiomeKeys}. */
