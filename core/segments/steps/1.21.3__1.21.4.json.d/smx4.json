@@ -255,6 +255,15 @@
   "fieldRenames": {
     "net/minecraft/class_2609.field_11981:I": "field_55574",
     "net/minecraft/class_2609.field_11989:I": "field_55576",
+    "net/minecraft/class_2609.field_11980:I": "field_55575",
+    "net/minecraft/class_1084.field_5346:Z": "comp_3459",
+    "net/minecraft/class_1084.field_5345:Z": "comp_3460",
+    "net/minecraft/class_2692.field_12323:F": "comp_3348",
+    "net/minecraft/class_2692.field_12321:F": "comp_3349",
+    "net/minecraft/class_2833.field_12898:F": "comp_3351",
+    "net/minecraft/class_2833.field_12896:F": "comp_3352",
+    "net/minecraft/class_7764$class_5791.field_28475:I": "comp_3445",
+    "net/minecraft/class_7764$class_5791.field_28476:I": "comp_3446",
     "net/minecraft/class_1092.field_20278:Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "field_55476",
     "net/minecraft/class_898.field_54173:Lnet/minecraft/class_10201;": "field_55290",
     "net/minecraft/class_4915.field_42087:Ljava/util/List;": "field_55244",
@@ -269,6 +278,11 @@
     "net/minecraft/class_1079.field_5335:Z": "comp_3457"
   },
   "_smx4_fieldRenames_basis": {
+    "class_2609 field_11980": "AbstractFurnaceBlockEntity litDuration -> litTotalTime (field_55575): set where fuel is consumed in both, and 1.21.4 saves it as lit_total_time (javap)",
+    "class_1084": "TextureMetadataSection became a record: blur (V getBlur method_4696 reads field_5346) is component comp_3459 (codec \"blur\", first constructor argument), clamp (getClamp method_4697 reads field_5345) is comp_3460",
+    "class_2692": "ServerboundMoveVehiclePacket became a record: yRot (V constructor stores Entity.getYRot in field_12323) is comp_3348, xRot (getXRot -> field_12321) is comp_3349 (1.21.4 fromEntity passes getYRot, getXRot in that order); the x/y/z doubles became the Vec3 component, not renamed",
+    "class_2833": "ClientboundMoveVehiclePacket became a record: yRot (field_12898) is comp_3351, xRot (field_12896) is comp_3352 (same constructor order); the doubles became the Vec3 component",
+    "class_7764$class_5791": "SpriteContents.FrameSize became a record (width, height): field_28475 / field_28476 are the constructor's first / second int, as comp_3445 / comp_3446",
     "class_2609": "AbstractFurnaceBlockEntity litTime / litDuration -> litTimeRemaining / litTotalTime: same type, same methods read and write them by the same opcodes (mixin-cause 'same uses'; javap)",
     "class_1092": "ModelManager.modelGroups: the only Object2IntMap<BlockState> field in both",
     "class_898": "EntityRenderDispatcher's equipment model set: the only class_10201 field in both, final, set in the constructor",
@@ -280,6 +294,8 @@
     "class_1079": "AnimationMetadataSection became a record: defaultFrameTime (V getDefaultFrameTime reads field_5334) and interpolatedFrames (field_5335) are its int and boolean components; frame width/height became Optional<Integer>, not renamed"
   },
   "_smx4_ledgerRemoved_basis": {
+    "net/minecraft/class_1088$class_7778.<init>": "reshaped in place: W constructor (ModelBakery, TextureGetter, class_10525)V, wired by smx4.json mixinTargets",
+    "fields that became record components / were renamed": "class_2609.field_11980, class_1084.field_5345/5346, class_2692.field_12321/12323, class_2833.field_12896/12898, class_7764$class_5791.field_28475/28476: W homes in smx4.json fieldRenames",
     "_why": "mixin-ledger-gen.json entries removed by hand (queue item 3; gen_mixin_ledger target-private-gone ledgers moved code): the private member W dropped from its class lives on in a member new in 1.21.4 of another class (same significant-instruction sequence, sigs.py ratio >= 0.70, compared side by side). Moved code is never ledgered; these rows stay open until bridged.",
     "net/minecraft/class_1472.method_59936": "W home: net/minecraft/class_1767.method_65356",
     "net/minecraft/class_1472.method_6639": "W home: net/minecraft/class_1767.method_65355",
