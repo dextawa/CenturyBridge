@@ -16,6 +16,8 @@ import net.minecraft.server.MinecraftServer;
  * running release (on 1.21.11 it names the 1.21.11 rules). "CB-S11 ok|FAIL case detail", then "CB-S11 summary ok=N fail=M".
  */
 public final class Driver {
+    public static volatile boolean forceKeep;
+    public static volatile int boolSets;
     private static int ok;
     private static int fail;
 
@@ -29,6 +31,14 @@ public final class Driver {
             fail++;
         }
         System.out.println("CB-S11 " + (cond ? "ok " : "FAIL ") + c + " " + detail);
+    }
+
+    private static int query(MinecraftServer server, String command) {
+        try {
+            return server.method_3734().method_9235().execute(command, server.method_3739());
+        } catch (com.mojang.brigadier.exceptions.CommandSyntaxException e) {
+            return -1;
+        }
     }
 
     private static void cmd(MinecraftServer server, String command) {
@@ -75,6 +85,35 @@ public final class Driver {
         rules.method_20746(class_1928.field_19387).method_20758(false, server);
         rules.method_20746(class_1928.field_19387).method_20758(true, server);
         check("doFireTick-restore-near", rules.method_8355(class_1928.field_19387) && !rules.method_8355(class_1928.field_56559), "near players again");
+
+        // a mod mixin on GameRules.getBoolean changes what vanilla reads (the game rule command's query reads 1.21.11's get)
+        cmd(server, "gamerule keep_inventory false");
+        int plain = query(server, "gamerule keep_inventory");
+        forceKeep = true;
+        int forced = query(server, "gamerule keep_inventory");
+        boolean modView = rules.method_8355(class_1928.field_19389);
+        forceKeep = false;
+        check("mixin-vanilla-read", plain == 0 && forced == 1 && modView && query(server, "gamerule keep_inventory") == 0,
+            "plain " + plain + " forced " + forced);
+        // a GameRules subclass's override answers converted callers; its super call reaches the restored body
+        MyRules mine = new MyRules(net.minecraft.class_7701.field_40183);
+        check("subclass-override", !mine.method_8355(class_1928.field_19392) && !mine.method_8355(class_1928.field_19389)
+            && mine.method_8356(class_1928.field_19399) == 3, "doTileDrops off, keepInventory default");
+        // assignFrom copies the other rules' values (1.21.11's setAll runs the restored assignFrom)
+        mine.method_20746(class_1928.field_19389).method_20758(true, null);
+        mine.method_20746(class_1928.field_19399).method_35236(9, null);
+        rules.method_27322(mine, server);
+        check("assignFrom", rules.method_8355(class_1928.field_19389) && rules.method_8356(class_1928.field_19399) == 9
+            && query(server, "gamerule random_tick_speed") == 9, rules.method_8356(class_1928.field_19399));
+        cmd(server, "gamerule keep_inventory false");
+        // a mod mixin on BooleanValue.set sees 1.21.11's own writes (the game rule command), once each
+        int sets = boolSets;
+        cmd(server, "gamerule mob_griefing false");
+        cmd(server, "gamerule raids true");
+        cmd(server, "gamerule random_tick_speed 4");
+        check("mixin-vanilla-write", boolSets == sets + 2 && !rules.method_8355(class_1928.field_19388) && !rules.method_8355(class_1928.field_19422)
+            && rules.method_8356(class_1928.field_19399) == 4, "boolean sets " + (boolSets - sets));
+        cmd(server, "gamerule mob_griefing true");
         // mod rules
         check("hasRegistration", GameRuleRegistry.hasRegistration("cbS11Flag") && GameRuleRegistry.hasRegistration("keepInventory")
             && !GameRuleRegistry.hasRegistration("noSuchRule"), "flag/keepInventory/none");

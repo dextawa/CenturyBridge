@@ -8,6 +8,7 @@ import com.mojang.serialization.DynamicLike;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -87,8 +88,8 @@ public final class CbGameRules {
     /** 1.21.10 GameRules.GAME_RULE_TYPES: sorted by id */
     private static final Map<String, Entry> BY_ID = new TreeMap<>();
     private static final Map<class_12279<?>, Entry> MOD_BY_RULE = new IdentityHashMap<>();
-    /** per GameRules: the values getRule handed out (1.21.10's rules map) */
-    private static final Map<class_1928, Map<String, GameRules.Value<?>>> VALUES = new WeakHashMap<>();
+    /** 1.21.11 rule -> the 1.21.10 keys standing for it, in id order (two for the fire spread radius) */
+    private static final Map<class_12279<?>, List<Entry>> BY_RULE = new java.util.concurrent.ConcurrentHashMap<>();
     /** per GameRules: allowFireTicksAwayFromPlayer while fire spread is off (1.21.11's radius 0 cannot hold it) */
     private static final Map<class_1928, Boolean> FIRE_AWAY_WHILE_OFF = new WeakHashMap<>();
 
@@ -98,10 +99,21 @@ public final class CbGameRules {
 
     // ---- the tables
 
+    private static void index(Entry e) {
+        BY_RULE.compute(e.rule, (r, old) -> {
+            List<Entry> l = old == null ? new java.util.ArrayList<>() : new java.util.ArrayList<>(old);
+            l.add(e);
+            l.sort(java.util.Comparator.comparing(x -> x.key.method_20771()));
+            return java.util.List.copyOf(l);
+        });
+    }
+
     static void vanilla(String id, GameRules.Category category, Kind kind, class_12279<?> rule) {
         GameRules.Key<?> key = new GameRules.Key<>(id, category);
         GameRules.Type<?> type = vanillaType(kind, rule);
-        BY_ID.put(id, new Entry(key, type, rule, kind, false, null));
+        Entry e = new Entry(key, type, rule, kind, false, null);
+        BY_ID.put(id, e);
+        index(e);
     }
 
     @SuppressWarnings("unchecked")
@@ -137,7 +149,7 @@ public final class CbGameRules {
     }
 
     private static int currentRadius(MinecraftServer server) {
-        return server.method_30002().method_64395().method_76185(class_1928.field_56559);
+        return (Integer) raw(server.method_30002().method_64395(), class_1928.field_56559);
     }
 
     /** the key of a vanilla 1.21.10 rule (GameRules.RULE_* reads) */
@@ -151,20 +163,20 @@ public final class CbGameRules {
 
     // ---- reading and writing a bound value
 
+    /** whether a GameRules holds a rule (1.21.11's GameRuleMap.has on its own map: enabled for its features) */
     private static boolean has(class_1928 rules, class_12279<?> rule) {
-        return rules.method_76181().anyMatch(r -> r == rule);
+        return rules.field_9196.method_76164(rule);
+    }
+
+    /** a rule's value in a GameRules' own map (not through GameRules.get, which CbGameRulesMixin routes) */
+    private static Object raw(class_1928 rules, class_12279<?> rule) {
+        return rules.field_9196.method_76173(rule);
     }
 
     /** a bound value's 1.21.10 reading */
     public static Object read(class_1928 rules, GameRules.Key<?> key) {
         Entry e = entry(key);
-        Object w = rules.method_76185(e.rule);
-        return switch (e.kind) {
-            case INVERT -> !(Boolean) w;
-            case FIRE_TICK -> (Integer) w != 0;
-            case FIRE_AWAY -> (Integer) w == 0 ? fireAwayWhileOff(rules) : (Integer) w < 0;
-            default -> w;
-        };
+        return fromW(e, raw(rules, e.rule), rules);
     }
 
     private static boolean fireAwayWhileOff(class_1928 rules) {
@@ -208,10 +220,47 @@ public final class CbGameRules {
         Entry e = entry(key);
         Object w = switch (e.kind) {
             case INVERT -> !(Boolean) v;
-            case FIRE_TICK, FIRE_AWAY -> fireRadius((Integer) rules.method_76185(e.rule), e.kind, (Boolean) v, rules);
+            case FIRE_TICK, FIRE_AWAY -> fireRadius((Integer) raw(rules, e.rule), e.kind, (Boolean) v, rules);
             default -> v;
         };
-        ((class_1928) rules).method_76186((class_12279) e.rule, w, server);
+        WRITING.set(Boolean.TRUE);
+        try {
+            rules.method_76186((class_12279) e.rule, w, server);
+        } finally {
+            WRITING.remove();
+        }
+    }
+
+    /** a 1.21.10 value's own write in progress on this thread (routeWrite lets 1.21.11's set through) */
+    private static final ThreadLocal<Boolean> WRITING = new ThreadLocal<>();
+
+    /**
+     * 1.21.11's GameRules.set(rule, value, server) through the 1.21.10 value of the key the rule stands for (its set,
+     * which writes back through {@link #write}): a mod's 1.21.10 mixin on BooleanValue.set / IntegerValue.set sees the
+     * game rule command, the edit screen's apply and every other 1.21.11 write, as it saw 1.21.10's. True: done (the
+     * caller cancels 1.21.11's own body). Not routed: the fire spread radius (two 1.21.10 keys, no one value set) and
+     * rules no boolean / integer key stands for.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static boolean routeWrite(class_1928 rules, class_12279<?> rule, Object value, MinecraftServer server) {
+        if (WRITING.get() != null) {
+            return false;
+        }
+        List<Entry> es = BY_RULE.get(rule);
+        if (es == null || es.size() != 1 || !has(rules, rule)) {
+            return false;
+        }
+        Entry e = es.get(0);
+        GameRules.Value v = live(rules, e.key);
+        switch (e.kind) {
+            case BOOL -> ((GameRules.BooleanValue) v).method_20758((Boolean) value, server);
+            case INVERT -> ((GameRules.BooleanValue) v).method_20758(!(Boolean) value, server);
+            case INT -> ((GameRules.IntegerValue) v).method_35236((Integer) value, server);
+            default -> {
+                return false;
+            }
+        }
+        return true;
     }
 
     /** a bound value's onChanged(server): 1.21.11's game rule hook with the rule's current value */
@@ -219,45 +268,38 @@ public final class CbGameRules {
     public static void changed(class_1928 rules, GameRules.Key<?> key, MinecraftServer server) {
         if (server != null) {
             Entry e = entry(key);
-            server.method_74058((class_12279) e.rule, rules.method_76185(e.rule));
+            server.method_74058((class_12279) e.rule, raw(rules, e.rule));
         }
     }
 
-    // ---- 1.21.10 GameRules members
+    // ---- 1.21.10 GameRules members (restored on GameRules by CbGameRulesMixin, whose bodies these are)
 
-    /** GameRules.getRule(key): this GameRules' value of the key; invalid (not registered or not enabled) throws */
+    /** GameRules.getRule(key): this GameRules' value of the key (one per GameRules and key); invalid ones throw */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public static GameRules.Value method_20746(class_1928 rules, GameRules.Key key) {
+    public static GameRules.Value getRule(class_1928 rules, Map<String, GameRules.Value<?>> values, GameRules.Key key) {
         Entry e = entry(key);
         if (e == null || !has(rules, e.rule)) {
             throw new IllegalArgumentException("Tried to access invalid game rule");
         }
-        synchronized (VALUES) {
-            Map<String, GameRules.Value<?>> m = VALUES.computeIfAbsent(rules, r -> new HashMap<>());
-            GameRules.Value v = m.get(e.key.method_20771());
-            if (v == null) {
-                v = e.type.method_20773();
-                v.cb$bind(rules, e.key);
-                m.put(e.key.method_20771(), v);
-            }
+        return values.computeIfAbsent(e.key.method_20771(), id -> {
+            GameRules.Value v = e.type.method_20773();
+            v.cb$bind(rules, e.key);
             return v;
-        }
+        });
     }
 
-    public static boolean method_8355(class_1928 rules, GameRules.Key<GameRules.BooleanValue> key) {
-        return ((GameRules.BooleanValue) method_20746(rules, key)).method_20753();
+    /** the live 1.21.10 value of a key in a GameRules, through its (restored, overridable) getRule */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static GameRules.Value<?> live(class_1928 rules, GameRules.Key<?> key) {
+        return ((CbLegacyGameRules) rules).method_20746((GameRules.Key) key);
     }
 
-    public static int method_8356(class_1928 rules, GameRules.Key<GameRules.IntegerValue> key) {
-        return ((GameRules.IntegerValue) method_20746(rules, key)).method_20763();
-    }
-
-    /** GameRules.createTag(): each enabled rule's 1.21.10 string under its 1.21.10 id */
-    public static class_2487 method_8358(class_1928 rules) {
+    /** GameRules.createTag(): each enabled rule's 1.21.10 string under its 1.21.10 id (1.21.10 read its own map) */
+    public static class_2487 createTag(class_1928 rules) {
         class_2487 tag = new class_2487();
-        for (Entry e : BY_ID.values()) {
+        for (Entry e : entries()) {
             if (has(rules, e.rule)) {
-                tag.method_10582(e.key.method_20771(), method_20746(rules, e.key).method_20779());
+                tag.method_10582(e.key.method_20771(), getRule(rules, ((CbLegacyGameRules) rules).cb$values(), e.key).method_20779());
             }
         }
         return tag;
@@ -266,25 +308,97 @@ public final class CbGameRules {
     /** new GameRules(features, dynamic): the rules of those features, each read from its 1.21.10 id where present */
     public static class_1928 newGameRules(class_7699 features, DynamicLike<?> dynamic) {
         class_1928 rules = new class_1928(features);
-        for (Entry e : BY_ID.values()) {
+        loadInto(rules, dynamic);
+        return rules;
+    }
+
+    /**
+     * 1.21.10 GameRules(features, dynamic)'s loadFromTag: each rule read from its 1.21.10 id where present. Also run
+     * after a mod subclass's super(features, dynamic), reshaped to 1.21.11's GameRules(features) (wiring "post").
+     */
+    public static void loadInto(class_1928 rules, DynamicLike<?> dynamic) {
+        for (Entry e : entries()) {
             if (has(rules, e.rule)) {
-                GameRules.Value<?> value = method_20746(rules, e.key);
+                GameRules.Value<?> value = getRule(rules, ((CbLegacyGameRules) rules).cb$values(), e.key);
                 dynamic.get(e.key.method_20771()).asString().ifSuccess(value::cb$deserialize);
             }
         }
-        return rules;
     }
 
     /** GameRules.visitGameRuleTypes(visitor): every enabled rule in id order, visit then the type's own call */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public static void method_20744(class_1928 rules, GameRules.GameRuleTypeVisitor visitor) {
-        for (Entry e : BY_ID.values()) {
+    public static void visit(class_1928 rules, GameRules.GameRuleTypeVisitor visitor) {
+        for (Entry e : entries()) {
             if (has(rules, e.rule)) {
                 GameRules.Type type = e.type;
                 visitor.method_20762((GameRules.Key) e.key, type);
                 type.method_27336(visitor, (GameRules.Key) e.key);
             }
         }
+    }
+
+    /**
+     * 1.21.10 GameRules.assignFrom: for each of other's rules, this.getRule(key).setFrom(other.getRule(key), server)
+     * (both through the overridable getRule); 1.21.11's set for the 1.21.11 rules no 1.21.10 key stands for (rules
+     * 1.21.10 did not have), as 1.21.11's assignFrom does.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void assignFrom(class_1928 rules, class_1928 other, MinecraftServer server) {
+        java.util.Set<class_12279<?>> done = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
+        for (Entry e : entries()) {
+            if (has(other, e.rule) && has(rules, e.rule)) {
+                GameRules.Value mine = live(rules, e.key);
+                mine.method_27337(live(other, e.key), server);
+                done.add(e.rule);
+            }
+        }
+        // a rule several 1.21.10 keys stand for (the fire spread radius): where its keys now read as other's do, it takes
+        // other's own value (the radius both readings leave open), as 1.21.11's setAll would copy it
+        for (class_12279<?> r : done) {
+            List<Entry> es = BY_RULE.get(r);
+            if (es.size() > 1 && es.stream().allMatch(e -> java.util.Objects.equals(read(rules, e.key), read(other, e.key)))
+                    && !java.util.Objects.equals(raw(rules, r), raw(other, r))) {
+                rules.method_76186((class_12279) r, raw(other, r), server);
+            }
+        }
+        other.method_76181().filter(r -> !done.contains(r) && has(rules, r))
+            .forEach(r -> rules.method_76186((class_12279) r, raw(other, r), server));
+    }
+
+    /**
+     * 1.21.11's GameRules.get(rule) through the restored 1.21.10 readers (CbGameRulesMixin): a rule a 1.21.10 boolean
+     * or integer key stands for is answered by getBoolean / getInt of that key, so a mod's 1.21.10 mixin on those (or
+     * an override in a GameRules subclass) changes what vanilla reads, as it did on 1.21.10; the fire spread radius
+     * from doFireTick and allowFireTicksAwayFromPlayer (GameRuleRegistryFix's mapping, the radius kept where they
+     * agree with it). Null: not routed (a 1.21.11 rule no 1.21.10 key stands for, or a mod double / enum rule).
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static Object routeRead(class_1928 rules, class_12279<?> rule) {
+        List<Entry> es = BY_RULE.get(rule);
+        if (es == null || !has(rules, rule)) {
+            return null;
+        }
+        CbLegacyGameRules legacy = (CbLegacyGameRules) rules;
+        if (es.size() == 1) {
+            Entry e = es.get(0);
+            return switch (e.kind) {
+                case BOOL -> legacy.method_8355((GameRules.Key) e.key);
+                case INVERT -> !legacy.method_8355((GameRules.Key) e.key);
+                case INT -> legacy.method_8356((GameRules.Key) e.key);
+                default -> null;
+            };
+        }
+        boolean tick = true;
+        boolean away = false;
+        for (Entry e : es) {
+            if (e.kind == Kind.FIRE_TICK) {
+                tick = legacy.method_8355((GameRules.Key) e.key);
+            } else if (e.kind == Kind.FIRE_AWAY) {
+                away = legacy.method_8355((GameRules.Key) e.key);
+            }
+        }
+        int radius = (Integer) raw(rules, rule);
+        return !tick ? 0 : away ? -1 : radius > 0 ? radius : FIRE_NEAR_PLAYERS;
     }
 
     /** GameRules.getType(key) */
@@ -298,7 +412,7 @@ public final class CbGameRules {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Codec method_66703(Class valueClass) {
         return Codec.STRING.comapFlatMap(id -> {
-            Entry e = BY_ID.get(id);
+            Entry e = byName(id);
             return e != null && e.type.cb$valueClass() == valueClass
                 ? DataResult.success(e.key)
                 : DataResult.error(() -> "Invalid game rule ID for type: " + id);
@@ -308,15 +422,52 @@ public final class CbGameRules {
     /** GameRules.availableRules(features) */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Stream method_61725(class_7699 features) {
-        return BY_ID.values().stream().filter(e -> e.type.method_61728().method_45400(features))
+        return entries().stream().filter(e -> e.type.method_61728().method_45400(features))
             .map(e -> new AbstractMap.SimpleImmutableEntry(e.key, e.type));
     }
 
-    /** MinecraftServer.getGameRules(): the overworld's (1.21.10's body) */
-    public static class_1928 method_3767(MinecraftServer server) {
+    /** MinecraftServer.getGameRules(): the overworld's (1.21.10's body; restored on MinecraftServer by CbGameRulesServerMixin) */
+    public static class_1928 serverRules(MinecraftServer server) {
         return server.method_30002().method_64395();
     }
 
+
+    /**
+     * 1.21.11's GameRules.visitGameRuleTypes(visitor) through the restored 1.21.10 one: this GameRules'
+     * visitGameRuleTypes (a mod's override or mixin applies) with a visitor handing the rule of each 1.21.10 key it
+     * visits to 1.21.11's visitor, each rule once (the fire spread radius for doFireTick and
+     * allowFireTicksAwayFromPlayer); then 1.21.11's rules no 1.21.10 key stands for, in 1.21.11's order. Each rule is
+     * visited as 1.21.11's own visit does it: visit(rule), then the rule's callVisitor.
+     */
+    public static void visitW(class_1928 rules, net.minecraft.class_4311 visitor) {
+        java.util.Set<class_12279<?>> seen = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
+        ((CbLegacyGameRules) rules).method_20744(new GameRules.GameRuleTypeVisitor() {
+            @Override
+            public <T extends GameRules.Value<T>> void method_20762(GameRules.Key<T> key, GameRules.Type<T> type) {
+                Entry e = entry(key);
+                if (e != null && has(rules, e.rule) && seen.add(e.rule)) {
+                    visitW(visitor, e.rule);
+                }
+            }
+        });
+        rules.field_9196.method_76172().stream().filter(r -> !BY_RULE.containsKey(r) && seen.add(r)).forEach(r -> visitW(visitor, r));
+    }
+
+    private static <T> void visitW(net.minecraft.class_4311 visitor, class_12279<T> rule) {
+        visitor.method_20762(rule);
+        rule.method_76145(visitor);
+    }
+
+    /** NotificationService.serverActivityOccured(), which a 1.21.10 implementation never had: 1.21.10 sent no such notification */
+    public static void serverActivityOccured(net.minecraft.class_11871 service) {
+    }
+
+    /** the keys in id order (a copy: mods may register while it is walked) */
+    private static List<Entry> entries() {
+        synchronized (BY_ID) {
+            return new java.util.ArrayList<>(BY_ID.values());
+        }
+    }
 
     /** 1.21.10 GameRules.DEFAULT_RANDOM_TICK_SPEED (a constant: 3) */
     public static int field_30963() {
@@ -339,26 +490,83 @@ public final class CbGameRules {
         throw new IllegalArgumentException("CenturyBridge: a game rule value of an unregistered type has no 1.21.11 rule");
     }
 
-    /** the value a 1.21.10 value has, as the 1.21.11 rule holds it */
-    private static Object toW(Entry e, GameRules.Value<?> value, MinecraftServer server) {
-        Object v = value instanceof GameRules.BooleanValue b ? (Object) b.method_20753()
+    /** a 1.21.10 value's own reading (a Boolean, Integer, Double or enum constant) */
+    static Object plain(GameRules.Value<?> value) {
+        return value instanceof GameRules.BooleanValue b ? (Object) b.method_20753()
             : value instanceof GameRules.IntegerValue i ? (Object) i.method_20763()
             : value instanceof DoubleRule d ? (Object) d.get()
             : value instanceof EnumRule<?> en ? en.get() : null;
+    }
+
+    /**
+     * The value the 1.21.11 rule of a 1.21.10 key holds for a 1.21.10 reading. The fire pair needs the current radius:
+     * the bound value's GameRules, else the server's, else none (then as from radius 128: GameRuleRegistryFix's
+     * doFireTick true with allowFireTicksAwayFromPlayer false, the 1.21.10 defaults).
+     */
+    static Object toW(Entry e, Object v, class_1928 rules, MinecraftServer server) {
         return switch (e.kind) {
             case INVERT -> !(Boolean) v;
-            case FIRE_TICK, FIRE_AWAY -> fireRadius(currentRadius(server), e.kind, (Boolean) v, null);
+            case FIRE_TICK, FIRE_AWAY -> fireRadius(rules != null ? (Integer) rules.method_76185(e.rule)
+                : server != null ? currentRadius(server) : FIRE_NEAR_PLAYERS, e.kind, (Boolean) v, rules);
             default -> v;
         };
     }
 
+    /** the value the 1.21.11 rule of a 1.21.10 value's key holds for it */
+    static Object toW(Entry e, GameRules.Value<?> value, MinecraftServer server) {
+        return toW(e, plain(value), value.cb$rules(), server);
+    }
+
+    /** the 1.21.10 reading of a 1.21.11 rule value for a 1.21.10 key (rules, may be null: the fire pair's memory) */
+    static Object fromW(Entry e, Object w, class_1928 rules) {
+        return switch (e.kind) {
+            case INVERT -> !(Boolean) w;
+            case FIRE_TICK -> (Integer) w != 0;
+            case FIRE_AWAY -> (Integer) w == 0 ? rules != null && fireAwayWhileOff(rules) : (Integer) w < 0;
+            default -> w;
+        };
+    }
+
+    /** a 1.21.10 value of its own (not bound to any GameRules) for a key, holding a 1.21.10 reading */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    static GameRules.Value<?> standalone(Entry e, Object v) {
+        GameRules.Value value = e.type.method_20773();
+        value.cb$deserialize(v instanceof Enum<?> en ? en.name() : String.valueOf(v));
+        return value;
+    }
+
+    /** the key registered under a 1.21.10 id, or null */
+    static Entry byName(String id) {
+        synchronized (BY_ID) {
+            return BY_ID.get(id);
+        }
+    }
+
+    /** the 1.21.10 keys a 1.21.11 rule stands for, in id order (two for the fire spread radius) */
+    static java.util.List<Entry> byRule(class_12279<?> rule) {
+        return BY_RULE.getOrDefault(rule, java.util.List.of());
+    }
+
+    static String id(Entry e) {
+        return e.key.method_20771();
+    }
+
+    static class_12279<?> rule(Entry e) {
+        return e.rule;
+    }
+
+    static boolean has(Entry e, class_1928 rules) {
+        return has(rules, e.rule);
+    }
+
     /**
-     * MinecraftServer.onGameRuleChanged(name, value): 1.21.10 told the server's notification manager (its body);
-     * 1.21.11's manager is told the rule and its value.
+     * MinecraftServer.onGameRuleChanged(name, value) called by a mod: 1.21.10's body told the server's notification
+     * manager the rule's name and value; 1.21.11's onGameRuleChanged(rule, value), which a mod would reach here, also
+     * runs the rule's effects -- the 1.21.10 call did not, so this tells the manager only, as 1.21.10 did.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static void method_74058(MinecraftServer server, String name, GameRules.Value<?> value) {
-        Entry e = BY_ID.get(name);
+        Entry e = byName(name);
         if (e != null) {
             server.method_74055().method_73667((class_12279) e.rule, toW(e, value, server));
         }
@@ -422,6 +630,7 @@ public final class CbGameRules {
             Entry e = new Entry(key, type, rule, kind, true, custom);
             BY_ID.put(id, e);
             MOD_BY_RULE.put(rule, e);
+            index(e);
             return key;
         }
     }
@@ -486,7 +695,7 @@ public final class CbGameRules {
         if (e == null) {
             return;
         }
-        GameRules.Value value = method_20746(method_3767(server), e.key);
+        GameRules.Value value = live(serverRules(server), e.key);
         ((GameRules.Type) e.type).cb$callback().accept(server, value);
     }
 
