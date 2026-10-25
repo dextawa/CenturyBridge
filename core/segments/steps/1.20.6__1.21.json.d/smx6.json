@@ -73,14 +73,6 @@
    ],
    "basis": "StructureTemplateManager.listFolderContents(folder, namespace, extension) is 1.21's listFolderContents(folder, namespace, extension, output) (javap: both walk the folder for files ending in the extension and map them to ids through the same lambda capturing the namespace and the path relativiser; 1.20.6 returned the Stream, 1.21 hands each id to the Consumer: handlers touching the return value are refused by MixinBridge's return check)"
   },
-  "net/minecraft/class_1291$class_8634.method_52522(Ljava/lang/String;I)Lnet/minecraft/class_1322;": {
-   "to": "method_52522(I)Lnet/minecraft/class_1322;",
-   "args": [
-    -1,
-    0
-   ],
-   "basis": "MobEffect.AttributeTemplate.create(name, amplifier) is 1.21's create(amplifier) (javap: the same AttributeModifier built from the template's id, amount * (amplifier + 1) and operation; 1.21's modifier has no name, the id replaced the UUID, so the name argument has no W counterpart)"
-  },
   "net/minecraft/class_156$class_158.method_674(Ljava/net/URL;)[Ljava/lang/String;": {
    "to": "method_674(Ljava/net/URI;)[Ljava/lang/String;",
    "args": [

@@ -71,6 +71,8 @@
     "CbNetServerUseItemMixin",
     "CbServersMixin",
     "CbVillagerEnchantBookMixin",
+    "CbMobEffectMixin",
+    "CbMobEffectTemplateMixin",
     "CbWorldButtonAccessor",
     "CbWorldDataFixersMixin",
     "CbWorldLeverInvoker",
