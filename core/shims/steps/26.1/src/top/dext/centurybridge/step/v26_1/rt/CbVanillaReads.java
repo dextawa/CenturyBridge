@@ -10,10 +10,16 @@ import java.lang.annotation.Target;
  * vanilla takes through it: the value names the layer mixin that routes 26.1's read through the restored member,
  * then how. A mod's 1.21.11 mixin on that member then changes what vanilla does, as it did on 1.21.11; MixinJudge
  * (engine LayerMembers) counts it bridged only with this marker and only when the named mixin is in the layer.
+ * When vanilla's path takes only part of the member -- its answer, not its body -- {@link #carries} lists what it
+ * carries ("Inject@HEAD", "ModifyReturnValue@RETURN": injector annotation and @At); any other injector on the member
+ * stays open as "vanilla path partial". Left out, the route runs the whole restored body.
  * Class retention: read from the bytecode, never loaded.
  */
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
 public @interface CbVanillaReads {
     String value();
+
+    /** what vanilla's path carries, "<injector>@<At value>"; absent = the whole member */
+    String[] carries() default {};
 }
