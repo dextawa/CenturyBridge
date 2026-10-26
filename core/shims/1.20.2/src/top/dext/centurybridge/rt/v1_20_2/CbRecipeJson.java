@@ -76,6 +76,29 @@ public final class CbRecipeJson {
      * {@code read}, unless the serializer's restored read(id, json) answers otherwise than its unmixed copy -- then
      * that answer (or its exception), as 1.20.1's RecipeManager.fromJson returned serializer.fromJson(id, json).
      */
+    /** the JSON RecipeManager.fromJson is decoding, carried from its HEAD to its RETURN (CbRecipeJsonVanillaMixin) */
+    private static final ThreadLocal<JsonObject> CURRENT_JSON = new ThreadLocal<>();
+
+    public static void carryJson(JsonObject json) {
+        CURRENT_JSON.set(json);
+    }
+
+    /**
+     * the RecipeHolder RecipeManager.fromJson returns: {@link #consult} on its recipe, with its id (holder.id(), a call the
+     * later steps carry) and the carried JSON; the same holder unless the restored reader answered otherwise
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_8786<?> consultHolder(net.minecraft.class_8786<?> holder) {
+        JsonObject json = CURRENT_JSON.get();
+        CURRENT_JSON.remove();
+        if (holder == null || json == null) {
+            return holder;
+        }
+        class_1860<?> recipe = holder.comp_1933();
+        class_1860<?> answer = consult(recipe, holder.comp_1932(), json);
+        return answer == recipe ? holder : new net.minecraft.class_8786(holder.comp_1932(), answer);
+    }
+
     public static class_1860<?> consult(class_1860<?> read, class_2960 id, JsonObject json) {
         if (!ROUTE || read == null) {
             return read;

@@ -23,8 +23,9 @@ public abstract class RecipeLoadIdBridge {
         CbRecipes.CURRENT_ID.set(id);
     }
 
+    /** captures nothing, so a later release reshaping fromJson's arguments leaves it applicable */
     @Inject(method = "method_17720", at = @At("RETURN"))
-    private static void cb$exit(class_2960 id, JsonObject json, CallbackInfoReturnable<class_8786<?>> cir) {
+    private static void cb$exit(CallbackInfoReturnable<class_8786<?>> cir) {
         CbRecipes.CURRENT_ID.remove();
     }
 }
