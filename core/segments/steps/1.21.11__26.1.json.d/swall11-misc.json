@@ -35,7 +35,9 @@
   "net/minecraft/class_3324.method_14567()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayerLists#getSingleplayerData",
   "net/minecraft/class_1130.method_14567()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayerListsClient#getSingleplayerData",
   "net/minecraft/class_638.method_29089(JJZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientTime#setTimeFromServer",
-  "net/minecraft/class_638$class_5271.method_165(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientTime#setDayTime"
+  "net/minecraft/class_638$class_5271.method_165(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientTime#setDayTime",
+  "net/minecraft/class_5350.method_61248()V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerResources#updateStaticRegistryTags",
+  "net/minecraft/class_8089.method_48618(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTabBars#setWidth"
  },
  "superRedirects": {
   "net/minecraft/class_9779$class_9781.method_60640(JZ)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTimer#superAdvanceTime",

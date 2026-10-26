@@ -261,3 +261,6 @@ accessible	class	net/minecraft/client/ClientClockManager$ClockInstance
 accessible	method	net/minecraft/client/ClientClockManager	getInstance	(Lnet/minecraft/core/Holder;)Lnet/minecraft/client/ClientClockManager$ClockInstance;
 accessible	field	net/minecraft/client/ClientClockManager$ClockInstance	totalTicks	J
 accessible	field	net/minecraft/client/ClientClockManager$ClockInstance	rate	F
+# 1.21.11 ReloadableServerResources.updateStaticRegistryTags / TabNavigationBar.setWidth: rt/CbWallServerResources, rt/CbWallTabBars keep 1.21.11's bodies (swall11)
+accessible	field	net/minecraft/server/ReloadableServerResources	postponedTags	Ljava/util/List;
+accessible	field	net/minecraft/client/gui/components/tabs/TabNavigationBar	width	I

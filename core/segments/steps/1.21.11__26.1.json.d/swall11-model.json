@@ -1,5 +1,45 @@
 {
- "_swall11_model_basis": "1.21.11 model/texture/block-entity members 26.1 reshaped (javap of both, rt/CbWallModelParts): ResolvedModel.resolveParticleSprite -> resolveParticleMaterial(..).sprite(); TextureSlots.Data.Builder.addTexture(name, Material=SpriteId) -> addTexture(name, model Material of the SpriteId's texture); SpriteContents.getUniqueFrames() IntStream -> the IntList as a stream; BlockEntityRenderDispatcher.prepare(camera) -> prepare(camera.position()); FogRenderer.setupFog -> setupFog + updateBuffer, the data's colour; GlobalSettingsUniform.update(.., camera, ..) -> camera.position() (rt/CbWallFrameSetup)",
+ "_swall11_model_basis": "1.21.11 model/texture/block-entity members 26.1 reshaped (javap of both, rt/CbWallModelParts): ResolvedModel.resolveParticleSprite -> resolveParticleMaterial(..).sprite(); TextureSlots.Data.Builder.addTexture(name, Material=SpriteId) -> addTexture(name, model Material of the SpriteId's texture); SpriteContents.getUniqueFrames() IntStream -> the IntList as a stream; BlockEntityRenderDispatcher.prepare(camera) -> prepare(camera.position()); FogRenderer.setupFog -> setupFog + updateBuffer, the data's colour; GlobalSettingsUniform.update(.., camera, ..) -> camera.position() (rt/CbWallFrameSetup); Frustum(Matrix4f, Matrix4f) -> 26.1's (Matrix4fc, Matrix4f) (rt/CbWallFrustums)",
+ "ctorRedirects": {
+  "net/minecraft/class_4604.<init>(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallFrustums#frustum",
+  "net/minecraft/class_7751.<init>(Lnet/minecraft/class_630;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#camel",
+  "net/minecraft/class_596.<init>(Lnet/minecraft/class_630;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#rabbit",
+  "net/minecraft/class_9082.<init>(Lnet/minecraft/class_630;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#armadillo"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_7751.<init>(Lnet/minecraft/class_630;)V": {
+   "desc": "(Lnet/minecraft/class_630;Lnet/minecraft/class_7184;Lnet/minecraft/class_7184;Lnet/minecraft/class_7184;Lnet/minecraft/class_7184;Lnet/minecraft/class_7184;Lnet/minecraft/class_7184;)V",
+   "ops": ["keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#camelWalk()Lnet/minecraft/class_7184;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#camelSit()Lnet/minecraft/class_7184;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#camelSitPose()Lnet/minecraft/class_7184;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#camelStandup()Lnet/minecraft/class_7184;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#camelIdle()Lnet/minecraft/class_7184;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#camelDash()Lnet/minecraft/class_7184;"],
+   "basis": "26.1's CamelModel(root, walk, sit, sitPose, standup, idle, dash) takes the definitions 1.21.11's CamelModel(root) baked itself; 26.1's AdultCamelModel passes CamelAnimation's (javap)"
+  },
+  "net/minecraft/class_596.<init>(Lnet/minecraft/class_630;)V": {
+   "desc": "(Lnet/minecraft/class_630;Lnet/minecraft/class_7184;Lnet/minecraft/class_7184;)V",
+   "ops": ["keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#rabbitHop()Lnet/minecraft/class_7184;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#rabbitIdleHeadTilt()Lnet/minecraft/class_7184;"],
+   "basis": "26.1's RabbitModel(root, hop, idleHeadTilt) takes the definitions 1.21.11's RabbitModel(root) baked itself; 26.1's AdultRabbitModel passes RabbitAnimation's (javap)"
+  },
+  "net/minecraft/class_9082.<init>(Lnet/minecraft/class_630;)V": {
+   "desc": "(Lnet/minecraft/class_630;Lnet/minecraft/class_7184;Lnet/minecraft/class_7184;Lnet/minecraft/class_7184;Lnet/minecraft/class_7184;)V",
+   "ops": ["keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#armadilloWalk()Lnet/minecraft/class_7184;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#armadilloRollOut()Lnet/minecraft/class_7184;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#armadilloRollUp()Lnet/minecraft/class_7184;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#armadilloPeek()Lnet/minecraft/class_7184;"],
+   "basis": "26.1's ArmadilloModel(root, walk, rollOut, rollUp, peek) takes the definitions 1.21.11's ArmadilloModel(root) baked itself; 26.1's AdultArmadilloModel passes ArmadilloAnimation's (javap)"
+  },
+  "net/minecraft/class_4604.<init>(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V": {
+   "desc": "(Lorg/joml/Matrix4fc;Lorg/joml/Matrix4f;)V",
+   "ops": ["conv top/dext/centurybridge/step/v26_1/rt/CbWallFrustums#modelView(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;", "keep"],
+   "basis": "26.1's Frustum(modelView, projection) takes the model-view matrix as a Matrix4fc, 1.21.11's as a Matrix4f (same body, javap of both): the subclass's argument passes unchanged"
+  }
+ },
  "staticRedirects": {
   "net/minecraft/class_10819.method_68054(Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#resolveParticleSprite"
  },
