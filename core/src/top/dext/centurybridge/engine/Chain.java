@@ -1741,6 +1741,48 @@ public final class Chain {
     private final java.util.Map<String, org.objectweb.asm.tree.ClassNode> facadeClasses = new java.util.HashMap<>();
 
     /**
+     * Where V's arguments arrive in a W method the step reshaped in place (same class, same name), for MixinRepair's
+     * captured-argument fit (smx1 CASE 14, third instance: 1.21 LivingEntity.method_20235 (EquipmentSlot) ->
+     * (Item, EquipmentSlot)): {V desc, int[] args (per V argument the W index), String[][] wrap (per V argument the
+     * W -> V static, or null)} from each overrideHooks entry with "args" whose new shape is {@code nameDesc} and whose
+     * onlyUnder / notUnder admit the W class {@code owner}, and from each mixinTargets entry of {@code owner} landing
+     * on it under the same name.
+     */
+    public java.util.List<Object[]> mixinArgMaps(String owner, String nameDesc) {
+        java.util.List<Object[]> out = new java.util.ArrayList<>();
+        int p = nameDesc.indexOf('(');
+        String name = nameDesc.substring(0, p);
+        String wDesc = nameDesc.substring(p);
+        org.objectweb.asm.Type[] wa = org.objectweb.asm.Type.getArgumentTypes(wDesc);
+        for (OverrideHook h : overrideHooks) {
+            if (h.args == null || !h.newName.equals(name) || !h.oldName.equals(name) || !h.newDesc.equals(wDesc)) continue;
+            if (h.onlyUnder != null && !targetUnder(owner, h.onlyUnder) || h.notUnder != null && targetUnder(owner, h.notUnder)) continue;
+            org.objectweb.asm.Type[] va = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
+            if (va.length != h.args.length) continue;
+            String[][] wrap = new String[va.length][];
+            for (int i = 0; i < va.length; i++) {
+                if (h.args[i] >= 0 && h.args[i] < wa.length && !wa[h.args[i]].equals(va[i])) wrap[i] = h.wrapFor(wa[h.args[i]], va[i]);
+            }
+            out.add(new Object[] {h.oldDesc, h.args, wrap});
+        }
+        String pre = owner + "." + name + "(";
+        for (java.util.Map.Entry<String, MixinTarget> e : mixinTargets.entrySet()) {
+            MixinTarget mt = e.getValue();
+            if (!e.getKey().startsWith(pre) || !mt.name().equals(name) || !mt.desc().equals(wDesc) || mt.args() == null) continue;
+            out.add(new Object[] {e.getKey().substring(pre.length() - 1), mt.args(), mt.wrap()});
+        }
+        return out;
+    }
+
+    /** whether W class {@code c} is {@code anc} or extends it (target superclasses) */
+    private boolean targetUnder(String c, String anc) {
+        for (String x = c; x != null; x = targetSuperOf.get(x)) {
+            if (x.equals(anc)) return true;
+        }
+        return false;
+    }
+
+    /**
      * A static of the step's wiring converting a W value to the V type that stood in its place (smx1 CASE 14: a kept
      * injector's handler captures a target argument whose type the step changed -- 1.21.2 RecipeManager.fromJson's
      * ResourceLocation id became a ResourceKey, the handler still takes the ResourceLocation). The wiring declares such

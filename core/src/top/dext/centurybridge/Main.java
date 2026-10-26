@@ -269,6 +269,7 @@ public final class Main {
                 chain.mixinRepair.mixinMoves = chain.mixinMoves; // injectors on static methods W moved to another class
                 chain.mixinRepair.mixinMoveSelf = chain.mixinMoveSelf; // and on instance methods, this through the hops (C17)
                 chain.mixinRepair.converter = chain::argConverter; // captured target arguments the step retyped (CASE 14)
+                chain.mixinRepair.argMaps = chain::mixinArgMaps; // and arguments a same-class reshape moved (CASE 14, third)
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");

@@ -773,12 +773,33 @@ public final class MixinCheck {
     private void checkInjection(String me, MethodNode m, AnnotationNode a, ClassNode target) {
         Object methods = get(a, "method");
         if (methods instanceof List<?> l) {
+            // Mixin (TargetSelectors.findRootTargets / validate, sponge-mixin 0.17.3): each selector must match at least its
+            // quantifier's minimum -- 0 unless it says "+" or "{n,..}" -- and the injector as a whole at least one method
+            // ("could not find any targets matching a or b"). An alternative no method answers beside one that matches
+            // is no failure (the 1.20.2 layer's @Redirect on TextureManager {method_4618, method_4619} at 1.21.2)
+            List<String> dead = new ArrayList<>();
+            boolean anyMatched = false;
             for (Object o : l) {
                 String sel = o.toString();
                 String name = sel.contains("(") ? sel.substring(0, sel.indexOf('(')) : sel;
                 String desc = sel.contains("(") ? sel.substring(sel.indexOf('(')) : null;
+                int min = 0;
+                java.util.regex.Matcher q = java.util.regex.Pattern.compile("(\\+|\\{(\\d*)(,\\d*)?\\}|\\*)$").matcher(name);
+                if (q.find()) {
+                    min = q.group(1).equals("+") ? 1 : q.group(2) != null && !q.group(2).isEmpty() ? Integer.parseInt(q.group(2)) : 0;
+                    name = name.substring(0, q.start());
+                }
                 boolean ok = desc == null ? hasMethodNamed(target, name) : hasMethod(target, name, desc);
+                anyMatched |= ok;
                 if (!ok) {
+                    dead.add(sel);
+                    if (min > 0) {
+                        problems.add(me + ": " + short_(a.desc) + " " + m.name + " method=\"" + sel + "\" (at least " + min + ") not on " + target.name);
+                    }
+                }
+            }
+            if (!anyMatched && !dead.isEmpty()) {
+                for (String sel : dead) {
                     problems.add(me + ": " + short_(a.desc) + " " + m.name + " method=\"" + sel + "\" not on " + target.name);
                 }
             }

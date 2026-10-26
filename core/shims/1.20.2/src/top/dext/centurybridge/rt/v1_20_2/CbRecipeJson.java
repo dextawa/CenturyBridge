@@ -248,6 +248,55 @@ public final class CbRecipeJson {
         return rows;
     }
 
+    /**
+     * 1.20.1 ShapedRecipe.shrink(rows) (1.20.2's shrink(List), the same code; javap class_1869 method_8146 with
+     * firstNonSpace method_8151 / lastNonSpace method_8153): the golden copy, unmixed
+     */
+    public static String[] shrink(java.util.List<String> rows) {
+        int first = Integer.MAX_VALUE;
+        int last = 0;
+        int emptyTop = 0;
+        int emptyBottom = 0;
+        for (int i = 0; i < rows.size(); ++i) {
+            String row = rows.get(i);
+            first = Math.min(first, firstNonSpace(row));
+            int lastOfRow = lastNonSpace(row);
+            last = Math.max(last, lastOfRow);
+            if (lastOfRow < 0) {
+                if (emptyTop == i) {
+                    ++emptyTop;
+                }
+                ++emptyBottom;
+            } else {
+                emptyBottom = 0;
+            }
+        }
+        if (rows.size() == emptyBottom) {
+            return new String[0];
+        }
+        String[] out = new String[rows.size() - emptyBottom - emptyTop];
+        for (int i = 0; i < out.length; ++i) {
+            out[i] = rows.get(i + emptyTop).substring(first, last + 1);
+        }
+        return out;
+    }
+
+    private static int firstNonSpace(String row) {
+        int i = 0;
+        while (i < row.length() && row.charAt(i) == ' ') {
+            ++i;
+        }
+        return i;
+    }
+
+    private static int lastNonSpace(String row) {
+        int i = row.length() - 1;
+        while (i >= 0 && row.charAt(i) == ' ') {
+            --i;
+        }
+        return i;
+    }
+
     /** 1.20.1 ShapedRecipe.dissolvePattern(rows, key, width, height) */
     public static class_2371<class_1856> dissolvePattern(String[] rows, Map<String, class_1856> key, int width, int height) {
         class_2371<class_1856> list = class_2371.method_10213(width * height, class_1856.field_9017);

@@ -19,6 +19,10 @@ RELEASES=(1.20.1 1.20.2 1.20.3 1.20.4 1.20.5 1.20.6 1.21 1.21.1 1.21.2 1.21.3 1.
 OUT="$WD/runtime-$T"
 rm -rf "$OUT" "$WD/layers" && mkdir -p "$OUT" "$WD/layers"
 DEPS_SEEN=""
+# every layer is built first, then each climbs: a layer's step W' reads layers/centurybridge-0.3.0+<W'>.jar, which must
+# exist when the layer before it climbs (built one by one, each layer climbed through steps whose layers were not built
+# yet -- the members those layers restore and their redirect bodies were missing from the judgement)
+LAYERS=()
 for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
     V=${RELEASES[$i]}; W=${RELEASES[$((i + 1))]}
     if [ "$V" = 1.20.1 ]; then
@@ -31,6 +35,12 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
     if [ -n "$BUILD" ]; then
         (cd "$WD" && eval "CB_DATA=\$HOME/cbwork/data $BUILD" > "layers/build-$W.log" 2>&1) \
             || { echo "layer $W: BUILD FAILED"; tail -5 "$WD/layers/build-$W.log"; exit 1; }
+        LAYERS+=("$W")
+    fi
+    [ "$W" = "$T" ] && break
+done
+for W in "${LAYERS[@]}"; do
+    {
         JAR="$WD/layers/centurybridge-0.3.0+$W.jar"
         # the separately released mods this layer depends on (build.sh put them in layers/deps/ as it built them)
         for d in "$WD"/layers/deps/*.jar; do
@@ -50,7 +60,6 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
             cp "$WD/layers/climb-$W/centurybridge-0.3.0+$W+$T.jar" "$OUT/"
         fi
         echo "layer $W -> $T: $(grep -h 'unaccounted' "$WD/layers/climb-$W/steps"/*/report.md 2>/dev/null | head -1)"
-    fi
-    [ "$W" = "$T" ] && break
+    }
 done
 ls "$OUT"
