@@ -1,0 +1,42 @@
+{
+ "_smx1_renames_basis": "smx1c 2026-10-26: ClientboundAddPlayerPacket (class_2613) is gone in 1.20.2; classRenames (s1net) send it to ClientboundAddEntityPacket (class_2604), which carries a player now. Its private fields are the same values under the entity packet's ids, judged from both constructors (javap -c -p): 1.20.1 Player ctor stores getId -> field_12017, profile id -> field_12015, getX/getY/getZ -> field_12014/12013/12021, packed getYRot -> field_12020, packed getXRot -> field_12019; 1.20.2 stores id -> field_11953, uuid (a player's profile id) -> field_11952, x/y/z -> field_11948/11946/11956, packed xRot -> field_11947, packed yRot -> field_11957 (both hold the rotation as degrees * 256 / 360 in a byte; 1.20.1 truncated it with f2i, 1.20.2 floors it, so a negative non-integral value is one unit lower in 1.20.2's packet, which is what 1.20.2's client reads). mixinMoves: private methods whose code 1.20.2 keeps, the same, in another class (cause moved-private-member), each judged against both bodies; left out: ChatReportScreen -> AbstractReportScreen (1.20.2 runs it for report kinds 1.20.1 did not have) and LevelRenderer.method_34808 -> SectionOcclusionGraph.method_52825 (different parameters; cases_smixin3 CASE 17).",
+ "fieldRenames": {
+  "net/minecraft/class_2613.field_12017:I": "field_11953",
+  "net/minecraft/class_2613.field_12015:Ljava/util/UUID;": "field_11952",
+  "net/minecraft/class_2613.field_12014:D": "field_11948",
+  "net/minecraft/class_2613.field_12013:D": "field_11946",
+  "net/minecraft/class_2613.field_12021:D": "field_11956",
+  "net/minecraft/class_2613.field_12020:B": "field_11957",
+  "net/minecraft/class_2613.field_12019:B": "field_11947"
+ },
+ "mixinMoves": {
+  "net/minecraft/class_634.method_43331(Ljava/lang/String;)Ljava/net/URL;": {
+   "to": "net/minecraft/class_8673.method_52773(Ljava/lang/String;)Ljava/net/URL;",
+   "basis": "ClientPacketListener.parseResourcePackUrl -> ClientCommonPacketListenerImpl (method_52773): javap -c -p both: the same instructions, the fields it reads now ClientCommonPacketListenerImpl's (connection: the step's fieldRenames field_3689 -> field_45589; deferredPackets changed element type and stays unrenamed); W's ClientPacketListener extends ClientCommonPacketListenerImpl, which runs it for the game listener and for the configuration listener, the phase 1.20.2 moved these packets into (1.20.1 handled them during play)"
+  },
+  "net/minecraft/class_634.method_2873(Lnet/minecraft/class_2856$class_2857;)V": {
+   "to": "net/minecraft/class_8673.method_52785(Lnet/minecraft/class_2856$class_2857;)V",
+   "basis": "ClientPacketListener.send(ServerboundResourcePackPacket.Action) -> ClientCommonPacketListenerImpl (method_52785): javap -c -p both: the same instructions, the fields it reads now ClientCommonPacketListenerImpl's (connection: the step's fieldRenames field_3689 -> field_45589; deferredPackets changed element type and stays unrenamed); W's ClientPacketListener extends ClientCommonPacketListenerImpl, which runs it for the game listener and for the configuration listener, the phase 1.20.2 moved these packets into (1.20.1 handled them during play)"
+  },
+  "net/minecraft/class_634.method_36322(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;)Lnet/minecraft/class_2561;": {
+   "to": "net/minecraft/class_8673.method_52778(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;)Lnet/minecraft/class_2561;",
+   "basis": "ClientPacketListener.preparePackPrompt -> ClientCommonPacketListenerImpl (method_52778): javap -c -p both: the same instructions, the fields it reads now ClientCommonPacketListenerImpl's (connection: the step's fieldRenames field_3689 -> field_45589; deferredPackets changed element type and stays unrenamed); W's ClientPacketListener extends ClientCommonPacketListenerImpl, which runs it for the game listener and for the configuration listener, the phase 1.20.2 moved these packets into (1.20.1 handled them during play)"
+  },
+  "net/minecraft/class_634.method_2885(Ljava/util/concurrent/CompletableFuture;)V": {
+   "to": "net/minecraft/class_8673.method_52777(Ljava/util/concurrent/CompletableFuture;)V",
+   "basis": "ClientPacketListener.downloadCallback -> ClientCommonPacketListenerImpl (method_52777): javap -c -p both: the same instructions, the fields it reads now ClientCommonPacketListenerImpl's (connection: the step's fieldRenames field_3689 -> field_45589; deferredPackets changed element type and stays unrenamed); W's ClientPacketListener extends ClientCommonPacketListenerImpl, which runs it for the game listener and for the configuration listener, the phase 1.20.2 moved these packets into (1.20.1 handled them during play)"
+  },
+  "net/minecraft/class_634.method_40217(Lnet/minecraft/class_5321;Lnet/minecraft/class_6864$class_5748;)V": {
+   "to": "net/minecraft/class_8673.method_52771(Lnet/minecraft/class_5321;Lnet/minecraft/class_6864$class_5748;)V",
+   "basis": "ClientPacketListener.updateTagsForRegistry -> ClientCommonPacketListenerImpl (method_52771): javap -c -p both: the same tag map build and Registry.bindTags, the registry access read through registryAccess() where 1.20.1 read the layered access field; run for the game and the configuration listener"
+  },
+  "net/minecraft/class_634.method_49033(Lnet/minecraft/class_2596;Ljava/util/function/BooleanSupplier;Ljava/time/Duration;)V": {
+   "to": "net/minecraft/class_8673.method_52779(Lnet/minecraft/class_2596;Ljava/util/function/BooleanSupplier;Ljava/time/Duration;)V",
+   "basis": "ClientPacketListener.sendWhen -> ClientCommonPacketListenerImpl (method_52779): javap -c -p both: the same instructions, the fields it reads now ClientCommonPacketListenerImpl's (connection: the step's fieldRenames field_3689 -> field_45589; deferredPackets changed element type and stays unrenamed); W's ClientPacketListener extends ClientCommonPacketListenerImpl, which runs it for the game listener and for the configuration listener, the phase 1.20.2 moved these packets into (1.20.1 handled them during play)"
+  },
+  "net/minecraft/class_3258.method_14399()Ljava/util/zip/ZipFile;": {
+   "to": "net/minecraft/class_3258$class_8616.method_52426()Ljava/util/zip/ZipFile;",
+   "basis": "FilePackResources.getOrCreateZipFile -> FilePackResources.SharedZipFileAccess (method_52426), the per-pack holder of the zip: javap -c -p both: the same open-once / failed-once logic and log line, on the holder's file / zip / failed fields"
+  }
+ }
+}
