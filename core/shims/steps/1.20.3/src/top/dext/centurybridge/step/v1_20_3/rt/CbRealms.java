@@ -35,6 +35,15 @@ public final class CbRealms {
     }
 
     /**
+     * The realms main screen's servers-fetched callback (the private lambda method_44615) took 1.20.2's server list;
+     * 1.20.3's takes the fetcher's ServerListData record (servers, snapshot-compatible servers) and reads the servers
+     * from it as 1.20.2 used the list. A 1.20.2 list is the servers of a record with no snapshot servers.
+     */
+    public static net.minecraft.class_7578.class_8843 cbServerList(java.util.List<net.minecraft.class_4877> servers) {
+        return new net.minecraft.class_7578.class_8843(servers, java.util.List.of());
+    }
+
+    /**
      * A 1.20.2 RealmsMainScreen subclass overriding refreshServerList() (adapterHooks marks it): 1.20.2's
      * RealmsConfigureWorldScreen asked the main screen it came from to refresh, and so reached the override
      * (see the RealmsConfigureWorldScreen mixin).
