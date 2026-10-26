@@ -1,0 +1,15 @@
+{
+ "_s11_worldrender_basis": "LevelRenderer's cloud and weather passes kept their code at 1.21.11 under the same names with other arguments (javap -c of both code jars: method_62204 / method_62203 add the same frame-graph pass, the cloud lambda takes the same fields). Clouds: 1.21.10's float ticks became 1.21.11's long gameTime (CameraRenderState-extracted LevelRenderState.gameTime) plus float partialTick, so no one W argument is V's ticks. Weather: 1.21.10's camera position argument is read inside 1.21.11's body from LevelRenderState.cameraRenderState.pos.",
+ "mixinTargets": {
+  "net/minecraft/class_761.method_62204(Lnet/minecraft/class_9909;Lnet/minecraft/class_4063;Lnet/minecraft/class_243;FIF)V": {
+   "to": "method_62204(Lnet/minecraft/class_9909;Lnet/minecraft/class_4063;Lnet/minecraft/class_243;JFIF)V",
+   "args": [0, 1, 2, -1, 5, 6],
+   "basis": "addCloudsPass: same body; V's ticks (float) is W's gameTime (long) + partialTick (float), not one W argument"
+  },
+  "net/minecraft/class_761.method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V": {
+   "to": "method_62203(Lnet/minecraft/class_9909;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V",
+   "args": [0, -1, 1],
+   "basis": "addWeatherPass: same body; the camera position W reads from field_61737.field_63082.field_63078 itself"
+  }
+ }
+}

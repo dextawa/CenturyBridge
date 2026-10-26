@@ -1,0 +1,71 @@
+{
+ "_s11_fapi_biome_basis": "Fabric API 0.141 (1.21.11) removed EffectsContext's particle / ambient sound / mood / additions / music setters with the BiomeSpecialEffects fields 0.138 (1.21.10) wrote; 1.21.11 keeps them as the biome's environment attributes, where 0.141's own EffectsContext writes the colors and music volume. CbFapiBiomeEffects writes the attribute standing for each field (javap of both biome modules' EffectsContext and EffectsContextImpl). A 1.21.10 implementation's super call to one of 0.138's default methods runs that default's body (superRedirects); LegacyEffects carries the default shapes so the implementation's own overrides of them are what virtual calls reach.",
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setParticleConfig(Ljava/util/Optional;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setParticleConfig",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setParticleConfig(Lnet/minecraft/class_4761;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setParticleConfig",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.clearParticleConfig()V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#clearParticleConfig",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setAmbientSound(Ljava/util/Optional;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setAmbientSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setAmbientSound(Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setAmbientSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.clearAmbientSound()V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#clearAmbientSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setMoodSound(Ljava/util/Optional;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setMoodSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setMoodSound(Lnet/minecraft/class_4968;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setMoodSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.clearMoodSound()V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#clearMoodSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setAdditionsSound(Ljava/util/Optional;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setAdditionsSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setAdditionsSound(Lnet/minecraft/class_4967;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setAdditionsSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.clearAdditionsSound()V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#clearAdditionsSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setMusic(Ljava/util/Optional;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setMusic",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setMusic(Lnet/minecraft/class_6012;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setMusic",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setMusic(Lnet/minecraft/class_5195;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#setMusic",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.clearMusic()V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#clearMusic"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects$LegacyEffects",
+   "requires": [
+    "setParticleConfig(Ljava/util/Optional;)V",
+    "setAmbientSound(Ljava/util/Optional;)V",
+    "setMoodSound(Ljava/util/Optional;)V",
+    "setAdditionsSound(Ljava/util/Optional;)V",
+    "setMusic(Ljava/util/Optional;)V"
+   ],
+   "synth": [
+    {
+     "new": "setDryFoliageColor(Ljava/util/Optional;)V",
+     "call": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects.setDryFoliageColor(Ltop/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects$LegacyEffects;Ljava/util/Optional;)V"
+    }
+   ],
+   "basis": "a 1.21.10 EffectsContext implementation answers 0.138's abstract setters itself; 0.141's new abstract setDryFoliageColor has nothing on it to set (0.138 had no dry foliage color) and says so"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects$LegacyContext",
+   "requires": [
+    "getWeather()Lnet/fabricmc/fabric/api/biome/v1/BiomeModificationContext$WeatherContext;",
+    "getEffects()Lnet/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext;",
+    "getGenerationSettings()Lnet/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext;",
+    "getSpawnSettings()Lnet/fabricmc/fabric/api/biome/v1/BiomeModificationContext$SpawnSettingsContext;"
+   ],
+   "synth": [
+    {
+     "new": "getAttributes()Lnet/fabricmc/fabric/api/biome/v1/BiomeModificationContext$AttributesContext;",
+     "call": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects.getAttributes(Ltop/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects$LegacyContext;)Lnet/fabricmc/fabric/api/biome/v1/BiomeModificationContext$AttributesContext;"
+    }
+   ],
+   "basis": "a 1.21.10 BiomeModificationContext implementation has no attributes context (0.141's new abstract getAttributes) and says so when asked"
+  }
+ ],
+ "superRedirects": {
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setParticleConfig(Lnet/minecraft/class_4761;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superSetParticleConfig",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.clearParticleConfig()V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superClearParticleConfig",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setAmbientSound(Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superSetAmbientSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.clearAmbientSound()V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superClearAmbientSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setMoodSound(Lnet/minecraft/class_4968;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superSetMoodSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.clearMoodSound()V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superClearMoodSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setAdditionsSound(Lnet/minecraft/class_4967;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superSetAdditionsSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.clearAdditionsSound()V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superClearAdditionsSound",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setMusic(Lnet/minecraft/class_6012;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superSetMusic",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setMusic(Lnet/minecraft/class_5195;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superSetMusic",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.clearMusic()V": "top/dext/centurybridge/step/v1_21_11/rt/CbFapiBiomeEffects#superClearMusic"
+ }
+}

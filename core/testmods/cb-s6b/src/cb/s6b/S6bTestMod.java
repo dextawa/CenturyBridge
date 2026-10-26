@@ -397,7 +397,7 @@ public class S6bTestMod implements ModInitializer {
     }
 
     /** one 1.21.6 Leashable.tickLeash of {@code e} leashed to a holder {@code d} blocks away; the native counters' deltas */
-    static String leashTick(class_3218 level, net.minecraft.class_10730 e, double d) {
+    static String leashTick(class_3218 level, net.minecraft.class_1308 e, double d) {
         net.minecraft.class_10730 holder = new net.minecraft.class_10730(class_1299.field_6085, level);
         holder.method_5814(d, -60.0, 0.0);
         e.method_5814(0.0, -60.0, 0.0);
@@ -428,7 +428,25 @@ public class S6bTestMod implements ModInitializer {
         net.minecraft.class_243 m = puller.method_18798();
         check(puller.pulls == 1 && m.field_1352 == 0.0 && m.field_1351 == 0.5 && m.field_1350 == 0.0 && pu.equals("1,1,1,1,0"),
             "cow whose elasticRangeLeashBehaviour pulls: its pull replaces 1.21.6's, 1.21.6's check and onElasticLeashPull still run (" + puller.pulls + ", " + m + "; " + pu + ")");
+        // TamableAnimal's restored override reaches PathfinderMob's restored member through its super call, so this
+        // mod's mixin there (S6bLeashMixin) runs for a standing wolf as in 1.21.5, and not for a sitting one
+        net.minecraft.class_1493 wolf = new net.minecraft.class_1493(net.minecraft.class_1299.field_6055, level);
+        int hits = pathLeashHits;
+        String wo = leashTick(level, wolf, 8.0);
+        int standing = pathLeashHits - hits;
+        check(standing == 1 && wo.startsWith("1,1,1,"),
+            "standing wolf: the converted mixin on PathfinderMob.handleLeashAtDistance runs once through TamableAnimal's super call, 1.21.6's tick goes on (" + standing + "; " + wo + ")");
+        net.minecraft.class_1493 sitter = new net.minecraft.class_1493(net.minecraft.class_1299.field_6055, level);
+        sitter.method_6179(true);
+        hits = pathLeashHits;
+        String si = leashTick(level, sitter, 8.0);
+        int sitting = pathLeashHits - hits;
+        check(sitting == 0 && si.equals("1,0,0,0,0") && sitter.method_60952() != null,
+            "sitting wolf 8 blocks away: TamableAnimal answers false without the super call (mixin " + sitting + "), the rest of 1.21.6's tick cancelled, still leashed (" + si + ")");
     }
+
+    /** the converted PathfinderMob.handleLeashAtDistance mixin's runs (S6bLeashMixin) */
+    public static int pathLeashHits;
 
     static long counter(String key) {
         return Long.parseLong(System.getProperty(key, "0"));
