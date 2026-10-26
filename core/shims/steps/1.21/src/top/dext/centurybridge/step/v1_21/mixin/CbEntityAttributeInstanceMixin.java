@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21.rt.CbEntityAttributes;
+import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /**
  * AttributeInstance.removePermanentModifier(UUID) of 1.20.6 (a cover; 1.21 has no permanent-only removal).
@@ -16,7 +17,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbEntityAttributes;
  * map, the per-operation map and the by-id map, then setDirty -- and a transient one with that uuid stays.
  * It touches the maps directly, as 1.20.6 did, so it reaches no overridable method of a subclass.
  */
-@Mixin(class_1324.class)
+@Mixin(value = class_1324.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityAttributeInstanceMixin {
 
     @Shadow
