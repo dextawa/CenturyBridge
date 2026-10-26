@@ -222,6 +222,15 @@ if cfgs:
 PYGATE
 [ $? -eq 0 ] || { echo "build aborted: mixin config out of sync with sources"; exit 1; }
 
+# Climb step layers only (the 1.20.2 tree is step 1's layer): a layer mixin that merges members sits below the mods'
+# priority (CbVanillaReads.PRIORITY), or Mixin keeps a converted mod's INVOKE / other non-HEAD/RETURN/TAIL injectors out
+# of the restored member; and such a restorer carries no injectors into W's own methods (they move to a default-priority
+# <name>Hooks mixin), except a route declared CbVanillaReads.ROUTE_FIRST. Rules: core/tools/mixin_priority.py.
+case "$SHIM" in
+    core/shims/steps/*|core/shims/1.20.2|*/core/shims/steps/*|*/core/shims/1.20.2)
+        python3 core/tools/mixin_priority.py "$SHIM" || { echo "build aborted: layer mixin priorities"; exit 1; } ;;
+esac
+
 # The wiring and mixin gates below run the engine's own checkers against the
 # COMPILED tree, so the engine must be built first (see CLAUDE.md). Skipping
 # them silently when it is not would ship a jar no gate has looked at.
