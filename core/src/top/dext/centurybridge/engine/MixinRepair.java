@@ -647,13 +647,14 @@ public final class MixinRepair {
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
                         if (cands.isEmpty() && s.desc != null && mixinMoves.containsKey(owner + "." + s.name + s.desc)) {
-                            // the static moved, the same code, to another W class (mixinMoves): onto a mixin of that class
-                            String why0 = movable(mx, handler, an, anchors, mixinMoves.get(owner + "." + s.name + s.desc));
+                            // the method moved, the same code, to another W class (mixinMoves): onto a mixin of that class
+                            List<String[]> self = mixinMoveSelf.get(owner + "." + s.name + s.desc);
+                            String why0 = movable(mx, handler, an, anchors, mixinMoves.get(owner + "." + s.name + s.desc), owner, self);
                             if (why0 == null) {
                                 String to = mixinMoves.get(owner + "." + s.name + s.desc);
                                 fixNotes.add("move " + where + " => " + to + " (mixinMoves: the same code in another class)");
                                 fixes.add(() -> {
-                                    moveInjector(mx, handler, an, to);
+                                    moveInjector(mx, handler, an, to, owner, self);
                                     dirty[0] = true;
                                 });
                             } else if (deadWhy == null) {
@@ -920,8 +921,32 @@ public final class MixinRepair {
         return f;
     }
 
+    private String crossMixinName(String decl) {
+        return (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$xguard$" + decl.replace('/', '_').replace('$', '_');
+    }
+
+    /** a @Shadow on the guard mixin, {kind 'f'/'m', name, desc, static}, unless it has one of that shape */
+    private static void addShadow(ClassNode gc, Object[] sh) {
+        String name = (String) sh[1];
+        String desc = (String) sh[2];
+        boolean st = (Boolean) sh[3];
+        AnnotationNode a = new AnnotationNode(SHADOW);
+        if ((Character) sh[0] == 'f') {
+            if (gc.fields.stream().anyMatch(f -> f.name.equals(name) && f.desc.equals(desc))) return;
+            FieldNode f = new FieldNode(Opcodes.ACC_PRIVATE | (st ? Opcodes.ACC_STATIC : 0), name, desc, null, null);
+            f.visibleAnnotations = new ArrayList<>(List.of(a));
+            gc.fields.add(f);
+        } else {
+            if (gc.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc))) return;
+            MethodNode m = new MethodNode(st ? Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_NATIVE : Opcodes.ACC_PROTECTED | Opcodes.ACC_ABSTRACT,
+                name, desc, null, null);
+            m.visibleAnnotations = new ArrayList<>(List.of(a));
+            gc.methods.add(m);
+        }
+    }
+
     private ClassNode crossMixin(String decl, int version) {
-        String name = (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$xguard$" + decl.replace('/', '_').replace('$', '_');
+        String name = crossMixinName(decl);
         return crossMixins.computeIfAbsent(name, k -> {
             ClassNode gc = new ClassNode();
             gc.version = version;
@@ -1222,7 +1247,8 @@ public final class MixinRepair {
     }
 
     /** why an injector cannot move onto a mixin of the class a mixinMoves entry names, or null */
-    private String movable(ClassNode mx, MethodNode h, AnnotationNode an, List<Anchor> anchors, String to) {
+    private String movable(ClassNode mx, MethodNode h, AnnotationNode an, List<Anchor> anchors, String to, String vOwner,
+                           List<String[]> self) {
         if (!crossAllowed) return "not in a config being repaired";
         int dot = to.indexOf('.');
         int paren = to.indexOf('(');
@@ -1234,21 +1260,157 @@ public final class MixinRepair {
         boolean ws = (wm.access & Opcodes.ACC_STATIC) != 0;
         boolean hs = (h.access & Opcodes.ACC_STATIC) != 0;
         if (ws != hs) return ws ? "a static target with an instance handler" : "an instance target with a static handler";
-        // an instance method moved to another class runs on another object: the handler may not read its own
-        // instance (s9: ParticleEngine.registerProviders -> ParticleResources.registerProviders)
-        if (!hs && !touchesThisFree(h)) return "the handler reads this, which is another object in the moved method";
-        if (usesOwnClass(h, mx.name)) return "the handler uses its own mixin's members";
+        // an instance method moved to another class runs on another object: the handler may read its own instance
+        // only through the entry's self hops (C17), its own mixin's members only as @Shadows of the W class or V's
+        if (!hs && !touchesThisFree(h) || usesOwnClass(h, mx.name)) {
+            if (self == null || self.isEmpty() || hs) {
+                if (!hs && !touchesThisFree(h)) return "the handler reads this, which is another object in the moved method";
+                return "the handler uses its own mixin's members";
+            }
+            List<String> why = new ArrayList<>();
+            if (selfHopCopy(mx, h, to.substring(0, dot), vOwner, self, why, new ArrayList<>()) == null) return why.get(0);
+        }
         if (anchors == null) return "an anchor not statically evaluable";
         if (!anchors.isEmpty() && !anchorsIn(wm, wc, anchors)) return "its anchor is not in the moved method " + anchors;
         return null;
     }
 
+    private static final String SHADOW = "Lorg/spongepowered/asm/mixin/Shadow;";
+
     /**
-     * the injector onto a mixin of the W class (the config's cb$xguard$ mixin of it): a copy of the static handler
-     * selecting the W method; the mod's handler stays a plain method marked like a guarded one, so MixinJudge
-     * judges the copy where it now stands
+     * The handler as it runs in the W class's guard mixin (C17): its own mixin's name becomes the guard mixin's, so
+     * {@code this} is the W class's instance; a @Shadow member the W class declares stays on {@code this} (a @Shadow
+     * of it is declared on the guard mixin, {@code shadows}: {kind, name, desc, static}); a @Shadow member only V's
+     * class declares (public: the guard runs in another class) is called on V's instance; every use of {@code this}
+     * other than as the receiver of a member the W class declares reads the self hops -- the first a field of the W
+     * class (shadowed too), the rest public. Null with the reason when the handler does anything else with its own
+     * class (a @Unique member, a cast to it, {@code this} duplicated or stored, a frame holding it on the stack)
      */
-    private void moveInjector(ClassNode mx, MethodNode h, AnnotationNode an, String to) {
+    private MethodNode selfHopCopy(ClassNode mx, MethodNode h, String wOwner, String vOwner, List<String[]> hops,
+                                   List<String> why, List<Object[]> shadows) {
+        String gname = crossMixinName(wOwner);
+        ClassNode wc = target(wOwner);
+        ClassNode vc = target(vOwner);
+        if (wc == null || vc == null) { why.add("no W code for " + wOwner + " / " + vOwner); return null; }
+        if (!hops.get(0)[0].equals(wOwner)) { why.add("the first self hop is not a field of " + wOwner); return null; }
+        org.objectweb.asm.commons.SimpleRemapper rm = new org.objectweb.asm.commons.SimpleRemapper(mx.name, gname);
+        MethodNode c = new MethodNode(h.access, h.name, rm.mapMethodDesc(h.desc), null,
+            h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
+        h.accept(new org.objectweb.asm.commons.MethodRemapper(c, rm));
+        c.desc = rm.mapMethodDesc(h.desc);
+        // the mod mixin's @Shadow members: insn name+desc -> the target's name
+        Map<String, String> shadowed = new HashMap<>();
+        for (FieldNode f : mx.fields) {
+            if (hasAnnotation(f.visibleAnnotations, SHADOW) || hasAnnotation(f.invisibleAnnotations, SHADOW)) shadowed.put(f.name + ":" + rm.mapDesc(f.desc), f.name);
+        }
+        for (MethodNode m : mx.methods) {
+            AnnotationNode sh = null;
+            for (AnnotationNode a : annotations(m)) if (a.desc.equals(SHADOW)) sh = a;
+            if (sh == null) continue;
+            String prefix = values(sh).get("prefix") instanceof String p ? p : "shadow$";
+            shadowed.put(m.name + rm.mapMethodDesc(m.desc), m.name.startsWith(prefix) ? m.name.substring(prefix.length()) : m.name);
+        }
+        org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue>[] fr;
+        try {
+            fr = new org.objectweb.asm.tree.analysis.Analyzer<>(new org.objectweb.asm.tree.analysis.SourceInterpreter()).analyze(gname, c);
+        } catch (org.objectweb.asm.tree.analysis.AnalyzerException ex) {
+            why.add("the handler's code cannot be analysed: " + ex.getMessage());
+            return null;
+        }
+        AbstractInsnNode[] insns = c.instructions.toArray();
+        Set<AbstractInsnNode> keep = new java.util.HashSet<>();
+        Set<AbstractInsnNode> hop = new java.util.HashSet<>();
+        for (int i = 0; i < insns.length; i++) {
+            AbstractInsnNode in = insns[i];
+            if (in instanceof TypeInsnNode ti && ti.desc.equals(gname)) { why.add("the handler casts to its own mixin"); return null; }
+            if (fr[i] == null) continue; // unreachable
+            if (in.getOpcode() >= Opcodes.DUP && in.getOpcode() <= Opcodes.SWAP || in.getOpcode() == Opcodes.ASTORE) {
+                org.objectweb.asm.tree.analysis.SourceValue top = fr[i].getStack(fr[i].getStackSize() - 1);
+                if (top.insns.stream().anyMatch(MixinRepair::isThis)) { why.add("the handler duplicates or stores this"); return null; }
+            }
+            String owner, name, desc;
+            boolean field = in instanceof FieldInsnNode;
+            if (in instanceof FieldInsnNode fi) { owner = fi.owner; name = fi.name; desc = fi.desc; }
+            else if (in instanceof MethodInsnNode mi) { owner = mi.owner; name = mi.name; desc = mi.desc; }
+            else continue;
+            if (!owner.equals(gname)) continue;
+            String real = shadowed.get(field ? name + ":" + desc : name + desc);
+            if (real == null) { why.add("the handler uses its own mixin's member " + name + " (not a @Shadow)"); return null; }
+            boolean st = in.getOpcode() == Opcodes.GETSTATIC || in.getOpcode() == Opcodes.PUTSTATIC || in.getOpcode() == Opcodes.INVOKESTATIC;
+            boolean onW = declares(wc, field, real, desc);
+            Integer vAcc = access(vc, field, real, desc);
+            int recv;
+            if (onW) {
+                shadows.add(new Object[] {field ? 'f' : 'm', real, desc, st});
+                recv = 1;
+            } else if (vAcc != null && (vAcc & Opcodes.ACC_PUBLIC) != 0) {
+                if (field) ((FieldInsnNode) in).owner = vOwner; else ((MethodInsnNode) in).owner = vOwner;
+                recv = 2;
+            } else {
+                why.add("@Shadow " + real + " is on neither " + wOwner + " nor (public) on " + vOwner);
+                return null;
+            }
+            if (field) ((FieldInsnNode) in).name = real; else ((MethodInsnNode) in).name = real;
+            if (!st) {
+                int depth = field ? (in.getOpcode() == Opcodes.PUTFIELD ? 1 : 0) : Type.getArgumentTypes(desc).length;
+                org.objectweb.asm.tree.analysis.SourceValue r = fr[i].getStack(fr[i].getStackSize() - 1 - depth);
+                for (AbstractInsnNode src : r.insns) if (isThis(src)) (recv == 1 ? keep : hop).add(src);
+            }
+        }
+        for (AbstractInsnNode in : insns) {
+            if (in instanceof FrameNode f && f.stack != null && f.stack.contains(gname)) { why.add("a frame holds this on the stack"); return null; }
+        }
+        for (AbstractInsnNode in : insns) {
+            if (!isThis(in) || keep.contains(in) && !hop.contains(in)) continue;
+            if (keep.contains(in)) { why.add("one this is the receiver of members of both classes"); return null; }
+            InsnList hl = new InsnList();
+            for (int k = 0; k < hops.size(); k++) {
+                String[] hp = hops.get(k);
+                if (k == 0) {
+                    shadows.add(new Object[] {'f', hp[1], hp[2], false});
+                    hl.add(new FieldInsnNode(Opcodes.GETFIELD, gname, hp[1], hp[2]));
+                } else {
+                    Integer a = access(target(hp[0]), true, hp[1], hp[2]);
+                    if (a == null || (a & Opcodes.ACC_PUBLIC) == 0) { why.add("self hop " + hp[0] + "." + hp[1] + " is not public"); return null; }
+                    hl.add(new FieldInsnNode(Opcodes.GETFIELD, hp[0], hp[1], hp[2]));
+                }
+            }
+            c.instructions.insert(in, hl);
+        }
+        c.maxStack += 1;
+        return c;
+    }
+
+    private static boolean isThis(AbstractInsnNode n) {
+        return n instanceof VarInsnNode v && v.getOpcode() == Opcodes.ALOAD && v.var == 0;
+    }
+
+    private static boolean hasAnnotation(List<AnnotationNode> l, String desc) {
+        return l != null && l.stream().anyMatch(a -> a.desc.equals(desc));
+    }
+
+    private static boolean declares(ClassNode cn, boolean field, String name, String desc) {
+        return access(cn, field, name, desc) != null;
+    }
+
+    /** the access of a member a class declares itself, or null */
+    private static Integer access(ClassNode cn, boolean field, String name, String desc) {
+        if (cn == null) return null;
+        if (field) {
+            for (FieldNode f : cn.fields) if (f.name.equals(name) && f.desc.equals(desc)) return f.access;
+        } else {
+            for (MethodNode m : cn.methods) if (m.name.equals(name) && m.desc.equals(desc)) return m.access;
+        }
+        return null;
+    }
+
+    /**
+     * the injector onto a mixin of the W class (the config's cb$xguard$ mixin of it): a copy of the handler
+     * selecting the W method; the mod's handler stays a plain method marked like a guarded one, so MixinJudge
+     * judges the copy where it now stands. The copy is spelled in the guard mixin's name (its own class's members
+     * are the guard's); with self hops (C17) {@code this} is read as {@link #selfHopCopy} says
+     */
+    private void moveInjector(ClassNode mx, MethodNode h, AnnotationNode an, String to, String vOwner, List<String[]> self) {
         int dot = to.indexOf('.');
         String wOwner = to.substring(0, dot);
         ClassNode gc = crossMixin(wOwner, mx.version);
@@ -1261,8 +1423,17 @@ public final class MixinRepair {
         }
         AnnotationNode moved = copyAnnotation(an);
         setSelector(moved, "L" + wOwner + ";" + to.substring(dot + 1));
-        MethodNode g = new MethodNode(h.access, gname, h.desc, h.signature, h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
-        h.accept(g);
+        List<Object[]> shadows = new ArrayList<>();
+        MethodNode g = self != null && !self.isEmpty() && (h.access & Opcodes.ACC_STATIC) == 0
+            ? selfHopCopy(mx, h, wOwner, vOwner, self, new ArrayList<>(), shadows) : null;
+        if (g == null) {
+            org.objectweb.asm.commons.SimpleRemapper rm = new org.objectweb.asm.commons.SimpleRemapper(mx.name, gc.name);
+            g = new MethodNode(h.access, gname, rm.mapMethodDesc(h.desc), null, h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
+            h.accept(new org.objectweb.asm.commons.MethodRemapper(g, rm));
+            g.desc = rm.mapMethodDesc(h.desc);
+        }
+        g.signature = null;
+        for (Object[] sh : shadows) addShadow(gc, sh);
         g.name = gname;
         g.visibleAnnotations = new ArrayList<>(List.of(moved));
         g.invisibleAnnotations = null;
@@ -2254,6 +2425,8 @@ public final class MixinRepair {
     public Map<String, String> classRenames = Map.of();
     /** Chain.mixinMoves: "V owner.name(desc)" -> "W owner.name(desc)" of a static W keeps in another class */
     public Map<String, String> mixinMoves = Map.of();
+    /** Chain.mixinMoveSelf: per mixinMoves key, the field hops from the W class's instance to V's (C17) */
+    public Map<String, List<String[]>> mixinMoveSelf = Map.of();
 
     /** overrides MixinBridge.restoreOverride put back (restoring mixins of the jar being repaired), by target */
     private Map<String, List<MethodNode>> restoredByTarget = Map.of();

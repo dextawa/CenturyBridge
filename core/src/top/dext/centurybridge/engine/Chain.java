@@ -174,6 +174,15 @@ public final class Chain {
      */
     public final java.util.Map<String, String> mixinMoves = new java.util.HashMap<>();
 
+    /**
+     * a mixinMoves entry's "self": field hops ["owner.name:desc", ...] from an instance of the W class to the instance
+     * of V's class whose method V ran (s26 C17: 26.2 LevelExtractor.levelRenderer). With it an INSTANCE method's
+     * injector whose handler reads {@code this} moves too: in the moved handler a @Shadow member the W class declares
+     * stays on {@code this} (it moved with the code: LevelExtractor.level, minecraft), any other use of {@code this}
+     * -- a @Shadow member only V's class still declares (public), {@code (V)(Object) this} -- takes the hops
+     */
+    public final java.util.Map<String, java.util.List<String[]>> mixinMoveSelf = new java.util.HashMap<>();
+
     /** "splitRenames": a V interface W made a final record, kept in two spellings in mods (SplitRename) */
     public final java.util.Map<String, SplitRename.Split> splitRenames = new java.util.HashMap<>();
 
@@ -3253,6 +3262,16 @@ public final class Chain {
                 var mm = root.getAsJsonObject("mixinMoves");
                 for (String k : mm.keySet()) {
                     c.mixinMoves.put(k, mm.getAsJsonObject(k).get("to").getAsString());
+                    if (mm.getAsJsonObject(k).has("self")) {
+                        java.util.List<String[]> l = new java.util.ArrayList<>();
+                        for (var e : mm.getAsJsonObject(k).getAsJsonArray("self")) {
+                            String h = e.getAsString(); // owner.name:desc
+                            int col = h.indexOf(':');
+                            int dot = h.lastIndexOf('.', col);
+                            l.add(new String[] {h.substring(0, dot), h.substring(dot + 1, col), h.substring(col + 1)});
+                        }
+                        c.mixinMoveSelf.put(k, l);
+                    }
                 }
             }
             if (root.has("mixinSplits")) {

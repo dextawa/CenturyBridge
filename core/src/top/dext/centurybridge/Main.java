@@ -255,6 +255,7 @@ public final class Main {
                 chain.mixinRepair.classRenames = chain.classRenames; // anchor-facade: what restored bodies call
                 chain.mixinRepair.stepTo = args[3]; // the mixed-member signal (MixinRepair.MIXED_DIR)
                 chain.mixinRepair.mixinMoves = chain.mixinMoves; // injectors on static methods W moved to another class
+                chain.mixinRepair.mixinMoveSelf = chain.mixinMoveSelf; // and on instance methods, this through the hops (C17)
                 chain.mixinRepair.converter = chain::argConverter; // captured target arguments the step retyped (CASE 14)
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
