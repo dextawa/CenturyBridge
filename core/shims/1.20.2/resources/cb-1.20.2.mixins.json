@@ -83,6 +83,7 @@
     "CbFapiTagBuilderRemoval",
     "CbFapiTagEntryAccess",
     "CbFapiTagFileRemoval",
+    "CbFapiTagFileRemovalHooks",
     "CbFapiTagGroupLoaderRemoval",
     "CbFapiTagProviderRemoval",
     "CbFapiVillagerConversion",
