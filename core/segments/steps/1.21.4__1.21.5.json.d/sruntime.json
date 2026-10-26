@@ -5,5 +5,15 @@
     "net/minecraft/class_7378$class_9419": "top/dext/centurybridge/step/v1_21_5/facade/EntitySubPredicates$EntityHolderVariantPredicateType",
     "net/minecraft/class_7378$class_9419$class_9420": "top/dext/centurybridge/step/v1_21_5/facade/EntitySubPredicates$EntityHolderVariantPredicateType$Instance"
   },
-  "_sruntime_entitySubPredicates_basis": "1.21.5 removed EntitySubPredicates' variant predicate types class_7378$class_7380 / $class_9419 and their predicates (damage 1.21.4__1.21.5 rows: call-static method_43116 / method_47840 / method_58354, new, call method_43117 / method_58356, extend, super-ctor, override+super). The facade has 1.21.4's members under the same intermediary names with 1.21.4's bodies (javap -c -p 1.21.4 class_7378$class_7380, $class_9419, $class_7380$class_9353, $class_9419$class_9420: a 'variant' field MapCodec of the value codec / RegistryCodecs.homogeneousList(key), a predicate matching value.equals / holderSet.contains of the getter's answer); EntitySubPredicate (class_7376) and the sub-predicate type registry are unchanged in 1.21.5, so classRenames carry every reference. The 1.21.2 layer's CbItemTriggers BOAT type (registered in class_7923.field_49911 at init) died on the missing class at every T >= 1.21.5. Still open: 1.21.4's static types (field_41534 ... field_49973, method_58153 / 58154 / 59667: 1.21.5 matches those variants through component predicates)"
+  "_sruntime_entitySubPredicates_basis": "1.21.5 removed EntitySubPredicates' variant predicate types class_7378$class_7380 / $class_9419 and their predicates (damage 1.21.4__1.21.5 rows: call-static method_43116 / method_47840 / method_58354, new, call method_43117 / method_58356, extend, super-ctor, override+super). The facade has 1.21.4's members under the same intermediary names with 1.21.4's bodies (javap -c -p 1.21.4 class_7378$class_7380, $class_9419, $class_7380$class_9353, $class_9419$class_9420: a 'variant' field MapCodec of the value codec / RegistryCodecs.homogeneousList(key), a predicate matching value.equals / holderSet.contains of the getter's answer); EntitySubPredicate (class_7376) and the sub-predicate type registry are unchanged in 1.21.5, so classRenames carry every reference. The 1.21.2 layer's CbItemTriggers BOAT type (registered in class_7923.field_49911 at init) died on the missing class at every T >= 1.21.5. Still open: 1.21.4's static types (field_41534 ... field_49973, method_58153 / 58154 / 59667: 1.21.5 matches those variants through component predicates)",
+  "mixinTargets": {
+    "net/minecraft/class_1297.method_65037(Ljava/util/List;Ljava/util/Set;)V": {
+      "to": "method_65037(Ljava/util/List;Lnet/minecraft/class_10774$class_10775;)V",
+      "args": [
+        0,
+        -1
+      ],
+      "basis": "Entity.checkInsideBlocks(movements, blocksInside) -> checkInsideBlocks(movements, StepBasedCollector): javap both, the same private loop of applyEffectsFromBlocks (each movement's box, BlockGetter.forEachBlockIntersectedBetween, a visited LongSet cleared after; 1.21.5 visits through a lambda and hands each block's effects to the collector where 1.21.4 recorded the block states in the set)"
+    }
+  }
 }

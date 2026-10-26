@@ -24,9 +24,12 @@ public abstract class CbPackInfoFormat {
         }
     }
 
+    /**
+     * Takes none of readPackInfo's arguments (it reads only the answer): 1.20.5 opens the pack by location where
+     * 1.20.4 took its id, and an injector capturing no arguments climbs onto the reshaped method as it is.
+     */
     @Inject(method = "method_45274", at = @At("RETURN"))
-    private static void cb$recordFormat(String id, class_3288.class_7680 resources, int version,
-                                        CallbackInfoReturnable<class_3288.class_7679> cir) {
+    private static void cb$recordFormat(CallbackInfoReturnable<class_3288.class_7679> cir) {
         CbPacks.claimDeclaredFormat(cir.getReturnValue());
     }
 }
