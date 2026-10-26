@@ -2029,7 +2029,11 @@ final class MixinBridge {
                         }
                     }
                     if ((!sameArgs || fate.converts()) && !fate.argsKnown()) {
-                        unread = unreadUnmapped(h, fate, ci);
+                        // not where the layer restores the V member on the target: the injector stays there (it fires
+                        // where V's did, for the calls that reach it) rather than moving onto W's code with zeros
+                        boolean restoredHere = chain.layerMembers.member(target, vmeth.name, vmeth.desc) != null
+                            || chain.layerMembers.member(target, vmeth.name, chain.renamedDesc(vmeth.desc)) != null;
+                        unread = restoredHere ? null : unreadUnmapped(h, fate, ci);
                         if (unread == null) {
                             why.add(fate.how() + ": the wiring does not say which of " + chain.to + "'s arguments are " + chain.from + "'s");
                             return null;

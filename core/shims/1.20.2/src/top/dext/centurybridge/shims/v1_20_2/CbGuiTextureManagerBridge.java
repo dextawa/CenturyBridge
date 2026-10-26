@@ -18,8 +18,10 @@ import top.dext.centurybridge.rt.v1_20_2.CbGuiLegacyTextures;
 @Mixin(net.minecraft.class_1060.class)
 public abstract class CbGuiTextureManagerBridge {
 
+    // NEW's target is the constructor's descriptor with the type as its return (Mixin's BeforeNew reads the return
+    // type of a method descriptor: "Lclass_1049;<init>(..)V" named type "V" and matched nothing)
     @Redirect(method = {"method_4619", "method_4618"},
-              at = @At(value = "NEW", target = "Lnet/minecraft/class_1049;<init>(Lnet/minecraft/class_2960;)V"))
+              at = @At(value = "NEW", target = "(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1049;"))
     private net.minecraft.class_1049 cb$fileTexture(net.minecraft.class_2960 id) {
         return CbGuiLegacyTextures.fileTexture(id);
     }
