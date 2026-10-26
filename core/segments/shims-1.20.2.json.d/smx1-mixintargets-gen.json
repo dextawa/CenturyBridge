@@ -18,6 +18,13 @@
    ],
    "basis": "1.20.2 made the loot / predicate classes codec records: the one constructor holds 1.20.1's body (same field stores; arrays became Lists, Item / Block / BlockEntityType / Potion / Enchantment became Holders)"
   },
+  "net/minecraft/class_1068.method_47438(Ljava/util/UUID;)Lnet/minecraft/class_1068$class_7921;": {
+   "to": "method_4648(Ljava/util/UUID;)Lnet/minecraft/class_8685;",
+   "args": [
+    0
+   ],
+   "basis": "DefaultPlayerSkin: the same DEFAULT_SKINS[floorMod(uuid.hashCode(), length)] (similarity 1.00); the array holds PlayerSkin where it held the skin type"
+  },
   "net/minecraft/class_109.<init>([Lnet/minecraft/class_5341;Ljava/util/Collection;)V": {
    "to": "<init>(Ljava/util/List;Ljava/util/Optional;)V",
    "args": [
@@ -108,6 +115,13 @@
    ],
    "basis": "1.20.2 made the loot / predicate classes codec records: the one constructor holds 1.20.1's body (same field stores; arrays became Lists, Item / Block / BlockEntityType / Potion / Enchantment became Holders)"
   },
+  "net/minecraft/class_161$class_162.<init>(Z)V": {
+   "to": "<init>()V",
+   "args": [
+    -1
+   ],
+   "basis": "Advancement.Builder's constructor of a fresh builder: the same default stores (AdvancementRewards.EMPTY, an empty criteria map, the AND requirements strategy); 1.20.2 sets the telemetry flag through sendsTelemetryEvent()"
+  },
   "net/minecraft/class_163.method_711(Ljava/util/Map;)V": {
    "to": "method_53691(Ljava/util/Collection;)V",
    "args": [
@@ -119,6 +133,17 @@
    "to": "method_8089(Z)Lcom/google/gson/JsonElement;",
    "args": [],
    "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_189.<init>(Ljava/lang/String;ILjava/lang/String;ILnet/minecraft/class_124;)V": {
+   "to": "<init>(Ljava/lang/String;ILjava/lang/String;Lnet/minecraft/class_124;)V",
+   "args": [
+    0,
+    -1,
+    2,
+    -1,
+    3
+   ],
+   "basis": "FrameType -> AdvancementType's one enum constructor: the same name / chat format / advancements.toast.<name> stores; 1.20.2 dropped the texture offset (sprites)"
   },
   "net/minecraft/class_2048.method_51706(Ljava/lang/String;Lnet/minecraft/class_5257;Lcom/google/gson/JsonElement;)Lnet/minecraft/class_5258;": {
    "to": "method_51706(Ljava/lang/String;Lnet/minecraft/class_5257;Lcom/google/gson/JsonElement;)Ljava/util/Optional;",
@@ -259,6 +284,16 @@
    ],
    "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
   },
+  "net/minecraft/class_2539.<init>(Ljava/lang/String;IILnet/minecraft/class_2539$class_4533;)V": {
+   "to": "<init>(Ljava/lang/String;ILjava/lang/String;Lnet/minecraft/class_2539$class_4533;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    3
+   ],
+   "basis": "ConnectionProtocol's one enum constructor: the same id and flow map stores; the numeric id became a name"
+  },
   "net/minecraft/class_2580.method_10934(I)Lnet/minecraft/class_1291;": {
    "to": "method_53251(Lnet/minecraft/class_1291;)Lnet/minecraft/class_1291;",
    "args": [
@@ -295,6 +330,15 @@
     0
    ],
    "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_310.method_51251(Lnet/minecraft/class_4341;Lnet/minecraft/class_4011;Lnet/minecraft/class_542$class_8495;)V": {
+   "to": "method_53528(Lnet/minecraft/class_310$class_8764;)V",
+   "args": [
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "Minecraft: the first screen after loading -- QuickPlay.connect when quick play is enabled, else the title screen; 1.20.2 takes the realms client and quick play data from the GameLoadCookie, no longer the reload instance, and moved the accessibility onboarding branch into its own method"
   },
   "net/minecraft/class_310.method_51736()V": {
    "to": "method_51736(Lnet/minecraft/class_310$class_8764;)V",
@@ -369,6 +413,19 @@
     2
    ],
    "basis": "1.20.2 made the loot / predicate classes codec records: the one constructor holds 1.20.1's body (same field stores; arrays became Lists, Item / Block / BlockEntityType / Potion / Enchantment became Holders)"
+  },
+  "net/minecraft/class_453.<init>(Ljava/lang/String;IIIIII)V": {
+   "to": "<init>(Ljava/lang/String;ILnet/minecraft/class_453$class_8670;Lnet/minecraft/class_453$class_8670;III)V",
+   "args": [
+    0,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "AdvancementTabType's one enum constructor: the same width / height / max stores; the texture offsets became sprites"
   },
   "net/minecraft/class_4558.method_27853(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_195;": {
    "to": "method_27853(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4558$class_8788;",
@@ -453,6 +510,25 @@
    ],
    "basis": "1.20.2 made the loot / predicate classes codec records: the one constructor holds 1.20.1's body (same field stores; arrays became Lists, Item / Block / BlockEntityType / Potion / Enchantment became Holders)"
   },
+  "net/minecraft/class_5646.method_32431(Ljava/lang/String;)Lnet/minecraft/class_5646;": {
+   "to": "method_53432(Ljava/lang/String;)Lnet/minecraft/class_5646$class_5648;",
+   "args": [
+    0
+   ],
+   "basis": "ContextNbtProvider: the same \"block_entity\" test choosing BLOCK_ENTITY's getter or forEntity(EntityTarget.getByName); 1.20.2 answers the getter and its caller wraps it in the provider"
+  },
+  "net/minecraft/class_5682$class_5771.<init>(Ljava/lang/String;IIIII)V": {
+   "to": "<init>(Ljava/lang/String;ILnet/minecraft/class_2960;II)V",
+   "args": [
+    0,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "ClientBundleTooltip.Texture's one enum constructor: the same width / height stores; the texture offsets became a sprite"
+  },
   "net/minecraft/class_5739$class_5740.<init>(JLnet/minecraft/class_5712;Lnet/minecraft/class_243;)V": {
    "to": "<init>(JLnet/minecraft/class_5321;Lnet/minecraft/class_243;)V",
    "args": [
@@ -515,6 +591,18 @@
    ],
    "basis": "1.20.2 made the loot / predicate classes codec records: the one constructor holds 1.20.1's body (same field stores; arrays became Lists, Item / Block / BlockEntityType / Potion / Enchantment became Holders)"
   },
+  "net/minecraft/class_7591$class_7592.<init>(Ljava/lang/String;IIIII)V": {
+   "to": "<init>(Ljava/lang/String;ILnet/minecraft/class_2960;II)V",
+   "args": [
+    0,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "GuiMessageTag.Icon's one enum constructor: the same width / height stores; the texture offsets became a sprite"
+  },
   "net/minecraft/class_77.<init>(Lnet/minecraft/class_1792;II[Lnet/minecraft/class_5341;[Lnet/minecraft/class_117;)V": {
    "to": "<init>(Lnet/minecraft/class_6880;IILjava/util/List;Ljava/util/List;)V",
    "args": [
@@ -551,6 +639,14 @@
     1
    ],
    "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_8221.method_49761(Lcom/mojang/serialization/Dynamic;Ljava/lang/String;)Lcom/mojang/serialization/Dynamic;": {
+   "to": "method_52469(Lcom/mojang/serialization/Dynamic;Ljava/lang/String;)Ljava/util/stream/Stream;",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "BlockEntitySignDoubleSidedEditableTextFix: the same four <prefix>1..4 line reads of the sign tag; 1.20.2 answers their stream and its caller builds the list 1.20.1 built here"
   },
   "net/minecraft/class_8221.method_49762(Lcom/mojang/serialization/Dynamic;)Lcom/mojang/serialization/Dynamic;": {
    "to": "method_52474(Lcom/mojang/serialization/Dynamic;)Lcom/mojang/serialization/Dynamic;",

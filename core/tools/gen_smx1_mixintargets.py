@@ -75,6 +75,44 @@ JUDGED = {
          "NbtIo.readUnnamedTag: the same private method with its only caller read(DataInput, NbtAccounter); 1.20.2 dropped "
          "the depth (1.20.1's caller always passed 0; the accounter tracks depth now) and moved the guarded load into "
          "readTagSafe (method_52892), which it calls"),
+    # smx1c 2026-10-27, MixinCause target-private-similar (javap -c -p of both bodies)
+    "net/minecraft/class_8221.method_49761(Lcom/mojang/serialization/Dynamic;Ljava/lang/String;)Lcom/mojang/serialization/Dynamic;":
+        ("method_52469(Lcom/mojang/serialization/Dynamic;Ljava/lang/String;)Ljava/util/stream/Stream;",
+         "BlockEntitySignDoubleSidedEditableTextFix: the same four <prefix>1..4 line reads of the sign tag; 1.20.2 answers "
+         "their stream and its caller builds the list 1.20.1 built here"),
+    "net/minecraft/class_5646.method_32431(Ljava/lang/String;)Lnet/minecraft/class_5646;":
+        ("method_53432(Ljava/lang/String;)Lnet/minecraft/class_5646$class_5648;",
+         "ContextNbtProvider: the same \"block_entity\" test choosing BLOCK_ENTITY's getter or forEntity(EntityTarget.getByName); "
+         "1.20.2 answers the getter and its caller wraps it in the provider"),
+    "net/minecraft/class_1068.method_47438(Ljava/util/UUID;)Lnet/minecraft/class_1068$class_7921;":
+        ("method_4648(Ljava/util/UUID;)Lnet/minecraft/class_8685;",
+         "DefaultPlayerSkin: the same DEFAULT_SKINS[floorMod(uuid.hashCode(), length)] (similarity 1.00); the array holds "
+         "PlayerSkin where it held the skin type"),
+    "net/minecraft/class_310.method_51251(Lnet/minecraft/class_4341;Lnet/minecraft/class_4011;Lnet/minecraft/class_542$class_8495;)V":
+        ("method_53528(Lnet/minecraft/class_310$class_8764;)V",
+         "Minecraft: the first screen after loading -- QuickPlay.connect when quick play is enabled, else the title screen; "
+         "1.20.2 takes the realms client and quick play data from the GameLoadCookie, no longer the reload instance, and "
+         "moved the accessibility onboarding branch into its own method"),
+    "net/minecraft/class_161$class_162.<init>(Z)V":
+        ("<init>()V",
+         "Advancement.Builder's constructor of a fresh builder: the same default stores (AdvancementRewards.EMPTY, an empty "
+         "criteria map, the AND requirements strategy); 1.20.2 sets the telemetry flag through sendsTelemetryEvent()"),
+    "net/minecraft/class_189.<init>(Ljava/lang/String;ILjava/lang/String;ILnet/minecraft/class_124;)V":
+        ("<init>(Ljava/lang/String;ILjava/lang/String;Lnet/minecraft/class_124;)V",
+         "FrameType -> AdvancementType's one enum constructor: the same name / chat format / advancements.toast.<name> stores; "
+         "1.20.2 dropped the texture offset (sprites)"),
+    "net/minecraft/class_2539.<init>(Ljava/lang/String;IILnet/minecraft/class_2539$class_4533;)V":
+        ("<init>(Ljava/lang/String;ILjava/lang/String;Lnet/minecraft/class_2539$class_4533;)V",
+         "ConnectionProtocol's one enum constructor: the same id and flow map stores; the numeric id became a name"),
+    "net/minecraft/class_453.<init>(Ljava/lang/String;IIIIII)V":
+        ("<init>(Ljava/lang/String;ILnet/minecraft/class_453$class_8670;Lnet/minecraft/class_453$class_8670;III)V",
+         "AdvancementTabType's one enum constructor: the same width / height / max stores; the texture offsets became sprites"),
+    "net/minecraft/class_5682$class_5771.<init>(Ljava/lang/String;IIIII)V":
+        ("<init>(Ljava/lang/String;ILnet/minecraft/class_2960;II)V",
+         "ClientBundleTooltip.Texture's one enum constructor: the same width / height stores; the texture offsets became a sprite"),
+    "net/minecraft/class_7591$class_7592.<init>(Ljava/lang/String;IIIII)V":
+        ("<init>(Ljava/lang/String;ILnet/minecraft/class_2960;II)V",
+         "GuiMessageTag.Icon's one enum constructor: the same width / height stores; the texture offsets became a sprite"),
 }
 for _k, _to in {
     "net/minecraft/class_55.<init>([Lnet/minecraft/class_79;[Lnet/minecraft/class_5341;[Lnet/minecraft/class_117;Lnet/minecraft/class_5658;Lnet/minecraft/class_5658;)V":
