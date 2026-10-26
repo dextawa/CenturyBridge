@@ -1,5 +1,14 @@
 {
  "_s212_basis": "s212 (step owner 1.21.1 -> 1.21.2): hand-judged entries, each checked with javap -c -p of both releases",
+ "classRenames": {
+  "net/minecraft/class_330$class_331": "net/minecraft/class_10093$class_331",
+  "net/minecraft/class_5514$class_5516": "net/minecraft/class_9847$class_5516",
+  "net/minecraft/class_3143$class_3144": "net/minecraft/class_3144",
+  "net/minecraft/class_3143$class_9251": "net/minecraft/class_3144$class_9251",
+  "net/minecraft/class_3143$class_9252": "net/minecraft/class_3144$class_9252",
+  "net/minecraft/class_525$class_7749": "net/minecraft/class_7749"
+ },
+ "_classRenames_basis": "same intermediary id under another outer class (javap -p -c both): MapRenderer$MapInstance -> MapTextureManager$MapInstance keeps field_2046/field_2048/field_34044, <init>, method_37451/method_37450/method_1776/close with the same bodies (1.21.2 dropped the RenderType field_21689 and the outer field_2047 and moved the draw method_1777 to the render-state path: those stay open); TextFilterClient$PlayerContext -> ServerTextFilter$PlayerContext keeps its fields and method_31288/method_31289 (join/leave method_31287/method_31290 moved down to TextFilterClient$1); TeleportCommand$LookAt/LookAtEntity/LookAtPosition -> LookAt and its nested records, same members and method_13772 bodies; CreateWorldScreen$DataPackReloadCookie -> DataPackReloadCookie, same record",
  "callReshapes": {
   "net/minecraft/class_26.method_17922(Ljava/lang/String;)Ljava/io/File;": {
    "desc": "(Ljava/lang/String;)Ljava/nio/file/Path;",
@@ -11,6 +20,17 @@
   }
  },
  "mixinTargets": {
+  "net/minecraft/class_330$class_331.<init>(Lnet/minecraft/class_330;ILnet/minecraft/class_22;)V": {
+   "to": "<init>(Lnet/minecraft/class_10093;ILnet/minecraft/class_22;)V",
+   "args": [-1, 1, 2],
+   "basis": "MapInstance's constructor under MapTextureManager: the same body (super, needsUpdate = true, data, new DynamicTexture(128, 128, true), textureManager.register(\"map/\" + id, texture)) without the RenderType it built from the location (javap); the outer MapRenderer has no 1.21.2 counterpart of its type"
+  },
+  "net/minecraft/class_5514$class_5516.<init>(Lnet/minecraft/class_5514;Lcom/mojang/authlib/GameProfile;)V": {
+   "to": "<init>(Lnet/minecraft/class_9847;Lcom/mojang/authlib/GameProfile;)V",
+   "args": [0, 1],
+   "narrow": true,
+   "basis": "PlayerContext's constructor under ServerTextFilter: the same body (outer, profile, a ProcessorMailbox -> ConsecutiveExecutor on the outer's worker pool named after the player) (javap); the outer widened from TextFilterClient to its 1.21.2 superclass ServerTextFilter"
+  },
   "com/mojang/blaze3d/systems/RenderSystem._setShaderTexture(ILnet/minecraft/class_2960;)V": {
    "to": "setShaderTexture(ILnet/minecraft/class_2960;)V",
    "args": [0, 1],

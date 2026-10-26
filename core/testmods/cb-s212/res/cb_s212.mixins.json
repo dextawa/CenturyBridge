@@ -9,7 +9,8 @@
     "FurnaceCanBurnMixin",
     "DataStorageInvoker",
     "ExplosionSeenMixin",
-    "ExplosionSeenQualifiedMixin"
+    "ExplosionSeenQualifiedMixin",
+    "TeleportLookAtMixin"
   ],
   "injectors": {
     "defaultRequire": 1
