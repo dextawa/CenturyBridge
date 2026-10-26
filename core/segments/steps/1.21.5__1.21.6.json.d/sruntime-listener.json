@@ -1,0 +1,74 @@
+{
+ "_sruntime_listener_basis":"1.21.6 turned PacketSendListener (class_7648) from an interface of send callbacks into a utility class of netty ChannelFutureListener factories, and every send that took one takes a ChannelFutureListener (Connection.send x2, ServerCommonPacketListenerImpl.send, Fabric API PacketSender / LoginPacketSender.sendPacket; javap 1.21.5 / 1.21.6 and fabric-networking-api-v1 4.5.0 / 5.0.1). The facade gives the 1.21.5 interface back; rt/CbPacketListeners turns a 1.21.5 listener into what 1.21.5's Connection did with it on the write's future and back. Calls are redirected, overrides of the old shape hooked (vanilla's netty listener carried as a 1.21.5 listener), their super calls bridged. CenturyBridge's 1.20.5 CbFapiFutureListenerMixin retires: its holder is a ChannelFutureListener doing what the mixin added, and 1.21.6's Connection adds the listener it is given to the write's future itself.",
+ "classRenames": {
+  "net/minecraft/class_7648": "top/dext/centurybridge/step/v1_21_6/facade/PacketSendListener"
+ },
+ "retiredClasses": {
+  "top/dext/centurybridge/step/v1_20_5/mixin/CbFapiFutureListenerMixin": "1.21.6's Connection.sendInternal adds the ChannelFutureListener it is given to the write's future; CbFutureListenerCallbacks is that listener (its delegate, then FIRE_EXCEPTION_ON_FAILURE, what the mixin added), handed over by CbPacketListeners.listener. The mixin's target took a PacketSendListener, gone at 1.21.6."
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2535.method_10752(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners#send",
+  "net/minecraft/class_2535.method_52906(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners#send",
+  "net/minecraft/class_8609.method_52391(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners#send",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners#sendPacket",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_8710;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners#sendPacket",
+  "net/fabricmc/fabric/api/networking/v1/LoginPacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners#sendPacket"
+ },
+ "superRedirects": {
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_8710;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners#superSendPacket",
+  "net/fabricmc/fabric/api/networking/v1/LoginPacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners#superSendPacket"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_10752(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V",
+   "new": "method_10752(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;)V",
+   "onlyUnder": "net/minecraft/class_2535",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners.callbacks(Lio/netty/channel/ChannelFutureListener;)Lnet/minecraft/class_7648;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners.superSend(Ltop/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners$SuperConnectionSend;Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners$SuperConnectionSend",
+   "superAccessors": ["method_10752(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;)V"],
+   "basis": "1.21.6's Connection.send(packet, listener): a 1.21.5 subclass's send(packet, callbacks) gets vanilla's listener as a 1.21.5 one (sent on unchanged); its super.send reaches 1.21.6's with the listener back"
+  },
+  {
+   "old": "method_52906(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V",
+   "new": "method_52906(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;Z)V",
+   "onlyUnder": "net/minecraft/class_2535",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners.callbacks(Lio/netty/channel/ChannelFutureListener;)Lnet/minecraft/class_7648;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners.superSend(Ltop/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners$SuperConnectionSendFlush;Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners$SuperConnectionSendFlush",
+   "superAccessors": ["method_52906(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;Z)V"],
+   "basis": "1.21.6's Connection.send(packet, listener, flush), as send(packet, listener)"
+  },
+  {
+   "old": "method_52391(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V",
+   "new": "method_52391(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;)V",
+   "onlyUnder": "net/minecraft/class_8609",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners.callbacks(Lio/netty/channel/ChannelFutureListener;)Lnet/minecraft/class_7648;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners.superSend(Ltop/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners$SuperCommonSend;Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners$SuperCommonSend",
+   "superAccessors": ["method_52391(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;)V"],
+   "basis": "1.21.6's ServerCommonPacketListenerImpl.send(packet, listener), as Connection.send"
+  },
+  {
+   "old": "sendPacket(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V",
+   "new": "sendPacket(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/networking/v1/PacketSender",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners.callbacks(Lio/netty/channel/ChannelFutureListener;)Lnet/minecraft/class_7648;",
+   "basis": "Fabric API 1.21.6's abstract PacketSender.sendPacket(packet, listener): a 1.21.5 implementation's sendPacket(packet, callbacks) gets the listener as a 1.21.5 one (abstract in 1.21.5: no super call)"
+  },
+  {
+   "old": "sendPacket(Lnet/minecraft/class_8710;Lnet/minecraft/class_7648;)V",
+   "new": "sendPacket(Lnet/minecraft/class_8710;Lio/netty/channel/ChannelFutureListener;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/networking/v1/PacketSender",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners.callbacks(Lio/netty/channel/ChannelFutureListener;)Lnet/minecraft/class_7648;",
+   "basis": "Fabric API 1.21.6's default PacketSender.sendPacket(payload, listener): a 1.21.5 override gets the listener as a 1.21.5 one; its super call is 1.21.5's default (superRedirects)"
+  },
+  {
+   "old": "sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lnet/minecraft/class_7648;)V",
+   "new": "sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lio/netty/channel/ChannelFutureListener;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/networking/v1/LoginPacketSender",
+   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbPacketListeners.callbacks(Lio/netty/channel/ChannelFutureListener;)Lnet/minecraft/class_7648;",
+   "basis": "Fabric API 1.21.6's default LoginPacketSender.sendPacket(channel, buf, listener), as PacketSender's"
+  }
+ ]
+}
