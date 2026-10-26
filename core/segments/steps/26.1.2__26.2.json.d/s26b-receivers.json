@@ -1,0 +1,20 @@
+{
+  "_s26b_receivers": "s26b, queue item 0 (C11): calls 26.2 makes on an object 26.1.2's receiver holds (javap of both: 26.1.2 minecraft.setScreen(s) is 26.2 minecraft.gui.setScreen(s), GETFIELD Minecraft.gui then INVOKEVIRTUAL Gui.setScreen; getToastManager -> Gui.toastManager, getChatListener -> Gui.chatListener, getMainRenderTarget -> GameRenderer.mainRenderTarget, 26.1.2 Gui.getChat/setTimes/setNowPlaying/getBossOverlay/extractDebugOverlay -> Hud). Converters: rt/CbS26Receivers",
+  "mixinReceivers": {
+    "net/minecraft/client/Minecraft>net/minecraft/client/gui/Gui": {
+      "toV": "top/dext/centurybridge/step/v26_2/rt/CbS26Receivers#guiToMinecraft(Lnet/minecraft/client/gui/Gui;)Lnet/minecraft/client/Minecraft;",
+      "toW": "top/dext/centurybridge/step/v26_2/rt/CbS26Receivers#minecraftToGui(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/gui/Gui;",
+      "basis": "26.2 Minecraft.gui is public final, set once in Minecraft's constructor to the Gui it builds with this (new Gui(this, hud, guiRenderState)); Gui.minecraft is private final, that constructor argument. toW reads minecraft.gui, toV gui.minecraft (checked: its gui is this Gui), so they undo each other. The step's delegates (CbDelegatesClient#Minecraft_setScreen, _getChatListener, _getToastManager) read the same minecraft.gui"
+    },
+    "net/minecraft/client/Minecraft>net/minecraft/client/renderer/GameRenderer": {
+      "toV": "top/dext/centurybridge/step/v26_2/rt/CbS26Receivers#gameRendererToMinecraft(Lnet/minecraft/client/renderer/GameRenderer;)Lnet/minecraft/client/Minecraft;",
+      "toW": "top/dext/centurybridge/step/v26_2/rt/CbS26Receivers#minecraftToGameRenderer(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/renderer/GameRenderer;",
+      "basis": "26.2 Minecraft.gameRenderer is public final, set once in Minecraft's constructor to new GameRenderer(this, ...); GameRenderer.minecraft is private final, that argument. toW reads minecraft.gameRenderer, toV gameRenderer.minecraft (checked: its gameRenderer is this one). The step's delegate CbDelegatesClient#Minecraft_getMainRenderTarget reads the same minecraft.gameRenderer"
+    },
+    "net/minecraft/client/gui/Gui>net/minecraft/client/gui/Hud": {
+      "toV": "top/dext/centurybridge/step/v26_2/rt/CbS26Receivers#hudToGui(Lnet/minecraft/client/gui/Hud;)Lnet/minecraft/client/gui/Gui;",
+      "toW": "top/dext/centurybridge/step/v26_2/rt/CbS26Receivers#guiToHud(Lnet/minecraft/client/gui/Gui;)Lnet/minecraft/client/gui/Hud;",
+      "basis": "26.2 Gui.hud is public final, the Hud Minecraft's constructor builds (new Hud(this)) and hands to new Gui(this, hud, ...); Hud.minecraft is private final, that same Minecraft, whose gui is that Gui. toW reads gui.hud, toV hud.minecraft.gui (checked: its hud is this Hud). The step's delegates for 26.1.2 Gui's public members (CbDelegatesClient#Gui_*) read the same gui.hud"
+    }
+  }
+}

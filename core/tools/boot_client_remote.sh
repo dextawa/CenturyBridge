@@ -22,6 +22,9 @@
 #
 # Environment:
 #   CB_CLIMB=1|0          climb the jars from 1.20.1 (default 1) or use them as they are
+#   CB_FROM=<V>           with CB_CLIMB=1: the jars are V-era mods and climb from V (default 1.20.1)
+#   CB_NATIVE_MODS="<jar> ..."  with CB_CLIMB=1: T-native mods on beta2 (paths relative to ~/cbwork), copied in
+#                         unconverted beside the climbed ones (climb_mods.sh)
 #   CB_FAPI=1|0           with CB_CLIMB=0: add T's Fabric API (default 1; a climb always has it)
 #   CB_REUSE_LAYERS=1     keep agents/<name>/wt-T/runtime-T when it exists (default: rebuild the layers
 #                         in wt-T, a copy of the uploaded tree per target)
@@ -32,6 +35,8 @@
 #                         tally: CB_READY='CB-CLIENTTEST [0-9]+/[0-9]+' CB_SHOTS="" CB_EXIT_WAIT=30
 #   CB_EXIT_WAIT=<s>      after the ready line and the shots, wait up to this long for the client to stop
 #                         itself (a test mod that quits when done) before killing it (default 0)
+#   CB_INPUT="<s>:<sequence>|<s>:<sequence>"  client_input.py sequences played <s> seconds after the ready line
+#                         (for a test mod that does not print "input ready" itself), e.g. CB_INPUT="5:key F3"
 #   CB_WORLD=<save dir>   a world on beta2, copied into saves/cbworld and entered with
 #                         --quickPlaySingleplayer cbworld (the ready line default becomes "joined the
 #                         game"); CB_WORLD=seed:<seed> generates it once with T's vanilla dedicated server
@@ -75,7 +80,7 @@ if [ "${1:-}" != __remote ] && [ "${1:-}" != __inner ]; then
     retry $SSH "rm -rf ~/$RUN && mkdir -p ~/$RUN/in"
     for j in "$@"; do retry $SCP "$j" "dext@beta2.dext.top:$RUN/in/"; done
     ENV=""
-    for v in CB_CLIMB CB_FAPI CB_REUSE_LAYERS CB_SHOTS CB_EXIT_WAIT CB_READY CB_WAIT CB_WORLD CB_GREP CB_CLIENTS CB_CLIENT_RT CB_ASSETS CB_JAVA; do
+    for v in CB_CLIMB CB_FROM CB_NATIVE_MODS CB_INPUT CB_FAPI CB_REUSE_LAYERS CB_SHOTS CB_EXIT_WAIT CB_READY CB_WAIT CB_WORLD CB_GREP CB_CLIENTS CB_CLIENT_RT CB_ASSETS CB_JAVA; do
         [ -n "${!v+set}" ] && ENV="$ENV $v=$(printf '%q' "${!v}")"
     done
     # started/ is made before the launch (mkdir is atomic): an ssh drop after the launch must not make
@@ -175,7 +180,7 @@ PYEOF
                 || { tail -8 "$OUT/layers.log"; end "===RESULT: LAYERS FAILED==="; }
             echo "   $(grep -c '^layer' "$OUT/layers.log") layers in $((SECONDS - S)) s"
         fi
-        echo "== climb: ${#IN[@]} mod(s) 1.20.1 -> $T"
+        echo "== climb: ${#IN[@]} mod(s) ${CB_FROM:-1.20.1} -> $T"
         bash "$AG/core/tools/climb_mods.sh" "$WT" "$T" "$RUN/conv" "$MODS" "${IN[@]}" || end "===RESULT: CLIMB FAILED==="
         cp "$RUN/conv/climb.log" "$OUT/climb.log"
     else
@@ -308,6 +313,21 @@ for i in $(seq 1 "${CB_WAIT:-300}"); do
 done
 echo "ready line ($READY): $STATE at $(el) s"
 if [ "$STATE" = ready ]; then
+    # CB_INPUT: input for a test mod that does not ask for it itself, played after the ready line
+    if [ -n "${CB_INPUT:-}" ]; then
+        (
+            IFS='|' read -ra EV <<< "${CB_INPUT//||/|}"
+            gone=0
+            for ev in "${EV[@]}"; do
+                t="${ev%%:*}"; seq="${ev#*:}"
+                while [ "$gone" -lt "$t" ]; do sleep 1; gone=$((gone + 1)); done
+                kill -0 "$CPID" 2>/dev/null || break
+                echo "+$t s: $seq" >> "$OUT/input.log"
+                python3 "$(dirname "$0")/client_input.py" "$seq" >> "$OUT/input.log" 2>&1 \
+                    || echo "client_input.py failed" >> "$OUT/input.log"
+            done
+        ) &
+    fi
     AT=0
     for t in ${CB_SHOTS-10 25 40}; do
         while [ "$AT" -lt "$t" ]; do sleep 1; AT=$((AT + 1)); rss; done

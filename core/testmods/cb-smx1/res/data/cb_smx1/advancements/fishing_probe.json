@@ -1,0 +1,16 @@
+{
+  "criteria": {
+    "fishing_probe": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type_specific": {
+            "type": "fishing_hook",
+            "in_open_water": true,
+            "cb_smx1_fishing_probe": true
+          }
+        }
+      }
+    }
+  }
+}

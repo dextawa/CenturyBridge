@@ -1,6 +1,10 @@
 package top.dext.centurybridge.step.v26_1.rt;
 
+import it.unimi.dsi.fastutil.objects.AbstractObject2DoubleMap;
+import it.unimi.dsi.fastutil.objects.Object2DoubleArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
+import it.unimi.dsi.fastutil.objects.ObjectSet;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
@@ -25,6 +29,102 @@ import net.minecraft.world.phys.Vec3;
 public final class CbWallEntityFluids {
 
     private CbWallEntityFluids() {
+    }
+
+    /** the heights 1.21.11's measurement recorded for tags 26.1 does not track (mixin/CbWallEntityFluidMixin) */
+    public interface Legacy {
+        Object2DoubleMap<TagKey<Fluid>> cb$legacyFluidHeights();
+    }
+
+    /**
+     * 1.21.11 Entity.fluidHeight (class_1297.field_5964, protected, read by subclasses): a view answering what
+     * getFluidHeight(tag) answers -- 26.1's EntityFluidInteraction for water and lava, 1.21.11's measurement for any
+     * other tag -- and listing the tags with a height. A value a mod puts is kept and read back through the view (and,
+     * for a tag 26.1 does not track, through getFluidHeight); for water and lava 26.1's own measurement stays what vanilla
+     * reads (known loss).
+     */
+    public static Object2DoubleMap<TagKey<Fluid>> fluidHeight(Entity entity) {
+        return new HeightView(entity);
+    }
+
+    /** 1.21.11 `entity.fluidHeight = map` (class_1297.field_5964): its heights replace the recorded ones */
+    public static void setFluidHeight(Entity entity, Object2DoubleMap<TagKey<Fluid>> heights) {
+        Object2DoubleMap<TagKey<Fluid>> legacy = ((Legacy) entity).cb$legacyFluidHeights();
+        if (heights instanceof HeightView view && view.entity == entity) {
+            return;
+        }
+        legacy.clear();
+        legacy.putAll(heights);
+    }
+
+    private static final class HeightView extends AbstractObject2DoubleMap<TagKey<Fluid>> {
+        final Entity entity;
+
+        HeightView(Entity entity) {
+            this.entity = entity;
+        }
+
+        private Object2DoubleMap<TagKey<Fluid>> legacy() {
+            return ((Legacy) this.entity).cb$legacyFluidHeights();
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public double getDouble(Object key) {
+            if (!(key instanceof TagKey<?> tag)) {
+                return defRetValue;
+            }
+            Object2DoubleMap<TagKey<Fluid>> legacy = legacy();
+            if (legacy.containsKey(tag)) {
+                return legacy.getDouble(tag);
+            }
+            return this.entity.getFluidHeight((TagKey<Fluid>) tag);
+        }
+
+        @Override
+        public boolean containsKey(Object key) {
+            return key instanceof TagKey<?> && (legacy().containsKey(key) || getDouble(key) != 0.0);
+        }
+
+        @Override
+        public double put(TagKey<Fluid> key, double value) {
+            double old = getDouble(key);
+            legacy().put(key, value);
+            return old;
+        }
+
+        @Override
+        public double removeDouble(Object key) {
+            double old = getDouble(key);
+            legacy().removeDouble(key);
+            return old;
+        }
+
+        @Override
+        public void clear() {
+            legacy().clear();
+        }
+
+        @Override
+        public int size() {
+            return entries().size();
+        }
+
+        private Object2DoubleMap<TagKey<Fluid>> entries() {
+            Object2DoubleMap<TagKey<Fluid>> all = new Object2DoubleArrayMap<>(legacy());
+            for (TagKey<Fluid> tag : List.of(FluidTags.WATER, FluidTags.LAVA)) {
+                double h = this.entity.getFluidHeight(tag);
+                if (h != 0.0 && !all.containsKey(tag)) {
+                    all.put(tag, h);
+                }
+            }
+            return all;
+        }
+
+        @Override
+        public ObjectSet<Object2DoubleMap.Entry<TagKey<Fluid>>> object2DoubleEntrySet() {
+            return entries().object2DoubleEntrySet();
+        }
     }
 
     /** whether 26.1's EntityFluidInteraction tracks the tag (Entity's constructor: water and lava) */

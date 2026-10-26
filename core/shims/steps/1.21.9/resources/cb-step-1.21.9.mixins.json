@@ -5,15 +5,22 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CbAreaEffectCloudMixin",
+    "CbLargePayloadConnectionMixin",
     "CbLevelParticlesPacketMixin",
+    "CbPassthroughEncoderMixin",
     "CbProfilesServerMixin"
   ],
   "client": [
     "CbBlockEntityDispatchMixin",
     "CbBlockEntityStateMixin",
     "CbClientAvatarMixin",
+    "CbDebugTextMixin",
+    "CbElytraRotationMixin",
     "CbCullFrustumMixin",
-    "CbParticleEngineMixin"
+    "CbDebugHudMixin",
+    "CbParticleEngineMixin",
+    "CbWorldRenderEventsMixin",
+    "CbWorldRenderTargetsMixin"
   ],
   "server": [],
   "injectors": {

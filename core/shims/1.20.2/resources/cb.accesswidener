@@ -212,3 +212,14 @@ accessible class net/minecraft/class_4559$class_4561
 accessible method net/minecraft/class_4559$class_4561 <init> (Ljava/lang/String;)V
 accessible class net/minecraft/class_4559$class_4563
 accessible method net/minecraft/class_4559$class_4563 <init> (Ljava/util/Optional;Ljava/util/Optional;)V
+# ContextAwarePredicate(conditions) is package-private in 1.20.2: the restored 1.20.1 ContextAwarePredicate.fromElement
+# (CbAdvContextPredicateJson) and its unmixable copy (CbAdvPredicateJson) build the predicate with it, as 1.20.1's body did.
+accessible method net/minecraft/class_5258 <init> (Ljava/util/List;)V
+# PlayerPredicate's advancement predicates (package-private in 1.20.2): the restored 1.20.1 PlayerPredicate readers
+# (CbAdvPlayerPredicateJson) and their unmixable copies (CbAdvPredicateJson) build them as 1.20.1's bodies did.
+accessible class net/minecraft/class_4553$class_4556
+accessible class net/minecraft/class_4553$class_4554
+accessible method net/minecraft/class_4553$class_4554 <init> (Lit/unimi/dsi/fastutil/objects/Object2BooleanMap;)V
+accessible class net/minecraft/class_4553$class_4555
+accessible method net/minecraft/class_4553$class_4555 <init> (Z)V
+accessible class net/minecraft/class_4553$class_8749

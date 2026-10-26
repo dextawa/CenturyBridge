@@ -164,13 +164,18 @@ public final class Chain {
     public final java.util.Map<String, MixinReceiver> mixinReceivers = new java.util.HashMap<>();
 
     /**
-     * A static V method whose code W keeps, the same, in a static method of another class ("mixinMoves", judged by
-     * an area agent from both bodies): key "V owner.name(desc)", value {"to": "W owner.name(desc)", "basis"}.
-     * 1.21.11 moved RenderType's static factories to RenderTypes. MixinRepair moves an injector selecting the V
-     * method onto a mixin of the W class it adds (same descriptor, a static handler that reads nothing of its own
-     * mixin), its anchors judged in the W body. Mods' plain calls are the staticRedirects' business.
+     * A V method whose code W keeps, the same, in a method of another class ("mixinMoves", judged by an area agent
+     * from both bodies): key "V owner.name(desc)", value {"to": "W owner.name(desc)", "basis"}. 1.21.11 moved
+     * RenderType's static factories to RenderTypes; 1.21.9 ParticleEngine's provider registration to
+     * ParticleResources. MixinRepair moves an injector selecting the V method onto a mixin of the W class it adds
+     * (the handler's static-ness that of the W method, an instance handler that does not read this -- it runs on
+     * another object --, nothing of its own mixin read), its anchors judged in the W body. Mods' plain calls are the
+     * redirects' business.
      */
     public final java.util.Map<String, String> mixinMoves = new java.util.HashMap<>();
+
+    /** "splitRenames": a V interface W made a final record, kept in two spellings in mods (SplitRename) */
+    public final java.util.Map<String, SplitRename.Split> splitRenames = new java.util.HashMap<>();
 
     /**
      * How a V method's answer and the W method's answer turn into each other for an @Inject whose selector
@@ -885,6 +890,51 @@ public final class Chain {
             todo.addAll(rawInterfaces(i));
         }
         return null;
+    }
+
+    /**
+     * Whether a source Fabric API class still stands directly over the same game class on the target: the first
+     * class up the target's Fabric API superclass chain from {@code libClass} that is not a Fabric API class is
+     * {@code gameClass} (both in analysis names, spelled through the step's classRenames and past the wall the wall
+     * rename). False when the target has no such library class or its Fabric API was not read.
+     */
+    public boolean targetLibraryOver(String libClass, String gameClass) {
+        String l = classRenames.getOrDefault(libClass, libClass);
+        String g = classRenames.getOrDefault(gameClass, gameClass);
+        if (wallRemapper != null) {
+            l = wallRemapper.map(l);
+            g = wallRemapper.map(g);
+        }
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        String c = l;
+        if (!targetLibAccess.containsKey(c)) {
+            return false;
+        }
+        while (c != null && targetLibAccess.containsKey(c) && seen.add(c)) {
+            c = targetLibSuperOf.get(c);
+        }
+        return g.equals(c);
+    }
+
+    /**
+     * Whether an instance method (analysis names) resolves on the target, JVM-style from {@code owner}, to a
+     * non-abstract declaration: a body the target runs for it (a vanilla javac bridge, say). Spelled as
+     * {@link #linksOnTarget} spells it.
+     */
+    public boolean concreteOnTarget(String owner, String name, String desc) {
+        if (targetRaw == null) {
+            return false;
+        }
+        String o = classRenames.getOrDefault(owner, owner);
+        String d = renamedDesc(desc);
+        String n = name;
+        if (wallRemapper != null) {
+            n = wallRemapper.mapMethodName(o, name, d);
+            d = wallRemapper.mapMethodDesc(d);
+            o = wallRemapper.map(o);
+        }
+        String hit = resolveOnTargetJvm(o, n, d);
+        return hit != null && !hit.contains(" abstract") && !hit.endsWith(" static");
     }
 
     /**
@@ -3117,6 +3167,15 @@ public final class Chain {
                     String where = "mixinReceivers " + k;
                     c.mixinReceivers.put(k, new MixinReceiver(parseStaticRef(where, o.get("toV").getAsString()),
                         parseStaticRef(where, o.get("toW").getAsString()), o.has("basis") ? o.get("basis").getAsString() : ""));
+                }
+            }
+            if (root.has("splitRenames")) {
+                var sr = root.getAsJsonObject("splitRenames");
+                for (String k : sr.keySet()) {
+                    var o = sr.getAsJsonObject(k);
+                    String where = "splitRenames " + k;
+                    c.splitRenames.put(k, new SplitRename.Split(k, o.get("facade").getAsString(),
+                        parseStaticRef(where, o.get("toW").getAsString()), parseStaticRef(where, o.get("toV").getAsString())));
                 }
             }
             if (root.has("mixinMoves")) {

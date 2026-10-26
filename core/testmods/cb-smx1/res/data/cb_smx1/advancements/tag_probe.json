@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "tag_probe": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "killing_blow": {
+          "tags": [
+            {
+              "id": "minecraft:is_fall",
+              "expected": true,
+              "cb_smx1_tag_probe": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

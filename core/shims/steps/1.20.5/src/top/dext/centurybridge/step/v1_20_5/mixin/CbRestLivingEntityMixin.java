@@ -7,6 +7,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbRestAttributes;
 import top.dext.centurybridge.step.v1_20_5.rt.CbRestMobType;
 import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 import top.dext.centurybridge.step.v1_20_5.rt.Guard;
+import top.dext.centurybridge.step.v1_20_5.rt.CbRoutes;
 
 /**
  * 1.20.4 LivingEntity's eye height: getEyeHeight(pose, dimensions) was final there -- 0.2 sleeping,
@@ -25,7 +26,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.Guard;
  * falls through to its superclass instead of forwarding back.
  */
 @Mixin(value = net.minecraft.class_1309.class, priority = CbVanillaReads.PRIORITY)
-public abstract class CbRestLivingEntityMixin {
+public abstract class CbRestLivingEntityMixin implements CbRoutes.BreakHand {
 
     @Shadow
     public abstract double method_45325(net.minecraft.class_6880<net.minecraft.class_1320> attribute);
@@ -61,6 +62,8 @@ public abstract class CbRestLivingEntityMixin {
     }
 
     /** 1.20.4 broadcastBreakEvent(InteractionHand): the main hand's slot or the off hand's */
+    @Override
+    @CbVanillaReads("CbRouteBreakMixin: broadcastBreakEvent(slot) for a hand slot goes through it when a converted mod mixes it")
     public void method_20236(net.minecraft.class_1268 hand) {
         boolean entered = Guard.cbEnter(this);
         try {

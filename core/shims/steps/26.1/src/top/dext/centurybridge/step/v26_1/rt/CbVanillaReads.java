@@ -18,6 +18,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
 public @interface CbVanillaReads {
+    /**
+     * The priority of a layer mixin that restores members: below every mod's, so a mod's 1.21.11 injector may anchor
+     * anywhere in a restored body (Mixin's InjectionPoint.checkPriority refuses an injection into a method another
+     * mixin merged at a higher priority).
+     */
+    int PRIORITY = 1;
+
     String value();
 
     /** what vanilla's path carries, "<injector>@<At value>"; absent = the whole member */

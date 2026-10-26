@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.s6bn.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerSaveMixin",
+    "RecipeBookPackMixin",
+    "HorseJumpMixin",
+    "InventorySaveMixin",
+    "ContainerSaveMixin",
+    "EnderSaveMixin",
+    "AbilitiesSaveMixin",
+    "LeashTickMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

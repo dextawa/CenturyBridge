@@ -1,0 +1,11 @@
+{
+  "classRenames": {
+    "top/dext/centurybridge/compat/fapi/event/registry/FabricRegistry": "net/fabricmc/fabric/api/event/registry/FabricRegistry"
+  },
+  "retiredClasses": {
+    "top/dext/centurybridge/compat/fapi/event/registry/FabricRegistry": "native returns: step 1 gave back 1.20.1's fabric-registry-sync-v0 (0.92.12) FabricRegistry under CB's name because the Fabric API of 1.20.2 ... 1.21 has no FabricRegistry (processedMods of each client, beta2); 1.21.1's (fabric-registry-sync-v0 0.116.15) ships it again: interface net.fabricmc.fabric.api.event.registry.FabricRegistry with the one default method addAlias(class_2960, class_2960)V, the layer copy's shape (javap -p both); converted mods' references move to it at this step (classRenames). Left in place, from 1.21.4 on both SimpleRegistryMixin copies @Overwrite addAlias (real client 1.21.4/1.21.8: overwrite-conflict, Fabric API's skipped)",
+    "top/dext/centurybridge/shims/v1_20_2/CbFapiRegistryAliasInterface": "native returns: 1.21.1's fabric-registry-sync-v0 injects FabricRegistry into class_2378 itself (loom:injected_interfaces); the layer's mixin made class_2378 implement the retired copy",
+    "top/dext/centurybridge/shims/v1_20_2/CbFapiSimpleRegistryAliases": "native returns: 1.21.1's SimpleRegistryMixin keeps the aliases (field aliases, addAlias with the same checks, aliasIdentifierParameter / aliasRegistryKeyParameter on the id and key lookups, and the entry-added refusal 'Tried registering %s to registry %s, but it is already an alias (for %s)': javap -c -p fabric-registry-sync-v0-0.116.15 SimpleRegistryMixin), what this mixin reproduced from 1.20.1. Left in place it overwrote addAlias beside Fabric API's and its @Inject on method_10272 failed at apply from 1.20.5 on",
+    "top/dext/centurybridge/compat/fapi/impl/registry/sync/CbFapiRegistryAliases": "native returns: the log lines of the retired CbFapiSimpleRegistryAliases (its only caller); 1.21.1's SimpleRegistryMixin logs its own"
+  }
+}

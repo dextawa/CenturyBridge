@@ -318,6 +318,38 @@ public final class Driver {
                 String nativeState = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1n", "state_probe")));
                 check("predicate-state-native-mixin-" + phase, nativeState.contains("\"axis\":\"z\"") && !nativeState.contains("cbsmx1n_state_probe"),
                     "route " + ROUTE + ": cb_smx1n:state_probe criteria " + nativeState + " (axis z = the native mixin acted)");
+                // entity family: player_killed_entity's entity (EntityPredicate.fromJson(json, name, context), and through it
+                // fromJson(json) and EntityFlagsPredicate), levitation's distance, effects_changed's effects
+                String[][] converted = {
+                    {"entity_probe", "minecraft:creeper", "minecraft:zombie", "entity-predicate-return-all"},
+                    {"flags_probe", "\"is_baby\":true", "\"is_on_fire\":true", "flags-predicate-return-all"},
+                    {"distance_probe", "7.0", "\"y\"", "distance-predicate-return-all"},
+                    {"effects_probe", "minecraft:glowing", "minecraft:speed", "effects-predicate-return-all"},
+                    {"dsource_probe", "minecraft:is_fire", "minecraft:is_explosion", "dsource-predicate-return-all"},
+                    {"damage_probe", "11.0", "\"min\":2.0", "damage-predicate-return-all"},
+                    {"tag_probe", "minecraft:is_freezing", "minecraft:is_fall", "tag-predicate-return-all"},
+                    {"player_probe", "creative", "survival", "player-predicate-return-all"},
+                    {"lightning_probe", "\"min\":3", "\"min\":1", "lightning-predicate-return-all"},
+                    {"fishing_probe", "\"in_open_water\":false", "\"in_open_water\":true", "fishing-predicate-return-all"},
+                    {"slime_probe", "\"min\":4", "\"min\":1", "slime-predicate-return-all"}};
+                for (String[] c : converted) {
+                    String crit = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1", c[0])));
+                    check("predicate-" + c[0] + "-converted-mixin-" + phase, ROUTE ? crit.contains(c[1]) && !crit.contains(c[2])
+                        : crit.contains(c[2]) && !crit.contains(c[1]), "route " + ROUTE + ": cb_smx1:" + c[0] + " criteria " + crit
+                        + " (handler returned " + COUNT.getOrDefault(c[3], 0) + " time(s))");
+                }
+                String[][] natives = {
+                    {"entity_probe", "minecraft:skeleton", "minecraft:zombie"},
+                    {"context_probe", "minecraft:witch", "minecraft:zombie"},
+                    {"distance_probe", "9.0", "\"y\""},
+                    {"effects_probe", "minecraft:glowing", "minecraft:speed"},
+                    {"dsource_probe", "minecraft:is_lightning", "minecraft:is_explosion"},
+                    {"damage_probe", "13.0", "\"min\":2.0"}};
+                for (String[] c : natives) {
+                    String crit = criteriaJson(advancements.method_12896(new net.minecraft.class_2960("cb_smx1n", c[0])));
+                    check("predicate-" + c[0] + "-native-mixin-" + phase, crit.contains(c[1]) && !crit.contains(c[2]),
+                        "route " + ROUTE + ": cb_smx1n:" + c[0] + " criteria " + crit + " (" + c[1] + " = the native mixin acted)");
+                }
                 java.util.TreeMap<String, String> forms = new java.util.TreeMap<>();
                 for (net.minecraft.class_161 a : advancements.method_12893()) {
                     String id = a.method_688().toString();
@@ -394,6 +426,24 @@ public final class Driver {
         } catch (Throwable t) {
             t.printStackTrace();
             check("effect-converted-mixin", false, "threw " + t);
+        }
+        // the routes' load-time cost: /reload eight times (recipes, advancements, loot... all reread), each timed; compare
+        // the line of a boot with the routes on to one with -Dcenturybridge.legacyJsonRoute=false
+        try {
+            long[] ms = new long[8];
+            for (int i = 0; i < ms.length; ++i) {
+                long t0 = System.nanoTime();
+                java.util.concurrent.CompletableFuture<Void> reload = server.method_29439(server.method_3836().method_29210());
+                server.method_18857(reload::isDone);
+                reload.join();
+                ms[i] = (System.nanoTime() - t0) / 1_000_000L;
+            }
+            long[] sorted = ms.clone();
+            java.util.Arrays.sort(sorted);
+            System.out.println("CB-SMX1 timing reload route=" + ROUTE + " ms=" + java.util.Arrays.toString(ms) + " median="
+                + (sorted[3] + sorted[4]) / 2 + " min=" + sorted[0]);
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
         System.out.println("CB-SMX1 summary ok=" + ok + " fail=" + fail);
     }

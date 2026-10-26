@@ -10,6 +10,21 @@ public final class CbPrioritySplit {
     private CbPrioritySplit() {
     }
 
+    /** CbEntityFireballRawMixin / CbEntityThrowableItemRawMixin: 1.20.4's getItemRaw, called virtually */
+    public interface ItemRaw {
+        net.minecraft.class_1799 cb$v1_20_5$itemRaw();
+    }
+
+    /** CbEntityPiglinSoundMixin: 1.20.4's makeSound(sound), called virtually */
+    public interface PiglinSound {
+        void cb$v1_20_5$makeSound(net.minecraft.class_3414 sound);
+    }
+
+    /** CbRestSwimNodeEvaluatorMixin: 1.20.4's isDiagonalNodeValid, called virtually */
+    public interface SwimDiagonal {
+        boolean cb$v1_20_5$isDiagonalNodeValid(net.minecraft.class_9 diagonal, net.minecraft.class_9 a, net.minecraft.class_9 b);
+    }
+
     /** CbEntityHorseMixin: 1.20.4's getCustomJump, called virtually */
     public interface HorseJump {
         double cb$v1_20_5$customJump();

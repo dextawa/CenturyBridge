@@ -854,6 +854,33 @@ public final class WiringCheck {
                 }
             }
         }
+        // splitRenames: X -> facade F with toW (F)X and toV (X)F, both existing with their exact descriptors, and a basis
+        if (root.has("splitRenames")) {
+            for (var e : root.getAsJsonObject("splitRenames").entrySet()) {
+                checked++;
+                var o = e.getValue().getAsJsonObject();
+                String where = "splitRenames " + e.getKey();
+                if (!o.has("facade") || !o.has("toW") || !o.has("toV") || !o.has("basis")) {
+                    problems.add(where + ": needs \"facade\", \"toW\", \"toV\" and \"basis\"");
+                    continue;
+                }
+                String f = o.get("facade").getAsString();
+                String tw = o.get("toW").getAsString().trim();
+                String tv = o.get("toV").getAsString().trim();
+                int pw = tw.indexOf('(');
+                int pv = tv.indexOf('(');
+                if (pv <= 0 || pw <= 0) {
+                    problems.add(where + ": a converter is not OWNER#name(desc)");
+                    continue;
+                }
+                wantMethod(where + " toW", tw.substring(0, pw), null, tw.substring(pw));
+                wantMethod(where + " toV", tv.substring(0, pv), null, tv.substring(pv));
+                String x = e.getKey();
+                if (!tw.substring(pw).equals("(L" + f + ";)L" + x + ";") || !tv.substring(pv).equals("(L" + x + ";)L" + f + ";")) {
+                    problems.add(where + ": toW must be (L" + f + ";)L" + x + "; and toV (L" + x + ";)L" + f + ";");
+                }
+            }
+        }
         // mixinReceivers: "V>W" with toV (W)V and toW (V)W, both existing with their exact descriptors, and a basis
         if (root.has("mixinReceivers")) {
             for (var e : root.getAsJsonObject("mixinReceivers").entrySet()) {
