@@ -9,20 +9,19 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import top.dext.centurybridge.step.v26_1.rt.CbWallAudio;
+import top.dext.centurybridge.step.v26_1.rt.CbWallLegacyCalls;
 
 /**
  * 1.21.11's Library instance members 26.1 replaced with DeviceList / DeviceTracker (rt/CbWallAudio):
  * init(deviceName, directional) (class_4225.method_19661), hasDefaultDeviceChanged() (method_38723: whether the
  * system's default device differs from the one last seen, remembering the new one -- as 1.21.11 did, starting from
- * the default at init) and getAvailableSoundDevices() (method_38502).
+ * the default at init, which mixin/CbWallAudioLibraryReadsMixin records) and getAvailableSoundDevices() (method_38502).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(Library.class)
-public abstract class CbWallAudioLibraryMixin {
+@Mixin(value = Library.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbWallAudioLibraryMixin implements CbWallLegacyCalls.AudioLibraryLegacy {
 
     @Unique
     private String cb$defaultDevice;
@@ -30,8 +29,8 @@ public abstract class CbWallAudioLibraryMixin {
     @Shadow
     public abstract void init(String deviceName, DeviceList devices, boolean directionalAudio);
 
-    @Inject(method = "init(Ljava/lang/String;Lcom/mojang/blaze3d/audio/DeviceList;Z)V", at = @At("TAIL"))
-    private void cb$rememberDefault(String deviceName, DeviceList devices, boolean directionalAudio, CallbackInfo ci) {
+    @Override
+    public synchronized void cb$rememberDefaultDevice() {
         cb$defaultDevice = CbWallAudio.getDefaultDeviceName();
     }
 

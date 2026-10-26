@@ -42,7 +42,7 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallDepthFar;
  * <li>lightTexture(): the renderer's lightmap, its state extractor and state as 1.21.11's LightTexture.</li>
  * </ul>
  */
-@Mixin(GameRenderer.class)
+@Mixin(value = GameRenderer.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallGameRendererMixin implements CbWallDepthFar, CbWallPick {
 
     @Shadow

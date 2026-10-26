@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.Direction;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 
 /**
  * 1.21.11's AbstractEndPortalRenderer.submit and the hooks it read: getOffsetUp() (0.75: the top face's height),
@@ -28,7 +29,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * renderers keep their own submit.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(AbstractEndPortalRenderer.class)
+@Mixin(value = AbstractEndPortalRenderer.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallEndPortalRendererMixin {
 
     protected float getOffsetUp() {

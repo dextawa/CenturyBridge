@@ -39,6 +39,20 @@ public class SwallTestMod implements ModInitializer {
     }
 
     /** a 1.21.11 subclass: its calls of inherited ExpirableValue members name this class */
+    /** 1.21.11: an item reading its own components in its constructor (the stack size and the item name it was built with) */
+    static class LegacyComponentsItem extends net.minecraft.class_1792 {
+        final Object stackSizeSeen;
+        final String nameSeen;
+
+        LegacyComponentsItem(net.minecraft.class_1792.class_1793 properties) {
+            super(properties);
+            net.minecraft.class_9323 components = this.method_57347();
+            this.stackSizeSeen = components.method_58694(net.minecraft.class_9334.field_50071);
+            net.minecraft.class_2561 name = components.method_58694(net.minecraft.class_9334.field_50239);
+            this.nameSeen = name != null && name.method_10851() instanceof net.minecraft.class_2588 t ? t.method_11022() : String.valueOf(name);
+        }
+    }
+
     static class Sub extends class_4831<String> {
         Sub() {
             super("sub", 5L);
@@ -58,6 +72,17 @@ public class SwallTestMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        // 1.21.11 Item.components read in the item's own constructor (CbWallItemComponentsMixin): 1.21.11 built them there
+        try {
+            net.minecraft.class_5321<net.minecraft.class_1792> key = net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41197,
+                net.minecraft.class_2960.method_60655("cbswall", "legacy_components"));
+            LegacyComponentsItem item = new LegacyComponentsItem(new net.minecraft.class_1792.class_1793().method_7889(16).method_63686(key));
+            net.minecraft.class_2378.method_39197(net.minecraft.class_7923.field_41178, key, item);
+            String seen = item.stackSizeSeen + "/" + item.nameSeen;
+            check("item.componentsInConstructor", "16/item.cbswall.legacy_components".equals(seen), seen);
+        } catch (Throwable t) {
+            check("item.componentsInConstructor", false, t);
+        }
         // blocks are built while the block registry still makes intrusive holders (before it freezes)
         try {
             legacyStem = net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41175,
