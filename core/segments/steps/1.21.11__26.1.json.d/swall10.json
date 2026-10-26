@@ -1,0 +1,26 @@
+{
+ "instanceFieldGetters": {
+  "net/minecraft/class_11949.field_62663:F": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#bannerAngle",
+  "net/minecraft/class_11949.field_62664:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#bannerStanding",
+  "net/minecraft/class_11972.field_62746:Lnet/minecraft/class_2350;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#skullDirection",
+  "net/minecraft/class_11972.field_62747:F": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#skullRotationDegrees",
+  "net/minecraft/class_10016.field_53323:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#endermanCarriedBlock",
+  "net/minecraft/class_10075.field_53597:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#tntBlockState",
+  "net/minecraft/class_11679.field_62049:Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#copperGolemBlockOnAntenna",
+  "net/minecraft/class_10429.field_55319:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#snowGolemHasPumpkin",
+  "net/minecraft/class_10003.field_53273:Lnet/minecraft/class_8113$class_8115$class_8225;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#blockDisplayBlockRenderState",
+  "net/minecraft/class_11791.field_62249:Lnet/minecraft/class_1920;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#movingBlockLevel"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_11949.field_62663:F": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setBannerAngle",
+  "net/minecraft/class_11949.field_62664:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setBannerStanding",
+  "net/minecraft/class_11972.field_62746:Lnet/minecraft/class_2350;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setSkullDirection",
+  "net/minecraft/class_11972.field_62747:F": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setSkullRotationDegrees",
+  "net/minecraft/class_10016.field_53323:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setEndermanCarriedBlock",
+  "net/minecraft/class_10075.field_53597:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setTntBlockState",
+  "net/minecraft/class_11679.field_62049:Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setCopperGolemBlockOnAntenna",
+  "net/minecraft/class_10429.field_55319:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setSnowGolemHasPumpkin",
+  "net/minecraft/class_10003.field_53273:Lnet/minecraft/class_8113$class_8115$class_8225;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setBlockDisplayBlockRenderState",
+  "net/minecraft/class_11791.field_62249:Lnet/minecraft/class_1920;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setMovingBlockLevel"
+ }
+}
