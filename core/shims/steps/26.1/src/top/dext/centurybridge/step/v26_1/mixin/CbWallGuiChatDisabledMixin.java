@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.Gui;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.Unique;
  * only a mod's own calls set it).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(Gui.class)
+@Mixin(value = Gui.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallGuiChatDisabledMixin {
 
     @Shadow

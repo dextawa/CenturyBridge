@@ -7,10 +7,11 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.bossevents.CustomBossEvent;
 import net.minecraft.server.bossevents.CustomBossEvents;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import top.dext.centurybridge.step.v26_1.rt.CbWallBossEvents;
 
 /** 1.21.11 CustomBossEvents members 26.1 dropped, given back (covers; bodies in rt/CbWallBossEvents) */
-@Mixin(CustomBossEvents.class)
+@Mixin(value = CustomBossEvents.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallBossEventsMixin {
 
     public CustomBossEvent create(Identifier id, Component name) {

@@ -49,8 +49,9 @@ def main():
             RULE + ".method_58434(Ljava/util/List;F)Lnet/minecraft/class_9424$class_9425;": RT,
         },
         "instanceRedirects": {
-            "net/minecraft/class_1766.method_8022()Lnet/minecraft/class_1832;": RT,
-            "net/minecraft/class_1829.method_8022()Lnet/minecraft/class_1832;": RT,
+            # per-class names: 1.21.5 folds DiggerItem / SwordItem into Item (no overloads told apart by them)
+            "net/minecraft/class_1766.method_8022()Lnet/minecraft/class_1832;": RT + "#method_8022Digger",
+            "net/minecraft/class_1829.method_8022()Lnet/minecraft/class_1832;": RT + "#method_8022Sword",
             # through a TieredItem reference (an Item since the rename): the class's, the facade's or the 1.21.2 tool's
             "net/minecraft/class_1831.method_8022()Lnet/minecraft/class_1832;": RT,
             "net/minecraft/class_1831.method_7837()I": MEMBERS,

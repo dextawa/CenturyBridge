@@ -16,7 +16,9 @@
     "WalkTypesMixin",
     "SwimDiagonalMixin",
     "RunningGoalsMixin",
-    "DeflectMixin"
+    "DeflectMixin",
+    "BufItemMixin",
+    "BufProfileMixin"
   ],
   "injectors": {
     "defaultRequire": 1

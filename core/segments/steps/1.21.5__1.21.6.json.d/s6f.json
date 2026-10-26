@@ -1,0 +1,72 @@
+{
+ "covers": [
+  "net/minecraft/class_10592.method_66381()V"
+ ],
+ "_covers_basis_s6f": "TicketStorage.purgeStaleTickets() restored on TicketStorage (CbTicketStorageRestoredMixin)",
+ "callReshapes": {
+  "net/minecraft/class_340.method_67545()V": {
+   "desc": "(Lnet/minecraft/class_4184;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbScreens#mainCamera()Lnet/minecraft/class_4184;"
+   ],
+   "basis": "1.21.5 DebugScreenOverlay.render3dCrosshair() drew with the model-view Gui.renderCrosshair had rotated by gameRenderer.getMainCamera(); 1.21.6's render3dCrosshair(Camera) rotates by its argument and GameRenderer passes its main camera (javap)"
+  },
+  "net/minecraft/class_9110.method_56142(ZZLnet/minecraft/class_8030;)V": {
+   "desc": "(Lnet/minecraft/class_332;IIZZLnet/minecraft/class_8030;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbScreens#screenGraphics()Lnet/minecraft/class_332;",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbScreens#mouseX()I",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbScreens#mouseY()I",
+    "keep:0",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "1.21.5 WidgetTooltipHolder.refreshTooltipForNextRenderPass(hovered, focused, rect) handed the tooltip to Minecraft.screen, drawn at the mouse at the end of its renderWithTooltip; 1.21.6's takes the GuiGraphics and mouse and hands it to that GuiGraphics, drawn by renderDeferredTooltip at the end of the same renderWithTooltip (javap)"
+  },
+  "net/minecraft/class_382.method_65025(Lnet/minecraft/class_382$class_10364;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;I)V": {
+   "desc": "(Lnet/minecraft/class_382$class_10364;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw#flatGlyphs()Z"
+   ],
+   "basis": "1.21.5 BakedSheetGlyph.renderChar always kept the depth step between shadow and glyph; 1.21.6's flag drops every offset when true (javap)"
+  },
+  "net/minecraft/class_382.method_22944(Lnet/minecraft/class_382$class_328;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;I)V": {
+   "desc": "(Lnet/minecraft/class_382$class_328;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbFontDraw#flatGlyphs()Z"
+   ],
+   "basis": "1.21.5 BakedSheetGlyph.renderEffect always drew at the effect's own depth (comp_3311); 1.21.6's flag draws at depth 0 when true (javap)"
+  }
+ },
+ "frameDefaults": {
+  "method_57734()V": {
+   "0": "top/dext/centurybridge/step/v1_21_6/rt/CbScreens#blurGraphics()Lnet/minecraft/class_332;"
+  },
+  "method_56142(ZZLnet/minecraft/class_8030;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_6/rt/CbScreens#screenGraphics()Lnet/minecraft/class_332;",
+   "1": "top/dext/centurybridge/step/v1_21_6/rt/CbScreens#mouseX()I",
+   "2": "top/dext/centurybridge/step/v1_21_6/rt/CbScreens#mouseY()I"
+  },
+  "method_67545()V": {
+   "0": "top/dext/centurybridge/step/v1_21_6/rt/CbScreens#mainCamera()Lnet/minecraft/class_4184;"
+  },
+  "method_65025(Lnet/minecraft/class_382$class_10364;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;I)V": {
+   "4": "zero: false keeps the depth offsets between a glyph's shadow, body and effects, which 1.21.5's renderChar always applied (the 0.03f shadow step, javap); 1.21.6 drops them (0) only when told true"
+  },
+  "method_22944(Lnet/minecraft/class_382$class_328;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;I)V": {
+   "4": "zero: false draws the effect at its own depth (comp_3311), which 1.21.5's renderEffect always used (javap); 1.21.6 draws it at depth 0 only when told true"
+  },
+  "method_66381()V": {
+   "0": "top/dext/centurybridge/step/v1_21_6/rt/CbChunkTickets#chunkMap(Lnet/minecraft/class_10592;)Lnet/minecraft/class_3898;"
+  }
+ },
+ "_frameDefaults_basis_s6f": "javap of both releases for each; see the javadoc of each static (CbScreens.blurGraphics / screenGraphics / mouseX / mouseY / mainCamera, CbChunkTickets.chunkMap): the values vanilla 1.21.6 passes where 1.21.5's body used a fixed or ambient one -- the current screen's GuiGraphics (1.21.5 handed tooltips to Minecraft.screen and blurred at once), the scaled cursor GameRenderer gives renderWithTooltip, the main camera, the chunk map of the ticket storage's own ServerChunkCache"
+}

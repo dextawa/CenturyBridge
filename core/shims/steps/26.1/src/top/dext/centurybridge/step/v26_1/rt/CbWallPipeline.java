@@ -21,7 +21,6 @@ import net.minecraft.client.renderer.ShaderDefines;
 import net.minecraft.resources.Identifier;
 import top.dext.centurybridge.step.v26_1.facade.DepthTestFunction;
 import top.dext.centurybridge.step.v26_1.facade.LogicOp;
-import top.dext.centurybridge.step.v26_1.mixin.CbWallPipelineBuilderAccess;
 import top.dext.centurybridge.step.v26_1.mixin.CbWallRenderPipelinesAccess;
 
 /**
@@ -230,9 +229,10 @@ public final class CbWallPipeline {
     static VState state(RenderPipeline.Builder builder) {
         VState s = BUILDERS.get(builder);
         if (s == null) {
-            // a builder no 1.21.11 call started: its 1.21.11 view is what it holds
-            CbWallPipelineBuilderAccess a = (CbWallPipelineBuilderAccess) builder;
-            s = viewOf(a.cb$depthStencilState(), a.cb$colorTargetState());
+            // a builder no 1.21.11 call started: its 1.21.11 view is what it holds (read off a snippet of it, which copies
+            // the builder's states and changes nothing; no accessor on the builder's fields, which 26.2 reshaped)
+            RenderPipeline.Snippet held = builder.buildSnippet();
+            s = viewOf(held.depthStencilState(), held.colorTargetState());
             BUILDERS.put(builder, s);
         }
         return s;

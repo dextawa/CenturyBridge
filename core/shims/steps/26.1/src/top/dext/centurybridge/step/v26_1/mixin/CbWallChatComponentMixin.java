@@ -8,6 +8,7 @@ import net.minecraft.client.multiplayer.chat.GuiMessageTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MessageSignature;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Shadow;
 
 /**
@@ -16,7 +17,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * addClientSystemMessage source) -- and keeps the tag given, as 1.21.11 did.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(ChatComponent.class)
+@Mixin(value = ChatComponent.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallChatComponentMixin {
 
     @Shadow

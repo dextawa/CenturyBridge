@@ -6,17 +6,16 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v26_1.facade.ContainerListener;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
+import top.dext.centurybridge.step.v26_1.rt.CbWallLegacyCalls;
 
 /**
  * 1.21.11's SimpleContainer.addListener / removeListener, given back (covers): the listeners are told, in the
- * order added, each time the container changes (setChanged), as 1.21.11's were.
+ * order added, each time the container changes (setChanged, mixin/CbWallSimpleContainerReadsMixin), as 1.21.11's were.
  */
-@Mixin(SimpleContainer.class)
-public abstract class CbWallSimpleContainerMixin {
+@Mixin(value = SimpleContainer.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbWallSimpleContainerMixin implements CbWallLegacyCalls.ContainerListenersLegacy {
 
     @Unique
     private List<ContainerListener> cb$listeners;
@@ -34,8 +33,8 @@ public abstract class CbWallSimpleContainerMixin {
         }
     }
 
-    @Inject(method = "setChanged", at = @At("TAIL"))
-    private void cb$changed(CallbackInfo ci) {
+    @Override
+    public void cb$notifyListeners() {
         if (this.cb$listeners != null) {
             for (ContainerListener listener : this.cb$listeners) {
                 listener.method_5453((Container) (Object) this);

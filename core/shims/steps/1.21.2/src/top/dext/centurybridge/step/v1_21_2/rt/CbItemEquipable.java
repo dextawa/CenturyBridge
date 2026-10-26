@@ -89,8 +89,8 @@ public final class CbItemEquipable {
             bodySlot = CbItemArmor.super_method_7685(a);
             bodySound = CbItemArmor.super_method_31570(a);
         } else if (item instanceof class_4059 a) {
-            bodySlot = CbItemArmor.super_method_7685(a);
-            bodySound = CbItemArmor.super_method_31570(a);
+            bodySlot = CbItemArmor.super_method_7685Animal(a);
+            bodySound = CbItemArmor.super_method_31570Animal(a);
         } else {
             bodySlot = class_1304.field_6171; // ShieldItem: OFFHAND and Equipable's default sound (CbItemEquipableShieldMixin)
             bodySound = class_3417.field_14883;

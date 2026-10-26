@@ -23,12 +23,16 @@
     "CbLeashHorseRestoredMixin",
     "CbLeashCamelRestoredMixin",
     "CbLeashBoatRestoredMixin",
-    "CbLeashRouteMixin"
+    "CbLeashRouteMixin",
+    "CbChunkTicketsMixin",
+    "CbTicketStorageRestoredMixin"
   ],
   "client": [
     "CbRenderAttachedRegionMixin",
     "CbGuiHudLayersMixin",
     "CbTextureMultiMixin",
+    "CbTextureBlurMixin",
+    "CbTextureReloadBlurMixin",
     "CbScreenTooltipMixin"
   ],
   "server": [],

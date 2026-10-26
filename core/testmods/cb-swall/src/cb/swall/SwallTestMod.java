@@ -26,6 +26,8 @@ import net.minecraft.server.MinecraftServer;
 public class SwallTestMod implements ModInitializer {
 
     private static final List<String> FAILS = new ArrayList<>();
+    /** calls of the restored 1.21.11 furnace burn (mixin/FurnaceBurnMixin) */
+    public static final java.util.concurrent.atomic.AtomicInteger BURN_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     private static int passed;
 
     private static void check(String name, boolean ok, Object detail) {
@@ -39,6 +41,20 @@ public class SwallTestMod implements ModInitializer {
     }
 
     /** a 1.21.11 subclass: its calls of inherited ExpirableValue members name this class */
+    /** 1.21.11: an item reading its own components in its constructor (the stack size and the item name it was built with) */
+    static class LegacyComponentsItem extends net.minecraft.class_1792 {
+        final Object stackSizeSeen;
+        final String nameSeen;
+
+        LegacyComponentsItem(net.minecraft.class_1792.class_1793 properties) {
+            super(properties);
+            net.minecraft.class_9323 components = this.method_57347();
+            this.stackSizeSeen = components.method_58694(net.minecraft.class_9334.field_50071);
+            net.minecraft.class_2561 name = components.method_58694(net.minecraft.class_9334.field_50239);
+            this.nameSeen = name != null && name.method_10851() instanceof net.minecraft.class_2588 t ? t.method_11022() : String.valueOf(name);
+        }
+    }
+
     static class Sub extends class_4831<String> {
         Sub() {
             super("sub", 5L);
@@ -58,6 +74,20 @@ public class SwallTestMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        // 1.21.11 Item.components read in the item's own constructor (CbWallItemComponentsMixin): 1.21.11 built them there
+        try {
+            net.minecraft.class_5321<net.minecraft.class_1792> key = net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41197,
+                net.minecraft.class_2960.method_60655("cbswall", "legacy_components"));
+            LegacyComponentsItem item = new LegacyComponentsItem(new net.minecraft.class_1792.class_1793().method_7889(16).method_63686(key));
+            net.minecraft.class_2378.method_39197(net.minecraft.class_7923.field_41178, key, item);
+            String seen = item.stackSizeSeen + "/" + item.nameSeen;
+            check("item.componentsInConstructor", "16/item.cbswall.legacy_components".equals(seen), seen);
+            // 1.21.11 made stacks of an item before the registries loaded (26.1's ItemStack reads the item's holder)
+            int max = new net.minecraft.class_1799(item).method_7914();
+            check("item.stackBeforeBinding", max == 16, max);
+        } catch (Throwable t) {
+            check("item.componentsInConstructor", false, t);
+        }
         // blocks are built while the block registry still makes intrusive holders (before it freezes)
         try {
             legacyStem = net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41175,
@@ -661,6 +691,51 @@ public class SwallTestMod implements ModInitializer {
             && !a.equals(net.minecraft.class_3532.method_15394()), a);
     }
 
+    /**
+     * 1.21.11 world loading with a WorldData: WorldStem / LevelDataAndDimensions built from one (26.1 takes the data
+     * with its generation settings split off), and level.dat through a LevelStorageAccess of a scratch world while
+     * the server's own access is open too (getDataTag, getSummary, LevelStorageSource.getLevelDataAndDimensions)
+     */
+    private static void worldLoading(MinecraftServer server) {
+        net.minecraft.class_5219 data = server.method_27728();
+        net.minecraft.class_7780<net.minecraft.class_7659> registries = server.method_46221();
+        long seed = data.method_28057().method_28028();
+        try {
+            net.minecraft.class_6904 stem = new net.minecraft.class_6904(null, null, registries, data);
+            check("worldLoad.stem", stem.comp_359() == data && stem.comp_358() == registries
+                && stem.comp_359().method_28057().method_28028() == seed, stem);
+        } catch (Throwable t) {
+            check("worldLoad.stem", false, t);
+        }
+        net.minecraft.class_2378<net.minecraft.class_5363> stems = registries.method_45926().method_30530(net.minecraft.class_7924.field_41224);
+        try {
+            net.minecraft.class_7723.class_7725 complete = new net.minecraft.class_7723.class_7725(stems, net.minecraft.class_31.class_7729.field_40373);
+            net.minecraft.class_8895 both = new net.minecraft.class_8895(data, complete);
+            check("worldLoad.levelDataAndDimensions", both.comp_2008() == data && both.comp_2009() == complete
+                && both.comp_2008().method_28057().method_28028() == seed, both);
+        } catch (Throwable t) {
+            check("worldLoad.levelDataAndDimensions", false, t);
+        }
+        java.nio.file.Path dir = null;
+        try {
+            dir = java.nio.file.Files.createTempDirectory("cbswall-worlds");
+            net.minecraft.class_32 source = net.minecraft.class_32.method_26999(dir);
+            try (net.minecraft.class_32.class_5143 access = source.method_27002("scratch")) {
+                access.method_27425(registries.method_45926(), data);
+                com.mojang.serialization.Dynamic<?> tag = access.method_54545();
+                String name = tag.get("LevelName").asString("");
+                net.minecraft.class_34 summary = access.method_29584(tag);
+                net.minecraft.class_8895 loaded = net.minecraft.class_32.method_54523(tag, data.method_29589(), stems, registries.method_45926());
+                check("worldLoad.levelDat", name.equals(data.method_150()) && summary.method_252().equals(data.method_150())
+                    && "scratch".equals(summary.method_248()) && loaded.comp_2008().method_150().equals(data.method_150())
+                    && loaded.comp_2008().method_28057().method_28028() == seed,
+                    name + " / " + summary.method_252() + " / " + loaded.comp_2008().method_150() + " / " + loaded.comp_2008().method_28057().method_28028());
+            }
+        } catch (Throwable t) {
+            check("worldLoad.levelDat", false, t);
+        }
+    }
+
     /** 1.21.11 noise, mushroom configuration and NBT statics */
     private static void worldgenStatics(MinecraftServer server) {
         net.minecraft.class_3537 noise = net.minecraft.class_3537.method_39126(net.minecraft.class_5819.method_43049(42L), -3,
@@ -928,6 +1003,7 @@ public class SwallTestMod implements ModInitializer {
             legacyRegionStorage(server);
             legacyStructureData(server);
             recordViews(server);
+            worldLoading(server);
             worldgenStatics(server);
             interactPacket(server);
             timerQueue();
@@ -1387,6 +1463,7 @@ public class SwallTestMod implements ModInitializer {
             }
             net.minecraft.class_1799 out = be.method_5438(2);
             int used = be.method_27354(level, new net.minecraft.class_243(0, 100, 0)).size();
+            check("furnace.burn.mixedRoute", BURN_CALLS.get() >= 2, BURN_CALLS.get());
             check("furnace.burn.smelt", out.method_7909() == net.minecraft.class_1802.field_8620 && out.method_7947() == 2
                 && be.method_5438(0).method_7960() && used == 1, out + " input " + be.method_5438(0) + " recipes " + used);
         } catch (Throwable t) {

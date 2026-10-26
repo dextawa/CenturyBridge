@@ -64,3 +64,9 @@ accessible field net/minecraft/class_4668$class_5940$class_10542 comp_3462 Lnet/
 accessible field net/minecraft/class_757 field_60579 Lnet/minecraft/class_751;
 # CbHorses: AbstractHorse.setFlag, for 1.21.5's flag-only setStanding(boolean)
 accessible method net/minecraft/class_1496 method_6769 (IZ)V
+# CbRecipeBookSettingsRestoredMixin: 1.21.5's write(FriendlyByteBuf) reads TypeSettings' record fields directly (getfield)
+accessible field net/minecraft/class_5411$class_5412 comp_3247 Z
+accessible field net/minecraft/class_5411$class_5412 comp_3248 Z
+# CbScreens: the frame GUI render state (blurGraphics / screenGraphics) and whether it is already marked to blur
+accessible field net/minecraft/class_757 field_59966 Lnet/minecraft/class_11246;
+accessible field net/minecraft/class_11246 field_60314 I

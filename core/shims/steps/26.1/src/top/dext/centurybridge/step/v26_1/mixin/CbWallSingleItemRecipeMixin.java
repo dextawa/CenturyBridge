@@ -4,6 +4,7 @@ import net.minecraft.world.item.crafting.SingleItemRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v26_1.rt.CbWallRecipes;
@@ -14,7 +15,7 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallRecipes;
  * here and answered by group() -- given back for a 1.21.11 subclass that relied on SingleItemRecipe's -- and by
  * StonecutterRecipe's (CbWallStonecutterRecipeMixin).
  */
-@Mixin(SingleItemRecipe.class)
+@Mixin(value = SingleItemRecipe.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallSingleItemRecipeMixin implements CbWallRecipes.SingleItemGroup {
 
     @Unique

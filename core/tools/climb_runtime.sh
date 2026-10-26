@@ -42,7 +42,9 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
             cp "$JAR" "$OUT/"
         else
             rm -rf "$WD/layers/climb-$W"
-            "$JAVA" -Xmx8g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" "$W" "$T" \
+            # each step reads its own layer (layers/centurybridge-0.3.0+<step's W>.jar), as climb_mods.sh does for mods:
+            # the members a later layer restores (LayerMembers) and its redirect bodies are what this layer's mixins meet
+            "$JAVA" -Xmx8g -Dcb.layersDir="$WD/layers" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" "$W" "$T" \
                 "$WD/layers/climb-$W" "$JAR" > "$WD/layers/climb-$W.log" 2>&1 \
                 || { echo "layer $W: CLIMB FAILED"; tail -5 "$WD/layers/climb-$W.log"; exit 1; }
             cp "$WD/layers/climb-$W/centurybridge-0.3.0+$W+$T.jar" "$OUT/"
