@@ -1,0 +1,31 @@
+{
+ "_s212_basis": "s212 (step owner 1.21.1 -> 1.21.2): hand-judged entries, each checked with javap -c -p of both releases",
+ "callReshapes": {
+  "net/minecraft/class_26.method_17922(Ljava/lang/String;)Ljava/io/File;": {
+   "desc": "(Ljava/lang/String;)Ljava/nio/file/Path;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelSavedData#file(Ljava/nio/file/Path;)Ljava/io/File;",
+   "basis": "DimensionDataStorage.getDataFile(id): 1.21.1 new File(dataFolder, id + \".dat\"), 1.21.2 dataFolder.resolve(id + \".dat\") -- the same file as a Path (private: reached by mixin shadows / invokers, e.g. the 1.20.2 layer's CbSavedDataReadCover)"
+  }
+ },
+ "mixinMoves": {
+  "net/minecraft/class_761.method_3250(Lnet/minecraft/class_4587;)V": {
+   "to": "net/minecraft/class_9975.method_62312(Lnet/minecraft/class_4587;)V",
+   "basis": "LevelRenderer.renderEndSky(poseStack) -> SkyRenderer.renderEndSky(poseStack): same code (70 referenced members, same order); 1.21.1 called it only from renderSky, 1.21.2 only from LevelRenderer's sky pass (javap, callers)"
+  },
+  "net/minecraft/class_761.method_3255(Lnet/minecraft/class_289;)Lnet/minecraft/class_9801;": {
+   "to": "net/minecraft/class_9975.method_62308(Lnet/minecraft/class_289;)Lnet/minecraft/class_9801;",
+   "basis": "LevelRenderer.drawStars(tesselator) -> SkyRenderer.drawStars(tesselator): same seed 10842, same star loop (1.21.2 rotates with a Matrix3f where 1.21.1 used a Quaternionf); 1.21.1 called it only from createStars, 1.21.2 only from SkyRenderer's star buffer build"
+  },
+  "net/minecraft/class_761.method_51779(FFFF)Lnet/minecraft/class_243;": {
+   "to": "net/minecraft/class_863.method_62349(FFFF)Lnet/minecraft/class_243;",
+   "basis": "LevelRenderer.mixColor(hue, ...) (static) -> DebugRenderer's static of the same body (javap: identical); 1.21.1 called it only from renderVoxelShape, 1.21.2 only from the moved renderVoxelShape"
+  },
+  "net/minecraft/class_761.method_51778(F)Lnet/minecraft/class_243;": {
+   "to": "net/minecraft/class_863.method_62348(F)Lnet/minecraft/class_243;",
+   "basis": "LevelRenderer.colorFromHue(hue) (static) -> the same static, moved with mixColor (javap: identical); called only from it in both"
+  }
+ }
+}

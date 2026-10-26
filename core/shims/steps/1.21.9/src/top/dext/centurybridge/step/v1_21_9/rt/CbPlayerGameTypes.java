@@ -21,9 +21,4 @@ public final class CbPlayerGameTypes {
         class_1934 previous = input == null ? null : class_3222.method_32745(input, "previousPlayerGameType");
         player.field_13974.method_14261(player.method_32746(gameType), previous);
     }
-
-    /** FakePlayer.loadGameTypes(input): a call naming Fabric API's FakePlayer (ServerPlayer's member) */
-    public static void method_32748(net.fabricmc.fabric.api.entity.FakePlayer player, class_11368 input) {
-        method_32748((class_3222) player, input);
-    }
 }

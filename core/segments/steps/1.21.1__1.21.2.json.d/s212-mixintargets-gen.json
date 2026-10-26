@@ -1,0 +1,401 @@
+{
+ "_s212_mixinTargets_basis": "gen_s212_mixintargets.py over Main gen-mixin-targets (V/W bytecode); regenerate, never hand-edit",
+ "mixinTargets": {
+  "net/minecraft/class_1092.method_45896(Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
+   "to": "method_45896(Lnet/minecraft/class_9824;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "args": [
+    1,
+    2
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1299.method_17848(Lnet/minecraft/class_2487;Lnet/minecraft/class_1937;)Ljava/util/Optional;": {
+   "to": "method_17848(Lnet/minecraft/class_2487;Lnet/minecraft/class_1937;Lnet/minecraft/class_3730;)Ljava/util/Optional;",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1454.method_6593(Lnet/minecraft/class_1308;)V": {
+   "to": "method_6593(Lnet/minecraft/class_3218;Lnet/minecraft/class_1308;)V",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1510.method_6821(Lnet/minecraft/class_238;)Z": {
+   "to": "method_6821(Lnet/minecraft/class_3218;Lnet/minecraft/class_238;)Z",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1510.method_6827(Ljava/util/List;)V": {
+   "to": "method_6827(Lnet/minecraft/class_3218;Ljava/util/List;)V",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1511.method_6835(Lnet/minecraft/class_1282;)V": {
+   "to": "method_6835(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;)V",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1517.method_6841()V": {
+   "to": "method_6841(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1519.method_6844()V": {
+   "to": "method_6844(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1533.method_6936(Lnet/minecraft/class_1297;Z)V": {
+   "to": "method_6936(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Z)V",
+   "args": [
+    1,
+    2
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1560.method_38068(Lnet/minecraft/class_1282;Lnet/minecraft/class_1686;F)Z": {
+   "to": "method_38068(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;Lnet/minecraft/class_1686;F)Z",
+   "args": [
+    1,
+    2,
+    3
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1671.method_16830()V": {
+   "to": "method_16830(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1671.method_7475()V": {
+   "to": "method_7475(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1686.method_7498(Ljava/lang/Iterable;Lnet/minecraft/class_1297;)V": {
+   "to": "method_7498(Lnet/minecraft/class_3218;Ljava/lang/Iterable;Lnet/minecraft/class_1297;)V",
+   "args": [
+    1,
+    2
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1686.method_7500()V": {
+   "to": "method_7500(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1927$class_4179.<init>(Ljava/lang/String;I)V": {
+   "to": "<init>(Ljava/lang/String;IZ)V",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1928$class_4314.<init>(Ljava/util/function/Supplier;Ljava/util/function/Function;Ljava/util/function/BiConsumer;Lnet/minecraft/class_1928$class_5199;)V": {
+   "to": "<init>(Ljava/util/function/Supplier;Ljava/util/function/Function;Ljava/util/function/BiConsumer;Lnet/minecraft/class_1928$class_5199;Lnet/minecraft/class_7699;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1959.method_21740(Lnet/minecraft/class_2338;)F": {
+   "to": "method_21740(Lnet/minecraft/class_2338;I)F",
+   "args": [
+    0
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_1959.method_8707(Lnet/minecraft/class_2338;)F": {
+   "to": "method_8707(Lnet/minecraft/class_2338;I)F",
+   "args": [
+    0
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2246.method_26109(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;": {
+   "to": "method_26109(Ljava/lang/String;Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2246.method_55133(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2248;": {
+   "to": "method_55133(Ljava/lang/String;Lnet/minecraft/class_2248;)Lnet/minecraft/class_2248;",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2288.method_9779(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)V": {
+   "to": "method_9779(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2288.method_9780(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1918;Z)V": {
+   "to": "method_9780(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_1918;Z)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2457.method_10485(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": {
+   "to": "method_10485(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_9904;Z)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2538.method_10780(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V": {
+   "to": "method_10780(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Ljava/util/List;)V",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2542.method_10835(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;)Z": {
+   "to": "method_10835(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;)Z",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2609.method_11192(Lnet/minecraft/class_5455;Lnet/minecraft/class_8786;Lnet/minecraft/class_2371;I)Z": {
+   "to": "method_11192(Lnet/minecraft/class_5455;Lnet/minecraft/class_8786;Lnet/minecraft/class_9696;Lnet/minecraft/class_2371;I)Z",
+   "args": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2609.method_11203(Lnet/minecraft/class_5455;Lnet/minecraft/class_8786;Lnet/minecraft/class_2371;I)Z": {
+   "to": "method_11203(Lnet/minecraft/class_5455;Lnet/minecraft/class_8786;Lnet/minecraft/class_9696;Lnet/minecraft/class_2371;I)Z",
+   "args": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_2609.method_17029(Lnet/minecraft/class_1937;Lnet/minecraft/class_2609;)I": {
+   "to": "method_17029(Lnet/minecraft/class_3218;Lnet/minecraft/class_2609;)I",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_3218.method_14188()V": {
+   "to": "method_14188(Z)V",
+   "args": [],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_3609.method_15744(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;Lnet/minecraft/class_2680;)V": {
+   "to": "method_15744(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;Lnet/minecraft/class_2680;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_3722.method_17512(Lnet/minecraft/class_1657;)Lnet/minecraft/class_2168;": {
+   "to": "method_17512(Lnet/minecraft/class_1657;Lnet/minecraft/class_3218;)Lnet/minecraft/class_2168;",
+   "args": [
+    0
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_3898.method_39925(Lnet/minecraft/class_3193;)Z": {
+   "to": "method_39925(Lnet/minecraft/class_3193;J)Z",
+   "args": [
+    0
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_3898.method_53686(Lnet/minecraft/class_2818;)V": {
+   "to": "method_53686(Lnet/minecraft/class_3193;Lnet/minecraft/class_2818;)V",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_4337$class_4338.<init>(Ljava/io/InputStream;JLnet/minecraft/class_4351;)V": {
+   "to": "<init>(Lnet/minecraft/class_4337;Ljava/io/InputStream;JLnet/minecraft/class_4351;)V",
+   "args": [
+    1,
+    2,
+    3
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_4835.method_24684(Lnet/minecraft/class_4760;)Ljava/util/Optional;": {
+   "to": "method_24684(Lnet/minecraft/class_3218;Lnet/minecraft/class_4760;)Ljava/util/Optional;",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_4838.method_24777(Lnet/minecraft/class_4836;)Ljava/util/Optional;": {
+   "to": "method_24777(Lnet/minecraft/class_3218;Lnet/minecraft/class_4836;)Ljava/util/Optional;",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_4838.method_30089(Lnet/minecraft/class_4836;Lnet/minecraft/class_1799;)V": {
+   "to": "method_30089(Lnet/minecraft/class_3218;Lnet/minecraft/class_4836;Lnet/minecraft/class_1799;)V",
+   "args": [
+    1,
+    2
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_4983.method_26333(Lnet/minecraft/class_1646;)V": {
+   "to": "method_26333(Lnet/minecraft/class_3218;Lnet/minecraft/class_1646;)V",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_5136.method_26934()Ljava/util/Optional;": {
+   "to": "method_26934(Lnet/minecraft/class_3218;)Ljava/util/Optional;",
+   "args": [],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_5136.method_26936(Lnet/minecraft/class_1309;)Z": {
+   "to": "method_26936(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;)Z",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_5183.method_27209(Lnet/minecraft/class_2338;Lnet/minecraft/class_6880;)Z": {
+   "to": "method_27209(Lnet/minecraft/class_2338;Lnet/minecraft/class_6880;I)Z",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_525.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_437;Lnet/minecraft/class_7193;Ljava/util/Optional;Ljava/util/OptionalLong;)V": {
+   "to": "<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_437;Lnet/minecraft/class_7193;Ljava/util/Optional;Ljava/util/OptionalLong;Lnet/minecraft/class_10241;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_5420.method_30247(Lnet/minecraft/class_5418;)Ljava/util/Optional;": {
+   "to": "method_30247(Lnet/minecraft/class_3218;Lnet/minecraft/class_5418;)Ljava/util/Optional;",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_5768.method_33247(Lnet/minecraft/class_5762;)Ljava/util/Optional;": {
+   "to": "method_33247(Lnet/minecraft/class_3218;Lnet/minecraft/class_5762;)Ljava/util/Optional;",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_6045.method_35151(Lnet/minecraft/class_1309;)Ljava/util/Optional;": {
+   "to": "method_35151(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;)Ljava/util/Optional;",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_7159$class_7161.<init>(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2350;)V": {
+   "to": "<init>(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Lnet/minecraft/class_2350;)V",
+   "args": [
+    0,
+    1,
+    3
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_7655.method_45126(Ljava/util/Map;)V": {
+   "to": "method_45126(Ljava/util/Map;)Lnet/minecraft/class_148;",
+   "args": [
+    0
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_8174.method_49218(Lnet/minecraft/class_1657;)V": {
+   "to": "method_49218(Lnet/minecraft/class_3218;Lnet/minecraft/class_1657;Lnet/minecraft/class_1799;)V",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_8174.method_49220(Lnet/minecraft/class_1657;)V": {
+   "to": "method_49220(Lnet/minecraft/class_3218;Lnet/minecraft/class_1657;Lnet/minecraft/class_1799;)V",
+   "args": [
+    1
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_8197$class_5305.method_49193(Ljava/util/function/Function;)Lnet/minecraft/class_6544$class_6547;": {
+   "to": "method_49193(Ljava/util/function/Function;Lnet/minecraft/class_6554$class_10317;)Lnet/minecraft/class_6544$class_6547;",
+   "args": [
+    0
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_9199$class_9201.method_56751(Lnet/minecraft/class_3218;Lnet/minecraft/class_9203;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)Ljava/util/List;": {
+   "to": "method_56751(Lnet/minecraft/class_3218;Lnet/minecraft/class_9203;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1799;)Ljava/util/List;",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_9254.method_57309()V": {
+   "to": "method_57309(Lnet/minecraft/class_3218;Lnet/minecraft/class_1799;)V",
+   "args": [],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  },
+  "net/minecraft/class_9461.method_58641()V": {
+   "to": "method_58641(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "basis": "gen_mixin_targets: same name, the one method of that name W declares, arguments by type one for one"
+  }
+ }
+}
