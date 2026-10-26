@@ -3563,7 +3563,9 @@ final class MixinBridge {
             for (int i = 0; known && i < from.length; i++) {
                 known = from[i] >= 0;
             }
-            return new Fate(mt.name(), mt.desc(), from, new String[va.length][], new boolean[va.length], known,
+            // a derived argument (s26 C13 (2)): V's value is the static of W's
+            String[][] wrap = from != null && mt.wrap() != null ? mt.wrap().clone() : new String[va.length][];
+            return new Fate(mt.name(), mt.desc(), from, wrap, new boolean[va.length], known,
                 "mixinTargets (" + mt.basis() + ")");
         }
         for (Chain.OverrideHook h : chain.overrideHooksForOld(name, vdesc)) {

@@ -127,12 +127,14 @@ public final class Chain {
     /**
      * Where a V method's code lives on W for mixins ("mixinTargets"), judged by an area agent from both
      * bodies: key "owner.name(desc)" (V), value {"to": "name(desc)" of the same class on W, "args":
-     * [for each V argument the W argument index it arrives as, or -1], "basis": why}. MixinBridge moves
+     * [for each V argument the W argument index it arrives as, or -1, or "j Owner#name(desc)": derived from W's j-th
+     * argument by that static, taking exactly W's type and answering V's], "basis": why}. MixinBridge moves
      * an injector selecting the V method there (handlers taking the target's arguments get a W-shaped
-     * handler mapping them back through "args"; an argument at -1 leaves only handlers that take none),
-     * before anything it would infer itself. Mods' plain calls are not touched (that is callReshapes').
+     * handler mapping them back through "args", a derived one through its static; an argument at -1 leaves only
+     * handlers that never read it), before anything it would infer itself. Mods' plain calls are not touched
+     * (that is callReshapes').
      */
-    public record MixinTarget(String name, String desc, int[] args, String basis) {}
+    public record MixinTarget(String name, String desc, int[] args, String[][] wrap, String basis) {}
 
     public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
 
@@ -3229,14 +3231,39 @@ public final class Chain {
                     String mtTo = o.get("to").getAsString();
                     int mtP = mtTo.indexOf('(');
                     int[] mtArgs = null;
+                    String[][] mtWrap = null;
                     if (o.has("args")) {
                         var mtA = o.getAsJsonArray("args");
                         mtArgs = new int[mtA.size()];
+                        mtWrap = new String[mtArgs.length][];
+                        org.objectweb.asm.Type[] vArgs = org.objectweb.asm.Type.getArgumentTypes(k.substring(k.indexOf('(')));
+                        org.objectweb.asm.Type[] wArgs = org.objectweb.asm.Type.getArgumentTypes(mtTo.substring(mtP));
                         for (int i = 0; i < mtArgs.length; i++) {
-                            mtArgs[i] = mtA.get(i).getAsInt();
+                            var e = mtA.get(i).getAsJsonPrimitive();
+                            if (e.isNumber()) {
+                                mtArgs[i] = e.getAsInt();
+                                continue;
+                            }
+                            // "<j> Owner#name(desc)": V's argument derived from W's j-th by a static (s26 C13 (2))
+                            String s = e.getAsString().trim();
+                            int sp = s.indexOf(' ');
+                            String where = "mixinTargets " + k + " args[" + i + "]";
+                            if (sp < 0) {
+                                throw new IllegalArgumentException(where + ": '" + s + "' is not \"<W index> Owner#name(desc)\"");
+                            }
+                            mtArgs[i] = Integer.parseInt(s.substring(0, sp));
+                            String[] ref = parseStaticRef(where, s.substring(sp + 1).trim());
+                            org.objectweb.asm.Type[] rp = org.objectweb.asm.Type.getArgumentTypes(ref[2]);
+                            if (mtArgs[i] < 0 || mtArgs[i] >= wArgs.length || i >= vArgs.length || rp.length != 1
+                                    || !rp[0].equals(wArgs[mtArgs[i]])
+                                    || !org.objectweb.asm.Type.getReturnType(ref[2]).equals(vArgs[i])) {
+                                throw new IllegalArgumentException(where + ": " + s + " must take W argument " + mtArgs[i]
+                                    + " and return V argument " + i + "'s type");
+                            }
+                            mtWrap[i] = ref;
                         }
                     }
-                    c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs,
+                    c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs, mtWrap,
                         o.has("basis") ? o.get("basis").getAsString() : ""));
                 }
             }
