@@ -1,0 +1,37 @@
+{
+ "_s121_basis": "s121 (1.20.6 -> 1.21 owner): code 1.21 keeps, the same, under another class. Each entry judged from both versions' javap -c -p (D:/tmp/s121 samecode.py / argmap.py for the body match; callers checked in both jars).",
+ "classRenames": {
+  "net/minecraft/class_1088$class_4455": "net/minecraft/class_9824$class_4455",
+  "net/minecraft/class_1088$class_1089": "net/minecraft/class_9824$class_1089"
+ },
+ "_s121_classRenames_basis": {
+  "net/minecraft/class_1088$class_4455": "ModelBakery.ModelGroupKey moved, with its intermediary id, under BlockStateModelLoader (class_9824) when 1.21 split the blockstate loading out of ModelBakery: the same two lists (V fields field_20275 / field_20276 = 1.21 record components comp_2873 / comp_2874, same types) and the same statics method_21607 / method_21608 / method_21609 / method_21610 with the same descriptors (javap). equals / hashCode became the record's generated ones",
+  "net/minecraft/class_1088$class_1089": "ModelBakery.BlockStateDefinitionException moved, with its intermediary id, under BlockStateModelLoader: the same RuntimeException with the same (String) constructor (javap)"
+ },
+ "fieldRenames": {
+  "net/minecraft/class_1088$class_4455.field_20275:Ljava/util/List;": "comp_2873",
+  "net/minecraft/class_1088$class_4455.field_20276:Ljava/util/List;": "comp_2874"
+ },
+ "mixinLedger": {
+  "net/minecraft/class_1088$class_4455.equals(Ljava/lang/Object;)Z": "1.21 made ModelGroupKey a record (class_9824$class_4455): its equals is the generated ObjectMethods bootstrap (javap: one invokedynamic, no instruction); 1.20.6's hand-written comparison (the identity test, instanceof, the two Objects.equals over field_20275 / field_20276, the iconst 0 / 1 returns) has no instruction left anywhere in 1.21",
+  "net/minecraft/class_1088$class_4455.hashCode()I": "1.21 made ModelGroupKey a record (class_9824$class_4455): its hashCode is the generated ObjectMethods bootstrap (javap: one invokedynamic, no instruction); 1.20.6's 31 * models.hashCode() + coloringValues.hashCode() has no instruction left anywhere in 1.21"
+ },
+ "mixinMoves": {
+  "net/minecraft/class_927.method_23187(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;FFFIIIIFFFFIZ)V": {
+   "to": "net/minecraft/class_897.method_61050(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;FFFIIIIFFFFIZ)V",
+   "basis": "MobRenderer.addVertexPair (private static) is 1.21's EntityRenderer.addVertexPair: 1.21 moved leash rendering from MobRenderer up to EntityRenderer (Leashable). Same descriptor and body (javap: the same 24-step fraction, the two Mth.lerp of block / sky light into LightTexture.pack, the colour constants 0.7 / 0.5 / 0.4 / 0.3, two addVertex / setColor / setLight per step; 1.21 without endVertex and with setLight renamed). Its only caller is the leash renderer in both versions (V MobRenderer.method_4073, W EntityRenderer.method_61049). 1.21 also draws the other Leashable entities' leashes through it"
+  },
+  "net/minecraft/class_1088.method_4725(Lnet/minecraft/class_2689;Ljava/lang/String;)Ljava/util/function/Predicate;": {
+   "to": "net/minecraft/class_9824.method_61057(Lnet/minecraft/class_2689;Ljava/lang/String;)Ljava/util/function/Predicate;",
+   "basis": "ModelBakery.predicate(StateDefinition, String) (private static) is 1.21's BlockStateModelLoader.predicate. Same descriptor and body (javap: the same Splitter splits on ',' and '=', StateDefinition.getProperty, value parse through getValueHelper (V method_4724 = W method_61058), Map.put, the same two RuntimeException messages; 1.21 builds the map with new HashMap where V called Maps.newHashMap). Its only caller is the blockstate loader in both versions (V ModelBakery.method_4731, W BlockStateModelLoader.method_61064)"
+  },
+  "net/minecraft/class_1088.method_4724(Lnet/minecraft/class_2769;Ljava/lang/String;)Ljava/lang/Comparable;": {
+   "to": "net/minecraft/class_9824.method_61058(Lnet/minecraft/class_2769;Ljava/lang/String;)Ljava/lang/Comparable;",
+   "basis": "ModelBakery.getValueHelper(Property, String) (static, package-private) is 1.21's BlockStateModelLoader.getValueHelper: the same descriptor and body (body r = 1.00). Its only caller is predicate in both versions (V method_4725, W method_61057)"
+  },
+  "net/minecraft/class_1088.method_21603(Ljava/lang/Iterable;)V": {
+   "to": "net/minecraft/class_9824.method_61063(Ljava/lang/Iterable;)V",
+   "basis": "ModelBakery.registerModelGroup(Iterable<BlockState>) (private) is 1.21's BlockStateModelLoader.registerModelGroup: the same descriptor and body (r = 1.00: the same id counter into the modelGroups map); its only caller is the blockstate loader in both versions (V ModelBakery.method_21601, W BlockStateModelLoader.method_61061). An instance handler moves only when it does not read this, which is another object on 1.21 (MixinRepair.movable)"
+  }
+ }
+}

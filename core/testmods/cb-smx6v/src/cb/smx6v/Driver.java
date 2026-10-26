@@ -119,6 +119,51 @@ public final class Driver {
         return r.isPresent() ? String.valueOf(r.get().comp_1932()) : "none";
     }
 
+    /** native 1.21 mixin TamableTeleportMixin: calls of TamableAnimal.tryToTeleportToOwner seen */
+    public static volatile int nativeTeleports;
+    private static net.minecraft.class_3222 followOwner;
+
+    /**
+     * cb-smx6's follow() on 1.21's API: a wolf tamed by a server player (in the level's player list, no connection) 20 blocks east
+     * of it, one canUse / start / tick of FollowOwnerGoal(wolf, 1.0, 10, 2); the wolf's distance to its owner afterwards
+     */
+    private static double follow(net.minecraft.server.MinecraftServer server, class_3218 level, int dx) {
+        class_2338 spawn = level.method_43126();
+        // a stone floor high above the terrain (the world's seed is random): owner and wolf stand on it, and every spot
+        // the teleport tries around the owner (3 blocks out, 1 up or down) is walkable floor or open air
+        class_2338 at = new class_2338(spawn.method_10263() + dx, 300, spawn.method_10260() - 20);
+        for (int x = -5; x <= 25; x++) {
+            for (int z = -5; z <= 5; z++) {
+                level.method_8501(at.method_10069(x, -1, z), net.minecraft.class_2246.field_10340.method_9564());
+            }
+        }
+        if (followOwner == null) {
+            followOwner = new net.minecraft.class_3222(server, level,
+                new com.mojang.authlib.GameProfile(java.util.UUID.fromString("0c0b5121-0000-4000-8000-00000000c0b6"), "cbsmx6vowner"),
+                net.minecraft.class_8791.method_53821());
+        }
+        // in the level's player list only (getOwner looks the owner up there), not in its entity / chunk tracking:
+        // a player without a connection must not be sent packets
+        level.method_18456().add(followOwner);
+        followOwner.method_5808(at.method_10263() + 0.5, at.method_10264(), at.method_10260() + 0.5, 0.0F, 0.0F);
+        class_2338 wp = at.method_10069(20, 0, 0);
+        net.minecraft.class_1493 wolf = class_1299.field_6055.method_5883(level);
+        wolf.method_5808(wp.method_10263() + 0.5, wp.method_10264(), wp.method_10260() + 0.5, 0.0F, 0.0F);
+        level.method_8649(wolf);
+        wolf.method_6170(followOwner);
+        wolf.method_24346(false);
+        net.minecraft.class_1350 goal = new net.minecraft.class_1350(wolf, 1.0, 10.0F, 2.0F);
+        double d = -1.0;
+        if (goal.method_6264()) {
+            goal.method_6269();
+            goal.method_6268();
+            d = Math.sqrt(wolf.method_5858(followOwner));
+        }
+        wolf.method_31472();
+        level.method_18456().remove(followOwner);
+        return d;
+    }
+
     public static void run(net.minecraft.server.MinecraftServer server) {
         boolean layer = net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("centurybridge")
             || net.fabricmc.loader.api.FabricLoader.getInstance().getAllMods().stream()
@@ -153,6 +198,10 @@ public final class Driver {
                 + recipe(cache, level, class_1802.field_20391);
             report(tag + " recipes", recipes.equals("minecraft:oak_planks minecraft:oak_planks minecraft:stone_button"), recipes);
             System.out.println("CB-SMX6V recipes " + tag + " " + recipes);
+            nativeTeleports = 0;
+            double d = follow(server, level, 24);
+            report(tag + " follow", d >= 0 && d < 5.0, "tamed wolf 20 blocks from its owner, one FollowOwnerGoal tick: distance " + d);
+            System.out.println("CB-SMX6V follow " + tag + " distance=" + d + " nativeTryToTeleportToOwner=" + nativeTeleports);
         } catch (Throwable t) {
             report(tag + " exception", false, String.valueOf(t));
             t.printStackTrace();
