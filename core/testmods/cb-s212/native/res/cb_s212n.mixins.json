@@ -6,7 +6,8 @@
   "mixins": [
     "ServerDriverMixin",
     "NativeCookTimeMixin",
-    "NativeCanBurnMixin"
+    "NativeCanBurnMixin",
+    "NativeSeenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

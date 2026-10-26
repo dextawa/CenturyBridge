@@ -7,7 +7,9 @@
     "ServerDriverMixin",
     "FurnaceCookTimeMixin",
     "FurnaceCanBurnMixin",
-    "DataStorageInvoker"
+    "DataStorageInvoker",
+    "ExplosionSeenMixin",
+    "ExplosionSeenQualifiedMixin"
   ],
   "injectors": {
     "defaultRequire": 1

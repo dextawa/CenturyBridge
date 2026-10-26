@@ -10,7 +10,68 @@
    "basis": "DimensionDataStorage.getDataFile(id): 1.21.1 new File(dataFolder, id + \".dat\"), 1.21.2 dataFolder.resolve(id + \".dat\") -- the same file as a Path (private: reached by mixin shadows / invokers, e.g. the 1.20.2 layer's CbSavedDataReadCover)"
   }
  },
+ "mixinTargets": {
+  "com/mojang/blaze3d/systems/RenderSystem._setShaderTexture(ILnet/minecraft/class_2960;)V": {
+   "to": "setShaderTexture(ILnet/minecraft/class_2960;)V",
+   "args": [0, 1],
+   "basis": "1.21.1 setShaderTexture(i, id) ran _setShaderTexture(i, id) (at once on the render thread, else recorded); 1.21.2 dropped the split and setShaderTexture holds _setShaderTexture's body after assertOnRenderThread (javap: same calls); _setShaderTexture had no other caller"
+  },
+  "com/mojang/blaze3d/systems/RenderSystem._setShaderTexture(II)V": {
+   "to": "setShaderTexture(II)V",
+   "args": [0, 1],
+   "basis": "as the ResourceLocation form: 1.21.1 setShaderTexture(i, glId) -> _setShaderTexture(i, glId) only; 1.21.2 setShaderTexture holds its body"
+  },
+  "net/minecraft/class_5602.method_32078(Lnet/minecraft/class_4719;)Lnet/minecraft/class_5601;": {
+   "to": "method_62130(Lnet/minecraft/class_4719;)Lnet/minecraft/class_5601;",
+   "args": [0],
+   "basis": "ModelLayers' WoodType -> ModelLayerLocation static: same three instructions under another name (javap); 1.21.2 calls it from LayerDefinitions and SignRenderer as 1.21.1 did (1.21.1's third caller, a SignRenderer static 1.21.2 dropped, is gone)"
+  }
+ },
  "mixinMoves": {
+  "net/minecraft/class_895.method_32165()Lnet/minecraft/class_5607;": {
+   "to": "net/minecraft/class_625.method_62128()Lnet/minecraft/class_5607;",
+   "basis": "EnderDragonRenderer.createBodyLayer -> DragonModel.createBodyLayer (the model left the renderer): the same parts and cubes (javap, 268 of 291 referenced members shared; 1.21.2 builds the neck/tail segments in a helper); the only caller in both is LayerDefinitions.createRoots"
+  },
+  "net/minecraft/class_1927.method_17752(Lnet/minecraft/class_243;Lnet/minecraft/class_1297;)F": {
+   "to": "net/minecraft/class_9892.method_61731(Lnet/minecraft/class_243;Lnet/minecraft/class_1297;)F",
+   "basis": "Explosion.getSeenPercent -> ServerExplosion.getSeenPercent: identical body (javap); 1.21.1 called it from Explosion.explode (and ExplosionDamageCalculator.getKnockbackMultiplier), 1.21.2 from ServerExplosion.hurtEntities only"
+  },
+  "net/minecraft/class_3880.method_32138()Lnet/minecraft/class_5607;": {
+   "to": "net/minecraft/class_9943.method_62064()Lnet/minecraft/class_5607;",
+   "basis": "BellRenderer.createBodyLayer -> BellModel.createBodyLayer: identical body (javap); only caller LayerDefinitions.createRoots in both"
+  },
+  "net/minecraft/class_826.method_32147()Lnet/minecraft/class_5607;": {
+   "to": "net/minecraft/class_9944.method_62070()Lnet/minecraft/class_5607;",
+   "basis": "ChestRenderer.createSingleBodyLayer -> ChestModel.createSingleBodyLayer: identical body (javap); only caller LayerDefinitions.createRoots in both"
+  },
+  "net/minecraft/class_826.method_32148()Lnet/minecraft/class_5607;": {
+   "to": "net/minecraft/class_9944.method_62071()Lnet/minecraft/class_5607;",
+   "basis": "ChestRenderer.createDoubleBodyRightLayer -> ChestModel: identical body (javap); only caller LayerDefinitions.createRoots in both"
+  },
+  "net/minecraft/class_826.method_32149()Lnet/minecraft/class_5607;": {
+   "to": "net/minecraft/class_9944.method_62072()Lnet/minecraft/class_5607;",
+   "basis": "ChestRenderer.createDoubleBodyLeftLayer -> ChestModel: identical body (javap); only caller LayerDefinitions.createRoots in both"
+  },
+  "net/minecraft/class_761.method_22981(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDDDDFFFFFFF)V": {
+   "to": "net/minecraft/class_9974.method_62293(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDDDDFFFFFFF)V",
+   "basis": "LevelRenderer.renderLineBox (static) -> ShapeRenderer.renderLineBox: identical body (javap); callers the same (the debug renderers and the moved box helpers)"
+  },
+  "net/minecraft/class_761.method_61044(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_2350;FFFFFFFFFF)V": {
+   "to": "net/minecraft/class_9974.method_62297(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_2350;FFFFFFFFFF)V",
+   "basis": "LevelRenderer.renderFace (static) -> ShapeRenderer.renderFace: same body (javap; only the switch map class renamed); callers the same two in both"
+  },
+  "net/minecraft/class_761.method_49041(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;FFFFFFFFFF)V": {
+   "to": "net/minecraft/class_9974.method_62294(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;FFFFFFFFFF)V",
+   "basis": "LevelRenderer.addChainedFilledBoxVertices (static) -> ShapeRenderer: identical body (javap); called only from the moved addChainedFilledBoxVertices(DDDDDD) form in both"
+  },
+  "net/minecraft/class_761.method_22980(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDDDDFFFF)V": {
+   "to": "net/minecraft/class_9974.method_62292(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDDDDFFFF)V",
+   "basis": "LevelRenderer.renderLineBox(DDDDDD, rgba) (static) -> ShapeRenderer: one call to the moved renderLineBox in both; same three callers"
+  },
+  "net/minecraft/class_761.method_3258(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDDDDFFFF)V": {
+   "to": "net/minecraft/class_9974.method_62300(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDDDDFFFF)V",
+   "basis": "LevelRenderer.addChainedFilledBoxVertices(DDDDDD) (static) -> ShapeRenderer: one call to the moved float form in both; same four callers"
+  },
   "net/minecraft/class_761.method_3250(Lnet/minecraft/class_4587;)V": {
    "to": "net/minecraft/class_9975.method_62312(Lnet/minecraft/class_4587;)V",
    "basis": "LevelRenderer.renderEndSky(poseStack) -> SkyRenderer.renderEndSky(poseStack): same code (70 referenced members, same order); 1.21.1 called it only from renderSky, 1.21.2 only from LevelRenderer's sky pass (javap, callers)"

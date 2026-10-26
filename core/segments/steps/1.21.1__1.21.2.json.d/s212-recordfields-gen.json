@@ -1,0 +1,23 @@
+{
+ "_s212_recordfields_basis": "gen_s212_record_fields.py (gen_smx1_record_fields' rule over both constructors' bytecode, step 1.21.1 -> 1.21.2); regenerate, never hand-edit",
+ "fieldRenames": {
+  "net/minecraft/class_1796$class_1797.field_8027:I": "comp_3084",
+  "net/minecraft/class_1796$class_1797.field_8028:I": "comp_3083",
+  "net/minecraft/class_2761.field_12621:J": "comp_3219",
+  "net/minecraft/class_5411$class_5412.field_25737:Z": "comp_3247",
+  "net/minecraft/class_5411$class_5412.field_25738:Z": "comp_3248",
+  "net/minecraft/class_5601.field_27546:Lnet/minecraft/class_2960;": "comp_2995",
+  "net/minecraft/class_5601.field_27547:Ljava/lang/String;": "comp_2996",
+  "net/minecraft/class_6350$class_6351.field_33576:I": "comp_2967",
+  "net/minecraft/class_6350$class_6351.field_33577:Lnet/minecraft/class_2680;": "comp_2968",
+  "net/minecraft/class_799$class_5826.field_28790:Lnet/minecraft/class_2960;": "comp_3195",
+  "net/minecraft/class_799$class_5826.field_28791:F": "comp_3196",
+  "net/minecraft/class_799.field_4268:Lnet/minecraft/class_2960;": "comp_3193",
+  "net/minecraft/class_806$class_5827.field_28794:[Lnet/minecraft/class_806$class_5828;": "comp_3189",
+  "net/minecraft/class_806$class_5827.field_28795:Lnet/minecraft/class_1087;": "comp_3190",
+  "net/minecraft/class_806$class_5828.field_28796:I": "comp_3191",
+  "net/minecraft/class_806$class_5828.field_28797:F": "comp_3192",
+  "net/minecraft/class_807.field_4294:Ljava/util/List;": "comp_3049"
+ },
+ "methodRenames": {}
+}
