@@ -449,23 +449,13 @@ public final class CbClientGui {
      * 1.21's getClosest / isStillActive from the subclass's own getters, as 1.20.6's overlay used them.
      */
 
-    private static java.lang.invoke.MethodHandle playedAt;
-
     /**
-     * SoundPlayedAt(location, time), the package-private record 1.21's Subtitle answers getClosest with (its
-     * constructor opened by the layer's access widener, so only reflection can name it from here).
+     * SoundPlayedAt(location, time), the package-private record 1.21's Subtitle answers getClosest with (it and
+     * its constructor opened by the layer's access widener; named in bytecode so it follows the class as the
+     * layer climbs).
      */
     public static Object cbPlayedAt(net.minecraft.class_243 location, long time) {
-        try {
-            if (playedAt == null) {
-                Class<?> c = Class.forName("net.minecraft.class_359$class_9772");
-                playedAt = java.lang.invoke.MethodHandles.publicLookup().findConstructor(c,
-                    java.lang.invoke.MethodType.methodType(void.class, net.minecraft.class_243.class, long.class));
-            }
-            return playedAt.invoke(location, time);
-        } catch (Throwable t) {
-            throw new IllegalStateException("SubtitleOverlay.SoundPlayedAt(Vec3, long) not reachable", t);
-        }
+        return new net.minecraft.class_359.class_9772(location, time);
     }
 
     // ------------------------------------------------------------------ RecipeBookComponent.addItemToSlot (class_507)

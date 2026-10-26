@@ -1,6 +1,5 @@
 package top.dext.centurybridge.shims.v1_20_2;
 
-import java.util.List;
 import net.minecraft.class_310;
 import net.minecraft.class_4325;
 import net.minecraft.class_7580;
@@ -25,7 +24,7 @@ public abstract class CbNetRealmsPopupBridgeHooks {
     private volatile boolean field_19500;
 
     @Inject(method = "method_44615", at = @At("TAIL"))
-    private void cb$serversFetched(List<?> servers, CallbackInfo ci) {
+    private void cb$serversFetched(CallbackInfo ci) {
         ((CbNetRealmsAccess.Popup) (Object) this).cb$markServersFetched();
     }
 
