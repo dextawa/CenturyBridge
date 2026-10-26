@@ -21,9 +21,9 @@
   "net/minecraft/class_3972$class_3973.field_46107:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_46107",
   "net/minecraft/class_4648.field_24932:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_24932",
   "net/minecraft/class_4652.field_24939:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_24939",
-  "net/minecraft/class_466$class_469.field_2813:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_2813",
-  "net/minecraft/class_466.field_17412:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_17412",
-  "net/minecraft/class_466.field_17413:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_17413",
+  "net/minecraft/class_466$class_469.field_2813:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGenClient#field_2813",
+  "net/minecraft/class_466.field_17412:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGenClient#field_17412",
+  "net/minecraft/class_466.field_17413:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGenClient#field_17413",
   "net/minecraft/class_4663.field_24963:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_24963",
   "net/minecraft/class_4970$class_2251.field_10666:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_10666",
   "net/minecraft/class_5142.field_24973:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_24973",
@@ -34,7 +34,7 @@
   "net/minecraft/class_8174.field_42814:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_42814",
   "net/minecraft/class_8244.field_43338:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_43338",
   "net/minecraft/class_8492.field_44507:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_44507",
-  "net/minecraft/class_8690$class_8695.field_45661:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_45661"
+  "net/minecraft/class_8690$class_8695.field_45661:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGenClient#field_45661"
  },
  "fieldGetters": {
   "net/minecraft/class_1584.field_30483:D": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_30483",
@@ -54,9 +54,9 @@
   "net/minecraft/class_1693.field_7734:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_7734",
   "net/minecraft/class_2580.field_11795:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_11795",
   "net/minecraft/class_2580.field_11799:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_11799",
-  "net/minecraft/class_466$class_469.field_2813:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_2813",
-  "net/minecraft/class_466.field_17412:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_17412",
-  "net/minecraft/class_466.field_17413:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_17413",
+  "net/minecraft/class_466$class_469.field_2813:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGenClient#field_2813",
+  "net/minecraft/class_466.field_17412:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGenClient#field_17412",
+  "net/minecraft/class_466.field_17413:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGenClient#field_17413",
   "net/minecraft/class_4970$class_2251.field_10666:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_10666",
   "net/minecraft/class_7264.field_38205:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_38205",
   "net/minecraft/class_8174.field_42814:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFieldReshapesGen#field_42814"

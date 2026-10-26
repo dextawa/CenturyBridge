@@ -148,33 +148,6 @@ public final class CbFieldReshapesGen {
         com.mojang.serialization.MapCodec w = o.field_24939;
         return w == null ? null : w.codec();
     }
-    /** class_466.field_17412: MobEffect -> Holder<MobEffect>: the holder's value */
-    public static net.minecraft.class_1291 field_17412(net.minecraft.class_466 o) {
-        net.minecraft.class_6880 w = o.field_17412;
-        return w == null ? null : (net.minecraft.class_1291) w.comp_349();
-    }
-    /** writing class_466.field_17412 */
-    public static void field_17412(net.minecraft.class_466 o, net.minecraft.class_1291 v) {
-        o.field_17412 = top.dext.centurybridge.step.v1_20_5.rt.CbHolders.mobEffect(v);
-    }
-    /** class_466.field_17413: MobEffect -> Holder<MobEffect>: the holder's value */
-    public static net.minecraft.class_1291 field_17413(net.minecraft.class_466 o) {
-        net.minecraft.class_6880 w = o.field_17413;
-        return w == null ? null : (net.minecraft.class_1291) w.comp_349();
-    }
-    /** writing class_466.field_17413 */
-    public static void field_17413(net.minecraft.class_466 o, net.minecraft.class_1291 v) {
-        o.field_17413 = top.dext.centurybridge.step.v1_20_5.rt.CbHolders.mobEffect(v);
-    }
-    /** class_466$class_469.field_2813: MobEffect -> Holder<MobEffect>: the holder's value */
-    public static net.minecraft.class_1291 field_2813(net.minecraft.class_466.class_469 o) {
-        net.minecraft.class_6880 w = o.field_2813;
-        return w == null ? null : (net.minecraft.class_1291) w.comp_349();
-    }
-    /** writing class_466$class_469.field_2813 */
-    public static void field_2813(net.minecraft.class_466.class_469 o, net.minecraft.class_1291 v) {
-        o.field_2813 = top.dext.centurybridge.step.v1_20_5.rt.CbHolders.mobEffect(v);
-    }
     /** class_4663.field_24963: Codec -> MapCodec: V stores its Codec parameter, which 1.20.4's callers built as RecordCodecBuilder.create(..) = mapCodec(..).codec() of the map codec 1.20.5's callers pass */
     public static com.mojang.serialization.Codec field_24963(net.minecraft.class_4663 o) {
         com.mojang.serialization.MapCodec w = o.field_24963;
@@ -246,11 +219,6 @@ public final class CbFieldReshapesGen {
     public static net.minecraft.class_2960 field_44507(net.minecraft.class_8492 o) {
         net.minecraft.class_5321 w = o.field_44507;
         return w == null ? null : w.method_29177();
-    }
-    /** class_8690$class_8695.field_45661: Codec -> MapCodec: V stores its Codec parameter, which 1.20.4's callers built as RecordCodecBuilder.create(..) = mapCodec(..).codec() of the map codec 1.20.5's callers pass */
-    public static com.mojang.serialization.Codec field_45661(net.minecraft.class_8690.class_8695 o) {
-        com.mojang.serialization.MapCodec w = o.field_45661;
-        return w == null ? null : w.codec();
     }
     /** class_8888.field_46824: Codec -> MapCodec: V stores RecordCodecBuilder.create(f), which is RecordCodecBuilder.mapCodec(f).codec() of the map codec W stores */
     public static com.mojang.serialization.Codec field_46824() {
