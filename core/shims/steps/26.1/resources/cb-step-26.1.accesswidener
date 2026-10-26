@@ -21,6 +21,9 @@ accessible	field	net/minecraft/world/level/levelgen/feature/stateproviders/RuleB
 accessible	field	net/minecraft/world/level/storage/SavedDataStorage	dataFolder	Ljava/nio/file/Path;
 # 1.21.11 TimerQueue.store() was public; 26.1 writes the same events through the protected pack() (swall)
 accessible	method	net/minecraft/world/level/timers/TimerQueue	pack	()Lnet/minecraft/world/level/timers/TimerQueue$Packed;
+# 1.21.11 MinecraftServer.throwIfFatalException() threw the fatal exception kept for the server's blocking waits; 26.1
+# keeps it as BlockableEventLoop's delayed crash (relayDelayCrash) (swall7)
+accessible	field	net/minecraft/util/thread/BlockableEventLoop	delayedCrash	Ljava/util/function/Supplier;
 
 # ---- BEGIN GENERATED (swall): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
