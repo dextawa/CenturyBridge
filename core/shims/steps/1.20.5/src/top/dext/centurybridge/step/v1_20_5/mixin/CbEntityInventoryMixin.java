@@ -3,6 +3,8 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbRoutes;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * Inventory: 1.20.4's hurtArmor(source, damage, slots) -- a quarter of the damage (at least 1) to each named armor
@@ -10,7 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * item damage, breaking in the same armor slot.
  */
 @Mixin(net.minecraft.class_1661.class)
-public abstract class CbEntityInventoryMixin {
+public abstract class CbEntityInventoryMixin implements CbRoutes.InventoryHurtArmor {
 
     @Shadow
     @Final
@@ -21,6 +23,8 @@ public abstract class CbEntityInventoryMixin {
     public net.minecraft.class_1657 field_7546;
 
     /** was hurtArmor(source, damage, slots) */
+    @Override
+    @CbVanillaReads("CbRouteArmorMixin: Player.hurtArmor / hurtHelmet call it with 1.20.4's slot ids instead of 1.20.5's doHurtEquipment when a converted mod mixes it")
     public void method_7375(net.minecraft.class_1282 source, float damage, int[] slots) {
         if (damage <= 0.0F) {
             return;

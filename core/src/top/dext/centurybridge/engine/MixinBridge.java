@@ -94,6 +94,7 @@ final class MixinBridge {
     static final String INVOKER = "Lorg/spongepowered/asm/mixin/gen/Invoker;";
     static final String CI = "Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;";
     static final String CIR = "Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;";
+    static final String OPERATION = "Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;";
     static final String COERCE = "Lorg/spongepowered/asm/mixin/injection/Coerce;";
     /** MixinExtras' parameter sugar (@Local, @Share, @Cancellable): handler values besides the injector's own */
     static final String SUGAR = "Lcom/llamalad7/mixinextras/sugar/";
@@ -1065,11 +1066,27 @@ final class MixinBridge {
          * merges the mixin -- and the shadow goes; the step's call wiring then carries those calls
          * like the same call anywhere in the mod's code (JarProcessor runs over mixin classes too).
          */
+        /**
+         * a member the step layer's mixins merge onto the target in this shape (LayerMembers: a restored method or
+         * field) before this mixin applies: at runtime the target declares it, so a @Shadow / @Invoker / @Accessor
+         * naming it stays as written (Mixin resolves it against the merged member)
+         */
+        private boolean restored(char kind, String name, String desc) {
+            AnnotationNode ma = MixinRepair.mixinAnnotation(mx);
+            int mp = ma != null && MixinRepair.values(ma).get("priority") instanceof Integer p ? p : LayerMembers.DEFAULT_PRIORITY;
+            if (chain.layerDeclares(target, kind, name, desc, mp)) {
+                member((kind == 'f' ? "field " : "member ") + sn + " -> " + shortName(target) + "." + name + (kind == 'f' ? ":" : "") + desc
+                    + ": the layer's restored member");
+                return true;
+            }
+            return false;
+        }
+
         void shadowMethod(MethodNode m, AnnotationNode sh) {
             String prefix = str(sh, "prefix", "shadow$");
             String name = m.name.startsWith(prefix) ? m.name.substring(prefix.length()) : m.name;
             Boolean live = wDeclares(target, name, m.desc);
-            if (live == null || live) {
+            if (live == null || live || restored('m', name, m.desc)) {
                 return;
             }
             for (String alias : MixinRepair.strings(MixinRepair.values(sh).get("aliases"))) {
@@ -1123,7 +1140,7 @@ final class MixinBridge {
          */
         void shadowField(FieldNode f) {
             Boolean live = wDeclaresField(target, f.name, f.desc);
-            if (live == null || live) {
+            if (live == null || live || restored('f', f.name, f.desc)) {
                 return;
             }
             boolean isStatic = (f.access & Opcodes.ACC_STATIC) != 0;
@@ -1210,7 +1227,7 @@ final class MixinBridge {
             }
             boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
             Boolean live = wDeclares(target, name, m.desc);
-            if (live == null || live) {
+            if (live == null || live || restored('m', name, m.desc)) {
                 return;
             }
             String what = "invoker " + sn + "." + m.name + m.desc;
@@ -1506,7 +1523,7 @@ final class MixinBridge {
             String fdesc = (getter ? Type.getReturnType(m.desc) : args[0]).getDescriptor();
             boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
             Boolean live = wDeclaresField(target, name, fdesc);
-            if (live == null || live) {
+            if (live == null || live || restored('f', name, fdesc)) {
                 return;
             }
             String what = "accessor " + sn + "." + m.name + m.desc;
@@ -1772,9 +1789,23 @@ final class MixinBridge {
                     // the target declares it; MixinJudge decides whether vanilla reaches it
                     wmeth = chain.layerMembers.member(target, fate.name(), fate.desc());
                 }
+                // the wired member W's target inherits (methodRenames to a member W moved up into a superclass:
+                // 1.21.4 AbstractSelectionList's scroll members on AbstractScrollArea): the override put back as a
+                // call of the inherited one, as restoreOverride does for V's own name -- only for an injector whose
+                // anchors stand in that body (HEAD / RETURN / TAIL); V's inner anchors are not in it
+                MethodNode inheritedFate = null;
+                List<String> rwhy = new ArrayList<>();
+                if (wmeth == null) {
+                    inheritedFate = restoreOverride(fate.name(), fate.desc(), vmeth.access, wt, rwhy, false);
+                    if (inheritedFate != null && anchorGone(an, h, kind, vmeth, inheritedFate, wt) == null) {
+                        wmeth = inheritedFate;
+                    }
+                }
                 if (wmeth == null) {
                     left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", which "
-                        + shortName(target) + " does not declare in " + chain.to);
+                        + shortName(target) + " does not declare in " + chain.to
+                        + (inheritedFate != null ? " (inherited; an anchor inside V's body is not in the restored override)" : "")
+                        + (!rwhy.isEmpty() ? "; " + rwhy.get(0) : ""));
                     continue;
                 }
                 if (((wmeth.access ^ vmeth.access) & Opcodes.ACC_STATIC) != 0) {
@@ -1817,6 +1848,11 @@ final class MixinBridge {
                     refmapDirty = true;
                 } else {
                     MixinRepair.setMethodSelector(an, idx, nm);
+                }
+                if (wmeth == inheritedFate) {
+                    wmeth = restoreOverride(fate.name(), fate.desc(), vmeth.access, wt, new ArrayList<>(), true);
+                    injected("@" + kind + " " + sn + "." + h.name, where + " => " + fate.name() + fate.desc()
+                        + ", which " + chain.to + "'s " + shortName(target) + " inherits: the override restored in the mixin as a call of the inherited one");
                 }
                 MethodNode handler = p.synth() ? synthesizeInject(h, fate, p) : h;
                 if (p.untouched()) {
@@ -2174,6 +2210,120 @@ final class MixinBridge {
          * converter where the type changed; a widened argument (narrowing hook, keep with a wider
          * type) reaches the handler only when it is V's type, as V only ever passed that.
          */
+        /**
+         * The handler of a @Redirect / @WrapOperation / @WrapWithCondition on V's call {@code a} given a front
+         * shaped for W's call {@code af} on another receiver (mixinReceivers): the front takes W's receiver, hands
+         * the mod's handler V's (toV) and, for @WrapOperation, an Operation that calls W's with toW of the receiver
+         * the mod passes. Null when done, else why not.
+         */
+        private String receiverFront(MethodNode h, String kind, MixinRepair.Anchor a, AtFate af, Chain.MixinReceiver mr) {
+            boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
+            Type[] hp = Type.getArgumentTypes(h.desc);
+            Type vr = Type.getObjectType(a.owner());
+            if (hp.length == 0 || !hp[0].equals(vr)) {
+                return "the handler's first parameter is not " + shortName(a.owner());
+            }
+            int oi = -1;
+            if (kind.equals("WrapOperation")) {
+                oi = 1 + Type.getArgumentTypes(a.desc()).length;
+                if (oi >= hp.length || !hp[oi].getDescriptor().equals(OPERATION)) {
+                    return "the handler takes no Operation after the call's arguments";
+                }
+            }
+            String oldName = h.name;
+            String oldDesc = h.desc;
+            String del = unique(oldName + "$cb" + step);
+            Type[] wp = hp.clone();
+            wp[0] = Type.getObjectType(af.owner());
+            MethodNode syn = new MethodNode(h.access & ~(Opcodes.ACC_ABSTRACT | Opcodes.ACC_NATIVE | Opcodes.ACC_BRIDGE | Opcodes.ACC_VARARGS),
+                oldName, Type.getMethodDescriptor(Type.getReturnType(h.desc), wp), null, exceptions(h));
+            syn.visibleAnnotations = h.visibleAnnotations;
+            syn.invisibleAnnotations = h.invisibleAnnotations;
+            syn.visibleParameterAnnotations = h.visibleParameterAnnotations;
+            syn.invisibleParameterAnnotations = h.invisibleParameterAnnotations;
+            syn.visibleAnnotableParameterCount = h.visibleAnnotableParameterCount;
+            syn.invisibleAnnotableParameterCount = h.invisibleAnnotableParameterCount;
+            h.visibleAnnotations = null;
+            h.invisibleAnnotations = null;
+            h.visibleParameterAnnotations = null;
+            h.invisibleParameterAnnotations = null;
+            Refs r = refs(oldName, oldDesc, false);
+            for (MethodInsnNode mi : r.calls) {
+                mi.name = del;
+            }
+            retargetHandles(r, mx.name, del, itf);
+            h.name = del;
+            h.access = (h.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE;
+            InsnList in = syn.instructions;
+            int slot = st ? 0 : 1;
+            if (!st) {
+                in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            }
+            for (int i = 0; i < wp.length; i++) {
+                in.add(new VarInsnNode(wp[i].getOpcode(Opcodes.ILOAD), slot));
+                if (i == 0) {
+                    in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, mr.toV()[0], mr.toV()[1], mr.toV()[2], false));
+                } else if (i == oi) {
+                    String[] ad = operationToW(mr);
+                    in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, helperName, ad[0], ad[1], false));
+                }
+                slot += wp[i].getSize();
+            }
+            in.add(new MethodInsnNode(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, del, oldDesc, false));
+            in.add(new InsnNode(Type.getReturnType(oldDesc).getOpcode(Opcodes.IRETURN)));
+            syn.maxLocals = slot;
+            syn.maxStack = slot + 2;
+            mx.methods.add(syn);
+            changed = true;
+            return null;
+        }
+
+        /**
+         * {@code (Operation)Operation} in the bridge class: an Operation that replaces the receiver the mod's
+         * handler passes (V's, args[0]) by toW of it and calls W's Operation with the rest unchanged
+         */
+        private String[] operationToW(Chain.MixinReceiver mr) {
+            String opT = OPERATION.substring(1, OPERATION.length() - 1);
+            String base = "o" + (helperSeq++) + "$" + sn.replace('$', '_');
+            String lamDesc = "(" + OPERATION + "[Ljava/lang/Object;)Ljava/lang/Object;";
+            MethodNode lam = new MethodNode(Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, base + "$call", lamDesc, null, null);
+            InsnList l = lam.instructions;
+            l.add(new VarInsnNode(Opcodes.ALOAD, 1));
+            l.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "[Ljava/lang/Object;", "clone", "()Ljava/lang/Object;", false));
+            l.add(new TypeInsnNode(Opcodes.CHECKCAST, "[Ljava/lang/Object;"));
+            l.add(new VarInsnNode(Opcodes.ASTORE, 2));
+            l.add(new VarInsnNode(Opcodes.ALOAD, 2));
+            l.add(new InsnNode(Opcodes.ICONST_0));
+            l.add(new VarInsnNode(Opcodes.ALOAD, 2));
+            l.add(new InsnNode(Opcodes.ICONST_0));
+            l.add(new InsnNode(Opcodes.AALOAD));
+            l.add(new TypeInsnNode(Opcodes.CHECKCAST, Type.getArgumentTypes(mr.toW()[2])[0].getInternalName()));
+            l.add(new MethodInsnNode(Opcodes.INVOKESTATIC, mr.toW()[0], mr.toW()[1], mr.toW()[2], false));
+            l.add(new InsnNode(Opcodes.AASTORE));
+            l.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            l.add(new VarInsnNode(Opcodes.ALOAD, 2));
+            l.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE, opT, "call", "([Ljava/lang/Object;)Ljava/lang/Object;", true));
+            l.add(new InsnNode(Opcodes.ARETURN));
+            lam.maxLocals = 3;
+            lam.maxStack = 5;
+            String desc = "(" + OPERATION + ")" + OPERATION;
+            MethodNode m = new MethodNode(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, base, desc, null, null);
+            m.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            m.instructions.add(new InvokeDynamicInsnNode("call", desc,
+                new Handle(Opcodes.H_INVOKESTATIC, "java/lang/invoke/LambdaMetafactory", "metafactory",
+                    "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;"
+                        + "Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;", false),
+                Type.getType("([Ljava/lang/Object;)Ljava/lang/Object;"),
+                new Handle(Opcodes.H_INVOKESTATIC, helperName, base + "$call", lamDesc, false),
+                Type.getType("([Ljava/lang/Object;)Ljava/lang/Object;")));
+            m.instructions.add(new InsnNode(Opcodes.ARETURN));
+            m.maxLocals = 1;
+            m.maxStack = 1;
+            helperMethods.add(lam);
+            helperMethods.add(m);
+            return new String[] {base, desc};
+        }
+
         private MethodNode synthesizeInject(MethodNode h, Fate fate, Plan p) {
             boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
             Type[] hp = Type.getArgumentTypes(h.desc);
@@ -2410,10 +2560,22 @@ final class MixinBridge {
                 }
                 if (RECEIVER_KINDS.contains(kind) && !af.owner().equals(a.owner()) && takesReceiver(sel.v(), a)) {
                     // the handler takes the call's receiver first, typed as V's owner; W's call is on another object
-                    // (Minecraft.setScreen -> minecraft.gui's Gui.setScreen), which the handler cannot take
-                    left.add(where + ": " + af.how() + " gives " + shortName(af.owner()) + "." + af.name() + af.desc()
-                        + ", a call on another receiver than " + shortName(a.owner()) + ", which @" + kind + "'s handler takes");
-                    continue;
+                    // (Minecraft.setScreen -> minecraft.gui's Gui.setScreen): a W-shaped front walks back to V's
+                    // receiver when the wiring gives both ways between them (mixinReceivers)
+                    Chain.MixinReceiver mr = chain.mixinReceivers.get(a.owner() + ">" + af.owner());
+                    String rwhy = mr == null ? "no mixinReceivers " + shortName(a.owner()) + ">" + shortName(af.owner())
+                        : !af.desc().equals(a.desc()) || fld ? "the call's shape changed too"
+                        : hasSugar(sel.handler(), "Local;") ? "the handler captures the target's locals"
+                        : receiverFront(sel.handler(), kind, a, af, mr);
+                    if (rwhy != null) {
+                        left.add(where + ": " + af.how() + " gives " + shortName(af.owner()) + "." + af.name() + af.desc()
+                            + ", a call on another receiver than " + shortName(a.owner()) + ", which @" + kind + "'s handler takes ("
+                            + rwhy + ")");
+                        continue;
+                    }
+                    injected("@" + kind + " " + sn + "." + sel.handler().name, where + ": a " + chain.to + "-shaped front takes "
+                        + shortName(af.owner()) + " as " + shortName(a.owner()) + " (" + shortName(mr.toV()[0]) + "." + mr.toV()[1] + ")"
+                        + (kind.equals("WrapOperation") ? ", its Operation reaches W's call on " + mr.toW()[1] + " of the receiver the mod passes" : ""));
                 }
                 if (kind.equals("Inject") && capturesLocals(sel.handler()) || hasSugar(sel.handler(), "Local;")) {
                     // the locals Mixin hands it are read at the anchor, in a body that changed around it
@@ -3093,6 +3255,15 @@ final class MixinBridge {
          * package; one per mixin and member. Anchors are then judged in it as in any target.
          */
         private MethodNode restoreOverride(MethodNode vmeth, ClassNode wt, List<String> why) {
+            return restoreOverride(vmeth.name, vmeth.desc, vmeth.access, wt, why, true);
+        }
+
+        /**
+         * the override of name+desc, which W's target inherits, as restoreOverride puts it back; {@code add} false:
+         * built but not added to the restoring mixin (to judge the injector against it first)
+         */
+        private MethodNode restoreOverride(String vname, String vdesc, int vaccess, ClassNode wt, List<String> why, boolean add) {
+            MethodNode vmeth = new MethodNode(vaccess, vname, vdesc, null, null);
             if (itf || (vmeth.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE | Opcodes.ACC_ABSTRACT)) != 0
                     || vmeth.name.startsWith("<")) {
                 return null;
@@ -3130,8 +3301,8 @@ final class MixinBridge {
                 return null;
             }
             // super.m(..) as javac writes it: through the direct superclass, the JVM finds the declaration above
-            ClassNode rc = restorer(target, wt.superName);
-            for (MethodNode m : rc.methods) {
+            ClassNode rc = add ? restorer(target, wt.superName) : null;
+            for (MethodNode m : rc == null ? List.<MethodNode>of() : rc.methods) {
                 if (m.name.equals(vmeth.name) && m.desc.equals(vmeth.desc)) {
                     return m;
                 }
@@ -3150,7 +3321,9 @@ final class MixinBridge {
             r.visitInsn(Type.getReturnType(vmeth.desc).getOpcode(Opcodes.IRETURN));
             r.visitMaxs(slot + 1, slot);
             r.visitEnd();
-            rc.methods.add(r);
+            if (rc != null) {
+                rc.methods.add(r);
+            }
             return r;
         }
 

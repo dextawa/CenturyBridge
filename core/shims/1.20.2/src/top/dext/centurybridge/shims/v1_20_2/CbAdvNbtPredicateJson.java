@@ -14,13 +14,14 @@ import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 /**
  * NbtPredicate's 1.20.1 fromJson(json), gone from 1.20.2 (its codec reads the tag), restored on NbtPredicate as a private
  * static with 1.20.1's body (ANY for null, the SNBT string parsed, 1.20.1's message). The restored 1.20.1 predicate
- * readers call it (CbAdvNbtPredicateAccess); 1.20.2's readers consult those.
+ * readers call it (CbAdvNbtPredicateAccess: ItemPredicate's, BlockPredicate's); 1.20.2's readers consult those.
  */
 @Mixin(value = class_2105.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbAdvNbtPredicateJson {
 
     /** 1.20.1 NbtPredicate.fromJson(json) */
-    @CbVanillaReads("CbAdvItemPredicateConsult: the restored ItemPredicate.fromJson calls it; 1.20.2's ItemPredicate.fromJson consults that against its unmixed copy")
+    @CbVanillaReads("CbAdvItemPredicateConsult: the restored ItemPredicate.fromJson calls it; 1.20.2's ItemPredicate.fromJson consults that against its unmixed copy;"
+        + " CbAdvLocationPredicateConsult: the same through the restored BlockPredicate.fromJson")
     private static class_2105 method_9073(JsonElement json) {
         if (json == null || json.isJsonNull()) {
             return CbAdvAny.field_9716;

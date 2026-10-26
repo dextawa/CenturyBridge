@@ -9,12 +9,16 @@
    "cb.s6b.S6bTestMod"
   ]
  },
+ "mixins": [
+  "cb_s6b.mixins.json"
+ ],
  "depends": {
   "fabricloader": ">=0.14.0",
   "minecraft": "1.21.5",
   "fabric-commands-v0": "*",
   "fabric-command-api-v1": "*",
   "fabric-rendering-data-attachment-v1": "*",
-  "fabric-client-tags-api-v1": "*"
+  "fabric-client-tags-api-v1": ">=1.1.0",
+  "fabric-keybindings-v0": ">=0.2.0"
  }
 }

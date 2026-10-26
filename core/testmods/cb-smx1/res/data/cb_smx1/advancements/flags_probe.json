@@ -1,0 +1,15 @@
+{
+  "criteria": {
+    "flags_probe": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "flags": {
+            "is_on_fire": true,
+            "cb_smx1_flags_probe": true
+          }
+        }
+      }
+    }
+  }
+}

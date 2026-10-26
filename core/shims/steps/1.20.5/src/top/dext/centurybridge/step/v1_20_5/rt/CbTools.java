@@ -168,32 +168,37 @@ public final class CbTools {
         return forSlot(own.comp_2393().isEmpty() ? item.method_7844() : own, slot);
     }
 
-    /** super.getDefaultAttributeModifiers(slot) in a mod subclass of Item: 1.20.4's body answered none */
+    /**
+     * super.getDefaultAttributeModifiers(slot) in a mod subclass of Item: 1.20.4's body answered none.
+     * The per-class forms below carry the class in their name, not only in an overload: 1.21.5 folds
+     * SwordItem / DiggerItem / ArmorItem into Item (classRenames), and overloads told apart only by those
+     * types would become one descriptor in the climbed layer (ClassFormatError: duplicate method).
+     */
     public static Multimap<net.minecraft.class_1320, net.minecraft.class_1322> superModifiers(net.minecraft.class_1792 item,
                                                                                              net.minecraft.class_1304 slot) {
         return ImmutableMultimap.of();
     }
 
     /** ... of SwordItem: its own modifiers (1.20.4: for the main hand) */
-    public static Multimap<net.minecraft.class_1320, net.minecraft.class_1322> superModifiers(net.minecraft.class_1829 item,
+    public static Multimap<net.minecraft.class_1320, net.minecraft.class_1322> superModifiersSword(net.minecraft.class_1829 item,
                                                                                              net.minecraft.class_1304 slot) {
         return forSlot(own(item), slot);
     }
 
     /** ... of DiggerItem */
-    public static Multimap<net.minecraft.class_1320, net.minecraft.class_1322> superModifiers(net.minecraft.class_1766 item,
+    public static Multimap<net.minecraft.class_1320, net.minecraft.class_1322> superModifiersDigger(net.minecraft.class_1766 item,
                                                                                              net.minecraft.class_1304 slot) {
         return forSlot(own(item), slot);
     }
 
     /** ... of TridentItem */
-    public static Multimap<net.minecraft.class_1320, net.minecraft.class_1322> superModifiers(net.minecraft.class_1835 item,
+    public static Multimap<net.minecraft.class_1320, net.minecraft.class_1322> superModifiersTrident(net.minecraft.class_1835 item,
                                                                                              net.minecraft.class_1304 slot) {
         return forSlot(own(item), slot);
     }
 
     /** ... of ArmorItem: ArmorItem's own (1.20.5 keeps them in a supplier: mixin/CbArmorItemAccessor) */
-    public static Multimap<net.minecraft.class_1320, net.minecraft.class_1322> superModifiers(net.minecraft.class_1738 item,
+    public static Multimap<net.minecraft.class_1320, net.minecraft.class_1322> superModifiersArmor(net.minecraft.class_1738 item,
                                                                                              net.minecraft.class_1304 slot) {
         return forSlot(((top.dext.centurybridge.step.v1_20_5.mixin.CbArmorItemAccessor) item).cbS4$defaultModifiers().get(), slot);
     }
@@ -222,17 +227,17 @@ public final class CbTools {
     }
 
     /** ... of DiggerItem (1.20.5 keeps its blocks and speed in its tool) */
-    public static float superGetDestroySpeed(net.minecraft.class_1766 item, net.minecraft.class_1799 stack, net.minecraft.class_2680 state) {
+    public static float superGetDestroySpeedDigger(net.minecraft.class_1766 item, net.minecraft.class_1799 stack, net.minecraft.class_2680 state) {
         return superGetDestroySpeed((net.minecraft.class_1792) item, stack, state);
     }
 
     /** ... of SwordItem */
-    public static float superGetDestroySpeed(net.minecraft.class_1829 item, net.minecraft.class_1799 stack, net.minecraft.class_2680 state) {
+    public static float superGetDestroySpeedSword(net.minecraft.class_1829 item, net.minecraft.class_1799 stack, net.minecraft.class_2680 state) {
         return superGetDestroySpeed((net.minecraft.class_1792) item, stack, state);
     }
 
     /** ... of ShearsItem */
-    public static float superGetDestroySpeed(net.minecraft.class_1820 item, net.minecraft.class_1799 stack, net.minecraft.class_2680 state) {
+    public static float superGetDestroySpeedShears(net.minecraft.class_1820 item, net.minecraft.class_1799 stack, net.minecraft.class_2680 state) {
         return superGetDestroySpeed((net.minecraft.class_1792) item, stack, state);
     }
 
@@ -261,17 +266,17 @@ public final class CbTools {
     }
 
     /** ... of DiggerItem */
-    public static boolean superIsCorrectToolForDrops(net.minecraft.class_1766 item, net.minecraft.class_2680 state) {
+    public static boolean superIsCorrectToolForDropsDigger(net.minecraft.class_1766 item, net.minecraft.class_2680 state) {
         return superIsCorrectToolForDrops((net.minecraft.class_1792) item, state);
     }
 
     /** ... of SwordItem */
-    public static boolean superIsCorrectToolForDrops(net.minecraft.class_1829 item, net.minecraft.class_2680 state) {
+    public static boolean superIsCorrectToolForDropsSword(net.minecraft.class_1829 item, net.minecraft.class_2680 state) {
         return superIsCorrectToolForDrops((net.minecraft.class_1792) item, state);
     }
 
     /** ... of ShearsItem */
-    public static boolean superIsCorrectToolForDrops(net.minecraft.class_1820 item, net.minecraft.class_2680 state) {
+    public static boolean superIsCorrectToolForDropsShears(net.minecraft.class_1820 item, net.minecraft.class_2680 state) {
         return superIsCorrectToolForDrops((net.minecraft.class_1792) item, state);
     }
 

@@ -1,0 +1,15 @@
+{
+  "criteria": {
+    "distance_probe": {
+      "trigger": "minecraft:levitation",
+      "conditions": {
+        "distance": {
+          "y": {
+            "min": 1
+          },
+          "cb_smx1_distance_probe": true
+        }
+      }
+    }
+  }
+}

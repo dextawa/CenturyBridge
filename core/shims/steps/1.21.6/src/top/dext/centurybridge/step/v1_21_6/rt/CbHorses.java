@@ -10,6 +10,13 @@ public final class CbHorses {
     private CbHorses() {
     }
 
+    /** 1.21.5's restored AbstractHorse jump flag members (CbHorseJumpRestoredMixin), as the route calls them */
+    public interface LegacyJump {
+        boolean method_6763();
+
+        void method_6758(boolean jumping);
+    }
+
     /** setStanding(boolean) */
     public static void method_6737(net.minecraft.class_1496 horse, boolean standing) {
         if (standing) {

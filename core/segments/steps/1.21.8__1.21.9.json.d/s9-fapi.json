@@ -1,0 +1,157 @@
+{
+ "_fapi_basis": "s9 fapi: Fabric API 0.136 (1.21.8) -> 0.134 (1.21.9) members, judged by javap of both releases' modules (D:/tmp/s9/fapi9)",
+ "callReshapes": {
+  "net/fabricmc/fabric/api/entity/FakePlayer.method_5873(Lnet/minecraft/class_1297;Z)Z": {
+   "basis": "s9 fapi: FakePlayer declares startRiding; it gained sendEventsAndTriggers with Entity's (1.21.8 always sent them: CbClimb.sendEvents)",
+   "desc": "(Lnet/minecraft/class_1297;ZZ)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#sendEvents()Z"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBakedItemModel.method_65584(Lnet/minecraft/class_10444;Lnet/minecraft/class_1799;Lnet/minecraft/class_10442;Lnet/minecraft/class_811;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)V": {
+   "desc": "(Lnet/minecraft/class_10444;Lnet/minecraft/class_1799;Lnet/minecraft/class_10442;Lnet/minecraft/class_811;Lnet/minecraft/class_638;Lnet/minecraft/class_11566;I)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5 Lnet/minecraft/class_11566;",
+    "keep:6"
+   ],
+   "basis": "s9 fapi: WrapperBakedItemModel declares ItemModel.update, which takes the ItemOwner where 1.21.8 took the LivingEntity (as vanilla's, mechanical)"
+  },
+  "net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer.render(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V": {
+   "basis": "s9 fapi: ArmorRenderer.render submits through 1.21.9's SubmitNodeCollector where 0.136 drew into a MultiBufferSource (CbSubmit.collector)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ]
+  },
+  "net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin$DataLoader.load(Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
+   "basis": "s9 fapi: DataLoader.load takes the reload's SharedState where 0.136 took the resource manager it holds",
+   "desc": "(Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_9/rt/CbFapiCommon#state(Lnet/minecraft/class_3300;)Lnet/minecraft/class_3302$class_11558;",
+    "keep:1"
+   ]
+  },
+  "net/fabricmc/fabric/api/entity/event/v1/ServerEntityCombatEvents$AfterKilledOtherEntity.afterKilledOtherEntity(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;)V": {
+   "basis": "s9 fapi: AfterKilledOtherEntity takes the damage source that killed the entity (CbFapiCommon.killingSource: its last damage source)",
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbFapiCommon#killingSource(Lnet/minecraft/class_1309;)Lnet/minecraft/class_1282;"
+   ]
+  },
+  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
+   "basis": "s9 fapi: SimpleResourceReloadListener's default reload is 1.21.9's reload(SharedState, background, barrier, game); 0.136's (barrier, manager, background, game) passes a state of that manager (the default reads only its manager)",
+   "desc": "(Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;Lnet/minecraft/class_3302$class_4045;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": [
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbFapiCommon#state(Lnet/minecraft/class_3300;)Lnet/minecraft/class_3302$class_11558;",
+    "keep:2",
+    "keep:0",
+    "keep:3"
+   ]
+  },
+  "net/fabricmc/fabric/api/entity/FakePlayer.method_64578(FF)V": {
+   "basis": "s9 fapi: a call through FakePlayer (a Fabric API class over ServerPlayer) of forceSetRotation(yRot, xRot); the engine does not walk a library owner up to ServerPlayer's reshape, so it is keyed here too (absolute angles, CbAvatar.absolute)",
+   "desc": "(FZFZ)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbAvatar#absolute()Z",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbAvatar#absolute()Z"
+   ]
+  }
+ },
+ "staticRedirects": {
+  "net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer.renderPart(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_3879;Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi"
+ },
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/client/rendering/v1/FabricRenderState.getDataOrDefault(Lnet/fabricmc/fabric/api/client/rendering/v1/RenderStateDataKey;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi"
+ },
+ "fieldGetters": {
+  "net/fabricmc/fabric/api/util/NbtType.NUMBER:I": "top/dext/centurybridge/step/v1_21_9/rt/CbFapiCommon"
+ },
+ "classRenames": {
+  "net/fabricmc/fabric/api/renderer/v1/sprite/FabricAtlasPreparation": "net/fabricmc/fabric/api/renderer/v1/sprite/FabricStitchResult"
+ },
+ "abstractFills": [
+  {
+   "under": "net/fabricmc/fabric/api/client/particle/v1/FabricSpriteProvider",
+   "method": "method_74304()Lnet/minecraft/class_1058;",
+   "call": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi.first(Lnet/fabricmc/fabric/api/client/particle/v1/FabricSpriteProvider;)Lnet/minecraft/class_1058;",
+   "basis": "s9 fapi: FabricSpriteProvider is a SpriteSet; 1.21.9's demands first() (CbParticles.first: the sprite for age 0)"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer.render(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi#adaptArmorRenderer(Ltop/dext/centurybridge/step/v1_21_9/rt/CbFapi$LegacyArmorRenderer;)Lnet/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi$LegacyArmorRenderer"
+  },
+  "net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin$DataLoader.load(Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi#adaptDataLoader(Ltop/dext/centurybridge/step/v1_21_9/rt/CbFapi$LegacyDataLoader;)Lnet/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin$DataLoader;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi$LegacyDataLoader"
+  },
+  "net/fabricmc/fabric/api/entity/event/v1/ServerEntityCombatEvents$AfterKilledOtherEntity.afterKilledOtherEntity(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;)V": {
+   "adapt": "top/dext/centurybridge/step/v1_21_9/rt/CbFapiCommon#adaptAfterKilledOtherEntity(Ltop/dext/centurybridge/step/v1_21_9/rt/CbFapiCommon$LegacyAfterKilledOtherEntity;)Lnet/fabricmc/fabric/api/entity/event/v1/ServerEntityCombatEvents$AfterKilledOtherEntity;",
+   "iface": "top/dext/centurybridge/step/v1_21_9/rt/CbFapiCommon$LegacyAfterKilledOtherEntity"
+  }
+ },
+ "overrideHooks": [
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi$LegacyArmorRenderer",
+   "basis": "s9 fapi: 0.134 calls render(pose, collector, ..); a 0.136 renderer draws into a capture of the collector (CbSubmit)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi.cbArmorRender(Ltop/dext/centurybridge/step/v1_21_9/rt/CbFapi$LegacyArmorRenderer;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "render(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V",
+   "old": "render(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer"
+  },
+  {
+   "basis": "s9 fapi: 0.134 calls load(state, executor); a 0.136 loader gets the state's resource manager",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "load(Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "old": "load(Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "onlyUnder": "net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin$DataLoader",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi.manager(Lnet/minecraft/class_3302$class_11558;)Lnet/minecraft/class_3300;"
+  },
+  {
+   "basis": "s9 fapi: 0.134 passes the damage source too; a 0.136 listener gets the rest",
+   "new": "afterKilledOtherEntity(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;)V",
+   "old": "afterKilledOtherEntity(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/entity/event/v1/ServerEntityCombatEvents$AfterKilledOtherEntity",
+   "args": [
+    0,
+    1,
+    2
+   ]
+  }
+ ],
+ "superRedirects": {
+  "net/fabricmc/fabric/api/client/rendering/v1/FabricRenderState.getDataOrDefault(Lnet/fabricmc/fabric/api/client/rendering/v1/RenderStateDataKey;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi#getDataOrDefaultBase"
+ },
+ "adapterHooks": [
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbFapi$LegacyDataOrDefault",
+   "basis": "s9 fapi: 0.134 dropped FabricRenderState.getDataOrDefault; a 0.136 override is reached by 0.136 code's calls through this interface (CbFapi.getDataOrDefault), its super call runs 0.136's default body",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "requires": [
+    "getDataOrDefault(Lnet/fabricmc/fabric/api/client/rendering/v1/RenderStateDataKey;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "synth": [],
+   "under": "net/fabricmc/fabric/api/client/rendering/v1/FabricRenderState"
+  }
+ ]
+}

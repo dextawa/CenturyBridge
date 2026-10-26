@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.smx6n.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["BakeFaceCounter", "ModelManagerAccess"],
+  "injectors": { "defaultRequire": 1 }
+}

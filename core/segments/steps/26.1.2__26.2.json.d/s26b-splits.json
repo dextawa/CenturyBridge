@@ -1,0 +1,20 @@
+{
+  "_basis": "smixin3: mixinSplits for C10 (s26b), javap of client-26.2.jar: Hud.minecraft (private final Minecraft), Minecraft.gui (public final Gui), Gui.hud (public final Hud); every V Gui method and field stands on W Hud under the same name and descriptor (s26b, D:/tmp/s26/vgui.txt vs whud.txt). owned by s26b since 2026-10-26 (queue item 0): member judgement and the remaining rows below",
+  "mixinSplits": {
+    "net/minecraft/client/gui/Gui": {
+      "to": "net/minecraft/client/gui/Hud",
+      "self": [
+        "net/minecraft/client/gui/Hud.minecraft:Lnet/minecraft/client/Minecraft;",
+        "net/minecraft/client/Minecraft.gui:Lnet/minecraft/client/gui/Gui;"
+      ],
+      "back": [
+        "net/minecraft/client/gui/Gui.hud:Lnet/minecraft/client/gui/Hud;"
+      ],
+      "basis": "26.2 split 26.1.2's Gui into Gui (screens, overlay, toasts, chat listener; members new in 26.2) and Hud (all of 26.1.2's Gui methods and fields except the constructor); W's Gui holds the Hud, the Hud the Minecraft whose gui is that Gui"
+    }
+  },
+  "fieldRenames": {
+    "net/minecraft/client/gui/Gui.contextualInfoBarRenderers:Ljava/util/Map;": "contextualInfoBars"
+  },
+  "_fieldRenames_basis": "javap: 26.1.2 Gui.contextualInfoBarRenderers (private final Map<Gui$ContextualInfo, Supplier<ContextualBarRenderer>>) is 26.2 Hud.contextualInfoBars (private final Map<Hud$ContextualInfo, Supplier<ContextualBar>>): Gui$ContextualInfo -> Hud$ContextualInfo and ContextualBarRenderer -> ContextualBar are classRenames (pkgmoves-gen, same members), the map is filled with the same four entries in the constructor and read by extractHotbarAndDecorations / nextContextualInfoState as before"
+}

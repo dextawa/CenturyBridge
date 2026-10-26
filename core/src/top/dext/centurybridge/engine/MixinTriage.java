@@ -142,6 +142,9 @@ public final class MixinTriage {
         List<String> broken = new ArrayList<>();
         boolean[] loadBearing = {false};
         Chain.Issue[] worst = {Chain.Issue.OK};
+        // the mixin's @Mixin priority (Mixin's default 1000): a member a layer mixin merges is there for this mixin's
+        // @Shadow / @Accessor / @Invoker only when the layer's mixin applies first (Chain.layerDeclares)
+        int[] priority = {LayerMembers.DEFAULT_PRIORITY};
 
         java.util.function.BiConsumer<Chain.Issue, String> touch = (issue, what) -> {
             if (issue.level() != Chain.Level.OK) {
@@ -161,6 +164,9 @@ public final class MixinTriage {
                 boolean declared = sp.kind == 'f'
                     ? chain.fieldDeclaredOnTarget(o, sp.name, sp.desc) || !java.util.Objects.equals(d, sp.desc) && chain.fieldDeclaredOnTarget(o, sp.name, d)
                     : chain.declaredOnTarget(o, sp.name, sp.desc) || !java.util.Objects.equals(d, sp.desc) && chain.declaredOnTarget(o, sp.name, d);
+                // or a member the step layer restores on the target (LayerMembers: a restored method or field)
+                declared = declared || chain.layerDeclares(o, sp.kind, sp.name, sp.desc, priority[0])
+                    || !java.util.Objects.equals(d, sp.desc) && chain.layerDeclares(o, sp.kind, sp.name, d, priority[0]);
                 if (!declared) {
                     touch.accept(new Chain.Issue(Chain.Level.L3, "target-decl"),
                         what + " not declared on " + o.substring(o.lastIndexOf('/') + 1));
@@ -174,6 +180,20 @@ public final class MixinTriage {
         java.util.function.BiFunction<Spec, Chain.Issue, Chain.Issue> exact = (sp, issue) -> {
             // L3 too when the step's classRenames give the member exactly W's shape (the segment judged the
             // V descriptor; the ClassRemapper will write the renamed one)
+            // a member the step layer restores (LayerMembers) in exactly this shape on every target: the segment
+            // judged V's member dead or changed, but at runtime the target declares it (Item.components on 26.1)
+            if (issue.level() != Chain.Level.OK && sp.desc != null && !(sp.owner == null && targets.isEmpty())) {
+                boolean all = true;
+                for (String o : sp.owner != null ? List.of(sp.owner) : targets) {
+                    all &= chain.layerDeclares(o, sp.kind, sp.name, sp.desc, priority[0])
+                        || chain.layerDeclares(o, sp.kind, sp.name, chain.renamedDesc(sp.desc), priority[0])
+                        // or the facade the step renames the target to declares it (the mixin applies to the facade)
+                        || chain.facadeDeclares(o, sp.kind, sp.name, sp.desc);
+                }
+                if (all) {
+                    return Chain.Issue.OK;
+                }
+            }
             boolean viaRename = issue.level() == Chain.Level.L3 && sp.desc != null && !sp.desc.equals(chain.renamedDesc(sp.desc));
             if (issue.level() != Chain.Level.L2 && !viaRename || sp.desc == null || chain.targetDecls.isEmpty()) {
                 return issue;
@@ -204,6 +224,9 @@ public final class MixinTriage {
                 }
                 Map<String, Object> values = new LinkedHashMap<>();
                 return collector(values, () -> {
+                    if (values.get("priority") instanceof Integer p) {
+                        priority[0] = p;
+                    }
                     for (Object t : asList(values.get("value"))) {
                         if (t instanceof Type type) {
                             targets.add(type.getInternalName());

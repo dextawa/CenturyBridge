@@ -257,6 +257,88 @@ public class S9TestMod implements ModInitializer {
             check(back.comp_2885().method_10295() == ex.comp_2885().method_10295(), "the explode packet encodes and decodes");
         });
 
+        run("fabric api: AfterKilledOtherEntity (0.136 listener)", () -> {
+            class_3218 level = server.method_30002();
+            int[] seen = new int[1];
+            net.minecraft.class_1309[] got = new net.minecraft.class_1309[1];
+            net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killed) -> {
+                seen[0]++;
+                got[0] = killed;
+            });
+            net.minecraft.class_1308 zombie = (net.minecraft.class_1308) net.minecraft.class_1299.field_6051.method_5883(level, net.minecraft.class_3730.field_16462);
+            net.minecraft.class_1309 pig = (net.minecraft.class_1309) net.minecraft.class_1299.field_6093.method_5883(level, net.minecraft.class_3730.field_16462);
+            zombie.method_5814(0.5, 120.0, 0.5);
+            pig.method_5814(0.5, 120.0, 0.5);
+            level.method_8649(zombie);
+            level.method_8649(pig);
+            pig.method_64397(level, level.method_48963().method_48812(zombie), 1000.0F);
+            check(seen[0] == 1 && got[0] == pig, "the 0.136-shaped listener ran once for the pig the zombie killed (" + seen[0] + ")");
+            zombie.method_31472();
+        });
+
+        run("fabric api: NbtType / FakePlayer / SimpleResourceReloadListener", () -> {
+            check(net.fabricmc.fabric.api.util.NbtType.NUMBER == 99, "NbtType.NUMBER == 99");
+            class_3218 level = server.method_30002();
+            net.fabricmc.fabric.api.entity.FakePlayer fp = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+            net.minecraft.class_1297 pig = net.minecraft.class_1299.field_6093.method_5883(level, net.minecraft.class_3730.field_16462);
+            boolean rode = fp.method_5873(pig, true);
+            check(!rode && fp.method_5854() == null, "FakePlayer.startRiding(vehicle, force) answers false (fake players do not ride), got " + rode);
+            int[] applied = new int[1];
+            net.fabricmc.fabric.api.resource.SimpleResourceReloadListener<String> l = new net.fabricmc.fabric.api.resource.SimpleResourceReloadListener<String>() {
+                @Override
+                public net.minecraft.class_2960 getFabricId() {
+                    return net.minecraft.class_2960.method_60655("cb", "s9");
+                }
+
+                @Override
+                public java.util.concurrent.CompletableFuture<String> load(net.minecraft.class_3300 manager, java.util.concurrent.Executor executor) {
+                    return java.util.concurrent.CompletableFuture.completedFuture("loaded");
+                }
+
+                @Override
+                public java.util.concurrent.CompletableFuture<Void> apply(String data, net.minecraft.class_3300 manager, java.util.concurrent.Executor executor) {
+                    if ("loaded".equals(data)) {
+                        applied[0]++;
+                    }
+                    return java.util.concurrent.CompletableFuture.completedFuture(null);
+                }
+            };
+            net.minecraft.class_3302.class_4045 barrier = new net.minecraft.class_3302.class_4045() {
+                @Override
+                public <T> java.util.concurrent.CompletableFuture<T> method_18352(T value) {
+                    return java.util.concurrent.CompletableFuture.completedFuture(value);
+                }
+            };
+            l.method_25931(barrier, server.method_34864(), Runnable::run, Runnable::run).join();
+            check(applied[0] == 1, "SimpleResourceReloadListener.reload(barrier, manager, ..) loaded and applied (" + applied[0] + ")");
+        });
+
+        run("avatar: Player members 1.21.9 moved", () -> {
+            class_3218 level = server.method_30002();
+            net.fabricmc.fabric.api.entity.FakePlayer fp = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+            net.minecraft.class_1657 p = fp;
+            check(net.minecraft.class_1657.field_46174 == p.method_6068(), "Player.DEFAULT_MAIN_HAND is the main arm of a fresh player, got " + net.minecraft.class_1657.field_46174);
+            check(net.minecraft.class_1657.field_18135 != null && net.minecraft.class_1657.field_18135.comp_2185() == 0.6F,
+                "Player.STANDING_DIMENSIONS is 0.6 wide, got " + net.minecraft.class_1657.field_18135);
+            p.method_7283(net.minecraft.class_1306.field_6182);
+            check(p.method_6068() == net.minecraft.class_1306.field_6182, "setMainArm(LEFT) then getMainArm() == LEFT");
+            p.method_7283(net.minecraft.class_1306.field_6183);
+            check(!p.method_7348(net.minecraft.class_1664.field_7559) || p.method_7348(net.minecraft.class_1664.field_7559), "isModelPartShown(CAPE) answers");
+            check(p.method_7327() == level.method_8428(), "Player.getScoreboard() is the level's scoreboard");
+            check(p.method_7356() != null && p.method_7356().method_33133(), "getShoulderEntityLeft() of a player without one is an empty tag, got " + p.method_7356());
+            check(p.method_7308() != null && p.method_7308().method_33133(), "getShoulderEntityRight() is an empty tag");
+            p.field_7500 = 3.5;
+            p.field_7483 = 0.25F;
+            check(p.field_7500 == 3.5 && p.field_7483 == 0.25F, "Player.xCloak / bob keep what 1.21.8 code set on a server player");
+            net.minecraft.class_1309 pig = (net.minecraft.class_1309) net.minecraft.class_1299.field_6093.method_5883(level, net.minecraft.class_3730.field_16462);
+            p.method_5874(level, pig);
+            check(true, "Player.killedEntity(level, killed) in the 1.21.8 shape ran");
+            fp.method_64578(90.0F, 10.0F);
+            check(fp.method_36454() == 90.0F && fp.method_36455() == 10.0F, "ServerPlayer.forceSetRotation(90, 10) sets absolute angles, got " + fp.method_36454() + " " + fp.method_36455());
+            net.minecraft.class_10265 rot = new net.minecraft.class_10265(30.0F, -5.0F);
+            check(rot.comp_3230() == 30.0F && rot.comp_3231() == -5.0F, "new ClientboundPlayerRotationPacket(30, -5) keeps the angles");
+        });
+
         System.out.println("CB-S9TEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " failed: " + FAILS));
     }
 }

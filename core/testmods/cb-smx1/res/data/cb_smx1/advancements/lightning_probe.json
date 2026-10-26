@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "lightning_probe": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type_specific": {
+            "type": "lightning",
+            "blocks_set_on_fire": {
+              "min": 1
+            },
+            "cb_smx1_lightning_probe": true
+          }
+        }
+      }
+    }
+  }
+}

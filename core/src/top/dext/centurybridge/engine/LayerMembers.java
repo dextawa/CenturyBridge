@@ -15,6 +15,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldNode;
 import org.objectweb.asm.tree.MethodNode;
 
 /**
@@ -34,7 +35,8 @@ import org.objectweb.asm.tree.MethodNode;
  * ("Inject@HEAD", ...); any other injector on it stays open, "restored-member: vanilla path partial".
  *
  * Merged: concrete, non-synthetic methods of any access (as V declared the member) (no constructors) of a class carrying @Mixin, other than
- * @Shadow / @Overwrite / @Unique / injector handlers / accessors and invokers.
+ * @Shadow / @Overwrite / @Unique / injector handlers / accessors and invokers; and its non-synthetic fields other than
+ * @Shadow / @Unique (a restored field: declared on the target at runtime, for mods' @Shadow / @Accessor on it).
  */
 public final class LayerMembers {
     private static final String MIXIN = "Lorg/spongepowered/asm/mixin/Mixin;";
@@ -49,6 +51,13 @@ public final class LayerMembers {
     private final Map<String, List<MethodNode>> byTarget = new HashMap<>();
     /** the @Mixin priority of the layer mixin that merges each restored member (Mixin's default 1000) */
     private final Map<MethodNode, Integer> priority = new java.util.IdentityHashMap<>();
+    /**
+     * restored fields by game class: a layer mixin's own fields (not @Shadow / @Unique) Mixin merges onto its
+     * targets under the names the mixin declares -- a field W dropped, given back on the W class (1.21.11's
+     * Item.components on 26.1). Each with the priority of the mixin merging it
+     */
+    private final Map<String, List<FieldNode>> fieldsByTarget = new HashMap<>();
+    private final Map<FieldNode, Integer> fieldPriority = new java.util.IdentityHashMap<>();
     /** the layer's mixin classes */
     private final Set<String> mixins = new HashSet<>();
 
@@ -104,9 +113,53 @@ public final class LayerMembers {
                         }
                     }
                 }
+                for (FieldNode f : cn.fields) {
+                    if (mergedField(f)) {
+                        for (String t : targets) {
+                            FieldNode a = new FieldNode(f.access, f.name,
+                                new org.objectweb.asm.commons.SimpleRemapper(cn.name, t).mapDesc(f.desc), f.signature, null);
+                            out.fieldsByTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
+                            out.fieldPriority.put(a, prio);
+                        }
+                    }
+                }
             }
         }
         return out;
+    }
+
+    /** a field Mixin merges onto the targets: not @Shadow / @Unique (a @Unique one is renamed apart), not synthetic */
+    private static boolean mergedField(FieldNode f) {
+        if ((f.access & Opcodes.ACC_SYNTHETIC) != 0) {
+            return false;
+        }
+        for (List<AnnotationNode> l : java.util.Arrays.asList(f.visibleAnnotations, f.invisibleAnnotations)) {
+            for (AnnotationNode a : l == null ? List.<AnnotationNode>of() : l) {
+                if (NOT_MERGED.contains(a.desc)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * a field a layer mixin merges onto a game class (desc null: any descriptor), or null. The caller's mixin
+     * resolves a @Shadow / @Accessor on it only when the layer's mixin was merged first: Mixin applies a target's
+     * mixins in priority order, and a shadow of a field not yet in the class fails at apply -- so the merging
+     * mixin's priority must be below the caller's ({@link #fieldPriority})
+     */
+    public FieldNode field(String target, String name, String desc) {
+        for (FieldNode f : fieldsByTarget.getOrDefault(target, List.of())) {
+            if (f.name.equals(name) && (desc == null || f.desc.equals(desc))) {
+                return f;
+            }
+        }
+        return null;
+    }
+
+    public int fieldPriority(FieldNode f) {
+        return fieldPriority.getOrDefault(f, DEFAULT_PRIORITY);
     }
 
     /**
@@ -178,6 +231,17 @@ public final class LayerMembers {
         List<MethodNode> out = new ArrayList<>();
         for (MethodNode m : byTarget.getOrDefault(target, List.of())) {
             if (m.name.equals(s.name()) && (s.desc() == null || m.desc.equals(s.desc()))) {
+                out.add(m);
+            }
+        }
+        return out;
+    }
+
+    /** the restored methods of a game class with one name, any descriptor */
+    public List<MethodNode> byName(String target, String name) {
+        List<MethodNode> out = new ArrayList<>();
+        for (MethodNode m : byTarget.getOrDefault(target, List.of())) {
+            if (m.name.equals(name)) {
                 out.add(m);
             }
         }

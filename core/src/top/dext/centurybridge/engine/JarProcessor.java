@@ -2437,8 +2437,14 @@ public final class JarProcessor {
         // across it the refmaps take their names later, see repairPastWall)
         MixinBridge.Result bridged = null;
         // a mixin of a class the step renames into a class W adds in its place goes there first (Chain.mixinFollow)
-        for (String moved : MixinClassRenames.followTargets(entries, chain.mixinFollow(), chain.classRenames)) {
+        List<String> followed = MixinClassRenames.followTargets(entries, chain.mixinFollow(), chain.classRenames);
+        for (String moved : followed) {
             rpt.notes.add(tag + "mixin follows its target's class rename: " + shortName(moved));
+        }
+        // a followed split class (mixinSplits): this-as-V-class and casts to interfaces now merged onto the new class
+        for (String n : MixinSplitAdapt.run(entries, chain, followed, "centurybridge/gen/MixinSplits_" + jarTag + "_"
+                + chain.to.replace('.', '_') + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count()))) {
+            rpt.notes.add(tag + n);
         }
         if (MixinBridge.applies(chain)) {
             bridged = MixinBridge.run(entries, chain,
@@ -2526,6 +2532,7 @@ public final class JarProcessor {
             }
         }
         stripConfigs(entries, triage, deadMixins);
+        MixinRepair.dropMixed(entries, deadMixins); // a stripped mixin mixes no restored member
         markConfigsOptional(entries, triage);
         if (bridged != null) {
             // a member MixinBridge carried counts once its mixin survived triage and repair kept its injector
@@ -2641,6 +2648,9 @@ public final class JarProcessor {
         if (!reg.stubs.isEmpty()) {
             entries.put(tombClass + ".class", reg.synthesize());
         }
+        if (!chain.splitRenames.isEmpty()) {
+            splitRenames(entries, chain, rpt, tag, deadMixins);
+        }
         // the data pack and resource pack are read by the target's loaders, in the
         // target's formats: carry them over the same boundaries the bytecode crossed
         top.dext.centurybridge.engine.res.ResourceTranslator.Outcome res =
@@ -2654,6 +2664,97 @@ public final class JarProcessor {
             rpt.notes.add(tag + "resources: " + n);
         }
         res.losses.forEach((what, n) -> rpt.resourceLosses.add(tag + what + (n > 1 ? " (x" + n + ")" : "")));
+    }
+
+    /**
+     * splitRenames (SplitRename): every class of the jar naming a split class, its own declarations onto the facade,
+     * game members kept in W's spelling with the converters between. Member resolution walks the jar's classes and
+     * then W's hierarchy (Chain.targetDecls), so a mod override of a game method keeps the game descriptor
+     */
+    private static void splitRenames(Map<String, byte[]> entries, Chain chain, Report rpt, String tag, Set<String> dead) {
+        Map<String, org.objectweb.asm.tree.ClassNode> heads = new HashMap<>();
+        Map<String, byte[]> before = new HashMap<>(entries); // members resolve against the jar as it was spelled
+        java.util.function.Function<String, org.objectweb.asm.tree.ClassNode> head = n -> heads.computeIfAbsent(n, k -> {
+            byte[] b = before.get(k + ".class");
+            if (b == null) {
+                return null;
+            }
+            org.objectweb.asm.tree.ClassNode c = new org.objectweb.asm.tree.ClassNode();
+            new ClassReader(b).accept(c, ClassReader.SKIP_CODE);
+            return c;
+        });
+        SplitRename.Resolver res = new SplitRename.Resolver() {
+            @Override
+            public boolean overridesGame(org.objectweb.asm.tree.ClassNode c, org.objectweb.asm.tree.MethodNode m) {
+                if ((m.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) != 0 || m.name.startsWith("<")) {
+                    return false;
+                }
+                java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+                Set<String> seen = new HashSet<>();
+                if (c.superName != null) todo.add(c.superName);
+                todo.addAll(c.interfaces);
+                while (!todo.isEmpty()) {
+                    String t = todo.poll();
+                    if (!seen.add(t)) continue;
+                    org.objectweb.asm.tree.ClassNode jc = head.apply(t);
+                    if (jc != null) {
+                        if (jc.superName != null) todo.add(jc.superName);
+                        todo.addAll(jc.interfaces);
+                        continue;
+                    }
+                    Set<String> d = chain.targetDecls.get(t);
+                    if (d != null && d.contains(m.name + m.desc)) {
+                        return true;
+                    }
+                    String sup = chain.superOf.get(t);
+                    if (sup != null) todo.add(sup);
+                    todo.addAll(chain.targetInterfacesOf.getOrDefault(t, List.of()));
+                }
+                return false;
+            }
+
+            @Override
+            public boolean gameSpelled(String owner, String name, String desc, boolean field) {
+                java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+                Set<String> seen = new HashSet<>();
+                boolean reachedGame = false;
+                while (!todo.isEmpty()) {
+                    String t = todo.poll();
+                    if (!seen.add(t)) continue;
+                    org.objectweb.asm.tree.ClassNode jc = head.apply(t);
+                    if (jc == null) {
+                        reachedGame = true;
+                        continue;
+                    }
+                    if (field) {
+                        if (SplitRename.declaresField(jc, name, desc)) return false;
+                    } else {
+                        for (org.objectweb.asm.tree.MethodNode m : jc.methods) {
+                            if (m.name.equals(name) && m.desc.equals(desc)) {
+                                return overridesGame(jc, m);
+                            }
+                        }
+                    }
+                    if (jc.superName != null) todo.add(jc.superName);
+                    todo.addAll(jc.interfaces);
+                }
+                return reachedGame;
+            }
+        };
+        List<String> notes = new ArrayList<>();
+        for (Map.Entry<String, byte[]> e : new ArrayList<>(entries.entrySet())) {
+            String n = e.getKey();
+            if (!n.endsWith(".class") || dead.contains(n.substring(0, n.length() - 6))) {
+                continue;
+            }
+            byte[] out = SplitRename.apply(e.getValue(), chain.splitRenames, res, notes);
+            if (out != null) {
+                e.setValue(out);
+            }
+        }
+        for (String note : notes) {
+            rpt.notes.add(tag + note);
+        }
     }
 
     /** fabric.mod.json's "accessWidener" entry path, or null */
@@ -2927,6 +3028,7 @@ public final class JarProcessor {
         boolean changed = false;
         Map<String, byte[]> before = new HashMap<>(entries);
         MixinRepair.Outcome out = repair.repair(entries);
+        MixinRepair.dropMixed(entries, out.fatal()); // earlier steps' lines of a mixin stripped here
         for (String r : out.repairs()) {
             rpt.notes.add(tag + "mixin repaired past the wall: " + r);
         }
@@ -3688,6 +3790,13 @@ public final class JarProcessor {
                         if (r.level() == Chain.Level.OK) {
                             return;
                         }
+                        // a dead name the target still links JVM-style: the member moved up into a superclass or an
+                        // interface default (or a Fabric API interface injected into the class) under the same shape.
+                        // The call is not dead: it stays, spelled as the converted jar spells it
+                        if (!name.startsWith("<") && chain.linksOnTarget(owner, name, desc, op == Opcodes.INVOKESTATIC)) {
+                            top.dext.centurybridge.data.FullAudit.record(key, "links-on-target");
+                            return;
+                        }
                         String side = chain.sideOf(owner);
                         if (side.equals("datagen")) {
                             rpt.datagenSkipped++; // dev-time bytecode, never executes in play
@@ -4070,6 +4179,12 @@ public final class JarProcessor {
                                     continue;
                                 }
                                 Chain.Issue r = chain.resolveMember('m', h.getName());
+                                if (r.level() != Chain.Level.OK && !h.getName().startsWith("<")
+                                        && chain.linksOnTarget(hOwner, h.getName(), h.getDesc(), h.getTag() == Opcodes.H_INVOKESTATIC)) {
+                                    // as for a call: the target links the reference JVM-style (moved up / interface default)
+                                    top.dext.centurybridge.data.FullAudit.record(key, "links-on-target");
+                                    continue;
+                                }
                                 if (r.level() == Chain.Level.L3 && !h.getName().equals("<init>")
                                         && chain.resolveClass(hOwner).level() == Chain.Level.OK) {
                                     tombstone.put(site, r.boundary());

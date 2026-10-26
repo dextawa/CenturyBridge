@@ -98,7 +98,41 @@ public class SwallTestMod implements ModInitializer {
             net.minecraft.class_2960.method_60655("cbswall", "half"), () -> HalfFloat.CODEC);
         EARLY_ATTACKS = new net.minecraft.class_10707(0.25F, 1.0F, List.of(), net.minecraft.class_10707.class_10709.field_56308,
             Optional.of(net.minecraft.class_8103.field_56242), Optional.empty(), Optional.empty());
+        // before any registries are up: the clock is looked up on first use (rt/CbWallClocks.Lazy)
+        try {
+            EARLY_TIMELINE = net.minecraft.class_12329.method_76478().method_76491(24000).method_76490();
+            EARLY_TIME_CHECK = new net.minecraft.class_4571(Optional.of(24000L), net.minecraft.class_42.method_32387(5));
+        } catch (Throwable t) {
+            earlyClockFailure = t;
+        }
         ServerLifecycleEvents.SERVER_STARTED.register(SwallTestMod::onStarted);
+    }
+
+    static net.minecraft.class_12329 EARLY_TIMELINE;
+    static net.minecraft.class_4571 EARLY_TIME_CHECK;
+    static Throwable earlyClockFailure;
+
+    /** 1.21.11 Timeline (builder, getTotalTicks / getCurrentTicks on a level) and TimeCheck shapes (rt/CbWallClocks) */
+    private static void clocks(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            net.minecraft.class_12329 t = net.minecraft.class_12329.method_76478().method_76491(24000).method_76490();
+            long day = level.method_8532();
+            long total = t.method_76485(level), current = t.method_76481(level);
+            check("clock.timelineTicks", total == day && current == day % 24000, total + " " + current + " " + day);
+            check("clock.timelineBuiltEarly", earlyClockFailure == null && EARLY_TIMELINE.method_76485(level) == day
+                && EARLY_TIMELINE.method_76481(level) == day % 24000, earlyClockFailure);
+            net.minecraft.class_42 five = net.minecraft.class_42.method_32387(5);
+            net.minecraft.class_4571 made = new net.minecraft.class_4571(Optional.of(24000L), five);
+            net.minecraft.class_4571 built = net.minecraft.class_4571.method_35559(five).method_35560(24000L).method_35561();
+            net.minecraft.class_4571 sub = new net.minecraft.class_4571.class_6164(five) { }.method_35560(24000L).method_35561();
+            check("clock.timeCheck", made.equals(built) && made.equals(sub) && made.comp_1885().get() == 24000L
+                && made.comp_1886() == five, made + " " + built + " " + sub);
+            check("clock.timeCheckBuiltEarly", EARLY_TIME_CHECK != null && EARLY_TIME_CHECK.comp_1885().get() == 24000L
+                && EARLY_TIME_CHECK.equals(new net.minecraft.class_4571(Optional.of(24000L), EARLY_TIME_CHECK.comp_1886())), EARLY_TIME_CHECK);
+        } catch (Throwable e) {
+            check("clock.timelineTicks", false, e);
+        }
     }
 
     /** a 1.21.11 loot function and its type, registered into 26.1's registry of codecs */
@@ -841,6 +875,7 @@ public class SwallTestMod implements ModInitializer {
             blockStatics(server);
             legacyConstructors(server);
             timeCommand(server);
+            clocks(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);

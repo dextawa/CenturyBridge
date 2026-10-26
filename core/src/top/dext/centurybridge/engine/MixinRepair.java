@@ -207,30 +207,54 @@ public final class MixinRepair {
      * unrelated class counts too: an answer of false is the proven one.
      */
     public synchronized boolean invokes(String name) {
+        index();
+        return invokedUnproven || invokedNames.contains(name);
+    }
+
+    /** the methods ("owner.name desc") calling a method of this name ("?" for a method reference); null if unproven */
+    private Map<String, Set<String>> callersByName;
+
+    public synchronized Set<String> callers(String name) {
+        index();
+        return invokedUnproven ? null : callersByName.getOrDefault(name, Set.of());
+    }
+
+    private void index() {
         if (invokedNames == null) {
             Set<String> out = new java.util.HashSet<>();
+            Map<String, Set<String>> by = new HashMap<>();
+            callersByName = by;
             for (ZipEntry e : java.util.Collections.list(code.entries())) {
                 if (!e.getName().endsWith(".class")) continue;
                 try {
+                    String cls = e.getName().substring(0, e.getName().length() - 6);
                     new ClassReader(code.getInputStream(e).readAllBytes()).accept(new org.objectweb.asm.ClassVisitor(Opcodes.ASM9) {
                         @Override
                         public org.objectweb.asm.MethodVisitor visitMethod(int access, String n, String d, String sig, String[] ex) {
+                            String caller = cls + "." + n + d;
                             return new org.objectweb.asm.MethodVisitor(Opcodes.ASM9) {
                                 @Override
                                 public void visitMethodInsn(int op, String owner, String mn, String md, boolean itf) {
                                     out.add(mn);
+                                    by.computeIfAbsent(mn, k -> new java.util.HashSet<>()).add(caller);
                                 }
 
                                 @Override
                                 public void visitInvokeDynamicInsn(String in, String id, org.objectweb.asm.Handle bsm, Object... args) {
                                     for (Object a : args) {
-                                        if (a instanceof org.objectweb.asm.Handle h) out.add(h.getName());
+                                        if (a instanceof org.objectweb.asm.Handle h) {
+                                            out.add(h.getName());
+                                            by.computeIfAbsent(h.getName(), k -> new java.util.HashSet<>()).add("?");
+                                        }
                                     }
                                 }
 
                                 @Override
                                 public void visitLdcInsn(Object v) {
-                                    if (v instanceof org.objectweb.asm.Handle h) out.add(h.getName());
+                                    if (v instanceof org.objectweb.asm.Handle h) {
+                                        out.add(h.getName());
+                                        by.computeIfAbsent(h.getName(), k -> new java.util.HashSet<>()).add("?");
+                                    }
                                 }
                             };
                         }
@@ -241,7 +265,6 @@ public final class MixinRepair {
             }
             invokedNames = out;
         }
-        return invokedUnproven || invokedNames.contains(name);
     }
 
     public ClassNode target(String owner) {
@@ -332,8 +355,73 @@ public final class MixinRepair {
 
     // ------------------------------------------------------------------ entry
 
+    /**
+     * The step's W (set by Main): the release whose layer restores the members {@link #layerMembers} holds. A kept
+     * injector on such a member is written to the jar as {@link #MIXED_DIR}{@code <W>.txt}, one line per member
+     * and mixin, three tab-separated columns "{@code <owner>.<name><desc>}", the mixin class, its config section
+     * ("mixins" / "client" / "server": a client-section mixin does not apply on a dedicated server), in the layer's own names (past the wall: W's real
+     * names) -- the conversion-time signal "a converted mod mixed this restored member" (smx4 (l)). A layer route
+     * that cannot compare answers consults the restored member only when a loaded mod's jar lists it (the layer
+     * reads every jar's file through its class loader's getResources), and otherwise leaves W's own path exactly
+     * as it is. Lines of mixins stripped later in the conversion are dropped ({@link #dropMixed})
+     */
+    public String stepTo;
+    public static final String MIXED_DIR = "META-INF/centurybridge/mixed/";
+    /** restored members kept injectors / overwrites select, by mixin class (one repair() run) */
+    private final Map<String, Set<String>> mixedByMixin = new LinkedHashMap<>();
+    /** the config section each of those mixins is listed in ("mixins" / "client" / "server") */
+    private final Map<String, String> mixedSide = new HashMap<>();
+
+    /** drop the mixed-member lines of mixins the conversion stripped, in every step's file of the jar */
+    public static void dropMixed(Map<String, byte[]> entries, Set<String> dead) {
+        if (dead.isEmpty()) return;
+        for (Map.Entry<String, byte[]> e : new ArrayList<>(entries.entrySet())) {
+            if (!e.getKey().startsWith(MIXED_DIR) || !e.getKey().endsWith(".txt")) continue;
+            StringBuilder b = new StringBuilder();
+            boolean cut = false;
+            for (String line : new String(e.getValue(), StandardCharsets.UTF_8).split("\n")) {
+                String[] f = line.split("\t");
+                if (f.length > 1 && dead.contains(f[1])) {
+                    cut = true;
+                } else if (!line.isBlank()) {
+                    b.append(line).append('\n');
+                }
+            }
+            if (!cut) continue;
+            if (b.length() == 0) entries.remove(e.getKey());
+            else entries.put(e.getKey(), b.toString().getBytes(StandardCharsets.UTF_8));
+        }
+    }
+
+    /** writes this run's mixed members (mixins not fatal here) to the step's file, merged with what it holds */
+    private void writeMixed(Map<String, byte[]> entries, Set<String> fatal) {
+        if (stepTo == null || mixedByMixin.isEmpty()) return;
+        String name = MIXED_DIR + stepTo + ".txt";
+        Set<String> lines = new java.util.TreeSet<>();
+        if (entries.get(name) != null) {
+            for (String l : new String(entries.get(name), StandardCharsets.UTF_8).split("\n")) {
+                if (!l.isBlank()) lines.add(l);
+            }
+        }
+        for (Map.Entry<String, Set<String>> e : mixedByMixin.entrySet()) {
+            if (fatal.contains(e.getKey())) continue;
+            for (String k : e.getValue()) lines.add(k + "\t" + e.getKey() + "\t" + mixedSide.getOrDefault(e.getKey(), "mixins"));
+        }
+        if (lines.isEmpty()) return;
+        entries.put(name, (String.join("\n", lines) + "\n").getBytes(StandardCharsets.UTF_8));
+    }
+
+    private void mixed(String mixin, String owner, List<MethodNode> cands) {
+        for (MethodNode m : cands) {
+            mixedByMixin.computeIfAbsent(mixin, k -> new java.util.TreeSet<>()).add(owner + "." + m.name + m.desc);
+        }
+        if (curKey != null) mixedSide.put(mixin, curKey);
+    }
+
     /** rewrites mixin classes / refmaps in {@code entries} in place */
     public Outcome repair(Map<String, byte[]> entries) {
+        mixedByMixin.clear();
+        mixedSide.clear();
         Set<String> fatal = new LinkedHashSet<>();
         Map<String, String> why = new LinkedHashMap<>();
         List<String> repairs = new ArrayList<>();
@@ -404,6 +492,7 @@ public final class MixinRepair {
                 entries.put(refmapName, GSON.toJson(refmapRoot).getBytes(StandardCharsets.UTF_8));
             }
         }
+        writeMixed(entries, fatal);
         return new Outcome(fatal, why, repairs, disabledAll);
     }
 
@@ -518,6 +607,22 @@ public final class MixinRepair {
                         }
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
+                        if (cands.isEmpty() && s.desc != null && mixinMoves.containsKey(owner + "." + s.name + s.desc)) {
+                            // the static moved, the same code, to another W class (mixinMoves): onto a mixin of that class
+                            String why0 = movable(mx, handler, an, anchors, mixinMoves.get(owner + "." + s.name + s.desc));
+                            if (why0 == null) {
+                                String to = mixinMoves.get(owner + "." + s.name + s.desc);
+                                fixNotes.add("move " + where + " => " + to + " (mixinMoves: the same code in another class)");
+                                fixes.add(() -> {
+                                    moveInjector(mx, handler, an, to);
+                                    dirty[0] = true;
+                                });
+                            } else if (deadWhy == null) {
+                                deadWhy = "target gone: @" + kind + " " + where + " (mixinMoves to "
+                                    + mixinMoves.get(owner + "." + s.name + s.desc) + ": " + why0 + ")";
+                            }
+                            continue;
+                        }
                         if (cands.isEmpty()) {
                             Sel byName = new Sel(s.owner, s.name, null, s.wildcard || s.name.equals("<init>"));
                             List<MethodNode> named = byName.match(tc);
@@ -537,6 +642,9 @@ public final class MixinRepair {
                             continue;
                         }
                         if (anchors == null || anchors.isEmpty() || cands.stream().anyMatch(m -> anchorsIn(m, tc, anchors))) {
+                            if (cands.stream().allMatch(layerMembers::isMember)) {
+                                mixed(mx.name, owner, cands); // a converted mod mixes the layer's restored member
+                            }
                             live = true;
                             break;
                         }
@@ -561,8 +669,10 @@ public final class MixinRepair {
                                     String value = "L" + fo + ";" + a0.name + (a0.kind.equals("FIELD") ? ":" : "") + fd;
                                     fixNotes.add("anchor-facade " + where + " " + a0 + " => " + value
                                         + " (the restored body calls the facade the step renames " + a0.owner + " to)");
+                                    List<MethodNode> fc = cands;
                                     fixes.add(() -> {
                                         if (setAtTarget(an, refmap, value)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
+                                        mixed(mx.name, owner, fc);
                                     });
                                     continue;
                                 }
@@ -597,8 +707,10 @@ public final class MixinRepair {
                                     + (d.toCir() ? " (callback as CallbackInfoReturnable)" : "")
                                     + " (V's site by context; the callee is " + d.how() + ")");
                                 if (d.crossOwner() != null) {
+                                    MethodNode via = depth2Of.get(d.callee());
                                     fixNotes.set(fixNotes.size() - 1, fixNotes.get(fixNotes.size() - 1).replace(" => ", " => "
-                                        + d.crossOwner().substring(d.crossOwner().lastIndexOf('/') + 1) + "."));
+                                        + d.crossOwner().substring(d.crossOwner().lastIndexOf('/') + 1) + ".")
+                                        + (via != null ? " (depth 2, under " + via.name + via.desc + ")" : ""));
                                     fixes.add(() -> {
                                         crossGuard(d, mx, handler, an);
                                         dirty[0] = true;
@@ -1035,6 +1147,61 @@ public final class MixinRepair {
         b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "set", "(Ljava/lang/Object;)V", false));
     }
 
+    /** why an injector cannot move onto a mixin of the class a mixinMoves entry names, or null */
+    private String movable(ClassNode mx, MethodNode h, AnnotationNode an, List<Anchor> anchors, String to) {
+        if (!crossAllowed) return "not in a config being repaired";
+        int dot = to.indexOf('.');
+        int paren = to.indexOf('(');
+        if (dot <= 0 || paren <= dot) return "not owner.name(desc)";
+        ClassNode wc = target(to.substring(0, dot));
+        List<MethodNode> wms = wc == null ? List.of() : new Sel(null, to.substring(dot + 1, paren), to.substring(paren), false).match(wc);
+        MethodNode wm = wms.size() == 1 ? wms.get(0) : null;
+        if (wm == null) return "not a method of the target";
+        boolean ws = (wm.access & Opcodes.ACC_STATIC) != 0;
+        boolean hs = (h.access & Opcodes.ACC_STATIC) != 0;
+        if (ws != hs) return ws ? "a static target with an instance handler" : "an instance target with a static handler";
+        // an instance method moved to another class runs on another object: the handler may not read its own
+        // instance (s9: ParticleEngine.registerProviders -> ParticleResources.registerProviders)
+        if (!hs && !touchesThisFree(h)) return "the handler reads this, which is another object in the moved method";
+        if (usesOwnClass(h, mx.name)) return "the handler uses its own mixin's members";
+        if (anchors == null) return "an anchor not statically evaluable";
+        if (!anchors.isEmpty() && !anchorsIn(wm, wc, anchors)) return "its anchor is not in the moved method " + anchors;
+        return null;
+    }
+
+    /**
+     * the injector onto a mixin of the W class (the config's cb$xguard$ mixin of it): a copy of the static handler
+     * selecting the W method; the mod's handler stays a plain method marked like a guarded one, so MixinJudge
+     * judges the copy where it now stands
+     */
+    private void moveInjector(ClassNode mx, MethodNode h, AnnotationNode an, String to) {
+        int dot = to.indexOf('.');
+        String wOwner = to.substring(0, dot);
+        ClassNode gc = crossMixin(wOwner, mx.version);
+        String oldName = h.name;
+        String gname = mx.name.substring(mx.name.lastIndexOf('/') + 1).replaceAll("[^A-Za-z0-9_]", "_") + "$" + oldName;
+        while (true) {
+            String g0 = gname;
+            if (gc.methods.stream().noneMatch(m -> m.name.equals(g0))) break;
+            gname += "_";
+        }
+        AnnotationNode moved = copyAnnotation(an);
+        setSelector(moved, "L" + wOwner + ";" + to.substring(dot + 1));
+        MethodNode g = new MethodNode(h.access, gname, h.desc, h.signature, h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
+        h.accept(g);
+        g.name = gname;
+        g.visibleAnnotations = new ArrayList<>(List.of(moved));
+        g.invisibleAnnotations = null;
+        g.access = (g.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE;
+        gc.methods.add(g);
+        dropInjector(h, an);
+        h.name = "cb$guarded$" + oldName; // the judge follows the mark from the mod's name
+        AnnotationNode mark = new AnnotationNode(MixinBridge.GUARDED);
+        mark.values = new ArrayList<>(List.of("of", oldName, "mixin", gc.name, "handler", gname));
+        h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
+        h.invisibleAnnotations.add(mark);
+    }
+
     private static AnnotationNode copyAnnotation(AnnotationNode an) {
         AnnotationNode c = new AnnotationNode(an.desc);
         an.accept(c);
@@ -1447,6 +1614,23 @@ public final class MixinRepair {
                 places.add(dm);
             }
         }
+        // depth 2 under another class's callee: a method of that callee's own class it calls exactly once (W moved V's
+        // code one call further down there). The guard is still the target's one call of the depth-1 callee: the
+        // handler acts only while that call runs, and the depth-1 callee reaches this method once in it
+        if (crossAllowed && DEPTH2) {
+            for (MethodNode dm : new ArrayList<>(crossOf.keySet())) {
+                MethodInsnNode c1 = crossCall.get(dm);
+                ClassNode dcn = c1 == null ? null : target(crossOf.get(dm));
+                if (dcn == null || dm.name.startsWith("<") || overriddenBelow(dcn.name, dm)) continue;
+                for (MethodNode c2 : callees(dm, dcn)) {
+                    if (places.contains(c2) || crossOf.containsKey(c2) || c2.name.startsWith("<") || callCount(dm, dcn.name, c2) != 1) continue;
+                    crossOf.put(c2, dcn.name);
+                    crossCall.put(c2, c1);
+                    depth2Of.put(c2, dm);
+                    places.add(c2);
+                }
+            }
+        }
         // V's target overrode a framework class's hook (SimplePreparableReloadListener.apply); W split its code over
         // that class's hooks (RecipeManager: parsing in prepare, storing in apply). Another hook of the same
         // framework class, called from nowhere in W's own class, runs once where V's target ran once
@@ -1553,6 +1737,23 @@ public final class MixinRepair {
             return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, false, guardCall, tc.name, wm, site, null, false);
         }
         return new Descend(into, ordinal, toCir, calleeStatic && !handlerStatic, siblings.contains(into));
+    }
+
+    /** -Dcb.descendDepth2=false: no descend under another class's callee (depth 2 of stage 2) */
+    private static final boolean DEPTH2 = !"false".equals(System.getProperty("cb.descendDepth2"));
+
+    /** a depth-2 callee of stage 2 -> the depth-1 callee it stands under (for the repair note) */
+    private final Map<MethodNode, MethodNode> depth2Of = new java.util.IdentityHashMap<>();
+
+    /** how many calls of c (owner o) m makes */
+    private static int callCount(MethodNode m, String o, MethodNode c) {
+        int n = 0;
+        if (m.instructions != null) {
+            for (AbstractInsnNode in : m.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.owner.equals(o) && mi.name.equals(c.name) && mi.desc.equals(c.desc)) n++;
+            }
+        }
+        return n;
     }
 
     /** the descend into another class's callee (stage 2), or null with the reason counted */
@@ -1977,6 +2178,8 @@ public final class MixinRepair {
     public LayerMembers layerMembers = LayerMembers.none();
     /** the step's classRenames (W side: a restored body calls the facade a V class is renamed to) */
     public Map<String, String> classRenames = Map.of();
+    /** Chain.mixinMoves: "V owner.name(desc)" -> "W owner.name(desc)" of a static W keeps in another class */
+    public Map<String, String> mixinMoves = Map.of();
 
     /** overrides MixinBridge.restoreOverride put back (restoring mixins of the jar being repaired), by target */
     private Map<String, List<MethodNode>> restoredByTarget = Map.of();

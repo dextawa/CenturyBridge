@@ -137,6 +137,47 @@ public final class Chain {
     public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
 
     /**
+     * A V class W split into two classes, V's members all standing on the new one ("mixinSplits"): key the V
+     * class, value {"to": the W class holding V's members (a class V lacks), "self": [field hops "owner.name:desc"
+     * from an instance of "to" to the W instance of V's class name], "back": [field hops the other way], "basis"}.
+     * 26.2 Gui -> Hud: V's Gui methods and fields stand on Hud under the same names; W's Gui holds the Hud
+     * (Gui.hud), the Hud the Minecraft whose gui is that Gui (Hud.minecraft, Minecraft.gui). A mod mixin of V's
+     * class follows onto "to" (Chain.mixinFollow) and is judged there; "(V class)(Object) this" in its code takes
+     * the "self" hops; a cast of a V-class instance to one of the jar's mixin interfaces now merged onto "to"
+     * takes the "back" hops (an instanceof-tested adapter, JarProcessor). Mods' plain calls are not touched.
+     */
+    public record MixinSplit(String to, java.util.List<String[]> self, java.util.List<String[]> back, String basis) {}
+
+    public final java.util.Map<String, MixinSplit> mixinSplits = new java.util.HashMap<>();
+
+    /**
+     * A call W makes on an object V's receiver holds ("mixinReceivers", key "V owner>W owner"): V
+     * {@code minecraft.setScreen(s)}, W {@code minecraft.gui.setScreen(s)}. A @Redirect / @WrapOperation /
+     * @WrapWithCondition on V's call follows to W's when the wiring gives both ways between the receivers:
+     * "toW" {@code (V)W} (the held object, what the step's redirect body reads) and "toV" {@code (W)V} (the object
+     * holding it; for 26.2's client singletons the instance whose field is the W receiver, checked). MixinBridge
+     * gives the handler a W-shaped front taking W's receiver as V's (toV), and an Operation the mod calls with V's
+     * receiver reaches W's call on toW of it. "basis": why the two undo each other.
+     */
+    public record MixinReceiver(String[] toV, String[] toW, String basis) {}
+
+    public final java.util.Map<String, MixinReceiver> mixinReceivers = new java.util.HashMap<>();
+
+    /**
+     * A V method whose code W keeps, the same, in a method of another class ("mixinMoves", judged by an area agent
+     * from both bodies): key "V owner.name(desc)", value {"to": "W owner.name(desc)", "basis"}. 1.21.11 moved
+     * RenderType's static factories to RenderTypes; 1.21.9 ParticleEngine's provider registration to
+     * ParticleResources. MixinRepair moves an injector selecting the V method onto a mixin of the W class it adds
+     * (the handler's static-ness that of the W method, an instance handler that does not read this -- it runs on
+     * another object --, nothing of its own mixin read), its anchors judged in the W body. Mods' plain calls are the
+     * redirects' business.
+     */
+    public final java.util.Map<String, String> mixinMoves = new java.util.HashMap<>();
+
+    /** "splitRenames": a V interface W made a final record, kept in two spellings in mods (SplitRename) */
+    public final java.util.Map<String, SplitRename.Split> splitRenames = new java.util.HashMap<>();
+
+    /**
      * How a V method's answer and the W method's answer turn into each other for an @Inject whose selector
      * MixinBridge moved to a W method returning another type ("returnConverters"): key "owner.name(desc)" (V,
      * on the class or a V supertype of the mixin's target), value {"toV": "OWNER#name(desc)", "toW":
@@ -707,6 +748,186 @@ public final class Chain {
     public final java.util.Set<String> targetAbstracts = new java.util.HashSet<>();
     /** target-stub methods declared final, "owner.name(desc)" in the analysis namespace */
     public final java.util.Set<String> targetFinalMethods = new java.util.HashSet<>();
+    /** target-stub methods declared static, "owner.name(desc)" in the analysis namespace */
+    public final java.util.Set<String> targetStaticMethods = new java.util.HashSet<>();
+    /** target classes declared abstract (interfaces included) */
+    public final java.util.Set<String> targetAbstractClasses = new java.util.HashSet<>();
+
+    /**
+     * The target as the JVM sees it, in its own namespace (mojang names past the wall): the target stub's index and
+     * the target release's Fabric API classes (processedMods, jar-in-jar included). {@link #wallRemapper} spells a
+     * converted reference the way the wall rename writes it (null: one namespace).
+     */
+    public top.dext.centurybridge.data.StubDiff.Index targetRaw;
+    public org.objectweb.asm.commons.Remapper wallRemapper;
+    public final java.util.Map<String, java.util.Set<String>> targetLibDecls = new java.util.HashMap<>();
+    public final java.util.Set<String> targetLibStatics = new java.util.HashSet<>();
+    public final java.util.Set<String> targetLibAbstracts = new java.util.HashSet<>();
+    public final java.util.Map<String, Integer> targetLibAccess = new java.util.HashMap<>();
+    public final java.util.Map<String, String> targetLibSuperOf = new java.util.HashMap<>();
+    public final java.util.Map<String, java.util.List<String>> targetLibInterfacesOf = new java.util.HashMap<>();
+
+    /** index the target stub as it is (its own namespace) for JVM-style resolution */
+    public void loadTargetRaw(Path stubJar) throws IOException {
+        targetRaw = top.dext.centurybridge.data.StubDiff.index(stubJar);
+    }
+
+    /** read the target's Fabric API classes (every jar under processedMods, jar-in-jar included) */
+    public void loadTargetLibraryDecls(Path processedMods) throws IOException {
+        if (processedMods == null || !Files.isDirectory(processedMods)) {
+            return;
+        }
+        try (var st = Files.walk(processedMods)) {
+            for (Path j : st.filter(f -> f.toString().endsWith(".jar")).toList()) {
+                try (var in = Files.newInputStream(j)) {
+                    readLibJar(in);
+                }
+            }
+        }
+    }
+
+    private void readLibJar(java.io.InputStream raw) throws IOException {
+        java.util.zip.ZipInputStream z = new java.util.zip.ZipInputStream(raw);
+        for (java.util.zip.ZipEntry e; (e = z.getNextEntry()) != null; ) {
+            if (e.getName().endsWith(".jar")) {
+                readLibJar(new java.io.ByteArrayInputStream(z.readAllBytes()));
+                continue;
+            }
+            if (!e.getName().endsWith(".class")) {
+                continue;
+            }
+            org.objectweb.asm.ClassReader cr = new org.objectweb.asm.ClassReader(z.readAllBytes());
+            String owner = cr.getClassName();
+            if (targetRaw != null && targetRaw.classAccess.containsKey(owner)) {
+                continue; // a game class: the stub's
+            }
+            targetLibAccess.put(owner, cr.getAccess());
+            if (cr.getSuperName() != null) {
+                targetLibSuperOf.put(owner, cr.getSuperName());
+            }
+            targetLibInterfacesOf.put(owner, java.util.List.of(cr.getInterfaces()));
+            java.util.Set<String> decls = targetLibDecls.computeIfAbsent(owner, k -> new java.util.HashSet<>());
+            cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                @Override
+                public org.objectweb.asm.MethodVisitor visitMethod(int access, String name, String desc, String sig, String[] ex) {
+                    decls.add(name + desc);
+                    if ((access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0) {
+                        targetLibStatics.add(owner + "." + name + desc);
+                    }
+                    if ((access & org.objectweb.asm.Opcodes.ACC_ABSTRACT) != 0) {
+                        targetLibAbstracts.add(owner + "." + name + desc);
+                    }
+                    return null;
+                }
+            }, org.objectweb.asm.ClassReader.SKIP_CODE | org.objectweb.asm.ClassReader.SKIP_DEBUG | org.objectweb.asm.ClassReader.SKIP_FRAMES);
+        }
+    }
+
+    /** the injected interfaces of a target class, in the target's namespace */
+    private final java.util.Map<String, java.util.List<String>> targetInjectedRaw = new java.util.HashMap<>();
+
+    private java.util.List<String> rawInterfaces(String c) {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        if (targetRaw != null) out.addAll(targetRaw.interfacesOf.getOrDefault(c, java.util.List.of()));
+        out.addAll(targetLibInterfacesOf.getOrDefault(c, java.util.List.of()));
+        out.addAll(targetInjectedRaw.getOrDefault(c, java.util.List.of()));
+        return out;
+    }
+
+    private String rawSuper(String c) {
+        if (targetRaw != null && targetRaw.superOf.containsKey(c)) return targetRaw.superOf.get(c);
+        return targetLibSuperOf.get(c);
+    }
+
+    private Integer rawAccess(String c) {
+        if (targetRaw != null && targetRaw.classAccess.containsKey(c)) return targetRaw.classAccess.get(c);
+        return targetLibAccess.get(c);
+    }
+
+    /** "decl[ abstract][ static]" when c declares name+desc (target namespace), else null */
+    private String rawDeclared(String c, String name, String desc) {
+        String k = c + "." + name + desc;
+        if (targetRaw != null && targetRaw.methods.getOrDefault(c, java.util.Map.of()).getOrDefault(name, java.util.Set.of()).contains(desc)) {
+            return c + (targetRaw.abstracts.contains(k) ? " abstract" : "") + (targetRaw.statics.contains(k) ? " static" : "");
+        }
+        if (targetLibDecls.getOrDefault(c, java.util.Set.of()).contains(name + desc)) {
+            return c + (targetLibAbstracts.contains(k) ? " abstract" : "") + (targetLibStatics.contains(k) ? " static" : "");
+        }
+        return null;
+    }
+
+    /**
+     * Where the JVM resolves owner.name(desc) on the target, in the target's namespace: the class, its superclasses,
+     * then its superinterfaces (vanilla's, the interfaces the target's Fabric API injects, Fabric API's own); a JDK
+     * class through reflection. "decl[ abstract][ static]", or null.
+     */
+    public String resolveOnTargetJvm(String owner, String name, String desc) {
+        java.util.List<String> ifaces = new java.util.ArrayList<>();
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        for (String c = owner; c != null && seen.add(c); c = rawSuper(c)) {
+            if (c.startsWith("java/")) {
+                if (Boolean.TRUE.equals(jdkDeclares(c, name + desc))) {
+                    return c;
+                }
+                break; // the JDK's own supertypes are jdkDeclares's; the target's interfaces come next
+            }
+            String hit = rawDeclared(c, name, desc);
+            if (hit != null) {
+                return hit;
+            }
+            ifaces.addAll(rawInterfaces(c));
+        }
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(ifaces);
+        while (!todo.isEmpty()) {
+            String i = todo.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            String hit = rawDeclared(i, name, desc);
+            if (hit != null) {
+                return hit;
+            }
+            todo.addAll(rawInterfaces(i));
+        }
+        return null;
+    }
+
+    /**
+     * Whether a call the source release made (owner.name(desc), analysis names) links on the target as the converted
+     * jar spells it: the step's classRenames on owner and descriptor, then past the wall the wall rename (the same
+     * remapper the conversion applies). Resolved JVM-style in the target's namespace, with the call kind's
+     * static-ness; an abstract declaration counts only for a call through an abstract class or interface (a concrete
+     * owner selecting it is an AbstractMethodError). A member the target moved up into a superclass or an interface
+     * default (26.1: Player.isIgnoringFallDamageFromCurrentImpulse into LivingEntity) links, so it is not dead.
+     */
+    public boolean linksOnTarget(String owner, String name, String desc, boolean isStatic) {
+        if (targetRaw == null) {
+            return false;
+        }
+        String o = classRenames.getOrDefault(owner, owner);
+        String d = renamedDesc(desc);
+        String n = name;
+        if (wallRemapper != null) {
+            n = wallRemapper.mapMethodName(o, name, d);
+            d = wallRemapper.mapMethodDesc(d);
+            o = wallRemapper.map(o);
+        }
+        if (rawAccess(o) == null) {
+            return false; // the owner is not a target class (a facade, a mod class): not this question
+        }
+        String hit = resolveOnTargetJvm(o, n, d);
+        String dbg = System.getProperty("cb.debugLinks");
+        if (dbg != null && (owner + "." + name).contains(dbg)) {
+            System.err.println("cb.debugLinks " + owner + "." + name + desc + " -> " + o + "." + n + d + " : " + hit
+                + " ifaces=" + rawInterfaces(o) + " super=" + rawSuper(o));
+        }
+        if (hit == null || hit.endsWith(" static") != isStatic) {
+            return false;
+        }
+        int acc = rawAccess(o);
+        boolean abstractOwner = (acc & (org.objectweb.asm.Opcodes.ACC_ABSTRACT | org.objectweb.asm.Opcodes.ACC_INTERFACE)) != 0;
+        return !hit.contains(" abstract") || abstractOwner;
+    }
 
     /**
      * Whether the nearest declaration of name+desc up the target superclass chain of these vanilla roots is final:
@@ -1057,6 +1278,17 @@ public final class Chain {
                     out.put(from, to); // a facade holding V's code (the layer jar answers for it in W's model)
                 }
             });
+            // a class W split in two (26.2 Gui -> Gui + Hud): V's class keeps no member of its own on W's class of
+            // that name, so its mixins follow onto the class that holds V's members ("mixinSplits")
+            mixinSplits.forEach((from, sp) -> {
+                if (out.containsKey(from)) {
+                    System.out.println("WARNING: mixinSplits " + from + ": the class also follows a class rename; the split is not used");
+                } else if (w.declares(sp.to()) && !sourceCode.declares(sp.to()) && sourceCode.declares(from)) {
+                    out.put(from, sp.to());
+                } else {
+                    System.out.println("WARNING: mixinSplits " + from + " -> " + sp.to() + ": needs a W class V lacks and a V class; not used");
+                }
+            });
             sourceCode.aliases(out, classRenames);
         }
         mixinFollow = out;
@@ -1225,6 +1457,9 @@ public final class Chain {
             if ((e.getValue() & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0) {
                 targetInterfaces.add(owner);
             }
+            if ((e.getValue() & org.objectweb.asm.Opcodes.ACC_ABSTRACT) != 0) {
+                targetAbstractClasses.add(owner);
+            }
         }
         for (var e : idx.methods.entrySet()) {
             String owner = back.getOrDefault(e.getKey(), e.getKey());
@@ -1261,11 +1496,20 @@ public final class Chain {
                     if (idx.finals.contains(e.getKey() + "." + me.getKey() + d)) {
                         targetFinalMethods.add(owner + "." + name + bd);
                     }
+                    if (idx.statics.contains(e.getKey() + "." + me.getKey() + d)) {
+                        targetStaticMethods.add(owner + "." + name + bd);
+                    }
                     if (!name.equals(me.getKey())) {
                         // past the wall the runtime name IS the mojang one: a mixin
                         // spelling it that way (mojang-mapped bundled jar, whose
                         // descriptors are mojang-named as well) resolves too
                         decls.add(me.getKey() + d);
+                        if (idx.statics.contains(e.getKey() + "." + me.getKey() + d)) {
+                            targetStaticMethods.add(owner + "." + me.getKey() + d);
+                        }
+                        if (idx.abstracts.contains(e.getKey() + "." + me.getKey() + d)) {
+                            targetAbstracts.add(owner + "." + me.getKey() + d);
+                        }
                     }
                     if (name.equals("<init>")) {
                         targetCtors.computeIfAbsent(owner, k -> new java.util.HashSet<>()).add(bd);
@@ -1286,8 +1530,11 @@ public final class Chain {
                     if (mapped == null) {
                         // a record component's field shares its accessor's name; the
                         // table lists it once, as the method (comp_NNNN)
+                        // (its comp_ id: a method of the same mojang name -- Advancement.name(AdvancementHolder)
+                        // beside the component name -- is another id under that key)
                         java.util.List<String> comp = memberBack.get(e.getKey() + "." + name);
-                        mapped = comp == null ? null : comp.get(0);
+                        mapped = comp == null ? null : comp.stream()
+                            .filter(c -> c.substring(c.lastIndexOf('.') + 1).startsWith("comp_")).findFirst().orElse(null);
                     }
                     if (mapped != null) {
                         name = mapped.substring(mapped.lastIndexOf('.') + 1);
@@ -1388,6 +1635,82 @@ public final class Chain {
             }
         }
         return b.toString();
+    }
+
+    /**
+     * whether a mixin at {@code mixinPriority} finds a member the step layer's mixins merge onto a game class
+     * (LayerMembers: restored methods and fields), kind 'm' or 'f', desc null for any. Mixin applies a target's
+     * mixins in priority order, so only a member merged by a layer mixin of lower priority is there when the
+     * caller's @Shadow / @Accessor / @Invoker is resolved. The query is in the analysis namespace; past the wall the
+     * layer is built against W's real names, so the member is spelled as the wall renames it
+     */
+    public boolean layerDeclares(String owner, char kind, String name, String desc, int mixinPriority) {
+        String o = owner;
+        String n = name;
+        String d = desc;
+        if (wallRemapper != null) {
+            n = kind == 'f' ? wallRemapper.mapFieldName(owner, name, desc == null ? "" : desc)
+                            : wallRemapper.mapMethodName(owner, name, desc == null ? "()V" : desc);
+            d = desc == null ? null : kind == 'f' ? wallRemapper.mapDesc(desc) : wallRemapper.mapMethodDesc(desc);
+            o = wallRemapper.map(owner);
+        }
+        if (kind == 'f') {
+            org.objectweb.asm.tree.FieldNode f = layerMembers.field(o, n, d);
+            return f != null && layerMembers.fieldPriority(f) < mixinPriority;
+        }
+        for (org.objectweb.asm.tree.MethodNode m : layerMembers.byName(o, n)) {
+            if ((d == null || m.desc.equals(d)) && layerMembers.priority(m) < mixinPriority) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** the layer jar's classes read for facadeDeclares, by name (null value: not in the jar) */
+    private final java.util.Map<String, org.objectweb.asm.tree.ClassNode> facadeClasses = new java.util.HashMap<>();
+
+    /**
+     * whether the facade the step renames a V class to (classRenames into CenturyBridge's classes, the layer jar)
+     * declares the member, kind 'm' or 'f': a mixin of the V class targets the facade at runtime (the ClassRemapper
+     * renames its @Mixin class literal), and the facade declares V's names -- a rewrite facade too (s11 C4:
+     * GameRules$BooleanValue), whose mixins Chain.mixinFollow does not carry
+     */
+    public boolean facadeDeclares(String owner, char kind, String name, String desc) {
+        String f = classRenames.get(owner);
+        if (f == null || !f.startsWith("top/dext/") || layerJar == null || desc == null) {
+            return false;
+        }
+        org.objectweb.asm.tree.ClassNode cn = facadeClasses.computeIfAbsent(f, n -> {
+            try (java.util.zip.ZipFile z = new java.util.zip.ZipFile(layerJar.toFile())) {
+                java.util.zip.ZipEntry e = z.getEntry(n + ".class");
+                if (e == null) {
+                    return null;
+                }
+                org.objectweb.asm.tree.ClassNode c = new org.objectweb.asm.tree.ClassNode();
+                new org.objectweb.asm.ClassReader(z.getInputStream(e).readAllBytes()).accept(c, org.objectweb.asm.ClassReader.SKIP_CODE);
+                return c;
+            } catch (IOException ex) {
+                return null;
+            }
+        });
+        if (cn == null) {
+            return false;
+        }
+        String d = renamedDesc(desc);
+        if (kind == 'f') {
+            for (org.objectweb.asm.tree.FieldNode x : cn.fields) {
+                if (x.name.equals(name) && (x.desc.equals(desc) || x.desc.equals(d))) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        for (org.objectweb.asm.tree.MethodNode x : cn.methods) {
+            if (x.name.equals(name) && (x.desc.equals(desc) || x.desc.equals(d))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean fieldDeclaredOnTarget(String owner, String name, String desc) {
@@ -2247,6 +2570,7 @@ public final class Chain {
             }
         }
         injected.forEach((cls, itfs) -> targetInterfacesOf.merge(back.getOrDefault(cls, cls), itfs, Chain::union));
+        injected.forEach((cls, itfs) -> targetInjectedRaw.merge(cls, itfs, Chain::union));
     }
 
     private static java.util.List<String> union(java.util.List<String> a, java.util.List<String> b) {
@@ -2788,6 +3112,50 @@ public final class Chain {
                         }
                     }
                     c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs,
+                        o.has("basis") ? o.get("basis").getAsString() : ""));
+                }
+            }
+            if (root.has("mixinReceivers")) {
+                var mrs = root.getAsJsonObject("mixinReceivers");
+                for (String k : mrs.keySet()) {
+                    var o = mrs.getAsJsonObject(k);
+                    String where = "mixinReceivers " + k;
+                    c.mixinReceivers.put(k, new MixinReceiver(parseStaticRef(where, o.get("toV").getAsString()),
+                        parseStaticRef(where, o.get("toW").getAsString()), o.has("basis") ? o.get("basis").getAsString() : ""));
+                }
+            }
+            if (root.has("splitRenames")) {
+                var sr = root.getAsJsonObject("splitRenames");
+                for (String k : sr.keySet()) {
+                    var o = sr.getAsJsonObject(k);
+                    String where = "splitRenames " + k;
+                    c.splitRenames.put(k, new SplitRename.Split(k, o.get("facade").getAsString(),
+                        parseStaticRef(where, o.get("toW").getAsString()), parseStaticRef(where, o.get("toV").getAsString())));
+                }
+            }
+            if (root.has("mixinMoves")) {
+                var mm = root.getAsJsonObject("mixinMoves");
+                for (String k : mm.keySet()) {
+                    c.mixinMoves.put(k, mm.getAsJsonObject(k).get("to").getAsString());
+                }
+            }
+            if (root.has("mixinSplits")) {
+                var ms = root.getAsJsonObject("mixinSplits");
+                for (String k : ms.keySet()) {
+                    var o = ms.getAsJsonObject(k);
+                    java.util.function.Function<String, java.util.List<String[]>> hops = n -> {
+                        java.util.List<String[]> l = new java.util.ArrayList<>();
+                        if (o.has(n)) {
+                            for (var e : o.getAsJsonArray(n)) {
+                                String h = e.getAsString(); // owner.name:desc
+                                int dot = h.lastIndexOf('.', h.indexOf(':'));
+                                int col = h.indexOf(':');
+                                l.add(new String[] {h.substring(0, dot), h.substring(dot + 1, col), h.substring(col + 1)});
+                            }
+                        }
+                        return l;
+                    };
+                    c.mixinSplits.put(k, new MixinSplit(o.get("to").getAsString(), hops.apply("self"), hops.apply("back"),
                         o.has("basis") ? o.get("basis").getAsString() : ""));
                 }
             }

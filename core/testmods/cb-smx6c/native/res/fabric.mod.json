@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx6n",
+  "version": "1.0.0",
+  "name": "CB smx6 native 1.21 driver",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.smx6n.Driver"] },
+  "mixins": ["cb_smx6n.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21" }
+}

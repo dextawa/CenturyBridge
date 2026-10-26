@@ -1,0 +1,1997 @@
+{
+ "_smx4b_mixinTargets_basis": "smx4b family A (1.20.4 -> 1.20.5): a V method whose code W keeps in the same class under the same intermediary name with another descriptor (Fabric's matcher carried the member; the body compared side by side with javap -c). Each V argument maps to the W argument of its type in order, -1 where its type changed (handlers taking arguments then stay open). Candidates from D:/tmp/smx4b/cands.py, entries judged per target.",
+ "mixinTargets": {
+  "net/minecraft/class_4482.method_21855(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_4482$class_4483;Ljava/util/List;Lnet/minecraft/class_4482$class_4484;Lnet/minecraft/class_2338;)Z": {
+   "to": "method_21855(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_4482$class_9309;Ljava/util/List;Lnet/minecraft/class_4482$class_4484;Lnet/minecraft/class_2338;)Z",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    4,
+    5,
+    6
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 70 of V's 91 significant instructions in order in W's 74; V argument(s) [3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_338.method_1815(Lnet/minecraft/class_2561;Lnet/minecraft/class_7469;ILnet/minecraft/class_7591;Z)V": {
+   "to": "method_1815(Lnet/minecraft/class_303;)V",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 37 of V's 52 significant instructions in order in W's 41; V argument(s) [0, 1, 2, 3, 4] have no W counterpart of their type"
+  },
+  "net/minecraft/class_7689.method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lorg/joml/Vector3f;": {
+   "to": "method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lnet/minecraft/class_243;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 18 of V's 21 significant instructions in order in W's 24"
+  },
+  "net/minecraft/class_1690.method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lorg/joml/Vector3f;": {
+   "to": "method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lnet/minecraft/class_243;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 15 of V's 20 significant instructions in order in W's 23"
+  },
+  "net/minecraft/class_757.method_3172(Lnet/minecraft/class_4587;Lnet/minecraft/class_4184;F)V": {
+   "to": "method_3172(Lnet/minecraft/class_4184;FLorg/joml/Matrix4f;)V",
+   "args": [
+    -1,
+    0,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 58 of V's 67 significant instructions in order in W's 70; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5736.<init>(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_5744;Lnet/minecraft/class_4002;)V": {
+   "to": "<init>(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_9679;Lnet/minecraft/class_4002;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    -1,
+    8
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 28 of V's 46 significant instructions in order in W's 30; V argument(s) [7] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3244.method_44337(Lnet/minecraft/class_7635$class_7636;)Ljava/util/Optional;": {
+   "to": "method_44337(Ljava/lang/String;Ljava/lang/Runnable;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 13 of V's 17 significant instructions in order in W's 22; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2614.method_11246(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1263;)Z": {
+   "to": "method_11246(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2614;)Z",
+   "args": [
+    0,
+    1,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 16 of V's 26 significant instructions in order in W's 25; V argument(s) [2, 3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4985.method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lorg/joml/Vector3f;": {
+   "to": "method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lnet/minecraft/class_243;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 11 of V's 16 significant instructions in order in W's 15"
+  },
+  "net/minecraft/class_329.method_1736(Lnet/minecraft/class_332;)V": {
+   "to": "method_1736(Lnet/minecraft/class_332;F)V",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 103 of V's 121 significant instructions in order in W's 121"
+  },
+  "net/minecraft/class_1728.method_20214(ILnet/minecraft/class_1799;)V": {
+   "to": "method_20214(ILnet/minecraft/class_9306;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 17 of V's 24 significant instructions in order in W's 23; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_312.method_1606()V": {
+   "to": "method_1606(D)V",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 54 of V's 69 significant instructions in order in W's 54"
+  },
+  "net/minecraft/class_7655.method_45122(Lnet/minecraft/class_6903$class_7863;Lnet/minecraft/class_3300;Lnet/minecraft/class_5321;Lnet/minecraft/class_2385;Lcom/mojang/serialization/Decoder;Ljava/util/Map;)V": {
+   "to": "method_45122(Lnet/minecraft/class_3300;Lnet/minecraft/class_6903$class_7863;Lnet/minecraft/class_2385;Lcom/mojang/serialization/Decoder;Ljava/util/Map;)V",
+   "args": [
+    1,
+    0,
+    -1,
+    2,
+    3,
+    4
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 28 of V's 42 significant instructions in order in W's 35; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1657.method_30263()Z": {
+   "to": "method_30263(F)Z",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 14 significant instructions in order in W's 9"
+  },
+  "net/minecraft/class_2629$class_5880.method_34107(Lnet/minecraft/class_2540;)V": {
+   "to": "method_34107(Lnet/minecraft/class_9129;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 9 of V's 14 significant instructions in order in W's 15; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5712.method_32939(Ljava/lang/String;)Lnet/minecraft/class_5712;": {
+   "to": "method_32939(Ljava/lang/String;)Lnet/minecraft/class_6880$class_6883;",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3"
+  },
+  "net/minecraft/class_22.method_107(Lnet/minecraft/class_20$class_21;Lnet/minecraft/class_1936;Ljava/lang/String;DDDLnet/minecraft/class_2561;)V": {
+   "to": "method_107(Lnet/minecraft/class_6880;Lnet/minecraft/class_1936;Ljava/lang/String;DDDLnet/minecraft/class_2561;)V",
+   "args": [
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 59 of V's 66 significant instructions in order in W's 72; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5132.method_26865(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324;": {
+   "to": "method_26865(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1324;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 10 significant instructions in order in W's 9; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3039.method_13180(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/class_2960;Lnet/minecraft/class_8567;Lnet/minecraft/class_3039$class_3041;)I": {
+   "to": "method_13180(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/class_6880;Lnet/minecraft/class_8567;Lnet/minecraft/class_3039$class_3041;)I",
+   "args": [
+    0,
+    -1,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 9 significant instructions in order in W's 8; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_39.method_271(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2960;": {
+   "to": "method_271(Lnet/minecraft/class_5321;)Lnet/minecraft/class_5321;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 7 significant instructions in order in W's 9; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5687.method_32712(Lnet/minecraft/class_2168;Lnet/minecraft/class_1297;ILnet/minecraft/class_2338;ILnet/minecraft/class_117;)I": {
+   "to": "method_32712(Lnet/minecraft/class_2168;Lnet/minecraft/class_1297;ILnet/minecraft/class_2338;ILnet/minecraft/class_6880;)I",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 4 significant instructions in order in W's 4; V argument(s) [5] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1657.method_7284(Z)V": {
+   "to": "method_7284()V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 9 of V's 15 significant instructions in order in W's 9; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3934.method_17566(Lnet/minecraft/class_332;Ljava/lang/Integer;Lnet/minecraft/class_22;IIF)V": {
+   "to": "method_17566(Lnet/minecraft/class_332;Lnet/minecraft/class_9209;Lnet/minecraft/class_22;IIF)V",
+   "args": [
+    0,
+    -1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 19 of V's 21 significant instructions in order in W's 20; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5687.method_32718(Lnet/minecraft/class_2168;Lnet/minecraft/class_2338;ILnet/minecraft/class_117;)I": {
+   "to": "method_32718(Lnet/minecraft/class_2168;Lnet/minecraft/class_2338;ILnet/minecraft/class_6880;)I",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 14 of V's 15 significant instructions in order in W's 15; V argument(s) [3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_7046.method_41022(Lcom/mojang/datafixers/util/Pair;Lcom/mojang/serialization/Dynamic;)Lcom/mojang/serialization/Dynamic;": {
+   "to": "method_41022(Lcom/mojang/serialization/Dynamic;Lcom/mojang/serialization/Dynamic;)Lcom/mojang/serialization/Dynamic;",
+   "args": [
+    -1,
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 16 of V's 24 significant instructions in order in W's 17; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4215.method_19555(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;F)V": {
+   "to": "method_19555(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;FI)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 6 significant instructions in order in W's 3"
+  },
+  "net/minecraft/class_2580.method_53251(Lnet/minecraft/class_1291;)Lnet/minecraft/class_1291;": {
+   "to": "method_53251(Lnet/minecraft/class_6880;)Lnet/minecraft/class_6880;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 3 significant instructions in order in W's 3; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4180.method_20368(Lnet/minecraft/class_1923;Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)V": {
+   "to": "method_20368(Lnet/minecraft/class_1923;Lnet/minecraft/class_6903;Lnet/minecraft/class_2487;)V",
+   "args": [
+    0,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 33 of V's 36 significant instructions in order in W's 35; V argument(s) [1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_711$class_714.method_3098(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;": {
+   "to": "method_3098(Lnet/minecraft/class_9381;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;",
+   "args": [
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 5 significant instructions in order in W's 10; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2629$class_5887.method_34107(Lnet/minecraft/class_2540;)V": {
+   "to": "method_34107(Lnet/minecraft/class_9129;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 5 significant instructions in order in W's 5; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3934.method_17567(Lnet/minecraft/class_332;Ljava/lang/Integer;Lnet/minecraft/class_22;ZZZZ)V": {
+   "to": "method_17567(Lnet/minecraft/class_332;Lnet/minecraft/class_9209;Lnet/minecraft/class_22;ZZZZ)V",
+   "args": [
+    0,
+    -1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 74 of V's 79 significant instructions in order in W's 79; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4527.method_54904(Lnet/minecraft/class_3218;Lnet/minecraft/class_4517;)Z": {
+   "to": "method_54904(Lnet/minecraft/class_3218;Ljava/lang/String;)Z",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 11 of V's 14 significant instructions in order in W's 12; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2629$class_5880.<init>(Lnet/minecraft/class_2540;)V": {
+   "to": "<init>(Lnet/minecraft/class_9129;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 22 of V's 27 significant instructions in order in W's 29; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2561$class_2562.method_10874(Lnet/minecraft/class_2561;)Lcom/google/gson/JsonElement;": {
+   "to": "method_10874(Lnet/minecraft/class_2561;Lnet/minecraft/class_7225$class_7874;)Lcom/google/gson/JsonElement;",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 7 significant instructions in order in W's 8"
+  },
+  "net/minecraft/class_1309.method_52540(Lnet/minecraft/class_1320;)V": {
+   "to": "method_52540(Lnet/minecraft/class_6880;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 9 significant instructions in order in W's 11; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2614.method_11255(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1263;": {
+   "to": "method_11255(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2614;)Lnet/minecraft/class_1263;",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 6 significant instructions in order in W's 4; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1686.method_7498(Ljava/util/List;Lnet/minecraft/class_1297;)V": {
+   "to": "method_7498(Ljava/lang/Iterable;Lnet/minecraft/class_1297;)V",
+   "args": [
+    -1,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 38 of V's 41 significant instructions in order in W's 45; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_677$class_681.method_3030(DDDDDD[I[IZZ)V": {
+   "to": "method_3030(DDDDDDLit/unimi/dsi/fastutil/ints/IntList;Lit/unimi/dsi/fastutil/ints/IntList;ZZ)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    -1,
+    -1,
+    8,
+    9
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 13 of V's 15 significant instructions in order in W's 20; V argument(s) [6, 7] have no W counterpart of their type"
+  },
+  "net/minecraft/class_761.method_3251(Lnet/minecraft/class_1921;Lnet/minecraft/class_4587;DDDLorg/joml/Matrix4f;)V": {
+   "to": "method_3251(Lnet/minecraft/class_1921;DDDLorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "args": [
+    0,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 129 of V's 133 significant instructions in order in W's 131; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2629$class_5887.<init>(Lnet/minecraft/class_2540;)V": {
+   "to": "<init>(Lnet/minecraft/class_9129;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 8 of V's 10 significant instructions in order in W's 10; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4517.method_22166(Lnet/minecraft/class_2338;)V": {
+   "to": "method_22166()Lnet/minecraft/class_4517;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 18 of V's 20 significant instructions in order in W's 28; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5817.method_33832(III)D": {
+   "to": "method_33832(DDD)D",
+   "args": [
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 7; V argument(s) [0, 1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1324.method_6193(Lnet/minecraft/class_1322$class_1323;)Ljava/util/Set;": {
+   "to": "method_6193(Lnet/minecraft/class_1322$class_1323;)Ljava/util/Map;",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 5 significant instructions in order in W's 5"
+  },
+  "net/minecraft/class_329.method_39192(Lnet/minecraft/class_332;)V": {
+   "to": "method_39192(Lnet/minecraft/class_332;F)V",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 32 of V's 34 significant instructions in order in W's 34"
+  },
+  "net/minecraft/class_5624.<init>(Lnet/minecraft/class_4517;Lnet/minecraft/class_4521;Lnet/minecraft/class_2338;)V": {
+   "to": "<init>()V",
+   "args": [
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 9 significant instructions in order in W's 6; V argument(s) [0, 1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2540.method_34069(Ljava/util/function/IntFunction;Lnet/minecraft/class_2540$class_7461;Lnet/minecraft/class_2540$class_7461;)Ljava/util/Map;": {
+   "to": "method_34069(Ljava/util/function/IntFunction;Lnet/minecraft/class_9141;Lnet/minecraft/class_9141;)Ljava/util/Map;",
+   "args": [
+    0,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 8 significant instructions in order in W's 8; V argument(s) [1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_26.method_120(Ljava/util/function/Function;Lnet/minecraft/class_4284;Ljava/lang/String;)Lnet/minecraft/class_18;": {
+   "to": "method_120(Ljava/util/function/BiFunction;Lnet/minecraft/class_4284;Ljava/lang/String;)Lnet/minecraft/class_18;",
+   "args": [
+    -1,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 14 of V's 15 significant instructions in order in W's 16; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2945$class_7834.method_46363(Lnet/minecraft/class_2540;ILnet/minecraft/class_2941;)Lnet/minecraft/class_2945$class_7834;": {
+   "to": "method_46363(Lnet/minecraft/class_9129;ILnet/minecraft/class_2941;)Lnet/minecraft/class_2945$class_7834;",
+   "args": [
+    -1,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 4 significant instructions in order in W's 5; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5687.method_32714(Lnet/minecraft/class_2168;Lnet/minecraft/class_1297;ILjava/util/Collection;ILnet/minecraft/class_117;)I": {
+   "to": "method_32714(Lnet/minecraft/class_2168;Lnet/minecraft/class_1297;ILjava/util/Collection;ILnet/minecraft/class_6880;)I",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 4 significant instructions in order in W's 4; V argument(s) [5] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5687.method_32720(Lnet/minecraft/class_2168;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338;ILnet/minecraft/class_117;)I": {
+   "to": "method_32720(Lnet/minecraft/class_2168;Lnet/minecraft/class_2338;ILnet/minecraft/class_2338;ILnet/minecraft/class_6880;)I",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 4 significant instructions in order in W's 4; V argument(s) [5] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5687.method_32722(Lnet/minecraft/class_2168;Lnet/minecraft/class_2338;ILjava/util/Collection;ILnet/minecraft/class_117;)I": {
+   "to": "method_32722(Lnet/minecraft/class_2168;Lnet/minecraft/class_2338;ILjava/util/Collection;ILnet/minecraft/class_6880;)I",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 4 significant instructions in order in W's 4; V argument(s) [5] have no W counterpart of their type"
+  },
+  "net/minecraft/class_7706.method_45428(Lnet/minecraft/class_1761$class_7704;Lnet/minecraft/class_7225;Ljava/util/Set;Lnet/minecraft/class_1761$class_7705;)V": {
+   "to": "method_45428(Lnet/minecraft/class_1761$class_7704;Lnet/minecraft/class_7225;Ljava/util/Set;Lnet/minecraft/class_1761$class_7705;Lnet/minecraft/class_7699;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 10 significant instructions in order in W's 12"
+  },
+  "net/minecraft/class_7706.method_45430(Lnet/minecraft/class_1761$class_7704;Lnet/minecraft/class_7225;Ljava/util/Set;Lnet/minecraft/class_1761$class_7705;)V": {
+   "to": "method_45430(Lnet/minecraft/class_1761$class_7704;Lnet/minecraft/class_7225;Ljava/util/Set;Lnet/minecraft/class_1761$class_7705;Lnet/minecraft/class_7699;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 10 significant instructions in order in W's 12"
+  },
+  "net/minecraft/class_970.method_23192(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1738;Lnet/minecraft/class_572;ZFFFLjava/lang/String;)V": {
+   "to": "method_23192(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_572;FFFLnet/minecraft/class_2960;)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    3,
+    -1,
+    4,
+    5,
+    6,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 7 significant instructions in order in W's 6; V argument(s) [3, 5, 9] have no W counterpart of their type"
+  },
+  "net/minecraft/class_273.method_1216()Lnet/minecraft/class_2499;": {
+   "to": "method_1216(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2499;",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 34 of V's 37 significant instructions in order in W's 37"
+  },
+  "net/minecraft/class_329.method_1759(FLnet/minecraft/class_332;)V": {
+   "to": "method_1759(Lnet/minecraft/class_332;F)V",
+   "args": [
+    1,
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 103 of V's 112 significant instructions in order in W's 114"
+  },
+  "net/minecraft/server/MinecraftServer.method_29735(Lnet/minecraft/class_3283;)Lnet/minecraft/class_5359;": {
+   "to": "method_29735(Lnet/minecraft/class_3283;Z)Lnet/minecraft/class_5359;",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 8 of V's 12 significant instructions in order in W's 11"
+  },
+  "net/minecraft/class_4410$class_4411.<init>(Lnet/minecraft/class_4410;IILnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V": {
+   "to": "<init>(Lnet/minecraft/class_4410;Lnet/minecraft/class_327;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V",
+   "args": [
+    0,
+    -1,
+    -1,
+    2,
+    3,
+    4
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 7 significant instructions in order in W's 11; V argument(s) [1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_527.<init>(Lit/unimi/dsi/fastutil/booleans/BooleanConsumer;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_1940;ZLnet/minecraft/class_2378;)V": {
+   "to": "<init>(Lit/unimi/dsi/fastutil/booleans/BooleanConsumer;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_1940;ZLnet/minecraft/class_5455;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 10 of V's 11 significant instructions in order in W's 12; V argument(s) [5] have no W counterpart of their type"
+  },
+  "net/minecraft/class_353$class_354.<init>(Ljava/util/Map;)V": {
+   "to": "<init>(Ljava/util/List;Lnet/minecraft/class_437;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 6 significant instructions in order in W's 5; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_131.method_29323(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5339;": {
+   "to": "method_29323(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_5339;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1317.method_20637(Lnet/minecraft/class_1299;Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_4306;)V": {
+   "to": "method_20637(Lnet/minecraft/class_1299;Lnet/minecraft/class_9168;Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_4306;)V",
+   "args": [
+    0,
+    -1,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 10 of V's 12 significant instructions in order in W's 13; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1718.method_7637(Lnet/minecraft/class_1799;II)Ljava/util/List;": {
+   "to": "method_7637(Lnet/minecraft/class_7699;Lnet/minecraft/class_1799;II)Ljava/util/List;",
+   "args": [
+    1,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 15 of V's 16 significant instructions in order in W's 16"
+  },
+  "net/minecraft/class_1764.method_20309(Lnet/minecraft/class_1799;)F": {
+   "to": "method_20309(Lnet/minecraft/class_9278;)F",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1806.method_53836(I)Lnet/minecraft/class_2561;": {
+   "to": "method_53836(Lnet/minecraft/class_9209;)Lnet/minecraft/class_2561;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 8 of V's 8 significant instructions in order in W's 9; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_217.method_29327(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5342;": {
+   "to": "method_29327(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_5342;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_22$class_23.method_112(I)Lnet/minecraft/class_2596;": {
+   "to": "method_112(Lnet/minecraft/class_9209;)Lnet/minecraft/class_2596;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 21 of V's 22 significant instructions in order in W's 22; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2398.method_42022(Ljava/lang/String;ZLnet/minecraft/class_2394$class_2395;Ljava/util/function/Function;)Lnet/minecraft/class_2396;": {
+   "to": "method_42022(Ljava/lang/String;ZLjava/util/function/Function;Ljava/util/function/Function;)Lnet/minecraft/class_2396;",
+   "args": [
+    0,
+    1,
+    -1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2580.method_10940(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;ILnet/minecraft/class_1291;Lnet/minecraft/class_1291;)V": {
+   "to": "method_10940(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;ILnet/minecraft/class_6880;Lnet/minecraft/class_6880;)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 38 of V's 40 significant instructions in order in W's 42; V argument(s) [3, 4] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3039.method_13197(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/class_2960;Lnet/minecraft/class_3039$class_3041;)I": {
+   "to": "method_13197(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/class_6880;Lnet/minecraft/class_3039$class_3041;)I",
+   "args": [
+    0,
+    -1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 14 of V's 15 significant instructions in order in W's 15; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3039.method_13199(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/class_2960;Lnet/minecraft/class_2338;Lnet/minecraft/class_1799;Lnet/minecraft/class_3039$class_3041;)I": {
+   "to": "method_13199(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/class_6880;Lnet/minecraft/class_2338;Lnet/minecraft/class_1799;Lnet/minecraft/class_3039$class_3041;)I",
+   "args": [
+    0,
+    -1,
+    2,
+    3,
+    4
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 16 of V's 17 significant instructions in order in W's 17; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3039.method_13212(Lnet/minecraft/class_2168;Ljava/util/List;Lnet/minecraft/class_2960;)V": {
+   "to": "method_13212(Lnet/minecraft/class_2168;Ljava/util/List;Lnet/minecraft/class_5321;)V",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 10 of V's 12 significant instructions in order in W's 12; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3050.method_22829(Lnet/minecraft/class_2168;Lnet/minecraft/class_5341;)Z": {
+   "to": "method_22829(Lnet/minecraft/class_2168;Lnet/minecraft/class_6880;)Z",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 19 of V's 19 significant instructions in order in W's 23; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3244.method_45010(Lnet/minecraft/class_7472;Lnet/minecraft/class_7635;)V": {
+   "to": "method_45010(Lnet/minecraft/class_9449;Lnet/minecraft/class_7635;)V",
+   "args": [
+    -1,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 12 of V's 15 significant instructions in order in W's 15; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_330.method_32601(ILnet/minecraft/class_22;)Lnet/minecraft/class_330$class_331;": {
+   "to": "method_32601(Lnet/minecraft/class_9209;Lnet/minecraft/class_22;)Lnet/minecraft/class_330$class_331;",
+   "args": [
+    -1,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 5 significant instructions in order in W's 6; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_338.method_45027(Lnet/minecraft/class_2561;Lnet/minecraft/class_7591;)V": {
+   "to": "method_45027(Lnet/minecraft/class_303;)V",
+   "args": [
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 17 of V's 17 significant instructions in order in W's 19; V argument(s) [0, 1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3409.method_49885(Lnet/minecraft/class_2248;Lnet/minecraft/class_2248;Lnet/minecraft/class_2960;)Lnet/minecraft/class_3491;": {
+   "to": "method_49885(Lnet/minecraft/class_2248;Lnet/minecraft/class_2248;Lnet/minecraft/class_5321;)Lnet/minecraft/class_3491;",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 16 of V's 17 significant instructions in order in W's 17; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_378.method_51620(Ljava/util/List;Lnet/minecraft/class_390;)V": {
+   "to": "method_51620(Ljava/util/List;Lnet/minecraft/class_390$class_9241;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 12 of V's 13 significant instructions in order in W's 14; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4506.method_23295(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;FIFFI)V": {
+   "to": "method_23295(Lnet/minecraft/class_4588;Lnet/minecraft/class_4587$class_4665;FIFFI)V",
+   "args": [
+    0,
+    -1,
+    -1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 15 of V's 17 significant instructions in order in W's 17; V argument(s) [1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4648.method_28850(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_4648;": {
+   "to": "method_28850(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_4648;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4652.method_23457(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_4652;": {
+   "to": "method_23457(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_4652;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_466$class_469.method_37081(Lnet/minecraft/class_1291;)V": {
+   "to": "method_37081(Lnet/minecraft/class_6880;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 9 significant instructions in order in W's 9; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_466$class_469.method_37082(Lnet/minecraft/class_1291;)Lnet/minecraft/class_5250;": {
+   "to": "method_37082(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5250;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 3 significant instructions in order in W's 5; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_466$class_6393.method_37082(Lnet/minecraft/class_1291;)Lnet/minecraft/class_5250;": {
+   "to": "method_37082(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5250;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 5 significant instructions in order in W's 7; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4663.method_28895(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_4663;": {
+   "to": "method_28895(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_4663;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4915.method_48519(Lnet/minecraft/class_2960;Ljava/util/Map;Lnet/minecraft/class_1741;)Lcom/google/gson/JsonObject;": {
+   "to": "method_48519(Lnet/minecraft/class_2960;Ljava/util/Map;Lnet/minecraft/class_6880;)Lcom/google/gson/JsonObject;",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 28 of V's 29 significant instructions in order in W's 29; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4915$class_8072.method_48744(Lnet/minecraft/class_1741;)Ljava/lang/String;": {
+   "to": "method_48744(Lnet/minecraft/class_6880;)Ljava/lang/String;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 5 significant instructions in order in W's 5; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5142.method_26995(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5142;": {
+   "to": "method_26995(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_5142;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5202.method_27382(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5202;": {
+   "to": "method_27382(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_5202;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5469.method_51464(Lnet/minecraft/class_2960;I)Lnet/minecraft/class_8243;": {
+   "to": "method_51464(Lnet/minecraft/class_5321;I)Lnet/minecraft/class_8243;",
+   "args": [
+    -1,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 17 of V's 18 significant instructions in order in W's 18; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5652.method_32443(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5650;": {
+   "to": "method_32443(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_5650;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5659.method_32456(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5657;": {
+   "to": "method_32456(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_5657;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5671.method_32479(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5669;": {
+   "to": "method_32479(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_5669;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5687.method_32715(Lnet/minecraft/class_2168;Lnet/minecraft/class_117;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": {
+   "to": "method_32715(Lnet/minecraft/class_2168;Lnet/minecraft/class_6880;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "args": [
+    0,
+    -1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 20 of V's 20 significant instructions in order in W's 26; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5687.method_32725(Lnet/minecraft/class_2168;Ljava/util/Collection;ILnet/minecraft/class_117;)I": {
+   "to": "method_32725(Lnet/minecraft/class_2168;Ljava/util/Collection;ILnet/minecraft/class_6880;)I",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 35 of V's 36 significant instructions in order in W's 36; V argument(s) [3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_677$class_681.method_3028(D[[D[I[IZZZ)V": {
+   "to": "method_3028(D[[DLit/unimi/dsi/fastutil/ints/IntList;Lit/unimi/dsi/fastutil/ints/IntList;ZZZ)V",
+   "args": [
+    0,
+    1,
+    -1,
+    -1,
+    4,
+    5,
+    6
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 33 of V's 35 significant instructions in order in W's 35; V argument(s) [2, 3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_677$class_681.method_3031(DI[I[IZZ)V": {
+   "to": "method_3031(DILit/unimi/dsi/fastutil/ints/IntList;Lit/unimi/dsi/fastutil/ints/IntList;ZZ)V",
+   "args": [
+    0,
+    1,
+    -1,
+    -1,
+    4,
+    5
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 25 of V's 26 significant instructions in order in W's 26; V argument(s) [2, 3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_677$class_681.method_3032([I[IZZ)V": {
+   "to": "method_3032(Lit/unimi/dsi/fastutil/ints/IntList;Lit/unimi/dsi/fastutil/ints/IntList;ZZ)V",
+   "args": [
+    -1,
+    -1,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 27 of V's 28 significant instructions in order in W's 28; V argument(s) [0, 1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_7388.method_43186(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_7388;": {
+   "to": "method_43186(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_7388;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_75.method_29317(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5338;": {
+   "to": "method_29317(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_5338;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_7923.method_47478(Lnet/minecraft/class_5321;Lnet/minecraft/class_2385;Lnet/minecraft/class_7923$class_6889;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_2385;": {
+   "to": "method_47478(Lnet/minecraft/class_5321;Lnet/minecraft/class_2385;Lnet/minecraft/class_7923$class_6889;)Lnet/minecraft/class_2385;",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 8 of V's 9 significant instructions in order in W's 10; V argument(s) [3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_7952.method_47680(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_7951;": {
+   "to": "method_47680(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_7951;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 10 of V's 12 significant instructions in order in W's 13; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_8188.method_49343(Lnet/minecraft/class_1792;)Lnet/minecraft/class_4730;": {
+   "to": "method_49343(Ljava/util/Optional;)Lnet/minecraft/class_4730;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 6 significant instructions in order in W's 10; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_822.method_23076(Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;Lnet/minecraft/class_4588;FFFFIFFFF)V": {
+   "to": "method_23076(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;FFFFIFFFF)V",
+   "args": [
+    -1,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 11 of V's 13 significant instructions in order in W's 13; V argument(s) [0, 1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_8514$class_8516.method_51399(Lnet/minecraft/class_3218;Lnet/minecraft/class_8514$class_8515;Lnet/minecraft/class_5712;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_243;Lnet/minecraft/class_243;)V": {
+   "to": "method_51399(Lnet/minecraft/class_3218;Lnet/minecraft/class_8514$class_8515;Lnet/minecraft/class_6880;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_243;Lnet/minecraft/class_243;)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3,
+    4,
+    5
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_8641.method_52597(Ljava/util/List;Ljava/util/List;Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_8839;)Lnet/minecraft/class_8868;": {
+   "to": "method_52597(Ljava/util/List;Ljava/util/List;Lcom/mojang/brigadier/CommandDispatcher;)Lnet/minecraft/class_8868;",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 22 of V's 23 significant instructions in order in W's 23; V argument(s) [3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_8641$class_8871.method_54429(Ljava/util/List;Lcom/mojang/brigadier/CommandDispatcher;Ljava/lang/Object;Lnet/minecraft/class_2960;)Lnet/minecraft/class_8856;": {
+   "to": "method_54429(Ljava/util/List;Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_2960;)Lnet/minecraft/class_8856;",
+   "args": [
+    0,
+    1,
+    -1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 2 significant instructions in order in W's 2; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_8884.method_54471(Ljava/util/List;Lnet/minecraft/class_3955;)V": {
+   "to": "method_54471(Ljava/util/List;Lnet/minecraft/class_8786;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 21 of V's 22 significant instructions in order in W's 22; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_891.method_23837(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;IFIII)V": {
+   "to": "method_23837(Lnet/minecraft/class_4588;Lnet/minecraft/class_4587$class_4665;IFIII)V",
+   "args": [
+    0,
+    -1,
+    -1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 17 of V's 19 significant instructions in order in W's 19; V argument(s) [1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_902.method_23171(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;FFIIIFFI)V": {
+   "to": "method_23171(Lnet/minecraft/class_4588;Lnet/minecraft/class_4587$class_4665;FFIIIFFI)V",
+   "args": [
+    0,
+    -1,
+    -1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 12 of V's 14 significant instructions in order in W's 14; V argument(s) [1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_906.method_23840(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;IFIII)V": {
+   "to": "method_23840(Lnet/minecraft/class_4588;Lnet/minecraft/class_4587$class_4665;IFIII)V",
+   "args": [
+    0,
+    -1,
+    -1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 17 of V's 19 significant instructions in order in W's 19; V argument(s) [1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_907.method_23173(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;FFFIIIFF)V": {
+   "to": "method_23173(Lnet/minecraft/class_4588;Lnet/minecraft/class_4587$class_4665;FFFIIIFF)V",
+   "args": [
+    0,
+    -1,
+    -1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 12 of V's 14 significant instructions in order in W's 14; V argument(s) [1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_928.method_23188(Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;Lnet/minecraft/class_4588;FFFFFIIII)V": {
+   "to": "method_23188(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;FFFFFIIII)V",
+   "args": [
+    -1,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 11 of V's 13 significant instructions in order in W's 13; V argument(s) [0, 1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_970.method_48482(Lnet/minecraft/class_1741;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_8053;Lnet/minecraft/class_572;Z)V": {
+   "to": "method_48482(Lnet/minecraft/class_6880;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_8053;Lnet/minecraft/class_572;Z)V",
+   "args": [
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 16 of V's 18 significant instructions in order in W's 18; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/server/Main.method_29173(Lnet/minecraft/class_32$class_5143;Lcom/mojang/datafixers/DataFixer;ZLjava/util/function/BooleanSupplier;Lnet/minecraft/class_2378;)V": {
+   "to": "method_29173(Lnet/minecraft/class_32$class_5143;Lcom/mojang/datafixers/DataFixer;ZLjava/util/function/BooleanSupplier;Lnet/minecraft/class_5455;Z)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 30 of V's 31 significant instructions in order in W's 31; V argument(s) [4] have no W counterpart of their type"
+  },
+  "net/minecraft/class_8979.<init>(Lnet/minecraft/class_638;DDD)V": {
+   "to": "<init>(Lnet/minecraft/class_638;DDDDII)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 7 significant instructions in order in W's 8"
+  },
+  "net/minecraft/class_2539.<init>(Ljava/lang/String;ILjava/lang/String;Lnet/minecraft/class_2539$class_4533;)V": {
+   "to": "<init>(Ljava/lang/String;ILjava/lang/String;)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 5 significant instructions in order in W's 3; V argument(s) [3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2568$class_5249.<init>(Lnet/minecraft/class_1792;ILjava/util/Optional;)V": {
+   "to": "<init>(Lnet/minecraft/class_6880;ILnet/minecraft/class_9326;)V",
+   "args": [
+    -1,
+    1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 5 significant instructions in order in W's 5; V argument(s) [0, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3279$class_8620.<init>(Lnet/minecraft/class_8580;Z)V": {
+   "to": "<init>(Lnet/minecraft/class_8580;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 2; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2561$class_2562.method_10871(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_5250;": {
+   "to": "method_10871(Lcom/google/gson/JsonElement;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5250;",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 7 significant instructions in order in W's 8"
+  },
+  "net/minecraft/class_2589.method_11027(Lnet/minecraft/class_2371;)Z": {
+   "to": "method_11027(Lnet/minecraft/class_1845;Lnet/minecraft/class_2371;)Z",
+   "args": [
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 17 of V's 19 significant instructions in order in W's 19"
+  },
+  "net/minecraft/class_2614.method_11248(Lnet/minecraft/class_1937;Lnet/minecraft/class_2615;)Lnet/minecraft/class_1263;": {
+   "to": "method_11248(Lnet/minecraft/class_1937;Lnet/minecraft/class_2615;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1263;",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6"
+  },
+  "net/minecraft/class_273.method_1217()Lnet/minecraft/class_2499;": {
+   "to": "method_1217(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2499;",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 59 of V's 62 significant instructions in order in W's 62"
+  },
+  "net/minecraft/class_273.method_1219(Lnet/minecraft/class_2499;)V": {
+   "to": "method_1219(Lnet/minecraft/class_2499;Lnet/minecraft/class_7225$class_7874;)V",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 67 of V's 70 significant instructions in order in W's 70"
+  },
+  "net/minecraft/class_273.method_1220(Lnet/minecraft/class_2499;)V": {
+   "to": "method_1220(Lnet/minecraft/class_2499;Lnet/minecraft/class_7225$class_7874;)V",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 28 of V's 30 significant instructions in order in W's 31"
+  },
+  "net/minecraft/class_2995.method_32704(Lnet/minecraft/class_2487;)Lnet/minecraft/class_273;": {
+   "to": "method_32704(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_273;",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3"
+  },
+  "net/minecraft/class_3115.method_55345(Lcom/mojang/brigadier/builder/ArgumentBuilder;Lnet/minecraft/class_3115$class_9008;)Lcom/mojang/brigadier/builder/ArgumentBuilder;": {
+   "to": "method_55345(Lnet/minecraft/class_7157;Lcom/mojang/brigadier/builder/ArgumentBuilder;Lnet/minecraft/class_3115$class_9008;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
+   "args": [
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 24 of V's 26 significant instructions in order in W's 26"
+  },
+  "net/minecraft/class_378$class_8537.method_51631(Lnet/minecraft/class_378$class_8534;Lnet/minecraft/class_389$class_8540;)V": {
+   "to": "method_51631(Lnet/minecraft/class_378$class_8534;Lnet/minecraft/class_9243$class_9244;Lnet/minecraft/class_389$class_8540;)V",
+   "args": [
+    0,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 9 of V's 10 significant instructions in order in W's 10"
+  },
+  "net/minecraft/class_378$class_8537.method_51632(Lnet/minecraft/class_378$class_8534;Ljava/util/concurrent/CompletableFuture;)V": {
+   "to": "method_51632(Lnet/minecraft/class_378$class_8534;Lnet/minecraft/class_9243$class_9244;Ljava/util/concurrent/CompletableFuture;)V",
+   "args": [
+    0,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6"
+  },
+  "net/minecraft/class_412.method_2130(Lnet/minecraft/class_310;Lnet/minecraft/class_639;Lnet/minecraft/class_642;)V": {
+   "to": "method_2130(Lnet/minecraft/class_310;Lnet/minecraft/class_639;Lnet/minecraft/class_642;Lnet/minecraft/class_9112;)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 16 of V's 17 significant instructions in order in W's 17"
+  },
+  "net/minecraft/class_4517.method_23634()V": {
+   "to": "method_23634(I)Lnet/minecraft/class_4517;",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 8 significant instructions in order in W's 8"
+  },
+  "net/minecraft/class_634.method_54133(Lnet/minecraft/class_746;Lnet/minecraft/class_638;)V": {
+   "to": "method_54133(Lnet/minecraft/class_746;Lnet/minecraft/class_638;Lnet/minecraft/class_434$class_9678;)V",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 12 of V's 13 significant instructions in order in W's 13"
+  },
+  "net/minecraft/class_6519.method_38014(Lnet/minecraft/class_6767;)Lcom/google/gson/JsonElement;": {
+   "to": "method_38014(Lnet/minecraft/class_6767;Ljava/util/function/BiConsumer;)Lcom/google/gson/JsonElement;",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 25 of V's 26 significant instructions in order in W's 26"
+  },
+  "net/minecraft/class_7706.method_45427(Lnet/minecraft/class_1761$class_7704;Lnet/minecraft/class_7225;Lnet/minecraft/class_1792;Lnet/minecraft/class_1761$class_7705;)V": {
+   "to": "method_45427(Lnet/minecraft/class_1761$class_7704;Lnet/minecraft/class_7225;Lnet/minecraft/class_1792;Lnet/minecraft/class_1761$class_7705;Lnet/minecraft/class_7699;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8"
+  },
+  "net/minecraft/class_7877.method_55283(Lnet/minecraft/class_5321;Lcom/mojang/serialization/Lifecycle;Ljava/util/Map;)Lnet/minecraft/class_7225$class_7226;": {
+   "to": "method_55283(Lnet/minecraft/class_5321;Lcom/mojang/serialization/Lifecycle;Lnet/minecraft/class_7876;Ljava/util/Map;)Lnet/minecraft/class_7225$class_7226;",
+   "args": [
+    0,
+    1,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3"
+  },
+  "net/minecraft/class_8867.method_54421(Ljava/lang/String;I)V": {
+   "to": "method_54421(Ljava/lang/String;ILnet/minecraft/class_8839;)V",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 24 of V's 25 significant instructions in order in W's 25"
+  },
+  "net/minecraft/class_2540.method_34062(Ljava/util/Collection;Lnet/minecraft/class_2540$class_7462;)V": {
+   "to": "method_34062(Ljava/util/Collection;Lnet/minecraft/class_9142;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 7 significant instructions in order in W's 7; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2540.method_34063(Ljava/util/Map;Lnet/minecraft/class_2540$class_7462;Lnet/minecraft/class_2540$class_7462;)V": {
+   "to": "method_34063(Ljava/util/Map;Lnet/minecraft/class_9142;Lnet/minecraft/class_9142;)V",
+   "args": [
+    0,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 5 significant instructions in order in W's 5; V argument(s) [1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2540.method_34068(Ljava/util/function/IntFunction;Lnet/minecraft/class_2540$class_7461;)Ljava/util/Collection;": {
+   "to": "method_34068(Ljava/util/function/IntFunction;Lnet/minecraft/class_9141;)Ljava/util/Collection;",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 7 significant instructions in order in W's 7; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2540.method_37435(Ljava/util/Optional;Lnet/minecraft/class_2540$class_7462;)V": {
+   "to": "method_37435(Ljava/util/Optional;Lnet/minecraft/class_9142;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2540.method_37436(Lnet/minecraft/class_2540$class_7461;)Ljava/util/Optional;": {
+   "to": "method_37436(Lnet/minecraft/class_9141;)Ljava/util/Optional;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3553.method_15476(Ljava/lang/String;Lcom/mojang/datafixers/types/templates/TaggedChoice$TaggedChoiceType;Lcom/mojang/datafixers/types/templates/TaggedChoice$TaggedChoiceType;)Lcom/mojang/datafixers/TypeRewriteRule;": {
+   "to": "method_15476(Lcom/mojang/datafixers/types/templates/TaggedChoice$TaggedChoiceType;Lcom/mojang/datafixers/types/templates/TaggedChoice$TaggedChoiceType;)Lcom/mojang/datafixers/TypeRewriteRule;",
+   "args": [
+    -1,
+    0,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 9 of V's 9 significant instructions in order in W's 10; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5350.method_40421(Lnet/minecraft/class_5455;)V": {
+   "to": "method_40421()V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 7; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_111.<init>(Ljava/util/List;Lnet/minecraft/class_6862;Lnet/minecraft/class_20$class_21;BIZ)V": {
+   "to": "<init>(Ljava/util/List;Lnet/minecraft/class_6862;Lnet/minecraft/class_6880;BIZ)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3,
+    4,
+    5
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 7 significant instructions in order in W's 7; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_134.<init>(Ljava/util/List;Lnet/minecraft/class_6880;Ljava/util/List;)V": {
+   "to": "<init>(Ljava/util/List;Lnet/minecraft/class_9666;Ljava/util/List;)V",
+   "args": [
+    0,
+    -1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 5 significant instructions in order in W's 5; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_137.<init>(Ljava/util/List;Ljava/util/List;)V": {
+   "to": "<init>(Ljava/util/List;Ljava/util/List;Z)V",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 4 significant instructions in order in W's 5"
+  },
+  "net/minecraft/class_144.<init>(Ljava/util/List;Lnet/minecraft/class_2960;JLnet/minecraft/class_6880;)V": {
+   "to": "<init>(Ljava/util/List;Lnet/minecraft/class_5321;JLnet/minecraft/class_6880;)V",
+   "args": [
+    0,
+    -1,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 5 significant instructions in order in W's 5; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1451$class_3700.<init>(Lnet/minecraft/class_1451;DLnet/minecraft/class_1856;Z)V": {
+   "to": "<init>(Lnet/minecraft/class_1451;DLjava/util/function/Predicate;Z)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1708$class_1710.<init>(Lnet/minecraft/class_1263;III)V": {
+   "to": "<init>(Lnet/minecraft/class_1845;Lnet/minecraft/class_1263;III)V",
+   "args": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 2 significant instructions in order in W's 3"
+  },
+  "net/minecraft/class_2178.<init>()V": {
+   "to": "<init>(Lnet/minecraft/class_7225$class_7874;)V",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 2 significant instructions in order in W's 3"
+  },
+  "net/minecraft/class_2629$class_5886.<init>(Lnet/minecraft/class_2540;)V": {
+   "to": "<init>(Lnet/minecraft/class_9129;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 14 of V's 15 significant instructions in order in W's 15; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2867.<init>(Ljava/nio/file/Path;Z)V": {
+   "to": "<init>(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Z)V",
+   "args": [
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 7 significant instructions in order in W's 8"
+  },
+  "net/minecraft/class_3268.<init>(Lnet/minecraft/class_7662;Ljava/util/Set;Ljava/util/List;Ljava/util/Map;)V": {
+   "to": "<init>(Lnet/minecraft/class_9224;Lnet/minecraft/class_7662;Ljava/util/Set;Ljava/util/List;Ljava/util/Map;)V",
+   "args": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 6 significant instructions in order in W's 7"
+  },
+  "net/minecraft/class_3670.<init>(Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "to": "<init>(Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_3670$class_9475;)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 4 significant instructions in order in W's 5"
+  },
+  "net/minecraft/class_3701$class_3703.<init>(Lnet/minecraft/class_3701;DLnet/minecraft/class_1856;Z)V": {
+   "to": "<init>(Lnet/minecraft/class_3701;DLjava/util/function/Predicate;Z)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_378$class_8535.<init>(Lnet/minecraft/class_378$class_8534;Lcom/mojang/datafixers/util/Either;)V": {
+   "to": "<init>(Lnet/minecraft/class_378$class_8534;Lnet/minecraft/class_9243$class_9244;Lcom/mojang/datafixers/util/Either;)V",
+   "args": [
+    0,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 4 significant instructions in order in W's 5"
+  },
+  "net/minecraft/class_3837$class_3839.<init>(Lnet/minecraft/class_3837$class_8753;Lnet/minecraft/class_3837$class_8753;Lnet/minecraft/class_3837$class_3841;)V": {
+   "to": "<init>(Lnet/minecraft/class_2203$class_2209;Lnet/minecraft/class_2203$class_2209;Lnet/minecraft/class_3837$class_3841;)V",
+   "args": [
+    -1,
+    -1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 5 significant instructions in order in W's 5; V argument(s) [0, 1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3853$class_1654.<init>(ILnet/minecraft/class_6862;Ljava/lang/String;Lnet/minecraft/class_20$class_21;II)V": {
+   "to": "<init>(ILnet/minecraft/class_6862;Ljava/lang/String;Lnet/minecraft/class_6880;II)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    4,
+    5
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8; V argument(s) [3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3853$class_4161.<init>(Lnet/minecraft/class_1799;III)V": {
+   "to": "<init>(Lnet/minecraft/class_9306;III)V",
+   "args": [
+    -1,
+    1,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 7 of V's 8 significant instructions in order in W's 8; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3853$class_4166.<init>(Ljava/util/List;IF)V": {
+   "to": "<init>(Lnet/minecraft/class_9298;IF)V",
+   "args": [
+    -1,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 5 significant instructions in order in W's 5; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4486.<init>(ILnet/minecraft/class_4486$class_4487;Lnet/minecraft/class_4486$class_4487;)V": {
+   "to": "<init>(ILjava/lang/String;Lnet/minecraft/class_4486$class_4487;Lnet/minecraft/class_4486$class_4487;)V",
+   "args": [
+    0,
+    2,
+    3
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 5 significant instructions in order in W's 6"
+  },
+  "net/minecraft/class_4648.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "to": "<init>(Lcom/mojang/serialization/MapCodec;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4652.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "to": "<init>(Lcom/mojang/serialization/MapCodec;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_466$class_469.<init>(Lnet/minecraft/class_466;IILnet/minecraft/class_1291;ZI)V": {
+   "to": "<init>(Lnet/minecraft/class_466;IILnet/minecraft/class_6880;ZI)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1,
+    4,
+    5
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 6 significant instructions in order in W's 6; V argument(s) [3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_466$class_6393.<init>(Lnet/minecraft/class_466;IILnet/minecraft/class_1291;)V": {
+   "to": "<init>(Lnet/minecraft/class_466;IILnet/minecraft/class_6880;)V",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 5 significant instructions in order in W's 5; V argument(s) [3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_4663.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "to": "<init>(Lcom/mojang/serialization/MapCodec;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_47.<init>(Lnet/minecraft/class_8567;Lnet/minecraft/class_5819;Lnet/minecraft/class_8489;)V": {
+   "to": "<init>(Lnet/minecraft/class_8567;Lnet/minecraft/class_5819;Lnet/minecraft/class_7871$class_7872;)V",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 7 significant instructions in order in W's 7; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5142.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "to": "<init>(Lcom/mojang/serialization/MapCodec;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5202.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "to": "<init>(Lcom/mojang/serialization/MapCodec;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_7172$class_7175.<init>(Lnet/minecraft/class_315;IIIILnet/minecraft/class_7172;Lnet/minecraft/class_7172$class_7176;Lnet/minecraft/class_7172$class_7277;Ljava/util/function/Consumer;)V": {
+   "to": "<init>(Lnet/minecraft/class_315;IIIILnet/minecraft/class_7172;Lnet/minecraft/class_7172$class_7176;Lnet/minecraft/class_7172$class_7277;Ljava/util/function/Consumer;Z)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 9 of V's 9 significant instructions in order in W's 10"
+  },
+  "net/minecraft/class_7388.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "to": "<init>(Lcom/mojang/serialization/MapCodec;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_83.<init>(Lnet/minecraft/class_2960;IILjava/util/List;Ljava/util/List;)V": {
+   "to": "<init>(Lcom/mojang/datafixers/util/Either;IILjava/util/List;Ljava/util/List;)V",
+   "args": [
+    -1,
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_8492.<init>(Ljava/util/List;Lnet/minecraft/class_2960;)V": {
+   "to": "<init>(Ljava/util/List;Lnet/minecraft/class_5321;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 3 significant instructions in order in W's 3; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_8641$class_8870.<init>(Lnet/minecraft/class_8873;Lit/unimi/dsi/fastutil/ints/IntList;)V": {
+   "to": "<init>(Lnet/minecraft/class_8873;Lit/unimi/dsi/fastutil/ints/IntList;Lnet/minecraft/class_8839;)V",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 4 significant instructions in order in W's 5"
+  },
+  "net/minecraft/class_8884$class_8885.<init>(Lnet/minecraft/class_2371;Lnet/minecraft/class_3955;)V": {
+   "to": "<init>(Lnet/minecraft/class_2371;Lnet/minecraft/class_8786;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 4 significant instructions in order in W's 4; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_9019.<init>()V": {
+   "to": "<init>(Lnet/minecraft/class_7225$class_7874;)V",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 2 significant instructions in order in W's 3"
+  },
+  "net/minecraft/class_310.method_1499(Lnet/minecraft/class_1799;Lnet/minecraft/class_2586;)V": {
+   "to": "method_1499(Lnet/minecraft/class_1799;Lnet/minecraft/class_2586;Lnet/minecraft/class_5455;)V",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 35 significant instructions in order in W's 7"
+  },
+  "net/minecraft/class_3803.method_16693(Lnet/minecraft/class_1799;II)Lnet/minecraft/class_1799;": {
+   "to": "method_16693(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "args": [
+    0,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 36 significant instructions in order in W's 16; V argument(s) [1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_473.method_37433(Z)V": {
+   "to": "method_37433()V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 28 significant instructions in order in W's 11; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_353$class_354.method_20410(Lnet/minecraft/class_315;ILnet/minecraft/class_7172;Lnet/minecraft/class_7172;)Lnet/minecraft/class_353$class_354;": {
+   "to": "method_20410(Lnet/minecraft/class_339;Lnet/minecraft/class_339;Lnet/minecraft/class_437;)Lnet/minecraft/class_353$class_354;",
+   "args": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 19 significant instructions in order in W's 8; V argument(s) [0, 1, 2, 3] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3765.method_16518(Lnet/minecraft/class_1657;)V": {
+   "to": "method_16518(Lnet/minecraft/class_3222;)Z",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 9 of V's 16 significant instructions in order in W's 26; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1309.method_18865(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": {
+   "to": "method_18865(Lnet/minecraft/class_4174;)V",
+   "args": [
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 21 significant instructions in order in W's 14; V argument(s) [0, 1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1806.method_7996(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;I)V": {
+   "to": "method_7996(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;)V",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 7 significant instructions in order in W's 7; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1496.method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lorg/joml/Vector3f;": {
+   "to": "method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lnet/minecraft/class_243;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 9 significant instructions in order in W's 13"
+  },
+  "net/minecraft/class_395.method_51884()Lorg/lwjgl/stb/STBTTFontinfo;": {
+   "to": "method_51884()Lorg/lwjgl/util/freetype/FT_Face;",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 8 significant instructions in order in W's 8"
+  },
+  "net/minecraft/class_1688.method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lorg/joml/Vector3f;": {
+   "to": "method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lnet/minecraft/class_243;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 11 significant instructions in order in W's 8"
+  },
+  "net/minecraft/class_353$class_354.method_20409(Lnet/minecraft/class_315;ILnet/minecraft/class_7172;)Lnet/minecraft/class_353$class_354;": {
+   "to": "method_20409(Ljava/util/List;Lnet/minecraft/class_437;)Lnet/minecraft/class_353$class_354;",
+   "args": [
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 9 significant instructions in order in W's 3; V argument(s) [0, 1, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3853$class_4166.<init>(Lnet/minecraft/class_1291;II)V": {
+   "to": "<init>(Lnet/minecraft/class_6880;II)V",
+   "args": [
+    -1,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 6 significant instructions in order in W's 8; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2629$class_5885.method_34107(Lnet/minecraft/class_2540;)V": {
+   "to": "method_34107(Lnet/minecraft/class_9129;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 3 significant instructions in order in W's 3; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1297.method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lorg/joml/Vector3f;": {
+   "to": "method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lnet/minecraft/class_243;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 6 significant instructions in order in W's 3"
+  },
+  "net/minecraft/class_6603$class_6604.method_38597(Lnet/minecraft/class_2540;)V": {
+   "to": "method_38597(Lnet/minecraft/class_9129;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 10 significant instructions in order in W's 11; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1291$class_8634.method_52522(I)Lnet/minecraft/class_1322;": {
+   "to": "method_52522(Ljava/lang/String;I)Lnet/minecraft/class_1322;",
+   "args": [
+    1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 5 of V's 10 significant instructions in order in W's 8"
+  },
+  "net/minecraft/class_1496.method_49124(Lnet/minecraft/class_1296;Lnet/minecraft/class_1496;Lnet/minecraft/class_1320;DD)V": {
+   "to": "method_49124(Lnet/minecraft/class_1296;Lnet/minecraft/class_1496;Lnet/minecraft/class_6880;DD)V",
+   "args": [
+    0,
+    1,
+    -1,
+    3,
+    4
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 4 of V's 7 significant instructions in order in W's 7; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2568$class_5249.method_54203(Lnet/minecraft/class_2561;)Lcom/mojang/serialization/DataResult;": {
+   "to": "method_54203(Lnet/minecraft/class_2561;Lnet/minecraft/class_6903;)Lcom/mojang/serialization/DataResult;",
+   "args": [
+    0
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 6 of V's 10 significant instructions in order in W's 13"
+  },
+  "net/minecraft/class_1291$class_8634.<init>(Lnet/minecraft/class_1291;Ljava/util/UUID;DLnet/minecraft/class_1322$class_1323;)V": {
+   "to": "<init>(Ljava/util/UUID;DLnet/minecraft/class_1322$class_1323;)V",
+   "args": [
+    -1,
+    0,
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 6 significant instructions in order in W's 5; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3853.method_52553(Lnet/minecraft/class_1842;)Lnet/minecraft/class_1799;": {
+   "to": "method_52553(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1799;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 5 significant instructions in order in W's 3; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_7877.method_55290(Lnet/minecraft/class_5455;Ljava/util/stream/Stream;)Lnet/minecraft/class_7225$class_7874;": {
+   "to": "method_55290(Lnet/minecraft/class_7877$class_7879;Lnet/minecraft/class_5455;Ljava/util/stream/Stream;)Lnet/minecraft/class_7225$class_7874;",
+   "args": [
+    1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 6 significant instructions in order in W's 10"
+  },
+  "net/minecraft/class_822.method_22740(Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;Lnet/minecraft/class_4588;FFFFIIFFFFFFFF)V": {
+   "to": "method_22740(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;FFFFIIFFFFFFFF)V",
+   "args": [
+    -1,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 5 significant instructions in order in W's 5; V argument(s) [0, 1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1317$class_1318.<init>(Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_1317$class_4306;)V": {
+   "to": "<init>(Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_9168;Lnet/minecraft/class_1317$class_4306;)V",
+   "args": [
+    0,
+    -1,
+    2
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 5 significant instructions in order in W's 5; V argument(s) [1] have no W counterpart of their type"
+  },
+  "net/minecraft/class_1845$class_1846.<init>(Ljava/lang/Object;Lnet/minecraft/class_1856;Ljava/lang/Object;)V": {
+   "to": "<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_1856;Lnet/minecraft/class_6880;)V",
+   "args": [
+    -1,
+    1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 5 significant instructions in order in W's 5; V argument(s) [0, 2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_2629$class_5884.method_34107(Lnet/minecraft/class_2540;)V": {
+   "to": "method_34107(Lnet/minecraft/class_9129;)V",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 3 significant instructions in order in W's 4; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_3023$class_3024.<init>(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2487;)V": {
+   "to": "<init>(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3023$class_9450;)V",
+   "args": [
+    0,
+    1,
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 5 significant instructions in order in W's 5; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_5132$class_5133.method_26870(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324;": {
+   "to": "method_26870(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1324;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 2 of V's 6 significant instructions in order in W's 6; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_758$class_7283.method_42590()Lnet/minecraft/class_1291;": {
+   "to": "method_42590()Lnet/minecraft/class_6880;",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 2 significant instructions in order in W's 2"
+  },
+  "net/minecraft/class_758$class_7284.method_42590()Lnet/minecraft/class_1291;": {
+   "to": "method_42590()Lnet/minecraft/class_6880;",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 2 significant instructions in order in W's 2"
+  },
+  "net/minecraft/class_8172.method_52577(Lnet/minecraft/class_8172$class_8526;)Lnet/minecraft/class_1799;": {
+   "to": "method_52577(Lnet/minecraft/class_8526;)Lnet/minecraft/class_1799;",
+   "args": [
+    -1
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 8 significant instructions in order in W's 5; V argument(s) [0] have no W counterpart of their type"
+  },
+  "net/minecraft/class_8884$class_8885.comp_2002()Lnet/minecraft/class_3955;": {
+   "to": "comp_2002()Lnet/minecraft/class_8786;",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 2 significant instructions in order in W's 2"
+  },
+  "net/minecraft/class_2664.method_55331()Lnet/minecraft/class_3414;": {
+   "to": "method_55331()Lnet/minecraft/class_6880;",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 2 significant instructions in order in W's 2"
+  },
+  "net/minecraft/class_2751.method_55336()Lnet/minecraft/class_9022;": {
+   "to": "method_55336()Ljava/util/Optional;",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 2 significant instructions in order in W's 2"
+  },
+  "net/minecraft/class_2783.method_11945()B": {
+   "to": "method_11945()I",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 2 significant instructions in order in W's 2"
+  },
+  "net/minecraft/class_2783.method_11946()Lnet/minecraft/class_1291;": {
+   "to": "method_11946()Lnet/minecraft/class_6880;",
+   "args": [],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 1 of V's 2 significant instructions in order in W's 2"
+  },
+  "net/minecraft/class_2535.method_52904(Ljava/lang/String;ILnet/minecraft/class_2547;Lnet/minecraft/class_8592;)V": {
+   "to": "method_52904(Ljava/lang/String;ILnet/minecraft/class_9127;Lnet/minecraft/class_9127;Lnet/minecraft/class_8697;Lnet/minecraft/class_8592;)V",
+   "args": [
+    0,
+    1,
+    -1,
+    5
+   ],
+   "basis": "same intermediary member, reshaped in place: javap -c both, 3 of V's 4 significant instructions in order in W's 10; V argument(s) [2] have no W counterpart of their type"
+  },
+  "net/minecraft/class_14.method_29579(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z": {
+   "to": "method_29579(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z",
+   "args": [
+    0,
+    1,
+    2,
+    -1
+   ],
+   "basis": "WalkNodeEvaluator.isDiagonalValid: javap -c both, W reads its arguments 1-3 exactly where V read 1-3 (field_39 / field_41 / field_43 of the same nodes); V's fourth node (the diagonal's own checks, field_42 closed and its type) moved to the caller"
+  }
+ },
+ "_smx4b_fieldRenames_basis": "private fields W keeps under another name in the same class, same type (mixin-cause: only unmatched field of that type; most are 1.20.5 record components, comp_*). Kept when the V field and its W name have a reader/writer method in common, or the W field is a record component of the class; dropped where two V fields would land on one W field or no method uses both",
+ "fieldRenames": {
+  "net/minecraft/class_4406.field_19962:Lnet/minecraft/class_4406$class_4407;": "field_49460",
+  "net/minecraft/class_17.field_69:Lnet/minecraft/class_2338;": "comp_2312",
+  "net/minecraft/class_1322.field_6327:Ljava/util/UUID;": "comp_2447",
+  "net/minecraft/class_4208.field_18790:Lnet/minecraft/class_5321;": "comp_2207",
+  "net/minecraft/class_4208.field_18791:Lnet/minecraft/class_2338;": "comp_2208",
+  "net/minecraft/class_2940.field_13306:I": "comp_2327",
+  "net/minecraft/class_4381.field_19746:Lnet/minecraft/class_4381$class_4382;": "field_49448",
+  "net/minecraft/class_8035.field_41870:Lnet/minecraft/class_8039;": "field_48534",
+  "net/minecraft/class_1273.field_5818:Ljava/lang/String;": "comp_2371",
+  "net/minecraft/class_1309.field_6240:Lnet/minecraft/class_2940;": "field_49792",
+  "net/minecraft/class_17.field_68:Lnet/minecraft/class_1767;": "comp_2313",
+  "net/minecraft/class_2196$class_2197.field_9877:Ljava/lang/String;": "comp_2653",
+  "net/minecraft/class_2196$class_2197.field_9878:[Lnet/minecraft/class_2196$class_2198;": "comp_2654",
+  "net/minecraft/class_1322.field_6324:Lnet/minecraft/class_1322$class_1323;": "comp_2450",
+  "net/minecraft/class_4395.field_44942:Lnet/minecraft/class_4185;": "field_49458",
+  "net/minecraft/class_5235.field_24294:Lnet/minecraft/class_5235$class_5241;": "field_49903",
+  "net/minecraft/class_7745$class_7746.field_40451:Lnet/minecraft/class_7745$class_7746$class_7747;": "field_50222",
+  "net/minecraft/class_1297.field_35588:Lnet/minecraft/class_2680;": "field_47742",
+  "net/minecraft/class_1322.field_46248:Ljava/lang/String;": "comp_2448",
+  "net/minecraft/class_1322.field_6323:D": "comp_2449",
+  "net/minecraft/class_2923.field_13280:J": "comp_2201",
+  "net/minecraft/class_312.field_1785:D": "field_47842",
+  "net/minecraft/class_5712.field_28154:I": "comp_2193",
+  "net/minecraft/class_6008$class_6010.field_29933:Lnet/minecraft/class_6007;": "comp_2543",
+  "net/minecraft/class_8917.field_46956:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "field_48717",
+  "net/minecraft/class_2196$class_2198.field_9881:Lnet/minecraft/class_2300;": "comp_2657",
+  "net/minecraft/class_2291.field_10806:Ljava/util/function/Function;": "field_50053",
+  "net/minecraft/class_2617.field_12030:Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "comp_2197",
+  "net/minecraft/class_2629$class_5884.field_29115:Lnet/minecraft/class_2561;": "comp_2260",
+  "net/minecraft/class_2629$class_5885.field_29116:F": "comp_2261",
+  "net/minecraft/class_2656.field_12154:Lnet/minecraft/class_1792;": "comp_2198",
+  "net/minecraft/class_2656.field_12155:I": "comp_2199",
+  "net/minecraft/class_2661.field_12173:Lnet/minecraft/class_2561;": "comp_2325",
+  "net/minecraft/class_2820.field_26897:I": "comp_2285",
+  "net/minecraft/class_2820.field_34041:Ljava/util/List;": "comp_2286",
+  "net/minecraft/class_2820.field_34042:Ljava/util/Optional;": "comp_2287",
+  "net/minecraft/class_2873.field_13070:Lnet/minecraft/class_1799;": "comp_2610",
+  "net/minecraft/class_2940.field_13307:Lnet/minecraft/class_2941;": "comp_2328",
+  "net/minecraft/class_3193$class_5830.field_28807:Ljava/lang/Thread;": "comp_2364",
+  "net/minecraft/class_3193$class_5830.field_28808:Ljava/util/concurrent/CompletableFuture;": "comp_2365",
+  "net/minecraft/class_3193$class_5830.field_28809:Ljava/lang/String;": "comp_2366",
+  "net/minecraft/class_3288.field_45056:Lnet/minecraft/class_3288$class_7679;": "field_49038",
+  "net/minecraft/class_4514.field_20543:Ljava/lang/String;": "comp_2209",
+  "net/minecraft/class_4514.field_20544:Ljava/util/Collection;": "comp_2210",
+  "net/minecraft/class_4527$class_4528.field_20581:Lnet/minecraft/class_3218;": "comp_2216",
+  "net/minecraft/class_4527$class_4528.field_20582:Lnet/minecraft/class_4524;": "comp_2217",
+  "net/minecraft/class_5892.field_29133:I": "comp_2275",
+  "net/minecraft/class_5892.field_29135:Lnet/minecraft/class_2561;": "comp_2276",
+  "net/minecraft/class_5894.field_29142:Lnet/minecraft/class_2561;": "comp_2279",
+  "net/minecraft/class_5903.field_29165:Lnet/minecraft/class_2561;": "comp_2280",
+  "net/minecraft/class_5904.field_29166:Lnet/minecraft/class_2561;": "comp_2281",
+  "net/minecraft/class_6008$class_6010.field_29932:Ljava/lang/Object;": "comp_2542",
+  "net/minecraft/class_1291$class_8634.field_45105:Ljava/util/UUID;": "comp_2182",
+  "net/minecraft/class_1291$class_8634.field_45106:D": "comp_2183",
+  "net/minecraft/class_1291$class_8634.field_45107:Lnet/minecraft/class_1322$class_1323;": "comp_2184",
+  "net/minecraft/class_1317$class_1318.field_19349:Lnet/minecraft/class_1317$class_4306;": "comp_2255",
+  "net/minecraft/class_1317$class_1318.field_6314:Lnet/minecraft/class_2902$class_2903;": "comp_2253",
+  "net/minecraft/class_14.field_25190:Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;": "field_49156",
+  "net/minecraft/class_1845$class_1846.field_8960:Lnet/minecraft/class_1856;": "comp_2191",
+  "net/minecraft/class_2291.field_10800:Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;": "field_50051",
+  "net/minecraft/class_2370.field_26731:Ljava/util/Map;": "field_49135",
+  "net/minecraft/class_2582.field_11824:Ljava/lang/String;": "comp_2457",
+  "net/minecraft/class_2683.field_12296:B": "comp_2271",
+  "net/minecraft/class_2683.field_17433:Z": "comp_2272",
+  "net/minecraft/class_2718.field_12424:I": "comp_2175",
+  "net/minecraft/class_2781$class_2782.field_12722:D": "comp_2178",
+  "net/minecraft/class_2781$class_2782.field_12723:Ljava/util/Collection;": "comp_2179",
+  "net/minecraft/class_2901.field_13190:Lcom/mojang/authlib/GameProfile;": "comp_2363",
+  "net/minecraft/class_378$class_8536.comp_1496:Ljava/util/Map;": "comp_2351",
+  "net/minecraft/class_4174.field_18614:I": "comp_2491",
+  "net/minecraft/class_4174.field_18619:Ljava/util/List;": "comp_2495",
+  "net/minecraft/class_4529.field_20587:Ljava/util/function/Consumer;": "comp_2227",
+  "net/minecraft/class_4529.field_21460:J": "comp_2223",
+  "net/minecraft/class_4529.field_25306:Lnet/minecraft/class_2470;": "comp_2221",
+  "net/minecraft/class_7495.field_39387:Lnet/minecraft/class_2561;": "comp_2277",
+  "net/minecraft/class_7495.field_42967:Ljava/util/Optional;": "comp_2278",
+  "net/minecraft/class_8490.field_44502:Ljava/lang/String;": "comp_2521",
+  "net/minecraft/class_8490.field_44503:Lnet/minecraft/class_8490$class_8491;": "comp_2522",
+  "net/minecraft/class_8490.field_45794:Lcom/mojang/serialization/Codec;": "comp_2520"
+ },
+ "_smx4b_methodRenames_basis": "WorldOpenFlows.openWorldLoadLevelData (class_7196.method_54615) is 1.20.5's method_57782, same descriptor: javap -c both, its first 35 significant instructions (data-read screen, readLevelData with the OOM crash report) are identical; 1.20.5 moved the tail (the incompatible / backup / experimental screens) into method_57781, called once from it. Invokers, selectors and anchors follow the name",
+ "methodRenames": {
+  "net/minecraft/class_7196.method_54615(Lnet/minecraft/class_32$class_5143;Ljava/lang/Runnable;)V": "method_57782"
+ }
+}
