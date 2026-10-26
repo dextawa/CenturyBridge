@@ -1,9 +1,6 @@
 package top.dext.centurybridge.step.v1_20_5.mixin;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import net.minecraft.class_2940;
 import net.minecraft.class_2945;
 import org.spongepowered.asm.mixin.Final;
@@ -11,19 +8,18 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import top.dext.centurybridge.step.v1_20_5.rt.CbNetEntityData;
 import top.dext.centurybridge.step.v1_20_5.rt.CbNetEntityDataAccess;
 import top.dext.centurybridge.step.v1_20_5.rt.CbNetEntityDataBuilderAccess;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * SynchedEntityData: 1.20.4's define / hasItem / isEmpty come back, and 1.20.5's own loops over
- * the item array take an id that is allocated but not (yet) defined the way 1.20.4's map did --
- * see {@link CbNetEntityData} for the whole contract. A slot is empty only for such an id: 1.20.5
- * itself never leaves one.
+ * the item array take an id that is allocated but not (yet) defined the way 1.20.4's map did
+ * (CbNetEntityDataBridgeHooks, default priority) -- see {@link CbNetEntityData} for the whole contract. A slot is
+ * empty only for such an id: 1.20.5 itself never leaves one.
  */
-@Mixin(class_2945.class)
+@Mixin(value = class_2945.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbNetEntityDataBridge implements CbNetEntityDataAccess {
 
     @Shadow
@@ -80,33 +76,5 @@ public abstract class CbNetEntityDataBridge implements CbNetEntityDataAccess {
             }
         }
         return true;
-    }
-
-    /** packDirty(): an undefined id is never dirty (1.20.4 iterated defined items only) */
-    @Redirect(method = "method_12781", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_2945$class_2946;method_12796()Z"))
-    private boolean cb$dirtyIfDefined(class_2945.class_2946<?> item) {
-        return item != null && item.method_12796();
-    }
-
-    /** getNonDefaultValues(): an undefined id has no value to send (1.20.4 iterated defined items only) */
-    @Redirect(method = "method_46357", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_2945$class_2946;method_46358()Z"))
-    private boolean cb$defaultIfUndefined(class_2945.class_2946<?> item) {
-        return item == null || item.method_46358();
-    }
-
-    /**
-     * assignValues(values): 1.20.4 skipped a value for an id this side has not defined -- no assignment,
-     * no per-item notification -- and still told the entity about the whole list. Only the per-item
-     * loop sees the filtered values; the closing onSyncedDataUpdated(list) gets the list as handed in.
-     */
-    @Redirect(method = "method_12779", at = @At(value = "INVOKE", target = "Ljava/util/List;iterator()Ljava/util/Iterator;"))
-    private Iterator<class_2945.class_7834<?>> cb$definedValues(List<class_2945.class_7834<?>> values) {
-        List<class_2945.class_7834<?>> defined = new ArrayList<>(values.size());
-        for (class_2945.class_7834<?> v : values) {
-            if (v.comp_1115() < this.field_13331.length && this.field_13331[v.comp_1115()] != null) {
-                defined.add(v);
-            }
-        }
-        return defined.iterator();
     }
 }

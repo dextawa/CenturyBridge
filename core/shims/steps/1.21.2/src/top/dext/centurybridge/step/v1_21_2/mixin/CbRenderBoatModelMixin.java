@@ -5,6 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 BoatModel's parts (see CbRenderBoats): createPartsBuilder(root) -- bottom, back, front, right, left and the
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.Unique;
  * (a subclass's override is called), and waterPatch(), implementing WaterPatchModel again as 1.21.1's boat models did.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_554.class)
+@Mixin(value = net.minecraft.class_554.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderBoatModelMixin implements top.dext.centurybridge.step.v1_21_2.facade.WaterPatchModel {
 
     @Unique

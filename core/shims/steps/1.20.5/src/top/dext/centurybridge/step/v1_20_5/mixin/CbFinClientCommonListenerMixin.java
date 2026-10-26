@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * ClientCommonPacketListenerImpl: 1.20.4's protected abstract registryAccess(), back for a subclass's
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * declaration and is reached by none of them.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_8673.class)
+@Mixin(value = net.minecraft.class_8673.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinClientCommonListenerMixin {
 
     /** was registryAccess() (abstract) */

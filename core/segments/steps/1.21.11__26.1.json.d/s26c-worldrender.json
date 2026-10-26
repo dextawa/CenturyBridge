@@ -1,0 +1,42 @@
+{
+  "_s26c_worldrender": "s26c (coordinator-confirmed 2026-10-26): the 26.1 home of Fabric API 0.136's WorldRenderEvents, which the 1.21.9 layer restored (facade/WorldRenderEvents, WorldRenderContext) and fired from 1.21.9's renderLevel. Its firing mixin loses its start at this step (s9 climb report 1.21.11__26.1: cb$start, afterSetup, matrixStack, before/afterEntities, afterTranslucent, sky, last disabled: renderLevel's head and the main pass moved), so from 26.1 on no event fired and the context was never prepared (CbWorldRender.cbLive needs the flag only cb$start set). The 26.1 layer serves the API from here (facade/WorldRenderEvents, WorldRenderContext; rt/CbWorldRenderHome*; mixin/CbWorldRenderHomeMixin at 26.1's points, javap of 26.1 LevelRenderer), and the 1.21.9 copy and its firing machinery retire: one layer serves the API on 26.1 and later",
+  "classRenames": {
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$Start": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents$Start",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$AfterSetup": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents$AfterSetup",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$BeforeEntities": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents$BeforeEntities",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$AfterEntities": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents$AfterEntities",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$BeforeBlockOutline": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents$BeforeBlockOutline",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$BlockOutline": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents$BlockOutline",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$DebugRender": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents$DebugRender",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$AfterTranslucent": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents$AfterTranslucent",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$Last": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents$Last",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$End": "top/dext/centurybridge/step/v26_1/facade/WorldRenderEvents$End",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderContext": "top/dext/centurybridge/step/v26_1/facade/WorldRenderContext",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderContext$BlockOutlineContext": "top/dext/centurybridge/step/v26_1/facade/WorldRenderContext$BlockOutlineContext",
+    "top/dext/centurybridge/step/v1_21_9/rt/CbWorldRender": "top/dext/centurybridge/step/v26_1/rt/CbWorldRenderHome",
+    "top/dext/centurybridge/step/v1_21_9/rt/CbWorldRenderContextImpl": "top/dext/centurybridge/step/v26_1/rt/CbWorldRenderHomeContext"
+  },
+  "_s26c_classRenames_basis": "the 1.21.9 copy and the 26.1 home have the same API members (0.136's ten events, listener interfaces, WorldRenderContext / BlockOutlineContext accessors) with the descriptors the 1.21.9 copy has once converted to 26.1 names (javap of the climbed layer at 26.1.2). The two rt renames serve the climbing 1.21.9 layer's rt/CbDimensionRendering, which stays (DimensionRenderingRegistry): it calls CbWorldRender.cbActivate()V (CbWorldRenderHome.cbActivate()V) and takes the context as CbWorldRenderContextImpl (CbWorldRenderHomeContext implements the same WorldRenderContext). Its sky / clouds / weather hooks died at 1.21.11 and 26.1 (cb$sky, cb$clouds, cb$weather) and are not given back here",
+  "retiredClasses": {
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents": "moved home: the 26.1 layer's facade/WorldRenderEvents serves the API from 26.1 on (classRenames); left in place two classes would hold the events and the 1.21.9 one never fires",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$Start": "moved home (WorldRenderEvents)",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$AfterSetup": "moved home (WorldRenderEvents)",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$BeforeEntities": "moved home (WorldRenderEvents)",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$AfterEntities": "moved home (WorldRenderEvents)",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$BeforeBlockOutline": "moved home (WorldRenderEvents)",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$BlockOutline": "moved home (WorldRenderEvents)",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$DebugRender": "moved home (WorldRenderEvents)",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$AfterTranslucent": "moved home (WorldRenderEvents)",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$Last": "moved home (WorldRenderEvents)",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$End": "moved home (WorldRenderEvents)",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderContext": "moved home: the 26.1 layer's facade/WorldRenderContext",
+    "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderContext$BlockOutlineContext": "moved home: the 26.1 layer's facade/WorldRenderContext$BlockOutlineContext",
+    "top/dext/centurybridge/step/v1_21_9/rt/CbWorldRender": "moved home: rt/CbWorldRenderHome fires the events on 26.1 (CbWorldRenderHomeMixin)",
+    "top/dext/centurybridge/step/v1_21_9/rt/CbWorldRenderContextImpl": "moved home: rt/CbWorldRenderHomeContext",
+    "top/dext/centurybridge/step/v1_21_9/rt/CbWorldRenderHolder": "moved home: the frame context lives in CbWorldRenderHomeMixin (rt/CbWorldRenderHomeHolder)",
+    "top/dext/centurybridge/step/v1_21_9/mixin/CbWorldRenderEventsMixin": "moved home: the 1.21.9 firing mixin; its start and main-pass points are gone from 26.1 (s9 climb report 1.21.11__26.1), CbWorldRenderHomeMixin fires the same events at 26.1's points",
+    "top/dext/centurybridge/step/v1_21_9/rt/CbWorldRenderTargets": "moved home: the frame-target bundle only the retired CbWorldRender's afterTranslucent pass read; CbWorldRenderHomeMixin reads 26.1's LevelRenderer.targets",
+    "top/dext/centurybridge/step/v1_21_9/mixin/CbWorldRenderTargetsMixin": "moved home: implemented the retired CbWorldRenderTargets"
+  }
+}

@@ -8,13 +8,14 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_3.rt.CbText;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * HoverEvent.Action's 1.20.2 JSON methods, gone in 1.20.3, given back on top of the codecs the action
  * holds since then: "contents" decoded with the action's own codec, legacy "value" text with its legacy
  * codec, a value encoded the way the hover codec writes it. Works for any action, a mod's own included.
  */
-@Mixin(net.minecraft.class_2568.class_5247.class)
+@Mixin(value = net.minecraft.class_2568.class_5247.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbHoverEventActionMixin implements CbText.CbHoverAction {
 
     /** codec: {"contents": value} -> TypedHoverEvent of this action */

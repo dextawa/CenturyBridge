@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * PanoramaRenderer.render(delta, alpha): 1.20.4's -- the spin and bob advanced by the frame delta scaled by
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * partialTick) does the same and then draws the panorama overlay texture over it; 1.20.4's drew no overlay.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_766.class)
+@Mixin(value = net.minecraft.class_766.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientPanoramaMixin {
 
     @Shadow

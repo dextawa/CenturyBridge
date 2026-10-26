@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_2.facade.fapi.FabricProvidedTagBuilder;
 import top.dext.centurybridge.step.v1_21_2.rt.CbItemDatagenTags;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * Fabric API 0.116's FabricProvidedTagBuilder on 1.21.2's TagsProvider.TagAppender (0.116 injected it there): a
@@ -19,7 +20,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemDatagenTags;
  * (CbItemDatagenTags); any other appender fails as 0.116's interface defaults did. Also hands its TagBuilder to
  * CbItemDatagenTags.
  */
-@Mixin(class_2474.class_5124.class)
+@Mixin(value = class_2474.class_5124.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbItemTagAppenderMixin<T> implements FabricProvidedTagBuilder<T>, CbItemDatagenTags.Appender {
 
     @Shadow

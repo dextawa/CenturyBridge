@@ -1,6 +1,5 @@
 package top.dext.centurybridge.shims.v1_20_2;
 
-import com.mojang.serialization.Lifecycle;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -8,12 +7,10 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.compat.fapi.event.registry.FabricRegistry;
 import top.dext.centurybridge.compat.fapi.impl.registry.sync.CbFapiRegistryAliases;
+import top.dext.centurybridge.rt.v1_20_2.CbPrioritySplit;
+import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 
 /**
  * Registry aliases on SimpleRegistry, as 1.20.1's registry sync SimpleRegistryMixin had them: addAlias
@@ -21,10 +18,10 @@ import top.dext.centurybridge.compat.fapi.impl.registry.sync.CbFapiRegistryAlias
  * missing target is only warned about) and chain collapsing; the id and key lookups (get, containsId,
  * get / getEntry / getOrCreateEntry / contains by key) resolve an alias first; and registering an id
  * that is an alias is refused right after the entry is added, where 1.20.1's entry-added listener
- * refused it.
+ * refused it (the lookups and the refusal: CbFapiSimpleRegistryAliasesHooks, default priority).
  */
-@Mixin(net.minecraft.class_2370.class)
-abstract class CbFapiSimpleRegistryAliases<T> implements FabricRegistry {
+@Mixin(value = net.minecraft.class_2370.class, priority = CbVanillaReads.PRIORITY)
+abstract class CbFapiSimpleRegistryAliases<T> implements FabricRegistry, CbPrioritySplit.RegistryAliases {
 
     @Shadow @Final private Map<net.minecraft.class_2960, net.minecraft.class_6880.class_6883<T>> field_11107;
     @Shadow @Final net.minecraft.class_5321<? extends net.minecraft.class_2378<T>> field_41126;
@@ -34,6 +31,11 @@ abstract class CbFapiSimpleRegistryAliases<T> implements FabricRegistry {
 
     @Unique
     private final Map<net.minecraft.class_2960, net.minecraft.class_2960> cb$aliases = new HashMap<>();
+
+    @Override
+    public Map<net.minecraft.class_2960, net.minecraft.class_2960> cb$v1_20_2$aliases() {
+        return cb$aliases;
+    }
 
     @Override
     public void addAlias(net.minecraft.class_2960 old, net.minecraft.class_2960 newId) {
@@ -63,27 +65,5 @@ abstract class CbFapiSimpleRegistryAliases<T> implements FabricRegistry {
         }
         cb$aliases.put(old, target);
         CbFapiRegistryAliases.debugAdded(old, newId, field_41126);
-    }
-
-    @ModifyVariable(method = {"method_10223", "method_10250"}, at = @At("HEAD"), argsOnly = true)
-    private net.minecraft.class_2960 cb$aliasIdentifierParameter(net.minecraft.class_2960 original) {
-        return cb$aliases.getOrDefault(original, original);
-    }
-
-    @ModifyVariable(method = {"method_29107", "method_40264", "method_44298", "method_35842"}, at = @At("HEAD"), argsOnly = true)
-    private net.minecraft.class_5321<T> cb$aliasRegistryKeyParameter(net.minecraft.class_5321<T> original) {
-        net.minecraft.class_2960 aliased = cb$aliases.get(original.method_29177());
-        return aliased == null ? original
-            : net.minecraft.class_5321.method_29179(net.minecraft.class_5321.method_29180(original.method_41185()), aliased);
-    }
-
-    @Inject(method = "method_10272", at = @At("RETURN"))
-    private void cb$refuseAliasRegistration(net.minecraft.class_5321<T> key, T entry, Lifecycle lifecycle,
-                                            CallbackInfoReturnable<net.minecraft.class_6880.class_6883<T>> cir) {
-        net.minecraft.class_2960 id = key.method_29177();
-        if (cb$aliases.containsKey(id)) {
-            throw new IllegalArgumentException("Tried registering %s to registry %s, but it is already an alias (for %s)"
-                .formatted(id, field_41126, cb$aliases.get(id)));
-        }
     }
 }

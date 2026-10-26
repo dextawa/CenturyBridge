@@ -152,7 +152,7 @@ PYEOF
     # takes 4g; held for the whole run
     mkdir -p .slots; SLOT=''
     while [ -z "$SLOT" ]; do
-        for i in $(seq 1 "${CB_SLOTS:-3}"); do
+        for i in $(seq 1 "${CB_SLOTS:-6}"); do
             exec 9>.slots/$i
             if flock -n 9; then SLOT=$i; break; fi
             exec 9>&-

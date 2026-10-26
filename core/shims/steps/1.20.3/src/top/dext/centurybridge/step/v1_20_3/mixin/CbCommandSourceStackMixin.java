@@ -6,13 +6,14 @@ import java.util.function.BinaryOperator;
 import java.util.function.IntConsumer;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_20_3.rt.CbCommands;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * CommandSourceStack's 1.20.2 callback members on 1.20.3's CommandResultCallback ({@link CbCommands}):
  * withCallback(ResultConsumer[, merge]), onCommandComplete(context, success, result), and the return-value
  * consumer's withReturnValueConsumer / getReturnValueConsumer.
  */
-@Mixin(net.minecraft.class_2168.class)
+@Mixin(value = net.minecraft.class_2168.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbCommandSourceStackMixin {
 
     private net.minecraft.class_2168 cb$self() {

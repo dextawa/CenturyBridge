@@ -124,6 +124,7 @@
     "CbFapiHudRenderCallbackMixin",
     "CbFapiLayerRenderStateMixin",
     "CbFapiLevelRendererMixin",
+    "CbWorldRenderHomeMixin",
     "CbFapiModelManagerFluidMixin",
     "CbFapiSectionCompilerMixin",
     "CbFapiSubmitNodeCollectionAccess",
@@ -199,7 +200,11 @@
     "CbWallChatRenderMixin",
     "CbWallChatRenderReadsMixin",
     "CbWallGlRenderPassMixin",
-    "CbWallEndPortalRendererMixin"
+    "CbWallEndPortalRendererMixin",
+    "CbWallBlockEntityPoseMixin",
+    "CbWallBlockModelResolverMixin",
+    "CbWallBlockModelSourceMixin",
+    "CbWallMovingBlockLevelMixin"
   ],
   "server": [],
   "injectors": {

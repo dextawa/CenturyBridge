@@ -19,8 +19,12 @@
     "CbS26BedFallOnMixin",
     "CbS26EntityFallOnMixin",
     "CbS26CrashCategoryMixin",
+    "CbS26ConnectionEncryptedMixin",
     "CbS26GroundNavigationMixin",
-    "CbS26StriderNavigationMixin"
+    "CbS26StriderNavigationMixin",
+    "CbS26BodyArmorRestoreMixin",
+    "CbS26BodyArmorHorseRouteMixin",
+    "CbS26BodyArmorWolfRouteMixin"
   ],
   "client": [
     "CbS26BedLayersMixin",
@@ -34,9 +38,16 @@
     "CbS26SignSubmitMixin",
     "CbS26RenderBuffersMixin",
     "CbS26LevelFlushMixin",
+    "CbS26BlockOutlineRestoreMixin",
+    "CbS26BlockOutlineRouteMixin",
     "CbS26GameFlushMixin",
     "CbS26GuiFlushMixin",
-    "CbS26TesselatorMixin"
+    "CbS26TesselatorMixin",
+    "CbS26GlowingStateMixin",
+    "CbS26GlowingResetMixin",
+    "CbS26GlowingExtractMixin",
+    "CbS26GlowingFrameMixin",
+    "CbS26GlowingPassMixin"
   ],
   "server": [],
   "injectors": {

@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_20_3.rt.CbWorldScoreV;
 import top.dext.centurybridge.step.v1_20_3.rt.CbWorldScores;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * 1.20.2's Score on 1.20.3's (see CbWorldScoreV): the scoreboard, objective and owner the score is stored under,
@@ -15,7 +16,7 @@ import top.dext.centurybridge.step.v1_20_3.rt.CbWorldScores;
  * scoreboard's 1.20.3 onScoreChanged what 1.20.2 announced through onScoreChanged(Score): a change of value, and
  * a new score's first value.
  */
-@Mixin(class_267.class)
+@Mixin(value = class_267.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWorldScoreMixin implements CbWorldScoreV {
 
     @Shadow

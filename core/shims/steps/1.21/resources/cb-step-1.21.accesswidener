@@ -50,3 +50,6 @@ accessible class net/minecraft/class_8884$class_8885
 
 # VillagerTrades.EnchantBookForEmeralds (package-private): CbEnchantBookTrades builds it for 1.20.6's constructors (smx6)
 accessible class net/minecraft/class_3853$class_1648
+# RenderType.create (rt/CbRenderTypes armorGlint / glintDirect of 1.20.6): package-private, as is the CompositeRenderType it answers
+accessible method net/minecraft/class_1921 method_24048 (Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;ILnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+accessible class net/minecraft/class_1921$class_4687

@@ -196,7 +196,7 @@ mutable	field	net/minecraft/client/renderer/state/GameRenderState	optionsRenderS
 mutable	field	net/minecraft/client/renderer/state/GameRenderState	windowRenderState	Lnet/minecraft/client/renderer/state/WindowRenderState;
 # 1.21.11 SectionRenderDispatcher.setLevel(level) keeps the dispatcher's compiler (swall, rt/CbWallChunks)
 accessible	field	net/minecraft/client/renderer/chunk/SectionRenderDispatcher	sectionCompiler	Lnet/minecraft/client/renderer/chunk/SectionCompiler;
-# 1.21.11 CompiledSectionMesh.uploadMeshLayer(layer, data, sectionNode) finds its section in the view area (swall, rt/CbWallSectionUploads)
+# 1.21.11 CompiledSectionMesh.uploadMeshLayer(layer, data, sectionNode) finds its section in the view area (swall, rt/CbWallSectionUploadCount)
 accessible	field	net/minecraft/client/renderer/LevelRenderer	viewArea	Lnet/minecraft/client/renderer/ViewArea;
 accessible	method	net/minecraft/client/renderer/ViewArea	getRenderSection	(J)Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection;
 # 1.21.11 GL classes were the API: a GlCommandEncoder caller gets the CommandEncoder over it, with its device (swall, rt/CbWallGpu)
@@ -246,3 +246,7 @@ accessible	method	net/minecraft/world/level/storage/LevelStorageSource$LevelStor
 accessible	method	net/minecraft/world/level/storage/LevelStorageSource	makeLevelSummary	(Lcom/mojang/serialization/Dynamic;Lnet/minecraft/world/level/storage/LevelStorageSource$LevelDirectory;ZI)Lnet/minecraft/world/level/storage/LevelSummary;
 # 26.1's CamelRenderer.createCamelSaddleLayer(context, renderer, layerType, layer), which the camel and camel husk constructors call: the saddle Reads mixins call it when 1.21.11's restored method is not mixed (swall9)
 accessible	method	net/minecraft/client/renderer/entity/CamelRenderer	createCamelSaddleLayer	(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/renderer/entity/MobRenderer;Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/renderer/entity/layers/SimpleEquipmentLayer;
+# 1.21.11 SectionRenderDispatcher.getToUpload(): the meshes staged in the per-layer uber buffers, read under the copy lock (swall11, rt/CbWallSectionUploadCount)
+accessible	field	net/minecraft/client/renderer/chunk/SectionRenderDispatcher	chunkUberBuffers	Ljava/util/Map;
+accessible	class	net/minecraft/client/renderer/chunk/SectionRenderDispatcher$SectionUberBuffers
+accessible	field	com/mojang/blaze3d/vertex/UberGpuBuffer	stagedAllocations	Lit/unimi/dsi/fastutil/objects/Object2ObjectOpenHashMap;

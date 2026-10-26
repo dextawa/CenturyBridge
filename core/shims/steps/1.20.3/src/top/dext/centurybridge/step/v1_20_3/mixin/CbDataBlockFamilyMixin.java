@@ -4,6 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_20_3.rt.CbDataRecipes;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * BlockFamily's 1.20.2 feature lock back on the class: the family's required features (1.20.3
@@ -11,7 +12,7 @@ import top.dext.centurybridge.step.v1_20_3.rt.CbDataRecipes;
  * .featureLockedBehind set them, and the 1.20.2 shouldGenerateRecipe(enabled) over them (a cover:
  * generate recipes for the family only when it asks for them and its features are all enabled).
  */
-@Mixin(net.minecraft.class_5794.class)
+@Mixin(value = net.minecraft.class_5794.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbDataBlockFamilyMixin implements CbDataRecipes.FamilyFeatures {
 
     /** generateRecipe */

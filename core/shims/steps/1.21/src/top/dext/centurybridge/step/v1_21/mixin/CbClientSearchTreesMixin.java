@@ -11,6 +11,7 @@ import top.dext.centurybridge.step.v1_21.facade.RefreshableSearchTree;
 import top.dext.centurybridge.step.v1_21.facade.SearchRegistryKey;
 import top.dext.centurybridge.step.v1_21.facade.SearchRegistryTreeBuilderSupplier;
 import top.dext.centurybridge.step.v1_21.rt.CbClientSearch;
+import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /**
  * 1.20.6's SearchRegistry on 1.21's SessionSearchTrees (CbClientSearch): register / getTree / populate /
@@ -20,7 +21,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbClientSearch;
  * this object (the connection's, for the game's registry), and populating one builds it with 1.20.6's supplier
  * where 1.21's screens read it. An unregistered other key is 1.20.6's "Tree builder not registered".
  */
-@Mixin(net.minecraft.class_1124.class)
+@Mixin(value = net.minecraft.class_1124.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientSearchTreesMixin implements CbClientSearch.CbClientSearchRegistry, net.minecraft.class_4013 {
 
     /** creativeByNameSearch */

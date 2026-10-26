@@ -5,13 +5,14 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Final;
 import top.dext.centurybridge.step.v1_20_3.facade.class_2991$class_6346;
 import top.dext.centurybridge.step.v1_20_3.rt.CbFunctions;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * ServerFunctionManager's 1.20.2 members on 1.20.3's execution ({@link CbFunctions}): getCommandLimit(),
  * and execute(function, source[, tracer, arguments]) answering how many commands ran (1.20.3's answers
  * nothing). The two-argument execute goes through the four-argument one, as 1.20.2's did.
  */
-@Mixin(net.minecraft.class_2991.class)
+@Mixin(value = net.minecraft.class_2991.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbServerFunctionManagerMixin {
 
     @Shadow

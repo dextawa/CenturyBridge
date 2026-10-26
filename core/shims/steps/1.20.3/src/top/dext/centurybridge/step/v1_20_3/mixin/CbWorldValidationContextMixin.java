@@ -7,9 +7,10 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_3.rt.CbWorldLoot;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /** 1.20.2's ValidationContext.getProblems() (a cover): the problems reported so far (CbWorldLoot.problemsOf) */
-@Mixin(class_58.class)
+@Mixin(value = class_58.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWorldValidationContextMixin {
 
     @Shadow

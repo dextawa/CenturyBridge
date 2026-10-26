@@ -1,0 +1,49 @@
+{
+ "_bsd_generated": "core/tools/gen_bsd_targets.py <V code jar> <W code jar> <this>; regenerate, never hand-edit",
+ "mixinTargets": {
+  "net/minecraft/class_3580.method_31458()V": {
+   "to": "method_68181()V",
+   "args": [],
+   "basis": "BlockStateData table chunk: 1.21.5 renamed method_31458 -> method_68181; the same 101 register calls with the same ids 2560..2810 in the same order (javap V/W), called from <clinit> where V called it"
+  },
+  "net/minecraft/class_3580.method_31459()V": {
+   "to": "method_68182()V",
+   "args": [],
+   "basis": "BlockStateData table chunk: 1.21.5 renamed method_31459 -> method_68182; the same 134 register calls with the same ids 2816..3040 in the same order (javap V/W), called from <clinit> where V called it"
+  },
+  "net/minecraft/class_3580.method_31460()V": {
+   "to": "method_68183()V",
+   "args": [],
+   "basis": "BlockStateData table chunk: 1.21.5 renamed method_31460 -> method_68183; the same 93 register calls with the same ids 3072..3314 in the same order (javap V/W), called from <clinit> where V called it"
+  },
+  "net/minecraft/class_3580.method_31461()V": {
+   "to": "method_68184()V",
+   "args": [],
+   "basis": "BlockStateData table chunk: 1.21.5 renamed method_31461 -> method_68184; the same 78 register calls with the same ids 3328..3572 in the same order (javap V/W), called from <clinit> where V called it"
+  },
+  "net/minecraft/class_3580.method_31462()V": {
+   "to": "method_68185()V",
+   "args": [],
+   "basis": "BlockStateData table chunk: 1.21.5 renamed method_31462 -> method_68185; the same 85 register calls with the same ids 3584..3826 in the same order (javap V/W), called from <clinit> where V called it"
+  },
+  "net/minecraft/class_3580.method_31463()V": {
+   "to": "method_68186()V",
+   "args": [],
+   "basis": "BlockStateData table chunk: 1.21.5 renamed method_31463 -> method_68186; the same 79 register calls with the same ids 3840..4082 in the same order (javap V/W), called from <clinit> where V called it"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_3580.method_15596(ILjava/lang/String;[Ljava/lang/String;)V": {
+   "basis": "BlockStateData.register(id, newState, oldStates...): 1.21.5 takes the states as Dynamic values (built from name + properties by method_68177 / method_68178) where 1.21.4 took SNBT strings and parsed each with parse(String) first (javap V method_15596); the strings go through 1.21.4's parse",
+   "desc": "(ILcom/mojang/serialization/Dynamic;[Lcom/mojang/serialization/Dynamic;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_5/rt/CbDataFixBlockStates#parse(Ljava/lang/String;)Lcom/mojang/serialization/Dynamic;",
+    "conv:2 top/dext/centurybridge/step/v1_21_5/rt/CbDataFixBlockStates#parseAll([Ljava/lang/String;)[Lcom/mojang/serialization/Dynamic;"
+   ]
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_3580.method_15598(Ljava/lang/String;)Lcom/mojang/serialization/Dynamic;": "top/dext/centurybridge/step/v1_21_5/rt/CbDataFixBlockStates#parse"
+ }
+}

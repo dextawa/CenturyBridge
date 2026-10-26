@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21.rt.CbLevelChunks;
+import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /**
  * 1.20.6 ChunkMap members 1.21 dropped, given back on ChunkMap so a 1.20.6 mod's calls, overrides and super calls
@@ -26,7 +27,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbLevelChunks;
  * holder's generation tasks, the light engine takes no tickets, and the command that reloaded the generator is
  * gone -- so an override is reached exactly where the mod itself calls it.
  */
-@Mixin(class_3898.class)
+@Mixin(value = class_3898.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbLevelChunkMapMixin implements CbLevelChunks.LegacyChunkMap {
 
     @Shadow

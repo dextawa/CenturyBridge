@@ -6,12 +6,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.compat.fapi.attachment.v1.AttachmentType;
 import top.dext.centurybridge.compat.fapi.impl.attachment.AttachmentTargetImpl;
+import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 
 /**
  * A read-only wrapper around a world chunk is the world chunk as far as attachments go
  * (1.20.1's WrapperProtoChunkMixin): every attachment call goes to the wrapped chunk.
  */
-@Mixin(net.minecraft.class_2821.class)
+@Mixin(value = net.minecraft.class_2821.class, priority = CbVanillaReads.PRIORITY)
 abstract class CbFapiWrapperProtoChunkAttachments implements AttachmentTargetImpl {
 
     @Shadow @Final private net.minecraft.class_2818 field_12866;

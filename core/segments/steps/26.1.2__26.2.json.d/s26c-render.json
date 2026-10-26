@@ -1,0 +1,13 @@
+{
+  "_s26c_render": "s26c: 26.1.2 FeatureRenderDispatcher.renderSolidFeatures / renderTranslucentFeatures onto 26.2's prepared frame (rt/CbS26FeatureFrames, javap of both). The one-game-call bodies also carry mixins anchored on the 26.1.2 calls to 26.2's executeSolid / executeTranslucent (the 26.1 layer's restored WorldRenderEvents AFTER_ENTITIES, CbWorldRenderHomeMixin.cb$homeAfterEntities). Overrides of the two in a dispatcher subclass are not reached by 26.2's vanilla (it calls the prepared frame) and stay open",
+  "instanceRedirects": {
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.renderSolidFeatures()V": "top/dext/centurybridge/step/v26_2/rt/CbS26FeatureFrames",
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.renderTranslucentFeatures()V": "top/dext/centurybridge/step/v26_2/rt/CbS26FeatureFrames",
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.renderTranslucentParticles()V": "top/dext/centurybridge/step/v26_2/rt/CbS26FeatureFrames"
+  },
+  "_s26c_render_redirects_basis": {
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.renderSolidFeatures()V": "26.1.2 drew each submitted collection's solid features (block, item, model, model part, custom, flame, leash, particle renderers' renderSolid); 26.2's PreparedFrame.executeSolid draws each collection's solid phase; 26.1.2's main pass called renderSolidFeatures where 26.2's calls executeSolid",
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.renderTranslucentFeatures()V": "26.1.2 drew each submitted collection's translucent features (shadows, models, model parts, name tags, texts, items, blocks, custom); 26.2's PreparedFrame.executeTranslucent draws the same phases (shadows, translucent models, see-through and plain name tags, texts, custom geometry, blocks and items, breaking overlay, water mask) plus shape outlines and gizmos; 26.1.2's main pass called renderTranslucentFeatures where 26.2's calls executeTranslucent",
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.renderTranslucentParticles()V": "s26d: 26.1.2 drew each submitted collection's translucent particles, from the main pass after the translucent terrain (@525); 26.2's PreparedFrame.executeTranslucentAfterTerrain draws each collection's after-terrain phase there (@324): translucent quad particles and translucent shape outlines (the block outline 26.1.2 drew from the main pass just before, @507)"
+  }
+}

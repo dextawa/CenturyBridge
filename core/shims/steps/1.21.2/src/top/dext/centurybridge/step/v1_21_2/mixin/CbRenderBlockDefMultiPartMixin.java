@@ -8,13 +8,14 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderBlockDefs;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 MultiPart's members over 1.21.2's (see CbRenderBlockDefs): the state definition and selectors it was built
  * from, getSelectors() and getMultiVariants() with 1.21.1's bodies.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_816.class)
+@Mixin(value = net.minecraft.class_816.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderBlockDefMultiPartMixin implements CbRenderBlockDefs.Part {
 
     @Unique

@@ -1,0 +1,52 @@
+{
+ "_smx4d_gl_basis": "Plan A (step 1.21.4 -> 1.21.5, GlStateManager): sruntime-classmoves.json moves com/mojang/blaze3d/platform/GlStateManager and GlConst onto 1.21.5's com/mojang/blaze3d/opengl classes (same members, javap). What 1.21.5 dropped is given back here: the 35 static methods (staticRedirects to rt/CbGlStateManager, 1.21.4's bodies through 1.21.5's own cached entry points where 1.21.5 caches the state; see its javadoc for each), TEXTURE_COUNT (12, as 1.21.5's 12 texture units), the nested enums SourceFactor / DestFactor / LogicOp (class_4535 / class_4534 / class_1030, facades with 1.21.4's constants, order and GL values, core/tools/gen_gl_enum_facades.py) with the three RenderSystem members taking them (blendFunc, blendFuncSeparate, logicOp: rt/CbGlRenderSystem), and Viewport (class_1040, facade answering the last _viewport, recorded by mixin/CbGlViewportMixin at the head of 1.21.5's _viewport, the only glViewport call in 1.21.5). GlConst lost no member (javap -constants both).",
+ "classRenames": {
+  "com/mojang/blaze3d/platform/GlStateManager$class_1030": "top/dext/centurybridge/step/v1_21_5/facade/GlStateManager$class_1030",
+  "com/mojang/blaze3d/platform/GlStateManager$class_1040": "top/dext/centurybridge/step/v1_21_5/facade/GlStateManager$class_1040",
+  "com/mojang/blaze3d/platform/GlStateManager$class_4534": "top/dext/centurybridge/step/v1_21_5/facade/GlStateManager$class_4534",
+  "com/mojang/blaze3d/platform/GlStateManager$class_4535": "top/dext/centurybridge/step/v1_21_5/facade/GlStateManager$class_4535"
+ },
+ "staticRedirects": {
+  "com/mojang/blaze3d/platform/GlStateManager._blendEquation(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._blendFunc(II)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._clearColor(FFFF)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._clearDepth(D)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._clearStencil(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._deleteTextures([I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._disableVertexAttribArray(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._genTextures([I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._getTexImage(IIIIJ)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glBindRenderbuffer(II)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glCopyTexSubImage2D(IIIIIIII)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glDeleteRenderbuffers(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glDeleteVertexArrays(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glDrawPixels(IIIIJ)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glFramebufferRenderbuffer(IIII)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glGetAttribLocation(ILjava/lang/CharSequence;)I": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glMapBuffer(II)Ljava/nio/ByteBuffer;": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glRenderbufferStorage(IIII)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glUniform2(ILjava/nio/IntBuffer;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glUniform4(ILjava/nio/IntBuffer;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glUniformMatrix2(IZLjava/nio/FloatBuffer;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glUniformMatrix3(IZLjava/nio/FloatBuffer;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._glUniformMatrix4(IZLjava/nio/FloatBuffer;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._readPixels(IIIIIILjava/nio/ByteBuffer;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._stencilFunc(III)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._stencilMask(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._stencilOp(III)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager._texParameter(IIF)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager.getBoundFramebuffer()I": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager.glCheckFramebufferStatus(I)I": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager.glGenRenderbuffers()I": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager.setupGui3DDiffuseLighting(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager.setupGuiFlatDiffuseLighting(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager.setupLevelDiffuseLighting(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager.upload(IIIIILnet/minecraft/class_1011$class_1012;Ljava/nio/IntBuffer;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager",
+  "com/mojang/blaze3d/systems/RenderSystem.blendFunc(Lcom/mojang/blaze3d/platform/GlStateManager$class_4535;Lcom/mojang/blaze3d/platform/GlStateManager$class_4534;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.blendFuncSeparate(Lcom/mojang/blaze3d/platform/GlStateManager$class_4535;Lcom/mojang/blaze3d/platform/GlStateManager$class_4534;Lcom/mojang/blaze3d/platform/GlStateManager$class_4535;Lcom/mojang/blaze3d/platform/GlStateManager$class_4534;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.logicOp(Lcom/mojang/blaze3d/platform/GlStateManager$class_1030;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem"
+ },
+ "fieldGetters": {
+  "com/mojang/blaze3d/platform/GlStateManager.TEXTURE_COUNT:I": "top/dext/centurybridge/step/v1_21_5/rt/CbGlStateManager"
+ }
+}

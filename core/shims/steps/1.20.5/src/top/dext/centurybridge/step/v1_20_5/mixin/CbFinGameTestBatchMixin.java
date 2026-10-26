@@ -11,13 +11,14 @@ import net.minecraft.class_4529;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_5.rt.CbFinGameTests;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * GameTestBatch: 1.20.4's getTestFunctions() / runBeforeBatchFunction(level) / runAfterBatchFunction(level),
  * which a subclass may override (1.20.5's record answers its components). A batch a 1.20.4 mod built holds
  * TestFunctions (rt/CbFinGameTests); one 1.20.5 built holds GameTestInfos, whose functions it answers.
  */
-@Mixin(class_4514.class)
+@Mixin(value = class_4514.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinGameTestBatchMixin implements CbFinGameTests.LegacyBatch {
 
     @Shadow

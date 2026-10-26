@@ -9,6 +9,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 BlockModel.getDependencies(): its overrides' models and its parent (class_793.method_4755), on 1.21.2's fields.
@@ -16,7 +17,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * overriding that five-argument bake (CbRenderBake.LegacyBake) is baked through it again, with the baker 1.21.2 passes.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_793.class)
+@Mixin(value = net.minecraft.class_793.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderBakeBlockModelMixin {
 
     @Shadow

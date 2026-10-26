@@ -6,11 +6,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderDisplays;
 import top.dext.centurybridge.step.v1_21_2.rt.Guard;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** 1.21.1 DisplayRenderer.getSubState / renderInner(display, subState, ...) on 1.21.2's (see CbRenderDisplays) */
 @SuppressWarnings({"unchecked", "rawtypes"})
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_8138.class)
+@Mixin(value = net.minecraft.class_8138.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderDisplayMixin implements CbRenderDisplays.Legacy {
 
     @Shadow

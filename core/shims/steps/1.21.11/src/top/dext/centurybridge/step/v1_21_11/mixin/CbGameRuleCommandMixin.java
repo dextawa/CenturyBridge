@@ -9,15 +9,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21_11.rt.CbGameRules;
-import top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads;
 
 /**
  * 1.21.11's GameRuleCommand.setRule(context, rule): marks the command in progress, so that 1.21.11's set (which the
  * command still calls, and writes) consults the 1.21.10 value's setFromArgument(context, "value") as 1.21.10's
  * command called it (CbGameRules.routeWrite), where a mod's 1.21.10 mixin on setFromArgument / updateFromArgument /
- * onChanged sees and can change the command's write.
+ * onChanged sees and can change the command's write. It merges nothing and only marks the command around 1.21.11's
+ * body, so it runs at the default priority among the mods' injectors.
  */
-@Mixin(value = class_3065.class, priority = CbVanillaReads.PRIORITY)
+@Mixin(class_3065.class)
 public abstract class CbGameRuleCommandMixin {
     @Inject(method = "method_13394", at = @At("HEAD"))
     private static void cb$commandStart(CommandContext<class_2168> context, class_12279<?> rule, CallbackInfoReturnable<Integer> cir) {

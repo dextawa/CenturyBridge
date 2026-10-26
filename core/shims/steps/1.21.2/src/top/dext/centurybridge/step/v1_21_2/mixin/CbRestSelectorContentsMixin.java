@@ -1,7 +1,5 @@
 package top.dext.centurybridge.step.v1_21_2.mixin;
 
-import net.minecraft.class_1297;
-import net.minecraft.class_2168;
 import net.minecraft.class_2561;
 import net.minecraft.class_2579;
 import net.minecraft.class_5250;
@@ -21,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class CbRestSelectorContentsMixin {
 
     @Inject(method = "method_10890", at = @At("HEAD"), cancellable = true)
-    private void cb$unparsedSelector(class_2168 source, class_1297 entity, int depth, CallbackInfoReturnable<class_5250> cir) {
+    private void cb$unparsedSelector(CallbackInfoReturnable<class_5250> cir) {
         if (((class_2579) (Object) this).comp_3080().comp_3068() == null) {
             cir.setReturnValue(class_2561.method_43473());
         }

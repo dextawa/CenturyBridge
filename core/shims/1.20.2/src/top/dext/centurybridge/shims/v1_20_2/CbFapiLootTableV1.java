@@ -6,13 +6,14 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.compat.fapi.loot.v1.FabricLootSupplier;
+import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 
 /**
  * Every LootTable is a Fabric API loot tables v1 FabricLootSupplier, as 1.20.1's LootTableMixin made
  * it: its pools and functions as unmodifiable lists (1.20.1 copied them out of its arrays; 1.20.2
  * keeps lists).
  */
-@Mixin(net.minecraft.class_52.class)
+@Mixin(value = net.minecraft.class_52.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFapiLootTableV1 implements FabricLootSupplier {
 
     @Shadow @Final private List<net.minecraft.class_55> field_943;

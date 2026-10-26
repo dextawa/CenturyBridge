@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 WardenModel's emissive part lists: getTendrilsLayerModelParts / getHeartLayerModelParts /
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * from the same-named methods, which take the render state and ignore it.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_7280.class)
+@Mixin(value = net.minecraft.class_7280.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderModelWardenMixin {
 
     @Shadow

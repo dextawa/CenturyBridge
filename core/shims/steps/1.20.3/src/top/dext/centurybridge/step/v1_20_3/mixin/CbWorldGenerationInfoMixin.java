@@ -1,6 +1,7 @@
 package top.dext.centurybridge.step.v1_20_3.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * WorldGenerationInfo's 1.20.2 getters -- getSeed(), getLevelType(), shouldGenerateStructures() -- on
@@ -9,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * subclass's override of the getter is renamed to the accessor (overrideRenames), so it answers either
  * call, as it answered the getter in 1.20.2.
  */
-@Mixin(net.minecraft.class_4413.class)
+@Mixin(value = net.minecraft.class_4413.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWorldGenerationInfoMixin {
 
     private net.minecraft.class_4413 cb$self() {
