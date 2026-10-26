@@ -8,7 +8,8 @@
     "S6bAbilitiesMixin",
     "S6bInventoryMixin",
     "S6bContainerMixin",
-    "S6bEnderMixin"
+    "S6bEnderMixin",
+    "S6bLeashMixin"
   ],
   "injectors": {
     "defaultRequire": 1
