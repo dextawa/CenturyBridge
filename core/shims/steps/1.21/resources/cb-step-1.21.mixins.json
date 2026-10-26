@@ -90,6 +90,7 @@
     "CbClientColorableHierarchicalModelMixin",
     "CbClientDeltaTimerAccess",
     "CbClientFullTextSearchTreeMixin",
+    "CbClientFullTextSearchTreeMixinHooks",
     "CbClientIdSearchTreeMixin",
     "CbClientMinecraftFrameMixin",
     "CbClientMinecraftTimerAccess",

@@ -20,6 +20,11 @@ public final class CbPrioritySplit {
         long cb$v1_21$time();
     }
 
+    /** CbClientFullTextSearchTreeMixin: the constructor's filler and contents, kept for 1.20.6's refresh */
+    public interface SearchTreeSource {
+        void cb$v1_21$source(java.util.function.Function<?, ?> filler, java.util.List<?> contents);
+    }
+
     /** CbRenderBufferBuilderMixin: 1.20.6's default color (set, being filled) and its fill */
     public interface BufferDefaultColor {
         boolean cb$v1_21$defaultColorSet();
