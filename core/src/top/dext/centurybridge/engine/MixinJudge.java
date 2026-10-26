@@ -611,6 +611,13 @@ public final class MixinJudge {
             rowLayer = facade ? "facade-only-unreached" : "restored-unreached";
             return null;
         }
+        // a restored member the layer marks @CbNoCounterpart: W dropped the V code it held (smx4b case 5)
+        for (LayerMembers l : restoredLayers) {
+            if (!facade && l.noCounterpart(wm) != null) {
+                rowLayer = "restored-unreached";
+                return null;
+            }
+        }
         rowLayer = facade ? "facade-only-open" : "restored-open";
         return facade ? "facade-only: vanilla path unmixed" : "restored-member: vanilla path unmixed";
     }

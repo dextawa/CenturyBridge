@@ -334,6 +334,24 @@ public final class LayerMembers {
     }
 
     /**
+     * smx4b case (5): a restored member whose V code W dropped altogether (1.20.5 Breeze.withinOuterCircleRange: its
+     * only 1.20.4 caller, Slide.start, no longer makes the ring test, and no 1.20.5 method does): the layer says so
+     * with {@code @CbNoCounterpart("<basis>")} (any annotation type named CbNoCounterpart under top/dext/centurybridge,
+     * class retention; the basis names the V caller and what W does there instead, from javap of both). W vanilla then
+     * never reaches the counterpart of the V code, so a mixin there changes nothing vanilla does on V either way: the
+     * judge counts it restored-unreached. The basis, or null without the marker (a blank basis is no marker)
+     */
+    public String noCounterpart(MethodNode m) {
+        for (AnnotationNode a : MixinRepair.annotations(m)) {
+            if (a.desc.startsWith("Ltop/dext/centurybridge/") && a.desc.endsWith("/CbNoCounterpart;")) {
+                Object v = MixinRepair.values(a).get("value");
+                return v instanceof String s && !s.isBlank() ? s : null;
+            }
+        }
+        return null;
+    }
+
+    /**
      * where vanilla's W read path goes through a restored member: its CbVanillaReads marker, when the marker
      * names (first word) a mixin class of the layer by simple or internal name; null otherwise
      */
