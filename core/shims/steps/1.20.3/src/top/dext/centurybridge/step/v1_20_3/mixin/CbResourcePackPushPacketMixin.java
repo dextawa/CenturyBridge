@@ -1,13 +1,14 @@
 package top.dext.centurybridge.step.v1_20_3.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * ClientboundResourcePackPacket's 1.20.2 getters on 1.20.3's ClientboundResourcePackPushPacket record --
  * getUrl(), getHash(), isRequired(), getPrompt() -- each forwarding to its record accessor virtually (a 1.20.2
  * subclass's override of a getter is renamed to the accessor, overrideRenames).
  */
-@Mixin(net.minecraft.class_2720.class)
+@Mixin(value = net.minecraft.class_2720.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbResourcePackPushPacketMixin {
 
     private net.minecraft.class_2720 cb$self() {

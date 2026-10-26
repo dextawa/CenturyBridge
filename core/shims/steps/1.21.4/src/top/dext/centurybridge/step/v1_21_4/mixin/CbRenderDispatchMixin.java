@@ -7,18 +7,18 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.dext.centurybridge.step.v1_21_4.rt.CbPrioritySplitClient;
 import top.dext.centurybridge.step.v1_21_4.rt.CbRenderDispatch;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * BlockEntityRenderDispatcher's 1.21.3 members (see {@link CbRenderDispatch}): a dispatcher built with 1.21.3's renderer
- * Suppliers asks them when it reloads, as 1.21.3 did; renderItem(blockEntity, ..) is back.
+ * Suppliers asks them when it reloads, as 1.21.3 did (CbRenderDispatchMixinHooks, default priority); renderItem(blockEntity,
+ * ..) is back.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_824.class)
-public abstract class CbRenderDispatchMixin implements CbRenderDispatch.CbLegacyBlockEntityDispatcher {
+@Mixin(value = net.minecraft.class_824.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbRenderDispatchMixin implements CbRenderDispatch.CbLegacyBlockEntityDispatcher, CbPrioritySplitClient.DispatchSuppliers {
 
     @Shadow
     @Final
@@ -55,9 +55,9 @@ public abstract class CbRenderDispatchMixin implements CbRenderDispatch.CbLegacy
         this.cb$entityRenderer = entityRenderer;
     }
 
-    /** 1.21.3's reload asked the Suppliers for the renderers its renderers' context carries */
-    @Inject(method = "method_14491", at = @At("HEAD"))
-    private void cb$askSuppliers(net.minecraft.class_3300 resourceManager, CallbackInfo ci) {
+    /** 1.21.3's reload asked the Suppliers for the renderers its renderers' context carries (CbRenderDispatchMixinHooks) */
+    @Override
+    public void cb$v1_21_4$askSuppliers() {
         if (this.cb$blockRenderer != null) {
             this.field_27747 = this.cb$blockRenderer.get();
             this.field_55283 = CbRenderDispatch.cbGameResolver();

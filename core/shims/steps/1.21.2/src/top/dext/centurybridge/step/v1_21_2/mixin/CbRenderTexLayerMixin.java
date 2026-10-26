@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderLiving;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderTex;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 RenderLayer.getTextureLocation(entity), gone in 1.21.2: it asked the layer's parent, as 1.21.1 did
@@ -14,7 +15,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderTex;
  * Also hands the rt code the layer's parent (CbRenderLiving.Layer).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_3887.class)
+@Mixin(value = net.minecraft.class_3887.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderTexLayerMixin implements CbRenderLiving.Layer {
 
     @Shadow

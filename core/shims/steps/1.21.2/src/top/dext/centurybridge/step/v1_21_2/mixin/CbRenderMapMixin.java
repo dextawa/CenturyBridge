@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 MapRenderer's own map textures (update / render / resetData / close), which 1.21.2 moved to MapTextureManager
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * (1.21.1's close was its resetData).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_330.class)
+@Mixin(value = net.minecraft.class_330.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderMapMixin {
 
     @Shadow

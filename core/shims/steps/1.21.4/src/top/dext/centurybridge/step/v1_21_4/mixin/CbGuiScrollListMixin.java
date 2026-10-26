@@ -4,10 +4,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21_4.rt.CbGuiScroll;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * AbstractSelectionList's 1.21.3 scrolling surface on 1.21.4, where the list scrolls as an AbstractScrollArea.
@@ -23,14 +21,15 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbGuiScroll;
  *     updateScrolling (both reconnected by override hooks);</li>
  * <li>setClampedScrollAmount: every 1.21.3 scroll set went through it (setScrollAmount called it), so 1.21.4's
  *     setScrollAmount on a list hands the value to a 1.21.3 override;</li>
- * <li>getDefaultScrollbarPosition: the default of getScrollbarPosition, so scrollBarX asks a 1.21.3 override;</li>
+ * <li>getDefaultScrollbarPosition: the default of getScrollbarPosition, so scrollBarX asks a 1.21.3 override
+ *     (CbGuiScrollListMixinHooks, default priority);</li>
  * <li>clickedHeader(x, y): asked, as 1.21.3's mouseClicked did, when a press over the list hit no entry, with
  *     the point relative to the header's top left;</li>
  * <li>setRenderHeader(render, height): the header flag and height 1.21.4 takes in the constructor.</li>
  * </ul>
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_350.class)
+@Mixin(value = net.minecraft.class_350.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbGuiScrollListMixin extends net.minecraft.class_9017 {
 
     /** renderHeader */
@@ -100,17 +99,6 @@ public abstract class CbGuiScrollListMixin extends net.minecraft.class_9017 {
         }
         // AbstractSelectionList.scrollBarX's own answer (1.21.3: getRealRowRight() + 10, the same place)
         return cb$self().method_31383() + net.minecraft.class_7528.field_55258 + 2;
-    }
-
-    @Inject(method = "method_65507", at = @At("HEAD"), cancellable = true)
-    private void cb$legacyDefaultScrollbar(CallbackInfoReturnable<Integer> cir) {
-        if (this instanceof CbGuiScroll.CbLegacyDefaultScrollbar legacy && CbGuiScroll.enter(this, CbGuiScroll.DEFAULT_SCROLLBAR)) {
-            try {
-                cir.setReturnValue(legacy.cb$getDefaultScrollbarPosition());
-            } finally {
-                CbGuiScroll.exit(this, CbGuiScroll.DEFAULT_SCROLLBAR);
-            }
-        }
     }
 
     /** was isValidMouseClick(int) (method_53812): the left button */

@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_21_2.mixin;
 import net.minecraft.class_3215;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * ServerChunkCache.setSpawnSettings(spawnEnemies, spawnFriendlies) of 1.21.1 (a cover, overriding
@@ -11,7 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * hostile flag; the friendly flag is what 1.21.1's caller passed (MinecraftServer.isSpawningAnimals,
  * CbRestMinecraftServerMixin).
  */
-@Mixin(class_3215.class)
+@Mixin(value = class_3215.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestServerChunkCacheMixin extends CbRestChunkSourceMixin {
 
     @Shadow

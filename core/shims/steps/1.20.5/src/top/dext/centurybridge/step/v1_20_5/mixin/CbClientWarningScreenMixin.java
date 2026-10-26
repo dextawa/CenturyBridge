@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * WarningScreen's 1.20.4 members, named on 1.20.5's WarningScreen so a converted subclass's own calls to them
@@ -11,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * screen supplying its own.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_7065.class)
+@Mixin(value = net.minecraft.class_7065.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientWarningScreenMixin extends net.minecraft.class_437 {
 
     private CbClientWarningScreenMixin() {

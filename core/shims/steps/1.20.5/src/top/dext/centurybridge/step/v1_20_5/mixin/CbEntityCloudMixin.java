@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_5.rt.CbPotions;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * AreaEffectCloud: 1.20.4's potion and color members, which 1.20.5 folded into one PotionContents (potion,
@@ -10,7 +11,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbPotions;
  * call and subclass override all have the member again (1.20.5 itself never calls them; 1.20.4's lingering
  * potion did, 1.20.5's sets the contents). A fixed color is 1.20.5's custom color.
  */
-@Mixin(net.minecraft.class_1295.class)
+@Mixin(value = net.minecraft.class_1295.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityCloudMixin {
 
     @Shadow

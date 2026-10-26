@@ -3,10 +3,11 @@ package top.dext.centurybridge.step.v1_21_2.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** 1.21.1 ParrotRenderer.getBob (class_930.method_4081), gone in 1.21.2 (the state carries the value), put back with its body: lerp(pt, oFlap, flap) and lerp(pt, oFlapSpeed, flapSpeed): (sin(flap) + 1) * flapSpeed. */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_930.class)
+@Mixin(value = net.minecraft.class_930.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderLivingBob930Mixin {
 
     /** 1.21.1 class_930.method_4081 */

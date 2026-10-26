@@ -11,6 +11,7 @@ import net.minecraft.class_796;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /**
  * FaceBakery.bakeQuad with 1.20.6's trailing model id, given back so a 1.20.6 mod's calls, overrides and super
@@ -18,7 +19,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * in the UV-lock warning, which 1.21 no longer prints. 1.21 bakes vanilla faces with its own FaceBakery and never
  * calls this shape, as 1.20.6 never called a mod's FaceBakery.
  */
-@Mixin(class_796.class)
+@Mixin(value = class_796.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderFaceBakeryMixin {
 
     @Shadow

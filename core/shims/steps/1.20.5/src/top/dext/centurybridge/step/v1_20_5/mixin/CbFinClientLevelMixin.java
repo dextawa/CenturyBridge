@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * ClientLevel: 1.20.4's setScoreboard(scoreboard). 1.20.4 kept the client's scoreboard on the level and its
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * both the level and the scoreboard packets use, as 1.20.4's setter did.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_638.class)
+@Mixin(value = net.minecraft.class_638.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinClientLevelMixin {
 
     @Shadow

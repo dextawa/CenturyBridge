@@ -1,11 +1,8 @@
 package top.dext.centurybridge.step.v1_20_3.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_20_3.rt.CbGui;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * AbstractWidget's 1.20.2 contract on 1.20.3:
@@ -18,27 +15,10 @@ import top.dext.centurybridge.step.v1_20_3.rt.CbGui;
  *     given back with 1.20.2's choice, and a widget that overrides it (marked with
  *     {@link CbGui.CbLegacyTooltipPositioner}) has its tooltip placed by its own answer again.</li>
  * </ul>
+ * The injectors into 1.20.3's render are in CbAbstractWidgetMixinHooks (default priority).
  */
-@Mixin(net.minecraft.class_339.class)
+@Mixin(value = net.minecraft.class_339.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbAbstractWidgetMixin {
-
-    @Inject(method = "method_25394", at = @At("HEAD"), cancellable = true)
-    private void cb$legacyRender(net.minecraft.class_332 graphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
-        if (this instanceof CbGui.CbLegacyWidgetRender legacy && CbGui.cbRenderEnter(this)) {
-            try {
-                legacy.cb$render(graphics, mouseX, mouseY, partialTick);
-            } finally {
-                CbGui.cbRenderExit(this);
-            }
-            ci.cancel();
-        }
-    }
-
-    @Redirect(method = "method_25394", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/class_7919;method_54384(ZZLnet/minecraft/class_8030;)V"))
-    private void cb$refreshTooltip(net.minecraft.class_7919 tooltip, boolean hovered, boolean focused, net.minecraft.class_8030 area) {
-        CbGui.cbRefreshTooltip(tooltip, this, hovered, focused, area);
-    }
 
     /** was createTooltipPositioner() (method_47937): below or above the widget when focused by keyboard, else by the mouse */
     protected net.minecraft.class_8000 method_47937() {

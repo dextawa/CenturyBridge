@@ -45,8 +45,10 @@ import top.dext.centurybridge.step.v26_1.rt.CbWorldRenderHomeHolder;
  *   <li>BEFORE_ENTITIES at submitEntities' head; AFTER_ENTITIES after renderTranslucentFeatures (1.21.9 drew every
  *       submitted feature in one renderAllFeatures, which 26.1 splits into solid and translucent);</li>
  *   <li>BEFORE_BLOCK_OUTLINE at renderBlockOutline's head and BLOCK_OUTLINE after its translucency test (the first read
- *       of the camera position), as 1.21.9; a refused BLOCK_OUTLINE ends the batch the listeners drew into and skips
- *       vanilla's outline;</li>
+ *       of the camera position), as 1.21.9; a refused BLOCK_OUTLINE skips vanilla's outline. What the listeners drew
+ *       into the frame's buffer source is drawn when 26.1's main pass ends that source's batch right after each
+ *       renderBlockOutline call (javap: bufferSource.endBatch() follows both calls), so the handler ends nothing itself
+ *       (1.21.9's endLastBatch at that point is that same batch end, earlier);</li>
  *   <li>BEFORE_DEBUG_RENDER at finalizeGizmoCollection's head (26.1 draws the debug geometry as gizmos there);</li>
  *   <li>0.136's afterTranslucent frame pass right before the clouds pass, or before the weather pass when no clouds
  *       pass is added (1.21.9 added it just before reading the clouds option), only while AFTER_TRANSLUCENT has a
@@ -156,7 +158,6 @@ public abstract class CbWorldRenderHomeMixin implements CbWorldRenderHomeHolder 
         Vec3 cameraPos = state.cameraRenderState.pos;
         if (!CbWorldRenderHome.cbBlockOutline(context, context.camera().entity(), cameraPos.x, cameraPos.y, cameraPos.z,
                 outline.pos(), context.world().getBlockState(outline.pos()))) {
-            consumers.endLastBatch();
             ci.cancel();
         }
     }

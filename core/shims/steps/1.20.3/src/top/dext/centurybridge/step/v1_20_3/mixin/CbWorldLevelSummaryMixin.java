@@ -6,13 +6,14 @@ import net.minecraft.class_5315;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * 1.20.2's LevelSummary.markVersionInList() (a cover): whether the world list marks the world's version -- when
  * opening it is a downgrade (1.20.2's askToOpenWorld, 1.20.3's isDowngrade), when a snapshot game shows a world of
  * a release, or when the world wants a backup. 1.20.3's list asks shouldBackup() alone at those places.
  */
-@Mixin(class_34.class)
+@Mixin(value = class_34.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWorldLevelSummaryMixin {
 
     @Shadow

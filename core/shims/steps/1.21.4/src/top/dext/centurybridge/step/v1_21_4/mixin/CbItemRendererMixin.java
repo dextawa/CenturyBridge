@@ -3,18 +3,18 @@ package top.dext.centurybridge.step.v1_21_4.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_21_4.rt.CbItemRender;
+import top.dext.centurybridge.step.v1_21_4.rt.CbPrioritySplitClient;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * ItemRenderer's 1.21.3 model-based methods, given back on 1.21.4 (see {@link CbItemRender}). 1.21.3's renderStatic
- * was getModel then render, both virtual: a 1.21.3 ItemRenderer subclass overriding either is drawn through them again.
+ * was getModel then render, both virtual: a 1.21.3 ItemRenderer subclass overriding either is drawn through them again
+ * (CbItemRendererMixinHooks, default priority).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_918.class)
-public abstract class CbItemRendererMixin {
+@Mixin(value = net.minecraft.class_918.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbItemRendererMixin implements CbPrioritySplitClient.ItemRenderStatic {
 
     private net.minecraft.class_918 cb$self() {
         return (net.minecraft.class_918) (Object) this;
@@ -50,17 +50,13 @@ public abstract class CbItemRendererMixin {
     public void method_14491(net.minecraft.class_3300 resourceManager) {
     }
 
-    /** 1.21.3 renderStatic(entity, ..): getModel, then render -- for a subclass that overrides them */
-    @Inject(method = "method_23177", at = @At("HEAD"), cancellable = true)
-    private void cb$legacyRenderStatic(net.minecraft.class_1309 entity, net.minecraft.class_1799 stack, net.minecraft.class_811 context, boolean leftHand,
-            net.minecraft.class_4587 pose, net.minecraft.class_4597 buffers, net.minecraft.class_1937 level, int light, int overlay, int seed, CallbackInfo ci) {
-        if ((Object) this.getClass() == net.minecraft.class_918.class) {
-            return;
-        }
+    /** 1.21.3 renderStatic(entity, ..)'s body: getModel, then render, virtually (CbItemRendererMixinHooks) */
+    @Override
+    public void cb$v1_21_4$renderStatic(net.minecraft.class_1309 entity, net.minecraft.class_1799 stack, net.minecraft.class_811 context, boolean leftHand,
+            net.minecraft.class_4587 pose, net.minecraft.class_4597 buffers, net.minecraft.class_1937 level, int light, int overlay, int seed) {
         if (!stack.method_7960()) {
             net.minecraft.class_1087 model = this.method_4019(stack, level, entity, seed);
             this.method_23179(stack, context, leftHand, pose, buffers, light, overlay, model);
         }
-        ci.cancel();
     }
 }

@@ -8,13 +8,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderBlockDefs;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 BlockModelDefinition's members over 1.21.2's (see CbRenderBlockDefs): hasVariant, getVariants, isMultiPart
  * with 1.21.1's bodies on the same fields, and the state definition / 1.21.1 MultiPart the definition answers.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_790.class)
+@Mixin(value = net.minecraft.class_790.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderBlockDefMixin implements CbRenderBlockDefs.Def, CbRenderBlockDefs.Legacy {
 
     @Shadow

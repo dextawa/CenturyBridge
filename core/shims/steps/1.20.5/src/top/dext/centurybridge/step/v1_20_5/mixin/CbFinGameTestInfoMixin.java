@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_5.rt.CbFinGameTests;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * GameTestInfo: 1.20.4's public members 1.20.5 removed, with 1.20.4's bodies (a subclass may override and
@@ -32,7 +33,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbFinGameTests;
  * halting on failure (RetryOptions(0, true)) -- so the flag is the info's retry options.</li>
  * </ul>
  */
-@Mixin(class_4517.class)
+@Mixin(value = class_4517.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinGameTestInfoMixin implements CbFinGameTests.LegacyInfo {
 
     @Shadow

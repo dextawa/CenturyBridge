@@ -1,0 +1,53 @@
+{
+ "_swall11_render_basis": "1.21.11 render-backend records and counters on 26.1's (javap of both): SubmitNodeStorage.BlockModelSubmit (model + one tint colour -> parts with seed 42 + a colour per tint index; accessors from what the constructor got, rt/CbWallBlockSubmits), BlockBreakingRenderState(level, pos, progress) -> 26.1's record of pos, level.getBlockState(pos), progress, SectionRenderDispatcher.getToUpload() -> the sections staged for upload in 26.1's uber buffers (rt/CbWallSectionUploadCount), CompileTask.doTask's future <-> 26.1's result (rt/CbWallCompileTasks), SubmitNodeStorage.BlockSubmit (gone with submitBlock) -> facade/BlockSubmit and SubmitNodeCollection.getBlockSubmits() -> the blocks submitBlock queued this frame, adding one queues its model (rt/CbWallBlockSubmits, rt/CbFapiSubmitBlocks)",
+ "classRenames": {
+  "net/minecraft/class_11661$class_11663": "top/dext/centurybridge/step/v26_1/facade/BlockSubmit"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_11661$class_11662.<init>(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_1921;Lnet/minecraft/class_1087;FFFIII)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockSubmits#blockModelSubmit",
+  "net/minecraft/class_12073.<init>(Lnet/minecraft/class_638;Lnet/minecraft/class_2338;I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockSubmits#blockBreaking"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_11661$class_11662.comp_4478()Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockSubmits#model",
+  "net/minecraft/class_11661$class_11662.comp_4479()F": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockSubmits#red",
+  "net/minecraft/class_11661$class_11662.comp_4480()F": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockSubmits#green",
+  "net/minecraft/class_11661$class_11662.comp_4481()F": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockSubmits#blue",
+  "net/minecraft/class_846.method_34846()I": "top/dext/centurybridge/step/v26_1/rt/CbWallSectionUploadCount#getToUpload",
+  "net/minecraft/class_846$class_851$class_4577.method_22783(Lnet/minecraft/class_750;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v26_1/rt/CbWallCompileTasks#doTask",
+  "net/minecraft/class_11788.method_73518()Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockSubmits#blockSubmits"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_22783(Lnet/minecraft/class_750;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_22783(Lnet/minecraft/class_750;)Lnet/minecraft/class_846$class_4690;",
+   "onlyUnder": "net/minecraft/class_846$class_851$class_4577",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallCompileTasks.join(Ljava/util/concurrent/CompletableFuture;)Lnet/minecraft/class_846$class_4690;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "1.21.11's CompileTask.doTask(buffers) answered a future of the result (completed after the section's uploads); 26.1's compiles, stages and answers the result: a 1.21.11 subclass's future, joined (CbWallCompileTasks)"
+  }
+ ],
+ "superRedirects": {
+  "net/minecraft/class_846.method_34846()I": "top/dext/centurybridge/step/v26_1/rt/CbWallSectionUploadCount#superGetToUpload",
+  "net/minecraft/class_11788.method_73518()Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockSubmits#superBlockSubmits"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_846",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallSectionUploadCount$LegacyToUpload",
+   "requires": [
+    "method_34846()I"
+   ],
+   "synth": [],
+   "basis": "26.1's SectionRenderDispatcher has no getToUpload(); a 1.21.11 dispatcher subclass's own override is what 1.21.11's callers got (CbWallSectionUploadCount.getToUpload)"
+  },
+  {
+   "under": "net/minecraft/class_11788",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockSubmits$LegacyBlockSubmits",
+   "requires": [
+    "method_73518()Ljava/util/List;"
+   ],
+   "synth": [],
+   "basis": "26.1's SubmitNodeCollection has no getBlockSubmits(); a 1.21.11 collection subclass's own override is what 1.21.11's callers got (CbWallBlockSubmits.blockSubmits)"
+  }
+ ]
+}

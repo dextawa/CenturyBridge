@@ -5,13 +5,14 @@ import net.minecraft.class_2246;
 import net.minecraft.class_2445;
 import net.minecraft.class_2513;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * 1.20.2's PumpkinBlock was a StemGrownBlock and named its stems; 1.20.3's is a plain Block. The two
  * methods come back with their 1.20.2 bodies (Blocks.PUMPKIN_STEM / ATTACHED_PUMPKIN_STEM are still a
  * StemBlock and an AttachedStemBlock), for the mods that call them and the subclasses that override them.
  */
-@Mixin(class_2445.class)
+@Mixin(value = class_2445.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWorldPumpkinMixin {
 
     public class_2513 method_10679() {

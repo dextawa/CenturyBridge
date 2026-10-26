@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.s203.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BlocksLeavesMixin",
+    "SkullAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

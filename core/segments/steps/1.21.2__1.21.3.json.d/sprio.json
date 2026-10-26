@@ -1,0 +1,5 @@
+{
+  "retiredClasses": {
+    "top/dext/centurybridge/step/v1_21_2/mixin/CbRestFapiRegistryAliasMixinHooks": "sprio 拆分: CbRestFapiRegistryAliasMixin 的注入半边, 随原 mixin 一同退役 (native returns: Fabric API 1.21.3's SimpleRegistryMixin keeps the aliases, addAlias, the alias-resolving lookups and the alias-id refusal on MappedRegistry itself)"
+  }
+}

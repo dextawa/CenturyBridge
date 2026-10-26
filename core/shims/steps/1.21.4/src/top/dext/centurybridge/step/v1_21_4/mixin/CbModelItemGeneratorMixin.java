@@ -11,13 +11,14 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_4.rt.CbModelBlockModel;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * ItemModelGenerator's 1.21.3 generateBlockModel(spriteGetter, model): the BlockModel of an item's layer textures (one
  * element set per layer, from the same processFrames 1.21.4 keeps), which 1.21.4 bakes directly instead.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_801.class)
+@Mixin(value = net.minecraft.class_801.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbModelItemGeneratorMixin {
 
     @Shadow

@@ -11,13 +11,14 @@ import net.minecraft.class_9761;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21.rt.CbLevelChunks;
+import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /**
  * 1.20.6 ChunkHolder members 1.21 has no counterpart of under any name, given back on ChunkHolder itself so a
  * 1.20.6 mod's calls, overrides and super calls all link (covers in s6fin-level.json). The getters 1.21 kept
  * under new names (getPos, getFullStatus, ...) are renamed instead (methodRenames / overrideRenames).
  */
-@Mixin(class_3193.class)
+@Mixin(value = class_3193.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbLevelChunkHolderMixin implements CbLevelChunks.LegacyHolder {
 
     @Shadow

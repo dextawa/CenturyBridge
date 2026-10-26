@@ -4,13 +4,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderBakeOverrides;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * SimpleBakedModel: 1.21.1's protected overrides field (field_5412), set right after construction from the argument
  * 1.21.1's constructor took (CbRenderBakeOverrides), and getOverrides() answering it (1.21.2's EMPTY when unset).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_1093.class)
+@Mixin(value = net.minecraft.class_1093.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderBakeOverridesMixin implements CbRenderBakeOverrides.Holder {
 
     protected net.minecraft.class_806 field_5412;

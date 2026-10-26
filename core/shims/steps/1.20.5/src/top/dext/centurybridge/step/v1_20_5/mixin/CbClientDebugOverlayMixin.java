@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * DebugScreenOverlay.logTickDuration(nanos): 1.20.4's integrated server handed the overlay each tick's duration
@@ -11,7 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * integrated server's getTickTimeLogger()); the method comes back with 1.20.4's body for 1.20.4 callers.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_340.class)
+@Mixin(value = net.minecraft.class_340.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientDebugOverlayMixin implements top.dext.centurybridge.step.v1_20_5.rt.CbClientGui.DebugOverlayApi {
 
     @Shadow

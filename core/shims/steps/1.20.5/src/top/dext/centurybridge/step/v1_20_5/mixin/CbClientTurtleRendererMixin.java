@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * TurtleRenderer.render(turtle, yaw, partialTick, pose, buffers, light): 1.20.4's own render, which halved
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * compounded frame after frame, which 1.20.5's per-entity radius does not reproduce.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_958.class)
+@Mixin(value = net.minecraft.class_958.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientTurtleRendererMixin extends net.minecraft.class_927<net.minecraft.class_1481, net.minecraft.class_614<net.minecraft.class_1481>> {
 
     private CbClientTurtleRendererMixin() {

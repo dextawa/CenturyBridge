@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s26d",
+  "version": "1.0.0",
+  "name": "CB s26d 1.21.8-era WorldRenderEvents listeners",
+  "description": "1.21.8-era client mod with Fabric API 0.136 WorldRenderEvents listeners (START, END, AFTER_ENTITIES, BEFORE_BLOCK_OUTLINE, BLOCK_OUTLINE), counted in system properties for the native 26.2 driver cb_s26dn",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.s26d.S26dOld"] },
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.8", "fabric-rendering-v1": "*" }
+}

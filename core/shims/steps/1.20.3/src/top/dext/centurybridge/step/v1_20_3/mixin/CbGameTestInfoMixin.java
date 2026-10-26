@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_3.rt.CbGameTest;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * GameTestInfo's 1.20.2 spawnStructure(pos, padding) back on the class (a cover: calls, a mod
@@ -14,7 +15,7 @@ import top.dext.centurybridge.step.v1_20_3.rt.CbGameTest;
  * prepareTestStructure(pos) is untouched; a subclass overriding spawnStructure is reconnected to it
  * by an override hook (CbGameTest.prepareTestStructure).
  */
-@Mixin(net.minecraft.class_4517.class)
+@Mixin(value = net.minecraft.class_4517.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbGameTestInfoMixin implements CbGameTest.LegacyTestInfo {
 
     @Shadow

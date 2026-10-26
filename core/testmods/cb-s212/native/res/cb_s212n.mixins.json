@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "cb.s212n.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "ServerDriverMixin",
+    "NativeCookTimeMixin",
+    "NativeCanBurnMixin",
+    "NativeSeenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

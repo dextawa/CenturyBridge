@@ -9,21 +9,20 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21_4.facade.ItemOverride;
 import top.dext.centurybridge.step.v1_21_4.rt.CbModelBlockModel;
-import top.dext.centurybridge.step.v1_21_4.rt.CbModelSpecial;
+import top.dext.centurybridge.step.v1_21_4.rt.CbPrioritySplitClient;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * BlockModel's 1.21.3 members on 1.21.4's BlockModel (see {@link CbModelBlockModel}): the name, texture map and overrides
  * 1.21.4 dropped, and 1.21.3's chain-walking getters and bake. 1.21.4's own baking stays for its own models; a mod's
- * subclass, and a chain ending in one of 1.21.3's builtin markers, bake as 1.21.3 baked them.
+ * subclass, and a chain ending in one of 1.21.3's builtin markers, bake as 1.21.3 baked them (CbModelBlockModelMixinHooks,
+ * default priority).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_793.class)
-public abstract class CbModelBlockModelMixin implements CbModelBlockModel.CbLegacyBlockModel {
+@Mixin(value = net.minecraft.class_793.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbModelBlockModelMixin implements CbModelBlockModel.CbLegacyBlockModel, CbPrioritySplitClient.BlockModelLegacy {
 
     @Shadow
     @Final
@@ -114,12 +113,10 @@ public abstract class CbModelBlockModelMixin implements CbModelBlockModel.CbLega
         this.field_4252 = name;
     }
 
-    /** the texture map, once asked for, is the model's texture slots (a write through it reaches baking, as in 1.21.3) */
-    @Inject(method = "method_65539", at = @At("HEAD"), cancellable = true)
-    private void cb$slotsFromMap(CallbackInfoReturnable<net.minecraft.class_10419.class_10420> cir) {
-        if (this.cb$textureMap != null) {
-            cir.setReturnValue(CbModelBlockModel.toData(this.cb$textureMap));
-        }
+    /** the texture map as set (null until asked for or set), for 1.21.4's getTextureSlots (CbModelBlockModelMixinHooks) */
+    @Override
+    public Map<String, Either<net.minecraft.class_4730, String>> cb$v1_21_4$textureMapIfSet() {
+        return this.cb$textureMap;
     }
 
     // ---- 1.21.3 members ----
@@ -186,24 +183,16 @@ public abstract class CbModelBlockModelMixin implements CbModelBlockModel.CbLega
         return CbModelBlockModel.transforms(cb$self());
     }
 
-    /**
-     * 1.21.4's bake: a chain ending in GENERATED_MARKER bakes through the item model generator (1.21.3's model bakery did);
-     * a mod's subclass, and a chain ending in BLOCK_ENTITY_MARKER, bake as 1.21.3 baked (1.21.3's bake through the model's
-     * own members, with the baker's sprites)
-     */
-    @Inject(method = "method_4753(Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;Lnet/minecraft/class_3665;ZZLnet/minecraft/class_809;)Lnet/minecraft/class_1087;",
-            at = @At("HEAD"), cancellable = true)
-    private void cb$legacyBake(net.minecraft.class_10419 slots, net.minecraft.class_7775 baker, net.minecraft.class_3665 state, boolean ambientOcclusion,
-            boolean usesBlockLight, net.minecraft.class_809 transforms, CallbackInfoReturnable<net.minecraft.class_1087> cir) {
-        boolean subclass = (Object) this.getClass() != net.minecraft.class_793.class;
-        // a vanilla model keeps 1.21.4's bake unless its chain of BlockModels ends in one of 1.21.3's markers; a mod's
-        // subclass is asked its root as 1.21.3's model bakery asked it
-        net.minecraft.class_793 root = subclass ? this.method_3431() : CbModelBlockModel.lastBlockModel(cb$self());
-        if (root == CbModelSpecial.generatedMarker()) {
-            cir.setReturnValue(CbModelSpecial.generator().method_4753(slots, baker, state, ambientOcclusion, usesBlockLight, transforms));
-        } else if (subclass || root == CbModelSpecial.blockEntityMarker()) {
-            net.minecraft.class_10527 sprites = baker.method_65732();
-            cir.setReturnValue(this.method_4753(baker, sprites::method_65741, state));
-        }
+    /** 1.21.3's getRootModel called virtually, for 1.21.4's bake (CbModelBlockModelMixinHooks) */
+    @Override
+    public net.minecraft.class_793 cb$v1_21_4$rootModel() {
+        return this.method_3431();
+    }
+
+    /** 1.21.3's bake(baker, spriteGetter, state) called virtually, for 1.21.4's bake (CbModelBlockModelMixinHooks) */
+    @Override
+    public net.minecraft.class_1087 cb$v1_21_4$bake(net.minecraft.class_7775 baker, Function<net.minecraft.class_4730, net.minecraft.class_1058> sprites,
+            net.minecraft.class_3665 state) {
+        return this.method_4753(baker, sprites, state);
     }
 }
