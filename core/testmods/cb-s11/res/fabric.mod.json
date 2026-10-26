@@ -7,5 +7,5 @@
   "environment": "*",
   "entrypoints": { "main": ["cb.s11.Init"] },
   "mixins": ["cb_s11.mixins.json"],
-  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.10", "fabric-game-rule-api-v1": "*" }
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.10", "fabric-game-rule-api-v1": "*", "fabric-biome-api-v1": "*" }
 }

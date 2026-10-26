@@ -6,6 +6,7 @@
   "mixins": [
     "CbBiomeBuilderMixin",
     "CbBiomeEffectsBuilderMixin",
+    "CbDimensionTypeCodecMixin",
     "CbGameRuleCommandMixin",
     "CbGameRuleDescriptionMixin",
     "CbGameRuleMixin",
@@ -13,6 +14,7 @@
     "CbGameRulesServerMixin"
   ],
   "client": [
+    "CbClientLevelEffectsMixin",
     "CbLineWidthBufferSourceMixin",
     "CbLineWidthBuilderMixin"
   ],

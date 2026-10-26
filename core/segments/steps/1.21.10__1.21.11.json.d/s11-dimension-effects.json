@@ -1,0 +1,27 @@
+{
+ "_s11_dimension_effects_basis": "1.21.11 deleted DimensionSpecialEffects (class_5294): facade/DimensionSpecialEffects is 1.21.10's class (members, bodies, its three vanilla effects and effects map); ClientLevel.effects() is restored on ClientLevel (CbClientLevelEffectsMixin); DimensionType.effectsLocation, gone with it, is read from the dimension_type \"effects\" field 1.21.11's codec drops (CbDimensionTypeCodecMixin, rt/CbDimensionEffects), or derived from skybox / cardinal lighting for 1.21.11's own types; BuiltinDimensionTypes' three effects ids; SkyRenderState.skyType is 1.21.11's skybox (rt/CbSkyType)",
+ "classRenames": {
+  "net/minecraft/class_5294": "top/dext/centurybridge/step/v1_21_11/facade/DimensionSpecialEffects",
+  "net/minecraft/class_5294$class_5297": "top/dext/centurybridge/step/v1_21_11/facade/DimensionSpecialEffects$OverworldEffects",
+  "net/minecraft/class_5294$class_5296": "top/dext/centurybridge/step/v1_21_11/facade/DimensionSpecialEffects$NetherEffects",
+  "net/minecraft/class_5294$class_5295": "top/dext/centurybridge/step/v1_21_11/facade/DimensionSpecialEffects$EndEffects",
+  "net/minecraft/class_5294$class_5401": "top/dext/centurybridge/step/v1_21_11/facade/DimensionSpecialEffects$SkyType"
+ },
+ "covers": [
+  "net/minecraft/class_638.method_28103()Lnet/minecraft/class_5294;"
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_2874.comp_655()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_11/rt/CbDimensionEffects"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_7134.field_37670:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_11/rt/CbDimensionEffects",
+  "net/minecraft/class_7134.field_37671:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_11/rt/CbDimensionEffects",
+  "net/minecraft/class_7134.field_37672:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_11/rt/CbDimensionEffects"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_12076.field_63088:Lnet/minecraft/class_5294$class_5401;": "top/dext/centurybridge/step/v1_21_11/rt/CbSkyType"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_12076.field_63088:Lnet/minecraft/class_5294$class_5401;": "top/dext/centurybridge/step/v1_21_11/rt/CbSkyType"
+ }
+}

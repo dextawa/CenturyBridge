@@ -49,6 +49,10 @@ public final class Driver {
         server.method_3734().method_44252(server.method_3739(), command);
     }
 
+    private static net.minecraft.class_2960 class_2960_of(String ns, String path) {
+        return net.minecraft.class_2960.method_60655(ns, path);
+    }
+
     public static void run(MinecraftServer server) {
         try {
             run0(server);
@@ -69,6 +73,15 @@ public final class Driver {
             .method_24379(effects).method_30974(net.minecraft.class_5483.field_26646).method_30973(net.minecraft.class_5485.field_26639)
             .method_30972();
         check("biome-effects-water", effects.method_24388() == 0x111111, Integer.toHexString(effects.method_24388()));
+        // 1.21.10's DimensionType.effectsLocation: 1.21.11's own types by skybox / lighting, and cb_s11:fx's "effects"
+        net.minecraft.class_2378<net.minecraft.class_2874> types = server.method_30611().method_30530(net.minecraft.class_7924.field_41241);
+        net.minecraft.class_2960 ow = types.method_31140(net.minecraft.class_7134.field_37666).comp_655();
+        net.minecraft.class_2960 ne = types.method_31140(net.minecraft.class_7134.field_37667).comp_655();
+        net.minecraft.class_2960 en = types.method_31140(net.minecraft.class_7134.field_37668).comp_655();
+        net.minecraft.class_2960 fx = types.method_31140(net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41241,
+            class_2960_of("cb_s11", "fx"))).comp_655();
+        check("dimension-effects-location", ow.equals(net.minecraft.class_7134.field_37670) && ne.equals(net.minecraft.class_7134.field_37671)
+            && en.equals(net.minecraft.class_7134.field_37672) && fx.equals(class_2960_of("cb_s11", "fx")), ow + " " + ne + " " + en + " " + fx);
         class_1928 rules = server.method_3767();
         // vanilla keys: read what the command set, write what the command reads
         cmd(server, "gamerule keep_inventory true");
