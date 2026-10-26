@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s6bn",
+  "version": "1.0.0",
+  "name": "CB s6b native 1.21.6 probe (server routes)",
+  "environment": "*",
+  "mixins": ["cb_s6bn.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.6" }
+}

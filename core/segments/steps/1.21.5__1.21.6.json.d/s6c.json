@@ -2,9 +2,20 @@
  "covers": [
   "net/minecraft/class_3441.method_14902()Lnet/minecraft/class_2487;",
   "net/minecraft/class_3441.method_14901(Lnet/minecraft/class_2487;Ljava/util/function/Predicate;)V",
-  "net/minecraft/class_5411.method_30189(Lnet/minecraft/class_2487;)V"
+  "net/minecraft/class_5411.method_30189(Lnet/minecraft/class_2487;)V",
+  "net/minecraft/class_1496.method_6763()Z",
+  "net/minecraft/class_1496.method_6758(Z)V",
+  "net/minecraft/class_1496.field_6968:Z",
+  "net/minecraft/class_1277.method_7659(Lnet/minecraft/class_2499;Lnet/minecraft/class_7225$class_7874;)V",
+  "net/minecraft/class_1277.method_7660(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2499;",
+  "net/minecraft/class_1656.method_7249(Lnet/minecraft/class_2487;)V",
+  "net/minecraft/class_1656.method_7251(Lnet/minecraft/class_2487;)V",
+  "net/minecraft/class_1661.method_7384(Lnet/minecraft/class_2499;)Lnet/minecraft/class_2499;",
+  "net/minecraft/class_1661.method_7397(Lnet/minecraft/class_2499;)V",
+  "net/minecraft/class_1730.method_7659(Lnet/minecraft/class_2499;Lnet/minecraft/class_7225$class_7874;)V",
+  "net/minecraft/class_1730.method_7660(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2499;"
  ],
- "_covers_basis": "1.21.5 members the layer restores on the game class (CbRecipeBookRestoredMixin / CbRecipeBookSettingsRestoredMixin) with 1.21.5's bodies; vanilla's 1.21.6 player save / load asks them (CbRecipeBookRouteMixin)",
+ "_covers_basis": "1.21.5 members the layer restores on the game class with 1.21.5's bodies: ServerRecipeBook.toNbt / fromNbt and RecipeBookSettings.write (CbRecipeBookRestoredMixin / CbRecipeBookSettingsRestoredMixin; vanilla's 1.21.6 player save / load asks them, CbRecipeBookRouteMixin), AbstractHorse's jump flag field, isJumping and setIsJumping (CbHorseJumpRestoredMixin; set and read on 1.21.6's jump paths, CbHorseJumpRouteMixin), SimpleContainer.fromTag / createTag, PlayerEnderChestContainer's overrides of both, Inventory.save / load(ListTag), Abilities.addSaveData / loadSaveData (CbContainerSaveRestoredMixin, CbEnderSaveRestoredMixin, CbInventorySaveRestoredMixin, CbAbilitiesSaveRestoredMixin; 1.21.6's Player save / load and InventoryCarrier write / read ask them when a converted mod mixed one or the object is a subclass: CbPlayerSaveRouteMixin, CbInventoryCarrierRouteMixin)",
  "classRenames": {
   "net/minecraft/class_7648": "top/dext/centurybridge/step/v1_21_6/facade/PacketSendListener",
   "net/minecraft/class_10738": "top/dext/centurybridge/step/v1_21_6/facade/TerracottaBlock"
@@ -26,20 +37,22 @@
    "old": "method_10752(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V",
    "new": "method_10752(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;)V",
    "onlyUnder": "net/minecraft/class_2535",
-   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets.fromNetty(Lio/netty/channel/ChannelFutureListener;)Ltop/dext/centurybridge/step/v1_21_6/facade/PacketSendListener;",
+   "adapter": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets$LegacySend",
+   "bridge": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets.bridgeSend(Ltop/dext/centurybridge/step/v1_21_6/rt/CbPackets$LegacySend;Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;)V",
    "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets.superSend(Ltop/dext/centurybridge/step/v1_21_6/rt/CbPackets$SuperConnection;Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V",
    "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets$SuperConnection",
    "superAccessors": [
     "method_10752(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;)V",
     "method_52906(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;Z)V"
    ],
-   "basis": "1.21.6's Connection.send(packet, listener) takes a ChannelFutureListener where 1.21.5's took a PacketSendListener (javap): a 1.21.5 subclass's send(packet, listener) gets 1.21.6's listener wrapped (CbPackets.NettyListener); its super call hands the same listener to super's 1.21.6 send"
+   "basis": "1.21.6's Connection.send(packet, listener) takes a ChannelFutureListener where 1.21.5's took a PacketSendListener (javap): a 1.21.5 subclass's send(packet, listener) gets 1.21.6's listener as a 1.21.5 one through a bridge (CbPackets.bridgeSend: a listener 1.21.5 handed in comes back as itself; a 1.21.6 factory listener answers a direct onSuccess() / onFailure() as 1.21.5's from the same factory, CbPackets.NettyListener); its super call hands the same listener to super's 1.21.6 send"
   },
   {
    "old": "method_52906(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V",
    "new": "method_52906(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;Z)V",
    "onlyUnder": "net/minecraft/class_2535",
-   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets.fromNetty(Lio/netty/channel/ChannelFutureListener;)Ltop/dext/centurybridge/step/v1_21_6/facade/PacketSendListener;",
+   "adapter": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets$LegacySendFlush",
+   "bridge": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets.bridgeSendFlush(Ltop/dext/centurybridge/step/v1_21_6/rt/CbPackets$LegacySendFlush;Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;Z)V",
    "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets.superSendFlush(Ltop/dext/centurybridge/step/v1_21_6/rt/CbPackets$SuperConnection;Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V",
    "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets$SuperConnection",
    "superAccessors": [
@@ -52,7 +65,8 @@
    "old": "method_52391(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V",
    "new": "method_52391(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;)V",
    "onlyUnder": "net/minecraft/class_8609",
-   "wrap": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets.fromNetty(Lio/netty/channel/ChannelFutureListener;)Ltop/dext/centurybridge/step/v1_21_6/facade/PacketSendListener;",
+   "adapter": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets$LegacyCommonSend",
+   "bridge": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets.bridgeHandlerSend(Ltop/dext/centurybridge/step/v1_21_6/rt/CbPackets$LegacyCommonSend;Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;)V",
    "superBridge": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets.superHandlerSend(Ltop/dext/centurybridge/step/v1_21_6/rt/CbPackets$SuperCommonListener;Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V",
    "superAccess": "top/dext/centurybridge/step/v1_21_6/rt/CbPackets$SuperCommonListener",
    "superAccessors": [

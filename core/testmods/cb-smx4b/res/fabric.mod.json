@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx4b",
+  "version": "1.0.0",
+  "name": "CB smx4b Mixin Test",
+  "description": "1.20.4-era mixins on members step 1.20.4 -> 1.20.5 restores and routes 1.20.5's own path through (Arrow.setEffectsFromItem, Inventory.hurtArmor, Piglin.makeSound, LivingEntity.broadcastBreakEvent(hand), Fireball / ThrowableItemProjectile.getItemRaw)",
+  "environment": "*",
+  "mixins": ["cb_smx4b.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.20.4" }
+}

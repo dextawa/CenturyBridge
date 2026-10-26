@@ -4,7 +4,12 @@
   "package": "cb.s6b.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "S6bRecipeBookMixin"
+    "S6bRecipeBookMixin",
+    "S6bAbilitiesMixin",
+    "S6bInventoryMixin",
+    "S6bContainerMixin",
+    "S6bEnderMixin",
+    "S6bLeashMixin"
   ],
   "injectors": {
     "defaultRequire": 1

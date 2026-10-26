@@ -35,6 +35,8 @@ public final class CbS26RenderBuffers {
         MultiBufferSource.BufferSource bufferSource();
 
         MultiBufferSource.BufferSource crumblingBufferSource();
+
+        top.dext.centurybridge.step.v26_2.facade.OutlineBufferSource outlineBufferSource();
     }
 
     private static final int DEFAULT_BUFFER_SIZE = 1536;
@@ -75,6 +77,11 @@ public final class CbS26RenderBuffers {
     /** instance redirect: 26.1.2 RenderBuffers.crumblingBufferSource() */
     public static MultiBufferSource.BufferSource crumblingBufferSource(RenderBuffers self) {
         return of(self).crumblingBufferSource();
+    }
+
+    /** instance redirect: 26.1.2 RenderBuffers.outlineBufferSource() */
+    public static top.dext.centurybridge.step.v26_2.facade.OutlineBufferSource outlineBufferSource(RenderBuffers self) {
+        return of(self).outlineBufferSource();
     }
 
     /** the game's render buffers, as 26.1.2's GuiRenderer held their main source */

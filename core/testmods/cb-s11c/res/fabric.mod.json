@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s11c",
+  "version": "1.0.0",
+  "name": "CB s11 client checks",
+  "description": "1.21.10-era client checks for s11's edit-game-rules screen (vanilla rows, mod boolean/integer rows, Fabric double/enum rows, custom category, mod row subclasses); tally CB-S11C n/n, then the client stops",
+  "environment": "client",
+  "entrypoints": { "main": ["cb.s11c.S11cRules"], "client": ["cb.s11c.S11cClient"] },
+  "mixins": ["cb_s11c.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.10", "fabric-game-rule-api-v1": "*" }
+}

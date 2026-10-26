@@ -108,7 +108,81 @@ public class SwallTestMod implements ModInitializer {
         ServerLifecycleEvents.SERVER_STARTED.register(SwallTestMod::onStarted);
     }
 
+    /** 1.21.11 LevelSettings (rt/CbWallLevelSettings, CbWallLevelSettingsMixin) and LevelSummary (super-ctor reshape) */
+    private static void levelSettings() {
+        try {
+            net.minecraft.class_1928 rules = new net.minecraft.class_1928(net.minecraft.class_7701.field_40182);
+            net.minecraft.class_1940 s = new net.minecraft.class_1940("cbswall", net.minecraft.class_1934.field_9220, true,
+                net.minecraft.class_1267.field_5807, true, rules, net.minecraft.class_7712.field_40260);
+            boolean own = "cbswall".equals(s.method_27339()) && s.method_8574() == net.minecraft.class_1934.field_9220 && s.method_8583()
+                && s.method_27340() == net.minecraft.class_1267.field_5807 && s.method_8582() && s.method_27341() == rules;
+            net.minecraft.class_1940 easy = s.method_28381(net.minecraft.class_1267.field_5805);
+            boolean wither = easy.method_27340() == net.minecraft.class_1267.field_5805 && easy.method_8583() && easy.method_27341() == rules;
+            net.minecraft.class_1940 copy = s.method_28385();
+            boolean copied = copy.method_27341() != null && copy.method_27341() != rules && copy.method_8583();
+            check("levelSettings.v", own && wither && copied, own + " " + wither + " " + copied);
+            net.minecraft.class_34 summary = new net.minecraft.class_34(s, null, "cbswall-id", false, false, false, null) { };
+            check("levelSummary.subclass", summary.method_35505() == s && "cbswall-id".equals(summary.method_248()) && summary.method_257(), summary);
+        } catch (Throwable e) {
+            check("levelSettings.v", false, e);
+        }
+    }
+
+    /** 1.21.11 new VillagerProfession(6 args) (rt/CbWallProfessions): its own values, no trade sets */
+    private static void professions() {
+        try {
+            net.minecraft.class_2561 name = net.minecraft.class_2561.method_43470("cbswall_prof");
+            net.minecraft.class_3852 p = new net.minecraft.class_3852(name, h -> false, h -> true,
+                com.google.common.collect.ImmutableSet.of(net.minecraft.class_1802.field_8687), com.google.common.collect.ImmutableSet.of(), null);
+            check("villagerProfession.ctor", p.comp_818() == name && !p.comp_819().test(null) && p.comp_820().test(null)
+                && p.comp_821().contains(net.minecraft.class_1802.field_8687) && p.comp_822().isEmpty() && p.comp_823() == null, p);
+        } catch (Throwable e) {
+            check("villagerProfession.ctor", false, e);
+        }
+    }
+
     static net.minecraft.class_12329 EARLY_TIMELINE;
+
+    /** a 1.21.11 entity subclass reading and writing the protected Entity.fluidHeight (rt/CbWallEntityFluids) */
+    static class FluidStand extends net.minecraft.class_1531 {
+        FluidStand(net.minecraft.class_1937 level) {
+            super(net.minecraft.class_1299.field_6131, level);
+        }
+
+        double height(net.minecraft.class_6862<net.minecraft.class_3611> tag) {
+            return this.field_5964.getDouble(tag);
+        }
+
+        void put(net.minecraft.class_6862<net.minecraft.class_3611> tag, double h) {
+            this.field_5964.put(tag, h);
+        }
+
+        void replace(it.unimi.dsi.fastutil.objects.Object2DoubleMap<net.minecraft.class_6862<net.minecraft.class_3611>> heights) {
+            this.field_5964 = heights;
+        }
+    }
+
+    /** 1.21.11 Entity.fluidHeight: a view of getFluidHeight; a mod's own tag written there is answered by getFluidHeight */
+    private static void fluidHeights(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            FluidStand stand = new FluidStand(level);
+            net.minecraft.class_6862<net.minecraft.class_3611> water = net.minecraft.class_3486.field_15517;
+            net.minecraft.class_6862<net.minecraft.class_3611> own = net.minecraft.class_6862.method_40092(net.minecraft.class_7924.field_41270,
+                net.minecraft.class_2960.method_60655("cbswall", "goo"));
+            boolean dry = stand.height(water) == stand.method_5861(water) && stand.height(own) == 0.0;
+            stand.put(own, 0.75);
+            boolean put = stand.height(own) == 0.75 && stand.method_5861(own) == 0.75;
+            it.unimi.dsi.fastutil.objects.Object2DoubleMap<net.minecraft.class_6862<net.minecraft.class_3611>> m =
+                new it.unimi.dsi.fastutil.objects.Object2DoubleArrayMap<>();
+            m.put(own, 0.5);
+            stand.replace(m);
+            boolean replaced = stand.method_5861(own) == 0.5;
+            check("entity.fluidHeight", dry && put && replaced, dry + " " + put + " " + replaced);
+        } catch (Throwable e) {
+            check("entity.fluidHeight", false, e);
+        }
+    }
     static net.minecraft.class_4571 EARLY_TIME_CHECK;
     static Throwable earlyClockFailure;
 
@@ -876,6 +950,10 @@ public class SwallTestMod implements ModInitializer {
             legacyConstructors(server);
             timeCommand(server);
             clocks(server);
+            fluidHeights(server);
+            check("server.throwIfFatalException", MinecraftServer.method_60584(), "");
+            professions();
+            levelSettings();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
