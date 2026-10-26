@@ -347,7 +347,10 @@ public final class CbItemArmor {
     }
 
     // 1.21.1's ArmorItem members: a call reaches the class's own override, else 1.21.1's body (super_); one overload
-    // per receiver 1.21.2 has for them -- ArmorItem, and AnimalArmorItem, an ArmorItem in 1.21.1 but not in 1.21.2
+    // per receiver 1.21.2 has for them -- ArmorItem, and AnimalArmorItem, an ArmorItem in 1.21.1 but not in 1.21.2.
+    // The AnimalArmorItem forms carry "Animal" in their name, not only in an overload: 1.21.5 folds ArmorItem and
+    // AnimalArmorItem into Item (classRenames), and two forms told apart only by those types would become one
+    // descriptor in the climbed layer (ClassFormatError: duplicate method)
 
     /** getType() */
     private static class_8051 call_method_48398(class_1792 item) {
@@ -366,11 +369,11 @@ public final class CbItemArmor {
         return body_method_48398(item);
     }
 
-    public static class_8051 method_48398(class_4059 item) {
+    public static class_8051 method_48398Animal(class_4059 item) {
         return call_method_48398(item);
     }
 
-    public static class_8051 super_method_48398(class_4059 item) {
+    public static class_8051 super_method_48398Animal(class_4059 item) {
         return body_method_48398(item);
     }
 
@@ -391,11 +394,11 @@ public final class CbItemArmor {
         return body_method_7686(item);
     }
 
-    public static class_6880<ArmorMaterial> method_7686(class_4059 item) {
+    public static class_6880<ArmorMaterial> method_7686Animal(class_4059 item) {
         return call_method_7686(item);
     }
 
-    public static class_6880<ArmorMaterial> super_method_7686(class_4059 item) {
+    public static class_6880<ArmorMaterial> super_method_7686Animal(class_4059 item) {
         return body_method_7686(item);
     }
 
@@ -420,11 +423,11 @@ public final class CbItemArmor {
         return body_method_7687(item);
     }
 
-    public static int method_7687(class_4059 item) {
+    public static int method_7687Animal(class_4059 item) {
         return call_method_7687(item);
     }
 
-    public static int super_method_7687(class_4059 item) {
+    public static int super_method_7687Animal(class_4059 item) {
         return body_method_7687(item);
     }
 
@@ -448,11 +451,11 @@ public final class CbItemArmor {
         return body_method_26353(item);
     }
 
-    public static float method_26353(class_4059 item) {
+    public static float method_26353Animal(class_4059 item) {
         return call_method_26353(item);
     }
 
-    public static float super_method_26353(class_4059 item) {
+    public static float super_method_26353Animal(class_4059 item) {
         return body_method_26353(item);
     }
 
@@ -473,11 +476,11 @@ public final class CbItemArmor {
         return body_method_7685(item);
     }
 
-    public static class_1304 method_7685(class_4059 item) {
+    public static class_1304 method_7685Animal(class_4059 item) {
         return call_method_7685(item);
     }
 
-    public static class_1304 super_method_7685(class_4059 item) {
+    public static class_1304 super_method_7685Animal(class_4059 item) {
         return body_method_7685(item);
     }
 
@@ -498,11 +501,11 @@ public final class CbItemArmor {
         return body_method_31570(item);
     }
 
-    public static class_6880<class_3414> method_31570(class_4059 item) {
+    public static class_6880<class_3414> method_31570Animal(class_4059 item) {
         return call_method_31570(item);
     }
 
-    public static class_6880<class_3414> super_method_31570(class_4059 item) {
+    public static class_6880<class_3414> super_method_31570Animal(class_4059 item) {
         return body_method_31570(item);
     }
 

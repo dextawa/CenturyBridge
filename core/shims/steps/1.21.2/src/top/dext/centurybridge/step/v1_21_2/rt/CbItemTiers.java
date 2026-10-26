@@ -245,11 +245,15 @@ public final class CbItemTiers {
         return fromW(((ToolFields) (Object) item).cb$toolMaterial());
     }
 
-    public static Tier method_8022(class_1766 item) {
+    /**
+     * getTier() through a DiggerItem / SwordItem reference. Named per class, not only overloaded: 1.21.5 folds both
+     * into Item (classRenames), and forms told apart only by those types would collide in the climbed layer
+     */
+    public static Tier method_8022Digger(class_1766 item) {
         return tier(item);
     }
 
-    public static Tier method_8022(class_1829 item) {
+    public static Tier method_8022Sword(class_1829 item) {
         return tier(item);
     }
 
