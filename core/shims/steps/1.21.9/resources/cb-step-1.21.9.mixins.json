@@ -15,10 +15,12 @@
     "CbBlockEntityStateMixin",
     "CbClientAvatarMixin",
     "CbDebugTextMixin",
+    "CbElytraRotationMixin",
     "CbCullFrustumMixin",
     "CbDebugHudMixin",
     "CbParticleEngineMixin",
-    "CbWorldRenderEventsMixin"
+    "CbWorldRenderEventsMixin",
+    "CbWorldRenderTargetsMixin"
   ],
   "server": [],
   "injectors": {

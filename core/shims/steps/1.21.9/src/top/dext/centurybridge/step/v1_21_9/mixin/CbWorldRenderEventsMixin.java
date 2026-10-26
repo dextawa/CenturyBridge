@@ -9,19 +9,14 @@ import net.minecraft.class_4063;
 import net.minecraft.class_4184;
 import net.minecraft.class_4587;
 import net.minecraft.class_4597;
-import net.minecraft.class_4599;
 import net.minecraft.class_4604;
-import net.minecraft.class_638;
 import net.minecraft.class_761;
 import net.minecraft.class_9779;
 import net.minecraft.class_9909;
 import net.minecraft.class_9922;
-import net.minecraft.class_9960;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -43,24 +38,13 @@ import top.dext.centurybridge.step.v1_21_9.rt.CbWorldRenderHolder;
  * pass's return; END at renderLevel's return. Every injection only adds: it returns at once until a converted mod
  * initialized the restored events, cancels nothing a listener did not refuse, and leaves 1.21.9's own and other mods'
  * injections at these methods in place.
+ * <p>Climb-safe: no @Shadow. The game, its level, its crosshair target and its render buffers (the same RenderBuffers
+ * the renderer was built with) come through Minecraft.getInstance(); the frame's level for the outline is the
+ * context's. The frame-target bundle the afterTranslucent pass writes is reached through CbWorldRenderTargetsMixin
+ * alone, so a later release dropping that field loses only that pass, never this class.
  */
 @Mixin(class_761.class)
 public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
-
-    @Shadow
-    @Final
-    private class_310 field_4088;
-
-    @Shadow
-    private class_638 field_4085;
-
-    @Shadow
-    @Final
-    private class_4599 field_20951;
-
-    @Shadow
-    @Final
-    private class_9960 field_53081;
 
     @Unique
     private CbWorldRenderContextImpl cb$worldRenderContext;
@@ -86,8 +70,9 @@ public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
         if (!CbWorldRender.cbActive()) {
             return;
         }
-        CbWorldRender.cbStart((class_761) (Object) this, tickCounter, renderBlockOutline, camera, this.field_4088.field_1773, positionMatrix,
-            projectionMatrix, this.field_20951.method_23000(), class_310.method_29611(), this.field_4085);
+        class_310 minecraft = class_310.method_1551();
+        CbWorldRender.cbStart((class_761) (Object) this, tickCounter, renderBlockOutline, camera, minecraft.field_1773, positionMatrix,
+            projectionMatrix, minecraft.method_22940().method_23000(), class_310.method_29611(), minecraft.field_1687);
     }
 
     @Inject(method = "method_74752(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;Z)V", at = @At("RETURN"))
@@ -140,7 +125,7 @@ public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
     private void cb$beforeBlockOutline(class_4597.class_4598 consumers, class_4587 matrices, boolean translucent, class_11658 state, CallbackInfo ci) {
         CbWorldRenderContextImpl context = CbWorldRender.cbLive((class_761) (Object) this);
         if (context != null) {
-            CbWorldRender.cbBeforeBlockOutline(context, translucent, this.field_4088.field_1765);
+            CbWorldRender.cbBeforeBlockOutline(context, translucent, class_310.method_1551().field_1765);
         }
     }
 
@@ -158,7 +143,7 @@ public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
         class_12074 outline = state.field_63083;
         class_243 cameraPos = state.field_63082.field_63078;
         if (!CbWorldRender.cbBlockOutline(context, context.camera().method_19331(), cameraPos.field_1352, cameraPos.field_1351, cameraPos.field_1350,
-                outline.comp_4932(), this.field_4085.method_8320(outline.comp_4932()))) {
+                outline.comp_4932(), context.world().method_8320(outline.comp_4932()))) {
             consumers.method_37104();
             ci.cancel();
         }
@@ -187,7 +172,7 @@ public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
     private void cb$afterTranslucent(CallbackInfo ci) {
         CbWorldRenderContextImpl context = CbWorldRender.cbLive((class_761) (Object) this);
         if (context != null) {
-            CbWorldRender.cbAfterTranslucentPass(context, this.cb$frameGraph, this.field_53081);
+            CbWorldRender.cbAfterTranslucentPass(context, this.cb$frameGraph, (Object) this);
         }
     }
 
@@ -196,7 +181,7 @@ public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
         at = @At("HEAD"), cancellable = true)
     private void cb$sky(class_9909 frameGraph, class_4184 camera, GpuBufferSlice fog, CallbackInfo ci) {
         CbWorldRenderContextImpl context = CbWorldRender.cbLive((class_761) (Object) this);
-        if (context != null && this.field_4088.field_1687 != null && CbDimensionRendering.cbRenderSky(context, this.field_4085)) {
+        if (context != null && CbDimensionRendering.cbRenderSky(context, class_310.method_1551().field_1687)) {
             ci.cancel();
         }
     }
@@ -205,7 +190,7 @@ public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
         at = @At("HEAD"), cancellable = true)
     private void cb$clouds(class_9909 frameGraph, class_4063 mode, class_243 cameraPos, float ticks, int color, float height, CallbackInfo ci) {
         CbWorldRenderContextImpl context = CbWorldRender.cbLive((class_761) (Object) this);
-        if (context != null && this.field_4088.field_1687 != null && CbDimensionRendering.cbRenderClouds(context, this.field_4085)) {
+        if (context != null && CbDimensionRendering.cbRenderClouds(context, class_310.method_1551().field_1687)) {
             ci.cancel();
         }
     }
@@ -214,7 +199,7 @@ public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
         at = @At("HEAD"), cancellable = true)
     private void cb$weather(class_9909 frameGraph, class_243 cameraPos, GpuBufferSlice fog, CallbackInfo ci) {
         CbWorldRenderContextImpl context = CbWorldRender.cbLive((class_761) (Object) this);
-        if (context != null && this.field_4088.field_1687 != null && CbDimensionRendering.cbRenderWeather(context, this.field_4085)) {
+        if (context != null && CbDimensionRendering.cbRenderWeather(context, class_310.method_1551().field_1687)) {
             ci.cancel();
         }
     }
