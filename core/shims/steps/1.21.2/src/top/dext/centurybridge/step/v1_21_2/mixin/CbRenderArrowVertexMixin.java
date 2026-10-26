@@ -3,13 +3,14 @@ package top.dext.centurybridge.step.v1_21_2.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 ArrowRenderer.vertex(pose, consumer, x, y, z, u, v, normalX, normalZ, normalY, light), gone in 1.21.2 (the
  * arrow is an ArrowModel drawn whole), put back with 1.21.1's body: one white, unoverlaid vertex at (x, y, z).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_876.class)
+@Mixin(value = net.minecraft.class_876.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderArrowVertexMixin {
 
     /** 1.21.1 ArrowRenderer.vertex */
