@@ -219,24 +219,63 @@ public final class MixinRepair {
         return invokedUnproven ? null : callersByName.getOrDefault(name, Set.of());
     }
 
+    /** class -> the other classes of the code jar whose code initializes it (lazily, with invokedNames) */
+    private Map<String, Set<String>> initializersOf;
+
+    /**
+     * Whether code of a class other than {@code owner} itself makes the JVM initialize {@code owner}: a new,
+     * a static field access or a static call naming it, or a class extending or implementing it (initializing a
+     * class initializes its superclass first, and an interface declaring default methods with its implementor;
+     * any implementor counts, so the answer errs towards reached). This is how the code jar's code reaches
+     * {@code <clinit>}, which nothing calls by name. True when a class could not be read.
+     */
+    public synchronized boolean initialized(String owner) {
+        index();
+        return invokedUnproven || !initializersOf.getOrDefault(owner, Set.of()).isEmpty();
+    }
+
     private void index() {
         if (invokedNames == null) {
             Set<String> out = new java.util.HashSet<>();
             Map<String, Set<String>> by = new HashMap<>();
+            Map<String, Set<String>> init = new HashMap<>();
             callersByName = by;
+            initializersOf = init;
             for (ZipEntry e : java.util.Collections.list(code.entries())) {
                 if (!e.getName().endsWith(".class")) continue;
                 try {
                     String cls = e.getName().substring(0, e.getName().length() - 6);
+                    java.util.function.Consumer<String> inits = o -> {
+                        if (o != null && !o.equals(cls)) init.computeIfAbsent(o, k -> new java.util.HashSet<>()).add(cls);
+                    };
                     new ClassReader(code.getInputStream(e).readAllBytes()).accept(new org.objectweb.asm.ClassVisitor(Opcodes.ASM9) {
+                        @Override
+                        public void visit(int version, int access, String n, String sig, String sup, String[] itfs) {
+                            inits.accept(sup);
+                            if (itfs != null) {
+                                for (String i : itfs) inits.accept(i);
+                            }
+                        }
+
                         @Override
                         public org.objectweb.asm.MethodVisitor visitMethod(int access, String n, String d, String sig, String[] ex) {
                             String caller = cls + "." + n + d;
                             return new org.objectweb.asm.MethodVisitor(Opcodes.ASM9) {
                                 @Override
+                                public void visitTypeInsn(int op, String type) {
+                                    if (op == Opcodes.NEW) inits.accept(type);
+                                }
+
+                                @Override
+                                public void visitFieldInsn(int op, String owner, String fn, String fd) {
+                                    if (op == Opcodes.GETSTATIC || op == Opcodes.PUTSTATIC) inits.accept(owner);
+                                }
+
+                                @Override
                                 public void visitMethodInsn(int op, String owner, String mn, String md, boolean itf) {
                                     out.add(mn);
                                     by.computeIfAbsent(mn, k -> new java.util.HashSet<>()).add(caller);
+                                    if (op == Opcodes.INVOKESTATIC) inits.accept(owner);
                                 }
 
                                 @Override
@@ -669,6 +708,24 @@ public final class MixinRepair {
                                     String value = "L" + fo + ";" + a0.name + (a0.kind.equals("FIELD") ? ":" : "") + fd;
                                     fixNotes.add("anchor-facade " + where + " " + a0 + " => " + value
                                         + " (the restored body calls the facade the step renames " + a0.owner + " to)");
+                                    List<MethodNode> fc = cands;
+                                    fixes.add(() -> {
+                                        if (setAtTarget(an, refmap, value)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
+                                        mixed(mx.name, owner, fc);
+                                    });
+                                    continue;
+                                }
+                            }
+                            // the restored body reaches another class's restored static through the layer's @Invoker of it
+                            // (restored statics are private): V's call of that member is the invoker's call (smx1 CASE 11)
+                            String[] inv = a0.owner == null || !a0.kind.equals("INVOKE") ? null
+                                : layerMembers.invokerOf(a0.owner, a0.name, a0.desc);
+                            if (inv != null) {
+                                Anchor ia = new Anchor("INVOKE", inv[0], inv[1], inv[2], a0.constant, a0.ordinal, a0.role);
+                                if (cands.stream().anyMatch(m -> anchorIn(m, ia))) {
+                                    String value = "L" + inv[0] + ";" + inv[1] + inv[2];
+                                    fixNotes.add("anchor-invoker " + where + " " + a0 + " => " + value
+                                        + " (the restored body calls " + a0.owner + "." + a0.name + " through the layer's invoker)");
                                     List<MethodNode> fc = cands;
                                     fixes.add(() -> {
                                         if (setAtTarget(an, refmap, value)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
