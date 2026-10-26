@@ -806,6 +806,21 @@ public final class MixinCheck {
             if (sel == null || sel.isEmpty()) {
                 continue;
             }
+            if ("NEW".equals(str(get(an, "value")))) {
+                // a constructor, named as Mixin's BeforeNew reads it (newTarget): the type and its <init>
+                String[] nt = newTarget(sel);
+                ClassNode nc = nt[0] == null ? null : jar.get(nt[0]);
+                int ns = nt[0] == null ? -1 : nt[0].lastIndexOf('/');
+                if (nc == null && nt[0] != null && !jarPackages.contains(ns < 0 ? "" : nt[0].substring(0, ns))) {
+                    continue; // a library's or the JDK's class (new ArrayList): Mixin matches the name in the body
+                }
+                if (nc == null || nt[1] != null && !hasMethod(nc, "<init>", nt[1])) {
+                    problems.add(me + ": @At(NEW) target \"" + sel + "\" names " + (nt[0] == null ? "no type"
+                        : nc == null ? "type " + nt[0] + ", not in the jar" : "no constructor " + nt[1] + " of " + nt[0])
+                        + " (" + m.name + ")");
+                }
+                continue;
+            }
             // Lowner;name(desc)ret   |   Lowner;name:desc   |   name(desc)ret on the target
             String owner = target.name;
             String rest = sel;
