@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v26_1.rt.CbWallEntityRepresentation;
 
@@ -16,7 +17,7 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallEntityRepresentation;
  * DATA_ITEM was synced: its onSyncedDataUpdated(accessor) override, which 26.1 dropped (ItemEntity inherits Entity's),
  * is given back with that body: Entity's, then the representation.
  */
-@Mixin(ItemEntity.class)
+@Mixin(value = ItemEntity.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallItemEntityRepresentationMixin extends Entity {
 
     @Shadow

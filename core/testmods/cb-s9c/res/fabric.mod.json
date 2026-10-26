@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s9c",
+  "version": "1.0.0",
+  "name": "CB s9 client checks",
+  "description": "1.21.8-era client checks for s9 (entity renderer and layer, block entity renderers, skins); tally CB-S9C n/n, then the client stops",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.s9c.S9cClient"] },
+  "accessWidener": "cb_s9c.accesswidener",
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.8" }
+}

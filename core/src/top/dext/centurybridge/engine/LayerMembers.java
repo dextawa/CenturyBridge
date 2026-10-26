@@ -90,6 +90,7 @@ public final class LayerMembers {
                 }
                 out.mixins.add(cn.name);
                 if ((cn.access & Opcodes.ACC_INTERFACE) != 0) {
+                    out.readInvokers(cn, mx);
                     continue;
                 }
                 List<String> targets = new ArrayList<>();
@@ -126,6 +127,50 @@ public final class LayerMembers {
             }
         }
         return out;
+    }
+
+    /**
+     * the layer's @Invoker methods by the game member they invoke: "owner.name desc" -> {interface, method, desc}. A
+     * restored body cannot call another class's restored static directly (restored statics are private), so it calls
+     * the layer's invoker of it (smx1 CASE 11: CbAdvBlockPredicateAccess.cb$fromJson for class_4550.method_22453)
+     */
+    private final Map<String, String[]> invokers = new HashMap<>();
+
+    private void readInvokers(ClassNode cn, AnnotationNode mx) {
+        List<String> targets = new ArrayList<>();
+        for (Object o : MixinRepair.list(MixinRepair.values(mx).get("value"))) {
+            if (o instanceof Type t) {
+                targets.add(t.getInternalName());
+            }
+        }
+        for (Object o : MixinRepair.list(MixinRepair.values(mx).get("targets"))) {
+            if (o instanceof String t) {
+                targets.add(t.replace('.', '/'));
+            }
+        }
+        if (targets.size() != 1) {
+            return;
+        }
+        for (MethodNode m : cn.methods) {
+            AnnotationNode inv = annotation(m.invisibleAnnotations, "Lorg/spongepowered/asm/mixin/gen/Invoker;");
+            if (inv == null) {
+                inv = annotation(m.visibleAnnotations, "Lorg/spongepowered/asm/mixin/gen/Invoker;");
+            }
+            if (inv == null || !(MixinRepair.values(inv).get("value") instanceof String v) || v.isEmpty()) {
+                continue; // a name inflected from the method's own: not read here
+            }
+            MixinRepair.Sel s = MixinRepair.Sel.parse(v);
+            if (s.name() == null || s.name().startsWith("<") || s.desc() != null && !s.desc().equals(m.desc)) {
+                continue;
+            }
+            // a static invoker takes the member's arguments; an instance one is called on the target, its desc the member's
+            invokers.put(targets.get(0) + "." + s.name() + m.desc, new String[] {cn.name, m.name, m.desc});
+        }
+    }
+
+    /** the layer's invoker of a game member ({interface, method, desc}), or null */
+    public String[] invokerOf(String owner, String name, String desc) {
+        return invokers.get(owner + "." + name + desc);
     }
 
     /** a field Mixin merges onto the targets: not @Shadow / @Unique (a @Unique one is renamed apart), not synthetic */

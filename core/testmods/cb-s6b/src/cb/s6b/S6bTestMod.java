@@ -168,6 +168,42 @@ public class S6bTestMod implements ModInitializer {
             check(false, "tail threw " + e);
         }
         try {
+            packets();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "packets threw " + e);
+        }
+        try {
+            terracotta(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "terracotta threw " + e);
+        }
+        try {
+            recipeBook(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "recipeBook threw " + e);
+        }
+        try {
+            routes(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "routes threw " + e);
+        }
+        try {
+            saveData(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "saveData threw " + e);
+        }
+        try {
+            leash(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "leash threw " + e);
+        }
+        try {
             problems();
         } catch (Throwable e) {
             e.printStackTrace();
@@ -258,6 +294,296 @@ public class S6bTestMod implements ModInitializer {
             "fabric-keybindings-v0 / rendering-data-attachment-v1 / commands: dependencies renamed onto the layer");
     }
 
+    /** a 1.21.5 Horse subclass using AbstractHorse's protected jump flag */
+    static class CbHorse extends net.minecraft.class_1498 {
+        CbHorse(class_1299<? extends net.minecraft.class_1498> type, class_1937 level) {
+            super(type, level);
+        }
+
+        boolean flagThroughField() {
+            this.field_6968 = true;
+            boolean seen = this.method_6763();
+            this.method_6758(false);
+            return seen && !this.field_6968;
+        }
+    }
+
+    /**
+     * a 1.21.5 Horse subclass overriding isJumping() (answering true when told to) and counting executeRidersJump,
+     * landing through AbstractHorse.tickRidden the way vanilla does when a ridden horse touches the ground
+     */
+    static class CbJumpyHorse extends net.minecraft.class_1498 {
+        boolean jumpy;
+        int jumps;
+
+        CbJumpyHorse(class_1299<? extends net.minecraft.class_1498> type, class_1937 level) {
+            super(type, level);
+        }
+
+        @Override
+        public boolean method_6763() {
+            return jumpy || super.method_6763();
+        }
+
+        @Override
+        protected void method_45343(float strength, net.minecraft.class_243 input) {
+            jumps++;
+            super.method_45343(strength, input);
+        }
+
+        int land(net.minecraft.class_1657 rider, boolean jumpy) {
+            this.jumpy = jumpy;
+            this.jumps = 0;
+            this.field_6976 = 0.8F;
+            this.method_24830(true);
+            this.method_49481(rider, net.minecraft.class_243.field_1353);
+            return jumps;
+        }
+
+        float pending() {
+            return field_6976;
+        }
+    }
+
+    /** a 1.21.5 cow whose handleLeashAtDistance override stops the leash tick (answers false), counting the asks */
+    static class CbStubbornCow extends net.minecraft.class_10730 {
+        int asked;
+        float askedAt;
+
+        CbStubbornCow(class_1937 level) {
+            super(class_1299.field_6085, level);
+        }
+
+        @Override
+        public boolean method_60956(net.minecraft.class_1297 holder, float distance) {
+            asked++;
+            askedAt = distance;
+            return false;
+        }
+    }
+
+    /** a 1.21.5 cow whose elasticRangeLeashBehaviour override pulls straight up, counting the pulls */
+    static class CbPullCow extends net.minecraft.class_10730 {
+        int pulls;
+
+        CbPullCow(class_1937 level) {
+            super(class_1299.field_6085, level);
+        }
+
+        @Override
+        public void method_61162(net.minecraft.class_1297 holder, float distance) {
+            pulls++;
+            this.method_18799(new net.minecraft.class_243(0.0, 0.5, 0.0));
+        }
+    }
+
+    static final String[] NATIVE_LEASH = {"cb.s6bn.leash.head", "cb.s6bn.leash.tail", "cb.s6bn.leash.elastic", "cb.s6bn.leash.pull", "cb.s6bn.leash.close"};
+
+    static long[] nativeLeash() {
+        long[] n = new long[NATIVE_LEASH.length];
+        for (int i = 0; i < n.length; i++) {
+            n[i] = counter(NATIVE_LEASH[i]);
+        }
+        return n;
+    }
+
+    static String leashDelta(long[] before) {
+        long[] now = nativeLeash();
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < now.length; i++) {
+            b.append(i == 0 ? "" : ",").append(now[i] - before[i]);
+        }
+        return b.toString();
+    }
+
+    /** one 1.21.6 Leashable.tickLeash of {@code e} leashed to a holder {@code d} blocks away; the native counters' deltas */
+    static String leashTick(class_3218 level, net.minecraft.class_1308 e, double d) {
+        net.minecraft.class_10730 holder = new net.minecraft.class_10730(class_1299.field_6085, level);
+        holder.method_5814(d, -60.0, 0.0);
+        e.method_5814(0.0, -60.0, 0.0);
+        e.method_60964(holder, false);
+        long[] n = nativeLeash();
+        net.minecraft.class_9817.method_60965(level, e);
+        return leashDelta(n);
+    }
+
+    /**
+     * The restored leash hooks on 1.21.6's Leashable.tickLeash, with the native 1.21.6 mod (cb-s6bn LeashTickMixin)
+     * counting HEAD, TAIL, checkElasticInteractions, onElasticLeashPull and closeRangeLeashBehaviour: a vanilla cow runs
+     * 1.21.6's tick unchanged (close range at 3 blocks, elastic at 8); a cow whose override answers false stops after
+     * whenLeashedTo, as 1.21.5 returned; a cow whose elastic override pulls gets its own pull in place of 1.21.6's.
+     */
+    static void leash(class_3218 level) {
+        String near = leashTick(level, new net.minecraft.class_10730(class_1299.field_6085, level), 3.0);
+        check(near.equals("1,1,0,0,1"), "vanilla cow leashed 3 blocks away: 1.21.6's tick unchanged, native HEAD/TAIL/close fire: " + near);
+        net.minecraft.class_10730 far = new net.minecraft.class_10730(class_1299.field_6085, level);
+        String farD = leashTick(level, far, 8.0);
+        check(farD.startsWith("1,1,1,"), "vanilla cow leashed 8 blocks away: 1.21.6's elastic check runs, native HEAD/TAIL/elastic fire: " + farD);
+        CbStubbornCow stubborn = new CbStubbornCow(level);
+        String st = leashTick(level, stubborn, 8.0);
+        check(stubborn.asked == 1 && Math.abs(stubborn.askedAt - 8.0F) < 1.0E-4F && st.equals("1,0,0,0,0"),
+            "cow whose handleLeashAtDistance answers false: asked once with 1.21.5's distanceTo (" + stubborn.askedAt + "), the rest of 1.21.6's tick cancelled (" + stubborn.asked + "; " + st + ")");
+        CbPullCow puller = new CbPullCow(level);
+        String pu = leashTick(level, puller, 8.0);
+        net.minecraft.class_243 m = puller.method_18798();
+        check(puller.pulls == 1 && m.field_1352 == 0.0 && m.field_1351 == 0.5 && m.field_1350 == 0.0 && pu.equals("1,1,1,1,0"),
+            "cow whose elasticRangeLeashBehaviour pulls: its pull replaces 1.21.6's, 1.21.6's check and onElasticLeashPull still run (" + puller.pulls + ", " + m + "; " + pu + ")");
+        // TamableAnimal's restored override reaches PathfinderMob's restored member through its super call, so this
+        // mod's mixin there (S6bLeashMixin) runs for a standing wolf as in 1.21.5, and not for a sitting one
+        net.minecraft.class_1493 wolf = new net.minecraft.class_1493(net.minecraft.class_1299.field_6055, level);
+        int hits = pathLeashHits;
+        String wo = leashTick(level, wolf, 8.0);
+        int standing = pathLeashHits - hits;
+        check(standing == 1 && wo.startsWith("1,1,1,"),
+            "standing wolf: the converted mixin on PathfinderMob.handleLeashAtDistance runs once through TamableAnimal's super call, 1.21.6's tick goes on (" + standing + "; " + wo + ")");
+        net.minecraft.class_1493 sitter = new net.minecraft.class_1493(net.minecraft.class_1299.field_6055, level);
+        sitter.method_6179(true);
+        hits = pathLeashHits;
+        String si = leashTick(level, sitter, 8.0);
+        int sitting = pathLeashHits - hits;
+        check(sitting == 0 && si.equals("1,0,0,0,0") && sitter.method_60952() != null,
+            "sitting wolf 8 blocks away: TamableAnimal answers false without the super call (mixin " + sitting + "), the rest of 1.21.6's tick cancelled, still leashed (" + si + ")");
+    }
+
+    /** the converted PathfinderMob.handleLeashAtDistance mixin's runs (S6bLeashMixin) */
+    public static int pathLeashHits;
+
+    static long counter(String key) {
+        return Long.parseLong(System.getProperty(key, "0"));
+    }
+
+    /** the converted save-data mixins' counts: Inventory save / load, SimpleContainer createTag / fromTag, ender chest createTag / fromTag */
+    public static final int[] saveHits = new int[6];
+    public static String abilitiesExtra = "";
+
+    static final String[] NATIVE_SAVE = {"cb.s6bn.inventory.save", "cb.s6bn.inventory.load", "cb.s6bn.container.save",
+        "cb.s6bn.container.load", "cb.s6bn.ender.save", "cb.s6bn.ender.load", "cb.s6bn.abilities.pack", "cb.s6bn.abilities.apply"};
+
+    static long[] nativeSave() {
+        long[] n = new long[NATIVE_SAVE.length];
+        for (int i = 0; i < n.length; i++) {
+            n[i] = counter(NATIVE_SAVE[i]);
+        }
+        return n;
+    }
+
+    static String delta(long[] before) {
+        long[] now = nativeSave();
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < now.length; i++) {
+            b.append(i == 0 ? "" : ",").append(now[i] - before[i]);
+        }
+        return b.toString();
+    }
+
+    /**
+     * The restored 1.21.5 save members (Inventory.save / load, Abilities.addSaveData / loadSaveData, the ender chest's
+     * and SimpleContainer's createTag / fromTag) mixed by this mod (S6bInventoryMixin, S6bAbilitiesMixin, S6bEnderMixin,
+     * S6bContainerMixin) on 1.21.6's Player and InventoryCarrier paths: each mixin runs once per save / load, its effect
+     * lands in the saved data, the content round-trips once, and the native 1.21.6 mod's mixins on the typed-list /
+     * Packed methods (cb-s6bn SaveDataMixins) fire once each.
+     */
+    static void saveData(class_3218 level) {
+        net.minecraft.class_1799 sticks = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 9);
+        net.minecraft.class_2520 st = sticks.method_57358(level.method_30349());
+        class_2487 prefixed = new class_2487();
+        prefixed.method_10567("Slot", (byte) 1);
+        net.minecraft.class_2520 sp = sticks.method_57376(level.method_30349(), prefixed);
+        java.util.Optional<net.minecraft.class_1799> parsed = net.minecraft.class_1799.method_57360(level.method_30349(), st);
+        boolean emptyThrows = false;
+        try {
+            net.minecraft.class_1799.field_8037.method_57358(level.method_30349());
+        } catch (IllegalStateException e) {
+            emptyThrows = true;
+        }
+        check(parsed.isPresent() && parsed.get().method_7947() == 9 && sp instanceof class_2487 c && c.method_10545("Slot") && c.method_10545("id") && emptyThrows,
+            "ItemStack.save(provider) / save(provider, prefix) / parse(provider, tag), empty stack refused: " + st + " " + sp);
+        net.minecraft.class_3222 player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+        player.method_31548().method_5447(3, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 4));
+        player.method_7274().method_5447(2, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 6));
+        player.method_31549().method_7250(0.125F);
+        int[] h = saveHits.clone();
+        long[] n = nativeSave();
+        class_2487 saved = player.method_5647(new class_2487());
+        check("kept".equals(saved.method_68568("abilities").method_68564("cb_s6b_extra", ""))
+                && saveHits[0] - h[0] == 1 && saveHits[4] - h[4] == 1,
+            "player save (1.21.6 path): the mod's Abilities mixin extra in \"abilities\", Inventory.save and the ender chest's createTag mixins ran once ("
+                + (saveHits[0] - h[0]) + "," + (saveHits[4] - h[4]) + ")");
+        String nSave = delta(n);
+        check(nSave.startsWith("1,0,0,0,1,0,1,0"), "native 1.21.6 mixins on Inventory.save / storeAsSlots / Abilities.pack fire once each on the save: " + nSave);
+        player.method_31548().method_5447(3, net.minecraft.class_1799.field_8037);
+        player.method_7274().method_5447(2, net.minecraft.class_1799.field_8037);
+        player.method_31549().method_7250(0.1F);
+        abilitiesExtra = "";
+        h = saveHits.clone();
+        n = nativeSave();
+        player.method_5651(saved);
+        String nLoad = delta(n);
+        check("kept".equals(abilitiesExtra) && saveHits[1] - h[1] == 1 && saveHits[5] - h[5] == 1
+                && player.method_31548().method_5438(3).method_7947() == 4 && player.method_7274().method_5438(2).method_7947() == 6
+                && player.method_31549().method_7253() == 0.125F
+                && Math.abs(player.method_45326(net.minecraft.class_5134.field_23719) - 0.125F) < 1.0E-6,
+            "player load (1.21.6 path): the mod's Abilities / Inventory.load / ender fromTag mixins ran once, inventory, ender chest and walk speed (attribute base too) restored ("
+                + abilitiesExtra + "," + (saveHits[1] - h[1]) + "," + (saveHits[5] - h[5]) + ")");
+        check(nLoad.startsWith("0,1,0,0,0,1,0,1"), "native 1.21.6 mixins on Inventory.load / fromSlots / Abilities.apply fire once each on the load: " + nLoad);
+
+        net.minecraft.class_7298 allay = new net.minecraft.class_7298(class_1299.field_38384, level);
+        allay.method_35199().method_5491(new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 2));
+        h = saveHits.clone();
+        n = nativeSave();
+        class_2487 at = allay.method_5647(new class_2487());
+        String aSave = delta(n);
+        net.minecraft.class_7298 back = new net.minecraft.class_7298(class_1299.field_38384, level);
+        back.method_5651(at);
+        String aAll = delta(n);
+        check(saveHits[2] - h[2] == 1 && saveHits[3] - h[3] == 1 && at.method_68569("Inventory").size() == 1
+                && back.method_35199().method_5438(0).method_7947() == 2,
+            "Allay (InventoryCarrier, 1.21.6 path): the mod's SimpleContainer createTag / fromTag mixins ran once each and the item round-trips ("
+                + (saveHits[2] - h[2]) + "," + (saveHits[3] - h[3]) + ")");
+        check(aSave.startsWith("0,0,1,0") && aAll.startsWith("0,0,1,1"),
+            "native 1.21.6 mixins on SimpleContainer.storeAsItemList / fromItems fire once each: " + aSave + " / " + aAll);
+    }
+
+    /**
+     * The layer's routes on 1.21.6's paths, with a native 1.21.6 mod (cb-s6bn) mixing the methods they sit in: the
+     * converted mod's override / mixin changes vanilla's behaviour as on 1.21.5 and the native mod's injectors fire.
+     */
+    static void routes(class_3218 level) {
+        net.minecraft.class_1657 rider = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+        CbJumpyHorse horse = new CbJumpyHorse(class_1299.field_6139, level);
+        long head = counter("cb.s6bn.tickRidden.head"), tail = counter("cb.s6bn.tickRidden.tail");
+        long isJ = counter("cb.s6bn.tickRidden.isJumping"), jh = counter("cb.s6bn.riderJump.head"), jv = counter("cb.s6bn.riderJump.velocity");
+        int plain = horse.land(rider, false);
+        boolean flagAfterJump = horse.method_6763();
+        check(plain == 1 && flagAfterJump,
+            "horse landing, isJumping() unmixed: 1.21.6's path jumps once and the restored flag is set at 1.21.5's point (" + plain + ", " + flagAfterJump + ")");
+        int mixed = horse.land(rider, true);
+        check(mixed == 0 && horse.pending() == 0.0F,
+            "horse landing, isJumping() overridden true: 1.21.5's no-jump path, pending scale 0 (" + mixed + ", " + horse.pending() + ")");
+        check(counter("cb.s6bn.tickRidden.head") - head == 2 && counter("cb.s6bn.tickRidden.tail") - tail == 2
+                && counter("cb.s6bn.tickRidden.isJumping") - isJ == 1 && counter("cb.s6bn.riderJump.head") - jh == 1
+                && counter("cb.s6bn.riderJump.velocity") - jv == 1,
+            "native 1.21.6 mixins on tickRidden (HEAD, TAIL, isJumping call) and executeRidersJump (HEAD, velocity) fire with the route on: "
+                + (counter("cb.s6bn.tickRidden.head") - head) + "," + (counter("cb.s6bn.tickRidden.tail") - tail) + ","
+                + (counter("cb.s6bn.tickRidden.isJumping") - isJ) + "," + (counter("cb.s6bn.riderJump.head") - jh) + ","
+                + (counter("cb.s6bn.riderJump.velocity") - jv));
+
+        // the recipe book route (the converted S6bRecipeBookMixin mixes toNbt / fromNbt, so it is on)
+        long sh = counter("cb.s6bn.playerSave.head"), st = counter("cb.s6bn.playerSave.tail"), pk = counter("cb.s6bn.book.pack");
+        long lh = counter("cb.s6bn.playerLoad.head"), lt = counter("cb.s6bn.playerLoad.tail"), lu = counter("cb.s6bn.book.loadUntrusted");
+        net.minecraft.class_3222 player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+        class_2487 saved = player.method_5647(new class_2487());
+        boolean extra = "kept".equals(saved.method_68568("recipeBook").method_68564("cb_s6b_extra", ""));
+        recipeExtra = "";
+        player.method_5651(saved);
+        check(extra && "kept".equals(recipeExtra)
+                && counter("cb.s6bn.playerSave.head") - sh == 1 && counter("cb.s6bn.playerSave.tail") - st == 1 && counter("cb.s6bn.book.pack") - pk == 1
+                && counter("cb.s6bn.playerLoad.head") - lh == 1 && counter("cb.s6bn.playerLoad.tail") - lt == 1 && counter("cb.s6bn.book.loadUntrusted") - lu == 1,
+            "player save / load with the recipe book route on: the mod mixin's extra round-trips and native 1.21.6 mixins on save / load (HEAD, TAIL) and pack / loadUntrusted fire once each: "
+                + (counter("cb.s6bn.playerSave.head") - sh) + "," + (counter("cb.s6bn.playerSave.tail") - st) + "," + (counter("cb.s6bn.book.pack") - pk) + ","
+                + (counter("cb.s6bn.playerLoad.head") - lh) + "," + (counter("cb.s6bn.playerLoad.tail") - lt) + "," + (counter("cb.s6bn.book.loadUntrusted") - lu));
+    }
+
     /** a 1.21.5 FlyingMob subclass */
     static class CbFlyer extends net.minecraft.class_1307 {
         CbFlyer(class_1299<? extends net.minecraft.class_1307> type, class_1937 level) {
@@ -299,6 +625,12 @@ public class S6bTestMod implements ModInitializer {
         boolean up = horse.method_6736();
         horse.method_6737(false);
         check(up && !horse.method_6736(), "AbstractHorse.setStanding(true/false) sets and clears standing");
+        horse.method_6758(true);
+        boolean jumping = horse.method_6763();
+        horse.method_6758(false);
+        CbHorse mine = new CbHorse(class_1299.field_6139, level);
+        check(jumping && !horse.method_6763() && mine.flagThroughField(),
+            "AbstractHorse.setIsJumping / isJumping and the protected isJumping field from a subclass");
 
         // SimpleContainer / PlayerEnderChestContainer ListTag forms, Abilities CompoundTag form
         net.minecraft.class_7225.class_7874 regs = level.method_30349();
@@ -344,6 +676,182 @@ public class S6bTestMod implements ModInitializer {
         net.minecraft.class_2632 pkt = new net.minecraft.class_2632(net.minecraft.class_1267.field_5807, true);
         check(pkt.method_11342() == net.minecraft.class_1267.field_5807 && pkt.method_11340(),
             "ClientboundChangeDifficultyPacket.getDifficulty / isLocked");
+    }
+
+    /** a 1.21.5 Connection subclass overriding send(packet, listener) and calling super */
+    static class CbConnection extends net.minecraft.class_2535 {
+        int sends;
+
+        CbConnection() {
+            super(net.minecraft.class_2598.field_11942);
+        }
+
+        @Override
+        public void method_10752(net.minecraft.class_2596<?> packet, net.minecraft.class_7648 listener) {
+            sends++;
+            super.method_10752(packet, listener);
+        }
+    }
+
+    /** PacketSendListener: 1.21.5's listener objects on a Connection over a netty EmbeddedChannel (writes succeed) */
+    static void packets() {
+        int[] ran = new int[3];
+        net.minecraft.class_7648 run = net.minecraft.class_7648.method_45084(() -> ran[0]++);
+        net.minecraft.class_7648 fallback = net.minecraft.class_7648.method_45085(() -> {
+            ran[1]++;
+            return new net.minecraft.class_2670(7L);
+        });
+        net.minecraft.class_7648 custom = new net.minecraft.class_7648() {
+            @Override
+            public void method_45083() {
+                ran[2]++;
+            }
+        };
+        check(run.method_45086() == null && ran[0] == 1, "PacketSendListener.thenRun: onFailure runs the runnable and answers null");
+        check(fallback.method_45086() instanceof net.minecraft.class_2670 && ran[1] == 1, "PacketSendListener.exceptionallySend: onFailure answers the packet");
+        ran[0] = ran[1] = 0;
+        net.minecraft.class_2535 conn = new net.minecraft.class_2535(net.minecraft.class_2598.field_11942);
+        io.netty.channel.embedded.EmbeddedChannel ch = new io.netty.channel.embedded.EmbeddedChannel(conn);
+        conn.method_10752(new net.minecraft.class_2670(1L), run);
+        conn.method_52906(new net.minecraft.class_2670(2L), custom, true);
+        conn.method_10752(new net.minecraft.class_2670(3L), fallback);
+        ch.runPendingTasks();
+        int written = 0;
+        while (ch.readOutbound() != null) {
+            written++;
+        }
+        check(ran[0] == 1 && ran[2] == 1 && ran[1] == 0 && written == 3,
+            "Connection.send with 1.21.5 listeners: onSuccess ran for thenRun and a custom listener, no fallback (" + ran[0] + "," + ran[2] + "," + ran[1] + ", written " + written + ")");
+        CbConnection mine = new CbConnection();
+        io.netty.channel.embedded.EmbeddedChannel ch2 = new io.netty.channel.embedded.EmbeddedChannel(mine);
+        ran[0] = 0;
+        mine.method_10752(new net.minecraft.class_2670(4L), run);
+        mine.method_10743(new net.minecraft.class_2670(5L));
+        ch2.runPendingTasks();
+        check(mine.sends == 2 && ran[0] == 1 && ch2.readOutbound() != null,
+            "Connection subclass: its send(packet, listener) override is reached by a direct call and by 1.21.6's send(packet) (sends " + mine.sends + ")");
+        directCallbacks();
+    }
+
+    /** a 1.21.5 Connection subclass whose send(packet, listener) override calls the listener's callbacks itself */
+    static class CbCallbackConnection extends net.minecraft.class_2535 {
+        net.minecraft.class_2596<?> fallback;
+
+        CbCallbackConnection() {
+            super(net.minecraft.class_2598.field_11942);
+        }
+
+        @Override
+        public void method_10752(net.minecraft.class_2596<?> packet, net.minecraft.class_7648 listener) {
+            if (listener != null) {
+                listener.method_45083();
+                fallback = listener.method_45086();
+            }
+            super.method_10752(packet, listener);
+        }
+    }
+
+    /**
+     * The override above handed the listeners 1.21.6 vanilla passes (its own thenRun / exceptionallySend factories,
+     * and a plain netty listener such as a native 1.21.6 mod's), called the way 1.21.6 calls send -- by reflection on
+     * the 1.21.6 descriptor, which this 1.21.5 mod cannot name. 1.21.5's answers: thenRun(r): onSuccess runs r,
+     * onFailure runs r and answers null, the successful write runs r once more; exceptionallySend(s): onSuccess does
+     * nothing, onFailure answers s.get(); a listener without callbacks answers null.
+     */
+    static void directCallbacks() {
+        try {
+            Class<?> factories = Class.forName("net.minecraft.class_7648");
+            java.lang.reflect.Method thenRun = factories.getMethod("method_45084", Runnable.class);
+            java.lang.reflect.Method exSend = factories.getMethod("method_45085", java.util.function.Supplier.class);
+            java.lang.reflect.Method send = net.minecraft.class_2535.class.getMethod("method_10752",
+                net.minecraft.class_2596.class, io.netty.channel.ChannelFutureListener.class);
+            CbCallbackConnection c = new CbCallbackConnection();
+            io.netty.channel.embedded.EmbeddedChannel ch = new io.netty.channel.embedded.EmbeddedChannel(c);
+            int[] ran = new int[3];
+            send.invoke(c, new net.minecraft.class_2670(10L), thenRun.invoke(null, (Runnable) () -> ran[0]++));
+            ch.runPendingTasks();
+            check(ran[0] == 3 && c.fallback == null && ch.readOutbound() != null,
+                "Connection override calling a 1.21.6 thenRun listener's onSuccess / onFailure itself: 1.21.5's answers (ran " + ran[0] + ")");
+            net.minecraft.class_2670 back = new net.minecraft.class_2670(11L);
+            java.util.function.Supplier<net.minecraft.class_2596<?>> sup = () -> {
+                ran[1]++;
+                return back;
+            };
+            send.invoke(c, new net.minecraft.class_2670(12L), exSend.invoke(null, sup));
+            ch.runPendingTasks();
+            check(c.fallback == back && ran[1] == 1 && ch.readOutbound() != null && ch.readOutbound() == null,
+                "Connection override calling a 1.21.6 exceptionallySend listener's callbacks itself: onFailure answers the fallback, nothing extra sent");
+            io.netty.channel.ChannelFutureListener plain = f -> {
+                if (f.isSuccess()) {
+                    ran[2]++;
+                }
+            };
+            send.invoke(c, new net.minecraft.class_2670(13L), plain);
+            ch.runPendingTasks();
+            check(ran[2] == 2 && c.fallback == null && ch.readOutbound() != null,
+                "Connection override calling a plain 1.21.6 netty listener's onSuccess itself: the listener sees a success, then the write's (" + ran[2] + ")");
+        } catch (ReflectiveOperationException e) {
+            check(false, "Connection direct callbacks: " + e);
+        }
+    }
+
+    /** a 1.21.5 TerracottaBlock subclass */
+    static class CbTerracotta extends net.minecraft.class_10738 {
+        CbTerracotta(net.minecraft.class_4970.class_2251 p) {
+            super(p);
+        }
+    }
+
+    /**
+     * TerracottaBlock (removed in 1.21.6): its codec and the subclass load (a block cannot be built once the block
+     * registry is frozen, in 1.21.5 as well); AmbientDesertBlockSoundsPlayer; SAND_WIND
+     */
+    static void terracotta(class_3218 level) {
+        check(net.minecraft.class_10738.field_56466 != null && net.minecraft.class_2248.class.isAssignableFrom(CbTerracotta.class),
+            "TerracottaBlock: CODEC and a subclass of it (a Block)");
+        net.minecraft.class_5819 rnd = net.minecraft.class_5819.method_43049(1L);
+        for (int i = 0; i < 2000; i++) {
+            net.minecraft.class_10739.method_67408(net.minecraft.class_2246.field_10415.method_9564(), level, new class_2338(0, -60, 0), rnd);
+        }
+        check(true, "AmbientDesertBlockSoundsPlayer.playAmbientBlockSounds runs");
+        check("minecraft:block.sand.wind".equals(net.minecraft.class_3417.field_56417.comp_3319().toString()), "SoundEvents.SAND_WIND id");
+    }
+
+    public static String recipeExtra = "";
+
+    /** ServerRecipeBook / RecipeBookSettings 1.21.5 tag form; the mod's mixin on toNbt / fromNbt on the player's save path */
+    static void recipeBook(class_3218 level) {
+        net.minecraft.class_5321<net.minecraft.class_1860<?>> planks = net.minecraft.class_5321.method_29179(
+            net.minecraft.class_7924.field_52178, net.minecraft.class_2960.method_60655("minecraft", "oak_planks"));
+        net.minecraft.class_3441 book = new net.minecraft.class_3441((k, c) -> { });
+        book.method_64588(planks);
+        book.method_14884(net.minecraft.class_5421.field_25764, true);
+        class_2487 tag = book.method_14902();
+        check(tag.method_68569("recipes").size() == 1 && tag.method_68566("isFurnaceGuiOpen", false)
+            && tag.method_10545("isGuiOpen") && "kept".equals(tag.method_68564("cb_s6b_extra", "")),
+            "ServerRecipeBook.toNbt: 1.21.5 keys, the recipe, the mod mixin's extra: " + tag);
+        net.minecraft.class_3441 back = new net.minecraft.class_3441((k, c) -> { });
+        recipeExtra = "";
+        back.method_14901(tag, k -> true);
+        check(back.method_64593(planks) && back.method_14887(net.minecraft.class_5421.field_25764) && "kept".equals(recipeExtra),
+            "ServerRecipeBook.fromNbt restores recipe and setting; the mod mixin's TAIL ran");
+        net.minecraft.class_5411 s = net.minecraft.class_5411.method_30183(tag);
+        class_2487 st = new class_2487();
+        s.method_30189(st);
+        check(s.method_30180(net.minecraft.class_5421.field_25764) && st.method_68566("isFurnaceGuiOpen", false) && st.method_10545("isSmokerFilteringCraftable"),
+            "RecipeBookSettings.read / write (all 8 keys): " + st);
+
+        // the player's save path: 1.21.6's ServerPlayer save, routed past the mixed toNbt
+        net.minecraft.class_3222 player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+        player.method_14253().method_64588(planks);
+        class_2487 saved = player.method_5647(new class_2487());
+        class_2487 rb = saved.method_68568("recipeBook");
+        check("kept".equals(rb.method_68564("cb_s6b_extra", "")) && rb.method_68569("recipes").size() >= 1,
+            "player save (1.21.6 path): the mod mixin's extra in \"recipeBook\" through the route: " + rb.method_68564("cb_s6b_extra", "-"));
+        recipeExtra = "";
+        player.method_5651(saved);
+        check("kept".equals(recipeExtra) && player.method_14253().method_64593(planks),
+            "player load (1.21.6 path): the mod mixin on fromNbt saw the saved extra; the book has the recipe");
     }
 
     static void problems() {

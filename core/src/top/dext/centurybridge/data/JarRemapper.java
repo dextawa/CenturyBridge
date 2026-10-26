@@ -534,6 +534,11 @@ public final class JarRemapper {
      * name (Mixin's targets = "net.minecraft.class_N$class_M") is renamed like the internal form.
      */
     static String renameText(String text, Table table, java.util.List<String> context) {
+        return renameText(text, table, context, false);
+    }
+
+    /** {@code fieldName}: the text names a field (an @Accessor value): never given a method descriptor */
+    static String renameText(String text, Table table, java.util.List<String> context, boolean fieldName) {
         Remapper remapper = table.remapper();
         text = MEMBER_TOKEN.matcher(text).replaceAll(mr -> {
             String owner = mr.group(1);
@@ -559,7 +564,7 @@ public final class JarRemapper {
                 // a reused id resolves by the descriptor written after it, as the class files' pass does
                 moj = remapper.mapMethodName(descOwner, id, desc);
             }
-            if (descOwner != null && desc == null) {
+            if (descOwner != null && desc == null && !fieldName) {
                 // a bare id that was unique in intermediary and is not in the target's names: Mixin would take
                 // the first method of the name (Table.sourceMethods)
                 String d = table.disambiguation(descOwner, id, moj);
@@ -666,31 +671,37 @@ public final class JarRemapper {
      * hold no intermediary token and pass unchanged.
      */
     private static org.objectweb.asm.ClassVisitor mixinStrings(org.objectweb.asm.ClassVisitor next, Table table) {
+        // wrap[1]: inside an @Accessor, whose value names a field (Advancement.name is a record field and a
+        // method of the same name: a method descriptor written after it would make Mixin look for no field)
         java.util.function.Function<org.objectweb.asm.AnnotationVisitor, org.objectweb.asm.AnnotationVisitor>[] wrap =
-            new java.util.function.Function[1];
+            new java.util.function.Function[2];
         // the class being visited: its @Mixin targets are the owner of an id its annotations write without one
         java.util.List<String>[] context = new java.util.List[1];
-        wrap[0] = av -> new org.objectweb.asm.AnnotationVisitor(org.objectweb.asm.Opcodes.ASM9, av) {
+        for (int k = 0; k < 2; k++) {
+        final int w = k;
+        wrap[k] = av -> new org.objectweb.asm.AnnotationVisitor(org.objectweb.asm.Opcodes.ASM9, av) {
             @Override
             public void visit(String name, Object value) {
-                super.visit(name, value instanceof String s ? renameText(s, table, context[0]) : value);
+                super.visit(name, value instanceof String s ? renameText(s, table, context[0], w == 1) : value);
             }
 
             @Override
             public org.objectweb.asm.AnnotationVisitor visitAnnotation(String name, String desc) {
                 org.objectweb.asm.AnnotationVisitor n = super.visitAnnotation(name, desc);
-                return n == null ? null : wrap[0].apply(n);
+                return n == null ? null : wrap[w].apply(n);
             }
 
             @Override
             public org.objectweb.asm.AnnotationVisitor visitArray(String name) {
                 org.objectweb.asm.AnnotationVisitor n = super.visitArray(name);
-                return n == null ? null : wrap[0].apply(n);
+                return n == null ? null : wrap[w].apply(n);
             }
         };
+        }
         java.util.function.BiFunction<String, org.objectweb.asm.AnnotationVisitor, org.objectweb.asm.AnnotationVisitor> top =
-            (desc, av) -> av != null && (desc.startsWith("Lorg/spongepowered/asm/mixin/")
-                || desc.startsWith("Lcom/llamalad7/mixinextras/")) ? wrap[0].apply(av) : av;
+            (desc, av) -> av == null ? null
+                : desc.equals("Lorg/spongepowered/asm/mixin/gen/Accessor;") ? wrap[1].apply(av)
+                : desc.startsWith("Lorg/spongepowered/asm/mixin/") || desc.startsWith("Lcom/llamalad7/mixinextras/") ? wrap[0].apply(av) : av;
         return new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9, next) {
             @Override
             public void visit(int version, int access, String name, String sig, String superName, String[] ifs) {

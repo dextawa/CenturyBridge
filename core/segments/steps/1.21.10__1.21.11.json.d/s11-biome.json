@@ -1,0 +1,23 @@
+{
+ "_s11_biome_basis": "1.21.11 moved BiomeSpecialEffects' fog / water fog / sky colors, ambient particle and sounds, background music and its volume to the biome's environment attributes (EnvironmentAttributes FOG_COLOR, WATER_FOG_COLOR, SKY_COLOR, AMBIENT_PARTICLES, AMBIENT_SOUNDS, BACKGROUND_MUSIC, MUSIC_VOLUME), set on Biome.Builder (javap of OverworldBiomes in both). The Builder setters are restored (CbBiomeEffectsBuilderMixin, 1.21.10's bodies on kept settings) and applied as those attributes when the effects reach Biome.Builder.specialEffects (CbBiomeBuilderMixin). BiomeSpecialEffects became a record: getWaterColor / getFoliageColorOverride / getDryFoliageColorOverride / getGrassColorOverride / getGrassColorModifier are its components (same types, javap).",
+ "covers": [
+  "net/minecraft/class_4763$class_4764.method_24392(I)Lnet/minecraft/class_4763$class_4764;",
+  "net/minecraft/class_4763$class_4764.method_24397(I)Lnet/minecraft/class_4763$class_4764;",
+  "net/minecraft/class_4763$class_4764.method_30820(I)Lnet/minecraft/class_4763$class_4764;",
+  "net/minecraft/class_4763$class_4764.method_24393(Lnet/minecraft/class_4761;)Lnet/minecraft/class_4763$class_4764;",
+  "net/minecraft/class_4763$class_4764.method_24942(Lnet/minecraft/class_6880;)Lnet/minecraft/class_4763$class_4764;",
+  "net/minecraft/class_4763$class_4764.method_24943(Lnet/minecraft/class_4968;)Lnet/minecraft/class_4763$class_4764;",
+  "net/minecraft/class_4763$class_4764.method_24944(Lnet/minecraft/class_4967;)Lnet/minecraft/class_4763$class_4764;",
+  "net/minecraft/class_4763$class_4764.method_27346(Lnet/minecraft/class_5195;)Lnet/minecraft/class_4763$class_4764;",
+  "net/minecraft/class_4763$class_4764.method_65138(Lnet/minecraft/class_6012;)Lnet/minecraft/class_4763$class_4764;",
+  "net/minecraft/class_4763$class_4764.method_65137(F)Lnet/minecraft/class_4763$class_4764;",
+  "net/minecraft/class_4763$class_4764.method_65136()Lnet/minecraft/class_4763$class_4764;"
+ ],
+ "methodRenames": {
+  "net/minecraft/class_4763.method_24388()I": "comp_5169",
+  "net/minecraft/class_4763.method_30811()Ljava/util/Optional;": "comp_5170",
+  "net/minecraft/class_4763.method_68147()Ljava/util/Optional;": "comp_5171",
+  "net/minecraft/class_4763.method_30812()Ljava/util/Optional;": "comp_5172",
+  "net/minecraft/class_4763.method_30814()Lnet/minecraft/class_4763$class_5486;": "comp_5173"
+ }
+}

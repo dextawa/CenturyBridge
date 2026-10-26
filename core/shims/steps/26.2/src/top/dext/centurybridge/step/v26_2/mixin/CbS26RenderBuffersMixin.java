@@ -19,11 +19,14 @@ public abstract class CbS26RenderBuffersMixin implements CbS26RenderBuffers.Hold
     private MultiBufferSource.BufferSource cbS26$bufferSource;
     @Unique
     private MultiBufferSource.BufferSource cbS26$crumblingBufferSource;
+    @Unique
+    private top.dext.centurybridge.step.v26_2.facade.OutlineBufferSource cbS26$outlineBufferSource;
 
     @Inject(method = "<init>(I)V", at = @At("TAIL"))
     private void cbS26$sources(int threads, CallbackInfo ci) {
         this.cbS26$bufferSource = CbS26RenderBuffers.newBufferSource();
         this.cbS26$crumblingBufferSource = CbS26RenderBuffers.newCrumblingBufferSource();
+        this.cbS26$outlineBufferSource = new top.dext.centurybridge.step.v26_2.facade.OutlineBufferSource();
     }
 
     @Override
@@ -34,5 +37,10 @@ public abstract class CbS26RenderBuffersMixin implements CbS26RenderBuffers.Hold
     @Override
     public MultiBufferSource.BufferSource crumblingBufferSource() {
         return this.cbS26$crumblingBufferSource;
+    }
+
+    @Override
+    public top.dext.centurybridge.step.v26_2.facade.OutlineBufferSource outlineBufferSource() {
+        return this.cbS26$outlineBufferSource;
     }
 }

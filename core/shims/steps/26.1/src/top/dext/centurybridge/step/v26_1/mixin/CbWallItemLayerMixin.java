@@ -1,22 +1,16 @@
 package top.dext.centurybridge.step.v26_1.mixin;
 
-import it.unimi.dsi.fastutil.ints.IntList;
-import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.geometry.BakedQuad;
 import net.minecraft.client.resources.model.sprite.Material;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.dext.centurybridge.step.v26_1.rt.CbWallItemSubmits;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
+import top.dext.centurybridge.step.v26_1.rt.CbWallLegacyCalls;
 
 /**
  * 1.21.11's ItemStackRenderState.LayerRenderState setters 26.1 replaced:
@@ -28,11 +22,12 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallItemSubmits;
  * <li>prepareTintLayers(count) (method_65613): 1.21.11 handed out a fresh array of count tints for the caller to fill
  *     and drew with it; 26.1 keeps an int list. The array handed out becomes the layer's tints when it submits.</li>
  * </ul>
- * clear() forgets them, as 1.21.11's clear reset the fields.
+ * clear() forgets them, as 1.21.11's clear reset the fields. The reads in 26.1's clear / submit are
+ * mixin/CbWallItemLayerReadsMixin.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(ItemStackRenderState.LayerRenderState.class)
-public abstract class CbWallItemLayerMixin {
+@Mixin(value = ItemStackRenderState.LayerRenderState.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbWallItemLayerMixin implements CbWallLegacyCalls.ItemLayerLegacy {
 
     @Unique
     private RenderType cb$renderType;
@@ -41,9 +36,6 @@ public abstract class CbWallItemLayerMixin {
 
     @Shadow
     public abstract void setParticleMaterial(Material.Baked material);
-
-    @Shadow
-    public abstract IntList tintLayers();
 
     /** 1.21.11 LayerRenderState.setRenderType (class_10444$class_10446.method_67992) */
     public void setRenderType(RenderType renderType) {
@@ -62,27 +54,19 @@ public abstract class CbWallItemLayerMixin {
         return tints;
     }
 
-    @Inject(method = "clear", at = @At("HEAD"))
-    private void cb$clearLegacy(CallbackInfo ci) {
+    @Override
+    public void cb$clearLegacy() {
         cb$renderType = null;
         cb$tints = null;
     }
 
-    @Inject(method = "submit", at = @At("HEAD"))
-    private void cb$legacyTints(CallbackInfo ci) {
-        if (cb$tints != null) {
-            IntList list = tintLayers();
-            list.clear();
-            for (int t : cb$tints) {
-                list.add(t);
-            }
-        }
+    @Override
+    public int[] cb$legacyTints() {
+        return cb$tints;
     }
 
-    @ModifyArg(method = "submit", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitItem(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/item/ItemDisplayContext;III[ILjava/util/List;Lnet/minecraft/client/renderer/item/ItemStackRenderState$FoilType;)V"),
-        index = 6)
-    private List<BakedQuad> cb$legacyRenderType(List<BakedQuad> quads) {
-        return CbWallItemSubmits.retype(quads, cb$renderType);
+    @Override
+    public RenderType cb$legacyRenderType() {
+        return cb$renderType;
     }
 }

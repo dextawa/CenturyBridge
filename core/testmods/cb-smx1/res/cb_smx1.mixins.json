@@ -23,7 +23,18 @@
     "AdvancementBuilderJsonMixin",
     "ItemPredicateJsonMixin",
     "LocationPredicateJsonMixin",
-    "StatePropertiesJsonMixin"
+    "StatePropertiesJsonMixin",
+    "EntityPredicateJsonMixin",
+    "EntityFlagsJsonMixin",
+    "DistancePredicateJsonMixin",
+    "MobEffectsJsonMixin",
+    "DamageSourceJsonMixin",
+    "DamageJsonMixin",
+    "TagPredicateJsonMixin",
+    "PlayerPredicateJsonMixin",
+    "LightningPredicateJsonMixin",
+    "FishingHookPredicateJsonMixin",
+    "SlimePredicateJsonMixin"
   ],
   "injectors": {
     "defaultRequire": 1

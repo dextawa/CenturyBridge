@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemorySlot;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v26_1.facade.ExpirableValue;
 import top.dext.centurybridge.step.v26_1.rt.CbWallBrain;
@@ -26,7 +27,7 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallBrain;
  * <li>copyWithoutBehaviors(): rt/CbWallBrain.copyWithoutBehaviors.</li>
  * </ul>
  */
-@Mixin(Brain.class)
+@Mixin(value = Brain.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallBrainMixin {
 
     @Shadow

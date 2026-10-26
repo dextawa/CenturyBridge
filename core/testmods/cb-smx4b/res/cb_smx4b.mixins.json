@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "package": "cb.smx4b.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": [
+    "ServerDriverMixin",
+    "ArrowEffectsMixin",
+    "HurtArmorMixin",
+    "PlayerInvoker",
+    "PiglinSoundMixin",
+    "PiglinInvoker",
+    "BreakHandMixin",
+    "FireballRawMixin",
+    "ThrowableRawMixin",
+    "WalkTypesMixin",
+    "SwimDiagonalMixin",
+    "RunningGoalsMixin",
+    "DeflectMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -48,6 +48,7 @@ public class S9TestMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        LargePayloadTest.register();
         Thread t = new Thread(() -> {
             for (int i = 0; i < 600; i++) {
                 try {
@@ -312,6 +313,35 @@ public class S9TestMod implements ModInitializer {
             l.method_25931(barrier, server.method_34864(), Runnable::run, Runnable::run).join();
             check(applied[0] == 1, "SimpleResourceReloadListener.reload(barrier, manager, ..) loaded and applied (" + applied[0] + ")");
         });
+
+        run("avatar: Player members 1.21.9 moved", () -> {
+            class_3218 level = server.method_30002();
+            net.fabricmc.fabric.api.entity.FakePlayer fp = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+            net.minecraft.class_1657 p = fp;
+            check(net.minecraft.class_1657.field_46174 == p.method_6068(), "Player.DEFAULT_MAIN_HAND is the main arm of a fresh player, got " + net.minecraft.class_1657.field_46174);
+            check(net.minecraft.class_1657.field_18135 != null && net.minecraft.class_1657.field_18135.comp_2185() == 0.6F,
+                "Player.STANDING_DIMENSIONS is 0.6 wide, got " + net.minecraft.class_1657.field_18135);
+            p.method_7283(net.minecraft.class_1306.field_6182);
+            check(p.method_6068() == net.minecraft.class_1306.field_6182, "setMainArm(LEFT) then getMainArm() == LEFT");
+            p.method_7283(net.minecraft.class_1306.field_6183);
+            check(!p.method_7348(net.minecraft.class_1664.field_7559) || p.method_7348(net.minecraft.class_1664.field_7559), "isModelPartShown(CAPE) answers");
+            check(p.method_7327() == level.method_8428(), "Player.getScoreboard() is the level's scoreboard");
+            check(p.method_7356() != null && p.method_7356().method_33133(), "getShoulderEntityLeft() of a player without one is an empty tag, got " + p.method_7356());
+            check(p.method_7308() != null && p.method_7308().method_33133(), "getShoulderEntityRight() is an empty tag");
+            p.field_7500 = 3.5;
+            p.field_7483 = 0.25F;
+            check(p.field_7500 == 3.5 && p.field_7483 == 0.25F, "Player.xCloak / bob keep what 1.21.8 code set on a server player");
+            net.minecraft.class_1309 pig = (net.minecraft.class_1309) net.minecraft.class_1299.field_6093.method_5883(level, net.minecraft.class_3730.field_16462);
+            p.method_5874(level, pig);
+            check(true, "Player.killedEntity(level, killed) in the 1.21.8 shape ran");
+            fp.method_64578(90.0F, 10.0F);
+            check(fp.method_36454() == 90.0F && fp.method_36455() == 10.0F, "ServerPlayer.forceSetRotation(90, 10) sets absolute angles, got " + fp.method_36454() + " " + fp.method_36455());
+            net.minecraft.class_10265 rot = new net.minecraft.class_10265(30.0F, -5.0F);
+            check(rot.comp_3230() == 30.0F && rot.comp_3231() == -5.0F, "new ClientboundPlayerRotationPacket(30, -5) keeps the angles");
+        });
+
+        LargePayloadTest.run();
+        EntityTest.run(server);
 
         System.out.println("CB-S9TEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " failed: " + FAILS));
     }

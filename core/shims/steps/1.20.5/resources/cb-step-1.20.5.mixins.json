@@ -381,6 +381,11 @@
     "CbRestThrownTridentMixin",
     "CbRestWalkNodeEvaluatorMixin",
     "CbRestWitherBossMixin",
+    "CbRouteArmorMixin",
+    "CbRouteArrowMixin",
+    "CbRouteBreakMixin",
+    "CbRouteGoalsMixin",
+    "CbRouteWalkTypesMixin",
     "CbSpawnEggAccessor",
     "CbTooltipLevelAccessor"
   ],

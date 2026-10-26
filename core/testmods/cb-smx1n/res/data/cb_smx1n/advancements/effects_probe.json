@@ -1,0 +1,16 @@
+{
+  "criteria": {
+    "effects_probe": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "minecraft:speed": {
+            "amplifier": {
+              "min": 118
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -28,6 +28,26 @@ accessible field net/minecraft/class_702 field_3834 Lnet/minecraft/class_638;
 accessible field net/minecraft/class_702 field_3830 Ljava/util/Map;
 accessible field net/minecraft/class_702 field_62618 Lnet/minecraft/class_11939;
 accessible field net/minecraft/class_647$class_10417 field_55268 Lnet/minecraft/class_10444;
+accessible field net/minecraft/class_11890 field_63007 F
+accessible field net/minecraft/class_11890 field_63008 F
+accessible field net/minecraft/class_11890 field_63010 Lnet/minecraft/class_4048;
+accessible field net/minecraft/class_11890 field_62513 Lnet/minecraft/class_2940;
+accessible field net/minecraft/class_11890 field_62514 Lnet/minecraft/class_2940;
+accessible method net/minecraft/class_3222 method_74076 (Lnet/minecraft/class_2487;)V
+accessible method net/minecraft/class_3222 method_74077 (Lnet/minecraft/class_2487;)V
+accessible method net/minecraft/class_1657 method_74135 (Lnet/minecraft/class_2487;)Ljava/util/Optional;
+accessible field net/minecraft/class_1453$class_7989 field_41557 I
+accessible field net/minecraft/class_11902 field_62569 F
+accessible field net/minecraft/class_11902 field_62570 F
+accessible field net/minecraft/class_11902 field_62571 D
+accessible field net/minecraft/class_11902 field_62572 D
+accessible field net/minecraft/class_11902 field_62573 D
+accessible field net/minecraft/class_11902 field_62574 D
+accessible field net/minecraft/class_11902 field_62575 D
+accessible field net/minecraft/class_11902 field_62576 D
+accessible field net/minecraft/class_11902 field_62568 Lnet/minecraft/class_243;
+accessible field net/minecraft/class_11902 field_62577 F
+accessible field net/minecraft/class_11902 field_62578 F
 accessible method net/minecraft/class_3940 method_74307 (Lnet/minecraft/class_1058;)V
 accessible method net/minecraft/class_3940 method_74308 (F)V
 accessible method net/minecraft/class_3940 method_74255 ()Lnet/minecraft/class_3940$class_11941;
@@ -45,6 +65,15 @@ accessible method net/minecraft/class_1921$class_4688$class_4689 method_23608 (L
 accessible method net/minecraft/class_1921$class_4688$class_4689 method_23617 (Z)Lnet/minecraft/class_1921$class_4688;
 accessible field net/minecraft/class_4668 field_21383 Lnet/minecraft/class_4668$class_4676;
 
+# DimensionRenderingRegistry.registerDimensionEffects / getDimensionEffects (rt/CbDimensionRendering): the effects-by-id map 0.136 reached through its accessor
+accessible field net/minecraft/class_5294 field_24609 Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;
+# PayloadTypeRegistry.registerLarge (rt/CbLargePayloads): the splitter encodes a packet to measure it, the merger decodes the merged one, as 0.136 through its invokers
+accessible method net/minecraft/class_2545 method_10838 (Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/class_2596;Lio/netty/buffer/ByteBuf;)V
+accessible method net/minecraft/class_2543 decode (Lio/netty/channel/ChannelHandlerContext;Lio/netty/buffer/ByteBuf;Ljava/util/List;)V
+# ServerPlayer.loadGameTypes (rt/CbPlayerGameTypes): 1.21.8's body with 1.21.9's readers
+accessible method net/minecraft/class_3222 method_32745 (Lnet/minecraft/class_11368;Ljava/lang/String;)Lnet/minecraft/class_1934;
+accessible method net/minecraft/class_3222 method_32746 (Lnet/minecraft/class_1934;)Lnet/minecraft/class_1934;
+accessible method net/minecraft/class_3225 method_14261 (Lnet/minecraft/class_1934;Lnet/minecraft/class_1934;)V
 # ---- BEGIN GENERATED (all): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
 # members, given back so a converted mod's call, read or write links again

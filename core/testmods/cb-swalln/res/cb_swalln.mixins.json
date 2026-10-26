@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "cb.swalln.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": ["MobCanAttackMixin", "TargetingTestMixin", "AttackRangeMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

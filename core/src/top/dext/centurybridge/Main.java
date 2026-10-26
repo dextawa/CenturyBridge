@@ -266,6 +266,7 @@ public final class Main {
                 chain.mixinRepair.layerMembers = chain.layerMembers;
                 chain.mixinRepair.classRenames = chain.classRenames; // anchor-facade: what restored bodies call
                 chain.mixinRepair.stepTo = args[3]; // the mixed-member signal (MixinRepair.MIXED_DIR)
+                chain.mixinRepair.mixinMoves = chain.mixinMoves; // injectors on static methods W moved to another class
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");
@@ -327,6 +328,10 @@ public final class Main {
             Path layerView = chain.layerJar;
             if (chain.bridgeCode != null && Files.exists(codeOf(args[2]))) {
                 layerView = top.dext.centurybridge.engine.WallInverse.intermediaryView(chain.layerJar, codeOf(args[2]), renameTable);
+                // MixinBridge and the triage carry the wall step in the analysis namespace: the layer's restored members
+                // in it too (swall7: a selector on a restored member with a route stays there, rather than following
+                // V's code by similarity onto another 26.1 method); the repair past the wall keeps the real names
+                chain.layerMembers = top.dext.centurybridge.engine.LayerMembers.read(layerView);
             }
             layerModel.layer(layerView);
         }

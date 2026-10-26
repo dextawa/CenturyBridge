@@ -9,13 +9,14 @@ import net.minecraft.util.context.ContextKeySet;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Shadow;
 
 /**
  * 1.21.11's ValidationContext.setContextKeySet(keys), given back (cover): the same context -- reporter,
  * resolver and visited elements -- under another key set, 1.21.11's body.
  */
-@Mixin(ValidationContext.class)
+@Mixin(value = ValidationContext.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallValidationContextMixin {
 
     @Shadow

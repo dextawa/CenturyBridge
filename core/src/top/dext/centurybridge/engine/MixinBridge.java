@@ -94,6 +94,7 @@ final class MixinBridge {
     static final String INVOKER = "Lorg/spongepowered/asm/mixin/gen/Invoker;";
     static final String CI = "Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;";
     static final String CIR = "Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;";
+    static final String OPERATION = "Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;";
     static final String COERCE = "Lorg/spongepowered/asm/mixin/injection/Coerce;";
     /** MixinExtras' parameter sugar (@Local, @Share, @Cancellable): handler values besides the injector's own */
     static final String SUGAR = "Lcom/llamalad7/mixinextras/sugar/";
@@ -746,7 +747,66 @@ final class MixinBridge {
         if (at != null && !at.owner().equals(owner)) {
             return new CallFate("inherited from " + shortName(at.owner()), name, desc, null, null, null, at);
         }
+        // a step agent's judgment of where the V method's code lives on W (mixinTargets): an invoker or a shadow of it
+        // calls that method, its arguments reordered by "args" (smx4b case 2) -- only where that is the whole story
+        Chain.MixinTarget mt = chain.mixinTargets.get(vk(owner) + "." + nd);
+        if (mt != null) {
+            Chain.CallReshape r = mixinTargetReshape(mt, desc, why);
+            if (r == null) {
+                return null;
+            }
+            Found mat = wResolveMethod(owner, mt.name(), mt.desc());
+            if (mat == null || !mat.owner().equals(owner) || mat.isStatic() != isStatic) {
+                why.add("mixinTargets " + mt.name() + mt.desc() + " is not " + (isStatic ? "a static" : "an instance")
+                    + " member of " + shortName(owner) + " in " + chain.to);
+                return null;
+            }
+            return new CallFate("mixinTargets (" + mt.basis() + ")", mt.name(), mt.desc(), r, null, null, mat);
+        }
         return null;
+    }
+
+    /**
+     * A mixinTargets entry as a call: W's arguments are exactly V's, reordered ("args": every V argument carried by
+     * one W argument of the same type, every W argument carrying one), and the answer is the same type. Anything
+     * else -- a V argument W does not take (-1), a W argument with no V source, a narrower type, a changed return --
+     * would change what the caller asked for, and is refused with why.
+     */
+    private Chain.CallReshape mixinTargetReshape(Chain.MixinTarget mt, String vdesc, List<String> why) {
+        Type[] va = Type.getArgumentTypes(vdesc);
+        Type[] wa = Type.getArgumentTypes(mt.desc());
+        String where = "mixinTargets " + mt.name() + mt.desc() + " as a call";
+        if (mt.args() == null || mt.args().length != va.length) {
+            why.add(where + ": no argument map");
+            return null;
+        }
+        if (!Type.getReturnType(vdesc).equals(Type.getReturnType(mt.desc()))) {
+            why.add(where + ": the return type changed");
+            return null;
+        }
+        int[] src = new int[wa.length];
+        Arrays.fill(src, -1);
+        for (int i = 0; i < va.length; i++) {
+            int j = mt.args()[i];
+            if (j < 0 || j >= wa.length || src[j] >= 0) {
+                why.add(where + ": " + chain.from + " argument " + i + " has no " + chain.to + " argument of its own");
+                return null;
+            }
+            if (!wa[j].equals(va[i])) {
+                why.add(where + ": argument " + i + " is " + va[i] + " in " + chain.from + ", " + wa[j] + " in " + chain.to);
+                return null;
+            }
+            src[j] = i;
+        }
+        List<Chain.ReshapeOp> ops = new ArrayList<>();
+        for (int j = 0; j < wa.length; j++) {
+            if (src[j] < 0) {
+                why.add(where + ": " + chain.to + " argument " + j + " has no " + chain.from + " source");
+                return null;
+            }
+            ops.add(new Chain.ReshapeOp(new int[] {src[j]}, null, null, null, false));
+        }
+        return new Chain.CallReshape(new Chain.CtorReshape(mt.desc(), ops), vdesc, mt.desc(), null, null, null, null);
     }
 
     /**
@@ -1108,6 +1168,12 @@ final class MixinBridge {
                 return;
             }
             Refs r = refs(m.name, m.desc, false);
+            if (f.how().startsWith("mixinTargets")) {
+                // no call wiring names the member (the plain-call pass would not reorder these calls): the shadow
+                // becomes a method making the call itself, its arguments reordered in place
+                directInvoker(m, sh, f, what);
+                return;
+            }
             if (!r.handles.isEmpty() && (f.reshape() != null || f.how().startsWith("renamed"))) {
                 // JarProcessor reshapes and renames call instructions, not method handles
                 left.add(what + ": taken as a method reference, and " + f.how() + " applies to calls");
@@ -1879,16 +1945,67 @@ final class MixinBridge {
                     handler.invisibleAnnotations = handler.invisibleAnnotations == null ? new ArrayList<>() : handler.invisibleAnnotations;
                     handler.invisibleAnnotations.add(new AnnotationNode(RETURN_UNTOUCHED));
                 }
+                if (!p.unread().isEmpty()) {
+                    handler.invisibleAnnotations = handler.invisibleAnnotations == null ? new ArrayList<>() : handler.invisibleAnnotations;
+                    handler.invisibleAnnotations.add(new AnnotationNode(ARGS_ZEROED));
+                }
                 changed = true;
                 injected("@" + kind + " " + sn + "." + h.name, where + " => " + fate.name() + fate.desc() + " (" + fate.how()
                     + (p.synth() ? "; a " + chain.to + "-shaped handler forwards to the mod's" : "")
                     + (p.rc() != null ? "; the answer converted both ways: " + p.rc().how() : "")
+                    + (p.unread().isEmpty() ? "" : "; WARN " + chain.from + " argument(s) " + p.unread()
+                        + " have no " + chain.to + " counterpart: the handler never reads them, given their type's zero")
                     + (p.untouched() ? "; return type " + Type.getReturnType(chain.renamedDesc(vmeth.desc)) + " -> "
                         + Type.getReturnType(fate.desc()) + " with no converter: partial, the answer untouched" : "") + ")");
                 return new Selection(handler, an, List.of(vmeth), List.of(wmeth));
             }
             // a bare selector nothing carried: left on W's method of the name, as before (the report says why)
             return bareFallback;
+        }
+
+        /** the zero of a type: null, 0, 0L, 0F, 0D */
+        private static AbstractInsnNode zero(Type t) {
+            return new InsnNode(switch (t.getSort()) {
+                case Type.LONG -> Opcodes.LCONST_0;
+                case Type.FLOAT -> Opcodes.FCONST_0;
+                case Type.DOUBLE -> Opcodes.DCONST_0;
+                case Type.OBJECT, Type.ARRAY -> Opcodes.ACONST_NULL;
+                default -> Opcodes.ICONST_0;
+            });
+        }
+
+        /**
+         * s26b C13 (1): the V arguments the wiring maps to no W argument (mixinTargets "args" -1) that the @Inject
+         * handler takes but never reads -- no load, store or iinc of its local in the handler's code. They get their
+         * type's zero in the W-shaped handler: what the handler does is the same for every value. Null when the
+         * wiring gives no map at all, or the handler reads one of them.
+         */
+        private List<Integer> unreadUnmapped(MethodNode h, Fate fate, int ci) {
+            int[] from = fate.from();
+            if (from == null || from.length < ci || fate.wrap() == null || fate.narrow() == null) {
+                return null;
+            }
+            Type[] hp = Type.getArgumentTypes(h.desc);
+            Set<Integer> touched = new HashSet<>();
+            for (AbstractInsnNode in = h.instructions.getFirst(); in != null; in = in.getNext()) {
+                if (in instanceof VarInsnNode vi) {
+                    touched.add(vi.var);
+                } else if (in instanceof org.objectweb.asm.tree.IincInsnNode ii) {
+                    touched.add(ii.var);
+                }
+            }
+            List<Integer> out = new ArrayList<>();
+            int slot = (h.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
+            for (int i = 0; i < ci; i++) {
+                if (from[i] < 0) {
+                    if (touched.contains(slot)) {
+                        return null;
+                    }
+                    out.add(i);
+                }
+                slot += hp[i].getSize();
+            }
+            return out;
         }
 
         /**
@@ -1921,6 +2038,7 @@ final class MixinBridge {
                     return null;
                 }
                 boolean capture = ci > 0;
+                List<Integer> unread = List.of();
                 if (capture) {
                     if (ci != va.length) {
                         why.add("the handler takes " + ci + " of the target's " + va.length + " arguments");
@@ -1933,8 +2051,15 @@ final class MixinBridge {
                         }
                     }
                     if ((!sameArgs || fate.converts()) && !fate.argsKnown()) {
-                        why.add(fate.how() + ": the wiring does not say which of " + chain.to + "'s arguments are " + chain.from + "'s");
-                        return null;
+                        // not where the layer restores the V member on the target: the injector stays there (it fires
+                        // where V's did, for the calls that reach it) rather than moving onto W's code with zeros
+                        boolean restoredHere = chain.layerMembers.member(target, vmeth.name, vmeth.desc) != null
+                            || chain.layerMembers.member(target, vmeth.name, chain.renamedDesc(vmeth.desc)) != null;
+                        unread = restoredHere ? null : unreadUnmapped(h, fate, ci);
+                        if (unread == null) {
+                            why.add(fate.how() + ": the wiring does not say which of " + chain.to + "'s arguments are " + chain.from + "'s");
+                            return null;
+                        }
                     }
                 }
                 boolean wVoid = wr.getSort() == Type.VOID;
@@ -1966,7 +2091,7 @@ final class MixinBridge {
                     }
                 }
                 boolean synth = cbChange || capture && (!sameArgs || fate.converts()) || rc != null;
-                return new Plan(synth, capture, wVoid ? CI : CIR, ci, rc, untouched);
+                return new Plan(synth, capture, wVoid ? CI : CIR, ci, rc, untouched, unread);
             }
             if (kind.equals("ModifyReturnValue") && !vr.equals(wr)) {
                 why.add("the return type changed");
@@ -2231,6 +2356,120 @@ final class MixinBridge {
          * converter where the type changed; a widened argument (narrowing hook, keep with a wider
          * type) reaches the handler only when it is V's type, as V only ever passed that.
          */
+        /**
+         * The handler of a @Redirect / @WrapOperation / @WrapWithCondition on V's call {@code a} given a front
+         * shaped for W's call {@code af} on another receiver (mixinReceivers): the front takes W's receiver, hands
+         * the mod's handler V's (toV) and, for @WrapOperation, an Operation that calls W's with toW of the receiver
+         * the mod passes. Null when done, else why not.
+         */
+        private String receiverFront(MethodNode h, String kind, MixinRepair.Anchor a, AtFate af, Chain.MixinReceiver mr) {
+            boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
+            Type[] hp = Type.getArgumentTypes(h.desc);
+            Type vr = Type.getObjectType(a.owner());
+            if (hp.length == 0 || !hp[0].equals(vr)) {
+                return "the handler's first parameter is not " + shortName(a.owner());
+            }
+            int oi = -1;
+            if (kind.equals("WrapOperation")) {
+                oi = 1 + Type.getArgumentTypes(a.desc()).length;
+                if (oi >= hp.length || !hp[oi].getDescriptor().equals(OPERATION)) {
+                    return "the handler takes no Operation after the call's arguments";
+                }
+            }
+            String oldName = h.name;
+            String oldDesc = h.desc;
+            String del = unique(oldName + "$cb" + step);
+            Type[] wp = hp.clone();
+            wp[0] = Type.getObjectType(af.owner());
+            MethodNode syn = new MethodNode(h.access & ~(Opcodes.ACC_ABSTRACT | Opcodes.ACC_NATIVE | Opcodes.ACC_BRIDGE | Opcodes.ACC_VARARGS),
+                oldName, Type.getMethodDescriptor(Type.getReturnType(h.desc), wp), null, exceptions(h));
+            syn.visibleAnnotations = h.visibleAnnotations;
+            syn.invisibleAnnotations = h.invisibleAnnotations;
+            syn.visibleParameterAnnotations = h.visibleParameterAnnotations;
+            syn.invisibleParameterAnnotations = h.invisibleParameterAnnotations;
+            syn.visibleAnnotableParameterCount = h.visibleAnnotableParameterCount;
+            syn.invisibleAnnotableParameterCount = h.invisibleAnnotableParameterCount;
+            h.visibleAnnotations = null;
+            h.invisibleAnnotations = null;
+            h.visibleParameterAnnotations = null;
+            h.invisibleParameterAnnotations = null;
+            Refs r = refs(oldName, oldDesc, false);
+            for (MethodInsnNode mi : r.calls) {
+                mi.name = del;
+            }
+            retargetHandles(r, mx.name, del, itf);
+            h.name = del;
+            h.access = (h.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE;
+            InsnList in = syn.instructions;
+            int slot = st ? 0 : 1;
+            if (!st) {
+                in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            }
+            for (int i = 0; i < wp.length; i++) {
+                in.add(new VarInsnNode(wp[i].getOpcode(Opcodes.ILOAD), slot));
+                if (i == 0) {
+                    in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, mr.toV()[0], mr.toV()[1], mr.toV()[2], false));
+                } else if (i == oi) {
+                    String[] ad = operationToW(mr);
+                    in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, helperName, ad[0], ad[1], false));
+                }
+                slot += wp[i].getSize();
+            }
+            in.add(new MethodInsnNode(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, del, oldDesc, false));
+            in.add(new InsnNode(Type.getReturnType(oldDesc).getOpcode(Opcodes.IRETURN)));
+            syn.maxLocals = slot;
+            syn.maxStack = slot + 2;
+            mx.methods.add(syn);
+            changed = true;
+            return null;
+        }
+
+        /**
+         * {@code (Operation)Operation} in the bridge class: an Operation that replaces the receiver the mod's
+         * handler passes (V's, args[0]) by toW of it and calls W's Operation with the rest unchanged
+         */
+        private String[] operationToW(Chain.MixinReceiver mr) {
+            String opT = OPERATION.substring(1, OPERATION.length() - 1);
+            String base = "o" + (helperSeq++) + "$" + sn.replace('$', '_');
+            String lamDesc = "(" + OPERATION + "[Ljava/lang/Object;)Ljava/lang/Object;";
+            MethodNode lam = new MethodNode(Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, base + "$call", lamDesc, null, null);
+            InsnList l = lam.instructions;
+            l.add(new VarInsnNode(Opcodes.ALOAD, 1));
+            l.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "[Ljava/lang/Object;", "clone", "()Ljava/lang/Object;", false));
+            l.add(new TypeInsnNode(Opcodes.CHECKCAST, "[Ljava/lang/Object;"));
+            l.add(new VarInsnNode(Opcodes.ASTORE, 2));
+            l.add(new VarInsnNode(Opcodes.ALOAD, 2));
+            l.add(new InsnNode(Opcodes.ICONST_0));
+            l.add(new VarInsnNode(Opcodes.ALOAD, 2));
+            l.add(new InsnNode(Opcodes.ICONST_0));
+            l.add(new InsnNode(Opcodes.AALOAD));
+            l.add(new TypeInsnNode(Opcodes.CHECKCAST, Type.getArgumentTypes(mr.toW()[2])[0].getInternalName()));
+            l.add(new MethodInsnNode(Opcodes.INVOKESTATIC, mr.toW()[0], mr.toW()[1], mr.toW()[2], false));
+            l.add(new InsnNode(Opcodes.AASTORE));
+            l.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            l.add(new VarInsnNode(Opcodes.ALOAD, 2));
+            l.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE, opT, "call", "([Ljava/lang/Object;)Ljava/lang/Object;", true));
+            l.add(new InsnNode(Opcodes.ARETURN));
+            lam.maxLocals = 3;
+            lam.maxStack = 5;
+            String desc = "(" + OPERATION + ")" + OPERATION;
+            MethodNode m = new MethodNode(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, base, desc, null, null);
+            m.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            m.instructions.add(new InvokeDynamicInsnNode("call", desc,
+                new Handle(Opcodes.H_INVOKESTATIC, "java/lang/invoke/LambdaMetafactory", "metafactory",
+                    "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;"
+                        + "Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;", false),
+                Type.getType("([Ljava/lang/Object;)Ljava/lang/Object;"),
+                new Handle(Opcodes.H_INVOKESTATIC, helperName, base + "$call", lamDesc, false),
+                Type.getType("([Ljava/lang/Object;)Ljava/lang/Object;")));
+            m.instructions.add(new InsnNode(Opcodes.ARETURN));
+            m.maxLocals = 1;
+            m.maxStack = 1;
+            helperMethods.add(lam);
+            helperMethods.add(m);
+            return new String[] {base, desc};
+        }
+
         private MethodNode synthesizeInject(MethodNode h, Fate fate, Plan p) {
             boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
             Type[] hp = Type.getArgumentTypes(h.desc);
@@ -2303,6 +2542,11 @@ final class MixinBridge {
             }
             for (int i = 0; p.capture() && i < p.ci(); i++) {
                 int j = fate.from()[i];
+                if (j < 0) {
+                    // no W argument carries it and the handler never reads it (unreadUnmapped): its type's zero
+                    in.add(zero(hp[i]));
+                    continue;
+                }
                 in.add(new VarInsnNode(wa[j].getOpcode(Opcodes.ILOAD), wslot[j]));
                 String[] wr = fate.wrap()[i];
                 if (wr != null) {
@@ -2467,10 +2711,22 @@ final class MixinBridge {
                 }
                 if (RECEIVER_KINDS.contains(kind) && !af.owner().equals(a.owner()) && takesReceiver(sel.v(), a)) {
                     // the handler takes the call's receiver first, typed as V's owner; W's call is on another object
-                    // (Minecraft.setScreen -> minecraft.gui's Gui.setScreen), which the handler cannot take
-                    left.add(where + ": " + af.how() + " gives " + shortName(af.owner()) + "." + af.name() + af.desc()
-                        + ", a call on another receiver than " + shortName(a.owner()) + ", which @" + kind + "'s handler takes");
-                    continue;
+                    // (Minecraft.setScreen -> minecraft.gui's Gui.setScreen): a W-shaped front walks back to V's
+                    // receiver when the wiring gives both ways between them (mixinReceivers)
+                    Chain.MixinReceiver mr = chain.mixinReceivers.get(a.owner() + ">" + af.owner());
+                    String rwhy = mr == null ? "no mixinReceivers " + shortName(a.owner()) + ">" + shortName(af.owner())
+                        : !af.desc().equals(a.desc()) || fld ? "the call's shape changed too"
+                        : hasSugar(sel.handler(), "Local;") ? "the handler captures the target's locals"
+                        : receiverFront(sel.handler(), kind, a, af, mr);
+                    if (rwhy != null) {
+                        left.add(where + ": " + af.how() + " gives " + shortName(af.owner()) + "." + af.name() + af.desc()
+                            + ", a call on another receiver than " + shortName(a.owner()) + ", which @" + kind + "'s handler takes ("
+                            + rwhy + ")");
+                        continue;
+                    }
+                    injected("@" + kind + " " + sn + "." + sel.handler().name, where + ": a " + chain.to + "-shaped front takes "
+                        + shortName(af.owner()) + " as " + shortName(a.owner()) + " (" + shortName(mr.toV()[0]) + "." + mr.toV()[1] + ")"
+                        + (kind.equals("WrapOperation") ? ", its Operation reaches W's call on " + mr.toW()[1] + " of the receiver the mod passes" : ""));
                 }
                 if (kind.equals("Inject") && capturesLocals(sel.handler()) || hasSugar(sel.handler(), "Local;")) {
                     // the locals Mixin hands it are read at the anchor, in a body that changed around it
@@ -3269,9 +3525,13 @@ final class MixinBridge {
         }
     }
 
-    record Plan(boolean synth, boolean capture, String cb, int ci, RetConv rc, boolean untouched) {
+    record Plan(boolean synth, boolean capture, String cb, int ci, RetConv rc, boolean untouched, List<Integer> unread) {
         Plan(boolean synth, boolean capture, String cb, int ci) {
-            this(synth, capture, cb, ci, null, false);
+            this(synth, capture, cb, ci, null, false, List.of());
+        }
+
+        Plan(boolean synth, boolean capture, String cb, int ci, RetConv rc, boolean untouched) {
+            this(synth, capture, cb, ci, rc, untouched, List.of());
         }
 
         /** the W-shaped handler takes W's arguments: the mod's handler captured V's, or a converter needs some */
@@ -3290,6 +3550,9 @@ final class MixinBridge {
     /** marks an @Inject handler whose target's return type changed with no converter: it runs, the answer untouched */
     static final String RETURN_UNTOUCHED = "Ltop/dext/centurybridge/ReturnUntouched;";
 
+    /** marks an @Inject handler handed zeros for V arguments with no W counterpart (it never reads them) */
+    static final String ARGS_ZEROED = "Ltop/dext/centurybridge/ArgsZeroed;";
+
     record Selection(MethodNode handler, AnnotationNode an, List<MethodNode> v, List<MethodNode> w) {}
 
     record AtFate(String owner, String name, String desc, String how) {}
@@ -3306,8 +3569,9 @@ final class MixinBridge {
         // an area agent's judgment of where the V code lives on W comes before anything inferred
         Chain.MixinTarget mt = chain.mixinTargets.get(owner + "." + name + vdesc);
         if (mt != null) {
-            boolean known = mt.args() != null && mt.args().length == va.length;
-            int[] from = known ? mt.args().clone() : null;
+            // -1: no W argument carries V's (unreadUnmapped: a handler that never reads it still follows)
+            int[] from = mt.args() != null && mt.args().length == va.length ? mt.args().clone() : null;
+            boolean known = from != null;
             for (int i = 0; known && i < from.length; i++) {
                 known = from[i] >= 0;
             }
@@ -3319,7 +3583,7 @@ final class MixinBridge {
             for (int i = 0; known && mt.narrow() && i < va.length; i++) {
                 narrow[i] = from[i] < mwa.length && !mwa[from[i]].equals(va[i]) && va[i].getSort() >= Type.ARRAY;
             }
-            return new Fate(mt.name(), mt.desc(), known ? from : null, new String[va.length][], narrow, known,
+            return new Fate(mt.name(), mt.desc(), from, new String[va.length][], narrow, known,
                 "mixinTargets (" + mt.basis() + ")");
         }
         for (Chain.OverrideHook h : chain.overrideHooksForOld(name, vdesc)) {
@@ -3347,11 +3611,14 @@ final class MixinBridge {
             String[][] wrap = new String[va.length][];
             boolean[] narrow = new boolean[va.length];
             boolean known = map.length == va.length;
-            for (int i = 0; known && i < va.length; i++) {
+            boolean bad = !known; // a mapped argument whose type does not fit: no map to rescue
+            for (int i = 0; !bad && i < va.length; i++) {
                 int j = map[i];
-                from[i] = j;
-                if (j < 0 || j >= na.length) {
+                from[i] = j < 0 ? -1 : j;
+                if (j < 0) {
                     known = false;
+                } else if (j >= na.length) {
+                    bad = true;
                 } else if (!na[j].equals(va[i]) && !wAssignable(na[j], va[i])) {
                     // the hook's wrap for this argument: of a list ("wrap": [...], one new argument feeding
                     // several old ones -- 1.21.6 saveAdditional's ValueOutput gives the tag and the lookup), the
@@ -3362,11 +3629,11 @@ final class MixinBridge {
                     } else if (h.narrow && va[i].getSort() >= Type.ARRAY) {
                         narrow[i] = true;
                     } else {
-                        known = false;
+                        bad = true;
                     }
                 }
             }
-            return new Fate(h.newName, h.newDesc, from, wrap, narrow, known,
+            return new Fate(h.newName, h.newDesc, bad ? null : from, wrap, narrow, known && !bad,
                 "override hook" + (h.wrapName != null ? " (wraps " + h.wrapName + ")" : h.narrow ? " (narrows)" : ""));
         }
         String nd = name + vdesc;

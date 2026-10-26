@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "slime_probe": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type_specific": {
+            "type": "slime",
+            "size": {
+              "min": 1
+            },
+            "cb_smx1_slime_probe": true
+          }
+        }
+      }
+    }
+  }
+}

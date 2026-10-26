@@ -1,0 +1,10 @@
+{
+  "gamerule.cbBoolRule": "CB Bool Rule",
+  "gamerule.cbBoolRule.description": "cb bool description",
+  "gamerule.cbIntRule": "CB Int Rule",
+  "gamerule.cbDoubleRule": "CB Double Rule",
+  "gamerule.cbEnumRule": "CB Enum Rule",
+  "gamerule.cbCustomRule": "CB Custom Rule",
+  "gamerule.cbSubBool": "CB Sub Bool",
+  "gamerule.cbSubInt": "CB Sub Int"
+}

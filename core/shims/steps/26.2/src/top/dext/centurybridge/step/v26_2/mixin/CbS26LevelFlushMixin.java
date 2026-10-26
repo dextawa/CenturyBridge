@@ -35,6 +35,8 @@ public abstract class CbS26LevelFlushMixin {
         CbS26RenderBuffers.Holder holder = CbS26RenderBuffers.of(this.renderBuffers);
         holder.bufferSource().endBatch();
         holder.crumblingBufferSource().endBatch();
+        // 26.1.2's main pass ended the outline batch right after the translucent features
+        holder.outlineBufferSource().endOutlineBatch();
     }
 
     @Inject(method = "lambda$addMainPass$0", at = @At(value = "INVOKE",

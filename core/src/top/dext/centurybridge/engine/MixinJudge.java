@@ -206,7 +206,9 @@ public final class MixinJudge {
         }
         System.out.println("  layer-held rows (facade class or restored member; MixinJudge.layerHeld): follow+W "
             + layerCounts.getOrDefault("follow+W", 0) + ", facade-only-unreached " + layerCounts.getOrDefault("facade-only-unreached", 0)
-            + ", facade-only-open " + layerCounts.getOrDefault("facade-only-open", 0) + "; restored vanilla-reads "
+            + ", facade-only-open " + layerCounts.getOrDefault("facade-only-open", 0)
+            + ", facade vanilla-reads " + layerCounts.getOrDefault("facade-vanilla-reads", 0)
+            + ", facade-partial " + layerCounts.getOrDefault("facade-partial", 0) + "; restored vanilla-reads "
             + layerCounts.getOrDefault("restored-vanilla-reads", 0) + ", restored-unreached " + layerCounts.getOrDefault("restored-unreached", 0)
             + ", restored-partial " + layerCounts.getOrDefault("restored-partial", 0)
             + ", restored-open " + layerCounts.getOrDefault("restored-open", 0)
@@ -525,6 +527,12 @@ public final class MixinJudge {
                     rowLayer = "partial-return";
                     why = "partial: return untouched only";
                 }
+                if (why == null && MixinRepair.annotations(h).stream().anyMatch(a -> a.desc.equals(MixinBridge.ARGS_ZEROED))) {
+                    // V arguments no W argument carries were handed in as zeros, because this handler never reads them
+                    // (MixinBridge.unreadUnmapped); a handler that reads them stays refused: the shape is not bridged
+                    rowLayer = "partial-args";
+                    why = "partial: unmapped arguments zeroed (handler never reads them)";
+                }
                 if (why == null) {
                     return null;
                 }
@@ -569,6 +577,20 @@ public final class MixinJudge {
             return null;
         }
         if (facade) {
+            // a facade method a layer mixin routes vanilla's W read through (@CbVanillaReads naming one of a
+            // layer's mixins, s11 C3: GameRules$BooleanValue.get under CbGameRulesMixin), read like a restored
+            // member's marker, carries included
+            for (LayerMembers l : restoredLayers) {
+                if (l.vanillaReads(wm) == null) {
+                    continue;
+                }
+                if (l.carries(wm) != null && !LayerMembers.carried(l.carries(wm), an, MixinRepair.values(an))) {
+                    rowLayer = "facade-partial";
+                    return "facade: vanilla path partial";
+                }
+                rowLayer = "facade-vanilla-reads";
+                return null;
+            }
             for (AnnotationNode a : MixinRepair.annotations(h)) {
                 if (!a.desc.equals(MixinBridge.ALSO_ON_W)) {
                     continue;
@@ -579,13 +601,37 @@ public final class MixinJudge {
                 return why == null ? null : "facade-only: the W copy " + why;
             }
         }
-        boolean unreached = source != null && sourceRows.isEmpty() && !source.invokes(wm.name);
+        // a static initializer is never called by name: V's code reaches it by initializing the class (smx4b
+        // case 4: a V enum / constant table whose role W moved into a registry or tags -- MapDecoration$Type,
+        // EnchantmentCategory -- was initialized by vanilla on every use; a mixin there changed what vanilla read)
+        boolean unreached = source != null && sourceRows.isEmpty() && (wm.name.equals("<clinit>")
+            ? !source.initialized(rowOwner)
+            : !source.invokes(wm.name) || !facade && onlyRestoredCallers(source.callers(wm.name), restoring));
         if (unreached) {
             rowLayer = facade ? "facade-only-unreached" : "restored-unreached";
             return null;
         }
         rowLayer = facade ? "facade-only-open" : "restored-open";
         return facade ? "facade-only: vanilla path unmixed" : "restored-member: vanilla path unmixed";
+    }
+
+    /**
+     * every V call of the name stands in a member the same layer restores (s26b C12: Strider's navigation
+     * hasValidPathType super-calls GroundPathNavigation's, both restored, and nothing else in V asks either): the
+     * call is the restored code's own, not vanilla W reaching the member. A method reference, or an unreadable
+     * class, counts as reaching it
+     */
+    private static boolean onlyRestoredCallers(Set<String> callers, LayerMembers restoring) {
+        if (callers == null || callers.isEmpty() || restoring == null) {
+            return false;
+        }
+        for (String c : callers) {
+            int dot = c.lastIndexOf('.', c.indexOf('('));
+            if (c.equals("?") || dot <= 0 || restoring.member(c.substring(0, dot), c.substring(dot + 1, c.indexOf('(')), c.substring(c.indexOf('('))) == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /** whether a supertype of the W class (W's code, not the layer's) declares an overridable name+desc */

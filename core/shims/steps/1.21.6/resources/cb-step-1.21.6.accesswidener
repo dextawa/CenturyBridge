@@ -13,6 +13,10 @@ accessible method net/minecraft/class_1297 method_5749 (Lnet/minecraft/class_113
 accessible method net/minecraft/class_2586 method_11007 (Lnet/minecraft/class_11372;)V
 accessible method net/minecraft/class_2586 method_11014 (Lnet/minecraft/class_11368;)V
 
+# CbPackets: a 1.21.5 send override's direct onSuccess() runs a non-factory 1.21.6 listener on its connection's channel
+accessible field net/minecraft/class_2535 field_11651 Lio/netty/channel/Channel;
+accessible field net/minecraft/class_8609 field_45013 Lnet/minecraft/class_2535;
+
 # ---- BEGIN GENERATED (s6b): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
 # members, given back so a converted mod's call, read or write links again

@@ -1,5 +1,5 @@
 {
- "_basis": "s9 fapi: Fabric API 0.136 (1.21.8) -> 0.134 (1.21.9) members, judged by javap of both releases' modules (D:/tmp/s9/fapi9)",
+ "_fapi_basis": "s9 fapi: Fabric API 0.136 (1.21.8) -> 0.134 (1.21.9) members, judged by javap of both releases' modules (D:/tmp/s9/fapi9)",
  "callReshapes": {
   "net/fabricmc/fabric/api/entity/FakePlayer.method_5873(Lnet/minecraft/class_1297;Z)Z": {
    "basis": "s9 fapi: FakePlayer declares startRiding; it gained sendEventsAndTriggers with Entity's (1.21.8 always sent them: CbClimb.sendEvents)",

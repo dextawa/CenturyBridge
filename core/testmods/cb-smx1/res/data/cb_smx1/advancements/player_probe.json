@@ -1,0 +1,16 @@
+{
+  "criteria": {
+    "player_probe": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": {
+          "type_specific": {
+            "type": "player",
+            "gamemode": "survival",
+            "cb_smx1_player_probe": true
+          }
+        }
+      }
+    }
+  }
+}
