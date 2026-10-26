@@ -13,8 +13,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * executeRidersJump set it right after the jump velocity; tickRidden, on landing, cleared it and jumped again only when
  * isJumping() answered false. 1.21.6's code runs as it is (its own isJumping check, a native 1.21.6 mod's mixins);
  * the flag is set and cleared at 1.21.5's points, and only when the restored isJumping() answers true right after it
- * was cleared -- a converted mod overriding or mixing it -- does tickRidden take 1.21.5's no-jump path (the pending
- * jump scale reset to 0, the rest of the method being exactly that).
+ * was cleared -- a converted mod overriding or mixing it -- does tickRidden take 1.21.5's no-jump path: the pending
+ * jump scale is set to 0 before 1.21.6's own check reads it, and 1.21.6's code runs on to its end (nothing is
+ * cancelled, so a native 1.21.6 mod's injectors after this point, TAIL included, still run).
  */
 @Mixin(class_1496.class)
 public abstract class CbHorseJumpRouteMixin {
@@ -29,14 +30,14 @@ public abstract class CbHorseJumpRouteMixin {
     }
 
     @Inject(method = "method_49481(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;)V",
-        at = @At(value = "FIELD", target = "Lnet/minecraft/class_1496;field_6976:F", opcode = Opcodes.GETFIELD, ordinal = 0),
-        cancellable = true)
+        at = @At(value = "FIELD", target = "Lnet/minecraft/class_1496;field_6976:F", opcode = Opcodes.GETFIELD, ordinal = 0))
     private void cb$legacyJumpFlagLanding(net.minecraft.class_1657 rider, net.minecraft.class_243 input, CallbackInfo ci) {
         top.dext.centurybridge.step.v1_21_6.rt.CbHorses.LegacyJump self = (top.dext.centurybridge.step.v1_21_6.rt.CbHorses.LegacyJump) (Object) this;
         self.method_6758(false);
         if (self.method_6763()) {
+            // 1.21.5's no-jump path: the pending jump scale goes to 0 here, so 1.21.6's own check that follows
+            // (scale > 0 and not isJumping()) does not jump and its reset to 0 ends the method as 1.21.5 did
             this.field_6976 = 0.0F;
-            ci.cancel();
         }
     }
 }
