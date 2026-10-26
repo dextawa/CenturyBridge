@@ -144,6 +144,20 @@ public final class LayerMembers {
     }
 
     /**
+     * The members an earlier step's layer restores, added to this step's: in a climb that layer is in the runtime
+     * at W too (climbed onto W like a mod), so its merged fields and methods are declared on W's classes at runtime
+     * as much as this layer's -- a field 1.21.6's layer gives back on AbstractTexture is there for a climbed 1.21.4
+     * mixin's @Shadow at every later step, not only at 1.21.6. This step's own members come first in every lookup.
+     */
+    public void inherit(LayerMembers earlier) {
+        earlier.byTarget.forEach((t, ms) -> byTarget.computeIfAbsent(t, k -> new ArrayList<>()).addAll(ms));
+        priority.putAll(earlier.priority);
+        earlier.fieldsByTarget.forEach((t, fs) -> fieldsByTarget.computeIfAbsent(t, k -> new ArrayList<>()).addAll(fs));
+        fieldPriority.putAll(earlier.fieldPriority);
+        mixins.addAll(earlier.mixins);
+    }
+
+    /**
      * a field a layer mixin merges onto a game class (desc null: any descriptor), or null. The caller's mixin
      * resolves a @Shadow / @Accessor on it only when the layer's mixin was merged first: Mixin applies a target's
      * mixins in priority order, and a shadow of a field not yet in the class fails at apply -- so the merging
