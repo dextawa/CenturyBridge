@@ -1528,7 +1528,19 @@ public final class Chain {
                     // (source-era) hierarchy until an ancestor's mapping is found
                     java.util.List<String> mapped = memberBack.get(e.getKey() + "." + me.getKey());
                     if (mapped == null) {
-                        for (String anc : selfAndSupers(owner)) {
+                        // the root may be an interface the class implements (SimpleContainer.clearContent is
+                        // Clearable.method_5448's: s6d, a layer @Shadow of it was "not declared" past the wall)
+                        java.util.List<String> roots = new java.util.ArrayList<>();
+                        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(selfAndSupers(owner));
+                        java.util.Set<String> seen = new java.util.HashSet<>();
+                        while (!todo.isEmpty()) {
+                            String c = todo.poll();
+                            if (seen.add(c)) {
+                                roots.add(c);
+                                todo.addAll(interfacesOf.getOrDefault(c, List.of()));
+                            }
+                        }
+                        for (String anc : roots) {
                             String mojAnc = fwd.get(anc);
                             mapped = mojAnc == null ? null : memberBack.get(mojAnc + "." + me.getKey());
                             if (mapped != null) {
