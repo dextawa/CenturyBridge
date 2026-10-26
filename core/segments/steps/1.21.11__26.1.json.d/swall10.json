@@ -22,5 +22,35 @@
   "net/minecraft/class_10429.field_55319:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setSnowGolemHasPumpkin",
   "net/minecraft/class_10003.field_53273:Lnet/minecraft/class_8113$class_8115$class_8225;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setBlockDisplayBlockRenderState",
   "net/minecraft/class_11791.field_62249:Lnet/minecraft/class_1920;": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setMovingBlockLevel"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_10435$class_10436.<init>(Ljava/util/List;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#composite",
+  "net/minecraft/class_10437$class_10438.<init>(Lnet/minecraft/class_10460;Lnet/minecraft/class_10439$class_10441;Lnet/minecraft/class_10439$class_10441;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#conditional",
+  "net/minecraft/class_10448$class_10450.<init>(Lnet/minecraft/class_1800;FLjava/util/List;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#rangeSelect",
+  "net/minecraft/class_10451$class_10453.<init>(Lnet/minecraft/class_10451$class_10454;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#select",
+  "net/minecraft/class_10430$class_10431.<init>(Lnet/minecraft/class_2960;Ljava/util/List;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#cuboid",
+  "net/minecraft/class_10455$class_10456.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_10515$class_10516;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#specialWrapper",
+  "net/minecraft/class_10498$class_10499.<init>(Lnet/minecraft/class_1767;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#banner",
+  "net/minecraft/class_10498.<init>(Lnet/minecraft/class_1767;Lnet/minecraft/class_823;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#bannerRenderer",
+  "net/minecraft/class_10502$class_10503.<init>(Lnet/minecraft/class_2960;F)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#chest",
+  "net/minecraft/class_10535$class_10536.<init>(Lnet/minecraft/class_4719;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#standingSign",
+  "net/minecraft/class_10535$class_10536.<init>(Lnet/minecraft/class_4719;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#standingSign",
+  "net/minecraft/class_10533$class_10534.<init>(Lnet/minecraft/class_4719;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#hangingSign",
+  "net/minecraft/class_10533$class_10534.<init>(Lnet/minecraft/class_4719;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#hangingSign",
+  "net/minecraft/class_10511$class_10512.<init>(Lnet/minecraft/class_2960;FLnet/minecraft/class_2350;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#shulkerBox"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_10511$class_10512.comp_3424()Lnet/minecraft/class_2350;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#shulkerOrientation"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_10498.<init>(Lnet/minecraft/class_1767;Lnet/minecraft/class_823;)V": {
+   "desc": "(Lnet/minecraft/class_1767;Lnet/minecraft/class_823;Lnet/minecraft/world/level/block/BannerBlock$AttachmentType;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#bannerAttachment()Lnet/minecraft/world/level/block/BannerBlock$AttachmentType;"
+   ],
+   "basis": "26.1 BannerSpecialRenderer(baseColor, renderer, attachment) draws the attachment it is given (BannerRenderer.submitSpecial); 1.21.11 drew the standing models (BannerRenderer.method_65556: field_55154 / field_55156)"
+  }
  }
 }

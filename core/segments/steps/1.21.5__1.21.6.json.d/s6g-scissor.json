@@ -1,0 +1,66 @@
+{
+ "classRenames": {
+  "com/mojang/blaze3d/systems/ScissorState": "net/minecraft/class_11219"
+ },
+ "_classRenames_basis_s6g_scissor": "1.21.5's com.mojang.blaze3d.systems.ScissorState is 1.21.6's net.minecraft.class_11219 (Mojang: the same name; inter-to-mojang-classes.tsv): javap of both, five fields enabled/x/y/width/height, enable(IIII) / disable() / isEnabled / getX / getY / getWidth / getHeight with the same bodies; copyFrom is gone (rt/CbScissor)",
+ "methodRenames": {
+  "com/mojang/blaze3d/systems/ScissorState.enable(IIII)V": "method_70814",
+  "com/mojang/blaze3d/systems/ScissorState.disable()V": "method_70813",
+  "com/mojang/blaze3d/systems/ScissorState.isEnabled()Z": "method_72091",
+  "com/mojang/blaze3d/systems/ScissorState.getX()I": "method_72092",
+  "com/mojang/blaze3d/systems/ScissorState.getY()I": "method_72093",
+  "com/mojang/blaze3d/systems/ScissorState.getWidth()I": "method_72094",
+  "com/mojang/blaze3d/systems/ScissorState.getHeight()I": "method_72095",
+  "com/mojang/blaze3d/systems/RenderSystem.enableScissor(IIII)V": "enableScissorForRenderTypeDraws",
+  "com/mojang/blaze3d/systems/RenderSystem.disableScissor()V": "disableScissorForRenderTypeDraws"
+ },
+ "_methodRenames_basis_s6g_scissor": "ScissorState's accessors keep their bodies under intermediary names on class_11219 (javap); 1.21.5 RenderSystem.enableScissor(x, y, w, h) / disableScissor() set SCISSOR_STATE, the state RenderType draws copy into their pass (javap: SCISSOR_STATE.enable / disable); 1.21.6's enableScissorForRenderTypeDraws / disableScissorForRenderTypeDraws set scissorStateForRenderTypeDraws the same way, which RenderType draws read (javap)",
+ "fieldGetters": {
+  "com/mojang/blaze3d/systems/RenderSystem.SCISSOR_STATE:Lcom/mojang/blaze3d/systems/ScissorState;": "top/dext/centurybridge/step/v1_21_6/rt/CbScissor"
+ },
+ "instanceRedirects": {
+  "com/mojang/blaze3d/systems/ScissorState.copyFrom(Lcom/mojang/blaze3d/systems/ScissorState;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbScissor#copyFrom",
+  "net/minecraft/class_10866.enableScissor(Lcom/mojang/blaze3d/systems/ScissorState;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbScissor#enableScissor"
+ },
+ "interfaceCallRedirects": {
+  "com/mojang/blaze3d/systems/RenderPass.enableScissor(Lcom/mojang/blaze3d/systems/ScissorState;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbScissor"
+ },
+ "callReshapes": {
+  "com/mojang/blaze3d/systems/RenderPass.bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTexture;)V": {
+   "desc": "(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_6/rt/CbTextures#view(Lcom/mojang/blaze3d/textures/GpuTexture;)Lcom/mojang/blaze3d/textures/GpuTextureView;"
+   ],
+   "basis": "1.21.5 bindSampler(name, texture) sampled the whole texture; 1.21.6 binds a view (javap): the texture's full view (CbTextures.view, closed with the texture); null stays null (1.21.6 then unbinds the name)"
+  },
+  "com/mojang/blaze3d/systems/RenderPass.drawIndexed(II)V": {
+   "desc": "(IIII)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbRenderPasses#noBaseVertex()I",
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbRenderPasses#oneInstance()I"
+   ],
+   "basis": "1.21.5 GlRenderPass.drawIndexed(firstIndex, indexCount) -> drawFromBuffers(pass, first, count, type) -> glDrawElements; 1.21.6 drawIndexed(baseVertex, firstIndex, indexCount, instanceCount) draws with glDrawElementsInstancedBaseVertex (javap): base vertex 0, one instance"
+  },
+  "net/minecraft/class_10866.bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTexture;)V": {
+   "desc": "(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_6/rt/CbTextures#view(Lcom/mojang/blaze3d/textures/GpuTexture;)Lcom/mojang/blaze3d/textures/GpuTextureView;"
+   ],
+   "basis": "1.21.5 bindSampler(name, texture) sampled the whole texture; 1.21.6 binds a view (javap): the texture's full view (CbTextures.view, closed with the texture); null stays null (1.21.6 then unbinds the name)"
+  },
+  "net/minecraft/class_10866.drawIndexed(II)V": {
+   "desc": "(IIII)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbRenderPasses#noBaseVertex()I",
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbRenderPasses#oneInstance()I"
+   ],
+   "basis": "1.21.5 GlRenderPass.drawIndexed(firstIndex, indexCount) -> drawFromBuffers(pass, first, count, type) -> glDrawElements; 1.21.6 drawIndexed(baseVertex, firstIndex, indexCount, instanceCount) draws with glDrawElementsInstancedBaseVertex (javap): base vertex 0, one instance"
+  }
+ }
+}

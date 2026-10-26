@@ -50,6 +50,7 @@ extendable method net/minecraft/class_3272 toString ()Ljava/lang/String;
 # FilePackResources' constructor and its SharedZipFileAccess are package-private in 1.20.2: a
 # converted subclass's super(name, file, builtin) is reshaped onto them (s1misc pack bridge)
 accessible class net/minecraft/class_3258$class_8616
+accessible method net/minecraft/class_3258$class_8616 <init> (Ljava/io/File;)V
 accessible method net/minecraft/class_3258 <init> (Ljava/lang/String;Lnet/minecraft/class_3258$class_8616;ZLjava/lang/String;)V
 # ---- s1net: Realms. 1.20.1 kept the Realms environment in a mutable static (RealmsClient
 # currentEnvironment, switched by switchToStage/Prod/Local); 1.20.2's is ENVIRONMENT, final -- writable
@@ -223,3 +224,11 @@ accessible method net/minecraft/class_4553$class_4554 <init> (Lit/unimi/dsi/fast
 accessible class net/minecraft/class_4553$class_4555
 accessible method net/minecraft/class_4553$class_4555 <init> (Z)V
 accessible class net/minecraft/class_4553$class_8749
+# WoodlandMansionPieces.main (rt/CbDevTools): 1.20.2's MansionGrid / SimpleGrid are package-private; the
+# layer builds a grid and reads its base / third-floor plans and cells as 1.20.1's print() did
+accessible class net/minecraft/class_3471$class_3474
+accessible field net/minecraft/class_3471$class_3474 field_15440 Lnet/minecraft/class_3471$class_3478;
+accessible field net/minecraft/class_3471$class_3474 field_15439 Lnet/minecraft/class_3471$class_3478;
+accessible class net/minecraft/class_3471$class_3478
+accessible field net/minecraft/class_3471$class_3478 field_15453 I
+accessible field net/minecraft/class_3471$class_3478 field_15454 I

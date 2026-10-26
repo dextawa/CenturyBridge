@@ -1,14 +1,9 @@
 package top.dext.centurybridge.step.v1_20_5.mixin;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -18,9 +13,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * -- the one pass that both loads options.txt and writes it -- processes it as 1.20.4's did, so a value a
  * 1.20.4 mod set reads and persists the same way.
  *
- * The pass's FieldAccess (class_315$class_5823) is package-private; its process(String, boolean) is reached
- * through a method handle looked up in Options itself (this handler is merged there, in the same package),
- * resolved once -- as the 1.21.2 step's Options.hideBundleTutorial does.
+ * The pass's FieldAccess (class_315$class_5823) is package-private; the layer's access widener opens it,
+ * so the handler takes it as it is and calls its process(String, boolean) in bytecode (a reflective name
+ * string would not follow the class as the layer climbs).
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_315.class)
@@ -39,23 +34,8 @@ public abstract class CbClientOptionsMixin implements top.dext.centurybridge.ste
         this.field_37208 = skip;
     }
 
-    @Unique
-    private static MethodHandle cb$processBoolean;
-
     @Inject(method = "method_33666", at = @At("TAIL"))
-    private void cb$processSkipRealms32bitWarning(@Coerce Object access, CallbackInfo ci) {
-        try {
-            MethodHandle process = cb$processBoolean;
-            if (process == null) {
-                process = MethodHandles.lookup().findVirtual(Class.forName("net.minecraft.class_315$class_5823"),
-                    "method_33684", MethodType.methodType(boolean.class, String.class, boolean.class));
-                cb$processBoolean = process;
-            }
-            this.field_37208 = (boolean) process.invoke(access, "skipRealms32bitWarning", this.field_37208);
-        } catch (RuntimeException | Error e) {
-            throw e;
-        } catch (Throwable t) {
-            throw new IllegalStateException("Options.skipRealms32bitWarning", t);
-        }
+    private void cb$processSkipRealms32bitWarning(net.minecraft.class_315.class_5823 access, CallbackInfo ci) {
+        this.field_37208 = access.method_33684("skipRealms32bitWarning", this.field_37208);
     }
 }
