@@ -122,6 +122,29 @@
     3
    ],
    "basis": "GlCommandEncoder.drawMultipleIndexed(pass, draws, indexBuffer, indexType): same body (javap: trySetup, per draw its uniform uploader, buffers and the private drawFromBuffers); 1.21.6 adds the dirty-uniform names and a value handed to each draw's uploader"
+  },
+  "net/minecraft/class_10866.drawIndexed(II)V": {
+   "to": "drawIndexed(IIII)V",
+   "args": [
+    1,
+    2
+   ],
+   "basis": "GlRenderPass.drawIndexed(first, count): same body (javap: closed check, then the encoder's drawFromBuffers); 1.21.6 adds the base vertex before and the instance count after"
+  },
+  "net/minecraft/class_10866.bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTexture;)V": {
+   "to": "bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "GlRenderPass.bindSampler(name, texture): same body (javap: samplers.put(name, it), dirtySamplers.add(name)); 1.21.6 binds a view (and removes the name for null), not a V argument"
+  },
+  "net/minecraft/class_10866.enableScissor(Lcom/mojang/blaze3d/systems/ScissorState;)V": {
+   "to": "enableScissor(IIII)V",
+   "args": [
+    -1
+   ],
+   "basis": "GlRenderPass.enableScissor(state): 1.21.5 copied the state into the pass's scissor state (javap: field_57872.copyFrom); 1.21.6's enableScissor(x, y, w, h) sets that same field's rectangle and flag (field_57872.method_70814); the state is not a V argument"
   }
  }
 }

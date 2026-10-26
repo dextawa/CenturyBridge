@@ -32,7 +32,9 @@
     "CbGuiHudLayersMixin",
     "CbTextureMultiMixin",
     "CbScreenTooltipMixin",
-    "CbTextureViewsMixin"
+    "CbTextureViewsMixin",
+    "CbSectionDistanceRestoredMixin",
+    "CbSectionDispatcherRestoredMixin"
   ],
   "server": [],
   "injectors": {

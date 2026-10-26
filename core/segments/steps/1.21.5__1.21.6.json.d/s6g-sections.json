@@ -3,5 +3,26 @@
   "net/minecraft/class_846$class_10896": "net/minecraft/class_10896",
   "net/minecraft/class_846$class_10196": "net/minecraft/class_10196"
  },
- "_classRenames_basis_s6g_sections": "1.21.6 moved SectionRenderDispatcher.SectionBuffers (class_846$class_10896) and SectionRenderDispatcher.TranslucencyPointOfView (class_846$class_10196) out of SectionRenderDispatcher to top-level classes with the same intermediary ids (net.minecraft.client.renderer.chunk.SectionBuffers / TranslucencyPointOfView): javap -c -p of both, the class name aside, are member for member and instruction for instruction the same; SectionBuffers' three fields went from package-private to private (no mod could reach them but through an accessor mixin, which follows the rename)"
+ "_classRenames_basis_s6g_sections": "1.21.6 moved SectionRenderDispatcher.SectionBuffers (class_846$class_10896) and SectionRenderDispatcher.TranslucencyPointOfView (class_846$class_10196) out of SectionRenderDispatcher to top-level classes with the same intermediary ids (net.minecraft.client.renderer.chunk.SectionBuffers / TranslucencyPointOfView): javap -c -p of both, the class name aside, are member for member and instruction for instruction the same; SectionBuffers' three fields went from package-private to private (no mod could reach them but through an accessor mixin, which follows the rename)",
+ "methodRenames": {
+  "net/minecraft/class_846.method_3632()V": "method_72045",
+  "net/minecraft/class_846.method_34845()I": "method_72046"
+ },
+ "_methodRenames_basis_s6g_sections": "SectionRenderDispatcher.uploadAllPendingUploads (method_3632 -> private method_3633: compileQueue/executor field_53957.method_62971(), then toBatchCount = 0) is 1.21.6's public method_72045 (field_53957.method_62971()); getToBatchCount (method_34845, the count field_20992 kept beside the queue) is 1.21.6's method_72046, the same queue's count asked live (field_53957.method_62967()) (javap of both)",
+ "overrideRenames": [
+  {
+   "old": "method_3632()V",
+   "new": "method_72045",
+   "onlyUnder": "net/minecraft/class_846",
+   "superCalls": "rename",
+   "basis": "uploadAllPendingUploads lives on as method_72045 (see methodRenames basis); 1.21.6's LevelRenderer calls method_72045"
+  },
+  {
+   "old": "method_34845()I",
+   "new": "method_72046",
+   "onlyUnder": "net/minecraft/class_846",
+   "superCalls": "rename",
+   "basis": "getToBatchCount lives on as method_72046 (see methodRenames basis)"
+  }
+ ]
 }
