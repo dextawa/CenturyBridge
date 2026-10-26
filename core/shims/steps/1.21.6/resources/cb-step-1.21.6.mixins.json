@@ -39,7 +39,8 @@
     "CbSectionDispatcherRestoredMixin",
     "CbGuiScissorMixin",
     "CbGuiScissorFrameMixin",
-    "CbGuiScissorGraphicsMixin"
+    "CbGuiScissorGraphicsMixin",
+    "CbCubeMapFacesMixin"
   ],
   "server": [],
   "injectors": {
