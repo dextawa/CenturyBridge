@@ -14,6 +14,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v26_1.rt.CbWallInteract;
 import top.dext.centurybridge.step.v26_1.rt.CbWallInteractAt;
@@ -36,7 +37,7 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallInteractClient;
  * ask an entity of a 1.21.11 class interactAt first, as 26.1's own clicks do.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(MultiPlayerGameMode.class)
+@Mixin(value = MultiPlayerGameMode.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallInteractGameModeMixin {
 
     @Shadow

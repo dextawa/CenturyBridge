@@ -7,10 +7,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_20_5.rt.CbEffects;
 
 /**
- * AbsorptionMobEffect, BadOmenMobEffect: the vanilla applyEffectTick bodies that can answer "the effect
- * goes". Reached as a 1.20.4 subclass's super call, that answer is the subclass's tick's (rt/CbEffects).
+ * AbsorptionMobEffect, BadOmenMobEffect (CbEffectTickBadOmenMixin): the vanilla applyEffectTick bodies that can
+ * answer "the effect goes". Reached as a 1.20.4 subclass's super call, that answer is the subclass's tick's
+ * (rt/CbEffects). One target per mixin: a later step whose applyEffectTick changed shape (1.21.2: the ServerLevel
+ * first) carries a mixin's injectors one target at a time.
  */
-@Mixin(targets = {"net.minecraft.class_1288", "net.minecraft.class_8631"})
+@Mixin(targets = "net.minecraft.class_1288")
 public abstract class CbEffectTickMixin {
 
     /** applyEffectTick(entity, amplifier) */

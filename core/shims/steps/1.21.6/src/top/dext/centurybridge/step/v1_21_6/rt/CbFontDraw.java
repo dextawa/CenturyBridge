@@ -26,6 +26,15 @@ public final class CbFontDraw {
         return 8;
     }
 
+    /**
+     * BakedSheetGlyph.renderChar / renderEffect's flag 1.21.6 added (true: draw flat, every depth offset 0): 1.21.5's
+     * bodies always kept their offsets (the shadow-to-glyph step, the effect's own depth comp_3311; javap of both), so
+     * a 1.21.5 call passes false.
+     */
+    public static boolean flatGlyphs() {
+        return false;
+    }
+
     private static int end(float x, float advance, boolean shadow) {
         return (int) (x + advance) + (shadow ? 1 : 0);
     }

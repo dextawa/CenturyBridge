@@ -20,6 +20,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_20_5.facade.FriendlyByteBufReader;
 import top.dext.centurybridge.step.v1_20_5.facade.FriendlyByteBufWriter;
 import top.dext.centurybridge.step.v1_20_5.rt.CbNetBufs;
+import top.dext.centurybridge.step.v1_20_5.rt.CbRoutes;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * FriendlyByteBuf: the 1.20.4 methods 1.20.5 took out or moved to stream codecs, back on the buffer
@@ -31,7 +33,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbNetBufs;
  * (CbNetBufs.cbRegistryBuf). The rest are 1.20.4's bodies over 1.20.5's primitives.
  */
 @Mixin(class_2540.class)
-public abstract class CbNetFriendlyByteBufBridge {
+public abstract class CbNetFriendlyByteBufBridge implements CbRoutes.LegacyBuf {
 
     private class_2540 cb$self() {
         return (class_2540) (Object) this;
@@ -214,14 +216,28 @@ public abstract class CbNetFriendlyByteBufBridge {
     // ---------------------------------------------------------------- items and components
 
     /** was writeItem(ItemStack): 1.20.5's item stack codec (empty allowed), through the buffer's registry view */
+    @Override
+    @CbVanillaReads("CbRouteBufItemMixin: ItemStack.OPTIONAL_STREAM_CODEC writes each stack of 1.20.5's packets through it, as 1.20.4's packets wrote theirs, when a converted mod mixes it")
     public class_2540 method_10793(class_1799 stack) {
-        class_1799.field_49268.encode(CbNetBufs.cbRegistryBuf(cb$self()), stack);
+        CbRoutes.enterIo();
+        try {
+            class_1799.field_49268.encode(CbNetBufs.cbRegistryBuf(cb$self()), stack);
+        } finally {
+            CbRoutes.exitIo();
+        }
         return cb$self();
     }
 
     /** was readItem() */
+    @Override
+    @CbVanillaReads("CbRouteBufItemMixin: ItemStack.OPTIONAL_STREAM_CODEC reads each stack of 1.20.5's packets through it, as 1.20.4's packets read theirs, when a converted mod mixes it")
     public class_1799 method_10819() {
-        return class_1799.field_49268.decode(CbNetBufs.cbRegistryBuf(cb$self()));
+        CbRoutes.enterIo();
+        try {
+            return class_1799.field_49268.decode(CbNetBufs.cbRegistryBuf(cb$self()));
+        } finally {
+            CbRoutes.exitIo();
+        }
     }
 
     /** was writeComponent(Component): its NBT form, as 1.20.4 wrote it (ComponentSerialization) */

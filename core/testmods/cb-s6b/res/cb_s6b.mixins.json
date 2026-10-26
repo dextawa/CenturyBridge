@@ -9,7 +9,9 @@
     "S6bInventoryMixin",
     "S6bContainerMixin",
     "S6bEnderMixin",
-    "S6bLeashMixin"
+    "S6bLeashMixin",
+    "S6bRecipeSettingsMixin",
+    "S6bRecipeSettingsAccess"
   ],
   "injectors": {
     "defaultRequire": 1

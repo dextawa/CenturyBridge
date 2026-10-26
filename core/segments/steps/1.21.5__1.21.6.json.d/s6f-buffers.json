@@ -1,0 +1,33 @@
+{
+ "classRenames": {
+  "com/mojang/blaze3d/buffers/BufferType": "top/dext/centurybridge/step/v1_21_6/facade/blaze3d/BufferType",
+  "com/mojang/blaze3d/buffers/BufferUsage": "top/dext/centurybridge/step/v1_21_6/facade/blaze3d/BufferUsage"
+ },
+ "_classRenames_basis_s6f_buffers": "1.21.6 removed com.mojang.blaze3d.buffers.BufferType and BufferUsage (javap of both): a buffer's roles became GpuBuffer usage bits. Both come back as the layer's enums with 1.21.5's constants, order and flags; rt/CbBuffers maps them to the bits that allow what 1.21.5 allowed (see its javadoc for the per-site evidence)",
+ "interfaceCallRedirects": {
+  "com/mojang/blaze3d/systems/GpuDevice.createBuffer(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;I)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "top/dext/centurybridge/step/v1_21_6/rt/CbBuffers",
+  "com/mojang/blaze3d/systems/GpuDevice.createBuffer(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "top/dext/centurybridge/step/v1_21_6/rt/CbBuffers"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_10865.createBuffer(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;I)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "top/dext/centurybridge/step/v1_21_6/rt/CbBuffers#createBuffer",
+  "net/minecraft/class_10865.createBuffer(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;": "top/dext/centurybridge/step/v1_21_6/rt/CbBuffers#createBuffer",
+  "com/mojang/blaze3d/buffers/GpuBuffer.type()Lcom/mojang/blaze3d/buffers/BufferType;": "top/dext/centurybridge/step/v1_21_6/rt/CbBuffers#type",
+  "com/mojang/blaze3d/buffers/GpuBuffer.usage()Lcom/mojang/blaze3d/buffers/BufferUsage;": "top/dext/centurybridge/step/v1_21_6/rt/CbBuffers#usage"
+ },
+ "staticRedirects": {
+  "com/mojang/blaze3d/opengl/GlConst.toGl(Lcom/mojang/blaze3d/buffers/BufferType;)I": "top/dext/centurybridge/step/v1_21_6/rt/CbBuffers",
+  "com/mojang/blaze3d/opengl/GlConst.toGl(Lcom/mojang/blaze3d/buffers/BufferUsage;)I": "top/dext/centurybridge/step/v1_21_6/rt/CbBuffers"
+ },
+ "superCtorReshapes": {
+  "com/mojang/blaze3d/buffers/GpuBuffer.<init>(Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;I)V": {
+   "desc": "(II)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21_6/rt/CbBuffers#usage(Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;)I",
+    "keep:2"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_6/rt/CbBuffers#created(Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;)V",
+   "postArgs": [0, 1],
+   "basis": "1.21.5 GpuBuffer(type, usage, size) stored the three; 1.21.6's GpuBuffer(usage bits, size) stores the bits and size (javap); the subclass keeps its 1.21.5 kind for type() / usage()"
+  }
+ }
+}

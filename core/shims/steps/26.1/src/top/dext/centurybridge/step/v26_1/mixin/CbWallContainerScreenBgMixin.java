@@ -15,7 +15,7 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallContainerBackground;
  * AbstractContainerScreen.renderBackground drew (rt/CbWallContainerBackground).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(AbstractContainerScreen.class)
+@Mixin(value = AbstractContainerScreen.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallContainerScreenBgMixin extends Screen implements CbWallContainerBackground.Screen {
 
     protected CbWallContainerScreenBgMixin(Component title) {

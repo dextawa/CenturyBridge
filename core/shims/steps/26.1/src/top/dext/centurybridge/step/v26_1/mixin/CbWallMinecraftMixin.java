@@ -5,22 +5,17 @@ import com.mojang.blaze3d.platform.Window;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.CrashReport;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.ChatVisiblity;
 import net.minecraft.util.thread.ReentrantBlockableEventLoop;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import net.minecraft.client.gui.screens.Screen;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v26_1.facade.ChatStatus;
 import top.dext.centurybridge.step.v26_1.facade.ItemRenderer;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import top.dext.centurybridge.step.v26_1.rt.CbWallGameRenderer;
+import top.dext.centurybridge.step.v26_1.rt.CbWallLegacyCalls;
 
 /**
  * 1.21.11 Minecraft members 26.1 dropped, given back on Minecraft itself (covers):
@@ -37,12 +32,13 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallGameRenderer;
  * <li>noRender: 1.21.11's public flag that made runTick skip the game renderer for a frame; 26.1 runs the
  *     game renderer as update, extract and render in renderFrame(boolean), which runTick calls; each is
  *     skipped while the flag is set (only those call sites, as 1.21.11 gated only its runTick's); opening a
- *     screen clears it, as 1.21.11's setScreen did.</li>
+ *     screen clears it, as 1.21.11's setScreen did (mixin/CbWallMinecraftReadsMixin).</li>
  * </ul>
  */
 @Environment(EnvType.CLIENT)
-@Mixin(Minecraft.class)
-public abstract class CbWallMinecraftMixin extends ReentrantBlockableEventLoop<Runnable> implements CbWallGameRenderer.CbWallMinecraftWindow {
+@Mixin(value = Minecraft.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbWallMinecraftMixin extends ReentrantBlockableEventLoop<Runnable>
+        implements CbWallGameRenderer.CbWallMinecraftWindow, CbWallLegacyCalls.MinecraftLegacy {
 
     @Shadow
     @Final
@@ -84,38 +80,14 @@ public abstract class CbWallMinecraftMixin extends ReentrantBlockableEventLoop<R
         return !this.userProperties().flag(UserApiService.UserFlag.CHAT_ALLOWED) ? ChatStatus.DISABLED_BY_PROFILE : ChatStatus.ENABLED;
     }
 
-    @Redirect(method = "renderFrame", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/GameRenderer;update(Lnet/minecraft/client/DeltaTracker;Z)V"))
-    private void cb$update(GameRenderer renderer, DeltaTracker deltaTracker, boolean renderLevel) {
-        if (!this.noRender) {
-            renderer.update(deltaTracker, renderLevel);
-        }
+    @Override
+    public boolean cb$noRender() {
+        return this.noRender;
     }
 
-    @Redirect(method = "renderFrame", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/GameRenderer;extract(Lnet/minecraft/client/DeltaTracker;Z)V"))
-    private void cb$extract(GameRenderer renderer, DeltaTracker deltaTracker, boolean renderLevel) {
-        if (!this.noRender) {
-            renderer.extract(deltaTracker, renderLevel);
-        }
-    }
-
-    @Redirect(method = "renderFrame", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/GameRenderer;render(Lnet/minecraft/client/DeltaTracker;Z)V"))
-    private void cb$render(GameRenderer renderer, DeltaTracker deltaTracker, boolean renderLevel) {
-        if (!this.noRender) {
-            renderer.render(deltaTracker, renderLevel);
-        }
-    }
-
-    @Shadow
-    public Screen screen;
-
-    @Inject(method = "setScreen", at = @At("TAIL"))
-    private void cb$screenClearsNoRender(Screen screen, CallbackInfo ci) {
-        if (this.screen != null) {
-            this.noRender = false;
-        }
+    @Override
+    public void cb$clearNoRender() {
+        this.noRender = false;
     }
 
     public ItemRenderer getItemRenderer() {
