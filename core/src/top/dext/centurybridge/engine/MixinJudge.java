@@ -595,8 +595,12 @@ public final class MixinJudge {
                 return why == null ? null : "facade-only: the W copy " + why;
             }
         }
-        boolean unreached = source != null && sourceRows.isEmpty() && (!source.invokes(wm.name)
-            || !facade && onlyRestoredCallers(source.callers(wm.name), restoring));
+        // a static initializer is never called by name: V's code reaches it by initializing the class (smx4b
+        // case 4: a V enum / constant table whose role W moved into a registry or tags -- MapDecoration$Type,
+        // EnchantmentCategory -- was initialized by vanilla on every use; a mixin there changed what vanilla read)
+        boolean unreached = source != null && sourceRows.isEmpty() && (wm.name.equals("<clinit>")
+            ? !source.initialized(rowOwner)
+            : !source.invokes(wm.name) || !facade && onlyRestoredCallers(source.callers(wm.name), restoring));
         if (unreached) {
             rowLayer = facade ? "facade-only-unreached" : "restored-unreached";
             return null;
