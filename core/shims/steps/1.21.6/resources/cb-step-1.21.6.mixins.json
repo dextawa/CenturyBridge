@@ -40,7 +40,8 @@
     "CbGuiScissorMixin",
     "CbGuiScissorFrameMixin",
     "CbGuiScissorGraphicsMixin",
-    "CbCubeMapFacesMixin"
+    "CbCubeMapFacesMixin",
+    "CbFontInternalRestoredMixin"
   ],
   "server": [],
   "injectors": {

@@ -70,3 +70,7 @@ accessible field net/minecraft/class_5411$class_5412 comp_3248 Z
 # CbScreens: the frame GUI render state (blurGraphics / screenGraphics) and whether it is already marked to blur
 accessible field net/minecraft/class_757 field_59966 Lnet/minecraft/class_11246;
 accessible field net/minecraft/class_11246 field_60314 I
+# CbFontInternalRestoredMixin: 1.21.5's private Font.drawInternal draws without bidirectional shaping (its callers shaped),
+# through 1.21.6's text builder (javap: Font.prepareText shapes first, then builds this)
+accessible class net/minecraft/class_327$class_5232
+accessible method net/minecraft/class_327$class_5232 <init> (Lnet/minecraft/class_327;FFIIZ)V
