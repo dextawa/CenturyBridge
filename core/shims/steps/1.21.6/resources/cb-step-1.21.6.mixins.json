@@ -9,7 +9,8 @@
     "CbRecipeBookSettingsRestoredMixin",
     "CbRecipeBookRouteMixin",
     "CbHorseJumpRestoredMixin",
-    "CbHorseJumpRouteMixin"
+    "CbHorseJumpRouteMixin",
+    "CbPacketListenerFactoriesMixin"
   ],
   "client": [
     "CbRenderAttachedRegionMixin",

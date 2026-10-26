@@ -13,6 +13,10 @@ accessible method net/minecraft/class_1297 method_5749 (Lnet/minecraft/class_113
 accessible method net/minecraft/class_2586 method_11007 (Lnet/minecraft/class_11372;)V
 accessible method net/minecraft/class_2586 method_11014 (Lnet/minecraft/class_11368;)V
 
+# CbPackets: a 1.21.5 send override's direct onSuccess() runs a non-factory 1.21.6 listener on its connection's channel
+accessible field net/minecraft/class_2535 field_11651 Lio/netty/channel/Channel;
+accessible field net/minecraft/class_8609 field_45013 Lnet/minecraft/class_2535;
+
 # ---- BEGIN GENERATED (s6b): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
 # members, given back so a converted mod's call, read or write links again
@@ -60,5 +64,3 @@ accessible field net/minecraft/class_4668$class_5940$class_10542 comp_3462 Lnet/
 accessible field net/minecraft/class_757 field_60579 Lnet/minecraft/class_751;
 # CbHorses: AbstractHorse.setFlag, for 1.21.5's flag-only setStanding(boolean)
 accessible method net/minecraft/class_1496 method_6769 (IZ)V
-# CbRecipeBooks: ServerRecipeBook's private copy-in, to give a player's book a fresh 1.21.5 book's state before fromNbt
-accessible method net/minecraft/class_3441 method_71342 (Lnet/minecraft/class_3441$class_11328;)V
