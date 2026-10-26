@@ -1,0 +1,80 @@
+{
+ "_swall11_model_basis": "1.21.11 model/texture/block-entity members 26.1 reshaped (javap of both, rt/CbWallModelParts): ResolvedModel.resolveParticleSprite -> resolveParticleMaterial(..).sprite(); TextureSlots.Data.Builder.addTexture(name, Material=SpriteId) -> addTexture(name, model Material of the SpriteId's texture); SpriteContents.getUniqueFrames() IntStream -> the IntList as a stream; BlockEntityRenderDispatcher.prepare(camera) -> prepare(camera.position()); FogRenderer.setupFog -> setupFog + updateBuffer, the data's colour; GlobalSettingsUniform.update(.., camera, ..) -> camera.position() (rt/CbWallFrameSetup)",
+ "staticRedirects": {
+  "net/minecraft/class_10819.method_68054(Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#resolveParticleSprite"
+ },
+ "interfaceCallRedirects": {
+  "net/minecraft/class_10819.method_68033(Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#resolveParticleSprite"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_10419$class_10420$class_10421.method_65548(Ljava/lang/String;Lnet/minecraft/class_4730;)Lnet/minecraft/class_10419$class_10420$class_10421;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#addTexture",
+  "net/minecraft/class_7764.method_45817()Ljava/util/stream/IntStream;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#getUniqueFrames",
+  "net/minecraft/class_824.method_3549(Lnet/minecraft/class_4184;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#prepare",
+  "net/minecraft/class_758.method_3211(Lnet/minecraft/class_4184;ILnet/minecraft/class_9779;FLnet/minecraft/class_638;)Lorg/joml/Vector4f;": "top/dext/centurybridge/step/v26_1/rt/CbWallFrameSetup#setupFog",
+  "net/minecraft/class_11284.method_71116(IIDJLnet/minecraft/class_9779;ILnet/minecraft/class_4184;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallFrameSetup#update"
+ },
+ "superRedirects": {
+  "net/minecraft/class_10819.method_68033(Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#superResolveParticleSprite",
+  "net/minecraft/class_10419$class_10420$class_10421.method_65548(Ljava/lang/String;Lnet/minecraft/class_4730;)Lnet/minecraft/class_10419$class_10420$class_10421;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#superAddTexture",
+  "net/minecraft/class_7764.method_45817()Ljava/util/stream/IntStream;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#superGetUniqueFrames",
+  "net/minecraft/class_824.method_3549(Lnet/minecraft/class_4184;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#superPrepare",
+  "net/minecraft/class_758.method_3211(Lnet/minecraft/class_4184;ILnet/minecraft/class_9779;FLnet/minecraft/class_638;)Lorg/joml/Vector4f;": "top/dext/centurybridge/step/v26_1/rt/CbWallFrameSetup#superSetupFog",
+  "net/minecraft/class_11284.method_71116(IIDJLnet/minecraft/class_9779;ILnet/minecraft/class_4184;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallFrameSetup#superUpdate"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_10819",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts$LegacyParticleSprite",
+   "requires": [
+    "method_68033(Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;)Lnet/minecraft/class_1058;"
+   ],
+   "synth": [],
+   "basis": "26.1's ResolvedModel has no resolveParticleSprite(slots, baker); a 1.21.11 model's own override is what 1.21.11's callers got (CbWallModelParts.resolveParticleSprite)"
+  },
+  {
+   "under": "net/minecraft/class_10419$class_10420$class_10421",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts$LegacyAddTexture",
+   "requires": [
+    "method_65548(Ljava/lang/String;Lnet/minecraft/class_4730;)Lnet/minecraft/class_10419$class_10420$class_10421;"
+   ],
+   "synth": [],
+   "basis": "26.1's TextureSlots.Data.Builder has no addTexture(name, SpriteId); a 1.21.11 builder subclass's own override is what 1.21.11's callers got (CbWallModelParts.addTexture)"
+  },
+  {
+   "under": "net/minecraft/class_7764",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts$LegacyUniqueFrames",
+   "requires": [
+    "method_45817()Ljava/util/stream/IntStream;"
+   ],
+   "synth": [],
+   "basis": "26.1's SpriteContents answers getUniqueFrames() as an IntList; a 1.21.11 subclass's own IntStream override is what 1.21.11's callers got (CbWallModelParts.getUniqueFrames)"
+  },
+  {
+   "under": "net/minecraft/class_824",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts$LegacyPrepare",
+   "requires": [
+    "method_3549(Lnet/minecraft/class_4184;)V"
+   ],
+   "synth": [],
+   "basis": "26.1's BlockEntityRenderDispatcher.prepare takes the camera position; a 1.21.11 dispatcher subclass's own prepare(camera) is what 1.21.11's callers got (CbWallModelParts.prepare)"
+  },
+  {
+   "under": "net/minecraft/class_758",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallFrameSetup$LegacySetupFog",
+   "requires": [
+    "method_3211(Lnet/minecraft/class_4184;ILnet/minecraft/class_9779;FLnet/minecraft/class_638;)Lorg/joml/Vector4f;"
+   ],
+   "synth": [],
+   "basis": "26.1's FogRenderer.setupFog answers the fog data; a 1.21.11 fog renderer subclass's own colour-answering setupFog is what 1.21.11's callers got (CbWallFrameSetup.setupFog)"
+  },
+  {
+   "under": "net/minecraft/class_11284",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallFrameSetup$LegacyGlobalSettings",
+   "requires": [
+    "method_71116(IIDJLnet/minecraft/class_9779;ILnet/minecraft/class_4184;Z)V"
+   ],
+   "synth": [],
+   "basis": "26.1's GlobalSettingsUniform.update takes the camera position; a 1.21.11 subclass's own update(.., camera, ..) is what 1.21.11's callers got (CbWallFrameSetup.update)"
+  }
+ ]
+}

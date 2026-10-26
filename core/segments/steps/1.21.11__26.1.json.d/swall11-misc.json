@@ -1,0 +1,85 @@
+{
+ "_swall11_misc_basis": "1.21.11 members 26.1 removed or split, each with what replaced it (javap of both): FeatureUtils.simpleRandomPatchConfiguration / simplePatchConfiguration -> RandomPatchConfiguration (facade/RandomPatchConfiguration, swall) with 1.21.11's bodies (rt/CbWallFeatureUtils); DeltaTracker.Timer.advanceTime(ms, advanceGameTime) -> advanceRealTime + advanceGameTime (rt/CbWallTimer); StateHolder.populateNeighbours(map) -> the neighbour table initializeNeighbors takes (rt/CbWallStateHolders); PlayerList / IntegratedPlayerList.getSingleplayerData() -> null / the owner's saved data through loadPlayerData (rt/CbWallPlayerLists); ClientLevel.setTimeFromServer(game, day, tick) / ClientLevelData.setDayTime -> the game time plus the dimension's default clock in the level's ClientClockManager (rt/CbWallClientTime)",
+ "staticRedirects": {
+  "net/minecraft/class_6803.method_39703(ILnet/minecraft/class_6880;)Lnet/minecraft/class_4638;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatureUtils#simpleRandomPatchConfiguration",
+  "net/minecraft/class_6803.method_39706(Lnet/minecraft/class_3031;Lnet/minecraft/class_3037;Ljava/util/List;I)Lnet/minecraft/class_4638;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatureUtils#simplePatchConfiguration",
+  "net/minecraft/class_6803.method_39705(Lnet/minecraft/class_3031;Lnet/minecraft/class_3037;Ljava/util/List;)Lnet/minecraft/class_4638;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatureUtils#simplePatchConfiguration",
+  "net/minecraft/class_6803.method_39704(Lnet/minecraft/class_3031;Lnet/minecraft/class_3037;)Lnet/minecraft/class_4638;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatureUtils#simplePatchConfiguration",
+  "net/minecraft/class_4239.method_20200(Ljava/nio/file/Path;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallStaticHelpers#isPathNormalized",
+  "net/minecraft/class_4239.method_20202(Ljava/nio/file/Path;Ljava/lang/String;Ljava/lang/String;)Ljava/nio/file/Path;": "top/dext/centurybridge/step/v26_1/rt/CbWallStaticHelpers#createPathToResource",
+  "net/minecraft/class_2512.method_36118(Lnet/minecraft/class_2520;)Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallStaticHelpers#prettyPrint",
+  "net/minecraft/class_4590.method_22931()Lnet/minecraft/class_4590;": "top/dext/centurybridge/step/v26_1/rt/CbWallStaticHelpers#identity",
+  "net/minecraft/class_7837.method_56827(Lorg/joml/Matrix4fc;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallStaticHelpers#isOrthonormal",
+  "net/minecraft/class_7842.method_52728(Lnet/minecraft/class_2561;Lnet/minecraft/class_327;I)Lnet/minecraft/class_5481;": "top/dext/centurybridge/step/v26_1/rt/CbWallStringWidgets#clipText"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_3213.<init>(Lnet/minecraft/class_2561;Lnet/minecraft/class_1259$class_1260;Lnet/minecraft/class_1259$class_1261;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerBossEvents#serverBossEvent",
+  "net/minecraft/class_746.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_638;Lnet/minecraft/class_634;Lnet/minecraft/class_3469;Lnet/minecraft/class_299;Lnet/minecraft/class_10185;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLocalPlayers#localPlayer"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_3213.<init>(Lnet/minecraft/class_2561;Lnet/minecraft/class_1259$class_1260;Lnet/minecraft/class_1259$class_1261;)V": {
+   "desc": "(Ljava/util/UUID;Lnet/minecraft/class_2561;Lnet/minecraft/class_1259$class_1260;Lnet/minecraft/class_1259$class_1261;)V",
+   "ops": ["push top/dext/centurybridge/step/v26_1/rt/CbWallBossEvents#newEventId()Ljava/util/UUID;", "keep", "keep", "keep"],
+   "basis": "26.1's ServerBossEvent(id, name, color, overlay) takes the id 1.21.11's (name, color, overlay) drew itself with Mth.createInsecureUUID() (javap class_3213.<init>)"
+  },
+  "net/minecraft/class_746.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_638;Lnet/minecraft/class_634;Lnet/minecraft/class_3469;Lnet/minecraft/class_299;Lnet/minecraft/class_10185;Z)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_638;Lnet/minecraft/class_634;Lnet/minecraft/class_3469;Lnet/minecraft/class_299;Lnet/minecraft/class_10185;ZLnet/minecraft/client/multiplayer/chat/ChatAbilities;)V",
+   "ops": ["keep", "keep", "keep", "keep", "keep", "keep", "keep",
+           "push top/dext/centurybridge/step/v26_1/rt/CbWallLocalPlayers#chatAbilities()Lnet/minecraft/client/multiplayer/chat/ChatAbilities;"],
+   "basis": "26.1's LocalPlayer constructor adds the player's chat abilities after 1.21.11's arguments; 26.1's MultiPlayerGameMode.createPlayer passes minecraft.computeChatAbilities() (javap)"
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_9779$class_9781.method_60640(JZ)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTimer#advanceTime",
+  "net/minecraft/class_2688.method_28496(Ljava/util/Map;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallStateHolders#populateNeighbours",
+  "net/minecraft/class_3324.method_14567()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayerLists#getSingleplayerData",
+  "net/minecraft/class_1130.method_14567()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayerListsClient#getSingleplayerData",
+  "net/minecraft/class_638.method_29089(JJZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientTime#setTimeFromServer",
+  "net/minecraft/class_638$class_5271.method_165(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientTime#setDayTime"
+ },
+ "superRedirects": {
+  "net/minecraft/class_9779$class_9781.method_60640(JZ)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTimer#superAdvanceTime",
+  "net/minecraft/class_2688.method_28496(Ljava/util/Map;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallStateHolders#superPopulateNeighbours",
+  "net/minecraft/class_3324.method_14567()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayerLists#superPlayerList",
+  "net/minecraft/class_1130.method_14567()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayerListsClient#superGetSingleplayerData",
+  "net/minecraft/class_638.method_29089(JJZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientTime#superSetTimeFromServer",
+  "net/minecraft/class_638$class_5271.method_165(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClientTime#superSetDayTime"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_9779$class_9781",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallTimer$LegacyAdvanceTime",
+   "requires": ["method_60640(JZ)I"],
+   "synth": [],
+   "basis": "26.1's Timer has no advanceTime(ms, advanceGameTime); a 1.21.11 timer subclass's own override is what 1.21.11's callers got (CbWallTimer.advanceTime)"
+  },
+  {
+   "under": "net/minecraft/class_2688",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallStateHolders$LegacyNeighbours",
+   "requires": ["method_28496(Ljava/util/Map;)V"],
+   "synth": [],
+   "basis": "26.1's StateHolder has no populateNeighbours(map); a 1.21.11 state subclass's own override is what 1.21.11's callers got (CbWallStateHolders.populateNeighbours)"
+  },
+  {
+   "under": "net/minecraft/class_3324",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayerLists$LegacySingleplayerData",
+   "requires": ["method_14567()Lnet/minecraft/class_2487;"],
+   "synth": [],
+   "basis": "26.1's PlayerList has no getSingleplayerData(); a 1.21.11 player list subclass's own override is what 1.21.11's callers got (CbWallPlayerLists.getSingleplayerData)"
+  },
+  {
+   "under": "net/minecraft/class_638",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallClientTime$LegacySetTimeFromServer",
+   "requires": ["method_29089(JJZ)V"],
+   "synth": [],
+   "basis": "26.1's ClientLevel.setTimeFromServer takes the game time alone; a 1.21.11 level subclass's own three-argument override is what 1.21.11's callers got (CbWallClientTime.setTimeFromServer)"
+  },
+  {
+   "under": "net/minecraft/class_638$class_5271",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallClientTime$LegacySetDayTime",
+   "requires": ["method_165(J)V"],
+   "synth": [],
+   "basis": "26.1's ClientLevelData has no day time (the dimension's clock holds it); a 1.21.11 level data subclass's own setDayTime is what 1.21.11's callers got (CbWallClientTime.setDayTime)"
+  }
+ ]
+}

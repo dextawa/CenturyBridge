@@ -250,3 +250,14 @@ accessible	method	net/minecraft/client/renderer/entity/CamelRenderer	createCamel
 accessible	field	net/minecraft/client/renderer/chunk/SectionRenderDispatcher	chunkUberBuffers	Ljava/util/Map;
 accessible	class	net/minecraft/client/renderer/chunk/SectionRenderDispatcher$SectionUberBuffers
 accessible	field	com/mojang/blaze3d/vertex/UberGpuBuffer	stagedAllocations	Lit/unimi/dsi/fastutil/objects/Object2ObjectOpenHashMap;
+# 1.21.11 RealmsScreen.addLabel(label) added the label as a renderable: rt/CbWallRealms calls Screen.addRenderableOnly from outside the screen (swall11)
+accessible	method	net/minecraft/client/gui/screens/Screen	addRenderableOnly	(Lnet/minecraft/client/gui/components/Renderable;)Lnet/minecraft/client/gui/components/Renderable;
+# 1.21.11 StateHolder.populateNeighbours(map): rt/CbWallStateHolders builds 26.1's neighbour table from the state's property keys and values and hands it to initializeNeighbors (swall11)
+accessible	field	net/minecraft/world/level/block/state/StateHolder	propertyKeys	[Lnet/minecraft/world/level/block/state/properties/Property;
+accessible	field	net/minecraft/world/level/block/state/StateHolder	propertyValues	[Ljava/lang/Comparable;
+accessible	method	net/minecraft/world/level/block/state/StateHolder	initializeNeighbors	([[Ljava/lang/Object;)V
+# 1.21.11 client day time (ClientLevel.setTimeFromServer(game, day, tick), ClientLevelData.setDayTime): rt/CbWallClientTime sets the dimension default clock in the level's ClientClockManager (swall11)
+accessible	class	net/minecraft/client/ClientClockManager$ClockInstance
+accessible	method	net/minecraft/client/ClientClockManager	getInstance	(Lnet/minecraft/core/Holder;)Lnet/minecraft/client/ClientClockManager$ClockInstance;
+accessible	field	net/minecraft/client/ClientClockManager$ClockInstance	totalTicks	J
+accessible	field	net/minecraft/client/ClientClockManager$ClockInstance	rate	F
