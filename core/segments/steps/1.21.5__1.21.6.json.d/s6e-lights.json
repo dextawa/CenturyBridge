@@ -1,0 +1,11 @@
+{
+ "staticRedirects": {
+  "com/mojang/blaze3d/systems/RenderSystem.setShaderLights(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbShaderLights",
+  "com/mojang/blaze3d/systems/RenderSystem.getShaderLights()[Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_6/rt/CbShaderLights",
+  "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem._setShaderLights(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbShaderLights"
+ },
+ "fieldGetters": {
+  "com/mojang/blaze3d/systems/RenderSystem.shaderLightDirections:[Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_6/rt/CbShaderLights"
+ },
+ "_shaderLights_basis": "1.21.5 RenderSystem kept the two shader light directions in a private static Vector3f[2] (setShaderLights stored them after a render-thread check, getShaderLights answered the array); 1.21.6 keeps them in Lighting's uniform buffer slots, selected by setShaderLights(GpuBufferSlice) (javap of both). rt/CbShaderLights holds 1.21.5's array and one slot written the way Lighting writes its own (Std140 vec3 + vec3, Lighting.UBO_SIZE, usage 136), selected on each set. The 1.21 layer's climbed accessor of the private field reads the array (sruntime 2026-10-26: InvalidAccessorException on every climbed runtime 1.21.6+), and its climbed thread-check-free _setShaderLights stores and uploads the same way"
+}

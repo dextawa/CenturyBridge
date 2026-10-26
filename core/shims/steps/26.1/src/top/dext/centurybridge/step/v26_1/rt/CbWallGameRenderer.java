@@ -44,11 +44,6 @@ public final class CbWallGameRenderer {
         w.setWindowActive(active);
     }
 
-    /** 1.21.11 Minecraft.doWorldLoad(access, packs, stem, newWorld): 26.1 also takes initial game rules (none: the world's own) */
-    public static java.util.Optional<?> noGameRules() {
-        return java.util.Optional.empty();
-    }
-
     /** 1.21.11's WindowEventHandler.setWindowActive, on Minecraft (CbWallMinecraftMixin) and a mod's handlers (adapterHooks) */
     public interface CbWallMinecraftWindow {
         void setWindowActive(boolean active);

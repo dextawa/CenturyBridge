@@ -1,0 +1,147 @@
+{
+ "ctorRedirects": {
+  "net/minecraft/class_6904.<init>(Lnet/minecraft/class_6860;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/class_5219;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#worldStem",
+  "net/minecraft/class_8895.<init>(Lnet/minecraft/class_5219;Lnet/minecraft/class_7723$class_7725;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#levelDataAndDimensions"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/server/MinecraftServer.<init>(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Ljava/net/Proxy;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7497;Lnet/minecraft/class_11545;)V": {
+   "desc": "(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Ljava/util/Optional;Ljava/net/Proxy;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7497;Lnet/minecraft/class_11545;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#initialRules(Lnet/minecraft/class_6904;)Ljava/util/Optional;",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#propagatesCrashes()Z"
+   ],
+   "basis": "26.1 MinecraftServer takes the new world's initial game rules beside the stem (1.21.11 kept them in the stem's world data: rt/CbWallWorldLoad.initialRules, empty for a world read from disk) and whether its event loop throws the delayed fatal crash (1.21.11's every server threw it from its waits: true)"
+  },
+  "net/minecraft/class_3176.<init>(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Lnet/minecraft/class_3807;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7497;)V": {
+   "desc": "(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Ljava/util/Optional;Lnet/minecraft/class_3807;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7497;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#initialRules(Lnet/minecraft/class_6904;)Ljava/util/Optional;",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "26.1 DedicatedServer takes the new world's initial game rules beside the stem; 1.21.11 kept them in the stem's world data (rt/CbWallWorldLoad.initialRules)"
+  },
+  "net/minecraft/class_1132.<init>(Ljava/lang/Thread;Lnet/minecraft/class_310;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Lnet/minecraft/class_7497;Lnet/minecraft/class_11545;)V": {
+   "desc": "(Ljava/lang/Thread;Lnet/minecraft/class_310;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Ljava/util/Optional;Lnet/minecraft/class_7497;Lnet/minecraft/class_11545;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:4 top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#initialRules(Lnet/minecraft/class_6904;)Ljava/util/Optional;",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "26.1 IntegratedServer takes the new world's initial game rules beside the stem; 1.21.11 kept them in the stem's world data (rt/CbWallWorldLoad.initialRules)"
+  },
+  "net/minecraft/class_3218.<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5268;Lnet/minecraft/class_5321;Lnet/minecraft/class_5363;ZJLjava/util/List;ZLnet/minecraft/class_8565;)V": {
+   "desc": "(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5268;Lnet/minecraft/class_5321;Lnet/minecraft/class_5363;ZJLjava/util/List;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "basis": "26.1 keeps the random sequences on the server (MinecraftServer.randomSequences) and ServerLevel holds none; 1.21.11's server handed every level the overworld's, the server-wide ones 26.1 keeps (javap of both). A level 1.21.11 gave its own sequences (null: its own saved data) shares the server's (release_notes_known)"
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_32$class_5143.method_29584(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_34;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#getSummary",
+  "net/minecraft/class_32$class_5143.method_54545()Lcom/mojang/serialization/Dynamic;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#getDataTag",
+  "net/minecraft/class_32$class_5143.method_54546()Lcom/mojang/serialization/Dynamic;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#getDataTagFallback"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_32.method_54523(Lcom/mojang/serialization/Dynamic;Lnet/minecraft/class_7712;Lnet/minecraft/class_2378;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_8895;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#getLevelDataAndDimensions",
+  "net/minecraft/class_524.method_2701(Lnet/minecraft/class_32$class_5143;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient#makeBackupAndShowToast"
+ },
+ "callReshapes": {
+  "net/minecraft/class_6306.method_40378(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Ljava/util/Optional;Z)Lnet/minecraft/class_6306;": {
+   "desc": "(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Ljava/util/Optional;ZI)Lnet/minecraft/class_6306;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#noRepeats()I"
+   ],
+   "basis": "26.1 GameTestServer.create takes a repeat count; 1.21.11 ran each selected test once with the direct decorator, which is 26.1's repeat count 0"
+  },
+  "net/minecraft/class_7196.method_41889(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/class_5219;)V": {
+   "desc": "(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:2,3 top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#withGenSettings(Lnet/minecraft/class_7780;Lnet/minecraft/class_5219;)Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#initialRules(Lnet/minecraft/class_5219;)Ljava/util/Optional;"
+   ],
+   "basis": "26.1 createLevelFromExistingSettings takes the world data with its generation settings split off, and the initial game rules; 1.21.11's world data carried both (rt/CbWallWorldLoad)"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_41889(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/class_5219;)V",
+   "new": "method_41889(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;Ljava/util/Optional;)V",
+   "onlyUnder": "net/minecraft/class_7196",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient.createLevelFromExistingSettings(Ltop/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyWorldOpenFlows;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;Ljava/util/Optional;)V",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyWorldOpenFlows",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls createLevelFromExistingSettings with the world data and generation settings apart, and the initial rules; a 1.21.11 override gets the data, which keeps both (handed back through a super call, the callReshapes entry restores them)"
+  }
+ ],
+ "interfaceCallRedirects": {
+  "net/minecraft/class_10241.create(Lnet/minecraft/class_525;Lnet/minecraft/class_7780;Lnet/minecraft/class_31;Ljava/nio/file/Path;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient#create"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_10241.create(Lnet/minecraft/class_525;Lnet/minecraft/class_7780;Lnet/minecraft/class_31;Ljava/nio/file/Path;)Z": {
+   "iface": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyCreateWorldCallback",
+   "adapt": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient#adapt(Ltop/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyCreateWorldCallback;)Lnet/minecraft/class_10241;"
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_10241",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyCreateWorldCallback",
+   "requires": [
+    "create(Lnet/minecraft/class_525;Lnet/minecraft/class_7780;Lnet/minecraft/class_31;Ljava/nio/file/Path;)Z"
+   ],
+   "synth": [
+    {
+     "new": "create(Lnet/minecraft/class_525;Lnet/minecraft/class_7780;Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;Ljava/util/Optional;Ljava/nio/file/Path;)Z",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient.create(Ltop/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyCreateWorldCallback;Lnet/minecraft/class_525;Lnet/minecraft/class_7780;Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;Ljava/util/Optional;Ljava/nio/file/Path;)Z"
+    }
+   ],
+   "basis": "26.1's CreateWorldCallback.create takes the world data with its generation settings and the initial game rules; a 1.21.11 callback gets the PrimaryLevelData, which keeps both"
+  }
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_11952.field_62670:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#bedIsHead",
+  "net/minecraft/class_11959.field_62695:F": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#chestAngle"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_11952.field_62670:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setBedIsHead",
+  "net/minecraft/class_11959.field_62695:F": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setChestAngle"
+ }
+}

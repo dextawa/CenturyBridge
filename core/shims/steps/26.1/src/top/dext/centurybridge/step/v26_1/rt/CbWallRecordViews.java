@@ -58,12 +58,12 @@ public final class CbWallRecordViews {
 
     /** 1.21.11 WorldStem.worldData() */
     public static WorldData stemWorldData(WorldStem stem) {
-        return stem.worldDataAndGenSettings().data();
+        return CbWallWorldLoad.data(stem.worldDataAndGenSettings());
     }
 
     /** 1.21.11 LevelDataAndDimensions.worldData() */
     public static WorldData levelWorldData(LevelDataAndDimensions levelData) {
-        return levelData.worldDataAndGenSettings().data();
+        return CbWallWorldLoad.data(levelData.worldDataAndGenSettings());
     }
 
     /** 1.21.11 new RegistryDataLoader.RegistryData(key, elementCodec, requiredNonEmpty) */

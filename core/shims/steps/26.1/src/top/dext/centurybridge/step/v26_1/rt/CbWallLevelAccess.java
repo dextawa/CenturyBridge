@@ -47,4 +47,21 @@ public final class CbWallLevelAccess {
         }
         return found.get(0);
     }
+
+    /**
+     * The one open access in this process, for a 1.21.11 call that names neither the access nor its level source
+     * (a level.dat tag it read through it). None or several open: refused, with the reason.
+     */
+    public static LevelStorageSource.LevelStorageAccess onlyOpen(String what) {
+        List<LevelStorageSource.LevelStorageAccess> found;
+        synchronized (OPEN) {
+            found = new ArrayList<>(OPEN.keySet());
+        }
+        if (found.size() != 1) {
+            throw new IllegalStateException(what + ": 26.1 reads the world's generation settings and saved data from the world's"
+                + " directory, and 1.21.11's call names the world only through its level data; " + found.size()
+                + " worlds are open, so the data belongs to no single one");
+        }
+        return found.get(0);
+    }
 }

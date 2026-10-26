@@ -39,7 +39,9 @@ public abstract class CbWallLevelSettingsMixin implements CbWallLevelSettings.Ru
         GameRules rules = this.cb$gameRules;
         LevelSettings next = cir.getReturnValue();
         if (rules != null && next != null && (Object) next != this) {
-            ((CbWallLevelSettings.Rules) (Object) next).cb$setGameRules(copy ? rules.copy(next.dataConfiguration().enabledFeatures()) : rules);
+            GameRules carried = copy ? rules.copy(next.dataConfiguration().enabledFeatures()) : rules;
+            CbWallLevelSettings.carried(rules, carried);
+            ((CbWallLevelSettings.Rules) (Object) next).cb$setGameRules(carried);
         }
     }
 

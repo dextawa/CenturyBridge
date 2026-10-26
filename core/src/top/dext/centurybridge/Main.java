@@ -217,6 +217,18 @@ public final class Main {
             chain.layerMembers = top.dext.centurybridge.engine.LayerMembers.read(chain.layerJar);
             System.out.println("step layer for redirect bodies and restored members: " + lj);
         }
+        // in a climb every earlier step's layer is in the runtime at W as well (climbed like a mod): the members it
+        // restores on W's classes are declared there at runtime too (LayerMembers.inherit), read off its built jar
+        if (System.getProperty("cb.layersDir") != null && System.getProperty("cb.layerJar") == null) {
+            int wi = top.dext.centurybridge.engine.Chain.RELEASES.indexOf(args[3]);
+            for (int ri = 0; ri < wi; ri++) {
+                Path ej = Path.of(System.getProperty("cb.layersDir"),
+                    "centurybridge-0.3.0+" + top.dext.centurybridge.engine.Chain.RELEASES.get(ri) + ".jar");
+                if (Files.exists(ej)) {
+                    chain.layerMembers.inherit(top.dext.centurybridge.engine.LayerMembers.read(ej));
+                }
+            }
+        }
         Path targetStub = stubOf(args[3]);
         if (Files.exists(targetStub)) {
             chain.loadTargetCtors(targetStub, crossesWall ? renameTable : null);

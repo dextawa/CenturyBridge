@@ -1,0 +1,13 @@
+{
+ "mixinTargets": {
+  "net/minecraft/class_1799.method_7979(Lnet/minecraft/class_1309;Lnet/minecraft/class_1657;)Z": {
+   "to": "method_7979(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z",
+   "args": [
+    0,
+    1
+   ],
+   "narrow": true,
+   "basis": "ItemStack.hurtEnemy(target, Player attacker) -> hurtEnemy(target, LivingEntity attacker): javap both, the same body (Item.hurtEnemy, then the ITEM_USED stat when the attacker is a player, now behind an instanceof); 1.21.2's Mob.doHurtTarget calls it too, so a 1.21.1 handler is handed the attacker only when it is a Player, as 1.21.1 only ever did"
+  }
+ }
+}

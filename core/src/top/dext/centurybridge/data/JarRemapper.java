@@ -91,6 +91,33 @@ public final class JarRemapper {
         public final java.util.Map<String, java.util.Set<String>> mixinShadows = new java.util.HashMap<>();
 
         /**
+         * Each mixin's own methods (name + descriptor as in the input), @Shadow / @Overwrite ones excluded. A member a
+         * layer mixin restores on its target under the V id (1.20.2 SlotBridge's setByPlayer(ItemStack), method_48931)
+         * takes the table's name of the target's member of that id -- and when the target release declares a method of
+         * that name and descriptor itself (26.1 Slot.setByPlayer(ItemStack): 1.20.2's one-argument form is back), the
+         * mixin's method would replace vanilla's at apply. Such a method keeps its token ({@link #keepsToken}): vanilla's
+         * stays, the restored body stays reachable by the name the layer's own references use, and references through
+         * the target class reach vanilla's method by the table's name.
+         */
+        public final java.util.Map<String, java.util.Set<String>> mixinOwnMethods = new java.util.HashMap<>();
+
+        /** whether mixin {@code owner}'s own method {@code name desc}, renamed to {@code moj}, would land on a target method */
+        boolean keepsToken(String owner, String name, String desc, String moj, Remapper r) {
+            java.util.Set<String> own = mixinOwnMethods.get(owner);
+            if (own == null || moj.equals(name) || targetMethods == null || !own.contains(name + desc)) {
+                return false;
+            }
+            String md = r.mapMethodDesc(desc);
+            for (String t : mixinTargets.getOrDefault(owner, java.util.List.of())) {
+                java.util.Set<String> ms = targetMethods.get(r.map(t));
+                if (ms != null && ms.contains(moj + md)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
          * The source release's methods (intermediary owner -> id -> its descriptors), when the conversion has the
          * source code jar ({@link #loadSource}). A selector naming a method by id alone was unique in intermediary
          * (every method its own id) and need not be in mojang names: 1.21.11's BlockItem has method_7710 (instance)
@@ -349,6 +376,9 @@ public final class JarRemapper {
                         return name;
                     }
                     String m = member(owner, name);
+                    if (keepsToken(owner, name, desc, m, this)) {
+                        return name;
+                    }
                     return targetMethods == null ? m : byDescriptor(owner, name, desc, m);
                 }
 
@@ -605,6 +635,13 @@ public final class JarRemapper {
             }
             table.mixinTargets.put(cn.name, targets);
             table.mixinShadows.put(cn.name, shadows);
+            java.util.Set<String> own = new java.util.HashSet<>();
+            for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                if (!shadows.contains(m.name)) {
+                    own.add(m.name + m.desc);
+                }
+            }
+            table.mixinOwnMethods.put(cn.name, own);
         }
     }
 
