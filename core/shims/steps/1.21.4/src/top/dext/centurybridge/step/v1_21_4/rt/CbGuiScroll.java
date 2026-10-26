@@ -85,6 +85,11 @@ public final class CbGuiScroll {
         boolean cb$clicked(double x, double y);
     }
 
+    /** the restored 1.21.3 AbstractWidget.clicked called virtually (CbGuiScrollWidgetMixin), for the mouseClicked route */
+    public interface AskClicked {
+        boolean cb$v1_21_4$askClicked(double x, double y);
+    }
+
     /** a 1.21.3 list overriding isValidMouseClick(int): its mouseClicked refused a press the override refused */
     public interface CbLegacyValidMouseClick {
         boolean cb$isValidMouseClick(int button);

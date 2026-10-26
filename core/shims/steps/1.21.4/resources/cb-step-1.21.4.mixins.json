@@ -44,6 +44,7 @@
     "CbGuiScrollListMixin",
     "CbGuiScrollTextAreaMixin",
     "CbGuiScrollWidgetMixin",
+    "CbGuiScrollWidgetRouteMixin",
     "CbItemConditionsMixin",
     "CbItemLayerAccess",
     "CbItemModelTypesMixin",
