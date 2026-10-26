@@ -1,0 +1,13 @@
+{
+ "_sruntime_registry_alias_basis": "Fabric API's registry aliases return natively at 1.21.3 (fabric-registry-sync-v0 0.114.1, javap: FabricRegistry with default addAlias(Identifier, Identifier) injected into Registry; SimpleRegistryMixin implements it with its aliases map and rewrites the lookups' id / key parameters through it; 1.21.2's 0.106.1 had neither). The 1.21.2 layer's copy (facade/fapi/FabricRegistry + CbRestFapiRegistryAliasMixin on MappedRegistry) retires: on every T >= 1.21.4 its addAlias overwrite-conflicted with the native SimpleRegistryMixin. Converted references move to the native interface (member check: both declare only default addAlias(class_2960, class_2960)V besides the facade's static, which staticRedirects send to rt/CbFapiRegistryAliases).",
+ "classRenames": {
+  "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry": "net/fabricmc/fabric/api/event/registry/FabricRegistry"
+ },
+ "staticRedirects": {
+  "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry.addAlias(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_3/rt/CbFapiRegistryAliases"
+ },
+ "retiredClasses": {
+  "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry": "Fabric API 1.21.3's own FabricRegistry (fabric-registry-sync-v0 0.114.1) is back; references move to it (classRenames)",
+  "top/dext/centurybridge/step/v1_21_2/mixin/CbRestFapiRegistryAliasMixin": "Fabric API 1.21.3's SimpleRegistryMixin keeps the aliases, addAlias, the alias-resolving lookups and the alias-id refusal on MappedRegistry itself; the copy's addAlias overwrite-conflicted with it"
+ }
+}

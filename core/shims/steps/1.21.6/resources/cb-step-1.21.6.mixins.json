@@ -33,7 +33,10 @@
     "CbTextureMultiMixin",
     "CbTextureBlurMixin",
     "CbTextureReloadBlurMixin",
-    "CbScreenTooltipMixin"
+    "CbScreenTooltipMixin",
+    "CbTextureViewsMixin",
+    "CbSectionDistanceRestoredMixin",
+    "CbSectionDispatcherRestoredMixin"
   ],
   "server": [],
   "injectors": {

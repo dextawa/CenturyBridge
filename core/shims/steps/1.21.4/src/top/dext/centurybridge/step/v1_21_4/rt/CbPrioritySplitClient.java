@@ -32,11 +32,6 @@ public final class CbPrioritySplitClient {
                 net.minecraft.class_4587 pose, net.minecraft.class_4597 buffers, net.minecraft.class_1937 level, int light, int overlay, int seed);
     }
 
-    /** CbGuiScrollWidgetMixin: 1.21.3's clicked(x, y), called virtually */
-    public interface WidgetClicked {
-        boolean cb$v1_21_4$askClicked(double x, double y);
-    }
-
     /** CbGuiScrollTextAreaMixin: 1.21.3's withinContentAreaPoint(x, y), called virtually */
     public interface TextAreaContentPoint {
         boolean cb$v1_21_4$contentAreaPoint(double x, double y);
