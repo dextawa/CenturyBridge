@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import top.dext.centurybridge.step.v1_20_5.rt.CbRestPath;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * 1.20.4 WalkNodeEvaluator's path type composition, which 1.20.5 folded into getPathTypeWithinMobBB /
@@ -34,6 +35,7 @@ public abstract class CbRestWalkNodeEvaluatorMixin extends net.minecraft.class_8
 
     /** 1.20.4 getBlockPathTypes(level, x, y, z, types, current, mobPos): every cell of the mob's box, evaluated */
     @Override
+    @CbVanillaReads("CbRouteWalkTypesMixin: getPathTypeWithinMobBB collects the mob box's types through it, as 1.20.4's getBlockPathType(level, x, y, z, mob) did, when a converted mod mixes it or evaluateBlockPathType")
     public net.minecraft.class_7 method_64(net.minecraft.class_1922 level, int x, int y, int z, EnumSet<net.minecraft.class_7> types,
                                            net.minecraft.class_7 current, net.minecraft.class_2338 mobPos) {
         for (int i = 0; i < this.field_31; i++) {
@@ -53,6 +55,7 @@ public abstract class CbRestWalkNodeEvaluatorMixin extends net.minecraft.class_8
 
     /** 1.20.4 evaluateBlockPathType(level, pos, type): doors as the evaluator may pass them, rails only on rails */
     @Override
+    @CbVanillaReads("CbRouteWalkTypesMixin: getPathTypeWithinMobBB evaluates each cell of the mob's box through it (via getBlockPathTypes), as 1.20.4's did, when a converted mod mixes it or getBlockPathTypes")
     public net.minecraft.class_7 method_61(net.minecraft.class_1922 level, net.minecraft.class_2338 pos, net.minecraft.class_7 type) {
         boolean canPassDoors = this.method_23();
         if (type == net.minecraft.class_7.field_23 && this.method_24() && canPassDoors) {

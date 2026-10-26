@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # boot.sh <tag> [native-only]: step 1.20.4 -> 1.20.5 real-server check for smx4b. cb-smx4b (built against 1.20.4 here)
 # is converted 1.20.4 -> 1.20.5 with this agent's engine, wiring and built step layer and booted on a Fabric 1.20.5
-# server (own copy, agents/smx4b/srv-1.20.5) with Fabric API and the step layer, next to cb-smx4bn (native/, built
+# server (own copy, <work dir>/srv-1.20.5) with Fabric API and the step layer, next to cb-smx4bn (native/, built
 # against 1.20.5, not converted). "native-only" boots cb-smx4bn without cb-smx4b: no converted mod mixes the restored
 # members, so every route must leave 1.20.5's path untouched and cb-smx4bn's mixins must all fire.
-# Run on beta2 from ~/cbwork after the work dir's layer was built (remote_step.sh).
+# Run on beta2 from ~/cbwork after the work dir's layer was built (remote_step.sh); CB_WD=<work dir> (default agents/smx4b).
 set -uo pipefail
 cd ~/cbwork
-WD=agents/smx4b; TAG="$1"; MODE="${2:-}"
+WD=${CB_WD:-agents/smx4b}; TAG="$1"; MODE="${2:-}"
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 export PATH=$HOME/cbtest/jdk-25.0.4.1+1/bin:$PATH
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')

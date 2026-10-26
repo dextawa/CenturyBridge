@@ -12,6 +12,11 @@
     "NativeBreakSlotMixin",
     "NativeFireballItemMixin",
     "NativeThrowableItemMixin",
+    "NativeWalkMixin",
+    "NativeSwimMixin",
+    "NativePanicMixin",
+    "NativeGoalsMixin",
+    "NativeDeflectMixin",
     "PlayerInvoker",
     "PiglinInvoker"
   ],
