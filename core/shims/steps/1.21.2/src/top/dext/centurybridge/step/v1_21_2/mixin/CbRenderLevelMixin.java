@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 LevelRenderer methods with nothing left to do in 1.21.2:
@@ -26,7 +27,7 @@ import org.spongepowered.asm.mixin.Shadow;
  *   camera position and ticks + partialTick (1.21.2's clouds pass passes the same values).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_761.class)
+@Mixin(value = net.minecraft.class_761.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderLevelMixin implements top.dext.centurybridge.step.v1_21_2.rt.CbRenderLevel.LegacyEvents {
 
     @Shadow

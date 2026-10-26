@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 SectionRenderDispatcher.RenderSection members over 1.21.2's, which addresses a section by its SectionPos node
@@ -21,7 +22,7 @@ import org.spongepowered.asm.mixin.Unique;
  *   and answers nothing (cb$cancelTasks: whether either was there, then 1.21.2's).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_846.class_851.class)
+@Mixin(value = net.minecraft.class_846.class_851.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderSectionMixin implements top.dext.centurybridge.step.v1_21_2.rt.CbRenderSections.LegacySection {
 
     @Unique

@@ -6,9 +6,8 @@ import net.minecraft.class_3222;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.dext.centurybridge.step.v1_21_2.rt.CbPrioritySplit;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * FoodData keeps 1.21.1's lastFoodLevel (the food level at the start of the last tick; 20 before the first) and
@@ -16,9 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * tick(Player) -- 1.21.2's tick takes a ServerPlayer; 1.21.1's Player.tick ticked food on the server only, so a
  * 1.21.1 call is made with one, and a client player is refused by the cast as 1.21.2 refuses it. Declared here
  * they are real members: a converted subclass's overrides override them and its super calls reach them.
+ * The tick's capture of lastFoodLevel is in CbItemFoodDataMixinHooks (default priority).
  */
-@Mixin(class_1702.class)
-public abstract class CbItemFoodDataMixin {
+@Mixin(value = class_1702.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbItemFoodDataMixin implements CbPrioritySplit.FoodData {
 
     @Shadow
     private int field_7756;
@@ -30,19 +30,20 @@ public abstract class CbItemFoodDataMixin {
     @Unique
     private Integer cb$lastFoodLevel;
 
-    @Inject(method = "method_7588(Lnet/minecraft/class_3222;)V", at = @At("HEAD"))
-    private void cb$tick(class_3222 player, CallbackInfo ci) {
-        this.cb$lastFoodLevel = this.field_7756;
+    /** set at the head of 1.21.2's tick (CbItemFoodDataMixinHooks) */
+    @Override
+    public void cb$v1_21_2$lastFoodLevel(int level) {
+        this.cb$lastFoodLevel = level;
     }
 
     @Unique
-    private int cb$lastFoodLevel() {
+    private int cb$v1_21_2$lastFoodLevel() {
         return cb$lastFoodLevel != null ? cb$lastFoodLevel : 20;
     }
 
     /** getLastFoodLevel() */
     public int method_35217() {
-        return cb$lastFoodLevel();
+        return cb$v1_21_2$lastFoodLevel();
     }
 
     /** getExhaustionLevel() */

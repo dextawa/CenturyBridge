@@ -4,10 +4,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderDisplays;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** 1.21.1 DisplayRenderer.TextDisplayRenderer's getSubState / renderInner (see CbRenderDisplays) */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_8138.class_8141.class)
+@Mixin(value = net.minecraft.class_8138.class_8141.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderDisplayTextMixin {
 
     /** 1.21.1 getSubState(display): the display's textRenderState() */

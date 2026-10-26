@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderTex;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 EntityRenderer.getTextureLocation(entity), abstract there and gone in 1.21.2 (see CbRenderTex). Every 1.21.1
@@ -14,7 +15,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderTex;
  * no 1.21.1 implementation to give back: the call is the AbstractMethodError it would have been.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_897.class)
+@Mixin(value = net.minecraft.class_897.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderTexMixin implements CbRenderTex.Renderer, CbRenderTex.Legacy {
 
     @Shadow

@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestClient;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * ClientLevel members of 1.21.1 that 1.21.2 dropped or reshaped, back with 1.21.1's bodies on 1.21.2's
@@ -25,7 +26,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRestClient;
  * precision it is drawn with).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(class_638.class)
+@Mixin(value = class_638.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestClientLevelMixin {
 
     @Shadow

@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1's GuiGraphics draw API that 1.21.2 removed or reshaped (covers): the texture and sprite blits without
@@ -39,7 +40,7 @@ import org.spongepowered.asm.mixin.Unique;
  * were made -- and then sets the new one. drawManaged(r) ran r between two flushes, as here.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(class_332.class)
+@Mixin(value = class_332.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestGuiGraphicsMixin {
 
     @Shadow
