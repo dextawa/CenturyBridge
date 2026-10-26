@@ -17,6 +17,7 @@
     "NativePanicMixin",
     "NativeGoalsMixin",
     "NativeDeflectMixin",
+    "NativeItemCodecMixin",
     "PlayerInvoker",
     "PiglinInvoker"
   ],
