@@ -36,7 +36,10 @@
     "CbScreenTooltipMixin",
     "CbTextureViewsMixin",
     "CbSectionDistanceRestoredMixin",
-    "CbSectionDispatcherRestoredMixin"
+    "CbSectionDispatcherRestoredMixin",
+    "CbGuiScissorMixin",
+    "CbGuiScissorFrameMixin",
+    "CbGuiScissorGraphicsMixin"
   ],
   "server": [],
   "injectors": {
