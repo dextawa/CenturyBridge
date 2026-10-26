@@ -580,7 +580,7 @@ public final class MixinRepair {
         }
 
         boolean[] dirty = {false, false}; // class, refmap
-        for (MethodNode handler : mx.methods) {
+        for (MethodNode handler : new ArrayList<>(mx.methods)) { // a copy: reshapeCaptured adds a handler
             for (AnnotationNode an : annotations(handler)) {
                 Map<String, Object> v = values(an);
                 List<String> methods = strings(v.get("method"));
@@ -681,6 +681,23 @@ public final class MixinRepair {
                             continue;
                         }
                         if (anchors == null || anchors.isEmpty() || cands.stream().anyMatch(m -> anchorsIn(m, tc, anchors))) {
+                            // the handler's captured target arguments must be what the target takes now (smx1 CASE 14)
+                            List<MethodNode> hit = anchors == null || anchors.isEmpty() ? cands
+                                : cands.stream().filter(m -> anchorsIn(m, tc, anchors)).toList();
+                            CapturedFit fit = capturedFit(an, handler, anchors, hit);
+                            if (fit.why() != null) {
+                                if (deadWhy == null) deadWhy = "captured args: @" + kind + " " + where + " (" + fit.why() + ")";
+                                continue;
+                            }
+                            if (fit.changes()) {
+                                fixNotes.add("captured-args " + where + " " + fit.note()
+                                    + " (the target's arguments changed; a wrapper handler takes W's and calls the mod's handler with V's)");
+                                fixes.add(() -> {
+                                    reshapeCaptured(mx, handler, fit);
+                                    dirty[0] = true;
+                                });
+                                continue;
+                            }
                             if (cands.stream().allMatch(layerMembers::isMember)) {
                                 mixed(mx.name, owner, cands); // a converted mod mixes the layer's restored member
                             }
@@ -2744,6 +2761,181 @@ public final class MixinRepair {
         if (an.desc.endsWith("/WrapOperation;")) return hp.length != operands + 1;
         if (an.desc.endsWith("/ModifyArg;") || an.desc.endsWith("/ModifyArgs;")) return hp.length != 1;
         return true;
+    }
+
+    /**
+     * W -> V converters of the step's wiring (Chain.argConverter: (W type, V type) -> {owner, name, desc}, or null);
+     * set by Main. A captured target argument whose type the step changed is handed to the handler through one
+     */
+    public java.util.function.BiFunction<Type, Type, String[]> converter;
+
+    private static final String COERCE = "Lorg/spongepowered/asm/mixin/injection/Coerce;";
+
+    /**
+     * the handler parameters Mixin fills with the target's arguments, {first, end} (end exclusive; the k-th of them
+     * is the target's k-th argument), or null when the handler's shape does not say: @Inject before its
+     * CallbackInfo(Returnable); the value-modifying injectors after their one value; @ModifyArg(s) after the
+     * argument / Args; @Redirect / @WrapWithCondition / @WrapOperation of one INVOKE after the call's operands (and
+     * the Operation)
+     */
+    static int[] capturedRange(AnnotationNode an, MethodNode h, List<Anchor> anchors) {
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        if (an.desc.equals(INJECT)) {
+            for (int i = 0; i < hp.length; i++) {
+                if (hp[i].getDescriptor().equals(CI) || hp[i].getDescriptor().equals(CIR)) return new int[] {0, i};
+            }
+            return null;
+        }
+        if (an.desc.endsWith("/ModifyVariable;") || an.desc.endsWith("/ModifyConstant;") || an.desc.endsWith("/ModifyReturnValue;")
+                || an.desc.endsWith("/ModifyExpressionValue;") || an.desc.endsWith("/ModifyArg;") || an.desc.endsWith("/ModifyArgs;")) {
+            return new int[] {1, hp.length};
+        }
+        boolean wrap = an.desc.endsWith("/WrapOperation;");
+        if (!wrap && !an.desc.endsWith("/Redirect;") && !an.desc.endsWith("/WrapWithCondition;")) return null;
+        if (anchors == null || anchors.size() != 1 || !anchors.get(0).kind.equals("INVOKE") || anchors.get(0).desc == null
+                || anchors.get(0).name.equals("<init>")) return null;
+        Anchor a = anchors.get(0);
+        String recv = a.owner == null ? null : Type.getObjectType(a.owner).getDescriptor();
+        int start = Type.getArgumentTypes(a.desc).length + (hp.length > 0 && recv != null && hp[0].getDescriptor().equals(recv) ? 1 : 0)
+            + (wrap ? 1 : 0);
+        return start <= hp.length ? new int[] {start, hp.length} : null;
+    }
+
+    /**
+     * a kept injector's captured arguments against its target(s): why it cannot apply, or the conversions it needs
+     * (convs / types: by handler parameter index) and, for an @Inject, the target's trailing arguments the handler
+     * never took (Mixin's callback takes all of them or none), accepted and dropped at {@code insertAt}
+     */
+    record CapturedFit(String why, Map<Integer, String[]> convs, Map<Integer, Type> types, String note, List<Type> extra, int insertAt) {
+        CapturedFit(String why, Map<Integer, String[]> convs, Map<Integer, Type> types, String note) {
+            this(why, convs, types, note, List.of(), -1);
+        }
+
+        boolean changes() {
+            return !convs.isEmpty() || !extra.isEmpty();
+        }
+    }
+
+    /**
+     * smx1 CASE 14: a handler capturing the target's arguments fails at apply once the step changed one's type (Mixin
+     * compares each captured parameter with the target's argument; only an @Coerce parameter may differ). Per
+     * captured parameter: the same type (or the type the step's classRenames give it) fits; another reference type
+     * the step's wiring converts W -> V ({@link #converter}) is converted in a wrapper handler; anything else -- or
+     * more captured parameters than the target now takes -- cannot apply, and the injector is dropped with a WARN
+     */
+    CapturedFit capturedFit(AnnotationNode an, MethodNode h, List<Anchor> anchors, List<MethodNode> targets) {
+        int[] r = capturedRange(an, h, anchors);
+        Map<Integer, String[]> convs = new java.util.TreeMap<>();
+        Map<Integer, Type> types = new HashMap<>();
+        if (r == null || r[0] >= r[1]) return new CapturedFit(null, convs, types, "");
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        StringBuilder note = new StringBuilder();
+        List<Type> extra = null;
+        for (MethodNode m : targets) {
+            Type[] ta = Type.getArgumentTypes(m.desc);
+            if (an.desc.equals(INJECT) && r[1] - r[0] < ta.length) {
+                // the target gained trailing arguments: the callback takes them and drops them
+                List<Type> ex = List.of(ta).subList(r[1] - r[0], ta.length);
+                if (extra != null && !extra.equals(ex)) {
+                    return new CapturedFit("the target methods' trailing arguments differ", convs, types, "");
+                }
+                extra = ex;
+            }
+            for (int k = r[0]; k < r[1]; k++) {
+                int i = k - r[0];
+                if (i >= ta.length) {
+                    return new CapturedFit("the handler captures " + (r[1] - r[0]) + " target arguments, " + m.name + m.desc
+                        + " takes " + ta.length, convs, types, "");
+                }
+                Type p = hp[k];
+                Type t = ta[i];
+                if (p.equals(t) || renamed.apply(p.getDescriptor()).equals(t.getDescriptor()) || coerced(h, k)) continue;
+                boolean refs = (p.getSort() == Type.OBJECT || p.getSort() == Type.ARRAY) && (t.getSort() == Type.OBJECT || t.getSort() == Type.ARRAY);
+                String[] c = refs && converter != null ? converter.apply(t, p) : null;
+                if (c != null && (!types.containsKey(k) || types.get(k).equals(t))) {
+                    if (!types.containsKey(k)) note.append(" arg ").append(i).append(' ').append(t.getClassName()).append(" -> ")
+                        .append(p.getClassName()).append(" by ").append(c[0].substring(c[0].lastIndexOf('/') + 1)).append('.').append(c[1]);
+                    convs.put(k, c);
+                    types.put(k, t);
+                    continue;
+                }
+                return new CapturedFit("captures " + p.getDescriptor() + " as target argument " + i + ", " + m.name + m.desc
+                    + " takes " + t.getDescriptor() + (refs ? "; the step's wiring has no W -> V converter for it" : ""), convs, types, "");
+            }
+        }
+        if (extra != null) {
+            note.append(" accepts and drops ").append(extra.size()).append(" trailing target argument(s)");
+        }
+        return new CapturedFit(null, convs, types, note.toString().trim(), extra == null ? List.of() : extra, r[1]);
+    }
+
+    private static boolean coerced(MethodNode h, int k) {
+        for (List<AnnotationNode>[] pa : java.util.Arrays.<List<AnnotationNode>[]>asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+            if (pa != null && k < pa.length && pa[k] != null && pa[k].stream().anyMatch(a -> a.desc.equals(COERCE))) return true;
+        }
+        return false;
+    }
+
+    /** parameter annotations of the handler as the wrapper's: the inserted trailing target arguments carry none */
+    @SuppressWarnings("unchecked")
+    private static List<AnnotationNode>[] widen(List<AnnotationNode>[] pa, CapturedFit fit) {
+        if (pa == null || fit.extra().isEmpty()) return pa;
+        List<AnnotationNode>[] out = new List[pa.length + fit.extra().size()];
+        for (int k = 0; k < pa.length; k++) out[k < fit.insertAt() ? k : k + fit.extra().size()] = pa[k];
+        return out;
+    }
+
+    /**
+     * The handler takes the target's new argument types: the mod's handler keeps its body under {@code <name>$cbcap}
+     * (a plain private method, no annotations), and a handler of the new shape -- carrying the injector and parameter
+     * annotations -- converts each changed argument by the step's W -> V static and calls it with the rest as they came
+     */
+    void reshapeCaptured(ClassNode mx, MethodNode h, CapturedFit fit) {
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        List<Type> np = new ArrayList<>(List.of(hp));
+        for (Map.Entry<Integer, Type> e : fit.types().entrySet()) np.set(e.getKey(), e.getValue());
+        if (!fit.extra().isEmpty()) np.addAll(fit.insertAt(), fit.extra());
+        Type ret = Type.getReturnType(h.desc);
+        boolean isStatic = (h.access & Opcodes.ACC_STATIC) != 0;
+        boolean itf = (mx.access & Opcodes.ACC_INTERFACE) != 0;
+        MethodNode w = new MethodNode(h.access, h.name, Type.getMethodDescriptor(ret, np.toArray(new Type[0])), null,
+            h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
+        w.visibleAnnotations = h.visibleAnnotations;
+        w.invisibleAnnotations = h.invisibleAnnotations;
+        w.visibleParameterAnnotations = widen(h.visibleParameterAnnotations, fit);
+        w.invisibleParameterAnnotations = widen(h.invisibleParameterAnnotations, fit);
+        h.visibleAnnotations = null;
+        h.invisibleAnnotations = null;
+        h.visibleParameterAnnotations = null;
+        h.invisibleParameterAnnotations = null;
+        h.visibleAnnotableParameterCount = 0;
+        h.invisibleAnnotableParameterCount = 0;
+        h.name = h.name + "$cbcap";
+        // synthetic: kept out of the merged-member indexes (LayerMembers), as a lambda body is
+        h.access = (h.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE | Opcodes.ACC_SYNTHETIC;
+        int slot = 0;
+        if (!isStatic) {
+            w.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            slot = 1;
+        }
+        int stack = slot;
+        for (int k = 0; k < np.size(); k++) {
+            Type t = np.get(k);
+            boolean dropped = !fit.extra().isEmpty() && k >= fit.insertAt() && k < fit.insertAt() + fit.extra().size();
+            if (!dropped) {
+                int hk = !fit.extra().isEmpty() && k >= fit.insertAt() ? k - fit.extra().size() : k;
+                w.instructions.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+                String[] c = fit.convs().get(hk);
+                if (c != null) w.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, c[0], c[1], c[2], false));
+                stack += Math.max(t.getSize(), hp[hk].getSize());
+            }
+            slot += t.getSize();
+        }
+        w.instructions.add(new MethodInsnNode(isStatic ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, h.name, h.desc, itf));
+        w.instructions.add(new InsnNode(ret.getOpcode(Opcodes.IRETURN)));
+        w.maxLocals = slot;
+        w.maxStack = Math.max(stack, ret.getSize());
+        mx.methods.add(w);
     }
 
     static boolean touchesThisFree(MethodNode h) {

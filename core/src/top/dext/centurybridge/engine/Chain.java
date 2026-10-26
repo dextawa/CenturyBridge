@@ -1715,6 +1715,77 @@ public final class Chain {
     private final java.util.Map<String, org.objectweb.asm.tree.ClassNode> facadeClasses = new java.util.HashMap<>();
 
     /**
+     * A static of the step's wiring converting a W value to the V type that stood in its place (smx1 CASE 14: a kept
+     * injector's handler captures a target argument whose type the step changed -- 1.21.2 RecipeManager.fromJson's
+     * ResourceLocation id became a ResourceKey, the handler still takes the ResourceLocation). The wiring declares such
+     * converters where vanilla hands a mod a W value in V's place: an override hook's "wrap" (new argument -> old) and
+     * a call reshape's "ret conv" (W's answer -> V's). {owner, name, desc} taking exactly {@code w} and answering exactly
+     * {@code v}; null when the wiring has none, or has several whose bodies (the layer jar) are not instruction for
+     * instruction the same -- two different conversions of one pair are not the engine's to choose between.
+     */
+    public String[] argConverter(org.objectweb.asm.Type w, org.objectweb.asm.Type v) {
+        String want = "(" + w.getDescriptor() + ")" + v.getDescriptor();
+        java.util.Map<String, String[]> found = new java.util.TreeMap<>();
+        for (OverrideHook h : overrideHooks) {
+            for (String[] s : h.wraps) {
+                if (s[2].equals(want)) {
+                    found.put(s[0] + "." + s[1] + s[2], s);
+                }
+            }
+        }
+        for (CallReshape r : callReshapes.values()) {
+            if ("conv".equals(r.retKind) && want.equals(r.retDesc)) {
+                found.put(r.retOwner + "." + r.retName + r.retDesc, new String[] {r.retOwner, r.retName, r.retDesc});
+            }
+        }
+        if (found.size() <= 1) {
+            return found.isEmpty() ? null : found.values().iterator().next();
+        }
+        String body = null;
+        for (String[] s : found.values()) {
+            String b = layerBody(s[0], s[1], s[2]);
+            if (b == null || body != null && !body.equals(b)) {
+                return null;
+            }
+            body = b;
+        }
+        return found.values().iterator().next();
+    }
+
+    /** a layer-jar method's instructions as text (opcodes and operands, no labels / lines / frames), or null */
+    private String layerBody(String owner, String name, String desc) {
+        if (layerJar == null) {
+            return null;
+        }
+        try (java.util.zip.ZipFile z = new java.util.zip.ZipFile(layerJar.toFile())) {
+            java.util.zip.ZipEntry e = z.getEntry(owner + ".class");
+            if (e == null) {
+                return null;
+            }
+            org.objectweb.asm.tree.ClassNode c = new org.objectweb.asm.tree.ClassNode();
+            new org.objectweb.asm.ClassReader(z.getInputStream(e).readAllBytes()).accept(c,
+                org.objectweb.asm.ClassReader.SKIP_DEBUG | org.objectweb.asm.ClassReader.SKIP_FRAMES);
+            for (org.objectweb.asm.tree.MethodNode m : c.methods) {
+                if (m.name.equals(name) && m.desc.equals(desc)) {
+                    org.objectweb.asm.util.Textifier t = new org.objectweb.asm.util.Textifier();
+                    m.accept(new org.objectweb.asm.util.TraceMethodVisitor(t));
+                    StringBuilder b = new StringBuilder();
+                    for (Object o : t.getText()) {
+                        String s = o.toString();
+                        if (!s.contains("MAXSTACK") && !s.contains("MAXLOCALS")) {
+                            b.append(s);
+                        }
+                    }
+                    return b.toString();
+                }
+            }
+            return null;
+        } catch (IOException ex) {
+            return null;
+        }
+    }
+
+    /**
      * whether the facade the step renames a V class to (classRenames into CenturyBridge's classes, the layer jar)
      * declares the member, kind 'm' or 'f': a mixin of the V class targets the facade at runtime (the ClassRemapper
      * renames its @Mixin class literal), and the facade declares V's names -- a rewrite facade too (s11 C4:

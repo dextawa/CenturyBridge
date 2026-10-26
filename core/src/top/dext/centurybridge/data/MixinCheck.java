@@ -920,6 +920,17 @@ public final class MixinCheck {
             if (a.desc.equals(INJECT)) {
                 checkCallback(what, h, a, tm);
             }
+            if (a.desc.endsWith("ModifyVariable;")) {
+                // ModifyVariableInjector: (the local's type) then a prefix of the target's arguments, returning the type
+                Type t = Type.getReturnType(h.desc);
+                String err = validate(h, tm, t, List.of(t));
+                if (err != null) {
+                    problems.add(what + "." + tm.name + tm.desc + ": handler " + h.desc + " " + err);
+                }
+            }
+            currentInjector = a;
+            currentWhat = what + "." + tm.name + tm.desc;
+            currentCode = code;
             for (AnnotationNode an : ats) {
                 List<AbstractInsnNode> hits = match(an, tm, slices, a.desc.endsWith("ModifyVariable;") ? Type.getReturnType(h.desc) : null);
                 if (hits == null) {
@@ -1108,16 +1119,21 @@ public final class MixinCheck {
                         && (nt[0] == null || nt[0].equals(ti.desc));
                 }
                 case "STORE", "LOAD" -> {
-                    // which local the ModifyVariable discriminator picks needs the frames Mixin computes: not modelled.
-                    // Only the sound bound is: no store/load instruction of the handler type's kind at all = 0 matched.
+                    // AfterStoreLocal / BeforeLoadLocal: a store / load of the local the ModifyVariable discriminator picks
+                    // in the frame there (after the store, at the load) -- localAt models Mixin's Locals.getLocalsAt
                     if (local == null) {
                         return null;
                     }
                     int op = local.getOpcode(value.equals("STORE") ? org.objectweb.asm.Opcodes.ISTORE : org.objectweb.asm.Opcodes.ILOAD);
-                    if (n.getOpcode() == op) {
+                    if (n.getOpcode() != op) {
+                        hit = false;
+                        break;
+                    }
+                    Integer slot = localAt(tm, value.equals("STORE") ? i + 1 : i, local);
+                    if (slot == null) {
                         return null;
                     }
-                    hit = false;
+                    hit = slot >= 0 && ((org.objectweb.asm.tree.VarInsnNode) n).var == slot;
                 }
                 default -> {
                     return null;
@@ -1147,6 +1163,204 @@ public final class MixinCheck {
             }
         }
         return hits;
+    }
+
+    /** the injector, its report prefix and the target's code class being matched (localAt reads the discriminator) */
+    private AnnotationNode currentInjector;
+    private String currentWhat;
+    private ClassNode currentCode;
+    private final Map<MethodNode, org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.BasicValue>[]> frames
+        = new java.util.IdentityHashMap<>();
+
+    /**
+     * The local the current @ModifyVariable's discriminator (LocalVariableDiscriminator, sponge-mixin 0.8.7 javap)
+     * picks in the frame before instruction {@code at} of {@code tm}: its slot, -1 when none fits (the point does not
+     * inject there), null when not modelled (a name discriminator without a local variable table). Locals are the
+     * target's LVT entries live there or, without one, the types a verifier's analysis gives each slot (Mixin's
+     * Locals.getLocalsAt); argsOnly: the method's arguments. Candidates are the locals from the first argument on
+     * (baseArgIndex) whose type equals the handler's exactly; ordinal counts locals of that type from slot 0;
+     * implicit (no ordinal / index / name) needs exactly one candidate -- otherwise Mixin throws
+     * InvalidImplicitDiscriminatorException at apply whatever the require, reported as a problem here.
+     */
+    private Integer localAt(MethodNode tm, int at, Type type) {
+        AnnotationNode a = currentInjector;
+        int ordinal = get(a, "ordinal") instanceof Integer o ? o : -1;
+        int index = get(a, "index") instanceof Integer x ? x : -1;
+        List<String> names = new ArrayList<>();
+        if (get(a, "name") instanceof List<?> l) {
+            for (Object o : l) {
+                names.add(o.toString());
+            }
+        }
+        boolean argsOnly = Boolean.TRUE.equals(get(a, "argsOnly"));
+        boolean isStatic = (tm.access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0;
+        int base = isStatic ? 0 : 1;
+        Type[] locals = new Type[tm.maxLocals];
+        String[] lnames = new String[tm.maxLocals];
+        if (argsOnly) {
+            int s = base;
+            for (Type t : Type.getArgumentTypes(tm.desc)) {
+                if (s < locals.length) {
+                    locals[s] = t;
+                }
+                s += t.getSize();
+            }
+        } else if (tm.localVariables != null && !tm.localVariables.isEmpty()) {
+            for (org.objectweb.asm.tree.LocalVariableNode lv : tm.localVariables) {
+                int s = tm.instructions.indexOf(lv.start);
+                int e = tm.instructions.indexOf(lv.end);
+                if (s <= at && at < e && lv.index < locals.length) {
+                    locals[lv.index] = Type.getType(lv.desc);
+                    lnames[lv.index] = lv.name;
+                }
+            }
+        } else {
+            if (!names.isEmpty() && ordinal < 0 && index < base) {
+                return null;
+            }
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.BasicValue>[] fs = frames(tm);
+            if (fs == null) {
+                return null;
+            }
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.BasicValue> f = at < fs.length ? fs[at] : null;
+            if (f == null) {
+                return -1; // unreachable code: the analysis has no frame, Mixin finds nothing to modify there
+            }
+            for (int s = 0; s < f.getLocals() && s < locals.length; s++) {
+                org.objectweb.asm.tree.analysis.BasicValue v = f.getLocal(s);
+                locals[s] = v == null || v.getType() == null || v == org.objectweb.asm.tree.analysis.BasicValue.UNINITIALIZED_VALUE ? null : v.getType();
+            }
+        }
+        int ord = -1;
+        int count = 0;
+        int implicit = -1;
+        for (int s = 0; s < locals.length; s++) {
+            if (locals[s] == null || !locals[s].equals(type)) {
+                continue;
+            }
+            ord++;
+            if (s < base) {
+                continue;
+            }
+            count++;
+            implicit = s;
+            if (ordinal > -1 ? ordinal == ord : index >= base ? index == s : !names.isEmpty() && names.contains(lnames[s])) {
+                return s;
+            }
+        }
+        if (ordinal < 0 && index < base && names.isEmpty()) {
+            if (count == 1) {
+                return implicit;
+            }
+            if (count > 1) {
+                problems.add(currentWhat + ": implicit @ModifyVariable finds " + count + " " + type.getDescriptor()
+                    + " locals at instruction " + at + " (InvalidImplicitDiscriminatorException at apply)");
+            }
+        }
+        return -1;
+    }
+
+    /** the frames a verifier's analysis gives the target method (class hierarchy from the code source), or null */
+    private org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.BasicValue>[] frames(MethodNode tm) {
+        if (frames.containsKey(tm)) {
+            return frames.get(tm);
+        }
+        ClassNode owner = currentCode;
+        org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.BasicValue>[] out;
+        try {
+            List<Type> itfs = new ArrayList<>();
+            for (String s : owner.interfaces) {
+                itfs.add(Type.getObjectType(s));
+            }
+            org.objectweb.asm.tree.analysis.SimpleVerifier v = new org.objectweb.asm.tree.analysis.SimpleVerifier(
+                    org.objectweb.asm.Opcodes.ASM9, Type.getObjectType(owner.name),
+                    owner.superName == null ? null : Type.getObjectType(owner.superName), itfs,
+                    (owner.access & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0) {
+                @Override
+                protected boolean isInterface(Type t) {
+                    ClassNode c = hierarchyClass(t.getInternalName());
+                    return c != null && (c.access & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0;
+                }
+
+                @Override
+                protected Type getSuperClass(Type t) {
+                    ClassNode c = hierarchyClass(t.getInternalName());
+                    return c == null ? (t.getInternalName().equals("java/lang/Object") ? null : Type.getObjectType("java/lang/Object"))
+                        : c.superName == null ? null : Type.getObjectType(c.superName);
+                }
+
+                @Override
+                protected Class<?> getClass(Type t) {
+                    throw new IllegalStateException("not loaded: " + t);
+                }
+
+                @Override
+                protected boolean isAssignableFrom(Type to, Type from) {
+                    if (to.equals(from) || to.getInternalName().equals("java/lang/Object") || isInterface(to)) {
+                        return true; // interfaces: as the JVM's verifier, any reference may stand for one
+                    }
+                    if (to.getSort() == Type.ARRAY || from.getSort() == Type.ARRAY) {
+                        return to.getSort() == Type.ARRAY && from.getSort() == Type.ARRAY && to.getDimensions() == from.getDimensions()
+                            && to.getElementType().getSort() == Type.OBJECT && from.getElementType().getSort() == Type.OBJECT
+                            && isAssignableFrom(to.getElementType(), from.getElementType());
+                    }
+                    return subtype(from.getInternalName(), to.getInternalName(), new java.util.HashSet<>());
+                }
+            };
+            out = new org.objectweb.asm.tree.analysis.Analyzer<>(v).analyze(owner.name, tm);
+        } catch (org.objectweb.asm.tree.analysis.AnalyzerException | RuntimeException ex) {
+            out = null;
+        }
+        frames.put(tm, out);
+        return out;
+    }
+
+    /** a class of the code source, or a JDK class's shape read from the running JDK (null: unknown, taken as Object's subclass) */
+    private ClassNode hierarchyClass(String name) {
+        ClassNode c = codeClass(name);
+        if (c != null || !name.startsWith("java/")) {
+            return c;
+        }
+        return jdkNodes.computeIfAbsent(name, n -> {
+            try (java.io.InputStream in = ClassLoader.getSystemResourceAsStream(n + ".class")) {
+                if (in == null) {
+                    return null;
+                }
+                ClassNode cn = new ClassNode();
+                new ClassReader(in.readAllBytes()).accept(cn, ClassReader.SKIP_CODE);
+                return cn;
+            } catch (java.io.IOException ex) {
+                return null;
+            }
+        });
+    }
+
+    private final Map<String, ClassNode> jdkNodes = new HashMap<>();
+
+    /**
+     * whether class {@code c} is {@code sup} or extends / implements it. The analysis is after the locals' types, not a
+     * verification: a class the code source and the JDK do not hold (a library's) counts as compatible
+     */
+    private boolean subtype(String c, String sup, java.util.Set<String> seen) {
+        if (c == null || !seen.add(c)) {
+            return false;
+        }
+        if (c.equals(sup)) {
+            return true;
+        }
+        ClassNode n = hierarchyClass(c);
+        if (n == null) {
+            return !c.equals("java/lang/Object");
+        }
+        if (subtype(n.superName, sup, seen)) {
+            return true;
+        }
+        for (String i : n.interfaces) {
+            if (subtype(i, sup, seen)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
