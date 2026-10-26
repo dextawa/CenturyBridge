@@ -78,6 +78,7 @@
     "CbFapiRegistryAliasInterface",
     "CbFapiServerWorldAttachments",
     "CbFapiSimpleRegistryAliases",
+    "CbFapiSimpleRegistryAliasesHooks",
     "CbFapiTadpoleConversion",
     "CbFapiTagBuilderRemoval",
     "CbFapiTagEntryAccess",
