@@ -3311,7 +3311,15 @@ final class MixinBridge {
             for (int i = 0; known && i < from.length; i++) {
                 known = from[i] >= 0;
             }
-            return new Fate(mt.name(), mt.desc(), known ? from : null, new String[va.length][], new boolean[va.length], known,
+            // "narrow": an argument W widened (1.21.2 ItemStack.hurtEnemy: a LivingEntity attacker where 1.21.1 took a
+            // Player, mobs now calling it too) reaches the handler only when it is V's type, as the override hooks'
+            // narrowing: a handler written for V never saw another
+            boolean[] narrow = new boolean[va.length];
+            Type[] mwa = Type.getArgumentTypes(mt.desc());
+            for (int i = 0; known && mt.narrow() && i < va.length; i++) {
+                narrow[i] = from[i] < mwa.length && !mwa[from[i]].equals(va[i]) && va[i].getSort() >= Type.ARRAY;
+            }
+            return new Fate(mt.name(), mt.desc(), known ? from : null, new String[va.length][], narrow, known,
                 "mixinTargets (" + mt.basis() + ")");
         }
         for (Chain.OverrideHook h : chain.overrideHooksForOld(name, vdesc)) {
@@ -3345,9 +3353,12 @@ final class MixinBridge {
                 if (j < 0 || j >= na.length) {
                     known = false;
                 } else if (!na[j].equals(va[i]) && !wAssignable(na[j], va[i])) {
-                    if (h.wrapName != null && Arrays.equals(Type.getArgumentTypes(h.wrapDesc), new Type[] {na[j]})
-                            && Type.getReturnType(h.wrapDesc).equals(va[i])) {
-                        wrap[i] = new String[] {h.wrapOwner, h.wrapName, h.wrapDesc};
+                    // the hook's wrap for this argument: of a list ("wrap": [...], one new argument feeding
+                    // several old ones -- 1.21.6 saveAdditional's ValueOutput gives the tag and the lookup), the
+                    // static taking W's type to V's
+                    String[] w = h.wrapFor(na[j], va[i]);
+                    if (w != null) {
+                        wrap[i] = w;
                     } else if (h.narrow && va[i].getSort() >= Type.ARRAY) {
                         narrow[i] = true;
                     } else {

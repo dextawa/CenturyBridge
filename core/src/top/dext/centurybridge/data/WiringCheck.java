@@ -764,15 +764,28 @@ public final class WiringCheck {
                     problems.add(where + ": args has " + a.size() + " entries, the V method " + va.length + " arguments");
                     continue;
                 }
+                // "narrow": an argument W widened reaches the handler behind an instanceof test of V's type, so V's
+                // type must be a subtype of W's (as for override hooks' narrow)
+                boolean narrow = o.has("narrow") && o.get("narrow").getAsBoolean();
+                boolean narrows = false;
                 for (int i = 0; i < va.length; i++) {
                     int j = a.get(i).getAsInt();
+                    boolean objects = j >= 0 && j < wa.length && wa[j].getSort() == org.objectweb.asm.Type.OBJECT
+                        && va[i].getSort() == org.objectweb.asm.Type.OBJECT;
                     if (j < -1 || j >= wa.length) {
                         problems.add(where + ": args[" + i + "] = " + j + " is no argument of " + nm + nd);
                     } else if (j >= 0 && !wa[j].equals(va[i])
-                            && !(wa[j].getSort() == org.objectweb.asm.Type.OBJECT && va[i].getSort() == org.objectweb.asm.Type.OBJECT
-                                 && resolvesSuper(wa[j].getInternalName(), va[i].getInternalName()))) {
-                        problems.add(where + ": args[" + i + "]: W argument " + j + " (" + wa[j] + ") is not a " + va[i]);
+                            && !(objects && resolvesSuper(wa[j].getInternalName(), va[i].getInternalName()))) {
+                        if (narrow && objects && resolvesSuper(va[i].getInternalName(), wa[j].getInternalName())) {
+                            narrows = true;
+                        } else {
+                            problems.add(where + ": args[" + i + "]: W argument " + j + " (" + wa[j] + ") is not a " + va[i]
+                                + (narrow ? ", nor a supertype it narrows to" : ""));
+                        }
                     }
+                }
+                if (narrow && !narrows) {
+                    problems.add(where + ": \"narrow\" but no argument W widened");
                 }
             }
         }

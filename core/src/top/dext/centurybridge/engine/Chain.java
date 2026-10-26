@@ -131,8 +131,11 @@ public final class Chain {
      * an injector selecting the V method there (handlers taking the target's arguments get a W-shaped
      * handler mapping them back through "args"; an argument at -1 leaves only handlers that take none),
      * before anything it would infer itself. Mods' plain calls are not touched (that is callReshapes').
+     * "narrow": true, for an argument W widened: a captured argument whose W type differs from V's reaches the
+     * handler only when it is V's type (an instanceof test, as override hooks' "narrow"), otherwise the handler is
+     * skipped -- a handler written for V was never handed another.
      */
-    public record MixinTarget(String name, String desc, int[] args, String basis) {}
+    public record MixinTarget(String name, String desc, int[] args, String basis, boolean narrow) {}
 
     public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
 
@@ -3010,7 +3013,8 @@ public final class Chain {
                         }
                     }
                     c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs,
-                        o.has("basis") ? o.get("basis").getAsString() : ""));
+                        o.has("basis") ? o.get("basis").getAsString() : "",
+                        o.has("narrow") && o.get("narrow").getAsBoolean()));
                 }
             }
             if (root.has("methodRenames")) {
