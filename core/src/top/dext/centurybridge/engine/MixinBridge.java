@@ -1712,6 +1712,9 @@ final class MixinBridge {
         }
 
         private Selection select(MethodNode h, AnnotationNode an, String kind, List<String> sels, ClassNode wt, ClassNode vt) {
+            // a bare selector (a name, no descriptor) that W still matches by name, though a V method it meant has
+            // another descriptor on W: kept only if nothing below carries it (see the bare-name test)
+            Selection bareFallback = null;
             // any alternative that still selects a method of W: nothing moved under it
             for (String sel : sels) {
                 if (sel.startsWith("/") || sel.contains("*")) {
@@ -1727,7 +1730,25 @@ final class MixinBridge {
                     wm = new MixinRepair.Sel(s.owner(), s.name(), chain.renamedDesc(s.desc()), s.wildcard()).match(wt);
                 }
                 if (!wm.isEmpty()) {
-                    return new Selection(h, an, vt == null ? List.of() : s.match(vt), wm);
+                    Selection same = new Selection(h, an, vt == null ? List.of() : s.match(vt), wm);
+                    // A bare selector ("method_9559": CenturyBridge's layers have no refmap, so every selector of a
+                    // climbing layer is one) matches W's method of that name whatever its descriptor. Unchanged only
+                    // if every V method of the name is declared by W with its descriptor (as classRenames spell it);
+                    // otherwise the V method's signature changed under the same name (1.21.2 updateShape, 1.21.4
+                    // getCloneItemStack) and the step's wiring for it (override hook, reshape, mixinTargets) carries
+                    // the selector and gives the handler W's shape, as for a selector with a descriptor
+                    if (s.desc() == null && vt != null && !itf) {
+                        List<MethodNode> vmatch = s.match(vt);
+                        boolean kept = true;
+                        for (MethodNode m : vmatch) {
+                            kept &= method(wt, m.name, chain.renamedDesc(m.desc)) != null;
+                        }
+                        if (!kept) {
+                            bareFallback = bareFallback == null ? same : bareFallback;
+                            continue;
+                        }
+                    }
+                    return same;
                 }
                 // a member the layer restores on the W class (LayerMembers) whose vanilla read path the layer
                 // routes through it (@CbVanillaReads): the selector names a method that exists at runtime and
@@ -1866,7 +1887,8 @@ final class MixinBridge {
                         + Type.getReturnType(fate.desc()) + " with no converter: partial, the answer untouched" : "") + ")");
                 return new Selection(handler, an, List.of(vmeth), List.of(wmeth));
             }
-            return null;
+            // a bare selector nothing carried: left on W's method of the name, as before (the report says why)
+            return bareFallback;
         }
 
         /**
