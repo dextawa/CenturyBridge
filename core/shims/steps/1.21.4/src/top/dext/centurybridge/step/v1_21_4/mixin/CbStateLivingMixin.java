@@ -4,13 +4,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_4.rt.CbRenderStates;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * LivingEntityRenderState's 1.21.3 item fields (see {@link CbRenderStates}): the head item and its model, the main arm, both
  * hands' items and models. The head item keeps its 1.21.3 name elsewhere (1.21.4's field of that name is its render state).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_10042.class)
+@Mixin(value = net.minecraft.class_10042.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbStateLivingMixin implements CbRenderStates.CbLegacyLivingState, CbRenderStates.CbLegacyHands {
 
     /** headItemModel */

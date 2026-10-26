@@ -3,10 +3,11 @@ package top.dext.centurybridge.step.v1_21_4.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /** TextureAtlas's 1.21.3 updateFilter(preparations): mipmapped when the atlas has mip levels, never blurred */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_1059.class)
+@Mixin(value = net.minecraft.class_1059.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbTextureAtlasMixin extends net.minecraft.class_1044 {
 
     /** was updateFilter(preparations) */
