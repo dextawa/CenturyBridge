@@ -38,8 +38,7 @@
   }
  },
  "instanceRedirects": {
-  "net/minecraft/class_3222.method_32748(Lnet/minecraft/class_11368;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPlayerGameTypes",
-  "net/fabricmc/fabric/api/entity/FakePlayer.method_32748(Lnet/minecraft/class_11368;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPlayerGameTypes"
+  "net/minecraft/class_3222.method_32748(Lnet/minecraft/class_11368;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPlayerGameTypes"
  },
  "overrideHooks": [
   {
