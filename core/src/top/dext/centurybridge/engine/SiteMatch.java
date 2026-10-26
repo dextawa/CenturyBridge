@@ -559,8 +559,12 @@ public final class SiteMatch {
     }
 
     static String sigOf(AbstractInsnNode in) {
-        if (in instanceof MethodInsnNode mi) return mi.owner + "." + mi.name;
-        if (in instanceof FieldInsnNode fi) return fi.getOpcode() + fi.owner + "." + fi.name;
+        // an intermediary member name is one per member (per override family for methods), whatever class a call
+        // names it through: javac writes the static type, so a call of a member W moved up to a supertype names
+        // the supertype (smx4b case 3: class_5823.method_42570 -> class_9242.method_42570, class_5823 extends
+        // class_9242). The same resolved member is the same neighbour; other names keep their owner
+        if (in instanceof MethodInsnNode mi) return (intermediaryName(mi.name, "method_") ? "" : mi.owner) + "." + mi.name;
+        if (in instanceof FieldInsnNode fi) return fi.getOpcode() + (intermediaryName(fi.name, "field_") ? "" : fi.owner) + "." + fi.name;
         if (in instanceof TypeInsnNode ti) return ti.getOpcode() + ti.desc;
         if (in instanceof InvokeDynamicInsnNode id) return "indy." + id.name;
         Object c = constantOf(in);
@@ -568,6 +572,18 @@ public final class SiteMatch {
         int op = in.getOpcode();
         if (op >= Opcodes.IRETURN && op <= Opcodes.RETURN || op == Opcodes.ATHROW) return "ret" + op;
         return null;
+    }
+
+    private static boolean intermediaryName(String name, String prefix) {
+        if (!name.startsWith(prefix) || name.length() == prefix.length()) {
+            return false;
+        }
+        for (int i = prefix.length(); i < name.length(); i++) {
+            if (!Character.isDigit(name.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /** a constant as Mixin's @Constant / CONSTANT sees it (null for anything else) */
