@@ -24,6 +24,11 @@ public final class CbRoutes {
     public static final String LIVING_BROADCAST_BREAK_HAND = "net/minecraft/class_1309.method_20236(Lnet/minecraft/class_1268;)V";
     public static final String FIREBALL_GET_ITEM_RAW = "net/minecraft/class_3855.method_16938()Lnet/minecraft/class_1799;";
     public static final String THROWABLE_GET_ITEM_RAW = "net/minecraft/class_3857.method_16943()Lnet/minecraft/class_1799;";
+    public static final String WALK_BOX_TYPES = "net/minecraft/class_14.method_64(Lnet/minecraft/class_1922;IIILjava/util/EnumSet;Lnet/minecraft/class_7;Lnet/minecraft/class_2338;)Lnet/minecraft/class_7;";
+    public static final String WALK_EVALUATE = "net/minecraft/class_14.method_61(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_7;)Lnet/minecraft/class_7;";
+    public static final String SWIM_DIAGONAL = "net/minecraft/class_12.method_38488(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z";
+    public static final String GOALS_RUNNING = "net/minecraft/class_1355.method_19048()Ljava/util/stream/Stream;";
+    public static final String ARROW_DEFLECT = "net/minecraft/class_1665.method_55052()V";
 
     private static final ThreadLocal<Set<Object>> IN_RESTORED =
         ThreadLocal.withInitial(() -> Collections.newSetFromMap(new IdentityHashMap<>()));
@@ -54,6 +59,16 @@ public final class CbRoutes {
     /** the restored 1.20.4 LivingEntity.broadcastBreakEvent(hand), for the break route */
     public interface BreakHand {
         void method_20236(net.minecraft.class_1268 hand);
+    }
+
+    /** the restored 1.20.4 GoalSelector.getRunningGoals, for the PathfinderMob.isPanicking route */
+    public interface RunningGoals {
+        java.util.stream.Stream<net.minecraft.class_4135> method_19048();
+    }
+
+    /** the restored 1.20.4 AbstractArrow.deflect, for the Projectile.hitTargetOrDeflectSelf route */
+    public interface ArrowDeflect {
+        void method_55052();
     }
 
     /**

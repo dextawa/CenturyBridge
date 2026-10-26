@@ -119,6 +119,21 @@ public final class NativeDriver implements ModInitializer {
         check("biome-attributes", fog == 0x123456 && waterFog == 0x222222 && sky == 0x654321 && volume == 0.5F
             && biome.method_24377().comp_5169() == 0x111111,
             "fog " + Integer.toHexString(fog) + " waterFog " + Integer.toHexString(waterFog) + " sky " + Integer.toHexString(sky) + " volume " + volume);
+        // cb-s11's 1.21.10 Fabric API biome modification of plains: particle, loop and mood sounds, additions cleared,
+        // music -> plains' 1.21.11 AMBIENT_PARTICLES / AMBIENT_SOUNDS / BACKGROUND_MUSIC
+        net.minecraft.class_12199 plains = server.method_30611().method_30530(net.minecraft.class_7924.field_41236)
+            .method_31140(net.minecraft.class_1972.field_9451).method_75734();
+        java.util.List<net.minecraft.class_4761> particles = plains.method_75663(net.minecraft.class_12206.field_63750, java.util.List.of());
+        net.minecraft.class_12190 sounds = plains.method_75663(net.minecraft.class_12206.field_63753, net.minecraft.class_12190.field_63684);
+        net.minecraft.class_12194 music = plains.method_75663(net.minecraft.class_12206.field_63751, net.minecraft.class_12194.field_63700);
+        boolean particleOk = particles.size() == 1 && particles.get(0).comp_4993() == net.minecraft.class_2398.field_11248
+            && particles.get(0).comp_4994() == 0.0125F;
+        boolean soundsOk = sounds.comp_5125().map(snd -> snd.method_40230().equals(net.minecraft.class_3417.field_14564.method_40230())).orElse(false)
+            && sounds.comp_5126().map(m -> m == net.minecraft.class_4968.field_23146).orElse(false) && sounds.comp_5127().isEmpty();
+        boolean musicOk = music.comp_5133().map(m -> m.comp_5124().method_40230().equals(net.minecraft.class_3417.field_23790.method_40230())
+            && m.comp_4359() == 100 && m.comp_4360() == 200 && m.comp_4361()).orElse(false);
+        check("fapi-biome-effects", particleOk && soundsOk && musicOk,
+            "particles " + particles + " sounds " + sounds + " music " + music);
         check("native-serialize-route", "true".equals(plain) && "yes".equals(loud) && sawPlain
             && serializeHeads == zh + 2 && serializeReturns == zr + 2,
             "plain " + plain + " loud " + loud + " native heads " + (serializeHeads - zh) + " returns " + (serializeReturns - zr));

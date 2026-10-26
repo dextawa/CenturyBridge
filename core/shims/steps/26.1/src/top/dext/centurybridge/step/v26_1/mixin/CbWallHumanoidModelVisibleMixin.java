@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.player.PlayerModel;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 
 /**
  * 1.21.11's HumanoidModel.setAllVisible(visible), gone in 26.1: it showed or hid the head, hat, body, arms and legs;
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * AbstractPiglinModel override did the same for its sleeves / pants / jacket, parts 26.1's piglin mesh no longer has.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(HumanoidModel.class)
+@Mixin(value = HumanoidModel.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallHumanoidModelVisibleMixin {
 
     public void setAllVisible(boolean visible) {

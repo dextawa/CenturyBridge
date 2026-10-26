@@ -17,7 +17,9 @@ import top.dext.centurybridge.step.v26_2.facade.Tesselator;
 @Mixin(Minecraft.class)
 public abstract class CbS26TesselatorMixin {
 
-    @Inject(method = "<init>", at = @At(value = "NEW", target = "Lnet/minecraft/client/renderer/GameRenderer;<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/ItemInHandRenderer;Lnet/minecraft/client/resources/model/ModelManager;)V"))
+    // NEW's target is the constructor's descriptor with the type as its return (Mixin's BeforeNew reads the return
+    // type of a method descriptor: "Lowner;<init>(..)V" names type "V" and matched nothing on the real client)
+    @Inject(method = "<init>", at = @At(value = "NEW", target = "(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/ItemInHandRenderer;Lnet/minecraft/client/resources/model/ModelManager;)Lnet/minecraft/client/renderer/GameRenderer;"))
     private void cbS26$initTesselator(CallbackInfo ci) {
         Tesselator.init();
     }

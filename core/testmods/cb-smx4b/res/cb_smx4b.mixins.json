@@ -12,7 +12,11 @@
     "PiglinInvoker",
     "BreakHandMixin",
     "FireballRawMixin",
-    "ThrowableRawMixin"
+    "ThrowableRawMixin",
+    "WalkTypesMixin",
+    "SwimDiagonalMixin",
+    "RunningGoalsMixin",
+    "DeflectMixin"
   ],
   "injectors": {
     "defaultRequire": 1

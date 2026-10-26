@@ -13,10 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import top.dext.centurybridge.step.v26_1.rt.CbWallInteract;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 
 /**
  * 1.21.11's ArmorStand split between interactAt and interact, given back (see rt/CbWallInteract):
@@ -24,10 +21,11 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallInteract;
  * <li>interactAt(player, location, hand) (cover): 1.21.11's body -- 26.1's interact with PASS where 26.1
  *     falls through to LivingEntity's interact.</li>
  * <li>interact(player, hand, location) of an armor stand of a 1.21.11 class, or under a mod's call of the
- *     old interact/interactOn: 1.21.11's ArmorStand had no interact of its own, so LivingEntity's.</li>
+ *     old interact/interactOn: 1.21.11's ArmorStand had no interact of its own, so LivingEntity's
+ *     (mixin/CbWallInteractArmorStandReadsMixin).</li>
  * </ul>
  */
-@Mixin(ArmorStand.class)
+@Mixin(value = ArmorStand.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallInteractArmorStandMixin extends LivingEntity {
 
     protected CbWallInteractArmorStandMixin(EntityType<? extends LivingEntity> type, Level level) {
@@ -85,12 +83,5 @@ public abstract class CbWallInteractArmorStandMixin extends LivingEntity {
             }
         }
         return InteractionResult.PASS;
-    }
-
-    @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
-    private void cb$secondStep(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
-        if (CbWallInteract.armorStandSecondStep((ArmorStand) (Object) this)) {
-            cir.setReturnValue(super.interact(player, hand, location));
-        }
     }
 }

@@ -36,6 +36,12 @@ public final class Driver {
     public static volatile int breakSlot;
     public static volatile int fireItem;
     public static volatile int throwItem;
+    public static volatile int walkOfMob;
+    public static volatile int walkWithin;
+    public static volatile int swimNeighbors;
+    public static volatile int panicking;
+    public static volatile int availableGoals;
+    public static volatile int deflect;
     private static int ok;
     private static int fail;
 
@@ -129,6 +135,83 @@ public final class Driver {
                 check("snowball-item", item.method_31574(class_1802.field_8543), "getItem=" + throwItem + " item=" + item + " " + mode);
             } else {
                 check("snowball-item", throwItem == 1 && item.method_31574(class_1802.field_8543), "getItem=" + throwItem + " item=" + item + " " + mode);
+            }
+        });
+        net.minecraft.class_2338 spawn = level.method_43126();
+        int bx = spawn.method_10263() + 20;
+        int bz = spawn.method_10260();
+        run("walk", () -> {
+            for (int x = -1; x <= 9; x++) {
+                for (int z = -1; z <= 3; z++) {
+                    level.method_8501(new net.minecraft.class_2338(bx + x, 200, bz + z), net.minecraft.class_2246.field_10340.method_9564());
+                    for (int y = 201; y <= 203; y++) {
+                        level.method_8501(new net.minecraft.class_2338(bx + x, y, bz + z), net.minecraft.class_2246.field_10124.method_9564());
+                    }
+                }
+            }
+            class_1642 zombie = class_1299.field_6051.method_5883(level);
+            zombie.method_5814(bx + 0.5, 201.0, bz + 1.5);
+            zombie.method_24830(true);
+            walkOfMob = 0;
+            walkWithin = 0;
+            net.minecraft.class_11 path = zombie.method_5942().method_6348(new net.minecraft.class_2338(bx + 8, 201, bz + 1), 0);
+            boolean reach = path != null && path.method_21655();
+            if (mixed) {
+                check("walk", walkOfMob > 0 && reach, "getPathTypeOfMob=" + walkOfMob + " getPathTypeWithinMobBB=" + walkWithin + " (routed) reach=" + reach + " " + mode);
+            } else {
+                check("walk", walkOfMob > 0 && walkWithin > 0 && reach, "getPathTypeOfMob=" + walkOfMob + " getPathTypeWithinMobBB=" + walkWithin + " reach=" + reach + " " + mode);
+            }
+        });
+        run("swim", () -> {
+            for (int x = -1; x <= 7; x++) {
+                for (int z = -1; z <= 7; z++) {
+                    for (int y = 210; y <= 215; y++) {
+                        boolean inside = x >= 0 && x <= 6 && z >= 0 && z <= 6 && y >= 211 && y <= 214;
+                        level.method_8501(new net.minecraft.class_2338(bx + x, y, bz + z),
+                            (inside ? net.minecraft.class_2246.field_10382 : net.minecraft.class_2246.field_10340).method_9564());
+                    }
+                }
+            }
+            net.minecraft.class_1308 dolphin = (net.minecraft.class_1308) class_1299.field_6087.method_5883(level);
+            dolphin.method_5814(bx + 0.5, 212.0, bz + 0.5);
+            swimNeighbors = 0;
+            net.minecraft.class_11 path = dolphin.method_5942().method_6348(new net.minecraft.class_2338(bx + 6, 212, bz + 6), 0);
+            boolean reach = path != null && path.method_21655();
+            int nodes = path == null ? -1 : path.method_38();
+            if (mixed) {
+                check("swim", reach, "getNeighbors=" + swimNeighbors + " (routed) nodes=" + nodes + " " + mode);
+            } else {
+                check("swim", swimNeighbors > 0 && reach, "getNeighbors=" + swimNeighbors + " nodes=" + nodes + " " + mode);
+            }
+        });
+        run("panicking", () -> {
+            class_1430 cow = class_1299.field_6085.method_5883(level);
+            panicking = 0;
+            availableGoals = 0;
+            boolean panic = cow.method_52546();
+            if (mixed) {
+                check("panicking", panicking == 1 && !panic, "isPanicking=" + panicking + " getAvailableGoals=" + availableGoals + " (routed) result=" + panic + " " + mode);
+            } else {
+                check("panicking", panicking == 1 && availableGoals == 1 && !panic, "isPanicking=" + panicking + " getAvailableGoals=" + availableGoals + " result=" + panic + " " + mode);
+            }
+        });
+        run("deflect", () -> {
+            net.minecraft.class_8949 breeze = new net.minecraft.class_8949(class_1299.field_47244, level);
+            breeze.method_5814(bx + 0.5, 220.0, bz + 0.5);
+            level.method_8649(breeze);
+            class_1642 shooter = class_1299.field_6051.method_5883(level);
+            class_1665 arrow = ((class_1744) class_1802.field_8107).method_7702(level, new class_1799(class_1802.field_8107), shooter);
+            arrow.method_5814(bx - 1.5, 220.8, bz + 0.5);
+            arrow.method_18800(2.0, 0.0, 0.0);
+            deflect = 0;
+            arrow.method_5773();
+            double speed = arrow.method_18798().method_1033();
+            breeze.method_31472();
+            arrow.method_31472();
+            if (mixed) {
+                check("deflect", speed < 1.5, "Projectile.deflect=" + deflect + " (routed) speed=" + speed + " " + mode);
+            } else {
+                check("deflect", deflect == 1 && speed < 1.5, "Projectile.deflect=" + deflect + " speed=" + speed + " " + mode);
             }
         });
         System.out.println("CB-SMX4BN summary ok=" + ok + " fail=" + fail);

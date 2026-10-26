@@ -11,7 +11,7 @@ RT="$DATA/runtime/client-1.21.10"
 CP="$DATA/jars/client-1.21.10-intermediary.jar"
 for j in $(find "$RT/libraries" "$RT/.fabric/processedMods" -name '*.jar'); do CP="$CP:$j"; done
 javac --release 21 -nowarn -proc:none -cp "$CP" -d "$CLS" $(find core/testmods/cb-s11/src -name '*.java')
-cp core/testmods/cb-s11/res/* "$CLS/"
+cp -r core/testmods/cb-s11/res/* "$CLS/"
 (cd "$CLS" && jar cf "$JAR" .)
 rm -rf "$CLS"
 echo "-> $OUT"

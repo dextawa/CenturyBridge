@@ -33,5 +33,19 @@ public final class Init implements ModInitializer {
         COUNT = GameRuleRegistry.register("cbS11Count", class_1928.class_5198.field_24100, GameRuleFactory.createIntRule(5, 0, 10));
         RATIO = GameRuleRegistry.register("cbS11Ratio", class_1928.class_5198.field_24100, GameRuleFactory.createDoubleRule(0.5, 0.0, 1.0));
         MODE = GameRuleRegistry.register("cbS11Mode", CATEGORY, GameRuleFactory.createEnumRule(Mode.A));
+        // 1.21.10 Fabric API EffectsContext setters 1.21.11's Fabric API removed: plains gets an ambient particle, loop and
+        // mood sounds, no additions sound and a music; cb-s11n reads the plains' 1.21.11 environment attributes back
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.create(class_2960.method_60655("cb_s11", "effects")).add(
+            net.fabricmc.fabric.api.biome.v1.ModificationPhase.POST_PROCESSING,
+            net.fabricmc.fabric.api.biome.v1.BiomeSelectors.includeByKey(net.minecraft.class_1972.field_9451),
+            context -> {
+                net.fabricmc.fabric.api.biome.v1.BiomeModificationContext.EffectsContext effects = context.getEffects();
+                effects.setParticleConfig(new net.minecraft.class_4761(net.minecraft.class_2398.field_11248, 0.0125F));
+                effects.setAmbientSound(net.minecraft.class_3417.field_14564);
+                effects.setMoodSound(net.minecraft.class_4968.field_23146);
+                effects.setAdditionsSound(new net.minecraft.class_4967(net.minecraft.class_3417.field_23791, 0.0111));
+                effects.clearAdditionsSound();
+                effects.setMusic(new net.minecraft.class_5195(net.minecraft.class_3417.field_23790, 100, 200, true));
+            });
     }
 }

@@ -11,6 +11,7 @@ import net.minecraft.world.level.storage.loot.ValidationContextSource;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Shadow;
 
 /**
@@ -19,7 +20,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * validated in a context of the reporter's child for the field (and index) named, the key set given (the
  * advancement entity's by default) and the loot data.
  */
-@Mixin(ValidationContextSource.class)
+@Mixin(value = ValidationContextSource.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallCriterionValidatorMixin {
 
     @Shadow
