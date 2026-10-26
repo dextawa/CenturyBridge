@@ -205,7 +205,6 @@
   "net/minecraft/class_5762.method_6121(Lnet/minecraft/class_1297;)Z @ INVOKE Lnet/minecraft/class_5762;method_45325(Lnet/minecraft/class_6880;)D",
   "net/minecraft/class_5762.method_6121(Lnet/minecraft/class_1297;)Z @ INVOKE Lnet/minecraft/class_5762;method_48923()Lnet/minecraft/class_8109;",
   "net/minecraft/class_5762.method_6121(Lnet/minecraft/class_1297;)Z @ INVOKE Lnet/minecraft/class_8109;method_48812(Lnet/minecraft/class_1309;)Lnet/minecraft/class_1282;",
-  "com/mojang/blaze3d/systems/RenderSystem.initGameThread(Z)V",
   "net/minecraft/class_1088.<clinit>()V @ CONSTANT intValue=1",
   "net/minecraft/class_1088.method_4729(Lnet/minecraft/class_2960;Lnet/minecraft/class_1100;)V",
   "net/minecraft/class_1124$class_7457",

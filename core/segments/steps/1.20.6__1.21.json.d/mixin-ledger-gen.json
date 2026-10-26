@@ -4,6 +4,7 @@
   "com/mojang/blaze3d/platform/GLX._renderCrosshair(IZZZ)V @ CONSTANT doubleValue=0.0": "anchor gone: not in the target, its callees (depth 2) or lambdas; no instruction of its kind between the same neighbours",
   "com/mojang/blaze3d/systems/RenderSystem._setShaderFogShape(Lnet/minecraft/class_6854;)V": "private member gone from W; no member of the class holds its code",
   "com/mojang/blaze3d/systems/RenderSystem.gameThread:Ljava/lang/Thread;": "private member gone from W; no member of the class holds its code",
+  "com/mojang/blaze3d/systems/RenderSystem.initGameThread(Z)V": "gone from W; rebuilt for mods' calls only (static computes); no W method holds its code",
   "com/mojang/blaze3d/systems/RenderSystem.initRenderThread()V @ FIELD Lcom/mojang/blaze3d/systems/RenderSystem;gameThread:Ljava/lang/Thread;": "anchor gone: not in the target, its callees (depth 2) or lambdas; no instruction of its kind between the same neighbours",
   "com/mojang/blaze3d/systems/RenderSystem.isReplayingQueue:Z": "private member gone from W; no member of the class holds its code",
   "com/mojang/blaze3d/systems/RenderSystem.replayQueue()V @ CONSTANT intValue=1": "anchor gone: not in the target, its callees (depth 2) or lambdas; no instruction of its kind between the same neighbours",
