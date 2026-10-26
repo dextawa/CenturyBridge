@@ -9,7 +9,9 @@ import java.util.Optional;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.color.item.ItemTintSource;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
+import net.minecraft.client.renderer.blockentity.ShulkerBoxRenderer;
 import net.minecraft.client.renderer.item.CompositeModel;
 import net.minecraft.client.renderer.item.ConditionalItemModel;
 import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
@@ -20,6 +22,7 @@ import net.minecraft.client.renderer.item.SpecialModelWrapper;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperty;
 import net.minecraft.client.renderer.special.BannerSpecialRenderer;
+import net.minecraft.client.renderer.special.BedSpecialRenderer;
 import net.minecraft.client.renderer.special.ChestSpecialRenderer;
 import net.minecraft.client.renderer.special.ConduitSpecialRenderer;
 import net.minecraft.client.renderer.special.CopperGolemStatueSpecialRenderer;
@@ -40,6 +43,9 @@ import net.minecraft.world.level.block.PlainSignBlock;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import org.joml.Matrix4f;
+import org.joml.Matrix4fc;
+import top.dext.centurybridge.step.v26_1.facade.LegacyBedSpecialRenderer;
+import top.dext.centurybridge.step.v26_1.facade.LegacyShulkerBoxSpecialRenderer;
 
 /**
  * 1.21.11 item model constructors whose 26.1 records gained fields (javap of both).
@@ -94,9 +100,43 @@ public final class CbWallItemModels {
         return new CuboidItemModelWrapper.Unbaked(model, Optional.empty(), tints);
     }
 
-    /** 1.21.11 new SpecialModelWrapper.Unbaked(base, specialModel): the special model's 1.21.11 pose as transformation */
+    /**
+     * 1.21.11 new SpecialModelWrapper.Unbaked(base, specialModel): the special model's 1.21.11 pose as transformation.
+     * A bed record a 1.21.11 constructor made (the whole bed, rt/CbWallBed) is held as the whole-bed special model
+     * (26.1's wrapper bakes it itself, and 26.1's record would bake one part); it poses itself, as 1.21.11's did.
+     */
     public static SpecialModelWrapper.Unbaked specialWrapper(Identifier base, SpecialModelRenderer.Unbaked<?> specialModel) {
+        if (specialModel instanceof BedSpecialRenderer.Unbaked bed && CbWallBed.whole(bed)) {
+            return new SpecialModelWrapper.Unbaked(base, Optional.empty(), new LegacyBedSpecialRenderer.Unbaked(bed.texture()));
+        }
         return new SpecialModelWrapper.Unbaked(base, legacyPose(specialModel), specialModel);
+    }
+
+    /**
+     * A 1.21.11 caller's bake(context) of a special model (SpecialModelRenderer.Unbaked.bake through the interface):
+     * the renderers 1.21.11's records baked where 26.1's differ -- a shulker box ({@link #bakeShulkerBox}), a whole bed
+     * (CbWallBed.bake); any other special model bakes as itself.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static SpecialModelRenderer bakeAny(SpecialModelRenderer.Unbaked unbaked, SpecialModelRenderer.BakingContext context) {
+        if (unbaked instanceof ShulkerBoxSpecialRenderer.Unbaked shulker) {
+            return bakeShulkerBox(shulker, context);
+        }
+        if (unbaked instanceof BedSpecialRenderer.Unbaked bed) {
+            return CbWallBed.bake(bed, context);
+        }
+        return unbaked.bake(context);
+    }
+
+    /**
+     * 1.21.11's ShulkerBoxSpecialRenderer.Unbaked.bake(context) (javap class_10511$class_10512.method_65698): new
+     * ShulkerBoxSpecialRenderer(new ShulkerBoxRenderer(context), openness, orientation, SHULKER_MAPPER.apply(texture)),
+     * a renderer posing itself by its orientation (facade/LegacyShulkerBoxSpecialRenderer); a record no 1.21.11
+     * constructor gave one has 1.21.11's default, UP. 26.1's own item models never come here: 26.1 bakes them.
+     */
+    public static SpecialModelRenderer<?> bakeShulkerBox(ShulkerBoxSpecialRenderer.Unbaked unbaked, SpecialModelRenderer.BakingContext context) {
+        return new LegacyShulkerBoxSpecialRenderer(new ShulkerBoxRenderer(context), unbaked.openness(), shulkerOrientation(unbaked),
+            Sheets.SHULKER_MAPPER.apply(unbaked.texture()));
     }
 
     /**
@@ -134,6 +174,13 @@ public final class CbWallItemModels {
         }
         return Optional.of(new Transformation(m));
     }
+
+    /** the transformation of a 1.21.11 baked SpecialModelWrapper(renderer, properties): 1.21.11's had none, the identity */
+    public static Matrix4fc noTransformation() {
+        return IDENTITY;
+    }
+
+    private static final Matrix4fc IDENTITY = new Matrix4f();
 
     /** 1.21.11 new BannerSpecialRenderer.Unbaked(baseColor) */
     public static BannerSpecialRenderer.Unbaked banner(DyeColor baseColor) {

@@ -36,6 +36,11 @@ public final class CbFapiSpecialBlocks {
         BLOCKS.put(Objects.requireNonNull(block, "block"), Objects.requireNonNull(unbakedRenderer, "unbakedRenderer"));
     }
 
+    /** the registrations so far, in order (1.21.11's registry fed them into vanilla's block table: rt/CbWallSpecialBlocks) */
+    public static synchronized Map<Block, SpecialModelRenderer.Unbaked<?>> registered() {
+        return new LinkedHashMap<>(BLOCKS);
+    }
+
     /** BuiltInBlockModels.createBlockModels' answer with the 1.21.11 registrations added */
     public static synchronized Map<BlockState, BlockModel.Unbaked> withRegistered(Map<BlockState, BlockModel.Unbaked> models, BlockColors colors) {
         if (BLOCKS.isEmpty()) {
