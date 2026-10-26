@@ -19,6 +19,7 @@
     "CbS26BedFallOnMixin",
     "CbS26EntityFallOnMixin",
     "CbS26CrashCategoryMixin",
+    "CbS26ConnectionEncryptedMixin",
     "CbS26GroundNavigationMixin",
     "CbS26StriderNavigationMixin"
   ],
