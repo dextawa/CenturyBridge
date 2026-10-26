@@ -47,7 +47,11 @@
     "CbS26GlowingResetMixin",
     "CbS26GlowingExtractMixin",
     "CbS26GlowingFrameMixin",
-    "CbS26GlowingPassMixin"
+    "CbS26GlowingPassMixin",
+    "CbS26SubmitWindowMixin",
+    "CbS26SubmitDrainMixin",
+    "CbS26LevelTicksMixin",
+    "CbS26LevelTicksClockMixin"
   ],
   "server": [],
   "injectors": {
