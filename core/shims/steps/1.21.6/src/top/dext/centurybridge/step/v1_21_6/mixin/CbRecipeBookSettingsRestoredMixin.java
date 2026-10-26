@@ -35,9 +35,10 @@ import top.dext.centurybridge.step.v1_21_6.rt.CbVanillaReads;
  *     restored member only when a converted mod mixed it (CbMixedMembers), otherwise through 1.21.6's own codec
  *     untouched. Same wire format both ways. 1.21.5's private constructor RecipeBookSettings(Map) has no 1.21.6
  *     counterpart (a mixin adds no constructor): read builds the settings with the public one and fills the map.</li>
- * <li>equals / hashCode: 1.21.5's (the maps'), overriding Object's as in 1.21.5. In 1.21.6 only the generated
- *     equals / hashCode of the two records holding one (ClientboundRecipeBookSettingsPacket, ServerRecipeBook.Packed)
- *     reach them (javap; release_notes_known).</li>
+ * <li>equals / hashCode (1.21.5's map value semantics) are not restored: an override of Object's methods changes
+ *     1.21.6 for everyone (the generated equals / hashCode of ClientboundRecipeBookSettingsPacket and
+ *     ServerRecipeBook.Packed would change with no converted mod present), and an Object override cannot be gated by
+ *     the mixed signal. A 1.21.5 mod comparing two settings by value sees identity (release_notes_known).</li>
  * </ul>
  * Priority below every mod's. The layer's own reads (CbRecipeBooks.LegacySettings: the same tag from the four fields,
  * a fresh book's all-false settings, the view's field access) touch the fields directly, so they add no call a mod
@@ -123,16 +124,6 @@ public abstract class CbRecipeBookSettingsRestoredMixin implements CbRecipeBooks
         class_5411.class_5412 s = this.field_25736.getOrDefault(type, class_5411.class_5412.field_54549);
         tag.method_10556(keys.getFirst(), s.comp_3247);
         tag.method_10556(keys.getSecond(), s.comp_3248);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return this == o || o instanceof class_5411 && this.field_25736.equals(((CbRecipeBookSettingsRestoredMixin) o).field_25736);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.field_25736.hashCode();
     }
 
     @Override

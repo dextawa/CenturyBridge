@@ -831,7 +831,7 @@ public class S6bTestMod implements ModInitializer {
 
     /**
      * RecipeBookSettings' restored 1.21.5 members on 1.21.6: the private states map through a 1.21.5 accessor (a live
-     * view of 1.21.6's per-type fields), the key table, value equals / hashCode, and STREAM_CODEC encoding / decoding
+     * view of 1.21.6's per-type fields), the key table, and STREAM_CODEC encoding / decoding
      * through the restored write / read(FriendlyByteBuf) that this mod mixes (the same eight booleans as 1.21.6's codec)
      */
     static void recipeSettings() {
@@ -844,12 +844,6 @@ public class S6bTestMod implements ModInitializer {
         java.util.Map<?, ?> keys = cb.s6b.mixin.S6bRecipeSettingsAccess.cbs6b$keys();
         check(keys.size() == 4 && String.valueOf(keys.get(furnace)).contains("isFurnaceGuiOpen"),
             "RecipeBookSettings' 1.21.5 key table (static accessor): " + keys);
-        net.minecraft.class_5411 same = new net.minecraft.class_5411();
-        same.method_30181(furnace, true);
-        net.minecraft.class_5411 other = new net.minecraft.class_5411();
-        other.method_30188(furnace, true);
-        check(s.equals(same) && s.hashCode() == same.hashCode() && !s.equals(other),
-            "RecipeBookSettings equals / hashCode by value, as 1.21.5's");
         net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
         int w = settingsNet[0];
         int r = settingsNet[1];
@@ -857,9 +851,10 @@ public class S6bTestMod implements ModInitializer {
         int bytes = buf.readableBytes();
         boolean furnaceByte = buf.getBoolean(2);
         net.minecraft.class_5411 back = net.minecraft.class_5411.field_54548.decode(buf);
-        check(settingsNet[0] - w == 1 && settingsNet[1] - r == 1 && bytes == 8 && furnaceByte && back.equals(s) && back.method_30180(furnace),
+        boolean sameStates = ((cb.s6b.mixin.S6bRecipeSettingsAccess) (Object) back).cbs6b$states().equals(states);
+        check(settingsNet[0] - w == 1 && settingsNet[1] - r == 1 && bytes == 8 && furnaceByte && sameStates && back.method_30180(furnace),
             "STREAM_CODEC through the mixed write / read(FriendlyByteBuf): mixin ran " + (settingsNet[0] - w) + " / " + (settingsNet[1] - r)
-                + ", " + bytes + " bytes (furnace open at byte 2: " + furnaceByte + "), round trip equal");
+                + ", " + bytes + " bytes (furnace open at byte 2: " + furnaceByte + "), round trip same states: " + sameStates);
         states.clear();
         check(!s.method_30180(furnace), "the states map writes through: clear() resets 1.21.6's furnace settings");
     }
