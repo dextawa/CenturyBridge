@@ -23,8 +23,8 @@
   "covers": [
     "net/minecraft/network/Connection.isEncrypted()Z"
   ],
-  "_covers_basis": "restored on Connection by mixin/CbS26ConnectionEncryptedMixin: true once setEncryptionKey ran on that connection (26.1.2 set its encrypted field at setEncryptionKey's head; 26.2 adds the same cipher handlers without the field). 26.2's two vanilla readers (PlayerTabOverlay, ClientPacketListener) moved to ClientPacketListener.onlineMode(), so an override no longer steers them",
-  "_redirects_basis": {
+  "_s26c_covers_basis": "restored on Connection by mixin/CbS26ConnectionEncryptedMixin: true once setEncryptionKey ran on that connection (26.1.2 set its encrypted field at setEncryptionKey's head; 26.2 adds the same cipher handlers without the field). 26.2's two vanilla readers (PlayerTabOverlay, ClientPacketListener) moved to ClientPacketListener.onlineMode(), so an override no longer steers them",
+  "_s26c_redirects_basis": {
     "net/minecraft/util/Mth.rotationAroundAxis(Lorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;)Lorg/joml/Quaternionf;": "javap: the same body; 26.2 reads the axis through Vector3fc's accessors instead of Vector3f's fields",
     "net/minecraft/world/scores/Team.getColor()Lnet/minecraft/ChatFormatting;": "Team declares getColor abstract in both releases, 26.1.2 as ChatFormatting, 26.2 as Optional<TeamColor>; PlayerTeam receivers answer as the PlayerTeam redirect does, other teams by TeamColor name (CbS26Team.getColor(Team)); the getColor override hook now applies under Team (s26.json)"
   }
