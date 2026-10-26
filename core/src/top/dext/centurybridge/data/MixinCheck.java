@@ -1087,13 +1087,10 @@ public final class MixinCheck {
                 case "FIELD" -> hit = n instanceof FieldInsnNode fi && sel.matches(fi.owner, fi.name, fi.desc)
                     && (opcode < 0 || fi.getOpcode() == opcode);
                 case "NEW" -> {
-                    String cls = arg(at, "class");
-                    String want = cls != null ? cls.replace('.', '/') : sel.owner != null ? sel.owner
-                        : target == null ? null : target.startsWith("L") && target.endsWith(";")
-                            ? target.substring(1, target.length() - 1) : target;
+                    // BeforeNew: the ordinal counts among the NEWs of the type; the constructor descriptor filters after
+                    String[] nt = newTarget(arg(at, "class") != null ? arg(at, "class") : target);
                     hit = n instanceof TypeInsnNode ti && ti.getOpcode() == org.objectweb.asm.Opcodes.NEW
-                        && (want == null || want.equals(ti.desc))
-                        && (sel.desc == null || ctorAfter(ti) != null && ctorAfter(ti).desc.equals(sel.desc));
+                        && (nt[0] == null || nt[0].equals(ti.desc));
                 }
                 case "STORE", "LOAD" -> {
                     // which local the ModifyVariable discriminator picks needs the frames Mixin computes: not modelled.
@@ -1119,9 +1116,72 @@ public final class MixinCheck {
             hits.add(lastReturn);
         }
         if (ordinal >= 0) {
-            return ordinal < hits.size() ? List.of(hits.get(ordinal)) : List.of();
+            hits = ordinal < hits.size() ? List.of(hits.get(ordinal)) : List.of();
+        }
+        if ("NEW".equals(value)) {
+            String ctor = newTarget(arg(at, "class") != null ? arg(at, "class") : target)[1];
+            if (ctor != null) {
+                List<AbstractInsnNode> kept = new ArrayList<>();
+                for (AbstractInsnNode h : hits) {
+                    MethodInsnNode init = ctorAfter((TypeInsnNode) h);
+                    if (init != null && init.desc.equals(ctor)) {
+                        kept.add(h);
+                    }
+                }
+                hits = kept;
+            }
         }
         return hits;
+    }
+
+    /**
+     * What @At("NEW") looks for, as Mixin's BeforeNew reads its class / target (sponge-mixin 0.8.7, javap): the
+     * string with '.' as '/', parsed as a MemberInfo (descriptor split off at '(' or ':', then the owner before the
+     * last '.' or inside "L...;", a name holding '/' taken as the owner), its type MemberInfo.toCtorType -- the
+     * descriptor's return type when it is a method descriptor ("(I)Lfoo/Bar;" -> foo/Bar, but
+     * "Lfoo/Bar;<init>(I)V" -> "V": a NEW of nothing), else the owner, else a bare name -- and its constructor
+     * descriptor toCtorDesc (the descriptor with return type V). {type, ctorDesc}; nulls: any.
+     */
+    static String[] newTarget(String raw) {
+        if (raw == null || raw.isEmpty()) {
+            return new String[] {null, null};
+        }
+        String s = raw.replace('.', '/').replaceAll("\\s", "");
+        String desc = null;
+        int paren = s.indexOf('(');
+        int colon = s.indexOf(':');
+        if (paren > -1) {
+            desc = s.substring(paren);
+            s = s.substring(0, paren);
+        } else if (colon > -1) {
+            desc = s.substring(colon + 1);
+            s = s.substring(0, colon);
+        }
+        String owner = null;
+        String name = s;
+        int semi = s.indexOf(';');
+        if (semi > -1 && s.startsWith("L")) {
+            owner = s.substring(1, semi);
+            name = s.substring(semi + 1);
+        }
+        if (owner == null && name.indexOf('/') > -1) {
+            owner = name;
+            name = "";
+        }
+        String type;
+        if (desc != null && desc.startsWith("(") && desc.indexOf(')') > -1) {
+            String r = desc.substring(desc.indexOf(')') + 1);
+            type = r.startsWith("L") && r.endsWith(";") ? r.substring(1, r.length() - 1) : r;
+        } else if (owner != null) {
+            type = owner;
+        } else if (!name.isEmpty() && desc == null) {
+            type = name;
+        } else {
+            type = desc != null ? desc : raw;
+        }
+        String ctor = desc == null ? null
+            : desc.startsWith("(") && desc.indexOf(')') > -1 ? desc.substring(0, desc.indexOf(')') + 1) + "V" : desc;
+        return new String[] {type, ctor};
     }
 
     /** the constructor call that completes a NEW: the next INVOKESPECIAL <init> of the type at the same nesting */
