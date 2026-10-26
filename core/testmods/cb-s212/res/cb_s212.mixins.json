@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "cb.s212.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "ServerDriverMixin",
+    "FurnaceCookTimeMixin",
+    "FurnaceCanBurnMixin",
+    "DataStorageInvoker"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
