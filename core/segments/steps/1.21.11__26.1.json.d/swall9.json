@@ -135,5 +135,13 @@
    ],
    "basis": "26.1's CreateWorldCallback.create takes the world data with its generation settings and the initial game rules; a 1.21.11 callback gets the PrimaryLevelData, which keeps both"
   }
- ]
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_11952.field_62670:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#bedIsHead",
+  "net/minecraft/class_11959.field_62695:F": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#chestAngle"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_11952.field_62670:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setBedIsHead",
+  "net/minecraft/class_11959.field_62695:F": "top/dext/centurybridge/step/v26_1/rt/CbWallRenderStateViews#setChestAngle"
+ }
 }

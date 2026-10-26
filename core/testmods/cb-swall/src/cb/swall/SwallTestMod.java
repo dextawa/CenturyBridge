@@ -26,6 +26,8 @@ import net.minecraft.server.MinecraftServer;
 public class SwallTestMod implements ModInitializer {
 
     private static final List<String> FAILS = new ArrayList<>();
+    /** calls of the restored 1.21.11 furnace burn (mixin/FurnaceBurnMixin) */
+    public static final java.util.concurrent.atomic.AtomicInteger BURN_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     private static int passed;
 
     private static void check(String name, boolean ok, Object detail) {
@@ -1461,6 +1463,7 @@ public class SwallTestMod implements ModInitializer {
             }
             net.minecraft.class_1799 out = be.method_5438(2);
             int used = be.method_27354(level, new net.minecraft.class_243(0, 100, 0)).size();
+            check("furnace.burn.mixedRoute", BURN_CALLS.get() >= 2, BURN_CALLS.get());
             check("furnace.burn.smelt", out.method_7909() == net.minecraft.class_1802.field_8620 && out.method_7947() == 2
                 && be.method_5438(0).method_7960() && used == 1, out + " input " + be.method_5438(0) + " recipes " + used);
         } catch (Throwable t) {
