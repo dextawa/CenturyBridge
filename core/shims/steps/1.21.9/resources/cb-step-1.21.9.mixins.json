@@ -8,7 +8,8 @@
     "CbLargePayloadConnectionMixin",
     "CbLevelParticlesPacketMixin",
     "CbPassthroughEncoderMixin",
-    "CbProfilesServerMixin"
+    "CbProfilesServerMixin",
+    "CbProjectileDeflectionMixin"
   ],
   "client": [
     "CbBlockEntityDispatchMixin",

@@ -415,9 +415,9 @@
   {
    "old": "getColor()Lnet/minecraft/ChatFormatting;",
    "new": "getColor()Ljava/util/Optional;",
-   "onlyUnder": "net/minecraft/world/scores/PlayerTeam",
+   "onlyUnder": "net/minecraft/world/scores/Team",
    "guard": "top/dext/centurybridge/step/v26_2/rt/Guard",
-   "basis": "26.2 keeps the team colour as an Optional of TeamColor; the old override is converted (CbS26Team); its super call reaches 26.2's shape through the instance redirect, the guard falling through to super on re-entry",
+   "basis": "26.2 keeps the team colour as an Optional of TeamColor (Team declares it abstract in both, javap); the old override, under PlayerTeam or directly under Team, is converted (CbS26Team); its super call reaches 26.2's shape through the instance redirect, the guard falling through to super on re-entry",
    "unwrap": "top/dext/centurybridge/step/v26_2/rt/CbS26Team.unwrapColor(Lnet/minecraft/ChatFormatting;)Ljava/util/Optional;"
   },
   {

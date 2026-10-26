@@ -4,7 +4,6 @@ import net.minecraft.class_1297;
 import net.minecraft.class_1299;
 import net.minecraft.class_1309;
 import net.minecraft.class_1937;
-import net.minecraft.class_9279;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Coerce;
@@ -25,7 +24,7 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbRestEntityNbt;
 public abstract class CbRestEntityNbtMixin {
 
     @Redirect(method = "method_5881", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_1299;method_65893()Z"))
-    private static boolean cb$onlyOp(class_1299 type, class_1937 level, @Coerce class_1309 player, class_1297 entity, class_9279 data) {
+    private static boolean cb$onlyOp(class_1299 type, class_1937 level, @Coerce class_1309 player, class_1297 entity, @Coerce Object data) {
         return entity instanceof CbRestEntityNbt.OnlyOp a ? a.method_5833() : type.method_65893();
     }
 }

@@ -85,6 +85,20 @@ public final class CbS26Team {
         return f != null ? f : toFormatting(team.getColor());
     }
 
+    /**
+     * 26.1.2 Team.getColor() (abstract) on a Team-typed receiver: a PlayerTeam answers as above (a kept format, else
+     * its TeamColor's formatting); any other Team answers its 26.2 getColor() as the ChatFormatting of the same name,
+     * RESET for none (26.1.2's PlayerTeam default colour). A 26.1.2 Team subclass's own getColor() answers 26.2's
+     * through the overrideHooks unwrap, so a colour comes back here unchanged; a format it answers (BOLD ...) has no
+     * TeamColor and reads back as RESET.
+     */
+    public static ChatFormatting getColor(net.minecraft.world.scores.Team team) {
+        if (team instanceof PlayerTeam playerTeam) {
+            return getColor(playerTeam);
+        }
+        return toFormatting(team.getColor());
+    }
+
     /** hook wrap: 26.2's setColor(Optional) handed to a 26.1.2 override of setColor(ChatFormatting) */
     public static ChatFormatting wrapColor(Optional<TeamColor> c) {
         return toFormatting(c);

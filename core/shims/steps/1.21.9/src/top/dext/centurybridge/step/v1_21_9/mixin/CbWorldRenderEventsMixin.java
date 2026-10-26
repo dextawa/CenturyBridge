@@ -5,7 +5,6 @@ import net.minecraft.class_11658;
 import net.minecraft.class_12074;
 import net.minecraft.class_243;
 import net.minecraft.class_310;
-import net.minecraft.class_4063;
 import net.minecraft.class_4184;
 import net.minecraft.class_4587;
 import net.minecraft.class_4597;
@@ -179,7 +178,7 @@ public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
     /** sky, clouds, weather: a DimensionRenderingRegistry renderer registered for the world's dimension replaces the pass, as 0.136 */
     @Inject(method = "method_62200(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V",
         at = @At("HEAD"), cancellable = true)
-    private void cb$sky(class_9909 frameGraph, class_4184 camera, GpuBufferSlice fog, CallbackInfo ci) {
+    private void cb$sky(CallbackInfo ci) {
         CbWorldRenderContextImpl context = CbWorldRender.cbLive((class_761) (Object) this);
         if (context != null && CbDimensionRendering.cbRenderSky(context, class_310.method_1551().field_1687)) {
             ci.cancel();
@@ -188,7 +187,7 @@ public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
 
     @Inject(method = "method_62204(Lnet/minecraft/class_9909;Lnet/minecraft/class_4063;Lnet/minecraft/class_243;FIF)V",
         at = @At("HEAD"), cancellable = true)
-    private void cb$clouds(class_9909 frameGraph, class_4063 mode, class_243 cameraPos, float ticks, int color, float height, CallbackInfo ci) {
+    private void cb$clouds(CallbackInfo ci) {
         CbWorldRenderContextImpl context = CbWorldRender.cbLive((class_761) (Object) this);
         if (context != null && CbDimensionRendering.cbRenderClouds(context, class_310.method_1551().field_1687)) {
             ci.cancel();
@@ -197,7 +196,7 @@ public abstract class CbWorldRenderEventsMixin implements CbWorldRenderHolder {
 
     @Inject(method = "method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V",
         at = @At("HEAD"), cancellable = true)
-    private void cb$weather(class_9909 frameGraph, class_243 cameraPos, GpuBufferSlice fog, CallbackInfo ci) {
+    private void cb$weather(CallbackInfo ci) {
         CbWorldRenderContextImpl context = CbWorldRender.cbLive((class_761) (Object) this);
         if (context != null && CbDimensionRendering.cbRenderWeather(context, class_310.method_1551().field_1687)) {
             ci.cancel();

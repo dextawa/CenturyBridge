@@ -7,7 +7,10 @@ import net.minecraft.class_1309;
 import net.minecraft.class_5131;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Coerce;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.rt.v1_20_2.CbEffectAttributeRoute;
 
 /**
@@ -36,9 +39,23 @@ public abstract class CbLivingEffectAttributes {
         CbEffectAttributeRoute.remove(effect, (class_1309) (Object) this, attributes, instance.method_5578());
     }
 
+    /**
+     * onEffectRemoved(instance): the instance is carried to the call below rather than captured there (taken as an Object:
+     * 1.21.2 makes this onEffectsRemoved(Collection), CbEffectAttributeRoute.removing reads either)
+     */
+    @Inject(method = "method_6129", at = @At("HEAD"))
+    private void cb$removing(@Coerce Object instances, CallbackInfo ci) {
+        CbEffectAttributeRoute.removing(instances);
+    }
+
     @Redirect(method = "method_6129", at = @At(value = "INVOKE",
         target = "Lnet/minecraft/class_1291;method_5562(Lnet/minecraft/class_5131;)V"))
-    private void cb$removeAttributesOnRemoval(class_1291 effect, class_5131 attributes, class_1293 instance) {
-        CbEffectAttributeRoute.remove(effect, (class_1309) (Object) this, attributes, instance.method_5578());
+    private void cb$removeAttributesOnRemoval(class_1291 effect, class_5131 attributes) {
+        CbEffectAttributeRoute.removeCarried(effect, (class_1309) (Object) this, attributes);
+    }
+
+    @Inject(method = "method_6129", at = @At("RETURN"))
+    private void cb$removed(CallbackInfo ci) {
+        CbEffectAttributeRoute.removed();
     }
 }

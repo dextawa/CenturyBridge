@@ -62,6 +62,46 @@ public final class CbEffectAttributeRoute {
         mixed.applyIfDifferent(golden, touched, attributes);
     }
 
+    /**
+     * the instances LivingEntity.onEffectRemoved is removing, carried from its HEAD to the remove(attributes) call inside
+     * it (CbLivingEffectAttributes): 1.20.2 passes one MobEffectInstance, 1.21.2 a Collection of them (onEffectsRemoved,
+     * one call per element). The HEAD handler takes the argument as an Object, so either shape applies; the call then
+     * takes the first carried instance of its effect.
+     */
+    private static final ThreadLocal<java.util.ArrayDeque<net.minecraft.class_1293>> REMOVING = ThreadLocal.withInitial(java.util.ArrayDeque::new);
+
+    public static void removing(Object instances) {
+        java.util.ArrayDeque<net.minecraft.class_1293> q = REMOVING.get();
+        q.clear();
+        if (instances instanceof net.minecraft.class_1293 one) {
+            q.add(one);
+        } else if (instances instanceof java.util.Collection<?> many) {
+            for (Object o : many) {
+                if (o instanceof net.minecraft.class_1293 i) {
+                    q.add(i);
+                }
+            }
+        }
+    }
+
+    public static void removed() {
+        REMOVING.get().clear();
+    }
+
+    /** remove(attributes) inside onEffectRemoved: the amplifier of the carried instance of this effect (0 if none is carried) */
+    public static void removeCarried(class_1291 effect, class_1309 entity, class_5131 attributes) {
+        int amplifier = 0;
+        for (java.util.Iterator<net.minecraft.class_1293> it = REMOVING.get().iterator(); it.hasNext(); ) {
+            net.minecraft.class_1293 i = it.next();
+            if (i.method_5579() == effect) {
+                amplifier = i.method_5578();
+                it.remove();
+                break;
+            }
+        }
+        remove(effect, entity, attributes, amplifier);
+    }
+
     /** LivingEntity's effect.remove(attributes), the instance's amplifier being what 1.20.1 passed */
     public static void remove(class_1291 effect, class_1309 entity, class_5131 attributes, int amplifier) {
         if (effect instanceof CbLegacyMobEffectOverride legacy) {
