@@ -12,7 +12,9 @@
     "OozingMixin",
     "RecipeCacheEntryMixin",
     "UtilOsMixin",
-    "EnchantBookInvoker"
+    "EnchantBookInvoker",
+    "FollowOwnerMixin",
+    "FollowOwnerAccess"
   ],
   "injectors": {
     "defaultRequire": 1

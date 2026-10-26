@@ -41,6 +41,10 @@ public final class Driver {
     public static volatile boolean forceMatch;
     public static volatile int openAsked;
     public static volatile String openUrl;
+    public static volatile int followCanAsked;
+    public static volatile int followMoved;
+    public static volatile boolean blockFollowTeleport;
+    private static net.minecraft.class_3222 followOwner;
     private static int ok;
     private static int fail;
 
@@ -169,6 +173,35 @@ public final class Driver {
         System.out.println("CB-SMX6 start");
         class_3218 level = server.method_30002();
         try {
+            // ---- FollowOwnerGoal teleport helpers: FollowOwnerMixin (1.21: routed through the restored 1.20.6 members)
+            blockFollowTeleport = false;
+            followCanAsked = 0;
+            followMoved = 0;
+            System.out.println("CB-SMX6 follow-begin passive");
+            double near = follow(server, level, -8);
+            System.out.println("CB-SMX6 follow-end passive");
+            check("follow-passive", near >= 0 && near < 5.0 && followCanAsked > 0 && followMoved == 1,
+                "tamed wolf 20 blocks from its owner, one goal tick: distance " + near + ", canTeleportTo asked " + followCanAsked
+                + " time(s), moved " + followMoved);
+            blockFollowTeleport = true;
+            followCanAsked = 0;
+            followMoved = 0;
+            System.out.println("CB-SMX6 follow-begin blocked");
+            double far = follow(server, level, 8);
+            System.out.println("CB-SMX6 follow-end blocked");
+            blockFollowTeleport = false;
+            check("follow-blocked", far > 15.0 && followCanAsked > 0 && followMoved == 0,
+                "canTeleportTo refused by the mod: distance " + far + ", asked " + followCanAsked + " time(s), moved " + followMoved);
+            {
+                net.minecraft.class_1493 wolf = class_1299.field_6055.method_5883(level);
+                cb.smx6.mixin.FollowOwnerAccess g0 = (cb.smx6.mixin.FollowOwnerAccess) new net.minecraft.class_1350(wolf, 1.0, 10.0F, 2.0F, false);
+                cb.smx6.mixin.FollowOwnerAccess g1 = (cb.smx6.mixin.FollowOwnerAccess) new net.minecraft.class_1350(wolf, 1.0, 10.0F, 2.0F, true);
+                check("follow-fields", g0.cb$level() == level && !g0.cb$canFly() && g1.cb$canFly()
+                    && cb.smx6.mixin.FollowOwnerAccess.cb$maxHorizontal() == 3,
+                    "level " + (g0.cb$level() == level) + ", canFly false/true goals " + g0.cb$canFly() + "/" + g1.cb$canFly()
+                    + ", MAX_HORIZONTAL " + cb.smx6.mixin.FollowOwnerAccess.cb$maxHorizontal());
+                wolf.method_31472();
+            }
             level.method_8519(1.0F);
             level.method_8496(1.0F);
             check("thunderstorm", level.method_8546(), "isThundering after rain/thunder level 1");
@@ -290,7 +323,50 @@ public final class Driver {
             doubleEffect = false;
             noSlimes = false;
             forceMatch = false;
+            blockFollowTeleport = false;
         }
         System.out.println("CB-SMX6 summary ok=" + ok + " fail=" + fail);
+    }
+
+    /**
+     * a wolf tamed by a server player (in the level's player list, no connection) 20 blocks east of it at the surface, and one
+     * canUse / start / tick of a 1.20.6-made FollowOwnerGoal(wolf, 1.0, 10, 2, false): the wolf's distance to its owner
+     * afterwards (-1 when the goal did not start). 1.20.6 teleports a wolf 12 or more blocks away next to its owner.
+     */
+    private static double follow(net.minecraft.server.MinecraftServer server, class_3218 level, int dx) {
+        class_2338 spawn = level.method_43126();
+        // a stone floor high above the terrain (the world's seed is random): owner and wolf stand on it, and every spot
+        // the teleport tries around the owner (3 blocks out, 1 up or down) is walkable floor or open air
+        class_2338 at = new class_2338(spawn.method_10263() + dx, 300, spawn.method_10260() - 20);
+        for (int x = -5; x <= 25; x++) {
+            for (int z = -5; z <= 5; z++) {
+                level.method_8501(at.method_10069(x, -1, z), net.minecraft.class_2246.field_10340.method_9564());
+            }
+        }
+        if (followOwner == null) {
+            followOwner = new net.minecraft.class_3222(server, level,
+                new com.mojang.authlib.GameProfile(java.util.UUID.fromString("0c0b5121-0000-4000-8000-00000000c0b5"), "cbsmx6owner"),
+                net.minecraft.class_8791.method_53821());
+        }
+        // in the level's player list only (getOwner looks the owner up there), not in its entity / chunk tracking:
+        // a player without a connection must not be sent packets
+        level.method_18456().add(followOwner);
+        followOwner.method_5808(at.method_10263() + 0.5, at.method_10264(), at.method_10260() + 0.5, 0.0F, 0.0F);
+        class_2338 wp = at.method_10069(20, 0, 0);
+        net.minecraft.class_1493 wolf = class_1299.field_6055.method_5883(level);
+        wolf.method_5808(wp.method_10263() + 0.5, wp.method_10264(), wp.method_10260() + 0.5, 0.0F, 0.0F);
+        level.method_8649(wolf);
+        wolf.method_6170(followOwner);
+        wolf.method_24346(false);
+        net.minecraft.class_1350 goal = new net.minecraft.class_1350(wolf, 1.0, 10.0F, 2.0F, false);
+        double d = -1.0;
+        if (goal.method_6264()) {
+            goal.method_6269();
+            goal.method_6268();
+            d = Math.sqrt(wolf.method_5858(followOwner));
+        }
+        wolf.method_31472();
+        level.method_18456().remove(followOwner);
+        return d;
     }
 }

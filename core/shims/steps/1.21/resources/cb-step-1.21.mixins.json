@@ -43,6 +43,7 @@
     "CbEntitySoulSpeedMixin",
     "CbEntitySpinAttackMixin",
     "CbEntityTamableFlyMixin",
+    "CbEntityFollowOwnerRestoredMixin",
     "CbEntityTrackedEntityMixin",
     "CbEntityTrackingMixin",
     "CbEntityTridentMixin",
