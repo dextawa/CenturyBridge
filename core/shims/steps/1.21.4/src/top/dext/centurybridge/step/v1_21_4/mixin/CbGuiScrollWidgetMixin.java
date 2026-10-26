@@ -54,16 +54,20 @@ public abstract class CbGuiScrollWidgetMixin {
      * 1.21.4's mouseClicked stores isMouseOver's answer (the call stays vanilla's, so a mod's own mixin on it still
      * applies); the stored answer is then 1.21.3's clicked where that decides: a 1.21.3 class overriding clicked, or an
      * answer otherwise than clicked's own box test (a 1.21.3 mod's mixin on clicked). Otherwise isMouseOver's answer stands.
+     * The local is typed int: the game jar has no local variable table, and the table Mixin generates from its verifier
+     * frames types a stored boolean as I (sponge-mixin 0.8.7 Locals.generateLocalVariableTable), so a boolean handler
+     * finds no candidate ("(0/1) succeeded"; gate 3 models it since smixin6). Among int locals (counted from slot 0,
+     * arguments included: LocalVariableDiscriminator) button is ordinal 0, the stored answer (slot 6) ordinal 1
      */
-    @ModifyVariable(method = "method_25402", at = @At("STORE"), ordinal = 0)
-    private boolean cb$legacyClicked(boolean over, double x, double y, int button) {
+    @ModifyVariable(method = "method_25402", at = @At("STORE"), ordinal = 1)
+    private int cb$legacyClicked(int over, double x, double y, int button) {
         net.minecraft.class_339 widget = (net.minecraft.class_339) (Object) this;
         if (widget instanceof CbGuiScroll.CbLegacyClicked) {
-            return this.method_25361(x, y);
+            return this.method_25361(x, y) ? 1 : 0;
         }
         boolean clicked = this.method_25361(x, y);
         if (clicked != cb$box(widget, x, y)) {
-            return clicked; // a 1.21.3 mixin on clicked answered otherwise: 1.21.3's mouseClicked took that answer
+            return clicked ? 1 : 0; // a 1.21.3 mixin on clicked answered otherwise: 1.21.3's mouseClicked took that answer
         }
         return over;
     }

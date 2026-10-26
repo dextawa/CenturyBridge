@@ -2951,7 +2951,7 @@ public final class MixinRepair {
      * argument / Args; @Redirect / @WrapWithCondition / @WrapOperation of one INVOKE after the call's operands (and
      * the Operation)
      */
-    static int[] capturedRange(AnnotationNode an, MethodNode h, List<Anchor> anchors) {
+    static int[] capturedRange(AnnotationNode an, MethodNode h, List<Anchor> anchors, List<MethodNode> targets) {
         Type[] hp = Type.getArgumentTypes(h.desc);
         if (an.desc.equals(INJECT)) {
             for (int i = 0; i < hp.length; i++) {
@@ -2968,9 +2968,20 @@ public final class MixinRepair {
         if (anchors == null || anchors.size() != 1 || !anchors.get(0).kind.equals("INVOKE") || anchors.get(0).desc == null
                 || anchors.get(0).name.equals("<init>")) return null;
         Anchor a = anchors.get(0);
-        String recv = a.owner == null ? null : Type.getObjectType(a.owner).getDescriptor();
-        int start = Type.getArgumentTypes(a.desc).length + (hp.length > 0 && recv != null && hp[0].getDescriptor().equals(recv) ? 1 : 0)
-            + (wrap ? 1 : 0);
+        // the call's receiver is an operand when the call is an instance one -- whatever type the handler gives it
+        // (a type match fails when the step moved or renamed the anchor's owner): read off the matched call in W's body
+        Boolean isStatic = null;
+        for (MethodNode m : targets) {
+            for (AbstractInsnNode in : m.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.name.equals(a.name) && mi.desc.equals(a.desc)) {
+                    boolean s = mi.getOpcode() == Opcodes.INVOKESTATIC;
+                    if (isStatic != null && isStatic != s) return null;
+                    isStatic = s;
+                }
+            }
+        }
+        if (isStatic == null) return null;
+        int start = Type.getArgumentTypes(a.desc).length + (isStatic ? 0 : 1) + (wrap ? 1 : 0);
         return start <= hp.length ? new int[] {start, hp.length} : null;
     }
 
@@ -2997,7 +3008,7 @@ public final class MixinRepair {
      * more captured parameters than the target now takes -- cannot apply, and the injector is dropped with a WARN
      */
     CapturedFit capturedFit(AnnotationNode an, MethodNode h, List<Anchor> anchors, List<MethodNode> targets) {
-        int[] r = capturedRange(an, h, anchors);
+        int[] r = capturedRange(an, h, anchors, targets);
         Map<Integer, String[]> convs = new java.util.TreeMap<>();
         Map<Integer, Type> types = new HashMap<>();
         if (r == null || r[0] >= r[1]) return new CapturedFit(null, convs, types, "");
