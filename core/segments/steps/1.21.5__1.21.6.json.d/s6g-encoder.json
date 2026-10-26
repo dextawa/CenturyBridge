@@ -1,0 +1,150 @@
+{
+ "mixinTargets": {
+  "net/minecraft/class_10860.createRenderPass(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/util/OptionalInt;)Lcom/mojang/blaze3d/systems/RenderPass;": {
+   "to": "createRenderPass(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalInt;)Lcom/mojang/blaze3d/systems/RenderPass;",
+   "args": [
+    -1,
+    2
+   ],
+   "basis": "GlCommandEncoder.createRenderPass(color, clear): same body (javap: both pass on to the depth form with an empty depth); 1.21.6 adds the debug label and takes the color texture as a view, not one V argument"
+  },
+  "net/minecraft/class_10860.createRenderPass(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/util/OptionalInt;Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/util/OptionalDouble;)Lcom/mojang/blaze3d/systems/RenderPass;": {
+   "to": "createRenderPass(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalInt;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalDouble;)Lcom/mojang/blaze3d/systems/RenderPass;",
+   "args": [
+    -1,
+    2,
+    -1,
+    4
+   ],
+   "basis": "GlCommandEncoder.createRenderPass(color, clearColor, depth, clearDepth): same body (javap: closed checks, size checks, framebuffer bind, clears, new GlRenderPass) with 1.21.6's usage / layer checks and debug group added; the textures arrive as views, not V arguments"
+  },
+  "net/minecraft/class_10860.presentTexture(Lcom/mojang/blaze3d/textures/GpuTexture;)V": {
+   "to": "presentTexture(Lcom/mojang/blaze3d/textures/GpuTextureView;)V",
+   "args": [
+    -1
+   ],
+   "basis": "GlCommandEncoder.presentTexture: same body (javap: blit of the texture to the default framebuffer, sizes read from it) with 1.21.6's usage / layer checks added; the texture arrives as a view"
+  },
+  "net/minecraft/class_10860.writeToBuffer(Lcom/mojang/blaze3d/buffers/GpuBuffer;Ljava/nio/ByteBuffer;I)V": {
+   "to": "writeToBuffer(Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Ljava/nio/ByteBuffer;)V",
+   "args": [
+    -1,
+    1,
+    -1
+   ],
+   "basis": "GlCommandEncoder.writeToBuffer: same prologue (javap: render-pass, closed, writable, bounds checks); the GL upload 1.21.5 made inline 1.21.6 makes through the device's buffer storage (class_10874.method_71027); buffer + offset are 1.21.6's slice, not V arguments"
+  },
+  "net/minecraft/class_10860.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;IIIIIII)V": {
+   "to": "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;IIIIIIII)V",
+   "args": [
+    0,
+    1,
+    2,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "basis": "GlCommandEncoder.writeToTexture(texture, image, mip, x, y, w, h, srcX, srcY): same body (javap) with 1.21.6's layer argument after the mip level (usage / layer checks, cube-map face bind added)"
+  },
+  "net/minecraft/class_10860.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/IntBuffer;Lnet/minecraft/class_1011$class_1012;IIIII)V": {
+   "to": "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/IntBuffer;Lnet/minecraft/class_1011$class_1012;IIIIII)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8
+   ],
+   "basis": "GlCommandEncoder.writeToTexture(texture, IntBuffer, format, mip, x, y, w, h): same body (javap) with 1.21.6's layer argument after the mip level (usage / layer checks, cube-map face bind added)"
+  },
+  "net/minecraft/class_10865.createTexture(Ljava/lang/String;Lcom/mojang/blaze3d/textures/TextureFormat;III)Lcom/mojang/blaze3d/textures/GpuTexture;": {
+   "to": "createTexture(Ljava/lang/String;ILcom/mojang/blaze3d/textures/TextureFormat;IIII)Lcom/mojang/blaze3d/textures/GpuTexture;",
+   "args": [
+    0,
+    2,
+    3,
+    4,
+    6
+   ],
+   "basis": "GlDevice.createTexture(label, format, w, h, mips): same body (javap: checks, glGenTexture, storage per mip, new GlTexture) with 1.21.6's usage bits and depth / layer count (and their checks) added"
+  },
+  "net/minecraft/class_10865.createTexture(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/TextureFormat;III)Lcom/mojang/blaze3d/textures/GpuTexture;": {
+   "to": "createTexture(Ljava/util/function/Supplier;ILcom/mojang/blaze3d/textures/TextureFormat;IIII)Lcom/mojang/blaze3d/textures/GpuTexture;",
+   "args": [
+    0,
+    2,
+    3,
+    4,
+    6
+   ],
+   "basis": "GlDevice.createTexture(Supplier label, ...): same body (javap: the label resolved, then the String form) with 1.21.6's usage and depth / layer count passed on"
+  },
+  "net/minecraft/class_10860.method_68351(Lnet/minecraft/class_10866;)Z": {
+   "to": "method_68351(Lnet/minecraft/class_10866;Ljava/util/Collection;)Z",
+   "args": [
+    0
+   ],
+   "basis": "GlCommandEncoder.trySetup(pass): the same step of every draw (javap: both called first by drawFromBuffers / drawMultipleIndexed, check the pipeline and its uniforms / samplers, bind the program and samplers, return false when the pass cannot draw); 1.21.6 adds the dirty-uniform names and binds uniform buffers where 1.21.5 uploaded uniform values"
+  },
+  "net/minecraft/class_10860.method_68352(Lnet/minecraft/class_10866;IILcom/mojang/blaze3d/vertex/VertexFormat$class_5595;)V": {
+   "to": "method_68352(Lnet/minecraft/class_10866;IIILcom/mojang/blaze3d/vertex/VertexFormat$class_5595;I)V",
+   "args": [
+    0,
+    2,
+    3,
+    4
+   ],
+   "basis": "GlCommandEncoder.drawFromBuffers(pass, first, count, indexType): same body (javap: trySetup, vertex / index buffer checks, then drawFromBuffers' private form); 1.21.6 adds the base vertex before and the instance count after (index checks on buffer usage added)"
+  },
+  "net/minecraft/class_10860.method_68353(Lnet/minecraft/class_10866;IILcom/mojang/blaze3d/vertex/VertexFormat$class_5595;Lnet/minecraft/class_10867;)V": {
+   "to": "method_68353(Lnet/minecraft/class_10866;IIILcom/mojang/blaze3d/vertex/VertexFormat$class_5595;Lnet/minecraft/class_10867;I)V",
+   "args": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "basis": "GlCommandEncoder's private drawFromBuffers(pass, first, count, indexType, pipeline): same body (javap: vertex array setup, index buffer bind, the draw call); 1.21.6 adds the base vertex before and the instance count after, drawing with glDrawElementsInstancedBaseVertex / glDrawArraysInstanced where 1.21.5 called _drawElements / _drawArrays"
+  },
+  "net/minecraft/class_10860.method_68355(Lnet/minecraft/class_10866;Ljava/util/Collection;Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$class_5595;)V": {
+   "to": "method_68355(Lnet/minecraft/class_10866;Ljava/util/Collection;Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$class_5595;Ljava/util/Collection;Ljava/lang/Object;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "GlCommandEncoder.drawMultipleIndexed(pass, draws, indexBuffer, indexType): same body (javap: trySetup, per draw its uniform uploader, buffers and the private drawFromBuffers); 1.21.6 adds the dirty-uniform names and a value handed to each draw's uploader"
+  },
+  "net/minecraft/class_10866.drawIndexed(II)V": {
+   "to": "drawIndexed(IIII)V",
+   "args": [
+    1,
+    2
+   ],
+   "basis": "GlRenderPass.drawIndexed(first, count): same body (javap: closed check, then the encoder's drawFromBuffers); 1.21.6 adds the base vertex before and the instance count after"
+  },
+  "net/minecraft/class_10866.bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTexture;)V": {
+   "to": "bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "GlRenderPass.bindSampler(name, texture): same body (javap: samplers.put(name, it), dirtySamplers.add(name)); 1.21.6 binds a view (and removes the name for null), not a V argument"
+  },
+  "net/minecraft/class_10866.enableScissor(Lcom/mojang/blaze3d/systems/ScissorState;)V": {
+   "to": "enableScissor(IIII)V",
+   "args": [
+    -1
+   ],
+   "basis": "GlRenderPass.enableScissor(state): 1.21.5 copied the state into the pass's scissor state (javap: field_57872.copyFrom); 1.21.6's enableScissor(x, y, w, h) sets that same field's rectangle and flag (field_57872.method_70814); the state is not a V argument"
+  }
+ }
+}
