@@ -893,6 +893,51 @@ public final class Chain {
     }
 
     /**
+     * Whether a source Fabric API class still stands directly over the same game class on the target: the first
+     * class up the target's Fabric API superclass chain from {@code libClass} that is not a Fabric API class is
+     * {@code gameClass} (both in analysis names, spelled through the step's classRenames and past the wall the wall
+     * rename). False when the target has no such library class or its Fabric API was not read.
+     */
+    public boolean targetLibraryOver(String libClass, String gameClass) {
+        String l = classRenames.getOrDefault(libClass, libClass);
+        String g = classRenames.getOrDefault(gameClass, gameClass);
+        if (wallRemapper != null) {
+            l = wallRemapper.map(l);
+            g = wallRemapper.map(g);
+        }
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        String c = l;
+        if (!targetLibAccess.containsKey(c)) {
+            return false;
+        }
+        while (c != null && targetLibAccess.containsKey(c) && seen.add(c)) {
+            c = targetLibSuperOf.get(c);
+        }
+        return g.equals(c);
+    }
+
+    /**
+     * Whether an instance method (analysis names) resolves on the target, JVM-style from {@code owner}, to a
+     * non-abstract declaration: a body the target runs for it (a vanilla javac bridge, say). Spelled as
+     * {@link #linksOnTarget} spells it.
+     */
+    public boolean concreteOnTarget(String owner, String name, String desc) {
+        if (targetRaw == null) {
+            return false;
+        }
+        String o = classRenames.getOrDefault(owner, owner);
+        String d = renamedDesc(desc);
+        String n = name;
+        if (wallRemapper != null) {
+            n = wallRemapper.mapMethodName(o, name, d);
+            d = wallRemapper.mapMethodDesc(d);
+            o = wallRemapper.map(o);
+        }
+        String hit = resolveOnTargetJvm(o, n, d);
+        return hit != null && !hit.contains(" abstract") && !hit.endsWith(" static");
+    }
+
+    /**
      * Whether a call the source release made (owner.name(desc), analysis names) links on the target as the converted
      * jar spells it: the step's classRenames on owner and descriptor, then past the wall the wall rename (the same
      * remapper the conversion applies). Resolved JVM-style in the target's namespace, with the call kind's
