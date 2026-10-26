@@ -58,6 +58,16 @@ public final class Driver {
         // ---- a HEAD injector on a private method W reshaped with no wiring (body follow)
         int r = COUNT.getOrDefault("particle-types-register", 0);
         check("body-follow-head", r == 11, "ParticleTypes.register handler ran " + r + " time(s) (1.20.5 registers 11 particle types with options through it)");
+        // ---- an INVOKE injector in a member a layer restores (1.20.5: FriendlyByteBuf.writeGameProfile)
+        try {
+            net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
+            RAN.remove("buf-writeGameProfile-invoke");
+            buf.method_43616(new com.mojang.authlib.GameProfile(new java.util.UUID(1L, 2L), "cbrestore"));
+            check("restored-member-invoke", "name=cbrestore".equals(RAN.get("buf-writeGameProfile-invoke")),
+                "writeGameProfile wrote " + buf.readableBytes() + " bytes, writeUtf INVOKE handler: " + RAN.get("buf-writeGameProfile-invoke"));
+        } catch (Throwable t) {
+            check("restored-member-invoke", false, "threw " + t);
+        }
         System.out.println("CB-MIXINRESTORE summary ok=" + ok + " fail=" + fail);
     }
 }
