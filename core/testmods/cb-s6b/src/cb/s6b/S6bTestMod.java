@@ -192,6 +192,12 @@ public class S6bTestMod implements ModInitializer {
             check(false, "recipeSettings threw " + e);
         }
         try {
+            tickets(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "tickets threw " + e);
+        }
+        try {
             routes(level);
         } catch (Throwable e) {
             e.printStackTrace();
@@ -857,6 +863,43 @@ public class S6bTestMod implements ModInitializer {
                 + ", " + bytes + " bytes (furnace open at byte 2: " + furnaceByte + "), round trip same states: " + sameStates);
         states.clear();
         check(!s.method_30180(furnace), "the states map writes through: clear() resets 1.21.6's furnace settings");
+    }
+
+    /**
+     * TicketStorage.purgeStaleTickets(), 1.21.5's no-argument shape, on the level's own ticket storage (the one its
+     * ServerChunkCache holds): a ticket of a type that times out regardless of loading, at a level that loads nothing,
+     * is gone after timeout + 1 purges, as in 1.21.5. A storage no chunk cache owns has no chunk map to purge against.
+     */
+    static void tickets(class_3218 level) {
+        net.minecraft.class_10592 live = level.method_17983().method_17924(net.minecraft.class_10592.field_56451);
+        net.minecraft.class_3230 type = null;
+        for (net.minecraft.class_3230 t : new net.minecraft.class_3230[] {net.minecraft.class_3230.field_14030, net.minecraft.class_3230.field_17264,
+                net.minecraft.class_3230.field_55599, net.minecraft.class_3230.field_55600, net.minecraft.class_3230.field_14031,
+                net.minecraft.class_3230.field_19280, net.minecraft.class_3230.field_54211, net.minecraft.class_3230.field_14032}) {
+            if (t.comp_3474() > 0L && !t.method_66027()) {
+                type = t;
+                break;
+            }
+        }
+        net.minecraft.class_1923 far = new net.minecraft.class_1923(200000, 200000);
+        live.method_66357(new net.minecraft.class_3228(type, 40), far);
+        boolean added = !live.method_66352(far.method_8324()).isEmpty();
+        boolean before;
+        for (long i = 0; i < type.comp_3474(); i++) {
+            live.method_66381();
+        }
+        before = !live.method_66352(far.method_8324()).isEmpty();
+        live.method_66381();
+        boolean gone = live.method_66352(far.method_8324()).isEmpty();
+        check(added && before && gone, "TicketStorage.purgeStaleTickets() on the level's storage: a " + type
+            + " ticket kept through its timeout, gone after one more purge (" + added + ", " + before + ", " + gone + ")");
+        String err = "";
+        try {
+            new net.minecraft.class_10592().method_66381();
+        } catch (IllegalStateException e) {
+            err = String.valueOf(e.getMessage());
+        }
+        check(err.contains("no ServerChunkCache owns"), "TicketStorage.purgeStaleTickets() on a storage no chunk cache owns: " + err);
     }
 
     static void recipeBook(class_3218 level) {

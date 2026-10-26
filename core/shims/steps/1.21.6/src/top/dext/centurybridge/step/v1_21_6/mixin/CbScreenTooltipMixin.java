@@ -15,6 +15,8 @@ package top.dext.centurybridge.step.v1_21_6.mixin;
  *     unchanged.</li>
  * <li>renderBlurredBackground() was minecraft.gameRenderer.processBlurEffect(); 1.21.6 keeps processBlurEffect (its GUI
  *     renderer calls it before the stratum a screen marked with renderBlurredBackground(GuiGraphics)).</li>
+ * <li>renderWithTooltip's GuiGraphics is recorded for its duration (CbScreens.screenFrame): the step's frameDefaults
+ *     hand it to a 1.21.5 override's rewritten super call that has no frame (CbScreens.screenGraphics / blurGraphics).</li>
  * </ul>
  */
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
@@ -68,6 +70,20 @@ public abstract class CbScreenTooltipMixin {
     /** renderBlurredBackground() */
     protected void method_57734() {
         this.field_22787.field_1773.method_57796();
+    }
+
+    @org.spongepowered.asm.mixin.injection.Inject(method = "method_47413(Lnet/minecraft/class_332;IIF)V",
+        at = @org.spongepowered.asm.mixin.injection.At("HEAD"))
+    private void cb$screenFrameStart(net.minecraft.class_332 graphics, int mouseX, int mouseY, float partialTick,
+            org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        top.dext.centurybridge.step.v1_21_6.rt.CbScreens.screenFrame(graphics);
+    }
+
+    @org.spongepowered.asm.mixin.injection.Inject(method = "method_47413(Lnet/minecraft/class_332;IIF)V",
+        at = @org.spongepowered.asm.mixin.injection.At("RETURN"))
+    private void cb$screenFrameEnd(net.minecraft.class_332 graphics, int mouseX, int mouseY, float partialTick,
+            org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        top.dext.centurybridge.step.v1_21_6.rt.CbScreens.screenFrame(null);
     }
 
     @org.spongepowered.asm.mixin.injection.Inject(method = "method_47413(Lnet/minecraft/class_332;IIF)V",

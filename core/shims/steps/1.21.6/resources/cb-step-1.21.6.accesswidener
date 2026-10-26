@@ -67,3 +67,6 @@ accessible method net/minecraft/class_1496 method_6769 (IZ)V
 # CbRecipeBookSettingsRestoredMixin: 1.21.5's write(FriendlyByteBuf) reads TypeSettings' record fields directly (getfield)
 accessible field net/minecraft/class_5411$class_5412 comp_3247 Z
 accessible field net/minecraft/class_5411$class_5412 comp_3248 Z
+# CbScreens: the frame GUI render state (blurGraphics / screenGraphics) and whether it is already marked to blur
+accessible field net/minecraft/class_757 field_59966 Lnet/minecraft/class_11246;
+accessible field net/minecraft/class_11246 field_60314 I
