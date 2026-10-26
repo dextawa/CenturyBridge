@@ -1,0 +1,62 @@
+{
+ "_entity_basis": "s9 entity: Entity.getVisualRotationYInDegrees is ItemOwner's method_73188 in 1.21.9 (javap: the same bodies in Entity, LivingEntity, ItemFrame, ItemEntity, LocalPlayer); lerpMotion(x,y,z) became lerpMotion(Vec3) (the same bodies); ServerPlayer.loadGameTypes folded into readAdditionalSaveData; every 1.21.8 class declaring the member is keyed (a site resolves to the nearest declaring class)",
+ "methodRenames": {
+  "net/minecraft/class_1297.method_43078()F": "method_73188",
+  "net/minecraft/class_1309.method_43078()F": "method_73188",
+  "net/minecraft/class_1533.method_43078()F": "method_73188",
+  "net/minecraft/class_1542.method_43078()F": "method_73188",
+  "net/minecraft/class_746.method_43078()F": "method_73188"
+ },
+ "callReshapes": {
+  "net/minecraft/class_1297.method_5750(DDD)V": {
+   "basis": "s9 entity: lerpMotion takes the motion as one Vec3 in 1.21.9",
+   "desc": "(Lnet/minecraft/class_243;)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbEntityMotion#vec(DDD)Lnet/minecraft/class_243;"
+   ]
+  },
+  "net/minecraft/class_1665.method_5750(DDD)V": {
+   "basis": "s9 entity: lerpMotion takes the motion as one Vec3 in 1.21.9",
+   "desc": "(Lnet/minecraft/class_243;)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbEntityMotion#vec(DDD)Lnet/minecraft/class_243;"
+   ]
+  },
+  "net/minecraft/class_1688.method_5750(DDD)V": {
+   "basis": "s9 entity: lerpMotion takes the motion as one Vec3 in 1.21.9",
+   "desc": "(Lnet/minecraft/class_243;)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbEntityMotion#vec(DDD)Lnet/minecraft/class_243;"
+   ]
+  },
+  "net/minecraft/class_745.method_5750(DDD)V": {
+   "basis": "s9 entity: lerpMotion takes the motion as one Vec3 in 1.21.9",
+   "desc": "(Lnet/minecraft/class_243;)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_21_9/rt/CbEntityMotion#vec(DDD)Lnet/minecraft/class_243;"
+   ]
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_3222.method_32748(Lnet/minecraft/class_11368;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPlayerGameTypes",
+  "net/fabricmc/fabric/api/entity/FakePlayer.method_32748(Lnet/minecraft/class_11368;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPlayerGameTypes"
+ },
+ "overrideHooks": [
+  {
+   "basis": "s9 entity: getVisualRotationYInDegrees is method_73188 (the same bodies); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "old": "method_43078()F",
+   "new": "method_73188()F",
+   "onlyUnder": "net/minecraft/class_1297"
+  },
+  {
+   "basis": "s9 entity: 1.21.9's lerpMotion(Vec3) reaches a 1.21.8 lerpMotion(x, y, z) override with the vector's components (CbEntityMotion.cbLerpMotion)",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbEntityMotion$LegacyLerpMotion",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbEntityMotion.cbLerpMotion(Ltop/dext/centurybridge/step/v1_21_9/rt/CbEntityMotion$LegacyLerpMotion;Lnet/minecraft/class_243;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "old": "method_5750(DDD)V",
+   "new": "method_5750(Lnet/minecraft/class_243;)V",
+   "onlyUnder": "net/minecraft/class_1297"
+  }
+ ]
+}

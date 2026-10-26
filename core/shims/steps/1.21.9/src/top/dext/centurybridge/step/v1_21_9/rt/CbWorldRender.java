@@ -111,10 +111,11 @@ public final class CbWorldRender {
      * Before the clouds are added to the frame graph: 0.136's afterTranslucent pass, writing the main target and
      * firing AFTER_TRANSLUCENT when the graph runs it. Added only while a listener is registered.
      */
-    public static void cbAfterTranslucentPass(CbWorldRenderContextImpl context, class_9909 frameGraph, class_9960 targets) {
-        if (frameGraph == null || !WorldRenderEvents.cbAfterTranslucentListened()) {
+    public static void cbAfterTranslucentPass(CbWorldRenderContextImpl context, class_9909 frameGraph, Object renderer) {
+        if (frameGraph == null || !WorldRenderEvents.cbAfterTranslucentListened() || !(renderer instanceof CbWorldRenderTargets holder)) {
             return;
         }
+        class_9960 targets = holder.cb$targets();
         class_9916 pass = frameGraph.method_61911("afterTranslucent");
         targets.field_53091 = pass.method_61933(targets.field_53091);
         pass.method_61929(() -> WorldRenderEvents.AFTER_TRANSLUCENT.invoker().afterTranslucent(context));
