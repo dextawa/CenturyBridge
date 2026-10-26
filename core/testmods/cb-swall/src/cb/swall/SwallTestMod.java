@@ -80,6 +80,9 @@ public class SwallTestMod implements ModInitializer {
             net.minecraft.class_2378.method_39197(net.minecraft.class_7923.field_41178, key, item);
             String seen = item.stackSizeSeen + "/" + item.nameSeen;
             check("item.componentsInConstructor", "16/item.cbswall.legacy_components".equals(seen), seen);
+            // 1.21.11 made stacks of an item before the registries loaded (26.1's ItemStack reads the item's holder)
+            int max = new net.minecraft.class_1799(item).method_7914();
+            check("item.stackBeforeBinding", max == 16, max);
         } catch (Throwable t) {
             check("item.componentsInConstructor", false, t);
         }
