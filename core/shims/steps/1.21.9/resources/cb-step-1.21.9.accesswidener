@@ -65,6 +65,15 @@ accessible method net/minecraft/class_1921$class_4688$class_4689 method_23608 (L
 accessible method net/minecraft/class_1921$class_4688$class_4689 method_23617 (Z)Lnet/minecraft/class_1921$class_4688;
 accessible field net/minecraft/class_4668 field_21383 Lnet/minecraft/class_4668$class_4676;
 
+# DimensionRenderingRegistry.registerDimensionEffects / getDimensionEffects (rt/CbDimensionRendering): the effects-by-id map 0.136 reached through its accessor
+accessible field net/minecraft/class_5294 field_24609 Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;
+# PayloadTypeRegistry.registerLarge (rt/CbLargePayloads): the splitter encodes a packet to measure it, the merger decodes the merged one, as 0.136 through its invokers
+accessible method net/minecraft/class_2545 method_10838 (Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/class_2596;Lio/netty/buffer/ByteBuf;)V
+accessible method net/minecraft/class_2543 decode (Lio/netty/channel/ChannelHandlerContext;Lio/netty/buffer/ByteBuf;Ljava/util/List;)V
+# ServerPlayer.loadGameTypes (rt/CbPlayerGameTypes): 1.21.8's body with 1.21.9's readers
+accessible method net/minecraft/class_3222 method_32745 (Lnet/minecraft/class_11368;Ljava/lang/String;)Lnet/minecraft/class_1934;
+accessible method net/minecraft/class_3222 method_32746 (Lnet/minecraft/class_1934;)Lnet/minecraft/class_1934;
+accessible method net/minecraft/class_3225 method_14261 (Lnet/minecraft/class_1934;Lnet/minecraft/class_1934;)V
 # ---- BEGIN GENERATED (all): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
 # members, given back so a converted mod's call, read or write links again

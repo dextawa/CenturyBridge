@@ -164,13 +164,18 @@ public final class Chain {
     public final java.util.Map<String, MixinReceiver> mixinReceivers = new java.util.HashMap<>();
 
     /**
-     * A static V method whose code W keeps, the same, in a static method of another class ("mixinMoves", judged by
-     * an area agent from both bodies): key "V owner.name(desc)", value {"to": "W owner.name(desc)", "basis"}.
-     * 1.21.11 moved RenderType's static factories to RenderTypes. MixinRepair moves an injector selecting the V
-     * method onto a mixin of the W class it adds (same descriptor, a static handler that reads nothing of its own
-     * mixin), its anchors judged in the W body. Mods' plain calls are the staticRedirects' business.
+     * A V method whose code W keeps, the same, in a method of another class ("mixinMoves", judged by an area agent
+     * from both bodies): key "V owner.name(desc)", value {"to": "W owner.name(desc)", "basis"}. 1.21.11 moved
+     * RenderType's static factories to RenderTypes; 1.21.9 ParticleEngine's provider registration to
+     * ParticleResources. MixinRepair moves an injector selecting the V method onto a mixin of the W class it adds
+     * (the handler's static-ness that of the W method, an instance handler that does not read this -- it runs on
+     * another object --, nothing of its own mixin read), its anchors judged in the W body. Mods' plain calls are the
+     * redirects' business.
      */
     public final java.util.Map<String, String> mixinMoves = new java.util.HashMap<>();
+
+    /** "splitRenames": a V interface W made a final record, kept in two spellings in mods (SplitRename) */
+    public final java.util.Map<String, SplitRename.Split> splitRenames = new java.util.HashMap<>();
 
     /**
      * How a V method's answer and the W method's answer turn into each other for an @Inject whose selector
@@ -1525,8 +1530,11 @@ public final class Chain {
                     if (mapped == null) {
                         // a record component's field shares its accessor's name; the
                         // table lists it once, as the method (comp_NNNN)
+                        // (its comp_ id: a method of the same mojang name -- Advancement.name(AdvancementHolder)
+                        // beside the component name -- is another id under that key)
                         java.util.List<String> comp = memberBack.get(e.getKey() + "." + name);
-                        mapped = comp == null ? null : comp.get(0);
+                        mapped = comp == null ? null : comp.stream()
+                            .filter(c -> c.substring(c.lastIndexOf('.') + 1).startsWith("comp_")).findFirst().orElse(null);
                     }
                     if (mapped != null) {
                         name = mapped.substring(mapped.lastIndexOf('.') + 1);
@@ -3114,6 +3122,15 @@ public final class Chain {
                     String where = "mixinReceivers " + k;
                     c.mixinReceivers.put(k, new MixinReceiver(parseStaticRef(where, o.get("toV").getAsString()),
                         parseStaticRef(where, o.get("toW").getAsString()), o.has("basis") ? o.get("basis").getAsString() : ""));
+                }
+            }
+            if (root.has("splitRenames")) {
+                var sr = root.getAsJsonObject("splitRenames");
+                for (String k : sr.keySet()) {
+                    var o = sr.getAsJsonObject(k);
+                    String where = "splitRenames " + k;
+                    c.splitRenames.put(k, new SplitRename.Split(k, o.get("facade").getAsString(),
+                        parseStaticRef(where, o.get("toW").getAsString()), parseStaticRef(where, o.get("toV").getAsString())));
                 }
             }
             if (root.has("mixinMoves")) {

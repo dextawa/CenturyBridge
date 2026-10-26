@@ -11,11 +11,11 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallAttackType;
  * entity of that type -- true here; Mob, IronGolem, Breeze and Phantom overrode it. 1.21.11's TargetingConditions.test
  * asked it after canAttack(target); 26.1 dropped it and moved the overrides' type checks into canAttack(target).
  * <p>
- * Vanilla's path asks it again: TargetingConditions.test (CbWallTargetingAttackTypeMixin) and Mob.canAttack, whose
- * type check is this method (CbWallMobAttackTypeMixin); IronGolem's and Breeze's canAttack leave their type checks
- * to it (CbWallIronGolemAttackTypeMixin, CbWallBreezeAttackTypeMixin).
+ * Vanilla's path asks it again, after 26.1's own checks ran: TargetingConditions.test (CbWallTargetingAttackTypeMixin)
+ * and Mob / IronGolem / Breeze.canAttack (CbWallMobCanAttackMixin, CbWallGolemBreezeCanAttackMixin) take its answer
+ * where it differs from 1.21.11's vanilla body (rt/CbWallAttackType); unmixed, 26.1's answer stands.
  */
-@Mixin(LivingEntity.class)
+@Mixin(value = LivingEntity.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallLivingEntityAttackTypeMixin implements CbWallAttackType {
 
     /** 1.21.11 LivingEntity.canAttackType (class_1309.method_5973) */

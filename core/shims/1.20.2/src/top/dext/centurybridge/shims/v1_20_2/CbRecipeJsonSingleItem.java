@@ -8,9 +8,7 @@ import net.minecraft.class_2960;
 import net.minecraft.class_3518;
 import net.minecraft.class_3972;
 import net.minecraft.class_7923;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.rt.v1_20_2.CbRecipeSerializerSupport;
 import top.dext.centurybridge.rt.v1_20_2.CbRecipeJson;
 import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
@@ -25,10 +23,6 @@ import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 @Mixin(value = class_3972.class_3973.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRecipeJsonSingleItem implements CbRecipeJson.Reader {
 
-    /** 1.20.2's codec: the one place 1.20.2 calls the serializer's (package-private) factory */
-    @Shadow
-    @Final
-    private com.mojang.serialization.Codec<class_3972> field_46107;
 
     @CbVanillaReads("CbRecipeJsonVanillaMixin: RecipeManager.fromJson consults it, against its unmixed copy cb$goldenJson, for every stonecutting recipe the codec decoded")
     public class_3972 method_17881(class_2960 id, JsonObject json) {
@@ -44,7 +38,7 @@ public abstract class CbRecipeJsonSingleItem implements CbRecipeJson.Reader {
         class_1799 result = new class_1799(class_7923.field_41178.method_10223(new class_2960(resultId)), count);
         // factory.create(group, ingredient, result), run with the id as the one being decoded (a converted 1.20.1
         // factory takes it from there)
-        return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.singleItem(this.field_46107, group, ingredient, result));
+        return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.singleItem(this.cb$codec(), group, ingredient, result));
     }
 
     /** the same 1.20.1 body under a CenturyBridge name: what method_17881 answers unmixed (CbRecipeJson.consult) */
@@ -62,11 +56,23 @@ public abstract class CbRecipeJsonSingleItem implements CbRecipeJson.Reader {
         class_1799 result = new class_1799(class_7923.field_41178.method_10223(new class_2960(resultId)), count);
         // factory.create(group, ingredient, result), run with the id as the one being decoded (a converted 1.20.1
         // factory takes it from there)
-        return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.singleItem(this.field_46107, group, ingredient, result));
+        return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.singleItem(this.cb$codec(), group, ingredient, result));
     }
 
     @Override
     public class_1860<?> cb$readJson(class_2960 id, JsonObject json) {
         return this.method_17881(id, json);
+    }
+
+    /**
+     * the serializer's codec, the one place 1.20.2 calls its (package-private) factory: asked through
+     * RecipeSerializer.codec(), a call later steps carry like any mod's (1.20.5's MapCodec answer is converted back by
+     * that step's wiring), not a @Shadow of 1.20.2's private codec field, which a later release drops (1.20.5) and
+     * Mixin then strips the whole mixin with
+     */
+    @SuppressWarnings("unchecked")
+    @org.spongepowered.asm.mixin.Unique
+    private com.mojang.serialization.Codec<class_3972> cb$codec() {
+        return ((net.minecraft.class_1865<class_3972>) (Object) this).method_53736();
     }
 }

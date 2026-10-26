@@ -65,5 +65,227 @@
   "net/minecraft/class_1921.field_32772:I": "field_64008",
   "net/minecraft/class_1921.field_32774:I": "field_64009",
   "net/minecraft/class_1921.field_32775:I": "field_64010"
+ },
+ "mixinMoves": {
+  "net/minecraft/class_1921.method_23018(Lnet/minecraft/class_2960;FF)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75974(Lnet/minecraft/class_2960;FF)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.energySwirl = 1.21.11 RenderTypes.energySwirl: same name, parameters, pipeline and type name (['field_56911'], ['energy_swirl'])"
+  },
+  "net/minecraft/class_1921.method_23026(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76014(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.eyes = 1.21.11 RenderTypes.eyes: same name, parameters, pipeline and type name (['field_56912'], ['eyes'])"
+  },
+  "net/minecraft/class_1921.method_23028(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76022(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.text = 1.21.11 RenderTypes.text: same name, parameters, pipeline and type name (['field_56818'], ['text'])"
+  },
+  "net/minecraft/class_1921.method_23030(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76028(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.textSeeThrough = 1.21.11 RenderTypes.textSeeThrough: same name, parameters, pipeline and type name (['field_56822'], ['text_see_through'])"
+  },
+  "net/minecraft/class_1921.method_23287(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76018(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.outline = 1.21.11 RenderTypes.outline: outline(Identifier): both CompositeRenderType OUTLINE.apply(texture, false), a memoized BiFunction over the \"outline\" type"
+  },
+  "net/minecraft/class_1921.method_23570(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76020(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.crumbling = 1.21.11 RenderTypes.crumbling: same name, parameters, pipeline and type name (['field_56817'], ['crumbling'])"
+  },
+  "net/minecraft/class_1921.method_23572(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75982(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entitySolid = 1.21.11 RenderTypes.entitySolid: same name, parameters, pipeline and type name (['field_56901'], ['entity_solid'])"
+  },
+  "net/minecraft/class_1921.method_23573(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76012(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.dragonExplosionAlpha = 1.21.11 RenderTypes.dragonExplosionAlpha: same name, parameters, pipeline and type name (['field_56813'], ['entity_alpha'])"
+  },
+  "net/minecraft/class_1921.method_23574()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76011()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.endPortal = 1.21.11 RenderTypes.endPortal: same name, parameters, pipeline and type name (['field_56828'], ['end_portal'])"
+  },
+  "net/minecraft/class_1921.method_23576(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75990(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityCutout = 1.21.11 RenderTypes.entityCutout: same name, parameters, pipeline and type name (['field_56903'], ['entity_cutout'])"
+  },
+  "net/minecraft/class_1921.method_23578(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75994(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityCutoutNoCull = 1.21.11 RenderTypes.entityCutoutNoCull: same name, parameters, pipeline and type name (['field_56904'], ['entity_cutout_no_cull'])"
+  },
+  "net/minecraft/class_1921.method_23580(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76000(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityTranslucent = 1.21.11 RenderTypes.entityTranslucent: same name, parameters, pipeline and type name (['field_56906'], ['entity_translucent'])"
+  },
+  "net/minecraft/class_1921.method_23584(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76004(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entitySmoothCutout = 1.21.11 RenderTypes.entitySmoothCutout: same name, parameters, pipeline and type name (['field_56908'], ['entity_smooth_cutout'])"
+  },
+  "net/minecraft/class_1921.method_23586(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76006(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityDecal = 1.21.11 RenderTypes.entityDecal: same name, parameters, pipeline and type name (['field_56913'], ['entity_decal'])"
+  },
+  "net/minecraft/class_1921.method_23587()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75981()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.leash = 1.21.11 RenderTypes.leash: same name, parameters, pipeline and type name (['field_56814'], ['leash'])"
+  },
+  "net/minecraft/class_1921.method_23588(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76008(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityNoOutline = 1.21.11 RenderTypes.entityNoOutline: same name, parameters, pipeline and type name (['field_56909'], ['entity_no_outline'])"
+  },
+  "net/minecraft/class_1921.method_23589()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75985()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.waterMask = 1.21.11 RenderTypes.waterMask: same name, parameters, pipeline and type name (['field_56815'], ['water_mask'])"
+  },
+  "net/minecraft/class_1921.method_23590()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75995()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.glint = 1.21.11 RenderTypes.glint: same name, parameters, pipeline and type name (['field_56816'], ['glint'])"
+  },
+  "net/minecraft/class_1921.method_23591()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75997()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityGlint = 1.21.11 RenderTypes.entityGlint: same name, parameters, pipeline and type name (['field_56816'], ['entity_glint'])"
+  },
+  "net/minecraft/class_1921.method_23592(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75988(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.beaconBeam = 1.21.11 RenderTypes.beaconBeam: same name, parameters, pipeline and type name (['field_56812', 'field_56916'], ['beacon_beam'])"
+  },
+  "net/minecraft/class_1921.method_23593()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76003()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.lightning = 1.21.11 RenderTypes.lightning: same name, parameters, pipeline and type name (['field_56825'], ['lightning'])"
+  },
+  "net/minecraft/class_1921.method_23594()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76015()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.lines = 1.21.11 RenderTypes.lines: same name, parameters, pipeline and type name (['field_56833'], ['lines'])"
+  },
+  "net/minecraft/class_1921.method_24293(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75969(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityCutoutNoCull = 1.21.11 RenderTypes.entityCutoutNoCull: same name, parameters, pipeline and type name (['field_56904'], ['entity_cutout_no_cull'])"
+  },
+  "net/minecraft/class_1921.method_24294(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75980(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityTranslucent = 1.21.11 RenderTypes.entityTranslucent: same name, parameters, pipeline and type name (['field_56906'], ['entity_translucent'])"
+  },
+  "net/minecraft/class_1921.method_24469(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76010(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityShadow = 1.21.11 RenderTypes.entityShadow: same name, parameters, pipeline and type name (['field_56914'], ['entity_shadow'])"
+  },
+  "net/minecraft/class_1921.method_25448(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75966(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.armorCutoutNoCull = 1.21.11 RenderTypes.armorCutoutNoCull: same name, parameters, pipeline and type name (['field_56898'], ['armor_cutout_no_cull'])"
+  },
+  "net/minecraft/class_1921.method_27949()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75989()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.armorEntityGlint = 1.21.11 RenderTypes.armorEntityGlint: same name, parameters, pipeline and type name (['field_56816'], ['armor_entity_glint'])"
+  },
+  "net/minecraft/class_1921.method_28115(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75976(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityCutoutNoCullZOffset = 1.21.11 RenderTypes.entityCutoutNoCullZOffset: same name, parameters, pipeline and type name (['field_56905'], ['entity_cutout_no_cull_z_offset'])"
+  },
+  "net/minecraft/class_1921.method_28116(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75996(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityCutoutNoCullZOffset = 1.21.11 RenderTypes.entityCutoutNoCullZOffset: same name, parameters, pipeline and type name (['field_56905'], ['entity_cutout_no_cull_z_offset'])"
+  },
+  "net/minecraft/class_1921.method_29379(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75998(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.itemEntityTranslucentCull = 1.21.11 RenderTypes.itemEntityTranslucentCull: same name, parameters, pipeline and type name (['field_56915'], ['item_entity_translucent_cull'])"
+  },
+  "net/minecraft/class_1921.method_29380()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75977()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.translucentMovingBlock = 1.21.11 RenderTypes.translucentMovingBlock: same name, parameters, pipeline and type name (['field_56897'], ['translucent_moving_block'])"
+  },
+  "net/minecraft/class_1921.method_30676()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75993()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.glintTranslucent = 1.21.11 RenderTypes.glintTranslucent: same name, parameters, pipeline and type name (['field_56816'], ['glint_translucent'])"
+  },
+  "net/minecraft/class_1921.method_34571()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76013()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.endGateway = 1.21.11 RenderTypes.endGateway: same name, parameters, pipeline and type name (['field_56829'], ['end_gateway'])"
+  },
+  "net/minecraft/class_1921.method_36434(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76024(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.textIntensity = 1.21.11 RenderTypes.textIntensity: same name, parameters, pipeline and type name (['field_56820'], ['text_intensity'])"
+  },
+  "net/minecraft/class_1921.method_36435(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76029(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.textIntensitySeeThrough = 1.21.11 RenderTypes.textIntensitySeeThrough: same name, parameters, pipeline and type name (['field_56824'], ['text_intensity_see_through'])"
+  },
+  "net/minecraft/class_1921.method_37345(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76026(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.textPolygonOffset = 1.21.11 RenderTypes.textPolygonOffset: same name, parameters, pipeline and type name (['field_56821'], ['text_polygon_offset'])"
+  },
+  "net/minecraft/class_1921.method_37346(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76027(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.textIntensityPolygonOffset = 1.21.11 RenderTypes.textIntensityPolygonOffset: same name, parameters, pipeline and type name (['field_56820'], ['text_intensity_polygon_offset'])"
+  },
+  "net/minecraft/class_1921.method_42599(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75984(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityTranslucentEmissive = 1.21.11 RenderTypes.entityTranslucentEmissive: same name, parameters, pipeline and type name (['field_56907'], ['entity_translucent_emissive'])"
+  },
+  "net/minecraft/class_1921.method_42600(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76002(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entityTranslucentEmissive = 1.21.11 RenderTypes.entityTranslucentEmissive: same name, parameters, pipeline and type name (['field_56907'], ['entity_translucent_emissive'])"
+  },
+  "net/minecraft/class_1921.method_49042()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76023()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.debugQuads = 1.21.11 RenderTypes.debugQuads: same name, parameters, pipeline and type name (['field_56865'], ['debug_quads'])"
+  },
+  "net/minecraft/class_1921.method_49045()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75999()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.textBackground = 1.21.11 RenderTypes.textBackground: same name, parameters, pipeline and type name (['field_56819'], ['text_background'])"
+  },
+  "net/minecraft/class_1921.method_49046()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76001()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.textBackgroundSeeThrough = 1.21.11 RenderTypes.textBackgroundSeeThrough: same name, parameters, pipeline and type name (['field_56823'], ['text_background_see_through'])"
+  },
+  "net/minecraft/class_1921.method_49047()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76019()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.debugFilledBox = 1.21.11 RenderTypes.debugFilledBox: same name, parameters, pipeline and type name (['field_56837'], ['debug_filled_box'])"
+  },
+  "net/minecraft/class_1921.method_53491(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75973(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.createArmorDecalCutoutNoCull = 1.21.11 RenderTypes.createArmorDecalCutoutNoCull: same name, parameters, pipeline and type name (['field_56899'], ['armor_decal_cutout_no_cull'])"
+  },
+  "net/minecraft/class_1921.method_55251(Lnet/minecraft/class_2960;FF)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75967(Lnet/minecraft/class_2960;FF)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.breezeWind = 1.21.11 RenderTypes.breezeWind: same name, parameters, pipeline and type name (['field_56910'], ['breeze_wind'])"
+  },
+  "net/minecraft/class_1921.method_55252(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76016(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.breezeEyes = 1.21.11 RenderTypes.breezeEyes: same name, parameters, pipeline and type name (['field_56907'], ['entity_translucent_emissive'])"
+  },
+  "net/minecraft/class_1921.method_61046()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76005()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.dragonRays = 1.21.11 RenderTypes.dragonRays: same name, parameters, pipeline and type name (['field_56826'], ['dragon_rays'])"
+  },
+  "net/minecraft/class_1921.method_61157()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76007()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.dragonRaysDepth = 1.21.11 RenderTypes.dragonRaysDepth: same name, parameters, pipeline and type name (['field_56827'], ['dragon_rays_depth'])"
+  },
+  "net/minecraft/class_1921.method_62278()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76025()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.debugTriangleFan = 1.21.11 RenderTypes.debugTriangleFan: same name, parameters, pipeline and type name (['field_56866'], ['debug_triangle_fan'])"
+  },
+  "net/minecraft/class_1921.method_62290(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75986(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.entitySolidZOffsetForward = 1.21.11 RenderTypes.entitySolidZOffsetForward: same name, parameters, pipeline and type name (['field_56902'], ['entity_solid_z_offset_forward'])"
+  },
+  "net/minecraft/class_1921.method_64914()Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_76017()Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.secondaryBlockOutline = 1.21.11 RenderTypes.secondaryBlockOutline: same name, parameters, pipeline and type name (['field_56834'], ['secondary_block_outline'])"
+  },
+  "net/minecraft/class_1921.method_65052(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75978(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.armorTranslucent = 1.21.11 RenderTypes.armorTranslucent: same name, parameters, pipeline and type name (['field_56900'], ['armor_translucent'])"
+  },
+  "net/minecraft/class_1921.method_65216(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75942(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.blockScreenEffect = 1.21.11 RenderTypes.blockScreenEffect: same name, parameters, pipeline and type name (['field_56885'], ['block_screen_effect'])"
+  },
+  "net/minecraft/class_1921.method_65217(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75943(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.fireScreenEffect = 1.21.11 RenderTypes.fireScreenEffect: same name, parameters, pipeline and type name (['field_56886'], ['fire_screen_effect'])"
+  },
+  "net/minecraft/class_1921.method_65231(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;": {
+   "to": "net/minecraft/class_12249.method_75992(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921;",
+   "basis": "1.21.10 RenderType.weather = 1.21.11 RenderTypes.weather: same name, parameters, pipeline and type name (['field_56872', 'field_56873'], ['weather'])"
+  }
  }
 }

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx4n",
+  "version": "1.0.0",
+  "name": "CB smx4 native 1.21.4 driver",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.smx4n.Driver"] },
+  "mixins": ["cb_smx4n.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.4" }
+}

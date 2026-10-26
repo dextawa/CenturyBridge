@@ -1,0 +1,22 @@
+{
+ "_worldrender_basis": "s9 fapi: Fabric API 0.136 WorldRenderEvents / WorldRenderContext (deleted by Fabric API for 1.21.9) given back by the layer facade, fired from 1.21.9 LevelRenderer by CbWorldRenderEventsMixin at 0.136 points; DimensionRenderingRegistry (also deleted) given back the same way, its renderers consulted only for a dimension one was registered for",
+ "classRenames": {
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$Start": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$Start",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$AfterSetup": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$AfterSetup",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$BeforeEntities": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$BeforeEntities",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$AfterEntities": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$AfterEntities",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$BeforeBlockOutline": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$BeforeBlockOutline",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$BlockOutline": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$BlockOutline",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$DebugRender": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$DebugRender",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$AfterTranslucent": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$AfterTranslucent",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$Last": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$Last",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$End": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderEvents$End",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderContext",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext$BlockOutlineContext": "top/dext/centurybridge/step/v1_21_9/facade/WorldRenderContext$BlockOutlineContext",
+  "net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry": "top/dext/centurybridge/step/v1_21_9/facade/DimensionRenderingRegistry",
+  "net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$SkyRenderer": "top/dext/centurybridge/step/v1_21_9/facade/DimensionRenderingRegistry$SkyRenderer",
+  "net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$CloudRenderer": "top/dext/centurybridge/step/v1_21_9/facade/DimensionRenderingRegistry$CloudRenderer",
+  "net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$WeatherRenderer": "top/dext/centurybridge/step/v1_21_9/facade/DimensionRenderingRegistry$WeatherRenderer"
+ }
+}

@@ -317,6 +317,16 @@ public final class CbRecipeJson {
         return decodeWith(codec, json);
     }
 
+    /**
+     * SimpleCraftingRecipeSerializer's factory.create(category), through the serializer's own codec as {@link #cooking}:
+     * its codec reads exactly the category
+     */
+    public static <T> T special(Codec<T> codec, net.minecraft.class_7710 category) {
+        JsonObject json = new JsonObject();
+        json.addProperty("category", category.method_15434());
+        return decodeWith(codec, json);
+    }
+
     private static JsonElement encodeIngredient(class_1856 ingredient) {
         return class_1856.field_46096.encodeStart(JsonOps.INSTANCE, ingredient).result()
             .orElseThrow(() -> new JsonSyntaxException("Ingredient has no JSON form: " + ingredient));

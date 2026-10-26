@@ -21,6 +21,7 @@ public final class Driver {
     public static volatile int argSets;
     public static volatile boolean loudResult;
     public static volatile boolean loudSerialize;
+    public static volatile Object builtBiome;
     private static int ok;
     private static int fail;
 
@@ -60,6 +61,14 @@ public final class Driver {
     }
 
     private static void run0(MinecraftServer server) {
+        // a 1.21.10 biome built with BiomeSpecialEffects.Builder's fog / water fog / sky color and music volume (1.21.11
+        // keeps them as biome environment attributes; cb-s11n reads them back); water color stays in the effects
+        net.minecraft.class_4763 effects = new net.minecraft.class_4763.class_4764().method_24395(0x111111).method_24392(0x123456)
+            .method_24397(0x222222).method_30820(0x654321).method_65137(0.5F).method_24391();
+        builtBiome = new net.minecraft.class_1959.class_1960().method_48164(true).method_8747(0.5F).method_8727(0.5F)
+            .method_24379(effects).method_30974(net.minecraft.class_5483.field_26646).method_30973(net.minecraft.class_5485.field_26639)
+            .method_30972();
+        check("biome-effects-water", effects.method_24388() == 0x111111, Integer.toHexString(effects.method_24388()));
         class_1928 rules = server.method_3767();
         // vanilla keys: read what the command set, write what the command reads
         cmd(server, "gamerule keep_inventory true");

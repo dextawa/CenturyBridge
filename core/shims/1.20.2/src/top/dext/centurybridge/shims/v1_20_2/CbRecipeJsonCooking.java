@@ -11,9 +11,7 @@ import net.minecraft.class_3518;
 import net.minecraft.class_3957;
 import net.minecraft.class_7709;
 import net.minecraft.class_7923;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.rt.v1_20_2.CbRecipeSerializerSupport;
 import top.dext.centurybridge.rt.v1_20_2.CbRecipeJson;
 import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
@@ -29,10 +27,6 @@ import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 @Mixin(value = class_3957.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRecipeJsonCooking implements CbRecipeJson.Reader, CbRecipeJson.CookingTime {
 
-    /** 1.20.2's codec: the one place 1.20.2 calls the serializer's (package-private) factory */
-    @Shadow
-    @Final
-    private com.mojang.serialization.Codec<class_1874> field_46105;
 
     /** 1.20.1 defaultCookingTime */
     private int field_17551;
@@ -56,7 +50,7 @@ public abstract class CbRecipeJsonCooking implements CbRecipeJson.Reader, CbReci
         int cookingTime = class_3518.method_15282(json, "cookingtime", this.field_17551);
         // factory.create(group, category, ingredient, result, experience, cookingTime), run with the id as the one
         // being decoded (a converted 1.20.1 factory takes it from there)
-        return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.cooking(this.field_46105, group, category, ingredient, result, experience, cookingTime));
+        return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.cooking(this.cb$codec(), group, category, ingredient, result, experience, cookingTime));
     }
 
     /** the same 1.20.1 body under a CenturyBridge name: what method_17736 answers unmixed (CbRecipeJson.consult) */
@@ -75,7 +69,7 @@ public abstract class CbRecipeJsonCooking implements CbRecipeJson.Reader, CbReci
         int cookingTime = class_3518.method_15282(json, "cookingtime", this.cb$constructedCookingTime);
         // factory.create(group, category, ingredient, result, experience, cookingTime), run with the id as the one
         // being decoded (a converted 1.20.1 factory takes it from there)
-        return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.cooking(this.field_46105, group, category, ingredient, result, experience, cookingTime));
+        return CbRecipeSerializerSupport.withId(id, () -> CbRecipeJson.cooking(this.cb$codec(), group, category, ingredient, result, experience, cookingTime));
     }
 
     @Override
@@ -87,5 +81,17 @@ public abstract class CbRecipeJsonCooking implements CbRecipeJson.Reader, CbReci
     public void cb$setDefaultCookingTime(int defaultCookingTime) {
         this.field_17551 = defaultCookingTime;
         this.cb$constructedCookingTime = defaultCookingTime;
+    }
+
+    /**
+     * the serializer's codec, the one place 1.20.2 calls its (package-private) factory: asked through
+     * RecipeSerializer.codec(), a call later steps carry like any mod's (1.20.5's MapCodec answer is converted back by
+     * that step's wiring), not a @Shadow of 1.20.2's private codec field, which a later release drops (1.20.5) and
+     * Mixin then strips the whole mixin with
+     */
+    @SuppressWarnings("unchecked")
+    @org.spongepowered.asm.mixin.Unique
+    private com.mojang.serialization.Codec<class_1874> cb$codec() {
+        return ((net.minecraft.class_1865<class_1874>) (Object) this).method_53736();
     }
 }

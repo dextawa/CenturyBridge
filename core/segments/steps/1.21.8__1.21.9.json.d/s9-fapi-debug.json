@@ -1,0 +1,17 @@
+{
+ "_debug_basis": "s9 fapi: Fabric API 0.136 GatherDebugTextEvents (deleted by Fabric API for 1.21.9) given back by the layer facade, fired by CbDebugTextMixin on 1.21.9 DebugHud.render's left/right line lists; VanillaHudElements.DEBUG (dropped with the F3 overlay leaving the HUD) is rt/CbHud.DEBUG, its root kept by rt/CbHud and drawn at Gui.renderDebugOverlay (CbDebugHudMixin); converted mods' HudElementRegistry attach/remove/replace calls go through CbHud, which passes every anchor outside that root to Fabric API",
+ "classRenames": {
+  "net/fabricmc/fabric/api/client/rendering/v1/GatherDebugTextEvents": "top/dext/centurybridge/step/v1_21_9/facade/GatherDebugTextEvents",
+  "net/fabricmc/fabric/api/client/rendering/v1/GatherDebugTextEvents$Left": "top/dext/centurybridge/step/v1_21_9/facade/GatherDebugTextEvents$Left",
+  "net/fabricmc/fabric/api/client/rendering/v1/GatherDebugTextEvents$Right": "top/dext/centurybridge/step/v1_21_9/facade/GatherDebugTextEvents$Right"
+ },
+ "fieldRedirects": {
+  "net/fabricmc/fabric/api/client/rendering/v1/hud/VanillaHudElements.DEBUG:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_9/rt/CbHud#DEBUG"
+ },
+ "staticRedirects": {
+  "net/fabricmc/fabric/api/client/rendering/v1/hud/HudElementRegistry.attachElementBefore(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/rendering/v1/hud/HudElement;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbHud",
+  "net/fabricmc/fabric/api/client/rendering/v1/hud/HudElementRegistry.attachElementAfter(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/rendering/v1/hud/HudElement;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbHud",
+  "net/fabricmc/fabric/api/client/rendering/v1/hud/HudElementRegistry.removeElement(Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbHud",
+  "net/fabricmc/fabric/api/client/rendering/v1/hud/HudElementRegistry.replaceElement(Lnet/minecraft/class_2960;Ljava/util/function/Function;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbHud"
+ }
+}

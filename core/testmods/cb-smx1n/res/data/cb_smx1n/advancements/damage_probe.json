@@ -1,0 +1,15 @@
+{
+  "criteria": {
+    "damage_probe": {
+      "trigger": "minecraft:entity_hurt_player",
+      "conditions": {
+        "damage": {
+          "taken": {
+            "min": 2
+          },
+          "cbsmx1n_damage_probe": true
+        }
+      }
+    }
+  }
+}

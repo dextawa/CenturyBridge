@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.s11c.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["EditRulesScreenMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

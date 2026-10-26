@@ -48,6 +48,7 @@ public class S9TestMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        LargePayloadTest.register();
         Thread t = new Thread(() -> {
             for (int i = 0; i < 600; i++) {
                 try {
@@ -338,6 +339,9 @@ public class S9TestMod implements ModInitializer {
             net.minecraft.class_10265 rot = new net.minecraft.class_10265(30.0F, -5.0F);
             check(rot.comp_3230() == 30.0F && rot.comp_3231() == -5.0F, "new ClientboundPlayerRotationPacket(30, -5) keeps the angles");
         });
+
+        LargePayloadTest.run();
+        EntityTest.run(server);
 
         System.out.println("CB-S9TEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " failed: " + FAILS));
     }
