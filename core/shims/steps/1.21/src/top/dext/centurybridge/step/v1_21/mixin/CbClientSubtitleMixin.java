@@ -50,7 +50,8 @@ public abstract class CbClientSubtitleMixin {
 
     @Unique
     private boolean cb$legacySubclass() {
-        return !this.getClass().getName().equals("net.minecraft.class_359$class_360");
+        // the class literal, not its name string: it follows Subtitle as the layer climbs (the wall renames it)
+        return (Object) this.getClass() != net.minecraft.class_359.class_360.class;
     }
 
     @Inject(method = "method_60572", at = @At("HEAD"), cancellable = true)
