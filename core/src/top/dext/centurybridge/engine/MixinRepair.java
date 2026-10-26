@@ -716,6 +716,24 @@ public final class MixinRepair {
                                     continue;
                                 }
                             }
+                            // the restored body reaches another class's restored static through the layer's @Invoker of it
+                            // (restored statics are private): V's call of that member is the invoker's call (smx1 CASE 11)
+                            String[] inv = a0.owner == null || !a0.kind.equals("INVOKE") ? null
+                                : layerMembers.invokerOf(a0.owner, a0.name, a0.desc);
+                            if (inv != null) {
+                                Anchor ia = new Anchor("INVOKE", inv[0], inv[1], inv[2], a0.constant, a0.ordinal, a0.role);
+                                if (cands.stream().anyMatch(m -> anchorIn(m, ia))) {
+                                    String value = "L" + inv[0] + ";" + inv[1] + inv[2];
+                                    fixNotes.add("anchor-invoker " + where + " " + a0 + " => " + value
+                                        + " (the restored body calls " + a0.owner + "." + a0.name + " through the layer's invoker)");
+                                    List<MethodNode> fc = cands;
+                                    fixes.add(() -> {
+                                        if (setAtTarget(an, refmap, value)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
+                                        mixed(mx.name, owner, fc);
+                                    });
+                                    continue;
+                                }
+                            }
                         }
                         // @Inject marks a POSITION in the unchanged target: its anchor may
                         // follow the call it named -- re-described (drawTexture grew a
