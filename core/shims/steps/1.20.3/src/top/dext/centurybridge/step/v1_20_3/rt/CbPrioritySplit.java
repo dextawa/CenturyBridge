@@ -19,4 +19,14 @@ public final class CbPrioritySplit {
     public interface PlayerMovementStatistics {
         void cb$v1_20_3$checkMovementStatistics(double dx, double dy, double dz);
     }
+
+    /** CbWorldAttributeModifierMixin: the name as 1.20.2's toString read it (the supplier, else the field) */
+    public interface AttributeModifierName {
+        String cb$v1_20_3$name();
+    }
+
+    /** CbWorldStemMixin: the 1.20.2 fruit and seed a stem was built with (null for a 1.20.3 stem) */
+    public interface StemLegacy {
+        CbWorldStems.LegacyStem cb$v1_20_3$legacyStem();
+    }
 }
