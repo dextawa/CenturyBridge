@@ -28,6 +28,20 @@ public final class CbS26FeatureFrames {
         }
     }
 
+    /**
+     * 26.1.2 FeatureRenderDispatcher.renderTranslucentParticles(): each submitted collection's translucent particles,
+     * called by 26.1.2's main pass after the translucent terrain (@525). 26.2's main pass calls
+     * PreparedFrame.executeTranslucentAfterTerrain() there (@324), which draws each collection's after-terrain phase:
+     * the translucent quad particles and the translucent shape outlines (SubmitNodeCollection.submitQuadParticleGroup /
+     * submitShapeOutline, javap) -- the block outline 26.1.2 drew just before, from the main pass, when translucent.
+     */
+    public static void renderTranslucentParticles(FeatureRenderDispatcher dispatcher) {
+        FeatureRenderDispatcher.PreparedFrame frame = dispatcher.preparedFrame;
+        if (frame.context != null) {
+            frame.executeTranslucentAfterTerrain();
+        }
+    }
+
     /** 26.1.2 FeatureRenderDispatcher.renderTranslucentFeatures() */
     public static void renderTranslucentFeatures(FeatureRenderDispatcher dispatcher) {
         FeatureRenderDispatcher.PreparedFrame frame = dispatcher.preparedFrame;
