@@ -427,6 +427,24 @@ public final class Driver {
             t.printStackTrace();
             check("effect-converted-mixin", false, "threw " + t);
         }
+        // the routes' load-time cost: /reload eight times (recipes, advancements, loot... all reread), each timed; compare
+        // the line of a boot with the routes on to one with -Dcenturybridge.legacyJsonRoute=false
+        try {
+            long[] ms = new long[8];
+            for (int i = 0; i < ms.length; ++i) {
+                long t0 = System.nanoTime();
+                java.util.concurrent.CompletableFuture<Void> reload = server.method_29439(server.method_3836().method_29210());
+                server.method_18857(reload::isDone);
+                reload.join();
+                ms[i] = (System.nanoTime() - t0) / 1_000_000L;
+            }
+            long[] sorted = ms.clone();
+            java.util.Arrays.sort(sorted);
+            System.out.println("CB-SMX1 timing reload route=" + ROUTE + " ms=" + java.util.Arrays.toString(ms) + " median="
+                + (sorted[3] + sorted[4]) / 2 + " min=" + sorted[0]);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
         System.out.println("CB-SMX1 summary ok=" + ok + " fail=" + fail);
     }
 }
