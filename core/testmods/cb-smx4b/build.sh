@@ -2,7 +2,9 @@
 # cb-smx4b: a 1.20.4-era mod (intermediary names, no refmap, no fabric-api) whose mixins name 1.20.4 members that step
 # 1.20.4 -> 1.20.5 restores and routes 1.20.5's own path through when a converted mod mixes them (CbMixedMembers):
 # Arrow.setEffectsFromItem (a cancellable HEAD injector), Inventory.hurtArmor, Piglin.makeSound,
-# LivingEntity.broadcastBreakEvent(hand), Fireball / ThrowableItemProjectile.getItemRaw. ServerDriverMixin runs Driver
+# LivingEntity.broadcastBreakEvent(hand), Fireball / ThrowableItemProjectile.getItemRaw, FriendlyByteBuf.writeItem /
+# readItem (asked by ItemStack.OPTIONAL_STREAM_CODEC; profile / property members only through this mod's own calls).
+# ServerDriverMixin runs Driver
 # once the world is loaded: "CB-SMX4B ok|FAIL <case> <detail>", ending "CB-SMX4B summary ok=N fail=M". native/ is
 # cb-smx4bn, a 1.20.5 mod (not converted) with mixins on the 1.20.5 methods those routes go through.
 #

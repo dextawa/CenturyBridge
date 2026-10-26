@@ -44,9 +44,14 @@ public final class CbWallWorldData {
 
     private static final Map<WorldData, WorldOptions> OPTIONS = Collections.synchronizedMap(new WeakHashMap<>());
 
-    /** the options a 1.21.11 constructor or parse built this level data with, else null */
+    /** the options a 1.21.11 constructor or parse built this level data with, or 26.1 handed it out with, else null */
     static WorldOptions options(WorldData data) {
-        return OPTIONS.get(data);
+        WorldOptions built = OPTIONS.get(data);
+        if (built != null) {
+            return built;
+        }
+        net.minecraft.world.level.levelgen.WorldGenSettings kept = CbWallWorldLoad.keptGenSettings(data);
+        return kept == null ? null : kept.options();
     }
 
     /** post of 1.21.11's new PrimaryLevelData(settings, options, specialWorldProperty, lifecycle) */
