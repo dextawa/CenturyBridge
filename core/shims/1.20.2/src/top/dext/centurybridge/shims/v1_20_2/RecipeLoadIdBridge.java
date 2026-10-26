@@ -1,12 +1,12 @@
 package top.dext.centurybridge.shims.v1_20_2;
 
-import com.google.gson.JsonObject;
 import net.minecraft.class_1863;
 import net.minecraft.class_2960;
 import net.minecraft.class_8786;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.rt.v1_20_2.CbRecipes;
 
@@ -18,9 +18,15 @@ import top.dext.centurybridge.rt.v1_20_2.CbRecipes;
 @Mixin(class_1863.class)
 public abstract class RecipeLoadIdBridge {
 
-    @Inject(method = "method_17720", at = @At("HEAD"))
-    private static void cb$enter(class_2960 id, JsonObject json, CallbackInfoReturnable<class_8786<?>> cir) {
+    /**
+     * Takes the id by type, not by position: 1.20.5 appends a HolderLookup.Provider to fromJson, which a
+     * positional (id, json, cir) handler no longer matches. Returns the id unchanged. (1.21.2 turns the id into a
+     * ResourceKey; that type change is the step's to carry, see cases_smixin3 CASE 14.)
+     */
+    @ModifyVariable(method = "method_17720", at = @At("HEAD"), argsOnly = true)
+    private static class_2960 cb$enter(class_2960 id) {
         CbRecipes.CURRENT_ID.set(id);
+        return id;
     }
 
     /** captures nothing, so a later release reshaping fromJson's arguments leaves it applicable */
