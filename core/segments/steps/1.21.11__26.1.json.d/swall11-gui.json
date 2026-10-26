@@ -1,0 +1,38 @@
+{
+ "_swall11_gui_basis": "1.21.11 GUI classes 26.1 dropped (javap of both): DemoIntroScreen (class_417) -> 26.1 builds the same help as a PopupScreen in ClientPacketListener.openDemoIntroScreen; a mod's DemoIntroScreen gets 1.21.11's screen (facade/DemoIntroScreen, panel on 26.1's popup background sprite: demo_background.png is not in 26.1's jar). RealmsLabel (class_4903) -> facade/RealmsLabel (1.21.11's renderable), RealmsScreen.addLabel / createLabelNarration / COLOR_MEDIUM_GRAY, gone with it -> rt/CbWallRealms (per-screen label list, 1.21.11's bodies)",
+ "classRenames": {
+  "net/minecraft/class_417": "top/dext/centurybridge/step/v26_1/facade/DemoIntroScreen",
+  "net/minecraft/class_4903": "top/dext/centurybridge/step/v26_1/facade/RealmsLabel"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_4905.field_33062:I": "top/dext/centurybridge/step/v26_1/rt/CbWallRealms"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_4905.method_37107(Lnet/minecraft/class_4903;)Lnet/minecraft/class_4903;": "top/dext/centurybridge/step/v26_1/rt/CbWallRealms#addLabel",
+  "net/minecraft/class_4905.method_25495()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v26_1/rt/CbWallRealms#createLabelNarration"
+ },
+ "superRedirects": {
+  "net/minecraft/class_4905.method_37107(Lnet/minecraft/class_4903;)Lnet/minecraft/class_4903;": "top/dext/centurybridge/step/v26_1/rt/CbWallRealms#superAddLabel",
+  "net/minecraft/class_4905.method_25495()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v26_1/rt/CbWallRealms#superCreateLabelNarration"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_4905",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRealms$LegacyAddLabel",
+   "requires": [
+    "method_37107(Lnet/minecraft/class_4903;)Lnet/minecraft/class_4903;"
+   ],
+   "synth": [],
+   "basis": "26.1's RealmsScreen has no addLabel(label); a 1.21.11 Realms screen subclass's own override is what 1.21.11's callers got (CbWallRealms.addLabel)"
+  },
+  {
+   "under": "net/minecraft/class_4905",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRealms$LegacyLabelNarration",
+   "requires": [
+    "method_25495()Lnet/minecraft/class_2561;"
+   ],
+   "synth": [],
+   "basis": "26.1's RealmsScreen has no createLabelNarration(); a 1.21.11 Realms screen subclass's own override is what 1.21.11's callers got (CbWallRealms.createLabelNarration)"
+  }
+ ]
+}
