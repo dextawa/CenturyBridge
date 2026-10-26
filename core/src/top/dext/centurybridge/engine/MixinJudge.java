@@ -527,6 +527,12 @@ public final class MixinJudge {
                     rowLayer = "partial-return";
                     why = "partial: return untouched only";
                 }
+                if (why == null && MixinRepair.annotations(h).stream().anyMatch(a -> a.desc.equals(MixinBridge.ARGS_ZEROED))) {
+                    // V arguments no W argument carries were handed in as zeros, because this handler never reads them
+                    // (MixinBridge.unreadUnmapped); a handler that reads them stays refused: the shape is not bridged
+                    rowLayer = "partial-args";
+                    why = "partial: unmapped arguments zeroed (handler never reads them)";
+                }
                 if (why == null) {
                     return null;
                 }
