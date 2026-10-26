@@ -1,0 +1,6 @@
+{
+ "_net_basis": "s9 fapi: Fabric API 0.136 PayloadTypeRegistry.registerLarge (absent from 0.134 for 1.21.9) given back by rt/CbLargePayloads: 0.136's large-type table, fabric:split splitter/merger and passthrough encoding (CbLargePayloadConnectionMixin, CbPassthroughEncoderMixin), read off 0.136's bytecode",
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry.registerLarge(Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;I)Lnet/minecraft/class_8710$class_9155;": "top/dext/centurybridge/step/v1_21_9/rt/CbLargePayloads"
+ }
+}
