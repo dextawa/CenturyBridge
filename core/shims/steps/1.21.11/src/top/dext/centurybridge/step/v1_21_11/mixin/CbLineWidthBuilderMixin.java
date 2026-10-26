@@ -24,9 +24,6 @@ public abstract class CbLineWidthBuilderMixin implements CbLineWidthTarget {
     @Unique
     private float cb$lineWidth = Float.NaN;
 
-    @Shadow
-    public abstract class_4588 method_75298(float width);
-
     @Override
     public void cb$lineWidth(float width) {
         this.cb$lineWidth = width;
@@ -35,7 +32,9 @@ public abstract class CbLineWidthBuilderMixin implements CbLineWidthTarget {
     @Inject(method = "method_60806", at = @At("HEAD"))
     private void cb$fillLineWidth(CallbackInfo ci) {
         if (!Float.isNaN(this.cb$lineWidth) && (this.field_52077 & VertexFormatElement.LINE_WIDTH.mask()) != 0) {
-            this.method_75298(this.cb$lineWidth);
+            // through VertexConsumer (the interface declares setLineWidth under the id every later release maps; a
+            // @Shadow on BufferBuilder's own copy does not climb past the 1.21.11 -> 26.1 wall)
+            ((class_4588) (Object) this).method_75298(this.cb$lineWidth);
         }
     }
 }

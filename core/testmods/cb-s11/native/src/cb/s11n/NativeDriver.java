@@ -109,6 +109,16 @@ public final class NativeDriver implements ModInitializer {
         driver("loudSerialize", true);
         String loud = class_1928.field_19389.method_76146(true);
         driver("loudSerialize", false);
+        // cb-s11's 1.21.10 biome: its BiomeSpecialEffects.Builder settings are the biome's environment attributes
+        net.minecraft.class_1959 biome = (net.minecraft.class_1959) driver("builtBiome");
+        net.minecraft.class_12199 attrs = biome.method_75734();
+        Integer fog = attrs.method_75663(net.minecraft.class_12206.field_63742, 0);
+        Integer waterFog = attrs.method_75663(net.minecraft.class_12206.field_63744, 0);
+        Integer sky = attrs.method_75663(net.minecraft.class_12206.field_63746, 0);
+        Float volume = attrs.method_75663(net.minecraft.class_12206.field_63752, 1.0F);
+        check("biome-attributes", fog == 0x123456 && waterFog == 0x222222 && sky == 0x654321 && volume == 0.5F
+            && biome.method_24377().comp_5169() == 0x111111,
+            "fog " + Integer.toHexString(fog) + " waterFog " + Integer.toHexString(waterFog) + " sky " + Integer.toHexString(sky) + " volume " + volume);
         check("native-serialize-route", "true".equals(plain) && "yes".equals(loud) && sawPlain
             && serializeHeads == zh + 2 && serializeReturns == zr + 2,
             "plain " + plain + " loud " + loud + " native heads " + (serializeHeads - zh) + " returns " + (serializeReturns - zr));
