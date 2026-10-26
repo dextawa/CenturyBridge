@@ -10,7 +10,13 @@
     "CbRecipeBookRouteMixin",
     "CbHorseJumpRestoredMixin",
     "CbHorseJumpRouteMixin",
-    "CbPacketListenerFactoriesMixin"
+    "CbPacketListenerFactoriesMixin",
+    "CbContainerSaveRestoredMixin",
+    "CbEnderSaveRestoredMixin",
+    "CbInventorySaveRestoredMixin",
+    "CbAbilitiesSaveRestoredMixin",
+    "CbPlayerSaveRouteMixin",
+    "CbInventoryCarrierRouteMixin"
   ],
   "client": [
     "CbRenderAttachedRegionMixin",

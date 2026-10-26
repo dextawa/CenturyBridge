@@ -192,6 +192,12 @@ public class S6bTestMod implements ModInitializer {
             check(false, "routes threw " + e);
         }
         try {
+            saveData(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "saveData threw " + e);
+        }
+        try {
             problems();
         } catch (Throwable e) {
             e.printStackTrace();
@@ -335,6 +341,98 @@ public class S6bTestMod implements ModInitializer {
 
     static long counter(String key) {
         return Long.parseLong(System.getProperty(key, "0"));
+    }
+
+    /** the converted save-data mixins' counts: Inventory save / load, SimpleContainer createTag / fromTag, ender chest createTag / fromTag */
+    public static final int[] saveHits = new int[6];
+    public static String abilitiesExtra = "";
+
+    static final String[] NATIVE_SAVE = {"cb.s6bn.inventory.save", "cb.s6bn.inventory.load", "cb.s6bn.container.save",
+        "cb.s6bn.container.load", "cb.s6bn.ender.save", "cb.s6bn.ender.load", "cb.s6bn.abilities.pack", "cb.s6bn.abilities.apply"};
+
+    static long[] nativeSave() {
+        long[] n = new long[NATIVE_SAVE.length];
+        for (int i = 0; i < n.length; i++) {
+            n[i] = counter(NATIVE_SAVE[i]);
+        }
+        return n;
+    }
+
+    static String delta(long[] before) {
+        long[] now = nativeSave();
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < now.length; i++) {
+            b.append(i == 0 ? "" : ",").append(now[i] - before[i]);
+        }
+        return b.toString();
+    }
+
+    /**
+     * The restored 1.21.5 save members (Inventory.save / load, Abilities.addSaveData / loadSaveData, the ender chest's
+     * and SimpleContainer's createTag / fromTag) mixed by this mod (S6bInventoryMixin, S6bAbilitiesMixin, S6bEnderMixin,
+     * S6bContainerMixin) on 1.21.6's Player and InventoryCarrier paths: each mixin runs once per save / load, its effect
+     * lands in the saved data, the content round-trips once, and the native 1.21.6 mod's mixins on the typed-list /
+     * Packed methods (cb-s6bn SaveDataMixins) fire once each.
+     */
+    static void saveData(class_3218 level) {
+        net.minecraft.class_1799 sticks = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 9);
+        net.minecraft.class_2520 st = sticks.method_57358(level.method_30349());
+        class_2487 prefixed = new class_2487();
+        prefixed.method_10567("Slot", (byte) 1);
+        net.minecraft.class_2520 sp = sticks.method_57376(level.method_30349(), prefixed);
+        java.util.Optional<net.minecraft.class_1799> parsed = net.minecraft.class_1799.method_57360(level.method_30349(), st);
+        boolean emptyThrows = false;
+        try {
+            net.minecraft.class_1799.field_8037.method_57358(level.method_30349());
+        } catch (IllegalStateException e) {
+            emptyThrows = true;
+        }
+        check(parsed.isPresent() && parsed.get().method_7947() == 9 && sp instanceof class_2487 c && c.method_10545("Slot") && c.method_10545("id") && emptyThrows,
+            "ItemStack.save(provider) / save(provider, prefix) / parse(provider, tag), empty stack refused: " + st + " " + sp);
+        net.minecraft.class_3222 player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+        player.method_31548().method_5447(3, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 4));
+        player.method_7274().method_5447(2, new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 6));
+        player.method_31549().method_7250(0.125F);
+        int[] h = saveHits.clone();
+        long[] n = nativeSave();
+        class_2487 saved = player.method_5647(new class_2487());
+        check("kept".equals(saved.method_68568("abilities").method_68564("cb_s6b_extra", ""))
+                && saveHits[0] - h[0] == 1 && saveHits[4] - h[4] == 1,
+            "player save (1.21.6 path): the mod's Abilities mixin extra in \"abilities\", Inventory.save and the ender chest's createTag mixins ran once ("
+                + (saveHits[0] - h[0]) + "," + (saveHits[4] - h[4]) + ")");
+        String nSave = delta(n);
+        check(nSave.startsWith("1,0,0,0,1,0,1,0"), "native 1.21.6 mixins on Inventory.save / storeAsSlots / Abilities.pack fire once each on the save: " + nSave);
+        player.method_31548().method_5447(3, net.minecraft.class_1799.field_8037);
+        player.method_7274().method_5447(2, net.minecraft.class_1799.field_8037);
+        player.method_31549().method_7250(0.1F);
+        abilitiesExtra = "";
+        h = saveHits.clone();
+        n = nativeSave();
+        player.method_5651(saved);
+        String nLoad = delta(n);
+        check("kept".equals(abilitiesExtra) && saveHits[1] - h[1] == 1 && saveHits[5] - h[5] == 1
+                && player.method_31548().method_5438(3).method_7947() == 4 && player.method_7274().method_5438(2).method_7947() == 6
+                && player.method_31549().method_7253() == 0.125F
+                && Math.abs(player.method_45326(net.minecraft.class_5134.field_23719) - 0.125F) < 1.0E-6,
+            "player load (1.21.6 path): the mod's Abilities / Inventory.load / ender fromTag mixins ran once, inventory, ender chest and walk speed (attribute base too) restored ("
+                + abilitiesExtra + "," + (saveHits[1] - h[1]) + "," + (saveHits[5] - h[5]) + ")");
+        check(nLoad.startsWith("0,1,0,0,0,1,0,1"), "native 1.21.6 mixins on Inventory.load / fromSlots / Abilities.apply fire once each on the load: " + nLoad);
+
+        net.minecraft.class_7298 allay = new net.minecraft.class_7298(class_1299.field_38384, level);
+        allay.method_35199().method_5491(new net.minecraft.class_1799(net.minecraft.class_1802.field_8600, 2));
+        h = saveHits.clone();
+        n = nativeSave();
+        class_2487 at = allay.method_5647(new class_2487());
+        String aSave = delta(n);
+        net.minecraft.class_7298 back = new net.minecraft.class_7298(class_1299.field_38384, level);
+        back.method_5651(at);
+        String aAll = delta(n);
+        check(saveHits[2] - h[2] == 1 && saveHits[3] - h[3] == 1 && at.method_68569("Inventory").size() == 1
+                && back.method_35199().method_5438(0).method_7947() == 2,
+            "Allay (InventoryCarrier, 1.21.6 path): the mod's SimpleContainer createTag / fromTag mixins ran once each and the item round-trips ("
+                + (saveHits[2] - h[2]) + "," + (saveHits[3] - h[3]) + ")");
+        check(aSave.startsWith("0,0,1,0") && aAll.startsWith("0,0,1,1"),
+            "native 1.21.6 mixins on SimpleContainer.storeAsItemList / fromItems fire once each: " + aSave + " / " + aAll);
     }
 
     /**

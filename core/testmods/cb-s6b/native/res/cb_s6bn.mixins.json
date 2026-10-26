@@ -6,7 +6,11 @@
   "mixins": [
     "PlayerSaveMixin",
     "RecipeBookPackMixin",
-    "HorseJumpMixin"
+    "HorseJumpMixin",
+    "InventorySaveMixin",
+    "ContainerSaveMixin",
+    "EnderSaveMixin",
+    "AbilitiesSaveMixin"
   ],
   "injectors": {
     "defaultRequire": 1
