@@ -4512,9 +4512,38 @@ public final class JarProcessor {
                 return new KindNormalizer(super.visitMethod(acc, mName, mDesc, sig, ex), chain, kindFixed);
             }
         };
+        // s6c A1: a class the step both classRenames (as a type: its live superclass) and superRenames (as a super: the
+        // facade) -- 1.21.6 FlyingMob. A mixin aimed AT it applies to the facade (Mob declares none of its methods), so
+        // its names take the superRenames value; a mixin of another class extending it (@Mixin(Ghast) extends FlyingMob)
+        // must extend what the target's W hierarchy holds, the classRenames value, not the facade
+        Map<String, String> renames = chain.classRenames;
+        Set<String> superSkip = new HashSet<>();
+        if (!chain.superRenames.isEmpty()) {
+            org.objectweb.asm.tree.ClassNode hdr = new org.objectweb.asm.tree.ClassNode();
+            new ClassReader(bytes).accept(hdr, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+            List<String> mts = MixinRepair.mixinTargets(hdr, null).stream().map(t -> t.replace('.', '/')).toList();
+            if (!mts.isEmpty()) {
+                for (Map.Entry<String, String> sr : chain.superRenames.entrySet()) {
+                    if (!chain.classRenames.containsKey(sr.getKey())) {
+                        continue;
+                    }
+                    if (mts.contains(sr.getKey())) {
+                        if (renames == chain.classRenames) {
+                            renames = new HashMap<>(chain.classRenames);
+                        }
+                        renames.put(sr.getKey(), sr.getValue());
+                        rpt.notes.add(tag + "mixin on a split-renamed class: " + shortName(clsName[0]) + " aims at "
+                            + shortName(sr.getKey()) + ", applied to " + shortName(sr.getValue()));
+                    } else {
+                        superSkip.add(sr.getKey());
+                    }
+                }
+            }
+        }
+        final Map<String, String> classRen = renames;
         ClassVisitor sink = needClassRename
             ? MixinClassRenames.annotations(new org.objectweb.asm.commons.ClassRemapper(kinds,
-                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames)), chain.classRenames, c -> wDeclares(chain, c))
+                new org.objectweb.asm.commons.SimpleRemapper(classRen)), classRen, c -> wDeclares(chain, c))
             : kinds;
         // super/implements-only rename layer: rewrites the hierarchy declaration
         // and super-invocations to the facade, leaving every other reference to
@@ -4522,15 +4551,16 @@ public final class JarProcessor {
         // so the two never fight over the same owner.
         if (needSuperRename[0]) {
             final ClassVisitor downstream = sink;
+            java.util.function.Function<String, String> sup = c -> c == null || superSkip.contains(c) ? c : chain.superRenames.getOrDefault(c, c);
             sink = new ClassVisitor(Opcodes.ASM9, downstream) {
                 @Override
                 public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
-                    String sn = superName != null ? chain.superRenames.getOrDefault(superName, superName) : superName;
+                    String sn = sup.apply(superName);
                     String[] ifs = ifaces;
                     if (ifaces != null) {
                         ifs = new String[ifaces.length];
                         for (int i = 0; i < ifaces.length; i++) {
-                            ifs[i] = chain.superRenames.getOrDefault(ifaces[i], ifaces[i]);
+                            ifs[i] = sup.apply(ifaces[i]);
                         }
                     }
                     // the generic signature still names the old super/interfaces;
@@ -4552,7 +4582,7 @@ public final class JarProcessor {
                             // must follow the hierarchy to the facade; a facade
                             // mirroring the method surface answers them. Other
                             // opcodes keep the real owner (no type-split).
-                            if (op == Opcodes.INVOKESPECIAL && chain.superRenames.containsKey(owner)) {
+                            if (op == Opcodes.INVOKESPECIAL && chain.superRenames.containsKey(owner) && !superSkip.contains(owner)) {
                                 super.visitMethodInsn(op, chain.superRenames.get(owner), n, d, itf);
                             } else {
                                 super.visitMethodInsn(op, owner, n, d, itf);
