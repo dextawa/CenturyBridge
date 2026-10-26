@@ -116,9 +116,11 @@ def main():
                                     "basis": "a 1.21.1 ArmorItem subclass overriding " + why
                                              + ": calls of it reach the override (CbItemArmor)"})
     # 1.21.1's AnimalArmorItem was an ArmorItem; 1.21.2's is not: its inherited ArmorItem members are keyed on it too,
-    # so a call through it takes the static typed for it (the ArmorItem one would not verify)
+    # so a call through it takes the static typed for it (the ArmorItem one would not verify). Those statics are
+    # named <member>Animal: 1.21.5 folds ArmorItem and AnimalArmorItem into Item, and overloads told apart only by
+    # those two types would collide in the climbed layer (sruntime)
     for member, legacy, why in MEMBERS:
-        out["instanceRedirects"][ANIMAL + "." + member] = RT
+        out["instanceRedirects"][ANIMAL + "." + member] = RT + "#" + member[:member.index("(")] + "Animal"
     for member, legacy, why in ANIMAL_MEMBERS:
         out["instanceRedirects"][ANIMAL + "." + member] = RT
         out["adapterHooks"].append({"under": ANIMAL, "adapter": RT + "$" + legacy, "requires": [member], "synth": [],

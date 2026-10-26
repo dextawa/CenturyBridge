@@ -60,6 +60,13 @@ public abstract class CbClientHotbarMixin implements CbClientHotbar.Slots, java.
 
     // ---------------------------------------------------------------- 1.20.4's ForwardingList over delegate()
 
+    /**
+     * Unique: 26.1 names Hotbar's own method_56835 isEmpty()Z (every slot empty, javap -c 1.21.11 class_748: each
+     * encoded slot tested for an empty stack -- what this answers over the decoded view). There Mixin keeps vanilla's,
+     * which also answers List.isEmpty, and discards this one instead of overwriting it; before 26.1 no Hotbar method
+     * has this name and it is merged as it is
+     */
+    @org.spongepowered.asm.mixin.Unique
     @Override
     public boolean isEmpty() {
         return CbClientHotbar.isEmpty(this);

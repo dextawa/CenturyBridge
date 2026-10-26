@@ -33,6 +33,7 @@
     "CbCodecRegistryMixin",
     "CbComponentBuilderAccessor",
     "CbEffectInstanceMixin",
+    "CbEffectTickBadOmenMixin",
     "CbEffectTickMixin",
     "CbEnchantDamageMixin",
     "CbEnchantmentMixin",

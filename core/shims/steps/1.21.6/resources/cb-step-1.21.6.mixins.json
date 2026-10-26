@@ -29,6 +29,8 @@
     "CbRenderAttachedRegionMixin",
     "CbGuiHudLayersMixin",
     "CbTextureMultiMixin",
+    "CbTextureBlurMixin",
+    "CbTextureReloadBlurMixin",
     "CbScreenTooltipMixin"
   ],
   "server": [],
