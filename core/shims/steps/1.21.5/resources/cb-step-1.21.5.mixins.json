@@ -11,7 +11,9 @@
     "CbItemStackMembersMixin",
     "CbItemStackTickMixin"
   ],
-  "client": [],
+  "client": [
+    "CbGlViewportMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

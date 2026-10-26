@@ -1,0 +1,47 @@
+{
+ "_smx4d_adv_basis": "1.21.5 folded ItemPredicate's components + subPredicates into DataComponentMatchers (class_10914(class_9329, Map), the same two parts and the same test, javap both) and gave EntityPredicate (class_2048, 16th component) and BlockPredicate (class_4550, 4th) a DataComponentMatchers 1.21.4 did not have. 1.21.4 constructors: ItemPredicate's two parts become the matchers of the two; EntityPredicate / BlockPredicate get DataComponentMatchers.ANY (no component constraint, as 1.21.4 had none). Found as a crash: the climbed 1.20.2 layer's CbAdvAny.<clinit> (new EntityPredicate / ItemPredicate with the 1.21.4 shapes) threw NoSuchMethodError on a real 1.21.5 server from ItemStack.hurtAndBreak's durability trigger (climb report L3 constructor class_2048 / class_2073 / class_4550 at 1.21.4 -> 1.21.5).",
+ "superCtorReshapes": {
+  "net/minecraft/class_2048.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2048$class_9777;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2048$class_9777;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_10914;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_5/rt/CbAdvMatchers#any()Lnet/minecraft/class_10914;"
+   ]
+  },
+  "net/minecraft/class_4550.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_10914;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_5/rt/CbAdvMatchers#any()Lnet/minecraft/class_10914;"
+   ]
+  },
+  "net/minecraft/class_2073.<init>(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_9329;Ljava/util/Map;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_10914;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2,3 top/dext/centurybridge/step/v1_21_5/rt/CbAdvMatchers#matchers(Lnet/minecraft/class_9329;Ljava/util/Map;)Lnet/minecraft/class_10914;"
+   ]
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2073.comp_2374()Lnet/minecraft/class_9329;": "top/dext/centurybridge/step/v1_21_5/rt/CbAdvMatchers#components",
+  "net/minecraft/class_2073.comp_2462()Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_5/rt/CbAdvMatchers#subPredicates"
+ }
+}
