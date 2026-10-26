@@ -1,22 +1,41 @@
 {
   "staticRedirects": {
     "net/minecraft/class_12329.method_76478()Lnet/minecraft/class_12329$class_12330;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#timelineBuilder",
-    "net/minecraft/class_4571.method_35559(Lnet/minecraft/class_42;)Lnet/minecraft/class_4571$class_6164;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#time"
+    "net/minecraft/class_4571.method_35559(Lnet/minecraft/class_42;)Lnet/minecraft/class_4571$class_6164;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#time",
+    "net/minecraft/server/MinecraftServer.method_60584()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFatal#throwIfFatalException",
+    "net/minecraft/server/MinecraftServer.method_60582(Ljava/lang/RuntimeException;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallFatal#setFatalException"
   },
   "instanceRedirects": {
     "net/minecraft/class_12329.method_76481(Lnet/minecraft/class_1937;)J": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#getCurrentTicks",
     "net/minecraft/class_12329.method_76485(Lnet/minecraft/class_1937;)J": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#getTotalTicks",
     "net/minecraft/class_12329.method_76479(Lnet/minecraft/class_12197;Ljava/util/function/LongSupplier;)Lnet/minecraft/class_12328;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#createTrackSampler",
     "net/minecraft/class_12327.method_76473(Lnet/minecraft/class_12197;Ljava/util/Optional;Ljava/util/function/LongSupplier;)Lnet/minecraft/class_12328;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#bakeSampler",
-    "net/minecraft/class_12205$class_12314.method_76420(Lnet/minecraft/class_6880;Ljava/util/function/LongSupplier;)Lnet/minecraft/class_12205$class_12314;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#addTimelineLayer"
+    "net/minecraft/class_12205$class_12314.method_76420(Lnet/minecraft/class_6880;Ljava/util/function/LongSupplier;)Lnet/minecraft/class_12205$class_12314;": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#addTimelineLayer",
+    "net/minecraft/class_1940.method_8583()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelSettings#hardcore",
+    "net/minecraft/class_1940.method_27340()Lnet/minecraft/class_1267;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelSettings#difficulty",
+    "net/minecraft/class_1940.method_27341()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelSettings#gameRules"
   },
   "ctorRedirects": {
     "net/minecraft/class_12328.<init>(Ljava/util/Optional;Lnet/minecraft/class_12212;Lnet/minecraft/class_12306;Lnet/minecraft/class_12210;Ljava/util/function/LongSupplier;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#newAttributeTrackSampler",
     "net/minecraft/class_4571.<init>(Ljava/util/Optional;Lnet/minecraft/class_42;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#newTimeCheck",
     "net/minecraft/class_4571$class_6164.<init>(Lnet/minecraft/class_42;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#newTimeCheckBuilder",
-    "net/minecraft/class_12192.<init>(Lcom/mojang/serialization/Codec;Ljava/util/Map;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_12210;Lnet/minecraft/class_12210;Lnet/minecraft/class_12210;Lnet/minecraft/class_12210;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#newAttributeType"
+    "net/minecraft/class_12192.<init>(Lcom/mojang/serialization/Codec;Ljava/util/Map;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_12210;Lnet/minecraft/class_12210;Lnet/minecraft/class_12210;Lnet/minecraft/class_12210;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallClocks#newAttributeType",
+    "net/minecraft/class_3852.<init>(Lnet/minecraft/class_2561;Ljava/util/function/Predicate;Ljava/util/function/Predicate;Lcom/google/common/collect/ImmutableSet;Lcom/google/common/collect/ImmutableSet;Lnet/minecraft/class_3414;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallProfessions#newProfession",
+    "net/minecraft/class_1940.<init>(Ljava/lang/String;Lnet/minecraft/class_1934;ZLnet/minecraft/class_1267;ZLnet/minecraft/class_1928;Lnet/minecraft/class_7712;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelSettings#newSettings"
+  },
+  "instanceFieldGetters": {
+    "net/minecraft/class_1297.field_5964:Lit/unimi/dsi/fastutil/objects/Object2DoubleMap;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityFluids#fluidHeight"
+  },
+  "instanceFieldSetters": {
+    "net/minecraft/class_1297.field_5964:Lit/unimi/dsi/fastutil/objects/Object2DoubleMap;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityFluids#setFluidHeight"
   },
   "superCtorReshapes": {
+    "net/minecraft/class_34.<init>(Lnet/minecraft/class_1940;Lnet/minecraft/class_5315;Ljava/lang/String;ZZZLjava/nio/file/Path;)V": {
+      "desc": "(Lnet/minecraft/class_1940;Lnet/minecraft/class_5315;Ljava/lang/String;ZZZZLjava/nio/file/Path;)V",
+      "ops": ["keep", "keep", "keep", "keep",
+              "push top/dext/centurybridge/step/v26_1/rt/CbWallLevelSettings#noFileFixing()Z", "keep", "keep", "keep"],
+      "basis": "1.21.11 LevelSummary(settings, version, id, requiresManualConversion, locked, experimental, icon); 26.1 adds requiresFileFixing after requiresManualConversion (javap of both constructors: the same fields in the same order otherwise). 1.21.11 had no file fixing: false"
+    },
     "net/minecraft/class_12328.<init>(Ljava/util/Optional;Lnet/minecraft/class_12212;Lnet/minecraft/class_12306;Lnet/minecraft/class_12210;Ljava/util/function/LongSupplier;)V": {
       "desc": "(Lnet/minecraft/class_6880;Ljava/util/Optional;Lnet/minecraft/class_12212;Lnet/minecraft/class_12306;Lnet/minecraft/class_12210;Lnet/minecraft/world/clock/ClockManager;)V",
       "ops": ["push top/dext/centurybridge/step/v26_1/rt/CbWallClocks#overworldClock()Lnet/minecraft/class_6880;", "keep", "keep", "keep", "keep",
