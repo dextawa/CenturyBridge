@@ -1,10 +1,6 @@
 package top.dext.centurybridge.shims.v1_20_2;
 
-import java.util.Map;
 import net.minecraft.class_1863;
-import net.minecraft.class_2960;
-import net.minecraft.class_3300;
-import net.minecraft.class_3695;
 import net.minecraft.class_8786;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,14 +18,14 @@ import top.dext.centurybridge.rt.v1_20_2.CbRecipeIds;
 @Mixin(class_1863.class)
 public abstract class RecipeManagerBridge {
 
+    /** captures no target argument: apply's arguments change shape at 1.21.2 (RecipeMap) and the handler needs none */
     @Inject(method = "method_20705", at = @At("TAIL"))
-    private void cb$trackApply(Map<class_2960, com.google.gson.JsonElement> map,
-                               class_3300 rm, class_3695 profiler, CallbackInfo ci) {
+    private void cb$trackApply(CallbackInfo ci) {
         cb$track();
     }
 
     @Inject(method = "method_20702", at = @At("TAIL"))
-    private void cb$trackSet(Iterable<class_8786<?>> recipes, CallbackInfo ci) {
+    private void cb$trackSet(CallbackInfo ci) {
         cb$track();
     }
 
