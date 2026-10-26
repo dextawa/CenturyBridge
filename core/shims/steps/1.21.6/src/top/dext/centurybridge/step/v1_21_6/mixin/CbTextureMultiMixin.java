@@ -23,6 +23,13 @@ public abstract class CbTextureMultiMixin implements top.dext.centurybridge.step
         this.cb$textures = java.util.List.copyOf(ids);
     }
 
+    /**
+     * Unique: where the target already answers cb$textures() itself (the 1.21.11 step retires MultiTextureStateShard
+     * into its facade RenderStateShard$MultiTextureStateShard, which declares it over the same entries), Mixin keeps the
+     * target's and discards this one ("Discarding @Unique public method") instead of overwriting it; before that no
+     * target declares it and it is merged as it is
+     */
+    @org.spongepowered.asm.mixin.Unique
     @Override
     public java.util.List<net.minecraft.class_2960> cb$textures() {
         return this.cb$textures;
