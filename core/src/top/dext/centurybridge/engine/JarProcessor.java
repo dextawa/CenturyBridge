@@ -1216,6 +1216,9 @@ public final class JarProcessor {
                 continue; // not an override of the hooked member, or already bridged at this step
             }
             m.name = h.renamed;
+            // the jar's index was built before this rename: the bridge's own invokespecial of the renamed body
+            // must resolve to this class, not climb to the vanilla superclass and be tombstoned (s26b C15)
+            layer.decls.computeIfAbsent(cn.name, k -> new HashSet<>()).add(h.renamed + m.desc);
             bridges.add(convertBridge(cn.name, itf, m, h));
             rpt.notes.add(tag + "convert-hooked: " + cn.name + "." + h.name + h.desc + " (old body now " + h.renamed + ")");
             top.dext.centurybridge.data.FullAudit.record(h.under + "." + h.name + h.desc, "convert-hooked");
@@ -2019,6 +2022,9 @@ public final class JarProcessor {
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer, Chain chain) {
         String inh = inheritedVanillaOwner(owner, member, layer);
         int paren = member.indexOf('(');
+        if (inh == null && chain != null && paren > 0) {
+            inh = libraryVanillaOwner(owner, member, layer, chain);
+        }
         if (chain == null || paren < 0 || inh == null && !leavesIntoJdk(owner, member, layer)) {
             return inh;
         }
@@ -2048,6 +2054,49 @@ public final class JarProcessor {
         }
         String declarer = vanillaIfaces.isEmpty() ? null : chain.sourceDeclarer(name, desc, vanillaIfaces);
         return declarer != null ? declarer : inh;
+    }
+
+    /**
+     * For a method reference naming a library class (Fabric API's FakePlayer) or a class of this jar layer whose
+     * superclass chain leaves into one: the game class the JVM resolves it on when neither the layer's classes nor
+     * the source release's library classes on the way declare the method -- fakePlayer.forceSetRotation(y, x) is
+     * ServerPlayer's (Entity's), so the wiring keyed there (reshape, rename, redirect, tombstone) serves it exactly
+     * as for a call naming ServerPlayer. Only where the target's Fabric API keeps the library class directly over
+     * the same game class (Chain.targetLibraryOver): one standing elsewhere on the target (a superRename) answers
+     * the call with its own members. Null otherwise: the library's own member, an unread class (another mod), the
+     * JDK, or a changed position.
+     */
+    private static String libraryVanillaOwner(String owner, String member, LayerIndex layer, Chain chain) {
+        String cur = owner;
+        int hops = 0;
+        for (; cur != null && hops < 64; hops++) {
+            if (Chain.minecraftOwned(cur)) {
+                return null; // the layer's own chain reaches the game: inheritedVanillaOwner's
+            }
+            Set<String> d = layer.decls.get(cur);
+            if (d == null) {
+                break;
+            }
+            if (d.contains(member)) {
+                return null;
+            }
+            cur = layer.superOf.get(cur);
+        }
+        if (cur == null || cur.startsWith("java/")) {
+            return null;
+        }
+        String lastLib = null;
+        for (; cur != null && !Chain.minecraftOwned(cur) && hops < 64; cur = chain.libSuperOf.get(cur), hops++) {
+            Set<String> d = chain.libDecls.get(cur);
+            if (d == null || d.contains(member)) {
+                return null;
+            }
+            lastLib = cur;
+        }
+        if (cur == null || lastLib == null || !chain.targetLibraryOver(lastLib, cur)) {
+            return null;
+        }
+        return cur;
     }
 
     /**
@@ -2122,6 +2171,7 @@ public final class JarProcessor {
             if (d == null) {
                 // the first class outside the layer: a library class and its library superclasses
                 String c = cur;
+                String lastLib = null;
                 boolean declared = false;
                 for (; c != null && !c.startsWith("java/") && !Chain.minecraftOwned(c) && hops < 64;
                         c = chain.libSuperOf.get(c), hops++) {
@@ -2129,17 +2179,39 @@ public final class JarProcessor {
                         return c;
                     }
                     declared |= chain.libDecls.getOrDefault(c, Set.of()).contains(member);
+                    declared |= !chain.libDecls.containsKey(c); // an unread class may declare it
                     todo.addAll(chain.libInterfacesOf.getOrDefault(c, List.of()));
+                    lastLib = c;
                 }
-                // a static member reached through library classes above a Minecraft class, none of them declaring
-                // it (a mod's Fabric API FabricRecipeProvider subclass calling RecipeProvider's static has(item)
-                // through its own name): resolved by declaration, it is the Minecraft class's, served by the wiring
-                // keyed there. Not an instance member: the library class may stand on another hierarchy on the
-                // target (a superRename), where its own members answer the virtual call.
-                if (isStatic && c != null && Chain.minecraftOwned(c) && !declared) {
+                // a member reached through library classes above a Minecraft class, none of them declaring it, is the
+                // Minecraft class's, served by the wiring keyed there: a static resolved by declaration (a mod's
+                // Fabric API FabricRecipeProvider subclass calling RecipeProvider's static has(item) through its own
+                // name), an instance member as the JVM resolves it (fakePlayer.forceSetRotation(y, x) is
+                // ServerPlayer's) -- the latter only where the target's Fabric API keeps the library class over the
+                // same Minecraft class: one standing on another hierarchy on the target (a superRename) answers the
+                // virtual call with its own members
+                if (c != null && Chain.minecraftOwned(c) && !declared
+                        && (isStatic || lastLib != null && chain.targetLibraryOver(lastLib, c))) {
                     for (String v : chain.selfAndSupers(c)) {
                         if (keyed.test(v + "." + member)) {
                             return v;
+                        }
+                    }
+                    if (!isStatic) {
+                        java.util.ArrayDeque<String> vi = new java.util.ArrayDeque<>();
+                        for (String v : chain.selfAndSupers(c)) {
+                            vi.addAll(chain.interfacesOf.getOrDefault(v, List.of()));
+                        }
+                        Set<String> vseen = new HashSet<>();
+                        while (!vi.isEmpty()) {
+                            String i = vi.poll();
+                            if (!vseen.add(i)) {
+                                continue;
+                            }
+                            if (keyed.test(i + "." + member)) {
+                                return i;
+                            }
+                            vi.addAll(chain.interfacesOf.getOrDefault(i, List.of()));
                         }
                     }
                 }
@@ -4867,7 +4939,65 @@ public final class JarProcessor {
             rpt.notes.add(tag + "kind-fixed: calls into " + o + " follow its target kind ("
                 + (Boolean.TRUE.equals(chain.interfaceOnTarget(o)) ? "interface" : "class") + ") in " + clsName[0]);
         }
-        return cw.toByteArray();
+        byte[] written = cw.toByteArray();
+        for (String c : renameCollisions(bytes, written, needClassRename ? chain.classRenames : Map.of())) {
+            // the JVM refuses the class (ClassFormatError: duplicate method / field), and every call of the
+            // members folded together would name one of them: not a class to ship as converted
+            rpt.brokenHierarchy.add(tag + "duplicate members (ClassFormatError): " + clsName[0] + "." + c);
+        }
+        return written;
+    }
+
+    /**
+     * The members of a converted class declared twice under one name and descriptor (sruntime case 1: a
+     * many-to-one classRenames -- 1.21.5's SwordItem / DiggerItem / ArmorItem into Item -- folds overloads told
+     * apart only by those types, foo(SwordItem) and foo(Item), into one shape). Each as "name desc <- the
+     * declarations it came from".
+     */
+    static List<String> renameCollisions(byte[] before, byte[] after, Map<String, String> renames) {
+        Map<String, Integer> seen = new HashMap<>();
+        new ClassReader(after).accept(new ClassVisitor(Opcodes.ASM9) {
+            @Override
+            public MethodVisitor visitMethod(int a, String n, String d, String s, String[] x) {
+                seen.merge(n + d, 1, Integer::sum);
+                return null;
+            }
+
+            @Override
+            public org.objectweb.asm.FieldVisitor visitField(int a, String n, String d, String s, Object v) {
+                seen.merge(n + ":" + d, 1, Integer::sum);
+                return null;
+            }
+        }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        Set<String> dup = new java.util.TreeSet<>();
+        seen.forEach((k, n) -> {
+            if (n > 1) dup.add(k);
+        });
+        if (dup.isEmpty()) {
+            return List.of();
+        }
+        org.objectweb.asm.commons.Remapper rm = new org.objectweb.asm.commons.SimpleRemapper(renames);
+        Map<String, List<String>> from = new java.util.TreeMap<>();
+        new ClassReader(before).accept(new ClassVisitor(Opcodes.ASM9) {
+            @Override
+            public MethodVisitor visitMethod(int a, String n, String d, String s, String[] x) {
+                String k = n + rm.mapMethodDesc(d);
+                if (dup.contains(k)) from.computeIfAbsent(k, z -> new ArrayList<>()).add(n + d);
+                return null;
+            }
+
+            @Override
+            public org.objectweb.asm.FieldVisitor visitField(int a, String n, String d, String s, Object v) {
+                String k = n + ":" + rm.mapDesc(d);
+                if (dup.contains(k)) from.computeIfAbsent(k, z -> new ArrayList<>()).add(n + ":" + d);
+                return null;
+            }
+        }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        List<String> out = new ArrayList<>();
+        for (String k : dup) {
+            out.add(k + " <- " + from.getOrDefault(k, List.of("(synthesized)")));
+        }
+        return out;
     }
 
     /**
