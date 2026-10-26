@@ -31,7 +31,8 @@
     "CbRenderAttachedRegionMixin",
     "CbGuiHudLayersMixin",
     "CbTextureMultiMixin",
-    "CbScreenTooltipMixin"
+    "CbScreenTooltipMixin",
+    "CbTextureViewsMixin"
   ],
   "server": [],
   "injectors": {
