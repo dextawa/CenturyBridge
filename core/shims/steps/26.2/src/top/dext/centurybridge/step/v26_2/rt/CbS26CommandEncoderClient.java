@@ -6,6 +6,9 @@ import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.CommandEncoder;
 import com.mojang.blaze3d.systems.GpuQuery;
 import com.mojang.blaze3d.systems.GpuQueryPool;
+import com.mojang.blaze3d.systems.CommandEncoderBackend;
+import com.mojang.blaze3d.systems.GpuSurface;
+import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTexture;
 import com.mojang.blaze3d.GpuFormat;
@@ -145,6 +148,51 @@ public final class CbS26CommandEncoderClient {
     /** an unsigned normalised byte as GL stores it in a signed normalised component: round(clamp(f, -1, 1) * 127) */
     private static byte snorm(byte unorm) {
         return (byte) Math.round((unorm & 0xFF) / 255.0f * 127.0f);
+    }
+
+    /**
+     * 26.1.2 CommandEncoder.presentTexture(view): with no render pass open, a single-layer colour texture usable as a
+     * render attachment was blitted at its size onto the window's framebuffer (GlCommandEncoder: draw FBO 0,
+     * blitFrameBuffers, nearest), at the moment of the call; Minecraft's own blitToScreen later in the frame drew over
+     * it. 26.2 draws to the window through the GpuSurface of the frame (Minecraft.windowSurface: acquired, blitted once,
+     * presented). The layer blits through that surface's backend, the same backend call GpuSurface.blitFromTexture
+     * makes (GlSurface -> GlCommandEncoder.presentTexture(view, w, h)), without marking the frame blitted: 26.2's own
+     * blit of the main target still runs afterwards and draws over it, as on 26.1.2, and 26.2's checks stay in place
+     * (also USAGE_COPY_SRC, which 26.2's presentation needs). Outside an acquired frame 26.2 has no window image to
+     * draw into: refused with that reason.
+     */
+    public static void presentTexture(CommandEncoder self, GpuTextureView view) {
+        if (self.isInRenderPass()) {
+            throw new IllegalStateException("Close the existing render pass before performing additional commands");
+        }
+        presentThrough(self.backend(), view);
+    }
+
+    /** 26.1.2 CommandEncoderBackend.presentTexture(view), as {@link #presentTexture} after its render pass check */
+    public static void presentTexture(CommandEncoderBackend backend, GpuTextureView view) {
+        presentThrough(backend, view);
+    }
+
+    private static void presentThrough(CommandEncoderBackend backend, GpuTextureView view) {
+        GpuTexture texture = view.texture();
+        if (!texture.getFormat().hasColorAspect()) {
+            throw new IllegalStateException("Cannot present a non-color texture!");
+        }
+        if ((texture.usage() & GpuTexture.USAGE_RENDER_ATTACHMENT) == 0) {
+            throw new IllegalStateException("Color texture must have USAGE_RENDER_ATTACHMENT to presented to the screen");
+        }
+        if ((texture.usage() & GpuTexture.USAGE_COPY_SRC) == 0) {
+            throw new IllegalStateException("Color texture must have USAGE_COPY_SRC to presented to the screen");
+        }
+        if (texture.getDepthOrLayers() > 1) {
+            throw new UnsupportedOperationException("Textures with multiple depths or layers are not yet supported for presentation");
+        }
+        GpuSurface surface = net.minecraft.client.Minecraft.getInstance().windowSurface();
+        if (!surface.isAcquired()) {
+            throw new IllegalStateException("26.2 draws to the window only within a frame whose surface image is acquired;"
+                + " 26.1.2's presentTexture outside one has no window image to draw into");
+        }
+        surface.backend.blitFromTexture(backend, view);
     }
 
     /** the timer query begun and not yet ended (26.1.2's GlCommandEncoder held one; render thread only) */

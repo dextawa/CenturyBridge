@@ -11,7 +11,8 @@
     "com/mojang/blaze3d/systems/CommandEncoder.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIIIIIII)V": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient",
     "com/mojang/blaze3d/systems/CommandEncoder.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/ByteBuffer;Lcom/mojang/blaze3d/platform/NativeImage$Format;IIIIII)V": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient",
     "com/mojang/blaze3d/systems/CommandEncoder.timerQueryBegin()Lcom/mojang/blaze3d/systems/GpuQuery;": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient",
-    "com/mojang/blaze3d/systems/CommandEncoder.timerQueryEnd(Lcom/mojang/blaze3d/systems/GpuQuery;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient"
+    "com/mojang/blaze3d/systems/CommandEncoder.timerQueryEnd(Lcom/mojang/blaze3d/systems/GpuQuery;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient",
+    "com/mojang/blaze3d/systems/CommandEncoder.presentTexture(Lcom/mojang/blaze3d/textures/GpuTextureView;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient"
   },
   "mixinTargets": {
     "net/minecraft/client/renderer/LevelRenderer.renderLevel(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;ZLnet/minecraft/client/renderer/chunk/ChunkSectionsToRender;)V": {
@@ -92,7 +93,9 @@
     "com/mojang/blaze3d/systems/CommandEncoder.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIIIIIII)V": "26.1.2 wrote the image's width x height region at (sourceX, sourceY) to (destX, destY) of the mip level / layer; 26.2 writes a whole image at (destX, destY). The whole image goes as it is, a region through a copy of it (NativeImage.copyRect into an image of the region's size)",
     "com/mojang/blaze3d/systems/CommandEncoder.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/ByteBuffer;Lcom/mojang/blaze3d/platform/NativeImage$Format;IIIIII)V": "26.1.2 took the pixels' NativeImage.Format (it sized the buffer by format.components() and uploaded in that format); 26.2 sizes by the texture format's block size and has no conversion: a format of the same pixel size goes as it is, another is refused with the reason",
     "com/mojang/blaze3d/systems/CommandEncoder.timerQueryBegin()Lcom/mojang/blaze3d/systems/GpuQuery;": "26.1.2: one GL_TIME_ELAPSED query at a time (render thread), its value the elapsed nanoseconds once available; 26.2 has timestamp query pools (GpuDevice.createTimestampQueryPool, CommandEncoder.writeTimestamp): a pool of two, the first timestamp now, the second at timerQueryEnd, the value their difference",
-    "com/mojang/blaze3d/systems/CommandEncoder.timerQueryEnd(Lcom/mojang/blaze3d/systems/GpuQuery;)V": "26.1.2 refused a query that was not the active one ('Mismatched or duplicate GpuQuery when ending timerQuery'); the layer writes the second timestamp of the active one"
+    "com/mojang/blaze3d/systems/CommandEncoder.timerQueryEnd(Lcom/mojang/blaze3d/systems/GpuQuery;)V": "26.1.2 refused a query that was not the active one ('Mismatched or duplicate GpuQuery when ending timerQuery'); the layer writes the second timestamp of the active one",
+    "com/mojang/blaze3d/systems/CommandEncoder.presentTexture(Lcom/mojang/blaze3d/textures/GpuTextureView;)V": "javap: 26.1.2 checked no render pass, a colour, render-attachable, single-layer texture, then the backend blitted it at its size onto window framebuffer 0 (Minecraft's own blitToScreen later in the frame drew over it); 26.2 presents through Minecraft.windowSurface (GpuSurface.blitFromTexture -> GpuSurfaceBackend.blitFromTexture -> GlCommandEncoder.presentTexture(view, w, h)). The layer calls the surface backend's blit without marking the frame blitted, so 26.2's own blit still draws over it; refused outside an acquired frame",
+    "com/mojang/blaze3d/systems/CommandEncoderBackend.presentTexture(Lcom/mojang/blaze3d/textures/GpuTextureView;)V": "as CommandEncoder.presentTexture: the backend call 26.1.2's encoder made, through the frame's surface backend with this backend"
   },
   "callReshapes": {
     "net/minecraft/client/renderer/WeatherEffectRenderer.extractRenderState(Lnet/minecraft/world/level/Level;IFLnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/level/WeatherRenderState;)V": {
@@ -196,5 +199,8 @@
   },
   "_classRenames_basis": {
     "com/mojang/blaze3d/buffers/GpuBuffer$MappedView": "26.1.2's interface (data(), close()); 26.2 replaced it by the record GpuBufferSlice.MappedView with the same two members; the facade interface is 26.1.2's, 26.2's views handed out through it (facade/GpuBufferViews.of)"
+  },
+  "interfaceCallRedirects": {
+    "com/mojang/blaze3d/systems/CommandEncoderBackend.presentTexture(Lcom/mojang/blaze3d/textures/GpuTextureView;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26CommandEncoderClient"
   }
 }
