@@ -1,0 +1,33 @@
+{
+ "instanceFieldGetters": {
+  "net/minecraft/class_1293.field_5896:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffectsGiveBack#field_5896",
+  "net/minecraft/class_1291$class_8634.field_45104:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffectsGiveBack#field_45104",
+  "net/minecraft/class_2356.field_45775:Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffectsGiveBack#field_45775",
+  "net/minecraft/class_2989.field_44468:Lnet/minecraft/class_60;": "top/dext/centurybridge/step/v1_20_5/rt/CbAdvGiveBack#field_44468",
+  "net/minecraft/class_2568$class_5247.field_46605:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbTextHoverGiveBack#field_46605",
+  "net/minecraft/class_2568$class_5247.field_46606:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbTextHoverGiveBack#field_46606",
+  "net/minecraft/class_1667.field_7597:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbWorldArrowGiveBack#field_7597",
+  "net/minecraft/class_1667.field_7598:Ljava/util/Set;": "top/dext/centurybridge/step/v1_20_5/rt/CbWorldArrowGiveBack#field_7598",
+  "net/minecraft/class_1667.field_7596:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbWorldArrowGiveBack#field_7596"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_2788.method_17817(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8786;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#recipeFromNetwork"
+ },
+ "mixinTargets": {
+  "net/minecraft/class_2989.method_20723(Lcom/google/common/collect/ImmutableMap$Builder;Lnet/minecraft/class_2960;Lcom/google/gson/JsonElement;)V": {
+   "to": "method_20723(Lnet/minecraft/class_6903;Lcom/google/common/collect/ImmutableMap$Builder;Lnet/minecraft/class_2960;Lcom/google/gson/JsonElement;)V",
+   "args": [1, 2, 3],
+   "basis": "ServerAdvancementManager's per-advancement step: javap -c both, the same body (Advancement.CODEC.parse -> getOrThrow -> astore, validate(id, advancement), put new AdvancementHolder(id, advancement), the same 'Parsing error loading custom advancement' catch); 1.20.5 parses with the RegistryOps it is handed where 1.20.4 used JsonOps.INSTANCE"
+  },
+  "net/minecraft/class_2631.method_54081(Ljava/lang/String;Lnet/minecraft/class_7497;Ljava/util/function/BooleanSupplier;)Ljava/util/concurrent/CompletableFuture;": {
+   "to": "method_59536(Ljava/lang/String;Lnet/minecraft/class_7497;)Ljava/util/concurrent/CompletableFuture;",
+   "args": [0, 1, -1],
+   "basis": "SkullBlockEntity.fetchProfileByName: javap -c both, services.profileCache().getAsync(name) then a continuation (1.20.4 thenApplyAsync to the textures fill with the cancel check; 1.20.5 thenCompose to the by-UUID cache, whose loader method_59541 checks the cancel flag and fills the textures); 1.20.5 takes no cancel flag here"
+  },
+  "net/minecraft/class_2631.method_54082(Ljava/util/function/BooleanSupplier;Lnet/minecraft/class_7497;Ljava/util/Optional;)Ljava/util/Optional;": {
+   "to": "method_59541(Ljava/util/function/BooleanSupplier;Lnet/minecraft/class_7497;Ljava/util/UUID;)Ljava/util/Optional;",
+   "args": [0, 1, -1],
+   "basis": "SkullBlockEntity's textures fill: javap -c both, if the cancel flag is set an empty answer, else services.sessionService().fetchProfile(id, true) and its profile; 1.20.4 took the looked-up Optional<GameProfile> and its id, 1.20.5 the id itself (the by-UUID cache loader, reached from the by-name lookup and from by-UUID lookups)"
+  }
+ }
+}

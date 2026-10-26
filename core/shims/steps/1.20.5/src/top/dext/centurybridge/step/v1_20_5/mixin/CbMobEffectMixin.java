@@ -84,4 +84,18 @@ public abstract class CbMobEffectMixin implements CbEffects.EffectSlot {
     private void cbS4$removeLegacy(net.minecraft.class_5131 attributes, CallbackInfo ci) {
         CbEffects.removedLegacy((net.minecraft.class_1291) (Object) this, attributes);
     }
+
+    /**
+     * addAttributeModifier(attribute, id, amount, operation) returning: the template it put is this effect's (1.20.4's
+     * template held its effect; rt/CbEffectsGiveBack.field_45104). Reads only; 1.20.5's put is untouched.
+     */
+    @Inject(method = "method_5566", at = @At("RETURN"))
+    @SuppressWarnings("rawtypes")
+    private void cbS205$ownTemplate(net.minecraft.class_6880 attribute, String id, double amount,
+            net.minecraft.class_1322.class_1323 operation, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<net.minecraft.class_1291> cir) {
+        Object template = field_5885.get(attribute);
+        if (template instanceof top.dext.centurybridge.step.v1_20_5.rt.CbEffectsGiveBack.TemplateOwner owned) {
+            owned.cbS205$owner((net.minecraft.class_1291) (Object) this);
+        }
+    }
 }
