@@ -186,6 +186,12 @@ public class S6bTestMod implements ModInitializer {
             check(false, "recipeBook threw " + e);
         }
         try {
+            recipeSettings();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "recipeSettings threw " + e);
+        }
+        try {
             routes(level);
         } catch (Throwable e) {
             e.printStackTrace();
@@ -820,6 +826,44 @@ public class S6bTestMod implements ModInitializer {
     public static String recipeExtra = "";
 
     /** ServerRecipeBook / RecipeBookSettings 1.21.5 tag form; the mod's mixin on toNbt / fromNbt on the player's save path */
+    /** the converted RecipeBookSettings write / read(FriendlyByteBuf) mixin's runs (S6bRecipeSettingsMixin) */
+    public static final int[] settingsNet = new int[2];
+
+    /**
+     * RecipeBookSettings' restored 1.21.5 members on 1.21.6: the private states map through a 1.21.5 accessor (a live
+     * view of 1.21.6's per-type fields), the key table, value equals / hashCode, and STREAM_CODEC encoding / decoding
+     * through the restored write / read(FriendlyByteBuf) that this mod mixes (the same eight booleans as 1.21.6's codec)
+     */
+    static void recipeSettings() {
+        net.minecraft.class_5421 furnace = net.minecraft.class_5421.field_25764;
+        net.minecraft.class_5411 s = new net.minecraft.class_5411();
+        s.method_30181(furnace, true);
+        java.util.Map<?, ?> states = ((cb.s6b.mixin.S6bRecipeSettingsAccess) (Object) s).cbs6b$states();
+        check(states.size() == 1 && states.containsKey(furnace) && !states.containsKey(net.minecraft.class_5421.field_25763),
+            "RecipeBookSettings' 1.21.5 states map (accessor): the furnace entry the setter made (" + states + ")");
+        java.util.Map<?, ?> keys = cb.s6b.mixin.S6bRecipeSettingsAccess.cbs6b$keys();
+        check(keys.size() == 4 && String.valueOf(keys.get(furnace)).contains("isFurnaceGuiOpen"),
+            "RecipeBookSettings' 1.21.5 key table (static accessor): " + keys);
+        net.minecraft.class_5411 same = new net.minecraft.class_5411();
+        same.method_30181(furnace, true);
+        net.minecraft.class_5411 other = new net.minecraft.class_5411();
+        other.method_30188(furnace, true);
+        check(s.equals(same) && s.hashCode() == same.hashCode() && !s.equals(other),
+            "RecipeBookSettings equals / hashCode by value, as 1.21.5's");
+        net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
+        int w = settingsNet[0];
+        int r = settingsNet[1];
+        net.minecraft.class_5411.field_54548.encode(buf, s);
+        int bytes = buf.readableBytes();
+        boolean furnaceByte = buf.getBoolean(2);
+        net.minecraft.class_5411 back = net.minecraft.class_5411.field_54548.decode(buf);
+        check(settingsNet[0] - w == 1 && settingsNet[1] - r == 1 && bytes == 8 && furnaceByte && back.equals(s) && back.method_30180(furnace),
+            "STREAM_CODEC through the mixed write / read(FriendlyByteBuf): mixin ran " + (settingsNet[0] - w) + " / " + (settingsNet[1] - r)
+                + ", " + bytes + " bytes (furnace open at byte 2: " + furnaceByte + "), round trip equal");
+        states.clear();
+        check(!s.method_30180(furnace), "the states map writes through: clear() resets 1.21.6's furnace settings");
+    }
+
     static void recipeBook(class_3218 level) {
         net.minecraft.class_5321<net.minecraft.class_1860<?>> planks = net.minecraft.class_5321.method_29179(
             net.minecraft.class_7924.field_52178, net.minecraft.class_2960.method_60655("minecraft", "oak_planks"));
