@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # boot9.sh <tag> <mod jar...>: step 1.21.8 -> 1.21.9 real-server check for s9 -- 1.21.8 mods converted 1.21.8 -> 1.21.9
-# with this agent's engine and wiring, booted on a Fabric 1.21.9 server (own copy, agents/s9/srv-1.21.9) with Fabric API
+# with this agent's engine and wiring, booted on a Fabric 1.21.9 server (own copy, $CB_WD/srv-1.21.9; CB_WD defaults to agents/s9) with Fabric API
 # and this agent's 1.21.9 step layer. Run on beta2 from ~/cbwork after remote_step.sh built the layer.
 set -uo pipefail
 cd ~/cbwork
-WD=agents/s9; TAG="$1"; shift 1
+WD=${CB_WD:-agents/s9}; TAG="$1"; shift 1
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
 SRV=$WD/srv-1.21.9

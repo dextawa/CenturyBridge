@@ -1,0 +1,62 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_1676.method_59859(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Z)Z": {
+   "basis": "s9c deflection: Projectile.deflect takes the owner as its EntityReference on 1.21.9 (javap: 1.21.8 callers passed getOwner(), 1.21.9's the owner field; the body only hands it to setOwner, and setOwner(Entity) is setOwner(EntityReference.of(entity)))",
+   "desc": "(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_10583;Z)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbDeflection#ownerRef(Lnet/minecraft/class_1297;)Lnet/minecraft/class_10583;",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_8956.method_59859(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Z)Z": {
+   "basis": "s9c deflection: WindCharge declares deflect (cooldown test, then super); the owner as its EntityReference on 1.21.9, as Projectile's",
+   "desc": "(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_10583;Z)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbDeflection#ownerRef(Lnet/minecraft/class_1297;)Lnet/minecraft/class_10583;",
+    "keep"
+   ]
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_59859(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Z)Z",
+   "new": "method_59859(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_10583;Z)Z",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbDeflection$LegacyDeflect",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbDeflection.cbDeflect(Ltop/dext/centurybridge/step/v1_21_9/rt/CbDeflection$LegacyDeflect;Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_10583;Z)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1676",
+   "basis": "s9c deflection: a 1.21.8 deflect override gets the owner entity, resolved from 1.21.9's reference in the projectile's level (what 1.21.9's getOwner answers and 1.21.8's callers passed)"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1676",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbDeflection$LegacyOnDeflection",
+   "requires": [
+    "method_59525(Lnet/minecraft/class_1297;Z)V"
+   ],
+   "synth": []
+  }
+ ],
+ "mixinTargets": {
+  "net/minecraft/class_1676.method_59859(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Z)Z": {
+   "to": "method_59859(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_10583;Z)Z",
+   "args": [0, 1, -1, 3],
+   "basis": "s9c deflection: Projectile.deflect, the same body (deflection.deflect(this, deflector, random); server side: setOwner(owner), onDeflection(fromAttack); true); the owner arrives as its EntityReference, so a handler reading the owner entity does not follow"
+  },
+  "net/minecraft/class_8956.method_59859(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Z)Z": {
+   "to": "method_59859(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_10583;Z)Z",
+   "args": [0, 1, -1, 3],
+   "basis": "s9c deflection: WindCharge.deflect, the same body (deflect cooldown > 0: false; else super); the owner arrives as its EntityReference, so a handler reading the owner entity does not follow"
+  },
+  "net/minecraft/class_1668.method_59525(Lnet/minecraft/class_1297;Z)V": {
+   "to": "method_59525(Z)V",
+   "args": [-1, 0],
+   "basis": "s9c deflection: AbstractHurtingProjectile.onDeflection(deflector, fromAttack) -> onDeflection(fromAttack); javap: the same body (super call, then accelerationPower 0.1 when fromAttack, else halved), the deflector was never read"
+  }
+ }
+}
