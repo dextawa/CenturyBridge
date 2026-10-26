@@ -747,7 +747,66 @@ final class MixinBridge {
         if (at != null && !at.owner().equals(owner)) {
             return new CallFate("inherited from " + shortName(at.owner()), name, desc, null, null, null, at);
         }
+        // a step agent's judgment of where the V method's code lives on W (mixinTargets): an invoker or a shadow of it
+        // calls that method, its arguments reordered by "args" (smx4b case 2) -- only where that is the whole story
+        Chain.MixinTarget mt = chain.mixinTargets.get(vk(owner) + "." + nd);
+        if (mt != null) {
+            Chain.CallReshape r = mixinTargetReshape(mt, desc, why);
+            if (r == null) {
+                return null;
+            }
+            Found mat = wResolveMethod(owner, mt.name(), mt.desc());
+            if (mat == null || !mat.owner().equals(owner) || mat.isStatic() != isStatic) {
+                why.add("mixinTargets " + mt.name() + mt.desc() + " is not " + (isStatic ? "a static" : "an instance")
+                    + " member of " + shortName(owner) + " in " + chain.to);
+                return null;
+            }
+            return new CallFate("mixinTargets (" + mt.basis() + ")", mt.name(), mt.desc(), r, null, null, mat);
+        }
         return null;
+    }
+
+    /**
+     * A mixinTargets entry as a call: W's arguments are exactly V's, reordered ("args": every V argument carried by
+     * one W argument of the same type, every W argument carrying one), and the answer is the same type. Anything
+     * else -- a V argument W does not take (-1), a W argument with no V source, a narrower type, a changed return --
+     * would change what the caller asked for, and is refused with why.
+     */
+    private Chain.CallReshape mixinTargetReshape(Chain.MixinTarget mt, String vdesc, List<String> why) {
+        Type[] va = Type.getArgumentTypes(vdesc);
+        Type[] wa = Type.getArgumentTypes(mt.desc());
+        String where = "mixinTargets " + mt.name() + mt.desc() + " as a call";
+        if (mt.args() == null || mt.args().length != va.length) {
+            why.add(where + ": no argument map");
+            return null;
+        }
+        if (!Type.getReturnType(vdesc).equals(Type.getReturnType(mt.desc()))) {
+            why.add(where + ": the return type changed");
+            return null;
+        }
+        int[] src = new int[wa.length];
+        Arrays.fill(src, -1);
+        for (int i = 0; i < va.length; i++) {
+            int j = mt.args()[i];
+            if (j < 0 || j >= wa.length || src[j] >= 0) {
+                why.add(where + ": " + chain.from + " argument " + i + " has no " + chain.to + " argument of its own");
+                return null;
+            }
+            if (!wa[j].equals(va[i])) {
+                why.add(where + ": argument " + i + " is " + va[i] + " in " + chain.from + ", " + wa[j] + " in " + chain.to);
+                return null;
+            }
+            src[j] = i;
+        }
+        List<Chain.ReshapeOp> ops = new ArrayList<>();
+        for (int j = 0; j < wa.length; j++) {
+            if (src[j] < 0) {
+                why.add(where + ": " + chain.to + " argument " + j + " has no " + chain.from + " source");
+                return null;
+            }
+            ops.add(new Chain.ReshapeOp(new int[] {src[j]}, null, null, null, false));
+        }
+        return new Chain.CallReshape(new Chain.CtorReshape(mt.desc(), ops), vdesc, mt.desc(), null, null, null, null);
     }
 
     /**
@@ -1109,6 +1168,12 @@ final class MixinBridge {
                 return;
             }
             Refs r = refs(m.name, m.desc, false);
+            if (f.how().startsWith("mixinTargets")) {
+                // no call wiring names the member (the plain-call pass would not reorder these calls): the shadow
+                // becomes a method making the call itself, its arguments reordered in place
+                directInvoker(m, sh, f, what);
+                return;
+            }
             if (!r.handles.isEmpty() && (f.reshape() != null || f.how().startsWith("renamed"))) {
                 // JarProcessor reshapes and renames call instructions, not method handles
                 left.add(what + ": taken as a method reference, and " + f.how() + " applies to calls");
