@@ -36,7 +36,12 @@
     "CbS26LevelFlushMixin",
     "CbS26GameFlushMixin",
     "CbS26GuiFlushMixin",
-    "CbS26TesselatorMixin"
+    "CbS26TesselatorMixin",
+    "CbS26GlowingStateMixin",
+    "CbS26GlowingResetMixin",
+    "CbS26GlowingExtractMixin",
+    "CbS26GlowingFrameMixin",
+    "CbS26GlowingPassMixin"
   ],
   "server": [],
   "injectors": {
