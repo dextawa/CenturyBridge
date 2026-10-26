@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s11d",
+  "version": "1.0.0",
+  "name": "CB s11 dimension effects",
+  "description": "1.21.10-era client mod with its own DimensionSpecialEffects for the overworld (data pack effects id cb_s11d:fx), for step 1.21.10 -> 1.21.11's effects routes",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.s11d.FxClient"] },
+  "mixins": ["cb_s11d.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.10" }
+}

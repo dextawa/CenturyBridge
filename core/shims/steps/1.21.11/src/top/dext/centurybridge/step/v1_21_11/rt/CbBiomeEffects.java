@@ -57,6 +57,11 @@ public final class CbBiomeEffects {
         }
     }
 
+    /** a BiomeSpecialEffects.Builder with 1.21.10's setters restored (CbBiomeEffectsBuilderMixin): what they set */
+    public interface Builder {
+        Settings cb$v1_21_11$settings();
+    }
+
     public static void attach(class_4763 effects, Settings s) {
         if (s != null && s.any()) {
             BUILT.put(effects, s);

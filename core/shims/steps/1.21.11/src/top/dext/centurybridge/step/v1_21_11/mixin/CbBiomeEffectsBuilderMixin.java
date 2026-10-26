@@ -10,9 +10,6 @@ import net.minecraft.class_6012;
 import net.minecraft.class_6880;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21_11.rt.CbBiomeEffects;
 import top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads;
 
@@ -20,10 +17,11 @@ import top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads;
  * 1.21.10's BiomeSpecialEffects.Builder setters 1.21.11 dropped (their settings are biome environment attributes now,
  * rt/CbBiomeEffects), restored with 1.21.10's bodies on the kept settings; build() hands them to the effects it builds.
  * 1.21.11's own biomes set those attributes on the Biome.Builder and never call these: a mod's mixin on them changes
- * only the biomes converted mods build.
+ * only the biomes converted mods build. Restored members only (CbVanillaReads.PRIORITY); the build() hook is in
+ * CbBiomeEffectsBuilderMixinHooks.
  */
 @Mixin(value = class_4763.class_4764.class, priority = CbVanillaReads.PRIORITY)
-public abstract class CbBiomeEffectsBuilderMixin {
+public abstract class CbBiomeEffectsBuilderMixin implements CbBiomeEffects.Builder {
     @Unique
     private final CbBiomeEffects.Settings cb$settings = new CbBiomeEffects.Settings();
 
@@ -102,8 +100,8 @@ public abstract class CbBiomeEffectsBuilderMixin {
         return this.method_65137(0.0F);
     }
 
-    @Inject(method = "method_24391", at = @At("RETURN"))
-    private void cb$build(CallbackInfoReturnable<class_4763> cir) {
-        CbBiomeEffects.attach(cir.getReturnValue(), this.cb$settings);
+    @Override
+    public CbBiomeEffects.Settings cb$v1_21_11$settings() {
+        return this.cb$settings;
     }
 }
