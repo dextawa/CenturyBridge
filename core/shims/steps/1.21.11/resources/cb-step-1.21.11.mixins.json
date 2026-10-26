@@ -6,15 +6,23 @@
   "mixins": [
     "CbBiomeBuilderMixin",
     "CbBiomeEffectsBuilderMixin",
+    "CbBiomeEffectsBuilderMixinHooks",
     "CbDimensionTypeCodecMixin",
     "CbGameRuleCommandMixin",
     "CbGameRuleDescriptionMixin",
     "CbGameRuleMixin",
     "CbGameRulesMixin",
-    "CbGameRulesServerMixin"
+    "CbGameRulesMixinHooks",
+    "CbGameRulesServerMixin",
+    "CbGameRulesServerMixinHooks"
   ],
   "client": [
     "CbClientLevelEffectsMixin",
+    "CbClientLevelEffectsMixinHooks",
+    "CbDimEffectsFogMixin",
+    "CbDimEffectsLightTextureMixin",
+    "CbDimEffectsLightingMixin",
+    "CbDimEffectsSkyMixin",
     "CbLineWidthBufferSourceMixin",
     "CbLineWidthBuilderMixin"
   ],

@@ -5,13 +5,10 @@ import java.util.Map;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import top.dext.centurybridge.step.v1_21_2.rt.CbPrioritySplitClient;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderShaders;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 ShaderInstance members on 1.21.2's compiled program (the same class, class_5944; see CbRenderShaders):
@@ -28,11 +25,12 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderShaders;
  *   ShaderManager's compiled vertex and fragment shaders) gets a Program for each of them, named as 1.21.1 named the
  *   shader (a vanilla shader's bare name, another's namespace:name) and not entered in Program.Type's cache, which
  *   1.21.1 filled from its own compiles only. attachToProgram attaches both again, as 1.21.1's did.
+ * The injectors into 1.21.2's linkShader and apply are in CbRenderShaderMixinHooks (default priority).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_5944.class)
+@Mixin(value = net.minecraft.class_5944.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderShaderMixin implements CbRenderShaders.Program, top.dext.centurybridge.step.v1_21_2.rt.CbRenderShaderLoad.Legacy,
-    top.dext.centurybridge.step.v1_21_2.facade.Shader {
+    top.dext.centurybridge.step.v1_21_2.facade.Shader, CbPrioritySplitClient.ShaderState {
 
     @Unique
     private final Map<String, Object> cb$samplers = new LinkedHashMap<>();
@@ -48,9 +46,6 @@ public abstract class CbRenderShaderMixin implements CbRenderShaders.Program, to
 
     @Unique
     private top.dext.centurybridge.step.v1_21_2.facade.Program cb$fragment;
-
-    @Shadow
-    public abstract void method_62899(String name, int textureId);
 
     /** 1.21.1 ShaderInstance.markDirty() */
     @Override
@@ -106,25 +101,14 @@ public abstract class CbRenderShaderMixin implements CbRenderShaders.Program, to
         this.cb$vertex.method_1281(this);
     }
 
-    /** 1.21.2 linkShader(vertex, fragment, format): the linked program's Programs, over the two compiled shaders */
-    @Inject(method = "method_62896(Lnet/minecraft/class_10141;Lnet/minecraft/class_10141;Lnet/minecraft/class_293;)Lnet/minecraft/class_5944;",
-        at = @At("RETURN"))
-    private static void cb$linkedPrograms(net.minecraft.class_10141 vertex, net.minecraft.class_10141 fragment, net.minecraft.class_293 format,
-                                          CallbackInfoReturnable<net.minecraft.class_5944> cir) {
-        CbRenderShaderMixin linked = (CbRenderShaderMixin) (Object) cir.getReturnValue();
-        linked.cb$vertex = new top.dext.centurybridge.step.v1_21_2.facade.Program(top.dext.centurybridge.step.v1_21_2.facade.Program.Type.field_1530,
-            vertex.method_62883(), CbRenderShaders.legacyName(vertex.method_62881()));
-        linked.cb$fragment = new top.dext.centurybridge.step.v1_21_2.facade.Program(top.dext.centurybridge.step.v1_21_2.facade.Program.Type.field_1531,
-            fragment.method_62883(), CbRenderShaders.legacyName(fragment.method_62881()));
+    @Override
+    public Map<String, Object> cb$v1_21_2$samplers() {
+        return this.cb$samplers;
     }
 
-    @Inject(method = "method_34586()V", at = @At("HEAD"))
-    private void cb$bindLegacySamplers(CallbackInfo ci) {
-        for (Map.Entry<String, Object> e : this.cb$samplers.entrySet()) {
-            int id = CbRenderShaders.textureId(e.getValue());
-            if (id != -1) {
-                this.method_62899(e.getKey(), id);
-            }
-        }
+    @Override
+    public void cb$v1_21_2$programs(top.dext.centurybridge.step.v1_21_2.facade.Program vertex, top.dext.centurybridge.step.v1_21_2.facade.Program fragment) {
+        this.cb$vertex = vertex;
+        this.cb$fragment = fragment;
     }
 }

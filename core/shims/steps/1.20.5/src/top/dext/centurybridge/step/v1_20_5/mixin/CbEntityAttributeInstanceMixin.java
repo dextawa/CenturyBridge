@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * AttributeInstance: 1.20.4's public getModifiers(operation), the live set of the instance's modifiers of one
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * values as 1.20.4's set: a removal removes the modifier from the operation's map, an addition puts it there
  * -- as adding to 1.20.4's set did, without registering it by id or marking the value dirty.
  */
-@Mixin(net.minecraft.class_1324.class)
+@Mixin(value = net.minecraft.class_1324.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityAttributeInstanceMixin {
 
     @Shadow

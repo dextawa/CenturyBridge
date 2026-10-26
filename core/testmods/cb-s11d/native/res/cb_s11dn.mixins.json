@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.s11dn.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["NBoss", "NFog", "NLevelShade", "NLight", "NLighting", "NProbe", "NSky", "NType"],
+  "injectors": { "defaultRequire": 1 }
+}

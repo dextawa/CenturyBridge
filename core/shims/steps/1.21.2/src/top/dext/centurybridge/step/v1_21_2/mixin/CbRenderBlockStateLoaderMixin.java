@@ -12,10 +12,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_21_2.facade.BlockStateLoadedJson;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderBlockStates;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** 1.21.1 BlockStateModelLoader's constructor state, loadAllBlockStates() and getModelGroups() on 1.21.2's loader (see CbRenderBlockStates) */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_9824.class)
+@Mixin(value = net.minecraft.class_9824.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderBlockStateLoaderMixin implements CbRenderBlockStates.Legacy {
 
     @Shadow

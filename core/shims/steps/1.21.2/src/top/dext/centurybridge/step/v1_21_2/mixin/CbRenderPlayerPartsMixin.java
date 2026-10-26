@@ -5,6 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 PlayerModel.renderEars / renderCloak. 1.21.1's player mesh had an "ear" part (one 6x6x1 box, deformation 1)
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.Unique;
  * poses it as the head with no offset (1.21.1: ear.copyFrom(head), x = y = 0) and draws it, renderCloak draws the cloak.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_591.class)
+@Mixin(value = net.minecraft.class_591.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderPlayerPartsMixin {
 
     @Unique

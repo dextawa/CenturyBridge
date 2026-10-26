@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_20_5.facade.FactorData;
 import top.dext.centurybridge.step.v1_20_5.rt.CbNetGame;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * ClientboundUpdateMobEffectPacket: 1.20.4's getters whose type 1.20.5 changed, back beside 1.20.5's under
@@ -14,7 +15,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbNetGame;
  * Each reads the packet's own field, never the overridable 1.20.5 getter: a subclass's super call must not
  * come back into its own override.
  */
-@Mixin(net.minecraft.class_2783.class)
+@Mixin(value = net.minecraft.class_2783.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbNetMobEffectPacketMixin implements CbNetGame.MobEffectPacketSlot {
 
     @Shadow

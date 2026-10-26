@@ -6,12 +6,13 @@ import net.minecraft.class_4388;
 import net.minecraft.class_4905;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 
 /**
  * RealmsConfigureWorldScreen.renderMousehoverTooltip: as CbNetRealmsPendingInvitesBridge, with this
  * screen's 1.20.1 body (the box moves left of the mouse when it would pass the screen's right edge).
  */
-@Mixin(class_4388.class)
+@Mixin(value = class_4388.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbNetRealmsConfigureWorldBridge extends class_4905 {
 
     @Shadow

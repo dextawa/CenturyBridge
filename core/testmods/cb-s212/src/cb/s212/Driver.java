@@ -29,6 +29,13 @@ public final class Driver {
     public static volatile java.util.List<class_1799> canBurnItems;
     public static volatile int canBurnMax = -1;
     public static volatile boolean refuseBurn;
+    public static volatile Object seenTarget;
+    public static volatile int seenAsked;
+    public static volatile int seenAskedQualified;
+    public static volatile boolean seenHide;
+    public static volatile int lookAtAsked;
+    public static volatile Object lookAtEntity;
+    public static volatile net.minecraft.class_243 lookAtPos;
     private static int ok;
     private static int fail;
 
@@ -135,6 +142,67 @@ public final class Driver {
             java.io.File f = ((DataStorageInvoker) level.method_17983()).cbs212$dataFile("cbs212");
             String p = f == null ? null : f.getPath().replace('\\', '/');
             check("data.file", p != null && p.endsWith("/data/cbs212.dat"), "getDataFile(\"cbs212\") = " + p);
+        });
+
+        run("explosion.seenPercent", () -> {
+            // a zombie beside a blast: 1.21.2's ServerExplosion.hurtEntities asks getSeenPercent (1.21.1's
+            // Explosion.getSeenPercent, moved) for it; answered 0 the blast hurts it by 1, answered as vanilla far more
+            float[] health = new float[2];
+            // round -1 only gets the chunk's entity sections loaded (a zombie added before they are is not yet in the
+            // blast's entity query); it stands in the same chunk (x 48..63) as rounds 0 and 1
+            for (int i = -1; i < 2; i++) {
+                net.minecraft.class_1642 zombie = net.minecraft.class_1299.field_6051.method_5883(level);
+                double x = i < 0 ? 56 : 50 + 10 * i;
+                zombie.method_5814(x, 200, 20);
+                level.method_8649(zombie);
+                if (i < 0) {
+                    level.method_8437(null, x + 2.5, 200.5, 20, 2.0F, net.minecraft.class_1937.class_7867.field_40888);
+                    zombie.method_31472();
+                    continue;
+                }
+                int n0 = nativeCount("seen");
+                seenTarget = zombie;
+                seenAsked = 0;
+                seenAskedQualified = 0;
+                seenHide = i == 0;
+                level.method_8437(null, x + 2.5, 200.5, 20, 2.0F, net.minecraft.class_1937.class_7867.field_40888);
+                seenHide = false;
+                health[i] = zombie.method_6032();
+                check("explosion.seenPercent.qualified" + i, seenAskedQualified >= 1, "asked " + seenAskedQualified
+                    + " for the zombie (selector naming class_1927)");
+                check("explosion.seenPercent.byName" + i, seenAsked >= 1, "asked " + seenAsked
+                    + " for the zombie (selector by name only; open while interface-retarget hides the V owner: smixin3 case 7)");
+                if (i == 1) {
+                    // round 0 answers 0 with setReturnValue, which cancels at RETURN: injectors after it there (cb-s212n's)
+                    // do not run for that call, as between any two mods on 1.21.1
+                    checkNative("explosion.seenPercent", "seen", n0);
+                }
+                zombie.method_31472();
+            }
+            check("explosion.seenPercent.used", health[0] >= 18.0F && health[1] < health[0],
+                "zombie health after the blast: hidden " + health[0] + ", seen " + health[1]);
+        });
+
+        run("teleport.lookAt", () -> {
+            // /tp <zombie> x y z facing fx fy fz: 1.21.2's LookAt$LookAtPosition.perform (1.21.1's
+            // TeleportCommand$LookAtPosition, moved unchanged) turns the zombie toward +x
+            net.minecraft.class_1642 zombie = net.minecraft.class_1299.field_6051.method_5883(level);
+            zombie.method_5814(0, 200, 40);
+            level.method_8649(zombie);
+            int n0 = nativeCount("lookAt");
+            lookAtAsked = 0;
+            server.method_3734().method_44252(server.method_3739(),
+                "execute in minecraft:overworld run tp " + zombie.method_5845() + " 0 200 40 facing 10 200 40");
+            check("teleport.lookAt.asked", lookAtAsked == 1 && lookAtEntity == zombie, "asked " + lookAtAsked
+                + " entity=" + (lookAtEntity == zombie));
+            net.minecraft.class_243 p = lookAtPos;
+            // the command's Vec3 argument centers whole x / z on the block (as on 1.21.1)
+            check("teleport.lookAt.shadow", p != null && p.field_1352 == 10.5 && p.field_1351 == 200 && p.field_1350 == 40.5,
+                "record field read through the shadow: " + p);
+            check("teleport.lookAt.turned", Math.abs(zombie.method_36454() + 90.0F) < 0.5F, "yRot " + zombie.method_36454()
+                + " (facing +x is -90)");
+            checkNative("teleport.lookAt", "lookAt", n0);
+            zombie.method_31472();
         });
 
         System.out.println("CB-S212 summary ok=" + ok + " fail=" + fail);

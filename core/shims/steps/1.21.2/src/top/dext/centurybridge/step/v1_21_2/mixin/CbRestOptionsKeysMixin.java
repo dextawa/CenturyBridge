@@ -7,10 +7,11 @@ import net.minecraft.class_304;
 import net.minecraft.class_315;
 import net.minecraft.class_3675;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** Options.setKey / toggleModelPart of 1.21.1, back with their bodies (1.21.2 inlined them into its screens) */
 @Environment(EnvType.CLIENT)
-@Mixin(class_315.class)
+@Mixin(value = class_315.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestOptionsKeysMixin {
 
     /** setKey(mapping, key): the mapping bound to the key, options saved */

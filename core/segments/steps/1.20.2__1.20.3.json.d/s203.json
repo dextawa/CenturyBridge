@@ -1,0 +1,154 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_4325.method_44615(Ljava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_7578$class_8843;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbServerList(Ljava/util/List;)Lnet/minecraft/class_7578$class_8843;"
+   ],
+   "basis": "RealmsMainScreen's servers-fetched lambda: 1.20.3 takes the fetcher's ServerListData and reads its servers (comp_1989) where 1.20.2 read the list; same body otherwise (javap -c both)"
+  },
+  "net/minecraft/class_2246.method_26106(Lnet/minecraft/class_2498;)Lnet/minecraft/class_2397;": {
+   "desc": "(Lnet/minecraft/class_2498;)Lnet/minecraft/class_2248;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#leavesV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2397;",
+   "basis": "mixin invokers / shadows of the private member (mixinTargets carries its injectors): Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2246.method_26109(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2244;": {
+   "desc": "(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#bedV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2244;",
+   "basis": "mixin invokers / shadows of the private member (mixinTargets carries its injectors): Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2246.method_26119(Z)Lnet/minecraft/class_2665;": {
+   "desc": "(Z)Lnet/minecraft/class_2248;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#pistonV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2665;",
+   "basis": "mixin invokers / shadows of the private member (mixinTargets carries its injectors): Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2246.method_26120(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2506;": {
+   "desc": "(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#stainedGlassV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2506;",
+   "basis": "mixin invokers / shadows of the private member (mixinTargets carries its injectors): Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2246.method_45453()Lnet/minecraft/class_2269;": {
+   "desc": "()Lnet/minecraft/class_2248;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#buttonV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2269;",
+   "basis": "mixin invokers / shadows of the private member (mixinTargets carries its injectors): Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2246.method_50001(Lnet/minecraft/class_3620;)Lnet/minecraft/class_5544;": {
+   "desc": "(Lnet/minecraft/class_3620;)Lnet/minecraft/class_2248;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#candleCakeV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_5544;",
+   "basis": "mixin invokers / shadows of the private member (mixinTargets carries its injectors): Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2578.method_27699(Lnet/minecraft/class_2168;)Ljava/lang/String;": {
+   "desc": "(Lnet/minecraft/class_2168;)Lnet/minecraft/class_9015;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#scoreNameV(Lnet/minecraft/class_9015;)Ljava/lang/String;",
+   "basis": "mixin invokers / shadows of the private member (mixinTargets carries its injectors): ScoreContents.findTargetName: 1.20.2's name is the 1.20.3 holder's scoreboard name; a name is its name-only holder"
+  }
+ },
+ "fieldGetters": {
+  "net/minecraft/class_2631.field_12089:Lnet/minecraft/class_3312;": "top/dext/centurybridge/step/v1_20_3/rt/CbSkullServices",
+  "net/minecraft/class_2631.field_12088:Lcom/mojang/authlib/minecraft/MinecraftSessionService;": "top/dext/centurybridge/step/v1_20_3/rt/CbSkullServices"
+ },
+ "staticFieldSetters": {
+  "net/minecraft/class_2631.field_12089:Lnet/minecraft/class_3312;": "top/dext/centurybridge/step/v1_20_3/rt/CbSkullServices",
+  "net/minecraft/class_2631.field_12088:Lcom/mojang/authlib/minecraft/MinecraftSessionService;": "top/dext/centurybridge/step/v1_20_3/rt/CbSkullServices"
+ },
+ "returnConverters": {
+  "net/minecraft/class_2246.method_26106(Lnet/minecraft/class_2498;)Lnet/minecraft/class_2397;": {
+   "toV": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#leavesV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2397;",
+   "toW": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#leavesW(Lnet/minecraft/class_2397;)Lnet/minecraft/class_2248;",
+   "with": [],
+   "basis": "Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2246.method_26109(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2244;": {
+   "toV": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#bedV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2244;",
+   "toW": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#bedW(Lnet/minecraft/class_2244;)Lnet/minecraft/class_2248;",
+   "with": [],
+   "basis": "Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2246.method_26119(Z)Lnet/minecraft/class_2665;": {
+   "toV": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#pistonV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2665;",
+   "toW": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#pistonW(Lnet/minecraft/class_2665;)Lnet/minecraft/class_2248;",
+   "with": [],
+   "basis": "Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2246.method_26120(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2506;": {
+   "toV": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#stainedGlassV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2506;",
+   "toW": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#stainedGlassW(Lnet/minecraft/class_2506;)Lnet/minecraft/class_2248;",
+   "with": [],
+   "basis": "Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2246.method_45453()Lnet/minecraft/class_2269;": {
+   "toV": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#buttonV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2269;",
+   "toW": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#buttonW(Lnet/minecraft/class_2269;)Lnet/minecraft/class_2248;",
+   "with": [],
+   "basis": "Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2246.method_50001(Lnet/minecraft/class_3620;)Lnet/minecraft/class_5544;": {
+   "toV": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#candleCakeV(Lnet/minecraft/class_2248;)Lnet/minecraft/class_5544;",
+   "toW": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#candleCakeW(Lnet/minecraft/class_5544;)Lnet/minecraft/class_2248;",
+   "with": [],
+   "basis": "Blocks' private factory: 1.20.3 declares it answering Block and still makes exactly V's class (javap: one NEW, returned)"
+  },
+  "net/minecraft/class_2578.method_27699(Lnet/minecraft/class_2168;)Ljava/lang/String;": {
+   "toV": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#scoreNameV(Lnet/minecraft/class_9015;)Ljava/lang/String;",
+   "toW": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#scoreNameW(Ljava/lang/String;)Lnet/minecraft/class_9015;",
+   "with": [],
+   "basis": "ScoreContents.findTargetName: 1.20.2's name is the 1.20.3 holder's scoreboard name; a name is its name-only holder"
+  },
+  "net/minecraft/class_7615$class_7616.method_45048(Lnet/minecraft/class_7471;)Z": {
+   "toV": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#acceptedV(Lnet/minecraft/class_7471;Lnet/minecraft/class_7471;)Z",
+   "toW": "top/dext/centurybridge/step/v1_20_3/rt/CbMixinReturns#acceptedW(ZLnet/minecraft/class_7471;)Lnet/minecraft/class_7471;",
+   "with": [
+    0
+   ],
+   "basis": "SignedMessageValidator.KeyBased.updateAndValidate: false/true became null/the message (javap)"
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1869.method_8146(Ljava/util/List;)[Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_3/rt/CbRecipeShapedPattern",
+  "net/minecraft/class_1869.method_8151(Ljava/lang/String;)I": "top/dext/centurybridge/step/v1_20_3/rt/CbRecipeShapedPattern",
+  "net/minecraft/class_1869.method_8153(Ljava/lang/String;)I": "top/dext/centurybridge/step/v1_20_3/rt/CbRecipeShapedPattern"
+ },
+ "mixinMoves": {
+  "net/minecraft/class_1869.method_8146(Ljava/util/List;)[Ljava/lang/String;": {
+   "to": "net/minecraft/class_8957.method_55084(Ljava/util/List;)[Ljava/lang/String;",
+   "basis": "1.20.2 ShapedRecipe.shrink = 1.20.3 ShapedRecipePattern.shrink: same static body instruction for instruction (javap -c; only its own helper calls renamed), the pattern code 1.20.3 moved with it"
+  },
+  "net/minecraft/class_1869.method_8151(Ljava/lang/String;)I": {
+   "to": "net/minecraft/class_8957.method_55083(Ljava/lang/String;)I",
+   "basis": "1.20.2 ShapedRecipe.firstNonSpace = 1.20.3 ShapedRecipePattern.firstNonSpace: same static body instruction for instruction (javap -c; only its own helper calls renamed), the pattern code 1.20.3 moved with it"
+  },
+  "net/minecraft/class_1869.method_8153(Ljava/lang/String;)I": {
+   "to": "net/minecraft/class_8957.method_55089(Ljava/lang/String;)I",
+   "basis": "1.20.2 ShapedRecipe.lastNonSpace = 1.20.3 ShapedRecipePattern.lastNonSpace: same static body instruction for instruction (javap -c; only its own helper calls renamed), the pattern code 1.20.3 moved with it"
+  },
+  "net/minecraft/class_1869.method_8161(Lnet/minecraft/class_8566;IIZ)Z": {
+   "to": "net/minecraft/class_8957.method_55079(Lnet/minecraft/class_8566;IIZ)Z",
+   "basis": "1.20.2 ShapedRecipe.matches(container, x, y, mirrored) = 1.20.3 ShapedRecipePattern.matches(container, x, y, mirrored): same body (similarity 1.00), reading the pattern's width / height / ingredients where 1.20.2 read the recipe's; called twice from the one-argument matches in both releases"
+  }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_4398.field_19919:Lnet/minecraft/class_4358;": "top/dext/centurybridge/step/v1_20_3/rt/CbNetRealmsTasks"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_4398.field_19919:Lnet/minecraft/class_4358;": "top/dext/centurybridge/step/v1_20_3/rt/CbNetRealmsTasks"
+ }
+}

@@ -5,13 +5,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 RaftModel's parts (see CbRenderBoats): createPartsBuilder(root) -- bottom and the two paddles, the chest raft's
  * also its chest parts (1.21.2's RaftModel baked from the chest raft layer has them) -- and parts(), built once.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_7754.class)
+@Mixin(value = net.minecraft.class_7754.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderRaftModelMixin {
 
     @Unique

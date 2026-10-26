@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_4.rt.CbRenderTail;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * 1.21.3's AbstractHorseRenderer took a scale and applied it in scale(state, pose) before LivingEntityRenderer's; 1.21.4 scales
@@ -11,7 +12,7 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbRenderTail;
  * 1.21.4's own renderers have scale 1 (no change).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_875.class)
+@Mixin(value = net.minecraft.class_875.class, priority = CbVanillaReads.PRIORITY)
 @SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class CbTailHorseScaleMixin extends net.minecraft.class_9990 implements CbRenderTail.CbHorseScale {
 

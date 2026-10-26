@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderLiving;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 LivingEntityRenderer.getBob / getAttackAnim, gone in 1.21.2 (their values live in the render state), put back
@@ -11,7 +12,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderLiving;
  * virtually so a renderer's override -- a mod's, or a 1.21.1 vanilla one put back (CbRenderLivingBob*Mixin) -- answers.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_922.class)
+@Mixin(value = net.minecraft.class_922.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderLivingMixin implements CbRenderLiving.Legacy {
 
     /** 1.21.1 class_922.method_4045 (getBob): entity.tickCount + partialTick */

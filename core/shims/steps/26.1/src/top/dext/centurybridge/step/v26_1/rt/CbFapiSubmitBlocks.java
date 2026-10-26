@@ -60,10 +60,11 @@ import java.util.function.Function;
 /**
  * 1.21.11's block submissions on 26.1's submit node collectors.
  * <ul>
- * <li>OrderedSubmitNodeCollector.submitBlock(pose, state, light, overlay, outline): 1.21.11 queued the block's model
- *     in the collection and submitted the block's special renderer (chest, banner, ...) to the collection's storage. 26.1
- *     keeps both in the block's model from BlockModelSet; its render state's model goes to the receiver, its special
- *     renderer to the storage, as 1.21.11 split them.</li>
+ * <li>OrderedSubmitNodeCollector.submitBlock(pose, state, light, overlay, outline): 1.21.11 queued a BlockSubmit in the
+ *     collection (drawn as the block's model) and submitted the block's special renderer from its block table (chest,
+ *     banner, ...) to the collection's storage. Here the BlockSubmit is listed (getBlockSubmits), 26.1's block model
+ *     without its special renderer goes to the receiver, and 1.21.11's block table renderer to the storage
+ *     (rt/CbWallSpecialBlocks).</li>
  * <li>OrderedSubmitNodeCollector.submitBlockModel(pose, renderType, model, r, g, b, light, overlay, outline): 1.21.11
  *     rendered the model's quads (seed 42; through Fabric API's renderer: emitQuads with an empty world at the origin as
  *     air) into the render type, tinted quads in r, g, b. Here the quads are emitted into a mesh, submitted through
@@ -106,18 +107,29 @@ public final class CbFapiSubmitBlocks {
         }
     }
 
-    /** 1.21.11's SubmitNodeCollection / SubmitNodeStorage body of submitBlock (a super call reaches it) */
+    /**
+     * 1.21.11's SubmitNodeCollection / SubmitNodeStorage body of submitBlock (a super call reaches it; javap
+     * class_11788.method_73481): a BlockSubmit queued in the collection (SubmitNodeStorage.submitBlock: order(0)'s),
+     * which 1.21.11's BlockFeatureRenderer drew as the block's model, then the block's special renderer from
+     * 1.21.11's block table submitted to the collection's storage (ModelManager.specialBlockModelRenderer()
+     * .renderByBlock(block, NONE, ...)). The queued submit is listed by getBlockSubmits() (rt/CbWallBlockSubmits); its
+     * model is submitted here, 26.1's block model without its special renderer.
+     */
     public static void submitBlockBase(OrderedSubmitNodeCollector collector, PoseStack pose, BlockState state, int light, int overlay,
                                        int outline) {
+        CbWallBlockSubmits.queued(collector, pose, state, light, overlay, outline);
+        submitBlockModelOf(modelTarget(collector), pose, state, light, overlay, outline);
+        CbWallSpecialBlocks.superSpecialBlockModelRenderer(Minecraft.getInstance().getModelManager()).method_65535(state.getBlock(),
+            ItemDisplayContext.NONE, pose, storage(collector), light, overlay, outline);
+    }
+
+    /** what 1.21.11's BlockFeatureRenderer drew for a BlockSubmit: the block's model (26.1's, without its special renderer) */
+    public static void submitBlockModelOf(SubmitNodeCollector target, PoseStack pose, BlockState state, int light, int overlay, int outline) {
         BlockModelRenderState renderState = new BlockModelRenderState();
         Minecraft.getInstance().getModelManager().getBlockModelSet().get(state).update(renderState, state, BlockDisplayContext.create(), SEED);
         CbFapiBlockModelRenderStateAccess access = (CbFapiBlockModelRenderStateAccess) (Object) renderState;
-        SpecialModelRenderer<?> special = access.cb$specialRenderer();
         access.cb$setSpecialRenderer(null);
-        renderState.submit(pose, modelTarget(collector), light, overlay, outline);
-        if (special != null) {
-            submitSpecial(special, access.cb$specialRendererTransformation(), pose, storage(collector), light, overlay, outline);
-        }
+        renderState.submit(pose, target, light, overlay, outline);
     }
 
     // ---- OrderedSubmitNodeCollector.submitBlockModel ----
@@ -302,7 +314,7 @@ public final class CbFapiSubmitBlocks {
     }
 
     /** where a block render state's model goes: the receiver itself, seen as a SubmitNodeCollector */
-    private static SubmitNodeCollector modelTarget(OrderedSubmitNodeCollector collector) {
+    static SubmitNodeCollector modelTarget(OrderedSubmitNodeCollector collector) {
         if (collector instanceof SubmitNodeCollector full) {
             return full;
         }

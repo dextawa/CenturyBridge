@@ -49,6 +49,22 @@ public final class Driver {
             class_2609.method_31651(level, pos, level.method_8320(pos), be);
             check("native.canBurn", Counts.canBurn > b0, "fired " + (Counts.canBurn - b0));
             check("native.canBurn.vanilla", level.method_8320(pos).method_11654(class_2363.field_11105), "lit " + level.method_8320(pos));
+            net.minecraft.class_1642 zombie = net.minecraft.class_1299.field_6051.method_5883(level, net.minecraft.class_3730.field_16467);
+            zombie.method_5814(40, 210, 20);
+            level.method_8649(zombie);
+            int s0 = Counts.seen;
+            level.method_8437(null, 40, 210.5, 20, 3.0F, net.minecraft.class_1937.class_7867.field_40888);
+            check("native.seen", Counts.seen > s0, "fired " + (Counts.seen - s0) + ", zombie health " + zombie.method_6032());
+            zombie.method_31472();
+            net.minecraft.class_1642 z2 = net.minecraft.class_1299.field_6051.method_5883(level, net.minecraft.class_3730.field_16467);
+            z2.method_5814(0, 210, 40);
+            level.method_8649(z2);
+            int l0 = Counts.lookAt;
+            server.method_3734().method_44252(server.method_3739(),
+                "execute in minecraft:overworld run tp " + z2.method_5845() + " 0 210 40 facing 10 210 40");
+            check("native.lookAt", Counts.lookAt == l0 + 1 && Math.abs(z2.method_36454() + 90.0F) < 0.5F,
+                "fired " + (Counts.lookAt - l0) + ", yRot " + z2.method_36454());
+            z2.method_31472();
         } catch (Throwable t) {
             fail++;
             System.out.println("CB-S212N FAIL threw " + t);

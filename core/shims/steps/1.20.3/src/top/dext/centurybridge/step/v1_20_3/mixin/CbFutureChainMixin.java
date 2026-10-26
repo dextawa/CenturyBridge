@@ -10,13 +10,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_3.facade.class_7620$class_7621;
 import top.dext.centurybridge.step.v1_20_3.rt.CbTasks;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * FutureChain.append(DelayedTask), 1.20.2's body on 1.20.3's chain: after the chain's head, the task is
  * submitted on the chain's executor -- which 1.20.2 wrapped to run nothing once the chain is closed -- and
  * the chain waits for its future; a failed link is logged and the chain goes on, a cancellation ends it.
  */
-@Mixin(net.minecraft.class_7619.class)
+@Mixin(value = net.minecraft.class_7619.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFutureChainMixin implements CbTasks.CbLegacyTaskChainer {
 
     @Shadow

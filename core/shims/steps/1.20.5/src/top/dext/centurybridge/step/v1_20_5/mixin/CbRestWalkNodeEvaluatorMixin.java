@@ -4,8 +4,6 @@ import java.util.EnumSet;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import top.dext.centurybridge.step.v1_20_5.rt.CbRestPath;
 import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
@@ -16,9 +14,10 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
  * (the cache is 1.20.5's own, which held the same values), each calling the others virtually so a mod's
  * override of one is reached the way 1.20.4 reached it. 1.20.5's own callers reach mod overrides through
  * the override and adapter hooks (CbRestPath); getBlockPathType(mob, pos), which 1.20.5 dropped for
- * getCachedPathType in canStartAt / getStartNode, is called there again for a class that overrides it.
+ * getCachedPathType in canStartAt / getStartNode, is called there again for a class that overrides it
+ * (CbRestWalkNodeEvaluatorMixinHooks, default priority).
  */
-@Mixin(net.minecraft.class_14.class)
+@Mixin(value = net.minecraft.class_14.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestWalkNodeEvaluatorMixin extends net.minecraft.class_8 implements CbRestPath.LegacyWalk {
 
     @Shadow
@@ -105,12 +104,5 @@ public abstract class CbRestWalkNodeEvaluatorMixin extends net.minecraft.class_8
         return diagonal.field_43 >= 0.0F
             && (b.field_39 < node.field_39 || b.field_43 >= 0.0F || thinFence)
             && (a.field_39 < node.field_39 || a.field_43 >= 0.0F || thinFence);
-    }
-
-    /** canStartAt / getStartNode asked 1.20.4's getBlockPathType(mob, pos): a class overriding it is asked again */
-    @Redirect(method = {"method_47893", "method_43415"}, at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/class_14;method_31932(III)Lnet/minecraft/class_7;"))
-    private net.minecraft.class_7 cbRest$startType(net.minecraft.class_14 self, int x, int y, int z) {
-        return CbRestPath.startType(self, x, y, z);
     }
 }

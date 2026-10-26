@@ -1,0 +1,6 @@
+{
+ "_s11c_dimension_type_basis": "1.21.11 DimensionType keeps 1.21.10's fixed-time test as the record component hasFixedTime (comp_5219, boolean) where 1.21.10 derived hasFixedTime() (method_29960) from fixedTime.isPresent(): javap of both code jars, Level.isBrightOutside (method_8530) and isDarkOutside (method_23886) test it at the same place (1.21.10 method_29960, 1.21.11 comp_5219). The record is final, so a call rename covers every use.",
+ "methodRenames": {
+  "net/minecraft/class_2874.method_29960()Z": "comp_5219"
+ }
+}

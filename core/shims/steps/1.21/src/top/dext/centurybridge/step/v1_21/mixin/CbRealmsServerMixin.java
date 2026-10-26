@@ -17,13 +17,14 @@ import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_21.facade.class_4880;
 import top.dext.centurybridge.step.v1_21.facade.class_4881;
 import top.dext.centurybridge.step.v1_21.rt.CbRealms;
+import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /**
  * RealmsServer's 1.20.6 serverPing (a fresh RealmsServerPing per server, as 1.20.6's constructor made one) and
  * updateServerPing(playerList), which 1.21 removed. 1.20.6's own Realms code read and called neither (only a mod
  * did), so nothing in 1.21 needs to keep them current either.
  */
-@Mixin(class_4877.class)
+@Mixin(value = class_4877.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRealmsServerMixin implements CbRealms.PingHolder {
 
     @Shadow

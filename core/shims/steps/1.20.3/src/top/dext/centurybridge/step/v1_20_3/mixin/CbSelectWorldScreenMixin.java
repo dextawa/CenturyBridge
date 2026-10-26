@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_20_3.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_3.rt.CbGui;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * SelectWorldScreen.updateButtonStatus(boolean active, boolean deleteActive), 1.20.2's body: the play,
@@ -10,7 +11,7 @@ import top.dext.centurybridge.step.v1_20_3.rt.CbGui;
  * world's summary instead (and words the play button by it); a 1.20.2 subclass overriding the old shape
  * is reached from it through {@link CbGui#cbUpdateButtonStatus} (overrideHooks).
  */
-@Mixin(net.minecraft.class_526.class)
+@Mixin(value = net.minecraft.class_526.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbSelectWorldScreenMixin implements CbGui.CbLegacyButtonStatus {
 
     /** selectButton */
