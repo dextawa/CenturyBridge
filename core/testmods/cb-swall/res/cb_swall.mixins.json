@@ -5,7 +5,8 @@
   "minVersion": "0.8",
   "mixins": [
     "MobAttackTypeMixin",
-    "EntityAttackRangeMixin"
+    "EntityAttackRangeMixin",
+    "FurnaceBurnMixin"
   ],
   "injectors": {
     "defaultRequire": 1

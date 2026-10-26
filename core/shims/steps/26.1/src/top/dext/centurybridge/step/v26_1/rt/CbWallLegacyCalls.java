@@ -107,4 +107,34 @@ public final class CbWallLegacyCalls {
 
         void cb$clearNoRender();
     }
+
+    /** mixin/CbWallFurnaceBurnMixin -> CbWallFurnaceBurnReadsMixin */
+    public interface FurnaceLegacy {
+        /** the restored private static burn(registryAccess, recipe, input, items, maxStackSize) on this furnace's items */
+        boolean cb$burn(net.minecraft.core.RegistryAccess registryAccess, net.minecraft.world.item.crafting.RecipeHolder<?> recipe,
+                        net.minecraft.world.item.crafting.SingleRecipeInput input, int maxStackSize);
+    }
+
+    /** mixin/CbWallCamelSaddleMixin, CbWallCamelHuskSaddleMixin -> their Reads mixins */
+    @Environment(EnvType.CLIENT)
+    public interface CamelSaddleLegacy {
+        net.minecraft.client.renderer.entity.layers.SimpleEquipmentLayer<net.minecraft.client.renderer.entity.state.CamelRenderState,
+            net.minecraft.client.model.animal.camel.CamelModel, net.minecraft.client.model.animal.camel.CamelSaddleModel> createCamelSaddleLayer(
+            net.minecraft.client.renderer.entity.EntityRendererProvider.Context context);
+    }
+
+    /** mixin/CbWallCameraEntityPosMixin -> CbWallCameraEntityPosReadsMixin */
+    @Environment(EnvType.CLIENT)
+    public interface CameraStateLegacy {
+        /** sets the restored 1.21.11 CameraRenderState.entityPos */
+        void cb$setEntityPos(Vec3 pos);
+    }
+
+    /** mixin/CbWallMinecartContentsMixin -> CbWallMinecartContentsReadsMixin */
+    @Environment(EnvType.CLIENT)
+    public interface MinecartContentsLegacy {
+        /** the restored protected submitMinecartContents(state, blockState, pose, collector, light) */
+        void cb$submitMinecartContents(net.minecraft.client.renderer.entity.state.MinecartRenderState state, BlockState block,
+                                       PoseStack pose, SubmitNodeCollector collector, int light);
+    }
 }

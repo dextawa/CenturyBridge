@@ -1,5 +1,9 @@
 package top.dext.centurybridge.step.v26_1.rt;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
+import java.util.WeakHashMap;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.GameType;
@@ -61,8 +65,31 @@ public final class CbWallLevelSettings {
             return server.getGameRules();
         }
         GameRules fresh = new GameRules(s.dataConfiguration().enabledFeatures());
+        STAND_INS.put(fresh, Boolean.TRUE);
         r.cb$setGameRules(fresh);
         return fresh;
+    }
+
+    /**
+     * rules {@link #gameRules} made up for settings no 1.21.11 caller built (26.1-made settings, a world read from
+     * disk): stand-ins for rules 26.1 keeps elsewhere, never a world's initial rules (GameRules has identity equality)
+     */
+    private static final Map<GameRules, Boolean> STAND_INS = Collections.synchronizedMap(new WeakHashMap<>());
+
+    /** the settings' rules were carried onto a wither's / copy's settings (CbWallLevelSettingsMixin): a stand-in stays one */
+    public static void carried(GameRules from, GameRules to) {
+        if (from != to && STAND_INS.containsKey(from)) {
+            STAND_INS.put(to, Boolean.TRUE);
+        }
+    }
+
+    /**
+     * The rules a 1.21.11 caller built these settings with (new LevelSettings(.., gameRules, ..), carried by its
+     * withers and copy()), which 1.21.11 created a world from; empty when there are none.
+     */
+    public static Optional<GameRules> builtRules(LevelSettings s) {
+        GameRules kept = ((Rules) (Object) s).cb$gameRules();
+        return kept == null || STAND_INS.containsKey(kept) ? Optional.empty() : Optional.of(kept);
     }
 
     /** 1.21.11 LevelSummary had no requiresFileFixing: none */
