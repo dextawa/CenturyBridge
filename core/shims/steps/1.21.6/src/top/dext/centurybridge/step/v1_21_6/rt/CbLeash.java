@@ -36,25 +36,33 @@ public final class CbLeash {
     /** the classes whose elasticRangeLeashBehaviour the layer restores */
     static final java.util.Set<Class<?>> VANILLA_ELASTIC = java.util.Set.of(net.minecraft.class_9817.class, net.minecraft.class_10255.class);
 
+    /**
+     * the restored declarations whose 1.21.5 body super-calls another restored one (javap: TamableAnimal's, not
+     * sitting, reached PathfinderMob's; AbstractHorse's, Camel's and PathfinderMob's make no super call)
+     */
+    static final java.util.Map<Class<?>, Class<?>> HANDLE_SUPER = java.util.Map.of(net.minecraft.class_1321.class, net.minecraft.class_1314.class);
+
     private static final ClassValue<Boolean> HANDLE_ROUTE = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            return route(type, HANDLE, HANDLE_DESC, VANILLA_HANDLE);
+            return route(type, HANDLE, HANDLE_DESC, VANILLA_HANDLE, HANDLE_SUPER);
         }
     };
 
     private static final ClassValue<Boolean> ELASTIC_ROUTE = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            return route(type, ELASTIC, ELASTIC_DESC, VANILLA_ELASTIC);
+            return route(type, ELASTIC, ELASTIC_DESC, VANILLA_ELASTIC, java.util.Map.of());
         }
     };
 
     /**
      * Whether the class takes the hook from a converted mod: the declaring class of the public method dispatch reaches
-     * is not one of the layer's restored declarations (a mod's override), or it is one and a converted mod mixed it.
+     * is not one of the layer's restored declarations (a mod's override), or it is one and a converted mod mixed it or
+     * a restored declaration its 1.21.5 body super-calls.
      */
-    private static boolean route(Class<?> type, String name, String desc, java.util.Set<Class<?>> vanilla) {
+    private static boolean route(Class<?> type, String name, String desc, java.util.Set<Class<?>> vanilla,
+                                 java.util.Map<Class<?>, Class<?>> supers) {
         Class<?> declaring;
         try {
             declaring = type.getMethod(name, class_1297.class, float.class).getDeclaringClass();
@@ -64,7 +72,36 @@ public final class CbLeash {
         if (!vanilla.contains(declaring)) {
             return true;
         }
-        return CbMixedMembers.mixed(declaring.getName().replace('.', '/') + "." + name + desc);
+        for (Class<?> d = declaring; d != null; d = supers.get(d)) {
+            if (CbMixedMembers.mixed(d.getName().replace('.', '/') + "." + name + desc)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * TamableAnimal's super call in its restored handleLeashAtDistance (1.21.5: invokespecial Animal's, reaching
+     * PathfinderMob's): PathfinderMob's restored member with invokespecial semantics, looked up with TamableAnimal's own
+     * Lookup (MethodHandles.lookup() in the merged method), so dispatch does not come back into TamableAnimal's override
+     */
+    public static java.lang.invoke.MethodHandle tamableSuper(java.lang.invoke.MethodHandles.Lookup tamable) {
+        try {
+            return tamable.findSpecial(net.minecraft.class_1314.class, HANDLE,
+                java.lang.invoke.MethodType.methodType(boolean.class, class_1297.class, float.class), net.minecraft.class_1321.class);
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("PathfinderMob's restored handleLeashAtDistance", e);
+        }
+    }
+
+    public static boolean callTamableSuper(java.lang.invoke.MethodHandle sup, net.minecraft.class_1321 self, class_1297 holder, float distance) {
+        try {
+            return (boolean) sup.invokeExact(self, holder, distance);
+        } catch (RuntimeException | Error e) {
+            throw e;
+        } catch (Throwable t) {
+            throw new IllegalStateException(t);
+        }
     }
 
     /** whether 1.21.6's tickLeash asks the restored handleLeashAtDistance for this entity */
