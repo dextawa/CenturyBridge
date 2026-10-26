@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s11r",
+  "version": "1.0.0",
+  "name": "CB s11 dimension renderers (1.21.8)",
+  "description": "1.21.8-era client mod: Fabric API 0.136 DimensionRenderingRegistry sky / cloud / weather renderers for the overworld; checks each is called after climbing; tally CB-S11R n/3, then the client stops",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.s11r.RendClient"] },
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.8", "fabric-rendering-v1": "*", "fabric-lifecycle-events-v1": "*" }
+}
