@@ -10,6 +10,10 @@
   "net/minecraft/class_1667.field_7598:Ljava/util/Set;": "top/dext/centurybridge/step/v1_20_5/rt/CbWorldArrowGiveBack#field_7598",
   "net/minecraft/class_1667.field_7596:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbWorldArrowGiveBack#field_7596"
  },
+ "instanceFieldSetters": {
+  "net/minecraft/class_1667.field_7597:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbWorldArrowGiveBack#field_7597",
+  "net/minecraft/class_1667.field_7596:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbWorldArrowGiveBack#field_7596"
+ },
  "staticRedirects": {
   "net/minecraft/class_2788.method_17817(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8786;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#recipeFromNetwork"
  },
@@ -46,6 +50,7 @@
   "net/minecraft/class_5699$class_5839": "ExtraCodecs.XorCodec moved into DataFixerUpper 7 as com.mojang.serialization.codecs.XorCodec (Codec.xor); 1.20.5 has no Minecraft class of it, and a library class takes no mod mixin",
   "net/minecraft/class_5699$class_8741": "ExtraCodecs.RecursiveCodec moved into DataFixerUpper 7 as com.mojang.serialization.Codec$RecursiveCodec (Codec.recursive); 1.20.5 has no Minecraft class of it, and a library class takes no mod mixin",
   "net/minecraft/class_5699$class_8742": "ExtraCodecs.StrictOptionalFieldCodec moved into DataFixerUpper 7 as com.mojang.serialization.codecs.OptionalFieldCodec (Codec.optionalFieldOf, strict by default); 1.20.5 has no Minecraft class of it, and a library class takes no mod mixin",
+  "net/minecraft/class_8806": "JavaOps moved into DataFixerUpper 7 as com.mojang.serialization.JavaOps (javap: the same 40 public members; 1.20.5 vanilla reads only the library class, no Minecraft class of it remains); mods are sent to the layer copy, a library class takes no mod mixin",
   "net/minecraft/class_8806$class_8807": "JavaOps.FixedMapBuilder moved into DataFixerUpper 7 with JavaOps (com.mojang.serialization.JavaOps$FixedMapBuilder); 1.20.5 has no Minecraft class of it, and a library class takes no mod mixin"
  }
 }

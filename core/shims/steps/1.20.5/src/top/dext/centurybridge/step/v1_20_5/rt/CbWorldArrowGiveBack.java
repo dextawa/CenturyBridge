@@ -21,6 +21,24 @@ public final class CbWorldArrowGiveBack {
         return arrow.method_57315().comp_2379().isPresent();
     }
 
+    /** writing Arrow.potion: the contents with that potion (1.20.4's empty potion: none), custom colour and effects kept */
+    public static void field_7597(net.minecraft.class_1667 arrow, net.minecraft.class_1842 potion) {
+        net.minecraft.class_1844 contents = arrow.method_57315();
+        @SuppressWarnings("unchecked")
+        java.util.Optional<net.minecraft.class_6880<net.minecraft.class_1842>> holder = CbPotions.holder(potion);
+        arrow.method_57316(new net.minecraft.class_1844(holder, contents.comp_2379(), contents.comp_2380()));
+    }
+
+    /**
+     * writing Arrow.fixedColor: 1.20.4 kept the flag beside the colour in the entity data; fixing it keeps the colour the
+     * arrow shows now as the custom colour, unfixing drops the custom colour (1.20.5 then derives it from the contents)
+     */
+    public static void field_7596(net.minecraft.class_1667 arrow, boolean fixed) {
+        net.minecraft.class_1844 contents = arrow.method_57315();
+        java.util.Optional<Integer> color = fixed ? java.util.Optional.of(arrow.method_7460()) : java.util.Optional.empty();
+        arrow.method_57316(new net.minecraft.class_1844(contents.comp_2378(), color, contents.comp_2380()));
+    }
+
     /**
      * Arrow.effects: a live view of the contents' custom effects. Adding goes through 1.20.5's addEffect (1.20.4's
      * addEffect added to this set); removing writes the contents back without the effect.
