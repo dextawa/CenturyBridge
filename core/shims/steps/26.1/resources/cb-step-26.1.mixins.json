@@ -122,6 +122,7 @@
     "CbFapiHudRenderCallbackMixin",
     "CbFapiLayerRenderStateMixin",
     "CbFapiLevelRendererMixin",
+    "CbWorldRenderHomeMixin",
     "CbFapiModelManagerFluidMixin",
     "CbFapiSectionCompilerMixin",
     "CbFapiSubmitNodeCollectionAccess",
