@@ -343,6 +343,7 @@ public class S9TestMod implements ModInitializer {
         LargePayloadTest.run();
         EntityTest.run(server);
         DeflectionTest.run(server);
+        ProfileCacheTest.run(server);
 
         System.out.println("CB-S9TEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " failed: " + FAILS));
     }

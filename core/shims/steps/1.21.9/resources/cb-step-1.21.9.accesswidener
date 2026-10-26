@@ -105,3 +105,5 @@ extendable method net/minecraft/class_7766 method_47663 (Ljava/util/List;ILjava/
 mutable field com/mojang/blaze3d/buffers/GpuBuffer size I
 mutable field net/minecraft/class_11200 field_59771 Lnet/minecraft/class_9139;
 # ---- END GENERATED (all) ----
+accessible field net/minecraft/class_350$class_351 field_22752 Lnet/minecraft/class_350;
+accessible class net/minecraft/class_350$class_351
