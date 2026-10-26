@@ -35,6 +35,8 @@
     "CbS26SignSubmitMixin",
     "CbS26RenderBuffersMixin",
     "CbS26LevelFlushMixin",
+    "CbS26BlockOutlineRestoreMixin",
+    "CbS26BlockOutlineRouteMixin",
     "CbS26GameFlushMixin",
     "CbS26GuiFlushMixin",
     "CbS26TesselatorMixin",

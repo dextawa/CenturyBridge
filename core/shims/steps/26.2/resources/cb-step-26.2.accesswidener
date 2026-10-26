@@ -33,6 +33,9 @@ accessible field net/minecraft/client/gui/Hud minecraft Lnet/minecraft/client/Mi
 accessible field net/minecraft/client/Options minecraft Lnet/minecraft/client/Minecraft;
 accessible field com/mojang/blaze3d/systems/GpuSurface backend Lcom/mojang/blaze3d/systems/GpuSurfaceBackend;
 accessible method com/mojang/blaze3d/systems/CommandEncoder backend ()Lcom/mojang/blaze3d/systems/CommandEncoderBackend;
+# s26c: rt/CbS26FeatureFrames: the dispatcher's prepared frame and whether it is prepared (26.1.2 renderSolidFeatures / renderTranslucentFeatures)
+accessible field net/minecraft/client/renderer/feature/FeatureRenderDispatcher preparedFrame Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame;
+accessible field net/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame context Lnet/minecraft/client/renderer/feature/FeatureFrameContext;
 
 # ---- BEGIN GENERATED (s26): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
