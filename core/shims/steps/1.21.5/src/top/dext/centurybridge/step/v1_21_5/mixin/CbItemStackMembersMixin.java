@@ -4,9 +4,10 @@ import net.minecraft.class_1799;
 import net.minecraft.class_3414;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_5.rt.CbItemSounds;
+import top.dext.centurybridge.step.v1_21_5.rt.CbVanillaReads;
 
 /** 1.21.4's ItemStack members 1.21.5 dropped, restored on ItemStack */
-@Mixin(class_1799.class)
+@Mixin(value = class_1799.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbItemStackMembersMixin {
 
     /** 1.21.4's ItemStack.getBreakingSound(): the item's (1.21.4's body), through the restored Item member */

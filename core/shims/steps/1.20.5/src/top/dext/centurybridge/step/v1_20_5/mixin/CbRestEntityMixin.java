@@ -3,12 +3,10 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import top.dext.centurybridge.step.v1_20_5.rt.CbPrioritySplit;
 import top.dext.centurybridge.step.v1_20_5.rt.CbRestEntity;
 import top.dext.centurybridge.step.v1_20_5.rt.CbRestEntityApi;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 import top.dext.centurybridge.step.v1_20_5.rt.Guard;
 
 /**
@@ -25,9 +23,12 @@ import top.dext.centurybridge.step.v1_20_5.rt.Guard;
  * attachment point of this entity's class unturned, the vehicle attachment's height as a riding offset.
  * They reach the vanilla 1.20.5 shape by calling it with the step's Guard held, so a mod class's
  * synthesized 1.20.5 method falls through to its superclass instead of forwarding back.
+ * <p>
+ * The injectors into 1.20.5's own methods (the eye height reads, maxUpStep) are in CbRestEntityMixinHooks (default
+ * priority).
  */
-@Mixin(net.minecraft.class_1297.class)
-public abstract class CbRestEntityMixin implements CbRestEntityApi {
+@Mixin(value = net.minecraft.class_1297.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbRestEntityMixin implements CbRestEntityApi, CbPrioritySplit.EntityEyes {
 
     @Shadow
     public abstract net.minecraft.class_4050 method_18376();
@@ -63,19 +64,15 @@ public abstract class CbRestEntityMixin implements CbRestEntityApi {
         return dimensions.comp_2187();
     }
 
-    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_4048;comp_2187()F"))
-    private float cbRest$initialEyeHeight(net.minecraft.class_4048 dimensions) {
-        return this.method_18378(net.minecraft.class_4050.field_18076, dimensions);
-    }
-
-    @Redirect(method = {"method_46396", "method_18382"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/class_4048;comp_2187()F"))
-    private float cbRest$eyeHeight(net.minecraft.class_4048 dimensions) {
-        return this.method_18378(this.method_18376(), dimensions);
-    }
-
-    @Redirect(method = "method_18381", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_4048;comp_2187()F"))
-    private float cbRest$eyeHeightFor(net.minecraft.class_4048 dimensions, net.minecraft.class_4050 pose) {
+    /** 1.20.4's getEyeHeight called virtually, for 1.20.5's eye height reads (CbRestEntityMixinHooks) */
+    @Override
+    public float cb$v1_20_5$eyeHeight(net.minecraft.class_4050 pose, net.minecraft.class_4048 dimensions) {
         return this.method_18378(pose, dimensions);
+    }
+
+    @Override
+    public float cb$v1_20_5$maxUpStep() {
+        return this.cbRest$maxUpStep;
     }
 
     // ---------------------------------------------------------------- riding
@@ -177,13 +174,6 @@ public abstract class CbRestEntityMixin implements CbRestEntityApi {
             }
         } else {
             this.cbRest$maxUpStep = height;
-        }
-    }
-
-    @Inject(method = "method_49476", at = @At("HEAD"), cancellable = true)
-    private void cbRest$maxUpStep(CallbackInfoReturnable<Float> cir) {
-        if (this.cbRest$maxUpStep != 0F) {
-            cir.setReturnValue(this.cbRest$maxUpStep);
         }
     }
 }

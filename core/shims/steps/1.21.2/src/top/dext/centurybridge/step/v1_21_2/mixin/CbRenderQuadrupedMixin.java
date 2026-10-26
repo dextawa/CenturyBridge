@@ -8,10 +8,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelFields;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderQuadruped;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** 1.21.1 QuadrupedModel's baby values, headParts() and bodyParts() on 1.21.2's QuadrupedModel (see CbRenderQuadruped) */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_597.class)
+@Mixin(value = net.minecraft.class_597.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderQuadrupedMixin implements CbRenderQuadruped.Legacy {
 
     @Shadow

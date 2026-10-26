@@ -4,9 +4,6 @@ import com.google.common.base.Splitter;
 import com.mojang.serialization.Lifecycle;
 import java.io.File;
 import java.io.IOException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -135,29 +132,14 @@ public final class CbPacks {
         return (class_3258) new class_3258.class_8615(file, builtin).method_52424(name);
     }
 
-    private static final MethodHandle SHARED_ZIP;
-
-    static {
-        try {
-            Class<?> access = Class.forName("net.minecraft.class_3258$class_8616");
-            SHARED_ZIP = MethodHandles.privateLookupIn(access, MethodHandles.lookup())
-                .findConstructor(access, MethodType.methodType(void.class, File.class));
-        } catch (ReflectiveOperationException e) {
-            throw new ExceptionInInitializerError(e);
-        }
-    }
-
     /**
      * The shared zip access a converted FilePackResources subclass's super(name, file, builtin)
-     * hands 1.20.2's constructor (package-private type; the reshape casts it, the layer's access
-     * widener opens it).
+     * hands 1.20.2's constructor (package-private type and constructor, opened by the layer's access
+     * widener; the reshape casts it). Named in bytecode, not by a reflective string, so the layer
+     * keeps reaching it as it climbs (the namespace wall renames the class).
      */
     public static Object sharedZip(File file) {
-        try {
-            return SHARED_ZIP.invoke(file);
-        } catch (Throwable t) {
-            throw CbSuper.rethrow(t);
-        }
+        return new class_3258.class_8616(file);
     }
 
     /** the prefix of a FilePackResources over the zip's root (1.20.2's overlays use others) */

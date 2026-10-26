@@ -8,6 +8,7 @@ import net.minecraft.class_9779;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestClient;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestServer;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * Minecraft.getProfiler() / getTimer() / debugFpsMeterKeyPress(int) of 1.21.1 (covers): the running
@@ -15,7 +16,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRestServer;
  * (getDeltaTracker) and the profiler pie chart's key press, now on the debug overlay's chart.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(class_310.class)
+@Mixin(value = class_310.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestMinecraftMixin {
 
     public class_3695 method_16011() {

@@ -5,12 +5,13 @@ import net.minecraft.class_332;
 import net.minecraft.class_4419;
 import net.minecraft.class_4905;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 
 /**
  * RealmsSelectWorldTemplateScreen.renderMousehoverTooltip: as CbNetRealmsPendingInvitesBridge -- the
  * 1.20.1 body for a subclass's calls and super calls; 1.20.2's render shows widget tooltips instead.
  */
-@Mixin(class_4419.class)
+@Mixin(value = class_4419.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbNetRealmsTemplateScreenBridge extends class_4905 {
 
     protected CbNetRealmsTemplateScreenBridge() {

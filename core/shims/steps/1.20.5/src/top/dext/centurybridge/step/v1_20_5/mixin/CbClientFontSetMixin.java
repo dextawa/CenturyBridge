@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * FontSet.reload(providers): 1.20.4's set used every provider it was handed. 1.20.5's reload takes each provider
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * FontManager.updateOptions passes), so the set holds them and keeps refiltering them as the options change.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_377.class)
+@Mixin(value = net.minecraft.class_377.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientFontSetMixin {
 
     @Shadow

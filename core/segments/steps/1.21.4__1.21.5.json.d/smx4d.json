@@ -1,0 +1,6 @@
+{
+ "instanceFieldGetters": {
+  "net/minecraft/class_1661.field_7548:Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityInventory#armor",
+  "net/minecraft/class_1661.field_7544:Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityInventory#offhand"
+ }
+}

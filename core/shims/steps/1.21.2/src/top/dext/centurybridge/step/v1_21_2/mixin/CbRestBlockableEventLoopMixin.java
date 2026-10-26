@@ -4,6 +4,7 @@ import net.minecraft.class_1255;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_2.facade.ProcessorHandle;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1's BlockableEventLoop was a ProcessorHandle&lt;R&gt; (the server, the client and the main-thread mail
@@ -11,7 +12,7 @@ import top.dext.centurybridge.step.v1_21_2.facade.ProcessorHandle;
  * name() is its own; tell(message) schedules it, as 1.21.1's bridge did; close() is the empty default both
  * interfaces give.
  */
-@Mixin(class_1255.class)
+@Mixin(value = class_1255.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestBlockableEventLoopMixin<R extends Runnable> implements ProcessorHandle<R> {
 
     @Shadow

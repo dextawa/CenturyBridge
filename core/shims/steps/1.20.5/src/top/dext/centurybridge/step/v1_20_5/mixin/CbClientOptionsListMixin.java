@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * OptionsList.addSmall(left, right): 1.20.4's took two options and made their widgets as a half-width row (the
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * addBig(option) is rt/CbClientGui.method_20406.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_353.class)
+@Mixin(value = net.minecraft.class_353.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientOptionsListMixin {
 
     @Shadow

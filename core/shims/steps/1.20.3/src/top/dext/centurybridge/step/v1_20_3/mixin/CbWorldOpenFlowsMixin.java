@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_20_3.mixin;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * WorldOpenFlows' 1.20.2 entry points that 1.20.3 replaced:
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.Shadow;
  *     access and its pack repository, then 1.20.3's loadWorldStem(levelData, safeMode, packs).</li>
  * </ul>
  */
-@Mixin(net.minecraft.class_7196.class)
+@Mixin(value = net.minecraft.class_7196.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWorldOpenFlowsMixin {
 
     @Shadow

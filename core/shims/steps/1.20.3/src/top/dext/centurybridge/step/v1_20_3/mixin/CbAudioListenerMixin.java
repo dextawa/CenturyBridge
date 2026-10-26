@@ -1,12 +1,13 @@
 package top.dext.centurybridge.step.v1_20_3.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * com.mojang.blaze3d.audio.Listener's 1.20.2 setters and getter, which 1.20.3 folded into one transform
  * (position, forward, up) set at once: each sets its part and keeps the others as they are.
  */
-@Mixin(net.minecraft.class_4227.class)
+@Mixin(value = net.minecraft.class_4227.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbAudioListenerMixin {
 
     private net.minecraft.class_4227 cb$self() {

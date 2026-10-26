@@ -75,6 +75,42 @@ public final class CbBuffers {
         return createBuffer((GpuDevice) device, label, type, usage, data);
     }
 
+    /**
+     * CommandEncoder.readBuffer(GpuBuffer): 1.21.5 mapped the whole buffer for reading (readBuffer(buffer, 0, size));
+     * 1.21.6's mapBuffer(buffer, read, write) does the same, its MappedView has 1.21.5's ReadView members (data, close).
+     */
+    public static GpuBuffer.MappedView readBuffer(com.mojang.blaze3d.systems.CommandEncoder encoder, GpuBuffer buffer) {
+        return encoder.mapBuffer(buffer, true, false);
+    }
+
+    /** CommandEncoder.readBuffer(GpuBuffer, offset, length): 1.21.5's glMapBufferRange(offset, length), read only */
+    public static GpuBuffer.MappedView readBuffer(com.mojang.blaze3d.systems.CommandEncoder encoder, GpuBuffer buffer,
+            int offset, int length) {
+        return encoder.mapBuffer(buffer.slice(offset, length), true, false);
+    }
+
+    /**
+     * CommandEncoder.writeToBuffer(GpuBuffer, ByteBuffer, offset): 1.21.5 wrote data.remaining() bytes at the offset
+     * (glBufferSubData); 1.21.6 writes into a slice of the buffer, which must hold them.
+     */
+    public static void writeToBuffer(com.mojang.blaze3d.systems.CommandEncoder encoder, GpuBuffer buffer,
+            java.nio.ByteBuffer data, int offset) {
+        encoder.writeToBuffer(buffer.slice(offset, data.remaining()), data);
+    }
+
+    /** the same three, called on the GL command encoder itself */
+    public static GpuBuffer.MappedView readBuffer(net.minecraft.class_10860 encoder, GpuBuffer buffer) {
+        return readBuffer((com.mojang.blaze3d.systems.CommandEncoder) encoder, buffer);
+    }
+
+    public static GpuBuffer.MappedView readBuffer(net.minecraft.class_10860 encoder, GpuBuffer buffer, int offset, int length) {
+        return readBuffer((com.mojang.blaze3d.systems.CommandEncoder) encoder, buffer, offset, length);
+    }
+
+    public static void writeToBuffer(net.minecraft.class_10860 encoder, GpuBuffer buffer, java.nio.ByteBuffer data, int offset) {
+        writeToBuffer((com.mojang.blaze3d.systems.CommandEncoder) encoder, buffer, data, offset);
+    }
+
     /** GpuBuffer(BufferType, BufferUsage, int)'s super call, reshaped: the subclass instance keeps its 1.21.5 kind */
     public static void created(GpuBuffer buffer, BufferType type, BufferUsage usage) {
         KINDS.put(buffer, new Object[] {type, usage});

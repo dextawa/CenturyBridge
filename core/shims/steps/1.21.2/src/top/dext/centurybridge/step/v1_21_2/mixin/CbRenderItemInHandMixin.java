@@ -4,11 +4,12 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderItemInHand;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** 1.21.1 ItemInHandLayer.renderArmWithItem(entity, stack, ...) put back with 1.21.1's body (see CbRenderItemInHand) */
 @SuppressWarnings("rawtypes")
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_989.class)
+@Mixin(value = net.minecraft.class_989.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderItemInHandMixin implements CbRenderItemInHand.Legacy {
 
     @Override

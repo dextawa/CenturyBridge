@@ -4,13 +4,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 EntityRendererProvider.Context.getItemInHandRenderer(): 1.21.1's dispatcher built its context with its own
  * ItemInHandRenderer, which 1.21.2's dispatcher still has.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_5617.class_5618.class)
+@Mixin(value = net.minecraft.class_5617.class_5618.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderContextMixin {
 
     @Shadow

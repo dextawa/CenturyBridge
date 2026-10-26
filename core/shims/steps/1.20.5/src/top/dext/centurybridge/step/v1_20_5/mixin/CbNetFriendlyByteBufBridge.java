@@ -32,7 +32,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
  * only through stream codecs on a RegistryFriendlyByteBuf: through the buffer's view
  * (CbNetBufs.cbRegistryBuf). The rest are 1.20.4's bodies over 1.20.5's primitives.
  */
-@Mixin(class_2540.class)
+@Mixin(value = class_2540.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbNetFriendlyByteBufBridge implements CbRoutes.LegacyBuf {
 
     private class_2540 cb$self() {

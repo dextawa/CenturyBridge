@@ -1,9 +1,6 @@
 package top.dext.centurybridge.rt.v1_20_2;
 
 import java.io.IOException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,6 +9,7 @@ import net.minecraft.class_2461;
 import net.minecraft.class_2487;
 import net.minecraft.class_2512;
 import net.minecraft.class_2966;
+import net.minecraft.class_3471;
 import net.minecraft.class_3843;
 import net.minecraft.class_4525;
 import net.minecraft.class_5819;
@@ -56,24 +54,17 @@ public final class CbDevTools {
         long seed = random.method_43055();
         System.out.println("Seed: " + seed);
         random.method_43052(seed);
-        try {
-            Class<?> gridClass = Class.forName("net.minecraft.class_3471$class_3474");
-            Class<?> simpleGridClass = Class.forName("net.minecraft.class_3471$class_3478");
-            MethodHandles.Lookup grid = MethodHandles.privateLookupIn(gridClass, MethodHandles.lookup());
-            MethodHandles.Lookup simple = MethodHandles.privateLookupIn(simpleGridClass, MethodHandles.lookup());
-            Object mansion = grid.findConstructor(gridClass, MethodType.methodType(void.class, class_5819.class)).invoke(random);
-            MethodHandle base = grid.findGetter(gridClass, "field_15440", simpleGridClass);
-            MethodHandle third = grid.findGetter(gridClass, "field_15439", simpleGridClass);
-            MethodHandle rowsOf = simple.findGetter(simpleGridClass, "field_15453", int.class);
-            MethodHandle columnsOf = simple.findGetter(simpleGridClass, "field_15454", int.class);
-            MethodHandle get = simple.findVirtual(simpleGridClass, "method_15066", MethodType.methodType(int.class, int.class, int.class));
+        // MansionGrid / SimpleGrid and the members read here are opened by the layer's access widener and
+        // named in bytecode (a reflective name string would not follow the class as the layer climbs)
+        {
+            class_3471.class_3474 mansion = new class_3471.class_3474(random);
             for (int floor = 0; floor < 2; floor++) {
-                Object g = floor == 0 ? base.invoke(mansion) : third.invoke(mansion);
-                int rows = (int) rowsOf.invoke(g);
-                int columns = (int) columnsOf.invoke(g);
+                class_3471.class_3478 g = floor == 0 ? mansion.field_15440 : mansion.field_15439;
+                int rows = g.field_15453;
+                int columns = g.field_15454;
                 for (int y = 0; y < rows; y++) {
                     for (int x = 0; x < columns; x++) {
-                        int cell = (int) get.invoke(g, x, y);
+                        int cell = g.method_15066(x, y);
                         System.out.print(switch (cell) {
                             case 1 -> "+";
                             case 4 -> "x";
@@ -87,8 +78,6 @@ public final class CbDevTools {
                 }
                 System.out.println("");
             }
-        } catch (Throwable t) {
-            throw CbSuper.rethrow(t);
         }
     }
 

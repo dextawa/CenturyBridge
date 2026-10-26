@@ -12,7 +12,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
  * any arrow when a converted mod mixes it (route, CbMixedMembers).
  * Extends Entity for the inherited protected random.
  */
-@Mixin(net.minecraft.class_1665.class)
+@Mixin(value = net.minecraft.class_1665.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestAbstractArrowMixin extends net.minecraft.class_1297 implements CbRoutes.ArrowDeflect {
 
     protected CbRestAbstractArrowMixin(net.minecraft.class_1299<?> type, net.minecraft.class_1937 level) {
