@@ -10,7 +10,11 @@
     "com/mojang/blaze3d/pipeline/BlendFunction.sourceColor()Lcom/mojang/blaze3d/platform/SourceFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline",
     "com/mojang/blaze3d/pipeline/BlendFunction.destColor()Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline",
     "com/mojang/blaze3d/pipeline/BlendFunction.sourceAlpha()Lcom/mojang/blaze3d/platform/SourceFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline",
-    "com/mojang/blaze3d/pipeline/BlendFunction.destAlpha()Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline"
+    "com/mojang/blaze3d/pipeline/BlendFunction.destAlpha()Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline",
+    "net/minecraft/client/renderer/LevelRenderer.destroyBlockProgress(ILnet/minecraft/core/BlockPos;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26DestroyProgress"
+  },
+  "_s26e_destroy_basis": {
+    "net/minecraft/client/renderer/LevelRenderer.destroyBlockProgress(ILnet/minecraft/core/BlockPos;I)V": "26.2 ClientLevel.destroyBlockProgress(id, pos, progress) holds 26.1.2's renderer body (same maps and sequence, clock = game time; javap); 26.1.2's ClientLevel.destroyBlockProgress forwarded to the renderer, 26.2's runs it itself: a call on the renderer runs it on Minecraft.level (rt/CbS26DestroyProgress)"
   },
   "_s26e_pipeline_basis": {
     "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.colorTargetState()Ljava/util/Optional;": "26.1.2 one Optional<ColorTargetState> per snippet; 26.2 colorTargetStates[] + activeColorTargetStateCount, and Builder.withColorTargetState(state) is withColorTargetState(0, state): target 0 when the count covers it (rt/CbS26Pipeline; also swall8 item 3, the 26.1 layer's CbWallPipeline)",
