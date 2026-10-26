@@ -76,57 +76,78 @@ public final class LayerMembers {
         }
         try (ZipFile z = new ZipFile(layerJar.toFile())) {
             for (ZipEntry e : java.util.Collections.list(z.entries())) {
-                if (!e.getName().endsWith(".class")) {
-                    continue;
-                }
-                ClassNode cn = new ClassNode();
-                new ClassReader(z.getInputStream(e).readAllBytes()).accept(cn, ClassReader.SKIP_FRAMES);
-                AnnotationNode mx = annotation(cn.invisibleAnnotations, MIXIN);
-                if (mx == null) {
-                    mx = annotation(cn.visibleAnnotations, MIXIN);
-                }
-                if (mx == null) {
-                    continue;
-                }
-                out.mixins.add(cn.name);
-                if ((cn.access & Opcodes.ACC_INTERFACE) != 0) {
-                    out.readInvokers(cn, mx);
-                    continue;
-                }
-                List<String> targets = new ArrayList<>();
-                for (Object o : MixinRepair.list(MixinRepair.values(mx).get("value"))) {
-                    if (o instanceof Type t) {
-                        targets.add(t.getInternalName());
-                    }
-                }
-                for (Object o : MixinRepair.list(MixinRepair.values(mx).get("targets"))) {
-                    if (o instanceof String t) {
-                        targets.add(t.replace('.', '/'));
-                    }
-                }
-                int prio = MixinRepair.values(mx).get("priority") instanceof Integer p ? p : DEFAULT_PRIORITY;
-                for (MethodNode m : cn.methods) {
-                    if (merged(m)) {
-                        for (String t : targets) {
-                            MethodNode a = applied(m, cn.name, t);
-                            out.byTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
-                            out.priority.put(a, prio);
-                        }
-                    }
-                }
-                for (FieldNode f : cn.fields) {
-                    if (mergedField(f)) {
-                        for (String t : targets) {
-                            FieldNode a = new FieldNode(f.access, f.name,
-                                new org.objectweb.asm.commons.SimpleRemapper(cn.name, t).mapDesc(f.desc), f.signature, null);
-                            out.fieldsByTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
-                            out.fieldPriority.put(a, prio);
-                        }
-                    }
+                if (e.getName().endsWith(".class")) {
+                    out.add(z.getInputStream(e).readAllBytes());
                 }
             }
         }
         return out;
+    }
+
+    /**
+     * the members the mixins of a jar being converted merge onto their targets (smx1 CASE 13): a climbing layer's
+     * class mixins restore members its own @Invoker / @Accessor / @Shadow name (CbRecipeJsonShapedStatics merges
+     * class_1869.method_8157, CbRecipeJsonShapedAccess invokes it), so at runtime the target declares them -- the
+     * way MixinCheck.indexMerged counts them for gate 3. Only the mixin classes a config lists ({@code listed},
+     * internal names) are merged by Mixin; entries are the jar's class files by entry name
+     */
+    public static LayerMembers ofJar(Map<String, byte[]> entries, Set<String> listed) {
+        LayerMembers out = new LayerMembers();
+        for (String cls : listed) {
+            byte[] b = entries.get(cls + ".class");
+            if (b != null) {
+                out.add(b);
+            }
+        }
+        return out;
+    }
+
+    private void add(byte[] bytes) {
+        ClassNode cn = new ClassNode();
+        new ClassReader(bytes).accept(cn, ClassReader.SKIP_FRAMES);
+        AnnotationNode mx = annotation(cn.invisibleAnnotations, MIXIN);
+        if (mx == null) {
+            mx = annotation(cn.visibleAnnotations, MIXIN);
+        }
+        if (mx == null) {
+            return;
+        }
+        mixins.add(cn.name);
+        if ((cn.access & Opcodes.ACC_INTERFACE) != 0) {
+            readInvokers(cn, mx);
+            return;
+        }
+        List<String> targets = new ArrayList<>();
+        for (Object o : MixinRepair.list(MixinRepair.values(mx).get("value"))) {
+            if (o instanceof Type t) {
+                targets.add(t.getInternalName());
+            }
+        }
+        for (Object o : MixinRepair.list(MixinRepair.values(mx).get("targets"))) {
+            if (o instanceof String t) {
+                targets.add(t.replace('.', '/'));
+            }
+        }
+        int prio = MixinRepair.values(mx).get("priority") instanceof Integer p ? p : DEFAULT_PRIORITY;
+        for (MethodNode m : cn.methods) {
+            if (merged(m)) {
+                for (String t : targets) {
+                    MethodNode a = applied(m, cn.name, t);
+                    byTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
+                    priority.put(a, prio);
+                }
+            }
+        }
+        for (FieldNode f : cn.fields) {
+            if (mergedField(f)) {
+                for (String t : targets) {
+                    FieldNode a = new FieldNode(f.access, f.name,
+                        new org.objectweb.asm.commons.SimpleRemapper(cn.name, t).mapDesc(f.desc), f.signature, null);
+                    fieldsByTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
+                    fieldPriority.put(a, prio);
+                }
+            }
+        }
     }
 
     /**

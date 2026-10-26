@@ -152,12 +152,15 @@ final class MixinBridge {
     private String curKey = "mixins";
     /** restoring mixins made for the current config, by class name */
     private final Map<String, ClassNode> restorers = new LinkedHashMap<>();
+    /** the members the jar's own class mixins merge onto their targets, read before bridging (MixinTriage.ownMembers) */
+    private final LayerMembers own;
 
     private MixinBridge(Chain chain, Map<String, byte[]> entries, String helperName) {
         this.chain = chain;
         this.entries = entries;
         this.helperName = helperName;
         this.step = chain.to.replace('.', '_');
+        this.own = MixinTriage.ownMembers(entries);
     }
 
     /**
@@ -1136,6 +1139,13 @@ final class MixinBridge {
             if (chain.layerDeclares(target, kind, name, desc, mp)) {
                 member((kind == 'f' ? "field " : "member ") + sn + " -> " + shortName(target) + "." + name + (kind == 'f' ? ":" : "") + desc
                     + ": the layer's restored member");
+                return true;
+            }
+            // or one the jar's own class mixins merge onto the target (smx1 CASE 13: a climbing layer's invoker of a
+            // member it restores itself)
+            if (MixinTriage.ownDeclares(own, target, kind, name, desc, mp)) {
+                member((kind == 'f' ? "field " : "member ") + sn + " -> " + shortName(target) + "." + name + (kind == 'f' ? ":" : "") + desc
+                    + ": restored by the jar's own mixin");
                 return true;
             }
             return false;
