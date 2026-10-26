@@ -10,6 +10,8 @@ import net.minecraft.class_5294;
  */
 public class FxEffects extends class_5294 {
     public static volatile int fogColor, foggyAt, sunrise, sunriseColor, skyType, constantAmbient, forceBright;
+    /** set by the native driver's second phase: the sky type answered is NORMAL instead of END (sunrise drawing) */
+    public static volatile boolean normalSky;
 
     public FxEffects() {
         super(class_5294.class_5401.field_25641, true, true);
@@ -42,7 +44,7 @@ public class FxEffects extends class_5294 {
     @Override
     public class_5294.class_5401 method_29992() {
         skyType++;
-        return super.method_29992();
+        return normalSky ? class_5294.class_5401.field_25640 : super.method_29992();
     }
 
     @Override

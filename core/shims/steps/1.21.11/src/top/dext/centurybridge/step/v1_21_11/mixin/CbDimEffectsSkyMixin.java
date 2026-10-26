@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_21_11.rt.CbDimensionEffectsRoutes;
+import top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads;
 
 /**
  * SkyRenderer.extractRenderState: 1.21.10 set the state's sky type from effects().skyType() and its sunrise color
@@ -18,9 +19,11 @@ import top.dext.centurybridge.step.v1_21_11.rt.CbDimensionEffectsRoutes;
  * sunriseAndSunsetColor from the SUNRISE_SUNSET_COLOR attribute. Right after each of 1.21.11's writes, 1.21.10's
  * answer may replace it (rt/CbDimensionEffectsRoutes); the rest of the method (the early return for NONE, the end
  * flash for END) reads the field as written.
+ * Route order: CbVanillaReads.ROUTE_FIRST, so a native 1.21.11 mod's injector at the same point runs after the route and
+ * sees (and may change) the routed value instead of having its own replaced.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(class_9975.class)
+@Mixin(value = class_9975.class, priority = CbVanillaReads.ROUTE_FIRST)
 public abstract class CbDimEffectsSkyMixin {
     private static final String EXTRACT =
         "method_74926(Lnet/minecraft/class_638;FLnet/minecraft/class_4184;Lnet/minecraft/class_12076;)V";

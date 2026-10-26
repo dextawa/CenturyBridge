@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_21_11.rt.CbDimensionEffectsRoutes;
+import top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads;
 
 /**
  * LightTexture.updateLightTexture: 1.21.10 read effects().forceBrightLightmap() twice, for the sky light factor and
@@ -19,9 +20,11 @@ import top.dext.centurybridge.step.v1_21_11.rt.CbDimensionEffectsRoutes;
  * second Std140Builder.putFloat. Those arguments, with 1.21.11's attribute reads kept, may carry 1.21.10's answers
  * (rt/CbDimensionEffectsRoutes); the ambient color and the flash follow the level's EndFlashState, which
  * CbClientLevelEffectsMixin decides the same way.
+ * Route order: CbVanillaReads.ROUTE_FIRST, so a native 1.21.11 mod's injector at the same point runs after the route and
+ * sees (and may change) the routed value instead of having its own replaced.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(class_765.class)
+@Mixin(value = class_765.class, priority = CbVanillaReads.ROUTE_FIRST)
 public abstract class CbDimEffectsLightTextureMixin {
     @Unique
     private float cb$partialTick;

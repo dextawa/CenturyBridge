@@ -11,6 +11,9 @@ public final class Counters {
     public static volatile Object skybox;
     public static volatile int sunriseColor;
     public static volatile float fogEnd = Float.NaN;
+    public static volatile int baseColor;
+    public static volatile int skyLightColor;
+    public static volatile float skyLightFactor = Float.NaN;
 
     private Counters() {
     }

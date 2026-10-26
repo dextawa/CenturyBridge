@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_21_11.rt.CbDimensionEffectsRoutes;
+import top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads;
 
 /**
  * GameRenderer's two 1.21.10 effects reads, kept on 1.21.11's own calls (rt/CbDimensionEffectsRoutes decides whether
@@ -23,9 +24,11 @@ import top.dext.centurybridge.step.v1_21_11.rt.CbDimensionEffectsRoutes;
  * <li>renderLevel: 1.21.10 took the world fog flag as isFoggyAt(camera x, z) || shouldCreateWorldFog() (it chose
  * the sky pass); 1.21.11 takes only shouldCreateWorldFog() -- the argument it hands LevelRenderer.renderLevel.</li>
  * </ul>
+ * Route order: CbVanillaReads.ROUTE_FIRST, so a native 1.21.11 mod's injector at the same point runs after the route and
+ * sees (and may change) the routed value instead of having its own replaced.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(class_757.class)
+@Mixin(value = class_757.class, priority = CbVanillaReads.ROUTE_FIRST)
 public abstract class CbDimEffectsLightingMixin {
     @Unique
     private class_638 cb$lightingLevel;

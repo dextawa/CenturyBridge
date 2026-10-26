@@ -27,6 +27,7 @@ public abstract class NFog {
     @Inject(method = "method_71654", at = @At("RETURN"))
     private void cbn$color(class_638 level, class_4184 camera, int rd, float pt, CallbackInfoReturnable<Integer> cir) {
         Counters.hit("AtmosphericFogEnvironment.getBaseColor");
+        Counters.baseColor = cir.getReturnValueI();
     }
 
     @Inject(method = "method_42591", at = @At("RETURN"))
