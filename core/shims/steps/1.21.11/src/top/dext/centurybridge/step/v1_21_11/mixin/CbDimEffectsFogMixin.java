@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21_11.rt.CbDimensionEffectsRoutes;
+import top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads;
 
 /**
  * AtmosphericFogEnvironment, 1.21.11's air fog (1.21.10's AirBasedFogEnvironment / DimensionOrBossFogEnvironment), with
@@ -28,11 +29,12 @@ import top.dext.centurybridge.step.v1_21_11.rt.CbDimensionEffectsRoutes;
  * <li>setupFog: 1.21.10 drew a dimension whose effects are foggy at the camera's column with the dimension-or-boss
  * fog; 1.21.11 draws that fog for the boss overlay only, at the end of setupFog (bytecode 184-238: start
  * min(start, 10), end min(end, 96), sky and cloud end = end). When the boss flag is false and 1.21.10's isFoggyAt
- * says foggy, the same four lines run after 1.21.11's body.</li>
+ * says foggy, the same four lines run after 1.21.11's body, before other mods' RETURN injectors (the mixin's priority
+ * is the layer's low one, so its callback is inserted first): they see the fog 1.21.10's effects ask for.</li>
  * </ul>
  */
 @Environment(EnvType.CLIENT)
-@Mixin(class_11398.class)
+@Mixin(value = class_11398.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbDimEffectsFogMixin {
     private static final String BASE_COLOR = "method_71654(Lnet/minecraft/class_638;Lnet/minecraft/class_4184;IF)I";
 

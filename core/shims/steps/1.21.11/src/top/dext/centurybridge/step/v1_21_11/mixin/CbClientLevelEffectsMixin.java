@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -36,13 +35,13 @@ public abstract class CbClientLevelEffectsMixin implements CbEffectsLevel {
     @Mutable
     private class_11743 field_62026;
 
-    @Unique
-    private DimensionSpecialEffects cb$effects;
+    /** 1.21.10's ClientLevel.effects field (field_24606), restored under its name: effects() reads it as 1.21.10's did */
+    private DimensionSpecialEffects field_24606;
 
     @Inject(method = "<init>(Lnet/minecraft/class_634;Lnet/minecraft/class_638$class_5271;Lnet/minecraft/class_5321;Lnet/minecraft/class_6880;IILnet/minecraft/class_761;ZJI)V", at = @At("RETURN"))
     private void cb$chooseEffects(CallbackInfo ci) {
         class_638 self = (class_638) (Object) this;
-        this.cb$effects = DimensionSpecialEffects.method_28111(self.method_8597());
+        this.field_24606 = DimensionSpecialEffects.method_28111(self.method_8597());
         boolean flashes = this.field_62026 != null;
         boolean want = CbDimensionEffectsRoutes.endFlashes(self, flashes);
         if (want != flashes) {
@@ -71,7 +70,7 @@ public abstract class CbClientLevelEffectsMixin implements CbEffectsLevel {
         + "CbDimEffectsFogMixin, CbDimEffectsSkyMixin): when a converted mod mixes effects(), 1.21.11's shade, lighting, "
         + "end flash, lightmap, fog and sky points take the effects it answers")
     public DimensionSpecialEffects method_28103() {
-        return this.cb$effects;
+        return this.field_24606;
     }
 
     @Override
