@@ -25,13 +25,22 @@ EXCLUDE = {
 }
 
 
+RECIPE_OUTPUT = ("RecipeProvider's private datagen helper: the same builders saved to the output; 1.20.2's RecipeOutput "
+                 "where 1.20.1 took a Consumer<FinishedRecipe>")
+LOOT_REGISTER = ("the loot registry's type register: the same Registry.register of new <Type>(..) under the name; the "
+                 "type wraps a Codec where 1.20.1 wrapped a JSON Serializer")
+RECIPE_HOLDER = ("the same body reading the recipe through RecipeHolder.value() (1.20.2 hands the holder where 1.20.1 "
+                 "handed the recipe)")
+
 LOOT_CTOR = ("1.20.2 made the loot / predicate classes codec records: the one constructor holds 1.20.1's body "
              "(same field stores; arrays became Lists, Item / Block / BlockEntityType / Potion / Enchantment became Holders)")
 
 # V method -> (W method of the same class, basis): judged by hand from both bodies (javap -c -p) where
 # gen-mixin-targets' same-name rule does not apply (MixinCause target-private-similar). The argument map is
 # computed below: V argument i -> the one W argument of exactly its type, else -1 (only handlers taking none of
-# the target's arguments follow then).
+# the target's arguments follow then). A third element gives the map read off the call sites instead, where the
+# rule cannot tell equal types apart or must not pair them (a List whose element type changed is -1); each entry
+# is -1 or a W argument of exactly the V argument's erased type.
 JUDGED = {
     "net/minecraft/class_638.method_18114(ILnet/minecraft/class_1297;)V":
         ("method_53875(Lnet/minecraft/class_1297;)V",
@@ -113,6 +122,116 @@ JUDGED = {
     "net/minecraft/class_7591$class_7592.<init>(Ljava/lang/String;IIIII)V":
         ("<init>(Ljava/lang/String;ILnet/minecraft/class_2960;II)V",
          "GuiMessageTag.Icon's one enum constructor: the same width / height stores; the texture offsets became a sprite"),
+    # smx1c 2026-10-27, MixinCause target-private-reshape (same private method, other parameters; javap -c -p of both
+    # bodies and their callers)
+    "net/minecraft/class_337.method_41830(Lnet/minecraft/class_332;IILnet/minecraft/class_1259;II)V":
+        ("method_41830(Lnet/minecraft/class_332;IILnet/minecraft/class_1259;I[Lnet/minecraft/class_2960;[Lnet/minecraft/class_2960;)V",
+         "BossHealthOverlay.drawBar: the same background-by-colour and overlay-by-style blits between enableBlend / disableBlend; "
+         "1.20.2 passes the sprite arrays where 1.20.1 passed the texture row (0 background, 5 progress)",
+         [0, 1, 2, 3, 4, -1]),
+    "net/minecraft/class_2535.method_36942(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Lnet/minecraft/class_2539;Lnet/minecraft/class_2539;)V":
+        ("method_36942(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V",
+         "Connection.doSendPacket: the same channel write with the send listener; 1.20.2 no longer switches the protocol here "
+         "(configuration phase) and takes whether to flush",
+         [0, 1, -1, -1]),
+    "net/minecraft/class_3008.method_12990(Lnet/minecraft/class_161;Ljava/util/List;)V":
+        ("method_12990(Lnet/minecraft/class_8781;Ljava/util/List;)V",
+         "AdvancementCommands.addChildren: the same recursive add of every child; nodes and a List of holders where 1.20.1 "
+         "had advancements (the list's element type changed: not paired)",
+         [-1, -1]),
+    "net/minecraft/class_7689.method_45346(ZF)D":
+        ("method_45346(ZFLnet/minecraft/class_4048;F)D",
+         "Camel.getBodyAnchorAnimationYOffset: the same sitting / standing-up lerps; both callers pass the same boolean and "
+         "partial tick (fconst_0 / fload_1) first, 1.20.2 adds the dimensions and scale",
+         [0, 1]),
+    "net/minecraft/class_329.method_37299(Lnet/minecraft/class_332;Lnet/minecraft/class_329$class_6411;IIIZZ)V":
+        ("method_37299(Lnet/minecraft/class_332;Lnet/minecraft/class_329$class_6411;IIZZZ)V",
+         "Gui.renderHeart: the same one heart blit chosen by type, blinking and half; 1.20.2 passes hardcore where 1.20.1 "
+         "passed the texture row it implied",
+         [0, 1, 2, 3, -1, 5, 6]),
+    "net/minecraft/class_447.method_2282(Lnet/minecraft/class_332;IIII)V":
+        ("method_2282(Lnet/minecraft/class_332;IILnet/minecraft/class_2960;)V",
+         "StatsScreen.blitSlotIcon: the same one icon blit at x, y; a sprite where 1.20.1 took texture u / v",
+         [0, 1, 2, -1, -1]),
+    "net/minecraft/class_2446.method_34662(Ljava/util/function/Consumer;Lnet/minecraft/class_1935;Lnet/minecraft/class_1935;)V":
+        ("method_34662(Lnet/minecraft/class_8790;Lnet/minecraft/class_1935;Lnet/minecraft/class_1935;)V",
+         RECIPE_OUTPUT),
+    "net/minecraft/class_2446.method_36232(Ljava/util/function/Consumer;Lnet/minecraft/class_1865;Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;Ljava/lang/String;)V":
+        ("method_36232(Lnet/minecraft/class_8790;Lnet/minecraft/class_1865;Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;Ljava/lang/String;)V",
+         RECIPE_OUTPUT),
+    "net/minecraft/class_2446.method_36447(Ljava/util/function/Consumer;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V":
+        ("method_36447(Lnet/minecraft/class_8790;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
+         RECIPE_OUTPUT),
+    "net/minecraft/class_2446.method_36448(Ljava/util/function/Consumer;Ljava/lang/String;Lnet/minecraft/class_1865;ILnet/minecraft/class_1935;Lnet/minecraft/class_1935;F)V":
+        ("method_36448(Lnet/minecraft/class_8790;Ljava/lang/String;Lnet/minecraft/class_1865;ILnet/minecraft/class_1935;Lnet/minecraft/class_1935;F)V",
+         RECIPE_OUTPUT),
+    "net/minecraft/class_131.method_29323(Ljava/lang/String;Lnet/minecraft/class_5335;)Lnet/minecraft/class_5339;":
+        ("method_29323(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5339;",
+         LOOT_REGISTER),
+    "net/minecraft/class_217.method_29327(Ljava/lang/String;Lnet/minecraft/class_5335;)Lnet/minecraft/class_5342;":
+        ("method_29327(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5342;",
+         LOOT_REGISTER),
+    "net/minecraft/class_5652.method_32443(Ljava/lang/String;Lnet/minecraft/class_5335;)Lnet/minecraft/class_5650;":
+        ("method_32443(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5650;",
+         LOOT_REGISTER),
+    "net/minecraft/class_5659.method_32456(Ljava/lang/String;Lnet/minecraft/class_5335;)Lnet/minecraft/class_5657;":
+        ("method_32456(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5657;",
+         LOOT_REGISTER),
+    "net/minecraft/class_5671.method_32479(Ljava/lang/String;Lnet/minecraft/class_5335;)Lnet/minecraft/class_5669;":
+        ("method_32479(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5669;",
+         LOOT_REGISTER),
+    "net/minecraft/class_75.method_29317(Ljava/lang/String;Lnet/minecraft/class_5335;)Lnet/minecraft/class_5338;":
+        ("method_29317(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5338;",
+         LOOT_REGISTER),
+    "net/minecraft/class_1294.method_5594(ILjava/lang/String;Lnet/minecraft/class_1291;)Lnet/minecraft/class_1291;":
+        ("method_5594(Ljava/lang/String;Lnet/minecraft/class_1291;)Lnet/minecraft/class_1291;",
+         "MobEffects.register: the same Registry.register of the effect under its name; 1.20.2 registers by name only, "
+         "without 1.20.1's raw id"),
+    "net/minecraft/class_8005.method_48030(Lnet/minecraft/class_161;Lit/unimi/dsi/fastutil/Stack;Ljava/util/function/Predicate;Lnet/minecraft/class_8005$class_8006;)Z":
+        ("method_48030(Lnet/minecraft/class_8781;Lit/unimi/dsi/fastutil/Stack;Ljava/util/function/Predicate;Lnet/minecraft/class_8005$class_8006;)Z",
+         "AdvancementVisibilityEvaluator.evaluateVisibility: the same recursive visibility walk over the rule stack; a node "
+         "and a Predicate of nodes where 1.20.1 had advancements (type argument changed: not paired); the stack and output are "
+         "the same",
+         [-1, 1, -1, 3]),
+    "net/minecraft/class_2377.method_10217(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;I)V":
+        ("method_10217(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V",
+         "HopperBlock.checkPoweredState: the same hasNeighborSignal test and ENABLED setBlock; 1.20.2 no longer takes the "
+         "block-update flags",
+         [0, 1, 2, -1]),
+    "net/minecraft/class_2487.method_10581(Lnet/minecraft/class_4614;Ljava/lang/String;Ljava/io/DataInput;ILnet/minecraft/class_2505;)Lnet/minecraft/class_2520;":
+        ("method_10581(Lnet/minecraft/class_4614;Ljava/lang/String;Ljava/io/DataInput;Lnet/minecraft/class_2505;)Lnet/minecraft/class_2520;",
+         "CompoundTag.readNamedTagData: the same TagType.load with the same crash report; 1.20.2 dropped the depth (the "
+         "accounter tracks it), as NbtIo.readUnnamedTag above"),
+    "net/minecraft/class_2609.method_11192(Lnet/minecraft/class_5455;Lnet/minecraft/class_1860;Lnet/minecraft/class_2371;I)Z":
+        ("method_11192(Lnet/minecraft/class_5455;Lnet/minecraft/class_8786;Lnet/minecraft/class_2371;I)Z",
+         RECIPE_HOLDER),
+    "net/minecraft/class_2609.method_11203(Lnet/minecraft/class_5455;Lnet/minecraft/class_1860;Lnet/minecraft/class_2371;I)Z":
+        ("method_11203(Lnet/minecraft/class_5455;Lnet/minecraft/class_8786;Lnet/minecraft/class_2371;I)Z",
+         RECIPE_HOLDER),
+    "net/minecraft/class_299.method_1400(Lnet/minecraft/class_1860;)Lnet/minecraft/class_314;":
+        ("method_1400(Lnet/minecraft/class_8786;)Lnet/minecraft/class_314;",
+         RECIPE_HOLDER),
+    "net/minecraft/class_366.method_1984(Lnet/minecraft/class_1860;)V":
+        ("method_1984(Lnet/minecraft/class_8786;)V",
+         RECIPE_HOLDER),
+    "net/minecraft/class_4209.method_22319(Lnet/minecraft/class_3218;Lnet/minecraft/class_2540;Lnet/minecraft/class_2960;)V":
+        ("method_22319(Lnet/minecraft/class_3218;Lnet/minecraft/class_8710;)V",
+         "DebugPackets.sendPacketToAllPlayers: the same ClientboundCustomPayloadPacket sent to every player of the level; "
+         "1.20.2 takes the payload where 1.20.1 took the channel id and buffer"),
+    "net/minecraft/class_4703.method_23806(Lnet/minecraft/class_4703$class_5243;Lnet/minecraft/class_2338;)Ljava/lang/String;":
+        ("method_23806(Lnet/minecraft/class_8707$class_5243;Lnet/minecraft/class_2338;)Ljava/lang/String;",
+         "BeeDebugRenderer.getPosDescription: the same rounded distance text from the bee's position; the bee info is "
+         "BeeDebugPayload's record now"),
+    "net/minecraft/class_8564.method_52189(JLnet/minecraft/class_2960;)Lnet/minecraft/class_6677;":
+        ("method_52189(JLjava/util/Optional;)Lnet/minecraft/class_6677;",
+         "RandomSequences' sequence factory: the same seed mix with the id's seed; 1.20.2 takes the id as an Optional "
+         "(absent: the world seed alone)"),
+    "net/minecraft/class_2985.method_48025(Lnet/minecraft/class_161;Ljava/util/Set;Ljava/util/Set;)V":
+        ("method_48025(Lnet/minecraft/class_8781;Ljava/util/Set;Ljava/util/Set;)V",
+         "PlayerAdvancements.updateTreeVisibility: the same AdvancementVisibilityEvaluator.evaluateVisibility call with the "
+         "same predicate and output; a node and a Set of holders where 1.20.1 had advancements (element type changed: not "
+         "paired); the id set is the same",
+         [-1, -1, 2]),
 }
 for _k, _to in {
     "net/minecraft/class_55.<init>([Lnet/minecraft/class_79;[Lnet/minecraft/class_5341;[Lnet/minecraft/class_117;Lnet/minecraft/class_5658;Lnet/minecraft/class_5658;)V":
@@ -176,9 +295,15 @@ def arg_types(desc):
 
 def judged():
     out = {}
-    for k, (to, basis) in JUDGED.items():
+    for k, (to, basis, *given) in JUDGED.items():
         va = arg_types(k[k.index("("):])
         wa = arg_types(to[to.index("("):])
+        if given:
+            args = list(given[0])
+            if len(args) != len(va) or any(j != -1 and (j >= len(wa) or wa[j] != va[i]) for i, j in enumerate(args)):
+                raise SystemExit("judged argument map does not fit " + k + " -> " + to + ": " + str(args))
+            out[k] = {"to": to, "args": args, "basis": basis}
+            continue
         # the k-th V argument of a type is the k-th W argument of it when both have equally many (order kept:
         # LootPool's rolls / bonusRolls); any other count gives -1
         args = []
