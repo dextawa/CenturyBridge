@@ -19,7 +19,7 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallEntityRepresentation;
  * map, an item entity when its item is synced, an item display when it updates its render state. 26.1's own code
  * never reads it (it asks the frame), so only what mods read goes through these members.
  */
-@Mixin(ItemStack.class)
+@Mixin(value = ItemStack.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallItemStackRepresentationMixin implements CbWallEntityRepresentation {
 
     @Unique

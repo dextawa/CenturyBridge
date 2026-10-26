@@ -659,7 +659,7 @@
    "9": "zero: 1.21.11's writeToTexture(texture, image) wrote mip level 0, depth layer 0, from image origin (0, 0) to texture origin (0, 0)"
   },
   "method_29610(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Z)V": {
-   "3": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#noGameRules()Ljava/util/Optional;"
+   "3": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient#doWorldLoadRules(Lnet/minecraft/class_310;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Z)Ljava/util/Optional;"
   },
   "method_22752(Lnet/minecraft/class_638;)V": {
    "1": "top/dext/centurybridge/step/v26_1/rt/CbWallFramesClient#sectionCompiler(Lnet/minecraft/class_846;)Lnet/minecraft/class_9810;"
@@ -2756,13 +2756,13 @@
   "net/minecraft/class_310.method_29610(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Z)V": {
    "desc": "(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Ljava/util/Optional;Z)V",
    "ops": [
-    "keep",
-    "keep",
-    "keep",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#noGameRules()Ljava/util/Optional;",
-    "keep"
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#initialRules(Lnet/minecraft/class_6904;)Ljava/util/Optional;",
+    "keep:3"
    ],
-   "basis": "26.1 doWorldLoad takes the new world's initial game rules (empty: the saved world's own, as 1.21.11 loaded them)"
+   "basis": "26.1 doWorldLoad takes the new world's initial game rules: the ones the stem's world data stands for (a world 1.21.11 code built with rules), else empty: the saved world's own, as 1.21.11 loaded them (rt/CbWallWorldLoad.initialRules)"
   },
   "net/minecraft/class_751.method_3156(Lnet/minecraft/class_310;FF)V": {
    "desc": "(FF)V",

@@ -122,6 +122,11 @@ public final class CbPackets {
         if (l instanceof NettyListener n) {
             return n.listener;
         }
+        if (l instanceof ChannelFutureListener c) {
+            // already both (CenturyBridge's 1.20.5 CbFutureListenerCallbacks: a 1.20.4 GenericFutureListener carried
+            // as the callbacks, doing on the write's future what its 1.20.5 mixin added there): handed over as it is
+            return c;
+        }
         return new FromV(l);
     }
 
@@ -132,6 +137,9 @@ public final class CbPackets {
         }
         if (f instanceof FromV v) {
             return v.listener;
+        }
+        if (f instanceof PacketSendListener p) {
+            return p; // already both (toNetty)
         }
         return new NettyListener(f, connection);
     }

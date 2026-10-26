@@ -1788,6 +1788,9 @@ final class MixinBridge {
         }
 
         private Selection select(MethodNode h, AnnotationNode an, String kind, List<String> sels, ClassNode wt, ClassNode vt) {
+            // a bare selector (a name, no descriptor) that W still matches by name, though a V method it meant has
+            // another descriptor on W: kept only if nothing below carries it (see the bare-name test)
+            Selection bareFallback = null;
             // any alternative that still selects a method of W: nothing moved under it
             for (String sel : sels) {
                 if (sel.startsWith("/") || sel.contains("*")) {
@@ -1803,7 +1806,25 @@ final class MixinBridge {
                     wm = new MixinRepair.Sel(s.owner(), s.name(), chain.renamedDesc(s.desc()), s.wildcard()).match(wt);
                 }
                 if (!wm.isEmpty()) {
-                    return new Selection(h, an, vt == null ? List.of() : s.match(vt), wm);
+                    Selection same = new Selection(h, an, vt == null ? List.of() : s.match(vt), wm);
+                    // A bare selector ("method_9559": CenturyBridge's layers have no refmap, so every selector of a
+                    // climbing layer is one) matches W's method of that name whatever its descriptor. Unchanged only
+                    // if every V method of the name is declared by W with its descriptor (as classRenames spell it);
+                    // otherwise the V method's signature changed under the same name (1.21.2 updateShape, 1.21.4
+                    // getCloneItemStack) and the step's wiring for it (override hook, reshape, mixinTargets) carries
+                    // the selector and gives the handler W's shape, as for a selector with a descriptor
+                    if (s.desc() == null && vt != null && !itf) {
+                        List<MethodNode> vmatch = s.match(vt);
+                        boolean kept = true;
+                        for (MethodNode m : vmatch) {
+                            kept &= method(wt, m.name, chain.renamedDesc(m.desc)) != null;
+                        }
+                        if (!kept) {
+                            bareFallback = bareFallback == null ? same : bareFallback;
+                            continue;
+                        }
+                    }
+                    return same;
                 }
                 // a member the layer restores on the W class (LayerMembers) whose vanilla read path the layer
                 // routes through it (@CbVanillaReads): the selector names a method that exists at runtime and
@@ -1948,7 +1969,8 @@ final class MixinBridge {
                         + Type.getReturnType(fate.desc()) + " with no converter: partial, the answer untouched" : "") + ")");
                 return new Selection(handler, an, List.of(vmeth), List.of(wmeth));
             }
-            return null;
+            // a bare selector nothing carried: left on W's method of the name, as before (the report says why)
+            return bareFallback;
         }
 
         /** the zero of a type: null, 0, 0L, 0F, 0D */
@@ -3565,7 +3587,16 @@ final class MixinBridge {
             }
             // a derived argument (s26 C13 (2)): V's value is the static of W's
             String[][] wrap = from != null && mt.wrap() != null ? mt.wrap().clone() : new String[va.length][];
-            return new Fate(mt.name(), mt.desc(), from, wrap, new boolean[va.length], known,
+            // "narrow": an argument W widened (1.21.2 ItemStack.hurtEnemy: a LivingEntity attacker where 1.21.1 took a
+            // Player, mobs now calling it too) reaches the handler only when it is V's type, as the override hooks'
+            // narrowing: a handler written for V never saw another
+            boolean[] narrow = new boolean[va.length];
+            Type[] mwa = Type.getArgumentTypes(mt.desc());
+            for (int i = 0; known && mt.narrow() && i < va.length; i++) {
+                // a derived argument is converted by its static, not narrowed
+                narrow[i] = wrap[i] == null && from[i] < mwa.length && !mwa[from[i]].equals(va[i]) && va[i].getSort() >= Type.ARRAY;
+            }
+            return new Fate(mt.name(), mt.desc(), from, wrap, narrow, known,
                 "mixinTargets (" + mt.basis() + ")");
         }
         for (Chain.OverrideHook h : chain.overrideHooksForOld(name, vdesc)) {
@@ -3602,9 +3633,12 @@ final class MixinBridge {
                 } else if (j >= na.length) {
                     bad = true;
                 } else if (!na[j].equals(va[i]) && !wAssignable(na[j], va[i])) {
-                    if (h.wrapName != null && Arrays.equals(Type.getArgumentTypes(h.wrapDesc), new Type[] {na[j]})
-                            && Type.getReturnType(h.wrapDesc).equals(va[i])) {
-                        wrap[i] = new String[] {h.wrapOwner, h.wrapName, h.wrapDesc};
+                    // the hook's wrap for this argument: of a list ("wrap": [...], one new argument feeding
+                    // several old ones -- 1.21.6 saveAdditional's ValueOutput gives the tag and the lookup), the
+                    // static taking W's type to V's
+                    String[] w = h.wrapFor(na[j], va[i]);
+                    if (w != null) {
+                        wrap[i] = w;
                     } else if (h.narrow && va[i].getSort() >= Type.ARRAY) {
                         narrow[i] = true;
                     } else {

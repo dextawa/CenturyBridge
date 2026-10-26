@@ -1,7 +1,5 @@
 package top.dext.centurybridge.step.v1_21_2.mixin;
 
-import java.util.List;
-import java.util.Set;
 import net.minecraft.class_1297;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,8 +15,9 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbEntityInside;
 @Mixin(class_1297.class)
 public abstract class CbEntityInsideMixin {
 
+    /** takes none of the loop's arguments (1.21.5 replaced the set of blocks inside with an effect collector) */
     @Inject(method = "method_65037", at = @At("HEAD"), cancellable = true)
-    private void cb$legacyInside(List<?> movements, Set<?> blocksInside, CallbackInfo ci) {
+    private void cb$legacyInside(CallbackInfo ci) {
         if (this instanceof CbEntityInside.LegacyTry || this instanceof CbEntityInside.LegacyCheck) {
             CbEntityInside.tryCheckInsideBlocks((class_1297) (Object) this);
             ci.cancel();

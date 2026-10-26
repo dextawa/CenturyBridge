@@ -10,8 +10,13 @@ import java.util.Objects;
  * PacketCallbacks cannot express one. The CbFapiFutureListenerMixin on ClientConnection.sendInternal adds
  * the listener to the write's channel future, as 1.20.4's ClientConnectionMixin did, instead of the
  * callbacks vanilla would wrap; the callbacks themselves are never called (1.20.4's holder said the same).
+ * <p>
+ * It is also the netty listener that mixin puts on the future (the listener, then FIRE_EXCEPTION_ON_FAILURE):
+ * 1.21.6's Connection takes a ChannelFutureListener for a send and adds it to the write's future itself, so from
+ * that step on the holder is handed over as it is and the mixin retires (1.21.6 step wiring). Before 1.21.6 vanilla
+ * never sees it as one: the mixin cancels before its callbacks wrapper would be built.
  */
-public final class CbFutureListenerCallbacks implements net.minecraft.class_7648 {
+public final class CbFutureListenerCallbacks implements net.minecraft.class_7648, io.netty.channel.ChannelFutureListener {
 
     private final GenericFutureListener<? extends Future<? super Void>> delegate;
 
@@ -19,13 +24,21 @@ public final class CbFutureListenerCallbacks implements net.minecraft.class_7648
         this.delegate = Objects.requireNonNull(delegate);
     }
 
-    /** null for no listener, as 1.20.4's GenericFutureListenerHolder.create */
-    public static CbFutureListenerCallbacks create(GenericFutureListener<? extends Future<? super Void>> delegate) {
+    /** null for no listener, as 1.20.4's GenericFutureListenerHolder.create; typed as the packet's callbacks */
+    public static net.minecraft.class_7648 create(GenericFutureListener<? extends Future<? super Void>> delegate) {
         return delegate == null ? null : new CbFutureListenerCallbacks(delegate);
     }
 
     public GenericFutureListener<? extends Future<? super Void>> delegate() {
         return delegate;
+    }
+
+    /** what CbFapiFutureListenerMixin adds to the write's future: the listener, then FIRE_EXCEPTION_ON_FAILURE */
+    @Override
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void operationComplete(io.netty.channel.ChannelFuture future) throws Exception {
+        ((GenericFutureListener) delegate).operationComplete(future);
+        io.netty.channel.ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE.operationComplete(future);
     }
 
     @Override

@@ -1,0 +1,49 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_638.method_8525()V": {
+   "desc": "(Lnet/minecraft/class_2561;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbCallDefaults#quitting()Lnet/minecraft/class_2561;"
+   ],
+   "basis": "1.21.5 ClientLevel.disconnect() disconnected the connection with Component.translatable(\"multiplayer.status.quitting\"); 1.21.6's disconnect(Component) passes its argument to the same Connection.disconnect (javap)"
+  },
+  "net/minecraft/class_10868.method_68424()V": {
+   "desc": "(I)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbCallDefaults#texture2d()I"
+   ],
+   "basis": "1.21.5 GlTexture.flushModeChanges() set each texture parameter on GL_TEXTURE_2D (sipush 3553 before every _texParameter); 1.21.6's flushModeChanges(int) sets the same parameters on its argument (javap)"
+  },
+  "net/minecraft/class_2446.method_51890(Ljava/util/List;Ljava/util/List;Ljava/lang/String;)V": {
+   "desc": "(Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lnet/minecraft/class_7800;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbCallDefaults#dyeCategory()Lnet/minecraft/class_7800;"
+   ],
+   "basis": "1.21.5 RecipeProvider.colorItemWithDye(dyes, items, group) called colorWithDye(dyes, items, null, group, RecipeCategory.BUILDING_BLOCKS); 1.21.6's takes the category and passes it in the same place (javap)"
+  }
+ },
+ "frameDefaults": {
+  "method_51436(Lnet/minecraft/class_327;Ljava/util/List;Lnet/minecraft/class_8000;II)V": {
+   "5": "top/dext/centurybridge/step/v1_21_6/rt/CbGuiFill#tooltipKeepsFirst()Z"
+  },
+  "method_44414(Ljava/lang/String;)V": {
+   "1": "top/dext/centurybridge/step/v1_21_6/rt/CbWidgets#force()Z"
+  },
+  "method_30948()Z": {
+   "0": "top/dext/centurybridge/step/v1_21_6/rt/CbEntities#noEntity()Lnet/minecraft/class_1297;"
+  },
+  "method_8525()V": {
+   "0": "top/dext/centurybridge/step/v1_21_6/rt/CbCallDefaults#quitting()Lnet/minecraft/class_2561;"
+  },
+  "method_68424()V": {
+   "0": "top/dext/centurybridge/step/v1_21_6/rt/CbCallDefaults#texture2d()I"
+  },
+  "method_51890(Ljava/util/List;Ljava/util/List;Ljava/lang/String;)V": {
+   "3": "top/dext/centurybridge/step/v1_21_6/rt/CbCallDefaults#dyeCategory()Lnet/minecraft/class_7800;"
+  }
+ },
+ "_frameDefaults_basis": "each is what 1.21.5's body used where 1.21.6 takes an argument (javap of both), the same values the step's callReshapes push for 1.21.5 calls: GuiGraphics.setTooltipForNextFrame's replace flag (1.21.5 drew at once; every kept 1.21.5 call passes false), MultilineTextField.setValue's force (1.21.5 always set), Entity.canBeCollidedWith's other entity (none; the 1.21.5 overrides ignore it), ClientLevel.disconnect's reason, GlTexture.flushModeChanges' GL_TEXTURE_2D, RecipeProvider.colorItemWithDye's BUILDING_BLOCKS"
+}

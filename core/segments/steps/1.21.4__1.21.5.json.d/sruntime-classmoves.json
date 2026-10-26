@@ -1,0 +1,386 @@
+{
+ "_sruntime_classmoves_basis": "the classes 1.21.5 moved or renamed with their members (blaze3d's VertexFormat / VertexFormatElement / GlStateManager / GlConst / ShaderType out of net/minecraft or into com/mojang/blaze3d/opengl, nested classes moved to other outers), unwired in this step so every reference died (the climbed 1.21.2 layer's CbFapiShaders: NoClassDefFoundError class_293 on the 1.21.8 client's resource reload). Output of: python3 core/tools/wall_table.py --identity data/jars/client-1.21.4-intermediary-code.jar data/jars/client-1.21.5-intermediary-code.jar <tmp>/id.tsv <tmp>/id-report.tsv --fragment <tmp>/pkgmoves-gen.json 1.21.4__1.21.5 (each class matched by member overlap and same-code bodies; per class check in _sruntime_classmoves_check). Only its classRenames: its 55 methodRenames / 34 fieldRenames / 37 overrideRenames overlap the step's area wiring (s5-components, s5-nbt-gen, tags-gen) in 7 keys and are left to the step's judgment (cases_steps/sruntime-1.21.4__1.21.5.md)",
+ "classRenames": {
+  "com/mojang/blaze3d/platform/GlConst": "com/mojang/blaze3d/opengl/GlConst",
+  "com/mojang/blaze3d/platform/GlStateManager": "com/mojang/blaze3d/opengl/GlStateManager",
+  "com/mojang/blaze3d/platform/GlStateManager$class_1017": "com/mojang/blaze3d/opengl/GlStateManager$class_1017",
+  "com/mojang/blaze3d/platform/GlStateManager$class_1018": "com/mojang/blaze3d/opengl/GlStateManager$class_1018",
+  "com/mojang/blaze3d/platform/GlStateManager$class_1021": "com/mojang/blaze3d/opengl/GlStateManager$class_1021",
+  "com/mojang/blaze3d/platform/GlStateManager$class_1022": "com/mojang/blaze3d/opengl/GlStateManager$class_1022",
+  "com/mojang/blaze3d/platform/GlStateManager$class_1025": "com/mojang/blaze3d/opengl/GlStateManager$class_1025",
+  "com/mojang/blaze3d/platform/GlStateManager$class_1026": "com/mojang/blaze3d/opengl/GlStateManager$class_1026",
+  "com/mojang/blaze3d/platform/GlStateManager$class_1031": "com/mojang/blaze3d/opengl/GlStateManager$class_1031",
+  "com/mojang/blaze3d/platform/GlStateManager$class_1039": "com/mojang/blaze3d/opengl/GlStateManager$class_1039",
+  "com/mojang/blaze3d/platform/GlStateManager$class_5518": "com/mojang/blaze3d/opengl/GlStateManager$class_5518",
+  "net/minecraft/class_10141$class_282": "com/mojang/blaze3d/shaders/ShaderType",
+  "net/minecraft/class_10151$class_10154": "net/minecraft/class_10865$class_10154",
+  "net/minecraft/class_10227$class_10228": "net/minecraft/class_10859$class_10228",
+  "net/minecraft/class_1088$class_9826": "net/minecraft/class_9826",
+  "net/minecraft/class_1095": "net/minecraft/class_10895$class_1095",
+  "net/minecraft/class_1095$class_10204": "net/minecraft/class_10895$class_10204",
+  "net/minecraft/class_2580$class_2581": "net/minecraft/class_10633$class_2581",
+  "net/minecraft/class_2586$class_9473": "net/minecraft/class_9473",
+  "net/minecraft/class_293": "com/mojang/blaze3d/vertex/VertexFormat",
+  "net/minecraft/class_293$class_5595": "com/mojang/blaze3d/vertex/VertexFormat$class_5595",
+  "net/minecraft/class_293$class_5596": "com/mojang/blaze3d/vertex/VertexFormat$class_5596",
+  "net/minecraft/class_296": "com/mojang/blaze3d/vertex/VertexFormatElement",
+  "net/minecraft/class_296$class_297": "com/mojang/blaze3d/vertex/VertexFormatElement$Type",
+  "net/minecraft/class_296$class_298": "com/mojang/blaze3d/vertex/VertexFormatElement$Usage",
+  "net/minecraft/class_3119$class_3120": "net/minecraft/class_3057$class_3120",
+  "net/minecraft/class_3204$class_4077": "net/minecraft/class_4077",
+  "net/minecraft/class_4918$class_4920": "net/minecraft/class_10806$class_4920",
+  "net/minecraft/class_6005$class_6006": "net/minecraft/class_6012$class_6006",
+  "net/minecraft/class_6008$class_6010": "net/minecraft/class_6010",
+  "net/minecraft/class_816": "net/minecraft/class_10895$class_816",
+  "net/minecraft/class_816$class_9981": "net/minecraft/class_10895$class_816$class_9981",
+  "net/minecraft/class_816$class_9982": "net/minecraft/class_790$class_9982",
+  "net/minecraft/class_9119": "net/minecraft/class_10675",
+  "net/minecraft/class_9125": "net/minecraft/class_10674",
+  "net/minecraft/class_9979": "net/minecraft/class_1087$class_9979"
+ },
+ "_sruntime_classmoves_check": {
+  "com/mojang/blaze3d/platform/GlConst": {
+   "to": "com/mojang/blaze3d/opengl/GlConst",
+   "kept": 118,
+   "basis": "members 117.0/117 vs 135 (dice 0.93, 2nd 0.00), body votes 0/0"
+  },
+  "com/mojang/blaze3d/platform/GlStateManager": {
+   "to": "com/mojang/blaze3d/opengl/GlStateManager",
+   "kept": 83,
+   "missing": [
+    "_blendFunc(II)V",
+    "_blendEquation(I)V",
+    "_glUniform2(ILjava/nio/IntBuffer;)V",
+    "_glUniform4(ILjava/nio/IntBuffer;)V",
+    "_glUniformMatrix2(IZLjava/nio/FloatBuffer;)V",
+    "_glUniformMatrix3(IZLjava/nio/FloatBuffer;)V",
+    "_glUniformMatrix4(IZLjava/nio/FloatBuffer;)V",
+    "_glGetAttribLocation(ILjava/lang/CharSequence;)I",
+    "_glMapBuffer(II)Ljava/nio/ByteBuffer;",
+    "_glCopyTexSubImage2D(IIIIIIII)V",
+    "_glDeleteVertexArrays(I)V",
+    "_glBindRenderbuffer(II)V",
+    "_glDeleteRenderbuffers(I)V",
+    "glGenRenderbuffers()I",
+    "_glRenderbufferStorage(IIII)V",
+    "_glFramebufferRenderbuffer(IIII)V",
+    "glCheckFramebufferStatus(I)I",
+    "getBoundFramebuffer()I",
+    "setupLevelDiffuseLighting(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lorg/joml/Matrix4f;)V",
+    "setupGuiFlatDiffuseLighting(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V",
+    "setupGui3DDiffuseLighting(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V",
+    "_texParameter(IIF)V",
+    "_genTextures([I)V",
+    "_deleteTextures([I)V",
+    "upload(IIIIILnet/minecraft/class_1011$class_1012;Ljava/nio/IntBuffer;Ljava/util/function/Consumer;)V",
+    "_getTexImage(IIIIJ)V",
+    "_stencilFunc(III)V",
+    "_stencilMask(I)V",
+    "_stencilOp(III)V",
+    "_clearDepth(D)V",
+    "_clearColor(FFFF)V",
+    "_clearStencil(I)V",
+    "_glDrawPixels(IIIIJ)V",
+    "_disableVertexAttribArray(I)V",
+    "_readPixels(IIIIIILjava/nio/ByteBuffer;)V",
+    "TEXTURE_COUNT:I"
+   ],
+   "basis": "members 98.5/136 vs 103 (dice 0.82, 2nd 0.00), body votes 0/0"
+  },
+  "com/mojang/blaze3d/platform/GlStateManager$class_1017": {
+   "to": "com/mojang/blaze3d/opengl/GlStateManager$class_1017",
+   "kept": 6,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "com/mojang/blaze3d/platform/GlStateManager$class_1018": {
+   "to": "com/mojang/blaze3d/opengl/GlStateManager$class_1018",
+   "kept": 4,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "com/mojang/blaze3d/platform/GlStateManager$class_1021": {
+   "to": "com/mojang/blaze3d/opengl/GlStateManager$class_1021",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "com/mojang/blaze3d/platform/GlStateManager$class_1022": {
+   "to": "com/mojang/blaze3d/opengl/GlStateManager$class_1022",
+   "kept": 5,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "com/mojang/blaze3d/platform/GlStateManager$class_1025": {
+   "to": "com/mojang/blaze3d/opengl/GlStateManager$class_1025",
+   "kept": 2,
+   "missing": [
+    "field_5073:I"
+   ],
+   "basis": "members 1.0/2 vs 1 (dice 0.67, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "com/mojang/blaze3d/platform/GlStateManager$class_1026": {
+   "to": "com/mojang/blaze3d/opengl/GlStateManager$class_1026",
+   "kept": 4,
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "com/mojang/blaze3d/platform/GlStateManager$class_1031": {
+   "to": "com/mojang/blaze3d/opengl/GlStateManager$class_1031",
+   "kept": 4,
+   "missing": [
+    "field_5121:Lcom/mojang/blaze3d/platform/GlStateManager$class_1018;"
+   ],
+   "basis": "members 3.0/4 vs 3 (dice 0.86, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "com/mojang/blaze3d/platform/GlStateManager$class_1039": {
+   "to": "com/mojang/blaze3d/opengl/GlStateManager$class_1039",
+   "kept": 2,
+   "basis": "members 1.0/1 vs 1 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "com/mojang/blaze3d/platform/GlStateManager$class_5518": {
+   "to": "com/mojang/blaze3d/opengl/GlStateManager$class_5518",
+   "kept": 2,
+   "basis": "members 1.0/1 vs 1 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "net/minecraft/class_10141$class_282": {
+   "to": "com/mojang/blaze3d/shaders/ShaderType",
+   "kept": 2,
+   "renamed": [
+    "method_62884(Lnet/minecraft/class_2960;)Lnet/minecraft/class_10141$class_282; -> byLocation",
+    "method_62885()Lnet/minecraft/class_7654; -> idConverter"
+   ],
+   "missing": [
+    "method_1286()Ljava/lang/String;",
+    "method_1287()I",
+    "field_1530:Lnet/minecraft/class_10141$class_282;",
+    "field_1531:Lnet/minecraft/class_10141$class_282;"
+   ],
+   "basis": "members 3.0/10 vs 8 (dice 0.33, 2nd 0.00), body votes 4/4"
+  },
+  "net/minecraft/class_10151$class_10154": {
+   "to": "net/minecraft/class_10865$class_10154",
+   "kept": 10,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/class_10227$class_10228": {
+   "to": "net/minecraft/class_10859$class_10228",
+   "kept": 2,
+   "renamed": [
+    "method_64323()Ljava/nio/ByteBuffer; -> data"
+   ],
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.17), body votes 0/0"
+  },
+  "net/minecraft/class_1088$class_9826": {
+   "to": "net/minecraft/class_9826",
+   "kept": 0,
+   "missing": [
+    "method_65739(Lnet/minecraft/class_10525;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;",
+    "method_65740(Lnet/minecraft/class_10525;Ljava/lang/String;)Lnet/minecraft/class_1058;",
+    "method_65738(Lnet/minecraft/class_10525;)Lnet/minecraft/class_10527;"
+   ],
+   "basis": "members 1.0/3 vs 3 (dice 0.33, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/class_1095": {
+   "to": "net/minecraft/class_10895$class_1095",
+   "kept": 1,
+   "missing": [
+    "method_4707(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_5819;)Ljava/util/List;"
+   ],
+   "basis": "members 2.0/4 vs 5 (dice 0.44, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/class_1095$class_10204": {
+   "to": "net/minecraft/class_10895$class_10204",
+   "kept": 5,
+   "missing": [
+    "<init>(Ljava/util/function/Predicate;Lnet/minecraft/class_1087;)V",
+    "comp_3204()Lnet/minecraft/class_1087;",
+    "comp_3204:Lnet/minecraft/class_1087;"
+   ],
+   "basis": "members 3.0/4 vs 5 (dice 0.67, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/class_2580$class_2581": {
+   "to": "net/minecraft/class_10633$class_2581",
+   "kept": 5,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "net/minecraft/class_2586$class_9473": {
+   "to": "net/minecraft/class_9473",
+   "kept": 2,
+   "basis": "members 2.0/2 vs 3 (dice 0.80, 2nd 0.00), body votes 12/12"
+  },
+  "net/minecraft/class_293": {
+   "to": "com/mojang/blaze3d/vertex/VertexFormat",
+   "kept": 4,
+   "renamed": [
+    "method_60833()Lnet/minecraft/class_293$class_9803; -> builder",
+    "method_1362()I -> getVertexSize",
+    "method_1357()Ljava/util/List; -> getElements",
+    "method_34445()Ljava/util/List; -> getElementAttributeNames",
+    "method_60838()[I -> getOffsetsByElement",
+    "method_60835(Lnet/minecraft/class_296;)I -> getOffset",
+    "method_60836(Lnet/minecraft/class_296;)Z -> contains",
+    "method_60839()I -> getElementsMask",
+    "method_60837(Lnet/minecraft/class_296;)Ljava/lang/String; -> getElementName"
+   ],
+   "missing": [
+    "method_62886(I)V",
+    "method_22649()V",
+    "method_22651()V",
+    "method_43446()Lnet/minecraft/class_291;",
+    "field_52099:I"
+   ],
+   "basis": "members 7.0/20 vs 19 (dice 0.36, 2nd 0.02), body votes 19/19"
+  },
+  "net/minecraft/class_293$class_5595": {
+   "to": "com/mojang/blaze3d/vertex/VertexFormat$class_5595",
+   "kept": 6,
+   "missing": [
+    "field_27374:I"
+   ],
+   "basis": "members 4.0/5 vs 4 (dice 0.89, 2nd 0.00), body votes 7/7, follows its outer class"
+  },
+  "net/minecraft/class_293$class_5596": {
+   "to": "com/mojang/blaze3d/vertex/VertexFormat$class_5596",
+   "kept": 14,
+   "missing": [
+    "field_27383:I"
+   ],
+   "basis": "members 12.0/13 vs 12 (dice 0.96, 2nd 0.00), body votes 6/6, follows its outer class"
+  },
+  "net/minecraft/class_296": {
+   "to": "com/mojang/blaze3d/vertex/VertexFormatElement",
+   "kept": 4,
+   "renamed": [
+    "method_60845(IILnet/minecraft/class_296$class_297;Lnet/minecraft/class_296$class_298;I)Lnet/minecraft/class_296; -> register",
+    "method_60843()I -> mask",
+    "method_60847()I -> byteSize",
+    "method_60844(I)Lnet/minecraft/class_296; -> byId",
+    "method_60848(I)Ljava/util/stream/Stream; -> elementsFromMask",
+    "comp_2842()I -> id",
+    "comp_2843()I -> index",
+    "comp_2844()Lnet/minecraft/class_296$class_297; -> type",
+    "comp_2845()Lnet/minecraft/class_296$class_298; -> usage",
+    "comp_2846()I -> count",
+    "field_52107:Lnet/minecraft/class_296; -> POSITION",
+    "field_52108:Lnet/minecraft/class_296; -> COLOR",
+    "field_52109:Lnet/minecraft/class_296; -> UV0",
+    "field_52110:Lnet/minecraft/class_296; -> UV",
+    "field_52111:Lnet/minecraft/class_296; -> UV1",
+    "field_52112:Lnet/minecraft/class_296; -> UV2",
+    "field_52113:Lnet/minecraft/class_296; -> NORMAL"
+   ],
+   "missing": [
+    "method_22652(IJI)V",
+    "field_52106:I"
+   ],
+   "basis": "members 14.0/27 vs 26 (dice 0.53, 2nd 0.18), body votes 2/2"
+  },
+  "net/minecraft/class_296$class_297": {
+   "to": "com/mojang/blaze3d/vertex/VertexFormatElement$Type",
+   "kept": 3,
+   "renamed": [
+    "method_1391()I -> size",
+    "field_1623:Lnet/minecraft/class_296$class_297; -> FLOAT",
+    "field_1624:Lnet/minecraft/class_296$class_297; -> UBYTE",
+    "field_1621:Lnet/minecraft/class_296$class_297; -> BYTE",
+    "field_1625:Lnet/minecraft/class_296$class_297; -> SHORT"
+   ],
+   "missing": [
+    "method_1390()I",
+    "field_1622:Lnet/minecraft/class_296$class_297;",
+    "field_1619:Lnet/minecraft/class_296$class_297;",
+    "field_1617:Lnet/minecraft/class_296$class_297;"
+   ],
+   "basis": "members 5.0/12 vs 10 (dice 0.45, 2nd 0.00), body votes 4/4"
+  },
+  "net/minecraft/class_296$class_298": {
+   "to": "com/mojang/blaze3d/vertex/VertexFormatElement$Usage",
+   "kept": 3,
+   "renamed": [
+    "field_1633:Lnet/minecraft/class_296$class_298; -> POSITION",
+    "field_1635:Lnet/minecraft/class_296$class_298; -> NORMAL",
+    "field_1632:Lnet/minecraft/class_296$class_298; -> COLOR",
+    "field_1636:Lnet/minecraft/class_296$class_298; -> UV"
+   ],
+   "missing": [
+    "field_20782:Lnet/minecraft/class_296$class_298;",
+    "field_20783:Lnet/minecraft/class_296$class_298$class_4575;"
+   ],
+   "basis": "members 4.0/7 vs 6 (dice 0.62, 2nd 0.00), body votes 5/5"
+  },
+  "net/minecraft/class_3119$class_3120": {
+   "to": "net/minecraft/class_3057$class_3120",
+   "kept": 1,
+   "basis": "members 1.0/1 vs 2 (dice 0.67, 2nd 0.00), body votes 1/1"
+  },
+  "net/minecraft/class_3204$class_4077": {
+   "to": "net/minecraft/class_4077",
+   "kept": 4,
+   "missing": [
+    "<init>(Lnet/minecraft/class_3204;)V"
+   ],
+   "basis": "members 5.0/5 vs 7 (dice 0.83, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/class_4918$class_4920": {
+   "to": "net/minecraft/class_10806$class_4920",
+   "kept": 5,
+   "basis": "members 3.0/3 vs 6 (dice 0.67, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/class_6005$class_6006": {
+   "to": "net/minecraft/class_6012$class_6006",
+   "kept": 4,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/class_6008$class_6010": {
+   "to": "net/minecraft/class_6010",
+   "kept": 5,
+   "missing": [
+    "<init>(Ljava/lang/Object;Lnet/minecraft/class_6007;)V",
+    "method_34979()Lnet/minecraft/class_6007;",
+    "comp_2543()Lnet/minecraft/class_6007;"
+   ],
+   "basis": "members 4.0/6 vs 8 (dice 0.57, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/class_816": {
+   "to": "net/minecraft/class_10895$class_816",
+   "kept": 3,
+   "missing": [
+    "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;"
+   ],
+   "basis": "members 3.5/4 vs 5 (dice 0.78, 2nd 0.56), body votes 0/0"
+  },
+  "net/minecraft/class_816$class_9981": {
+   "to": "net/minecraft/class_10895$class_816$class_9981",
+   "kept": 6,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "net/minecraft/class_816$class_9982": {
+   "to": "net/minecraft/class_790$class_9982",
+   "kept": 6,
+   "missing": [
+    "method_62338()Ljava/util/Set;"
+   ],
+   "basis": "members 3.0/4 vs 4 (dice 0.75, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/class_9119": {
+   "to": "net/minecraft/class_10675",
+   "kept": 0,
+   "renamed": [
+    "findStructureBlockPos()Ljava/util/stream/Stream; -> findTestPos"
+   ],
+   "basis": "members 1.0/1 vs 1 (dice 1.00, 2nd 0.00), body votes 2/2"
+  },
+  "net/minecraft/class_9125": {
+   "to": "net/minecraft/class_10674",
+   "kept": 0,
+   "renamed": [
+    "findTestFunctions()Ljava/util/stream/Stream; -> findTests"
+   ],
+   "basis": "members 1.0/1 vs 1 (dice 1.00, 2nd 0.00), body votes 2/2"
+  },
+  "net/minecraft/class_9979": {
+   "to": "net/minecraft/class_1087$class_9979",
+   "kept": 1,
+   "missing": [
+    "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;"
+   ],
+   "basis": "members 1.5/2 vs 2 (dice 0.75, 2nd 0.00), body votes 1/1"
+  }
+ }
+}

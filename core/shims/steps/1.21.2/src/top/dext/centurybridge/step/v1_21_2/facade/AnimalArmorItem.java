@@ -49,27 +49,27 @@ public class AnimalArmorItem extends class_4059 {
 
     /** getType(): BODY */
     public class_8051 method_48398() {
-        return CbItemArmor.super_method_48398(this);
+        return CbItemArmor.super_method_48398Animal(this);
     }
 
     /** getMaterial() */
     public class_6880<ArmorMaterial> method_7686() {
-        return CbItemArmor.super_method_7686(this);
+        return CbItemArmor.super_method_7686Animal(this);
     }
 
     /** getDefense() */
     public int method_7687() {
-        return CbItemArmor.super_method_7687(this);
+        return CbItemArmor.super_method_7687Animal(this);
     }
 
     /** getToughness() */
     public float method_26353() {
-        return CbItemArmor.super_method_26353(this);
+        return CbItemArmor.super_method_26353Animal(this);
     }
 
     /** getEquipmentSlot(): BODY */
     public class_1304 method_7685() {
-        return CbItemArmor.super_method_7685(this);
+        return CbItemArmor.super_method_7685Animal(this);
     }
 
     /** getEquipSound(): through this class's getMaterial(), as 1.21.1's did */

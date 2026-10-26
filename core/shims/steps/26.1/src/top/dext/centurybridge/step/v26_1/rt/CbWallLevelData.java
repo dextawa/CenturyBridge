@@ -121,14 +121,24 @@ public final class CbWallLevelData {
 
     /**
      * 1.21.11 WorldData.getGameRules(): the primary level data's game rules, which 26.1 keeps on the server.
-     * Answered for the running server's own world data (as {@link #worldGenOptions}).
+     * Answered for the running server's own world data (as {@link #worldGenOptions}); for world data 26.1 handed a
+     * 1.21.11 CreateWorldCallback, the new world's initial rules it came with (rt/CbWallWorldLoad), the defaults of its
+     * features when 26.1 passed none (what such a world starts with), kept so every call answers the same object.
      */
     public static GameRules getGameRules(WorldData data) {
         MinecraftServer s = SERVER;
-        if (s == null || s.getWorldData() != data) {
-            throw new IllegalStateException(data + ": 1.21.11 world data of no running server has no game rules in 26.1");
+        if (s != null && s.getWorldData() == data) {
+            return s.getGameRules();
         }
-        return s.getGameRules();
+        Optional<GameRules> initial = CbWallWorldLoad.keptRules(data);
+        if (initial != null) {
+            if (initial.isEmpty()) {
+                initial = Optional.of(new GameRules(data.enabledFeatures()));
+                CbWallWorldLoad.keepRules(data, initial);
+            }
+            return initial.get();
+        }
+        throw new IllegalStateException(data + ": 1.21.11 world data of no running server has no game rules in 26.1");
     }
 
     /** 1.21.11 PrimaryLevelData.WORLD_GEN_SETTINGS (the level.dat key 1.21.11 wrote them under) */

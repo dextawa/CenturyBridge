@@ -31,7 +31,6 @@ public abstract class CbWallCreateFreshLevelRulesMixin {
         if (!rules.isEmpty()) {
             return rules;
         }
-        GameRules kept = ((CbWallLevelSettings.Rules) (Object) stem.worldDataAndGenSettings().data().getLevelSettings()).cb$gameRules();
-        return kept != null ? Optional.of(kept) : rules;
+        return CbWallLevelSettings.builtRules(stem.worldDataAndGenSettings().data().getLevelSettings());
     }
 }

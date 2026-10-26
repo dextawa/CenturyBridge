@@ -202,9 +202,10 @@ public final class CbWallWorldCalls {
 
     // ---- level storage ----
 
-    /** 1.21.11 LevelStorageAccess.saveDataTag(RegistryAccess, WorldData) */
+    /** 1.21.11 LevelStorageAccess.saveDataTag(RegistryAccess, WorldData) (with its generation settings and rules: CbWallWorldLoad) */
     public static void saveDataTag(LevelStorageSource.LevelStorageAccess access, RegistryAccess registries, WorldData data) {
         access.saveDataTag(data);
+        CbWallWorldLoad.saveSplitData(access, registries, data);
     }
 
     /**
@@ -216,6 +217,7 @@ public final class CbWallWorldCalls {
                                    CompoundTag player) {
         UUID id = player == null ? null : player.read("UUID", UUIDUtil.CODEC).orElse(null);
         access.saveDataTag(data, id);
+        CbWallWorldLoad.saveSplitData(access, registries, data);
         if (id == null) {
             return;
         }
