@@ -198,6 +198,12 @@ public class S6bTestMod implements ModInitializer {
             check(false, "saveData threw " + e);
         }
         try {
+            leash(level);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            check(false, "leash threw " + e);
+        }
+        try {
             problems();
         } catch (Throwable e) {
             e.printStackTrace();
@@ -337,6 +343,91 @@ public class S6bTestMod implements ModInitializer {
         float pending() {
             return field_6976;
         }
+    }
+
+    /** a 1.21.5 cow whose handleLeashAtDistance override stops the leash tick (answers false), counting the asks */
+    static class CbStubbornCow extends net.minecraft.class_10730 {
+        int asked;
+        float askedAt;
+
+        CbStubbornCow(class_1937 level) {
+            super(class_1299.field_6085, level);
+        }
+
+        @Override
+        public boolean method_60956(net.minecraft.class_1297 holder, float distance) {
+            asked++;
+            askedAt = distance;
+            return false;
+        }
+    }
+
+    /** a 1.21.5 cow whose elasticRangeLeashBehaviour override pulls straight up, counting the pulls */
+    static class CbPullCow extends net.minecraft.class_10730 {
+        int pulls;
+
+        CbPullCow(class_1937 level) {
+            super(class_1299.field_6085, level);
+        }
+
+        @Override
+        public void method_61162(net.minecraft.class_1297 holder, float distance) {
+            pulls++;
+            this.method_18799(new net.minecraft.class_243(0.0, 0.5, 0.0));
+        }
+    }
+
+    static final String[] NATIVE_LEASH = {"cb.s6bn.leash.head", "cb.s6bn.leash.tail", "cb.s6bn.leash.elastic", "cb.s6bn.leash.pull", "cb.s6bn.leash.close"};
+
+    static long[] nativeLeash() {
+        long[] n = new long[NATIVE_LEASH.length];
+        for (int i = 0; i < n.length; i++) {
+            n[i] = counter(NATIVE_LEASH[i]);
+        }
+        return n;
+    }
+
+    static String leashDelta(long[] before) {
+        long[] now = nativeLeash();
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < now.length; i++) {
+            b.append(i == 0 ? "" : ",").append(now[i] - before[i]);
+        }
+        return b.toString();
+    }
+
+    /** one 1.21.6 Leashable.tickLeash of {@code e} leashed to a holder {@code d} blocks away; the native counters' deltas */
+    static String leashTick(class_3218 level, net.minecraft.class_10730 e, double d) {
+        net.minecraft.class_10730 holder = new net.minecraft.class_10730(class_1299.field_6085, level);
+        holder.method_5814(d, -60.0, 0.0);
+        e.method_5814(0.0, -60.0, 0.0);
+        e.method_60964(holder, false);
+        long[] n = nativeLeash();
+        net.minecraft.class_9817.method_60965(level, e);
+        return leashDelta(n);
+    }
+
+    /**
+     * The restored leash hooks on 1.21.6's Leashable.tickLeash, with the native 1.21.6 mod (cb-s6bn LeashTickMixin)
+     * counting HEAD, TAIL, checkElasticInteractions, onElasticLeashPull and closeRangeLeashBehaviour: a vanilla cow runs
+     * 1.21.6's tick unchanged (close range at 3 blocks, elastic at 8); a cow whose override answers false stops after
+     * whenLeashedTo, as 1.21.5 returned; a cow whose elastic override pulls gets its own pull in place of 1.21.6's.
+     */
+    static void leash(class_3218 level) {
+        String near = leashTick(level, new net.minecraft.class_10730(class_1299.field_6085, level), 3.0);
+        check(near.equals("1,1,0,0,1"), "vanilla cow leashed 3 blocks away: 1.21.6's tick unchanged, native HEAD/TAIL/close fire: " + near);
+        net.minecraft.class_10730 far = new net.minecraft.class_10730(class_1299.field_6085, level);
+        String farD = leashTick(level, far, 8.0);
+        check(farD.startsWith("1,1,1,"), "vanilla cow leashed 8 blocks away: 1.21.6's elastic check runs, native HEAD/TAIL/elastic fire: " + farD);
+        CbStubbornCow stubborn = new CbStubbornCow(level);
+        String st = leashTick(level, stubborn, 8.0);
+        check(stubborn.asked == 1 && Math.abs(stubborn.askedAt - 8.0F) < 1.0E-4F && st.equals("1,0,0,0,0"),
+            "cow whose handleLeashAtDistance answers false: asked once with 1.21.5's distanceTo (" + stubborn.askedAt + "), the rest of 1.21.6's tick cancelled (" + stubborn.asked + "; " + st + ")");
+        CbPullCow puller = new CbPullCow(level);
+        String pu = leashTick(level, puller, 8.0);
+        net.minecraft.class_243 m = puller.method_18798();
+        check(puller.pulls == 1 && m.field_1352 == 0.0 && m.field_1351 == 0.5 && m.field_1350 == 0.0 && pu.equals("1,1,1,1,0"),
+            "cow whose elasticRangeLeashBehaviour pulls: its pull replaces 1.21.6's, 1.21.6's check and onElasticLeashPull still run (" + puller.pulls + ", " + m + "; " + pu + ")");
     }
 
     static long counter(String key) {

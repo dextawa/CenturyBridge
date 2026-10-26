@@ -6,5 +6,10 @@
   "net/minecraft/class_1799.method_57376(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_6/rt/CbItemStacks#method_57376",
   "net/minecraft/class_1799.method_57358(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_6/rt/CbItemStacks#method_57358"
  },
- "_basis": "ItemStack.parse(provider, tag) / save(provider, prefix) / save(provider): 1.21.5's bodies on 1.21.6's unchanged ItemStack.CODEC (CbItemStacks, javap of both); ItemStack is final, so a call is the whole API surface"
+ "_basis": "ItemStack.parse(provider, tag) / save(provider, prefix) / save(provider): 1.21.5's bodies on 1.21.6's unchanged ItemStack.CODEC (CbItemStacks, javap of both); ItemStack is final, so a call is the whole API surface",
+ "covers": [
+  "net/minecraft/class_9817.method_60956(Lnet/minecraft/class_1297;F)Z",
+  "net/minecraft/class_9817.method_61162(Lnet/minecraft/class_1297;F)V"
+ ],
+ "_leash_covers_basis": "Leashable.handleLeashAtDistance / elasticRangeLeashBehaviour, restored as Leashable defaults with 1.21.5's bodies (CbLeashRestoredMixin) and 1.21.5's vanilla overrides (PathfinderMob, TamableAnimal, AbstractHorse, Camel, AbstractBoat); 1.21.6's tickLeash asks them for an entity whose class takes a hook from a converted mod or a mixed declaration (CbLeashRouteMixin)"
 }

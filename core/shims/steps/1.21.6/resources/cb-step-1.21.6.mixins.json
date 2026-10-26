@@ -16,7 +16,14 @@
     "CbInventorySaveRestoredMixin",
     "CbAbilitiesSaveRestoredMixin",
     "CbPlayerSaveRouteMixin",
-    "CbInventoryCarrierRouteMixin"
+    "CbInventoryCarrierRouteMixin",
+    "CbLeashRestoredMixin",
+    "CbLeashPathfinderRestoredMixin",
+    "CbLeashTamableRestoredMixin",
+    "CbLeashHorseRestoredMixin",
+    "CbLeashCamelRestoredMixin",
+    "CbLeashBoatRestoredMixin",
+    "CbLeashRouteMixin"
   ],
   "client": [
     "CbRenderAttachedRegionMixin",

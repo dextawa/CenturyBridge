@@ -10,7 +10,8 @@
     "InventorySaveMixin",
     "ContainerSaveMixin",
     "EnderSaveMixin",
-    "AbilitiesSaveMixin"
+    "AbilitiesSaveMixin",
+    "LeashTickMixin"
   ],
   "injectors": {
     "defaultRequire": 1
