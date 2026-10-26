@@ -57,7 +57,7 @@ public final class EntitySubPredicates {
             return new Instance(value);
         }
 
-        private Instance method_58159(V value) {
+        public Instance method_58159(V value) {
             return new Instance(value);
         }
 
@@ -65,7 +65,7 @@ public final class EntitySubPredicates {
         public class Instance implements class_7376 {
             public final V field_49796;
 
-            Instance(V value) {
+            public Instance(V value) {
                 this.field_49796 = value;
             }
 
@@ -104,7 +104,7 @@ public final class EntitySubPredicates {
             return new Instance(holders);
         }
 
-        private Instance method_58357(class_6885<V> holders) {
+        public Instance method_58357(class_6885<V> holders) {
             return new Instance(holders);
         }
 
@@ -112,7 +112,7 @@ public final class EntitySubPredicates {
         public class Instance implements class_7376 {
             public final class_6885<V> field_49977;
 
-            Instance(class_6885<V> holders) {
+            public Instance(class_6885<V> holders) {
                 this.field_49977 = holders;
             }
 
