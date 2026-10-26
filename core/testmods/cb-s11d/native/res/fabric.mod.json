@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s11dn",
+  "version": "1.0.0",
+  "name": "CB s11 dimension effects (native 1.21.11)",
+  "description": "Native 1.21.11 client mod: its mixins on the 1.21.11 calls step 1.21.10 -> 1.21.11's dimension effects routes keep must still fire; checks the routes' answers; tally CB-S11D n/n, then the client stops",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.s11dn.NativeClient"] },
+  "mixins": ["cb_s11dn.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.11", "cb_s11d": "*" }
+}

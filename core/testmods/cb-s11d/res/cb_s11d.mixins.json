@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.s11d.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["EffectsAccess"],
+  "injectors": { "defaultRequire": 1 }
+}
