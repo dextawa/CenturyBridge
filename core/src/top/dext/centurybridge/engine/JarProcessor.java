@@ -3347,6 +3347,9 @@ public final class JarProcessor {
         }
         final List<Chain.AdapterHook> adapterApply = new ArrayList<>();
         final Set<String> declaredShapes = new HashSet<>();
+        // a javac bridge of the class (ACC_BRIDGE) -> the method it forwards to (name+desc): an override hook on the
+        // erased shape defers to one reconnecting the typed method the bridge calls (s9: two hooks, one method)
+        final Map<String, String> bridgeCalls = new HashMap<>();
         ClassVisitor analysis = new ClassVisitor(Opcodes.ASM9) {
             String cls;
             String[] itfs;
@@ -3531,6 +3534,7 @@ public final class JarProcessor {
                 if (nh != null) {
                     declaredNewOverrides.add(nh);
                 }
+                final String bridgeShape = (acc & Opcodes.ACC_BRIDGE) != 0 ? mName + mDesc : null;
                 return new MethodVisitor(Opcodes.ASM9) {
                     /** NEW sites awaiting their <init>, LIFO per type: an <init> no pending
                      *  NEW pairs with is a super()/this() delegation. Every type is tracked --
@@ -3542,6 +3546,9 @@ public final class JarProcessor {
                     @Override
                     public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
                         checkClass(owner);
+                        if (bridgeShape != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
+                            bridgeCalls.putIfAbsent(bridgeShape, name + desc);
+                        }
                         boolean newSite = false;
                         if (name.equals("<init>")) {
                             java.util.ArrayDeque<Boolean> st = pendingNew.get(owner);
@@ -4382,8 +4389,26 @@ public final class JarProcessor {
             ordered.sort(java.util.Comparator.comparingInt(chain.overrideHooks::indexOf));
             java.util.Map<String, Chain.OverrideHook> byShape = new java.util.LinkedHashMap<>();
             java.util.List<Chain.OverrideHook> shadowed = new ArrayList<>();
+            Set<String> hookedOld = new HashSet<>();
+            for (Chain.OverrideHook h : ordered) {
+                hookedOld.add(h.oldName + h.oldDesc);
+            }
             for (Chain.OverrideHook h : ordered) {
                 if (declaredNewOverrides.contains(h)) {
+                    continue;
+                }
+                String fwd = bridgeCalls.get(h.oldName + h.oldDesc);
+                if (fwd != null && !fwd.equals(h.oldName + h.oldDesc) && hookedOld.contains(fwd)
+                        && vanillaAncestors(superOf[0], ifacesOf[0], layer).stream()
+                            .anyMatch(r -> chain.concreteOnTarget(r, h.newName, h.newDesc))) {
+                    // the old shape is the class's own javac bridge, the typed method it forwards to has a hook of its
+                    // own (s9: ParticleProvider.createParticle's erased hook beside DragonBreathParticle$Provider's typed
+                    // one), and the target's vanilla superclass runs a body for the erased new shape (its own bridge to
+                    // the typed new one, which that hook reconnects): a second synthesized method here would hand the
+                    // typed method's new argument to the old bridge's checkcast (ClassCastException)
+                    rpt.notes.add(tag + "override-hook deferred (" + h.oldName + h.oldDesc + " is a bridge to " + fwd
+                        + ", whose own hook reconnects it)");
+                    top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hook-bridge-deferred");
                     continue;
                 }
                 String shape = h.newName + h.newDesc;

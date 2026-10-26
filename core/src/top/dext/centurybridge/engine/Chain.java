@@ -917,6 +917,27 @@ public final class Chain {
     }
 
     /**
+     * Whether an instance method (analysis names) resolves on the target, JVM-style from {@code owner}, to a
+     * non-abstract declaration: a body the target runs for it (a vanilla javac bridge, say). Spelled as
+     * {@link #linksOnTarget} spells it.
+     */
+    public boolean concreteOnTarget(String owner, String name, String desc) {
+        if (targetRaw == null) {
+            return false;
+        }
+        String o = classRenames.getOrDefault(owner, owner);
+        String d = renamedDesc(desc);
+        String n = name;
+        if (wallRemapper != null) {
+            n = wallRemapper.mapMethodName(o, name, d);
+            d = wallRemapper.mapMethodDesc(d);
+            o = wallRemapper.map(o);
+        }
+        String hit = resolveOnTargetJvm(o, n, d);
+        return hit != null && !hit.contains(" abstract") && !hit.endsWith(" static");
+    }
+
+    /**
      * Whether a call the source release made (owner.name(desc), analysis names) links on the target as the converted
      * jar spells it: the step's classRenames on owner and descriptor, then past the wall the wall rename (the same
      * remapper the conversion applies). Resolved JVM-style in the target's namespace, with the call kind's
