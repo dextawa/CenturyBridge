@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 
 /**
  * 1.21.11 Camera members 26.1 reshaped.
@@ -17,7 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * </ul>
  */
 @Environment(EnvType.CLIENT)
-@Mixin(Camera.class)
+@Mixin(value = Camera.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallCameraLegacyMixin {
 
     public Camera.NearPlane getNearPlane() {

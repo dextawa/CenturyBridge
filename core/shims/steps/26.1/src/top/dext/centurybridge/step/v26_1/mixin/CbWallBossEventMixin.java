@@ -5,6 +5,7 @@ import java.util.UUID;
 import net.minecraft.server.bossevents.CustomBossEvent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Shadow;
 
 /**
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * set, which 26.1 keeps under the same name and saves; 1.21.11's loading called it for each saved player
  * (26.1's restores them from the packed event). Marks the event dirty, as 26.1's other changes do.
  */
-@Mixin(CustomBossEvent.class)
+@Mixin(value = CustomBossEvent.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallBossEventMixin {
 
     @Shadow

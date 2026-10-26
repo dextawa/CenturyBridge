@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.loader.Resour
 import net.minecraft.world.level.levelgen.structure.templatesystem.loader.TemplatePathFactory;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import org.spongepowered.asm.mixin.Shadow;
 
 /**
@@ -24,7 +25,7 @@ import org.spongepowered.asm.mixin.Shadow;
  *     (every source shares the manager's fixer and block lookup).</li>
  * </ul>
  */
-@Mixin(StructureTemplateManager.class)
+@Mixin(value = StructureTemplateManager.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallStructureTemplateManagerMixin {
 
     @Shadow

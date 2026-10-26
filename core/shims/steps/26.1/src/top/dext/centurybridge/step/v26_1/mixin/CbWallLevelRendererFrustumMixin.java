@@ -6,13 +6,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.culling.Frustum;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 
 /**
  * 1.21.11's LevelRenderer.captureFrustum / killFrustum / getCapturedFrustum: 26.1 moved the captured culling frustum
  * (the debug "freeze frustum" state) to the camera; the level renderer's is the game renderer's main camera's.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(LevelRenderer.class)
+@Mixin(value = LevelRenderer.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallLevelRendererFrustumMixin {
 
     public void captureFrustum() {
