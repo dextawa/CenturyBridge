@@ -42,6 +42,8 @@ public final class Driver {
     public static volatile int panicking;
     public static volatile int availableGoals;
     public static volatile int deflect;
+    public static volatile int itemEncode;
+    public static volatile int itemDecode;
     private static int ok;
     private static int fail;
 
@@ -68,6 +70,25 @@ public final class Driver {
             fail++;
             System.out.println("CB-SMX4BN FAIL " + c + " threw " + t);
             t.printStackTrace(System.out);
+        }
+    }
+
+    /** cb_smx4b's counter (its 1.20.4 mixins on the restored FriendlyByteBuf members), -1 when it is not loaded */
+    private static int conv(String field) {
+        try {
+            return Class.forName("cb.smx4b.Driver").getField(field).getInt(null);
+        } catch (ReflectiveOperationException e) {
+            return -1;
+        }
+    }
+
+    private static void zeroConv() {
+        for (String f : new String[] {"writeItemAsked", "readItemAsked", "writeProfileAsked", "readProfileAsked", "writePropertyAsked", "readPropertyAsked"}) {
+            try {
+                Class.forName("cb.smx4b.Driver").getField(f).setInt(null, 0);
+            } catch (ReflectiveOperationException e) {
+                return;
+            }
         }
     }
 
@@ -212,6 +233,25 @@ public final class Driver {
                 check("deflect", speed < 1.5, "Projectile.deflect=" + deflect + " (routed) speed=" + speed + " " + mode);
             } else {
                 check("deflect", deflect == 1 && speed < 1.5, "Projectile.deflect=" + deflect + " speed=" + speed + " " + mode);
+            }
+        });
+        run("item-codec", () -> {
+            // a 1.20.5 packet carrying a stack, through its own stream codec (-> ItemStack.OPTIONAL_STREAM_CODEC)
+            class_1799 sword = new class_1799(class_1802.field_8371);
+            sword.method_7974(5);
+            net.minecraft.class_9129 buf = new net.minecraft.class_9129(io.netty.buffer.Unpooled.buffer(), server.method_30611());
+            zeroConv();
+            itemEncode = 0;
+            itemDecode = 0;
+            net.minecraft.class_2653.field_47918.encode(buf, new net.minecraft.class_2653(1, 2, 3, sword));
+            net.minecraft.class_2653 back = net.minecraft.class_2653.field_47918.decode(buf);
+            boolean same = class_1799.method_7973(sword, back.method_11449()) && buf.readableBytes() == 0;
+            String d = "codec encode=" + itemEncode + " decode=" + itemDecode + " writeItem=" + conv("writeItemAsked")
+                + " readItem=" + conv("readItemAsked") + " roundTrip=" + same + " " + mode;
+            if (mixed) {
+                check("item-codec", same && itemEncode == 1 && itemDecode == 1 && conv("writeItemAsked") == 1 && conv("readItemAsked") == 1, d);
+            } else {
+                check("item-codec", same && itemEncode == 1 && itemDecode == 1, d);
             }
         });
         System.out.println("CB-SMX4BN summary ok=" + ok + " fail=" + fail);

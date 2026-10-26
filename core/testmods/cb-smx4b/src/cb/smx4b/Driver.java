@@ -49,6 +49,13 @@ public final class Driver {
     public static volatile net.minecraft.class_1314 panicMob;
     public static volatile int deflectAsked;
     public static volatile boolean cancelDeflect;
+    // FriendlyByteBuf members (BufItemMixin / BufProfileMixin); cb-smx4bn reads them by reflection when it drives 1.20.5's codecs
+    public static volatile int writeItemAsked;
+    public static volatile int readItemAsked;
+    public static volatile int writeProfileAsked;
+    public static volatile int readProfileAsked;
+    public static volatile int writePropertyAsked;
+    public static volatile int readPropertyAsked;
     private static int ok;
     private static int fail;
 
@@ -217,6 +224,32 @@ public final class Driver {
                     check("arrow-deflect-cancelled", deflectAsked == 1 && speed > 1.5, "deflect=" + deflectAsked + " speed=" + speed);
                 }
             }
+        });
+        run("buf-plain-calls", () -> {
+            // this mod's own 1.20.4 calls on a FriendlyByteBuf: the restored members, each mixin once, the values back
+            net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
+            class_1799 sword = new class_1799(class_1802.field_8371);
+            sword.method_7974(5);
+            com.mojang.authlib.GameProfile profile = new com.mojang.authlib.GameProfile(UUID.randomUUID(), "cbsmx4b");
+            profile.getProperties().put("textures", new com.mojang.authlib.properties.Property("textures", "v1", "s1"));
+            writeItemAsked = 0;
+            readItemAsked = 0;
+            writeProfileAsked = 0;
+            readProfileAsked = 0;
+            writePropertyAsked = 0;
+            readPropertyAsked = 0;
+            buf.method_10793(sword);
+            buf.method_43616(profile);
+            class_1799 back = buf.method_10819();
+            com.mojang.authlib.GameProfile p2 = buf.method_43623();
+            com.mojang.authlib.properties.Property t = p2.getProperties().get("textures").iterator().next();
+            boolean same = class_1799.method_7973(sword, back) && p2.getId().equals(profile.getId()) && p2.getName().equals("cbsmx4b")
+                && t.value().equals("v1") && "s1".equals(t.signature()) && buf.readableBytes() == 0;
+            check("buf-plain-calls", same && writeItemAsked == 1 && readItemAsked == 1 && writeProfileAsked == 1 && readProfileAsked == 1
+                    && writePropertyAsked == 1 && readPropertyAsked == 1,
+                "writeItem=" + writeItemAsked + " readItem=" + readItemAsked + " writeGameProfile=" + writeProfileAsked
+                    + " readGameProfile=" + readProfileAsked + " writeProperty=" + writePropertyAsked + " readProperty=" + readPropertyAsked
+                    + " roundTrip=" + same);
         });
         System.out.println("CB-SMX4B summary ok=" + ok + " fail=" + fail);
     }

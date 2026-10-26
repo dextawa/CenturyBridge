@@ -30,8 +30,31 @@ public final class CbRoutes {
     public static final String GOALS_RUNNING = "net/minecraft/class_1355.method_19048()Ljava/util/stream/Stream;";
     public static final String ARROW_DEFLECT = "net/minecraft/class_1665.method_55052()V";
 
+    public static final String BUF_WRITE_ITEM = "net/minecraft/class_2540.method_10793(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2540;";
+    public static final String BUF_READ_ITEM = "net/minecraft/class_2540.method_10819()Lnet/minecraft/class_1799;";
+
     private static final ThreadLocal<Set<Object>> IN_RESTORED =
         ThreadLocal.withInitial(() -> Collections.newSetFromMap(new IdentityHashMap<>()));
+
+    /** how deep this thread is inside restored FriendlyByteBuf members (their own stream codec calls run as 1.20.5's) */
+    private static final ThreadLocal<int[]> IN_IO = ThreadLocal.withInitial(() -> new int[1]);
+
+    /**
+     * whether a 1.20.5 stream codec should ask the restored FriendlyByteBuf member now: mixed, and this thread is not
+     * inside a restored buffer member (whose own codec calls, and the codec calls of values nested in what it writes,
+     * run as 1.20.5 has them -- 1.20.4 wrote nested values as NBT, not through these members)
+     */
+    public static boolean routeIo(String key) {
+        return CbMixedMembers.mixed(key) && IN_IO.get()[0] == 0;
+    }
+
+    public static void enterIo() {
+        IN_IO.get()[0]++;
+    }
+
+    public static void exitIo() {
+        IN_IO.get()[0]--;
+    }
 
     /** whether the route should ask the restored member for this object now (mixed, and not already inside it) */
     public static boolean route(String key, Object self) {
@@ -69,6 +92,13 @@ public final class CbRoutes {
     /** the restored 1.20.4 AbstractArrow.deflect, for the Projectile.hitTargetOrDeflectSelf route */
     public interface ArrowDeflect {
         void method_55052();
+    }
+
+    /** the restored 1.20.4 FriendlyByteBuf members the stream codec routes ask (CbNetFriendlyByteBufBridge) */
+    public interface LegacyBuf {
+        net.minecraft.class_2540 method_10793(net.minecraft.class_1799 stack);
+
+        net.minecraft.class_1799 method_10819();
     }
 
     /**
