@@ -1,0 +1,10 @@
+{
+ "staticRedirects": {
+  "net/minecraft/class_1799.method_57360(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_2520;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_6/rt/CbItemStacks"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1799.method_57376(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_6/rt/CbItemStacks#method_57376",
+  "net/minecraft/class_1799.method_57358(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_6/rt/CbItemStacks#method_57358"
+ },
+ "_basis": "ItemStack.parse(provider, tag) / save(provider, prefix) / save(provider): 1.21.5's bodies on 1.21.6's unchanged ItemStack.CODEC (CbItemStacks, javap of both); ItemStack is final, so a call is the whole API surface"
+}

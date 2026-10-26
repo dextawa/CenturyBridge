@@ -5,9 +5,17 @@
   "net/minecraft/class_5411.method_30189(Lnet/minecraft/class_2487;)V",
   "net/minecraft/class_1496.method_6763()Z",
   "net/minecraft/class_1496.method_6758(Z)V",
-  "net/minecraft/class_1496.field_6968:Z"
+  "net/minecraft/class_1496.field_6968:Z",
+  "net/minecraft/class_1277.method_7659(Lnet/minecraft/class_2499;Lnet/minecraft/class_7225$class_7874;)V",
+  "net/minecraft/class_1277.method_7660(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2499;",
+  "net/minecraft/class_1656.method_7249(Lnet/minecraft/class_2487;)V",
+  "net/minecraft/class_1656.method_7251(Lnet/minecraft/class_2487;)V",
+  "net/minecraft/class_1661.method_7384(Lnet/minecraft/class_2499;)Lnet/minecraft/class_2499;",
+  "net/minecraft/class_1661.method_7397(Lnet/minecraft/class_2499;)V",
+  "net/minecraft/class_1730.method_7659(Lnet/minecraft/class_2499;Lnet/minecraft/class_7225$class_7874;)V",
+  "net/minecraft/class_1730.method_7660(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2499;"
  ],
- "_covers_basis": "1.21.5 members the layer restores on the game class with 1.21.5's bodies: ServerRecipeBook.toNbt / fromNbt and RecipeBookSettings.write (CbRecipeBookRestoredMixin / CbRecipeBookSettingsRestoredMixin; vanilla's 1.21.6 player save / load asks them, CbRecipeBookRouteMixin), AbstractHorse's jump flag field, isJumping and setIsJumping (CbHorseJumpRestoredMixin; set and read on 1.21.6's jump paths, CbHorseJumpRouteMixin)",
+ "_covers_basis": "1.21.5 members the layer restores on the game class with 1.21.5's bodies: ServerRecipeBook.toNbt / fromNbt and RecipeBookSettings.write (CbRecipeBookRestoredMixin / CbRecipeBookSettingsRestoredMixin; vanilla's 1.21.6 player save / load asks them, CbRecipeBookRouteMixin), AbstractHorse's jump flag field, isJumping and setIsJumping (CbHorseJumpRestoredMixin; set and read on 1.21.6's jump paths, CbHorseJumpRouteMixin), SimpleContainer.fromTag / createTag, PlayerEnderChestContainer's overrides of both, Inventory.save / load(ListTag), Abilities.addSaveData / loadSaveData (CbContainerSaveRestoredMixin, CbEnderSaveRestoredMixin, CbInventorySaveRestoredMixin, CbAbilitiesSaveRestoredMixin; 1.21.6's Player save / load and InventoryCarrier write / read ask them when a converted mod mixed one or the object is a subclass: CbPlayerSaveRouteMixin, CbInventoryCarrierRouteMixin)",
  "classRenames": {
   "net/minecraft/class_7648": "top/dext/centurybridge/step/v1_21_6/facade/PacketSendListener",
   "net/minecraft/class_10738": "top/dext/centurybridge/step/v1_21_6/facade/TerracottaBlock"
