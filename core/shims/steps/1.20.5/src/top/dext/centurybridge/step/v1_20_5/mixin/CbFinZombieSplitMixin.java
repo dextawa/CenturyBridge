@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
 import java.util.Objects;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * EntityZombieSplitFix: 1.20.4's protected getNewNameAndTag(name, tag), back for a subclass's call
@@ -11,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * the override hook, CbFinDatafix.cbZombieSplit). 1.20.4's body: a Zombie of ZombieType 1-5 becomes a
  * ZombieVillager with that profession minus one, of type 6 a Husk, ZombieType removed.
  */
-@Mixin(net.minecraft.class_1175.class)
+@Mixin(value = net.minecraft.class_1175.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinZombieSplitMixin {
 
     /** was getNewNameAndTag(name, tag) */

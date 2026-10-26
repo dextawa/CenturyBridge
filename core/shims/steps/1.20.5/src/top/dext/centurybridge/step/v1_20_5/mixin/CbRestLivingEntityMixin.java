@@ -2,11 +2,10 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import top.dext.centurybridge.step.v1_20_5.facade.class_1310;
 import top.dext.centurybridge.step.v1_20_5.rt.CbRestAttributes;
 import top.dext.centurybridge.step.v1_20_5.rt.CbRestMobType;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 import top.dext.centurybridge.step.v1_20_5.rt.Guard;
 
 /**
@@ -18,14 +17,14 @@ import top.dext.centurybridge.step.v1_20_5.rt.Guard;
  * 1.20.4 LivingEntity.getMobType() (see rt/CbRestMobType): the cover answers from the entity type's
  * tags; where 1.20.5 decides by the tags that replaced it -- undead healing and harm inverted, undead
  * ignoring poison and regeneration -- an entity whose class declares a MobType decides by it, as in
- * 1.20.4.
+ * 1.20.4 (CbRestLivingEntityMixinHooks, default priority).
  * <p>
  * 1.20.4 getAttributeValue / getAttributeBaseValue(Attribute), to which the Holder members delegated, and
  * broadcastBreakEvent(hand) (the hand's slot): each cover calls 1.20.5's member with the step's Guard
  * held, so a mod class's synthesized 1.20.5 shape (its 1.20.4 override, reconnected by this step's hooks)
  * falls through to its superclass instead of forwarding back.
  */
-@Mixin(net.minecraft.class_1309.class)
+@Mixin(value = net.minecraft.class_1309.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestLivingEntityMixin {
 
     @Shadow
@@ -86,17 +85,5 @@ public abstract class CbRestLivingEntityMixin {
     /** 1.20.4 LivingEntity.getMobType(): what the entity type's tags say */
     public class_1310 method_6046() {
         return CbRestMobType.of(((net.minecraft.class_1297) (Object) this).method_5864());
-    }
-
-    @Redirect(method = {"method_6049", "method_5999"}, at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/class_1299;method_20210(Lnet/minecraft/class_6862;)Z"))
-    private boolean cbRest$undeadTag(net.minecraft.class_1299<?> type, net.minecraft.class_6862<net.minecraft.class_1299<?>> tag) {
-        if (tag == net.minecraft.class_3483.field_48290 || tag == net.minecraft.class_3483.field_48291) {
-            class_1310 declared = CbRestMobType.declared((net.minecraft.class_1297) (Object) this);
-            if (declared != null) {
-                return declared == class_1310.field_6289;
-            }
-        }
-        return type.method_20210(tag);
     }
 }

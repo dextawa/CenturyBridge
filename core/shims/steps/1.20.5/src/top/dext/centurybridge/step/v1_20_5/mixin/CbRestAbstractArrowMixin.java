@@ -1,6 +1,7 @@
 package top.dext.centurybridge.step.v1_20_5.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * 1.20.4 AbstractArrow.deflect(), which 1.20.5 replaced by Projectile.deflect(ProjectileDeflection, ..):
@@ -9,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * that deflects arrows; for a mod class overriding it, mixin/CbRestProjectileMixin calls it there again.
  * Extends Entity for the inherited protected random.
  */
-@Mixin(net.minecraft.class_1665.class)
+@Mixin(value = net.minecraft.class_1665.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestAbstractArrowMixin extends net.minecraft.class_1297 {
 
     protected CbRestAbstractArrowMixin(net.minecraft.class_1299<?> type, net.minecraft.class_1937 level) {

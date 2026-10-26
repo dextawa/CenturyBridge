@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * RealmsResetWorldScreen.switchSlot(callback): 1.20.4's -- the long-running task screen (back to the screen
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * 1.20.5 folded the switch into its own reset flow and dropped the method.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_4410.class)
+@Mixin(value = net.minecraft.class_4410.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientRealmsResetWorldMixin extends net.minecraft.class_437 {
 
     @Shadow

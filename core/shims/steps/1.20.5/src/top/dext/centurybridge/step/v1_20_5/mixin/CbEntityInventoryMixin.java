@@ -3,13 +3,14 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * Inventory: 1.20.4's hurtArmor(source, damage, slots) -- a quarter of the damage (at least 1) to each named armor
  * piece that is armor and the source can hurt -- which 1.20.5 moved onto LivingEntity. 1.20.4's body over 1.20.5's
  * item damage, breaking in the same armor slot.
  */
-@Mixin(net.minecraft.class_1661.class)
+@Mixin(value = net.minecraft.class_1661.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityInventoryMixin {
 
     @Shadow

@@ -6,13 +6,14 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * GoalSelector: 1.20.4's getRunningGoals() and setNewGoalRate(rate). 1.20.5 dropped both: the first is the
  * available goals that are running, as 1.20.4 answered it; 1.20.4 stored the second in a field nothing read
  * (its tick did not consult it), and so does this.
  */
-@Mixin(net.minecraft.class_1355.class)
+@Mixin(value = net.minecraft.class_1355.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityGoalSelectorMixin {
 
     @Shadow

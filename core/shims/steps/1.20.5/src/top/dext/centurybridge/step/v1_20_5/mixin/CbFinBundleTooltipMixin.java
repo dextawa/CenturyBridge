@@ -4,12 +4,13 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_5.rt.CbFinWorld;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * BundleTooltip (a record over BundleContents in 1.20.5, reopened for 1.20.4 subclasses by the layer's access
  * widener): 1.20.4's getItems() and getWeight(), back for calls, super calls and overrides.
  */
-@Mixin(net.minecraft.class_5631.class)
+@Mixin(value = net.minecraft.class_5631.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinBundleTooltipMixin {
 
     @Shadow

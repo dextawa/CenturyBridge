@@ -3,9 +3,10 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /** Fireball: 1.20.4's protected getItemRaw() -- the synched item stack itself, empty when unset -- which 1.20.5 dropped */
-@Mixin(net.minecraft.class_3855.class)
+@Mixin(value = net.minecraft.class_3855.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityFireballRawMixin {
 
     @Shadow

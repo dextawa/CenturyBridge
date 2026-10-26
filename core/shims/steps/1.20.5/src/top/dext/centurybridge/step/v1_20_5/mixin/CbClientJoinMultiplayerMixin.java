@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * JoinMultiplayerScreen.setToolTip(lines): 1.20.4 kept the lines and drew them after the screen, once, then
@@ -10,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * server entries call now). The same lines, the same one-frame lifetime.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_500.class)
+@Mixin(value = net.minecraft.class_500.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientJoinMultiplayerMixin {
 
     /** 1.20.4 JoinMultiplayerScreen.setToolTip(lines) */

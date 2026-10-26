@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_20_5.facade.FriendlyByteBufReader;
 import top.dext.centurybridge.step.v1_20_5.facade.FriendlyByteBufWriter;
 import top.dext.centurybridge.step.v1_20_5.rt.CbNetBufs;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * FriendlyByteBuf: the 1.20.4 methods 1.20.5 took out or moved to stream codecs, back on the buffer
@@ -30,7 +31,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbNetBufs;
  * only through stream codecs on a RegistryFriendlyByteBuf: through the buffer's view
  * (CbNetBufs.cbRegistryBuf). The rest are 1.20.4's bodies over 1.20.5's primitives.
  */
-@Mixin(class_2540.class)
+@Mixin(value = class_2540.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbNetFriendlyByteBufBridge {
 
     private class_2540 cb$self() {

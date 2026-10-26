@@ -1,9 +1,10 @@
 package top.dext.centurybridge.step.v1_20_5.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /** Piglin: 1.20.4's protected makeSound(sound) -- the sound at the mob's volume and voice pitch -- which 1.20.5 dropped */
-@Mixin(net.minecraft.class_4836.class)
+@Mixin(value = net.minecraft.class_4836.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityPiglinSoundMixin extends net.minecraft.class_1309 {
 
     protected CbEntityPiglinSoundMixin(net.minecraft.class_1299<? extends net.minecraft.class_1309> type, net.minecraft.class_1937 level) {

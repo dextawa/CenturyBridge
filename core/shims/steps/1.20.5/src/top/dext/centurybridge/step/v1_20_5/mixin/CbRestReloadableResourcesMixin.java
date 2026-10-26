@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_5.facade.LootDataManager;
 import top.dext.centurybridge.step.v1_20_5.rt.CbLootData;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * 1.20.4 ReloadableServerResources.getLootData() (the loot data manager these resources loaded), which
@@ -16,7 +17,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbLootData;
  * also drops the furnace fuel map, which 1.20.5 caches from tags). The cover keeps 1.20.4's target and
  * 1.20.5's cache consistency.
  */
-@Mixin(net.minecraft.class_5350.class)
+@Mixin(value = net.minecraft.class_5350.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestReloadableResourcesMixin {
 
     @Shadow

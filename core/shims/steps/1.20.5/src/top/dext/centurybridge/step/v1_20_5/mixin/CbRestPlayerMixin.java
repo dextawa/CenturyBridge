@@ -1,9 +1,7 @@
 package top.dext.centurybridge.step.v1_20_5.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import top.dext.centurybridge.step.v1_20_5.rt.CbRestMobType;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 import top.dext.centurybridge.step.v1_20_5.rt.Guard;
 
 /**
@@ -11,14 +9,15 @@ import top.dext.centurybridge.step.v1_20_5.rt.Guard;
  * 1.20.5 keeps those heights in the player's dimensions per pose, which is what the cover answers.
  * <p>
  * Player.attack evaluates the weapon's damage bonus with the attacked entity known
- * (CbRestMobType.cbDamageBonus), so a target whose class declares a 1.20.4 MobType gets its bonus.
+ * (CbRestMobType.cbDamageBonus; CbRestPlayerMixinHooks, default priority), so a target whose class declares a
+ * 1.20.4 MobType gets its bonus.
  * <p>
  * 1.20.4 Player.disableShield(becauseOfAxe): the shield is disabled by chance -- a quarter, plus a
  * twentieth per level of block efficiency, plus three quarters when an axe did it -- which 1.20.5's
  * disableShield() always does (the attacker decides now); the cover rolls 1.20.4's chance and calls it
  * with the Guard held (a mod's 1.20.4 override is reconnected by this step's adapter hook).
  */
-@Mixin(net.minecraft.class_1657.class)
+@Mixin(value = net.minecraft.class_1657.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestPlayerMixin {
 
     /** 1.20.4 Player.getStandingEyeHeight(Pose, EntityDimensions) (public) */
@@ -45,11 +44,5 @@ public abstract class CbRestPlayerMixin {
                 }
             }
         }
-    }
-
-    @Redirect(method = "method_7324", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/class_1890;method_8218(Lnet/minecraft/class_1799;Lnet/minecraft/class_1299;)F"))
-    private float cbRest$damageBonus(net.minecraft.class_1799 stack, net.minecraft.class_1299<?> type, net.minecraft.class_1297 target) {
-        return CbRestMobType.cbDamageBonus(stack, type, target);
     }
 }
