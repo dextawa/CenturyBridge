@@ -1,6 +1,7 @@
 package top.dext.centurybridge.step.v1_20_3.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * WorldSelectionList.Entry.isSelectable() (method_43465), gone in 1.20.3. 1.20.2 declared it abstract and
@@ -8,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * a world entry when its world is not disabled, the loading header never (see the mixins on them). An
  * entry that answers nothing else is not selectable.
  */
-@Mixin(net.minecraft.class_528.class_7414.class)
+@Mixin(value = net.minecraft.class_528.class_7414.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWorldListEntryBaseMixin {
 
     public boolean method_43465() {

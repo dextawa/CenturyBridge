@@ -3,13 +3,14 @@ package top.dext.centurybridge.step.v1_20_3.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_20_3.rt.CbNet;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * ClientboundSetScorePacket's 1.20.2 surface on 1.20.3's record: getOwner(), getObjectiveName(), getScore()
  * forward to the record's accessors (virtually, see overrideRenames), and getMethod() answers REMOVE for a
  * packet made as 1.20.2's REMOVE (marked here; {@link CbNet#cbOutgoing} sends a reset for it), CHANGE else.
  */
-@Mixin(net.minecraft.class_2757.class)
+@Mixin(value = net.minecraft.class_2757.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbSetScorePacketMixin implements CbNet.CbLegacyScorePacket {
 
     @Unique

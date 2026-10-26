@@ -4,6 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_20_3.rt.CbGui;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * AbstractSelectionList's 1.20.2 surface that 1.20.3's widget-based list dropped: the 1.20.2 "height"
@@ -11,7 +12,7 @@ import top.dext.centurybridge.step.v1_20_3.rt.CbGui;
  * setLeftPos(x) and getScrollBottom(), each on the widget's geometry as 1.20.2 laid the list out
  * (x0 = left, x1 = right, y0 = top, y1 = bottom).
  */
-@Mixin(net.minecraft.class_350.class)
+@Mixin(value = net.minecraft.class_350.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbAbstractSelectionListMixin implements CbGui.CbLegacyListGeometry {
 
     /** headerHeight */

@@ -16,13 +16,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_3.rt.CbWorldScoreboardV;
 import top.dext.centurybridge.step.v1_20_3.rt.CbWorldScores;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * 1.20.2's Scoreboard player-score methods on 1.20.3's (covers, see CbWorldScoreboardV): each with its 1.20.2
  * body over the 1.20.3 ScoreHolder API (CbWorldScores), and forAllObjectives over the objectives of the criteria in
  * the order they were added, as 1.20.2 kept them.
  */
-@Mixin(class_269.class)
+@Mixin(value = class_269.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWorldScoreboardMixin implements CbWorldScoreboardV {
 
     @Shadow

@@ -4,12 +4,13 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_3.rt.CbDataRecipes;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * BlockFamily.Builder's 1.20.2 featureLockedBehind(flags) back on the class (a cover), the 1.20.2
  * body: the family's required features become exactly those flags (CbDataBlockFamilyMixin holds them).
  */
-@Mixin(net.minecraft.class_5794.class_5795.class)
+@Mixin(value = net.minecraft.class_5794.class_5795.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbDataBlockFamilyBuilderMixin {
 
     @Shadow
