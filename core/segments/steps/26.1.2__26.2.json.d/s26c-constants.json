@@ -1,0 +1,31 @@
+{
+  "_s26c_constants": "s26c, item 3 (API families): 26.1.2 public static fields 26.2 dropped or retyped (LevelChunkSection SECTION_*, Waypoint.MAX_RANGE, ChunkPos.MAX_COORDINATE_VALUE, Timelines.NIGHT_FOG_COLOR_MULTIPLIER, Goat.LONG_JUMPING_DIMENSIONS, Mth axes, ObjectiveCriteria TEAM_KILL / KILLED_BY_TEAM), Mth.rotationAroundAxis(Vector3f..), Team.getColor() on a Team receiver. Values read off 26.1.2's clinits, javap of both (CbS26Constants javadoc)",
+  "fieldGetters": {
+    "net/minecraft/world/level/chunk/LevelChunkSection.SECTION_WIDTH:I": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#LevelChunkSection_SECTION_WIDTH",
+    "net/minecraft/world/level/chunk/LevelChunkSection.SECTION_HEIGHT:I": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#LevelChunkSection_SECTION_HEIGHT",
+    "net/minecraft/world/level/chunk/LevelChunkSection.SECTION_SIZE:I": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#LevelChunkSection_SECTION_SIZE",
+    "net/minecraft/world/waypoints/Waypoint.MAX_RANGE:I": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#Waypoint_MAX_RANGE",
+    "net/minecraft/world/level/ChunkPos.MAX_COORDINATE_VALUE:I": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#ChunkPos_MAX_COORDINATE_VALUE",
+    "net/minecraft/world/timeline/Timelines.NIGHT_FOG_COLOR_MULTIPLIER:I": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#Timelines_NIGHT_FOG_COLOR_MULTIPLIER",
+    "net/minecraft/world/entity/animal/goat/Goat.LONG_JUMPING_DIMENSIONS:Lnet/minecraft/world/entity/EntityDimensions;": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#Goat_LONG_JUMPING_DIMENSIONS",
+    "net/minecraft/util/Mth.X_AXIS:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#Mth_X_AXIS",
+    "net/minecraft/util/Mth.Y_AXIS:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#Mth_Y_AXIS",
+    "net/minecraft/util/Mth.Z_AXIS:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#Mth_Z_AXIS",
+    "net/minecraft/world/scores/criteria/ObjectiveCriteria.TEAM_KILL:[Lnet/minecraft/world/scores/criteria/ObjectiveCriteria;": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#ObjectiveCriteria_TEAM_KILL",
+    "net/minecraft/world/scores/criteria/ObjectiveCriteria.KILLED_BY_TEAM:[Lnet/minecraft/world/scores/criteria/ObjectiveCriteria;": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#ObjectiveCriteria_KILLED_BY_TEAM"
+  },
+  "staticRedirects": {
+    "net/minecraft/util/Mth.rotationAroundAxis(Lorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;)Lorg/joml/Quaternionf;": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants"
+  },
+  "instanceRedirects": {
+    "net/minecraft/world/scores/Team.getColor()Lnet/minecraft/ChatFormatting;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team#getColor"
+  },
+  "covers": [
+    "net/minecraft/network/Connection.isEncrypted()Z"
+  ],
+  "_s26c_covers_basis": "restored on Connection by mixin/CbS26ConnectionEncryptedMixin: true once setEncryptionKey ran on that connection (26.1.2 set its encrypted field at setEncryptionKey's head; 26.2 adds the same cipher handlers without the field). 26.2's two vanilla readers (PlayerTabOverlay, ClientPacketListener) moved to ClientPacketListener.onlineMode(), so an override no longer steers them",
+  "_s26c_redirects_basis": {
+    "net/minecraft/util/Mth.rotationAroundAxis(Lorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;)Lorg/joml/Quaternionf;": "javap: the same body; 26.2 reads the axis through Vector3fc's accessors instead of Vector3f's fields",
+    "net/minecraft/world/scores/Team.getColor()Lnet/minecraft/ChatFormatting;": "Team declares getColor abstract in both releases, 26.1.2 as ChatFormatting, 26.2 as Optional<TeamColor>; PlayerTeam receivers answer as the PlayerTeam redirect does, other teams by TeamColor name (CbS26Team.getColor(Team)); the getColor override hook now applies under Team (s26.json)"
+  }
+}
