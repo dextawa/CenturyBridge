@@ -21,7 +21,10 @@
     "CbS26CrashCategoryMixin",
     "CbS26ConnectionEncryptedMixin",
     "CbS26GroundNavigationMixin",
-    "CbS26StriderNavigationMixin"
+    "CbS26StriderNavigationMixin",
+    "CbS26BodyArmorRestoreMixin",
+    "CbS26BodyArmorHorseRouteMixin",
+    "CbS26BodyArmorWolfRouteMixin"
   ],
   "client": [
     "CbS26BedLayersMixin",
