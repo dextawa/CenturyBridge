@@ -71,6 +71,7 @@
     "CbModelSlotValueAccess",
     "CbModelStateLoaderMixin",
     "CbRenderDispatchMixin",
+    "CbRenderDispatchMixinHooks",
     "CbRenderEntityModelSetMixin",
     "CbRestClientPacketsMixin",
     "CbRestEquipmentAssetsInvoker",

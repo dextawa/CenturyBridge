@@ -42,6 +42,11 @@ public final class CbPrioritySplitClient {
         boolean cb$v1_21_4$contentAreaPoint(double x, double y);
     }
 
+    /** CbRenderDispatchMixin: a dispatcher built with 1.21.3's Suppliers takes its renderers from them (reload) */
+    public interface DispatchSuppliers {
+        void cb$v1_21_4$askSuppliers();
+    }
+
     /** CbModelBlockModelMixin: the texture map as set (null until asked or set), the root model and 1.21.3's bake */
     public interface BlockModelLegacy {
         java.util.Map<String, com.mojang.datafixers.util.Either<net.minecraft.class_4730, String>> cb$v1_21_4$textureMapIfSet();
