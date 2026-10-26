@@ -5,13 +5,14 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_5.rt.CbFinCommands;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * ItemInput: 1.20.4's ItemInput was a Predicate&lt;ItemStack&gt; testing the item and its NBT (contained in the
  * stack's); 1.20.5's holds components and tests nothing. The predicate and test(stack) back, over the components'
  * 1.20.4 NBT (rt/CbFinCommands).
  */
-@Mixin(net.minecraft.class_2290.class)
+@Mixin(value = net.minecraft.class_2290.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinItemInputMixin implements Predicate<net.minecraft.class_1799> {
 
     @Shadow

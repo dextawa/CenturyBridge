@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderPost;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 TextureManager.bindForSetup(location), gone in 1.21.2 (its callers bind the texture themselves), put back with
@@ -11,7 +12,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderPost;
  * call reaches a mod subclass's override and that override's super call reaches 1.21.1's body.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_1060.class)
+@Mixin(value = net.minecraft.class_1060.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderTextureManagerMixin {
 
     /** 1.21.1 TextureManager.bindForSetup(location) */

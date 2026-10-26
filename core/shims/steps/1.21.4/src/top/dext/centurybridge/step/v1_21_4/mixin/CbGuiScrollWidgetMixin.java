@@ -18,7 +18,7 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
  * that answer decides, as 1.21.3's mouseClicked took it.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_339.class)
+@Mixin(value = net.minecraft.class_339.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbGuiScrollWidgetMixin implements CbGuiScroll.AskClicked {
 
     /** 1.21.3's clicked called virtually, for 1.21.4's mouseClicked (CbGuiScrollWidgetRouteMixin) */

@@ -1,12 +1,13 @@
 package top.dext.centurybridge.step.v1_20_5.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * ChunkHolder: 1.20.4's getFullChunkNow() -- the full chunk if its future has completed with one, else null --
  * over 1.20.5's ChunkResult futures.
  */
-@Mixin(net.minecraft.class_3193.class)
+@Mixin(value = net.minecraft.class_3193.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinChunkHolderMixin {
 
     /** was getFullChunkNow() */

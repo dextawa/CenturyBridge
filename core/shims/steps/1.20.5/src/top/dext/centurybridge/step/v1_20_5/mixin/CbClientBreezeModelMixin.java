@@ -5,13 +5,14 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * BreezeModel.windTop() / windMiddle() / windBottom(): 1.20.4's getters of the three wind rings, which 1.20.5
  * still keeps as fields (wind_top, wind_mid, wind_bottom) without getters. The same parts.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_8973.class)
+@Mixin(value = net.minecraft.class_8973.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientBreezeModelMixin {
 
     @Shadow

@@ -7,13 +7,14 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * 1.21.3's EntityModelSet was a resource reload listener: built empty, it took the vanilla layer definitions' roots on each
  * reload. 1.21.4's is an immutable set made from them; a 1.21.3 set is again a listener with that reload.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_5599.class)
+@Mixin(value = net.minecraft.class_5599.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderEntityModelSetMixin implements net.minecraft.class_4013 {
 
     @Shadow

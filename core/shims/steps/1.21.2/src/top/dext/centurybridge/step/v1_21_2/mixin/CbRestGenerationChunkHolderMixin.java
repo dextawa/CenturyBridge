@@ -5,9 +5,10 @@ import net.minecraft.class_9761;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** GenerationChunkHolder.getGenerationRefCount() of 1.21.1, back: the generation reference counter's value */
-@Mixin(class_9761.class)
+@Mixin(value = class_9761.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestGenerationChunkHolderMixin {
 
     @Shadow

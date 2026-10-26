@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelCalls;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelFields;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 PiglinModel.setupAttackAnimation(Mob, ageInTicks) (protected): 1.21.2's setupAttackAnimation(PiglinRenderState,
@@ -13,7 +14,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelFields;
  * that 1.21.2 method public for the override hook's fall-through (CbRenderModelFields.piglinAttack).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_4840.class)
+@Mixin(value = net.minecraft.class_4840.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderPiglinMixin implements CbRenderModelFields.PiglinAttack {
 
     @Shadow

@@ -10,13 +10,14 @@ import net.minecraft.class_4437;
 import net.minecraft.class_4877;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /**
  * RealmsConfigureWorldScreen's 1.20.6 openTheWorld(join, lastScreen) and closeTheWorld(lastScreen): 1.21's take
  * no screen and return to a fresh configure screen (getNewScreen()); a 1.20.6 caller's screen is kept. 1.20.6's
  * bodies on 1.21's (unchanged) long-running task screen and open / close server tasks.
  */
-@Mixin(class_4388.class)
+@Mixin(value = class_4388.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRealmsConfigureMixin {
 
     @Shadow

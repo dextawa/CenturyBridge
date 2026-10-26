@@ -12,6 +12,7 @@ import org.lwjgl.system.MemoryUtil;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 NativeImage members 1.21.2 dropped, 1.21.1's bodies on the same fields and private helpers 1.21.2 keeps
@@ -20,7 +21,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * 1.21.1's ABGR32 channel arithmetic: alpha c>>>24, blue (c>>16)&255, green (c>>8)&255, red c&255).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_1011.class)
+@Mixin(value = net.minecraft.class_1011.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderNativeImageMixin {
 
     @Shadow

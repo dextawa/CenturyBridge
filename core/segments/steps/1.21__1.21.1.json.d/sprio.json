@@ -1,0 +1,6 @@
+{
+  "retiredClasses": {
+    "top/dext/centurybridge/shims/v1_20_2/CbFapiTagFileRemovalHooks": "sprio 拆分: CbFapiTagFileRemoval 的注入半边, 随原 mixin 一同退役 (native returns: 1.21.1's TagFileMixin makes every TagFile a FabricTagFile and replaces the TagFile codec with one reading \"fabric:remove\"; left in place both would replace the codec; its <clinit> inject calls the retired compat/fapi/impl/tag/CbFapiTagRemoval)",
+    "top/dext/centurybridge/shims/v1_20_2/CbFapiSimpleRegistryAliasesHooks": "sprio 拆分: CbFapiSimpleRegistryAliases 的注入半边, 随原 mixin 一同退役 (native returns: 1.21.1's SimpleRegistryMixin keeps the aliases, what this mixin reproduced from 1.20.1)"
+  }
+}

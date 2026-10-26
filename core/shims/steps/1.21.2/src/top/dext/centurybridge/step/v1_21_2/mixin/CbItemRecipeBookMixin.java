@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_2.rt.CbItemRecipeBook;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1's RecipeBook fields and methods on 1.21.2's RecipeBook (CbItemRecipeBook): known / highlight (ids) and
@@ -17,7 +18,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemRecipeBook;
  * copyOverData and isFiltering(menu), under their 1.21.1 names so a converted mod's calls, overrides and super calls
  * link to them. Every body is 1.21.1's (a holder's id is 1.21.2's key's location).
  */
-@Mixin(class_3439.class)
+@Mixin(value = class_3439.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbItemRecipeBookMixin {
 
     @Shadow

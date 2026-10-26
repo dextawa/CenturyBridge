@@ -4,21 +4,20 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelCalls;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelFields;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 HumanoidModel members 1.21.2 dropped (see CbRenderModelFields):
  * the public pose fields rightArmPose / leftArmPose (field_3395 / field_3399, initially EMPTY as 1.21.1's constructor
  * set them), swimAmount (field_3396), crouching (field_3400); copyPropertiesTo(HumanoidModel); rotlerpRad;
  * setupAttackAnimation(LivingEntity, ageInTicks). While a 1.21.1 call runs 1.21.2 code on this model
- * (CbRenderModelCalls.legacy) getArmPose answers the put-back arm poses, as 1.21.1's setupAnim read the fields.
+ * (CbRenderModelCalls.legacy) getArmPose answers the put-back arm poses, as 1.21.1's setupAnim read the fields
+ * (CbRenderHumanoidMixinHooks, default priority).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_572.class)
+@Mixin(value = net.minecraft.class_572.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderHumanoidMixin implements CbRenderModelFields.Humanoid, CbRenderModelFields.HumanoidAttack {
 
     public net.minecraft.class_572.class_573 field_3395 = net.minecraft.class_572.class_573.field_3409;
@@ -37,14 +36,6 @@ public abstract class CbRenderHumanoidMixin implements CbRenderModelFields.Human
 
     @Shadow
     public abstract void method_64254(net.minecraft.class_572<?> other);
-
-    @Inject(method = "method_62081", at = @At("HEAD"), cancellable = true)
-    private void cb$legacyArmPose(net.minecraft.class_10034 state, net.minecraft.class_1306 arm,
-                                  CallbackInfoReturnable<net.minecraft.class_572.class_573> cir) {
-        if (CbRenderModelCalls.legacy(this)) {
-            cir.setReturnValue(arm == net.minecraft.class_1306.field_6183 ? this.field_3395 : this.field_3399);
-        }
-    }
 
     @Override
     public net.minecraft.class_572.class_573 cb$rightArmPose() {

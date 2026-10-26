@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_20_3.rt.CbGui;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * ReceivingLevelScreen.loadingPacketsReceived() (method_40040), gone in 1.20.3: 1.20.2's client packet
@@ -13,7 +14,7 @@ import top.dext.centurybridge.step.v1_20_3.rt.CbGui;
  * record and 1.20.2's readiness test ({@link CbGui.CbLegacyLoading}); one 1.20.3 code built closes by the
  * supplier it was given, which tracks the same arrival itself.
  */
-@Mixin(net.minecraft.class_434.class)
+@Mixin(value = net.minecraft.class_434.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbReceivingLevelScreenMixin implements CbGui.CbLegacyReceivingLevel {
 
     /** levelReceived */

@@ -5,20 +5,19 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import top.dext.centurybridge.step.v1_20_5.rt.CbPrioritySplitClient;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * SpellParticle.MobEffectProvider over a SimpleParticleType: 1.20.4's provider (1.20.5's takes coloured
  * particle options). 1.20.4's createParticle(type, ...) comes back -- a spell particle with the velocity it is
  * given, that velocity as its colour -- and a provider a 1.20.4 mod registered for its own simple particle
  * type is handed such options by the particle engine, so 1.20.5's createParticle(options, ...) gives them to
- * the 1.20.4 shape instead of failing its cast.
+ * the 1.20.4 shape instead of failing its cast (CbClientMobEffectProviderMixinHooks, default priority).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_711.class_714.class)
-public abstract class CbClientMobEffectProviderMixin {
+@Mixin(value = net.minecraft.class_711.class_714.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbClientMobEffectProviderMixin implements CbPrioritySplitClient.MobEffectParticle {
 
     @Shadow
     @Final
@@ -32,11 +31,10 @@ public abstract class CbClientMobEffectProviderMixin {
         return particle;
     }
 
-    @Inject(method = "method_3090", at = @At("HEAD"), cancellable = true)
-    private void cb$simpleType(net.minecraft.class_2394 options, net.minecraft.class_638 level, double x, double y, double z,
-                               double xd, double yd, double zd, CallbackInfoReturnable<net.minecraft.class_703> cir) {
-        if (options instanceof net.minecraft.class_2400 simple) {
-            cir.setReturnValue(this.method_3098(simple, level, x, y, z, xd, yd, zd));
-        }
+    /** 1.20.4's createParticle called virtually, for 1.20.5's createParticle (CbClientMobEffectProviderMixinHooks) */
+    @Override
+    public net.minecraft.class_703 cb$v1_20_5$createParticle(net.minecraft.class_2400 type, net.minecraft.class_638 level, double x, double y,
+                                                            double z, double xd, double yd, double zd) {
+        return this.method_3098(type, level, x, y, z, xd, yd, zd);
     }
 }

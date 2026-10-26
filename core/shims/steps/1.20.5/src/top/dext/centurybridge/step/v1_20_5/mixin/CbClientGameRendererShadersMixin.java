@@ -6,19 +6,18 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_20_5.rt.CbClientShaders;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * GameRenderer's 1.20.4 shader pieces (rt/CbClientShaders): the two core shaders 1.20.5 dropped, loaded with
- * the rest on every shader reload, and cycleEffect() -- 1.20.4's step through its post effects (the effect
- * index starting at EFFECT_NONE, as 1.20.4's constructor set it), only with a player as the camera entity; the
- * current effect closed first and loadEffect closing it again, as 1.20.4's pair did.
+ * the rest on every shader reload (CbClientGameRendererShadersMixinHooks, default priority), and cycleEffect() --
+ * 1.20.4's step through its post effects (the effect index starting at EFFECT_NONE, as 1.20.4's constructor set it),
+ * only with a player as the camera entity; the current effect closed first and loadEffect closing it again, as
+ * 1.20.4's pair did.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_757.class)
+@Mixin(value = net.minecraft.class_757.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientGameRendererShadersMixin {
 
     @Shadow
@@ -36,11 +35,6 @@ public abstract class CbClientGameRendererShadersMixin {
     /** 1.20.4 GameRenderer.effectIndex */
     @Unique
     private int cb$effectIndex = CbClientShaders.field_4010();
-
-    @Inject(method = "method_34538", at = @At("TAIL"))
-    private void cb$legacyCoreShaders(net.minecraft.class_5912 resources, CallbackInfo ci) {
-        CbClientShaders.reload(resources);
-    }
 
     /** 1.20.4 GameRenderer.cycleEffect() */
     public void method_35771() {

@@ -5,12 +5,13 @@ import net.minecraft.class_2625;
 import net.minecraft.class_8242;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * 1.20.2's SignBlockEntity.getTextFacingPlayer(player), gone in 1.20.3, back with its 1.20.2 body (a cover): the
  * text of the side the player is facing. 1.20.2 itself never called it.
  */
-@Mixin(class_2625.class)
+@Mixin(value = class_2625.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWorldSignBlockEntityMixin {
 
     @Shadow

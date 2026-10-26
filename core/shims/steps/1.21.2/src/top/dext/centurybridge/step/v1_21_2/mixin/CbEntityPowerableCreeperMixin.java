@@ -3,9 +3,10 @@ package top.dext.centurybridge.step.v1_21_2.mixin;
 import net.minecraft.class_1548;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_2.facade.PowerableMob;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** Creeper is 1.21.1's PowerableMob again: isPowered() is 1.21.2's isPowered (renamed, same body). */
-@Mixin(class_1548.class)
+@Mixin(value = class_1548.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityPowerableCreeperMixin implements PowerableMob {
 
     @Override

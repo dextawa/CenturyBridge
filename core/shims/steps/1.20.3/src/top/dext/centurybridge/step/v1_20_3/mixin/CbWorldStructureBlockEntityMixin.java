@@ -20,6 +20,7 @@ import net.minecraft.class_3544;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_3.rt.CbWorldStructureBlockV;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * StructureBlockEntity's 1.20.2 loading methods, back with their 1.20.2 bodies (covers): loadStructure(level,
@@ -30,7 +31,7 @@ import top.dext.centurybridge.step.v1_20_3.rt.CbWorldStructureBlockV;
  * placeStructureIfSameSize / loadStructureInfo are the same steps cut differently (the author is overwritten
  * by an empty one, a size change is not sent).
  */
-@Mixin(class_2633.class)
+@Mixin(value = class_2633.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWorldStructureBlockEntityMixin implements CbWorldStructureBlockV {
 
     @Shadow

@@ -4,6 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_5.rt.CbRestPath;
 import top.dext.centurybridge.step.v1_20_5.rt.Guard;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * 1.20.4 NodeEvaluator's BlockGetter-shaped path type queries, which 1.20.5 asks with a
@@ -12,7 +13,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.Guard;
  * call comes back here and goes on to 1.20.5's implementation). The fields and protected members
  * 1.20.4 code reached are handed to CbRestPath.
  */
-@Mixin(net.minecraft.class_8.class)
+@Mixin(value = net.minecraft.class_8.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestNodeEvaluatorMixin implements CbRestPath.Evaluator, CbRestPath.LegacyGetter {
 
     @Shadow

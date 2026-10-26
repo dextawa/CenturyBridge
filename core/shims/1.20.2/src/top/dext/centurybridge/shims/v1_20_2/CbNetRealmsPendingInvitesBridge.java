@@ -5,6 +5,7 @@ import net.minecraft.class_332;
 import net.minecraft.class_4401;
 import net.minecraft.class_4905;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 
 /**
  * RealmsPendingInvitesScreen.renderMousehoverTooltip: 1.20.1's drawing of a hover text at the mouse
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * tooltips and dropped the method. Put back with the 1.20.1 body, for a subclass's calls and super
  * calls -- 1.20.2's render does not call it.
  */
-@Mixin(class_4401.class)
+@Mixin(value = class_4401.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbNetRealmsPendingInvitesBridge extends class_4905 {
 
     protected CbNetRealmsPendingInvitesBridge() {
