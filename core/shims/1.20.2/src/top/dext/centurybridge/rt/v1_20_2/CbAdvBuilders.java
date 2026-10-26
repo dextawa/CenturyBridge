@@ -104,7 +104,7 @@ public final class CbAdvBuilders {
      */
     public static net.minecraft.class_161 consult(net.minecraft.class_161 read, net.minecraft.class_2960 id,
                                                   com.google.gson.JsonElement element, net.minecraft.class_60 lootData) {
-        if (!ROUTE || read == null) {
+        if (!ROUTE || read == null || !CbAdvPredicateJson.mixed()) {
             return read;
         }
         JsonObject json = net.minecraft.class_3518.method_15295(element, "advancement");
