@@ -1,0 +1,58 @@
+{
+ "classRenames": {
+  "net/fabricmc/fabric/api/renderer/v1/material/BlendMode": "top/dext/centurybridge/step/v1_21_6/facade/fapi/renderer/BlendMode",
+  "net/fabricmc/fabric/api/renderer/v1/material/GlintMode": "top/dext/centurybridge/step/v1_21_6/facade/fapi/renderer/GlintMode",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialView": "top/dext/centurybridge/step/v1_21_6/facade/fapi/renderer/MaterialView",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder": "top/dext/centurybridge/step/v1_21_6/facade/fapi/renderer/MaterialFinder",
+  "net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial": "top/dext/centurybridge/step/v1_21_6/facade/fapi/renderer/RenderMaterial",
+  "net/fabricmc/fabric/api/renderer/v1/material/ShadeMode": "net/fabricmc/fabric/api/renderer/v1/mesh/ShadeMode"
+ },
+ "_classRenames_basis": "Fabric API renderer-api 6.1 (1.21.5) -> 7.0 (1.21.6) removed the material package (javap of both jars): BlendMode, GlintMode, MaterialView, MaterialFinder and RenderMaterial come back as facades over the per-quad properties 1.21.6 has (rt/CbFapiRenderer); material.ShadeMode is 1.21.6's mesh.ShadeMode (same two constants ENHANCED, VANILLA in the same order, values / valueOf)",
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.materialFinder()Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#materialFinder",
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.materialById(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#materialById",
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.registerMaterial(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;)Z": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#registerMaterial",
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.emitBlockModelPartQuads(Lnet/minecraft/class_10889;Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Predicate;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#emitBlockModelPartQuads",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.material(Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#material",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.material(Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#material",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.material()Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#material",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.fromVanilla(Lnet/minecraft/class_777;Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;Lnet/minecraft/class_2350;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#fromVanilla",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.fromVanilla(Lnet/minecraft/class_777;Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;Lnet/minecraft/class_2350;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#fromVanilla"
+ },
+ "staticRedirects": {
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderLayerHelper.getMovingBlockLayer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderLayerHelper.getEntityBlockLayer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderLayerHelper.movingDelegate(Lnet/minecraft/class_4597;)Lnet/minecraft/class_4597;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderLayerHelper.entityDelegate(Lnet/minecraft/class_4597;)Lnet/minecraft/class_4597;": "top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer"
+ },
+ "callReshapes": {
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.render(Lnet/minecraft/class_778;Lnet/minecraft/class_1920;Lnet/minecraft/class_1087;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ZJI)V": {
+   "desc": "(Lnet/minecraft/class_778;Lnet/minecraft/class_1920;Lnet/minecraft/class_1087;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_4587;Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;ZJI)V",
+   "ops": ["keep:0", "keep:1", "keep:2", "keep:3", "keep:4", "keep:5",
+    "conv:6 top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#provider(Lnet/minecraft/class_4597;)Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;",
+    "keep:7", "keep:8", "keep:9"],
+   "basis": "1.21.5 Renderer.render(.., MultiBufferSource, ..) asked the buffers for 1.21.5's chunk render types; 1.21.6's takes a BlockVertexConsumerProvider asked for ChunkSectionLayers (javap): each layer answered with the source's buffer for that layer's 1.21.5 render type (CbFapiRenderer.provider)"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.render(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4597;Lnet/minecraft/class_1087;FFFIILnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": {
+   "desc": "(Lnet/minecraft/class_4587$class_4665;Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;Lnet/minecraft/class_1087;FFFIILnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V",
+   "ops": ["keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#provider(Lnet/minecraft/class_4597;)Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;",
+    "keep:2", "keep:3", "keep:4", "keep:5", "keep:6", "keep:7", "keep:8", "keep:9", "keep:10"],
+   "basis": "as the other render: the MultiBufferSource as a BlockVertexConsumerProvider (javap)"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/render/FabricBlockModelRenderer.render(Lnet/minecraft/class_1920;Lnet/minecraft/class_1087;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ZJI)V": {
+   "desc": "(Lnet/minecraft/class_1920;Lnet/minecraft/class_1087;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_4587;Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;ZJI)V",
+   "ops": ["keep:0", "keep:1", "keep:2", "keep:3", "keep:4",
+    "conv:5 top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#provider(Lnet/minecraft/class_4597;)Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;",
+    "keep:6", "keep:7", "keep:8"],
+   "basis": "FabricBlockModelRenderer.render (injected into ModelBlockRenderer): 1.21.5's forwarded to Renderer.render with the MultiBufferSource, 1.21.6's with a BlockVertexConsumerProvider (javap)"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/render/FabricBlockModelRenderer.render(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4597;Lnet/minecraft/class_1087;FFFIILnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": {
+   "desc": "(Lnet/minecraft/class_4587$class_4665;Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;Lnet/minecraft/class_1087;FFFIILnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V",
+   "ops": ["keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_6/rt/CbFapiRenderer#provider(Lnet/minecraft/class_4597;)Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;",
+    "keep:2", "keep:3", "keep:4", "keep:5", "keep:6", "keep:7", "keep:8", "keep:9", "keep:10"],
+   "basis": "the static FabricBlockModelRenderer.render: as Renderer.render (javap)"
+  }
+ }
+}

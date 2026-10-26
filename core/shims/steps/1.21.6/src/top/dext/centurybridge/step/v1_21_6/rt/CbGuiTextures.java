@@ -17,7 +17,7 @@ public final class CbGuiTextures {
 
     /** a MultiTextureStateShard's textures, in the order it bound them */
     public interface Multi {
-        java.util.List<net.minecraft.class_2960> cb$textures();
+        java.util.List<net.minecraft.class_2960> cb$multiTextures();
     }
 
     /** fill(RenderType, x1, y1, x2, y2, z) */
@@ -34,7 +34,7 @@ public final class CbGuiTextures {
         net.minecraft.class_4668.class_5939 state = composite.field_21403.field_21406;
         java.util.List<net.minecraft.class_2960> ids;
         if (state instanceof Multi multi) {
-            ids = multi.cb$textures();
+            ids = multi.cb$multiTextures();
         } else {
             ids = state.method_23564().map(java.util.List::of).orElse(java.util.List.of());
         }

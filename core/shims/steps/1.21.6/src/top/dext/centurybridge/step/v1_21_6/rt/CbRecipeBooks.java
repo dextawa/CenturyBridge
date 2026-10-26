@@ -55,6 +55,12 @@ public final class CbRecipeBooks {
 
         /** every setting false, a fresh book's (the fields, set directly) */
         void cb$clear();
+
+        /** one type's settings field, read directly (the states-map view) */
+        class_5411.class_5412 cb$type(class_5421 type);
+
+        /** one type's settings field, written directly (the states-map view) */
+        void cb$setType(class_5421 type, class_5411.class_5412 settings);
     }
 
     static final class_5421[] TYPES = {class_5421.field_25763, class_5421.field_25764, class_5421.field_25765, class_5421.field_25766};
@@ -78,11 +84,132 @@ public final class CbRecipeBooks {
         return settings;
     }
 
-    /** RecipeBookSettings.write(CompoundTag)'s body */
-    public static void writeSettings(class_5411 settings, class_2487 tag) {
+    /** RecipeBookSettings.write(CompoundTag)'s keys: 1.21.5's TAG_FIELDS (field_25735), restored on the class */
+    public static java.util.Map<class_5421, com.mojang.datafixers.util.Pair<String, String>> tagFields() {
+        java.util.Map<class_5421, com.mojang.datafixers.util.Pair<String, String>> m = new java.util.LinkedHashMap<>();
         for (int i = 0; i < TYPES.length; i++) {
-            tag.method_10556(KEYS[i][0], settings.method_30180(TYPES[i]));
-            tag.method_10556(KEYS[i][1], settings.method_30187(TYPES[i]));
+            m.put(TYPES[i], com.mojang.datafixers.util.Pair.of(KEYS[i][0], KEYS[i][1]));
+        }
+        return com.google.common.collect.ImmutableMap.copyOf(m);
+    }
+
+    /** the restored read / write(FriendlyByteBuf)'s keys in the mixed-member signal */
+    public static final String NET_READ = "net/minecraft/class_5411.method_30186(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5411;";
+    public static final String NET_WRITE = "net/minecraft/class_5411.method_30190(Lnet/minecraft/class_2540;)V";
+
+    /** whether STREAM_CODEC decodes through the restored read(FriendlyByteBuf): a converted mod mixed it */
+    public static boolean routeNetRead() {
+        return CbMixedMembers.mixed(NET_READ);
+    }
+
+    /** whether STREAM_CODEC encodes through the restored write(FriendlyByteBuf): a converted mod mixed it */
+    public static boolean routeNetWrite() {
+        return CbMixedMembers.mixed(NET_WRITE);
+    }
+
+    /**
+     * 1.21.5's RecipeBookSettings states map (field_25736, an EnumMap holding the types whose settings are not
+     * DEFAULT), as a live view of 1.21.6's four per-type fields: reads answer the fields (DEFAULT reads as absent),
+     * put / remove / clear and the entries' setValue write them (absent = DEFAULT).
+     */
+    public static final class SettingsView extends java.util.AbstractMap<class_5421, class_5411.class_5412> {
+        private final LegacySettings settings;
+
+        public SettingsView(LegacySettings settings) {
+            this.settings = settings;
+        }
+
+        @Override
+        public class_5411.class_5412 get(Object key) {
+            if (!(key instanceof class_5421 type)) {
+                return null;
+            }
+            class_5411.class_5412 v = settings.cb$type(type);
+            return v == null || v.equals(class_5411.class_5412.field_54549) ? null : v;
+        }
+
+        @Override
+        public boolean containsKey(Object key) {
+            return get(key) != null;
+        }
+
+        @Override
+        public class_5411.class_5412 put(class_5421 key, class_5411.class_5412 value) {
+            class_5411.class_5412 old = get(key);
+            settings.cb$setType(key, value == null ? class_5411.class_5412.field_54549 : value);
+            return old;
+        }
+
+        @Override
+        public class_5411.class_5412 remove(Object key) {
+            class_5411.class_5412 old = get(key);
+            if (old != null) {
+                settings.cb$setType((class_5421) key, class_5411.class_5412.field_54549);
+            }
+            return old;
+        }
+
+        @Override
+        public void clear() {
+            for (class_5421 type : TYPES) {
+                settings.cb$setType(type, class_5411.class_5412.field_54549);
+            }
+        }
+
+        @Override
+        public java.util.Set<Entry<class_5421, class_5411.class_5412>> entrySet() {
+            return new java.util.AbstractSet<>() {
+                @Override
+                public java.util.Iterator<Entry<class_5421, class_5411.class_5412>> iterator() {
+                    java.util.List<class_5421> present = new java.util.ArrayList<>();
+                    for (class_5421 type : TYPES) {
+                        if (get(type) != null) {
+                            present.add(type);
+                        }
+                    }
+                    java.util.Iterator<class_5421> keys = present.iterator();
+                    return new java.util.Iterator<>() {
+                        private class_5421 last;
+
+                        @Override
+                        public boolean hasNext() {
+                            return keys.hasNext();
+                        }
+
+                        @Override
+                        public Entry<class_5421, class_5411.class_5412> next() {
+                            class_5421 type = last = keys.next();
+                            return new java.util.AbstractMap.SimpleEntry<>(type, settings.cb$type(type)) {
+                                @Override
+                                public class_5411.class_5412 setValue(class_5411.class_5412 value) {
+                                    super.setValue(value);
+                                    return put(type, value);
+                                }
+                            };
+                        }
+
+                        @Override
+                        public void remove() {
+                            if (last == null) {
+                                throw new IllegalStateException();
+                            }
+                            SettingsView.this.remove(last);
+                            last = null;
+                        }
+                    };
+                }
+
+                @Override
+                public int size() {
+                    int n = 0;
+                    for (class_5421 type : TYPES) {
+                        if (get(type) != null) {
+                            n++;
+                        }
+                    }
+                    return n;
+                }
+            };
         }
     }
 
