@@ -15,6 +15,7 @@ import net.minecraft.class_1220;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_5.rt.CbFinDatafix;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * VillagerTradeFix: 1.20.4's protected fix(typed) -- a NamedEntityFix on minecraft:villager fixing the
@@ -23,7 +24,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbFinDatafix;
  * (CbFinDatafix.cbVillagerTradeRule). 1.20.5 fixes each trade type-wide; fix(typed) walks
  * Offers.Recipes as 1.20.4 did and applies 1.20.5's own per-trade fix (the buy/buyB/sell item ids).
  */
-@Mixin(net.minecraft.class_1219.class)
+@Mixin(value = net.minecraft.class_1219.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinVillagerTradeMixin extends DataFix implements CbFinDatafix.CbVillagerTradeRule {
 
     private CbFinVillagerTradeMixin(Schema schema, boolean changesType) {

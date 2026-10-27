@@ -205,3 +205,7 @@ extendable	class	net/minecraft/class_2757
 extendable	method	net/minecraft/class_2757	toString	()Ljava/lang/String;
 extendable	method	net/minecraft/class_2757	hashCode	()I
 extendable	method	net/minecraft/class_2757	equals	(Ljava/lang/Object;)Z
+# s203: ShapedRecipe.shrink / firstNonSpace / lastNonSpace (1.20.2, static) moved to ShapedRecipePattern at 1.20.3 (package-private / private); CbRecipeShapedPattern gives them back
+accessible	method	net/minecraft/class_8957	method_55084	(Ljava/util/List;)[Ljava/lang/String;
+accessible	method	net/minecraft/class_8957	method_55083	(Ljava/lang/String;)I
+accessible	method	net/minecraft/class_8957	method_55089	(Ljava/lang/String;)I

@@ -1,0 +1,5 @@
+{
+  "retiredClasses": {
+    "top/dext/centurybridge/step/v1_21_2/mixin/CbRestFapiTagFileMixinHooks": "sprio 拆分: CbRestFapiTagFileMixin 的注入半边, 随原 mixin 一同退役 (native returns: 1.21.11's TagFileMixin makes TagFile a FabricTagFile and replaces its codec with one reading \"fabric:remove\")"
+  }
+}

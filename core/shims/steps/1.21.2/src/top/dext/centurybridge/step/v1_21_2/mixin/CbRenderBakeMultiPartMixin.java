@@ -6,6 +6,7 @@ import java.util.Set;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 MultiPart.getDependencies(): every selector's variant models (class_816.method_4755). 1.21.2's
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * it asks for gives 1.21.1's set without touching the model.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_816.class)
+@Mixin(value = net.minecraft.class_816.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderBakeMultiPartMixin {
 
     /** 1.21.1 MultiPart.getDependencies() */

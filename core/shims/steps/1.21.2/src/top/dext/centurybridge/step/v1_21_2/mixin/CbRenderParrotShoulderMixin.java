@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_21_2.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 ParrotModel.renderOnShoulder(poseStack, consumer, light, overlay, limbSwing, limbSwingAmount, netHeadYaw,
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * as ParrotOnShoulderLayer fills its own), then the whole model drawn.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_584.class)
+@Mixin(value = net.minecraft.class_584.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderParrotShoulderMixin {
 
     /** 1.21.1 ParrotModel.renderOnShoulder */

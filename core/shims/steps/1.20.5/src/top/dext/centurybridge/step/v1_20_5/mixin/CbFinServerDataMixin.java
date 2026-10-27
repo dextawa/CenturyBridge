@@ -5,10 +5,11 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_20_5.rt.CbFinClient;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /** ServerData: 1.20.4's enforcesSecureChat, its getter and setter (rt/CbFinClient) */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_642.class)
+@Mixin(value = net.minecraft.class_642.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinServerDataMixin implements CbFinClient.ServerDataSlot {
 
     @Unique

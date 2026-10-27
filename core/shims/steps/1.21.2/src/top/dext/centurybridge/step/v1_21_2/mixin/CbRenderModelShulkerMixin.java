@@ -5,13 +5,14 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 ShulkerModel.getLid() / getHead() / parts(): the lid and head parts 1.21.2 keeps under the same fields, and
  * 1.21.1's parts list (base, lid) -- 1.21.2 keeps the base as the root's "base" child (it no longer has a field).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_602.class)
+@Mixin(value = net.minecraft.class_602.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderModelShulkerMixin {
 
     @Shadow

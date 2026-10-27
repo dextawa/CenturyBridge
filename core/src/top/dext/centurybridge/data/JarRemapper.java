@@ -89,6 +89,9 @@ public final class JarRemapper {
          */
         public final java.util.Map<String, java.util.List<String>> mixinTargets = new java.util.HashMap<>();
         public final java.util.Map<String, java.util.Set<String>> mixinShadows = new java.util.HashMap<>();
+        /** each mixin class's declared member names (fields and methods) and its superclass, as in the input ({@link #mixinMember}) */
+        public final java.util.Map<String, java.util.Set<String>> mixinDeclared = new java.util.HashMap<>();
+        public final java.util.Map<String, String> mixinSupers = new java.util.HashMap<>();
 
         /**
          * Each mixin's own methods (name + descriptor as in the input), @Shadow / @Overwrite ones excluded. A member a
@@ -100,6 +103,51 @@ public final class JarRemapper {
          * the target class reach vanilla's method by the table's name.
          */
         public final java.util.Map<String, java.util.Set<String>> mixinOwnMethods = new java.util.HashMap<>();
+
+        /**
+         * A CenturyBridge interface whose methods mixins implement on their targets (1.21.11 layer: rt/CbLegacyGameRules,
+         * implemented by mixin CbGameRulesMixin on GameRules with the restored 1.21.10 members, method_20744 ...). The
+         * interface is a CB class, so its tokens stay; the mixin's implementations take the target's names
+         * ({@link #mixinMember}: visitGameRuleTypes), and on 26.1 a call through the interface was an
+         * AbstractMethodError (GameRules no longer implemented it). An interface method every implementing class of the
+         * jar implements in a mixin takes the name those mixins' methods take, when they all take the same one; with any
+         * other implementer (a plain CB class keeps its tokens), or mixins disagreeing, it keeps its token.
+         * Input names throughout: interface -> its method name + desc; interface -> the jar's classes implementing it
+         * directly (mixin or not).
+         */
+        public final java.util.Map<String, java.util.Set<String>> cbInterfaceMethods = new java.util.HashMap<>();
+        public final java.util.Map<String, java.util.List<String>> cbImplementers = new java.util.HashMap<>();
+
+        String interfaceMember(String owner, String name, String desc, Remapper r) {
+            java.util.Set<String> declared = cbInterfaceMethods.get(owner);
+            if (declared == null || !declared.contains(name + desc)) {
+                return null;
+            }
+            java.util.List<String> impls = cbImplementers.get(owner);
+            if (impls == null || impls.isEmpty()) {
+                return null;
+            }
+            String agreed = null;
+            for (String c : impls) {
+                if (!mixinTargets.containsKey(c)) {
+                    return null;
+                }
+                java.util.Set<String> own = mixinOwnMethods.get(c);
+                if (own == null || !own.contains(name + desc)) {
+                    // implemented further up (a default, a superclass): the target's or another mixin's member
+                    return null;
+                }
+                String moj = mixinMember(c, name);
+                if (moj == null || keepsToken(c, name, desc, moj, r)) {
+                    moj = name;
+                }
+                if (agreed != null && !agreed.equals(moj)) {
+                    return null;
+                }
+                agreed = moj;
+            }
+            return agreed == null || agreed.equals(name) ? null : agreed;
+        }
 
         /** whether mixin {@code owner}'s own method {@code name desc}, renamed to {@code moj}, would land on a target method */
         boolean keepsToken(String owner, String name, String desc, String moj, Remapper r) {
@@ -190,7 +238,21 @@ public final class JarRemapper {
                 }
             }
             java.util.Set<String> shadows = mixinShadows.get(owner);
-            return shadows != null && shadows.contains(name) ? members.get(name) : null;
+            if (shadows != null && shadows.contains(name)) {
+                return members.get(name);
+            }
+            // a member the mixin class neither declares nor shadows: one it inherits from the vanilla class it extends
+            // (javac names the mixin class as owner of this.get(..) in a mixin extending Settings, 1.21.2 layer
+            // CbRestServerPropertiesMixin -> 26.1 NoSuchMethodError DedicatedServerProperties.method_16740): the
+            // superclass's row, else the bare-name map, as a mod class's inherited call takes it
+            java.util.Set<String> declared = mixinDeclared.get(owner);
+            String sup = mixinSupers.get(owner);
+            if (declared != null && !declared.contains(name) && sup != null && !sup.equals("java/lang/Object")
+                    && !sup.startsWith("top/dext/centurybridge/")) {
+                String hit = byOwner.get(sup + "." + name);
+                return hit != null ? hit : members.get(name);
+            }
+            return null;
         }
 
         /**
@@ -374,6 +436,10 @@ public final class JarRemapper {
                     // apart from method_; the table lists them as methods)
                     if (!name.startsWith("method_") && !name.startsWith("comp_")) {
                         return name;
+                    }
+                    String ir = interfaceMember(owner, name, desc, this);
+                    if (ir != null) {
+                        return ir;
                     }
                     String m = member(owner, name);
                     if (keepsToken(owner, name, desc, m, this)) {
@@ -602,6 +668,19 @@ public final class JarRemapper {
             }
             org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
             new ClassReader(zin.readAllBytes()).accept(cn, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+            if (cn.name.startsWith("top/dext/centurybridge/") && (cn.access & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0) {
+                java.util.Set<String> ms = new java.util.HashSet<>();
+                cn.methods.forEach(m -> ms.add(m.name + m.desc));
+                table.cbInterfaceMethods.put(cn.name, ms);
+            }
+            if (cn.interfaces != null) {
+                for (String i : cn.interfaces) {
+                    if (i.startsWith("top/dext/centurybridge/")) {
+                        // a sub-interface is listed too: Table.interfaceMember keeps the token for it (not a mixin)
+                        table.cbImplementers.computeIfAbsent(i, x -> new java.util.ArrayList<>()).add(cn.name);
+                    }
+                }
+            }
             org.objectweb.asm.tree.AnnotationNode mixin = annotation(cn.invisibleAnnotations, MIXIN_DESC);
             if (mixin == null) {
                 mixin = annotation(cn.visibleAnnotations, MIXIN_DESC);
@@ -642,6 +721,13 @@ public final class JarRemapper {
                 }
             }
             table.mixinOwnMethods.put(cn.name, own);
+            java.util.Set<String> declared = new java.util.HashSet<>();
+            cn.fields.forEach(f -> declared.add(f.name));
+            cn.methods.forEach(m -> declared.add(m.name));
+            table.mixinDeclared.put(cn.name, declared);
+            if (cn.superName != null) {
+                table.mixinSupers.put(cn.name, cn.superName);
+            }
         }
     }
 

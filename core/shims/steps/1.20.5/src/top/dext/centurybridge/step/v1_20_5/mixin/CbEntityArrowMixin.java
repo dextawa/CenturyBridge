@@ -9,7 +9,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
  * Arrow: 1.20.4's setEffectsFromItem(stack): a tipped arrow's potion, effects and color (1.20.5: the stack's
  * potion contents, which carry all three), none for a plain arrow, anything else left as it is.
  */
-@Mixin(net.minecraft.class_1667.class)
+@Mixin(value = net.minecraft.class_1667.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityArrowMixin implements CbRoutes.ArrowEffectsFromItem {
 
     @Shadow

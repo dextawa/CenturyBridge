@@ -1,6 +1,7 @@
 package top.dext.centurybridge.step.v1_20_5.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * Breeze: 1.20.4 members 1.20.5 dropped, back with 1.20.4's bodies (calls, super calls and overrides link):
@@ -8,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * 1.20.4's gust_dust particle type is gone in 1.20.5 (no such registry entry, no client renderer), so the puffs
  * are its small_gust, the particle 1.20.5's breeze gusts use.
  */
-@Mixin(net.minecraft.class_8949.class)
+@Mixin(value = net.minecraft.class_8949.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityBreezeMixin {
 
     private net.minecraft.class_1297 cbS4$self() {

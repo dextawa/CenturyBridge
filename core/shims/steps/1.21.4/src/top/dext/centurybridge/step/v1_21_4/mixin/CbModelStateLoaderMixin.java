@@ -6,13 +6,14 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_4.rt.CbModelLoading;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * BlockStateModelLoader's 1.21.3 instance API: it was built with the missing model and loaded a block's definitions with
  * it; 1.21.4 does so in a private static taking the missing model. The constructor's model is kept (superCtorReshapes post).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_9824.class)
+@Mixin(value = net.minecraft.class_9824.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbModelStateLoaderMixin implements CbModelLoading.CbLegacyStateLoader {
 
     @Shadow

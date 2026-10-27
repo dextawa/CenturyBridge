@@ -5,13 +5,14 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 ItemOverride.Predicate.getProperty() / getValue() on 1.21.2's Predicate record (property / value components),
  * with 1.21.1's bodies over the same fields; see CbRenderItemOverrideMixin.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_799.class_5826.class)
+@Mixin(value = net.minecraft.class_799.class_5826.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderItemOverridePredicateMixin {
 
     @Shadow

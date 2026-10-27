@@ -14,7 +14,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
  * available goals that are running, as 1.20.4 answered it; 1.20.4 stored the second in a field nothing read
  * (its tick did not consult it), and so does this.
  */
-@Mixin(net.minecraft.class_1355.class)
+@Mixin(value = net.minecraft.class_1355.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityGoalSelectorMixin implements CbRoutes.RunningGoals {
 
     @Shadow

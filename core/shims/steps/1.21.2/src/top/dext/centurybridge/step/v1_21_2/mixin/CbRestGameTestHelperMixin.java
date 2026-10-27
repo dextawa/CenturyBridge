@@ -8,6 +8,7 @@ import net.minecraft.class_243;
 import net.minecraft.class_4513;
 import net.minecraft.class_4516;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * GameTestHelper.assertEntityPresent / assertEntityNotPresent(type, from, to) of 1.21.1, back with their
@@ -16,7 +17,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * the failure placed at the two positions' block positions at the test's current tick, with 1.21.1's
  * messages.
  */
-@Mixin(class_4516.class)
+@Mixin(value = class_4516.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestGameTestHelperMixin {
 
     public void method_46224(class_1299<?> type, class_243 from, class_243 to) {

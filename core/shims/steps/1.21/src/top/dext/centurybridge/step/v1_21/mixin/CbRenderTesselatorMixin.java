@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_21.rt.CbRenderBufferBuilderV;
 import top.dext.centurybridge.step.v1_21.rt.CbRenderBuffers;
 import top.dext.centurybridge.step.v1_21.rt.CbRenderTesselatorV;
+import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /**
  * Tesselator's 1.20.6 builder: 1.20.6's Tesselator owned one BufferBuilder as large as its buffer, handed out by
@@ -15,7 +16,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbRenderTesselatorV;
  * idle until begun), made on first use with the Tesselator's capacity, so 1.20.6 and 1.21 batches of the one
  * Tesselator never write into each other's memory.
  */
-@Mixin(net.minecraft.class_289.class)
+@Mixin(value = net.minecraft.class_289.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderTesselatorMixin implements CbRenderTesselatorV {
 
     @Shadow

@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 BakedGlyph.render(italic, x, y, matrix, consumer, r, g, b, a, light): the glyph's quad, 1.21.1's body on the
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * colour) instead; the 1.21.1 call draws the quad as 1.21.1 did, with the float colour.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_382.class)
+@Mixin(value = net.minecraft.class_382.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderGlyphMixin {
 
     @Shadow

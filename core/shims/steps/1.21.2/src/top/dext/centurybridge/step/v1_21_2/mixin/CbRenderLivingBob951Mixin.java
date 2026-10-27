@@ -3,10 +3,11 @@ package top.dext.centurybridge.step.v1_21_2.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** 1.21.1 SquidRenderer.getBob (class_951.method_4125), gone in 1.21.2 (the state carries the value), put back with its body: lerp(pt, oldTentacleAngle, tentacleAngle). */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_951.class)
+@Mixin(value = net.minecraft.class_951.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderLivingBob951Mixin {
 
     /** 1.21.1 class_951.method_4125 */

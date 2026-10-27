@@ -6,7 +6,7 @@
 # Run on beta2 from ~/cbwork after the work dir's layer was built (remote_step.sh).
 set -uo pipefail
 cd ~/cbwork
-WD=agents/s11; TAG="$1"
+WD=${CB_WD:-agents/s11}; TAG="$1"
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 export PATH=$HOME/cbtest/jdk-25.0.4.1+1/bin:$PATH
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')

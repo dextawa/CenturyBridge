@@ -6,8 +6,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 GameRenderer members 1.21.2 dropped or reshaped:
@@ -24,11 +23,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
  * - getShader(name): the core shader 1.21.1 loaded under that name (CbRenderShaders.method_35767).
  * - the blitShader field (CbRenderGame.blitShader / setBlitShader): what 1.21.1 kept there, read and set here.
  * And the resource pool 1.21.2 renders the level with, for CbRenderFrames.
+ * The routing of 1.21.2's two projection calls is in CbRenderGameMixinHooks (default priority).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_757.class)
+@Mixin(value = net.minecraft.class_757.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderGameMixin implements top.dext.centurybridge.step.v1_21_2.rt.CbRenderFrames.ResourcePool,
-    top.dext.centurybridge.step.v1_21_2.rt.CbRenderGame.Blit {
+    top.dext.centurybridge.step.v1_21_2.rt.CbRenderGame.Blit, top.dext.centurybridge.step.v1_21_2.rt.CbPrioritySplitClient.GameProjection {
 
     @Shadow
     @Final
@@ -43,14 +43,10 @@ public abstract class CbRenderGameMixin implements top.dext.centurybridge.step.v
         com.mojang.blaze3d.systems.RenderSystem.setProjectionMatrix(matrix, net.minecraft.class_10366.field_54953);
     }
 
-    @Redirect(method = {"method_3172", "method_3188"}, require = 2, at = @At(value = "INVOKE",
-        target = "Lcom/mojang/blaze3d/systems/RenderSystem;setProjectionMatrix(Lorg/joml/Matrix4f;Lnet/minecraft/class_10366;)V"))
-    private void cb$resetProjectionMatrix(org.joml.Matrix4f matrix, net.minecraft.class_10366 type) {
-        if (type == net.minecraft.class_10366.field_54953) {
-            this.method_22709(matrix);
-        } else {
-            com.mojang.blaze3d.systems.RenderSystem.setProjectionMatrix(matrix, type);
-        }
+    /** 1.21.1's resetProjectionMatrix called virtually, for 1.21.2's renderItemInHand / renderLevel (CbRenderGameMixinHooks) */
+    @Override
+    public void cb$v1_21_2$resetProjectionMatrix(org.joml.Matrix4f matrix) {
+        this.method_22709(matrix);
     }
 
     public org.joml.Matrix4f method_22973(double fov) {

@@ -5,12 +5,13 @@ import net.minecraft.class_3218;
 import net.minecraft.class_3222;
 import net.minecraft.class_5454;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * ServerPlayer members of 1.21.1 that 1.21.2 dropped, back with 1.21.1's bodies on 1.21.2's API, so a
  * 1.21.1 mod's calls link, its subclass overrides override and its super calls reach them.
  */
-@Mixin(class_3222.class)
+@Mixin(value = class_3222.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestServerPlayerMixin {
 
     /**

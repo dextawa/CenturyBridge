@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * MouseHandler.turnPlayer(): 1.20.4's public turnPlayer() measured the time since its last call itself and
@@ -15,7 +16,7 @@ import org.spongepowered.asm.mixin.Unique;
  * turnPlayer ran after its checks (smoothing, tutorial, the player's turn).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_312.class)
+@Mixin(value = net.minecraft.class_312.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientMouseMixin {
 
     @Shadow

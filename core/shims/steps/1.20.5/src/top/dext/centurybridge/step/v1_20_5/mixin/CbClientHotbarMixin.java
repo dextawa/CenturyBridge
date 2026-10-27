@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_20_5.rt.CbClientHotbar;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * Hotbar as 1.20.4's list of nine stacks (rt/CbClientHotbar): the List it was (a ForwardingList), its
@@ -13,7 +14,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.CbClientHotbar;
  * encodes the stack into its slot, as 1.20.5's storeFrom encodes the inventory's.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_748.class)
+@Mixin(value = net.minecraft.class_748.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientHotbarMixin implements CbClientHotbar.Slots, java.util.List<net.minecraft.class_1799> {
 
     @Shadow

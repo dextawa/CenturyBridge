@@ -4,12 +4,13 @@ import java.util.Optional;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * ClientboundSetObjectivePacket: 1.20.4's getNumberFormat() (the format, or null; 1.20.5 answers an Optional)
  * beside 1.20.5's, reading the packet's field.
  */
-@Mixin(net.minecraft.class_2751.class)
+@Mixin(value = net.minecraft.class_2751.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbNetSetObjectivePacketMixin {
 
     @Shadow

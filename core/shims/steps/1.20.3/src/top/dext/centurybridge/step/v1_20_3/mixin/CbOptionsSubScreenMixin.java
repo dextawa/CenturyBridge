@@ -1,12 +1,13 @@
 package top.dext.centurybridge.step.v1_20_3.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_3.rt.CbVanillaReads;
 
 /**
  * OptionsSubScreen.basicListRender(GuiGraphics, OptionsList, int, int, float) (method_45626), gone in
  * 1.20.3, 1.20.2's body: the screen (Screen.render), then the list, then the title centred at y 20.
  */
-@Mixin(net.minecraft.class_4667.class)
+@Mixin(value = net.minecraft.class_4667.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbOptionsSubScreenMixin extends net.minecraft.class_437 {
 
     private CbOptionsSubScreenMixin() {

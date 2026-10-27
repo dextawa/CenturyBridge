@@ -5,13 +5,14 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderBakery;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 ModelBakery.getModelGroups(): the blockstate groups of a bakery 1.21.1's constructor built (CbRenderBakery);
  * a bakery 1.21.2 built has none (its ModelManager keeps the groups itself), an empty map.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_1088.class)
+@Mixin(value = net.minecraft.class_1088.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderBakeryMixin implements CbRenderBakery.Legacy {
 
     @Unique

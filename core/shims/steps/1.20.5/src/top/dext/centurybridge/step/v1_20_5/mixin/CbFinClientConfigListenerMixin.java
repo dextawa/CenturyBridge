@@ -5,6 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * ClientConfigurationPacketListenerImpl: 1.20.4's registryAccess() -- the client's static registries with
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * configuration finishes; asked earlier, it is built the same way from what has been collected.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_8674.class)
+@Mixin(value = net.minecraft.class_8674.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinClientConfigListenerMixin {
 
     @Shadow
