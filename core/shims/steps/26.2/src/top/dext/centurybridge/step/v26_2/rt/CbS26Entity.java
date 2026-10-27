@@ -200,4 +200,29 @@ public final class CbS26Entity {
     public static Entity loadEntityRecursive(CompoundTag tag, Level level, EntitySpawnReason reason, EntityProcessor processor) {
         return EntityType.loadEntityRecursive(tag, level, request(reason), processor);
     }
+
+    /**
+     * callReshapes ret: 26.1.2 Vex.getOwner()Mob resolved the owner reference as a Mob (EntityReference.get(owner,
+     * level, Mob.class), null for anything else); 26.2's getOwner() resolves the same reference as a LivingEntity
+     * (OwnableEntity's default). Vex.setOwner still takes a Mob in 26.2, so the answer is the same Mob.
+     */
+    public static net.minecraft.world.entity.Mob asMob(LivingEntity owner) {
+        return owner instanceof net.minecraft.world.entity.Mob mob ? mob : null;
+    }
+
+    /**
+     * instance redirect: 26.1.2 ItemStack.getDamageSource(attacker, fallback): the DAMAGE_TYPE component's source caused
+     * by the attacker, else the item's getItemDamageSource(attacker), else the caller's fallback (javap of 26.1.2). 26.2's
+     * one-argument form has the same first two steps and falls back to the attacker's mob-attack source instead.
+     */
+    public static DamageSource getDamageSource(ItemStack stack, LivingEntity attacker,
+            java.util.function.Supplier<DamageSource> fallback) {
+        net.minecraft.core.Holder<net.minecraft.world.damagesource.DamageType> type =
+            stack.get(net.minecraft.core.component.DataComponents.DAMAGE_TYPE);
+        if (type != null) {
+            return new DamageSource(type, attacker);
+        }
+        DamageSource own = stack.getItem().getItemDamageSource(attacker);
+        return own != null ? own : fallback.get();
+    }
 }

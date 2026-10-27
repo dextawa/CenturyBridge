@@ -120,3 +120,5 @@ mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPort
 mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties replaceWithBlackstone Z
 mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties vines Z
 # ---- END GENERATED (s26) ----
+# s26f: LevelRenderer.offsetFrustum (26.1.2 public static) moved to SectionOcclusionGraph, private there; a 26.1.2 call is redirected to it
+accessible method net/minecraft/client/renderer/SectionOcclusionGraph offsetFrustum (Lnet/minecraft/client/renderer/culling/Frustum;)Lnet/minecraft/client/renderer/culling/Frustum;

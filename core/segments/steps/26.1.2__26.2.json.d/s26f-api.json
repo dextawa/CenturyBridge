@@ -1,0 +1,97 @@
+{
+  "_s26f_api": "s26f: 26.1.2 client API members 26.2 renamed, reshaped or dropped while keeping their data (javap -c -p of both releases)",
+  "callReshapes": {
+    "net/minecraft/client/Minecraft.saveReport(Ljava/io/File;Lnet/minecraft/CrashReport;)I": {
+      "desc": "(Ljava/io/File;Lnet/minecraft/CrashReport;I)I",
+      "ops": [
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v26_2/rt/CbS26CrashReport#legacyExitCode()I"
+      ],
+      "basis": "26.1.2 saveReport(File, CrashReport) answered -1 when the report was printed (getSaveFile set) or saved, -2 when it could not be saved; 26.2 saveReport(File, CrashReport, int) is the same body answering the given code in place of -1 (and still -2), its own saveReport(File, CrashReport)V passes -1. 26.2's two-argument form returns void, so the 26.1.2 shape cannot link to it"
+    },
+    "net/minecraft/client/Minecraft.crash(Lnet/minecraft/client/Minecraft;Ljava/io/File;Lnet/minecraft/CrashReport;)V": {
+      "desc": "(Lnet/minecraft/client/Minecraft;Ljava/io/File;Lnet/minecraft/CrashReport;I)V",
+      "ops": [
+        "keep",
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v26_2/rt/CbS26CrashReport#legacyExitCode()I"
+      ],
+      "basis": "26.1.2 crash: System.exit(saveReportAndShutdownSoundManager(mc, dir, report)), which answered saveReport's -1 / -2; 26.2 crash(.., int code) exits with saveReportAndShutdownSoundManager(.., code), code in place of -1 (javap of both)"
+    },
+    "net/minecraft/server/Bootstrap.getMissingTranslations()Ljava/util/Set;": {
+      "desc": "(Lnet/minecraft/locale/Language;)Ljava/util/Set;",
+      "ops": [
+        "push net/minecraft/locale/Language#getInstance()Lnet/minecraft/locale/Language;"
+      ],
+      "basis": "26.1.2 getMissingTranslations() checked every registry against Language.getInstance() (read in checkTranslations / checkGameruleTranslations); 26.2 takes the language as an argument and checks the same registries against it"
+    },
+    "net/minecraft/world/entity/monster/Vex.getOwner()Lnet/minecraft/world/entity/Mob;": {
+      "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v26_2/rt/CbS26Entity#asMob(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/entity/Mob;",
+      "basis": "26.1.2 Vex.getOwner()Mob = EntityReference.get(owner, level, Mob.class); 26.2 Vex.getOwner()LivingEntity = OwnableEntity's EntityReference.get(owner reference, level, LivingEntity.class); 26.2's setOwner still takes a Mob, so the owner is the same Mob"
+    },
+    "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.emissiveRendering(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z": {
+      "desc": "()Z",
+      "ops": [
+        "drop",
+        "drop"
+      ],
+      "basis": "26.2's emissiveRendering() asks the block's emissive predicate with the state only (Properties.emissiveRendering takes a Predicate<BlockState> in 26.2, a StatePredicate in 26.1.2); every 26.2 predicate is asked as 26.2 asks it, so level and position have nowhere to go"
+    }
+  },
+  "methodRenames": {
+    "net/minecraft/client/gui/screens/Overlay.isPauseScreen()Z": "isPausing",
+    "net/minecraft/world/effect/InstantenousMobEffect.isInstantenous()Z": "isInstantaneous"
+  },
+  "overrideRenames": [
+    {
+      "old": "isPauseScreen()Z",
+      "new": "isPausing",
+      "onlyUnder": "net/minecraft/client/gui/screens/Overlay",
+      "superCalls": "rename",
+      "basis": "26.2 renamed Overlay.isPauseScreen to isPausing: the same body (iconst_1; ireturn), and 26.2 asks overlay.isPausing() in Gui.isPausing (which Minecraft.runTick asks) where 26.1.2's runTick asked overlay.isPauseScreen(), so a 26.1.2 overlay's override must carry the new name to be asked"
+    }
+  ],
+  "superCtorReshapes": {
+    "net/minecraft/client/particle/ParticleRenderType.<init>(Ljava/lang/String;)V": {
+      "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+      "ops": [
+        "keep:0",
+        "keep:0"
+      ],
+      "basis": "26.2's ParticleRenderType record gained a shorthand component (SINGLE_QUADS 'SQ', ITEM_PICKUP 'IP', ELDER_GUARDIANS 'EG', NO_RENDER 'NR'); its only reader is ParticleEngine.countParticles, the debug overlay's per-type count label. A 26.1.2 mod's type has no shorthand, so its name stands in as its label; name() and the record's identity are 26.1.2's"
+    }
+  },
+  "covers": [
+    "net/minecraft/client/renderer/GameRenderer.getMinecraft()Lnet/minecraft/client/Minecraft;",
+    "net/minecraft/client/renderer/GameRenderer.getGlobalSettingsUniform()Lnet/minecraft/client/renderer/GlobalSettingsUniform;",
+    "net/minecraft/client/Minecraft.getVersionType()Ljava/lang/String;",
+    "net/minecraft/util/thread/BlockableEventLoop.hasDelayedCrash()Z"
+  ],
+  "_s26f_covers_basis": {
+    "net/minecraft/client/renderer/GameRenderer.getMinecraft()Lnet/minecraft/client/Minecraft;": "restored on GameRenderer by mixin/CbS26GameRendererGettersMixin: 26.2 keeps the private final minecraft field the 26.1.2 getter returned",
+    "net/minecraft/client/renderer/GameRenderer.getGlobalSettingsUniform()Lnet/minecraft/client/renderer/GlobalSettingsUniform;": "restored on GameRenderer by mixin/CbS26GameRendererGettersMixin: 26.2 keeps the private final globalSettingsUniform field the 26.1.2 getter returned",
+    "net/minecraft/client/Minecraft.getVersionType()Ljava/lang/String;": "restored on Minecraft by mixin/CbS26VersionTypeMixin(+Hooks): 26.1.2's field held GameConfig.game.versionType, stored right after launchedVersion; 26.2's GameData still carries versionType, its Minecraft no longer reads it. 26.1.2's vanilla never called the getter (javap scan of 26.1.2's client classes)",
+    "net/minecraft/util/thread/BlockableEventLoop.hasDelayedCrash()Z": "restored on BlockableEventLoop by mixin/CbS26DelayedCrashMixin: delayedCrash != null over 26.2's kept static supplier. 26.1.2's only vanilla reader, Minecraft.destroy(), is gone from 26.2, so an override no longer steers the shutdown"
+  },
+  "staticRedirects": {
+    "net/minecraft/world/scores/ReadOnlyScoreInfo.safeFormatValue(Lnet/minecraft/world/scores/ReadOnlyScoreInfo;Lnet/minecraft/network/chat/numbers/NumberFormat;)Lnet/minecraft/network/chat/MutableComponent;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team",
+    "net/minecraft/client/renderer/LevelRenderer.getLightCoords(Lnet/minecraft/client/renderer/LevelRenderer$BrightnessGetter;Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I": "net/minecraft/util/LightCoordsUtil",
+    "net/minecraft/client/renderer/LevelRenderer.offsetFrustum(Lnet/minecraft/client/renderer/culling/Frustum;)Lnet/minecraft/client/renderer/culling/Frustum;": "net/minecraft/client/renderer/SectionOcclusionGraph",
+    "net/minecraft/world/level/NaturalSpawner.getFilteredSpawningCategories(Lnet/minecraft/world/level/NaturalSpawner$SpawnState;ZZZ)Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS26World"
+  },
+  "_s26f_redirects_basis": {
+    "net/minecraft/world/effect/InstantenousMobEffect.isInstantenous()Z": "26.2 renamed the class (InstantaneousMobEffect, pkgmoves) and its override isInstantenous -> isInstantaneous (same body: iconst_1; ireturn). pkgmoves keys the rename on MobEffect, which a call naming InstantenousMobEffect does not reach because 26.1.2's InstantenousMobEffect declares the method itself",
+    "net/minecraft/world/scores/ReadOnlyScoreInfo.safeFormatValue(Lnet/minecraft/world/scores/ReadOnlyScoreInfo;Lnet/minecraft/network/chat/numbers/NumberFormat;)Lnet/minecraft/network/chat/MutableComponent;": "26.2 dropped the static helper and kept formatValue(NumberFormat) and NumberFormat.format(int): the 26.1.2 body (rt/CbS26Team.safeFormatValue)",
+    "net/minecraft/client/renderer/LevelRenderer.getLightCoords(Lnet/minecraft/client/renderer/LevelRenderer$BrightnessGetter;Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I": "26.2 moved it to LightCoordsUtil.getLightCoords(LightCoordsUtil$BrightnessGetter, ..) (the getter interface moved with it, pkgmoves classRenames): the same body but for state.emissiveRendering(level, pos) -> emissiveRendering(), 26.2's emissive test taking the state only (its two-argument sibling is already redirected there)",
+    "net/minecraft/client/renderer/LevelRenderer.offsetFrustum(Lnet/minecraft/client/renderer/culling/Frustum;)Lnet/minecraft/client/renderer/culling/Frustum;": "26.2 moved it to SectionOcclusionGraph.offsetFrustum, the same body (javap diff: only the access, private in 26.2; cb-step-26.2.accesswidener opens it)",
+    "net/minecraft/world/level/NaturalSpawner.getFilteredSpawningCategories(Lnet/minecraft/world/level/NaturalSpawner$SpawnState;ZZZ)Ljava/util/List;": "26.1.2 (state, spawnFriendlies, spawnEnemies, spawnPersistent); 26.2 dropped the friendlies flag and always keeps friendly categories (javap of both: otherwise the same filter over SPAWNING_CATEGORIES, same order). rt/CbS26World asks 26.2 with (enemies, persistent) and drops the friendly categories when 26.1.2's flag was false",
+    "net/minecraft/world/item/ItemStack.getDamageSource(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Supplier;)Lnet/minecraft/world/damagesource/DamageSource;": "26.1.2: the DAMAGE_TYPE component's source for the attacker, else Item.getItemDamageSource(attacker), else the caller's supplier; 26.2 dropped the supplier and falls back to the attacker's mob-attack source. rt/CbS26Entity.getDamageSource runs the 26.1.2 body over the same 26.2 parts, so the caller's fallback is kept"
+  },
+  "instanceRedirects": {
+    "net/minecraft/world/item/ItemStack.getDamageSource(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Supplier;)Lnet/minecraft/world/damagesource/DamageSource;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity"
+  }
+}
