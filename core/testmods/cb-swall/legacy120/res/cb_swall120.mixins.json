@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "cb.swall120.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": ["EntityPredicateJsonMixin"],
+  "injectors": { "defaultRequire": 1 }
+}
