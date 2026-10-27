@@ -17,4 +17,9 @@ public final class CbPrioritySplitClient {
     public interface RenderBufferSources {
         void cb$v26_2$buildSources();
     }
+
+    /** CbS26VersionTypeMixin: 26.1.2's versionType, read from GameConfig where 26.1.2's constructor read it */
+    public interface VersionType {
+        void cb$v26_2$versionType(String versionType);
+    }
 }

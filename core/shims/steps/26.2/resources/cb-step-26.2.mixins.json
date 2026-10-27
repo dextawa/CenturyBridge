@@ -25,7 +25,8 @@
     "CbS26StriderNavigationMixin",
     "CbS26BodyArmorRestoreMixin",
     "CbS26BodyArmorHorseRouteMixin",
-    "CbS26BodyArmorWolfRouteMixin"
+    "CbS26BodyArmorWolfRouteMixin",
+    "CbS26DelayedCrashMixin"
   ],
   "client": [
     "CbS26BedLayersMixin",
@@ -53,7 +54,10 @@
     "CbS26SubmitWindowMixin",
     "CbS26SubmitDrainMixin",
     "CbS26LevelTicksMixin",
-    "CbS26LevelTicksClockMixin"
+    "CbS26LevelTicksClockMixin",
+    "CbS26GameRendererGettersMixin",
+    "CbS26VersionTypeMixin",
+    "CbS26VersionTypeMixinHooks"
   ],
   "server": [],
   "injectors": {
