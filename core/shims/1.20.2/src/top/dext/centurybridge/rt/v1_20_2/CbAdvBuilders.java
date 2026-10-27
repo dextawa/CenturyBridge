@@ -96,6 +96,30 @@ public final class CbAdvBuilders {
     public static final boolean ROUTE = CbRecipeJson.ROUTE;
 
     /**
+     * the id and JSON ServerAdvancementManager's per-advancement step (method_20723) is reading on this thread, taken by
+     * type at its head (CbAdvJsonVanillaMixin): {@link #consultCarried} reads them where the step stores the advancement
+     */
+    private static final ThreadLocal<net.minecraft.class_2960> CURRENT_ID = new ThreadLocal<>();
+    private static final ThreadLocal<com.google.gson.JsonElement> CURRENT_JSON = new ThreadLocal<>();
+
+    public static void carryId(net.minecraft.class_2960 id) {
+        CURRENT_ID.set(id);
+    }
+
+    public static void carryJson(com.google.gson.JsonElement json) {
+        CURRENT_JSON.set(json);
+    }
+
+    /** {@link #consult} with the carried id and JSON; both are cleared */
+    public static net.minecraft.class_161 consultCarried(net.minecraft.class_161 read, net.minecraft.class_60 lootData) {
+        net.minecraft.class_2960 id = CURRENT_ID.get();
+        com.google.gson.JsonElement json = CURRENT_JSON.get();
+        CURRENT_ID.remove();
+        CURRENT_JSON.remove();
+        return id == null || json == null ? read : consult(read, id, json, lootData);
+    }
+
+    /**
      * ServerAdvancementManager has read {@code read} with 1.20.2's Advancement.fromJson. The advancement vanilla keeps:
      * {@code read}, unless the restored 1.20.1 Builder.fromJson (which a converted mod's mixin may change) answers
      * otherwise than its unmixed copy {@link #goldenFromJson} -- then what that builder builds (or its exception), as

@@ -69,6 +69,7 @@
     "CbFapiBlockEntityAttachments",
     "CbFapiBlockEntityUpdatePacket",
     "CbFapiChunkSerializerAttachments",
+    "CbFapiDataProviderRemoval",
     "CbFapiEntityAttachments",
     "CbFapiLootPoolV1",
     "CbFapiLootTableV1",
