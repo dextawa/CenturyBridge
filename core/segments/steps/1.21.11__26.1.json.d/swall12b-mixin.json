@@ -1,0 +1,45 @@
+{
+ "_swall12b_basis": "private members 26.1 reshaped (mixin work list, cause target-private-reshape), each judged from javap of both bodies",
+ "callReshapes": {
+  "net/minecraft/class_9276.method_57423(Lnet/minecraft/class_1799;)Lorg/apache/commons/lang3/math/Fraction;": {
+   "desc": "(Lnet/minecraft/world/item/ItemInstance;)Lcom/mojang/serialization/DataResult;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#instance(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemInstance;"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallBundleWeights#toLegacy(Lcom/mojang/serialization/DataResult;)Lorg/apache/commons/lang3/math/Fraction;",
+   "basis": "BundleContents.getWeight(stack): 26.1's getWeight(ItemInstance) is 1.21.11's body (nested bundle weight + BUNDLE_IN_BUNDLE_WEIGHT, bees -> 1, else 1 / max stack size; javap of both) answering a DataResult; a stack is an ItemInstance -- rt/CbWallBundleWeights"
+  },
+  "net/minecraft/class_9362.method_61658(Lnet/minecraft/class_3222;)Lnet/minecraft/class_243;": {
+   "desc": "(Lnet/minecraft/class_1309;)Lnet/minecraft/class_243;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#living(Lnet/minecraft/class_3222;)Lnet/minecraft/class_1309;"
+   ],
+   "basis": "MaceItem.calculateImpactPosition(player): 26.1's takes the LivingEntity the impulse fields moved up to (isIgnoringFallDamageFromCurrentImpulse, currentImpulseImpactPos, position()); the same body call for call (javap of both); a player is a LivingEntity"
+  }
+ },
+ "returnConverters": {
+  "net/minecraft/class_9276.method_57423(Lnet/minecraft/class_1799;)Lorg/apache/commons/lang3/math/Fraction;": {
+   "toV": "top/dext/centurybridge/step/v26_1/rt/CbWallBundleWeights#toLegacy(Lcom/mojang/serialization/DataResult;)Lorg/apache/commons/lang3/math/Fraction;",
+   "toW": "top/dext/centurybridge/step/v26_1/rt/CbWallBundleWeights#toResult(Lorg/apache/commons/lang3/math/Fraction;)Lcom/mojang/serialization/DataResult;",
+   "basis": "the same value: 26.1 wraps 1.21.11's Fraction in a success; its one error (an over-full nested bundle) reads as a full weight"
+  }
+ },
+ "mixinTargets": {
+  "net/minecraft/class_9362.method_61658(Lnet/minecraft/class_3222;)Lnet/minecraft/class_243;": {
+   "to": "method_61658(Lnet/minecraft/class_1309;)Lnet/minecraft/class_243;",
+   "args": [
+    0
+   ],
+   "narrow": true,
+   "basis": "the same body on 26.1's widened parameter (javap of both): a handler written for 1.21.11's player runs for a player, as 26.1's attacker for a mace is (only players smash in 1.21.11)"
+  },
+  "net/minecraft/class_9276.method_57423(Lnet/minecraft/class_1799;)Lorg/apache/commons/lang3/math/Fraction;": {
+   "to": "method_57423(Lnet/minecraft/world/item/ItemInstance;)Lcom/mojang/serialization/DataResult;",
+   "args": [
+    0
+   ],
+   "narrow": true,
+   "basis": "the same body on 26.1's widened parameter (javap of both; the answer converts through returnConverters): 1.21.11 weighed only stacks, so a handler written for it runs when 26.1 weighs a stack (an inserted stack, tryInsert / getMaxAmountToAdd), not when it weighs a stored ItemStackTemplate"
+  }
+ }
+}

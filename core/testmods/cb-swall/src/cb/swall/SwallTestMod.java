@@ -2026,6 +2026,12 @@ public class SwallTestMod implements ModInitializer {
                 && "minecraft:stone".equals(id.toString()), id);
             net.minecraft.class_2456 special = new net.minecraft.class_2456(cat -> null);
             check("swall12.specialRecipeBuilder", special != null, "");
+            // BundleWeightMixin (a 1.21.11 mixin on getWeight): stone weighs 1/2, so a bundle takes 2 of 64
+            net.minecraft.class_9276.class_9277 bundle = new net.minecraft.class_9276.class_9277(net.minecraft.class_9276.field_49289);
+            int took = bundle.method_57432(new net.minecraft.class_1799(net.minecraft.class_1802.field_20391, 64));
+            int dirt = new net.minecraft.class_9276.class_9277(net.minecraft.class_9276.field_49289)
+                .method_57432(new net.minecraft.class_1799(net.minecraft.class_1802.field_20395, 64));
+            check("swall12b.bundleWeightMixin", took == 2 && dirt > 2, took + " " + dirt);
         } catch (Throwable t) {
             check("swall12.recipeBuilders", false, t);
         }
