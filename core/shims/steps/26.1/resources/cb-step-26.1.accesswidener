@@ -264,3 +264,9 @@ accessible	field	net/minecraft/client/ClientClockManager$ClockInstance	rate	F
 # 1.21.11 ReloadableServerResources.updateStaticRegistryTags / TabNavigationBar.setWidth: rt/CbWallServerResources, rt/CbWallTabBars keep 1.21.11's bodies (swall11)
 accessible	field	net/minecraft/server/ReloadableServerResources	postponedTags	Ljava/util/List;
 accessible	field	net/minecraft/client/gui/components/tabs/TabNavigationBar	width	I
+# 1.21.11 RecipeBuilder.getResult() answered the builder's result item; 26.1's builders keep it as a template in result (swall12b, rt/CbWallRecipeBuilders)
+accessible	field	net/minecraft/data/recipes/ShapedRecipeBuilder	result	Lnet/minecraft/world/item/ItemStackTemplate;
+accessible	field	net/minecraft/data/recipes/ShapelessRecipeBuilder	result	Lnet/minecraft/world/item/ItemStackTemplate;
+accessible	field	net/minecraft/data/recipes/SimpleCookingRecipeBuilder	result	Lnet/minecraft/world/item/ItemStackTemplate;
+accessible	field	net/minecraft/data/recipes/SingleItemRecipeBuilder	result	Lnet/minecraft/world/item/ItemStackTemplate;
+accessible	field	net/minecraft/data/recipes/TransmuteRecipeBuilder	result	Lnet/minecraft/world/item/ItemStackTemplate;

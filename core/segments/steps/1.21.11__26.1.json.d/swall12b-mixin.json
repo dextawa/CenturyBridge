@@ -1,0 +1,111 @@
+{
+ "_swall12b_basis": "private members 26.1 reshaped (mixin work list, cause target-private-reshape), each judged from javap of both bodies",
+ "callReshapes": {
+  "net/minecraft/class_9276.method_57423(Lnet/minecraft/class_1799;)Lorg/apache/commons/lang3/math/Fraction;": {
+   "desc": "(Lnet/minecraft/world/item/ItemInstance;)Lcom/mojang/serialization/DataResult;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#instance(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemInstance;"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallBundleWeights#toLegacy(Lcom/mojang/serialization/DataResult;)Lorg/apache/commons/lang3/math/Fraction;",
+   "basis": "BundleContents.getWeight(stack): 26.1's getWeight(ItemInstance) is 1.21.11's body (nested bundle weight + BUNDLE_IN_BUNDLE_WEIGHT, bees -> 1, else 1 / max stack size; javap of both) answering a DataResult; a stack is an ItemInstance -- rt/CbWallBundleWeights"
+  },
+  "net/minecraft/class_9362.method_61658(Lnet/minecraft/class_3222;)Lnet/minecraft/class_243;": {
+   "desc": "(Lnet/minecraft/class_1309;)Lnet/minecraft/class_243;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#living(Lnet/minecraft/class_3222;)Lnet/minecraft/class_1309;"
+   ],
+   "basis": "MaceItem.calculateImpactPosition(player): 26.1's takes the LivingEntity the impulse fields moved up to (isIgnoringFallDamageFromCurrentImpulse, currentImpulseImpactPos, position()); the same body call for call (javap of both); a player is a LivingEntity"
+  },
+  "net/minecraft/class_1887.method_60037(Lnet/minecraft/class_9331;Lnet/minecraft/class_3218;ILnet/minecraft/class_1799;Lorg/apache/commons/lang3/mutable/MutableFloat;)V": {
+   "desc": "(Lnet/minecraft/class_9331;Lnet/minecraft/class_3218;ILnet/minecraft/world/item/ItemInstance;Lorg/apache/commons/lang3/mutable/MutableFloat;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#instance(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemInstance;",
+    "keep"
+   ],
+   "basis": "Enchantment.modifyItemFilteredCount(component, level, enchantmentLevel, stack, value): 26.1's takes the ItemInstance its itemContext takes; the same body (getEffects, itemContext, applyEffects; javap of both); a stack is an ItemInstance"
+  },
+  "net/minecraft/class_8180.method_49249(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;Ljava/util/function/Function;Lnet/minecraft/class_2350;IZLnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_4647$class_5208;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;Ljava/util/function/Function;Lnet/minecraft/class_2350;IZLnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_4647$class_5208;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "CherryTrunkPlacer.generateBranch(level, ..): 26.1's takes a WorldGenLevel where 1.21.11's took a LevelSimulatedReader; the same body call for call (placeLog, distManhattan, getY; javap of both). 1.21.11's trunk placers were handed the tree feature's WorldGenLevel"
+  },
+  "net/minecraft/class_1887.method_60017(Lnet/minecraft/class_3218;ILnet/minecraft/class_1799;)Lnet/minecraft/class_47;": {
+   "desc": "(Lnet/minecraft/class_3218;ILnet/minecraft/world/item/ItemInstance;)Lnet/minecraft/class_47;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#instance(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemInstance;"
+   ],
+   "basis": "Enchantment.itemContext(level, enchantmentLevel, stack): 26.1's takes the ItemInstance (javap of both: the same loot context with THIS_ENTITY absent, TOOL = the item, ENCHANTMENT_LEVEL); a stack is an ItemInstance. Also the anchor of modifyItemFilteredCount's injectors"
+  }
+ },
+ "returnConverters": {
+  "net/minecraft/class_9276.method_57423(Lnet/minecraft/class_1799;)Lorg/apache/commons/lang3/math/Fraction;": {
+   "toV": "top/dext/centurybridge/step/v26_1/rt/CbWallBundleWeights#toLegacy(Lcom/mojang/serialization/DataResult;)Lorg/apache/commons/lang3/math/Fraction;",
+   "toW": "top/dext/centurybridge/step/v26_1/rt/CbWallBundleWeights#toResult(Lorg/apache/commons/lang3/math/Fraction;)Lcom/mojang/serialization/DataResult;",
+   "basis": "the same value: 26.1 wraps 1.21.11's Fraction in a success; its one error (an over-full nested bundle) reads as a full weight"
+  }
+ },
+ "mixinTargets": {
+  "net/minecraft/class_9362.method_61658(Lnet/minecraft/class_3222;)Lnet/minecraft/class_243;": {
+   "to": "method_61658(Lnet/minecraft/class_1309;)Lnet/minecraft/class_243;",
+   "args": [
+    0
+   ],
+   "narrow": true,
+   "basis": "the same body on 26.1's widened parameter (javap of both): a handler written for 1.21.11's player runs for a player, as 26.1's attacker for a mace is (only players smash in 1.21.11)"
+  },
+  "net/minecraft/class_9276.method_57423(Lnet/minecraft/class_1799;)Lorg/apache/commons/lang3/math/Fraction;": {
+   "to": "method_57423(Lnet/minecraft/world/item/ItemInstance;)Lcom/mojang/serialization/DataResult;",
+   "args": [
+    0
+   ],
+   "narrow": true,
+   "basis": "the same body on 26.1's widened parameter (javap of both; the answer converts through returnConverters): 1.21.11 weighed only stacks, so a handler written for it runs when 26.1 weighs a stack (an inserted stack, tryInsert / getMaxAmountToAdd), not when it weighs a stored ItemStackTemplate"
+  },
+  "net/minecraft/class_1887.method_60037(Lnet/minecraft/class_9331;Lnet/minecraft/class_3218;ILnet/minecraft/class_1799;Lorg/apache/commons/lang3/mutable/MutableFloat;)V": {
+   "to": "method_60037(Lnet/minecraft/class_9331;Lnet/minecraft/class_3218;ILnet/minecraft/world/item/ItemInstance;Lorg/apache/commons/lang3/mutable/MutableFloat;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "narrow": true,
+   "basis": "the same body on 26.1's widened parameter; every 26.1 caller (modifyDurabilityChange / modifyAmmoCount / modifyPiercingCount) passes its ItemStack, as 1.21.11's did (javap)"
+  },
+  "net/minecraft/class_8180.method_49249(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;Ljava/util/function/Function;Lnet/minecraft/class_2350;IZLnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_4647$class_5208;": {
+   "to": "method_49249(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;Ljava/util/function/Function;Lnet/minecraft/class_2350;IZLnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_4647$class_5208;",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "basis": "the same body; a handler taking 1.21.11's LevelSimulatedReader takes 26.1's WorldGenLevel, a LevelSimulatedReader"
+  }
+ }
+}

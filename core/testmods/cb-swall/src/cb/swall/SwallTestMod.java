@@ -1025,6 +1025,7 @@ public class SwallTestMod implements ModInitializer {
             blockStatics(server);
             legacyConstructors(server);
             timeCommand(server);
+            swall12Batch();
             clocks(server);
             fluidHeights(server);
             check("server.throwIfFatalException", MinecraftServer.method_60584(), "");
@@ -1965,6 +1966,74 @@ public class SwallTestMod implements ModInitializer {
                 && own.method_11654(net.minecraft.class_2453.field_11413), json);
         } catch (Throwable t) {
             check("states.codecAndField", false, t);
+        }
+    }
+
+    /** 1.21.11 BlockableEventLoop(name) subclass: super(name) gets propagatesCrashes = false (rt/CbWallEventLoops) */
+    static class LegacyLoop extends net.minecraft.class_1255<Runnable> {
+        private final Thread other = new Thread(() -> { });
+
+        LegacyLoop() {
+            super("cbtest-loop");
+        }
+
+        @Override
+        public Runnable method_16211(Runnable r) {
+            return r;
+        }
+
+        @Override
+        protected boolean method_18856(Runnable r) {
+            return true;
+        }
+
+        @Override
+        protected Thread method_3777() {
+            return this.other;
+        }
+    }
+
+    /** swall12 batch: event loop super(name), BuiltInMetadata, data/recipes builders */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void swall12Batch() {
+        try {
+            LegacyLoop loop = new LegacyLoop();
+            java.util.concurrent.atomic.AtomicBoolean ran = new java.util.concurrent.atomic.AtomicBoolean();
+            loop.execute(() -> ran.set(true));
+            loop.method_18857(ran::get);
+            check("swall12.eventLoopSuperName", ran.get() && "cbtest-loop".equals(loop.method_16898()), loop.method_16898());
+        } catch (Throwable t) {
+            check("swall12.eventLoopSuperName", false, t);
+        }
+        try {
+            net.minecraft.class_7677 type = net.minecraft.class_3272.field_61155;
+            net.minecraft.class_7662 empty = net.minecraft.class_7662.method_45172();
+            net.minecraft.class_7662 one = net.minecraft.class_7662.method_45174(type, "cb-value");
+            check("swall12.builtInMetadata", empty.method_45173(type) == null && "cb-value".equals(one.method_45173(type)),
+                one.method_45173(type));
+        } catch (Throwable t) {
+            check("swall12.builtInMetadata", false, t);
+        }
+        try {
+            net.minecraft.class_7800 category = net.minecraft.class_7800.values()[0];
+            net.minecraft.class_1856 stone = net.minecraft.class_1856.method_8091(net.minecraft.class_1802.field_20391);
+            net.minecraft.class_3981 cutting = net.minecraft.class_3981.method_17968(stone, category, net.minecraft.class_1802.field_20395);
+            net.minecraft.class_2454 smelting = net.minecraft.class_2454.method_17802(stone, category, net.minecraft.class_1802.field_20395, 0.1F, 200);
+            net.minecraft.class_5797 asInterface = smelting;
+            net.minecraft.class_2960 id = net.minecraft.class_5797.method_36442(net.minecraft.class_1802.field_20391);
+            check("swall12.recipeBuilders", cutting.method_36441() == net.minecraft.class_1802.field_20395
+                && smelting.method_36441() == net.minecraft.class_1802.field_20395 && asInterface.method_36441() == net.minecraft.class_1802.field_20395
+                && "minecraft:stone".equals(id.toString()), id);
+            net.minecraft.class_2456 special = new net.minecraft.class_2456(cat -> null);
+            check("swall12.specialRecipeBuilder", special != null, "");
+            // BundleWeightMixin (a 1.21.11 mixin on getWeight): stone weighs 1/2, so a bundle takes 2 of 64
+            net.minecraft.class_9276.class_9277 bundle = new net.minecraft.class_9276.class_9277(net.minecraft.class_9276.field_49289);
+            int took = bundle.method_57432(new net.minecraft.class_1799(net.minecraft.class_1802.field_20391, 64));
+            int dirt = new net.minecraft.class_9276.class_9277(net.minecraft.class_9276.field_49289)
+                .method_57432(new net.minecraft.class_1799(net.minecraft.class_1802.field_20395, 64));
+            check("swall12b.bundleWeightMixin", took == 2 && dirt > 2, took + " " + dirt);
+        } catch (Throwable t) {
+            check("swall12.recipeBuilders", false, t);
         }
     }
 }

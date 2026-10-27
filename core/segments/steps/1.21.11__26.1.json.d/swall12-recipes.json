@@ -1,0 +1,171 @@
+{
+ "_swall12_recipes_basis": "1.21.11's data/recipes builders on 26.1's (javap of class_5797 / class_2447 / class_2450 / class_2454 / class_3981 / class_8074 / class_2456 / class_10243 / class_2446 and 26.1's builders): getResult from a 26.1 builder's default id or a 1.21.11 builder's own override, getDefaultRecipeId's 1.21.11 body, 1.21.11's cooking book categories, 1.21.11 cooking factories kept with their serializer, one stonecutting result, result templates, special factories applied to MISC (rt/CbWallRecipeBuilders)",
+ "interfaceCallRedirects": {
+  "net/minecraft/class_5797.method_36441()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#getResult"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2447.method_36441()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#getResult",
+  "net/minecraft/class_2450.method_36441()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#getResult",
+  "net/minecraft/class_2454.method_36441()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#getResult",
+  "net/minecraft/class_3981.method_36441()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#getResult",
+  "net/minecraft/class_10243.method_36441()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#getResult"
+ },
+ "superRedirects": {
+  "net/minecraft/class_3981.method_36441()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#superGetResult"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_5797.method_36442(Lnet/minecraft/class_1935;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#getDefaultRecipeId"
+ },
+ "callReshapes": {
+  "net/minecraft/class_2450.method_10447(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2450;": {
+   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_2450;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "basis": "26.1's ShapelessRecipeBuilder.shapeless(items, category, result) takes the result as a template; 1.21.11's took the stack (javap)"
+  },
+  "net/minecraft/class_2454.method_10473(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FI)Lnet/minecraft/class_2454;": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_7709;Lnet/minecraft/class_1935;FI)Lnet/minecraft/class_2454;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#blastingCategory(Lnet/minecraft/class_1935;)Lnet/minecraft/class_7709;",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "26.1's SimpleCookingRecipeBuilder.blasting takes the book category; 1.21.11's chose it from the result (class_2454.method_46217, rt/CbWallRecipeBuilders)"
+  },
+  "net/minecraft/class_2454.method_17802(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FI)Lnet/minecraft/class_2454;": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_7709;Lnet/minecraft/class_1935;FI)Lnet/minecraft/class_2454;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#smeltingCategory(Lnet/minecraft/class_1935;)Lnet/minecraft/class_7709;",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "26.1's SimpleCookingRecipeBuilder.smelting takes the book category; 1.21.11's chose it from the result (class_2454.method_46216, rt/CbWallRecipeBuilders)"
+  },
+  "net/minecraft/class_2454.method_17801(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILnet/minecraft/class_1865;Lnet/minecraft/class_1874$class_3958;)Lnet/minecraft/class_2454;": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_7709;Lnet/minecraft/class_1935;FILnet/minecraft/world/item/crafting/AbstractCookingRecipe$Factory;)Lnet/minecraft/class_2454;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:5,2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#genericCategory(Lnet/minecraft/class_1865;Lnet/minecraft/class_1935;)Lnet/minecraft/class_7709;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:5,6 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#cookingFactory(Lnet/minecraft/class_1865;Lnet/minecraft/class_1874$class_3958;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$Factory;"
+   ],
+   "basis": "26.1's SimpleCookingRecipeBuilder.generic takes the book category and a 26.1 factory; 1.21.11's chose the category by serializer (class_2454.method_46215) and took the old factory, kept with its serializer (rt/CbWallRecipeBuilders.LegacyCookingFactory)"
+  },
+  "net/minecraft/class_3981.method_17968(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;)Lnet/minecraft/class_3981;": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;I)Lnet/minecraft/class_3981;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#one()I"
+   ],
+   "basis": "1.21.11's SingleItemRecipeBuilder.stonecutting(input, category, result) made one (javap: iconst_1 into its constructor); 26.1's takes the count"
+  },
+  "net/minecraft/class_2456.method_10476(Ljava/util/function/Function;)Lnet/minecraft/class_2456;": {
+   "desc": "(Ljava/util/function/Supplier;)Lnet/minecraft/class_2456;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#special(Ljava/util/function/Function;)Ljava/util/function/Supplier;"
+   ],
+   "basis": "26.1's SpecialRecipeBuilder.special takes a supplier; 1.21.11's save applied the factory to CraftingBookCategory.MISC (javap class_2456.method_10475)"
+  },
+  "net/minecraft/class_2446.method_36233(Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;)V": {
+   "desc": "(Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_7709;Lnet/minecraft/class_1935;FILjava/lang/String;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#smeltingCategory(Lnet/minecraft/class_1935;)Lnet/minecraft/class_7709;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "26.1's RecipeProvider.oreSmelting takes the book category; 1.21.11's oreCooking categorised the result by its serializer (generic, class_2454.method_46215)"
+  },
+  "net/minecraft/class_2446.method_36234(Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILjava/lang/String;)V": {
+   "desc": "(Ljava/util/List;Lnet/minecraft/class_7800;Lnet/minecraft/class_7709;Lnet/minecraft/class_1935;FILjava/lang/String;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#blastingCategory(Lnet/minecraft/class_1935;)Lnet/minecraft/class_7709;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "26.1's RecipeProvider.oreBlasting takes the book category; 1.21.11's oreCooking categorised the result by its serializer (generic, class_2454.method_46215)"
+  },
+  "net/minecraft/class_2446.method_17585(Ljava/lang/String;Lnet/minecraft/class_1865;Lnet/minecraft/class_1874$class_3958;I)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$Factory;I)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#cookingFactory(Lnet/minecraft/class_1865;Lnet/minecraft/class_1874$class_3958;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$Factory;",
+    "keep:3"
+   ],
+   "basis": "26.1's RecipeProvider.cookRecipes(name, factory, time) has no serializer; the old factory is kept with it, so each recipe gets the category 1.21.11's generic chose for it (rt/CbWallRecipeBuilders.LegacyCookingFactory)"
+  },
+  "net/minecraft/class_2446.method_62745(Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2450;": {
+   "desc": "(Lnet/minecraft/class_7800;Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_2450;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "basis": "26.1's RecipeProvider.shapeless(category, result) takes the result as a template; 1.21.11's took the stack (javap)"
+  }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_8074.<init>(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#smithing",
+  "net/minecraft/class_2456.<init>(Ljava/util/function/Function;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#specialBuilder"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_8074.<init>(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1792;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#template(Lnet/minecraft/class_1792;)Lnet/minecraft/world/item/ItemStackTemplate;"
+   ],
+   "basis": "26.1's SmithingTransformRecipeBuilder takes the result as a template; 1.21.11's took the item (javap)"
+  },
+  "net/minecraft/class_2456.<init>(Ljava/util/function/Function;)V": {
+   "desc": "(Ljava/util/function/Supplier;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#special(Ljava/util/function/Function;)Ljava/util/function/Supplier;"
+   ],
+   "basis": "26.1's SpecialRecipeBuilder takes a supplier; 1.21.11's save applied the factory to MISC (javap class_2456.method_10475)"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_17585(Ljava/lang/String;Lnet/minecraft/class_1865;Lnet/minecraft/class_1874$class_3958;I)V",
+   "new": "method_17585(Ljava/lang/String;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$Factory;I)V",
+   "onlyUnder": "net/minecraft/class_2446",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders.cookRecipes(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders$LegacyCookRecipes;Ljava/lang/String;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$Factory;I)V",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders$LegacyCookRecipes",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls cookRecipes(name, factory, time); a 1.21.11 override gets the serializer its factory was kept with (26.1's own callers name it by serializer id) and the old factory"
+  },
+  {
+   "old": "method_62745(Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2450;",
+   "new": "method_62745(Lnet/minecraft/class_7800;Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_2450;",
+   "onlyUnder": "net/minecraft/class_2446",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders.shapeless(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders$LegacyShapeless;Lnet/minecraft/class_7800;Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_2450;",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders$LegacyShapeless",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls shapeless(category, template); a 1.21.11 override gets the template's stack"
+  }
+ ]
+}
