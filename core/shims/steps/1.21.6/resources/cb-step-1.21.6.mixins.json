@@ -53,6 +53,8 @@
     "CbGuiScissorGraphicsMixin",
     "CbCubeMapFacesMixin",
     "CbCubeMapFacesMixinHooks",
+    "CbRealmsConfigureWorldRestoredMixin",
+    "CbRealmsConfigureWorldRestoredMixinHooks",
     "CbFontInternalRestoredMixin"
   ],
   "server": [],
