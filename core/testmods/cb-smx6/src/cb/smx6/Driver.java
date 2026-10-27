@@ -53,6 +53,9 @@ public final class Driver {
     public static volatile boolean blockLeashRestore;
     public static volatile int leashRestoreAsked;
     public static volatile int leashRestored;
+    public static volatile boolean foldNested;
+    public static volatile int nestedAsked;
+    public static volatile int nestedVisits;
     private static net.minecraft.class_3222 followOwner;
     private static int ok;
     private static int fail;
@@ -215,7 +218,7 @@ public final class Driver {
             System.out.println("CB-SMX6 follow-begin passive");
             double near = follow(server, level, -8);
             System.out.println("CB-SMX6 follow-end passive");
-            check("follow-passive", near >= 0 && near < 5.0 && followCanAsked > 0 && followMoved == 1,
+            check("follow-passive", near >= 0 && near < 5.0 && followCanAsked == 1 && followMoved == 1,
                 "tamed wolf 20 blocks from its owner, one goal tick: distance " + near + ", canTeleportTo asked " + followCanAsked
                 + " time(s), moved " + followMoved);
             blockFollowTeleport = true;
@@ -273,6 +276,21 @@ public final class Driver {
             blockLeashRestore = false;
             check("leash-blocked", "none/pos/1/0".equals(blocked),
                 "restore refused by the mod: " + blocked + " (holder/delayedLeashInfo after/asked/restored)");
+            // ---- TextComponentTagVisitor nested visits: TagVisitorMixin (1.21: visitList / visitCompound routed through the
+            // restored method_59850)
+            foldNested = false;
+            nestedAsked = 0;
+            nestedVisits = 0;
+            String text = tagText();
+            check("tagvisit-passive", text.equals("{a: {b: 1}}") && nestedAsked == 2 && nestedVisits == 2,
+                "{a:{b:1}} as text: " + text + ", method_59850 asked " + nestedAsked + " time(s), nested visits " + nestedVisits);
+            foldNested = true;
+            nestedAsked = 0;
+            nestedVisits = 0;
+            text = tagText();
+            foldNested = false;
+            check("tagvisit-folded", text.equals("{a: <cb>}") && nestedAsked == 1 && nestedVisits == 0,
+                "the mod answers the nested tag: " + text + ", asked " + nestedAsked + " time(s), nested visits " + nestedVisits);
             level.method_8519(1.0F);
             level.method_8496(1.0F);
             check("thunderstorm", level.method_8546(), "isThundering after rain/thunder level 1");
@@ -396,6 +414,7 @@ public final class Driver {
             forceMatch = false;
             blockFollowTeleport = false;
             forceComment = false;
+            foldNested = false;
         }
         System.out.println("CB-SMX6 summary ok=" + ok + " fail=" + fail);
     }
@@ -477,6 +496,15 @@ public final class Driver {
         return (readBack ? "" : "unread:") + h + "/" + d + "/" + leashRestoreAsked + "/" + leashRestored;
     }
 
+    /** {a:{b:1}} through TextComponentTagVisitor("") as a string */
+    private static String tagText() {
+        net.minecraft.class_2487 inner = new net.minecraft.class_2487();
+        inner.method_10569("b", 1);
+        net.minecraft.class_2487 outer = new net.minecraft.class_2487();
+        outer.method_10566("a", inner);
+        return new net.minecraft.class_5628("").method_32305(outer).getString();
+    }
+
     /**
      * a wolf tamed by a server player (in the level's player list, no connection) 20 blocks east of it at the surface, and one
      * canUse / start / tick of a 1.20.6-made FollowOwnerGoal(wolf, 1.0, 10, 2, false): the wolf's distance to its owner
@@ -507,6 +535,10 @@ public final class Driver {
         level.method_8649(wolf);
         wolf.method_6170(followOwner);
         wolf.method_24346(false);
+        // deterministic teleport target: the wolf's random seeded so that the first try (1.20.6's draw order dx, dy, dz;
+        // 1.21's dx, dz, dy) is a free floor spot 2-3 blocks from the owner, even if up to three draws happen before it
+        // (Java LCG simulated for both orders, s121d). Owner, wolf and platform stand at fixed offsets on an isolated floor.
+        wolf.method_6051().method_43052(1315L);
         net.minecraft.class_1350 goal = new net.minecraft.class_1350(wolf, 1.0, 10.0F, 2.0F, false);
         double d = -1.0;
         if (goal.method_6264()) {

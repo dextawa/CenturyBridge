@@ -141,6 +141,8 @@ public final class Driver {
     public static volatile int nativeRaidWraps;
     /** native 1.21 mixin LeashRestoreWrapMixin: tickLeash's restoreLeashFromSave calls wrapped */
     public static volatile int nativeLeashRestoreWraps;
+    /** native 1.21 mixin TagVisitorWrapMixin: visitCompound's nested visits wrapped */
+    public static volatile int nativeNestedWraps;
 
     /**
      * a pig high above the terrain beside an oak fence, its leash saved as the fence's position (setLeashData with a saved
@@ -221,6 +223,10 @@ public final class Driver {
         level.method_8649(wolf);
         wolf.method_6170(followOwner);
         wolf.method_24346(false);
+        // deterministic teleport target: the wolf's random seeded so that the first try (1.20.6's draw order dx, dy, dz;
+        // 1.21's dx, dz, dy) is a free floor spot 2-3 blocks from the owner, even if up to three draws happen before it
+        // (Java LCG simulated for both orders, s121d). Owner, wolf and platform stand at fixed offsets on an isolated floor.
+        wolf.method_59922().method_43052(1315L);
         net.minecraft.class_1350 goal = new net.minecraft.class_1350(wolf, 1.0, 10.0F, 2.0F);
         double d = -1.0;
         if (goal.method_6264()) {
@@ -299,6 +305,16 @@ public final class Driver {
             String leashed = leash(level, 3200);
             report(tag + " leash-restore", leashed.equals("knot") && nativeLeashRestoreWraps == 1,
                 "pig saved leashed to a fence, one tick: " + leashed + ", native @WrapOperation of restoreLeashFromSave ran " + nativeLeashRestoreWraps);
+            // {a:{b:1}} as text: 1.21's in-place nested visits (with the layer, unmixed: untouched; with cb-smx6 mixing
+            // method_59850: the routed restored visit); the native wrap of visitCompound's nested visit runs once per compound value
+            nativeNestedWraps = 0;
+            net.minecraft.class_2487 inner = new net.minecraft.class_2487();
+            inner.method_10569("b", 1);
+            net.minecraft.class_2487 outer = new net.minecraft.class_2487();
+            outer.method_10566("a", inner);
+            String text = new net.minecraft.class_5628("").method_32305(outer).getString();
+            report(tag + " tagvisit", text.equals("{a: {b: 1}}") && nativeNestedWraps == 2,
+                "{a:{b:1}} as text: " + text + ", native @WrapOperation of the nested visit ran " + nativeNestedWraps);
         } catch (Throwable t) {
             report(tag + " exception", false, String.valueOf(t));
             t.printStackTrace();
