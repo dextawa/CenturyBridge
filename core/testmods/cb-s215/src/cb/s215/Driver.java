@@ -48,6 +48,12 @@ public final class Driver {
     private Driver() {
     }
 
+    /** Block.fallOn as 1.21.5 declares it (fall distance double), looked up at run time: this mod is compiled against 1.21.4 */
+    static java.lang.reflect.Method class_2248_fallOnW() throws NoSuchMethodException {
+        return net.minecraft.class_2248.class.getMethod("method_9554", net.minecraft.class_1937.class, net.minecraft.class_2680.class,
+            class_2338.class, net.minecraft.class_1297.class, double.class);
+    }
+
     static void check(String c, boolean cond, String detail) {
         if (cond) {
             ok++;
@@ -272,6 +278,63 @@ public final class Driver {
             check("smithing-transform", base.isPresent() && base.get() == iron && viaIface.isPresent()
                 && out.method_31574(net.minecraft.class_1802.field_8477) && out.method_7947() == 2,
                 "base=" + base + " out=" + out);
+        });
+
+        run("shape-static", () -> {
+            // GrindstoneBlock.FLOOR_NORTH_* (field_16338): 1.21.4 built it from boxes in <clinit>; 1.21.5 has no such field
+            net.minecraft.class_238 b = net.minecraft.class_3713.field_16338.method_1107();
+            check("shape-static", Math.abs(b.field_1323 - 2 / 16.0) < 1e-9 && b.field_1322 == 0 && Math.abs(b.field_1321 - 2 / 16.0) < 1e-9
+                && Math.abs(b.field_1320 - 14 / 16.0) < 1e-9 && b.field_1325 == 1 && Math.abs(b.field_1324 - 14 / 16.0) < 1e-9, "bounds=" + b);
+        });
+
+        run("fall-on", () -> {
+            FallBlock block = new FallBlock(net.minecraft.class_4970.class_2251.method_9637().method_63500(net.minecraft.class_5321.method_29179(
+                class_7924.field_41254, net.minecraft.class_2960.method_60655("cbs215", "fall"))));
+            net.minecraft.class_1303 orb = new net.minecraft.class_1303(level, 0, 80, 0, 3);
+            class_2338 pos = new class_2338(0, 79, 0);
+            // the mod's own 1.21.4 call (float) ...
+            block.method_9554(level, block.method_9564(), pos, orb, 1.5F);
+            float viaMod = FallBlock.got;
+            // ... and 1.21.5's vanilla call shape (double), as Entity.checkFallDamage makes it
+            java.lang.reflect.Method w = class_2248_fallOnW();
+            w.invoke(block, level, block.method_9564(), pos, orb, 2.5D);
+            check("fall-on", viaMod == 1.5F && FallBlock.got == 2.5F && FallBlock.calls == 2, "viaMod=" + viaMod + " viaVanilla=" + FallBlock.got
+                + " calls=" + FallBlock.calls);
+        });
+
+        run("orb-packet", () -> {
+            net.minecraft.class_1303 orb = new net.minecraft.class_1303(level, 1.25, 70.5, -3.75, 11);
+            net.minecraft.class_3231 se = new net.minecraft.class_3231(level, orb, 0, false, p -> {
+            });
+            net.minecraft.class_2606 p = new net.minecraft.class_2606(orb, se);
+            net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
+            net.minecraft.class_2606.field_47897.encode(buf, p);
+            net.minecraft.class_2606 back = net.minecraft.class_2606.field_47897.decode(buf);
+            check("orb-packet", p.method_11183() == orb.method_5628() && p.method_11185() == 1.25 && p.method_11181() == 70.5
+                && p.method_11180() == -3.75 && p.method_11184() == 11 && back.method_11183() == p.method_11183()
+                && back.method_11185() == 1.25 && back.method_11184() == 11 && p.method_65080() == net.minecraft.class_9094.field_48149,
+                "id=" + p.method_11183() + " pos=" + p.method_11185() + "," + p.method_11181() + "," + p.method_11180() + " value=" + p.method_11184()
+                + " type=" + p.method_65080());
+        });
+
+        run("slot-iterables", () -> {
+            net.minecraft.class_1642 zombie = new net.minecraft.class_1642(level);
+            zombie.method_5673(net.minecraft.class_1304.field_6169, new net.minecraft.class_1799(net.minecraft.class_1802.field_8743));
+            zombie.method_5673(net.minecraft.class_1304.field_6173, new net.minecraft.class_1799(net.minecraft.class_1802.field_8371));
+            List<net.minecraft.class_1799> armor = new ArrayList<>();
+            zombie.method_5661().forEach(armor::add);
+            List<net.minecraft.class_1799> hands = new ArrayList<>();
+            zombie.method_5877().forEach(hands::add);
+            int all = 0;
+            for (net.minecraft.class_1799 st : zombie.method_56675()) {
+                all++;
+            }
+            // a write through the 1.21.4 list reaches the entity's slot (Mob.armorItems was its storage)
+            ((List<net.minecraft.class_1799>) zombie.method_5661()).set(0, new net.minecraft.class_1799(net.minecraft.class_1802.field_8660));
+            check("slot-iterables", armor.size() == 4 && armor.get(3).method_31574(net.minecraft.class_1802.field_8743)
+                && hands.size() == 2 && hands.get(0).method_31574(net.minecraft.class_1802.field_8371) && all == 7
+                && zombie.method_6118(net.minecraft.class_1304.field_6166).method_31574(net.minecraft.class_1802.field_8660),
+                "armor=" + armor + " hands=" + hands + " all=" + all);
         });
 
         DONE = true;
