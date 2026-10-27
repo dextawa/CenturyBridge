@@ -36,6 +36,11 @@ import net.minecraft.class_777;
  */
 public class Driver implements ClientModInitializer {
     public static final AtomicInteger FACES = new AtomicInteger();
+    /** MovedHomeCounter / LeashVertexCounter: calls of 1.21's homes of the members 1.21 moved */
+    public static final AtomicInteger PREDICATE = new AtomicInteger();
+    public static final AtomicInteger VALUE = new AtomicInteger();
+    public static final AtomicInteger GROUP = new AtomicInteger();
+    public static final AtomicInteger LEASH = new AtomicInteger();
     static final Map<String, Boolean> OK = new LinkedHashMap<>();
 
     static void check(String name, boolean pass, String detail) {
@@ -148,6 +153,12 @@ public class Driver implements ClientModInitializer {
                     class_2246.field_10474.method_9564()));
                 check("c.stoneQuadsZero", stoneZero && replaced > 0, "stone model quads all-zero " + stoneZero + ", quads replaced " + replaced);
                 check("c.othersUnchanged", graniteDrawn, "granite model has non-zero vertices " + graniteDrawn);
+                // (d) s121.json mixinMoves: ModelBakery helpers -> BlockStateModelLoader, counted at both ends
+                for (String n : new String[] {"PREDICATE", "VALUE", "GROUP"}) {
+                    int v = ((AtomicInteger) field(counters, n)).get();
+                    int w = ((AtomicInteger) Driver.class.getField(n).get(null)).get();
+                    check("d.moved." + n, v > 0 && v == w, "1.20.6 mixin calls " + v + ", 1.21 BlockStateModelLoader calls " + w);
+                }
             }
 
             // the screenshot: stone (left) beside cobblestone (right), 3 blocks north of the player, looking north
@@ -167,11 +178,26 @@ public class Driver implements ClientModInitializer {
                     }
                 }
                 p.method_14251(lvl, x + 0.5, y, z + 0.5, 180.0F, 0.0F);
+                // (e) a pig two blocks in front of the player, leashed to it: 1.21 draws the leash through
+                // EntityRenderer.addVertexPair, 1.20.6 through MobRenderer.addVertexPair
+                net.minecraft.class_1452 pig = net.minecraft.class_1299.field_6093.method_5883(lvl);
+                pig.method_5808(x + 0.5, y, z - 2 + 0.5, 0.0F, 0.0F);
+                pig.method_5977(true);
+                lvl.method_8649(pig);
+                pig.method_60964(p, true);
             }, server).get(20, TimeUnit.SECONDS);
             Thread.sleep(4000);
             CompletableFuture.runAsync(() -> class_318.method_22690(mc.field_1697, "cb-smx6-wall.png", mc.method_1522(), c -> { }), mc)
                 .get(20, TimeUnit.SECONDS);
-            log("screenshot cb-smx6-wall.png: left stone (invisible with the mixin), middle diamond block, right cobblestone");
+            log("screenshot cb-smx6-wall.png: left stone (invisible with the mixin), middle diamond block, right cobblestone, a leashed pig");
+            if (counters != null) {
+                int v = ((AtomicInteger) field(counters, "LEASH")).get();
+                int w = LEASH.get();
+                check("e.moved.LEASH", v > 0 && v == w,
+                    "1.20.6 MobRenderer.addVertexPair mixin calls " + v + ", 1.21 EntityRenderer.addVertexPair calls " + w);
+            } else {
+                log("leash vertex pairs drawn by 1.21: " + LEASH.get());
+            }
         } catch (Throwable t) {
             log("FAIL driver " + t);
             t.printStackTrace();
