@@ -40,6 +40,37 @@
         "drop"
       ],
       "basis": "26.2's emissiveRendering() asks the block's emissive predicate with the state only (Properties.emissiveRendering takes a Predicate<BlockState> in 26.2, a StatePredicate in 26.1.2); every 26.2 predicate is asked as 26.2 asks it, so level and position have nowhere to go"
+    },
+    "net/minecraft/client/gui/GuiGraphicsExtractor.entity(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;FLorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;IIII)V": {
+      "desc": "(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;FLorg/joml/Vector3fc;Lorg/joml/Quaternionfc;Lorg/joml/Quaternionfc;IIII)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2 Lorg/joml/Vector3fc;",
+        "keep:3 Lorg/joml/Quaternionfc;",
+        "keep:4 Lorg/joml/Quaternionfc;",
+        "keep:5",
+        "keep:6",
+        "keep:7",
+        "keep:8"
+      ],
+      "basis": "26.2 widened the translation and the two rotations to JOML's read-only interfaces (Vector3fc / Quaternionfc, which Vector3f / Quaternionf implement); the body is 26.1.2's (javap: the same GuiEntityRenderState from the same arguments)"
+    },
+    "net/minecraft/client/gui/GuiGraphicsExtractor.skin(Lnet/minecraft/client/model/player/PlayerModel;Lnet/minecraft/resources/Identifier;FFFFIIII)V": {
+      "desc": "(Lnet/minecraft/client/model/Model$Simple;Lnet/minecraft/resources/Identifier;FFFFIIII)V",
+      "ops": [
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient#skinModel(Lnet/minecraft/client/model/player/PlayerModel;)Lnet/minecraft/client/model/Model$Simple;",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep"
+      ],
+      "basis": "26.2 skin takes a Model.Simple (its PlayerSkinWidget builds Model.Simple over the PLAYER / PLAYER_SLIM layers where 26.1.2 built PlayerModels); the picture draws the model's root with its render type, kept by a Model.Simple over the PlayerModel's root() and renderType() (rt/CbS26GuiClient.skinModel, one per model)"
     }
   },
   "methodRenames": {
@@ -63,6 +94,23 @@
         "keep:0"
       ],
       "basis": "26.2's ParticleRenderType record gained a shorthand component (SINGLE_QUADS 'SQ', ITEM_PICKUP 'IP', ELDER_GUARDIANS 'EG', NO_RENDER 'NR'); its only reader is ParticleEngine.countParticles, the debug overlay's per-type count label. A 26.1.2 mod's type has no shorthand, so its name stands in as its label; name() and the record's identity are 26.1.2's"
+    },
+    "net/minecraft/client/gui/components/PlayerTabOverlay.<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/Gui;)V": {
+      "desc": "(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/Hud;)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26Receivers#guiToHud(Lnet/minecraft/client/gui/Gui;)Lnet/minecraft/client/gui/Hud;"
+      ],
+      "basis": "26.2's PlayerTabOverlay keeps the Hud where 26.1.2 kept the Gui (javap: same constructor body, field gui -> hud); 26.1.2's Gui members stand on 26.2's Hud (s26b-splits), the Gui's own Hud is gui.hud"
+    },
+    "net/minecraft/client/gui/Gui.<init>(Lnet/minecraft/client/Minecraft;)V": {
+      "desc": "(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/Hud;Lnet/minecraft/client/renderer/state/gui/GuiRenderState;)V",
+      "ops": [
+        "keep:0",
+        "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient#newHud(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/gui/Hud;",
+        "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient#guiRenderState(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/renderer/state/gui/GuiRenderState;"
+      ],
+      "basis": "26.2's Minecraft builds new Gui(this, new Hud(this), gameRenderer.gameRenderState().guiRenderState); 26.1.2's Gui(minecraft) was that Gui and Hud in one (s26b-splits), so a 26.1.2 construction gets a Hud of its own over the game's GUI state"
     }
   },
   "covers": [
@@ -81,7 +129,8 @@
     "net/minecraft/world/scores/ReadOnlyScoreInfo.safeFormatValue(Lnet/minecraft/world/scores/ReadOnlyScoreInfo;Lnet/minecraft/network/chat/numbers/NumberFormat;)Lnet/minecraft/network/chat/MutableComponent;": "top/dext/centurybridge/step/v26_2/rt/CbS26Team",
     "net/minecraft/client/renderer/LevelRenderer.getLightCoords(Lnet/minecraft/client/renderer/LevelRenderer$BrightnessGetter;Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I": "net/minecraft/util/LightCoordsUtil",
     "net/minecraft/client/renderer/LevelRenderer.offsetFrustum(Lnet/minecraft/client/renderer/culling/Frustum;)Lnet/minecraft/client/renderer/culling/Frustum;": "net/minecraft/client/renderer/SectionOcclusionGraph",
-    "net/minecraft/world/level/NaturalSpawner.getFilteredSpawningCategories(Lnet/minecraft/world/level/NaturalSpawner$SpawnState;ZZZ)Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS26World"
+    "net/minecraft/world/level/NaturalSpawner.getFilteredSpawningCategories(Lnet/minecraft/world/level/NaturalSpawner$SpawnState;ZZZ)Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS26World",
+    "net/minecraft/client/gui/components/tabs/TabNavigationBar.builder(Lnet/minecraft/client/gui/components/tabs/TabManager;I)Lnet/minecraft/client/gui/components/tabs/TabNavigationBar$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS26TabBars"
   },
   "_s26f_redirects_basis": {
     "net/minecraft/world/effect/InstantenousMobEffect.isInstantenous()Z": "26.2 renamed the class (InstantaneousMobEffect, pkgmoves) and its override isInstantenous -> isInstantaneous (same body: iconst_1; ireturn). pkgmoves keys the rename on MobEffect, which a call naming InstantenousMobEffect does not reach because 26.1.2's InstantenousMobEffect declares the method itself",
@@ -89,9 +138,27 @@
     "net/minecraft/client/renderer/LevelRenderer.getLightCoords(Lnet/minecraft/client/renderer/LevelRenderer$BrightnessGetter;Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I": "26.2 moved it to LightCoordsUtil.getLightCoords(LightCoordsUtil$BrightnessGetter, ..) (the getter interface moved with it, pkgmoves classRenames): the same body but for state.emissiveRendering(level, pos) -> emissiveRendering(), 26.2's emissive test taking the state only (its two-argument sibling is already redirected there)",
     "net/minecraft/client/renderer/LevelRenderer.offsetFrustum(Lnet/minecraft/client/renderer/culling/Frustum;)Lnet/minecraft/client/renderer/culling/Frustum;": "26.2 moved it to SectionOcclusionGraph.offsetFrustum, the same body (javap diff: only the access, private in 26.2; cb-step-26.2.accesswidener opens it)",
     "net/minecraft/world/level/NaturalSpawner.getFilteredSpawningCategories(Lnet/minecraft/world/level/NaturalSpawner$SpawnState;ZZZ)Ljava/util/List;": "26.1.2 (state, spawnFriendlies, spawnEnemies, spawnPersistent); 26.2 dropped the friendlies flag and always keeps friendly categories (javap of both: otherwise the same filter over SPAWNING_CATEGORIES, same order). rt/CbS26World asks 26.2 with (enemies, persistent) and drops the friendly categories when 26.1.2's flag was false",
-    "net/minecraft/world/item/ItemStack.getDamageSource(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Supplier;)Lnet/minecraft/world/damagesource/DamageSource;": "26.1.2: the DAMAGE_TYPE component's source for the attacker, else Item.getItemDamageSource(attacker), else the caller's supplier; 26.2 dropped the supplier and falls back to the attacker's mob-attack source. rt/CbS26Entity.getDamageSource runs the 26.1.2 body over the same 26.2 parts, so the caller's fallback is kept"
+    "net/minecraft/world/item/ItemStack.getDamageSource(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Supplier;)Lnet/minecraft/world/damagesource/DamageSource;": "26.1.2: the DAMAGE_TYPE component's source for the attacker, else Item.getItemDamageSource(attacker), else the caller's supplier; 26.2 dropped the supplier and falls back to the attacker's mob-attack source. rt/CbS26Entity.getDamageSource runs the 26.1.2 body over the same 26.2 parts, so the caller's fallback is kept",
+    "net/minecraft/client/gui/components/tabs/TabNavigationBar.builder(Lnet/minecraft/client/gui/components/tabs/TabManager;I)Lnet/minecraft/client/gui/components/tabs/TabNavigationBar$Builder;": "26.2 moved 26.1.2's menu-bar builder (builder(manager, width), 24 high, a button per tab) to MenuTabBar.builder(manager, width), whose Builder extends TabNavigationBar.Builder; 26.2's CreateWorldScreen / StatsScreen (26.1.2's users) build MenuTabBars (rt/CbS26TabBars)",
+    "net/minecraft/client/gui/components/tabs/TabNavigationBar$Builder.addTabs([Lnet/minecraft/client/gui/components/tabs/Tab;)Lnet/minecraft/client/gui/components/tabs/TabNavigationBar$Builder;": "26.2 MenuTabBar.Builder.addTabs(tabs...) = 26.1.2's addTabs (a 24-high button per tab); a plain 26.2 builder gets MenuTabButtons through addTab(button, tab) (rt/CbS26TabBars)",
+    "net/minecraft/client/gui/components/tabs/TabNavigationBar.updateWidth(I)V": "26.1.2 updateWidth(w) = width = w; arrangeElements(); 26.2 MenuTabBar.arrangeElements(w) is that body (sets width, sizes the buttons min(400, w) - 28 over the tabs, centres the row)",
+    "net/minecraft/client/gui/components/tabs/TabNavigationBar.arrangeElements()V": "26.1.2 arrangeElements() at the bar's width; 26.2 arrangeElements(width) on the bar's getWidth() (MenuTabBar's override is 26.1.2's body; a plain 26.2 bar positions its frame at getX/getY)",
+    "net/minecraft/client/gui/Gui.extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V": "26.2 Hud.extractRenderState(graphics, deltaTracker) is 26.1.2's Gui body (options.hideGui read as Hud.isHidden, the screen asked of minecraft.gui; javap diff), reached as gui.hud; gen_delegate_moves leaves it out (not instruction-identical)",
+    "net/minecraft/client/gui/Gui.extractSavingIndicator(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V": "26.2 Hud.extractSavingIndicator: instruction-identical to 26.1.2's Gui body (javap diff empty), reached as gui.hud",
+    "net/minecraft/client/gui/Gui.vignetteBrightness:F": "26.2 Hud.vignetteBrightness (public float), set and read by the vignette code that moved to Hud; reached as gui.hud"
   },
   "instanceRedirects": {
-    "net/minecraft/world/item/ItemStack.getDamageSource(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Supplier;)Lnet/minecraft/world/damagesource/DamageSource;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity"
+    "net/minecraft/world/item/ItemStack.getDamageSource(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Supplier;)Lnet/minecraft/world/damagesource/DamageSource;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
+    "net/minecraft/client/gui/components/tabs/TabNavigationBar$Builder.addTabs([Lnet/minecraft/client/gui/components/tabs/Tab;)Lnet/minecraft/client/gui/components/tabs/TabNavigationBar$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS26TabBars",
+    "net/minecraft/client/gui/components/tabs/TabNavigationBar.updateWidth(I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26TabBars",
+    "net/minecraft/client/gui/components/tabs/TabNavigationBar.arrangeElements()V": "top/dext/centurybridge/step/v26_2/rt/CbS26TabBars",
+    "net/minecraft/client/gui/Gui.extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient",
+    "net/minecraft/client/gui/Gui.extractSavingIndicator(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient"
+  },
+  "instanceFieldGetters": {
+    "net/minecraft/client/gui/Gui.vignetteBrightness:F": "top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient#getVignetteBrightness"
+  },
+  "instanceFieldSetters": {
+    "net/minecraft/client/gui/Gui.vignetteBrightness:F": "top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient#setVignetteBrightness"
   }
 }
