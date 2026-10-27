@@ -20,6 +20,16 @@ public final class CbPrioritySplit {
         java.util.Map<net.minecraft.class_2960, net.minecraft.class_2960> cb$v1_21_2$aliases();
     }
 
+    /** CbItemArmorMixin: the material and type 1.21.2's ArmorItem constructor was given (1.21.2 keeps neither) */
+    public interface ArmorKeep {
+        void cb$v1_21_2$keepArmor(net.minecraft.class_1741 material, net.minecraft.class_8051 type);
+    }
+
+    /** CbItemAnimalArmorMixin: the material and body type 1.21.2's AnimalArmorItem constructor was given */
+    public interface AnimalArmorKeep {
+        void cb$v1_21_2$keepAnimalArmor(net.minecraft.class_1741 material, net.minecraft.class_4059.class_9076 bodyType);
+    }
+
     /** CbRestMinecraftServerMixin: 1.21.1's isSpawningAnimals, called virtually */
     public interface ServerSpawn {
         boolean cb$v1_21_2$isSpawningAnimals();
