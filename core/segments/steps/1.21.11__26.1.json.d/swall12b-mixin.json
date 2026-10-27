@@ -52,6 +52,71 @@
     "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#instance(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemInstance;"
    ],
    "basis": "Enchantment.itemContext(level, enchantmentLevel, stack): 26.1's takes the ItemInstance (javap of both: the same loot context with THIS_ENTITY absent, TOOL = the item, ENCHANTMENT_LEVEL); a stack is an ItemInstance. Also the anchor of modifyItemFilteredCount's injectors"
+  },
+  "net/minecraft/class_7107.method_41375(Lnet/minecraft/class_7102;)Z": {
+   "desc": "(Lnet/minecraft/class_1308;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#mob(Lnet/minecraft/class_7102;)Lnet/minecraft/class_1308;"
+   ],
+   "basis": "FrogAi.canAttack(frog): 26.1 takes the Mob (the body is the same: the frog's brain and target checks through Mob's members, javap bdiff ratio 1.00); a frog is a Mob"
+  },
+  "net/minecraft/class_4647.method_49884(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;FLnet/minecraft/class_2338;Lnet/minecraft/class_2338$class_2339;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;FLnet/minecraft/class_2338;Lnet/minecraft/class_2338$class_2339;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "FoliagePlacer.tryPlaceExtension(level, ..): 26.1's takes a WorldGenLevel where 1.21.11's took a LevelSimulatedReader; the same body call for call (tryPlaceLeaf, distManhattan; javap of both, bdiff: only renames). 1.21.11's tree placers were handed the tree feature's WorldGenLevel"
+  },
+  "net/minecraft/class_5212.method_27393(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;ZLnet/minecraft/class_4643;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;ZLnet/minecraft/class_4643;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "FancyTrunkPlacer.makeLimb(level, ..): 26.1's takes a WorldGenLevel where 1.21.11's took a LevelSimulatedReader; the same body call for call (getSteps, placeLog, isFree, getX/Y/Z; javap of both, bdiff: only renames). 1.21.11's tree placers were handed the tree feature's WorldGenLevel"
+  },
+  "net/minecraft/class_5214.method_27399(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4643;Lnet/minecraft/class_2338;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4643;Lnet/minecraft/class_2338;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "GiantTrunkPlacer.placeLogIfFreeWithOffset(level, ..): 26.1's takes a WorldGenLevel where 1.21.11's took a LevelSimulatedReader; the same body call for call (placeLogIfFree; javap of both, bdiff: only renames). 1.21.11's tree placers were handed the tree feature's WorldGenLevel"
+  },
+  "net/minecraft/class_7390.method_43199(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_4643;Ljava/util/List;Lnet/minecraft/class_2338$class_2339;ILnet/minecraft/class_2350;II)V": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_4643;Ljava/util/List;Lnet/minecraft/class_2338$class_2339;ILnet/minecraft/class_2350;II)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "UpwardsBranchingTrunkPlacer.placeBranch(level, ..): 26.1's takes a WorldGenLevel where 1.21.11's took a LevelSimulatedReader; the same body call for call (placeLog, immutable, getX/Z; javap of both, bdiff: only renames). 1.21.11's tree placers were handed the tree feature's WorldGenLevel"
   }
  },
  "returnConverters": {
@@ -92,6 +157,72 @@
   },
   "net/minecraft/class_8180.method_49249(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;Ljava/util/function/Function;Lnet/minecraft/class_2350;IZLnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_4647$class_5208;": {
    "to": "method_49249(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;Ljava/util/function/Function;Lnet/minecraft/class_2350;IZLnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_4647$class_5208;",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "basis": "the same body; a handler taking 1.21.11's LevelSimulatedReader takes 26.1's WorldGenLevel, a LevelSimulatedReader"
+  },
+  "net/minecraft/class_7107.method_41375(Lnet/minecraft/class_7102;)Z": {
+   "to": "method_41375(Lnet/minecraft/class_1308;)Z",
+   "args": [
+    0
+   ],
+   "narrow": true,
+   "basis": "the same body on the widened parameter; 26.1's frog brain passes the frog, as 1.21.11's did"
+  },
+  "net/minecraft/class_4647.method_49884(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;FLnet/minecraft/class_2338;Lnet/minecraft/class_2338$class_2339;)Z": {
+   "to": "method_49884(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;FLnet/minecraft/class_2338;Lnet/minecraft/class_2338$class_2339;)Z",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "the same body; a handler taking 1.21.11's LevelSimulatedReader takes 26.1's WorldGenLevel, a LevelSimulatedReader"
+  },
+  "net/minecraft/class_5212.method_27393(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;ZLnet/minecraft/class_4643;)Z": {
+   "to": "method_27393(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;ZLnet/minecraft/class_4643;)Z",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "basis": "the same body; a handler taking 1.21.11's LevelSimulatedReader takes 26.1's WorldGenLevel, a LevelSimulatedReader"
+  },
+  "net/minecraft/class_5214.method_27399(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4643;Lnet/minecraft/class_2338;III)V": {
+   "to": "method_27399(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4643;Lnet/minecraft/class_2338;III)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "basis": "the same body; a handler taking 1.21.11's LevelSimulatedReader takes 26.1's WorldGenLevel, a LevelSimulatedReader"
+  },
+  "net/minecraft/class_7390.method_43199(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_4643;Ljava/util/List;Lnet/minecraft/class_2338$class_2339;ILnet/minecraft/class_2350;II)V": {
+   "to": "method_43199(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_4643;Ljava/util/List;Lnet/minecraft/class_2338$class_2339;ILnet/minecraft/class_2350;II)V",
    "args": [
     0,
     1,

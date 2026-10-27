@@ -2,6 +2,8 @@ package top.dext.centurybridge.step.v26_1.rt;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
 
@@ -21,5 +23,10 @@ public final class CbWallWidenings {
     /** a stack where 26.1 takes an item instance (BundleContents.getWeight) */
     public static ItemInstance instance(ItemStack stack) {
         return stack;
+    }
+
+    /** a frog where 26.1 takes a mob (FrogAi.canAttack) */
+    public static Mob mob(Frog frog) {
+        return frog;
     }
 }
