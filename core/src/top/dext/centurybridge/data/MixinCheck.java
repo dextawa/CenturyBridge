@@ -83,6 +83,8 @@ public final class MixinCheck {
     private static final String ACCESSOR = "Lorg/spongepowered/asm/mixin/gen/Accessor;";
     private static final String INVOKER = "Lorg/spongepowered/asm/mixin/gen/Invoker;";
     private static final String INJECT_PKG = "Lorg/spongepowered/asm/mixin/injection/";
+    /** MixinBridge.ARGS_WRAPPED: a W-shaped @Inject handler converting captured W arguments through wrap statics */
+    private static final String ARGS_WRAPPED = "Ltop/dext/centurybridge/ArgsWrapped;";
 
     private final Map<String, ClassNode> jar = new HashMap<>();
     /** the packages the game jar has classes in: an owner elsewhere is a library's (brigadier, DFU, ...) */
@@ -148,11 +150,16 @@ public final class MixinCheck {
                 byte[] b = Files.readAllBytes(p);
                 ClassNode cn = new ClassNode();
                 new ClassReader(b).accept(cn, ClassReader.SKIP_CODE);
+                boolean isMixin = find(cn.invisibleAnnotations, MIXIN) != null || find(cn.visibleAnnotations, MIXIN) != null;
+                if (isMixin) {
+                    // with code: a W-shaped handler's argument conversions are judged by the calls it makes (checkWrapped)
+                    cn = new ClassNode();
+                    new ClassReader(b).accept(cn, 0);
+                }
                 own.add(cn);
                 // the layer's own classes are targets too (a mixin the climb retargeted onto a facade it ships);
                 // the game jar wins for a name both have
-                if (find(cn.invisibleAnnotations, MIXIN) == null && find(cn.visibleAnnotations, MIXIN) == null
-                        && c.jar.putIfAbsent(cn.name, cn) == null) {
+                if (!isMixin && c.jar.putIfAbsent(cn.name, cn) == null) {
                     c.codeBytes.putIfAbsent(cn.name, b);
                 }
             }
@@ -452,6 +459,11 @@ public final class MixinCheck {
                 }
             }
         }
+        for (MethodNode m : cn.methods) {
+            if (has(m.visibleAnnotations, m.invisibleAnnotations, ARGS_WRAPPED)) {
+                checkWrapped(me, cn, m);
+            }
+        }
         for (String t : targets) {
             ClassNode target = jar.get(t);
             if (target == null) {
@@ -490,6 +502,40 @@ public final class MixinCheck {
             }
         }
         return true;
+    }
+
+    /**
+     * CASE 18: a W-shaped @Inject handler the converter wrote for a mixinTargets entry or an override hook with "wrap"
+     * (MixinBridge.ARGS_WRAPPED) hands the mod's handler V's value of a W argument through a wrap static. Each static
+     * it calls outside its own class must resolve where the handler runs -- a static of that exact descriptor on a class
+     * of the game, its libraries, Fabric API, the checked jar or the jars beside it -- and take exactly one argument; a
+     * later release (climb_mixin_check) that loses one turns the handler into a NoSuchMethodError at its first call.
+     */
+    private void checkWrapped(String me, ClassNode mx, MethodNode h) {
+        if (h.instructions == null || h.instructions.size() == 0) {
+            problems.add(me + ": wrapped-argument handler " + h.name + h.desc + " has no body");
+            return;
+        }
+        int wraps = 0;
+        for (AbstractInsnNode in = h.instructions.getFirst(); in != null; in = in.getNext()) {
+            if (!(in instanceof MethodInsnNode mi) || mi.getOpcode() != org.objectweb.asm.Opcodes.INVOKESTATIC
+                    || mi.owner.equals(mx.name)) {
+                continue;
+            }
+            ClassNode owner = jar.get(mi.owner);
+            boolean found = owner != null && walk(owner, c -> c.methods.stream().anyMatch(m -> m.name.equals(mi.name)
+                && m.desc.equals(mi.desc) && (m.access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0));
+            if (!found) {
+                problems.add(me + ": wrapped-argument handler " + h.name + " calls " + mi.owner + "." + mi.name + mi.desc
+                    + ", no static of that descriptor here");
+            }
+            if (Type.getArgumentTypes(mi.desc).length == 1 && Type.getReturnType(mi.desc).getSort() >= Type.ARRAY) {
+                wraps++;
+            }
+        }
+        if (wraps == 0) {
+            problems.add(me + ": wrapped-argument handler " + h.name + h.desc + " converts no argument (marked ArgsWrapped)");
+        }
     }
 
     /**

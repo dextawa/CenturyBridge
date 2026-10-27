@@ -10,6 +10,9 @@ with V's descriptor, the one W method of that name, arguments one for one by typ
   Here, from the repository root:
     python3 core/tools/gen_smx1_mixintargets.py mt-gen.json core/segments/shims-1.20.2.json.d/smx1-mixintargets-gen.json
 
+A V argument whose W argument has another type is carried through WRAPS ("wrap", the override hooks' rule: the static
+taking W's type to V's), so a handler capturing it receives V's value (CASE 18).
+
 A changed return type is left to MixinBridge's plan (it refuses a handler that reads or sets the return value and a
 CallbackInfoReturnable handler on a target that now returns nothing). Regenerate, never hand-edit.
 """
@@ -31,6 +34,19 @@ LOOT_REGISTER = ("the loot registry's type register: the same Registry.register 
                  "type wraps a Codec where 1.20.1 wrapped a JSON Serializer")
 RECIPE_HOLDER = ("the same body reading the recipe through RecipeHolder.value() (1.20.2 hands the holder where 1.20.1 "
                  "handed the recipe)")
+
+# (W type, V type) -> the static taking W's value to V's ("wrap" of a mixinTargets entry: the override hooks' rule). Each
+# is exact: RecipeHolder.value() is the recipe 1.20.1 handed (CbRecipeIds also remembers its id for 1.20.1's getId);
+# AdvancementNode.advancement() / AdvancementHolder.value() is the advancement record 1.20.1 handed, the layer giving
+# 1.20.1's tree API back on it (CbAdvNodes).
+WRAPS = {
+    ("Lnet/minecraft/class_8786;", "Lnet/minecraft/class_1860;"):
+        "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+    ("Lnet/minecraft/class_8781;", "Lnet/minecraft/class_161;"):
+        "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;",
+    ("Lnet/minecraft/class_8779;", "Lnet/minecraft/class_161;"):
+        "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;",
+}
 
 LOOT_CTOR = ("1.20.2 made the loot / predicate classes codec records: the one constructor holds 1.20.1's body "
              "(same field stores; arrays became Lists, Item / Block / BlockEntityType / Potion / Enchantment became Holders)")
@@ -137,8 +153,8 @@ JUDGED = {
     "net/minecraft/class_3008.method_12990(Lnet/minecraft/class_161;Ljava/util/List;)V":
         ("method_12990(Lnet/minecraft/class_8781;Ljava/util/List;)V",
          "AdvancementCommands.addChildren: the same recursive add of every child; nodes and a List of holders where 1.20.1 "
-         "had advancements (the list's element type changed: not paired)",
-         [-1, -1]),
+         "had advancements (the list's element type changed: not paired; the node reaches a handler as its advancement)",
+         [0, -1]),
     "net/minecraft/class_7689.method_45346(ZF)D":
         ("method_45346(ZFLnet/minecraft/class_4048;F)D",
          "Camel.getBodyAnchorAnimationYOffset: the same sitting / standing-up lerps; both callers pass the same boolean and "
@@ -191,8 +207,8 @@ JUDGED = {
         ("method_48030(Lnet/minecraft/class_8781;Lit/unimi/dsi/fastutil/Stack;Ljava/util/function/Predicate;Lnet/minecraft/class_8005$class_8006;)Z",
          "AdvancementVisibilityEvaluator.evaluateVisibility: the same recursive visibility walk over the rule stack; a node "
          "and a Predicate of nodes where 1.20.1 had advancements (type argument changed: not paired); the stack and output are "
-         "the same",
-         [-1, 1, -1, 3]),
+         "the same; the node reaches a handler as its advancement",
+         [0, 1, -1, 3]),
     "net/minecraft/class_2377.method_10217(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;I)V":
         ("method_10217(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V",
          "HopperBlock.checkPoweredState: the same hasNeighborSignal test and ENABLED setBlock; 1.20.2 no longer takes the "
@@ -230,8 +246,8 @@ JUDGED = {
         ("method_48025(Lnet/minecraft/class_8781;Ljava/util/Set;Ljava/util/Set;)V",
          "PlayerAdvancements.updateTreeVisibility: the same AdvancementVisibilityEvaluator.evaluateVisibility call with the "
          "same predicate and output; a node and a Set of holders where 1.20.1 had advancements (element type changed: not "
-         "paired); the id set is the same",
-         [-1, -1, 2]),
+         "paired); the id set is the same; the node reaches a handler as its advancement",
+         [0, -1, 2]),
 }
 for _k, _to in {
     "net/minecraft/class_55.<init>([Lnet/minecraft/class_79;[Lnet/minecraft/class_5341;[Lnet/minecraft/class_117;Lnet/minecraft/class_5658;Lnet/minecraft/class_5658;)V":
@@ -293,6 +309,15 @@ def arg_types(desc):
     return out
 
 
+def entry(to, args, basis, va, wa):
+    """the mixinTargets entry; "wrap" lists the WRAPS statics the map's type-changed arguments use"""
+    e = {"to": to, "args": args, "basis": basis}
+    wraps = sorted({WRAPS[(wa[j], va[i])] for i, j in enumerate(args) if j >= 0 and wa[j] != va[i]})
+    if wraps:
+        e["wrap"] = wraps if len(wraps) > 1 else wraps[0]
+    return e
+
+
 def judged():
     out = {}
     for k, (to, basis, *given) in JUDGED.items():
@@ -300,9 +325,10 @@ def judged():
         wa = arg_types(to[to.index("("):])
         if given:
             args = list(given[0])
-            if len(args) != len(va) or any(j != -1 and (j >= len(wa) or wa[j] != va[i]) for i, j in enumerate(args)):
+            if len(args) != len(va) or any(j != -1 and (j >= len(wa) or wa[j] != va[i] and (wa[j], va[i]) not in WRAPS)
+                                           for i, j in enumerate(args)):
                 raise SystemExit("judged argument map does not fit " + k + " -> " + to + ": " + str(args))
-            out[k] = {"to": to, "args": args, "basis": basis}
+            out[k] = entry(to, args, basis, va, wa)
             continue
         # the k-th V argument of a type is the k-th W argument of it when both have equally many (order kept:
         # LootPool's rolls / bonusRolls); any other count gives -1
@@ -310,7 +336,15 @@ def judged():
         for i, t in enumerate(va):
             hits = [j for j, w in enumerate(wa) if w == t]
             args.append(hits[va[:i].count(t)] if len(hits) == va.count(t) else -1)
-        out[k] = {"to": to, "args": args, "basis": basis}
+        # a V argument left unpaired takes the one W argument no other V argument holds whose type a WRAPS static takes
+        # to V's (RecipeHolder -> Recipe at furnace canBurn / burn)
+        for i, t in enumerate(va):
+            if args[i] >= 0:
+                continue
+            cands = [j for j, w in enumerate(wa) if (w, t) in WRAPS and j not in args]
+            if len(cands) == 1 and sum(1 for u in va if any((wa[c], u) in WRAPS for c in cands)) == 1:
+                args[i] = cands[0]
+        out[k] = entry(to, args, basis, va, wa)
     return out
 
 

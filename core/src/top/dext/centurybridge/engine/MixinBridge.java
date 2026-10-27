@@ -1949,12 +1949,26 @@ final class MixinBridge {
                     handler.invisibleAnnotations = handler.invisibleAnnotations == null ? new ArrayList<>() : handler.invisibleAnnotations;
                     handler.invisibleAnnotations.add(new AnnotationNode(ARGS_ZEROED));
                 }
+                List<String> wrapped = new ArrayList<>();
+                for (int i = 0; p.synth() && p.capture() && i < p.ci(); i++) {
+                    String[] w = fate.wrap() != null && fate.from()[i] >= 0 ? fate.wrap()[i] : null;
+                    if (w != null) {
+                        wrapped.add(i + " " + shortName(w[0]) + "." + w[1]);
+                    }
+                }
+                if (!wrapped.isEmpty()) {
+                    // the W-shaped handler hands these V arguments in through the wiring's wrap statics: mixin-check
+                    // (build gate and climb_mixin_check) checks each static it calls still resolves where it runs
+                    handler.invisibleAnnotations = handler.invisibleAnnotations == null ? new ArrayList<>() : handler.invisibleAnnotations;
+                    handler.invisibleAnnotations.add(new AnnotationNode(ARGS_WRAPPED));
+                }
                 changed = true;
                 injected("@" + kind + " " + sn + "." + h.name, where + " => " + fate.name() + fate.desc() + " (" + fate.how()
                     + (p.synth() ? "; a " + chain.to + "-shaped handler forwards to the mod's" : "")
                     + (p.rc() != null ? "; the answer converted both ways: " + p.rc().how() : "")
                     + (p.unread().isEmpty() ? "" : "; WARN " + chain.from + " argument(s) " + p.unread()
                         + " have no " + chain.to + " counterpart: the handler never reads them, given their type's zero")
+                    + (wrapped.isEmpty() ? "" : "; argument(s) converted by the wiring's wrap: " + String.join(", ", wrapped))
                     + (p.untouched() ? "; return type " + Type.getReturnType(chain.renamedDesc(vmeth.desc)) + " -> "
                         + Type.getReturnType(fate.desc()) + " with no converter: partial, the answer untouched" : "") + ")");
                 return new Selection(handler, an, List.of(vmeth), List.of(wmeth));
@@ -3553,6 +3567,9 @@ final class MixinBridge {
     /** marks an @Inject handler handed zeros for V arguments with no W counterpart (it never reads them) */
     static final String ARGS_ZEROED = "Ltop/dext/centurybridge/ArgsZeroed;";
 
+    /** marks a W-shaped @Inject handler that converts captured W arguments to V's through wrap statics (CASE 18) */
+    static final String ARGS_WRAPPED = "Ltop/dext/centurybridge/ArgsWrapped;";
+
     record Selection(MethodNode handler, AnnotationNode an, List<MethodNode> v, List<MethodNode> w) {}
 
     record AtFate(String owner, String name, String desc, String how) {}
@@ -3579,11 +3596,26 @@ final class MixinBridge {
             // Player, mobs now calling it too) reaches the handler only when it is V's type, as the override hooks'
             // narrowing: a handler written for V never saw another
             boolean[] narrow = new boolean[va.length];
+            String[][] wrap = new String[va.length][];
             Type[] mwa = Type.getArgumentTypes(mt.desc());
-            for (int i = 0; known && mt.narrow() && i < va.length; i++) {
-                narrow[i] = from[i] < mwa.length && !mwa[from[i]].equals(va[i]) && va[i].getSort() >= Type.ARRAY;
+            for (int i = 0; known && i < va.length; i++) {
+                if (from[i] >= mwa.length || mwa[from[i]].equals(va[i]) || wAssignable(mwa[from[i]], va[i])) {
+                    continue;
+                }
+                // CASE 18: the W argument of another type reaches the handler through the entry's wrap (the override
+                // hooks' rule: the static taking W's type to V's); else narrowed; else no W argument carries V's
+                String[] w = mt.wrapFor(mwa[from[i]], va[i]);
+                if (w != null) {
+                    wrap[i] = w;
+                } else if (mt.narrow() && va[i].getSort() >= Type.ARRAY) {
+                    narrow[i] = true;
+                } else {
+                    why.add("mixinTargets argument " + i + ": W's " + mwa[from[i]] + " is no " + va[i] + " and no wrap takes it there");
+                    from[i] = -1;
+                }
             }
-            return new Fate(mt.name(), mt.desc(), from, new String[va.length][], narrow, known,
+            known = known && Arrays.stream(from).allMatch(j -> j >= 0);
+            return new Fate(mt.name(), mt.desc(), from, wrap, narrow, known,
                 "mixinTargets (" + mt.basis() + ")");
         }
         for (Chain.OverrideHook h : chain.overrideHooksForOld(name, vdesc)) {

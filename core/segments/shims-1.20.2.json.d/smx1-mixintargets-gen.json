@@ -421,45 +421,50 @@
    "to": "method_11192(Lnet/minecraft/class_5455;Lnet/minecraft/class_8786;Lnet/minecraft/class_2371;I)Z",
    "args": [
     0,
-    -1,
+    1,
     2,
     3
    ],
-   "basis": "the same body reading the recipe through RecipeHolder.value() (1.20.2 hands the holder where 1.20.1 handed the recipe)"
+   "basis": "the same body reading the recipe through RecipeHolder.value() (1.20.2 hands the holder where 1.20.1 handed the recipe)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;"
   },
   "net/minecraft/class_2609.method_11203(Lnet/minecraft/class_5455;Lnet/minecraft/class_1860;Lnet/minecraft/class_2371;I)Z": {
    "to": "method_11203(Lnet/minecraft/class_5455;Lnet/minecraft/class_8786;Lnet/minecraft/class_2371;I)Z",
    "args": [
     0,
-    -1,
+    1,
     2,
     3
    ],
-   "basis": "the same body reading the recipe through RecipeHolder.value() (1.20.2 hands the holder where 1.20.1 handed the recipe)"
+   "basis": "the same body reading the recipe through RecipeHolder.value() (1.20.2 hands the holder where 1.20.1 handed the recipe)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;"
   },
   "net/minecraft/class_2985.method_48025(Lnet/minecraft/class_161;Ljava/util/Set;Ljava/util/Set;)V": {
    "to": "method_48025(Lnet/minecraft/class_8781;Ljava/util/Set;Ljava/util/Set;)V",
    "args": [
-    -1,
+    0,
     -1,
     2
    ],
-   "basis": "PlayerAdvancements.updateTreeVisibility: the same AdvancementVisibilityEvaluator.evaluateVisibility call with the same predicate and output; a node and a Set of holders where 1.20.1 had advancements (element type changed: not paired); the id set is the same"
+   "basis": "PlayerAdvancements.updateTreeVisibility: the same AdvancementVisibilityEvaluator.evaluateVisibility call with the same predicate and output; a node and a Set of holders where 1.20.1 had advancements (element type changed: not paired); the id set is the same; the node reaches a handler as its advancement",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
   },
   "net/minecraft/class_299.method_1400(Lnet/minecraft/class_1860;)Lnet/minecraft/class_314;": {
    "to": "method_1400(Lnet/minecraft/class_8786;)Lnet/minecraft/class_314;",
    "args": [
-    -1
+    0
    ],
-   "basis": "the same body reading the recipe through RecipeHolder.value() (1.20.2 hands the holder where 1.20.1 handed the recipe)"
+   "basis": "the same body reading the recipe through RecipeHolder.value() (1.20.2 hands the holder where 1.20.1 handed the recipe)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;"
   },
   "net/minecraft/class_3008.method_12990(Lnet/minecraft/class_161;Ljava/util/List;)V": {
    "to": "method_12990(Lnet/minecraft/class_8781;Ljava/util/List;)V",
    "args": [
-    -1,
+    0,
     -1
    ],
-   "basis": "AdvancementCommands.addChildren: the same recursive add of every child; nodes and a List of holders where 1.20.1 had advancements (the list's element type changed: not paired)"
+   "basis": "AdvancementCommands.addChildren: the same recursive add of every child; nodes and a List of holders where 1.20.1 had advancements (the list's element type changed: not paired; the node reaches a handler as its advancement)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
   },
   "net/minecraft/class_3062.method_13381(Lnet/minecraft/class_2168;Ljava/util/Collection;)I": {
    "to": "method_13381(Lnet/minecraft/class_2168;Ljava/util/Collection;Lnet/minecraft/class_2487;)I",
@@ -534,9 +539,10 @@
   "net/minecraft/class_366.method_1984(Lnet/minecraft/class_1860;)V": {
    "to": "method_1984(Lnet/minecraft/class_8786;)V",
    "args": [
-    -1
+    0
    ],
-   "basis": "the same body reading the recipe through RecipeHolder.value() (1.20.2 hands the holder where 1.20.1 handed the recipe)"
+   "basis": "the same body reading the recipe through RecipeHolder.value() (1.20.2 hands the holder where 1.20.1 handed the recipe)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;"
   },
   "net/minecraft/class_3670.<init>([Lnet/minecraft/class_5341;Lnet/minecraft/class_2561;Lnet/minecraft/class_47$class_50;)V": {
    "to": "<init>(Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)V",
@@ -887,12 +893,13 @@
   "net/minecraft/class_8005.method_48030(Lnet/minecraft/class_161;Lit/unimi/dsi/fastutil/Stack;Ljava/util/function/Predicate;Lnet/minecraft/class_8005$class_8006;)Z": {
    "to": "method_48030(Lnet/minecraft/class_8781;Lit/unimi/dsi/fastutil/Stack;Ljava/util/function/Predicate;Lnet/minecraft/class_8005$class_8006;)Z",
    "args": [
-    -1,
+    0,
     1,
     -1,
     3
    ],
-   "basis": "AdvancementVisibilityEvaluator.evaluateVisibility: the same recursive visibility walk over the rule stack; a node and a Predicate of nodes where 1.20.1 had advancements (type argument changed: not paired); the stack and output are the same"
+   "basis": "AdvancementVisibilityEvaluator.evaluateVisibility: the same recursive visibility walk over the rule stack; a node and a Predicate of nodes where 1.20.1 had advancements (type argument changed: not paired); the stack and output are the same; the node reaches a handler as its advancement",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
   },
   "net/minecraft/class_8138.method_49053(Lnet/minecraft/class_8113$class_8229;Lnet/minecraft/class_8113;)Lorg/joml/Quaternionf;": {
    "to": "method_49053(Lnet/minecraft/class_8113$class_8229;Lnet/minecraft/class_8113;FLorg/joml/Quaternionf;)Lorg/joml/Quaternionf;",

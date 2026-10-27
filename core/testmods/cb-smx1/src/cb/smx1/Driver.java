@@ -21,6 +21,8 @@ public final class Driver {
     public static final String PROBE_SHAPED = "cb_smx1:route_probe";
     public static final String PROBE_SMELT = "cb_smx1:route_probe_smelt";
     public static volatile int defaultCookingTime = -1;
+    /** the recipe FurnaceCanBurnMixin's handler was handed while the driver ticked its furnace */
+    public static volatile Object burnRecipe;
     /** -Dcenturybridge.legacyJsonRoute=false: the layer reads recipes with 1.20.2's codecs; the reader mixins never run */
     private static final boolean ROUTE = !"false".equals(System.getProperty("centurybridge.legacyJsonRoute"));
     public static final String PROBE_STAT_KEY = "stat_type.minecraft.killed";
@@ -152,6 +154,36 @@ public final class Driver {
                 "saved Speed, loaded " + primary + " (handler ran " + COUNT.getOrDefault("beacon-effect-head", 0) + " time(s))");
         } catch (Throwable t) {
             check("beacon-effect-head", false, "threw " + t);
+        }
+        // ---- a HEAD injector capturing canBurn's arguments (CASE 18): a furnace with raw iron and coal, ticked once,
+        // asks canBurn with the smelting recipe; the 1.20.1 handler must be handed that Recipe (1.20.2 passes the holder)
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            net.minecraft.class_2338 pos = level.method_43126().method_10086(200);
+            net.minecraft.class_2680 before = level.method_8320(pos);
+            level.method_8501(pos, net.minecraft.class_2246.field_10181.method_9564());
+            try {
+                net.minecraft.class_2609 furnace = (net.minecraft.class_2609) level.method_8321(pos);
+                furnace.method_5447(0, new net.minecraft.class_1799(net.minecraft.class_1802.field_33400));
+                furnace.method_5447(1, new net.minecraft.class_1799(net.minecraft.class_1802.field_8713));
+                burnRecipe = null;
+                ON_DRIVER.set(true);
+                try {
+                    net.minecraft.class_2609.method_31651(level, pos, level.method_8320(pos), furnace);
+                } finally {
+                    ON_DRIVER.set(false);
+                }
+                Object got = burnRecipe;
+                net.minecraft.class_1792 result = got instanceof net.minecraft.class_1860<?> r
+                    ? r.method_8110(server.method_30611()).method_7909() : null;
+                check("furnace-canburn-head-wrap", result == net.minecraft.class_1802.field_8620,
+                    "handler ran " + COUNT.getOrDefault("furnace-canburn-head", 0) + " time(s), handed "
+                        + (got == null ? "null" : got.getClass().getName()) + " making " + result);
+            } finally {
+                level.method_8501(pos, before);
+            }
+        } catch (Throwable t) {
+            check("furnace-canburn-head-wrap", false, "threw " + t);
         }
         // ---- an accessor on a field 1.20.2 made a record component
         try {
