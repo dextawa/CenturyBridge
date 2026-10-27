@@ -13,6 +13,7 @@ import net.minecraft.class_3695;
 import net.minecraft.class_5321;
 import net.minecraft.class_5455;
 import net.minecraft.class_7924;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1's TagManager (net/minecraft/class_3505, classRenames), gone in 1.21.2 (tags load with the registries):
@@ -43,7 +44,43 @@ public class TagManager implements class_3302 {
             field_28312.method_40311().map(entry -> method_33178(resources, background, entry)).toList();
         return CompletableFuture.allOf(loads.toArray(CompletableFuture[]::new))
             .thenCompose(barrier::method_18352)
-            .thenAcceptAsync(v -> field_36396 = loads.stream().<LoadResult<?>>map(CompletableFuture::join).toList(), game);
+            .thenAcceptAsync(v -> method_40098(loads, v), game);
+    }
+
+    /**
+     * 1.21.1's apply step (the lambda its reload ran on the game executor after the barrier): the results stored. A
+     * method of its own, as 1.21.1's was, so a 1.21.1 mixin into it (Fabric API 1.21.1's TagManagerLoaderMixin and
+     * mods written like it, which read the results at its RETURN) applies here.
+     */
+    @CbVanillaReads("CbRestTagResultsMixin: each 1.21.2 ReloadableServerResources, made with the tags its reload loaded"
+        + " (postponedTags), runs a TagManager's apply step over them (ofPending) before any reload listener prepares")
+    public void method_40098(List<? extends CompletableFuture<? extends LoadResult<?>>> loads, Void unused) {
+        field_36396 = loads.stream().<LoadResult<?>>map(CompletableFuture::join).toList();
+    }
+
+    /**
+     * The TagManager of a 1.21.2 reload: 1.21.1 loaded the tags among the reload listeners (this class) and kept them on
+     * ReloadableServerResources; 1.21.2 loads them before (TagLoader, as MinecraftServer and WorldLoader call it) and
+     * hands them to ReloadableServerResources as pending tags. Each registry's pending tags as 1.21.1's LoadResult (the
+     * tag ids with their entries, as the pending lookup holds them), stored through the apply step. registryAccess is
+     * the composite access 1.21.1 built its TagManager on (ReloadableServerResources' holder is made of it in both).
+     */
+    public static TagManager ofPending(class_5455 registryAccess, List<net.minecraft.class_2378.class_10106<?>> pending) {
+        TagManager manager = new TagManager(registryAccess);
+        List<CompletableFuture<LoadResult<?>>> loads = new java.util.ArrayList<>(pending.size());
+        for (net.minecraft.class_2378.class_10106<?> tags : pending) {
+            loads.add(CompletableFuture.completedFuture(loadResult(tags)));
+        }
+        manager.method_40098(loads, null);
+        return manager;
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static <T> LoadResult<T> loadResult(net.minecraft.class_2378.class_10106<T> pending) {
+        Map<class_2960, java.util.Collection<net.minecraft.class_6880<T>>> tags = new java.util.LinkedHashMap<>();
+        pending.method_62695().method_42020()
+            .forEach(named -> tags.put(named.method_40251().comp_327(), named.method_40239().toList()));
+        return new LoadResult<>((class_5321) pending.method_62693(), tags);
     }
 
     /** 1.21.1's reload with profilers (the profilers 1.21.2 dropped are not used) */

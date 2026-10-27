@@ -6,17 +6,18 @@ import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_20_5.facade.AttributeModifierTemplate;
 import top.dext.centurybridge.step.v1_20_5.rt.CbEffects;
 import top.dext.centurybridge.step.v1_20_5.rt.CbEffectsGiveBack;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * MobEffect.AttributeTemplate (a package-private record): its id and modifier, for 1.20.4's template view (rt/CbEffects).
  * <p>
  * 1.20.4's template (class_1291$class_8634) held the effect that made it and implemented AttributeModifierTemplate
  * (class_8630): getAttributeModifierId() its id, create(amplifier) the modifier named after that effect. 1.20.5's record
- * dropped both (javap). The effect comes back as the owner MobEffect.addAttributeModifier records (CbMobEffectMixin;
+ * dropped both (javap). The effect comes back as the owner MobEffect.addAttributeModifier records (CbMobEffectOwnerMixin;
  * rt/CbEffectsGiveBack.field_45104), and with it the 1.20.4 interface, so code holding a vanilla template as a 1.20.4
  * template (a converted mod's or a climbing layer's cast to class_8630) reaches it as 1.20.4 did.
  */
-@Mixin(targets = "net.minecraft.class_1291$class_8634")
+@Mixin(targets = "net.minecraft.class_1291$class_8634", priority = CbVanillaReads.PRIORITY)
 public abstract class CbAttributeTemplateMixin implements CbEffects.TemplateView, CbEffectsGiveBack.TemplateOwner,
         AttributeModifierTemplate {
 

@@ -37,7 +37,7 @@ public final class CbEffectsGiveBack {
      * MobEffect.AttributeTemplate.effect (class_1291$class_8634.field_45104): 1.20.4's template held the effect that
      * made it; 1.20.5's record holds only id, amount and operation (javap). Templates are made only by
      * MobEffect.addAttributeModifier (the record's constructor is package-private, its one caller that method), which
-     * records itself as the owner of the template it put (CbMobEffectMixin), so this is the same effect.
+     * records itself as the owner of the template it put (CbMobEffectOwnerMixin), so this is the same effect.
      */
     public static net.minecraft.class_1291 field_45104(net.minecraft.class_1291.class_8634 template) {
         net.minecraft.class_1291 owner = ((TemplateOwner) (Object) template).cbS205$owner();

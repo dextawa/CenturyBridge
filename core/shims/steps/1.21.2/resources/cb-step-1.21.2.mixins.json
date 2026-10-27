@@ -202,6 +202,7 @@
     "CbRestServerPropertiesMixin",
     "CbRestStackedItemContentsAccessor",
     "CbRestTagEntryAccessor",
+    "CbRestTagResultsMixin",
     "CbRestWorldLoaderMixin"
   ],
   "client": [
