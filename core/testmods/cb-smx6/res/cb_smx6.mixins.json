@@ -20,7 +20,8 @@
     "ProfileReportInvoker",
     "BadOmenMixin",
     "LeashSaveMixin",
-    "LeashFieldAccessor"
+    "LeashFieldAccessor",
+    "TagVisitorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

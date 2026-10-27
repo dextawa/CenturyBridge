@@ -76,4 +76,14 @@ public final class CbPrioritySplit {
 
         void cb$v1_21$restoreLeashFromSave();
     }
+
+    /**
+     * CbNbtTagVisitorRestoredMixin: the restored 1.20.6 TextComponentTagVisitor.method_59850 (a nested visit's answer), for
+     * CbNbtTagVisitorRestoredMixinHooks, and the two counters a nested visitor starts from
+     */
+    public interface TagVisitorNested {
+        void cb$v1_21$nest(int indentDepth, int depth);
+
+        net.minecraft.class_2561 cb$v1_21$visitNested(net.minecraft.class_2520 tag, boolean indent);
+    }
 }

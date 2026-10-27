@@ -575,8 +575,6 @@
   "net/minecraft/class_853.method_8321(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2586; @ FIELD Lnet/minecraft/class_853;field_4488:I": "anchor gone: not in the target, its callees (depth 2) or lambdas; no instruction of its kind between the same neighbours",
   "net/minecraft/class_8589.<clinit>()V": "private member gone from W; no member of the class holds its code",
   "net/minecraft/class_8589.field_48708:Lnet/minecraft/class_9139;": "private member gone from W; no member of the class holds its code",
-  "net/minecraft/class_8631.method_5572(Lnet/minecraft/class_1309;I)Z @ INVOKE Lnet/minecraft/class_8631;method_58613(Lnet/minecraft/class_3222;Lnet/minecraft/class_3218;)Z": "anchor gone: not in the target, its callees (depth 2) or lambdas; no instruction of its kind between the same neighbours",
-  "net/minecraft/class_8631.method_58613(Lnet/minecraft/class_3222;Lnet/minecraft/class_3218;)Z": "private member gone from W; no member of the class holds its code",
   "net/minecraft/class_8656.method_25426()V @ CONSTANT stringValue=https://aka.ms/BuyJavaRealms": "anchor gone: not in the target, its callees (depth 2) or lambdas; no instruction of its kind between the same neighbours",
   "net/minecraft/class_8656.method_25426()V @ CONSTANT stringValue=https://aka.ms/startjavarealmstrial": "anchor gone: not in the target, its callees (depth 2) or lambdas; no instruction of its kind between the same neighbours",
   "net/minecraft/class_8669.<clinit>()V @ CONSTANT stringValue=https://aka.ms/MinecraftSymLinks": "anchor gone: not in the target, its callees (depth 2) or lambdas; no instruction of its kind between the same neighbours",
