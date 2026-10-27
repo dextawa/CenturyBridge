@@ -10,7 +10,6 @@ import net.minecraft.class_11560;
 import net.minecraft.class_156;
 import net.minecraft.class_3312;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_9.rt.CbProfiles;
 import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
 
@@ -28,9 +27,6 @@ public abstract class CbProfileCacheRestoredMixin implements top.dext.centurybri
 
     private Executor field_33861;
 
-    @Shadow
-    public abstract Optional<class_11560> method_14515(String name);
-
     /** GameProfileCache.getAsync(name) */
     public CompletableFuture<Optional<GameProfile>> method_37156(String name) {
         if (this.field_33861 == null) {
@@ -41,7 +37,7 @@ public abstract class CbProfileCacheRestoredMixin implements top.dext.centurybri
             return pending;
         }
         CompletableFuture<Optional<GameProfile>> request = CompletableFuture
-            .supplyAsync(() -> this.method_14515(name).map(CbProfiles::toProfile), class_156.method_18349().method_64116("getProfile"))
+            .supplyAsync(() -> ((net.minecraft.class_11561) (Object) this).method_14515(name).map(CbProfiles::toProfile), class_156.method_18349().method_64116("getProfile"))
             .whenCompleteAsync((profile, failure) -> this.field_33860.remove(name), this.field_33861);
         this.field_33860.put(name, request);
         return request;

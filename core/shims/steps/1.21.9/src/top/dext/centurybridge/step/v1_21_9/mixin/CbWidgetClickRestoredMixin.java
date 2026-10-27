@@ -21,7 +21,9 @@ import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
  * mouseClicked runs this body in its place with the event's x, y and button, and onClick gets the event and double-click
  * flag 1.21.9 was given (the route: CbWidgetClickRestoredHooksMixin, at the default priority). Unmixed, 1.21.9's mouseClicked runs untouched. Called directly by 1.21.8 code, onClick gets the
  * click built from (x, y, button) and the double-click flag 1.21.9's MouseHandler would pass (CbInput).
- * The body keeps 1.21.8's local order: isMouseOver is its first boolean store (STORE ordinal 0).
+ * The body keeps 1.21.8's local order: isMouseOver is its first boolean store (STORE ordinal 0). isActive / isMouseOver
+ * are called, not @Shadow-ed: their declarations are NarratableEntry's / GuiEventListener's, where the wall table keys
+ * them, and a shadow of them is stripped when the layer climbs past 26.1.
  */
 @Mixin(value = class_339.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWidgetClickRestoredMixin implements CbPrioritySplitClient.WidgetClick {
@@ -33,13 +35,7 @@ public abstract class CbWidgetClickRestoredMixin implements CbPrioritySplitClien
     private boolean cb$routedDoubleClick;
 
     @Shadow
-    public abstract boolean method_37303();
-
-    @Shadow
     protected abstract boolean method_25351(class_11910 button);
-
-    @Shadow
-    public abstract boolean method_25405(double x, double y);
 
     @Shadow
     public abstract void method_25354(class_1144 soundManager);
@@ -50,12 +46,12 @@ public abstract class CbWidgetClickRestoredMixin implements CbPrioritySplitClien
     /** AbstractWidget.mouseClicked(x, y, button) */
     @CbVanillaReads("CbWidgetClickRestoredMixin: 1.21.9's mouseClicked runs it in its place while it is mixed")
     public boolean method_25402(double x, double y, int button) {
-        if (!this.method_37303()) {
+        if (!((class_339) (Object) this).method_37303()) {
             return false;
         }
         class_11909 event = this.cb$routedEvent != null ? this.cb$routedEvent : CbInput.cbClick(x, y, button);
         if (this.method_25351(event.comp_4800())) {
-            boolean over = this.method_25405(x, y);
+            boolean over = ((class_339) (Object) this).method_25405(x, y);
             if (over) {
                 this.method_25354(class_310.method_1551().method_1483());
                 this.method_25348(event, this.cb$routedEvent != null ? this.cb$routedDoubleClick : CbInput.cbDoubleClick(button));
