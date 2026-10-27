@@ -6,7 +6,9 @@
   "mixins": [
     "ServerDriverMixin",
     "TridentAccess",
-    "TamableTeleportMixin"
+    "TamableTeleportMixin",
+    "FollowOwnerWrapMixin",
+    "ReportCommentMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,25 @@
+{
+  "_s26e_sheets": "s26e: 26.1.2 Sheets members 26.2 dropped or regrouped (rt/CbS26Sheets, javap of both)",
+  "staticRedirects": {
+    "net/minecraft/client/renderer/Sheets.cutoutBlockSheet()Lnet/minecraft/client/renderer/rendertype/RenderType;": "top/dext/centurybridge/step/v26_2/rt/CbS26Sheets",
+    "net/minecraft/client/renderer/Sheets.translucentBlockSheet()Lnet/minecraft/client/renderer/rendertype/RenderType;": "top/dext/centurybridge/step/v26_2/rt/CbS26Sheets",
+    "net/minecraft/client/renderer/Sheets.getDecoratedPotSprite(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/client/resources/model/sprite/SpriteId;": "top/dext/centurybridge/step/v26_2/rt/CbS26Sheets"
+  },
+  "fieldGetters": {
+    "net/minecraft/client/renderer/Sheets.CHEST_COPPER_UNAFFECTED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "top/dext/centurybridge/step/v26_2/rt/CbS26Sheets",
+    "net/minecraft/client/renderer/Sheets.CHEST_COPPER_EXPOSED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "top/dext/centurybridge/step/v26_2/rt/CbS26Sheets",
+    "net/minecraft/client/renderer/Sheets.CHEST_COPPER_WEATHERED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "top/dext/centurybridge/step/v26_2/rt/CbS26Sheets",
+    "net/minecraft/client/renderer/Sheets.CHEST_COPPER_OXIDIZED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "top/dext/centurybridge/step/v26_2/rt/CbS26Sheets",
+    "net/minecraft/client/renderer/Sheets.DECORATED_POT_SPRITES:Ljava/util/Map;": "top/dext/centurybridge/step/v26_2/rt/CbS26Sheets"
+  },
+  "_s26e_sheets_basis": {
+    "net/minecraft/client/renderer/Sheets.cutoutBlockSheet()Lnet/minecraft/client/renderer/rendertype/RenderType;": "26.1.2 returned CUTOUT_BLOCK_SHEET = RenderTypes.entityCutoutCull(TextureAtlas.LOCATION_BLOCKS) (clinit @117-123); 26.2 keeps the memoized factory",
+    "net/minecraft/client/renderer/Sheets.translucentBlockSheet()Lnet/minecraft/client/renderer/rendertype/RenderType;": "26.1.2 returned TRANSLUCENT_BLOCK_SHEET = RenderTypes.entityTranslucentCullItemTarget(LOCATION_BLOCKS) (clinit @126-132); 26.2 keeps the memoized factory",
+    "net/minecraft/client/renderer/Sheets.getDecoratedPotSprite(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/client/resources/model/sprite/SpriteId;": "26.1.2: null key -> null, else DECORATED_POT_SPRITES.get(key); same on the restored map",
+    "net/minecraft/client/renderer/Sheets.CHEST_COPPER_UNAFFECTED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "26.2 Sheets.CHEST_COPPER (WeatheringCopperCollection.ByState).unaffected()",
+    "net/minecraft/client/renderer/Sheets.CHEST_COPPER_EXPOSED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "26.2 Sheets.CHEST_COPPER.exposed()",
+    "net/minecraft/client/renderer/Sheets.CHEST_COPPER_WEATHERED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "26.2 Sheets.CHEST_COPPER.weathered()",
+    "net/minecraft/client/renderer/Sheets.CHEST_COPPER_OXIDIZED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "26.2 Sheets.CHEST_COPPER.oxidized()",
+    "net/minecraft/client/renderer/Sheets.DECORATED_POT_SPRITES:Ljava/util/Map;": "26.1.2 Collectors.toMap over BuiltInRegistries.DECORATED_POT_PATTERN: key -> DECORATED_POT_MAPPER.apply(pattern.assetId()); 26.2 keeps registry, mapper and assetId (its DecoratedPotRenderer builds the same sprites keyed by item); rebuilt the 26.1.2 way on first use"
+  }
+}

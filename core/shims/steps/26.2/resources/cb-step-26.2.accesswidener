@@ -120,3 +120,8 @@ mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPort
 mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties replaceWithBlackstone Z
 mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties vines Z
 # ---- END GENERATED (s26) ----
+# s26f: LevelRenderer.offsetFrustum (26.1.2 public static) moved to SectionOcclusionGraph, private there; a 26.1.2 call is redirected to it
+accessible method net/minecraft/client/renderer/SectionOcclusionGraph offsetFrustum (Lnet/minecraft/client/renderer/culling/Frustum;)Lnet/minecraft/client/renderer/culling/Frustum;
+# s26f: rt/CbS26TabBars.addTabs builds MenuTabButtons for a plain 26.2 TabNavigationBar.Builder handed to 26.1.2 code
+accessible field net/minecraft/client/gui/components/tabs/TabNavigationBar$Builder tabManager Lnet/minecraft/client/gui/components/tabs/TabManager;
+accessible field net/minecraft/client/gui/components/tabs/TabNavigationBar$Builder height I

@@ -12,6 +12,8 @@ import net.minecraft.client.model.animal.camel.AdultCamelModel;
 import net.minecraft.client.model.animal.camel.CamelModel;
 import net.minecraft.client.model.animal.rabbit.AdultRabbitModel;
 import net.minecraft.client.model.animal.rabbit.RabbitModel;
+import net.minecraft.client.model.animal.turtle.AdultTurtleModel;
+import net.minecraft.client.model.animal.turtle.TurtleModel;
 import net.minecraft.client.model.geom.ModelPart;
 
 /**
@@ -39,6 +41,14 @@ public final class CbWallAnimalModels {
     /** new ArmadilloModel(root) */
     public static ArmadilloModel armadillo(ModelPart root) {
         return new AdultArmadilloModel(root);
+    }
+
+    /**
+     * new TurtleModel(root): 1.21.11's TurtleModel is 26.1's AdultTurtleModel (render type, egg belly and setupAnim,
+     * javap class_614 / AdultTurtleModel); a subclass extends facade/LegacyTurtleModel, the same class.
+     */
+    public static TurtleModel turtle(ModelPart root) {
+        return new AdultTurtleModel(root);
     }
 
     // ---- the definitions AdultCamelModel passes, in CamelModel's order ----

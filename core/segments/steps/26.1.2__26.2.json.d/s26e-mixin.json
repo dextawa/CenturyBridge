@@ -1,0 +1,17 @@
+{
+  "_s26e_mixin": "s26e: hand-judged mixin entries, each checked with javap -c -p of 26.1.2 and 26.2",
+  "mixinMoves": {
+    "net/minecraft/client/renderer/LevelRenderer.destroyBlockProgress(ILnet/minecraft/core/BlockPos;I)V": {
+      "to": "net/minecraft/client/multiplayer/ClientLevel.destroyBlockProgress(ILnet/minecraft/core/BlockPos;I)V",
+      "basis": "26.1.2 LevelRenderer.destroyBlockProgress(id, pos, progress) -> 26.2 ClientLevel.destroyBlockProgress, same body (same fields destroyingBlocks / destructionProgress moved with it, same removeProgress / new BlockDestructionProgress / setProgress / updateTick / computeIfAbsent sequence); the one difference is the tick stamped: 26.1.2 getfield ticks:I + updateTick(I), 26.2 getGameTime()J + updateTick(J) (@148). 26.1.2's callers (ClientLevel.destroyBlockProgress -> levelRenderer) are 26.2's ClientLevel itself"
+    },
+    "net/minecraft/client/renderer/LevelRenderer.removeBlockBreakingProgress()V": {
+      "to": "net/minecraft/client/multiplayer/ClientLevel.removeBlockBreakingProgress()V",
+      "basis": "26.1.2 LevelRenderer.removeBlockBreakingProgress() -> 26.2 ClientLevel.removeBlockBreakingProgress(), same body (every 20 ticks, drop progress older than 400 ticks via removeProgress); 26.1.2 reads ticks:I with int constants 20 / 400, 26.2 getGameTime()J with long constants 20L / 400L. 26.1.2 called it from LevelRenderer.tick(Camera) under runsNormally, 26.2 from ClientLevel.tick under runsNormally"
+    },
+    "net/minecraft/client/renderer/LevelRenderer.removeProgress(Lnet/minecraft/server/level/BlockDestructionProgress;)V": {
+      "to": "net/minecraft/client/multiplayer/ClientLevel.removeProgress(Lnet/minecraft/server/level/BlockDestructionProgress;)V",
+      "basis": "26.1.2 LevelRenderer.removeProgress(progress) -> 26.2 ClientLevel.removeProgress(progress): identical bodies (javap: same members, same order); callers removeBlockBreakingProgress / destroyBlockProgress moved with it"
+    }
+  }
+}

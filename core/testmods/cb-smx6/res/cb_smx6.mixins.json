@@ -14,7 +14,10 @@
     "UtilOsMixin",
     "EnchantBookInvoker",
     "FollowOwnerMixin",
-    "FollowOwnerAccess"
+    "FollowOwnerAccess",
+    "CrashCommentMixin",
+    "ProfileCommentMixin",
+    "ProfileReportInvoker"
   ],
   "injectors": {
     "defaultRequire": 1
