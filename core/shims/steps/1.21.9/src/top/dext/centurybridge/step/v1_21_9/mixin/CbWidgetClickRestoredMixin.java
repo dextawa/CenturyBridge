@@ -1,0 +1,90 @@
+package top.dext.centurybridge.step.v1_21_9.mixin;
+
+import net.minecraft.class_11909;
+import net.minecraft.class_11910;
+import net.minecraft.class_1144;
+import net.minecraft.class_310;
+import net.minecraft.class_339;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import top.dext.centurybridge.step.v1_21_9.rt.CbInput;
+import top.dext.centurybridge.step.v1_21_9.rt.CbMixedMembers;
+import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
+
+/**
+ * AbstractWidget.mouseClicked(x, y, button), 1.21.8's shape of 1.21.9's mouseClicked(MouseButtonEvent, doubleClick),
+ * with 1.21.8's body (javap -c class_339 both versions: active and visible -- 1.21.9's isActive() --, a valid button,
+ * isMouseOver(x, y) stored, then the down sound and onClick; 1.21.9's is the same with the event's values). A
+ * converted mixin into 1.21.8's method (the climbed 1.21.4 layer's CbGuiScrollWidgetMixin @ModifyVariable on that stored
+ * isMouseOver, capturing x, y, button; sruntime2 2026-10-27) lands here; while one does (CbMixedMembers), 1.21.9's
+ * mouseClicked runs this body in its place with the event's x, y and button, and onClick gets the event and double-click
+ * flag 1.21.9 was given. Unmixed, 1.21.9's mouseClicked runs untouched. Called directly by 1.21.8 code, onClick gets the
+ * click built from (x, y, button) and the double-click flag 1.21.9's MouseHandler would pass (CbInput).
+ * The body keeps 1.21.8's local order: isMouseOver is its first boolean store (STORE ordinal 0).
+ */
+@Mixin(value = class_339.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbWidgetClickRestoredMixin {
+
+    @Unique
+    private static final String KEY = "net/minecraft/class_339.method_25402(DDI)Z";
+
+    @Unique
+    private class_11909 cb$routedEvent;
+
+    @Unique
+    private boolean cb$routedDoubleClick;
+
+    @Shadow
+    public abstract boolean method_37303();
+
+    @Shadow
+    protected abstract boolean method_25351(class_11910 button);
+
+    @Shadow
+    public abstract boolean method_25405(double x, double y);
+
+    @Shadow
+    public abstract void method_25354(class_1144 soundManager);
+
+    @Shadow
+    public abstract void method_25348(class_11909 event, boolean doubleClick);
+
+    /** AbstractWidget.mouseClicked(x, y, button) */
+    @CbVanillaReads("CbWidgetClickRestoredMixin: 1.21.9's mouseClicked runs it in its place while it is mixed")
+    public boolean method_25402(double x, double y, int button) {
+        if (!this.method_37303()) {
+            return false;
+        }
+        class_11909 event = this.cb$routedEvent != null ? this.cb$routedEvent : CbInput.cbClick(x, y, button);
+        if (this.method_25351(event.comp_4800())) {
+            boolean over = this.method_25405(x, y);
+            if (over) {
+                this.method_25354(class_310.method_1551().method_1483());
+                this.method_25348(event, this.cb$routedEvent != null ? this.cb$routedDoubleClick : CbInput.cbDoubleClick(button));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Inject(method = "method_25402(Lnet/minecraft/class_11909;Z)Z", at = @At("HEAD"), cancellable = true)
+    private void cb$routeClick(class_11909 event, boolean doubleClick, CallbackInfoReturnable<Boolean> cir) {
+        if (!CbMixedMembers.mixed(KEY)) {
+            return;
+        }
+        class_11909 outerEvent = this.cb$routedEvent;
+        boolean outerDoubleClick = this.cb$routedDoubleClick;
+        this.cb$routedEvent = event;
+        this.cb$routedDoubleClick = doubleClick;
+        try {
+            cir.setReturnValue(this.method_25402(event.comp_4798(), event.comp_4799(), event.comp_4800().comp_4801()));
+        } finally {
+            this.cb$routedEvent = outerEvent;
+            this.cb$routedDoubleClick = outerDoubleClick;
+        }
+    }
+}

@@ -33,6 +33,23 @@ public final class CbSelectionLists {
 
         /** renderDecorations(graphics, mouseX, mouseY), called virtually */
         void cb$renderDecorations(class_332 graphics, int mouseX, int mouseY);
+
+        /** isSelectedItem(index), called virtually */
+        boolean cb$isSelectedItem(int index);
+    }
+
+    /** the restored AbstractSelectionList.isSelectedItem(int), as the layer declares it (CbMixedMembers key) */
+    public static final String IS_SELECTED_ITEM = "net/minecraft/class_350.method_25332(I)Z";
+
+    /** a 1.21.8 entry class declaring renderBack(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) */
+    public interface LegacyRenderBack {
+        void method_49568(class_332 graphics, int index, int top, int left, int width, int height, int mouseX, int mouseY,
+                          boolean hovered, float delta);
+    }
+
+    /** a 1.21.8 list class declaring isSelectedItem(index) (the adapter hook adds it and makes that method public) */
+    public interface LegacyIsSelectedItem {
+        boolean method_25332(int index);
     }
 
     /**

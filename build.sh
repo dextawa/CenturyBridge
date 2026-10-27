@@ -94,6 +94,29 @@ FAPI="${CB_FAPI:-$DATA/runtime/client-$VERSION/.fabric/processedMods}"
 if [ -d "$FAPI" ]; then
     while IFS= read -r jar; do CP="$CP:$jar"; done < <(find "$FAPI" -name '*.jar')
 fi
+# MixinExtras: Fabric Loader nests it (META-INF/jars/mixinextras-fabric-*.jar) and provides it to every mod at run
+# time. Older runtimes extracted it into processedMods; newer ones (Loader 0.19 on 1.21.9) do not, so compile against
+# the copy the release's own loader jar carries -- the same MixinExtras the game runs.
+case "$CP" in *mixinextras*) ;; *)
+    LOADER_JAR=$(find "$LIBS" -name 'fabric-loader-*.jar' 2>/dev/null | sed -n 1p)
+    if [ -n "$LOADER_JAR" ]; then
+        MX=$(python3 - "$LOADER_JAR" "$OUT/mixinextras" <<'PY'
+import sys, zipfile, os
+src, out = sys.argv[1], sys.argv[2]
+with zipfile.ZipFile(src) as z:
+    for n in z.namelist():
+        if n.startswith("META-INF/jars/mixinextras-") and n.endswith(".jar"):
+            os.makedirs(out, exist_ok=True)
+            p = os.path.join(out, os.path.basename(n))
+            with open(p, "wb") as f:
+                f.write(z.read(n))
+            print(p)
+            break
+PY
+)
+        [ -n "$MX" ] && CP="$CP:$MX"
+    fi;;
+esac
 # Windows toolchains want ';' between classpath entries
 SEP=":"
 case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) CP="${CP//:/;}"; SEP=";";; esac

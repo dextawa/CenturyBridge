@@ -59,6 +59,11 @@ public abstract class CbSelectionListRestoredMixin<E extends class_350.class_351
     }
 
     @Override
+    public boolean cb$isSelectedItem(int index) {
+        return this.method_25332(index);
+    }
+
+    @Override
     public void cb$header(int headerHeight) {
         this.field_22747 = true;
         this.field_22748 = headerHeight;
@@ -74,6 +79,7 @@ public abstract class CbSelectionListRestoredMixin<E extends class_350.class_351
     }
 
     /** AbstractSelectionList.isSelectedItem(index) */
+    @CbVanillaReads("CbSelectionListSelectedRouteMixin: renderItem asks it for the selection box when it is overridden or mixed")
     protected boolean method_25332(int index) {
         return Objects.equals(this.cb$self().method_25334(), this.cb$self().method_25396().get(index));
     }

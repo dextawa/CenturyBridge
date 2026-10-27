@@ -1,0 +1,15 @@
+{
+ "_basis_bercontext": "s9c BER context: 1.21.9 BlockEntityRendererProvider.Context is a record of 1.21.8's seven values (same types, same order) plus the MaterialSet and PlayerSkinRenderCache; 1.21.8's accessor of each value is the record's accessor of that component (each type occurs once); the 1.21.8 constructor takes the two new ones from the dispatcher passed (CbBerContext)",
+ "methodRenames": {
+  "net/minecraft/class_5614$class_5615.method_32139()Lnet/minecraft/class_824;": "comp_4534",
+  "net/minecraft/class_5614$class_5615.method_32141()Lnet/minecraft/class_776;": "comp_4535",
+  "net/minecraft/class_5614$class_5615.method_65558()Lnet/minecraft/class_10442;": "comp_4536",
+  "net/minecraft/class_5614$class_5615.method_43335()Lnet/minecraft/class_918;": "comp_4537",
+  "net/minecraft/class_5614$class_5615.method_43334()Lnet/minecraft/class_898;": "comp_4538",
+  "net/minecraft/class_5614$class_5615.method_32142()Lnet/minecraft/class_5599;": "comp_4539",
+  "net/minecraft/class_5614$class_5615.method_32143()Lnet/minecraft/class_327;": "comp_4540"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_5614$class_5615.<init>(Lnet/minecraft/class_824;Lnet/minecraft/class_776;Lnet/minecraft/class_10442;Lnet/minecraft/class_918;Lnet/minecraft/class_898;Lnet/minecraft/class_5599;Lnet/minecraft/class_327;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbBerContext#context"
+ }
+}
