@@ -292,11 +292,13 @@ public final class MixinCheck {
         if (extra == null || extra.isEmpty()) {
             return;
         }
+        List<ClassNode> extraMixins = new ArrayList<>();
         for (String j : extra.split(java.io.File.pathSeparator)) {
             if (j.isEmpty()) {
                 continue;
             }
             try (var z = new java.util.zip.ZipFile(j)) {
+                java.util.Set<String> listed = listedMixins(z);
                 for (var en : java.util.Collections.list(z.entries())) {
                     if (!en.getName().endsWith(".class") || en.getName().startsWith("META-INF/")) {
                         continue;
@@ -304,12 +306,59 @@ public final class MixinCheck {
                     byte[] b = z.getInputStream(en).readAllBytes();
                     ClassNode cn = new ClassNode();
                     new ClassReader(b).accept(cn, ClassReader.SKIP_CODE);
+                    if (listed.contains(cn.name)) {
+                        extraMixins.add(cn);
+                    }
                     if (jar.putIfAbsent(cn.name, cn) == null) {
                         codeBytes.putIfAbsent(cn.name, b);
                     }
                 }
             }
         }
+        // the members those jars' listed class mixins merge onto game classes are there for this jar's mixins that apply
+        // after them (a climbed layer's injector on a member a later layer restores: 1.21.2 MappedRegistry.bindTags)
+        indexMerged(extraMixins);
+    }
+
+    /** the class mixins a jar's mixin configs list (fabric.mod.json "mixins" -> each config's package + mixins/client/server) */
+    private static java.util.Set<String> listedMixins(java.util.zip.ZipFile z) throws IOException {
+        java.util.Set<String> out = new java.util.HashSet<>();
+        var fmj = z.getEntry("fabric.mod.json");
+        if (fmj == null) {
+            return out;
+        }
+        com.google.gson.JsonObject mod;
+        try {
+            mod = com.google.gson.JsonParser.parseString(new String(z.getInputStream(fmj).readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (RuntimeException ex) {
+            return out;
+        }
+        if (!mod.has("mixins")) {
+            return out;
+        }
+        for (var ref : mod.getAsJsonArray("mixins")) {
+            String name = ref.isJsonObject() ? ref.getAsJsonObject().get("config").getAsString() : ref.getAsString();
+            var ce = z.getEntry(name);
+            if (ce == null) {
+                continue;
+            }
+            com.google.gson.JsonObject cfg;
+            try {
+                cfg = com.google.gson.JsonParser.parseString(new String(z.getInputStream(ce).readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            } catch (RuntimeException ex) {
+                continue;
+            }
+            String pkg = cfg.has("package") ? cfg.get("package").getAsString().replace('.', '/') : "";
+            for (String key : new String[] {"mixins", "client", "server"}) {
+                if (!cfg.has(key)) {
+                    continue;
+                }
+                for (var e : cfg.getAsJsonArray(key)) {
+                    out.add((pkg.isEmpty() ? "" : pkg + "/") + e.getAsString().replace('.', '/'));
+                }
+            }
+        }
+        return out;
     }
     /** mixin internal name -> its config's injectors.defaultRequire (Mixin's own default is 0) */
     private final Map<String, Integer> defaultRequire = new HashMap<>();
@@ -466,7 +515,7 @@ public final class MixinCheck {
             }
             for (FieldNode f : cn.fields) {
                 if (has(f.visibleAnnotations, f.invisibleAnnotations, SHADOW)
-                        && !declaresField(target, f.name, f.desc)) {
+                        && !declaresField(target, f.name, f.desc) && !mergedBefore(t, f.name + ":" + f.desc, cn.name)) {
                     problems.add(me + ": @Shadow field " + f.name + ":" + f.desc + " not declared on " + t);
                 }
             }
@@ -685,7 +734,32 @@ public final class MixinCheck {
                     merged.computeIfAbsent(t, k -> new HashMap<>()).merge(m.name + m.desc, priority, Math::min);
                 }
             }
+            // a field the mixin merges as it is (no Mixin annotation: not a @Shadow, not a @Unique Mixin may rename),
+            // keyed "name:desc": a later mixin's @Shadow of it resolves (Mixin applies in priority order onto the
+            // target's node; a layer restoring a field W dropped, shadowed by a climbed earlier layer)
+            for (FieldNode f : cn.fields) {
+                if ((f.access & org.objectweb.asm.Opcodes.ACC_SYNTHETIC) != 0
+                        || f.visibleAnnotations != null && !f.visibleAnnotations.isEmpty()
+                        || f.invisibleAnnotations != null && f.invisibleAnnotations.stream().anyMatch(an -> an.desc.startsWith("Lorg/spongepowered/"))) {
+                    continue;
+                }
+                for (String t : targets) {
+                    merged.computeIfAbsent(t, k -> new HashMap<>()).merge(f.name + ":" + f.desc, priority, Math::min);
+                }
+            }
         }
+    }
+
+    /** a method of that name (and descriptor, when given) merged onto the target by a mixin applying before this one */
+    private boolean mergedForInjection(String target, String name, String desc, String mixin) {
+        int own = priorities.getOrDefault(mixin, 1000);
+        for (Map.Entry<String, Integer> e : merged.getOrDefault(target, Map.of()).entrySet()) {
+            String k = e.getKey();
+            if (e.getValue() < own && (desc != null ? k.equals(name + desc) : k.startsWith(name + "("))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean mergedBefore(String target, String nameDesc, String invokerMixin) {
@@ -781,8 +855,11 @@ public final class MixinCheck {
             boolean anyMatched = false;
             for (Object o : l) {
                 String sel = o.toString();
-                String name = sel.contains("(") ? sel.substring(0, sel.indexOf('(')) : sel;
-                String desc = sel.contains("(") ? sel.substring(sel.indexOf('(')) : null;
+                // an owner-qualified selector ("Lowner;name(desc)", MixinRepair's moved injectors) names the member
+                String bare = sel.startsWith("L") && sel.indexOf(';') > 0 && (sel.indexOf('(') < 0 || sel.indexOf(';') < sel.indexOf('('))
+                    ? sel.substring(sel.indexOf(';') + 1) : sel;
+                String name = bare.contains("(") ? bare.substring(0, bare.indexOf('(')) : bare;
+                String desc = bare.contains("(") ? bare.substring(bare.indexOf('(')) : null;
                 int min = 0;
                 java.util.regex.Matcher q = java.util.regex.Pattern.compile("(\\+|\\{(\\d*)(,\\d*)?\\}|\\*)$").matcher(name);
                 if (q.find()) {
@@ -790,6 +867,8 @@ public final class MixinCheck {
                     name = name.substring(0, q.start());
                 }
                 boolean ok = desc == null ? hasMethodNamed(target, name) : hasMethod(target, name, desc);
+                // or merged by a class mixin (this jar's, or a listed one of another installed jar) applying first
+                ok = ok || mergedForInjection(target.name, name, desc, currentMixin);
                 anyMatched |= ok;
                 if (!ok) {
                     dead.add(sel);
