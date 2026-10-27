@@ -69,15 +69,65 @@ public final class LayerMembers {
         return new LayerMembers();
     }
 
+    /**
+     * the members a layer jar's listed class mixins merge (fabric.mod.json "mixins" -> each config's package + mixins /
+     * client / server). A climbed layer keeps the class file of a mixin its climb stripped and only drops it from the
+     * config: Mixin never applies it, so its members are not there (the 1.21.2 layer's CbRenderState922Mixin past
+     * 1.21.9). A jar without a readable config counts every mixin class
+     */
     public static LayerMembers read(Path layerJar) throws IOException {
         LayerMembers out = new LayerMembers();
         if (layerJar == null) {
             return out;
         }
         try (ZipFile z = new ZipFile(layerJar.toFile())) {
+            Set<String> listed = listedMixins(z);
             for (ZipEntry e : java.util.Collections.list(z.entries())) {
-                if (e.getName().endsWith(".class")) {
+                String n = e.getName();
+                if (n.endsWith(".class") && (listed == null || listed.contains(n.substring(0, n.length() - 6)))) {
                     out.add(z.getInputStream(e).readAllBytes());
+                }
+            }
+        }
+        return out;
+    }
+
+    /** the mixin classes a jar's configs list (internal names), or null when it has no readable fabric.mod.json config */
+    private static Set<String> listedMixins(ZipFile z) throws IOException {
+        ZipEntry fmj = z.getEntry("fabric.mod.json");
+        if (fmj == null) {
+            return null;
+        }
+        com.google.gson.JsonObject mod;
+        try {
+            mod = com.google.gson.JsonParser.parseString(new String(z.getInputStream(fmj).readAllBytes(),
+                java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (RuntimeException ex) {
+            return null;
+        }
+        if (!mod.has("mixins")) {
+            return null;
+        }
+        Set<String> out = new java.util.HashSet<>();
+        for (com.google.gson.JsonElement ref : mod.getAsJsonArray("mixins")) {
+            String name = ref.isJsonObject() ? ref.getAsJsonObject().get("config").getAsString() : ref.getAsString();
+            ZipEntry ce = z.getEntry(name);
+            if (ce == null) {
+                return null;
+            }
+            com.google.gson.JsonObject cfg;
+            try {
+                cfg = com.google.gson.JsonParser.parseString(new String(z.getInputStream(ce).readAllBytes(),
+                    java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            } catch (RuntimeException ex) {
+                return null;
+            }
+            String pkg = cfg.has("package") ? cfg.get("package").getAsString().replace('.', '/') : "";
+            for (String key : new String[] {"mixins", "client", "server"}) {
+                if (cfg.has(key)) {
+                    for (com.google.gson.JsonElement e : cfg.getAsJsonArray(key)) {
+                        out.add((pkg.isEmpty() ? "" : pkg + "/") + e.getAsString().replace('.', '/'));
+                    }
                 }
             }
         }
