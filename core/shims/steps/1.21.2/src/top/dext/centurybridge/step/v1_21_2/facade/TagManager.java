@@ -61,25 +61,48 @@ public class TagManager implements class_3302 {
     /**
      * The TagManager of a 1.21.2 reload: 1.21.1 loaded the tags among the reload listeners (this class) and kept them on
      * ReloadableServerResources; 1.21.2 loads them before (TagLoader, as MinecraftServer and WorldLoader call it) and
-     * hands them to ReloadableServerResources as pending tags. Each registry's pending tags as 1.21.1's LoadResult (the
-     * tag ids with their entries, as the pending lookup holds them), stored through the apply step. registryAccess is
-     * the composite access 1.21.1 built its TagManager on (ReloadableServerResources' holder is made of it in both).
+     * hands them to ReloadableServerResources as pending tags, bound to the registries only after the reload
+     * (updateStaticRegistryTags; reading a pending tag's holder set before throws "unbound tag"). Each registry's
+     * loaded tags as 1.21.1's LoadResult (the tag ids with their entries, as TagLoader loaded them: {@link #loaded}),
+     * stored through the apply step. registryAccess is the composite access 1.21.1 built its TagManager on
+     * (ReloadableServerResources' holder is made of it in both).
      */
     public static TagManager ofPending(class_5455 registryAccess, List<net.minecraft.class_2378.class_10106<?>> pending) {
         TagManager manager = new TagManager(registryAccess);
         List<CompletableFuture<LoadResult<?>>> loads = new java.util.ArrayList<>(pending.size());
         for (net.minecraft.class_2378.class_10106<?> tags : pending) {
-            loads.add(CompletableFuture.completedFuture(loadResult(tags)));
+            LoadResult<?> r = loadResult(tags);
+            if (r != null) {
+                loads.add(CompletableFuture.completedFuture(r));
+            }
         }
         manager.method_40098(loads, null);
         return manager;
     }
 
+    /**
+     * the tags a registry's prepareTagReload was handed, by the pending tags it made (CbRestPendingTagsMixin): 1.21.2's
+     * pending tags keep them in a field of an anonymous class; this is the same map, recorded where it is passed in
+     */
+    private static final Map<net.minecraft.class_2378.class_10106<?>, Map<?, ? extends List<?>>> LOADED =
+        java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
+
+    /** CbRestPendingTagsMixin: MappedRegistry.prepareTagReload(result) returned these pending tags of result's tags */
+    public static void loaded(net.minecraft.class_2378.class_10106<?> pending, net.minecraft.class_3503.class_6863<?> result) {
+        LOADED.put(pending, result.comp_329());
+    }
+
     @SuppressWarnings({"unchecked", "rawtypes"})
     private static <T> LoadResult<T> loadResult(net.minecraft.class_2378.class_10106<T> pending) {
+        Map<?, ? extends List<?>> loaded = LOADED.get(pending);
+        if (loaded == null) {
+            // pending tags no MappedRegistry made (vanilla has no other Registry implementation): their entries are not known
+            org.slf4j.LoggerFactory.getLogger("centurybridge").warn("TagManager: the pending tags of {} were not made by"
+                + " MappedRegistry.prepareTagReload; left out of the reload's tag results", pending.method_62693());
+            return null;
+        }
         Map<class_2960, java.util.Collection<net.minecraft.class_6880<T>>> tags = new java.util.LinkedHashMap<>();
-        pending.method_62695().method_42020()
-            .forEach(named -> tags.put(named.method_40251().comp_327(), named.method_40239().toList()));
+        loaded.forEach((key, holders) -> tags.put(((net.minecraft.class_6862<T>) key).comp_327(), (List) holders));
         return new LoadResult<>((class_5321) pending.method_62693(), tags);
     }
 

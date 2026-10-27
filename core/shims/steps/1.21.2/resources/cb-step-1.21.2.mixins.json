@@ -201,6 +201,7 @@
     "CbRestServerPlayerMixin",
     "CbRestServerPropertiesMixin",
     "CbRestStackedItemContentsAccessor",
+    "CbRestPendingTagsMixin",
     "CbRestTagEntryAccessor",
     "CbRestTagResultsMixin",
     "CbRestWorldLoaderMixin"
