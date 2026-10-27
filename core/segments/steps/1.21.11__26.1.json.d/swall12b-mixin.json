@@ -30,7 +30,7 @@
   "net/minecraft/class_8180.method_49249(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;Ljava/util/function/Function;Lnet/minecraft/class_2350;IZLnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_4647$class_5208;": {
    "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;Ljava/util/function/Function;Lnet/minecraft/class_2350;IZLnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_4647$class_5208;",
    "ops": [
-    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
     "keep",
     "keep",
     "keep",
@@ -43,6 +43,15 @@
     "keep"
    ],
    "basis": "CherryTrunkPlacer.generateBranch(level, ..): 26.1's takes a WorldGenLevel where 1.21.11's took a LevelSimulatedReader; the same body call for call (placeLog, distManhattan, getY; javap of both). 1.21.11's trunk placers were handed the tree feature's WorldGenLevel"
+  },
+  "net/minecraft/class_1887.method_60017(Lnet/minecraft/class_3218;ILnet/minecraft/class_1799;)Lnet/minecraft/class_47;": {
+   "desc": "(Lnet/minecraft/class_3218;ILnet/minecraft/world/item/ItemInstance;)Lnet/minecraft/class_47;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#instance(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemInstance;"
+   ],
+   "basis": "Enchantment.itemContext(level, enchantmentLevel, stack): 26.1's takes the ItemInstance (javap of both: the same loot context with THIS_ENTITY absent, TOOL = the item, ENCHANTMENT_LEVEL); a stack is an ItemInstance. Also the anchor of modifyItemFilteredCount's injectors"
   }
  },
  "returnConverters": {
