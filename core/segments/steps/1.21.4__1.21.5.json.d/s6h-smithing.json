@@ -1,0 +1,43 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_8059.method_64723()Ljava/util/Optional;": {
+   "desc": "()Lnet/minecraft/class_1856;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbItemSmithing#base(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+   "basis": "s6h-smithing: SmithingRecipe.baseIngredient() answers the Ingredient since 1.21.5 (javap 1.21.4: ()Optional<Ingredient>; 1.21.5: ()Ingredient, never empty -- Ingredient's constructor refuses an empty item set); a 1.21.4 caller gets it present"
+  },
+  "net/minecraft/class_8060.method_64723()Ljava/util/Optional;": {
+   "desc": "()Lnet/minecraft/class_1856;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbItemSmithing#base(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+   "basis": "s6h-smithing: SmithingTransformRecipe.baseIngredient() (field_42031 Optional<Ingredient> -> Ingredient, javap); calls naming the class and a subclass's super call"
+  },
+  "net/minecraft/class_8062.method_64723()Ljava/util/Optional;": {
+   "desc": "()Lnet/minecraft/class_1856;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbItemSmithing#base(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+   "basis": "s6h-smithing: SmithingTrimRecipe.baseIngredient() (field_42036 Optional<Ingredient> -> Ingredient, javap); calls naming the class and a subclass's super call"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_64723()Ljava/util/Optional;",
+   "new": "method_64723()Lnet/minecraft/class_1856;",
+   "onlyUnder": "net/minecraft/class_8059",
+   "unwrap": "top/dext/centurybridge/step/v1_21_5/rt/CbItemSmithing.baseOf(Ljava/util/Optional;)Lnet/minecraft/class_1856;",
+   "basis": "s6h-smithing: a 1.21.4 SmithingRecipe implementation (or SmithingTransform/TrimRecipe subclass) answers baseIngredient as an Optional; vanilla 1.21.5 (matches, display, placement info) asks the Ingredient. An empty 1.21.4 base (only an empty slot matches) has no 1.21.5 form and is refused with a message (release_notes_known)"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_8060.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_1856;Ljava/util/Optional;Lnet/minecraft/class_10591;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_5/rt/CbItemSmithing#baseOf(Ljava/util/Optional;)Lnet/minecraft/class_1856;",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_5/rt/CbItemSmithing#result(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;"
+   ],
+   "basis": "s6h-smithing: SmithingTransformRecipe(template, base, addition, result): base Optional<Ingredient> -> Ingredient, result ItemStack -> TransmuteResult (javap 1.21.4 / 1.21.5). 1.21.4's assemble was base.transmuteCopy(result item, result count) + applyComponents(result patch), exactly TransmuteResult.apply of the same item, count and patch"
+  }
+ }
+}
