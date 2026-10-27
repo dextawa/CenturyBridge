@@ -9,7 +9,12 @@
     "CbItemMembersRestoredMixin",
     "CbItemStackHurtEnemyMixin",
     "CbItemStackMembersMixin",
-    "CbItemStackTickMixin"
+    "CbItemStackTickMixin",
+    "CbWeightedEnchantmentMixin",
+    "CbWeightedJumpMixin",
+    "CbWeightedListMixin",
+    "CbWeightedSpawnerDataMixin",
+    "CbWeightedWrapperMixin"
   ],
   "client": [
     "CbGlViewportMixin"

@@ -1,0 +1,101 @@
+{
+  "_s215_weighted_basis": "Family B1 (s215): 1.21.4's weighted-entry API on 1.21.5's WeightedList. 1.21.5 merged SimpleWeightedRandomList (class_6005) into WeightedList (same binary name as 1.21.4's WeightedRandomList, class_6012), turned Weight (class_6007) into a plain int and WeightedEntry.Wrapper into the top-level Weighted record (class_6010, sruntime-classmoves); WeightedEntry (class_6008) / IntrusiveBase (class_6008$class_6009) are gone. javap -c -p both releases. Converters are adaptive (rt/CbWeighted): erasure cannot tell an intrusive list from a wrapper list.",
+  "classRenames": {
+    "net/minecraft/class_6005": "net/minecraft/class_6012",
+    "net/minecraft/class_6007": "top/dext/centurybridge/step/v1_21_5/facade/Weight",
+    "net/minecraft/class_6008": "top/dext/centurybridge/step/v1_21_5/facade/WeightedEntry",
+    "net/minecraft/class_6008$class_6009": "top/dext/centurybridge/step/v1_21_5/facade/WeightedEntry$IntrusiveBase"
+  },
+  "methodRenames": {
+    "net/minecraft/class_6005.method_34971()Lnet/minecraft/class_6005$class_6006;": "method_66215",
+    "net/minecraft/class_6005.method_38062()Lnet/minecraft/class_6005;": "method_34990",
+    "net/minecraft/class_6005.method_38061(Ljava/lang/Object;)Lnet/minecraft/class_6005;": "method_66214",
+    "net/minecraft/class_6005.method_39521(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;": "method_34991",
+    "net/minecraft/class_6005.method_34972(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;": "method_66217",
+    "net/minecraft/class_6005.method_34973(Lnet/minecraft/class_5819;)Ljava/util/Optional;": "method_34992"
+  },
+  "_s215_weighted_methodRenames_basis": "SimpleWeightedRandomList members on WeightedList, each judged by body: builder() = new Builder (66215); empty() = new list of List.of() (34990); single(v) = list of one entry of weight 1 (66214); codec(c) = Wrapper codec listOf xmap create/unwrap (V 39521 = W 34991, Weighted codec {data, weight}); nonEmptyCodec(c) = the same through ExtraCodecs.nonEmptyList (V 34972 = W 66217); getRandomValue(r) = getRandom(r).map(Wrapper::data) (V 34973), which is 1.21.5's getRandom(r) answering the value (W 34992).",
+  "superCtorReshapes": {
+    "net/minecraft/class_6008$class_6010.<init>(Ljava/lang/Object;Lnet/minecraft/class_6007;)V": {
+      "desc": "(Ljava/lang/Object;I)V",
+      "ops": [
+        "keep",
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#asInt(Lnet/minecraft/class_6007;)I"
+      ],
+      "basis": "Wrapper(data, Weight) is Weighted(data, int weight): the Weight's int (Weighted's constructor checks >= 0 and warns on 0 as Weight.of did)"
+    }
+  },
+  "callReshapes": {
+    "net/minecraft/class_6008$class_6010.comp_2543()Lnet/minecraft/class_6007;": {
+      "desc": "()I",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#weight(I)Lnet/minecraft/class_6007;",
+      "basis": "Wrapper.weight() answers the Weight of Weighted.weight()'s int"
+    },
+    "net/minecraft/class_6012.method_34989([Lnet/minecraft/class_6008;)Lnet/minecraft/class_6012;": {
+      "desc": "([Lnet/minecraft/class_6010;)Lnet/minecraft/class_6012;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#wrapArray([Ljava/lang/Object;)[Lnet/minecraft/class_6010;"
+      ],
+      "basis": "WeightedRandomList.create(E...) on 1.21.5's create(Weighted...): each 1.21.4 entry wrapped with its own weight (a Wrapper is already a Weighted)"
+    },
+    "net/minecraft/class_6012.method_34988(Ljava/util/List;)Lnet/minecraft/class_6012;": {
+      "desc": "(Ljava/util/List;)Lnet/minecraft/class_6012;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#wrapList(Ljava/util/List;)Ljava/util/List;"
+      ],
+      "basis": "WeightedRandomList.create(List<E extends WeightedEntry>) on 1.21.5's create(List<Weighted<E>>) (generic drift): entries wrapped as for create(E...)"
+    },
+    "net/minecraft/class_6011.method_34984(Ljava/util/List;)I": {
+      "desc": "(Ljava/util/List;Ljava/util/function/ToIntFunction;)I",
+      "ops": [
+        "keep",
+        "push top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#weigher()Ljava/util/function/ToIntFunction;"
+      ],
+      "basis": "WeightedRandom.getTotalWeight(List) summed entry.getWeight().asInt(); 1.21.5 takes the weigher: the entries' own weights"
+    },
+    "net/minecraft/class_6011.method_34987(Lnet/minecraft/class_5819;Ljava/util/List;I)Ljava/util/Optional;": {
+      "desc": "(Lnet/minecraft/class_5819;Ljava/util/List;ILjava/util/function/ToIntFunction;)Ljava/util/Optional;",
+      "ops": [
+        "keep",
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#weigher()Ljava/util/function/ToIntFunction;"
+      ],
+      "basis": "WeightedRandom.getRandomItem(random, list, totalWeight): same draw with the entries' own weights"
+    },
+    "net/minecraft/class_6011.method_34985(Ljava/util/List;I)Ljava/util/Optional;": {
+      "desc": "(Ljava/util/List;ILjava/util/function/ToIntFunction;)Ljava/util/Optional;",
+      "ops": [
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#weigher()Ljava/util/function/ToIntFunction;"
+      ],
+      "basis": "WeightedRandom.getWeightedItem(list, index): same walk with the entries' own weights"
+    },
+    "net/minecraft/class_6011.method_34986(Lnet/minecraft/class_5819;Ljava/util/List;)Ljava/util/Optional;": {
+      "desc": "(Lnet/minecraft/class_5819;Ljava/util/List;Ljava/util/function/ToIntFunction;)Ljava/util/Optional;",
+      "ops": [
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#weigher()Ljava/util/function/ToIntFunction;"
+      ],
+      "basis": "WeightedRandom.getRandomItem(random, list): same draw with the entries' own weights"
+    }
+  },
+  "covers": [
+    "net/minecraft/class_5483$class_1964.method_34979()Lnet/minecraft/class_6007;",
+    "net/minecraft/class_1889.method_34979()Lnet/minecraft/class_6007;",
+    "net/minecraft/class_6030$class_6031.method_34979()Lnet/minecraft/class_6007;"
+  ],
+  "_s215_weighted_covers_basis": "getWeight() called on the 1.21.5 records themselves (SpawnerData, EnchantmentInstance, PossibleJump): declared by the layer mixins below with the facade Weight return (the classRenames of class_6007), so the call sites link instead of being tombstoned (b4 boot: NoSuchMethodError on the tombstones).",
+  "_s215_weighted_records_basis":"getWeight() on 1.21.5's records: Weighted (1.21.4 Wrapper), EnchantmentInstance, PossibleJump and SpawnerData implement the facade WeightedEntry again through layer mixins (mixin/CbWeighted*Mixin), so a converted mod's inherited getWeight() calls, interface calls, casts and type tests link as on 1.21.4.",
+  "returnConverters": {
+    "net/minecraft/class_6008$class_6010.comp_2543()Lnet/minecraft/class_6007;": {
+      "toV": "top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#weight(I)Ltop/dext/centurybridge/step/v1_21_5/facade/Weight;",
+      "toW": "top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#asInt(Ltop/dext/centurybridge/step/v1_21_5/facade/Weight;)I",
+      "with": [],
+      "basis": "Wrapper.weight() is Weighted.weight(): the Weight of the int and back (the pair the comp_2543 callReshape uses)"
+    }
+  }
+}

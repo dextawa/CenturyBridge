@@ -1,0 +1,35 @@
+{
+  "_s215_smithing_comment": "1.21.4 -> 1.21.5 smithing (javap -c -p class_8059 / class_8060 / class_10591, both releases): SmithingRecipe.baseIngredient() went from Optional<Ingredient> to Ingredient, SmithingTransformRecipe's result stack became a TransmuteResult. Trim recipes (class_8062: required ingredients plus an explicit pattern holder) are not wired here.",
+  "callReshapes": {
+    "net/minecraft/class_8059.method_64723()Ljava/util/Optional;": {
+      "desc": "()Lnet/minecraft/class_1856;",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbSmithing#some(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+      "basis": "1.21.5's baseIngredient() answers the Ingredient 1.21.4's Optional held (every 1.21.5 smithing recipe has a base)"
+    },
+    "net/minecraft/class_8060.method_64723()Ljava/util/Optional;": {
+      "desc": "()Lnet/minecraft/class_1856;",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbSmithing#some(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+      "basis": "SmithingTransformRecipe.baseIngredient(): as SmithingRecipe's"
+    },
+    "net/minecraft/class_8062.method_64723()Ljava/util/Optional;": {
+      "desc": "()Lnet/minecraft/class_1856;",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbSmithing#some(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+      "basis": "SmithingTrimRecipe.baseIngredient(): as SmithingRecipe's"
+    }
+  },
+  "ctorRedirects": {
+    "net/minecraft/class_8060.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbSmithing#newTransform"
+  },
+  "overrideHooks": [
+    {
+      "old": "method_64723()Ljava/util/Optional;",
+      "new": "method_64723()Lnet/minecraft/class_1856;",
+      "onlyUnder": "net/minecraft/class_8059",
+      "unwrap": "top/dext/centurybridge/step/v1_21_5/rt/CbSmithing.base(Ljava/util/Optional;)Lnet/minecraft/class_1856;",
+      "basis": "a mod SmithingRecipe's 1.21.4 baseIngredient() override answers 1.21.5's: present -> the Ingredient; empty has no 1.21.5 form (refused, release notes)"
+    }
+  ]
+}
