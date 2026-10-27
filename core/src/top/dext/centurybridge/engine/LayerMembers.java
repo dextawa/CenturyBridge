@@ -69,64 +69,135 @@ public final class LayerMembers {
         return new LayerMembers();
     }
 
+    /**
+     * the members a layer jar's listed class mixins merge (fabric.mod.json "mixins" -> each config's package + mixins /
+     * client / server). A climbed layer keeps the class file of a mixin its climb stripped and only drops it from the
+     * config: Mixin never applies it, so its members are not there (the 1.21.2 layer's CbRenderState922Mixin past
+     * 1.21.9). A jar without a readable config counts every mixin class
+     */
     public static LayerMembers read(Path layerJar) throws IOException {
         LayerMembers out = new LayerMembers();
         if (layerJar == null) {
             return out;
         }
         try (ZipFile z = new ZipFile(layerJar.toFile())) {
+            Set<String> listed = listedMixins(z);
             for (ZipEntry e : java.util.Collections.list(z.entries())) {
-                if (!e.getName().endsWith(".class")) {
-                    continue;
+                String n = e.getName();
+                if (n.endsWith(".class") && (listed == null || listed.contains(n.substring(0, n.length() - 6)))) {
+                    out.add(z.getInputStream(e).readAllBytes());
                 }
-                ClassNode cn = new ClassNode();
-                new ClassReader(z.getInputStream(e).readAllBytes()).accept(cn, ClassReader.SKIP_FRAMES);
-                AnnotationNode mx = annotation(cn.invisibleAnnotations, MIXIN);
-                if (mx == null) {
-                    mx = annotation(cn.visibleAnnotations, MIXIN);
-                }
-                if (mx == null) {
-                    continue;
-                }
-                out.mixins.add(cn.name);
-                if ((cn.access & Opcodes.ACC_INTERFACE) != 0) {
-                    out.readInvokers(cn, mx);
-                    continue;
-                }
-                List<String> targets = new ArrayList<>();
-                for (Object o : MixinRepair.list(MixinRepair.values(mx).get("value"))) {
-                    if (o instanceof Type t) {
-                        targets.add(t.getInternalName());
-                    }
-                }
-                for (Object o : MixinRepair.list(MixinRepair.values(mx).get("targets"))) {
-                    if (o instanceof String t) {
-                        targets.add(t.replace('.', '/'));
-                    }
-                }
-                int prio = MixinRepair.values(mx).get("priority") instanceof Integer p ? p : DEFAULT_PRIORITY;
-                for (MethodNode m : cn.methods) {
-                    if (merged(m)) {
-                        for (String t : targets) {
-                            MethodNode a = applied(m, cn.name, t);
-                            out.byTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
-                            out.priority.put(a, prio);
-                        }
-                    }
-                }
-                for (FieldNode f : cn.fields) {
-                    if (mergedField(f)) {
-                        for (String t : targets) {
-                            FieldNode a = new FieldNode(f.access, f.name,
-                                new org.objectweb.asm.commons.SimpleRemapper(cn.name, t).mapDesc(f.desc), f.signature, null);
-                            out.fieldsByTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
-                            out.fieldPriority.put(a, prio);
-                        }
+            }
+        }
+        return out;
+    }
+
+    /** the mixin classes a jar's configs list (internal names), or null when it has no readable fabric.mod.json config */
+    private static Set<String> listedMixins(ZipFile z) throws IOException {
+        ZipEntry fmj = z.getEntry("fabric.mod.json");
+        if (fmj == null) {
+            return null;
+        }
+        com.google.gson.JsonObject mod;
+        try {
+            mod = com.google.gson.JsonParser.parseString(new String(z.getInputStream(fmj).readAllBytes(),
+                java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (RuntimeException ex) {
+            return null;
+        }
+        if (!mod.has("mixins")) {
+            return null;
+        }
+        Set<String> out = new java.util.HashSet<>();
+        for (com.google.gson.JsonElement ref : mod.getAsJsonArray("mixins")) {
+            String name = ref.isJsonObject() ? ref.getAsJsonObject().get("config").getAsString() : ref.getAsString();
+            ZipEntry ce = z.getEntry(name);
+            if (ce == null) {
+                return null;
+            }
+            com.google.gson.JsonObject cfg;
+            try {
+                cfg = com.google.gson.JsonParser.parseString(new String(z.getInputStream(ce).readAllBytes(),
+                    java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            } catch (RuntimeException ex) {
+                return null;
+            }
+            String pkg = cfg.has("package") ? cfg.get("package").getAsString().replace('.', '/') : "";
+            for (String key : new String[] {"mixins", "client", "server"}) {
+                if (cfg.has(key)) {
+                    for (com.google.gson.JsonElement e : cfg.getAsJsonArray(key)) {
+                        out.add((pkg.isEmpty() ? "" : pkg + "/") + e.getAsString().replace('.', '/'));
                     }
                 }
             }
         }
         return out;
+    }
+
+    /**
+     * the members the mixins of a jar being converted merge onto their targets (smx1 CASE 13): a climbing layer's
+     * class mixins restore members its own @Invoker / @Accessor / @Shadow name (CbRecipeJsonShapedStatics merges
+     * class_1869.method_8157, CbRecipeJsonShapedAccess invokes it), so at runtime the target declares them -- the
+     * way MixinCheck.indexMerged counts them for gate 3. Only the mixin classes a config lists ({@code listed},
+     * internal names) are merged by Mixin; entries are the jar's class files by entry name
+     */
+    public static LayerMembers ofJar(Map<String, byte[]> entries, Set<String> listed) {
+        LayerMembers out = new LayerMembers();
+        for (String cls : listed) {
+            byte[] b = entries.get(cls + ".class");
+            if (b != null) {
+                out.add(b);
+            }
+        }
+        return out;
+    }
+
+    private void add(byte[] bytes) {
+        ClassNode cn = new ClassNode();
+        new ClassReader(bytes).accept(cn, ClassReader.SKIP_FRAMES);
+        AnnotationNode mx = annotation(cn.invisibleAnnotations, MIXIN);
+        if (mx == null) {
+            mx = annotation(cn.visibleAnnotations, MIXIN);
+        }
+        if (mx == null) {
+            return;
+        }
+        mixins.add(cn.name);
+        if ((cn.access & Opcodes.ACC_INTERFACE) != 0) {
+            readInvokers(cn, mx);
+            return;
+        }
+        List<String> targets = new ArrayList<>();
+        for (Object o : MixinRepair.list(MixinRepair.values(mx).get("value"))) {
+            if (o instanceof Type t) {
+                targets.add(t.getInternalName());
+            }
+        }
+        for (Object o : MixinRepair.list(MixinRepair.values(mx).get("targets"))) {
+            if (o instanceof String t) {
+                targets.add(t.replace('.', '/'));
+            }
+        }
+        int prio = MixinRepair.values(mx).get("priority") instanceof Integer p ? p : DEFAULT_PRIORITY;
+        for (MethodNode m : cn.methods) {
+            if (merged(m)) {
+                for (String t : targets) {
+                    MethodNode a = applied(m, cn.name, t);
+                    byTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
+                    priority.put(a, prio);
+                }
+            }
+        }
+        for (FieldNode f : cn.fields) {
+            if (mergedField(f)) {
+                for (String t : targets) {
+                    FieldNode a = new FieldNode(f.access, f.name,
+                        new org.objectweb.asm.commons.SimpleRemapper(cn.name, t).mapDesc(f.desc), f.signature, null);
+                    fieldsByTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
+                    fieldPriority.put(a, prio);
+                }
+            }
+        }
     }
 
     /**
@@ -324,6 +395,24 @@ public final class LayerMembers {
             }
         }
         return false;
+    }
+
+    /**
+     * smx4b case (5): a restored member whose V code W dropped altogether (1.20.5 Breeze.withinOuterCircleRange: its
+     * only 1.20.4 caller, Slide.start, no longer makes the ring test, and no 1.20.5 method does): the layer says so
+     * with {@code @CbNoCounterpart("<basis>")} (any annotation type named CbNoCounterpart under top/dext/centurybridge,
+     * class retention; the basis names the V caller and what W does there instead, from javap of both). W vanilla then
+     * never reaches the counterpart of the V code, so a mixin there changes nothing vanilla does on V either way: the
+     * judge counts it restored-unreached. The basis, or null without the marker (a blank basis is no marker)
+     */
+    public String noCounterpart(MethodNode m) {
+        for (AnnotationNode a : MixinRepair.annotations(m)) {
+            if (a.desc.startsWith("Ltop/dext/centurybridge/") && a.desc.endsWith("/CbNoCounterpart;")) {
+                Object v = MixinRepair.values(a).get("value");
+                return v instanceof String s && !s.isBlank() ? s : null;
+            }
+        }
+        return null;
     }
 
     /**

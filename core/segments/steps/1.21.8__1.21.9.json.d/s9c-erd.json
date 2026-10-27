@@ -1,0 +1,12 @@
+{
+ "covers": [
+  "net/minecraft/class_898.method_3959(DDD)D"
+ ],
+ "callReshapes": {
+  "net/minecraft/class_898.method_3941(Lnet/minecraft/class_1937;Lnet/minecraft/class_4184;Lnet/minecraft/class_1297;)V": {
+   "basis": "s9c ERD: EntityRenderDispatcher.prepare(level, camera, crosshairPickEntity) -> prepare(camera, crosshairPickEntity) (javap: both store the camera and the picked entity; 1.21.8 also stored the level and the camera's rotation, fields 1.21.9's dispatcher no longer has: it reads neither)",
+   "desc": "(Lnet/minecraft/class_4184;Lnet/minecraft/class_1297;)V",
+   "ops": ["drop", "keep", "keep"]
+  }
+ }
+}

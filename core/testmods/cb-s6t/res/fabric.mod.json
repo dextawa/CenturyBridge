@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s6t",
+ "version": "1.0.0",
+ "name": "CB s6t tag datagen test (1.21.5 era)",
+ "environment": "*",
+ "entrypoints": { "fabric-datagen": ["cb.s6t.S6tDatagen"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.5", "fabric-data-generation-api-v1": "*" }
+}

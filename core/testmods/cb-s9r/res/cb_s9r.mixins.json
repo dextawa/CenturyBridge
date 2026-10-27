@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.s9r.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["WidgetClickMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

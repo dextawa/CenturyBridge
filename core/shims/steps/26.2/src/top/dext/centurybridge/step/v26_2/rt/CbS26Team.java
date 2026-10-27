@@ -166,4 +166,13 @@ public final class CbS26Team {
         }
         throw net.minecraft.commands.arguments.TeamColorArgument.ERROR_INVALID_VALUE.createWithContext(reader, s);
     }
+
+    /**
+     * 26.1.2 ReadOnlyScoreInfo.safeFormatValue(info, format), dropped by 26.2 with the same parts kept: the score's
+     * formatValue(format) when there is a score, format.format(0) when there is none (javap of 26.1.2).
+     */
+    public static MutableComponent safeFormatValue(net.minecraft.world.scores.ReadOnlyScoreInfo info,
+            net.minecraft.network.chat.numbers.NumberFormat format) {
+        return info != null ? info.formatValue(format) : format.format(0);
+    }
 }

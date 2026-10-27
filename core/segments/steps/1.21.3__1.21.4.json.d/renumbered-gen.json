@@ -1,0 +1,18 @@
+{
+ "methodRenames": {
+  "net/minecraft/class_4668.method_29368()V": "method_65208",
+  "net/minecraft/class_4910.method_34605(Lnet/minecraft/class_2248;Lnet/minecraft/class_4918$class_4921;Lnet/minecraft/class_2746;)V": "method_65294",
+  "net/minecraft/class_4910.method_37366(Lnet/minecraft/class_2248;Lnet/minecraft/class_4918$class_4921;)V": "method_65293",
+  "net/minecraft/class_4942.method_48526(Lcom/google/gson/JsonObject;Lnet/minecraft/class_2960;)V": "method_65501",
+  "net/minecraft/class_4942.method_48527(Lcom/google/gson/JsonObject;Lnet/minecraft/class_4945;Lnet/minecraft/class_2960;)V": "method_65502",
+  "net/minecraft/class_5252.method_27747(Lcom/mojang/brigadier/context/CommandContext;)I": "method_65091",
+  "net/minecraft/class_5252.method_27750(Lcom/mojang/brigadier/context/CommandContext;)I": "method_65094",
+  "net/minecraft/data/Main.method_46595(Ljava/util/Collection;Lnet/minecraft/class_7784;)Lnet/minecraft/class_2461;": "method_65775",
+  "net/minecraft/data/Main.method_46598(Ljava/util/Collection;Lnet/minecraft/class_7784;)Lnet/minecraft/class_2463;": "method_65778",
+  "net/minecraft/data/Main.method_46599(Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/class_2474;Lnet/minecraft/class_7784;)Lnet/minecraft/class_2471;": "method_65776",
+  "net/minecraft/data/Main.method_52888(Lnet/minecraft/class_7784;)Lnet/minecraft/class_7796;": "method_65780",
+  "net/minecraft/data/Main.method_62731(Lnet/minecraft/class_7784;)Lnet/minecraft/class_7796;": "method_65777",
+  "net/minecraft/data/Main.method_62732(Lnet/minecraft/class_7784;)Lnet/minecraft/class_7796;": "method_65779"
+ },
+ "overrideHooks": []
+}

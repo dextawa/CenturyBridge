@@ -1,0 +1,11 @@
+{
+ "_basis_multiline": "s9c multiline: MultiLineLabel's 1.21.8 render / getStyle methods are 1.21.9's render(graphics, align, ...) and getStyle(align, ...) with the alignment and shadow 1.21.8's method had (rt/CbMultiLineLabels; javap both versions)",
+ "instanceRedirects": {
+  "net/minecraft/class_5489.method_30888(Lnet/minecraft/class_332;II)V": "top/dext/centurybridge/step/v1_21_9/rt/CbMultiLineLabels",
+  "net/minecraft/class_5489.method_30889(Lnet/minecraft/class_332;IIII)V": "top/dext/centurybridge/step/v1_21_9/rt/CbMultiLineLabels",
+  "net/minecraft/class_5489.method_30893(Lnet/minecraft/class_332;IIII)V": "top/dext/centurybridge/step/v1_21_9/rt/CbMultiLineLabels",
+  "net/minecraft/class_5489.method_30896(Lnet/minecraft/class_332;IIII)I": "top/dext/centurybridge/step/v1_21_9/rt/CbMultiLineLabels",
+  "net/minecraft/class_5489.method_72103(IIIDD)Lnet/minecraft/class_2583;": "top/dext/centurybridge/step/v1_21_9/rt/CbMultiLineLabels",
+  "net/minecraft/class_5489.method_72104(IIIDD)Lnet/minecraft/class_2583;": "top/dext/centurybridge/step/v1_21_9/rt/CbMultiLineLabels"
+ }
+}

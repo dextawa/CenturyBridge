@@ -14,7 +14,14 @@
     "UtilOsMixin",
     "EnchantBookInvoker",
     "FollowOwnerMixin",
-    "FollowOwnerAccess"
+    "FollowOwnerAccess",
+    "CrashCommentMixin",
+    "ProfileCommentMixin",
+    "ProfileReportInvoker",
+    "BadOmenMixin",
+    "LeashSaveMixin",
+    "LeashFieldAccessor",
+    "TagVisitorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

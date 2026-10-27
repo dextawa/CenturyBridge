@@ -1,0 +1,23 @@
+{
+ "classRenames": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder": "top/dext/centurybridge/step/v1_21_6/facade/fapi/FabricTagBuilder",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$EnchantmentTagProvider": "top/dext/centurybridge/step/v1_21_6/facade/fapi/EnchantmentTagProvider"
+ },
+ "_classRenames_basis_s6h_fapitags": "Fabric API 0.128.2+1.21.6 (fabric-data-generation-api-v1 23.2.3) rebuilt tag datagen on vanilla's new TagAppender interface (class_11389) with FabricProvidedTagBuilder injected (javap of 22.5.2 and 23.2.3): FabricTagProvider.FabricTagBuilder (an inner class extending vanilla's TagsProvider.TagAppender) and FabricTagProvider.EnchantmentTagProvider are gone. Both come back as facades with 1.21.5's bodies; FabricTagBuilder extends the layer's TagAppender facade (s6h-tags.json) as 1.21.5's extended vanilla's",
+ "covers": [
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider.reverseLookup(Ljava/lang/Object;)Lnet/minecraft/class_5321;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider.getOrCreateTagBuilder(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider.method_10512(Lnet/minecraft/class_6862;)Lnet/minecraft/class_2474$class_5124;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$ItemTagProvider.reverseLookup(Lnet/minecraft/class_1792;)Lnet/minecraft/class_5321;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$ItemTagProvider.reverseLookup(Ljava/lang/Object;)Lnet/minecraft/class_5321;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$BlockTagProvider.reverseLookup(Lnet/minecraft/class_2248;)Lnet/minecraft/class_5321;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$BlockTagProvider.reverseLookup(Ljava/lang/Object;)Lnet/minecraft/class_5321;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FluidTagProvider.reverseLookup(Lnet/minecraft/class_3611;)Lnet/minecraft/class_5321;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FluidTagProvider.reverseLookup(Ljava/lang/Object;)Lnet/minecraft/class_5321;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$EntityTypeTagProvider.reverseLookup(Lnet/minecraft/class_1299;)Lnet/minecraft/class_5321;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$EntityTypeTagProvider.reverseLookup(Ljava/lang/Object;)Lnet/minecraft/class_5321;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$BlockEntityTypeTagProvider.reverseLookup(Lnet/minecraft/class_2591;)Lnet/minecraft/class_5321;",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$BlockEntityTypeTagProvider.reverseLookup(Ljava/lang/Object;)Lnet/minecraft/class_5321;"
+ ],
+ "_covers_basis_s6h_fapitags": "FabricTagProvider.reverseLookup / getOrCreateTagBuilder / its tag(TagKey) override, and the Item / Block / Fluid / EntityType / BlockEntityType providers' reverseLookup overrides (typed and the erased bridge), which 23.2.3 dropped: restored on those Fabric API classes by CbFapiTagProviderRestoredMixin and CbFapi*TagReverseLookupMixin with 22.5.2's bodies. ItemTagProvider.copy and the providers' constructors keep their descriptors in 23.2.3 and need nothing"
+}

@@ -1,0 +1,26 @@
+{
+ "instanceFieldGetters": {
+  "net/minecraft/class_3806.field_16807:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16807",
+  "net/minecraft/class_3806.field_16825:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16825",
+  "net/minecraft/class_3806.field_16827:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16827",
+  "net/minecraft/class_3806.field_16805:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16805",
+  "net/minecraft/class_3806.field_16840:Lnet/minecraft/class_1267;": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16840",
+  "net/minecraft/class_3806.field_16841:Lnet/minecraft/class_1934;": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16841",
+  "net/minecraft/class_3806.field_16816:I": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16816",
+  "net/minecraft/class_3806.field_16845:I": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16845",
+  "net/minecraft/class_3806.field_16844:I": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16844",
+  "net/minecraft/class_3806.field_34883:I": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_34883",
+  "net/minecraft/class_3806.field_16814:I": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16814",
+  "net/minecraft/class_3806.field_24453:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_24453",
+  "net/minecraft/class_3806.field_35564:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_35564",
+  "net/minecraft/class_3806.field_24454:I": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_24454",
+  "net/minecraft/class_3806.field_52352:I": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_52352",
+  "net/minecraft/class_3806.field_48270:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_48270",
+  "net/minecraft/class_3806.field_16833:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16833",
+  "net/minecraft/class_3806.field_16835:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16835",
+  "net/minecraft/class_3806.field_16806:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_16806"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_3806.field_48270:Z": "top/dext/centurybridge/step/v1_21_9/rt/CbServerProperties#field_48270"
+ }
+}

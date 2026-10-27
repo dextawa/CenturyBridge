@@ -1,0 +1,37 @@
+{
+ "classRenames": {
+  "net/minecraft/class_2784$class_10763": "top/dext/centurybridge/step/v1_21_9/facade/DistancePerDirection",
+  "net/minecraft/class_2780$class_3976": "top/dext/centurybridge/step/v1_21_9/facade/DelegateBorderChangeListener"
+ },
+ "methodRenames": {
+  "net/minecraft/class_2784$class_5200.method_27356()D": "comp_4774",
+  "net/minecraft/class_2784$class_5200.method_27359()D": "comp_4775",
+  "net/minecraft/class_2784$class_5200.method_27360()D": "comp_4776",
+  "net/minecraft/class_2784$class_5200.method_27361()D": "comp_4777",
+  "net/minecraft/class_2784$class_5200.method_27362()I": "comp_4778",
+  "net/minecraft/class_2784$class_5200.method_27363()I": "comp_4779",
+  "net/minecraft/class_2784$class_5200.method_27364()D": "comp_4780",
+  "net/minecraft/class_2784$class_5200.method_27365()J": "comp_4781",
+  "net/minecraft/class_2784$class_5200.method_27366()D": "comp_4782"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_2784.field_24122:Lnet/minecraft/class_2784$class_5200;": "top/dext/centurybridge/step/v1_21_9/rt/CbWorldBorders"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_2784$class_5200.method_27358(Lcom/mojang/serialization/DynamicLike;Lnet/minecraft/class_2784$class_5200;)Lnet/minecraft/class_2784$class_5200;": "top/dext/centurybridge/step/v1_21_9/rt/CbWorldBorders"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2784$class_5200.method_27357(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbWorldBorders",
+  "net/minecraft/class_2784.method_27355()Lnet/minecraft/class_2784$class_5200;": "top/dext/centurybridge/step/v1_21_9/rt/CbWorldBorders",
+  "net/minecraft/class_2784.method_67544(DD)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_9/rt/CbWorldBorders"
+ },
+ "superRedirects": {
+  "net/minecraft/class_2784.method_27355()Lnet/minecraft/class_2784$class_5200;": "top/dext/centurybridge/step/v1_21_9/rt/CbWorldBorders",
+  "net/minecraft/class_2784.method_67544(DD)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_9/rt/CbWorldBorders"
+ },
+ "_s9d_border_basis": {
+  "classRenames": "s9d border: DistancePerDirection is gone from WorldBorder; 1.21.9 keeps the same record (Direction, double) only on the client's border render state class_12078, absent on a dedicated server, so 1.21.8's common record is restored as a facade. DelegateBorderChangeListener is gone (every 1.21.9 dimension keeps its own border), restored as a facade with 1.21.8's bodies",
+  "methodRenames": "s9d border: WorldBorder.Settings became a record; 1.21.8's accessors read the fields its (DDDDIIDJD) constructor set in order, 1.21.9's components are that constructor's parameters in the same order (javap -c: putfield order, DEFAULT built from the same constants)",
+  "redirects": "s9d border: DEFAULT_SETTINGS moved to Settings.DEFAULT; read/write of the level.dat tags, createSettings and closestBorder restored with 1.21.8's bodies (rt/CbWorldBorders); super calls of a mod's WorldBorder subclass reach the same bodies. Open: 1.21.9 vanilla no longer calls createSettings (the SavedData codec builds Settings(border)) or closestBorder (the render state computes it), so a mod's override of either is not consulted"
+ }
+}
