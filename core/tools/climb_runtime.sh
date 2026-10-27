@@ -19,6 +19,9 @@ RELEASES=(1.20.1 1.20.2 1.20.3 1.20.4 1.20.5 1.20.6 1.21 1.21.1 1.21.2 1.21.3 1.
 OUT="$WD/runtime-$T"
 rm -rf "$OUT" "$WD/layers" && mkdir -p "$OUT" "$WD/layers"
 DEPS_SEEN=""
+BUILT=()
+# every layer up to T is built first: a layer's climb reads, at each step, that step's layer jar
+# (LayerMembers: the members a later layer restores, which the climbing layer's mixins may shadow or access)
 for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
     V=${RELEASES[$i]}; W=${RELEASES[$((i + 1))]}
     if [ "$V" = 1.20.1 ]; then
@@ -31,26 +34,29 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
     if [ -n "$BUILD" ]; then
         (cd "$WD" && eval "CB_DATA=\$HOME/cbwork/data $BUILD" > "layers/build-$W.log" 2>&1) \
             || { echo "layer $W: BUILD FAILED"; tail -5 "$WD/layers/build-$W.log"; exit 1; }
-        JAR="$WD/layers/centurybridge-0.3.0+$W.jar"
         # the separately released mods this layer depends on (build.sh put them in layers/deps/ as it built them)
         for d in "$WD"/layers/deps/*.jar; do
             [ -f "$d" ] || continue
             case " $DEPS_SEEN " in *" $(basename "$d") "*) ;; *) cp "$d" "$OUT/"; DEPS_SEEN="$DEPS_SEEN $(basename "$d")";
                 echo "dependency $(basename "$d") (layer $W): installed as is";; esac
         done
-        if [ "$W" = "$T" ]; then
-            cp "$JAR" "$OUT/"
-        else
-            rm -rf "$WD/layers/climb-$W"
-            # each step reads its own layer (layers/centurybridge-0.3.0+<step's W>.jar), as climb_mods.sh does for mods:
-            # the members a later layer restores (LayerMembers) and its redirect bodies are what this layer's mixins meet
-            "$JAVA" -Xmx8g -Dcb.layersDir="$WD/layers" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" "$W" "$T" \
-                "$WD/layers/climb-$W" "$JAR" > "$WD/layers/climb-$W.log" 2>&1 \
-                || { echo "layer $W: CLIMB FAILED"; tail -5 "$WD/layers/climb-$W.log"; exit 1; }
-            cp "$WD/layers/climb-$W/centurybridge-0.3.0+$W+$T.jar" "$OUT/"
-        fi
-        echo "layer $W -> $T: $(grep -h 'unaccounted' "$WD/layers/climb-$W/steps"/*/report.md 2>/dev/null | head -1)"
+        BUILT+=("$W")
     fi
     [ "$W" = "$T" ] && break
+done
+for W in "${BUILT[@]}"; do
+    JAR="$WD/layers/centurybridge-0.3.0+$W.jar"
+    if [ "$W" = "$T" ]; then
+        cp "$JAR" "$OUT/"
+    else
+        rm -rf "$WD/layers/climb-$W"
+        # each step reads its own layer (layers/centurybridge-0.3.0+<step's W>.jar), as climb_mods.sh does for mods:
+        # the members a later layer restores (LayerMembers) and its redirect bodies are what this layer's mixins meet
+        "$JAVA" -Xmx8g -Dcb.layersDir="$WD/layers" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" "$W" "$T" \
+            "$WD/layers/climb-$W" "$JAR" > "$WD/layers/climb-$W.log" 2>&1 \
+            || { echo "layer $W: CLIMB FAILED"; tail -5 "$WD/layers/climb-$W.log"; exit 1; }
+        cp "$WD/layers/climb-$W/centurybridge-0.3.0+$W+$T.jar" "$OUT/"
+    fi
+    echo "layer $W -> $T: $(grep -h 'unaccounted' "$WD/layers/climb-$W/steps"/*/report.md 2>/dev/null | head -1)"
 done
 ls "$OUT"

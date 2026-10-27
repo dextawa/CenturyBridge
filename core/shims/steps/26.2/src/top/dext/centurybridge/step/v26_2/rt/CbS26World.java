@@ -25,4 +25,20 @@ public final class CbS26World {
             net.minecraft.world.level.levelgen.feature.configurations.CompositeFeatureConfiguration c) {
         return c.features();
     }
+
+    /**
+     * 26.1.2 NaturalSpawner.getFilteredSpawningCategories(state, spawnFriendlies, spawnEnemies, spawnPersistent). 26.2's
+     * (state, spawnEnemies, spawnPersistent) is the same filter over the same categories in the same order, with friendly
+     * categories always kept (javap of both); 26.1.2 dropped them when spawnFriendlies was false.
+     */
+    public static java.util.List<net.minecraft.world.entity.MobCategory> getFilteredSpawningCategories(
+            net.minecraft.world.level.NaturalSpawner.SpawnState state, boolean spawnFriendlies, boolean spawnEnemies,
+            boolean spawnPersistent) {
+        java.util.List<net.minecraft.world.entity.MobCategory> categories =
+            net.minecraft.world.level.NaturalSpawner.getFilteredSpawningCategories(state, spawnEnemies, spawnPersistent);
+        if (!spawnFriendlies) {
+            categories.removeIf(net.minecraft.world.entity.MobCategory::isFriendly);
+        }
+        return categories;
+    }
 }

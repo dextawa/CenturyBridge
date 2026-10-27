@@ -9,7 +9,8 @@
     "CbLevelParticlesPacketMixin",
     "CbPassthroughEncoderMixin",
     "CbProfilesServerMixin",
-    "CbProjectileDeflectionMixin"
+    "CbProjectileDeflectionMixin",
+    "CbProjectileDeflectionMixinHooks"
   ],
   "client": [
     "CbBlockEntityDispatchMixin",

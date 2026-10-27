@@ -3,6 +3,6 @@
   "minVersion": "0.8",
   "package": "cb.s6n.mixin",
   "compatibilityLevel": "JAVA_21",
-  "client": ["GuiInitMixin", "DeferredTooltipMixin"],
+  "client": ["GuiInitMixin", "DeferredTooltipMixin", "GuiScissorMixin", "ScissorPeekMixin"],
   "injectors": { "defaultRequire": 1 }
 }
