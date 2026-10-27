@@ -115,10 +115,24 @@ class Wall:
                 i += 1
         return "".join(out)
 
+    classes = {}
+
     def member(self, owner, name):
         hit = self.mem.get(owner + "." + name)
         if hit:
             return hit
+        # an override's row sits on the class or interface that declared the member first: walk V's hierarchy
+        seen, todo = set(), [owner]
+        while todo:
+            c = todo.pop(0)
+            if c in seen or c not in self.classes:
+                continue
+            seen.add(c)
+            hit = self.mem.get(c + "." + name)
+            if hit:
+                return hit
+            k = self.classes[c]
+            todo.extend(([k.super] if k.super else []) + list(k.interfaces))
         alts = self.byname.get(name, ())
         return next(iter(alts)) if len(alts) == 1 else name
 
@@ -205,6 +219,7 @@ def weak(insns):
 def find(V, W, wall):
     """{(V class, name, desc): W name} plus the review lists"""
     rv, rw = resolver(V), resolver(W)
+    wall.classes = V
     gone, new = {}, {}
     for cn, vk in V.items():
         wk = W.get(wall.cname(cn))
