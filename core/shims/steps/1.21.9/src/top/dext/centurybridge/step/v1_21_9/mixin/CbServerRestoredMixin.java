@@ -11,9 +11,7 @@ import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import top.dext.centurybridge.step.v1_21_9.rt.CbPrioritySplit;
 import top.dext.centurybridge.step.v1_21_9.rt.CbServerProperties;
 import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
 
@@ -27,10 +25,10 @@ import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
  * <p>setFlightAllowed: 1.21.8's isFlightAllowed answered the server's flag this sets. 1.21.9's DedicatedServer answers
  * its allow-flight property (the write lands there, in memory as 1.21.8's did: CbServerProperties); every other
  * server answers true, so once 1.21.8 code set the flag, that answer is the flag's (the head below, only while a 1.21.8
- * write was made).
+ * write was made: CbServerRestoredHooksMixin, at the default priority).
  */
 @Mixin(value = MinecraftServer.class, priority = CbVanillaReads.PRIORITY)
-public abstract class CbServerRestoredMixin {
+public abstract class CbServerRestoredMixin implements CbPrioritySplit.ServerFlight {
 
     @Unique
     private Boolean cb$flightAllowed;
@@ -80,10 +78,8 @@ public abstract class CbServerRestoredMixin {
         }
     }
 
-    @Inject(method = "method_3718()Z", at = @At("HEAD"), cancellable = true)
-    private void cb$flight(CallbackInfoReturnable<Boolean> cir) {
-        if (this.cb$flightAllowed != null) {
-            cir.setReturnValue(this.cb$flightAllowed);
-        }
+    @Override
+    public Boolean cb$v1_21_9$flightAllowed() {
+        return this.cb$flightAllowed;
     }
 }

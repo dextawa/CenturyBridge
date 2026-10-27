@@ -8,11 +8,8 @@ import net.minecraft.class_339;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21_9.rt.CbInput;
-import top.dext.centurybridge.step.v1_21_9.rt.CbMixedMembers;
+import top.dext.centurybridge.step.v1_21_9.rt.CbPrioritySplitClient;
 import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
 
 /**
@@ -22,15 +19,12 @@ import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
  * converted mixin into 1.21.8's method (the climbed 1.21.4 layer's CbGuiScrollWidgetMixin @ModifyVariable on that stored
  * isMouseOver, capturing x, y, button; sruntime2 2026-10-27) lands here; while one does (CbMixedMembers), 1.21.9's
  * mouseClicked runs this body in its place with the event's x, y and button, and onClick gets the event and double-click
- * flag 1.21.9 was given. Unmixed, 1.21.9's mouseClicked runs untouched. Called directly by 1.21.8 code, onClick gets the
+ * flag 1.21.9 was given (the route: CbWidgetClickRestoredHooksMixin, at the default priority). Unmixed, 1.21.9's mouseClicked runs untouched. Called directly by 1.21.8 code, onClick gets the
  * click built from (x, y, button) and the double-click flag 1.21.9's MouseHandler would pass (CbInput).
  * The body keeps 1.21.8's local order: isMouseOver is its first boolean store (STORE ordinal 0).
  */
 @Mixin(value = class_339.class, priority = CbVanillaReads.PRIORITY)
-public abstract class CbWidgetClickRestoredMixin {
-
-    @Unique
-    private static final String KEY = "net/minecraft/class_339.method_25402(DDI)Z";
+public abstract class CbWidgetClickRestoredMixin implements CbPrioritySplitClient.WidgetClick {
 
     @Unique
     private class_11909 cb$routedEvent;
@@ -71,17 +65,14 @@ public abstract class CbWidgetClickRestoredMixin {
         return false;
     }
 
-    @Inject(method = "method_25402(Lnet/minecraft/class_11909;Z)Z", at = @At("HEAD"), cancellable = true)
-    private void cb$routeClick(class_11909 event, boolean doubleClick, CallbackInfoReturnable<Boolean> cir) {
-        if (!CbMixedMembers.mixed(KEY)) {
-            return;
-        }
+    @Override
+    public boolean cb$v1_21_9$routeClick(class_11909 event, boolean doubleClick) {
         class_11909 outerEvent = this.cb$routedEvent;
         boolean outerDoubleClick = this.cb$routedDoubleClick;
         this.cb$routedEvent = event;
         this.cb$routedDoubleClick = doubleClick;
         try {
-            cir.setReturnValue(this.method_25402(event.comp_4798(), event.comp_4799(), event.comp_4800().comp_4801()));
+            return this.method_25402(event.comp_4798(), event.comp_4799(), event.comp_4800().comp_4801());
         } finally {
             this.cb$routedEvent = outerEvent;
             this.cb$routedDoubleClick = outerDoubleClick;

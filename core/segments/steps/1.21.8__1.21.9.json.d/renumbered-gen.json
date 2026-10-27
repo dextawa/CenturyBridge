@@ -1,0 +1,90 @@
+{
+ "methodRenames": {
+  "net/minecraft/class_1297.method_19538()Lnet/minecraft/class_243;": "method_73189",
+  "net/minecraft/class_1297.method_37908()Lnet/minecraft/class_1937;": "method_73183",
+  "net/minecraft/class_13.method_52609(I)[Lnet/minecraft/class_9;": "method_74693",
+  "net/minecraft/class_1391.method_64453(Lnet/minecraft/class_1309;Lnet/minecraft/class_3218;)Z": "method_74094",
+  "net/minecraft/class_1676.method_26959(Lnet/minecraft/class_238;Lnet/minecraft/class_1297;)Z": "method_74959",
+  "net/minecraft/class_1676.method_26961()Z": "method_74960",
+  "net/minecraft/class_2281.method_53993()Lnet/minecraft/class_2591;": "method_72585",
+  "net/minecraft/class_3176.method_16711(ZLnet/minecraft/class_3806;)Lnet/minecraft/class_3806;": "method_73586",
+  "net/minecraft/class_3218.method_72080(Ljava/util/List;)Z": "method_72271",
+  "net/minecraft/class_3222.method_37908()Lnet/minecraft/class_1937;": "method_73183",
+  "net/minecraft/class_382$class_10364.method_71833()F": "method_71829",
+  "net/minecraft/class_382$class_10364.method_71834()F": "method_71830",
+  "net/minecraft/class_382$class_10364.method_71835()F": "method_71831",
+  "net/minecraft/class_382$class_10364.method_71836()F": "method_71832",
+  "net/minecraft/class_3898.method_18702(Lnet/minecraft/class_1297;Lnet/minecraft/class_2596;)V": "method_74526",
+  "net/minecraft/class_3898.method_18717(Lnet/minecraft/class_1297;Lnet/minecraft/class_2596;)V": "method_74528",
+  "net/minecraft/class_4267$class_4270.method_20138()V": "method_73437",
+  "net/minecraft/class_4267$class_4270.method_29980()V": "method_73439",
+  "net/minecraft/class_4267$class_4270.method_55816()V": "method_73438",
+  "net/minecraft/class_4325$class_8202.method_49565(Lnet/minecraft/class_332;IIFLnet/minecraft/class_339;)V": "method_73337",
+  "net/minecraft/class_4401.method_25177(Lnet/minecraft/class_4185;)V": "method_73341",
+  "net/minecraft/class_447.method_19869(Lnet/minecraft/class_4185;)V": "method_73416",
+  "net/minecraft/class_447.method_57739(Lnet/minecraft/class_447;Lnet/minecraft/class_364;)V": "method_73420",
+  "net/minecraft/class_4503.method_49048(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2338;Lnet/minecraft/class_4503$class_4504;)V": "method_74931",
+  "net/minecraft/class_459.method_57745(Lnet/minecraft/class_459;)I": "method_73440",
+  "net/minecraft/class_459.method_57746(Lnet/minecraft/class_459;)I": "method_73442",
+  "net/minecraft/class_477.method_32643(Lnet/minecraft/class_2593$class_2594;)Lnet/minecraft/class_2561;": "method_73427",
+  "net/minecraft/class_477.method_32644(Lnet/minecraft/class_5676;Lnet/minecraft/class_2593$class_2594;)V": "method_73428",
+  "net/minecraft/class_477.method_32645(Lnet/minecraft/class_5676;Ljava/lang/Boolean;)V": "method_73429",
+  "net/minecraft/class_477.method_32646(Lnet/minecraft/class_5676;Ljava/lang/Boolean;)V": "method_73430",
+  "net/minecraft/class_526.method_19939(Lnet/minecraft/class_4185;)V": "method_74222",
+  "net/minecraft/class_6025.method_37908()Lnet/minecraft/class_1937;": "method_73183",
+  "net/minecraft/class_7265.method_19538()Lnet/minecraft/class_243;": "method_73189",
+  "net/minecraft/class_7265.method_37908()Lnet/minecraft/class_1937;": "method_73183",
+  "net/minecraft/class_7716.method_51356(Lnet/minecraft/class_1799;Lnet/minecraft/class_1263;Lnet/minecraft/class_1799;)Z": "method_73195"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_18702(Lnet/minecraft/class_1297;Lnet/minecraft/class_2596;)V",
+   "new": "method_74526(Lnet/minecraft/class_1297;Lnet/minecraft/class_2596;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_3898",
+   "basis": "renumbered: 1.21.9 renamed net/minecraft/class_3898.method_18702 to method_74526 (same descriptor, same body; gen_renumbered.py); vanilla calls the new name, the V override answers it, its super call falls through to vanilla's"
+  },
+  {
+   "old": "method_18717(Lnet/minecraft/class_1297;Lnet/minecraft/class_2596;)V",
+   "new": "method_74528(Lnet/minecraft/class_1297;Lnet/minecraft/class_2596;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_3898",
+   "basis": "renumbered: 1.21.9 renamed net/minecraft/class_3898.method_18717 to method_74528 (same descriptor, same body; gen_renumbered.py); vanilla calls the new name, the V override answers it, its super call falls through to vanilla's"
+  },
+  {
+   "old": "method_19538()Lnet/minecraft/class_243;",
+   "new": "method_73189()Lnet/minecraft/class_243;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1297",
+   "basis": "renumbered: 1.21.9 renamed net/minecraft/class_1297.method_19538 to method_73189 (same descriptor, same body; gen_renumbered.py); vanilla calls the new name, the V override answers it, its super call falls through to vanilla's"
+  },
+  {
+   "old": "method_19538()Lnet/minecraft/class_243;",
+   "new": "method_73189()Lnet/minecraft/class_243;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_7265",
+   "basis": "renumbered: 1.21.9 renamed net/minecraft/class_7265.method_19538 to method_73189 (same descriptor, abstract: implemented by the renamed method of a W implementor; gen_renumbered.py); vanilla calls the new name, the V override answers it, its super call falls through to vanilla's"
+  },
+  {
+   "old": "method_37908()Lnet/minecraft/class_1937;",
+   "new": "method_73183()Lnet/minecraft/class_1937;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1297",
+   "basis": "renumbered: 1.21.9 renamed net/minecraft/class_1297.method_37908 to method_73183 (same descriptor, same body; gen_renumbered.py); vanilla calls the new name, the V override answers it, its super call falls through to vanilla's"
+  },
+  {
+   "old": "method_37908()Lnet/minecraft/class_1937;",
+   "new": "method_73183()Lnet/minecraft/class_1937;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_6025",
+   "basis": "renumbered: 1.21.9 renamed net/minecraft/class_6025.method_37908 to method_73183 (same descriptor, abstract: implemented by the renamed method of a W implementor; gen_renumbered.py); vanilla calls the new name, the V override answers it, its super call falls through to vanilla's"
+  },
+  {
+   "old": "method_37908()Lnet/minecraft/class_1937;",
+   "new": "method_73183()Lnet/minecraft/class_1937;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_7265",
+   "basis": "renumbered: 1.21.9 renamed net/minecraft/class_7265.method_37908 to method_73183 (same descriptor, abstract: implemented by the renamed method of a W implementor; gen_renumbered.py); vanilla calls the new name, the V override answers it, its super call falls through to vanilla's"
+  }
+ ]
+}

@@ -1,0 +1,68 @@
+{
+ "classRenames": {
+  "net/minecraft/class_2152": "top/dext/centurybridge/step/v1_21_9/facade/WrappedMinMaxBounds"
+ },
+ "callReshapes": {
+  "net/minecraft/class_2303.method_9883()Lnet/minecraft/class_2152;": {
+   "basis": "s9d selector: EntitySelectorParser's rotation bounds are MinMaxBounds.FloatDegrees in 1.21.9 (1.21.8: WrappedMinMaxBounds); both releases wrap the degrees where the predicate is built with the same defaults (javap -c method_9859), so the values convert without loss (rt/CbSelectorBounds)",
+   "desc": "()Lnet/minecraft/class_2096$class_11894;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbSelectorBounds#legacy(Lnet/minecraft/class_2096$class_11894;)Lnet/minecraft/class_2152;"
+  },
+  "net/minecraft/class_2303.method_9853()Lnet/minecraft/class_2152;": {
+   "basis": "s9d selector: EntitySelectorParser's rotation bounds are MinMaxBounds.FloatDegrees in 1.21.9 (1.21.8: WrappedMinMaxBounds); both releases wrap the degrees where the predicate is built with the same defaults (javap -c method_9859), so the values convert without loss (rt/CbSelectorBounds)",
+   "desc": "()Lnet/minecraft/class_2096$class_11894;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbSelectorBounds#legacy(Lnet/minecraft/class_2096$class_11894;)Lnet/minecraft/class_2152;"
+  },
+  "net/minecraft/class_2303.method_9898(Lnet/minecraft/class_2152;)V": {
+   "basis": "s9d selector: EntitySelectorParser's rotation bounds are MinMaxBounds.FloatDegrees in 1.21.9 (1.21.8: WrappedMinMaxBounds); both releases wrap the degrees where the predicate is built with the same defaults (javap -c method_9859), so the values convert without loss (rt/CbSelectorBounds)",
+   "desc": "(Lnet/minecraft/class_2096$class_11894;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_9/rt/CbSelectorBounds#degrees(Lnet/minecraft/class_2152;)Lnet/minecraft/class_2096$class_11894;"
+   ]
+  },
+  "net/minecraft/class_2303.method_9855(Lnet/minecraft/class_2152;)V": {
+   "basis": "s9d selector: EntitySelectorParser's rotation bounds are MinMaxBounds.FloatDegrees in 1.21.9 (1.21.8: WrappedMinMaxBounds); both releases wrap the degrees where the predicate is built with the same defaults (javap -c method_9859), so the values convert without loss (rt/CbSelectorBounds)",
+   "desc": "(Lnet/minecraft/class_2096$class_11894;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_9/rt/CbSelectorBounds#degrees(Lnet/minecraft/class_2152;)Lnet/minecraft/class_2096$class_11894;"
+   ]
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_9883()Lnet/minecraft/class_2152;",
+   "new": "method_9883()Lnet/minecraft/class_2096$class_11894;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectorBounds.degrees(Ltop/dext/centurybridge/step/v1_21_9/facade/WrappedMinMaxBounds;)Lnet/minecraft/class_2096$class_11894;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_2303",
+   "basis": "s9d selector: EntitySelectorParser's rotation bounds are MinMaxBounds.FloatDegrees in 1.21.9 (1.21.8: WrappedMinMaxBounds); both releases wrap the degrees where the predicate is built with the same defaults (javap -c method_9859), so the values convert without loss (rt/CbSelectorBounds); a 1.21.8 override's answer converts to 1.21.9's"
+  },
+  {
+   "old": "method_9853()Lnet/minecraft/class_2152;",
+   "new": "method_9853()Lnet/minecraft/class_2096$class_11894;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectorBounds.degrees(Ltop/dext/centurybridge/step/v1_21_9/facade/WrappedMinMaxBounds;)Lnet/minecraft/class_2096$class_11894;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_2303",
+   "basis": "s9d selector: EntitySelectorParser's rotation bounds are MinMaxBounds.FloatDegrees in 1.21.9 (1.21.8: WrappedMinMaxBounds); both releases wrap the degrees where the predicate is built with the same defaults (javap -c method_9859), so the values convert without loss (rt/CbSelectorBounds); a 1.21.8 override's answer converts to 1.21.9's"
+  },
+  {
+   "old": "method_9898(Lnet/minecraft/class_2152;)V",
+   "new": "method_9898(Lnet/minecraft/class_2096$class_11894;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectorBounds.legacy(Lnet/minecraft/class_2096$class_11894;)Ltop/dext/centurybridge/step/v1_21_9/facade/WrappedMinMaxBounds;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_2303",
+   "basis": "s9d selector: EntitySelectorParser's rotation bounds are MinMaxBounds.FloatDegrees in 1.21.9 (1.21.8: WrappedMinMaxBounds); both releases wrap the degrees where the predicate is built with the same defaults (javap -c method_9859), so the values convert without loss (rt/CbSelectorBounds); vanilla's value reaches a 1.21.8 override converted"
+  },
+  {
+   "old": "method_9855(Lnet/minecraft/class_2152;)V",
+   "new": "method_9855(Lnet/minecraft/class_2096$class_11894;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectorBounds.legacy(Lnet/minecraft/class_2096$class_11894;)Ltop/dext/centurybridge/step/v1_21_9/facade/WrappedMinMaxBounds;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_2303",
+   "basis": "s9d selector: EntitySelectorParser's rotation bounds are MinMaxBounds.FloatDegrees in 1.21.9 (1.21.8: WrappedMinMaxBounds); both releases wrap the degrees where the predicate is built with the same defaults (javap -c method_9859), so the values convert without loss (rt/CbSelectorBounds); vanilla's value reaches a 1.21.8 override converted"
+  }
+ ],
+ "_s9d_selector_basis": "s9d selector: WrappedMinMaxBounds (class_2152) is gone in 1.21.9; restored as a facade with 1.21.8's bodies (javap -c class_2152), the selector's getters/setters converting"
+}
