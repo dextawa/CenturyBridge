@@ -127,6 +127,23 @@ for fmj in sorted(glob.glob("core/mods/*/resources/fabric.mod.json")):
 PYDEP
 )
 
+# MixinExtras (@WrapOperation & co.): Fabric Loader 0.15+ nests it (META-INF/jars/mixinextras-fabric-*.jar) and
+# initializes it for every mod, so a layer uses it like any Fabric mod. javac and the gates read the loader's own nested
+# copy, extracted under $OUT: the runtime's processedMods holds one only once that client has launched.
+LOADER_JAR=$(find "$LIBS" -name 'fabric-loader-*.jar' 2>/dev/null | sed -n 1p)
+if [ -n "$LOADER_JAR" ]; then
+    rm -rf "$OUT/loader-nested" && mkdir -p "$OUT/loader-nested"
+    python3 - "$LOADER_JAR" "$OUT/loader-nested" <<'PYNEST' || { echo "build aborted: could not read $LOADER_JAR"; exit 1; }
+import os, sys, zipfile
+with zipfile.ZipFile(sys.argv[1]) as z:
+    for n in z.namelist():
+        if n.startswith("META-INF/jars/mixinextras-") and n.endswith(".jar"):
+            with open(os.path.join(sys.argv[2], os.path.basename(n)), "wb") as f:
+                f.write(z.read(n))
+PYNEST
+    for j in "$OUT"/loader-nested/*.jar; do [ -f "$j" ] && CP="$CP$SEP$j"; done
+fi
+
 # A mixin listed in the config but missing from src is fatal at PREPARE, before
 # a single class loads -- worse than a compile error, because the build looks
 # clean and the game dies on launch. Catch it here.

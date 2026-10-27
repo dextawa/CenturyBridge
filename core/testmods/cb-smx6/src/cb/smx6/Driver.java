@@ -43,6 +43,9 @@ public final class Driver {
     public static volatile String openUrl;
     public static volatile int followCanAsked;
     public static volatile int followMoved;
+    public static volatile int crashCommentAsked;
+    public static volatile int profileCommentAsked;
+    public static volatile boolean forceComment;
     public static volatile boolean blockFollowTeleport;
     private static net.minecraft.class_3222 followOwner;
     private static int ok;
@@ -173,6 +176,24 @@ public final class Driver {
         System.out.println("CB-SMX6 start");
         class_3218 level = server.method_30002();
         try {
+            // ---- report comments: CrashCommentMixin / ProfileCommentMixin (1.21: ReportType.getErrorComment routed through
+            // the restored CrashReport.getErrorComment / FilledProfileResults.getComment)
+            forceComment = false;
+            crashCommentAsked = 0;
+            String crash = new net.minecraft.class_128("cb-smx6 test", new RuntimeException("cb-smx6")).method_568();
+            check("comment-passive", crashCommentAsked == 1 && !crash.contains("cb-smx6 witty"),
+                "crash report comment asked " + crashCommentAsked + " time(s): " + commentLine(crash));
+            forceComment = true;
+            crashCommentAsked = 0;
+            crash = new net.minecraft.class_128("cb-smx6 test", new RuntimeException("cb-smx6")).method_568();
+            check("comment-forced", crashCommentAsked == 1 && crash.contains("\n// cb-smx6 witty crash\n"),
+                "mod's comment: " + commentLine(crash));
+            profileCommentAsked = 0;
+            String profile = ((cb.smx6.mixin.ProfileReportInvoker) new net.minecraft.class_3692(java.util.Map.of(), 0L, 0, 1000000L, 1))
+                .cbsmx6$report(1000000L, 1);
+            forceComment = false;
+            check("profile-forced", profileCommentAsked == 1 && profile.contains("\n// cb-smx6 witty profile\n"),
+                "profiler report comment asked " + profileCommentAsked + " time(s): " + commentLine(profile));
             // ---- FollowOwnerGoal teleport helpers: FollowOwnerMixin (1.21: routed through the restored 1.20.6 members)
             blockFollowTeleport = false;
             followCanAsked = 0;
@@ -324,8 +345,19 @@ public final class Driver {
             noSlimes = false;
             forceMatch = false;
             blockFollowTeleport = false;
+            forceComment = false;
         }
         System.out.println("CB-SMX6 summary ok=" + ok + " fail=" + fail);
+    }
+
+    /** a report's comment line ("// ..."), the first one */
+    private static String commentLine(String report) {
+        for (String line : report.split("\n")) {
+            if (line.startsWith("// ")) {
+                return line;
+            }
+        }
+        return "(no comment line)";
     }
 
     /**

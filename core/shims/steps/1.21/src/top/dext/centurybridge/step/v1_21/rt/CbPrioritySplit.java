@@ -45,4 +45,16 @@ public final class CbPrioritySplit {
 
         void cb$v1_21$fillDefaultColor();
     }
+
+    /**
+     * CbEntityFollowOwnerRestoredMixin: the goal's restored level / canFly, set at construction, and the restored 1.20.6
+     * teleportToOwner / unableToMove for 1.21's calls (CbEntityFollowOwnerRestoredMixinHooks)
+     */
+    public interface FollowOwner {
+        void cb$v1_21$constructed(net.minecraft.class_4538 level, boolean canFly);
+
+        void cb$v1_21$teleportToOwner();
+
+        boolean cb$v1_21$unableToMove();
+    }
 }

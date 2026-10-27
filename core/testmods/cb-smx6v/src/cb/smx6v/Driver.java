@@ -27,6 +27,16 @@ public final class Driver {
     private Driver() {
     }
 
+    /** a report's comment ("// " stripped), the first comment line */
+    private static String commentOf(String report) {
+        for (String line : report.split("\n")) {
+            if (line.startsWith("// ")) {
+                return line.substring(3);
+            }
+        }
+        return "(no comment line)";
+    }
+
     private static void report(String c, boolean cond, String detail) {
         if (cond) {
             ok++;
@@ -121,6 +131,12 @@ public final class Driver {
 
     /** native 1.21 mixin TamableTeleportMixin: calls of TamableAnimal.tryToTeleportToOwner seen */
     public static volatile int nativeTeleports;
+    /** native 1.21 mixin FollowOwnerWrapMixin: FollowOwnerGoal's tryToTeleportToOwner / unableToMoveToOwner calls wrapped */
+    public static volatile int nativeTeleportWraps;
+    public static volatile int nativeUnableWraps;
+    /** native 1.21 mixin ReportCommentMixin: ReportType.getErrorComment answers seen, the last one */
+    public static volatile int nativeComments;
+    public static volatile String nativeLastComment;
     private static net.minecraft.class_3222 followOwner;
 
     /**
@@ -199,9 +215,25 @@ public final class Driver {
             report(tag + " recipes", recipes.equals("minecraft:oak_planks minecraft:oak_planks minecraft:stone_button"), recipes);
             System.out.println("CB-SMX6V recipes " + tag + " " + recipes);
             nativeTeleports = 0;
+            nativeTeleportWraps = 0;
+            nativeUnableWraps = 0;
             double d = follow(server, level, 24);
             report(tag + " follow", d >= 0 && d < 5.0, "tamed wolf 20 blocks from its owner, one FollowOwnerGoal tick: distance " + d);
-            System.out.println("CB-SMX6V follow " + tag + " distance=" + d + " nativeTryToTeleportToOwner=" + nativeTeleports);
+            report(tag + " follow-wraps", nativeTeleportWraps == 1 && nativeUnableWraps == 1,
+                "native @WrapOperation on the goal's calls: teleport " + nativeTeleportWraps + ", unable " + nativeUnableWraps);
+            System.out.println("CB-SMX6V follow " + tag + " distance=" + d + " nativeTryToTeleportToOwner=" + nativeTeleports
+                + " nativeTeleportWraps=" + nativeTeleportWraps + " nativeUnableWraps=" + nativeUnableWraps);
+            // report comments: 1.21's ReportType lists (with the layer's route installed, unmixed: untouched); the native
+            // RETURN injector on ReportType.getErrorComment sees each answer
+            nativeComments = 0;
+            String crash = new net.minecraft.class_128("cb-smx6v test", new RuntimeException("cb-smx6v")).method_60920(net.minecraft.class_9813.field_52181);
+            String cc = commentOf(crash);
+            report(tag + " crash-comment", net.minecraft.class_9813.field_52181.comp_2857().contains(cc) && nativeComments == 1 && cc.equals(nativeLastComment),
+                "crash report comment: " + cc + "; native RETURN injector saw " + nativeComments + " answer(s), last " + nativeLastComment);
+            nativeComments = 0;
+            String prof = net.minecraft.class_9813.field_52182.method_60927();
+            report(tag + " profile-comment", net.minecraft.class_9813.field_52182.comp_2857().contains(prof) && nativeComments == 1 && prof.equals(nativeLastComment),
+                "profile comment: " + prof + "; native RETURN injector saw " + nativeComments + " answer(s)");
         } catch (Throwable t) {
             report(tag + " exception", false, String.valueOf(t));
             t.printStackTrace();

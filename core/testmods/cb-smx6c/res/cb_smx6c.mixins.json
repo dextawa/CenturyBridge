@@ -3,6 +3,6 @@
   "minVersion": "0.8",
   "package": "cb.smx6c.mixin",
   "compatibilityLevel": "JAVA_17",
-  "client": ["FaceBakeryMixin"],
+  "client": ["FaceBakeryMixin", "ModelBakeryMoveMixin", "MobRendererLeashMixin"],
   "injectors": { "defaultRequire": 1 }
 }
