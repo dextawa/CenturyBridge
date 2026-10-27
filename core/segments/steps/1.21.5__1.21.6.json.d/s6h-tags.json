@@ -1,0 +1,13 @@
+{
+ "classRenames": {
+  "net/minecraft/class_2474$class_5124": "top/dext/centurybridge/step/v1_21_6/facade/TagAppender",
+  "net/minecraft/class_7889$class_7890": "top/dext/centurybridge/step/v1_21_6/facade/IntrinsicTagAppender",
+  "net/minecraft/class_7805": "top/dext/centurybridge/step/v1_21_6/facade/ItemTagsProvider"
+ },
+ "_classRenames_basis_s6h_tags": "1.21.6 rebuilt the datagen tag API (javap of both releases). TagsProvider.TagAppender (class_2474$class_5124), IntrinsicHolderTagsProvider.IntrinsicTagAppender (class_7889$class_7890) and ItemTagsProvider (class_7805) are gone. The appenders are now the interface TagAppender<E, T> (class_11389, forBuilder / map), handed out by KeyTagProvider.tag (class_11388) and IntrinsicHolderTagsProvider.tag; ItemTagsProvider.copy gave way to BlockItemTagsProvider (class_11387). The three classes come back as facades with 1.21.5's bodies over the provider's raw TagBuilder (class_3495, unchanged), which 1.21.6's TagsProvider.run writes as 1.21.5's did",
+ "covers": [
+  "net/minecraft/class_2474.method_10512(Lnet/minecraft/class_6862;)Lnet/minecraft/class_2474$class_5124;",
+  "net/minecraft/class_7889.method_46827(Lnet/minecraft/class_6862;)Lnet/minecraft/class_7889$class_7890;"
+ ],
+ "_covers_basis_s6h_tags": "TagsProvider.tag(TagKey) and IntrinsicHolderTagsProvider.tag(TagKey), in 1.21.5's shapes (answering the facades), are restored on their classes by CbTagsProviderRestoredMixin / CbIntrinsicTagsRestoredMixin with 1.21.5's bodies; 1.21.6's own IntrinsicHolderTagsProvider.tag (answering class_11389) is another descriptor and untouched"
+}
