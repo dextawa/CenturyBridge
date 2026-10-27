@@ -10,6 +10,7 @@ import net.minecraft.class_2960;
 import net.minecraft.class_3532;
 import net.minecraft.class_9848;
 import top.dext.centurybridge.step.v1_21_11.rt.CbDimensionEffects;
+import top.dext.centurybridge.step.v1_21_11.rt.CbDimensionEffectsRoutes;
 
 /**
  * 1.21.10's DimensionSpecialEffects (class_5294), deleted by 1.21.11: what a dimension looks like from the client (sky
@@ -28,10 +29,14 @@ public abstract class DimensionSpecialEffects {
 
     static {
         OverworldEffects overworld = new OverworldEffects();
+        NetherEffects nether = new NetherEffects();
+        EndEffects end = new EndEffects();
         ((Object2ObjectArrayMap<class_2960, DimensionSpecialEffects>) field_24609).defaultReturnValue(overworld);
         field_24609.put(CbDimensionEffects.OVERWORLD_EFFECTS, overworld);
-        field_24609.put(CbDimensionEffects.NETHER_EFFECTS, new NetherEffects());
-        field_24609.put(CbDimensionEffects.END_EFFECTS, new EndEffects());
+        field_24609.put(CbDimensionEffects.NETHER_EFFECTS, nether);
+        field_24609.put(CbDimensionEffects.END_EFFECTS, end);
+        // 1.21.11's drawing points consult a level's effects only when they are not these (rt/CbDimensionEffectsRoutes)
+        CbDimensionEffectsRoutes.vanilla(overworld, nether, end);
     }
 
     public DimensionSpecialEffects(SkyType skyType, boolean constantAmbientLight, boolean forceBrightLightmap) {

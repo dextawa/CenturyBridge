@@ -4,6 +4,8 @@ package cb.s212n;
 public final class Counts {
     public static volatile int cookTime;
     public static volatile int canBurn;
+    public static volatile int seen;
+    public static volatile int lookAt;
 
     private Counts() {
     }

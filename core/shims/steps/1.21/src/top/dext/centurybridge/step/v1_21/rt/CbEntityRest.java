@@ -142,12 +142,19 @@ public final class CbEntityRest {
         void cb$setCanFlyToOwner(boolean canFly);
     }
 
+    /** FollowOwnerGoal's restored 1.20.6 canFly field (CbEntityFollowOwnerRestoredMixin) */
+    public interface LegacyFollowCanFly {
+        void cb$setCanFly(boolean canFly);
+    }
+
     /**
      * 1.20.6 FollowOwnerGoal's canFly: the goal let its animal teleport onto leaves. 1.21's goal teleports through
      * the animal (TamableAnimal.tryToTeleportToOwner), which asks the animal's canFlyToOwner(); a goal made with
-     * canFly = true makes its animal answer true there (CbEntityTamableFlyMixin), false leaves 1.21's answer.
+     * canFly = true makes its animal answer true there (CbEntityTamableFlyMixin), false leaves 1.21's answer. The goal's
+     * restored canFly field (read by the restored 1.20.6 canTeleportTo and by mods' accessors) holds the argument.
      */
     public static void setFollowCanFly(class_1350 goal, boolean canFly) {
+        ((LegacyFollowCanFly) goal).cb$setCanFly(canFly);
         if (canFly) {
             class_1321 animal = ((CbEntityFollowOwnerAccessor) goal).cb$tamable();
             ((LegacyFlyToOwner) animal).cb$setCanFlyToOwner(true);

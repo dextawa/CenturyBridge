@@ -25,6 +25,16 @@ public @interface CbVanillaReads {
      */
     int PRIORITY = 1;
 
+    /**
+     * The priority of a layer route mixin (one that merges nothing) whose injectors into a 1.21.11 method must run
+     * before every mod's: a HEAD route that cancels and runs the 1.21.11 method again inside the restored member (the
+     * mods' injectors there then run once, inside, never on the cancelled outer call), or a RETURN route that replaces
+     * 1.21.11's answer (a native mod's RETURN injector then sees, and may change, the routed answer instead of being
+     * overwritten by it). Mixin applies mixins in ascending priority, and each injector at a point goes after the ones
+     * applied before it. Restored members stay in their own mixin at {@link #PRIORITY}.
+     */
+    int ROUTE_FIRST = 1;
+
     String value();
 
     /** what vanilla's path carries, "&lt;injector&gt;@&lt;At value&gt;"; absent = the whole member */

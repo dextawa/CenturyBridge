@@ -25,6 +25,18 @@ public final class CbPrioritySplit {
         void cb$v1_21$source(java.util.function.Function<?, ?> filler, java.util.List<?> contents);
     }
 
+    /** CbOozingMixin: 1.20.6's numberOfSlimesToSpawn (a private static merged member), for 1.21's call */
+    public interface OozingCount {
+        int cb$v1_21$numberOfSlimesToSpawn(int maxEntityCramming, int nearbySlimes, int spawnCount);
+    }
+
+    /** CbVillagerEnchantBookMixin: the registry of the pick in progress, and 1.20.6's pick called virtually */
+    public interface EnchantBookPick {
+        void cb$v1_21$pickRegistry(net.minecraft.class_2378<net.minecraft.class_1887> registry);
+
+        top.dext.centurybridge.step.v1_21.facade.class_1887 cb$v1_21$pick(net.minecraft.class_5819 random, net.minecraft.class_7699 features);
+    }
+
     /** CbRenderBufferBuilderMixin: 1.20.6's default color (set, being filled) and its fill */
     public interface BufferDefaultColor {
         boolean cb$v1_21$defaultColorSet();
