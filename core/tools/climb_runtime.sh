@@ -44,7 +44,10 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
     fi
     [ "$W" = "$T" ] && break
 done
-for W in "${BUILT[@]}"; do
+# newest layer first: a layer's climb reads, at each step, every earlier layer as that layer's own climb left it at the
+# step (layers/climb-<R>/steps/<V>__<W>/, Main.convert): a restorer stripped in its climb is not there at runtime
+for ((bi = ${#BUILT[@]} - 1; bi >= 0; bi--)); do
+    W=${BUILT[$bi]}
     JAR="$WD/layers/centurybridge-0.3.0+$W.jar"
     if [ "$W" = "$T" ]; then
         cp "$JAR" "$OUT/"
