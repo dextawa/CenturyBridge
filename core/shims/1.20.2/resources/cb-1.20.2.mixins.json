@@ -129,6 +129,7 @@
     "CbNetRespawnBridge",
     "CbPackInfoFormat",
     "CbPathDebugSets",
+    "CbDebugBrainRestored",
     "CbPathNavigationInvoker",
     "CbPlayerChunkSenderAccess",
     "CbPlayerChunkSenderLegacy",
