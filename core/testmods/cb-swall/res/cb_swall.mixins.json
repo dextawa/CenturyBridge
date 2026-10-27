@@ -8,7 +8,9 @@
     "EntityAttackRangeMixin",
     "FurnaceBurnMixin",
     "BundleWeightMixin",
-    "ItemStackCodecLambdaMixin"
+    "ItemStackCodecLambdaMixin",
+    "FrogAttackMixin",
+    "FancyLimbMixin"
   ],
   "injectors": {
     "defaultRequire": 1
