@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s9rn",
+  "version": "1.0.0",
+  "name": "CB s9 native 1.21.9 route driver",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.s9rn.Driver"] },
+  "mixins": ["cb_s9rn.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.9" }
+}
