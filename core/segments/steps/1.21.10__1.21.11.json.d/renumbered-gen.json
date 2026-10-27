@@ -1,0 +1,50 @@
+{
+ "methodRenames": {
+  "net/minecraft/class_1060.method_4622()V": "method_76322",
+  "net/minecraft/class_1092.method_65759()Lnet/minecraft/class_10418;": "method_65756",
+  "net/minecraft/class_1140.method_19750(FLnet/minecraft/class_4224;)V": "method_76565",
+  "net/minecraft/class_11839$class_11840.method_73871(Lcom/mojang/serialization/codecs/RecordCodecBuilder$Instance;)Lcom/mojang/datafixers/kinds/App;": "method_75591",
+  "net/minecraft/class_12036.method_74731(Lnet/minecraft/class_12017;)Lnet/minecraft/class_12036$class_12039;": "method_76758",
+  "net/minecraft/class_1257$class_9162.method_56548()Lnet/minecraft/class_26;": "method_75878",
+  "net/minecraft/class_2480.method_10524(Lnet/minecraft/class_2627;Ljava/util/function/Consumer;)V": "method_76592",
+  "net/minecraft/class_4149.method_41351()Lnet/minecraft/class_5760;": "method_76094",
+  "net/minecraft/class_415$class_4190.method_28060(Lnet/minecraft/class_6880$class_6883;)Lnet/minecraft/class_415$class_4190$class_4191;": "method_76271",
+  "net/minecraft/class_415$class_4190.method_40076(Lnet/minecraft/class_415$class_4190$class_4191;)Ljava/lang/String;": "method_76272",
+  "net/minecraft/class_4267.method_22109(Lnet/minecraft/class_4267;II)V": "method_76276",
+  "net/minecraft/class_4325$class_8202.method_73337(Lnet/minecraft/class_332;IIFLnet/minecraft/class_339;)V": "method_76233",
+  "net/minecraft/class_4503.method_74929(JLjava/util/Map$Entry;)Z": "method_75437",
+  "net/minecraft/class_459.method_73442(Lnet/minecraft/class_459;)I": "method_75375",
+  "net/minecraft/class_47$class_12065.method_74899()Lnet/minecraft/class_169;": "comp_4920",
+  "net/minecraft/class_47$class_50.method_315()Lnet/minecraft/class_169;": "comp_4920",
+  "net/minecraft/class_47$class_9319.method_74898()Lnet/minecraft/class_169;": "comp_4920",
+  "net/minecraft/class_4763$class_4764.method_24396()Ljava/lang/IllegalStateException;": "method_75742",
+  "net/minecraft/class_5365.method_7359()Ljava/lang/String;": "method_75305",
+  "net/minecraft/class_5676.method_74214()Z": "method_75350",
+  "net/minecraft/class_7763.method_66847(Lnet/minecraft/class_10007;)Lnet/minecraft/class_1799;": "method_76301",
+  "net/minecraft/class_7923.method_47510(Lnet/minecraft/class_2378;)Ljava/lang/Object;": "method_76572",
+  "net/minecraft/class_7957$class_7960.method_47700(Lnet/minecraft/class_8684;)Lnet/minecraft/class_7764;": "method_52853",
+  "net/minecraft/class_8560.method_51794(Lnet/minecraft/class_1297;)D": "method_75454",
+  "net/minecraft/class_8565.method_67339(Lnet/minecraft/class_8565;)Ljava/util/Map;": "method_75099",
+  "net/minecraft/class_869.method_74794(Ljava/util/Map;Lnet/minecraft/class_2338;II)V": "method_75442",
+  "net/minecraft/class_8985.method_55257(Lnet/minecraft/class_1297;)Lnet/minecraft/class_243;": "method_75425",
+  "net/minecraft/class_9317$class_12066.comp_4918()Lnet/minecraft/class_169;": "comp_4920",
+  "net/minecraft/class_9668.method_59741(Lnet/minecraft/class_9668;)Lnet/minecraft/class_2073;": "method_75908",
+  "net/minecraft/class_9701.method_60102(Lnet/minecraft/class_9331$class_9332;)Lnet/minecraft/class_9331$class_9332;": "method_75253"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_4622()V",
+   "new": "method_76322()V",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1060",
+   "basis": "renumbered: 1.21.11 renamed net/minecraft/class_1060.method_4622 to method_76322 (same descriptor, same body; gen_renumbered.py); vanilla calls the new name, the V override answers it, its super call falls through to vanilla's"
+  },
+  {
+   "old": "method_47700(Lnet/minecraft/class_8684;)Lnet/minecraft/class_7764;",
+   "new": "method_52853(Lnet/minecraft/class_8684;)Lnet/minecraft/class_7764;",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "onlyUnder": "net/minecraft/class_7957$class_7960",
+   "basis": "renumbered: 1.21.11 renamed net/minecraft/class_7957$class_7960.method_47700 to method_52853 (same descriptor, same body; gen_renumbered.py); vanilla calls the new name, the V override answers it, its super call falls through to vanilla's"
+  }
+ ]
+}

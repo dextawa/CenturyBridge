@@ -1,0 +1,57 @@
+{
+ "covers": [
+  "net/minecraft/class_3312.method_37156(Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_3312.method_37157(Ljava/util/concurrent/Executor;)V",
+  "net/minecraft/class_3312.method_39753()V",
+  "net/minecraft/class_3312.field_33861:Ljava/util/concurrent/Executor;",
+  "net/minecraft/class_3312.field_33860:Ljava/util/Map;"
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_7497.comp_840()Lnet/minecraft/class_3312;": "top/dext/centurybridge/step/v1_21_9/rt/CbProfileCache",
+  "net/minecraft/server/MinecraftServer.method_3793()Lnet/minecraft/class_3312;": "top/dext/centurybridge/step/v1_21_9/rt/CbProfileCache"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_3312.method_14510(Z)V": "top/dext/centurybridge/step/v1_21_9/rt/CbProfileCache"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_7497.<init>(Lcom/mojang/authlib/minecraft/MinecraftSessionService;Lcom/mojang/authlib/yggdrasil/ServicesKeySet;Lcom/mojang/authlib/GameProfileRepository;Lnet/minecraft/class_3312;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbProfileCache#services"
+ },
+ "callReshapes": {
+  "net/minecraft/class_3312.method_14515(Ljava/lang/String;)Ljava/util/Optional;": {
+   "basis": "s9c profile cache: get(name) answers Optional<NameAndId> on 1.21.9 (Optional<GameProfile> on 1.21.8), same erased descriptor; CbProfileCache.profileOut hands 1.21.8 code a GameProfile (CbProfiles.toProfile)",
+   "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfileCache#profileOut(Ljava/util/Optional;)Ljava/util/Optional;"
+  },
+  "net/minecraft/class_3312.method_14512(Ljava/util/UUID;)Ljava/util/Optional;": {
+   "basis": "s9c profile cache: get(uuid) answers Optional<NameAndId> on 1.21.9 (Optional<GameProfile> on 1.21.8), same erased descriptor; CbProfileCache.profileOut hands 1.21.8 code a GameProfile (CbProfiles.toProfile)",
+   "desc": "(Ljava/util/UUID;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_9/rt/CbProfileCache#profileOut(Ljava/util/Optional;)Ljava/util/Optional;"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_3312",
+   "member": "method_14515(Ljava/lang/String;)Ljava/util/Optional;",
+   "args": [
+    null
+   ],
+   "ret": "top/dext/centurybridge/step/v1_21_9/rt/CbProfileCache#profileIn(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s9c profile cache: a 1.21.8 get(name) override answers Optional<GameProfile>; vanilla reads Optional<NameAndId> (CbProfileCache.profileIn)"
+  },
+  {
+   "under": "net/minecraft/class_3312",
+   "member": "method_14512(Ljava/util/UUID;)Ljava/util/Optional;",
+   "args": [
+    null
+   ],
+   "ret": "top/dext/centurybridge/step/v1_21_9/rt/CbProfileCache#profileIn(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s9c profile cache: a 1.21.8 get(uuid) override answers Optional<GameProfile>; vanilla reads Optional<NameAndId> (CbProfileCache.profileIn)"
+  }
+ ]
+}
