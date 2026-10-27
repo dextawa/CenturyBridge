@@ -1301,6 +1301,20 @@ public final class LinkCheck {
             return;
         }
         String fate = auditFate.get(auditKey(kind, ref));
+        if (dot > 0 && !kind.equals("ORPHAN") && !kind.equals("VERIFY")
+                && !platform(owner) && !owner.startsWith("top/dext/centurybridge/")
+                && inheritedThrough(owner, ref.substring(dot + 1))) {
+            // a member reached through a mod class (ExtendedButton.field_22757, a GameData map's IdMapper field)
+            // that the class does not declare is inherited: the JVM resolves it up the class's own hierarchy, so
+            // the member is the platform ancestor's, not another mod's API -- judged as that class's
+            String home = platformHome(owner);
+            if (home != null) {
+                String homeRef = home + ref.substring(dot);
+                if (fate == null) fate = auditFate.get(auditKey(kind, homeRef));
+                note = "through " + owner + " " + note;
+                owner = home;
+            }
+        }
         if (delegationSite) {
             // a delegation site is judged by what the converter said about delegation
             // sites; a plain-site fate counts only when it claims nothing (datagen,
@@ -1336,6 +1350,55 @@ public final class LinkCheck {
     }
 
     private static final Set<String> ACCESS_KINDS = Set.of("ACCESS", "FINAL", "SEALED");
+
+    /**
+     * The nearest platform class above a mod class (its superclasses first, then its interfaces), through
+     * the classes this run has: where a member the mod class does not declare is inherited from. Null when
+     * the walk leaves the run (an absent dependency's class: then it is that mod's API) or reaches only the
+     * JDK (a mod-internal hierarchy).
+     */
+    private String platformHome(String owner) {
+        // the superclass chain first: a class's members are its superclasses' before its interfaces'
+        Set<String> seen = new HashSet<>();
+        List<String> itfs = new ArrayList<>();
+        for (String c = owner; c != null && seen.add(c); ) {
+            if (!c.equals(owner) && platform(c)) {
+                if (!jdk(c)) return c;
+                break;
+            }
+            Cls k = cls(c);
+            if (k == null) return null; // a superclass this run lacks: the member may be that dependency's
+            itfs.addAll(k.interfaces);
+            c = k.superName;
+        }
+        List<String> todo = new ArrayList<>(itfs);
+        while (!todo.isEmpty()) {
+            String c = todo.remove(0);
+            if (!seen.add(c)) continue;
+            if (platform(c)) {
+                if (!jdk(c)) return c;
+                continue;
+            }
+            Cls k = cls(c);
+            if (k == null) continue;
+            todo.addAll(k.interfaces);
+        }
+        return null;
+    }
+
+    /**
+     * the member ("name(desc)" / "name:desc") is one the class this run has does not declare itself, so the
+     * reference reaches it by inheritance (a constructor never is inherited)
+     */
+    private boolean inheritedThrough(String owner, String member) {
+        if (member.startsWith("<")) return false;
+        Cls k = cls(owner);
+        return k != null && !k.methods.containsKey(member) && !k.fields.containsKey(member);
+    }
+
+    private static boolean jdk(String c) {
+        return c.startsWith("java/") || c.startsWith("javax/") || c.startsWith("jdk/") || c.startsWith("sun/");
+    }
 
     /** the member (or class) name a reference names: owner.name(desc) / owner.name:desc / owner */
     private static String memberName(String ref) {
