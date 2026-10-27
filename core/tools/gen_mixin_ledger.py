@@ -13,9 +13,12 @@ Ledgered (each reason is what mixin-cause verified; nothing else is):
   class-renamed-to-layer   gone from W; classRenames sends mods' references to a layer class vanilla never runs
   target-private-gone      a private / package member gone from W; no member of the class holds its code
                            (methods: MixinBridge.bodyFate found none; fields: no field with the same uses)
-  target-wired: ... no W method holds its code / disabled, target gone
+  target-wired: ... no W method holds its code
                            gone from W; the step's wiring rebuilds it for mods' calls in layer code (redirects),
-                           vanilla no longer runs it, and no W method holds its code
+                           vanilla no longer runs it, and no W method holds its code (mixin-cause searched W's bodies;
+                           "disabled, target gone" did not search, so it stays open)
+Never ledgered: a member or class the step's other fragments say W runs elsewhere (mixinMoves, mixinTargets,
+mixinSplits) -- moved code.
   anchor-member-gone / anchor-private-gone / constant-gone   (positional @Inject rows only; never
                            anchor-unused-here: there the member still exists and only moved)
                            the anchor no longer stands in the target, in what the target calls (depth 2) or in
@@ -61,7 +64,9 @@ def reason(cause, mojang, target, anchor, evidence, usage):
         return "class", f"class gone from W; mods go to the layer's {to.split('/')[-1]}, which vanilla never runs"
     if cause == "target-private-gone":
         return "member", "private member gone from W; no member of the class holds its code"
-    if cause.startswith("target-wired") and ("no W method holds its code" in cause or "disabled, target gone" in cause):
+    if cause.startswith("target-wired") and "no W method holds its code" in cause:
+        # only the cause that searched W's bodies; "disabled, target gone" never looked (s9: DripParticle's
+        # providers at 1.21.9, whose code W runs in another class, were ledgered through it)
         how = cause.split(" / ")[-1] if " / " in cause else "the step's wiring"
         return "member", f"gone from W; rebuilt for mods' calls only ({how}); no W method holds its code"
     if cause == "target-moved-up-anchor":
@@ -88,8 +93,26 @@ def keep_open_keys(path):
     return set(j.get("keepOpen", []) if isinstance(j, dict) else j)
 
 
+def moved_by_wiring(out):
+    """the members and classes the step's other fragments say W runs elsewhere -- moved code, never ledgered:
+    mixinMoves / mixinTargets keys ("owner.name(desc)" -> "owner.name"), mixinSplits classes"""
+    members, classes = set(), set()
+    for p in sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(out)), "*.json"))):
+        if os.path.abspath(p) == os.path.abspath(out):
+            continue
+        with open(p, encoding="utf-8") as f:
+            j = json.load(f)
+        for sec in ("mixinMoves", "mixinTargets"):
+            for k in j.get(sec, {}):
+                members.add(k.split("(", 1)[0])
+                members.add(k)
+        classes.update(j.get("mixinSplits", {}))
+    return members, classes
+
+
 def generate(cause_tsv, out, strict=False, keep_open=None):
     keep = keep_open_keys(keep_open)
+    moved_members, moved_classes = moved_by_wiring(out)
     led = {}
     by = collections.Counter()
     with open(cause_tsv, encoding="utf-8") as f:
@@ -103,6 +126,8 @@ def generate(cause_tsv, out, strict=False, keep_open=None):
                 continue
             o, t, a = r[ix["owner"]], r[ix["target"]], r[ix["anchor"]]
             if o in keep or f"{o}.{t}" in keep or f"{o}.{t} @ {a}" in keep:
+                continue
+            if o in moved_classes or f"{o}.{t}" in moved_members or f"{o}.{t.split('(', 1)[0]}" in moved_members:
                 continue
             kind, why = reason(r[ix["cause"]], r[ix["mojang"]], r[ix["target"]], r[ix["anchor"]], r[ix["evidence"]], r[ix["usage"]])
             if kind is None:

@@ -1,0 +1,26 @@
+{
+ "instanceFieldGetters": {
+  "net/minecraft/class_10023.field_53356:Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState#startBlockPos",
+  "net/minecraft/class_10023.field_53357:Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState#blockPos",
+  "net/minecraft/class_10023.field_53358:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState#blockState",
+  "net/minecraft/class_10023.field_53359:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState#biome",
+  "net/minecraft/class_10023.field_53360:Lnet/minecraft/class_1920;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState#level"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_10023.field_53356:Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState#startBlockPos",
+  "net/minecraft/class_10023.field_53357:Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState#blockPos",
+  "net/minecraft/class_10023.field_53358:Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState#blockState",
+  "net/minecraft/class_10023.field_53359:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState#biome",
+  "net/minecraft/class_10023.field_53360:Lnet/minecraft/class_1920;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState#level"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_10023.method_24852(Lnet/minecraft/class_2350;Z)F": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState",
+  "net/minecraft/class_10023.method_22336()Lnet/minecraft/class_3568;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState",
+  "net/minecraft/class_10023.method_23752(Lnet/minecraft/class_2338;Lnet/minecraft/class_6539;)I": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState",
+  "net/minecraft/class_10023.method_8321(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2586;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState",
+  "net/minecraft/class_10023.method_8320(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState",
+  "net/minecraft/class_10023.method_8316(Lnet/minecraft/class_2338;)Lnet/minecraft/class_3610;": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState",
+  "net/minecraft/class_10023.method_31605()I": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState",
+  "net/minecraft/class_10023.method_31607()I": "top/dext/centurybridge/step/v1_21_9/rt/CbFallingBlockState"
+ }
+}

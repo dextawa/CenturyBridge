@@ -1,0 +1,12 @@
+{
+ "_swall12b_basis": "1.21.11 constructors of advancement predicates that gained components (javap of both releases); found through a climbed layer's call that crossed to 26.1 without them (the 1.20.2 layer's CbAdvJson, full climbed-runtime boot on 26.1: NoSuchMethodError EntityFlagsPredicate.<init>(Optional x7))",
+ "superCtorReshapes": {
+  "net/minecraft/class_2040.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": ["keep:0", "keep:1", "keep:2", "keep:3", "keep:4", "keep:5", "keep:6",
+    "push top/dext/centurybridge/step/v1_21_11/rt/CbEntityPredicates#noFlag()Ljava/util/Optional;",
+    "push top/dext/centurybridge/step/v1_21_11/rt/CbEntityPredicates#noFlag()Ljava/util/Optional;"],
+   "basis": "EntityFlagsPredicate appended isInWater and isFallFlying after 1.21.10's seven components (same order: isOnGround, isOnFire, isCrouching, isSprinting, isSwimming, isFlying, isBaby; javap class_2040 1.21.10 / 1.21.11); 1.21.10 required neither -- empty, as its codec reads an absent flag"
+  }
+ }
+}

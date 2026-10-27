@@ -292,11 +292,13 @@ public final class MixinCheck {
         if (extra == null || extra.isEmpty()) {
             return;
         }
+        List<ClassNode> extraMixins = new ArrayList<>();
         for (String j : extra.split(java.io.File.pathSeparator)) {
             if (j.isEmpty()) {
                 continue;
             }
             try (var z = new java.util.zip.ZipFile(j)) {
+                java.util.Set<String> listed = listedMixins(z);
                 for (var en : java.util.Collections.list(z.entries())) {
                     if (!en.getName().endsWith(".class") || en.getName().startsWith("META-INF/")) {
                         continue;
@@ -304,12 +306,59 @@ public final class MixinCheck {
                     byte[] b = z.getInputStream(en).readAllBytes();
                     ClassNode cn = new ClassNode();
                     new ClassReader(b).accept(cn, ClassReader.SKIP_CODE);
+                    if (listed.contains(cn.name)) {
+                        extraMixins.add(cn);
+                    }
                     if (jar.putIfAbsent(cn.name, cn) == null) {
                         codeBytes.putIfAbsent(cn.name, b);
                     }
                 }
             }
         }
+        // the members those jars' listed class mixins merge onto game classes are there for this jar's mixins that apply
+        // after them (a climbed layer's injector on a member a later layer restores: 1.21.2 MappedRegistry.bindTags)
+        indexMerged(extraMixins);
+    }
+
+    /** the class mixins a jar's mixin configs list (fabric.mod.json "mixins" -> each config's package + mixins/client/server) */
+    private static java.util.Set<String> listedMixins(java.util.zip.ZipFile z) throws IOException {
+        java.util.Set<String> out = new java.util.HashSet<>();
+        var fmj = z.getEntry("fabric.mod.json");
+        if (fmj == null) {
+            return out;
+        }
+        com.google.gson.JsonObject mod;
+        try {
+            mod = com.google.gson.JsonParser.parseString(new String(z.getInputStream(fmj).readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (RuntimeException ex) {
+            return out;
+        }
+        if (!mod.has("mixins")) {
+            return out;
+        }
+        for (var ref : mod.getAsJsonArray("mixins")) {
+            String name = ref.isJsonObject() ? ref.getAsJsonObject().get("config").getAsString() : ref.getAsString();
+            var ce = z.getEntry(name);
+            if (ce == null) {
+                continue;
+            }
+            com.google.gson.JsonObject cfg;
+            try {
+                cfg = com.google.gson.JsonParser.parseString(new String(z.getInputStream(ce).readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            } catch (RuntimeException ex) {
+                continue;
+            }
+            String pkg = cfg.has("package") ? cfg.get("package").getAsString().replace('.', '/') : "";
+            for (String key : new String[] {"mixins", "client", "server"}) {
+                if (!cfg.has(key)) {
+                    continue;
+                }
+                for (var e : cfg.getAsJsonArray(key)) {
+                    out.add((pkg.isEmpty() ? "" : pkg + "/") + e.getAsString().replace('.', '/'));
+                }
+            }
+        }
+        return out;
     }
     /** mixin internal name -> its config's injectors.defaultRequire (Mixin's own default is 0) */
     private final Map<String, Integer> defaultRequire = new HashMap<>();
@@ -466,7 +515,7 @@ public final class MixinCheck {
             }
             for (FieldNode f : cn.fields) {
                 if (has(f.visibleAnnotations, f.invisibleAnnotations, SHADOW)
-                        && !declaresField(target, f.name, f.desc)) {
+                        && !declaresField(target, f.name, f.desc) && !mergedBefore(t, f.name + ":" + f.desc, cn.name)) {
                     problems.add(me + ": @Shadow field " + f.name + ":" + f.desc + " not declared on " + t);
                 }
             }
@@ -685,7 +734,32 @@ public final class MixinCheck {
                     merged.computeIfAbsent(t, k -> new HashMap<>()).merge(m.name + m.desc, priority, Math::min);
                 }
             }
+            // a field the mixin merges as it is (no Mixin annotation: not a @Shadow, not a @Unique Mixin may rename),
+            // keyed "name:desc": a later mixin's @Shadow of it resolves (Mixin applies in priority order onto the
+            // target's node; a layer restoring a field W dropped, shadowed by a climbed earlier layer)
+            for (FieldNode f : cn.fields) {
+                if ((f.access & org.objectweb.asm.Opcodes.ACC_SYNTHETIC) != 0
+                        || f.visibleAnnotations != null && !f.visibleAnnotations.isEmpty()
+                        || f.invisibleAnnotations != null && f.invisibleAnnotations.stream().anyMatch(an -> an.desc.startsWith("Lorg/spongepowered/"))) {
+                    continue;
+                }
+                for (String t : targets) {
+                    merged.computeIfAbsent(t, k -> new HashMap<>()).merge(f.name + ":" + f.desc, priority, Math::min);
+                }
+            }
         }
+    }
+
+    /** a method of that name (and descriptor, when given) merged onto the target by a mixin applying before this one */
+    private boolean mergedForInjection(String target, String name, String desc, String mixin) {
+        int own = priorities.getOrDefault(mixin, 1000);
+        for (Map.Entry<String, Integer> e : merged.getOrDefault(target, Map.of()).entrySet()) {
+            String k = e.getKey();
+            if (e.getValue() < own && (desc != null ? k.equals(name + desc) : k.startsWith(name + "("))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean mergedBefore(String target, String nameDesc, String invokerMixin) {
@@ -773,12 +847,38 @@ public final class MixinCheck {
     private void checkInjection(String me, MethodNode m, AnnotationNode a, ClassNode target) {
         Object methods = get(a, "method");
         if (methods instanceof List<?> l) {
+            // Mixin (TargetSelectors.findRootTargets / validate, sponge-mixin 0.17.3): each selector must match at least its
+            // quantifier's minimum -- 0 unless it says "+" or "{n,..}" -- and the injector as a whole at least one method
+            // ("could not find any targets matching a or b"). An alternative no method answers beside one that matches
+            // is no failure (the 1.20.2 layer's @Redirect on TextureManager {method_4618, method_4619} at 1.21.2)
+            List<String> dead = new ArrayList<>();
+            boolean anyMatched = false;
             for (Object o : l) {
                 String sel = o.toString();
-                String name = sel.contains("(") ? sel.substring(0, sel.indexOf('(')) : sel;
-                String desc = sel.contains("(") ? sel.substring(sel.indexOf('(')) : null;
+                // an owner-qualified selector ("Lowner;name(desc)", MixinRepair's moved injectors) names the member
+                String bare = sel.startsWith("L") && sel.indexOf(';') > 0 && (sel.indexOf('(') < 0 || sel.indexOf(';') < sel.indexOf('('))
+                    ? sel.substring(sel.indexOf(';') + 1) : sel;
+                String name = bare.contains("(") ? bare.substring(0, bare.indexOf('(')) : bare;
+                String desc = bare.contains("(") ? bare.substring(bare.indexOf('(')) : null;
+                int min = 0;
+                java.util.regex.Matcher q = java.util.regex.Pattern.compile("(\\+|\\{(\\d*)(,\\d*)?\\}|\\*)$").matcher(name);
+                if (q.find()) {
+                    min = q.group(1).equals("+") ? 1 : q.group(2) != null && !q.group(2).isEmpty() ? Integer.parseInt(q.group(2)) : 0;
+                    name = name.substring(0, q.start());
+                }
                 boolean ok = desc == null ? hasMethodNamed(target, name) : hasMethod(target, name, desc);
+                // or merged by a class mixin (this jar's, or a listed one of another installed jar) applying first
+                ok = ok || mergedForInjection(target.name, name, desc, currentMixin);
+                anyMatched |= ok;
                 if (!ok) {
+                    dead.add(sel);
+                    if (min > 0) {
+                        problems.add(me + ": " + short_(a.desc) + " " + m.name + " method=\"" + sel + "\" (at least " + min + ") not on " + target.name);
+                    }
+                }
+            }
+            if (!anyMatched && !dead.isEmpty()) {
+                for (String sel : dead) {
                     problems.add(me + ": " + short_(a.desc) + " " + m.name + " method=\"" + sel + "\" not on " + target.name);
                 }
             }
@@ -920,6 +1020,17 @@ public final class MixinCheck {
             if (a.desc.equals(INJECT)) {
                 checkCallback(what, h, a, tm);
             }
+            if (a.desc.endsWith("ModifyVariable;")) {
+                // ModifyVariableInjector: (the local's type) then a prefix of the target's arguments, returning the type
+                Type t = Type.getReturnType(h.desc);
+                String err = validate(h, tm, t, List.of(t));
+                if (err != null) {
+                    problems.add(what + "." + tm.name + tm.desc + ": handler " + h.desc + " " + err);
+                }
+            }
+            currentInjector = a;
+            currentWhat = what + "." + tm.name + tm.desc;
+            currentCode = code;
             for (AnnotationNode an : ats) {
                 List<AbstractInsnNode> hits = match(an, tm, slices, a.desc.endsWith("ModifyVariable;") ? Type.getReturnType(h.desc) : null);
                 if (hits == null) {
@@ -1108,16 +1219,21 @@ public final class MixinCheck {
                         && (nt[0] == null || nt[0].equals(ti.desc));
                 }
                 case "STORE", "LOAD" -> {
-                    // which local the ModifyVariable discriminator picks needs the frames Mixin computes: not modelled.
-                    // Only the sound bound is: no store/load instruction of the handler type's kind at all = 0 matched.
+                    // AfterStoreLocal / BeforeLoadLocal: a store / load of the local the ModifyVariable discriminator picks
+                    // in the frame there (after the store, at the load) -- localAt models Mixin's Locals.getLocalsAt
                     if (local == null) {
                         return null;
                     }
                     int op = local.getOpcode(value.equals("STORE") ? org.objectweb.asm.Opcodes.ISTORE : org.objectweb.asm.Opcodes.ILOAD);
-                    if (n.getOpcode() == op) {
+                    if (n.getOpcode() != op) {
+                        hit = false;
+                        break;
+                    }
+                    Integer slot = localAt(tm, value.equals("STORE") ? i + 1 : i, local);
+                    if (slot == null) {
                         return null;
                     }
-                    hit = false;
+                    hit = slot >= 0 && ((org.objectweb.asm.tree.VarInsnNode) n).var == slot;
                 }
                 default -> {
                     return null;
@@ -1147,6 +1263,204 @@ public final class MixinCheck {
             }
         }
         return hits;
+    }
+
+    /** the injector, its report prefix and the target's code class being matched (localAt reads the discriminator) */
+    private AnnotationNode currentInjector;
+    private String currentWhat;
+    private ClassNode currentCode;
+    private final Map<MethodNode, org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.BasicValue>[]> frames
+        = new java.util.IdentityHashMap<>();
+
+    /**
+     * The local the current @ModifyVariable's discriminator (LocalVariableDiscriminator, sponge-mixin 0.8.7 javap)
+     * picks in the frame before instruction {@code at} of {@code tm}: its slot, -1 when none fits (the point does not
+     * inject there), null when not modelled (a name discriminator without a local variable table). Locals are the
+     * target's LVT entries live there or, without one, the types a verifier's analysis gives each slot (Mixin's
+     * Locals.getLocalsAt); argsOnly: the method's arguments. Candidates are the locals from the first argument on
+     * (baseArgIndex) whose type equals the handler's exactly; ordinal counts locals of that type from slot 0;
+     * implicit (no ordinal / index / name) needs exactly one candidate -- otherwise Mixin throws
+     * InvalidImplicitDiscriminatorException at apply whatever the require, reported as a problem here.
+     */
+    private Integer localAt(MethodNode tm, int at, Type type) {
+        AnnotationNode a = currentInjector;
+        int ordinal = get(a, "ordinal") instanceof Integer o ? o : -1;
+        int index = get(a, "index") instanceof Integer x ? x : -1;
+        List<String> names = new ArrayList<>();
+        if (get(a, "name") instanceof List<?> l) {
+            for (Object o : l) {
+                names.add(o.toString());
+            }
+        }
+        boolean argsOnly = Boolean.TRUE.equals(get(a, "argsOnly"));
+        boolean isStatic = (tm.access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0;
+        int base = isStatic ? 0 : 1;
+        Type[] locals = new Type[tm.maxLocals];
+        String[] lnames = new String[tm.maxLocals];
+        if (argsOnly) {
+            int s = base;
+            for (Type t : Type.getArgumentTypes(tm.desc)) {
+                if (s < locals.length) {
+                    locals[s] = t;
+                }
+                s += t.getSize();
+            }
+        } else if (tm.localVariables != null && !tm.localVariables.isEmpty()) {
+            for (org.objectweb.asm.tree.LocalVariableNode lv : tm.localVariables) {
+                int s = tm.instructions.indexOf(lv.start);
+                int e = tm.instructions.indexOf(lv.end);
+                if (s <= at && at < e && lv.index < locals.length) {
+                    locals[lv.index] = Type.getType(lv.desc);
+                    lnames[lv.index] = lv.name;
+                }
+            }
+        } else {
+            if (!names.isEmpty() && ordinal < 0 && index < base) {
+                return null;
+            }
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.BasicValue>[] fs = frames(tm);
+            if (fs == null) {
+                return null;
+            }
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.BasicValue> f = at < fs.length ? fs[at] : null;
+            if (f == null) {
+                return -1; // unreachable code: the analysis has no frame, Mixin finds nothing to modify there
+            }
+            for (int s = 0; s < f.getLocals() && s < locals.length; s++) {
+                org.objectweb.asm.tree.analysis.BasicValue v = f.getLocal(s);
+                locals[s] = v == null || v.getType() == null || v == org.objectweb.asm.tree.analysis.BasicValue.UNINITIALIZED_VALUE ? null : v.getType();
+            }
+        }
+        int ord = -1;
+        int count = 0;
+        int implicit = -1;
+        for (int s = 0; s < locals.length; s++) {
+            if (locals[s] == null || !locals[s].equals(type)) {
+                continue;
+            }
+            ord++;
+            if (s < base) {
+                continue;
+            }
+            count++;
+            implicit = s;
+            if (ordinal > -1 ? ordinal == ord : index >= base ? index == s : !names.isEmpty() && names.contains(lnames[s])) {
+                return s;
+            }
+        }
+        if (ordinal < 0 && index < base && names.isEmpty()) {
+            if (count == 1) {
+                return implicit;
+            }
+            if (count > 1) {
+                problems.add(currentWhat + ": implicit @ModifyVariable finds " + count + " " + type.getDescriptor()
+                    + " locals at instruction " + at + " (InvalidImplicitDiscriminatorException at apply)");
+            }
+        }
+        return -1;
+    }
+
+    /** the frames a verifier's analysis gives the target method (class hierarchy from the code source), or null */
+    private org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.BasicValue>[] frames(MethodNode tm) {
+        if (frames.containsKey(tm)) {
+            return frames.get(tm);
+        }
+        ClassNode owner = currentCode;
+        org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.BasicValue>[] out;
+        try {
+            List<Type> itfs = new ArrayList<>();
+            for (String s : owner.interfaces) {
+                itfs.add(Type.getObjectType(s));
+            }
+            org.objectweb.asm.tree.analysis.SimpleVerifier v = new org.objectweb.asm.tree.analysis.SimpleVerifier(
+                    org.objectweb.asm.Opcodes.ASM9, Type.getObjectType(owner.name),
+                    owner.superName == null ? null : Type.getObjectType(owner.superName), itfs,
+                    (owner.access & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0) {
+                @Override
+                protected boolean isInterface(Type t) {
+                    ClassNode c = hierarchyClass(t.getInternalName());
+                    return c != null && (c.access & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0;
+                }
+
+                @Override
+                protected Type getSuperClass(Type t) {
+                    ClassNode c = hierarchyClass(t.getInternalName());
+                    return c == null ? (t.getInternalName().equals("java/lang/Object") ? null : Type.getObjectType("java/lang/Object"))
+                        : c.superName == null ? null : Type.getObjectType(c.superName);
+                }
+
+                @Override
+                protected Class<?> getClass(Type t) {
+                    throw new IllegalStateException("not loaded: " + t);
+                }
+
+                @Override
+                protected boolean isAssignableFrom(Type to, Type from) {
+                    if (to.equals(from) || to.getInternalName().equals("java/lang/Object") || isInterface(to)) {
+                        return true; // interfaces: as the JVM's verifier, any reference may stand for one
+                    }
+                    if (to.getSort() == Type.ARRAY || from.getSort() == Type.ARRAY) {
+                        return to.getSort() == Type.ARRAY && from.getSort() == Type.ARRAY && to.getDimensions() == from.getDimensions()
+                            && to.getElementType().getSort() == Type.OBJECT && from.getElementType().getSort() == Type.OBJECT
+                            && isAssignableFrom(to.getElementType(), from.getElementType());
+                    }
+                    return subtype(from.getInternalName(), to.getInternalName(), new java.util.HashSet<>());
+                }
+            };
+            out = new org.objectweb.asm.tree.analysis.Analyzer<>(v).analyze(owner.name, tm);
+        } catch (org.objectweb.asm.tree.analysis.AnalyzerException | RuntimeException ex) {
+            out = null;
+        }
+        frames.put(tm, out);
+        return out;
+    }
+
+    /** a class of the code source, or a JDK class's shape read from the running JDK (null: unknown, taken as Object's subclass) */
+    private ClassNode hierarchyClass(String name) {
+        ClassNode c = codeClass(name);
+        if (c != null || !name.startsWith("java/")) {
+            return c;
+        }
+        return jdkNodes.computeIfAbsent(name, n -> {
+            try (java.io.InputStream in = ClassLoader.getSystemResourceAsStream(n + ".class")) {
+                if (in == null) {
+                    return null;
+                }
+                ClassNode cn = new ClassNode();
+                new ClassReader(in.readAllBytes()).accept(cn, ClassReader.SKIP_CODE);
+                return cn;
+            } catch (java.io.IOException ex) {
+                return null;
+            }
+        });
+    }
+
+    private final Map<String, ClassNode> jdkNodes = new HashMap<>();
+
+    /**
+     * whether class {@code c} is {@code sup} or extends / implements it. The analysis is after the locals' types, not a
+     * verification: a class the code source and the JDK do not hold (a library's) counts as compatible
+     */
+    private boolean subtype(String c, String sup, java.util.Set<String> seen) {
+        if (c == null || !seen.add(c)) {
+            return false;
+        }
+        if (c.equals(sup)) {
+            return true;
+        }
+        ClassNode n = hierarchyClass(c);
+        if (n == null) {
+            return !c.equals("java/lang/Object");
+        }
+        if (subtype(n.superName, sup, seen)) {
+            return true;
+        }
+        for (String i : n.interfaces) {
+            if (subtype(i, sup, seen)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

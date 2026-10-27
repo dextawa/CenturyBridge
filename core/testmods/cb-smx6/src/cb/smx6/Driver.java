@@ -47,6 +47,12 @@ public final class Driver {
     public static volatile int profileCommentAsked;
     public static volatile boolean forceComment;
     public static volatile boolean blockFollowTeleport;
+    public static volatile boolean blockRaid;
+    public static volatile int badOmenAsked;
+    public static volatile int badOmenRaids;
+    public static volatile boolean blockLeashRestore;
+    public static volatile int leashRestoreAsked;
+    public static volatile int leashRestored;
     private static net.minecraft.class_3222 followOwner;
     private static int ok;
     private static int fail;
@@ -61,6 +67,14 @@ public final class Driver {
             fail++;
         }
         System.out.println("CB-SMX6 " + (cond ? "ok " : "FAIL ") + c + " " + detail);
+    }
+
+    /** a case waiting on a known engine gap: "ok" once it holds, else "known" (counted in neither ok nor fail) */
+    private static void known(String c, boolean cond, String detail) {
+        if (cond) {
+            ok++;
+        }
+        System.out.println("CB-SMX6 " + (cond ? "ok " : "known ") + c + " " + detail);
     }
 
     /** one hit: a cow at the surface dx blocks east of spawn, a trident owned by an armor stand; returns the bolts struck */
@@ -223,6 +237,42 @@ public final class Driver {
                     + ", MAX_HORIZONTAL " + cb.smx6.mixin.FollowOwnerAccess.cb$maxHorizontal());
                 wolf.method_31472();
             }
+            // ---- Bad Omen raid start: BadOmenMixin (1.21: Raid Omen's createOrExtendRaid routed through the restored
+            // BadOmenMobEffect.method_58613)
+            blockRaid = false;
+            badOmenAsked = 0;
+            badOmenRaids = 0;
+            boolean raided = raid(server, level, 1000);
+            check("badomen-passive", raided && badOmenAsked == 1 && badOmenRaids == 1,
+                "Raid Omen ending at a village block: raid " + raided + ", method_58613 asked " + badOmenAsked + " time(s), raids started "
+                + badOmenRaids);
+            blockRaid = true;
+            badOmenAsked = 0;
+            badOmenRaids = 0;
+            raided = raid(server, level, 2000);
+            blockRaid = false;
+            check("badomen-blocked", !raided && badOmenAsked == 1 && badOmenRaids == 0,
+                "raid refused by the mod: raid " + raided + ", asked " + badOmenAsked + " time(s), raids started " + badOmenRaids);
+            // ---- Mob leash save state: LeashSaveMixin / LeashFieldAccessor (1.21: the fields are mirrors of LeashData, and
+            // Leashable.tickLeash's restoreLeashFromSave routed through the restored Mob.restoreLeashFromSave)
+            blockLeashRestore = false;
+            leashRestoreAsked = 0;
+            leashRestored = 0;
+            String leashPassive = leash(level, 1200, false);
+            check("leash-passive", leashPassive.startsWith("knot/null/1/"),
+                "pig whose delayedLeashInfo (a fence position) was set through the accessor, one tick: "
+                + leashPassive + " (holder/delayedLeashInfo after/asked/restored)");
+            // the INVOKE anchor on setLeashedTo (1.21's renamed method_60964) inside the restored member: a known engine gap
+            // (cases_smixin3/s121.md C8), reported apart from the pass / fail count
+            known("leash-anchor", leashPassive.endsWith("/1"), "INVOKE setLeashedTo injector in restoreLeashFromSave fired "
+                + leashPassive.substring(leashPassive.lastIndexOf('/') + 1) + " time(s) (C8: renamed anchors in restored members)");
+            blockLeashRestore = true;
+            leashRestoreAsked = 0;
+            leashRestored = 0;
+            String blocked = leash(level, 1300, true);
+            blockLeashRestore = false;
+            check("leash-blocked", "none/pos/1/0".equals(blocked),
+                "restore refused by the mod: " + blocked + " (holder/delayedLeashInfo after/asked/restored)");
             level.method_8519(1.0F);
             level.method_8496(1.0F);
             check("thunderstorm", level.method_8546(), "isThundering after rain/thunder level 1");
@@ -358,6 +408,73 @@ public final class Driver {
             }
         }
         return "(no comment line)";
+    }
+
+    /**
+     * a server player (no connection) at a village block high above the terrain dx blocks east of spawn, whose Raid Omen
+     * runs out there: RAID_OMEN's applyEffectTick with its Raid Omen position set at that block, as 1.21's Bad Omen sets it
+     * on entering a village. The block is a village by a meeting-point POI added there (a bell's POI, added the way
+     * ServerLevel adds it on the next server task) with a villager's claim on it. Answers whether a raid stands at the block
+     * afterwards (it is stopped).
+     */
+    private static boolean raid(net.minecraft.server.MinecraftServer server, class_3218 level, int dx) {
+        class_2338 spawn = level.method_43126();
+        class_2338 at = new class_2338(spawn.method_10263() + dx, 300, spawn.method_10260());
+        level.method_8501(at.method_10074(), net.minecraft.class_2246.field_10340.method_9564());
+        level.method_19494().method_19115(at, net.minecraft.class_7923.field_41128.method_40290(net.minecraft.class_7477.field_39292));
+        // a villager's claim (PoiManager.take): ServerLevel.isVillage counts occupied village POIs only
+        level.method_19494().method_19126(h -> true, (h, p) -> p.equals(at), at, 1);
+        if (followOwner == null) {
+            followOwner = new net.minecraft.class_3222(server, level,
+                new com.mojang.authlib.GameProfile(java.util.UUID.fromString("0c0b5121-0000-4000-8000-00000000c0b5"), "cbsmx6owner"),
+                net.minecraft.class_8791.method_53821());
+        }
+        followOwner.method_5808(at.method_10263() + 0.5, at.method_10264(), at.method_10260() + 0.5, 0.0F, 0.0F);
+        followOwner.method_58586(at);
+        net.minecraft.class_1294.field_50117.comp_349().method_5572(followOwner, 0);
+        net.minecraft.class_3765 r = level.method_19502(at);
+        if (r != null) {
+            r.method_16506();
+        }
+        return r != null;
+    }
+
+    /**
+     * a pig on a stone block high above the terrain dx blocks east of spawn, an oak fence beside it, whose saved leash
+     * (delayedLeashInfo = the fence's position) is set through the mod's accessor, or its @Shadow field when viaShadow; one
+     * tick (Mob.tick ticks the leash). Answers "holder/delayedLeashInfo/asked/restored": the holder as the accessor reads it
+     * ("knot", "none", or "mismatch" when the accessor, the @Shadow field and getLeashHolder disagree), delayedLeashInfo as the
+     * accessor reads it afterwards ("null", "pos", "other"), and the restore counters
+     */
+    private static String leash(class_3218 level, int dx, boolean viaShadow) {
+        class_2338 spawn = level.method_43126();
+        class_2338 at = new class_2338(spawn.method_10263() + dx, 300, spawn.method_10260());
+        class_2338 fence = at.method_10069(2, 0, 0);
+        level.method_8501(at.method_10074(), net.minecraft.class_2246.field_10340.method_9564());
+        level.method_8501(fence, net.minecraft.class_2246.field_10620.method_9564());
+        net.minecraft.class_1452 pig = class_1299.field_6093.method_5883(level);
+        pig.method_5808(at.method_10263() + 0.5, at.method_10264(), at.method_10260() + 0.5, 0.0F, 0.0F);
+        level.method_8649(pig);
+        com.mojang.datafixers.util.Either<java.util.UUID, class_2338> saved = com.mojang.datafixers.util.Either.right(fence);
+        if (viaShadow) {
+            ((cb.smx6.LeashSaveAccess) pig).cbsmx6$shadowSetDelayed(saved);
+        } else {
+            ((cb.smx6.mixin.LeashFieldAccessor) pig).cbsmx6$setDelayed(saved);
+        }
+        boolean readBack = ((cb.smx6.mixin.LeashFieldAccessor) pig).cbsmx6$delayed() == saved
+            && ((cb.smx6.LeashSaveAccess) pig).cbsmx6$shadowDelayed() == saved;
+        pig.method_5773();
+        net.minecraft.class_1297 holder = ((cb.smx6.mixin.LeashFieldAccessor) pig).cbsmx6$holder();
+        String h = holder != ((cb.smx6.LeashSaveAccess) pig).cbsmx6$shadowHolder() || holder != pig.method_5933()
+            || (holder != null) != pig.method_5934() ? "mismatch"
+            : holder == null ? "none" : holder instanceof net.minecraft.class_1532 ? "knot" : holder.getClass().getSimpleName();
+        com.mojang.datafixers.util.Either<java.util.UUID, class_2338> after = ((cb.smx6.mixin.LeashFieldAccessor) pig).cbsmx6$delayed();
+        String d = after == null ? "null" : after.right().isPresent() && after.right().get().equals(fence) ? "pos" : "other";
+        if (holder != null) {
+            holder.method_31472();
+        }
+        pig.method_31472();
+        return (readBack ? "" : "unread:") + h + "/" + d + "/" + leashRestoreAsked + "/" + leashRestored;
     }
 
     /**

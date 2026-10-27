@@ -8,7 +8,10 @@
     "TridentAccess",
     "TamableTeleportMixin",
     "FollowOwnerWrapMixin",
-    "ReportCommentMixin"
+    "ReportCommentMixin",
+    "RaidOmenWrapMixin",
+    "LeashRestoreWrapMixin",
+    "LeashDataNew"
   ],
   "injectors": {
     "defaultRequire": 1

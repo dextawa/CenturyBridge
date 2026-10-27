@@ -30,6 +30,8 @@ public class SwallTestMod implements ModInitializer {
     public static final java.util.concurrent.atomic.AtomicInteger BURN_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     /** calls of ItemStack.CODEC's components getter lambda (mixin/ItemStackCodecLambdaMixin) */
     public static final java.util.concurrent.atomic.AtomicInteger CODEC_PATCH_CALLS = new java.util.concurrent.atomic.AtomicInteger();
+    public static final java.util.concurrent.atomic.AtomicInteger FROG_ATTACK_CALLS = new java.util.concurrent.atomic.AtomicInteger();
+    public static final java.util.concurrent.atomic.AtomicInteger FANCY_LIMB_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     private static int passed;
 
     private static void check(String name, boolean ok, Object detail) {
@@ -1028,6 +1030,8 @@ public class SwallTestMod implements ModInitializer {
             legacyConstructors(server);
             timeCommand(server);
             swall12Batch();
+            frogAttack(server);
+            fancyLimb(server);
             clocks(server);
             fluidHeights(server);
             check("server.throwIfFatalException", MinecraftServer.method_60584(), "");
@@ -2046,6 +2050,44 @@ public class SwallTestMod implements ModInitializer {
                 (CODEC_PATCH_CALLS.get() - before) + " " + json);
         } catch (Throwable t) {
             check("swall12b.codecLambdaMixin", false, t);
+        }
+    }
+
+    /**
+     * FrogAttackMixin (a 1.21.11 mixin on the private FrogAi.canAttack(frog)): a frog's brain ticking with no attack target
+     * runs its StartAttacking behaviour, whose gate is canAttack, so the mixin counts
+     */
+    private static void frogAttack(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            net.minecraft.class_7102 frog = net.minecraft.class_1299.field_37419.method_5883(level, net.minecraft.class_3730.field_16471);
+            frog.method_5814(0.5, 100, 0.5);
+            int before = FROG_ATTACK_CALLS.get();
+            for (int i = 0; i < 5; i++) {
+                frog.method_18868().method_19542(level, frog);
+            }
+            check("swall12b.frogAttackMixin", FROG_ATTACK_CALLS.get() > before, FROG_ATTACK_CALLS.get() - before);
+        } catch (Throwable t) {
+            check("swall12b.frogAttackMixin", false, t);
+        }
+    }
+
+    /**
+     * FancyLimbMixin (a 1.21.11 mixin on the private FancyTrunkPlacer.makeLimb(reader, ..)): a fancy oak placed on grass
+     * checks and lays its limbs through makeLimb, so the mixin counts
+     */
+    private static void fancyLimb(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            net.minecraft.class_2338 ground = new net.minecraft.class_2338(72, 200, 72);
+            level.method_8501(ground, net.minecraft.class_2246.field_10219.method_9564());
+            net.minecraft.class_2975<?, ?> fancy = server.method_30611().method_30530(net.minecraft.class_7924.field_41239)
+                .method_63535(net.minecraft.class_2960.method_60656("fancy_oak"));
+            int before = FANCY_LIMB_CALLS.get();
+            boolean placed = fancy.method_12862(level, level.method_14178().method_12129(), net.minecraft.class_5819.method_43049(5L), ground.method_10084());
+            check("swall12b.fancyLimbMixin", placed && FANCY_LIMB_CALLS.get() > before, placed + " " + (FANCY_LIMB_CALLS.get() - before));
+        } catch (Throwable t) {
+            check("swall12b.fancyLimbMixin", false, t);
         }
     }
 }

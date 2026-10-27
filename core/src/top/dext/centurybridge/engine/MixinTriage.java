@@ -83,11 +83,37 @@ public final class MixinTriage {
     public static Result run(Map<String, byte[]> entries, Chain chain) {
         Map<String, String> configOfClass = new LinkedHashMap<>(); // mixin class -> config entry name
         Map<String, Map<String, String>> refmap = new HashMap<>(); // mixin class -> src -> intermediary
-
-        byte[] fmjBytes = entries.get("fabric.mod.json");
         List<MixinInfo> out = new ArrayList<>();
-        if (fmjBytes == null) {
+        if (!readConfigs(entries, configOfClass, refmap)) {
             return new Result(out, configOfClass);
+        }
+
+        // the members the jar's own class mixins merge onto their targets (smx1 CASE 13: a climbing layer's @Invoker of
+        // a member its own CbRecipeJsonShapedStatics restores on class_1869): declared on the target at runtime
+        LayerMembers own = ownMembers(entries);
+        for (Map.Entry<String, String> e : configOfClass.entrySet()) {
+            byte[] bytes = entries.get(e.getKey() + ".class");
+            if (bytes != null) {
+                out.add(analyze(bytes, e.getKey(), e.getValue(),
+                    refmap.getOrDefault(e.getKey(), Map.of()), chain, own));
+            }
+        }
+        return new Result(out, configOfClass);
+    }
+
+    /** the members the jar's listed class mixins merge onto their targets ({@link LayerMembers#ofJar}) */
+    public static LayerMembers ownMembers(Map<String, byte[]> entries) {
+        Map<String, String> configOfClass = new LinkedHashMap<>();
+        readConfigs(entries, configOfClass, new HashMap<>());
+        return LayerMembers.ofJar(entries, configOfClass.keySet());
+    }
+
+    /** the jar's mixin configs: listed mixin class -> config entry name, and the refmaps; false without fabric.mod.json */
+    private static boolean readConfigs(Map<String, byte[]> entries, Map<String, String> configOfClass,
+                                       Map<String, Map<String, String>> refmap) {
+        byte[] fmjBytes = entries.get("fabric.mod.json");
+        if (fmjBytes == null) {
+            return false;
         }
         JsonObject fmj = GSON.fromJson(new String(fmjBytes, StandardCharsets.UTF_8), JsonObject.class);
         for (JsonElement cfgRef : fmj.has("mixins") ? fmj.getAsJsonArray("mixins") : new JsonArray()) {
@@ -123,21 +149,31 @@ public final class MixinTriage {
                 }
             }
         }
+        return true;
+    }
 
-        for (Map.Entry<String, String> e : configOfClass.entrySet()) {
-            byte[] bytes = entries.get(e.getKey() + ".class");
-            if (bytes != null) {
-                out.add(analyze(bytes, e.getKey(), e.getValue(),
-                    refmap.getOrDefault(e.getKey(), Map.of()), chain));
-            }
+    /**
+     * whether a mixin at {@code mixinPriority} finds a member the converted jar's own class mixins merge onto the
+     * target (kind 'm' or 'f'): as {@link Chain#layerDeclares} for the step layer, with Mixin's priority order -- the
+     * merging mixin applies first only at a lower priority (MixinCheck.indexMerged judges gate 3 the same way). The jar
+     * is in the analysis namespace like the query, so no wall spelling
+     */
+    static boolean ownDeclares(LayerMembers own, String owner, char kind, String name, String desc, int mixinPriority) {
+        if (desc == null) {
+            return false;
         }
-        return new Result(out, configOfClass);
+        if (kind == 'f') {
+            org.objectweb.asm.tree.FieldNode f = own.field(owner, name, desc);
+            return f != null && own.fieldPriority(f) < mixinPriority;
+        }
+        org.objectweb.asm.tree.MethodNode m = own.member(owner, name, desc);
+        return m != null && own.priority(m) < mixinPriority;
     }
 
     // ---------------------------------------------------------------- analysis
 
     private static MixinInfo analyze(byte[] bytes, String className, String config,
-                                     Map<String, String> refmap, Chain chain) {
+                                     Map<String, String> refmap, Chain chain, LayerMembers own) {
         List<String> targets = new ArrayList<>();
         List<String> broken = new ArrayList<>();
         boolean[] loadBearing = {false};
@@ -166,7 +202,9 @@ public final class MixinTriage {
                     : chain.declaredOnTarget(o, sp.name, sp.desc) || !java.util.Objects.equals(d, sp.desc) && chain.declaredOnTarget(o, sp.name, d);
                 // or a member the step layer restores on the target (LayerMembers: a restored method or field)
                 declared = declared || chain.layerDeclares(o, sp.kind, sp.name, sp.desc, priority[0])
-                    || !java.util.Objects.equals(d, sp.desc) && chain.layerDeclares(o, sp.kind, sp.name, d, priority[0]);
+                    || !java.util.Objects.equals(d, sp.desc) && chain.layerDeclares(o, sp.kind, sp.name, d, priority[0])
+                    // or one the jar's own class mixins merge onto the target (CASE 13)
+                    || ownDeclares(own, o, sp.kind, sp.name, sp.desc, priority[0]);
                 if (!declared) {
                     touch.accept(new Chain.Issue(Chain.Level.L3, "target-decl"),
                         what + " not declared on " + o.substring(o.lastIndexOf('/') + 1));
@@ -187,6 +225,7 @@ public final class MixinTriage {
                 for (String o : sp.owner != null ? List.of(sp.owner) : targets) {
                     all &= chain.layerDeclares(o, sp.kind, sp.name, sp.desc, priority[0])
                         || chain.layerDeclares(o, sp.kind, sp.name, chain.renamedDesc(sp.desc), priority[0])
+                        || ownDeclares(own, o, sp.kind, sp.name, sp.desc, priority[0])
                         // or the facade the step renames the target to declares it (the mixin applies to the facade)
                         || chain.facadeDeclares(o, sp.kind, sp.name, sp.desc);
                 }
