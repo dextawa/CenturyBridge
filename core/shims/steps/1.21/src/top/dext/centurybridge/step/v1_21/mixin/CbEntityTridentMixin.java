@@ -1,16 +1,9 @@
 package top.dext.centurybridge.step.v1_21.mixin;
 
 import net.minecraft.class_1685;
-import net.minecraft.class_1799;
-import net.minecraft.class_3218;
-import net.minecraft.class_3965;
-import net.minecraft.class_3966;
 import net.minecraft.class_9304;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_21.rt.CbEntityEnchanting;
 import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
@@ -23,9 +16,10 @@ import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
  * block, only a lightning rod's), and 1.21's Channeling effect runs only when it says yes -- with 1.20.6's own
  * strike afterwards where it says yes and 1.21 has no Channeling to run. A mod's 1.20.6 mixin on isChanneling(),
  * or a 1.20.6 subclass's override, decides the strike as on 1.20.6; with neither, the answer is the enchantment's
- * presence and 1.21 runs as it does.
+ * presence and 1.21 runs as it does. The routes into 1.21's own onHitEntity / hitBlockEnchantmentEffects are
+ * CbEntityTridentMixinHooks (default priority).
  */
-@Mixin(value = class_1685.class, priority = 1)
+@Mixin(value = class_1685.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityTridentMixin implements CbEntityEnchanting.TridentHit, CbEntityEnchanting.LegacyChanneling {
 
     @Unique
@@ -55,7 +49,7 @@ public abstract class CbEntityTridentMixin implements CbEntityEnchanting.Trident
     }
 
     /** 1.20.6 ThrownTrident.isChanneling() (class_1685.method_31551): EnchantmentHelper.hasChanneling(the thrown stack) */
-    @CbVanillaReads(value = "CbEntityTridentMixin: 1.21's channeling strike of an entity hit (EnchantmentHelper.doPostAttackEffects, "
+    @CbVanillaReads(value = "CbEntityTridentMixinHooks: 1.21's channeling strike of an entity hit (EnchantmentHelper.doPostAttackEffects, "
         + "channeling.json post_attack) and of a lightning rod hit (ThrownTrident.method_59956, hit_block) runs only when "
         + "this answers true (CbEntityEnchanting.beforeWeaponEffects / beforeBlockEffects take Channeling off the weapon "
         + "for the call otherwise), and 1.20.6's own strike follows where it answers true without the enchantment; asked "
@@ -66,31 +60,5 @@ public abstract class CbEntityTridentMixin implements CbEntityEnchanting.Trident
     @Override
     public boolean method_31551() {
         return CbEntityEnchanting.superIsChanneling((class_1685) (Object) this);
-    }
-
-    @Inject(method = "method_7454(Lnet/minecraft/class_3966;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_1890;method_60619(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_1799;)V"))
-    private void cb$beforeAttackEffects(class_3966 hit, CallbackInfo ci) {
-        CbEntityEnchanting.beforeWeaponEffects((class_1685) (Object) this);
-    }
-
-    @Inject(method = "method_7454(Lnet/minecraft/class_3966;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_1890;method_60619(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_1799;)V", shift = At.Shift.AFTER))
-    private void cb$afterAttackEffects(class_3966 hit, CallbackInfo ci) {
-        CbEntityEnchanting.afterWeaponEffects((class_1685) (Object) this);
-    }
-
-    @Inject(method = "method_7454(Lnet/minecraft/class_3966;)V", at = @At("TAIL"))
-    private void cb$legacyStrike(class_3966 hit, CallbackInfo ci) {
-        CbEntityEnchanting.afterEntityHit((class_1685) (Object) this, hit.method_17782());
-    }
-
-    @Inject(method = "method_59956(Lnet/minecraft/class_3218;Lnet/minecraft/class_3965;Lnet/minecraft/class_1799;)V", at = @At("HEAD"))
-    private void cb$beforeBlockEffects(class_3218 level, class_3965 hit, class_1799 weapon, CallbackInfo ci) {
-        CbEntityEnchanting.beforeBlockEffects((class_1685) (Object) this, level, hit.method_17777());
-    }
-
-    @Inject(method = "method_59956(Lnet/minecraft/class_3218;Lnet/minecraft/class_3965;Lnet/minecraft/class_1799;)V", at = @At("TAIL"))
-    private void cb$afterBlockEffects(class_3218 level, class_3965 hit, class_1799 weapon, CallbackInfo ci) {
-        CbEntityEnchanting.afterWeaponEffects((class_1685) (Object) this);
-        CbEntityEnchanting.afterBlockHit((class_1685) (Object) this, level, hit.method_17777());
     }
 }
