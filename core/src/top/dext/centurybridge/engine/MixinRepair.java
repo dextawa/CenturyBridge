@@ -3299,6 +3299,8 @@ public final class MixinRepair {
      * more captured parameters than the target now takes -- cannot apply, and the injector is dropped with a WARN
      */
     CapturedFit capturedFit(AnnotationNode an, MethodNode h, List<Anchor> anchors, List<MethodNode> targets, String owner) {
+        String argsOnly = argsOnlyFit(an, h, targets);
+        if (argsOnly != null) return new CapturedFit(argsOnly, new java.util.TreeMap<>(), new HashMap<>(), "");
         CapturedFit direct = capturedFitInPlace(an, h, anchors, targets);
         if (direct.why() == null || !an.desc.equals(INJECT) || argMaps == null || targets.isEmpty()) return direct;
         CapturedFit mapped = capturedFitMapped(h, targets, owner);
@@ -3353,6 +3355,33 @@ public final class MixinRepair {
             }
             if (!ok) continue;
             return new CapturedFit(null, convs, new HashMap<>(), note.toString(), List.of(), r[0], args.clone(), ta);
+        }
+        return null;
+    }
+
+    /**
+     * A @ModifyVariable(argsOnly = true) with no index or name picks the target argument by the handler's type
+     * (LocalVariableDiscriminator over the method's arguments): exactly one argument of that type without an ordinal,
+     * more than the ordinal with one. A step that retyped the argument (1.21.2 RecipeManager.fromJson ResourceLocation
+     * -> ResourceKey) leaves none, and Mixin fails the whole mixin at apply ("Found 0 candidate variables but exactly 1
+     * is required"). Null when it fits on every target, else why not
+     */
+    private static String argsOnlyFit(AnnotationNode an, MethodNode h, List<MethodNode> targets) {
+        if (!an.desc.endsWith("/ModifyVariable;")) return null;
+        Map<String, Object> v = values(an);
+        if (!Boolean.TRUE.equals(v.get("argsOnly")) || v.get("index") instanceof Integer i && i >= 0
+                || v.get("name") != null && !list(v.get("name")).isEmpty()) return null;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        if (hp.length == 0) return null;
+        Type want = hp[0];
+        int ord = v.get("ordinal") instanceof Integer o ? o : -1;
+        for (MethodNode m : targets) {
+            int n = 0;
+            for (Type t : Type.getArgumentTypes(m.desc)) if (t.equals(want)) n++;
+            if (ord < 0 ? n != 1 : n <= ord) {
+                return "@ModifyVariable(argsOnly) of type " + want.getDescriptor() + (ord < 0 ? "" : " ordinal " + ord) + ": "
+                    + m.name + m.desc + " takes " + n + " argument(s) of that type";
+            }
         }
         return null;
     }
