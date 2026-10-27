@@ -1879,6 +1879,19 @@ final class MixinBridge {
                     continue;
                 }
                 MethodNode wmeth = method(wt, fate.name(), fate.desc());
+                if (wmeth == null && chain.wallRemapper != null) {
+                    // past the wall a class new in W nested in a class the table maps has two spellings: the wiring's
+                    // (W's own, AbstractScrollArea$ScrollbarSettings) and the wall view's (the outer's id + the nested
+                    // name, WallInverse; JarRemapper renames that one to W's). The same member when both descriptors
+                    // spell W's types alike (swall12 AbstractTextAreaWidget.<init>(.., ScrollbarSettings))
+                    String wd = chain.wallRemapper.mapMethodDesc(fate.desc());
+                    for (MethodNode m : wt.methods) {
+                        if (m.name.equals(fate.name()) && chain.wallRemapper.mapMethodDesc(m.desc).equals(wd)) {
+                            wmeth = m;
+                            break;
+                        }
+                    }
+                }
                 if (wmeth == null) {
                     // a W-named member a layer mixin declares on the target (an override of an inherited W method,
                     // say: SmithingTrimRecipe.matches, which 1.21.2 has only as SmithingRecipe's default): at runtime
