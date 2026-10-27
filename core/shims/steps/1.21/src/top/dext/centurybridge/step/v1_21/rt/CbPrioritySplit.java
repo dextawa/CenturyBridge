@@ -57,4 +57,23 @@ public final class CbPrioritySplit {
 
         boolean cb$v1_21$unableToMove();
     }
+
+    /** CbEntityBadOmenRestoredMixin: 1.20.6's raid start from Bad Omen (method_58613), for Raid Omen's call (CbEntityRaidOmenRouteMixin) */
+    public interface BadOmenRaid {
+        boolean cb$v1_21$badOmenRaid(net.minecraft.class_3222 player, net.minecraft.class_3218 level);
+    }
+
+    /**
+     * CbEntityLeashSaveRestoredMixin: Mob's restored 1.20.6 leash fields as mirrors of its LeashData, and the restored
+     * restoreLeashFromSave, for CbEntityLeashSaveRestoredMixinHooks / CbEntityLeashSaveRouteMixin
+     */
+    public interface LeashSave {
+        /** the mirrors take LeashData's values (after 1.21 wrote it) */
+        void cb$v1_21$mirrorLeash();
+
+        /** a mirror a mod wrote goes into LeashData; LeashData written directly goes into the mirrors */
+        void cb$v1_21$reconcileLeash();
+
+        void cb$v1_21$restoreLeashFromSave();
+    }
 }

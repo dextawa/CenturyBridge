@@ -1,5 +1,5 @@
 {
- "_s121_basis": "s121 (1.20.6 -> 1.21 owner): code 1.21 keeps, the same, under another class. Each entry judged from both versions' javap -c -p (D:/tmp/s121 samecode.py / argmap.py for the body match; callers checked in both jars).",
+ "_s121_basis": "s121 (1.20.6 -> 1.21 owner): code 1.21 keeps, the same, under another class. Each entry judged from both versions' javap -c -p (D:/tmp/s121 samecode.py / argmap.py for the body match; callers checked in both jars). s121d 2026-10-28 TextComponentTagVisitor (class_5628) fieldRenames: NAME_VALUE_SEPARATOR field_27838 (1.20.6: String.valueOf(':') in <clinit>) is 1.21's field_51922, a private static final String with ConstantValue \":\" (javap -v), read where 1.20.6 read field_27838 (visitCompound's name/value separator; javac inlines it as ldc \":\"); the folded marker field_51498 (1.20.6 <clinit>: Component.literal(\"<...>\").withStyle(GRAY)) is 1.21's field_51925, built by the same instructions in <clinit> and read where 1.20.6 read it (visitList / visitCompound depth cap) and by 1.21's new 128-element array caps.",
  "classRenames": {
   "net/minecraft/class_1088$class_4455": "net/minecraft/class_9824$class_4455",
   "net/minecraft/class_1088$class_1089": "net/minecraft/class_9824$class_1089"
@@ -10,11 +10,20 @@
  },
  "fieldRenames": {
   "net/minecraft/class_1088$class_4455.field_20275:Ljava/util/List;": "comp_2873",
-  "net/minecraft/class_1088$class_4455.field_20276:Ljava/util/List;": "comp_2874"
+  "net/minecraft/class_1088$class_4455.field_20276:Ljava/util/List;": "comp_2874",
+  "net/minecraft/class_5628.field_27838:Ljava/lang/String;": "field_51922",
+  "net/minecraft/class_5628.field_51498:Lnet/minecraft/class_2561;": "field_51925"
  },
  "mixinLedger": {
   "net/minecraft/class_1088$class_4455.equals(Ljava/lang/Object;)Z": "1.21 made ModelGroupKey a record (class_9824$class_4455): its equals is the generated ObjectMethods bootstrap (javap: one invokedynamic, no instruction); 1.20.6's hand-written comparison (the identity test, instanceof, the two Objects.equals over field_20275 / field_20276, the iconst 0 / 1 returns) has no instruction left anywhere in 1.21",
-  "net/minecraft/class_1088$class_4455.hashCode()I": "1.21 made ModelGroupKey a record (class_9824$class_4455): its hashCode is the generated ObjectMethods bootstrap (javap: one invokedynamic, no instruction); 1.20.6's 31 * models.hashCode() + coloringValues.hashCode() has no instruction left anywhere in 1.21"
+  "net/minecraft/class_1088$class_4455.hashCode()I": "1.21 made ModelGroupKey a record (class_9824$class_4455): its hashCode is the generated ObjectMethods bootstrap (javap: one invokedynamic, no instruction); 1.20.6's 31 * models.hashCode() + coloringValues.hashCode() has no instruction left anywhere in 1.21",
+  "net/minecraft/class_3193.method_16143(Ljava/util/concurrent/CompletableFuture;Ljava/lang/String;)V @ FIELD Lnet/minecraft/class_3193;field_28806:Lnet/minecraft/class_5831;": "1.21 dropped ChunkHolder's save-dependency debug record: no DebugBuffer field (1.20.6 field_28806, class_5831) on 1.21's class_3193 and no ChunkHolder$ChunkSaveDebug (class_3193$class_5830) anywhere in the 1.21 jar (javap); 1.21's addSaveDependency (method_39967(CompletableFuture)) holds only the thenCombine, where mixinTargets moves this member's other injectors",
+  "net/minecraft/class_3193.method_16143(Ljava/util/concurrent/CompletableFuture;Ljava/lang/String;)V @ INVOKE Ljava/lang/Thread;currentThread()Ljava/lang/Thread;": "1.21 dropped ChunkHolder's save-dependency debug record: no DebugBuffer field (1.20.6 field_28806, class_5831) on 1.21's class_3193 and no ChunkHolder$ChunkSaveDebug (class_3193$class_5830) anywhere in the 1.21 jar (javap); 1.21's addSaveDependency (method_39967(CompletableFuture)) holds only the thenCombine, where mixinTargets moves this member's other injectors",
+  "net/minecraft/class_3193.method_16143(Ljava/util/concurrent/CompletableFuture;Ljava/lang/String;)V @ NEW net/minecraft/class_3193$class_5830": "1.21 dropped ChunkHolder's save-dependency debug record: no DebugBuffer field (1.20.6 field_28806, class_5831) on 1.21's class_3193 and no ChunkHolder$ChunkSaveDebug (class_3193$class_5830) anywhere in the 1.21 jar (javap); 1.21's addSaveDependency (method_39967(CompletableFuture)) holds only the thenCombine, where mixinTargets moves this member's other injectors",
+  "net/minecraft/class_3193.method_16143(Ljava/util/concurrent/CompletableFuture;Ljava/lang/String;)V @ INVOKE Lnet/minecraft/class_3193$class_5830;<init>(Ljava/lang/Thread;Ljava/util/concurrent/CompletableFuture;Ljava/lang/String;)V": "1.21 dropped ChunkHolder's save-dependency debug record: no DebugBuffer field (1.20.6 field_28806, class_5831) on 1.21's class_3193 and no ChunkHolder$ChunkSaveDebug (class_3193$class_5830) anywhere in the 1.21 jar (javap); 1.21's addSaveDependency (method_39967(CompletableFuture)) holds only the thenCombine, where mixinTargets moves this member's other injectors",
+  "net/minecraft/class_3193.method_16143(Ljava/util/concurrent/CompletableFuture;Ljava/lang/String;)V @ INVOKE Lnet/minecraft/class_5831;method_33721(Ljava/lang/Object;)V": "1.21 dropped ChunkHolder's save-dependency debug record: no DebugBuffer field (1.20.6 field_28806, class_5831) on 1.21's class_3193 and no ChunkHolder$ChunkSaveDebug (class_3193$class_5830) anywhere in the 1.21 jar (javap); 1.21's addSaveDependency (method_39967(CompletableFuture)) holds only the thenCombine, where mixinTargets moves this member's other injectors",
+  "net/minecraft/class_3505.<clinit>()V": "1.21's TagManager has no static initializer (javap: no static {}) and no directory table: 1.20.6's <clinit> built CUSTOM_REGISTRY_DIRECTORIES (field_36395), Map.of(BLOCK \"tags/blocks\", ENTITY_TYPE \"tags/entity_types\", FLUID \"tags/fluids\", GAME_EVENT \"tags/game_events\", ITEM \"tags/items\"), the plural exceptions getTagDir answered before \"tags/\" + path. 1.21 renamed those data-pack directories to the registry path: Registries.tagsDirPath (class_7924.method_60916) answers \"tags/\" + path for every registry with no table or branch, and none of the five plural strings occurs anywhere in the 1.21 jar (whole javap dump)",
+  "net/minecraft/class_3505.field_36395:Ljava/util/Map;": "TagManager.CUSTOM_REGISTRY_DIRECTORIES: the plural tag-directory exceptions 1.21 dropped (see class_3505.<clinit>): Registries.tagsDirPath answers \"tags/\" + path for every registry; no 1.21 field or table holds a per-registry directory"
  },
  "mixinMoves": {
   "net/minecraft/class_927.method_23187(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;FFFIIIIFFFFIZ)V": {
@@ -32,6 +41,16 @@
   "net/minecraft/class_1088.method_21603(Ljava/lang/Iterable;)V": {
    "to": "net/minecraft/class_9824.method_61063(Ljava/lang/Iterable;)V",
    "basis": "ModelBakery.registerModelGroup(Iterable<BlockState>) (private) is 1.21's BlockStateModelLoader.registerModelGroup: the same descriptor and body (r = 1.00: the same id counter into the modelGroups map); its only caller is the blockstate loader in both versions (V ModelBakery.method_21601, W BlockStateModelLoader.method_61061). An instance handler moves only when it does not read this, which is another object on 1.21 (MixinRepair.movable)"
+  }
+ },
+ "mixinTargets": {
+  "net/minecraft/class_3193.method_16143(Ljava/util/concurrent/CompletableFuture;Ljava/lang/String;)V": {
+   "to": "method_39967(Ljava/util/concurrent/CompletableFuture;)V",
+   "args": [
+    0,
+    -1
+   ],
+   "basis": "ChunkHolder.addSaveDependency(future, reason) (private) is 1.21's addSaveDependency(future) (javap -c -p: both chain the future into the holder's save future with thenCombine -- 1.20.6 chunkToSave field_16428, 1.21 saveSync field_51858, renamed in smx6.json -- after 1.20.6's debug record, which 1.21 dropped with its ChunkSaveDebug class; the reason argument has no 1.21 counterpart). 1.21 calls it from updateFutures (method_14007) at exactly 1.20.6's three \"full\" / \"ticking\" / \"entity ticking\" sites; 1.20.6's other two callers (getOrScheduleFuture's \"schedule <status>\" and replaceProtoChunk's \"replaceProto\") have no 1.21 call: 1.21 holds a chunk's save back during generation by GenerationChunkHolder's generation ref count (isReadyForSaving method_60436 reads method_60470), not a save dependency"
   }
  }
 }
