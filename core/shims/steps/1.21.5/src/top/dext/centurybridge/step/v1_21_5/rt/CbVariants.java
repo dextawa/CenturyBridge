@@ -43,12 +43,22 @@ public final class CbVariants {
     }
 
     private static <T> class_2378<T> world(class_5321<? extends class_2378<T>> key) {
-        MinecraftServer s = server;
-        class_5455 access = s != null ? s.method_30611() : client.get();
+        class_5455 access = registries();
         if (access == null) {
             throw new IllegalStateException("1.21.5 keeps " + key.method_29177() + " in the world's registries and no world is loaded");
         }
         return access.method_30530(key);
+    }
+
+    /** the running server, or null */
+    static MinecraftServer server() {
+        return server;
+    }
+
+    /** the running server's registry access, else the client connection's; null when no world is loaded */
+    static class_5455 registries() {
+        MinecraftServer s = server;
+        return s != null ? s.method_30611() : client.get();
     }
 
     /** BuiltInRegistries.CAT_VARIANT */
