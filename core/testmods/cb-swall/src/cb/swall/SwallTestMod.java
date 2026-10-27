@@ -28,6 +28,8 @@ public class SwallTestMod implements ModInitializer {
     private static final List<String> FAILS = new ArrayList<>();
     /** calls of the restored 1.21.11 furnace burn (mixin/FurnaceBurnMixin) */
     public static final java.util.concurrent.atomic.AtomicInteger BURN_CALLS = new java.util.concurrent.atomic.AtomicInteger();
+    /** calls of ItemStack.CODEC's components getter lambda (mixin/ItemStackCodecLambdaMixin) */
+    public static final java.util.concurrent.atomic.AtomicInteger CODEC_PATCH_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     private static int passed;
 
     private static void check(String name, boolean ok, Object detail) {
@@ -2034,6 +2036,16 @@ public class SwallTestMod implements ModInitializer {
             check("swall12b.bundleWeightMixin", took == 2 && dirt > 2, took + " " + dirt);
         } catch (Throwable t) {
             check("swall12.recipeBuilders", false, t);
+        }
+        try {
+            // ItemStackCodecLambdaMixin: encoding a stack runs the codec's components getter lambda
+            int before = CODEC_PATCH_CALLS.get();
+            net.minecraft.class_1799 named = new net.minecraft.class_1799(net.minecraft.class_1802.field_20391, 3);
+            com.google.gson.JsonElement json = net.minecraft.class_1799.field_24671.encodeStart(JsonOps.INSTANCE, named).getOrThrow();
+            check("swall12b.codecLambdaMixin", CODEC_PATCH_CALLS.get() > before && json.toString().contains("stone"),
+                (CODEC_PATCH_CALLS.get() - before) + " " + json);
+        } catch (Throwable t) {
+            check("swall12b.codecLambdaMixin", false, t);
         }
     }
 }
