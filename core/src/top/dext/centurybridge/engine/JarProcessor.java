@@ -4507,6 +4507,37 @@ public final class JarProcessor {
         // judged by the owner it finally names
         final Set<String> kindFixed = new java.util.TreeSet<>();
         ClassVisitor kinds = new ClassVisitor(Opcodes.ASM9, cw) {
+            /**
+             * an InnerClasses entry a class rename made impossible: a nested class renamed onto its outer class (1.21.11
+             * folds RenderType$CompositeRenderType into RenderType, s11-rendertypes classRenames) leaves "RenderType of
+             * RenderType", and the JVM refuses to define the class ("Class is both outer and inner class": the climbed
+             * 1.21.9 layer's CbParticles); one renamed to a top-level class (no '$') is no member of the outer any more.
+             * The entry only describes nesting; the references themselves stand renamed
+             */
+            @Override
+            public void visitInnerClass(String name, String outerName, String innerName, int access) {
+                if (outerName != null && (name.equals(outerName) || name.indexOf('$') < 0)) {
+                    return;
+                }
+                super.visitInnerClass(name, outerName, innerName, access);
+            }
+
+            private String self;
+
+            @Override
+            public void visit(int version, int acc, String name, String sig, String superName, String[] ifaces) {
+                self = name;
+                super.visit(version, acc, name, sig, superName, ifaces);
+            }
+
+            /** the same rename on the nest: a host listing itself as its own member */
+            @Override
+            public void visitNestMember(String member) {
+                if (!member.equals(self)) {
+                    super.visitNestMember(member);
+                }
+            }
+
             @Override
             public MethodVisitor visitMethod(int acc, String mName, String mDesc, String sig, String[] ex) {
                 return new KindNormalizer(super.visitMethod(acc, mName, mDesc, sig, ex), chain, kindFixed);
