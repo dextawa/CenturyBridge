@@ -8,6 +8,8 @@
     "CbRecipeBookRestoredMixin",
     "CbRecipeBookSettingsRestoredMixin",
     "CbRecipeBookSettingsRestoredMixinHooks",
+    "CbTagsProviderRestoredMixin",
+    "CbIntrinsicTagsRestoredMixin",
     "CbRecipeBookRouteMixin",
     "CbHorseJumpRestoredMixin",
     "CbHorseJumpRouteMixin",
