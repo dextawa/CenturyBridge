@@ -367,16 +367,21 @@ public final class CbAdvJson {
     // ------------------------------------------------------------------ EntitySubPredicate
 
     /**
-     * EntitySubPredicate.ANY: matches anything, of type "any". 1.20.2 keeps that type (Types.ANY, whose
-     * codec is a unit codec of one vanilla instance); decoding {"type": "any"} answers that very instance.
+     * EntitySubPredicate.ANY: matches anything, of type "any". 1.20.2's Types.ANY wraps MapCodec.unit of that one
+     * vanilla instance; decoding an empty map with that type's own codec answers it. Not through the name dispatch
+     * ({"type": "any"} with EntitySubPredicate.CODEC): 1.20.5 registers no "any" (EntitySubPredicates, javap of
+     * client-1.20.5-intermediary-code.jar class_7378: lightning, fishing_hook, player, slime, ...), so once this layer
+     * climbs, that decode fails and this class could not initialise. Types.ANY itself climbs: the 1.20.5 step gives it
+     * back (facade EntitySubPredicateTypes.field_38724, the unit codec of an always-matching predicate).
      */
-    public static final net.minecraft.class_7376 field_38723 = net.minecraft.class_7376.field_45747
-        .parse(JsonOps.INSTANCE, anyType()).result().orElseThrow();
+    public static final net.minecraft.class_7376 field_38723 = anyPredicate();
 
-    private static JsonObject anyType() {
-        JsonObject o = new JsonObject();
-        o.addProperty("type", "any");
-        return o;
+    private static net.minecraft.class_7376 anyPredicate() {
+        @SuppressWarnings("unchecked")
+        MapCodec<net.minecraft.class_7376> unit =
+            (MapCodec<net.minecraft.class_7376>) net.minecraft.class_7376.class_7378.field_38724.comp_1774();
+        return unit.codec().parse(JsonOps.INSTANCE, new JsonObject()).result()
+            .orElseThrow(() -> new IllegalStateException("EntitySubPredicate Types.ANY's codec decodes no instance"));
     }
 
     /** EntitySubPredicate.fromJson(json): {"type": ..., the type's fields} through 1.20.2's dispatch codec */
