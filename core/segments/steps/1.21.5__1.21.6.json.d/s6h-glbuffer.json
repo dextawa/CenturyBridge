@@ -1,0 +1,6 @@
+{
+ "classRenames": {
+  "net/minecraft/class_10859$class_10228": "net/minecraft/class_10859$class_11269"
+ },
+ "_classRenames_basis_s6h_glbuffer": "GlBuffer.ReadView (class_10859$class_10228, implements GpuBuffer.ReadView: data() answers the mapped ByteBuffer, close() unmaps the buffer, glUnmapBuffer(handle)) is 1.21.6's GlBuffer.GlMappedView (class_10859$class_11269, implements GpuBuffer.MappedView -- the class the step renames GpuBuffer.ReadView to, s6f-buffers.json: data() the mapped ByteBuffer, close() once runs the unmap the encoder handed it): javap of both. The constructor changed ((int handle, ByteBuffer) -> (Runnable unmap, GlBuffer, ByteBuffer)); subclasses (extend / super-ctor rows) stay open"
+}

@@ -1,6 +1,8 @@
 package cb.s6c;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import java.util.List;
+import net.minecraft.class_1041;
 import net.minecraft.class_1799;
 import net.minecraft.class_1802;
 import net.minecraft.class_1921;
@@ -18,6 +20,11 @@ import net.minecraft.class_8519;
  *      lines, positioner, x, y); a MultiLineEditBox; SplashRenderer.render with the masks 0xFF000000, 0x80000000, 0
  *   2  renderBlurredBackground() over the world, setTooltipForNextRenderPass("cb") every frame
  *   3  Screen.PANORAMA.render, setTooltipForNextRenderPass("cb") then clearTooltipForNextRenderPass() (no tooltip)
+ *   4  scissor: RenderSystem.enableScissor over the GUI rectangle (20,20)-(80,80) in framebuffer pixels (1.21.5's
+ *      GuiGraphics.applyScissor formula), a red fill of the whole screen, flush(), RenderSystem.disableScissor(); then
+ *      GuiGraphics.enableScissor(100, 20, 160, 80), a green fill of the whole screen, disableScissor(); then an
+ *      unclipped blue box (100,100)-(120,120). Red must show only inside the first rectangle, green only inside the
+ *      second (S6cClient reads the pixels).
  * The default background is switched off, so the blur and the panorama come only from the calls under test.
  */
 public class S6cScreen extends class_437 {
@@ -64,6 +71,18 @@ public class S6cScreen extends class_437 {
             method_57734();
             g.method_51433(field_22793, "mode 2: blurred world, tooltip cb at the mouse", 10, 10, 0xFFFFFFFF, true);
             method_47415(class_2561.method_43470("cb"));
+        } else if (mode == 4) {
+            class_1041 window = field_22787.method_22683();
+            int scale = (int) window.method_4495();
+            int h = window.method_4506();
+            RenderSystem.enableScissor(20 * scale, h - 80 * scale, 60 * scale, 60 * scale);
+            g.method_25294(0, 0, field_22789, field_22790, 0xFFFF0000);
+            g.method_51452();
+            RenderSystem.disableScissor();
+            g.method_44379(100, 20, 160, 80);
+            g.method_25294(0, 0, field_22789, field_22790, 0xFF00FF00);
+            g.method_44380();
+            g.method_25294(100, 100, 120, 120, 0xFF0000FF);
         } else {
             class_437.field_49509.method_3317(g, field_22789, field_22790, 1f, 0f);
             g.method_51433(field_22793, "mode 3: panorama, no tooltip", 10, 10, 0xFFFFFFFF, true);

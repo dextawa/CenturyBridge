@@ -7,6 +7,7 @@
     "CbRenderAttachedViewMixin",
     "CbRecipeBookRestoredMixin",
     "CbRecipeBookSettingsRestoredMixin",
+    "CbRecipeBookSettingsRestoredMixinHooks",
     "CbRecipeBookRouteMixin",
     "CbHorseJumpRestoredMixin",
     "CbHorseJumpRouteMixin",
@@ -36,7 +37,15 @@
     "CbScreenTooltipMixin",
     "CbTextureViewsMixin",
     "CbSectionDistanceRestoredMixin",
-    "CbSectionDispatcherRestoredMixin"
+    "CbSectionDistanceRestoredMixinHooks",
+    "CbSectionDispatcherRestoredMixin",
+    "CbSectionDispatcherRestoredMixinHooks",
+    "CbGuiScissorMixin",
+    "CbGuiScissorFrameMixin",
+    "CbGuiScissorGraphicsMixin",
+    "CbCubeMapFacesMixin",
+    "CbCubeMapFacesMixinHooks",
+    "CbFontInternalRestoredMixin"
   ],
   "server": [],
   "injectors": {
