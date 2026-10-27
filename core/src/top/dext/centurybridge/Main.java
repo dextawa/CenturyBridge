@@ -270,6 +270,15 @@ public final class Main {
                 chain.mixinRepair.mixinMoveSelf = chain.mixinMoveSelf; // and on instance methods, this through the hops (C17)
                 chain.mixinRepair.converter = chain::argConverter; // captured target arguments the step retyped (CASE 14)
                 chain.mixinRepair.argMaps = chain::mixinArgMaps; // and arguments a same-class reshape moved (CASE 14, third)
+                // injectors on statics the step redirects into a layer class move onto that class's method (s6e B6)
+                chain.mixinRepair.staticMove = k -> {
+                    String r = chain.staticRedirects.get(k);
+                    if (r == null) return null;
+                    int p = k.indexOf('(');
+                    String nm = r.contains("#") ? r.substring(r.indexOf('#') + 1) : k.substring(k.lastIndexOf('.', p) + 1, p);
+                    if (nm.contains("(")) nm = nm.substring(0, nm.indexOf('('));
+                    return (r.contains("#") ? r.substring(0, r.indexOf('#')) : r) + "." + nm + chain.renamedDesc(k.substring(p));
+                };
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");

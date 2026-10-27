@@ -7,7 +7,10 @@ instance handler reading `this` takes the "self" hop LevelExtractor.levelRendere
 
 A pair is taken only on bytecode evidence (javap -c -p of both code jars):
   - 26.2's LevelRenderer no longer declares the method (name + descriptor), and
-  - 26.2's LevelExtractor declares the method under the same name with the same descriptor, and
+  - 26.2's LevelExtractor declares the method under the same name with the same descriptor -- or, renamed, the one
+    LevelExtractor method of that descriptor (not itself a V LevelRenderer name) that exactly V's caller classes call
+    (several: the one whose body matches at >= MIN_RATIO; extractLevel -> extract, getSectionStatistics ->
+    sectionStatistics), and
   - the two bodies are the same code: their instruction sequences (opcodes and operands, constant pool indices and
     offsets dropped, LevelRenderer as owner of a member LevelExtractor now declares spelled as LevelExtractor)
     match at a ratio >= MIN_RATIO (difflib), the ratio written into the entry's basis.
@@ -60,6 +63,7 @@ def javap(jar, cls):
             ins = re.sub(r'^\s+\d+: ', '', line)
             ins = re.sub(r'#\d+(, *\d+)?', '', ins)          # constant pool indices
             ins = re.sub(r'\b(goto|if\w*|jsr)\s+\d+', r'\1', ins)  # branch offsets
+            ins = re.sub(r'\s+', ' ', ins)                    # javap pads to the width of the pool index it printed
             methods[cur].append(ins.strip())
         elif line.strip() == '}' or line == '':
             pass
@@ -120,28 +124,47 @@ def main():
     for key, body in sorted(v.items()):
         if key in w_lr or key.startswith('<') or key.startswith('lambda$'):
             continue
+        to = key
+        renamed = False
         if key not in w_le:
-            same = [k for k in w_le if k.split('(')[0] == key.split('(')[0]]
-            print(f'open {key}: not on LevelExtractor with this descriptor' + (f' (LevelExtractor has {same})' if same else ''))
-            continue
-        a, b = norm(body, moved), norm(w_le[key], moved)
+            # renamed with the same descriptor (26.2 extractLevel -> LevelExtractor.extract): the one LevelExtractor
+            # method of that descriptor, not itself a V LevelRenderer name, that exactly V's callers call
+            desc = key[key.index('('):]
+            vc = v_calls.get(key, set())
+            cands = [k for k in w_le if k.endswith(desc) and k[k.index('('):] == desc and k.split('(')[0] not in names(v)
+                     and vc and w_calls.get(k, set()) == vc]
+            if len(cands) > 1:
+                # several such methods: the one whose body is V's (ratio >= MIN_RATIO, the others below it)
+                rs = {k: difflib.SequenceMatcher(None, norm(body, moved), norm(w_le[k], moved), autojunk=False).ratio() for k in cands}
+                best = [k for k in cands if rs[k] >= MIN_RATIO]
+                if len(best) == 1:
+                    cands = best
+            if len(cands) != 1:
+                same = [k for k in w_le if k.split('(')[0] == key.split('(')[0]]
+                print(f'open {key}: not on LevelExtractor with this descriptor' + (f' (LevelExtractor has {same})' if same else '')
+                      + (f' (renamed candidates by descriptor and callers: {cands})' if cands else ''))
+                continue
+            to, renamed = cands[0], True
+        a, b = norm(body, moved), norm(w_le[to], moved)
         r = difflib.SequenceMatcher(None, a, b, autojunk=False).ratio()
-        vc, wc = v_calls.get(key, set()), w_calls.get(key, set())
+        vc, wc = v_calls.get(key, set()), w_calls.get(to, set())
         same_callers = bool(vc) and vc == wc
         if r < MIN_RATIO and not same_callers:
             print(f'open {key}: bodies differ (ratio {r:.2f} < {MIN_RATIO}) and the callers differ '
                   f'(V {sorted(vc)}, W {sorted(wc)})')
             continue
         why = (f'same code (javap -c instruction ratio {r:.2f}, {len(a)} vs {len(b)} instructions)' if r >= MIN_RATIO
-               else f'the same callers call it (V LevelRenderer.{key} from {sorted(vc)}; W LevelExtractor.{key} from the '
+               else f'the same callers call it (V LevelRenderer.{key} from {sorted(vc)}; W LevelExtractor.{to} from the '
                     f'same classes), its body partly moved (ratio {r:.2f}): an anchor is judged in the W body')
+        decl = f'declares it as {to} (the same descriptor; no other LevelExtractor method of it is called by those classes)' if renamed \
+            else 'declares it'
         moves[f'{LR}.{key}'] = {
-            'to': f'{LE}.{key}',
+            'to': f'{LE}.{to}',
             'self': SELF,
-            'basis': f'26.2 LevelRenderer lacks {key}; LevelExtractor declares it, {why}; LevelExtractor.levelRenderer is the LevelRenderer '
+            'basis': f'26.2 LevelRenderer lacks {key}; LevelExtractor {decl}, {why}; LevelExtractor.levelRenderer is the LevelRenderer '
                      f'it extracts for (26.2 Minecraft.<init>: new LevelExtractor(this, state, this.levelRenderer))',
         }
-        print(f'move {key} (ratio {r:.2f}{", same callers" if same_callers else ""})')
+        print(f'move {key}{" => " + to if renamed else ""} (ratio {r:.2f}{", same callers" if same_callers else ""})')
     with open(FRAG, 'w', encoding='utf-8', newline='\n') as f:
         json.dump({'_smixin6_extractor_moves_gen_basis': 'generated by core/tools/gen_s26_extractor_moves.py (s26 C17): '
                    'LevelRenderer methods 26.2 moved, the same code, onto LevelExtractor -- regenerate, never hand-edit',

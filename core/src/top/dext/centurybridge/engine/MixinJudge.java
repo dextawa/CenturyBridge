@@ -604,9 +604,12 @@ public final class MixinJudge {
         // a static initializer is never called by name: V's code reaches it by initializing the class (smx4b
         // case 4: a V enum / constant table whose role W moved into a registry or tags -- MapDecoration$Type,
         // EnchantmentCategory -- was initialized by vanilla on every use; a mixin there changed what vanilla read)
-        boolean unreached = source != null && sourceRows.isEmpty() && (wm.name.equals("<clinit>")
+        // asked by V's name of the member (the probe row's target): a layer class's static an injector moved onto
+        // (s6e B6, staticRedirects "Owner#otherName") carries a name V's code never spelled
+        String vName = rowTarget != null && rowTarget.indexOf('(') > 0 ? rowTarget.substring(0, rowTarget.indexOf('(')) : wm.name;
+        boolean unreached = source != null && sourceRows.isEmpty() && (vName.equals("<clinit>")
             ? !source.initialized(rowOwner)
-            : !source.invokes(wm.name) || !facade && onlyRestoredCallers(source.callers(wm.name), restoring));
+            : !source.invokes(vName) || !facade && onlyRestoredCallers(vName, restoring, new HashSet<>()));
         if (unreached) {
             rowLayer = facade ? "facade-only-unreached" : "restored-unreached";
             return null;
@@ -623,18 +626,32 @@ public final class MixinJudge {
     }
 
     /**
-     * every V call of the name stands in a member the same layer restores (s26b C12: Strider's navigation
-     * hasValidPathType super-calls GroundPathNavigation's, both restored, and nothing else in V asks either): the
-     * call is the restored code's own, not vanilla W reaching the member. A method reference, or an unreadable
-     * class, counts as reaching it
+     * every V call of the name stands in a member the same layer restores, and V's vanilla code never reached that
+     * member either -- by the same rule, recursively (s26b C12: Strider's navigation hasValidPathType super-calls
+     * GroundPathNavigation's, both restored, and nothing else in V asks either): the call is the restored code's own,
+     * not vanilla reaching the member. A restored caller V's vanilla code did reach (smx4d (7): 1.20.4
+     * FriendlyByteBuf.writeGameProfile, called by packet writers vanilla ran on every send) makes the member reached:
+     * W's vanilla path runs its own code there, so a mixin on the restored copy changes nothing vanilla does. A method
+     * reference, or an unreadable class, counts as reaching it
      */
-    private static boolean onlyRestoredCallers(Set<String> callers, LayerMembers restoring) {
-        if (callers == null || callers.isEmpty() || restoring == null) {
+    private boolean onlyRestoredCallers(String name, LayerMembers restoring, Set<String> seen) {
+        Set<String> callers = source.callers(name);
+        if (callers == null || callers.isEmpty() || restoring == null || !seen.add(name)) {
             return false;
         }
         for (String c : callers) {
             int dot = c.lastIndexOf('.', c.indexOf('('));
-            if (c.equals("?") || dot <= 0 || restoring.member(c.substring(0, dot), c.substring(dot + 1, c.indexOf('(')), c.substring(c.indexOf('('))) == null) {
+            if (c.equals("?") || dot <= 0) {
+                return false;
+            }
+            String cn = c.substring(dot + 1, c.indexOf('('));
+            if (restoring.member(c.substring(0, dot), cn, c.substring(c.indexOf('('))) == null) {
+                return false;
+            }
+            if (cn.equals(name) || !source.invokes(cn)) {
+                continue; // a restored member calling its own name (a super call), or one V never called
+            }
+            if (!onlyRestoredCallers(cn, restoring, seen)) {
                 return false;
             }
         }
@@ -643,6 +660,12 @@ public final class MixinJudge {
 
     /** whether a supertype of the W class (W's code, not the layer's) declares an overridable name+desc */
     private boolean overridesW(ClassNode c, String name, String desc) {
+        // java/lang/Object's overridable methods: every virtual equals / hashCode / toString on the class runs the
+        // restored override (s6e B2)
+        if (name.equals("equals") && desc.equals("(Ljava/lang/Object;)Z") || name.equals("hashCode") && desc.equals("()I")
+                || name.equals("toString") && desc.equals("()Ljava/lang/String;")) {
+            return true;
+        }
         java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
         Set<String> seen = new HashSet<>();
         if (c.superName != null) todo.add(c.superName);

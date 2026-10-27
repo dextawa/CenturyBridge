@@ -402,7 +402,9 @@ public final class MixinRepair {
      * names) -- the conversion-time signal "a converted mod mixed this restored member" (smx4 (l)). A layer route
      * that cannot compare answers consults the restored member only when a loaded mod's jar lists it (the layer
      * reads every jar's file through its class loader's getResources), and otherwise leaves W's own path exactly
-     * as it is. Lines of mixins stripped later in the conversion are dropped ({@link #dropMixed})
+     * as it is. Lines of mixins stripped later in the conversion are dropped ({@link #dropMixed}). A kept injector on a
+     * facade's member (the step renames the target class to one of the layer's) is written too, keyed by the facade's
+     * name (s6e B1); so is an injector moved onto a layer class's static (s6e B6)
      */
     public String stepTo;
     public static final String MIXED_DIR = "META-INF/centurybridge/mixed/";
@@ -580,6 +582,17 @@ public final class MixinRepair {
             }
             if (fatalWhy != null) return new MixinResult(null, false, repairs, disabled, fatalWhy);
         }
+        // smx4d (6): an anonymous class javac renumbered (ByteBufCodecs$20 -> $22 at 1.21.2, the same methods)
+        for (String t : new ArrayList<>(targets)) {
+            String to = renumberedAnonymous(mx, refmap, t);
+            if (to != null && retargetMixin(mx, refmap, t, to)) {
+                classChanged = true;
+                if (refmap != null) refmapChanged = true;
+                targets.set(targets.indexOf(t), to);
+                repairs.add("anonymous-renumbered " + shortName + ": " + t + " -> " + to
+                    + " (the one sibling anonymous class declaring every member the mixin names)");
+            }
+        }
         if ((mx.access & Opcodes.ACC_INTERFACE) != 0 && moveInvokers(mx, refmap, targets, shortName, repairs)) {
             classChanged = true;
         }
@@ -681,8 +694,33 @@ public final class MixinRepair {
                                     if (viaRefmap) { refmapPut(refmap, sel, repl); dirty[1] = true; }
                                     else { setMethodSelector(an, idx, repl); dirty[0] = true; }
                                 });
-                            } else if (deadWhy == null) {
-                                deadWhy = "target gone: @" + kind + " " + where;
+                            } else {
+                                String toLayer = s.desc != null && staticMove != null ? staticMove.apply(owner + "." + s.name + s.desc) : null;
+                                if (toLayer != null && toLayer.startsWith("top/dext/")) {
+                                    // s6e B6, the last resort for a V static W lost: the step staticRedirects it into a layer
+                                    // class (a class mixin cannot restore a non-private static), which holds V's code for
+                                    // converted mods' calls. The injector moves onto a mixin of that method, and the move is
+                                    // recorded in the mixed signal: a layer route sending W's path through the method
+                                    // (@CbVanillaReads) consults it only when mixed. Taken only where nothing W runs itself
+                                    // holds the code (no restored member, no mixinMoves, no same-name method to drop onto)
+                                    String why0 = (handler.access & Opcodes.ACC_STATIC) == 0 ? "an instance handler on a static"
+                                        : movable(mx, handler, an, anchors, toLayer, owner, null);
+                                    if (why0 == null) {
+                                        fixNotes.add("move " + where + " => " + toLayer + " (staticRedirects: V's static held by a layer class)");
+                                        fixes.add(() -> {
+                                            moveInjector(mx, handler, an, toLayer, owner, null);
+                                            int d = toLayer.indexOf('.');
+                                            ClassNode lc = target(toLayer.substring(0, d));
+                                            mixed(crossMixinName(toLayer.substring(0, d)), toLayer.substring(0, d),
+                                                new Sel(null, toLayer.substring(d + 1, toLayer.indexOf('(')), toLayer.substring(toLayer.indexOf('(')), false).match(lc));
+                                            dirty[0] = true;
+                                        });
+                                    } else if (deadWhy == null) {
+                                        deadWhy = "target gone: @" + kind + " " + where + " (staticRedirects to " + toLayer + ": " + why0 + ")";
+                                    }
+                                } else if (deadWhy == null) {
+                                    deadWhy = "target gone: @" + kind + " " + where;
+                                }
                             }
                             continue;
                         }
@@ -706,6 +744,10 @@ public final class MixinRepair {
                             }
                             if (cands.stream().allMatch(layerMembers::isMember)) {
                                 mixed(mx.name, owner, cands); // a converted mod mixes the layer's restored member
+                            } else if (owner.startsWith("top/dext/") && layerEntry(owner) != null) {
+                                // a member of a facade (a class the step renames to one of the layer's, s6e B1:
+                                // TerracottaBlock): keyed by the facade's own name, as the layer's route reads it
+                                mixed(mx.name, owner, cands);
                             }
                             live = true;
                             break;
@@ -1276,8 +1318,48 @@ public final class MixinRepair {
             if (selfHopCopy(mx, h, to.substring(0, dot), vOwner, self, why, new ArrayList<>()) == null) return why.get(0);
         }
         if (anchors == null) return "an anchor not statically evaluable";
-        if (!anchors.isEmpty() && !anchorsIn(wm, wc, anchors)) return "its anchor is not in the moved method " + anchors;
+        if (!anchors.isEmpty() && !anchorsIn(wm, wc, anchors)) {
+            // s11 C6(a): an INVOKE anchor on another V method that moved too (a RenderType factory overload calling
+            // another factory): in the moved code the call names where that one went (moveInjector respells it)
+            List<Anchor> tr = movedAnchors(anchors);
+            if (tr == null || !anchorsIn(wm, wc, tr)) return "its anchor is not in the moved method " + anchors;
+        }
         return null;
+    }
+
+    /** the anchors with each INVOKE of a mixinMoves key respelled as its W method, or null when none is one */
+    private List<Anchor> movedAnchors(List<Anchor> anchors) {
+        List<Anchor> out = new ArrayList<>();
+        boolean any = false;
+        for (Anchor a : anchors) {
+            String to = a.kind.equals("INVOKE") && a.owner != null && a.desc != null ? mixinMoves.get(a.owner + "." + a.name + a.desc) : null;
+            if (to != null) {
+                int d = to.indexOf('.');
+                int p = to.indexOf('(');
+                out.add(new Anchor(a.kind, to.substring(0, d), to.substring(d + 1, p), to.substring(p), a.constant, a.ordinal, a.role));
+                any = true;
+            } else {
+                out.add(a);
+            }
+        }
+        return any ? out : null;
+    }
+
+    /** every @At target (slices included) naming a mixinMoves key, respelled as its W method (s11 C6(a)) */
+    private void respellMovedTargets(AnnotationNode an) {
+        if (an.values == null) return;
+        for (int i = 0; i + 1 < an.values.size(); i += 2) {
+            Object v = an.values.get(i + 1);
+            if ("target".equals(an.values.get(i)) && v instanceof String t && t.startsWith("L") && t.indexOf(';') > 0 && t.indexOf('(') > t.indexOf(';')) {
+                String key = t.substring(1, t.indexOf(';')) + "." + t.substring(t.indexOf(';') + 1);
+                String to = mixinMoves.get(key);
+                if (to != null) an.values.set(i + 1, "L" + to.substring(0, to.indexOf('.')) + ";" + to.substring(to.indexOf('.') + 1));
+            } else if (v instanceof AnnotationNode a) {
+                respellMovedTargets(a);
+            } else if (v instanceof List<?> l) {
+                for (Object o : l) if (o instanceof AnnotationNode a) respellMovedTargets(a);
+            }
+        }
     }
 
     private static final String SHADOW = "Lorg/spongepowered/asm/mixin/Shadow;";
@@ -1428,6 +1510,7 @@ public final class MixinRepair {
         }
         AnnotationNode moved = copyAnnotation(an);
         setSelector(moved, "L" + wOwner + ";" + to.substring(dot + 1));
+        respellMovedTargets(moved);
         List<Object[]> shadows = new ArrayList<>();
         MethodNode g = self != null && !self.isEmpty() && (h.access & Opcodes.ACC_STATIC) == 0
             ? selfHopCopy(mx, h, wOwner, vOwner, self, new ArrayList<>(), shadows) : null;
@@ -2575,6 +2658,11 @@ public final class MixinRepair {
     public LayerMembers layerMembers = LayerMembers.none();
     /** the step's classRenames (W side: a restored body calls the facade a V class is renamed to) */
     public Map<String, String> classRenames = Map.of();
+    /**
+     * Chain.staticRedirects as a move (s6e B6, set by Main): "V owner.name(desc)" -> "layer class.name(desc as the jar
+     * spells it)" of the static the step redirects V's static to, or null
+     */
+    public java.util.function.Function<String, String> staticMove;
     /** Chain.mixinMoves: "V owner.name(desc)" -> "W owner.name(desc)" of a static W keeps in another class */
     public Map<String, String> mixinMoves = Map.of();
     /** Chain.mixinMoveSelf: per mixinMoves key, the field hops from the W class's instance to V's (C17) */
@@ -2657,6 +2745,43 @@ public final class MixinRepair {
             }
         }
         return implIndex.getOrDefault(iface, List.of());
+    }
+
+    /**
+     * smx4d (6): javac numbers anonymous classes in order (Outer$N), and the number moves when the outer class gains or
+     * loses one before it while the members inside keep their names. For a target "Outer$N" (digits) that lacks a
+     * member the mixin names with a descriptor (injector selectors, @Shadow / @Accessor / @Invoker by name + the
+     * method's own descriptor): the one W class Outer$M (digits) declaring every such member, or null (none, or
+     * several: no evidence which). Only exact name + descriptor; a renamed method needs a body follow (not here).
+     */
+    private String renumberedAnonymous(ClassNode mx, JsonObject refmap, String t) {
+        int d = t.lastIndexOf('$');
+        if (d < 0 || !t.substring(d + 1).matches("\\d+")) return null;
+        List<String> wanted = new ArrayList<>();
+        for (MethodNode m : mx.methods) {
+            for (AnnotationNode an : annotations(m)) {
+                for (String sel : strings(values(an).get("method"))) {
+                    Sel sp = Sel.parse(refmapLookup(refmap, sel));
+                    if (sp.desc != null && !sp.wildcard && (sp.owner == null || sp.owner.equals(t))) wanted.add(sp.name + sp.desc);
+                }
+                if (an.desc.equals(SHADOW) && !m.name.startsWith("<")) wanted.add(m.name + m.desc);
+            }
+        }
+        if (wanted.isEmpty()) return null;
+        ClassNode tc = target(t);
+        if (tc != null && wanted.stream().allMatch(w -> tc.methods.stream().anyMatch(m -> (m.name + m.desc).equals(w)))) return null;
+        String outer = t.substring(0, d + 1);
+        List<String> hits = new ArrayList<>();
+        var en = code.entries();
+        while (en.hasMoreElements()) {
+            String n = en.nextElement().getName();
+            if (!n.startsWith(outer) || !n.endsWith(".class")) continue;
+            String c = n.substring(0, n.length() - 6);
+            if (c.equals(t) || !c.substring(outer.length()).matches("\\d+")) continue;
+            ClassNode cc = target(c);
+            if (cc != null && wanted.stream().allMatch(w -> cc.methods.stream().anyMatch(m -> (m.name + m.desc).equals(w)))) hits.add(c);
+        }
+        return hits.size() == 1 ? hits.get(0) : null;
     }
 
     /** replace one @Mixin target (value= Type or targets= string, via refmap if mapped) */
