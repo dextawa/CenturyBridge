@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_21_6.rt.CbScissor;
-import top.dext.centurybridge.step.v1_21_6.rt.CbVanillaReads;
 
 /**
  * The start of the frame's GUI build for a converted 1.21.5 mod's RenderSystem scissor (rt/CbScissor): 1.21.6's
@@ -15,7 +14,7 @@ import top.dext.centurybridge.step.v1_21_6.rt.CbVanillaReads;
  * drew stays with the RenderType draws. Additive: render runs whole.
  */
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
-@Mixin(value = net.minecraft.class_757.class, priority = CbVanillaReads.PRIORITY)
+@Mixin(net.minecraft.class_757.class)
 public abstract class CbGuiScissorFrameMixin {
 
     @Inject(method = "method_3192(Lnet/minecraft/class_9779;Z)V",

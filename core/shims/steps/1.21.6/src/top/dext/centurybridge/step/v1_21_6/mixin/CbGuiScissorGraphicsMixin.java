@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_21_6.rt.CbScissor;
-import top.dext.centurybridge.step.v1_21_6.rt.CbVanillaReads;
 
 /**
  * GuiGraphics.enableScissor (method_44379) / disableScissor (method_44380) end a converted 1.21.5 mod's RenderSystem
@@ -14,7 +13,7 @@ import top.dext.centurybridge.step.v1_21_6.rt.CbVanillaReads;
  * (javap; the only callers of ScissorStack.push / pop), whose top peek answers again. Additive at HEAD: both run whole.
  */
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
-@Mixin(value = net.minecraft.class_332.class, priority = CbVanillaReads.PRIORITY)
+@Mixin(net.minecraft.class_332.class)
 public abstract class CbGuiScissorGraphicsMixin {
 
     @Inject(method = "method_44379(IIII)V", at = @At("HEAD"))
