@@ -127,15 +127,17 @@ public final class Chain {
     /**
      * Where a V method's code lives on W for mixins ("mixinTargets"), judged by an area agent from both
      * bodies: key "owner.name(desc)" (V), value {"to": "name(desc)" of the same class on W, "args":
-     * [for each V argument the W argument index it arrives as, or -1], "basis": why}. MixinBridge moves
+     * [for each V argument the W argument index it arrives as, or -1, or "j Owner#name(desc)": derived from W's j-th
+     * argument by that static, taking exactly W's type and answering V's], "basis": why}. MixinBridge moves
      * an injector selecting the V method there (handlers taking the target's arguments get a W-shaped
-     * handler mapping them back through "args"; an argument at -1 leaves only handlers that take none),
-     * before anything it would infer itself. Mods' plain calls are not touched (that is callReshapes').
+     * handler mapping them back through "args", a derived one through its static; an argument at -1 leaves only
+     * handlers that never read it), before anything it would infer itself. Mods' plain calls are not touched
+     * (that is callReshapes').
      * "narrow": true, for an argument W widened: a captured argument whose W type differs from V's reaches the
      * handler only when it is V's type (an instanceof test, as override hooks' "narrow"), otherwise the handler is
      * skipped -- a handler written for V was never handed another.
      */
-    public record MixinTarget(String name, String desc, int[] args, String basis, boolean narrow) {}
+    public record MixinTarget(String name, String desc, int[] args, String[][] wrap, String basis, boolean narrow) {}
 
     public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
 
@@ -176,6 +178,15 @@ public final class Chain {
      * redirects' business.
      */
     public final java.util.Map<String, String> mixinMoves = new java.util.HashMap<>();
+
+    /**
+     * a mixinMoves entry's "self": field hops ["owner.name:desc", ...] from an instance of the W class to the instance
+     * of V's class whose method V ran (s26 C17: 26.2 LevelExtractor.levelRenderer). With it an INSTANCE method's
+     * injector whose handler reads {@code this} moves too: in the moved handler a @Shadow member the W class declares
+     * stays on {@code this} (it moved with the code: LevelExtractor.level, minecraft), any other use of {@code this}
+     * -- a @Shadow member only V's class still declares (public), {@code (V)(Object) this} -- takes the hops
+     */
+    public final java.util.Map<String, java.util.List<String[]>> mixinMoveSelf = new java.util.HashMap<>();
 
     /** "splitRenames": a V interface W made a final record, kept in two spellings in mods (SplitRename) */
     public final java.util.Map<String, SplitRename.Split> splitRenames = new java.util.HashMap<>();
@@ -1520,7 +1531,19 @@ public final class Chain {
                     // (source-era) hierarchy until an ancestor's mapping is found
                     java.util.List<String> mapped = memberBack.get(e.getKey() + "." + me.getKey());
                     if (mapped == null) {
-                        for (String anc : selfAndSupers(owner)) {
+                        // the root may be an interface the class implements (SimpleContainer.clearContent is
+                        // Clearable.method_5448's: s6d, a layer @Shadow of it was "not declared" past the wall)
+                        java.util.List<String> roots = new java.util.ArrayList<>();
+                        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(selfAndSupers(owner));
+                        java.util.Set<String> seen = new java.util.HashSet<>();
+                        while (!todo.isEmpty()) {
+                            String c = todo.poll();
+                            if (seen.add(c)) {
+                                roots.add(c);
+                                todo.addAll(interfacesOf.getOrDefault(c, List.of()));
+                            }
+                        }
+                        for (String anc : roots) {
                             String mojAnc = fwd.get(anc);
                             mapped = mojAnc == null ? null : memberBack.get(mojAnc + "." + me.getKey());
                             if (mapped != null) {
@@ -1716,6 +1739,119 @@ public final class Chain {
 
     /** the layer jar's classes read for facadeDeclares, by name (null value: not in the jar) */
     private final java.util.Map<String, org.objectweb.asm.tree.ClassNode> facadeClasses = new java.util.HashMap<>();
+
+    /**
+     * Where V's arguments arrive in a W method the step reshaped in place (same class, same name), for MixinRepair's
+     * captured-argument fit (smx1 CASE 14, third instance: 1.21 LivingEntity.method_20235 (EquipmentSlot) ->
+     * (Item, EquipmentSlot)): {V desc, int[] args (per V argument the W index), String[][] wrap (per V argument the
+     * W -> V static, or null)} from each overrideHooks entry with "args" whose new shape is {@code nameDesc} and whose
+     * onlyUnder / notUnder admit the W class {@code owner}, and from each mixinTargets entry of {@code owner} landing
+     * on it under the same name.
+     */
+    public java.util.List<Object[]> mixinArgMaps(String owner, String nameDesc) {
+        java.util.List<Object[]> out = new java.util.ArrayList<>();
+        int p = nameDesc.indexOf('(');
+        String name = nameDesc.substring(0, p);
+        String wDesc = nameDesc.substring(p);
+        org.objectweb.asm.Type[] wa = org.objectweb.asm.Type.getArgumentTypes(wDesc);
+        for (OverrideHook h : overrideHooks) {
+            if (h.args == null || !h.newName.equals(name) || !h.oldName.equals(name) || !h.newDesc.equals(wDesc)) continue;
+            if (h.onlyUnder != null && !targetUnder(owner, h.onlyUnder) || h.notUnder != null && targetUnder(owner, h.notUnder)) continue;
+            org.objectweb.asm.Type[] va = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
+            if (va.length != h.args.length) continue;
+            String[][] wrap = new String[va.length][];
+            for (int i = 0; i < va.length; i++) {
+                if (h.args[i] >= 0 && h.args[i] < wa.length && !wa[h.args[i]].equals(va[i])) wrap[i] = h.wrapFor(wa[h.args[i]], va[i]);
+            }
+            out.add(new Object[] {h.oldDesc, h.args, wrap});
+        }
+        String pre = owner + "." + name + "(";
+        for (java.util.Map.Entry<String, MixinTarget> e : mixinTargets.entrySet()) {
+            MixinTarget mt = e.getValue();
+            if (!e.getKey().startsWith(pre) || !mt.name().equals(name) || !mt.desc().equals(wDesc) || mt.args() == null) continue;
+            out.add(new Object[] {e.getKey().substring(pre.length() - 1), mt.args(), mt.wrap()});
+        }
+        return out;
+    }
+
+    /** whether W class {@code c} is {@code anc} or extends it (target superclasses) */
+    private boolean targetUnder(String c, String anc) {
+        for (String x = c; x != null; x = targetSuperOf.get(x)) {
+            if (x.equals(anc)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * A static of the step's wiring converting a W value to the V type that stood in its place (smx1 CASE 14: a kept
+     * injector's handler captures a target argument whose type the step changed -- 1.21.2 RecipeManager.fromJson's
+     * ResourceLocation id became a ResourceKey, the handler still takes the ResourceLocation). The wiring declares such
+     * converters where vanilla hands a mod a W value in V's place: an override hook's "wrap" (new argument -> old) and
+     * a call reshape's "ret conv" (W's answer -> V's). {owner, name, desc} taking exactly {@code w} and answering exactly
+     * {@code v}; null when the wiring has none, or has several whose bodies (the layer jar) are not instruction for
+     * instruction the same -- two different conversions of one pair are not the engine's to choose between.
+     */
+    public String[] argConverter(org.objectweb.asm.Type w, org.objectweb.asm.Type v) {
+        String want = "(" + w.getDescriptor() + ")" + v.getDescriptor();
+        java.util.Map<String, String[]> found = new java.util.TreeMap<>();
+        for (OverrideHook h : overrideHooks) {
+            for (String[] s : h.wraps) {
+                if (s[2].equals(want)) {
+                    found.put(s[0] + "." + s[1] + s[2], s);
+                }
+            }
+        }
+        for (CallReshape r : callReshapes.values()) {
+            if ("conv".equals(r.retKind) && want.equals(r.retDesc)) {
+                found.put(r.retOwner + "." + r.retName + r.retDesc, new String[] {r.retOwner, r.retName, r.retDesc});
+            }
+        }
+        if (found.size() <= 1) {
+            return found.isEmpty() ? null : found.values().iterator().next();
+        }
+        String body = null;
+        for (String[] s : found.values()) {
+            String b = layerBody(s[0], s[1], s[2]);
+            if (b == null || body != null && !body.equals(b)) {
+                return null;
+            }
+            body = b;
+        }
+        return found.values().iterator().next();
+    }
+
+    /** a layer-jar method's instructions as text (opcodes and operands, no labels / lines / frames), or null */
+    private String layerBody(String owner, String name, String desc) {
+        if (layerJar == null) {
+            return null;
+        }
+        try (java.util.zip.ZipFile z = new java.util.zip.ZipFile(layerJar.toFile())) {
+            java.util.zip.ZipEntry e = z.getEntry(owner + ".class");
+            if (e == null) {
+                return null;
+            }
+            org.objectweb.asm.tree.ClassNode c = new org.objectweb.asm.tree.ClassNode();
+            new org.objectweb.asm.ClassReader(z.getInputStream(e).readAllBytes()).accept(c,
+                org.objectweb.asm.ClassReader.SKIP_DEBUG | org.objectweb.asm.ClassReader.SKIP_FRAMES);
+            for (org.objectweb.asm.tree.MethodNode m : c.methods) {
+                if (m.name.equals(name) && m.desc.equals(desc)) {
+                    org.objectweb.asm.util.Textifier t = new org.objectweb.asm.util.Textifier();
+                    m.accept(new org.objectweb.asm.util.TraceMethodVisitor(t));
+                    StringBuilder b = new StringBuilder();
+                    for (Object o : t.getText()) {
+                        String s = o.toString();
+                        if (!s.contains("MAXSTACK") && !s.contains("MAXLOCALS")) {
+                            b.append(s);
+                        }
+                    }
+                    return b.toString();
+                }
+            }
+            return null;
+        } catch (IOException ex) {
+            return null;
+        }
+    }
 
     /**
      * whether the facade the step renames a V class to (classRenames into CenturyBridge's classes, the layer jar)
@@ -3152,14 +3288,39 @@ public final class Chain {
                     String mtTo = o.get("to").getAsString();
                     int mtP = mtTo.indexOf('(');
                     int[] mtArgs = null;
+                    String[][] mtWrap = null;
                     if (o.has("args")) {
                         var mtA = o.getAsJsonArray("args");
                         mtArgs = new int[mtA.size()];
+                        mtWrap = new String[mtArgs.length][];
+                        org.objectweb.asm.Type[] vArgs = org.objectweb.asm.Type.getArgumentTypes(k.substring(k.indexOf('(')));
+                        org.objectweb.asm.Type[] wArgs = org.objectweb.asm.Type.getArgumentTypes(mtTo.substring(mtP));
                         for (int i = 0; i < mtArgs.length; i++) {
-                            mtArgs[i] = mtA.get(i).getAsInt();
+                            var e = mtA.get(i).getAsJsonPrimitive();
+                            if (e.isNumber()) {
+                                mtArgs[i] = e.getAsInt();
+                                continue;
+                            }
+                            // "<j> Owner#name(desc)": V's argument derived from W's j-th by a static (s26 C13 (2))
+                            String s = e.getAsString().trim();
+                            int sp = s.indexOf(' ');
+                            String where = "mixinTargets " + k + " args[" + i + "]";
+                            if (sp < 0) {
+                                throw new IllegalArgumentException(where + ": '" + s + "' is not \"<W index> Owner#name(desc)\"");
+                            }
+                            mtArgs[i] = Integer.parseInt(s.substring(0, sp));
+                            String[] ref = parseStaticRef(where, s.substring(sp + 1).trim());
+                            org.objectweb.asm.Type[] rp = org.objectweb.asm.Type.getArgumentTypes(ref[2]);
+                            if (mtArgs[i] < 0 || mtArgs[i] >= wArgs.length || i >= vArgs.length || rp.length != 1
+                                    || !rp[0].equals(wArgs[mtArgs[i]])
+                                    || !org.objectweb.asm.Type.getReturnType(ref[2]).equals(vArgs[i])) {
+                                throw new IllegalArgumentException(where + ": " + s + " must take W argument " + mtArgs[i]
+                                    + " and return V argument " + i + "'s type");
+                            }
+                            mtWrap[i] = ref;
                         }
                     }
-                    c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs,
+                    c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs, mtWrap,
                         o.has("basis") ? o.get("basis").getAsString() : "",
                         o.has("narrow") && o.get("narrow").getAsBoolean()));
                 }
@@ -3186,6 +3347,16 @@ public final class Chain {
                 var mm = root.getAsJsonObject("mixinMoves");
                 for (String k : mm.keySet()) {
                     c.mixinMoves.put(k, mm.getAsJsonObject(k).get("to").getAsString());
+                    if (mm.getAsJsonObject(k).has("self")) {
+                        java.util.List<String[]> l = new java.util.ArrayList<>();
+                        for (var e : mm.getAsJsonObject(k).getAsJsonArray("self")) {
+                            String h = e.getAsString(); // owner.name:desc
+                            int col = h.indexOf(':');
+                            int dot = h.lastIndexOf('.', col);
+                            l.add(new String[] {h.substring(0, dot), h.substring(dot + 1, col), h.substring(col + 1)});
+                        }
+                        c.mixinMoveSelf.put(k, l);
+                    }
                 }
             }
             if (root.has("mixinSplits")) {
