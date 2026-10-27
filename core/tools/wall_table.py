@@ -911,10 +911,14 @@ class Table:
             if self.w_has(w, "M", n, dt, []):
                 matched += 0.5  # inherited on W: an override every subclass of the parent may have
                 continue
-            if any(x.name == n for x in own_w):
-                matched += 0.5  # the same name, reshaped in place
-                continue
+            # the same name with another descriptor: reshaped in place, unless the body moved to another member of
+            # the class and the name went to new code (26.1 BundleContents: 1.21.11's int getSelectedItem() is
+            # getSelectedItemIndex(), the same code; getSelectedItem() now answers an ItemStackTemplate) -- looked
+            # for below, the same name counting half when nothing else is the same code
+            reshaped = any(x.name == n for x in own_w)
             if not (self.identity or TOKEN.match(m.name)):
+                if reshaped:
+                    matched += 0.5
                 continue
             cands = []
             for x in own_w:
@@ -926,14 +930,17 @@ class Table:
                 ok, bv = self.same_code(m, x)
                 if ok:
                     cands.append((x, v + bv, self.last_anchors))
-            if len(cands) == 1:
+            if len(cands) == 1 and not (reshaped and cands[0][2] < 1):
                 x, v, anchors = cands[0]
                 matched += 1
                 wused.add((x.name, x.desc))
                 cvotes.extend(e for e in v if e[0] == "C")
-                renames.append(("M", c, m.name, x.name, anchors, "same code"))
+                renames.append(("M", c, m.name, x.name, anchors,
+                                "same code (its name went to another descriptor)" if reshaped else "same code"))
                 renames.extend(("M" if e[0] == "M" else "F", e[1], e[2], e[4], anchors, "named in a body that is the same code")
                                for e in v if e[0] in ("M", "F"))
+            elif reshaped:
+                matched += 0.5  # the same name, reshaped in place
         fmoved = self.field_reuse(c, w) if commit else {}
         if commit:
             for k, v in self.same_init_constants(c, w).items():

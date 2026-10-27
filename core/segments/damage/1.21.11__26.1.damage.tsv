@@ -535,8 +535,6 @@ call-inherited	net/minecraft/class_4184	method_55437	()F	METHOD	method not decla
 call	net/minecraft/class_9779$class_9781	method_60640	(JZ)I	METHOD	method not declared on the owner
 override+super	net/minecraft/class_9779$class_9781	method_60640	(JZ)I	METHOD	method not declared on the owner
 call-inherited	net/minecraft/class_9779$class_9781	method_60640	(JZ)I	METHOD	method not declared on the owner
-get-static	net/minecraft/class_3940$class_11941	field_62639	Lnet/minecraft/class_3940$class_11941;	FIELD	field not declared on the owner
-get-static	net/minecraft/class_3940$class_11941	field_64447	Lnet/minecraft/class_3940$class_11941;	FIELD	field not declared on the owner
 override+super	net/minecraft/class_647$class_10417	method_74256	(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;	METHOD	method getSprite(Lnet/minecraft/world/item/ItemStackTemplate;Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite; protected
 call-protected	net/minecraft/class_647$class_10417	method_74256	(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;	METHOD	method getSprite(Lnet/minecraft/world/item/ItemStackTemplate;Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite; protected
 call	net/minecraft/class_727	method_3068	(F)I	ACCESS	method not declared on the owner
@@ -860,11 +858,6 @@ lambda	net/minecraft/class_7775$class_12356	method_76676	(Lorg/joml/Vector3fc;)L
 implement-interface	net/minecraft/class_7775$class_12356			ABSTRACT	class public abstract interface extends java/lang/Object
 override+super	net/minecraft/class_7775$class_12356	method_76675	(FFF)Lorg/joml/Vector3fc;	METHOD	method vector(Lorg/joml/Vector3fc;)Lorg/joml/Vector3fc; public abstract
 call-inherited	net/minecraft/class_7775$class_12356	method_76675	(FFF)Lorg/joml/Vector3fc;	METHOD	method vector(Lorg/joml/Vector3fc;)Lorg/joml/Vector3fc; public abstract
-call	net/minecraft/class_7775	method_65732	()Lnet/minecraft/class_9826;	METHOD	method not declared on the owner
-call	net/minecraft/class_7775	method_76674	()Lnet/minecraft/class_7775$class_12356;	METHOD	method not declared on the owner
-implement-interface	net/minecraft/class_7775			ABSTRACT	class public abstract interface extends java/lang/Object
-call-inherited	net/minecraft/class_7775	method_65732	()Lnet/minecraft/class_9826;	METHOD	method not declared on the owner
-call-inherited	net/minecraft/class_7775	method_76674	()Lnet/minecraft/class_7775$class_12356;	METHOD	method not declared on the owner
 put-protected	net/minecraft/class_1102	field_38800	Lnet/minecraft/class_5819;	ACCESS	field Lnet/minecraft/util/RandomSource; protected final
 get-static	net/minecraft/class_11287$class_11292	field_60142	Lnet/minecraft/class_3542$class_7292;	FIELD	field Lcom/mojang/serialization/Codec; public static final
 call	net/minecraft/class_9976	method_62320	(Lnet/minecraft/class_4597;Lnet/minecraft/class_243;Lnet/minecraft/class_12077;)V	METHOD	method render(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/level/WeatherRenderState;)V public
@@ -903,7 +896,6 @@ call	net/minecraft/class_10502	method_65699	(Lnet/minecraft/class_811;Lnet/minec
 get-static	net/minecraft/class_10502	field_55429	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_10502	field_55430	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_10502	field_55431	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner
-get-static	net/minecraft/class_10502	field_55432	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_10502	field_61848	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_10502	field_61849	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_10502	field_61850	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner
@@ -1056,7 +1048,6 @@ call	net/minecraft/class_10529	method_74334	()Lnet/minecraft/class_11971;	METHOD
 extend	net/minecraft/class_10529			ABSTRACT	class public abstract extends java/lang/Object
 override+super	net/minecraft/class_10529	method_74334	()Lnet/minecraft/class_11971;	METHOD	method not declared on the owner
 call-protected	net/minecraft/class_10529	method_65823	(Lnet/minecraft/class_2680;Lnet/minecraft/class_4719;)Lnet/minecraft/class_3879$class_9948;	METHOD	method getSignModel(Lnet/minecraft/client/renderer/blockentity/state/SignRenderState;)Lnet/minecraft/client/model/Model$Simple; protected abstract
-call-protected	net/minecraft/class_10529	method_45792	(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;	METHOD	method not declared on the owner
 call-protected	net/minecraft/class_10529	method_51272	()F	METHOD	method not declared on the owner
 call-protected	net/minecraft/class_10529	method_51273	()F	METHOD	method not declared on the owner
 call-protected	net/minecraft/class_10529	method_45790	()Lnet/minecraft/class_243;	METHOD	method not declared on the owner
@@ -1085,14 +1076,12 @@ override+super	net/minecraft/class_7761	method_51272	()F	METHOD	method not decla
 override+super	net/minecraft/class_7761	method_51273	()F	METHOD	method not declared on the owner
 override+super	net/minecraft/class_7761	method_65824	(Lnet/minecraft/class_4587;FLnet/minecraft/class_2680;)V	METHOD	method not declared on the owner
 override+super	net/minecraft/class_7761	method_65823	(Lnet/minecraft/class_2680;Lnet/minecraft/class_4719;)Lnet/minecraft/class_3879$class_9948;	METHOD	method not declared on the owner
-override+super	net/minecraft/class_7761	method_45792	(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;	METHOD	method not declared on the owner
 override+super	net/minecraft/class_7761	method_45790	()Lnet/minecraft/class_243;	METHOD	method not declared on the owner
 call-protected	net/minecraft/class_7761	method_51272	()F	METHOD	method not declared on the owner
 call-protected	net/minecraft/class_7761	method_51273	()F	METHOD	method not declared on the owner
 call-static-inherited	net/minecraft/class_7761	method_49918	(Lnet/minecraft/class_4587;F)V	METHOD	method not declared on the owner
 call-protected	net/minecraft/class_7761	method_65824	(Lnet/minecraft/class_4587;FLnet/minecraft/class_2680;)V	METHOD	method not declared on the owner
 call-protected	net/minecraft/class_7761	method_65823	(Lnet/minecraft/class_2680;Lnet/minecraft/class_4719;)Lnet/minecraft/class_3879$class_9948;	METHOD	method not declared on the owner
-call-protected	net/minecraft/class_7761	method_45792	(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;	METHOD	method not declared on the owner
 call-protected	net/minecraft/class_7761	method_45790	()Lnet/minecraft/class_243;	METHOD	method not declared on the owner
 call	net/minecraft/class_834	method_65562	(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_2350;FLnet/minecraft/class_11683$class_11792;Lnet/minecraft/class_4730;I)V	ACCESS	method submit(Lnet/minecraft/client/renderer/blockentity/state/ShulkerBoxRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V public ; submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;IILnet/minecraft/core/Direction;FLnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;Lnet/minecraft/client/resources/model/sprite/SpriteId;I)V private ; submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;IIFLnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;Lnet/minecraft/client/resources/model/sprite/SpriteId;I)V public ; submit(Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V public
 call	net/minecraft/class_834	method_72163	(Lnet/minecraft/class_2350;FLjava/util/function/Consumer;)V	METHOD	method getExtents(FLjava/util/function/Consumer;)V public
@@ -1279,15 +1268,12 @@ call	net/minecraft/class_10809	comp_3767	()Lnet/minecraft/class_1058;	METHOD	met
 call	net/minecraft/class_10432$class_10433	method_65587	(Lnet/minecraft/class_10439$class_10440;)Lnet/minecraft/class_10439;	METHOD	method not declared on the owner
 call	net/minecraft/class_10444$class_10446	method_67992	(Lnet/minecraft/class_1921;)V	METHOD	method not declared on the owner
 call	net/minecraft/class_10444$class_10446	method_67994	(Lnet/minecraft/class_1058;)V	METHOD	method not declared on the owner
-call	net/minecraft/class_10444$class_10446	method_67993	(Lnet/minecraft/class_804;)V	METHOD	method not declared on the owner
 call	net/minecraft/class_10444$class_10446	method_65613	(I)[I	METHOD	method not declared on the owner
 override+super	net/minecraft/class_10444$class_10446	method_67992	(Lnet/minecraft/class_1921;)V	METHOD	method not declared on the owner
 override+super	net/minecraft/class_10444$class_10446	method_67994	(Lnet/minecraft/class_1058;)V	METHOD	method not declared on the owner
-override+super	net/minecraft/class_10444$class_10446	method_67993	(Lnet/minecraft/class_804;)V	METHOD	method not declared on the owner
 override+super	net/minecraft/class_10444$class_10446	method_65613	(I)[I	METHOD	method not declared on the owner
 call-inherited	net/minecraft/class_10444$class_10446	method_67992	(Lnet/minecraft/class_1921;)V	METHOD	method not declared on the owner
 call-inherited	net/minecraft/class_10444$class_10446	method_67994	(Lnet/minecraft/class_1058;)V	METHOD	method not declared on the owner
-call-inherited	net/minecraft/class_10444$class_10446	method_67993	(Lnet/minecraft/class_804;)V	METHOD	method not declared on the owner
 call-inherited	net/minecraft/class_10444$class_10446	method_65613	(I)[I	METHOD	method not declared on the owner
 new	net/minecraft/class_10451$class_10453	<init>	(Lnet/minecraft/class_10451$class_10454;Ljava/util/Optional;)V	METHOD	constructors (Ljava/util/Optional;Lnet/minecraft/client/renderer/item/SelectItemModel$UnbakedSwitch;Ljava/util/Optional;)V
 call	net/minecraft/class_10451$class_10453	method_65587	(Lnet/minecraft/class_10439$class_10440;)Lnet/minecraft/class_10439;	METHOD	method not declared on the owner
@@ -1338,11 +1324,7 @@ call-static	net/minecraft/class_4722	method_24071	()Lnet/minecraft/class_1921;	M
 call-static	net/minecraft/class_4722	method_45783	()Lnet/minecraft/class_1921;	METHOD	method not declared on the owner
 call-static	net/minecraft/class_4722	method_24072	()Lnet/minecraft/class_1921;	METHOD	method not declared on the owner
 call-static	net/minecraft/class_4722	method_24073	()Lnet/minecraft/class_1921;	METHOD	method not declared on the owner
-call-static	net/minecraft/class_4722	method_33082	(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;	METHOD	method not declared on the owner
-call-static	net/minecraft/class_4722	method_45781	(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;	METHOD	method not declared on the owner
 call-static	net/minecraft/class_4722	method_24062	(Lnet/minecraft/class_11959$class_11960;Lnet/minecraft/class_2745;)Lnet/minecraft/class_4730;	METHOD	method not declared on the owner
-get-static	net/minecraft/class_4722	field_21712	Ljava/util/Map;	FIELD	field not declared on the owner
-get-static	net/minecraft/class_4722	field_40515	Ljava/util/Map;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_4722	field_21714	Lnet/minecraft/class_4730;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_4722	field_21715	Lnet/minecraft/class_4730;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_4722	field_21716	Lnet/minecraft/class_4730;	FIELD	field not declared on the owner
@@ -1372,8 +1354,6 @@ call-static-inherited	net/minecraft/class_4722	method_24071	()Lnet/minecraft/cla
 call-static-inherited	net/minecraft/class_4722	method_45783	()Lnet/minecraft/class_1921;	METHOD	method not declared on the owner
 call-static-inherited	net/minecraft/class_4722	method_24072	()Lnet/minecraft/class_1921;	METHOD	method not declared on the owner
 call-static-inherited	net/minecraft/class_4722	method_24073	()Lnet/minecraft/class_1921;	METHOD	method not declared on the owner
-call-static-inherited	net/minecraft/class_4722	method_33082	(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;	METHOD	method not declared on the owner
-call-static-inherited	net/minecraft/class_4722	method_45781	(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;	METHOD	method not declared on the owner
 call-static-inherited	net/minecraft/class_4722	method_24062	(Lnet/minecraft/class_11959$class_11960;Lnet/minecraft/class_2745;)Lnet/minecraft/class_4730;	METHOD	method not declared on the owner
 call	net/minecraft/class_11788	method_73481	(Lnet/minecraft/class_4587;Lnet/minecraft/class_2680;III)V	METHOD	method not declared on the owner
 call	net/minecraft/class_11788	method_73484	(Lnet/minecraft/class_4587;Lnet/minecraft/class_1921;Lnet/minecraft/class_1087;FFFIII)V	METHOD	method not declared on the owner
@@ -1750,8 +1730,6 @@ call-static-inherited	net/minecraft/class_6803	method_39706	(Lnet/minecraft/clas
 call-static-inherited	net/minecraft/class_6803	method_39705	(Lnet/minecraft/class_3031;Lnet/minecraft/class_3037;Ljava/util/List;)Lnet/minecraft/class_4638;	METHOD	method not declared on the owner
 call-static-inherited	net/minecraft/class_6803	method_39704	(Lnet/minecraft/class_3031;Lnet/minecraft/class_3037;)Lnet/minecraft/class_4638;	METHOD	method not declared on the owner
 get-static	net/minecraft/class_6805	field_35834	Lnet/minecraft/class_5321;	FIELD	field not declared on the owner
-get-static	net/minecraft/class_6805	field_35839	Lnet/minecraft/class_5321;	FIELD	field not declared on the owner
-get-static	net/minecraft/class_6805	field_35840	Lnet/minecraft/class_5321;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_6809	field_35944	Lnet/minecraft/class_5321;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_6809	field_35945	Lnet/minecraft/class_5321;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_6809	field_35946	Lnet/minecraft/class_5321;	FIELD	field not declared on the owner
@@ -2013,7 +1991,6 @@ get-static	net/minecraft/class_3417	field_14750	Lnet/minecraft/class_3414;	FIELD
 get-static	net/minecraft/class_3417	field_14894	Lnet/minecraft/class_3414;	FIELD	field Lnet/minecraft/core/Holder$Reference; public static final
 get-static	net/minecraft/class_3417	field_14772	Lnet/minecraft/class_3414;	FIELD	field Lnet/minecraft/core/Holder$Reference; public static final
 get-static	net/minecraft/class_3481	field_35443	Lnet/minecraft/class_6862;	FIELD	field not declared on the owner
-get-static	net/minecraft/class_3481	field_56529	Lnet/minecraft/class_6862;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_3481	field_39104	Lnet/minecraft/class_6862;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_3481	field_39105	Lnet/minecraft/class_6862;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_9636	field_51531	Lnet/minecraft/class_6862;	FIELD	field not declared on the owner
