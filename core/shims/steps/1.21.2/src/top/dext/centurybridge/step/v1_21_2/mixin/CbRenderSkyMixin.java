@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 DimensionSpecialEffects.getSunriseColor(timeOfDay, partialTick): 1.21.1's body -- the sunrise / sunset
@@ -11,7 +12,7 @@ import org.spongepowered.asm.mixin.Unique;
  * isSunriseOrSunset / getSunriseOrSunsetColor.)
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_5294.class)
+@Mixin(value = net.minecraft.class_5294.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderSkyMixin {
 
     @Unique

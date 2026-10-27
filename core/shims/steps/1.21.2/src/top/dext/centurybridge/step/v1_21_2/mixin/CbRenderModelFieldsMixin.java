@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelCalls;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelFields;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 EntityModel's public attackTime / riding / young (field_3447 / field_3449 / field_3448), gone in 1.21.2 (the
@@ -17,7 +18,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelFields;
  * of the latest prepareMobModel.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_583.class)
+@Mixin(value = net.minecraft.class_583.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderModelFieldsMixin implements CbRenderModelFields.Pose, CbRenderModelCalls.Model {
 
     public float field_3447;

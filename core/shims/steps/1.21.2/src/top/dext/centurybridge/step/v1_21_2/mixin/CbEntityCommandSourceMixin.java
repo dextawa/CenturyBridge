@@ -8,6 +8,7 @@ import net.minecraft.class_2561;
 import net.minecraft.class_3218;
 import net.minecraft.class_3222;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1's Entity was a CommandSource; 1.21.2's is not (a ServerPlayer hands out a separate commandSource()). The
@@ -25,7 +26,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * No 1.21.2 entity class declares any of these shapes except Player / LocalPlayer / ServerPlayer's
  * getPermissionLevel, protected as here.
  */
-@Mixin(class_1297.class)
+@Mixin(value = class_1297.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityCommandSourceMixin implements class_2165 {
 
     @Override

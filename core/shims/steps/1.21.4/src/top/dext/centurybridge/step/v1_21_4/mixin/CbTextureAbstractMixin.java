@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_4.rt.CbTextures;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * AbstractTexture's 1.21.3 load / reset / getDefaultBlur (see {@link CbTextures}). 1.21.3's load was abstract; every 1.21.3
@@ -12,7 +13,7 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbTextures;
  * loads its contents (CbTextureReloadableMixin).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_1044.class)
+@Mixin(value = net.minecraft.class_1044.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbTextureAbstractMixin implements CbTextures.CbTexture {
 
     @Shadow

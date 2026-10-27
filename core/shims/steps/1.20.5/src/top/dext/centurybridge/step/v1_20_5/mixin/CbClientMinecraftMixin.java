@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * Minecraft.is64Bit(): 1.20.4 read it once at startup from the JVM's data model / bitmode / os.arch (any of
@@ -11,7 +12,7 @@ import org.spongepowered.asm.mixin.Unique;
  * only on 64-bit JVMs and dropped the check. The same reading, as 1.20.4's constructor did it.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_310.class)
+@Mixin(value = net.minecraft.class_310.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientMinecraftMixin implements top.dext.centurybridge.step.v1_20_5.rt.CbClientRealms.Minecraft64 {
 
     @Unique

@@ -4,11 +4,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.dext.centurybridge.step.v1_21_2.rt.CbPrioritySplitClient;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelBase;
-import top.dext.centurybridge.step.v1_21_2.rt.Guard;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 Model.renderToBuffer (abstract there) and HierarchicalModel.root() over 1.21.2's root-built Model (see
@@ -21,16 +19,23 @@ import top.dext.centurybridge.step.v1_21_2.rt.Guard;
  *   (CbRenderQuadruped).
  * - root(): every 1.21.1 vanilla HierarchicalModel answered its root part, which is the 1.21.2 model's root; a 1.21.1
  *   model drawing itself (the HierarchicalModel facade's subclasses) declares its own.
+ * The injector into 1.21.2's renderToBuffer is in CbRenderModelMixinHooks (default priority).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_3879.class)
-public abstract class CbRenderModelMixin implements CbRenderModelBase.Legacy {
+@Mixin(value = net.minecraft.class_3879.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbRenderModelMixin implements CbRenderModelBase.Legacy, CbPrioritySplitClient.ModelDraw {
 
     @Shadow
     public abstract void method_62100(net.minecraft.class_4587 pose, net.minecraft.class_4588 consumer, int light, int overlay, int color);
 
     @Shadow
     public abstract net.minecraft.class_630 method_63512();
+
+    /** 1.21.1's renderToBuffer called virtually, for 1.21.2's renderToBuffer (CbRenderModelMixinHooks) */
+    @Override
+    public void cb$v1_21_2$renderToBuffer(net.minecraft.class_4587 pose, net.minecraft.class_4588 consumer, int light, int overlay, int color) {
+        this.method_2828(pose, consumer, light, overlay, color);
+    }
 
     /** 1.21.1 Model.renderToBuffer */
     @Override
@@ -41,23 +46,5 @@ public abstract class CbRenderModelMixin implements CbRenderModelBase.Legacy {
     /** 1.21.1 HierarchicalModel.root() of a vanilla model */
     public net.minecraft.class_630 method_32008() {
         return this.method_63512();
-    }
-
-    @Inject(method = "method_62100(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V", at = @At("HEAD"), cancellable = true)
-    private void cb$drawItself(net.minecraft.class_4587 pose, net.minecraft.class_4588 consumer, int light, int overlay, int color, CallbackInfo ci) {
-        if (this instanceof top.dext.centurybridge.step.v1_21_2.rt.CbRenderQuadruped.Legacy quadruped
-            && quadruped.cb$drawLegacy(pose, consumer, light, overlay, color)) {
-            // a QuadrupedModel built by 1.21.1's constructor draws as 1.21.1's AgeableListModel did (CbRenderQuadruped)
-            ci.cancel();
-            return;
-        }
-        if (CbRenderModelBase.drawsItself(this) && Guard.cbEnter(this)) {
-            try {
-                this.method_2828(pose, consumer, light, overlay, color);
-            } finally {
-                Guard.cbExit(this);
-            }
-            ci.cancel();
-        }
     }
 }

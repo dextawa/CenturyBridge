@@ -1,0 +1,29 @@
+{
+  "_s26d_misc": "s26d: BlockDestructionProgress's int tick on 26.2's long one (rt/CbS26BlockDestruction; the clock moved from LevelRenderer.ticks to ClientLevel.getGameTime, javap of both)",
+  "instanceRedirects": {
+    "net/minecraft/server/level/BlockDestructionProgress.updateTick(I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockDestruction",
+    "net/minecraft/server/level/BlockDestructionProgress.getUpdatedRenderTick()I": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockDestruction"
+  },
+  "_s26d_misc_redirects_basis": {
+    "net/minecraft/server/level/BlockDestructionProgress.updateTick(I)V": "26.1.2 stored the int tick; 26.2 stores a long tick (updateTick(J)V, same body). 26.2's ClientLevel stamps it with getGameTime() where 26.1.2's LevelRenderer stamped LevelRenderer.ticks, and expires it at the same 400-tick distance; the int is the low 32 bits of that clock, widened next to the tick the progress holds",
+    "net/minecraft/server/level/BlockDestructionProgress.getUpdatedRenderTick()I": "26.1.2 answered the int tick; 26.2 the long one (()J, same body); the low 32 bits"
+  },
+  "overrideHooks": [
+    {
+      "old": "updateTick(I)V",
+      "new": "updateTick(J)V",
+      "onlyUnder": "net/minecraft/server/level/BlockDestructionProgress",
+      "guard": "top/dext/centurybridge/step/v26_2/rt/Guard",
+      "wrap": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockDestruction.toOldTick(J)I",
+      "basis": "26.2's ClientLevel.destroyBlockProgress calls updateTick(getGameTime()) where 26.1.2's LevelRenderer called updateTick(ticks) (javap of both); a 26.1.2 subclass's override gets the low 32 bits; its super call reaches 26.2's shape through the instance redirect, the guard falling through to super on re-entry"
+    },
+    {
+      "old": "getUpdatedRenderTick()I",
+      "new": "getUpdatedRenderTick()J",
+      "onlyUnder": "net/minecraft/server/level/BlockDestructionProgress",
+      "guard": "top/dext/centurybridge/step/v26_2/rt/Guard",
+      "unwrap": "top/dext/centurybridge/step/v26_2/rt/CbS26BlockDestruction.toNewTick(I)J",
+      "basis": "26.2's ClientLevel.removeBlockBreakingProgress reads getUpdatedRenderTick()J where 26.1.2's LevelRenderer read ()I (javap of both); a 26.1.2 subclass's answer is sign-extended; its super call reaches 26.2's shape through the instance redirect, the guard falling through to super on re-entry"
+    }
+  ]
+}

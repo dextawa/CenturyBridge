@@ -7,16 +7,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21.facade.BufferBuilderDrawState;
 import top.dext.centurybridge.step.v1_21.facade.BufferBuilderRenderedBuffer;
 import top.dext.centurybridge.step.v1_21.facade.BufferBuilderSortState;
 import top.dext.centurybridge.step.v1_21.rt.CbClientModels;
+import top.dext.centurybridge.step.v1_21.rt.CbPrioritySplit;
 import top.dext.centurybridge.step.v1_21.rt.CbRenderBufferBuilderV;
-import top.dext.centurybridge.step.v1_21.rt.CbRenderVertex;
+import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /**
  * 1.20.6's BufferBuilder on 1.21's (CbRenderBufferBuilderV). 1.21's builder is one batch: made building over a
@@ -42,9 +39,11 @@ import top.dext.centurybridge.step.v1_21.rt.CbRenderVertex;
  *     (1.21's ByteBufferBuilder.discard); 1.20.6 dropped its bytes but kept counting its vertices.</li>
  * </ul>
  * A mesh about to be built first ends the vertices 1.21 code left open on 1.20.6 consumers (CbRenderVertex).
+ * The injectors into 1.21's own methods (the default color under 1.21's calls, the open vertices) are in
+ * CbRenderBufferBuilderMixinHooks (default priority).
  */
-@Mixin(net.minecraft.class_287.class)
-public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilderV {
+@Mixin(value = net.minecraft.class_287.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilderV, CbPrioritySplit.BufferDefaultColor {
 
     @Shadow
     @Final
@@ -589,40 +588,20 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
         }
     }
 
-    // ------------------------------------------------------------------ 1.21's calls under a 1.20.6 default color
+    // ------------------------------------------------------------------ for 1.21's calls under a 1.20.6 default color (CbRenderBufferBuilderMixinHooks)
 
-    @Inject(method = "method_22912(FFF)Lnet/minecraft/class_4588;", at = @At("RETURN"))
-    private void cb$vertexBegun(float x, float y, float z, CallbackInfoReturnable<net.minecraft.class_4588> cir) {
-        if (this.cb$defaultColorSet) {
-            this.cb$fillDefaultColor();
-        }
+    @Override
+    public boolean cb$v1_21$defaultColorSet() {
+        return this.cb$defaultColorSet;
     }
 
-    @Inject(method = "method_1336(IIII)Lnet/minecraft/class_4588;", at = @At("HEAD"))
-    private void cb$colorUnderDefault(int r, int g, int b, int a, CallbackInfoReturnable<net.minecraft.class_4588> cir) {
-        if (this.cb$defaultColorSet && !this.cb$fillingDefault) {
-            throw new IllegalStateException();
-        }
+    @Override
+    public boolean cb$v1_21$fillingDefault() {
+        return this.cb$fillingDefault;
     }
 
-    @Inject(method = "method_39415(I)Lnet/minecraft/class_4588;", at = @At("HEAD"))
-    private void cb$packedColorUnderDefault(int color, CallbackInfoReturnable<net.minecraft.class_4588> cir) {
-        if (this.cb$defaultColorSet) {
-            throw new IllegalStateException();
-        }
-    }
-
-    @Inject(method = "method_23919(FFFIFFIIFFF)V", at = @At("HEAD"))
-    private void cb$wholeVertexUnderDefault(float x, float y, float z, int color, float u, float v, int overlay, int light, float nx,
-                                            float ny, float nz, CallbackInfo ci) {
-        if (this.cb$defaultColorSet) {
-            throw new IllegalStateException();
-        }
-    }
-
-    /** a mesh is about to be built: the vertices 1.21 code left open on 1.20.6 consumers end first */
-    @Inject(method = "method_60794()Lnet/minecraft/class_9801;", at = @At("HEAD"))
-    private void cb$building(CallbackInfoReturnable<net.minecraft.class_9801> cir) {
-        CbRenderVertex.cbEndAllPendingVertices();
+    @Override
+    public void cb$v1_21$fillDefaultColor() {
+        this.cb$fillDefaultColor();
     }
 }

@@ -49,26 +49,13 @@ public abstract class CbRenderTypes extends net.minecraft.class_1921 {
 
     // ------------------------------------------------------------------ armorGlint() / glintDirect()
 
-    /** RenderType.create(name, format, mode, bufferSize, state): package-private, reached reflectively once */
-    private static final java.lang.reflect.Method CREATE;
-
-    static {
-        try {
-            CREATE = net.minecraft.class_1921.class.getDeclaredMethod("method_24048", String.class, net.minecraft.class_293.class,
-                net.minecraft.class_293.class_5596.class, int.class, net.minecraft.class_1921.class_4688.class);
-            CREATE.setAccessible(true);
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalStateException("RenderType.create(name, format, mode, bufferSize, state) not found", e);
-        }
-    }
-
+    /**
+     * RenderType.create(name, format, mode, bufferSize, state): package-private, opened by the layer's access
+     * widener and named in bytecode (a reflective name string would not follow it as the layer climbs)
+     */
     private static net.minecraft.class_1921 cbCreate(String name, net.minecraft.class_1921.class_4688 state) {
-        try {
-            return (net.minecraft.class_1921) CREATE.invoke(null, name, net.minecraft.class_290.field_1585,
-                net.minecraft.class_293.class_5596.field_27382, 1536, state);
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalStateException("RenderType.create failed for " + name, e);
-        }
+        return net.minecraft.class_1921.method_24048(name, net.minecraft.class_290.field_1585,
+            net.minecraft.class_293.class_5596.field_27382, 1536, state);
     }
 
     private static net.minecraft.class_1921 armorGlint;

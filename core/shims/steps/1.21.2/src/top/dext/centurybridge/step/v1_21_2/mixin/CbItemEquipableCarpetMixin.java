@@ -4,12 +4,13 @@ import net.minecraft.class_1304;
 import net.minecraft.class_5815;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_2.facade.Equipable;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1's WoolCarpetBlock was an Equipable (a llama's body, the llama swag sound); 1.21.2 equips it by its item's EQUIPPABLE component. Implementing the facade again gives
  * 1.21.1 callers its answers (Equipable.get, instanceof, the interface calls).
  */
-@Mixin(class_5815.class)
+@Mixin(value = class_5815.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbItemEquipableCarpetMixin implements Equipable {
 
     /** getEquipmentSlot(): BODY */

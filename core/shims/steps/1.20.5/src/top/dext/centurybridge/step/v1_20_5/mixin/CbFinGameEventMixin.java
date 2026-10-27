@@ -1,13 +1,14 @@
 package top.dext.centurybridge.step.v1_20_5.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * GameEvent (a record in 1.20.5, reopened for 1.20.4 subclasses by the layer's access widener): 1.20.4's
  * builtInRegistryHolder() and is(tag), back for a subclass's override and super call -- the event's
  * reference in the game event registry, and whether that reference is in the tag.
  */
-@Mixin(net.minecraft.class_5712.class)
+@Mixin(value = net.minecraft.class_5712.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbFinGameEventMixin {
 
     /** was builtInRegistryHolder() */

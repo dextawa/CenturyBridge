@@ -6,6 +6,7 @@ import net.minecraft.class_243;
 import net.minecraft.class_3244;
 import org.spongepowered.asm.mixin.Mixin;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestPackets;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * ServerGamePacketListenerImpl.teleport(x, y, z, yRot, xRot, relatives) of 1.21.1, back on 1.21.2's
@@ -16,7 +17,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRestPackets;
  * constants added (CbRestPackets.withKeptDelta, as the 1.21.1 position packet constructor). The server's
  * copy of the player's movement, which 1.21.1 left alone, follows the same set.
  */
-@Mixin(class_3244.class)
+@Mixin(value = class_3244.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestServerGamePacketListenerMixin {
 
     @SuppressWarnings({"rawtypes", "unchecked"})

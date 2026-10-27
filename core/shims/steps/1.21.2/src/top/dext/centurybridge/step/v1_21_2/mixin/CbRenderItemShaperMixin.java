@@ -6,11 +6,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import top.dext.centurybridge.step.v1_21_2.rt.CbPrioritySplitClient;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRenderItemModels;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /**
  * 1.21.1 ItemModelShaper over 1.21.2's (class_763).
@@ -22,10 +20,11 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderItemModels;
  * registered model (getItemModel(stack) answers it, missing model when not yet cached, as 1.21.1); any other item with
  * 1.21.2's own model -- the model 1.21.1 registered for every vanilla item is the one its default item_model names.
  * The cache is rebuilt whenever 1.21.2 rebuilds its own (invalidateCache, at model reload).
+ * The injectors into 1.21.2's own methods are in CbRenderItemShaperMixinHooks (default priority).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_763.class)
-public abstract class CbRenderItemShaperMixin implements CbRenderItemModels.Shaper {
+@Mixin(value = net.minecraft.class_763.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbRenderItemShaperMixin implements CbRenderItemModels.Shaper, CbPrioritySplitClient.ItemShaper {
 
     @Unique
     private net.minecraft.class_1092 cb$modelManager;
@@ -36,9 +35,25 @@ public abstract class CbRenderItemShaperMixin implements CbRenderItemModels.Shap
     @Unique
     private final Int2ObjectMap<net.minecraft.class_1087> cb$cache = new Int2ObjectOpenHashMap<>(256);
 
-    @Inject(method = "<init>(Lnet/minecraft/class_1092;)V", at = @At("TAIL"))
-    private void cb$keepManager(net.minecraft.class_1092 manager, CallbackInfo ci) {
+    @Override
+    public net.minecraft.class_1092 cb$v1_21_2$modelManager() {
+        return this.cb$modelManager;
+    }
+
+    @Override
+    public void cb$v1_21_2$modelManager(net.minecraft.class_1092 manager) {
         this.cb$modelManager = manager;
+    }
+
+    @Override
+    public Int2ObjectMap<net.minecraft.class_1087> cb$v1_21_2$cache() {
+        return this.cb$cache;
+    }
+
+    /** 1.21.1's rebuildCache called virtually */
+    @Override
+    public void cb$v1_21_2$rebuildCache() {
+        this.method_3310();
     }
 
     @Override
@@ -70,22 +85,6 @@ public abstract class CbRenderItemShaperMixin implements CbRenderItemModels.Shap
         this.cb$cache.clear();
         for (Int2ObjectMap.Entry<net.minecraft.class_1091> e : this.cb$shapes.int2ObjectEntrySet()) {
             this.cb$cache.put(e.getIntKey(), this.cb$modelManager.method_4742(e.getValue()));
-        }
-    }
-
-    @Inject(method = "method_64056()V", at = @At("TAIL"))
-    private void cb$rebuildWithVanilla(CallbackInfo ci) {
-        if (this.cb$modelManager != null) {
-            this.method_3310();
-        }
-    }
-
-    @Inject(method = "method_3308(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1087;", at = @At("HEAD"), cancellable = true)
-    private void cb$registeredModel(net.minecraft.class_1799 stack, CallbackInfoReturnable<net.minecraft.class_1087> cir) {
-        int id = net.minecraft.class_1792.method_7880(stack.method_7909());
-        if (this.cb$shapes.containsKey(id)) {
-            net.minecraft.class_1087 m = this.cb$cache.get(id);
-            cir.setReturnValue(m == null ? this.cb$modelManager.method_4744() : m);
         }
     }
 }

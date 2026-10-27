@@ -5,10 +5,11 @@ import java.util.stream.Collectors;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** 1.21.1 MultiVariant.getDependencies(): its variants' model locations (class_807.method_4755), on the 1.21.2 record */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_807.class)
+@Mixin(value = net.minecraft.class_807.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderBakeMultiVariantMixin {
 
     /** 1.21.1 MultiVariant.getDependencies() */

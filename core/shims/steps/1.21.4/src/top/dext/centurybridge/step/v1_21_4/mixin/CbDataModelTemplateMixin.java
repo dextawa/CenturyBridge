@@ -10,20 +10,19 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21_4.facade.ModelTemplateJsonFactory;
 import top.dext.centurybridge.step.v1_21_4.rt.CbClientRest;
+import top.dext.centurybridge.step.v1_21_4.rt.CbPrioritySplitClient;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * ModelTemplate's 1.21.3 createBaseTemplate(id, textures) and create(id, mapping, output, jsonFactory), bodies as 1.21.3's.
  * 1.21.3's create(id, mapping, output) went through both virtually; a subclass (which may override either) creates as 1.21.3 did,
- * 1.21.4's own templates as 1.21.4 does.
+ * 1.21.4's own templates as 1.21.4 does (CbDataModelTemplateMixinHooks, default priority).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_4942.class)
-public abstract class CbDataModelTemplateMixin implements CbClientRest.CbLegacyModelTemplate {
+@Mixin(value = net.minecraft.class_4942.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbDataModelTemplateMixin implements CbClientRest.CbLegacyModelTemplate, CbPrioritySplitClient.ModelTemplateCreate {
 
     @Shadow
     @Final
@@ -49,13 +48,10 @@ public abstract class CbDataModelTemplateMixin implements CbClientRest.CbLegacyM
         return id;
     }
 
-    @Inject(method = "method_25852", at = @At("HEAD"), cancellable = true)
-    private void cb$legacyCreate(net.minecraft.class_2960 id, net.minecraft.class_4944 mapping,
-            BiConsumer<net.minecraft.class_2960, net.minecraft.class_10411> output, CallbackInfoReturnable<net.minecraft.class_2960> cir) {
-        if ((Object) this.getClass() != net.minecraft.class_4942.class) {
-            @SuppressWarnings({"unchecked", "rawtypes"})
-            BiConsumer<net.minecraft.class_2960, Supplier<com.google.gson.JsonElement>> legacy = (BiConsumer) output;
-            cir.setReturnValue(this.method_48525(id, mapping, legacy, this::method_48524));
-        }
+    /** 1.21.3's create(id, mapping, output): both members virtually, for 1.21.4's create (CbDataModelTemplateMixinHooks) */
+    @Override
+    public net.minecraft.class_2960 cb$v1_21_4$legacyCreate(net.minecraft.class_2960 id, net.minecraft.class_4944 mapping,
+            BiConsumer<net.minecraft.class_2960, Supplier<com.google.gson.JsonElement>> output) {
+        return this.method_48525(id, mapping, output, this::method_48524);
     }
 }

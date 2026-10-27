@@ -1,0 +1,158 @@
+{
+ "callReshapes": {
+  "com/mojang/blaze3d/systems/GpuDevice.createTexture(Ljava/lang/String;Lcom/mojang/blaze3d/textures/TextureFormat;III)Lcom/mojang/blaze3d/textures/GpuTexture;": {
+   "desc": "(Ljava/lang/String;ILcom/mojang/blaze3d/textures/TextureFormat;IIII)Lcom/mojang/blaze3d/textures/GpuTexture;",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#legacyUsage()I",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#oneLayer()I",
+    "keep:4"
+   ],
+   "basis": "1.21.5 createTexture(label, format, width, height, mipLevels) made a 2D texture every operation could use; 1.21.6's takes usage bits and a depth / layer count before the mip levels (javap): CbTextures' usage and one layer"
+  },
+  "com/mojang/blaze3d/systems/GpuDevice.createTexture(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/TextureFormat;III)Lcom/mojang/blaze3d/textures/GpuTexture;": {
+   "desc": "(Ljava/util/function/Supplier;ILcom/mojang/blaze3d/textures/TextureFormat;IIII)Lcom/mojang/blaze3d/textures/GpuTexture;",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#legacyUsage()I",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#oneLayer()I",
+    "keep:4"
+   ],
+   "basis": "1.21.5 createTexture(label, format, width, height, mipLevels) made a 2D texture every operation could use; 1.21.6's takes usage bits and a depth / layer count before the mip levels (javap): CbTextures' usage and one layer"
+  },
+  "net/minecraft/class_10865.createTexture(Ljava/lang/String;Lcom/mojang/blaze3d/textures/TextureFormat;III)Lcom/mojang/blaze3d/textures/GpuTexture;": {
+   "desc": "(Ljava/lang/String;ILcom/mojang/blaze3d/textures/TextureFormat;IIII)Lcom/mojang/blaze3d/textures/GpuTexture;",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#legacyUsage()I",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#oneLayer()I",
+    "keep:4"
+   ],
+   "basis": "1.21.5 createTexture(label, format, width, height, mipLevels) made a 2D texture every operation could use; 1.21.6's takes usage bits and a depth / layer count before the mip levels (javap): CbTextures' usage and one layer"
+  },
+  "net/minecraft/class_10865.createTexture(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/TextureFormat;III)Lcom/mojang/blaze3d/textures/GpuTexture;": {
+   "desc": "(Ljava/util/function/Supplier;ILcom/mojang/blaze3d/textures/TextureFormat;IIII)Lcom/mojang/blaze3d/textures/GpuTexture;",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#legacyUsage()I",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#oneLayer()I",
+    "keep:4"
+   ],
+   "basis": "1.21.5 createTexture(label, format, width, height, mipLevels) made a 2D texture every operation could use; 1.21.6's takes usage bits and a depth / layer count before the mip levels (javap): CbTextures' usage and one layer"
+  },
+  "com/mojang/blaze3d/systems/CommandEncoder.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;IIIIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;IIIIIIII)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#firstLayer()I",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8"
+   ],
+   "basis": "1.21.5 writeToTexture(texture, image, mipLevel, x, y, width, height, srcX, srcY) wrote into the 2D texture; 1.21.6's takes the layer after the mip level (javap: iload 4 checked against getDepthOrLayers, bound as the cube-map face): 1.21.5 textures had one layer, layer 0"
+  },
+  "com/mojang/blaze3d/systems/CommandEncoder.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/IntBuffer;Lnet/minecraft/class_1011$class_1012;IIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/IntBuffer;Lnet/minecraft/class_1011$class_1012;IIIIII)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#firstLayer()I",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "basis": "1.21.5 writeToTexture(texture, IntBuffer, format, mipLevel, x, y, width, height) wrote into the 2D texture; 1.21.6's takes the layer after the mip level (javap: iload 5 checked against getDepthOrLayers): 1.21.5 textures had one layer, layer 0"
+  },
+  "net/minecraft/class_10860.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;IIIIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Lnet/minecraft/class_1011;IIIIIIII)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#firstLayer()I",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8"
+   ],
+   "basis": "1.21.5 writeToTexture(texture, image, mipLevel, x, y, width, height, srcX, srcY) wrote into the 2D texture; 1.21.6's takes the layer after the mip level (javap: iload 4 checked against getDepthOrLayers, bound as the cube-map face): 1.21.5 textures had one layer, layer 0"
+  },
+  "net/minecraft/class_10860.writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/IntBuffer;Lnet/minecraft/class_1011$class_1012;IIIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/IntBuffer;Lnet/minecraft/class_1011$class_1012;IIIIII)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#firstLayer()I",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "basis": "1.21.5 writeToTexture(texture, IntBuffer, format, mipLevel, x, y, width, height) wrote into the 2D texture; 1.21.6's takes the layer after the mip level (javap: iload 5 checked against getDepthOrLayers): 1.21.5 textures had one layer, layer 0"
+  }
+ },
+ "superCtorReshapes": {
+  "com/mojang/blaze3d/textures/GpuTexture.<init>(Ljava/lang/String;Lcom/mojang/blaze3d/textures/TextureFormat;III)V": {
+   "desc": "(ILjava/lang/String;Lcom/mojang/blaze3d/textures/TextureFormat;IIII)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#legacyUsage()I",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#oneLayer()I",
+    "keep:4"
+   ],
+   "basis": "1.21.5 GpuTexture(label, format, width, height, mipLevels); 1.21.6 GpuTexture(usage, label, format, width, height, depthOrLayers, mipLevels) (javap)"
+  },
+  "net/minecraft/class_10868.<init>(Ljava/lang/String;Lcom/mojang/blaze3d/textures/TextureFormat;IIII)V": {
+   "desc": "(ILjava/lang/String;Lcom/mojang/blaze3d/textures/TextureFormat;IIIII)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#legacyUsage()I",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_6/rt/CbTextures#oneLayer()I",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "1.21.5 GlTexture(label, format, width, height, mipLevels, glId); 1.21.6 GlTexture(usage, label, format, width, height, depthOrLayers, mipLevels, glId) (javap)"
+  }
+ },
+ "interfaceCallRedirects": {
+  "com/mojang/blaze3d/systems/CommandEncoder.createRenderPass(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/util/OptionalInt;)Lcom/mojang/blaze3d/systems/RenderPass;": "top/dext/centurybridge/step/v1_21_6/rt/CbTextures",
+  "com/mojang/blaze3d/systems/CommandEncoder.createRenderPass(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/util/OptionalInt;Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/util/OptionalDouble;)Lcom/mojang/blaze3d/systems/RenderPass;": "top/dext/centurybridge/step/v1_21_6/rt/CbTextures",
+  "com/mojang/blaze3d/systems/CommandEncoder.presentTexture(Lcom/mojang/blaze3d/textures/GpuTexture;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbTextures"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_10860.createRenderPass(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/util/OptionalInt;)Lcom/mojang/blaze3d/systems/RenderPass;": "top/dext/centurybridge/step/v1_21_6/rt/CbTextures#createRenderPass",
+  "net/minecraft/class_10860.createRenderPass(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/util/OptionalInt;Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/util/OptionalDouble;)Lcom/mojang/blaze3d/systems/RenderPass;": "top/dext/centurybridge/step/v1_21_6/rt/CbTextures#createRenderPass",
+  "net/minecraft/class_10860.presentTexture(Lcom/mojang/blaze3d/textures/GpuTexture;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbTextures#presentTexture"
+ },
+ "_redirects_basis_s6f_textures": "1.21.5 CommandEncoder.createRenderPass / presentTexture took textures; 1.21.6's take a debug label and GpuTextureViews (javap): CbTextures hands each texture's full view, closed with the texture (CbTextureViewsMixin)"
+}

@@ -1450,3 +1450,5 @@ accessible method net/minecraft/class_4517 method_23635 (Lnet/minecraft/class_23
 # s4fin: ReportGameListener (package-private in 1.20.5) -- 1.20.4's GameTestRunner.runTest added one to every test it ran (rt/CbFinGameTests.runTest)
 accessible class net/minecraft/class_5624
 accessible method net/minecraft/class_5624 <init> ()V
+# Options.skipRealms32bitWarning restored (mixin/Cb*OptionsMixin): its processOptions handler takes the package-private FieldAccess
+accessible class net/minecraft/class_315$class_5823

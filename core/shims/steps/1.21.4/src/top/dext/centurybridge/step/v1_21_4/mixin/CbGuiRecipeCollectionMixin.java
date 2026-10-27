@@ -6,13 +6,14 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * RecipeCollection.hasSingleResultItem() (method_2656) is gone in 1.21.4 (the recipe book no longer asks). 1.21.3
  * answered whether every recipe of the collection shows the same result; given back over the same entries.
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_516.class)
+@Mixin(value = net.minecraft.class_516.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbGuiRecipeCollectionMixin {
 
     /** entries */

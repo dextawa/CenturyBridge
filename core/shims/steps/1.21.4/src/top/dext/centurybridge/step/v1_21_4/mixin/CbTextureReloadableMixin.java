@@ -5,13 +5,14 @@ import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_4.rt.CbTextures;
+import top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads;
 
 /**
  * A ReloadableTexture's 1.21.3 load(resourceManager): its contents, applied -- 1.21.3's SimpleTexture.load read the image and
  * its texture metadata and uploaded it with that blur / clamp, which 1.21.4's loadContents and apply do (see {@link CbTextures}).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_10537.class)
+@Mixin(value = net.minecraft.class_10537.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbTextureReloadableMixin extends net.minecraft.class_1044 {
 
     @Shadow

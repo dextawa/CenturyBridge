@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * WitherSkeletonRenderer.scale(AbstractSkeleton, pose, partialTick): 1.20.4's shape (1.20.5's takes the
@@ -10,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * 1.20.4 subclass's call reaches it (its override of the old shape is hooked to the new one by mechanical.json).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_967.class)
+@Mixin(value = net.minecraft.class_967.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbClientWitherSkeletonRendererMixin {
 
     /** 1.20.4 WitherSkeletonRenderer.scale(skeleton, pose, partialTick) */

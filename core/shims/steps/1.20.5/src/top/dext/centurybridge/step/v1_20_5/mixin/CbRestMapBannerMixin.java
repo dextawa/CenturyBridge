@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * 1.20.4 MapBanner.getName() and save(), which 1.20.5's MapBanner record dropped (its name() answers an
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * override (overrideHooks); a mod class overriding save() carries CbRestMaps.OwnSave (adapter hook),
  * through which the step's runtime calls it.
  */
-@Mixin(net.minecraft.class_17.class)
+@Mixin(value = net.minecraft.class_17.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestMapBannerMixin {
 
     @Shadow

@@ -3,10 +3,11 @@ package top.dext.centurybridge.step.v1_21_2.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
 
 /** 1.21.1 ChickenRenderer.getBob (class_882.method_3893), gone in 1.21.2 (the state carries the value), put back with its body: lerp(pt, oFlap, flap) and lerp(pt, oFlapSpeed, flapSpeed): (sin(flap) + 1) * flapSpeed. */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_882.class)
+@Mixin(value = net.minecraft.class_882.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRenderLivingBob882Mixin {
 
     /** 1.21.1 class_882.method_3893 */

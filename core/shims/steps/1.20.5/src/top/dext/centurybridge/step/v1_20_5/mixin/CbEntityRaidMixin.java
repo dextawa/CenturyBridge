@@ -2,13 +2,14 @@ package top.dext.centurybridge.step.v1_20_5.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import top.dext.centurybridge.step.v1_20_5.rt.CbVanillaReads;
 
 /**
  * Raid: 1.20.4's absorbBadOmen(player) -- the player's bad omen raises the raid's omen level by its amplifier plus
  * one (up to the maximum) and is removed -- which 1.20.5 replaced with absorbRaidOmen(ServerPlayer) for its raid
  * omen effect. 1.20.4's body over 1.20.5's effect holders.
  */
-@Mixin(net.minecraft.class_3765.class)
+@Mixin(value = net.minecraft.class_3765.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbEntityRaidMixin {
 
     @Shadow
