@@ -288,8 +288,7 @@ public final class Driver {
         });
 
         run("fall-on", () -> {
-            FallBlock block = new FallBlock(net.minecraft.class_4970.class_2251.method_9637().method_63500(net.minecraft.class_5321.method_29179(
-                class_7924.field_41254, net.minecraft.class_2960.method_60655("cbs215", "fall"))));
+            FallBlock block = Init.fall;
             net.minecraft.class_1303 orb = new net.minecraft.class_1303(level, 0, 80, 0, 3);
             class_2338 pos = new class_2338(0, 79, 0);
             // the mod's own 1.21.4 call (float) ...
@@ -335,6 +334,70 @@ public final class Driver {
                 && hands.size() == 2 && hands.get(0).method_31574(net.minecraft.class_1802.field_8371) && all == 7
                 && zombie.method_6118(net.minecraft.class_1304.field_6166).method_31574(net.minecraft.class_1802.field_8660),
                 "armor=" + armor + " hands=" + hands + " all=" + all);
+        });
+
+        run("rotations", () -> {
+            net.minecraft.class_2379 r = new net.minecraft.class_2379(370.0F, -10.0F, 190.0F);
+            net.minecraft.class_2499 tag = r.method_10255();
+            net.minecraft.class_2379 back = new net.minecraft.class_2379(tag);
+            check("rotations", r.method_10256() == 10.0F && r.method_10257() == -10.0F && r.method_35847() == -170.0F
+                && back.method_10256() == 10.0F && back.method_10258() == 190.0F && tag.size() == 3 && back.equals(r),
+                "x=" + r.method_10256() + " wrappedZ=" + r.method_35847() + " tag=" + tag);
+        });
+
+        run("lerp", () -> {
+            net.minecraft.class_1642 z = new net.minecraft.class_1642(level);
+            z.method_5814(0, 70, 0);
+            z.method_5759(5, 70, 0, 90.0F, 0.0F, 3);
+            double target = z.method_53830();
+            float yRot = z.method_53831();
+            z.method_64610();
+            double after = z.method_53830();
+            net.minecraft.class_1542 item = new net.minecraft.class_1542(level, 0, 70, 0, new net.minecraft.class_1799(net.minecraft.class_1802.field_8371));
+            item.method_5759(2, 71, 3, 0.0F, 0.0F, 3);
+            check("lerp", target == 5 && yRot == 90.0F && after == z.method_23317() && item.method_23317() == 2 && item.method_23318() == 71,
+                "target=" + target + " yRot=" + yRot + " afterCancel=" + after + " item=" + item.method_23317() + "," + item.method_23318());
+        });
+
+        run("container-click", () -> {
+            it.unimi.dsi.fastutil.ints.Int2ObjectMap<net.minecraft.class_1799> changed = new it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap<>();
+            changed.put(5, new net.minecraft.class_1799(net.minecraft.class_1802.field_8743, 1));
+            net.minecraft.class_2813 p = new net.minecraft.class_2813(3, 17, 300, 1, net.minecraft.class_1713.field_7790,
+                new net.minecraft.class_1799(net.minecraft.class_1802.field_8371, 2), changed);
+            net.minecraft.class_1799 carried = p.method_12190();
+            net.minecraft.class_1799 slot5 = p.method_34678().get(5);
+            check("container-click", p.method_12194() == 3 && p.method_37440() == 17 && p.method_12192() == 300 && p.method_12193() == 1
+                && p.method_12195() == net.minecraft.class_1713.field_7790 && carried.method_31574(net.minecraft.class_1802.field_8371)
+                && carried.method_7947() == 2 && slot5.method_31574(net.minecraft.class_1802.field_8743),
+                "slot=" + p.method_12192() + " carried=" + carried + " changed=" + p.method_34678());
+        });
+
+        run("region-ticket", () -> {
+            net.minecraft.class_1923 cp = new net.minecraft.class_1923(40, 40);
+            // 1.21.5 keeps tickets in the cache's TicketStorage (read by reflection: this mod is compiled against 1.21.4)
+            java.lang.reflect.Field tf = level.method_14178().getClass().getDeclaredField("field_55594");
+            tf.setAccessible(true);
+            Object storage = tf.get(level.method_14178());
+            java.lang.reflect.Method tickets = storage.getClass().getMethod("method_66352", long.class);
+            java.util.function.IntSupplier forced = () -> {
+                try {
+                    int n = 0;
+                    for (Object t : (List<?>) tickets.invoke(storage, cp.method_8324())) {
+                        if (t.getClass().getMethod("method_14281").invoke(t) == net.minecraft.class_3230.field_14031) {
+                            n++;
+                        }
+                    }
+                    return n;
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException(e);
+                }
+            };
+            int before = forced.getAsInt();
+            level.method_14178().method_17297(net.minecraft.class_3230.field_14031, cp, 1, cp);
+            int added = forced.getAsInt();
+            level.method_14178().method_17300(net.minecraft.class_3230.field_14031, cp, 1, cp);
+            int removed = forced.getAsInt();
+            check("region-ticket", added == before + 1 && removed == before, "before=" + before + " added=" + added + " removed=" + removed);
         });
 
         DONE = true;

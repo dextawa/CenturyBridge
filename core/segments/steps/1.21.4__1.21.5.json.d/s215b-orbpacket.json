@@ -10,5 +10,9 @@
  "_s215b_orbpacket_instanceRedirects_basis": "ClientGamePacketListener / ClientPacketListener.handleAddExperienceOrb(packet): 1.21.5's listener spawns the orb from handleAddEntity (the facade is that packet). A mod listener implementing or overriding handleAddExperienceOrb is not called by 1.21.5 (rows stay open).",
  "fieldRedirects": {
   "net/minecraft/class_9094.field_48149:Lnet/minecraft/class_9145;": "top/dext/centurybridge/step/v1_21_5/rt/CbOrbPackets"
- }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_3231.<init>(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;IZLjava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbServerEntities#newServerEntity"
+ },
+ "_s215b_serverentity_basis": "new ServerEntity(level, entity, interval, trackDelta, broadcast): 1.21.5's sixth argument (a broadcaster that ignores given players, used only for ClientboundSetPassengersPacket) gets one that broadcasts to everyone, as 1.21.4 sent that packet (rt/CbServerEntities). A 1.21.4 ServerEntity subclass's super constructor stays open."
 }

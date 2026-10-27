@@ -5,6 +5,16 @@
   "name": "CB s215 step test",
   "description": "1.21.4-era mod exercising API step 1.21.4 -> 1.21.5 gives back (weighted lists, SpawnerData weights, ChunkGenerator.getMobsAt round trip)",
   "environment": "*",
-  "mixins": ["cb_s215.mixins.json"],
-  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.4" }
+  "mixins": [
+    "cb_s215.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "1.21.4"
+  },
+  "entrypoints": {
+    "main": [
+      "cb.s215.Init"
+    ]
+  }
 }
