@@ -21,4 +21,19 @@ public final class CbS26Server {
     public static MinecraftServer.MultiplayerScope lan() {
         return MinecraftServer.MultiplayerScope.LAN;
     }
+
+    /**
+     * 26.1.2 MetricSampler.create(name, category, context, function): new MetricSamplerBuilder(name, category, function,
+     * context).build(). 26.2's builder is the same with a sampling phase, END_TICK unless set (26.1.2 had one phase, the
+     * tick's end; 26.2's create(name, category, supplier) also uses END_TICK).
+     */
+    public static <T> net.minecraft.util.profiling.metrics.MetricSampler createSampler(String name,
+            net.minecraft.util.profiling.metrics.MetricCategory category, T context, java.util.function.ToDoubleFunction<T> function) {
+        return new net.minecraft.util.profiling.metrics.MetricSampler.MetricSamplerBuilder<>(name, category, function, context).build();
+    }
+
+    /** superCtorReshapes push: the sampling phase of a 26.1.2 MetricSampler (26.1.2 sampled at the tick's end only) */
+    public static net.minecraft.util.profiling.metrics.MetricSampler.SamplingPhase endTick() {
+        return net.minecraft.util.profiling.metrics.MetricSampler.SamplingPhase.END_TICK;
+    }
 }

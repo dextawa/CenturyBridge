@@ -111,6 +111,18 @@
         "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient#guiRenderState(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/renderer/state/gui/GuiRenderState;"
       ],
       "basis": "26.2's Minecraft builds new Gui(this, new Hud(this), gameRenderer.gameRenderState().guiRenderState); 26.1.2's Gui(minecraft) was that Gui and Hud in one (s26b-splits), so a 26.1.2 construction gets a Hud of its own over the game's GUI state"
+    },
+    "net/minecraft/util/profiling/metrics/MetricSampler.<init>(Ljava/lang/String;Lnet/minecraft/util/profiling/metrics/MetricCategory;Ljava/util/function/DoubleSupplier;Ljava/lang/Runnable;Lnet/minecraft/util/profiling/metrics/MetricSampler$ThresholdTest;)V": {
+      "desc": "(Ljava/lang/String;Lnet/minecraft/util/profiling/metrics/MetricSampler$SamplingPhase;Lnet/minecraft/util/profiling/metrics/MetricCategory;Ljava/util/function/DoubleSupplier;Ljava/lang/Runnable;Lnet/minecraft/util/profiling/metrics/MetricSampler$ThresholdTest;)V",
+      "ops": [
+        "keep",
+        "push top/dext/centurybridge/step/v26_2/rt/CbS26Server#endTick()Lnet/minecraft/util/profiling/metrics/MetricSampler$SamplingPhase;",
+        "keep",
+        "keep",
+        "keep",
+        "keep"
+      ],
+      "basis": "26.2's constructor takes a sampling phase second, otherwise the same fields; 26.2's own create and builder default it to END_TICK, the tick-end sampling 26.1.2 did"
     }
   },
   "covers": [
@@ -130,7 +142,8 @@
     "net/minecraft/client/renderer/LevelRenderer.getLightCoords(Lnet/minecraft/client/renderer/LevelRenderer$BrightnessGetter;Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I": "net/minecraft/util/LightCoordsUtil",
     "net/minecraft/client/renderer/LevelRenderer.offsetFrustum(Lnet/minecraft/client/renderer/culling/Frustum;)Lnet/minecraft/client/renderer/culling/Frustum;": "net/minecraft/client/renderer/SectionOcclusionGraph",
     "net/minecraft/world/level/NaturalSpawner.getFilteredSpawningCategories(Lnet/minecraft/world/level/NaturalSpawner$SpawnState;ZZZ)Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS26World",
-    "net/minecraft/client/gui/components/tabs/TabNavigationBar.builder(Lnet/minecraft/client/gui/components/tabs/TabManager;I)Lnet/minecraft/client/gui/components/tabs/TabNavigationBar$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS26TabBars"
+    "net/minecraft/client/gui/components/tabs/TabNavigationBar.builder(Lnet/minecraft/client/gui/components/tabs/TabManager;I)Lnet/minecraft/client/gui/components/tabs/TabNavigationBar$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS26TabBars",
+    "net/minecraft/util/profiling/metrics/MetricSampler.create(Ljava/lang/String;Lnet/minecraft/util/profiling/metrics/MetricCategory;Ljava/lang/Object;Ljava/util/function/ToDoubleFunction;)Lnet/minecraft/util/profiling/metrics/MetricSampler;": "top/dext/centurybridge/step/v26_2/rt/CbS26Server#createSampler"
   },
   "_s26f_redirects_basis": {
     "net/minecraft/world/effect/InstantenousMobEffect.isInstantenous()Z": "26.2 renamed the class (InstantaneousMobEffect, pkgmoves) and its override isInstantenous -> isInstantaneous (same body: iconst_1; ireturn). pkgmoves keys the rename on MobEffect, which a call naming InstantenousMobEffect does not reach because 26.1.2's InstantenousMobEffect declares the method itself",
@@ -145,7 +158,11 @@
     "net/minecraft/client/gui/components/tabs/TabNavigationBar.arrangeElements()V": "26.1.2 arrangeElements() at the bar's width; 26.2 arrangeElements(width) on the bar's getWidth() (MenuTabBar's override is 26.1.2's body; a plain 26.2 bar positions its frame at getX/getY)",
     "net/minecraft/client/gui/Gui.extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V": "26.2 Hud.extractRenderState(graphics, deltaTracker) is 26.1.2's Gui body (options.hideGui read as Hud.isHidden, the screen asked of minecraft.gui; javap diff), reached as gui.hud; gen_delegate_moves leaves it out (not instruction-identical)",
     "net/minecraft/client/gui/Gui.extractSavingIndicator(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V": "26.2 Hud.extractSavingIndicator: instruction-identical to 26.1.2's Gui body (javap diff empty), reached as gui.hud",
-    "net/minecraft/client/gui/Gui.vignetteBrightness:F": "26.2 Hud.vignetteBrightness (public float), set and read by the vignette code that moved to Hud; reached as gui.hud"
+    "net/minecraft/client/gui/Gui.vignetteBrightness:F": "26.2 Hud.vignetteBrightness (public float), set and read by the vignette code that moved to Hud; reached as gui.hud",
+    "net/minecraft/util/profiling/metrics/MetricSampler.create(Ljava/lang/String;Lnet/minecraft/util/profiling/metrics/MetricCategory;Ljava/lang/Object;Ljava/util/function/ToDoubleFunction;)Lnet/minecraft/util/profiling/metrics/MetricSampler;": "26.1.2 create(name, category, context, fn) = builder(name, category, fn, context).build(); 26.2 keeps MetricSamplerBuilder with a sampling phase defaulting to END_TICK, the only phase 26.1.2 had",
+    "net/minecraft/client/renderer/LevelRenderer.needsUpdate()V": "26.1.2: sectionOcclusionGraph.invalidate() + cloudRenderer.markForRebuild(); 26.2 keeps both on the renderer (getters sectionOcclusionGraph() / cloudRenderer()) and makes both calls itself (resize, invalidateCompiledGeometry)",
+    "net/minecraft/client/renderer/LevelRenderer.addRecentlyCompiledSection(Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection;)V": "26.1.2: sectionOcclusionGraph.schedulePropagationFrom(section); 26.2's graph keeps the method (now called from inside the graph)",
+    "net/minecraft/client/renderer/LevelRenderer.HALF_SECTION_SIZE:I": "26.1.2 public static final int 8 (ConstantValue); 26.2 dropped the constant"
   },
   "instanceRedirects": {
     "net/minecraft/world/item/ItemStack.getDamageSource(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Supplier;)Lnet/minecraft/world/damagesource/DamageSource;": "top/dext/centurybridge/step/v26_2/rt/CbS26Entity",
@@ -153,12 +170,17 @@
     "net/minecraft/client/gui/components/tabs/TabNavigationBar.updateWidth(I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26TabBars",
     "net/minecraft/client/gui/components/tabs/TabNavigationBar.arrangeElements()V": "top/dext/centurybridge/step/v26_2/rt/CbS26TabBars",
     "net/minecraft/client/gui/Gui.extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient",
-    "net/minecraft/client/gui/Gui.extractSavingIndicator(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient"
+    "net/minecraft/client/gui/Gui.extractSavingIndicator(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient",
+    "net/minecraft/client/renderer/LevelRenderer.needsUpdate()V": "top/dext/centurybridge/step/v26_2/rt/CbS26RenderLevelClient",
+    "net/minecraft/client/renderer/LevelRenderer.addRecentlyCompiledSection(Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection;)V": "top/dext/centurybridge/step/v26_2/rt/CbS26RenderLevelClient"
   },
   "instanceFieldGetters": {
     "net/minecraft/client/gui/Gui.vignetteBrightness:F": "top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient#getVignetteBrightness"
   },
   "instanceFieldSetters": {
     "net/minecraft/client/gui/Gui.vignetteBrightness:F": "top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient#setVignetteBrightness"
+  },
+  "fieldGetters": {
+    "net/minecraft/client/renderer/LevelRenderer.HALF_SECTION_SIZE:I": "top/dext/centurybridge/step/v26_2/rt/CbS26RenderLevelClient#halfSectionSize"
   }
 }
