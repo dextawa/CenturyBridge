@@ -5108,6 +5108,8 @@ public final class JarProcessor {
                 renameSets.add(s.depRenames);
             }
             renameSets.add(chain.depRenames);
+            // ids whose range a depRename stated ("newId@range"): the wiring's judgment, kept as written
+            Set<String> wiredRange = new HashSet<>();
             for (Map<String, String> set : renameSets) {
                 for (Map.Entry<String, String> e : set.entrySet()) {
                     if (dep.has(e.getKey())) {
@@ -5124,13 +5126,65 @@ public final class JarProcessor {
                         // several old ids may collapse onto one provider: keep the wider range
                         if (!dep.has(target)) {
                             dep.add(target, v);
+                            if (at > 0) {
+                                wiredRange.add(target);
+                            }
                         }
                         rpt.notes.add("dep " + e.getKey() + " -> " + target);
                     }
                 }
             }
+            restateFapiRanges(dep, chain, wiredRange, false, "depends", rpt);
+        }
+        for (String key : new String[] {"recommends", "suggests"}) {
+            if (fmj.has(key) && fmj.get(key).isJsonObject()) {
+                restateFapiRanges(fmj.getAsJsonObject(key), chain, Set.of(), false, key, rpt);
+            }
+        }
+        for (String key : new String[] {"breaks", "conflicts"}) {
+            if (fmj.has(key) && fmj.get(key).isJsonObject()) {
+                restateFapiRanges(fmj.getAsJsonObject(key), chain, Set.of(), true, key, rpt);
+            }
         }
         return GSON.toJson(fmj).getBytes(StandardCharsets.UTF_8);
+    }
+
+    /**
+     * A range on fabric-api or one of its modules names the source release's Fabric API (Kilt's
+     * "fabric-api": "&gt;=0.92.11+1.20.1"): measured against the target's versions it means nothing --
+     * 1.20.2's 0.91.6 is refused, 1.20.4's 0.97 passes only because the numbers happen to be larger. The
+     * climbed mod runs against the target release's Fabric API, the one the conversion measured, so a
+     * positive relation (depends/recommends/suggests) on an id the target's Fabric API declares becomes
+     * "&gt;=" that version; a negative one (breaks/conflicts) on such an id is dropped, since the source
+     * versions it excludes have no counterpart on the target. "*" says nothing about versions and stays.
+     * Ids the target no longer ships are left to depRenames (fapi_modules.py), ids a depRename gave a
+     * range keep the wiring's.
+     */
+    private static void restateFapiRanges(JsonObject rel, Chain chain, Set<String> keep, boolean negative,
+                                          String key, Report rpt) {
+        if (chain.targetFapiVersions == null) {
+            return;
+        }
+        for (String id : new ArrayList<>(rel.keySet())) {
+            String tv = chain.targetFapiVersions.get(id);
+            if (tv == null || keep.contains(id)) {
+                continue;
+            }
+            JsonElement v = rel.get(id);
+            if (v.isJsonPrimitive() && v.getAsString().trim().equals("*")) {
+                continue;
+            }
+            if (negative) {
+                rel.remove(id);
+                rpt.notes.add(key + " " + id + " " + v + " dropped (source release's Fabric API versions)");
+            } else {
+                String nv = ">=" + tv;
+                if (!(v.isJsonPrimitive() && v.getAsString().equals(nv))) {
+                    rel.add(id, new JsonPrimitive(nv));
+                    rpt.notes.add(key + " " + id + " " + v + " -> " + nv + " (target release's Fabric API)");
+                }
+            }
+        }
     }
 
     private static String shortName(String internal) {

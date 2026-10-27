@@ -241,6 +241,11 @@ public final class Main {
             chain.loadTargetRaw(targetStub);
         }
         chain.loadTargetLibraryDecls(Path.of("data/runtime/client-" + args[3] + "/.fabric/processedMods"));
+        // the target's Fabric API versions: a mod's fabric-api / fabric-* dependency range names the source
+        // release's Fabric API and is re-stated for the target's (JarProcessor.patchFmj)
+        chain.targetFapiVersions = fabricApiVersionsOf(args[3]);
+        System.out.println("target Fabric API versions: " + (chain.targetFapiVersions == null ? "none"
+            : chain.targetFapiVersions.getOrDefault("fabric-api", "?") + " (" + chain.targetFapiVersions.size() + " ids)"));
         chain.wallRemapper = crossesWall && wallTable != null ? wallTable.remapper() : null;
         System.out.println("target Fabric API declarations: " + chain.targetLibDecls.size() + " classes");
         System.out.println("injected interfaces: " + tgtInjected.size() + " vanilla classes in " + args[3] + "'s Fabric API");
@@ -538,6 +543,31 @@ public final class Main {
             return java.util.Map.of();
         }
         return Chain.readInjectedInterfaces(mods);
+    }
+
+    /**
+     * The versions of a release's Fabric API (data/runtime/client-&lt;version&gt;/mods/fabric-api-*.jar, its
+     * nested modules included; Chain.readFabricApiVersions). A missing jar fails the conversion: the climbed
+     * mod's fabric-api ranges would keep naming the source release -- unless -Dcb.allowMissingStubs=true.
+     */
+    private static java.util.Map<String, String> fabricApiVersionsOf(String version) throws java.io.IOException {
+        Path mods = Path.of("data/runtime/client-" + version + "/mods");
+        Path jar = null;
+        if (Files.isDirectory(mods)) {
+            try (var s = Files.list(mods)) {
+                jar = s.filter(f -> f.getFileName().toString().startsWith("fabric-api-") && f.toString().endsWith(".jar"))
+                    .sorted().findFirst().orElse(null);
+            }
+        }
+        if (jar == null) {
+            if (Boolean.getBoolean("cb.allowMissingStubs")) {
+                return null;
+            }
+            throw new IllegalStateException(mods.toAbsolutePath() + " holds no fabric-api-*.jar: a mod's fabric-api"
+                + " dependency ranges are re-stated for that release's Fabric API (or set -Dcb.allowMissingStubs=true"
+                + " to leave them as the source release wrote them, knowingly)");
+        }
+        return Chain.readFabricApiVersions(jar);
     }
 
     /** a release's jar with real method bodies, for mixin anchors: past the wall the plain jar carries them */

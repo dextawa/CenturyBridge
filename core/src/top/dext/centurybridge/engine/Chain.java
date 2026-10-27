@@ -2362,6 +2362,68 @@ public final class Chain {
      *  ("depRenames" in shims-<to>.json), on top of the per-segment ones. */
     public final java.util.Map<String, String> depRenames = new java.util.HashMap<>();
 
+    /**
+     * The target release's Fabric API: mod id -> version, for the fabric-api jar itself and every module
+     * it nests, the ids they "provide" included ({@link #readFabricApiVersions}). A mod's fabric.mod.json
+     * range on one of these names the source release's Fabric API; the converter re-states it for the
+     * target's (JarProcessor.patchFmj). Null: not read (the conversion then leaves those ranges alone).
+     */
+    public java.util.Map<String, String> targetFapiVersions;
+
+    /**
+     * The versions a release's Fabric API jar declares: its own fabric.mod.json and each nested module's
+     * (META-INF/jars), keyed by id and by every id they "provide". Null when the jar is absent.
+     */
+    public static java.util.Map<String, String> readFabricApiVersions(Path fapiJar) throws IOException {
+        if (fapiJar == null || !Files.isRegularFile(fapiJar)) {
+            return null;
+        }
+        java.util.Map<String, String> out = new java.util.TreeMap<>();
+        try (var z = new java.util.zip.ZipFile(fapiJar.toFile())) {
+            readFmjVersions(z.getInputStream(z.getEntry("fabric.mod.json")).readAllBytes(), out);
+            var en = z.entries();
+            while (en.hasMoreElements()) {
+                var e = en.nextElement();
+                String n = e.getName();
+                if (!n.startsWith("META-INF/jars/") || !n.endsWith(".jar")) {
+                    continue;
+                }
+                try (var zin = new java.util.zip.ZipInputStream(z.getInputStream(e))) {
+                    java.util.zip.ZipEntry ie;
+                    while ((ie = zin.getNextEntry()) != null) {
+                        if (ie.getName().equals("fabric.mod.json")) {
+                            readFmjVersions(zin.readAllBytes(), out);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return out;
+    }
+
+    private static void readFmjVersions(byte[] fmjBytes, java.util.Map<String, String> out) {
+        var reader = new com.google.gson.stream.JsonReader(new java.io.InputStreamReader(
+            new java.io.ByteArrayInputStream(fmjBytes), java.nio.charset.StandardCharsets.UTF_8));
+        reader.setLenient(true);
+        var fmj = com.google.gson.JsonParser.parseReader(reader).getAsJsonObject();
+        if (!fmj.has("id") || !fmj.has("version")) {
+            return;
+        }
+        String ver = fmj.get("version").getAsString();
+        out.put(fmj.get("id").getAsString(), ver);
+        if (fmj.has("provides") && fmj.get("provides").isJsonArray()) {
+            for (var p : fmj.getAsJsonArray("provides")) {
+                if (p.isJsonPrimitive()) {
+                    out.putIfAbsent(p.getAsString(), ver);
+                } else if (p.isJsonObject() && p.getAsJsonObject().has("id")) {
+                    var po = p.getAsJsonObject();
+                    out.putIfAbsent(po.get("id").getAsString(), po.has("version") ? po.get("version").getAsString() : ver);
+                }
+            }
+        }
+    }
+
     /** Runtime class serving cbLookup() for the hooks above ("lookupRt"). */
     public String lookupRt;
 
