@@ -1,0 +1,7 @@
+{
+ "staticRedirects": {
+  "com/mojang/blaze3d/systems/RenderSystem.enableScissor(IIII)V": "top/dext/centurybridge/step/v1_21_6/rt/CbScissor#enableScissor",
+  "com/mojang/blaze3d/systems/RenderSystem.disableScissor()V": "top/dext/centurybridge/step/v1_21_6/rt/CbScissor#disableScissor"
+ },
+ "_staticRedirects_basis_s6h_scissor": "1.21.5 RenderSystem.enableScissor / disableScissor set SCISSOR_STATE, which RenderType draws and GuiGraphics' draws (through RenderTypes, GuiGraphics.applyScissor -> RenderSystem.enableScissor) alike copied into their pass (javap). 1.21.6 splits it: RenderType draws read enableScissorForRenderTypeDraws' state, GuiGraphics' deferred elements record GuiGraphics.ScissorStack.peek() and GuiRenderer maps it to pixels with 1.21.5's applyScissor formula (javap method_70884). rt/CbScissor calls the 1.21.6 render-type method (the methodRenames in s6g-scissor.json still carry mixins on the 1.21.5 member onto it) and, while the frame's GUI is built, stands as ScissorStack.peek()'s answer until GuiGraphics changes its stack (CbGuiScissorMixin / CbGuiScissorFrameMixin)."
+}

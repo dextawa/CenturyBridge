@@ -1,0 +1,108 @@
+{
+ "_swall12_basis": "1.21.11 constructors and calls 26.1 reshaped (javap of both bodies): TurtleModel(root) is 26.1's AdultTurtleModel (facade/LegacyTurtleModel for subclasses); Donkey/UndeadHorse renderers take 26.1's saddle and adult/baby arguments for the 1.21.11 Type (rt/CbWallHorseRenderers); AbstractScrollArea / AbstractContainerWidget / AbstractTextAreaWidget subclasses get 1.21.11's scrollbar as ScrollbarSettings (rt/CbWallScrollAreas); BlockableEventLoop subclasses do not propagate delayed crashes (rt/CbWallEventLoops); GuiMessage / GuiMessage.Line get 26.1's source and parent (rt/CbWallChatMessages); CloudRenderer.render gets the cloud range 1.21.11's body read (rt/CbWallClouds)",
+ "covers": [
+  "net/minecraft/class_4184.method_19321(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;ZZF)V"
+ ],
+ "_swall12_metadata_basis": "1.21.11's BuiltInMetadata (class_7662) is 26.1's ResourceMetadata (javap: 26.1 dropped the class; VanillaPackResourcesBuilder.setMetadata and VanillaPackResources take ResourceMetadata, whose of(..) build the same Map.of-backed metadata and whose EMPTY answers nothing); get(type) answers getSection(type) or null (rt/CbWallBuiltInMetadata)",
+ "classRenames": {
+  "net/minecraft/class_7662": "net/minecraft/class_7368"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_7662.method_45172()Lnet/minecraft/class_7662;": "top/dext/centurybridge/step/v26_1/rt/CbWallBuiltInMetadata#of",
+  "net/minecraft/class_7662.method_45174(Lnet/minecraft/class_7677;Ljava/lang/Object;)Lnet/minecraft/class_7662;": "top/dext/centurybridge/step/v26_1/rt/CbWallBuiltInMetadata#of",
+  "net/minecraft/class_7662.method_45175(Lnet/minecraft/class_7677;Ljava/lang/Object;Lnet/minecraft/class_7677;Ljava/lang/Object;)Lnet/minecraft/class_7662;": "top/dext/centurybridge/step/v26_1/rt/CbWallBuiltInMetadata#of"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_7662.method_45173(Lnet/minecraft/class_7677;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallBuiltInMetadata#get"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_614.<init>(Lnet/minecraft/class_630;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallAnimalModels#turtle",
+  "net/minecraft/class_9991.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_9991$class_10650;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallHorseRenderers#donkey",
+  "net/minecraft/class_961.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_961$class_10651;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallHorseRenderers#undeadHorse",
+  "net/minecraft/class_303.<init>(ILnet/minecraft/class_2561;Lnet/minecraft/class_7469;Lnet/minecraft/class_7591;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallChatMessages#message",
+  "net/minecraft/class_303$class_7590.<init>(ILnet/minecraft/class_5481;Lnet/minecraft/class_7591;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallChatMessages#line"
+ },
+ "superRenames": {
+  "net/minecraft/class_614": "top/dext/centurybridge/step/v26_1/facade/LegacyTurtleModel"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_9991.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_9991$class_10650;)V": {
+   "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5601;Lnet/minecraft/class_9991$class_10650;Lnet/minecraft/class_9991$class_10650;)V",
+   "ops": ["keep:0",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallHorseRenderers#donkeySaddleLayer(Lnet/minecraft/class_9991$class_10650;)Lnet/minecraft/class_10186$class_10190;",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallHorseRenderers#donkeySaddleModel(Lnet/minecraft/class_9991$class_10650;)Lnet/minecraft/class_5601;",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallHorseRenderers#donkeyAdult(Lnet/minecraft/class_9991$class_10650;)Lnet/minecraft/class_9991$class_10650;",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallHorseRenderers#donkeyBaby(Lnet/minecraft/class_9991$class_10650;)Lnet/minecraft/class_9991$class_10650;"],
+   "basis": "26.1's DonkeyRenderer(context, saddleLayer, saddleModel, adult, baby) takes what 1.21.11's Type held, with 26.1's baby type; the arguments 26.1's EntityRenderers passes for the 1.21.11 Type's animal (DONKEY: DONKEY_SADDLE, ModelLayers.DONKEY_SADDLE, DONKEY, DONKEY_BABY; MULE likewise; javap)"
+  },
+  "net/minecraft/class_961.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_961$class_10651;)V": {
+   "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5601;Lnet/minecraft/class_961$class_10651;Lnet/minecraft/class_961$class_10651;)V",
+   "ops": ["keep:0",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallHorseRenderers#undeadSaddleLayer(Lnet/minecraft/class_961$class_10651;)Lnet/minecraft/class_10186$class_10190;",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallHorseRenderers#undeadSaddleModel(Lnet/minecraft/class_961$class_10651;)Lnet/minecraft/class_5601;",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallHorseRenderers#undeadAdult(Lnet/minecraft/class_961$class_10651;)Lnet/minecraft/class_961$class_10651;",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallHorseRenderers#undeadBaby(Lnet/minecraft/class_961$class_10651;)Lnet/minecraft/class_961$class_10651;"],
+   "basis": "26.1's UndeadHorseRenderer(context, saddleLayer, saddleModel, adult, baby) takes what 1.21.11's Type held, with 26.1's baby type; the arguments 26.1's EntityRenderers passes for the 1.21.11 Type's animal (SKELETON: SKELETON_HORSE_SADDLE, ModelLayers.SKELETON_HORSE_SADDLE, SKELETON, SKELETON_BABY; ZOMBIE likewise; javap)"
+  },
+  "net/minecraft/class_7528.<init>(IIIILnet/minecraft/class_2561;)V": {
+   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V",
+   "ops": ["keep", "keep", "keep", "keep", "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;"],
+   "basis": "26.1's AbstractScrollArea takes ScrollbarSettings; defaultSettings is 1.21.11's bar and the rate is read only by scrollRate(), which every 1.21.11 subclass declares (abstract in 1.21.11, javap class_7528) -- rt/CbWallScrollAreas"
+  },
+  "net/minecraft/class_9017.<init>(IIIILnet/minecraft/class_2561;)V": {
+   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V",
+   "ops": ["keep", "keep", "keep", "keep", "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;"],
+   "basis": "AbstractContainerWidget passes its arguments to AbstractScrollArea in both (javap class_9017 / 26.1): 1.21.11's bar, as for AbstractScrollArea"
+  },
+  "net/minecraft/class_10415.<init>(IIIILnet/minecraft/class_2561;)V": {
+   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V",
+   "ops": ["keep", "keep", "keep", "keep", "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;"],
+   "basis": "AbstractTextAreaWidget passes its arguments to AbstractScrollArea and shows background and decorations in both (javap class_10415 / 26.1): 1.21.11's bar, as for AbstractScrollArea"
+  },
+  "net/minecraft/class_10415.<init>(IIIILnet/minecraft/class_2561;ZZ)V": {
+   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;ZZ)V",
+   "ops": ["keep", "keep", "keep", "keep", "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;",
+    "keep", "keep"],
+   "basis": "AbstractTextAreaWidget(.., showBackground, showDecorations) sets the same two flags in both (javap class_10415 / 26.1): 1.21.11's bar, as for AbstractScrollArea"
+  },
+  "net/minecraft/class_1255.<init>(Ljava/lang/String;)V": {
+   "desc": "(Ljava/lang/String;Z)V",
+   "ops": ["keep", "push top/dext/centurybridge/step/v26_1/rt/CbWallEventLoops#noCrashPropagation()Z"],
+   "basis": "26.1's BlockableEventLoop(name, propagatesCrashes): 1.21.11's loop rethrew no delayed crash (javap class_1255), so a 1.21.11 mod's loop passes false -- rt/CbWallEventLoops"
+  },
+  "net/minecraft/class_4093.<init>(Ljava/lang/String;)V": {
+   "desc": "(Ljava/lang/String;Z)V",
+   "ops": ["keep", "push top/dext/centurybridge/step/v26_1/rt/CbWallEventLoops#noCrashPropagation()Z"],
+   "basis": "ReentrantBlockableEventLoop passes to BlockableEventLoop in both (javap class_4093 / 26.1): false, as for BlockableEventLoop"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_9955.method_62168(ILnet/minecraft/class_4063;FLnet/minecraft/class_243;JF)V": {
+   "desc": "(ILnet/minecraft/class_4063;FILnet/minecraft/class_243;JF)V",
+   "ops": ["keep", "keep", "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallClouds#cloudRange()I",
+    "keep", "keep", "keep"],
+   "basis": "CloudRenderer.render: 26.1 is passed the cloud range 1.21.11's body read from options.cloudRange() at its head; the rest is the same body (javap) -- rt/CbWallClouds"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_62168(ILnet/minecraft/class_4063;FLnet/minecraft/class_243;JF)V",
+   "new": "method_62168(ILnet/minecraft/class_4063;FILnet/minecraft/class_243;JF)V",
+   "args": [0, 1, 2, 4, 5, 6],
+   "onlyUnder": "net/minecraft/class_9955",
+   "frames": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.11 CloudRenderer subclass's render(color, status, height, cameraPos, gameTime, partialTick) gets every argument 26.1's render passes but the cloud range, which 1.21.11's body read from the options itself; its super call passes back the range vanilla passed"
+  }
+ ],
+ "frameDefaults": {
+  "method_62168(ILnet/minecraft/class_4063;FLnet/minecraft/class_243;JF)V": {
+   "3": "top/dext/centurybridge/step/v26_1/rt/CbWallClouds#cloudRange()I"
+  }
+ }
+}

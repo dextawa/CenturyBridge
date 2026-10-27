@@ -24,4 +24,14 @@ public final class CbS26CrashReport {
     public static CrashReportDetail<Object> toDetail(Supplier<String> supplier) {
         return (CrashReportDetail) supplier::get;
     }
+
+    /**
+     * The exit code 26.2's Minecraft.saveReport(File, CrashReport, int) / crash(Minecraft, File, CrashReport, int) take
+     * for a 26.1.2 call: 26.1.2's saveReport answered -1 once the report was printed or saved (-2 when it could not be
+     * saved, which 26.2 still answers itself), and crash exited with that answer; 26.2 answers the given code there.
+     * 26.2's own two-argument saveReport and emergencySaveAndCrash pass -1 too (javap of both).
+     */
+    public static int legacyExitCode() {
+        return -1;
+    }
 }

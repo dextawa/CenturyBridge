@@ -6,10 +6,12 @@
 #               Font.drawInBatch in a world render callback, a FabricKeyBinding pressed for real, ClientTags.isInLocal,
 #               MultilineTextField / MultiLineEditBox / ToastManager, and a test screen in three modes
 #               (GuiGraphics endPortal fill, flush, renderItem with z, positioned tooltip, SplashRenderer masks;
-#               renderBlurredBackground + setTooltipForNextRenderPass; PANORAMA + clearTooltipForNextRenderPass),
-#               with screenshots; prints "CB-S6C ok|FAIL ..", "CB-S6C N/T", then stops the client.
+#               renderBlurredBackground + setTooltipForNextRenderPass; PANORAMA + clearTooltipForNextRenderPass;
+#               s6h: RenderSystem.enableScissor / disableScissor around GuiGraphics fills, judged on the framebuffer's
+#               pixels), with screenshots; prints "CB-S6C ok|FAIL ..", "CB-S6C N/T", then stops the client.
 #               Climb it one step: boot_client_remote.sh with CB_FROM=1.21.5, T=1.21.6.
-#   cb-s6n.jar  a native 1.21.6 mod: @Inject(HEAD) on Gui.<init> and GuiGraphics.renderDeferredTooltip, counted in
+#   cb-s6n.jar  a native 1.21.6 mod: @Inject(HEAD) on Gui.<init>, GuiGraphics.renderDeferredTooltip, GuiGraphics.enableScissor /
+#               disableScissor and GuiGraphics.ScissorStack.peek, counted in
 #               system properties the climbed driver reports (the native-W check). CB_NATIVE_MODS on the climbed run.
 # Not covered: the rendering-data-attachment chunk-region check (needs a custom block model).
 #   bash core/testmods/cb-s6c/build.sh <outDir>   (from the repository root on beta2; CB_DATA=<data dir>)

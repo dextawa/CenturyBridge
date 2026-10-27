@@ -4,14 +4,11 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.level.ItemLike;
@@ -69,17 +66,13 @@ public final class CbWallFrames {
     /** RecipeProvider.oreSmelting: 1.21.11's builder chose the book category from the result (food, block, misc) */
     public static CookingBookCategory smeltingCategory(Object provider, List<?> ingredients, RecipeCategory category,
             ItemLike result, float experience, int cookingTime, String group) {
-        Item item = result.asItem();
-        if (item.components().has(DataComponents.FOOD)) {
-            return CookingBookCategory.FOOD;
-        }
-        return item instanceof BlockItem ? CookingBookCategory.BLOCKS : CookingBookCategory.MISC;
+        return CbWallRecipeBuilders.smeltingCategory(result);
     }
 
     /** RecipeProvider.oreBlasting: 1.21.11's builder chose block for a block result, else misc */
     public static CookingBookCategory blastingCategory(Object provider, List<?> ingredients, RecipeCategory category,
             ItemLike result, float experience, int cookingTime, String group) {
-        return result.asItem() instanceof BlockItem ? CookingBookCategory.BLOCKS : CookingBookCategory.MISC;
+        return CbWallRecipeBuilders.blastingCategory(result);
     }
 
     /**

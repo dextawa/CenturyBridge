@@ -1,0 +1,39 @@
+{
+  "_s26e_storage": "s26e: 26.1.2's one submit storage (GameRenderer.submitNodeStorage = FeatureRenderDispatcher's = LevelRenderer.submitNodeStorage) onto 26.2's per-context storages (rt/CbS26SubmitStorage, mixin/CbS26SubmitWindowMixin, CbS26SubmitDrainMixin; javap of both). Overrides of these in a subclass are not called by 26.2 vanilla (it never asks a dispatcher or GameRenderer for its storage) and stay open",
+  "instanceRedirects": {
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.getSubmitNodeStorage()Lnet/minecraft/client/renderer/SubmitNodeStorage;": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitStorage",
+    "net/minecraft/client/renderer/GameRenderer.getSubmitNodeStorage()Lnet/minecraft/client/renderer/SubmitNodeStorage;": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitStorage",
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.renderAllFeatures()V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitStorage",
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.clearSubmitNodes()V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitStorage",
+    "net/minecraft/client/renderer/SubmitNodeStorage.clear()V": "top/dext/centurybridge/step/v26_2/rt/CbS26SubmitStorage",
+    "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.colorTargetState()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline",
+    "com/mojang/blaze3d/pipeline/BlendFunction.sourceColor()Lcom/mojang/blaze3d/platform/SourceFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline",
+    "com/mojang/blaze3d/pipeline/BlendFunction.destColor()Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline",
+    "com/mojang/blaze3d/pipeline/BlendFunction.sourceAlpha()Lcom/mojang/blaze3d/platform/SourceFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline",
+    "com/mojang/blaze3d/pipeline/BlendFunction.destAlpha()Lcom/mojang/blaze3d/platform/DestFactor;": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline",
+    "net/minecraft/client/renderer/LevelRenderer.destroyBlockProgress(ILnet/minecraft/core/BlockPos;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26DestroyProgress"
+  },
+  "_s26e_destroy_basis": {
+    "net/minecraft/client/renderer/LevelRenderer.destroyBlockProgress(ILnet/minecraft/core/BlockPos;I)V": "26.2 ClientLevel.destroyBlockProgress(id, pos, progress) holds 26.1.2's renderer body (same maps and sequence, clock = game time; javap); 26.1.2's ClientLevel.destroyBlockProgress forwarded to the renderer, 26.2's runs it itself: a call on the renderer runs it on Minecraft.level (rt/CbS26DestroyProgress)"
+  },
+  "_s26e_pipeline_basis": {
+    "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.colorTargetState()Ljava/util/Optional;": "26.1.2 one Optional<ColorTargetState> per snippet; 26.2 colorTargetStates[] + activeColorTargetStateCount, and Builder.withColorTargetState(state) is withColorTargetState(0, state): target 0 when the count covers it (rt/CbS26Pipeline; also swall8 item 3, the 26.1 layer's CbWallPipeline)",
+    "com/mojang/blaze3d/pipeline/BlendFunction.sourceColor()Lcom/mojang/blaze3d/platform/SourceFactor;": "26.2 BlendFunction.color().sourceFactor() (SourceFactor -> BlendFactor, classRenames in s26.json); 26.1.2's implicit add equation is what 26.2's four-factor constructor builds (BlendOp.ADD for both equations)",
+    "com/mojang/blaze3d/pipeline/BlendFunction.destColor()Lcom/mojang/blaze3d/platform/DestFactor;": "26.2 BlendFunction.color().destFactor()",
+    "com/mojang/blaze3d/pipeline/BlendFunction.sourceAlpha()Lcom/mojang/blaze3d/platform/SourceFactor;": "26.2 BlendFunction.alpha().sourceFactor()",
+    "com/mojang/blaze3d/pipeline/BlendFunction.destAlpha()Lcom/mojang/blaze3d/platform/DestFactor;": "26.2 BlendFunction.alpha().destFactor()"
+  },
+  "ctorRedirects": {
+    "com/mojang/blaze3d/pipeline/ColorTargetState.<init>(Ljava/util/Optional;I)V": "top/dext/centurybridge/step/v26_2/rt/CbS26Pipeline#newColorTargetState"
+  },
+  "_s26e_ctor_basis": {
+    "com/mojang/blaze3d/pipeline/ColorTargetState.<init>(Ljava/util/Optional;I)V": "26.1.2 ColorTargetState(blend, writeMask) had no format; 26.2's single-target construction ColorTargetState(BlendFunction) passes GpuFormat.RGBA8_UNORM (javap), so new ColorTargetState(blend, RGBA8_UNORM, writeMask)"
+  },
+  "_s26e_storage_basis": {
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.getSubmitNodeStorage()Lnet/minecraft/client/renderer/SubmitNodeStorage;": "26.1.2 returned the one storage GameRenderer made (also LevelRenderer.submitNodeStorage); 26.2 split it: LevelRenderer.submitNodeStorage (drained by prepareFrame at render's start), GameRenderer.handAndScreenSubmitNodeStorage, PictureInPictureRenderer.submitNodeStorage, GuiItemAtlas.submitNodeStorage. Answers the level's storage in render's submit window (head to prepareFrame), else a layer storage drawn where 26.1.2 drew its storage (after 26.2's renderAllFeatures(storage) calls, and after the level frame closes)",
+    "net/minecraft/client/renderer/GameRenderer.getSubmitNodeStorage()Lnet/minecraft/client/renderer/SubmitNodeStorage;": "26.1.2 GameRenderer.submitNodeStorage, the object its FeatureRenderDispatcher held; same answer as FeatureRenderDispatcher.getSubmitNodeStorage",
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.renderAllFeatures()V": "26.1.2 renderSolidFeatures, renderTranslucentFeatures, renderTranslucentParticles, clearSubmitNodes on its storage; 26.2 renderAllFeatures(storage) prepares a frame and executes solid, translucent, after-terrain, always-on-top, then closes it. Outside the level frame: renderAllFeatures(layer storage); inside it a second prepared frame throws (PreparedFrame.begin), so those submits are drawn later in the same frame",
+    "net/minecraft/client/renderer/feature/FeatureRenderDispatcher.clearSubmitNodes()V": "26.1.2 storage.clear() on its storage; clears the storage getSubmitNodeStorage answers now",
+    "net/minecraft/client/renderer/SubmitNodeStorage.clear()V": "26.1.2 emptied each node collection; 26.2 keeps a collection only while it holds submits (drainPhases removes drained ones, order(int) recreates), so dropping getSubmitsPerOrder()'s collections is the same empty storage"
+  }
+}

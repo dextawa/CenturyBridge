@@ -13,7 +13,8 @@
     "CbServerRestoredMixin",
     "CbServerRestoredHooksMixin",
     "CbProfilesServerMixin",
-    "CbProjectileDeflectionMixin"
+    "CbProjectileDeflectionMixin",
+    "CbProjectileDeflectionMixinHooks"
   ],
   "client": [
     "CbBlockEntityDispatchMixin",
