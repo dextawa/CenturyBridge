@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s26t",
+ "version": "1.0.0",
+ "name": "CB s26t tag datagen test (26.1.2 era)",
+ "environment": "*",
+ "entrypoints": { "fabric-datagen": ["cb.s26t.S26tDatagen"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "26.1.2", "fabric-data-generation-api-v1": "*" }
+}

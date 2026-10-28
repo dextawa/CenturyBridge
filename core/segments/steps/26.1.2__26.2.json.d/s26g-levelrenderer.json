@@ -1,0 +1,55 @@
+{
+ "_s26g_levelrenderer_basis": "26.2 rebuilt LevelRenderer's constructor (javap of both): 26.1.2 LevelRenderer(Minecraft, EntityRenderDispatcher, BlockEntityRenderDispatcher, RenderBuffers, GameRenderState, FeatureRenderDispatcher), 26.2 LevelRenderer(EntityRenderDispatcher, BlockEntityRenderDispatcher, ModelManager, TextureManager, AtlasManager, ShaderManager, GameRenderer, width, height), reading renderBuffers / featureRenderDispatcher / gameRenderState from the GameRenderer. The Minecraft-derived values come from the caller's Minecraft (rt/CbS26LevelRendererClient), as 26.2's Minecraft passes them. initOutline / shouldShowEntityOutlines / onSectionBecomingNonEmpty are restored members (mixin/CbS26LevelRendererRestoredMixin).",
+ "callReshapes": {
+  "net/minecraft/client/renderer/LevelRenderer.<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/renderer/RenderBuffers;Lnet/minecraft/client/renderer/state/GameRenderState;Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher;)V": {
+   "desc": "(Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/resources/model/ModelManager;Lnet/minecraft/client/renderer/texture/TextureManager;Lnet/minecraft/client/resources/model/sprite/AtlasManager;Lnet/minecraft/client/renderer/ShaderManager;Lnet/minecraft/client/renderer/GameRenderer;II)V",
+   "ops": [
+    "keep:1",
+    "keep:2",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#modelManager(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/resources/model/ModelManager;",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#textureManager(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/renderer/texture/TextureManager;",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#atlasManager(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/resources/model/sprite/AtlasManager;",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#shaderManager(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/renderer/ShaderManager;",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#gameRenderer(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/renderer/GameRenderer;",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#width(Lnet/minecraft/client/Minecraft;)I",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#height(Lnet/minecraft/client/Minecraft;)I",
+    "drop:3",
+    "drop:4",
+    "drop:5"
+   ],
+   "basis": "26.2's Minecraft passes its model / texture / atlas / shader managers, game renderer and window size; 26.1.2's Minecraft passed its renderBuffers, gameRenderer.getGameRenderState() and featureRenderDispatcher, which 26.2's constructor reads from the GameRenderer instead (the same objects 26.1.2's Minecraft held). A caller's own RenderBuffers / GameRenderState / FeatureRenderDispatcher of other instances are not used (release_notes_known.md)"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/client/renderer/LevelRenderer.<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/renderer/RenderBuffers;Lnet/minecraft/client/renderer/state/GameRenderState;Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher;)V": {
+   "desc": "(Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/resources/model/ModelManager;Lnet/minecraft/client/renderer/texture/TextureManager;Lnet/minecraft/client/resources/model/sprite/AtlasManager;Lnet/minecraft/client/renderer/ShaderManager;Lnet/minecraft/client/renderer/GameRenderer;II)V",
+   "ops": [
+    "keep:1",
+    "keep:2",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#modelManager(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/resources/model/ModelManager;",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#textureManager(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/renderer/texture/TextureManager;",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#atlasManager(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/resources/model/sprite/AtlasManager;",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#shaderManager(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/renderer/ShaderManager;",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#gameRenderer(Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/renderer/GameRenderer;",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#width(Lnet/minecraft/client/Minecraft;)I",
+    "conv:0 top/dext/centurybridge/step/v26_2/rt/CbS26LevelRendererClient#height(Lnet/minecraft/client/Minecraft;)I",
+    "drop:3",
+    "drop:4",
+    "drop:5"
+   ],
+   "basis": "a mod's LevelRenderer subclass: the same values as the callReshapes entry"
+  }
+ },
+ "covers": [
+  "net/minecraft/client/renderer/LevelRenderer.initOutline()V",
+  "net/minecraft/client/renderer/LevelRenderer.shouldShowEntityOutlines()Z",
+  "net/minecraft/client/renderer/LevelRenderer.onSectionBecomingNonEmpty(J)V",
+  "net/minecraft/client/renderer/LevelRenderer.onChunkReadyToRender(Lnet/minecraft/world/level/ChunkPos;)V"
+ ],
+ "_s26g_covers_basis": {
+  "net/minecraft/client/renderer/LevelRenderer.initOutline()V": "restored on LevelRenderer by mixin/CbS26LevelRendererRestoredMixin (26.1.2's body over 26.2's state; the class javadoc has the mapping)",
+  "net/minecraft/client/renderer/LevelRenderer.shouldShowEntityOutlines()Z": "restored on LevelRenderer by mixin/CbS26LevelRendererRestoredMixin (26.1.2's body over 26.2's state; the class javadoc has the mapping)",
+  "net/minecraft/client/renderer/LevelRenderer.onSectionBecomingNonEmpty(J)V": "restored on LevelRenderer by mixin/CbS26LevelRendererRestoredMixin (26.1.2's body over 26.2's state; the class javadoc has the mapping)",
+  "net/minecraft/client/renderer/LevelRenderer.onChunkReadyToRender(Lnet/minecraft/world/level/ChunkPos;)V": "restored on LevelRenderer by mixin/CbS26LevelRendererRestoredMixin (26.1.2's body over 26.2's state; the class javadoc has the mapping)"
+ }
+}
