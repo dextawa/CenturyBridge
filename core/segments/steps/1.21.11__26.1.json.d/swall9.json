@@ -89,12 +89,12 @@
    "basis": "26.1 GameTestServer.create takes a repeat count; 1.21.11 ran each selected test once with the direct decorator, which is 26.1's repeat count 0"
   },
   "net/minecraft/class_7196.method_41889(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/class_5219;)V": {
-   "desc": "(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;Ljava/util/Optional;)V",
+   "desc": "(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/class_8895$WorldDataAndGenSettings;Ljava/util/Optional;)V",
    "ops": [
     "keep:0",
     "keep:1",
     "keep:2",
-    "conv:2,3 top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#withGenSettings(Lnet/minecraft/class_7780;Lnet/minecraft/class_5219;)Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;",
+    "conv:2,3 top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#withGenSettings(Lnet/minecraft/class_7780;Lnet/minecraft/class_5219;)Lnet/minecraft/class_8895$WorldDataAndGenSettings;",
     "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoad#initialRules(Lnet/minecraft/class_5219;)Ljava/util/Optional;"
    ],
    "basis": "26.1 createLevelFromExistingSettings takes the world data with its generation settings split off, and the initial game rules; 1.21.11's world data carried both (rt/CbWallWorldLoad)"
@@ -103,9 +103,9 @@
  "overrideHooks": [
   {
    "old": "method_41889(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/class_5219;)V",
-   "new": "method_41889(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;Ljava/util/Optional;)V",
+   "new": "method_41889(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/class_8895$WorldDataAndGenSettings;Ljava/util/Optional;)V",
    "onlyUnder": "net/minecraft/class_7196",
-   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient.createLevelFromExistingSettings(Ltop/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyWorldOpenFlows;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;Ljava/util/Optional;)V",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient.createLevelFromExistingSettings(Ltop/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyWorldOpenFlows;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5350;Lnet/minecraft/class_7780;Lnet/minecraft/class_8895$WorldDataAndGenSettings;Ljava/util/Optional;)V",
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyWorldOpenFlows",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "26.1 calls createLevelFromExistingSettings with the world data and generation settings apart, and the initial rules; a 1.21.11 override gets the data, which keeps both (handed back through a super call, the callReshapes entry restores them)"
@@ -129,8 +129,8 @@
    ],
    "synth": [
     {
-     "new": "create(Lnet/minecraft/class_525;Lnet/minecraft/class_7780;Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;Ljava/util/Optional;Ljava/nio/file/Path;)Z",
-     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient.create(Ltop/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyCreateWorldCallback;Lnet/minecraft/class_525;Lnet/minecraft/class_7780;Lnet/minecraft/world/level/storage/LevelDataAndDimensions$WorldDataAndGenSettings;Ljava/util/Optional;Ljava/nio/file/Path;)Z"
+     "new": "create(Lnet/minecraft/class_525;Lnet/minecraft/class_7780;Lnet/minecraft/class_8895$WorldDataAndGenSettings;Ljava/util/Optional;Ljava/nio/file/Path;)Z",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient.create(Ltop/dext/centurybridge/step/v26_1/rt/CbWallWorldLoadClient$LegacyCreateWorldCallback;Lnet/minecraft/class_525;Lnet/minecraft/class_7780;Lnet/minecraft/class_8895$WorldDataAndGenSettings;Ljava/util/Optional;Ljava/nio/file/Path;)Z"
     }
    ],
    "basis": "26.1's CreateWorldCallback.create takes the world data with its generation settings and the initial game rules; a 1.21.11 callback gets the PrimaryLevelData, which keeps both"

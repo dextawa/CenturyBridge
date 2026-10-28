@@ -1393,7 +1393,8 @@ public final class WiringCheck {
             String c = todo.pop();
             if (!seen.add(c)) continue;
             if (c.equals(sup) || sup.equals("java/lang/Object")) return true;
-            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            // the target's game libraries too (as isSubtype): JOML's Matrix4f is a Matrix4fc
+            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.containsKey(c) ? stub.get(c) : gameLibs.get(c);
             if (n == null) continue;
             if (n.superName != null) todo.push(n.superName);
             todo.addAll(n.interfaces);

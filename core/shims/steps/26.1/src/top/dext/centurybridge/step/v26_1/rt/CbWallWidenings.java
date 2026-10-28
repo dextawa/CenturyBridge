@@ -6,6 +6,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Matrix4f;
+import org.joml.Matrix4fc;
 
 /**
  * Parameters 26.1 widened where 1.21.11's value passes as it is (callReshapes "conv": a reshaped call's operand
@@ -28,5 +30,10 @@ public final class CbWallWidenings {
     /** a frog where 26.1 takes a mob (FrogAi.canAttack) */
     public static Mob mob(Frog frog) {
         return frog;
+    }
+
+    /** a matrix where 26.1 takes the read-only view (vertex helpers of the leash, shadow, player-glyph and lightning renderers) */
+    public static Matrix4fc matrix(Matrix4f matrix) {
+        return matrix;
     }
 }

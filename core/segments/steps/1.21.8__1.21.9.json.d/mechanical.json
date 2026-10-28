@@ -573,16 +573,6 @@
     "keep:0 Lnet/minecraft/class_11565;"
    ],
    "basis": "mechanical: same values"
-  },
-  "net/minecraft/class_2837$class_6559.create(ILnet/minecraft/class_2359;Lnet/minecraft/class_2835;Ljava/util/List;)Lnet/minecraft/class_2837;": {
-   "desc": "(ILjava/util/List;)Lnet/minecraft/class_2837;",
-   "ops": [
-    "keep:0",
-    "keep:3",
-    "drop:1",
-    "drop:2"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2359;,Lnet/minecraft/class_2835;: no body of V reads it, but net/minecraft/class_2837$class_6559 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   }
  },
  "superCtorReshapes": {

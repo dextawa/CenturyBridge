@@ -10,7 +10,8 @@
     "BundleWeightMixin",
     "ItemStackCodecLambdaMixin",
     "FrogAttackMixin",
-    "FancyLimbMixin"
+    "FancyLimbMixin",
+    "LootMineMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,55 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_2837.method_12291(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes",
+  "net/minecraft/class_2837.method_12289(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes",
+  "net/minecraft/class_2837.method_12287(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes",
+  "net/minecraft/class_2837.method_12290()I": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes",
+  "net/minecraft/class_2837.method_39956(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes",
+  "net/minecraft/class_2837$class_6559.create(ILnet/minecraft/class_2359;Lnet/minecraft/class_2835;Ljava/util/List;)Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes",
+  "net/minecraft/class_7522.method_44345(Lnet/minecraft/class_2359;Lnet/minecraft/class_2841$class_6563;)Lnet/minecraft/class_7522$class_6562;": "top/dext/centurybridge/step/v1_21_9/rt/CbPaletteContainers",
+  "net/minecraft/class_7522$class_7523.read(Lnet/minecraft/class_2359;Lnet/minecraft/class_2841$class_6563;Lnet/minecraft/class_7522$class_6562;)Lcom/mojang/serialization/DataResult;": "top/dext/centurybridge/step/v1_21_9/rt/CbPaletteContainers"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_2814.method_38287(ILnet/minecraft/class_2359;Lnet/minecraft/class_2835;Ljava/util/List;)Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes",
+  "net/minecraft/class_2816.method_38286(ILnet/minecraft/class_2359;Lnet/minecraft/class_2835;Ljava/util/List;)Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes",
+  "net/minecraft/class_2834.method_38295(ILnet/minecraft/class_2359;Lnet/minecraft/class_2835;Ljava/util/List;)Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes",
+  "net/minecraft/class_6564.method_38316(ILnet/minecraft/class_2359;Lnet/minecraft/class_2835;Ljava/util/List;)Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes",
+  "net/minecraft/class_2841.method_44343(Lnet/minecraft/class_2359;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_2841$class_6563;Ljava/lang/Object;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_9/rt/CbPaletteContainers",
+  "net/minecraft/class_2841.method_44347(Lnet/minecraft/class_2359;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_2841$class_6563;Ljava/lang/Object;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_9/rt/CbPaletteContainers"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_2814.<init>(Lnet/minecraft/class_2359;ILnet/minecraft/class_2835;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes#hashMap",
+  "net/minecraft/class_2814.<init>(Lnet/minecraft/class_2359;ILnet/minecraft/class_2835;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes#hashMap",
+  "net/minecraft/class_6564.<init>(Lnet/minecraft/class_2359;Lnet/minecraft/class_2835;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes#singleValue",
+  "net/minecraft/class_2841.<init>(Lnet/minecraft/class_2359;Ljava/lang/Object;Lnet/minecraft/class_2841$class_6563;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPaletteContainers#container",
+  "net/minecraft/class_2841.<init>(Lnet/minecraft/class_2359;Lnet/minecraft/class_2841$class_6563;Lnet/minecraft/class_2841$class_6560;Lnet/minecraft/class_6490;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbPaletteContainers#container"
+ },
+ "_s9d_palettes_basis": "s9d palettes: 1.21.8 palettes kept their registry and resize handler (javap -c: set by the constructors) and used them in idFor/read/write/getSerializedSize; 1.21.9's take both per call. The layer gives the two fields back under 1.21.8's names (CbPalette*FieldsMixin), fills them where a palette is made with them known (PalettedContainer: its strategy's registry and itself, CbPalettedContainerTagMixin; 1.21.8 constructors, static creates, Palette.Factory.create and copy(resize), redirected to rt/CbPalettes), and 1.21.8's calls hand 1.21.9's methods the palette's own pair. Strategy: 1.21.8's registry-free PalettedContainer.Strategy is a facade (bodies 1.21.8's) giving the 1.21.9 strategy of its kind per registry; Configuration moved to Configuration.Simple (same constructor and components); the container constructors, codecs, pack and Unpacker.read hand 1.21.9 that strategy (rt/CbPaletteContainers). Open: super(...) of a mod's palette or container subclass, implementations of the old Palette.Factory.create / Unpacker.read, and 1.21.8 Configuration.createData",
+ "classRenames": {
+  "net/minecraft/class_2841$class_6563": "top/dext/centurybridge/step/v1_21_9/facade/PalettedContainerStrategy",
+  "net/minecraft/class_2841$class_6560": "net/minecraft/class_11895$class_6560"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_39956(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2837;",
+   "new": "method_39956()Lnet/minecraft/class_2837;",
+   "onlyUnder": "net/minecraft/class_2837",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes$LegacyCopy",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbPalettes.copy(Ltop/dext/centurybridge/step/v1_21_9/rt/CbPalettes$LegacyCopy;)Lnet/minecraft/class_2837;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "basis": "s9d palettes: vanilla calls copy(); a 1.21.8 palette's copy(resize) override gets the palette's own resize handler (1.21.8's container handed its own; rt/CbPalettes), its super call reaches vanilla's copy through the guard"
+  },
+  {
+   "old": "method_44345(Lnet/minecraft/class_2359;Lnet/minecraft/class_2841$class_6563;)Lnet/minecraft/class_7522$class_6562;",
+   "new": "method_44345(Lnet/minecraft/class_6563;)Lnet/minecraft/class_7522$class_6562;",
+   "onlyUnder": "net/minecraft/class_7522",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbPaletteContainers$LegacyPack",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbPaletteContainers.pack(Ltop/dext/centurybridge/step/v1_21_9/rt/CbPaletteContainers$LegacyPack;Lnet/minecraft/class_6563;)Lnet/minecraft/class_7522$class_6562;",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "basis": "s9d palettes: vanilla calls pack(strategy); a 1.21.8 pack(registry, strategy) override gets the strategy's registry and its 1.21.8 kind (rt/CbPaletteContainers), its super call reaches vanilla's pack through the guard"
+  }
+ ],
+ "facadeGaps": {
+  "net/minecraft/class_2841$class_6563.field_34571:Lnet/minecraft/class_2837$class_6559;": "Strategy.GLOBAL_PALETTE_FACTORY (package-private): 1.21.8's one factory took the registry per create call; a 1.21.9 Palette.Factory gets (bits, values) only, so no single factory can build every registry's GlobalPalette. The facade's getConfiguration hands out a global factory per registry instead, and calculateBitsForSerialization recognises those"
+ }
+}
