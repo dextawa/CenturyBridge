@@ -599,6 +599,9 @@ public final class MixinRepair {
 
         boolean[] dirty = {false, false}; // class, refmap
         for (MethodNode handler : new ArrayList<>(mx.methods)) { // a copy: reshapeCaptured adds a handler
+            int marks = handler.invisibleAnnotations == null ? 0 : handler.invisibleAnnotations.size();
+            Object[] notBridged = takeNotBridged(handler); // K2: MixinBridge could not carry it ({why, locals})
+            if (handler.invisibleAnnotations != null && handler.invisibleAnnotations.size() != marks) dirty[0] = true;
             for (AnnotationNode an : annotations(handler)) {
                 Map<String, Object> v = values(an);
                 List<String> methods = strings(v.get("method"));
@@ -625,6 +628,7 @@ public final class MixinRepair {
                 // whole; repair only when no alternative is live, and apply one repair
                 // (two alternatives repaired onto the same method would inject twice).
                 boolean live = false;
+                boolean localsJudged = false; // K1 judged the handler's captured locals against W's frames
                 String deadWhy = null;
                 List<String> fixNotes = new ArrayList<>();
                 List<Runnable> fixes = new ArrayList<>();
@@ -769,6 +773,7 @@ public final class MixinRepair {
                                 // TerracottaBlock): keyed by the facade's own name, as the layer's route reads it
                                 mixed(mx.name, owner, cands);
                             }
+                            localsJudged = lv != null;
                             live = true;
                             break;
                         }
@@ -901,7 +906,18 @@ public final class MixinRepair {
                         }
                     }
                 }
-                if (live) continue;
+                if (live) {
+                    // K2: MixinBridge left it "not bridged" and nothing here repaired it: it would apply unchanged against
+                    // W's changed body (or fail at apply), so it is disabled, never left live -- unless the reason is the
+                    // target's locals and K1 judged them against W's frames
+                    if (notBridged != null && !(Boolean.TRUE.equals(notBridged[1]) && localsJudged)) {
+                        dropInjector(handler, an);
+                        dirty[0] = true;
+                        disabled.add("not bridged: " + notBridged[0] + " (it would apply unchanged against " + stepTo
+                            + "'s changed body: disabled, not left live)");
+                    }
+                    continue;
+                }
                 if (!fixes.isEmpty()) {
                     fixes.get(0).run();
                     repairs.add(fixNotes.get(0));
@@ -1328,6 +1344,23 @@ public final class MixinRepair {
             if (m.name.equals(s.name)) return owner + "." + m.name + m.desc;
         }
         return null;
+    }
+
+    /**
+     * K2: MixinBridge's "not bridged" mark for this step on a handler ({why, locals}), or null. Every such mark is taken
+     * off (one written for another step is stale: a jar converted again starts clean).
+     */
+    private Object[] takeNotBridged(MethodNode h) {
+        if (h.invisibleAnnotations == null) return null;
+        Object[] out = null;
+        for (java.util.Iterator<AnnotationNode> it = h.invisibleAnnotations.iterator(); it.hasNext(); ) {
+            AnnotationNode a = it.next();
+            if (!a.desc.equals(MixinBridge.NOT_BRIDGED)) continue;
+            Map<String, Object> v = values(a);
+            if (stepTo == null || stepTo.equals(v.get("to"))) out = new Object[] {v.get("why"), v.get("locals")};
+            it.remove();
+        }
+        return out;
     }
 
     /** why an injector cannot move onto a mixin of the class a mixinMoves entry names, or null */

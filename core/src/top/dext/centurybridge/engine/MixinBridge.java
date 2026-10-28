@@ -1874,7 +1874,7 @@ final class MixinBridge {
                         return new Selection(h, an, List.of(vmeth), List.of(restored));
                     }
                     if (!why.isEmpty()) {
-                        left.add(where + ": " + why.get(0));
+                        leftInjector(h, where + ": " + why.get(0));
                     }
                     continue;
                 }
@@ -1898,14 +1898,14 @@ final class MixinBridge {
                     }
                 }
                 if (wmeth == null) {
-                    left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", which "
+                    leftInjector(h, where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", which "
                         + shortName(target) + " does not declare in " + chain.to
                         + (inheritedFate != null ? " (inherited; an anchor inside V's body is not in the restored override)" : "")
                         + (!rwhy.isEmpty() ? "; " + rwhy.get(0) : ""));
                     continue;
                 }
                 if (((wmeth.access ^ vmeth.access) & Opcodes.ACC_STATIC) != 0) {
-                    left.add(where + ": static in one release and not in the other");
+                    leftInjector(h, where + ": static in one release and not in the other");
                     continue;
                 }
                 String gone = anchorGone(an, h, kind, vmeth, wmeth, wt);
@@ -1929,13 +1929,13 @@ final class MixinBridge {
                             + (d.makeStatic() ? "; handler made static" : "") + (d.toCir() ? "; callback as CallbackInfoReturnable" : "") + ")");
                         return new Selection(h, an, List.of(vmeth), List.of(d.callee()));
                     }
-                    left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", where its anchor " + gone
+                    leftInjector(h, where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", where its anchor " + gone
                         + " no longer stands" + (dwhy.isEmpty() ? "" : "; " + dwhy.get(0)));
                     continue;
                 }
                 Plan p = plan(h, an, kind, vmeth, fate, why);
                 if (p == null) {
-                    left.add(where + ": " + why.get(0));
+                    leftInjector(h, where + ": " + why.get(0));
                     continue;
                 }
                 String nm = respell(mapped, fate.name(), fate.desc());
@@ -2725,12 +2725,12 @@ final class MixinBridge {
                     String wired = af.how() + " gives " + af.name() + af.desc() + ", standing " + wc + " time(s) in "
                         + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from;
                     if (value.equals("INVOKE_ASSIGN") || !counterpartAt(sel, kind, at, value, t, a, wired)) {
-                        left.add(where + ": " + wired);
+                        leftInjector(sel.handler(), where + ": " + wired);
                     }
                     continue;
                 }
                 if (!af.desc().equals(a.desc()) && !kind.equals("Inject")) {
-                    left.add(where + ": the call's shape changed (" + af.how() + "), and @" + kind + " handles the call itself");
+                    leftInjector(sel.handler(), where + ": the call's shape changed (" + af.how() + "), and @" + kind + " handles the call itself");
                     continue;
                 }
                 if (RECEIVER_KINDS.contains(kind) && !af.owner().equals(a.owner()) && takesReceiver(sel.v(), a)) {
@@ -2743,7 +2743,7 @@ final class MixinBridge {
                         : hasSugar(sel.handler(), "Local;") ? "the handler captures the target's locals"
                         : receiverFront(sel.handler(), kind, a, af, mr);
                     if (rwhy != null) {
-                        left.add(where + ": " + af.how() + " gives " + shortName(af.owner()) + "." + af.name() + af.desc()
+                        leftInjector(sel.handler(), where + ": " + af.how() + " gives " + shortName(af.owner()) + "." + af.name() + af.desc()
                             + ", a call on another receiver than " + shortName(a.owner()) + ", which @" + kind + "'s handler takes ("
                             + rwhy + ")");
                         continue;
@@ -2754,7 +2754,7 @@ final class MixinBridge {
                 }
                 if (kind.equals("Inject") && capturesLocals(sel.handler()) || hasSugar(sel.handler(), "Local;")) {
                     // the locals Mixin hands it are read at the anchor, in a body that changed around it
-                    left.add(where + ": the handler captures the target's locals at the anchor");
+                    leftInjector(sel.handler(), where + ": the handler captures the target's locals at the anchor");
                     continue;
                 }
                 String nt = "L" + af.owner() + ";" + af.name() + (fld ? ":" : "") + af.desc();
@@ -2767,6 +2767,23 @@ final class MixinBridge {
                 changed = true;
                 injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + af.name() + (fld ? ":" : "") + af.desc() + " (" + af.how() + ")");
             }
+        }
+
+        /**
+         * K2: an injector this step cannot carry faithfully, reported "mixin not bridged", whose selector and anchors are
+         * left as they were. Marked on the handler for the step's repair (MixinRepair.notBridged): where the repair then
+         * finds it applying unchanged -- the name still stands in W, nothing repaired it -- it would run against W's
+         * changed body (locals, operands, another site) or fail at apply, so it is disabled with this reason, never left
+         * live. "locals": the reason is the target's locals, which the repair judges itself against W's frames (K1).
+         */
+        private void leftInjector(MethodNode h, String text) {
+            left.add(text);
+            AnnotationNode mark = new AnnotationNode(NOT_BRIDGED);
+            mark.values = new ArrayList<>(List.of("to", chain.to, "why", text, "locals", text.contains("locals")));
+            h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
+            h.invisibleAnnotations.removeIf(a -> a.desc.equals(NOT_BRIDGED));
+            h.invisibleAnnotations.add(mark);
+            changed = true;
         }
 
         /**
@@ -2786,7 +2803,7 @@ final class MixinBridge {
             MixinRepair.Anchor na = counterpartAnchor(kind, sel.handler(), a, sel.v(), sel.w(), why);
             if (na == null) {
                 if (!why.isEmpty()) {
-                    left.add(where + ": " + (wired != null ? wired + "; " : "") + "in its place " + why.get(0));
+                    leftInjector(sel.handler(), where + ": " + (wired != null ? wired + "; " : "") + "in its place " + why.get(0));
                 }
                 return false;
             }
@@ -4447,6 +4464,8 @@ final class MixinBridge {
      * mixin class and "handler" the copy (the judge follows it)
      */
     static final String ALSO_ON_W = "Ltop/dext/centurybridge/AlsoOnW;";
+    /** K2: an injector left "not bridged" by the step (leftInjector): {"to": W, "why", "locals"} */
+    static final String NOT_BRIDGED = "Ltop/dext/centurybridge/NotBridged;";
 
     /** the step's class renames into vanilla classes only (a facade rename left out) */
     private Map<String, String> vanillaRenames;
