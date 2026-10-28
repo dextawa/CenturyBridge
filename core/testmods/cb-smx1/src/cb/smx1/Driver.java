@@ -159,7 +159,9 @@ public final class Driver {
         // asks canBurn with the smelting recipe; the 1.20.1 handler must be handed that Recipe (1.20.2 passes the holder)
         try {
             net.minecraft.class_3218 level = server.method_30002();
-            net.minecraft.class_2338 pos = level.method_43126().method_10086(200);
+            // a fixed height inside every overworld's build range (-64..319): spawn + 200 is above it on a high spawn
+            net.minecraft.class_2338 spawn = level.method_43126();
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(spawn.method_10263(), 300, spawn.method_10260());
             net.minecraft.class_2680 before = level.method_8320(pos);
             level.method_8501(pos, net.minecraft.class_2246.field_10181.method_9564());
             try {
