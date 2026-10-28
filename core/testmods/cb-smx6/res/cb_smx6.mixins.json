@@ -17,7 +17,13 @@
     "FollowOwnerAccess",
     "CrashCommentMixin",
     "ProfileCommentMixin",
-    "ProfileReportInvoker"
+    "ProfileReportInvoker",
+    "BadOmenMixin",
+    "LeashSaveMixin",
+    "LeashFieldAccessor",
+    "TagVisitorMixin",
+    "ChunkUnloadMixin",
+    "DimensionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

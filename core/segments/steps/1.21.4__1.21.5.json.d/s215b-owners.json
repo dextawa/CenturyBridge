@@ -1,0 +1,11 @@
+{
+ "_s215b_owners_basis": "1.21.4 OwnableEntity.getOwnerUUID / level() and TamableAnimal.getOwnerUUID / setOwnerUUID(UUID), gone in 1.21.5 (EntityReference owner, javap both; rt/CbOwners). A 1.21.4 class implementing OwnableEntity's getOwnerUUID (1.21.5 demands getOwnerReference) or overriding TamableAnimal's stays open.",
+ "instanceRedirects": {
+  "net/minecraft/class_1321.method_6139()Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners#ownerUuidTamable",
+  "net/minecraft/class_1321.method_6174(Ljava/util/UUID;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners#setOwnerUuid"
+ },
+ "interfaceCallRedirects": {
+  "net/minecraft/class_6025.method_6139()Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners#ownerUuid",
+  "net/minecraft/class_6025.method_48926()Lnet/minecraft/class_1924;": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners#level"
+ }
+}

@@ -39,4 +39,9 @@ public final class CbPrioritySplit {
     public interface CubeMapFaces {
         void cb$v1_21_6$setFaces(List<class_2960> faces);
     }
+
+    /** CbRealmsConfigureWorldRestoredMixin: 1.21.5's layout columns, set from the screen width at init */
+    public interface RealmsConfigureWorldLayout {
+        void cb$v1_21_6$layout(int width);
+    }
 }

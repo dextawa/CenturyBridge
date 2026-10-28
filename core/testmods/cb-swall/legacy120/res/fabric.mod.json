@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_swall120",
+  "version": "1.0.0",
+  "name": "CB swall 1.20.1 predicates",
+  "description": "1.20.1-era use of the advancement predicates' JSON API, climbed to 26.1 (cb-swall's legacy half)",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "cb.swall120.Swall120"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": "1.20.1"
+  },
+  "mixins": [
+    "cb_swall120.mixins.json"
+  ]
+}

@@ -57,3 +57,8 @@ accessible class net/minecraft/class_1921$class_4687
 # TamableAnimal.canFlyToOwner (protected): the restored 1.20.6 FollowOwnerGoal.canTeleportTo reads it where 1.20.6 read the
 # goal's canFly (CbEntityFollowOwnerRestoredMixin, s121)
 accessible method net/minecraft/class_1321 method_60716 ()Z
+
+# Leashable.LeashData constructors (package-private): CbEntityLeashSaveRestoredMixin makes the LeashData a converted mod's
+# write of the restored 1.20.6 Mob.leashHolder / delayedLeashInfo mirror stands for when the mob has none (s121d)
+accessible method net/minecraft/class_9817$class_9818 <init> (Lnet/minecraft/class_1297;)V
+accessible method net/minecraft/class_9817$class_9818 <init> (Lcom/mojang/datafixers/util/Either;)V

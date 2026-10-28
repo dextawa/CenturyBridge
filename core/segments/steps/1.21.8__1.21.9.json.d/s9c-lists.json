@@ -1,0 +1,162 @@
+{
+ "covers": [
+  "net/minecraft/class_350.method_25326(I)Lnet/minecraft/class_350$class_351;",
+  "net/minecraft/class_350.method_25332(I)Z",
+  "net/minecraft/class_350.method_48200()Lnet/minecraft/class_350$class_351;",
+  "net/minecraft/class_350.method_25338(I)Lnet/minecraft/class_350$class_351;",
+  "net/minecraft/class_350.method_64847(I)V",
+  "net/minecraft/class_350.method_25328(Lnet/minecraft/class_350$class_351;)V",
+  "net/minecraft/class_350.method_25312(Lnet/minecraft/class_332;II)V",
+  "net/minecraft/class_350.method_25320(Lnet/minecraft/class_332;II)V",
+  "net/minecraft/class_350.field_22747:Z",
+  "net/minecraft/class_350.field_22748:I",
+  "net/minecraft/class_350.method_44397(Lnet/minecraft/class_332;IIFIIIII)V",
+  "net/minecraft/class_350.method_44398(Lnet/minecraft/class_332;IIIII)V",
+  "net/minecraft/class_350.method_25330(Lnet/minecraft/class_350$class_351;)Z",
+  "net/minecraft/class_350.method_44650(Lnet/minecraft/class_350$class_351;)Z",
+  "net/minecraft/class_350$class_351.method_49568(Lnet/minecraft/class_332;IIIIIIIZF)V"
+ ],
+ "fieldRenames": {
+  "net/minecraft/class_350.field_22741:I": "field_62109"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_350.<init>(Lnet/minecraft/class_310;IIIII)V": {
+   "basis": "s9c lists: 1.21.9 has no list header; 1.21.8's six-argument constructor was the five-argument one and then renderHeader = true, headerHeight = the last argument, which the layer restores (CbSelectionLists.cbHeader, CbSelectionListRestoredMixin)",
+   "desc": "(Lnet/minecraft/class_310;IIII)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists#cbHeader(Lnet/minecraft/class_350;I)V",
+   "postArgs": [
+    5
+   ]
+  },
+  "net/minecraft/class_4280.<init>(Lnet/minecraft/class_310;IIIII)V": {
+   "basis": "s9c lists: ObjectSelectionList's six-argument constructor passed the header height to AbstractSelectionList's (javap); the header as for AbstractSelectionList (CbSelectionLists.cbHeader)",
+   "desc": "(Lnet/minecraft/class_310;IIII)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists#cbHeader(Lnet/minecraft/class_4280;I)V",
+   "postArgs": [
+    5
+   ]
+  },
+  "net/minecraft/class_4265.<init>(Lnet/minecraft/class_310;IIIII)V": {
+   "basis": "s9c lists: ContainerObjectSelectionList's six-argument constructor passed the header height to AbstractSelectionList's (javap); the header as for AbstractSelectionList (CbSelectionLists.cbHeader)",
+   "desc": "(Lnet/minecraft/class_310;IIII)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists#cbHeader(Lnet/minecraft/class_4265;I)V",
+   "postArgs": [
+    5
+   ]
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V",
+   "new": "method_25343(Lnet/minecraft/class_332;IIZF)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists$LegacyEntryRender",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists.cbRender(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists$LegacyEntryRender;Lnet/minecraft/class_332;IIZF)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350$class_351",
+   "basis": "s9c lists: 1.21.9 calls Entry.renderContent(graphics, mouseX, mouseY, hovered, delta); a 1.21.8 render override gets 1.21.8's index, top, left, width and height from the entry's own row (getContentY, getContentX, getWidth, getContentHeight: the values 1.21.8's renderItem passed, javap)"
+  },
+  {
+   "old": "method_44397(Lnet/minecraft/class_332;IIFIIIII)V",
+   "new": "method_44397(Lnet/minecraft/class_332;IIFLnet/minecraft/class_350$class_351;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists$LegacyRenderItem",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists.cbRenderItem(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists$LegacyRenderItem;Lnet/minecraft/class_332;IIFLnet/minecraft/class_350$class_351;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350",
+   "basis": "s9c lists: 1.21.9 calls renderItem(graphics, mouseX, mouseY, delta, entry); a 1.21.8 override gets the entry's index and 1.21.8's left, top, width, height (the entry's getContentX, getContentY, getWidth, getContentHeight); its super call reaches the restored 1.21.8 shape, which draws the entry with 1.21.9's renderItem"
+  },
+  {
+   "old": "method_44398(Lnet/minecraft/class_332;IIIII)V",
+   "new": "method_44398(Lnet/minecraft/class_332;Lnet/minecraft/class_350$class_351;I)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists$LegacyRenderSelection",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists.cbRenderSelection(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists$LegacyRenderSelection;Lnet/minecraft/class_332;Lnet/minecraft/class_350$class_351;I)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350",
+   "basis": "s9c lists: 1.21.9 calls renderSelection(graphics, entry, outerColor); a 1.21.8 override gets the entry's content top, width, content height, the outer colour and 1.21.8's opaque black inner colour (javap: both releases draw the same two boxes); its super call reaches the restored 1.21.8 body"
+  },
+  {
+   "old": "method_25330(Lnet/minecraft/class_350$class_351;)Z",
+   "new": "method_25330(Lnet/minecraft/class_350$class_351;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350",
+   "basis": "s9c lists: removeEntry answers nothing on 1.21.9 (1.21.8: whether the entry was removed); 1.21.9 calls the void shape, a 1.21.8 override answers it (its answer dropped, as no 1.21.9 caller reads one); its super call reaches the restored 1.21.8 shape (CbSelectionListRemoveRestoredMixin)"
+  },
+  {
+   "old": "method_44650(Lnet/minecraft/class_350$class_351;)Z",
+   "new": "method_44650(Lnet/minecraft/class_350$class_351;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350",
+   "basis": "s9c lists: removeEntryFromTop answers nothing on 1.21.9 (1.21.8: whether the entry was removed); 1.21.9 calls the void shape, a 1.21.8 override answers it (its answer dropped, as no 1.21.9 caller reads one); its super call reaches the restored 1.21.8 shape (CbSelectionListRemoveRestoredMixin)"
+  }
+ ],
+ "mixinTargets": {
+  "net/minecraft/class_350.method_44397(Lnet/minecraft/class_332;IIFIIIII)V": {
+   "to": "method_44397(Lnet/minecraft/class_332;IIFLnet/minecraft/class_350$class_351;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "basis": "s9c lists: renderItem's code (the selection box when the entry is the selected one, then the entry's render) is 1.21.9's renderItem(.., entry); the index and row are the entry's own, so a handler reading them does not follow"
+  },
+  "net/minecraft/class_350.method_44398(Lnet/minecraft/class_332;IIIII)V": {
+   "to": "method_44398(Lnet/minecraft/class_332;Lnet/minecraft/class_350$class_351;I)V",
+   "args": [
+    0,
+    -1,
+    -1,
+    -1,
+    2,
+    -1
+   ],
+   "basis": "s9c lists: renderSelection's two boxes are 1.21.9's renderSelection(graphics, entry, outerColor) (javap: the same fills over the entry's row; the inner colour is the constant black 1.21.8's only caller passed)"
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists$LegacyIsSelectedItem",
+   "requires": [
+    "method_25332(I)Z"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_350$class_351",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSelectionLists$LegacyRenderBack",
+   "requires": [
+    "method_49568(Lnet/minecraft/class_332;IIIIIIIZF)V"
+   ],
+   "synth": []
+  }
+ ]
+}

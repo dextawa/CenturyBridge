@@ -1,0 +1,52 @@
+{
+ "_basis_keycategories": "s9c key categories: 1.21.9 names a KeyMapping category by a registered KeyMapping.Category where 1.21.8 named it by its translation-key string (javap both versions); the string becomes its category (rt/CbKeyCategories: 1.21.8's vanilla strings are 1.21.9's vanilla categories, any other is registered once and keeps the string as its label)",
+ "fieldGetters": {
+  "net/minecraft/class_304.field_32136:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories",
+  "net/minecraft/class_304.field_32137:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories",
+  "net/minecraft/class_304.field_32138:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories",
+  "net/minecraft/class_304.field_32139:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories",
+  "net/minecraft/class_304.field_32140:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories",
+  "net/minecraft/class_304.field_32141:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories",
+  "net/minecraft/class_304.field_32142:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_304.<init>(Ljava/lang/String;ILjava/lang/String;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories#keyMapping",
+  "net/minecraft/class_304.<init>(Ljava/lang/String;Lnet/minecraft/class_3675$class_307;ILjava/lang/String;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories#keyMapping",
+  "net/minecraft/class_4666.<init>(Ljava/lang/String;ILjava/lang/String;Ljava/util/function/BooleanSupplier;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories#toggleKeyMapping"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_304.<init>(Ljava/lang/String;ILjava/lang/String;)V": {
+   "basis": "s9c key categories: 1.21.9 names a KeyMapping category by a registered KeyMapping.Category where 1.21.8 named it by its translation-key string (javap both versions); the string becomes its category (rt/CbKeyCategories: 1.21.8's vanilla strings are 1.21.9's vanilla categories, any other is registered once and keeps the string as its label)",
+   "desc": "(Ljava/lang/String;ILnet/minecraft/class_304$class_11900;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories#of(Ljava/lang/String;)Lnet/minecraft/class_304$class_11900;"
+   ]
+  },
+  "net/minecraft/class_304.<init>(Ljava/lang/String;Lnet/minecraft/class_3675$class_307;ILjava/lang/String;)V": {
+   "basis": "s9c key categories: 1.21.9 names a KeyMapping category by a registered KeyMapping.Category where 1.21.8 named it by its translation-key string (javap both versions); the string becomes its category (rt/CbKeyCategories: 1.21.8's vanilla strings are 1.21.9's vanilla categories, any other is registered once and keeps the string as its label)",
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_3675$class_307;ILnet/minecraft/class_304$class_11900;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories#of(Ljava/lang/String;)Lnet/minecraft/class_304$class_11900;"
+   ]
+  },
+  "net/minecraft/class_4666.<init>(Ljava/lang/String;ILjava/lang/String;Ljava/util/function/BooleanSupplier;)V": {
+   "basis": "s9c key categories: 1.21.9 names a KeyMapping category by a registered KeyMapping.Category where 1.21.8 named it by its translation-key string (javap both versions); the string becomes its category (rt/CbKeyCategories: 1.21.8's vanilla strings are 1.21.9's vanilla categories, any other is registered once and keeps the string as its label); 1.21.9's restore-on-screen-close flag is false (1.21.8's toggle never restored on screen close)",
+   "desc": "(Ljava/lang/String;ILnet/minecraft/class_304$class_11900;Ljava/util/function/BooleanSupplier;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories#of(Ljava/lang/String;)Lnet/minecraft/class_304$class_11900;",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories#noRestore()Z"
+   ]
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_304.method_1423()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_9/rt/CbKeyCategories"
+ }
+}

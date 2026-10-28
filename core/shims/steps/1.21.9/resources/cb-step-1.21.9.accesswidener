@@ -105,3 +105,15 @@ extendable method net/minecraft/class_7766 method_47663 (Ljava/util/List;ILjava/
 mutable field com/mojang/blaze3d/buffers/GpuBuffer size I
 mutable field net/minecraft/class_11200 field_59771 Lnet/minecraft/class_9139;
 # ---- END GENERATED (all) ----
+accessible field net/minecraft/class_350$class_351 field_22752 Lnet/minecraft/class_350;
+accessible class net/minecraft/class_350$class_351
+accessible field net/minecraft/class_3808$class_3809 field_16852 Ljava/lang/String;
+accessible field net/minecraft/class_3808$class_3809 field_16851 Ljava/util/function/Function;
+accessible method net/minecraft/class_3808$class_3809 <init> (Lnet/minecraft/class_3808;Ljava/lang/String;Ljava/lang/Object;Ljava/util/function/Function;)V
+mutable field net/minecraft/class_3806 field_16807 Lnet/minecraft/class_3808$class_3809;
+accessible field net/minecraft/class_824 field_61783 Lnet/minecraft/class_11701;
+accessible field net/minecraft/class_824 field_62250 Lnet/minecraft/class_11786;
+accessible field com/mojang/blaze3d/opengl/GlStateManager activeTexture I
+accessible class net/minecraft/class_2841$class_6561
+accessible field net/minecraft/class_2816 field_12828 Lnet/minecraft/class_2359;
+accessible method net/minecraft/class_2841 <init> (Lnet/minecraft/class_6563;Lnet/minecraft/class_11895;Lnet/minecraft/class_6490;Lnet/minecraft/class_2837;)V
