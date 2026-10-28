@@ -22,8 +22,15 @@ public @interface CbVanillaReads {
      * The priority of a layer mixin that restores members: below every mod's, so a mod's 1.21.5 injector may anchor
      * anywhere in a restored body (Mixin's InjectionPoint.checkPriority refuses an injection into a method another
      * mixin merged at a higher priority).
+     *
+     * Layer order (mixin_priority.py rule 3): -10 = 1 - (this release's index - 1.20.2's index) in Chain.RELEASES,
+     * one lower per later release. A climbing earlier layer's mixins @Shadow / @Accessor / @Invoker members a later
+     * layer restores (the 1.20.2 layer's Realms bridge reads 1.21.6's restored leftX / rightX); Mixin applies a
+     * target's mixins by priority and breaks ties by load order (MixinInfo.compareTo: priority, then the order the
+     * configs were read), so the later restorer must sit strictly lower or the reader may apply first and the climb
+     * strips it (Chain.layerDeclares, MixinJudge, MixinCheck judge strictly).
      */
-    int PRIORITY = 1;
+    int PRIORITY = -10;
 
     String value();
 
