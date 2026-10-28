@@ -3233,23 +3233,39 @@ final class MixinBridge {
             }
             MixinRepair.Sel s = MixinRepair.Sel.parse(MixinRepair.refmapLookup(table, sels.get(0)));
             ClassNode vraw = v(origin);
-            if (vraw == null || s.desc() == null || s.owner() != null && !s.owner().equals(target) && !s.owner().equals(origin)) {
+            if (vraw == null || s.wildcard() || s.owner() != null && !s.owner().equals(target) && !s.owner().equals(origin)) {
                 left.add(where + ": facade-only (follow+W: " + chain.from + "'s method not read)");
                 return;
             }
             ClassNode vc = vanillaView(vraw);
             MethodNode vm = null;
+            String vdesc = null;
             for (MethodNode m : vraw.methods) {
-                if (m.name.equals(s.name()) && (m.desc.equals(s.desc()) || chain.renamedDesc(m.desc).equals(s.desc()))) {
+                // a bare name: what Mixin selected on V, the class's first method of that name (C23)
+                if (m.name.equals(s.name()) && (s.desc() == null || m.desc.equals(s.desc()) || chain.renamedDesc(m.desc).equals(s.desc()))) {
                     vm = method(vc, m.name, vanillaDesc(m.desc));
+                    vdesc = m.desc;
+                    if (s.desc() == null) {
+                        break;
+                    }
                 }
             }
             if (vm == null) {
-                left.add(where + ": facade-only (follow+W: " + s.name() + s.desc() + " not in " + chain.from + "'s class)");
+                left.add(where + ": facade-only (follow+W: " + s.name() + (s.desc() != null ? s.desc() : "") + " not in " + chain.from + "'s class)");
                 return;
             }
             List<String> why = new ArrayList<>();
-            String[] cp = wCounterpart(origin, vm, why);
+            // CASE H: a judged mixinMoves entry for V's method names where W keeps its code; it wins over the inferred
+            // counterpart (which needs the very same instructions, and misses code whose fields W renamed)
+            String mv = chain.mixinMoves.get(origin + "." + vm.name + vdesc);
+            String[] cp;
+            if (mv != null) {
+                int d = mv.lastIndexOf('.', mv.indexOf('('));
+                cp = new String[] {mv.substring(0, d), mv.substring(d + 1, mv.indexOf('(')), mv.substring(mv.indexOf('('))};
+                why.add("mixinMoves: the same code in " + shortName(cp[0]));
+            } else {
+                cp = wCounterpart(origin, vm, why);
+            }
             if (cp == null) {
                 left.add(where + "." + vm.name + ": facade-only (follow+W: " + why.get(0) + ")");
                 return;
