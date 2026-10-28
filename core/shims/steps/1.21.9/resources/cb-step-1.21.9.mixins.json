@@ -35,6 +35,7 @@
     "CbSpriteLoaderRestoredMixin",
     "CbSpritePreparationsRestoredMixin",
     "CbClientAvatarMixin",
+    "CbDebugRendererRestoredMixin",
     "CbDebugTextMixin",
     "CbElytraRotationMixin",
     "CbEntityRenderDispatcherRestoredMixin",

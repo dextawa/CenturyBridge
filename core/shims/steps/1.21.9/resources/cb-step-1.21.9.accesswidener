@@ -118,3 +118,4 @@ accessible class net/minecraft/class_2841$class_6561
 accessible field net/minecraft/class_2816 field_12828 Lnet/minecraft/class_2359;
 accessible method net/minecraft/class_2841 <init> (Lnet/minecraft/class_6563;Lnet/minecraft/class_11895;Lnet/minecraft/class_6490;Lnet/minecraft/class_2837;)V
 accessible method net/minecraft/class_9279 <init> (Lnet/minecraft/class_2487;)V
+accessible field net/minecraft/class_634 field_62944 Lnet/minecraft/class_12036;

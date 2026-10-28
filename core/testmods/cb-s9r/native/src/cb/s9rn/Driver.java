@@ -42,7 +42,9 @@ import org.joml.Vector3f;
  * of the 1.21.9 slot layer that carries it at that deformation (outer: head = helmet, body and arms = chestplate, legs
  * = boots; inner: body and legs = leggings), and the inner head and arms must be there and smaller than the outer.
  * WardenModel (G): the climbed 1.21.8 mod builds a WardenModel; its constructor RETURN mixin must see the four part
- * lists 1.21.8 filled in the constructor, and the getters must answer those same lists.
+ * lists 1.21.8 filled in the constructor, and the getters must answer those same lists. DebugRenderer (H): the
+ * climbed mod's Minecraft.debugRenderer is LevelRenderer's; its switchRenderChunkborder / toggleRenderOctree flip
+ * 1.21.9's debug entries and answer them; clear() returns.
  */
 public class Driver implements ClientModInitializer {
     public static final AtomicInteger NATIVE_SELECTABLE = new AtomicInteger();
@@ -158,6 +160,37 @@ public class Driver implements ClientModInitializer {
             "a 1.21.8 mod's own TextureAtlasHolder reloaded the 1.21.8 way has block/stone: " + name(own));
     }
 
+    static Object call(class_310 mc, String method) throws Exception {
+        Class<?> c = Class.forName("cb.s9r.DebugCheck");
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return c.getMethod(method).invoke(null);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        }, mc).get(20, TimeUnit.SECONDS);
+    }
+
+    static void checkDebugRenderer(class_310 mc) throws Exception {
+        int id = (Integer) call(mc, "rendererId");
+        check("H.debugRenderer", id == System.identityHashCode(mc.field_1769.field_63067),
+            "a 1.21.8 Minecraft.debugRenderer read answers LevelRenderer's DebugRenderer");
+        String[][] toggles = {{"switchChunkBorder", "chunk borders"}, {"toggleOctree", "octree"}};
+        net.minecraft.class_2960[] entries = {net.minecraft.class_11631.field_61582, net.minecraft.class_11631.field_61555};
+        for (int i = 0; i < 2; i++) {
+            boolean before = mc.field_61504.method_72772(entries[i]);
+            boolean r1 = (Boolean) call(mc, toggles[i][0]);
+            boolean s1 = mc.field_61504.method_72772(entries[i]);
+            boolean r2 = (Boolean) call(mc, toggles[i][0]);
+            boolean s2 = mc.field_61504.method_72772(entries[i]);
+            check("H." + toggles[i][0], r1 == s1 && s1 != before && r2 == s2 && s2 == before,
+                "1.21.8 " + toggles[i][0] + "() flips 1.21.9's " + toggles[i][1] + " debug entry and answers it: before " + before
+                    + ", answers " + r1 + "/" + r2 + ", entry " + s1 + "/" + s2);
+        }
+        call(mc, "clear");
+        check("H.clear", true, "1.21.8 DebugRenderer.clear() returns (title screen: no connection, nothing to drop)");
+    }
+
     static void checkLoadScreen(class_310 mc) throws Exception {
         Class<?> c = Class.forName("cb.s9r.LoadScreenCheck");
         for (String reason : new String[]{"NETHER_PORTAL", "END_PORTAL", "OTHER"}) {
@@ -250,6 +283,9 @@ public class Driver implements ClientModInitializer {
 
             // ReceivingLevelScreen
             checkLoadScreen(mc);
+
+            // DebugRenderer toggles / clear, through 1.21.8's Minecraft.debugRenderer
+            checkDebugRenderer(mc);
 
             // WardenModel emissive part lists
             String warden = CompletableFuture.supplyAsync(() -> {

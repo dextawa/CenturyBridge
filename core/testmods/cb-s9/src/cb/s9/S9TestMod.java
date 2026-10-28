@@ -349,6 +349,7 @@ public class S9TestMod implements ModInitializer {
         PaletteTest.run();
         CommandBlockTest.run(server);
         CustomDataTest.run(server);
+        DebugPacketsTest.run(server);
 
         System.out.println("CB-S9TEST DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " failed: " + FAILS));
     }
