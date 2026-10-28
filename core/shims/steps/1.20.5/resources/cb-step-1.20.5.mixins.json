@@ -108,6 +108,7 @@
     "CbLevelDataPrimaryMixin",
     "CbLevelStoragePlayerDataAccessor",
     "CbMobEffectMixin",
+    "CbMobEffectOwnerMixin",
     "CbNetChatCommandMixin",
     "CbNetDecodeExceptionMixin",
     "CbNetDecodeFailureMixin",

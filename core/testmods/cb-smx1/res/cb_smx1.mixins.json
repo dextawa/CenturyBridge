@@ -34,7 +34,8 @@
     "PlayerPredicateJsonMixin",
     "LightningPredicateJsonMixin",
     "FishingHookPredicateJsonMixin",
-    "SlimePredicateJsonMixin"
+    "SlimePredicateJsonMixin",
+    "FurnaceCanBurnMixin"
   ],
   "injectors": {
     "defaultRequire": 1

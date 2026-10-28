@@ -11,7 +11,8 @@
     "ReportCommentMixin",
     "RaidOmenWrapMixin",
     "LeashRestoreWrapMixin",
-    "LeashDataNew"
+    "LeashDataNew",
+    "TagVisitorWrapMixin"
   ],
   "injectors": {
     "defaultRequire": 1

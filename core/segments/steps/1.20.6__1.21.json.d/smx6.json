@@ -73,14 +73,6 @@
    ],
    "basis": "StructureTemplateManager.listFolderContents(folder, namespace, extension) is 1.21's listFolderContents(folder, namespace, extension, output) (javap: both walk the folder for files ending in the extension and map them to ids through the same lambda capturing the namespace and the path relativiser; 1.20.6 returned the Stream, 1.21 hands each id to the Consumer: handlers touching the return value are refused by MixinBridge's return check)"
   },
-  "net/minecraft/class_3193.method_39967(Ljava/lang/String;Ljava/util/concurrent/CompletableFuture;)V": {
-   "to": "method_39967(Ljava/util/concurrent/CompletableFuture;)V",
-   "args": [
-    -1,
-    0
-   ],
-   "basis": "ChunkHolder.addSaveDependency(reason, future) is 1.21's addSaveDependency(future) (javap: both chain the future into the holder's save-sync future; 1.21 dropped the debug reason and its ChunkSaveDebug record, so the reason argument has no W counterpart)"
-  },
   "net/minecraft/class_4388.method_21217(Lnet/minecraft/class_437;)V": {
    "to": "method_21217()V",
    "args": [

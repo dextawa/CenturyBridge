@@ -117,6 +117,170 @@
     "keep"
    ],
    "basis": "UpwardsBranchingTrunkPlacer.placeBranch(level, ..): 26.1's takes a WorldGenLevel where 1.21.11's took a LevelSimulatedReader; the same body call for call (placeLog, immutable, getX/Z; javap of both, bdiff: only renames). 1.21.11's tree placers were handed the tree feature's WorldGenLevel"
+  },
+  "net/minecraft/class_11688.method_73011(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;FFFFFFIZLnet/minecraft/class_10017$class_10018;)V": {
+   "desc": "(Lnet/minecraft/class_4588;Lorg/joml/Matrix4fc;FFFFFFIZLnet/minecraft/class_10017$class_10018;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#matrix(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "LeashFeatureRenderer.addVertexPair: 26.1 takes the matrix as Matrix4fc; the same body call for call (javap of both, bdiff ratio 0.97: the only other change LightTexture.pack -> LightCoordsUtil.pack, the same packing); a Matrix4f is a Matrix4fc"
+  },
+  "net/minecraft/class_11690.method_73016(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IFFFFF)V": {
+   "desc": "(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IFFFFF)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#matrix(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "ShadowFeatureRenderer.shadowVertex: 26.1 takes the matrix as Matrix4fc; the same body call for call (javap of both, bdiff ratio 0.89: the matrix calls now through Matrix4fc); a Matrix4f is a Matrix4fc"
+  },
+  "net/minecraft/class_11879$class_11880.method_74042(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IFFFFFIFFIIII)V": {
+   "desc": "(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IFFFFFIFFIIII)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#matrix(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "PlayerGlyphProvider$Instance.renderQuad: 26.1 takes the matrix as Matrix4fc; the same body call for call (javap of both, bdiff ratio 1.00); a Matrix4f is a Matrix4fc"
+  },
+  "net/minecraft/class_919.method_23183(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;FFIFFFFFFFZZZZ)V": {
+   "desc": "(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;FFIFFFFFFFZZZZ)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#matrix(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "LightningBoltRenderer.quad: 26.1 takes the matrix as Matrix4fc; the same body call for call (javap of both, bdiff ratio 1.00); a Matrix4f is a Matrix4fc"
+  },
+  "net/minecraft/class_382.method_2025(ZFFFLorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZI)V": {
+   "desc": "(ZFFFLorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IZI)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#matrix(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "BakedSheetGlyph.render: 26.1 takes Matrix4fc where 1.21.11 took Matrix4f; the same body call for call (the glyph's own fields and shear/extraThickness reads under their 26.1 names, javap of both); the old value is a Matrix4fc"
+  },
+  "net/minecraft/class_382.method_22944(Lnet/minecraft/class_382$class_328;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZ)V": {
+   "desc": "(Lnet/minecraft/class_382$class_328;Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IZ)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#matrix(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "BakedSheetGlyph.renderEffect: 26.1 takes Matrix4fc where 1.21.11 took Matrix4f; the same body call for call (EffectInstance's record accessors under their 26.1 names, then buildEffect twice, javap of both); the old value is a Matrix4fc"
+  },
+  "net/minecraft/class_382.method_65025(Lnet/minecraft/class_382$class_10364;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZ)V": {
+   "desc": "(Lnet/minecraft/class_382$class_10364;Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IZ)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#matrix(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "BakedSheetGlyph.renderChar: 26.1 takes Matrix4fc where 1.21.11 took Matrix4f; the same body call for call (GlyphInstance's record accessors under their 26.1 names, then render as before, javap of both); the old value is a Matrix4fc"
+  },
+  "net/minecraft/class_382.method_65181(Lnet/minecraft/class_382$class_328;FFILnet/minecraft/class_4588;ILorg/joml/Matrix4f;)V": {
+   "desc": "(Lnet/minecraft/class_382$class_328;FFILnet/minecraft/class_4588;ILorg/joml/Matrix4fc;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#matrix(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4fc;"
+   ],
+   "basis": "BakedSheetGlyph.buildEffect: 26.1 takes Matrix4fc where 1.21.11 took Matrix4f; the same body call for call (EffectInstance's x0/x1/y0/y1 and the glyph's u0/u1/v0/v1 in the same order, javap of both); the old value is a Matrix4fc"
+  },
+  "net/minecraft/class_3039.method_13219(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/class_2338;Lnet/minecraft/class_1799;Lnet/minecraft/class_3039$class_3041;)I": {
+   "desc": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/class_2338;Lnet/minecraft/world/item/ItemInstance;Lnet/minecraft/class_3039$class_3041;)I",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#instance(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemInstance;",
+    "keep"
+   ],
+   "basis": "LootCommand.dropBlockLoot: 26.1 takes ItemInstance where 1.21.11 took class_1799; the same body call for call (getBlockState, getBlockEntity, getLootTable, getDrops under their 26.1 names, javap of both); the old value is a ItemInstance"
+  },
+  "net/minecraft/class_8174.method_49217(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/world/item/ItemInstance;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWidenings#instance(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemInstance;"
+   ],
+   "basis": "BrushableBlockEntity.unpackLootTable: 26.1 takes ItemInstance where 1.21.11 took class_1799; the same body call for call (lootTable/lootTableSeed/item fields and getServer/reloadableRegistries under their 26.1 names, javap of both); the old value is a ItemInstance"
+  },
+  "net/minecraft/class_1163.method_4965(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_6539;)I": {
+   "desc": "(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;Lnet/minecraft/class_6539;)I",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#toTint(Lnet/minecraft/class_1920;)Lnet/minecraft/client/renderer/block/BlockAndTintGetter;",
+    "keep",
+    "keep"
+   ],
+   "basis": "BiomeColors.getAverageColor: 26.1 takes the client BlockAndTintGetter where 1.21.11 took its BlockAndTintGetter (now BlockAndLightGetter, the client getter's supertype); the same body call for call (getBlockTint, now on the client getter; javap of both). toTint: the value itself when it is a client getter, a LevelReader seen through 1.21.11's tint"
+  },
+  "net/minecraft/class_775.method_40077(Lnet/minecraft/class_1920;Lnet/minecraft/class_3611;FFFLnet/minecraft/class_2338;)F": {
+   "desc": "(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_3611;FFFLnet/minecraft/class_2338;)F",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#toTint(Lnet/minecraft/class_1920;)Lnet/minecraft/client/renderer/block/BlockAndTintGetter;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "FluidRenderer.calculateAverageHeight (LiquidBlockRenderer): 26.1 takes the client BlockAndTintGetter where 1.21.11 took its BlockAndTintGetter (now BlockAndLightGetter, the client getter's supertype); the same body call for call (getHeight and four addWeightedHeight under their 26.1 names; javap of both). toTint: the value itself when it is a client getter, a LevelReader seen through 1.21.11's tint"
   }
  },
  "returnConverters": {
@@ -237,6 +401,180 @@
     10
    ],
    "basis": "the same body; a handler taking 1.21.11's LevelSimulatedReader takes 26.1's WorldGenLevel, a LevelSimulatedReader"
+  },
+  "net/minecraft/class_11688.method_73011(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;FFFFFFIZLnet/minecraft/class_10017$class_10018;)V": {
+   "to": "method_73011(Lnet/minecraft/class_4588;Lorg/joml/Matrix4fc;FFFFFFIZLnet/minecraft/class_10017$class_10018;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "narrow": true,
+   "basis": "LeashFeatureRenderer.addVertexPair: the same body on the widened matrix parameter; every 26.1 caller passes the pose's Matrix4f, as 1.21.11's did. Client-side: unverified until CASE 13b"
+  },
+  "net/minecraft/class_11690.method_73016(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IFFFFF)V": {
+   "to": "method_73016(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IFFFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "narrow": true,
+   "basis": "ShadowFeatureRenderer.shadowVertex: the same body on the widened matrix parameter; every 26.1 caller passes the pose's Matrix4f, as 1.21.11's did. Client-side: unverified until CASE 13b"
+  },
+  "net/minecraft/class_11879$class_11880.method_74042(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IFFFFFIFFIIII)V": {
+   "to": "method_74042(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IFFFFFIFFIIII)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ],
+   "narrow": true,
+   "basis": "PlayerGlyphProvider$Instance.renderQuad: the same body on the widened matrix parameter; every 26.1 caller passes the pose's Matrix4f, as 1.21.11's did. Client-side: unverified until CASE 13b"
+  },
+  "net/minecraft/class_919.method_23183(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;FFIFFFFFFFZZZZ)V": {
+   "to": "method_23183(Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;FFIFFFFFFFZZZZ)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+   ],
+   "narrow": true,
+   "basis": "LightningBoltRenderer.quad: the same body on the widened matrix parameter; every 26.1 caller passes the pose's Matrix4f, as 1.21.11's did. Client-side: unverified until CASE 13b"
+  },
+  "net/minecraft/class_382.method_2025(ZFFFLorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZI)V": {
+   "to": "method_2025(ZFFFLorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IZI)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "narrow": true,
+   "basis": "BakedSheetGlyph.render: the same body on the widened parameter; Client-side: unverified until CASE 13b"
+  },
+  "net/minecraft/class_382.method_22944(Lnet/minecraft/class_382$class_328;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZ)V": {
+   "to": "method_22944(Lnet/minecraft/class_382$class_328;Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IZ)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "narrow": true,
+   "basis": "BakedSheetGlyph.renderEffect: the same body on the widened parameter; Client-side: unverified until CASE 13b"
+  },
+  "net/minecraft/class_382.method_65025(Lnet/minecraft/class_382$class_10364;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;IZ)V": {
+   "to": "method_65025(Lnet/minecraft/class_382$class_10364;Lorg/joml/Matrix4fc;Lnet/minecraft/class_4588;IZ)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "narrow": true,
+   "basis": "BakedSheetGlyph.renderChar: the same body on the widened parameter; Client-side: unverified until CASE 13b"
+  },
+  "net/minecraft/class_382.method_65181(Lnet/minecraft/class_382$class_328;FFILnet/minecraft/class_4588;ILorg/joml/Matrix4f;)V": {
+   "to": "method_65181(Lnet/minecraft/class_382$class_328;FFILnet/minecraft/class_4588;ILorg/joml/Matrix4fc;)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "narrow": true,
+   "basis": "BakedSheetGlyph.buildEffect: the same body on the widened parameter; Client-side: unverified until CASE 13b"
+  },
+  "net/minecraft/class_3039.method_13219(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/class_2338;Lnet/minecraft/class_1799;Lnet/minecraft/class_3039$class_3041;)I": {
+   "to": "method_13219(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/class_2338;Lnet/minecraft/world/item/ItemInstance;Lnet/minecraft/class_3039$class_3041;)I",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "narrow": true,
+   "basis": "LootCommand.dropBlockLoot: the same body on the widened parameter; every 26.1 caller passes an ItemStack (a hand item, ItemInput.createItemStack or ItemStack.EMPTY)"
+  },
+  "net/minecraft/class_8174.method_49217(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V": {
+   "to": "method_49217(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/world/item/ItemInstance;)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "narrow": true,
+   "basis": "BrushableBlockEntity.unpackLootTable: the same body on the widened parameter; both 26.1 callers pass the brush ItemStack"
+  },
+  "net/minecraft/class_1163.method_4965(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_6539;)I": {
+   "to": "method_4965(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;Lnet/minecraft/class_6539;)I",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "basis": "BiomeColors.getAverageColor: the same body; a handler taking 1.21.11's getter takes 26.1's client getter, a BlockAndLightGetter. Client-side: unverified until CASE 13b"
+  },
+  "net/minecraft/class_775.method_40077(Lnet/minecraft/class_1920;Lnet/minecraft/class_3611;FFFLnet/minecraft/class_2338;)F": {
+   "to": "method_40077(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_3611;FFFLnet/minecraft/class_2338;)F",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "basis": "FluidRenderer.calculateAverageHeight (LiquidBlockRenderer): the same body; a handler taking 1.21.11's getter takes 26.1's client getter, a BlockAndLightGetter. Client-side: unverified until CASE 13b"
   }
  }
 }

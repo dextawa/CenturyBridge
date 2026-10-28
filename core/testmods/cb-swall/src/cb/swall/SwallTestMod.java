@@ -32,6 +32,7 @@ public class SwallTestMod implements ModInitializer {
     public static final java.util.concurrent.atomic.AtomicInteger CODEC_PATCH_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     public static final java.util.concurrent.atomic.AtomicInteger FROG_ATTACK_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     public static final java.util.concurrent.atomic.AtomicInteger FANCY_LIMB_CALLS = new java.util.concurrent.atomic.AtomicInteger();
+    public static final java.util.concurrent.atomic.AtomicInteger LOOT_MINE_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     private static int passed;
 
     private static void check(String name, boolean ok, Object detail) {
@@ -1032,6 +1033,7 @@ public class SwallTestMod implements ModInitializer {
             swall12Batch();
             frogAttack(server);
             fancyLimb(server);
+            lootMine(server);
             clocks(server);
             fluidHeights(server);
             check("server.throwIfFatalException", MinecraftServer.method_60584(), "");
@@ -2088,6 +2090,18 @@ public class SwallTestMod implements ModInitializer {
             check("swall12b.fancyLimbMixin", placed && FANCY_LIMB_CALLS.get() > before, placed + " " + (FANCY_LIMB_CALLS.get() - before));
         } catch (Throwable t) {
             check("swall12b.fancyLimbMixin", false, t);
+        }
+    }
+
+    /** LootMineMixin (a 1.21.11 mixin on the private LootCommand.dropBlockLoot(.., ItemStack, ..)): "/loot spawn .. mine" runs it */
+    private static void lootMine(MinecraftServer server) {
+        try {
+            server.method_30002().method_8501(new net.minecraft.class_2338(88, 200, 88), net.minecraft.class_2246.field_10340.method_9564());
+            int before = LOOT_MINE_CALLS.get();
+            server.method_3734().method_44252(server.method_3739().method_9217(), "loot spawn 88 202 88 mine 88 200 88");
+            check("swall12b.lootMineMixin", LOOT_MINE_CALLS.get() > before, LOOT_MINE_CALLS.get() - before);
+        } catch (Throwable t) {
+            check("swall12b.lootMineMixin", false, t);
         }
     }
 }

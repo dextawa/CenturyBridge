@@ -28,27 +28,6 @@
     "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#sendEvents()Z"
    ]
   },
-  "net/minecraft/class_2814.method_39956(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2837;": {
-   "basis": "s9 climb: 1.21.9's palettes keep no resize handler (each idFor call takes one), so copy has none to hand on; 1.21.8's copy(resize) handed the copy the one given",
-   "desc": "()Lnet/minecraft/class_2837;",
-   "ops": [
-    "drop"
-   ]
-  },
-  "net/minecraft/class_2834.method_39956(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2837;": {
-   "basis": "s9 climb: 1.21.9's palettes keep no resize handler (each idFor call takes one), so copy has none to hand on; 1.21.8's copy(resize) handed the copy the one given",
-   "desc": "()Lnet/minecraft/class_2837;",
-   "ops": [
-    "drop"
-   ]
-  },
-  "net/minecraft/class_2837.method_39956(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2837;": {
-   "basis": "s9 climb: 1.21.9's palettes keep no resize handler (each idFor call takes one), so copy has none to hand on; 1.21.8's copy(resize) handed the copy the one given",
-   "desc": "()Lnet/minecraft/class_2837;",
-   "ops": [
-    "drop"
-   ]
-  },
   "net/minecraft/class_2852.method_61794(Lnet/minecraft/class_5539;Lnet/minecraft/class_5455;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2852;": {
    "basis": "s9 climb: SerializableChunkData.parse takes the PalettedContainerFactory 1.21.9 builds from the same registries (PalettedContainerFactory.create(registries))",
    "desc": "(Lnet/minecraft/class_5539;Lnet/minecraft/class_11897;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2852;",

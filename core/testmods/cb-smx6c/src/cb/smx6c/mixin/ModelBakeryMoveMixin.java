@@ -10,23 +10,38 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /**
  * 1.20.6's ModelBakery blockstate helpers that 1.21 moved, same bodies, into BlockStateModelLoader (step wiring s121.json
  * mixinMoves): predicate (method_4725, private static), getValueHelper (method_4724, static) and registerModelGroup
- * (method_21603, private instance; the handler does not read this). HEAD counts each call.
+ * (method_21603, private instance; the handler does not read this). HEAD counts each call, twice: selectors with the
+ * descriptor (the wiring's proof) and bare names, the way most mods write them (counted apart: *_BARE).
  */
 @Mixin(net.minecraft.class_1088.class)
 public abstract class ModelBakeryMoveMixin {
 
-    @Inject(method = "method_4725", at = @At("HEAD"))
+    @Inject(method = "method_4725(Lnet/minecraft/class_2689;Ljava/lang/String;)Ljava/util/function/Predicate;", at = @At("HEAD"))
     private static void cb$predicate(CallbackInfoReturnable<?> cir) {
         Counters.PREDICATE.incrementAndGet();
     }
 
-    @Inject(method = "method_4724", at = @At("HEAD"))
+    @Inject(method = "method_4724(Lnet/minecraft/class_2769;Ljava/lang/String;)Ljava/lang/Comparable;", at = @At("HEAD"))
     private static void cb$value(CallbackInfoReturnable<?> cir) {
         Counters.VALUE.incrementAndGet();
     }
 
-    @Inject(method = "method_21603", at = @At("HEAD"))
+    @Inject(method = "method_21603(Ljava/lang/Iterable;)V", at = @At("HEAD"))
     private void cb$group(CallbackInfo ci) {
         Counters.GROUP.incrementAndGet();
+    }
+    @Inject(method = "method_4725", at = @At("HEAD"))
+    private static void cb$predicateBare(CallbackInfoReturnable<?> cir) {
+        Counters.PREDICATE_BARE.incrementAndGet();
+    }
+
+    @Inject(method = "method_4724", at = @At("HEAD"))
+    private static void cb$valueBare(CallbackInfoReturnable<?> cir) {
+        Counters.VALUE_BARE.incrementAndGet();
+    }
+
+    @Inject(method = "method_21603", at = @At("HEAD"))
+    private void cb$groupBare(CallbackInfo ci) {
+        Counters.GROUP_BARE.incrementAndGet();
     }
 }

@@ -1,0 +1,53 @@
+{
+ "_s215b_frames_basis": "frameDefaults (server side) of step 1.21.4 -> 1.21.5: the value of each argument 1.21.5 added, for a 1.21.4 override the mod enters itself (rt/CbFrameDefaults, javap of both releases there). Client-side hooks (block entity renderers' camera position, sprite contents' GpuTexture, tooltip DataComponentGetter, chat MessageSignature) are not judged yet.",
+ "frameDefaults": {
+  "method_6090(Lnet/minecraft/class_1309;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#ownLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6673(I)V": {
+   "0": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#ownLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_33230(I)V": {
+   "0": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#ownLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5585(Lnet/minecraft/class_1309;Ljava/lang/Runnable;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#tickLevel(Lnet/minecraft/class_1293;Lnet/minecraft/class_1309;Ljava/lang/Runnable;)Lnet/minecraft/class_3218;"
+  },
+  "method_16509()V": {
+   "0": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#raidLevel(Lnet/minecraft/class_3765;)Lnet/minecraft/class_3218;"
+  },
+  "method_16516(ILnet/minecraft/class_3763;Lnet/minecraft/class_2338;Z)V": {
+   "0": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#raidLevel(Lnet/minecraft/class_3765;)Lnet/minecraft/class_3218;"
+  },
+  "method_16510(Lnet/minecraft/class_3763;Z)V": {
+   "0": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#raidLevel(Lnet/minecraft/class_3765;)Lnet/minecraft/class_3218;"
+  },
+  "method_16487(ILnet/minecraft/class_3763;Z)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#raidLevel(Lnet/minecraft/class_3765;)Lnet/minecraft/class_3218;"
+  },
+  "method_16539()V": {
+   "0": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#raidsLevel(Lnet/minecraft/class_3767;)Lnet/minecraft/class_3218;"
+  },
+  "method_12876(Lnet/minecraft/class_3222;)V": {
+   "1": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#showAdvancements()Z"
+  },
+  "method_5700(Z)V": {
+   "1": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#bubbleColumnPos(Lnet/minecraft/class_1297;Z)Lnet/minecraft/class_2338;"
+  },
+  "method_7575()V": {
+   "0": "zero: 1.21.4's primeFuse had no damage source; 1.21.5's body records one only when it is not null (javap 1.21.5 class_1701.method_7575 @47 ifnull)"
+  },
+  "method_36014(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2586;": {
+   "1": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#anyBlockEntity(Ljava/lang/Object;Lnet/minecraft/class_2338;)Ljava/lang/Class;"
+  },
+  "method_31011(Lnet/minecraft/class_1311;Lnet/minecraft/class_5483$class_1964;)Lnet/minecraft/class_5483$class_5496;": {
+   "1": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#spawnWeight(Lnet/minecraft/class_5483$class_5496;Lnet/minecraft/class_1311;Lnet/minecraft/class_5483$class_1964;)I"
+  },
+  "method_9548(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;)V": {
+   "4": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#immediate(Lnet/minecraft/class_2248;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;)Lnet/minecraft/class_10774;"
+  },
+  "method_26178(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;)V": {
+   "3": "top/dext/centurybridge/step/v1_21_5/rt/CbFrameDefaults#immediateState(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;)Lnet/minecraft/class_10774;"
+  }
+ }
+}

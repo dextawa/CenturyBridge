@@ -755,6 +755,9 @@ public final class WiringCheck {
                     continue;
                 }
                 if (!o.has("args")) {
+                    if (o.has("wrap")) {
+                        problems.add(where + ": \"wrap\" without \"args\" (a wrap converts a mapped argument)");
+                    }
                     continue;
                 }
                 var a = o.getAsJsonArray("args");
@@ -768,6 +771,32 @@ public final class WiringCheck {
                 // type must be a subtype of W's (as for override hooks' narrow)
                 boolean narrow = o.has("narrow") && o.get("narrow").getAsBoolean();
                 boolean narrows = false;
+                // "wrap" (CASE 18): statics by the override hooks' rule -- exactly one parameter, W's type, returning V's
+                // type; each must exist with that exact descriptor, and each must serve an argument
+                List<String[]> wraps = new ArrayList<>();
+                if (o.has("wrap")) {
+                    List<String> ws = new ArrayList<>();
+                    if (o.get("wrap").isJsonArray()) {
+                        o.getAsJsonArray("wrap").forEach(x -> ws.add(x.getAsString()));
+                    } else {
+                        ws.add(o.get("wrap").getAsString());
+                    }
+                    for (String w : ws) {
+                        int wp = w.indexOf('(');
+                        int dot = wp < 0 ? -1 : w.lastIndexOf('.', wp);
+                        if (dot <= 0) {
+                            problems.add(where + ": wrap '" + w + "' is not owner.name(desc)R");
+                            continue;
+                        }
+                        String wd = methodDesc(w.substring(wp));
+                        if (org.objectweb.asm.Type.getArgumentTypes(wd).length != 1) {
+                            problems.add(where + ": wrap " + w + " must take exactly one argument (W's)");
+                        }
+                        wantMethod(where + " wrap", w.substring(0, dot) + "#" + w.substring(dot + 1, wp), null, wd);
+                        wraps.add(new String[] {w.substring(0, dot), w.substring(dot + 1, wp), wd});
+                    }
+                }
+                java.util.Set<String[]> usedWraps = new java.util.HashSet<>();
                 for (int i = 0; i < va.length; i++) {
                     var ai = a.get(i).getAsJsonPrimitive();
                     if (!ai.isNumber()) {
@@ -805,12 +834,20 @@ public final class WiringCheck {
                         problems.add(where + ": args[" + i + "] = " + j + " is no argument of " + nm + nd);
                     } else if (j >= 0 && !wa[j].equals(va[i])
                             && !(objects && resolvesSuper(wa[j].getInternalName(), va[i].getInternalName()))) {
-                        if (narrow && objects && resolvesSuper(va[i].getInternalName(), wa[j].getInternalName())) {
+                        String[] w = top.dext.centurybridge.engine.Chain.wrapFor(wraps, wa[j], va[i]);
+                        if (w != null) {
+                            usedWraps.add(w);
+                        } else if (narrow && objects && resolvesSuper(va[i].getInternalName(), wa[j].getInternalName())) {
                             narrows = true;
                         } else {
                             problems.add(where + ": args[" + i + "]: W argument " + j + " (" + wa[j] + ") is not a " + va[i]
-                                + (narrow ? ", nor a supertype it narrows to" : ""));
+                                + (narrow ? ", nor a supertype it narrows to" : "") + ", and no wrap takes it to one");
                         }
+                    }
+                }
+                for (String[] w : wraps) {
+                    if (!usedWraps.contains(w)) {
+                        problems.add(where + ": wrap " + w[0] + "." + w[1] + w[2] + " serves no argument");
                     }
                 }
                 if (narrow && !narrows) {
@@ -1393,7 +1430,8 @@ public final class WiringCheck {
             String c = todo.pop();
             if (!seen.add(c)) continue;
             if (c.equals(sup) || sup.equals("java/lang/Object")) return true;
-            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            // the target's game libraries too (as isSubtype): JOML's Matrix4f is a Matrix4fc
+            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.containsKey(c) ? stub.get(c) : gameLibs.get(c);
             if (n == null) continue;
             if (n.superName != null) todo.push(n.superName);
             todo.addAll(n.interfaces);

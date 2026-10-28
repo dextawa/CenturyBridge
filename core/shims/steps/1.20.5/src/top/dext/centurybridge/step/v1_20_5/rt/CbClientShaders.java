@@ -7,8 +7,8 @@ import net.fabricmc.api.Environment;
  * 1.20.4's GameRenderer shader statics on 1.20.5 (s4client): the core shaders position_tex_color_normal and
  * position_tex_lightmap_color, which 1.20.5 no longer ships or loads, and the post-effect cycle (cycleEffect,
  * EFFECT_NONE). The two shaders are loaded with the game's others (mixin/CbClientGameRendererShadersMixin) from
- * their 1.20.4 definitions -- programs given to the shader loader here, over the game's resources for what they
- * import (fog.glsl) -- with 1.20.4's vertex formats.
+ * their 1.20.4 definitions -- programs given to the shader loader here, with 1.20.4's fog functions written into
+ * them -- with 1.20.4's vertex formats.
  */
 @Environment(EnvType.CLIENT)
 public final class CbClientShaders {
@@ -55,6 +55,35 @@ public final class CbClientShaders {
     private static final String BLEND = "\"blend\": { \"func\": \"add\", \"srcrgb\": \"srcalpha\", \"dstrgb\": \"1-srcalpha\" },";
     private static final String IDENTITY = "[ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ]";
 
+    /*
+     * The two fog functions these 1.20.4 programs use, as 1.20.4's shaders/include/fog.glsl defined them, written into the
+     * programs instead of imported. The game's fog.glsl is another file from 1.20.5 on (read from each client jar):
+     * 1.20.5 - 1.21.5 declare fog_distance(vec3 pos, int shape), measuring the camera-relative position without the
+     * model-view rotation, and no fog_distance(mat4, vec3, int), so the imported program failed to compile and the
+     * shader reload threw; 1.21.6 on have neither fog_distance nor linear_fog (apply_fog over a Fog uniform block).
+     * With 1.20.4's own bodies the programs compute 1.20.4's fog wherever they load.
+     */
+    /** 1.20.4 fog.glsl fog_distance(modelViewMat, pos, shape) */
+    private static final String FOG_DISTANCE = String.join("\n",
+        "float fog_distance(mat4 modelViewMat, vec3 pos, int shape) {",
+        "    if (shape == 0) {",
+        "        return length((modelViewMat * vec4(pos, 1.0)).xyz);",
+        "    } else {",
+        "        float distXZ = length((modelViewMat * vec4(pos.x, 0.0, pos.z, 1.0)).xyz);",
+        "        float distY = length((modelViewMat * vec4(0.0, pos.y, 0.0, 1.0)).xyz);",
+        "        return max(distXZ, distY);",
+        "    }",
+        "}");
+    /** 1.20.4 fog.glsl linear_fog(inColor, vertexDistance, fogStart, fogEnd, fogColor) */
+    private static final String LINEAR_FOG = String.join("\n",
+        "vec4 linear_fog(vec4 inColor, float vertexDistance, float fogStart, float fogEnd, vec4 fogColor) {",
+        "    if (vertexDistance <= fogStart) {",
+        "        return inColor;",
+        "    }",
+        "    float fogValue = vertexDistance < fogEnd ? smoothstep(fogStart, fogEnd, vertexDistance) : 1.0;",
+        "    return vec4(mix(inColor.rgb, fogColor.rgb, fogValue * fogColor.a), inColor.a);",
+        "}");
+
     private static final java.util.Map<String, String> SOURCES = java.util.Map.of(
         "shaders/core/position_tex_color_normal.json", "{ " + BLEND
             + " \"vertex\": \"position_tex_color_normal\", \"fragment\": \"position_tex_color_normal\","
@@ -70,7 +99,7 @@ public final class CbClientShaders {
             + " { \"name\": \"FogShape\", \"type\": \"int\", \"count\": 1, \"values\": [ 0 ] } ] }",
         "shaders/core/position_tex_color_normal.vsh", String.join("\n",
             "#version 150",
-            "#moj_import <fog.glsl>",
+            FOG_DISTANCE,
             "in vec3 Position;", "in vec2 UV0;", "in vec4 Color;", "in vec3 Normal;",
             "uniform mat4 ModelViewMat;", "uniform mat4 ProjMat;", "uniform int FogShape;",
             "out vec2 texCoord0;", "out float vertexDistance;", "out vec4 vertexColor;", "out vec4 normal;",
@@ -83,7 +112,7 @@ public final class CbClientShaders {
             "}", ""),
         "shaders/core/position_tex_color_normal.fsh", String.join("\n",
             "#version 150",
-            "#moj_import <fog.glsl>",
+            LINEAR_FOG,
             "uniform sampler2D Sampler0;", "uniform vec4 ColorModulator;", "uniform float FogStart;", "uniform float FogEnd;",
             "uniform vec4 FogColor;",
             "in vec2 texCoord0;", "in float vertexDistance;", "in vec4 vertexColor;", "in vec4 normal;",
