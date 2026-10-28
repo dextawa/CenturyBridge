@@ -135,6 +135,7 @@
     "CbRenderDecalAccess",
     "CbRenderDoubleAccess",
     "CbRenderFaceBakeryMixin",
+    "CbRenderFaceBakeryRouteMixin",
     "CbRenderGameRendererMixin",
     "CbRenderLevelRendererAccess",
     "CbRenderModelBakerMixin",

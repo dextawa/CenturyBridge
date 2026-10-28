@@ -36,6 +36,9 @@ import net.minecraft.class_777;
  */
 public class Driver implements ClientModInitializer {
     public static final AtomicInteger FACES = new AtomicInteger();
+    /** BakeQuadCounter / BakeFaceWrapCounter: 1.21 bakeQuad HEAD, bakeFace's bakeQuad call wrapped (MixinExtras) */
+    public static final AtomicInteger QUADS = new AtomicInteger();
+    public static final AtomicInteger FACE_WRAPS = new AtomicInteger();
     /** MovedHomeCounter / LeashVertexCounter: calls of 1.21's homes of the members 1.21 moved */
     public static final AtomicInteger PREDICATE = new AtomicInteger();
     public static final AtomicInteger VALUE = new AtomicInteger();
@@ -137,6 +140,12 @@ public class Driver implements ClientModInitializer {
             }
             log("dump-total models=" + dump.size() + " hash=" + Integer.toHexString(dump.hashCode()) + " faces=" + FACES.get());
 
+            // (e) native 1.21 injectors in the bake path, with or without the layer's bakeQuad route: once per face
+            check("e.nativeQuadOnce", FACES.get() > 0 && QUADS.get() == FACES.get(),
+                "native bakeQuad HEAD " + QUADS.get() + ", bakeFace calls " + FACES.get());
+            check("e.nativeWrap", FACE_WRAPS.get() == FACES.get(),
+                "native @WrapOperation of bakeFace's bakeQuad call " + FACE_WRAPS.get() + ", bakeFace calls " + FACES.get());
+
             // (b) / (c): the climbed 1.20.6 mixin, when loaded
             Class<?> counters = null;
             try {
@@ -157,6 +166,9 @@ public class Driver implements ClientModInitializer {
                         + sample.subList(0, Math.min(8, sample.size())));
                 check("b.noNull", nulls == 0, "calls with a null location " + nulls);
                 check("b.countEqualsFaces", calls == FACES.get(), "bakeQuad calls " + calls + ", 1.21 bakeFace calls " + FACES.get());
+                int noId = ((AtomicInteger) field(counters, "CALLS_NO_ID")).get();
+                check("b.noIdOnce", noId == FACES.get(), "bakeQuad HEAD calls of a handler not reading the id " + noId
+                    + " (on 1.21's bakeQuad through mixinTargets), 1.21 bakeFace calls " + FACES.get());
                 boolean stoneZero = on(mc, () -> allZero(mc.method_1554().method_4743().method_3335(class_2246.field_10340.method_9564()),
                     class_2246.field_10340.method_9564()));
                 boolean graniteDrawn = on(mc, () -> !allZero(mc.method_1554().method_4743().method_3335(class_2246.field_10474.method_9564()),

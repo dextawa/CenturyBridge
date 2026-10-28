@@ -304,18 +304,16 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
         this.cb$indexOnly = true;
     }
 
-    /** 1.20.6's ensureBuilding */
-    @CbVanillaReads(value = "CbRenderBufferBuilderRouteMixin: 1.21's build() runs the restored end (CbRenderSectionCompileRouteMixin: endOrDiscardIfEmpty at the section compile), which calls this, when a converted mod mixes it",
-        carries = {"Inject@HEAD", "Inject@RETURN", "Inject@TAIL"})
+    /** 1.20.6's ensureBuilding, its body as 1.20.6's (1.20.6 called it only from end and endOrDiscardIfEmpty, both routed) */
+    @CbVanillaReads("CbRenderBufferBuilderRouteMixin: 1.21's build() runs the restored end (CbRenderSectionCompileRouteMixin: endOrDiscardIfEmpty at the section compile), which calls this, when a converted mod mixes it")
     private void method_43577() {
         if (!this.field_1556) {
             throw new IllegalStateException("Not building!");
         }
     }
 
-    /** 1.20.6's ensureNotClosed */
-    @CbVanillaReads(value = "CbRenderBufferBuilderRouteMixin: 1.21's BufferBuilder constructor runs the restored begin, which calls this, when a converted mod mixes it",
-        carries = {"Inject@HEAD", "Inject@RETURN", "Inject@TAIL"})
+    /** 1.20.6's ensureNotClosed, its body as 1.20.6's on the layer's closed flag (1.20.6 called it from begin, routed, and restoreSortState) */
+    @CbVanillaReads("CbRenderBufferBuilderRouteMixin: 1.21's BufferBuilder constructor runs the restored begin, which calls this, when a converted mod mixes it")
     private void method_54559() {
         if (this.cb$closed) {
             throw new IllegalStateException("This BufferBuilder has been closed");
