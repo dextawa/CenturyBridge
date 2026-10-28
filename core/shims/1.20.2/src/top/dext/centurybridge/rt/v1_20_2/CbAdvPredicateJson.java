@@ -206,12 +206,12 @@ public final class CbAdvPredicateJson {
 
     private static net.minecraft.class_7376 subPredicate(JsonElement element, boolean golden) {
         if (element == null || element.isJsonNull()) {
-            return CbAdvJson.field_38723;
+            return CbAdvJson.field_38723();
         }
         JsonObject json = net.minecraft.class_3518.method_15295(element, "type_specific");
         String type = net.minecraft.class_3518.method_15253(json, "type", null);
         if (type == null) {
-            return CbAdvJson.field_38723;
+            return CbAdvJson.field_38723();
         }
         if (!net.minecraft.class_7376.class_7378.field_38731.containsKey(type)) {
             throw new JsonSyntaxException("Unknown sub-predicate type: " + type);

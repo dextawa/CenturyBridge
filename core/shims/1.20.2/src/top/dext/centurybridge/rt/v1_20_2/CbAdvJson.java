@@ -373,8 +373,29 @@ public final class CbAdvJson {
      * client-1.20.5-intermediary-code.jar class_7378: lightning, fishing_hook, player, slime, ...), so once this layer
      * climbs, that decode fails and this class could not initialise. Types.ANY itself climbs: the 1.20.5 step gives it
      * back (facade EntitySubPredicateTypes.field_38724, the unit codec of an always-matching predicate).
+     *
+     * Built on first use (fieldGetters): nothing else in this class depends on it, so a later release whose own types
+     * cannot be built leaves every other 1.20.1 reader here working.
      */
-    public static final net.minecraft.class_7376 field_38723 = anyPredicate();
+    public static net.minecraft.class_7376 field_38723() {
+        net.minecraft.class_7376 a = any;
+        if (a == null) {
+            synchronized (CbAdvJson.class) {
+                a = any;
+                if (a == null) {
+                    any = a = anyPredicate();
+                }
+            }
+        }
+        return a;
+    }
+
+    private static volatile net.minecraft.class_7376 any;
+
+    /** whether {@code p} is EntitySubPredicate.ANY (never builds it: a predicate seen before it was built is not it) */
+    public static boolean isAny(net.minecraft.class_7376 p) {
+        return p != null && p == any;
+    }
 
     private static net.minecraft.class_7376 anyPredicate() {
         @SuppressWarnings("unchecked")
@@ -387,12 +408,12 @@ public final class CbAdvJson {
     /** EntitySubPredicate.fromJson(json): {"type": ..., the type's fields} through 1.20.2's dispatch codec */
     public static net.minecraft.class_7376 method_43097(JsonElement json) {
         if (absent(json)) {
-            return field_38723;
+            return field_38723();
         }
         JsonObject o = net.minecraft.class_3518.method_15295(json, "type_specific");
         String type = net.minecraft.class_3518.method_15253(o, "type", null);
         if (type == null) {
-            return field_38723;
+            return field_38723();
         }
         if (!net.minecraft.class_7376.class_7378.field_38731.containsKey(type)) {
             throw new JsonSyntaxException("Unknown sub-predicate type: " + type);
