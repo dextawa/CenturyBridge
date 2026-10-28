@@ -84,4 +84,5 @@ public abstract class CbMobEffectMixin implements CbEffects.EffectSlot {
     private void cbS4$removeLegacy(net.minecraft.class_5131 attributes, CallbackInfo ci) {
         CbEffects.removedLegacy((net.minecraft.class_1291) (Object) this, attributes);
     }
+
 }

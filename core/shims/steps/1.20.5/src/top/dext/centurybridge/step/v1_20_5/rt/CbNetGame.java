@@ -221,6 +221,21 @@ public final class CbNetGame {
         serializer.method_56104().encode(CbNetBufs.cbRegistryBuf(buf), holder.comp_1933());
     }
 
+    /**
+     * ClientboundUpdateRecipesPacket.fromNetwork(buf)'s 1.20.4 body (a private static, reached by mods' and the climbing
+     * 1.20.2 layer's @Invoker): the serializer's key, the recipe's id, then the serializer's own network form -- the
+     * form {@link #recipeToNetwork} writes, read through the serializer's stream codec as 1.20.5 reads it.
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static net.minecraft.class_8786 recipeFromNetwork(net.minecraft.class_2540 buf) {
+        net.minecraft.class_2960 key = buf.method_10810();
+        net.minecraft.class_2960 id = buf.method_10810();
+        net.minecraft.class_1865 serializer = net.minecraft.class_7923.field_41189.method_17966(key)
+            .orElseThrow(() -> new IllegalArgumentException("Unknown recipe serializer " + key));
+        net.minecraft.class_1860 recipe = (net.minecraft.class_1860) serializer.method_56104().decode(CbNetBufs.cbRegistryBuf(buf));
+        return new net.minecraft.class_8786(id, recipe);
+    }
+
     /** ClientboundExplodePacket.writeParticle(buf, particle)'s 1.20.4 body: type id and options (ParticleTypes.STREAM_CODEC) */
     public static void writeParticle(net.minecraft.class_2540 buf, net.minecraft.class_2394 particle) {
         net.minecraft.class_2398.field_48456.encode(CbNetBufs.cbRegistryBuf(buf), particle);

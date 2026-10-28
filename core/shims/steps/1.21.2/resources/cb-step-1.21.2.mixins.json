@@ -201,7 +201,9 @@
     "CbRestServerPlayerMixin",
     "CbRestServerPropertiesMixin",
     "CbRestStackedItemContentsAccessor",
+    "CbRestPendingTagsMixin",
     "CbRestTagEntryAccessor",
+    "CbRestTagResultsMixin",
     "CbRestWorldLoaderMixin"
   ],
   "client": [
@@ -213,6 +215,8 @@
     "CbFapiModelBakeryMixin",
     "CbFapiModelDiscoveryMixin",
     "CbFapiShaderReloadMixin",
+    "CbRestGameRendererShadersRestored",
+    "CbRestShaderReloadRoute",
     "CbLevelFuelClientMixin",
     "CbRenderBabyLayersMixin",
     "CbRenderBakeBakerMixin",
