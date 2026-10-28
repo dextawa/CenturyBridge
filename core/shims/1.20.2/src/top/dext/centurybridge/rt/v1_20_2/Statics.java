@@ -151,7 +151,14 @@ public final class Statics {
             .orElseThrow(() -> new JsonSyntaxException("Invalid distance predicate: " + json));
     }
 
+    /**
+     * EntityPredicate.fromJson(json): 1.20.1 answered ANY for null or JSON null; 1.20.2's answers Optional.empty() for
+     * exactly those (javap of both bodies: the same ifnull / isJsonNull test first), so empty is ANY (CbAdvAny's sentinel)
+     */
     public static net.minecraft.class_2048 method_8913(JsonElement json) {
+        if (json == null || json.isJsonNull()) {
+            return field_9599;
+        }
         return net.minecraft.class_2048.method_8913(json)
             .orElseThrow(() -> new JsonSyntaxException("Invalid entity predicate: " + json));
     }

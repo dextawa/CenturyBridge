@@ -48,6 +48,11 @@ public class Driver implements ClientModInitializer {
         log((pass ? "ok " : "FAIL ") + name + " " + detail);
     }
 
+    /** a case waiting on a known engine gap: logged "ok" or "known", not counted in the N/T tally */
+    static void known(String name, boolean pass, String detail) {
+        log((pass ? "ok " : "known ") + name + " " + detail);
+    }
+
     static void log(String s) {
         System.out.println("CB-SMX6 " + s);
     }
@@ -158,6 +163,9 @@ public class Driver implements ClientModInitializer {
                     int v = ((AtomicInteger) field(counters, n)).get();
                     int w = ((AtomicInteger) Driver.class.getField(n).get(null)).get();
                     check("d.moved." + n, v > 0 && v == w, "1.20.6 mixin calls " + v + ", 1.21 BlockStateModelLoader calls " + w);
+                    int b = ((AtomicInteger) field(counters, n + "_BARE")).get();
+                    known("d.movedBare." + n, b > 0 && b == w, "bare-name selector: 1.20.6 mixin calls " + b + ", 1.21 calls " + w
+                        + " (mixinMoves needs the selector's descriptor: cases_smixin3/s121.md C23)");
                 }
             }
 
@@ -195,6 +203,9 @@ public class Driver implements ClientModInitializer {
                 int w = LEASH.get();
                 check("e.moved.LEASH", v > 0 && v == w,
                     "1.20.6 MobRenderer.addVertexPair mixin calls " + v + ", 1.21 EntityRenderer.addVertexPair calls " + w);
+                int b = ((AtomicInteger) field(counters, "LEASH_BARE")).get();
+                known("e.movedBare.LEASH", b > 0 && b == w, "bare-name selector: 1.20.6 mixin calls " + b + ", 1.21 calls " + w
+                    + " (C23)");
             } else {
                 log("leash vertex pairs drawn by 1.21: " + LEASH.get());
             }

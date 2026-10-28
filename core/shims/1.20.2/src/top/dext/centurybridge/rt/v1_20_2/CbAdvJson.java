@@ -367,27 +367,43 @@ public final class CbAdvJson {
     // ------------------------------------------------------------------ EntitySubPredicate
 
     /**
-     * EntitySubPredicate.ANY: matches anything, of type "any". 1.20.2 keeps that type (Types.ANY, whose
-     * codec is a unit codec of one vanilla instance); decoding {"type": "any"} answers that very instance.
+     * EntitySubPredicate.ANY: matches anything, of type "any" (Types.ANY). Its own sentinel, built without the codecs
+     * (1.20.1's ANY was a constant too): {"type": "any"} through EntitySubPredicate.CODEC stops decoding from 1.20.5
+     * (javap client-1.20.5-intermediary-code.jar class_7378: no "any" registered), and Types.ANY is touched only when its
+     * type is asked (comp_1776), so nothing that builds this predicate depends on a later release's types table. Bridges
+     * that hand it to 1.20.2 records map it to Optional.empty() (isAny), as for CbAdvAny's sentinels.
      */
-    public static final net.minecraft.class_7376 field_38723 = net.minecraft.class_7376.field_45747
-        .parse(JsonOps.INSTANCE, anyType()).result().orElseThrow();
+    private static final net.minecraft.class_7376 ANY = new net.minecraft.class_7376() {
+        @Override
+        public boolean method_22497(net.minecraft.class_1297 entity, net.minecraft.class_3218 level, net.minecraft.class_243 pos) {
+            return true;
+        }
 
-    private static JsonObject anyType() {
-        JsonObject o = new JsonObject();
-        o.addProperty("type", "any");
-        return o;
+        @Override
+        public net.minecraft.class_7376.class_8745 comp_1776() {
+            return net.minecraft.class_7376.class_7378.field_38724;
+        }
+    };
+
+    /** EntitySubPredicate.ANY (fieldGetters) */
+    public static net.minecraft.class_7376 field_38723() {
+        return ANY;
+    }
+
+    /** whether {@code p} is EntitySubPredicate.ANY (this sentinel) */
+    public static boolean isAny(net.minecraft.class_7376 p) {
+        return p == ANY;
     }
 
     /** EntitySubPredicate.fromJson(json): {"type": ..., the type's fields} through 1.20.2's dispatch codec */
     public static net.minecraft.class_7376 method_43097(JsonElement json) {
         if (absent(json)) {
-            return field_38723;
+            return field_38723();
         }
         JsonObject o = net.minecraft.class_3518.method_15295(json, "type_specific");
         String type = net.minecraft.class_3518.method_15253(o, "type", null);
         if (type == null) {
-            return field_38723;
+            return field_38723();
         }
         if (!net.minecraft.class_7376.class_7378.field_38731.containsKey(type)) {
             throw new JsonSyntaxException("Unknown sub-predicate type: " + type);
