@@ -96,27 +96,29 @@ public final class CbAdvBuilders {
     public static final boolean ROUTE = CbRecipeJson.ROUTE;
 
     /**
-     * the id and JSON ServerAdvancementManager's per-advancement step (method_20723) is reading on this thread, taken by
-     * type at its head (CbAdvJsonVanillaMixin): {@link #consultCarried} reads them where the step stores the advancement
+     * the advancement files ServerAdvancementManager.apply (method_20724) is reading on this thread: its Map argument,
+     * taken at HEAD by its erased type (CbAdvJsonVanillaMixin) and cleared at its return. Up to 1.21.1 its values are
+     * the files' JSON; from 1.21.2 the loader hands decoded advancements, and {@link #consultCarried} finds no JSON.
      */
-    private static final ThreadLocal<net.minecraft.class_2960> CURRENT_ID = new ThreadLocal<>();
-    private static final ThreadLocal<com.google.gson.JsonElement> CURRENT_JSON = new ThreadLocal<>();
+    private static final ThreadLocal<java.util.Map<?, ?>> CURRENT_FILES = new ThreadLocal<>();
 
-    public static void carryId(net.minecraft.class_2960 id) {
-        CURRENT_ID.set(id);
+    public static void carryFiles(java.util.Map<?, ?> files) {
+        if (files == null) {
+            CURRENT_FILES.remove();
+        } else {
+            CURRENT_FILES.set(files);
+        }
     }
 
-    public static void carryJson(com.google.gson.JsonElement json) {
-        CURRENT_JSON.set(json);
-    }
-
-    /** {@link #consult} with the carried id and JSON; both are cleared */
-    public static net.minecraft.class_161 consultCarried(net.minecraft.class_161 read, net.minecraft.class_60 lootData) {
-        net.minecraft.class_2960 id = CURRENT_ID.get();
-        com.google.gson.JsonElement json = CURRENT_JSON.get();
-        CURRENT_ID.remove();
-        CURRENT_JSON.remove();
-        return id == null || json == null ? read : consult(read, id, json, lootData);
+    /**
+     * {@link #consult} for the advancement {@code id} the manager is about to hold, with that file's carried JSON;
+     * {@code read} unchanged when no JSON is carried for it (none carried, or a release whose loader decodes first)
+     */
+    public static net.minecraft.class_161 consultCarried(net.minecraft.class_2960 id, net.minecraft.class_161 read,
+                                                         net.minecraft.class_60 lootData) {
+        java.util.Map<?, ?> files = CURRENT_FILES.get();
+        Object json = files == null || id == null ? null : files.get(id);
+        return json instanceof com.google.gson.JsonElement element ? consult(read, id, element, lootData) : read;
     }
 
     /**
