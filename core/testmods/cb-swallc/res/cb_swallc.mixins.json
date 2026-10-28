@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "cb.swallc.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "LeashVertexMixin",
+    "ShadowVertexMixin",
+    "PlayerGlyphQuadMixin",
+    "LightningQuadMixin",
+    "SheetGlyphMixin",
+    "BiomeColorMixin",
+    "FluidHeightMixin"
+  ],
+  "injectors": { "defaultRequire": 1 }
+}
