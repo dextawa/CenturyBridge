@@ -742,6 +742,24 @@ public final class MixinRepair {
                                 });
                                 continue;
                             }
+                            // smixin K1: captured locals (LocalCapture after the CallbackInfo, MixinExtras @Local) judged
+                            // against V's and W's frames at the injection point (MixinLocals)
+                            ClassNode vtc = source != null ? source.target(owner) : null;
+                            List<MethodNode> vms = vtc != null ? s.match(vtc) : List.of();
+                            MixinLocals.Verdict lv = vms.size() == 1
+                                ? MixinLocals.judge(this, source, an, handler, hit, tc, vtc, vms.get(0), refmap) : null;
+                            if (lv != null && lv.why() != null) {
+                                if (deadWhy == null) deadWhy = "captured locals: @" + kind + " " + where + " (" + lv.why() + ")";
+                                continue;
+                            }
+                            if (lv != null && lv.fix() != null) {
+                                fixNotes.add("locals-remap " + where + " " + lv.note());
+                                fixes.add(() -> {
+                                    lv.fix().run();
+                                    dirty[0] = true;
+                                });
+                                continue; // a repaired injector: the fix runs when nothing else keeps it live
+                            }
                             if (cands.stream().allMatch(layerMembers::isMember)) {
                                 mixed(mx.name, owner, cands); // a converted mod mixes the layer's restored member
                             } else if (owner.startsWith("top/dext/") && layerEntry(owner) != null) {
