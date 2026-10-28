@@ -2257,6 +2257,35 @@ public final class JarProcessor {
      * a mod subclass of, say, RenderSystem (RenderSystem.initGameThread called as MyRenderSystem.initGameThread)
      * filed as a library member, so the vanilla class's redirects never applied to it.
      */
+    /**
+     * Whether a step layer in the runtime restores name+desc (a layer mixin's merged member, {@link LayerMembers}) on
+     * a class the site's owner reaches: the jar's own classes, then the source release's library and game
+     * superclasses. Such a member is declared on the game or library class at runtime though the target stub lacks
+     * it, so the target-decl judgment (the stub as the judge of real-named members) does not apply. Past the
+     * namespace wall every class is real-named, and a member an earlier, pre-wall layer restores (the 1.21.6 layer's
+     * TagsProvider.tag answering its facade TagAppender) reached the next step's stub check and was tombstoned
+     * there; Main reads those layers' members renamed through the wall ({@code inherit} of a wall view).
+     */
+    private static boolean layerRestored(String owner, String name, String desc, LayerIndex layer, Chain chain) {
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64; hops++) {
+            for (org.objectweb.asm.tree.MethodNode m : chain.layerMembers.byName(cur, name)) {
+                if (m.desc.equals(desc)) {
+                    return true;
+                }
+            }
+            String next = layer.superOf.get(cur);
+            if (next == null) {
+                next = chain.libSuperOf.get(cur);
+            }
+            if (next == null) {
+                next = chain.superOf.get(cur);
+            }
+            cur = next;
+        }
+        return false;
+    }
+
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer) {
         String cur = owner;
         for (int hops = 0; cur != null && hops < 64; hops++) {
@@ -3859,7 +3888,8 @@ public final class JarProcessor {
                         // advancements/Criterion) is unlockedBy(String, advancements/triggers/Criterion))
                         if (r.level() == Chain.Level.OK && !name.startsWith("<") && !Chain.intermediaryClass(owner)
                                 && Boolean.FALSE.equals(chain.resolvesOnTarget(chain.classRenames.getOrDefault(owner, owner),
-                                    name + chain.renamedDesc(desc)))) {
+                                    name + chain.renamedDesc(desc)))
+                                && !layerRestored(site.substring(0, site.indexOf('.')), name, desc, layer, chain)) {
                             // classes Mojang never obfuscated (blaze3d, ...) keep real member names,
                             // which the death tables -- keyed by intermediary name -- cannot see go:
                             // the target stub is the judge. (On an intermediary-named class a

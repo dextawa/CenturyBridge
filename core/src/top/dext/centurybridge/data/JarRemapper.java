@@ -442,10 +442,70 @@ public final class JarRemapper {
                         return ir;
                     }
                     String m = member(owner, name);
+                    if (m.equals(name)) {
+                        String ov = cbOverride(owner, name, desc);
+                        if (ov != null) {
+                            return ov;
+                        }
+                    }
                     if (keepsToken(owner, name, desc, m, this)) {
                         return name;
                     }
                     return targetMethods == null ? m : byDescriptor(owner, name, desc, m);
+                }
+
+                /**
+                 * A CenturyBridge class (a climbing layer's facade) keeps its token-named members (member()), but one
+                 * that extends a live game class and overrides one of its methods must take the method's new name,
+                 * or the override is dead past the wall: the 1.21.6 layer's ItemTagsProvider facade overrides
+                 * TagsProvider.method_49651 (createContentsProvider) to copy block tags into item tags, and under its
+                 * token nothing called it. Renamed when the table's name for the token, with the renamed descriptor,
+                 * is a method a target game class among the CB class's supertypes declares; the jar's sites naming
+                 * the CB class take the same name (this method), so its callers stay matched.
+                 */
+                private String cbOverride(String owner, String name, String desc) {
+                    if (targetMethods == null || !(owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/"))) {
+                        return null;
+                    }
+                    java.util.Set<String> names = new java.util.LinkedHashSet<>();
+                    String g = members.get(name);
+                    if (g != null) {
+                        names.add(g);
+                    }
+                    java.util.Set<String> cand = candidates.get(name);
+                    if (cand != null) {
+                        names.addAll(cand);
+                    }
+                    String md = mapMethodDesc(desc);
+                    String only = null;
+                    for (String n : names) {
+                        if (n.equals(name) || !gameSuperDeclares(owner, n + md, new java.util.HashSet<>())) {
+                            continue;
+                        }
+                        if (only != null && !only.equals(n)) {
+                            return null; // two live members fit: not decidable here
+                        }
+                        only = n;
+                    }
+                    return only;
+                }
+
+                /** whether a game class among the supertypes of a CB class declares nameDesc (target names) */
+                private boolean gameSuperDeclares(String owner, String nameDesc, java.util.Set<String> seen) {
+                    String[] sup = jarSupers.get(owner);
+                    if (sup == null || !seen.add(owner)) {
+                        return false;
+                    }
+                    for (String x : sup) {
+                        if (x.startsWith("top/dext/centurybridge/") || x.startsWith("centurybridge/")) {
+                            if (gameSuperDeclares(x, nameDesc, seen)) {
+                                return true;
+                            }
+                        } else if (declares(x, nameDesc, new java.util.HashSet<>())) {
+                            return true;
+                        }
+                    }
+                    return false;
                 }
 
                 /**
