@@ -26,14 +26,14 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
  * @Shadow / @Accessor) into the id: null clears it, a chain answered for an id sets that id. A chain a mod loaded from a
  * 1.21.1 json itself has no 1.21.2 id: the id is cleared and the hooks run, resize and close that chain where 1.21.1's
  * render, resize and close did. The layer writes the id only when the mirror was written or loadEffect is called:
- * unmixed, 1.21.2's state is untouched. Priority 0, below every mixin shadowing these members (as CbVanillaReads.PRIORITY
- * puts it below every mod's, so a mod's 1.21.1 injectors anchor inside loadEffect): Mixin applies a target's mixins in
- * priority order, and the climbed 1.20.5 layer's CbClientGameRendererShadersMixin (cycleEffect) shadows postEffect and
- * loadEffect at that layer's CbVanillaReads.PRIORITY (1); at 1 the 1.21.1 -> 1.21.2 step strips it (its shadow field
- * would not be declared yet when it applies).
+ * unmixed, 1.21.2's state is untouched. At this layer's CbVanillaReads.PRIORITY (mixin_priority.py rule 3: strictly below
+ * every earlier layer's mixins, and below every mod's, so a mod's 1.21.1 injectors anchor inside loadEffect): Mixin applies
+ * a target's mixins in priority order, and the climbed 1.20.5 layer's CbClientGameRendererShadersMixin (cycleEffect)
+ * shadows postEffect and loadEffect at that layer's higher CbVanillaReads.PRIORITY; at a tie or above the 1.21.1 -> 1.21.2
+ * step strips it (its shadow field would not be declared yet when it applies).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(value = net.minecraft.class_757.class, priority = 0)
+@Mixin(value = net.minecraft.class_757.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestPostEffectRestored implements CbRestPostEffect.Game {
 
     @Shadow
