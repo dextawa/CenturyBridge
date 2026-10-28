@@ -23,6 +23,46 @@ public interface CbRenderBufferBuilderV {
 
     // ------------------------------------------------------------------ the builder
 
+    /**
+     * Set on the thread while 1.21's build() is called from a 1.21 site whose 1.20.6 counterpart was not end()
+     * (SectionCompiler: 1.20.6's section compile called endOrDiscardIfEmpty): CbRenderBufferBuilderRouteMixin's end
+     * route stands aside there.
+     */
+    ThreadLocal<boolean[]> CB_V1_21_NOT_END = ThreadLocal.withInitial(() -> new boolean[1]);
+
+    /**
+     * The restored 1.20.6 lifecycle members, as CbMixedMembers keys, by the 1.21 path that reaches them through the routes
+     * (CbRenderBufferBuilderRouteMixin, CbRenderSectionCompileRouteMixin): begin and what it called (switchFormat,
+     * ensureNotClosed); end and what it called (ensureBuilding, storeRenderedBuffer, reset); endOrDiscardIfEmpty and what it
+     * called (isCurrentBatchEmpty, ensureBuilding, storeRenderedBuffer, reset).
+     */
+    String[] CB_V1_21_BEGIN = {"net/minecraft/class_287.method_1328(Lnet/minecraft/class_293$class_5596;Lnet/minecraft/class_293;)V",
+        "net/minecraft/class_287.method_23918(Lnet/minecraft/class_293;)V", "net/minecraft/class_287.method_54559()V"};
+
+    String[] CB_V1_21_END = {"net/minecraft/class_287.method_1326()Ltop/dext/centurybridge/step/v1_21/facade/BufferBuilderRenderedBuffer;",
+        "net/minecraft/class_287.method_43577()V",
+        "net/minecraft/class_287.method_43578()Ltop/dext/centurybridge/step/v1_21/facade/BufferBuilderRenderedBuffer;",
+        "net/minecraft/class_287.method_43579()V"};
+
+    String[] CB_V1_21_END_OR_DISCARD = {
+        "net/minecraft/class_287.method_43575()Ltop/dext/centurybridge/step/v1_21/facade/BufferBuilderRenderedBuffer;",
+        "net/minecraft/class_287.method_43574()Z", "net/minecraft/class_287.method_43577()V",
+        "net/minecraft/class_287.method_43578()Ltop/dext/centurybridge/step/v1_21/facade/BufferBuilderRenderedBuffer;",
+        "net/minecraft/class_287.method_43579()V"};
+
+    /** whether a loaded converted mod mixes any of these restored members (CbMixedMembers) */
+    static boolean cbV1_21AnyMixed(String[] keys) {
+        for (String k : keys) {
+            if (CbMixedMembers.mixed(k)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** whether the restored end / endOrDiscardIfEmpty is inside its own call of 1.21's build() (the route stands aside) */
+    boolean cb$v1_21$storing();
+
     /** begin(mode, format) */
     void method_1328(net.minecraft.class_293.class_5596 mode, net.minecraft.class_293 format);
 

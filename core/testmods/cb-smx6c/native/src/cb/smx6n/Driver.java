@@ -41,6 +41,11 @@ public class Driver implements ClientModInitializer {
     public static final AtomicInteger VALUE = new AtomicInteger();
     public static final AtomicInteger GROUP = new AtomicInteger();
     public static final AtomicInteger LEASH = new AtomicInteger();
+    /** BufferBuildCounter / SectionBuildCounter: 1.21 builders made, build() HEAD / RETURN, section-compile builds */
+    public static final AtomicInteger BUILDERS = new AtomicInteger();
+    public static final AtomicInteger BUILD_HEAD = new AtomicInteger();
+    public static final AtomicInteger BUILD_RETURN = new AtomicInteger();
+    public static final AtomicInteger SECTION_BUILDS = new AtomicInteger();
     static final Map<String, Boolean> OK = new LinkedHashMap<>();
 
     static void check(String name, boolean pass, String detail) {
@@ -208,6 +213,25 @@ public class Driver implements ClientModInitializer {
                     + " (C23)");
             } else {
                 log("leash vertex pairs drawn by 1.21: " + LEASH.get());
+            }
+            // (f) BufferBuilder lifecycle routes: one snapshot on the render thread (every count moves on it, except
+            // section compiles and their builders on worker threads, which the snapshot reads as they stand: up to 32 in flight)
+            AtomicInteger zero = new AtomicInteger();
+            AtomicInteger vBegin = counters == null ? zero : (AtomicInteger) field(counters, "BEGIN");
+            AtomicInteger vEnd = counters == null ? zero : (AtomicInteger) field(counters, "END");
+            AtomicInteger vEod = counters == null ? zero : (AtomicInteger) field(counters, "END_OR_DISCARD");
+            int[] snap = on(mc, () -> new int[] {BUILDERS.get(), BUILD_HEAD.get(), BUILD_RETURN.get(), SECTION_BUILDS.get(),
+                vBegin.get(), vEnd.get(), vEod.get()});
+            log("buffers: made " + snap[0] + ", build HEAD " + snap[1] + ", RETURN " + snap[2] + ", section builds " + snap[3]
+                + "; 1.20.6 begin " + snap[4] + ", end " + snap[5] + ", endOrDiscardIfEmpty " + snap[6]);
+            check("f.nativeOnce", snap[1] > 0 && snap[1] == snap[2], "native build() HEAD " + snap[1] + " = RETURN " + snap[2]
+                + " (a native injector runs once per batch with the routes on)");
+            if (counters != null) {
+                check("f.begin", snap[4] > 0 && Math.abs(snap[4] - snap[0]) <= 32, "1.20.6 begin " + snap[4] + ", 1.21 builders made " + snap[0]);
+                check("f.endOrDiscard", snap[6] > 0 && Math.abs(snap[6] - snap[3]) <= 32,
+                    "1.20.6 endOrDiscardIfEmpty " + snap[6] + ", 1.21 section-compile builds " + snap[3]);
+                check("f.end", snap[5] > 0 && Math.abs(snap[5] + snap[3] - snap[2]) <= 32,
+                    "1.20.6 end " + snap[5] + " + section builds " + snap[3] + " vs 1.21 build() RETURN " + snap[2]);
             }
         } catch (Throwable t) {
             log("FAIL driver " + t);

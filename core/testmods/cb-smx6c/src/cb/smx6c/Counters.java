@@ -21,6 +21,11 @@ public final class Counters {
     public static final AtomicInteger GROUP_BARE = new AtomicInteger();
     public static final AtomicInteger LEASH_BARE = new AtomicInteger();
 
+    /** BufferBuilderLifecycleMixin: 1.20.6 begin / end / endOrDiscardIfEmpty calls */
+    public static final AtomicInteger BEGIN = new AtomicInteger();
+    public static final AtomicInteger END = new AtomicInteger();
+    public static final AtomicInteger END_OR_DISCARD = new AtomicInteger();
+
     private Counters() {
     }
 }
