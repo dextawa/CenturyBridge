@@ -1,0 +1,6 @@
+{
+ "_s9d_realms_basis": "1.21.9 removed Realms' RowButton (class_4371, javap: absent from the 1.21.9 jar) with the list rows that used it; it comes back as a facade with 1.21.8's bodies (facade/RowButton), pressing through the list's restored setSelectedIndex (CbSelectionLists.LegacySelectedIndex).",
+ "classRenames": {
+  "net/minecraft/class_4371": "top/dext/centurybridge/step/v1_21_9/facade/RowButton"
+ }
+}

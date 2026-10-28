@@ -41,6 +41,8 @@ import org.joml.Vector3f;
  * climbed mod bakes 1.21.8's inner / outer armor layers (cb.s9r.ArmorCheck); each part must hold exactly the vertices
  * of the 1.21.9 slot layer that carries it at that deformation (outer: head = helmet, body and arms = chestplate, legs
  * = boots; inner: body and legs = leggings), and the inner head and arms must be there and smaller than the outer.
+ * WardenModel (G): the climbed 1.21.8 mod builds a WardenModel; its constructor RETURN mixin must see the four part
+ * lists 1.21.8 filled in the constructor, and the getters must answer those same lists.
  */
 public class Driver implements ClientModInitializer {
     public static final AtomicInteger NATIVE_SELECTABLE = new AtomicInteger();
@@ -156,6 +158,28 @@ public class Driver implements ClientModInitializer {
             "a 1.21.8 mod's own TextureAtlasHolder reloaded the 1.21.8 way has block/stone: " + name(own));
     }
 
+    static void checkLoadScreen(class_310 mc) throws Exception {
+        Class<?> c = Class.forName("cb.s9r.LoadScreenCheck");
+        for (String reason : new String[]{"NETHER_PORTAL", "END_PORTAL", "OTHER"}) {
+            Object screen = CompletableFuture.supplyAsync(() -> {
+                try {
+                    return c.getMethod("open", String.class).invoke(null, reason);
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException(e);
+                }
+            }, mc).get(20, TimeUnit.SECONDS);
+            Thread.sleep(1500);
+            boolean shown = mc.field_1755 == screen;
+            boolean escape = (Boolean) c.getMethod("closesOnEscape", class_437.class).invoke(null, screen);
+            ((java.util.concurrent.atomic.AtomicBoolean) c.getField("RECEIVED").get(null)).set(true);
+            Thread.sleep(1500);
+            boolean closed = mc.field_1755 != screen;
+            check("E." + reason, shown && !escape && closed && screen.getClass().getSimpleName().equals("ReceivingLevelScreen"),
+                "a 1.21.8 ReceivingLevelScreen (" + screen.getClass().getName() + ") shows and renders for " + reason + " (" + shown
+                    + "), ignores Escape (" + !escape + "), closes once levelReceived answers true (" + closed + ")");
+        }
+    }
+
     static String counts(Map<String, Set<Vector3f>> parts) {
         StringBuilder b = new StringBuilder();
         parts.forEach((k, v) -> b.append(k).append('=').append(v.size()).append(' '));
@@ -207,11 +231,36 @@ public class Driver implements ClientModInitializer {
             check("B.answer", keep == 1 && blocked == 0,
                 "keep pressed " + keep + "x, blocked pressed " + blocked + "x (the 1.21.8 mixin answers false for blocked)");
 
+            // Realms RowButton (the climbed list still on screen)
+            String row = CompletableFuture.supplyAsync(() -> {
+                try {
+                    return (String) Class.forName("cb.s9r.RowCheck").getMethod("press", Object.class).invoke(null, screen);
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException(e);
+                }
+            }, mc).get(20, TimeUnit.SECONDS);
+            check("F.rowButton", row.equals("1 true 25 12"),
+                "a 1.21.8 RowButton pressed over row 1 of the climbed list: clicked index, row selected, right, bottom = " + row + " (want 1 true 25 12)");
+
             // armor layers
             checkArmor(mc.method_31974());
 
             // atlas holders
             checkAtlases(mc);
+
+            // ReceivingLevelScreen
+            checkLoadScreen(mc);
+
+            // WardenModel emissive part lists
+            String warden = CompletableFuture.supplyAsync(() -> {
+                try {
+                    return (String) Class.forName("cb.s9r.WardenCheck").getMethod("bake").invoke(null);
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException(e);
+                }
+            }, mc).get(20, TimeUnit.SECONDS);
+            check("G.warden", warden.equals("lists at init: true | getters same as the constructor's lists: true | sizes 2,1,5,6"),
+                "a 1.21.8 WardenModel: the 1.21.8 mod's constructor RETURN mixin saw the part lists, the getters answer them: " + warden);
         } catch (Throwable t) {
             check("driver", false, String.valueOf(t));
             t.printStackTrace();

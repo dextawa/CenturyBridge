@@ -7,15 +7,23 @@ import net.minecraft.class_1059;
 import net.minecraft.class_10725;
 import net.minecraft.class_11697;
 import net.minecraft.class_2960;
+import net.minecraft.class_1144;
+import net.minecraft.class_10209;
+import net.minecraft.class_2535;
 import net.minecraft.class_310;
+import net.minecraft.class_3928;
+import net.minecraft.class_437;
+import net.minecraft.class_638;
 import net.minecraft.class_7497;
 import net.minecraft.class_7500;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import top.dext.centurybridge.step.v1_21_9.facade.GuiSpriteManager;
 import top.dext.centurybridge.step.v1_21_9.facade.MapDecorationTextureManager;
 import top.dext.centurybridge.step.v1_21_9.facade.PaintingTextureManager;
+import top.dext.centurybridge.step.v1_21_9.facade.ReceivingLevelScreen;
 import top.dext.centurybridge.step.v1_21_9.rt.CbAtlases;
 import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
 
@@ -33,6 +41,11 @@ import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
  * keeps every atlas in AtlasManager (keyed by definition id, each registered under its texture location): the atlas
  * whose location it is, its sprite getter as 1.21.8 answered, a NullPointerException for an unknown location as
  * 1.21.8's requireNonNull threw. AtlasManager also holds the atlases ModelManager did not (gui, paintings, ...).</li>
+ * <li>setLevel(level, reason): 1.21.8 put up a ReceivingLevelScreen for the reason through updateScreenAndTick (stop the
+ * sounds, drop the camera entity and pending connection, set the screen, run one tick without rendering), then set
+ * the level as 1.21.9's setLevel(level) still does. 1.21.8 then, off a local server, also gave SkullBlockEntity a
+ * fresh Services with its profile cache's executor; 1.21.9 has no SkullBlockEntity.setup (skulls resolve their
+ * profiles through Minecraft's own Services), so that part has nothing to stand on.</li>
  * </ul>
  * 1.21.9 never calls them, so no vanilla path runs through them.
  */
@@ -44,6 +57,24 @@ public abstract class CbMinecraftRestoredMixin {
 
     @Shadow
     public abstract class_11697 method_72703();
+
+    @Shadow
+    @Final
+    private class_1144 field_1727;
+
+    @Shadow
+    private class_2535 field_1746;
+
+    @Shadow
+    public abstract void method_1507(class_437 screen);
+
+    @Shadow
+    public abstract void method_1481(class_638 level);
+
+    @Shadow
+    private void method_1523(boolean renderLevel) {
+        throw new AssertionError();
+    }
 
     @Unique
     private PaintingTextureManager cb$paintings;
@@ -97,5 +128,25 @@ public abstract class CbMinecraftRestoredMixin {
     public Function<class_2960, class_1058> method_1549(class_2960 location) {
         class_1059 atlas = java.util.Objects.requireNonNull(CbAtlases.byLocation(this.method_72703(), location));
         return atlas::method_4608;
+    }
+
+    /** Minecraft.setLevel(level, reason) */
+    public void method_1481(class_638 level, class_3928.class_9678 reason) {
+        this.cb$updateScreenAndTick(new ReceivingLevelScreen(() -> false, reason));
+        this.method_1481(level);
+    }
+
+    /** 1.21.8 Minecraft.updateScreenAndTick(screen) (private, javap -c) */
+    @Unique
+    private void cb$updateScreenAndTick(class_437 screen) {
+        class_10209.method_64146().method_15396("forcedTick");
+        this.field_1727.method_4881();
+        // 1.21.8 nulled the cameraEntity field; 1.21.9 drops the camera only through setCameraEntity(null)
+        // (updateLevelInEngines, which the setLevel(level) after this runs too), and 26.1 keeps the entity in Camera
+        ((class_310) (Object) this).method_1504(null);
+        this.field_1746 = null;
+        this.method_1507(screen);
+        this.method_1523(false);
+        class_10209.method_64146().method_15407();
     }
 }
