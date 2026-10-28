@@ -1817,7 +1817,7 @@ final class MixinBridge {
                         List<MethodNode> vmatch = s.match(vt);
                         boolean kept = true;
                         for (MethodNode m : vmatch) {
-                            kept &= method(wt, m.name, chain.renamedDesc(m.desc)) != null;
+                            kept &= wallLookup(wt, m.name, chain.renamedDesc(m.desc)) != null;
                         }
                         if (!kept) {
                             bareFallback = bareFallback == null ? same : bareFallback;
@@ -1853,7 +1853,7 @@ final class MixinBridge {
                 String where = "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "." + vmeth.name + vmeth.desc;
                 List<String> why = new ArrayList<>();
                 Fate fate = selectorFate(vk(target), vmeth.name, vmeth.desc, why);
-                if (fate == null && method(wt, vmeth.name, vmeth.desc) == null) {
+                if (fate == null && wallLookup(wt, vmeth.name, vmeth.desc) == null) {
                     // no wiring for it, or wiring for mods' overrides that cannot carry an injector: where W keeps its code
                     List<String> bwhy = new ArrayList<>();
                     fate = bodyFate(vt, wt, vmeth, bwhy);
@@ -1878,20 +1878,7 @@ final class MixinBridge {
                     }
                     continue;
                 }
-                MethodNode wmeth = method(wt, fate.name(), fate.desc());
-                if (wmeth == null && chain.wallRemapper != null) {
-                    // past the wall a class new in W nested in a class the table maps has two spellings: the wiring's
-                    // (W's own, AbstractScrollArea$ScrollbarSettings) and the wall view's (the outer's id + the nested
-                    // name, WallInverse; JarRemapper renames that one to W's). The same member when both descriptors
-                    // spell W's types alike (swall12 AbstractTextAreaWidget.<init>(.., ScrollbarSettings))
-                    String wd = chain.wallRemapper.mapMethodDesc(fate.desc());
-                    for (MethodNode m : wt.methods) {
-                        if (m.name.equals(fate.name()) && chain.wallRemapper.mapMethodDesc(m.desc).equals(wd)) {
-                            wmeth = m;
-                            break;
-                        }
-                    }
-                }
+                MethodNode wmeth = wallLookup(wt, fate.name(), fate.desc());
                 if (wmeth == null) {
                     // a W-named member a layer mixin declares on the target (an override of an inherited W method,
                     // say: SmithingTrimRecipe.matches, which 1.21.2 has only as SmithingRecipe's default): at runtime
@@ -3271,7 +3258,7 @@ final class MixinBridge {
                 return;
             }
             ClassNode yc = w(cp[0]);
-            MethodNode wm = yc == null ? null : method(yc, cp[1], cp[2]);
+            MethodNode wm = yc == null ? null : wallLookup(yc, cp[1], cp[2]);
             AnnotationNode moved = literalCopy(an, cp[1] + cp[2]);
             String refuse = null;
             if (wm == null) {
@@ -4168,6 +4155,31 @@ final class MixinBridge {
     private static String pkgOf(String internal) {
         int i = internal.lastIndexOf('/');
         return i < 0 ? "" : internal.substring(0, i);
+    }
+
+    /**
+     * The target's method for a wiring-spelled name and descriptor. Past the wall the two sides spell one member two
+     * ways (CASE G): a class new in W nested in a class the table maps is the wiring's W name
+     * (AbstractScrollArea$ScrollbarSettings) and the view's outer id + nested name (WallInverse); a member whose
+     * descriptor a reshape changed keeps its mojang name in the view (WallInverse inverts by V's descriptor: 26.1
+     * ShapelessRecipeBuilder.shapeless(.., ItemStackTemplate)) while the wiring names it by its id (method_10447). Both
+     * are compared as the wall table renames them forward -- name and descriptor -- which is how JarRemapper will
+     * spell the selector. Before the wall: the plain lookup.
+     */
+    private MethodNode wallLookup(ClassNode wt, String name, String desc) {
+        MethodNode m = method(wt, name, desc);
+        if (m != null || chain.wallRemapper == null || wt == null) {
+            return m;
+        }
+        String wd = chain.wallRemapper.mapMethodDesc(desc);
+        String wn = name.startsWith("<") ? name : chain.wallRemapper.mapMethodName(wt.name, name, desc);
+        for (MethodNode c : wt.methods) {
+            String cn = c.name.startsWith("<") ? c.name : chain.wallRemapper.mapMethodName(wt.name, c.name, c.desc);
+            if ((c.name.equals(name) || cn.equals(wn)) && chain.wallRemapper.mapMethodDesc(c.desc).equals(wd)) {
+                return c;
+            }
+        }
+        return null;
     }
 
     static MethodNode method(ClassNode c, String name, String desc) {
