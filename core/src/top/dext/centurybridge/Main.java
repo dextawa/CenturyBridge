@@ -374,6 +374,8 @@ public final class Main {
                         System.getenv("CB_TARGET_CODE") != null ? Path.of(System.getenv("CB_TARGET_CODE"))
                                                                 : Path.of("data/jars/client-" + args[3] + ".jar"));
                     Files.delete(tmp);
+                    // reflective strings the wall rename translated, or could not prove (JarRemapper.reflectStrings)
+                    r.notes.addAll(wallTable.reflectNotes);
                     if (wallRepair != null) {
                         JarProcessor.repairPastWall(r.outputJar, wallRepair, r);
                     }
