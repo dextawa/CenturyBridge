@@ -1,0 +1,904 @@
+{
+ "methodRenames": {
+  "com/mojang/blaze3d/systems/RenderSystem.lambda$applyModelViewMatrix$69(Lorg/joml/Matrix4f;)V": "lambda$applyModelViewMatrix$68",
+  "com/mojang/blaze3d/systems/RenderSystem.lambda$backupProjectionMatrix$70()V": "lambda$backupProjectionMatrix$69",
+  "com/mojang/blaze3d/systems/RenderSystem.lambda$resetTextureMatrix$68()V": "lambda$resetTextureMatrix$67",
+  "com/mojang/blaze3d/systems/RenderSystem.lambda$restoreProjectionMatrix$71()V": "lambda$restoreProjectionMatrix$70",
+  "com/mojang/blaze3d/systems/RenderSystem.lambda$setShaderGameTime$72(F)V": "lambda$setShaderGameTime$71",
+  "com/mojang/blaze3d/systems/RenderSystem.lambda$setTextureMatrix$67(Lorg/joml/Matrix4f;)V": "lambda$setTextureMatrix$66",
+  "net/minecraft/class_1219.method_5188(Lcom/mojang/datafixers/OpticFinder;Lcom/mojang/datafixers/Typed;)Lcom/mojang/datafixers/Typed;": "method_59639",
+  "net/minecraft/class_1219.method_5189(Lcom/mojang/datafixers/OpticFinder;Ljava/util/function/Function;Lcom/mojang/datafixers/OpticFinder;Lcom/mojang/datafixers/OpticFinder;Lcom/mojang/datafixers/Typed;)Lcom/mojang/datafixers/Typed;": "method_59638",
+  "net/minecraft/class_1248.method_5293(Lcom/mojang/datafixers/schemas/Schema;)Lcom/mojang/datafixers/types/templates/TypeTemplate;": "method_59814",
+  "net/minecraft/class_2244.method_19283(Lnet/minecraft/class_1657;Lnet/minecraft/class_1657$class_1658;)V": "method_55767",
+  "net/minecraft/class_2291.method_9792(Ljava/lang/Object;)Lcom/mojang/brigadier/Message;": "method_58521",
+  "net/minecraft/class_2336.method_17468(Lnet/minecraft/class_1730;ILnet/minecraft/class_1661;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1703;": "method_55773",
+  "net/minecraft/class_2370.method_40277(Lnet/minecraft/class_5321;)Lnet/minecraft/class_6880$class_6883;": "method_56594",
+  "net/minecraft/class_312.method_16013(Lnet/minecraft/class_437;DD)V": "method_55794",
+  "net/minecraft/class_312.method_1602(Lnet/minecraft/class_437;DDDD)V": "method_55795",
+  "net/minecraft/class_332.method_51426(Lnet/minecraft/class_1799;)Ljava/lang/String;": "method_57708",
+  "net/minecraft/class_377.method_27545(Ljava/util/List;Ljava/util/Set;I)V": "method_57035",
+  "net/minecraft/class_377.method_27546(I)Lit/unimi/dsi/fastutil/ints/IntList;": "method_57039",
+  "net/minecraft/class_426.method_19820(Lnet/minecraft/class_4185;)V": "method_57729",
+  "net/minecraft/class_4527.method_29412(Lnet/minecraft/class_4517;)V": "method_56270",
+  "net/minecraft/class_4749.method_41163(Lnet/minecraft/class_4185;)V": "method_57752",
+  "net/minecraft/class_5235.method_27631(Lnet/minecraft/class_5235;)Lnet/minecraft/class_327;": "method_57771",
+  "net/minecraft/class_5699.method_48779(Ljava/util/List;)Lorg/joml/Quaternionf;": "method_59552",
+  "net/minecraft/class_635.method_2893(Ljavax/crypto/Cipher;Ljavax/crypto/Cipher;)V": "method_56152",
+  "net/minecraft/class_7196.method_54619(Ljava/lang/Throwable;)Ljava/lang/Void;": "method_57785",
+  "net/minecraft/class_7196.method_54620(Ljava/lang/Void;)Ljava/lang/Boolean;": "method_57786",
+  "net/minecraft/class_7196.method_54625(Ljava/lang/Throwable;)Ljava/util/concurrent/CompletionStage;": "method_57789",
+  "net/minecraft/class_7551.method_44675()I": "method_57764",
+  "net/minecraft/class_7551.method_44676()I": "method_57759",
+  "net/minecraft/class_757.method_36501(Lnet/minecraft/class_5944;)V": "method_56845",
+  "net/minecraft/class_8053.method_48430(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;": "method_57408",
+  "net/minecraft/class_8053.method_48433(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;": "method_57412",
+  "net/minecraft/class_8768$class_7539.method_44483(Lnet/minecraft/class_4185;)V": "method_57758",
+  "net/minecraft/class_8768$class_7539.method_46518(Lnet/minecraft/class_4185;)V": "method_57756",
+  "net/minecraft/class_8768$class_7539.method_46519(Lnet/minecraft/class_4185;)V": "method_57757",
+  "net/minecraft/class_8950.method_55017(Lnet/minecraft/class_8949;)Ljava/util/Optional;": "method_55749"
+ },
+ "overrideHooks": [],
+ "mixinTargets": {
+  "net/minecraft/class_2606.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55856(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2606.method_11052 to method_55856 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2616.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55857(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2616.method_11052 to method_55857 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2620.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55859(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2620.method_11052 to method_55859 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2632.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55862(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2632.method_11052 to method_55862 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2637.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55911(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2637.method_11052 to method_55911 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2645.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55868(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2645.method_11052 to method_55868 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2648.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55880(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2648.method_11052 to method_55880 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2651.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55870(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2651.method_11052 to method_55870 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2663.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55876(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2663.method_11052 to method_55876 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2666.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55878(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2666.method_11052 to method_55878 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2668.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55879(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2668.method_11052 to method_55879 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2670.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56463(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2670.method_11052 to method_56463 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2673.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55884(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2673.method_11052 to method_55884 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2676.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55886(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2676.method_11052 to method_55886 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2684$class_2685.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55890(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2684$class_2685.method_11052 to method_55890 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2684$class_2686.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55891(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2684$class_2686.method_11052 to method_55891 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2684$class_2687.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55892(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2684$class_2687.method_11052 to method_55892 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2692.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55893(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2692.method_11052 to method_55893 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2693.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55895(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2693.method_11052 to method_55895 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2695.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55896(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2695.method_11052 to method_55896 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2696.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55897(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2696.method_11052 to method_55897 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2707.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55903(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2707.method_11052 to method_55903 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2708.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55904(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2708.method_11052 to method_55904 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2716.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55906(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2716.method_11052 to method_55906 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2726.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55910(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2726.method_11052 to method_55910 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2734.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55920(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2734.method_11052 to method_55920 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2735.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55921(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2735.method_11052 to method_55921 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2736.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55925(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2736.method_11052 to method_55925 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2740.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55927(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2740.method_11052 to method_55927 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2743.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55928(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2743.method_11052 to method_55928 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2748.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55930(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2748.method_11052 to method_55930 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2749.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55931(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2749.method_11052 to method_55931 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2752.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55933(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2752.method_11052 to method_55933 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2759.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55924(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2759.method_11052 to method_55924 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2761.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55938(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2761.method_11052 to method_55938 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2770.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55944(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2770.method_11052 to method_55944 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2774.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55947(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2774.method_11052 to method_55947 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2775.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55948(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2775.method_11052 to method_55948 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2777.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55949(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2777.method_11052 to method_55949 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2793.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55960(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2793.method_11052 to method_55960 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2795.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55961(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2795.method_11052 to method_55961 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2799.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55968(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2799.method_11052 to method_55968 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2803.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56474(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2803.method_11052 to method_56474 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2805.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55969(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2805.method_11052 to method_55969 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2815.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55972(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2815.method_11052 to method_55972 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2822.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55975(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2822.method_11052 to method_55975 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2824.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55976(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2824.method_11052 to method_55976 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2827.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56476(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2827.method_11052 to method_56476 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2828$class_2829.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55979(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2828$class_2829.method_11052 to method_55979 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2828$class_2830.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55980(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2828$class_2830.method_11052 to method_55980 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2828$class_2831.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55981(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2828$class_2831.method_11052 to method_55981 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2828$class_5911.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55982(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2828$class_5911.method_11052 to method_55982 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2833.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55983(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2833.method_11052 to method_55983 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2836.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55984(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2836.method_11052 to method_55984 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2838.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55985(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2838.method_11052 to method_55985 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2840.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55986(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2840.method_11052 to method_55986 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2842.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55987(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2842.method_11052 to method_55987 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2846.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55988(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2846.method_11052 to method_55988 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2848.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55989(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2848.method_11052 to method_55989 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2851.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55990(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2851.method_11052 to method_55990 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2853.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55992(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2853.method_11052 to method_55992 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2855.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55993(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2855.method_11052 to method_55993 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2856.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56478(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2856.method_11052 to method_56478 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2859.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55994(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2859.method_11052 to method_55994 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2863.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55995(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2863.method_11052 to method_55995 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2868.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55996(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2868.method_11052 to method_55996 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2870.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55997(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2870.method_11052 to method_55997 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2871.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55998(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2871.method_11052 to method_55998 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2875.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56001(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2875.method_11052 to method_56001 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2877.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56002(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2877.method_11052 to method_56002 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2879.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56003(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2879.method_11052 to method_56003 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2884.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56004(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2884.method_11052 to method_56004 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2885.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56005(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2885.method_11052 to method_56005 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2886.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56006(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2886.method_11052 to method_56006 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2889.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56007(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2889.method_11052 to method_56007 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2899.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56010(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2899.method_11052 to method_56010 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2907.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56014(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2907.method_11052 to method_56014 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2915.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56020(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2915.method_11052 to method_56020 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2917.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56021(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2917.method_11052 to method_56021 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2924.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56026(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2924.method_11052 to method_56026 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_2935.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56025(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_2935.method_11052 to method_56025 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_3753.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56000(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_3753.method_11052 to method_56000 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_3895.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55894(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_3895.method_11052 to method_55894 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_4210.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55962(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_4210.method_11052 to method_55962 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_4211.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55978(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_4211.method_11052 to method_55978 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_4273.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55923(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_4273.method_11052 to method_55923 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_4282.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55922(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_4282.method_11052 to method_55922 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_4463.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55858(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_4463.method_11052 to method_55858 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5194.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55977(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5194.method_11052 to method_55977 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5427.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55991(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5427.method_11052 to method_55991 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5888.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55865(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5888.method_11052 to method_55865 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5889.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55882(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5889.method_11052 to method_55882 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5890.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55899(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5890.method_11052 to method_55899 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5895.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55915(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5895.method_11052 to method_55915 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5896.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55916(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5896.method_11052 to method_55916 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5897.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55917(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5897.method_11052 to method_55917 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5898.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55918(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5898.method_11052 to method_55918 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5899.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55919(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5899.method_11052 to method_55919 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_5905.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55940(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_5905.method_11052 to method_55940 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_6373.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56464(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_6373.method_11052 to method_56464 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_6374.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56477(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_6374.method_11052 to method_56477 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_6682.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55936(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_6682.method_11052 to method_55936 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_7617.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55874(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_7617.method_11052 to method_55874 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_7640.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55963(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_7640.method_11052 to method_55963 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_7861.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55966(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_7861.method_11052 to method_55966 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8043.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55881(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8043.method_11052 to method_55881 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8590.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55967(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8590.method_11052 to method_55967 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8708.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56480(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8708.method_53028 to method_56480 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8709.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56481(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8709.method_53028 to method_56481 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8712.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56494(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8712.method_53028 to method_56494 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8714.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56495(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8714.method_53028 to method_56495 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8718.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56498(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8718.method_53028 to method_56498 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8720.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56499(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8720.method_53028 to method_56499 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8721.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56500(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8721.method_53028 to method_56500 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8722.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56501(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8722.method_53028 to method_56501 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8723.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56502(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8723.method_53028 to method_56502 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8724.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56503(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8724.method_53028 to method_56503 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8729.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56507(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8729.method_53028 to method_56507 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8738.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55863(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8738.method_11052 to method_55863 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8875.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55973(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8875.method_11052 to method_55973 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8913.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55950(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8913.method_11052 to method_55950 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_8914.method_11052(Lnet/minecraft/class_2540;)V": {
+   "to": "method_55951(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_8914.method_11052 to method_55951 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  },
+  "net/minecraft/class_9004.method_53028(Lnet/minecraft/class_2540;)V": {
+   "to": "method_56482(Lnet/minecraft/class_2540;)V",
+   "args": [
+    0
+   ],
+   "basis": "renumbered, narrowed: 1.20.5 renamed net/minecraft/class_9004.method_53028 to method_56482 with less access (same descriptor, same body; gen_renumbered.py): mixins follow the code, calls are not renamed"
+  }
+ }
+}
