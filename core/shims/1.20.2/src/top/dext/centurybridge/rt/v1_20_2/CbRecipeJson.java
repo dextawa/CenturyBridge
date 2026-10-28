@@ -178,9 +178,10 @@ public final class CbRecipeJson {
         }
         // a subclass's own codec(): what it reads with -- unless it is the one CenturyBridge synthesized into a
         // converted 1.20.1 subclass, which calls that subclass's read(id, json)
+        java.lang.reflect.Method codec = codecMethod();
         for (Class<?> c = cls; c != vanilla; c = c.getSuperclass()) {
             try {
-                c.getDeclaredMethod("method_53736");
+                c.getDeclaredMethod(codec.getName(), codec.getParameterTypes());
                 if (!isLegacyJsonAdapter(c)) {
                     return false;
                 }
@@ -189,6 +190,19 @@ public final class CbRecipeJson {
             }
         }
         return true;
+    }
+
+    /**
+     * RecipeSerializer.codec(), looked up on RecipeSerializer itself: the owner is a class constant, so the wall's
+     * reflective-string pass translates the name through that owner's table entry (an override found by this name on a
+     * subclass is the override of this member, whatever the release spells it)
+     */
+    private static java.lang.reflect.Method codecMethod() {
+        try {
+            return class_1865.class.getMethod("method_53736");
+        } catch (NoSuchMethodException e) {
+            throw new IllegalStateException("RecipeSerializer.codec() not found", e);
+        }
     }
 
     private static boolean isLegacyJsonAdapter(Class<?> c) {

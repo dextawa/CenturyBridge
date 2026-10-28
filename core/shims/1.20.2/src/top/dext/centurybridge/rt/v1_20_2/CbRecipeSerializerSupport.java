@@ -10,7 +10,6 @@ import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.MapLike;
 import com.mojang.serialization.RecordBuilder;
-import java.lang.invoke.MethodType;
 import java.util.Collections;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -67,16 +66,6 @@ public final class CbRecipeSerializerSupport {
             return r.result().orElseThrow(() -> new JsonSyntaxException("Invalid recipe " + id + ": "
                 + r.error().map(DataResult.PartialResult::message).orElse(String.valueOf(json))));
         });
-    }
-
-    /** the codec {@code owner}'s own codec() returns for this serializer -- not a subclass's override */
-    @SuppressWarnings("unchecked")
-    public static <T> Codec<T> superCodec(Class<?> owner, Object self) {
-        try {
-            return (Codec<T>) CbSuper.special(owner, "method_53736", MethodType.methodType(Codec.class)).invoke(self);
-        } catch (Throwable t) {
-            throw CbSuper.rethrow(t);
-        }
     }
 
     /**

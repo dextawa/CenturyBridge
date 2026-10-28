@@ -22,7 +22,8 @@ import net.minecraft.class_793;
 
 /**
  * 1.20.6's model baking API on 1.21. 1.21 dropped the model id 1.20.6 handed UnbakedModel.bake, BlockModel.bake and
- * FaceBakery (1.20.6 used it only in the UV-lock warning, which 1.21 no longer prints), made ModelResourceLocation a
+ * FaceBakery (vanilla 1.20.6 used it only in the UV-lock warning, which 1.21 no longer prints; a 1.20.6 mod's mixin on
+ * bakeQuad reads it: {@link #baking}, CbRenderFaceBakeryRouteMixin), made ModelResourceLocation a
  * record that is no ResourceLocation, keys baking by ModelResourceLocation, and made BlockElementFace a record.
  * Wired from s6fin-client.json.
  */
@@ -48,6 +49,46 @@ public final class CbRenderModelBake {
      */
     public static class_2960 idOf(class_7775 baker) {
         return baker instanceof ModelIdSource source ? source.cb$currentModelId() : null;
+    }
+
+    /** the restored 1.20.6 FaceBakery.bakeQuad(.., id), as a CbMixedMembers key */
+    public static final String BAKE_QUAD = "net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;"
+        + "Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZLnet/minecraft/class_2960;)"
+        + "Lnet/minecraft/class_777;";
+
+    /** 1.21's FaceBakery with the restored 1.20.6 bakeQuad(.., id) (CbRenderFaceBakeryMixin) */
+    public interface LegacyFaceBakery {
+        net.minecraft.class_777 method_3468(org.joml.Vector3f from, org.joml.Vector3f to, class_783 face, class_1058 sprite, class_2350 direction,
+                                            class_3665 state, net.minecraft.class_789 rotation, boolean shade, class_2960 id);
+    }
+
+    /**
+     * The id of the model whose bake runs on this thread, set by {@link #baking} around 1.21's model bakes while a converted
+     * mod mixes the restored bakeQuad: 1.20.6 handed it down UnbakedModel.bake -> BlockModel.bake -> bakeFace -> bakeQuad,
+     * 1.21 drops it on the way (CbRenderFaceBakeryRouteMixin reads it at bakeFace's bakeQuad call).
+     */
+    private static final ThreadLocal<class_2960> BAKING_ID = new ThreadLocal<>();
+
+    /** the id of the model being baked on this thread (null outside a bake {@link #baking} marks) */
+    public static class_2960 bakingId() {
+        return BAKING_ID.get();
+    }
+
+    /**
+     * Runs a model bake with {@code id} as the id of the model being baked, when a converted mod mixes the restored
+     * bakeQuad (CbMixedMembers); the previous id comes back afterwards (a nested bake ends inside the outer one).
+     */
+    public static <T> T baking(class_2960 id, java.util.function.Supplier<T> bake) {
+        if (!CbMixedMembers.mixed(BAKE_QUAD)) {
+            return bake.get();
+        }
+        class_2960 was = BAKING_ID.get();
+        BAKING_ID.set(id);
+        try {
+            return bake.get();
+        } finally {
+            BAKING_ID.set(was);
+        }
     }
 
     // ------------------------------------------------------------------------------------------------ UnbakedModel.bake
@@ -79,7 +120,7 @@ public final class CbRenderModelBake {
         if (model instanceof LegacyUnbaked legacy) {
             return legacy.method_4753(baker, sprites, state, id);
         }
-        return model.method_4753(baker, sprites, state);
+        return baking(id, () -> model.method_4753(baker, sprites, state));
     }
 
     /** the same, the call made on a BlockModel */
@@ -104,9 +145,9 @@ public final class CbRenderModelBake {
         return self.method_4753(baker, sprites, state, idOf(baker));
     }
 
-    /** super.bake(baker, sprites, state, id) of a 1.20.6 subclass: super's 1.21 bake (the id is 1.21's to drop) */
+    /** super.bake(baker, sprites, state, id) of a 1.20.6 subclass: super's 1.21 bake, the id handed on to bakeQuad ({@link #baking}) */
     public static class_1087 superBake(SuperModel self, class_7775 baker, Function<class_4730, class_1058> sprites, class_3665 state, class_2960 id) {
-        return self.cb$super$method_4753(baker, sprites, state);
+        return baking(id, () -> self.cb$super$method_4753(baker, sprites, state));
     }
 
     /** blockModel.bake(baker, parent, sprites, state, id, gui3d) of 1.20.6: a 1.20.6 subclass's own, else 1.21's */
@@ -115,7 +156,7 @@ public final class CbRenderModelBake {
         if (model instanceof LegacyBlockModel legacy) {
             return legacy.method_3446(baker, parent, sprites, state, id, gui3d);
         }
-        return model.method_3446(baker, parent, sprites, state, gui3d);
+        return baking(id, () -> model.method_3446(baker, parent, sprites, state, gui3d));
     }
 
     /** 1.21's BlockModel.bake(baker, parent, sprites, state, gui3d) of a 1.20.6 subclass: its own with the model's id */
@@ -124,10 +165,10 @@ public final class CbRenderModelBake {
         return self.method_3446(baker, parent, sprites, state, idOf(baker), gui3d);
     }
 
-    /** super.bake(baker, parent, sprites, state, id, gui3d) of a 1.20.6 subclass: super's 1.21 bake */
+    /** super.bake(baker, parent, sprites, state, id, gui3d) of a 1.20.6 subclass: super's 1.21 bake, the id handed on to bakeQuad */
     public static class_1087 superBlockBake(SuperBlockModel self, class_7775 baker, class_793 parent, Function<class_4730, class_1058> sprites,
                                             class_3665 state, class_2960 id, boolean gui3d) {
-        return self.cb$super$method_3446(baker, parent, sprites, state, gui3d);
+        return baking(id, () -> self.cb$super$method_3446(baker, parent, sprites, state, gui3d));
     }
 
     // ------------------------------------------------------------------------------------------------ FaceBakery
