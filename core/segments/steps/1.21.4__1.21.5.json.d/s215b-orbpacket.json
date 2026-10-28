@@ -1,0 +1,18 @@
+{
+ "_s215b_orbpacket_basis": "1.21.5 removed ClientboundAddExperienceOrbPacket (class_2606): orbs spawn through ClientboundAddEntityPacket, the value as entity data (javap 1.21.5: no class_2606, class_2602 has no method_11091, class_9094 no field_48149; ExperienceOrb.field_55950). The class is the layer facade AddExperienceOrbPacket, a 1.21.5 AddEntity packet keeping 1.21.4's fields and getters.",
+ "classRenames": {
+  "net/minecraft/class_2606": "top/dext/centurybridge/step/v1_21_5/facade/AddExperienceOrbPacket"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2602.method_11091(Lnet/minecraft/class_2606;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbOrbPackets#handleAddExperienceOrb",
+  "net/minecraft/class_634.method_11091(Lnet/minecraft/class_2606;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbOrbPacketsClient#handleAddExperienceOrb"
+ },
+ "_s215b_orbpacket_instanceRedirects_basis": "ClientGamePacketListener / ClientPacketListener.handleAddExperienceOrb(packet): 1.21.5's listener spawns the orb from handleAddEntity (the facade is that packet). A mod listener implementing or overriding handleAddExperienceOrb is not called by 1.21.5 (rows stay open).",
+ "fieldRedirects": {
+  "net/minecraft/class_9094.field_48149:Lnet/minecraft/class_9145;": "top/dext/centurybridge/step/v1_21_5/rt/CbOrbPackets"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_3231.<init>(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;IZLjava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbServerEntities#newServerEntity"
+ },
+ "_s215b_serverentity_basis": "new ServerEntity(level, entity, interval, trackDelta, broadcast): 1.21.5's sixth argument (a broadcaster that ignores given players, used only for ClientboundSetPassengersPacket) gets one that broadcasts to everyone, as 1.21.4 sent that packet (rt/CbServerEntities). A 1.21.4 ServerEntity subclass's super constructor stays open."
+}

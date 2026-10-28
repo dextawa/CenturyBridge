@@ -1,0 +1,87 @@
+{
+ "covers": [
+  "net/minecraft/server/MinecraftServer.method_3841()I",
+  "net/minecraft/server/MinecraftServer.method_3829(Lnet/minecraft/class_3218;)I",
+  "net/minecraft/server/MinecraftServer.method_3719()Lcom/mojang/authlib/GameProfileRepository;",
+  "net/minecraft/server/MinecraftServer.method_3844()Lcom/mojang/authlib/minecraft/MinecraftSessionService;",
+  "net/minecraft/server/MinecraftServer.method_44301()Lnet/minecraft/class_7500;",
+  "net/minecraft/server/MinecraftServer.method_3815(Z)V",
+  "net/minecraft/server/MinecraftServer.method_3745(Z)V"
+ ],
+ "methodRenames": {
+  "net/minecraft/server/MinecraftServer.method_60671(Lnet/minecraft/class_1937;)Z": "method_74057",
+  "net/minecraft/class_3176.method_60671(Lnet/minecraft/class_1937;)Z": "method_74057",
+  "net/minecraft/server/MinecraftServer.method_3783()Z": "method_74056",
+  "net/minecraft/class_3176.method_3783()Z": "method_74056",
+  "net/minecraft/class_3176.method_16712(Z)V": "method_73589"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_60671(Lnet/minecraft/class_1937;)Z",
+   "new": "method_74057(Lnet/minecraft/class_1937;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/server/MinecraftServer",
+   "basis": "s9c server: MinecraftServer.isLevelEnabled(level) is 1.21.9 method_74057 (javap: 1.21.9 answers the allowEnteringNetherUsingPortals rule for the nether, true otherwise, which is 1.21.8 DedicatedServer's override with its allow-nether property, now that rule; 1.21.8's base answered true); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's"
+  },
+  {
+   "old": "method_3783()Z",
+   "new": "method_74056()Z",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/server/MinecraftServer",
+   "basis": "s9c server: MinecraftServer.isSpawningMonsters() is 1.21.9 method_74056 (javap: difficulty not peaceful, and 1.21.9 adds the doMobSpawning and spawnMonsters rules, the latter 1.21.8 DedicatedServer's spawn-monsters property its override tested); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's"
+  },
+  {
+   "old": "method_16712(Z)V",
+   "new": "method_73589(Z)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "onlyUnder": "net/minecraft/class_3176",
+   "basis": "s9c server: DedicatedServer.setUsingWhitelist(b) is 1.21.9 method_73589 (javap: both update the white-list property through the settings, field_16804); vanilla calls the new name, the 1.21.8 override answers it, its super call falls through to vanilla's"
+  }
+ ],
+ "callReshapes": {
+  "net/minecraft/server/MinecraftServer.method_3728(Lnet/minecraft/class_2168;)V": {
+   "basis": "s9c server: MinecraftServer.kickUnlistedPlayers(source) -> kickUnlistedPlayers() (javap: the same loop over the server's player list kicking players the whitelist does not hold; 1.21.8 reached the list through source.getServer(), the server it was called on; 1.21.9 also returns when the whitelist is off)",
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ]
+  },
+  "net/minecraft/server/MinecraftServer.method_3786(Lnet/minecraft/class_3949;)V": {
+   "basis": "s9c server: MinecraftServer.prepareLevels(listener) -> prepareLevels() (javap: 1.21.9 reports the spawn chunks' progress to its own LevelLoadListener, where 1.21.8 reported to the listener passed)",
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ]
+  },
+  "net/minecraft/class_3176.<init>(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Lnet/minecraft/class_3807;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7497;Lnet/minecraft/class_3950;)V": {
+   "basis": "s9c server: 1.21.9 DedicatedServer has no chunk-progress-listener factory (javap: 1.21.8 handed it to MinecraftServer, which reported level preparation to it; 1.21.9 reports to its own LevelLoadListener); the other arguments are the same values in the same order",
+   "desc": "(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Lnet/minecraft/class_3807;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7497;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ]
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_3176.<init>(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Lnet/minecraft/class_3807;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7497;Lnet/minecraft/class_3950;)V": {
+   "basis": "s9c server: 1.21.9 DedicatedServer has no chunk-progress-listener factory (javap: 1.21.8 handed it to MinecraftServer, which reported level preparation to it; 1.21.9 reports to its own LevelLoadListener); the other arguments are the same values in the same order",
+   "desc": "(Ljava/lang/Thread;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Lnet/minecraft/class_3807;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7497;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ]
+  }
+ }
+}

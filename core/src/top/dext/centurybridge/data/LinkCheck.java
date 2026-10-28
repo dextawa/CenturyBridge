@@ -140,6 +140,7 @@ public final class LinkCheck {
     private final Map<String, Cls> index = new HashMap<>();
     private final List<AwFile> awFiles = new ArrayList<>();
     private final Set<String> mixinNames = new HashSet<>();
+    private final Map<String, ClassNode> mixinNodes = new HashMap<>();
     /** the runtime's mapping namespace, as an access widener header must name it */
     private String runtimeNamespace;
     /** access wideners in force for the subject being checked: the runtime's + its own */
@@ -267,7 +268,7 @@ public final class LinkCheck {
                 }
                 if (index.containsKey(cn.name)) continue; // first on the path wins, like the loader
                 index.put(cn.name, model(cn, origin));
-                if (isMixin(cn)) { mixins.add(cn); mixinNames.add(cn.name); }
+                if (isMixin(cn)) { mixins.add(cn); mixinNames.add(cn.name); mixinNodes.put(cn.name, cn); }
                 if (subjectTag != null) subjects.computeIfAbsent(subjectTag, k -> new ArrayList<>()).add(cn);
             }
         }
@@ -610,8 +611,24 @@ public final class LinkCheck {
                 return true;
             }
         }
-        if ((acc & Opcodes.ACC_PRIVATE) == 0) return pkg(from).equals(pkg(declOwner));
+        if ((acc & Opcodes.ACC_PRIVATE) == 0) return samePackage(from, declOwner);
         return nestHost(from).equals(nestHost(declOwner));
+    }
+
+    /**
+     * JVMS 5.3: same run-time package. A mixin's inner class runs as Mixin's copy of it, one per target, in
+     * that target's package (mixinOuter): its own hierarchy, its target's package -- every copy must reach.
+     */
+    private boolean samePackage(String from, String other) {
+        String outer = mixinOuter(from);
+        if (outer != null) {
+            List<String> targets = mixinTargets(mixinNodes.get(outer)).stream().filter(t -> cls(t) != null).toList();
+            if (!targets.isEmpty()) {
+                for (String t : targets) if (!pkg(t).equals(pkg(other))) return false;
+                return true;
+            }
+        }
+        return pkg(from).equals(pkg(other));
     }
 
     private static String describe(int acc) {
@@ -1016,9 +1033,9 @@ public final class LinkCheck {
             return false;
         }
         // JVMS 5.4.4: a class is accessible if public or in the caller's run-time package
-        if (curCallers != null && !mixinNames.contains(name) && (classAcc(c) & Opcodes.ACC_PUBLIC) == 0) {
+        if (curCallers != null && !mixinNames.contains(name) && mixinOuter(name) == null && (classAcc(c) & Opcodes.ACC_PUBLIC) == 0) {
             for (String d : curCallers) {
-                if (!pkg(d).equals(pkg(name))) {
+                if (!samePackage(d, name)) {
                     report("ACCESS", where, name, "class not public, caller " + d + " (" + how + ")");
                     break;
                 }
@@ -1029,7 +1046,8 @@ public final class LinkCheck {
 
     /** IllegalAccessError for a resolved member the code may not reach */
     private void checkAccess(String refOwner, Member m, String where) {
-        if (curCallers == null || mixinNames.contains(m.owner()) || mixinNames.contains(refOwner)) return;
+        if (curCallers == null || mixinNames.contains(m.owner()) || mixinNames.contains(refOwner)
+                || mixinOuter(m.owner()) != null || mixinOuter(refOwner) != null) return;
         int acc = memberAcc(m);
         for (String d : curCallers) {
             if (!memberAccessible(d, refOwner, m.owner(), acc)) {
@@ -1301,6 +1319,20 @@ public final class LinkCheck {
             return;
         }
         String fate = auditFate.get(auditKey(kind, ref));
+        if (dot > 0 && !kind.equals("ORPHAN") && !kind.equals("VERIFY")
+                && !platform(owner) && !owner.startsWith("top/dext/centurybridge/")
+                && inheritedThrough(owner, ref.substring(dot + 1))) {
+            // a member reached through a mod class (ExtendedButton.field_22757, a GameData map's IdMapper field)
+            // that the class does not declare is inherited: the JVM resolves it up the class's own hierarchy, so
+            // the member is the platform ancestor's, not another mod's API -- judged as that class's
+            String home = platformHome(owner);
+            if (home != null) {
+                String homeRef = home + ref.substring(dot);
+                if (fate == null) fate = auditFate.get(auditKey(kind, homeRef));
+                note = "through " + owner + " " + note;
+                owner = home;
+            }
+        }
         if (delegationSite) {
             // a delegation site is judged by what the converter said about delegation
             // sites; a plain-site fate counts only when it claims nothing (datagen,
@@ -1323,6 +1355,11 @@ public final class LinkCheck {
             bucket = "KNOWN"; // the converter reported this override as orphaned
         } else if (owner.startsWith("top/dext/centurybridge/")) {
             bucket = "CLAIMED"; // the converter pointed the site at a bridge that is not there
+        } else if (dot > 0 && subjectOwns(owner) && namesCbType(ref.substring(dot + 1))) {
+            // the subject's own member, named with a CenturyBridge type the mod never wrote (an accessor whose
+            // descriptor the converter moved onto a facade): the converter's rewrite left the site dangling
+            bucket = "CLAIMED";
+            note = "descriptor names a CenturyBridge type " + note;
         } else if (!platform(owner) || foreignMinecraft(owner)) {
             bucket = "EXTDEP"; // another mod's API, or multi-loader dead code in mojmap names
         } else if (fate == null) {
@@ -1336,6 +1373,78 @@ public final class LinkCheck {
     }
 
     private static final Set<String> ACCESS_KINDS = Set.of("ACCESS", "FINAL", "SEALED");
+
+    /**
+     * The nearest platform class above a mod class (its superclasses first, then its interfaces), through
+     * the classes this run has: where a member the mod class does not declare is inherited from. Null when
+     * the walk leaves the run (an absent dependency's class: then it is that mod's API) or reaches only the
+     * JDK (a mod-internal hierarchy).
+     */
+    private String platformHome(String owner) {
+        // the superclass chain first: a class's members are its superclasses' before its interfaces'
+        Set<String> seen = new HashSet<>();
+        List<String> itfs = new ArrayList<>();
+        for (String c = owner; c != null && seen.add(c); ) {
+            if (!c.equals(owner) && platform(c)) {
+                if (!jdk(c)) return c;
+                break;
+            }
+            Cls k = cls(c);
+            if (k == null) return null; // a superclass this run lacks: the member may be that dependency's
+            itfs.addAll(k.interfaces);
+            c = k.superName;
+        }
+        List<String> todo = new ArrayList<>(itfs);
+        while (!todo.isEmpty()) {
+            String c = todo.remove(0);
+            if (!seen.add(c)) continue;
+            if (platform(c)) {
+                if (!jdk(c)) return c;
+                continue;
+            }
+            Cls k = cls(c);
+            if (k == null) continue;
+            todo.addAll(k.interfaces);
+        }
+        return null;
+    }
+
+    /**
+     * the member ("name(desc)" / "name:desc") is one the class this run has does not declare itself, so the
+     * reference reaches it by inheritance (a constructor never is inherited)
+     */
+    private boolean inheritedThrough(String owner, String member) {
+        if (member.startsWith("<")) return false;
+        Cls k = cls(owner);
+        return k != null && !k.methods.containsKey(member) && !k.fields.containsKey(member);
+    }
+
+    private static boolean jdk(String c) {
+        return c.startsWith("java/") || c.startsWith("javax/") || c.startsWith("jdk/") || c.startsWith("sun/");
+    }
+
+    /** a member spelling ("name(desc)" / "name:desc") whose descriptor names a CenturyBridge class */
+    private static boolean namesCbType(String member) {
+        int d = member.indexOf('(');
+        if (d < 0) d = member.indexOf(':');
+        return d >= 0 && (member.indexOf("Ltop/dext/centurybridge/", d) >= 0 || member.indexOf("Lcenturybridge/", d) >= 0);
+    }
+
+    /**
+     * The mixin a class is an inner class of (its name extends the mixin's with "$..."), when it is no mixin
+     * itself: Mixin copies such a class for each target into the target's package (its synthetic and
+     * anonymous inner classes), and the mixin's code merged into the target reaches that copy -- so the class
+     * keeps its own hierarchy but stands in its targets' package (samePackage), and the mixin's code may reach
+     * it whatever its access says.
+     */
+    private String mixinOuter(String name) {
+        if (mixinNames.contains(name)) return null;
+        for (int i = name.lastIndexOf('$'); i > 0; i = name.lastIndexOf('$', i - 1)) {
+            String outer = name.substring(0, i);
+            if (mixinNames.contains(outer)) return outer;
+        }
+        return null;
+    }
 
     /** the member (or class) name a reference names: owner.name(desc) / owner.name:desc / owner */
     private static String memberName(String ref) {

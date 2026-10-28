@@ -1,0 +1,6 @@
+{
+ "methodRenames": {
+  "net/minecraft/class_2586.method_10995()Ljava/lang/String;": "method_61177"
+ },
+ "overrideHooks": []
+}

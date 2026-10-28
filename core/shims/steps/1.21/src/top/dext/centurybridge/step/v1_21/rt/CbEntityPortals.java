@@ -90,6 +90,14 @@ public final class CbEntityPortals {
         return info.comp_2824();
     }
 
+    /**
+     * 1.20.6 changeDimension(dest)'s argument as 1.21's changeDimension(transition) carries it: the transition's level
+     * (1.21's body reads transition.newLevel() where 1.20.6's read dest; s121.json mixinTargets for mods' injectors)
+     */
+    public static class_3218 newLevel(class_5454 transition) {
+        return transition.comp_2820();
+    }
+
     private static final Logger LOGGER = LogUtils.getLogger();
 
     // ------------------------------------------------------------------------------------------------ adapters

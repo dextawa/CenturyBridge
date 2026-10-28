@@ -1,0 +1,580 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_11316$class_11317$class_11318.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_353$class_354.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_413$class_4192$class_4193.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_415$class_4190$class_4191.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_426$class_4195$class_4194.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4267$class_4268.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4267$class_4269.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4267$class_4270.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_430$class_4196$class_432.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4325$class_4330.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4325$class_8202.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4325$class_8840.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4325$class_8841.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4379$class_5344.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4381$class_4383.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4401$class_4403.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4406$class_4408.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4419$class_4421.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_447$class_4198$class_4197.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_447$class_4200$class_4199.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_447$class_4202$class_4201.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_459$class_460.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_459$class_462.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_521$class_4271.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_5235$class_5236.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_5235$class_5237.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_5235$class_5239.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_528$class_4272.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_528$class_7415.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_5519.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_7543$class_7544$class_7545.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_7543$class_7544$class_7548.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_7543$class_7544$class_7549.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_7543$class_7544$class_7550.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_7551$class_7552$class_7553.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_7745$class_7746$class_7748.method_25343(Lnet/minecraft/class_332;IIIIIIIZF)V": {
+   "basis": "s9c lists: Entry.render(graphics, index, top, left, width, height, mouseX, mouseY, hovered, delta) is renderContent(graphics, mouseX, mouseY, hovered, delta) on 1.21.9; the row comes from the entry's own position, which 1.21.9's list sets to 1.21.8's values (gen_s9c_entry_render.py)",
+   "desc": "(Lnet/minecraft/class_332;IIZF)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  }
+ }
+}

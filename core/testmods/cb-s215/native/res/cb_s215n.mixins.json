@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "cb.s215n.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "ServerDriverMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

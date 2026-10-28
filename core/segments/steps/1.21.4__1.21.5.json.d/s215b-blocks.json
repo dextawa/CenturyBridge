@@ -1,0 +1,26 @@
+{
+ "_s215b_blocks_basis": "s215b blocks: Block.fallOn's fall distance float -> double (javap 1.21.4 / 1.21.5 class_2248: method_9554(Level, BlockState, BlockPos, Entity, F)V -> (..., D)V; Entity.fallDistance is a double since 1.21.5, s5-entity.json). Converters are s5's rt/CbEntityFall.",
+ "callReshapes": {
+  "net/minecraft/class_2248.method_9554(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;F)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;D)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_5/rt/CbEntityFall#toDouble(F)D"
+   ],
+   "basis": "Block.fallOn takes the fall distance as a double since 1.21.5: the float widened, exactly"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_9554(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;F)V",
+   "new": "method_9554(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;D)V",
+   "onlyUnder": "net/minecraft/class_2248",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityFall.toFloat(D)F",
+   "guard": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
+   "basis": "vanilla calls Block.fallOn with a double distance since 1.21.5 (Entity.checkFallDamage): a 1.21.4 override gets it as the float 1.21.4 passed; its super call is reshaped by callReshapes (widened back)"
+  }
+ ]
+}

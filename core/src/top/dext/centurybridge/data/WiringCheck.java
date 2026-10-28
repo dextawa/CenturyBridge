@@ -769,7 +769,36 @@ public final class WiringCheck {
                 boolean narrow = o.has("narrow") && o.get("narrow").getAsBoolean();
                 boolean narrows = false;
                 for (int i = 0; i < va.length; i++) {
-                    int j = a.get(i).getAsInt();
+                    var ai = a.get(i).getAsJsonPrimitive();
+                    if (!ai.isNumber()) {
+                        // "<j> Owner#name(desc)": V's argument derived from W's j-th by a static taking exactly W's
+                        // type and answering V's (s26 C13 (2), Chain.mixinTargets)
+                        String sv = ai.getAsString().trim();
+                        int sp = sv.indexOf(' ');
+                        int pp = sv.indexOf('(');
+                        int jj;
+                        try {
+                            jj = sp < 0 ? -2 : Integer.parseInt(sv.substring(0, sp));
+                        } catch (NumberFormatException ex) {
+                            jj = -2;
+                        }
+                        if (jj < 0 || jj >= wa.length || pp < sp) {
+                            problems.add(where + ": args[" + i + "] '" + sv + "' is not \"<W index> Owner#name(desc)\" of " + nm + nd);
+                            continue;
+                        }
+                        String ref = sv.substring(sp + 1).trim();
+                        int rp = ref.indexOf('(');
+                        String rd = methodDesc(ref.substring(rp));
+                        org.objectweb.asm.Type[] rpa = org.objectweb.asm.Type.getArgumentTypes(rd);
+                        if (rpa.length != 1 || !rpa[0].equals(wa[jj]) || !org.objectweb.asm.Type.getReturnType(rd).equals(va[i])) {
+                            problems.add(where + ": args[" + i + "] " + ref + " must take W argument " + jj + " (" + wa[jj]
+                                + ") and answer V argument " + i + " (" + va[i] + ")");
+                            continue;
+                        }
+                        wantMethod(where + " args[" + i + "]", ref.substring(0, rp), null, rd);
+                        continue;
+                    }
+                    int j = ai.getAsInt();
                     boolean objects = j >= 0 && j < wa.length && wa[j].getSort() == org.objectweb.asm.Type.OBJECT
                         && va[i].getSort() == org.objectweb.asm.Type.OBJECT;
                     if (j < -1 || j >= wa.length) {
@@ -1364,7 +1393,8 @@ public final class WiringCheck {
             String c = todo.pop();
             if (!seen.add(c)) continue;
             if (c.equals(sup) || sup.equals("java/lang/Object")) return true;
-            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            // the target's game libraries too (as isSubtype): JOML's Matrix4f is a Matrix4fc
+            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.containsKey(c) ? stub.get(c) : gameLibs.get(c);
             if (n == null) continue;
             if (n.superName != null) todo.push(n.superName);
             todo.addAll(n.interfaces);

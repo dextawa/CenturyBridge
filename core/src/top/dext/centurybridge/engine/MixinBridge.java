@@ -152,12 +152,15 @@ final class MixinBridge {
     private String curKey = "mixins";
     /** restoring mixins made for the current config, by class name */
     private final Map<String, ClassNode> restorers = new LinkedHashMap<>();
+    /** the members the jar's own class mixins merge onto their targets, read before bridging (MixinTriage.ownMembers) */
+    private final LayerMembers own;
 
     private MixinBridge(Chain chain, Map<String, byte[]> entries, String helperName) {
         this.chain = chain;
         this.entries = entries;
         this.helperName = helperName;
         this.step = chain.to.replace('.', '_');
+        this.own = MixinTriage.ownMembers(entries);
     }
 
     /**
@@ -1138,6 +1141,13 @@ final class MixinBridge {
                     + ": the layer's restored member");
                 return true;
             }
+            // or one the jar's own class mixins merge onto the target (smx1 CASE 13: a climbing layer's invoker of a
+            // member it restores itself)
+            if (MixinTriage.ownDeclares(own, target, kind, name, desc, mp)) {
+                member((kind == 'f' ? "field " : "member ") + sn + " -> " + shortName(target) + "." + name + (kind == 'f' ? ":" : "") + desc
+                    + ": restored by the jar's own mixin");
+                return true;
+            }
             return false;
         }
 
@@ -1869,6 +1879,19 @@ final class MixinBridge {
                     continue;
                 }
                 MethodNode wmeth = method(wt, fate.name(), fate.desc());
+                if (wmeth == null && chain.wallRemapper != null) {
+                    // past the wall a class new in W nested in a class the table maps has two spellings: the wiring's
+                    // (W's own, AbstractScrollArea$ScrollbarSettings) and the wall view's (the outer's id + the nested
+                    // name, WallInverse; JarRemapper renames that one to W's). The same member when both descriptors
+                    // spell W's types alike (swall12 AbstractTextAreaWidget.<init>(.., ScrollbarSettings))
+                    String wd = chain.wallRemapper.mapMethodDesc(fate.desc());
+                    for (MethodNode m : wt.methods) {
+                        if (m.name.equals(fate.name()) && chain.wallRemapper.mapMethodDesc(m.desc).equals(wd)) {
+                            wmeth = m;
+                            break;
+                        }
+                    }
+                }
                 if (wmeth == null) {
                     // a W-named member a layer mixin declares on the target (an override of an inherited W method,
                     // say: SmithingTrimRecipe.matches, which 1.21.2 has only as SmithingRecipe's default): at runtime
@@ -3575,15 +3598,18 @@ final class MixinBridge {
             for (int i = 0; known && i < from.length; i++) {
                 known = from[i] >= 0;
             }
+            // a derived argument (s26 C13 (2)): V's value is the static of W's
+            String[][] wrap = from != null && mt.wrap() != null ? mt.wrap().clone() : new String[va.length][];
             // "narrow": an argument W widened (1.21.2 ItemStack.hurtEnemy: a LivingEntity attacker where 1.21.1 took a
             // Player, mobs now calling it too) reaches the handler only when it is V's type, as the override hooks'
             // narrowing: a handler written for V never saw another
             boolean[] narrow = new boolean[va.length];
             Type[] mwa = Type.getArgumentTypes(mt.desc());
             for (int i = 0; known && mt.narrow() && i < va.length; i++) {
-                narrow[i] = from[i] < mwa.length && !mwa[from[i]].equals(va[i]) && va[i].getSort() >= Type.ARRAY;
+                // a derived argument is converted by its static, not narrowed
+                narrow[i] = wrap[i] == null && from[i] < mwa.length && !mwa[from[i]].equals(va[i]) && va[i].getSort() >= Type.ARRAY;
             }
-            return new Fate(mt.name(), mt.desc(), from, new String[va.length][], narrow, known,
+            return new Fate(mt.name(), mt.desc(), from, wrap, narrow, known,
                 "mixinTargets (" + mt.basis() + ")");
         }
         for (Chain.OverrideHook h : chain.overrideHooksForOld(name, vdesc)) {

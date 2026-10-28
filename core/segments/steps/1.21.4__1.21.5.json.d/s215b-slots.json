@@ -1,0 +1,9 @@
+{
+ "_s215b_slots_basis": "LivingEntity getArmorSlots / getHandSlots / getArmorAndBodyArmorSlots / getAllSlots (class_1309 method_5661 / 5877 / 56674 / 56675), gone in 1.21.5 (EntityEquipment), restored on LivingEntity by mixin/CbEntitySlotsRestoredMixin as views over getItemBySlot / setItemSlot (rt/CbEntitySlots). Calls on subclasses (Mob, Player, ArmorStand) are served by the LivingEntity cover.",
+ "covers": [
+  "net/minecraft/class_1309.method_5661()Ljava/lang/Iterable;",
+  "net/minecraft/class_1309.method_5877()Ljava/lang/Iterable;",
+  "net/minecraft/class_1309.method_56674()Ljava/lang/Iterable;",
+  "net/minecraft/class_1309.method_56675()Ljava/lang/Iterable;"
+ ]
+}

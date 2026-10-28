@@ -10,6 +10,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.commons.ClassRemapper;
 import org.objectweb.asm.commons.Remapper;
+import org.objectweb.asm.Type;
 
 /**
  * Remaps an official (obfuscated) Minecraft jar into the intermediary
@@ -62,6 +63,26 @@ public final class JarRemapper {
         public final java.util.Map<String, String> byOwner = new java.util.HashMap<>();
         /** bare intermediary member name -> mojang name, ambiguous ids removed */
         public final java.util.Map<String, String> members = new java.util.HashMap<>();
+        /**
+         * the last {@link #remapWithTable} run's reflective strings ({@link #reflectStrings}): "translated ..." and
+         * "unproven ..." lines, for the conversion report
+         */
+        public final java.util.List<String> reflectNotes = new java.util.ArrayList<>();
+        /** every intermediary member id the table renames on some owner (lazily, {@link #renamesId}) */
+        private java.util.Set<String> renamedIds;
+
+        /** whether the table renames the member id anywhere: an id it never names is left alone by every rename */
+        boolean renamesId(String id) {
+            if (renamedIds == null) {
+                java.util.Set<String> ids = new java.util.HashSet<>(members.keySet());
+                ids.addAll(candidates.keySet());
+                for (String k : byOwner.keySet()) {
+                    ids.add(k.substring(k.lastIndexOf('.') + 1));
+                }
+                renamedIds = ids;
+            }
+            return renamedIds.contains(id);
+        }
         /** how many bare ids were ambiguous (owner-qualified lookup only) */
         public int ambiguous;
         /** bare intermediary method id -> every mojang name the table gives it (more than one: reused ids) */
@@ -627,6 +648,7 @@ public final class JarRemapper {
 
     /** as above, with a loaded table (the conversion's, facade tokens kept: {@link Table#keepFacadeTokens}) */
     public static void remapWithTable(Table table, Path inJar, Path outJar, Path targetJar) throws IOException {
+        table.reflectNotes.clear();
         try (java.io.InputStream in = Files.newInputStream(inJar)) {
             collectMixins(table, in);
         }
@@ -902,6 +924,209 @@ public final class JarRemapper {
         return false;
     }
 
+    /** an intermediary class or member id as a string constant spells it */
+    private static final java.util.regex.Pattern INTER_ID =
+        java.util.regex.Pattern.compile("(method|field|comp)_\\d+|net[./]minecraft[./]class_\\d+([$][\\w$]+)?");
+
+    /**
+     * String constants naming intermediary classes or members that flow into reflection (Class.forName /
+     * ClassLoader.loadClass, Class.getDeclaredMethod / getMethod / getDeclaredField / getField, MethodHandles.Lookup
+     * find*, a layer's CbSuper.special(owner, name, type)), spelled as the target declares them: the rename rewrites
+     * references in bytecode, never strings, so past the wall each of these finds nothing (a climbed layer's
+     * Class.forName("net.minecraft.class_3258$class_8616"): ClassNotFoundException at 26.x). The constant is traced to
+     * its call (SourceInterpreter: a single ldc reaching the name argument). A class name goes through the table's
+     * classes; a member through the owner the call names when that is a class constant (Foo.class, or a forName of a
+     * constant), else through the bare id when the table gives it exactly one name. An intermediary-shaped constant
+     * reaching such a call that the table does not translate is left and listed as unproven ({@link
+     * Table#reflectNotes}); a member the table does not rename (a token a layer keeps, a V member only a layer
+     * restores) is that too. Null: nothing to change
+     */
+    static byte[] reflectStrings(ClassReader cr, Table table, Remapper remapper) {
+        boolean any = false;
+        for (int i = 1; i < cr.getItemCount() && !any; i++) {
+            int off = cr.getItem(i);
+            if (off > 0 && cr.readByte(off - 1) == 8) { // CONSTANT_String
+                String s;
+                try {
+                    s = cr.readUTF8(off, new char[cr.getMaxStringLength()]);
+                } catch (RuntimeException ex) {
+                    continue;
+                }
+                any = s != null && INTER_ID.matcher(s).matches();
+            }
+        }
+        if (!any) {
+            return null;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        cr.accept(cn, 0);
+        boolean changed = false;
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if (m.instructions.size() == 0) {
+                continue;
+            }
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue>[] frames;
+            try {
+                frames = new org.objectweb.asm.tree.analysis.Analyzer<>(new org.objectweb.asm.tree.analysis.SourceInterpreter())
+                    .analyze(cn.name, m);
+            } catch (org.objectweb.asm.tree.analysis.AnalyzerException ex) {
+                continue;
+            }
+            org.objectweb.asm.tree.AbstractInsnNode[] insns = m.instructions.toArray();
+            for (int k = 0; k < insns.length; k++) {
+                if (!(insns[k] instanceof org.objectweb.asm.tree.MethodInsnNode mi) || frames[k] == null) {
+                    continue;
+                }
+                int[] role = reflectRole(mi);
+                if (role == null) {
+                    continue;
+                }
+                org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue> f = frames[k];
+                int argc = Type.getArgumentTypes(mi.desc).length + (mi.getOpcode() == org.objectweb.asm.Opcodes.INVOKESTATIC ? 0 : 1);
+                int base = f.getStackSize() - argc;
+                org.objectweb.asm.tree.LdcInsnNode nameLdc = singleLdc(f.getStack(base + role[1]));
+                if (nameLdc == null || !(nameLdc.cst instanceof String name) || !INTER_ID.matcher(name).matches()) {
+                    continue;
+                }
+                String where = cn.name + "." + m.name + ": " + mi.owner.substring(mi.owner.lastIndexOf('/') + 1) + "." + mi.name + " \"" + name + "\"";
+                String to = null;
+                String why;
+                if (role[2] == 'c') {
+                    String internal = name.replace('.', '/');
+                    String mapped = remapper.map(internal);
+                    to = mapped.equals(internal) ? null : name.indexOf('/') >= 0 ? mapped : mapped.replace('/', '.');
+                    why = "the table does not rename the class";
+                } else {
+                    String owner = role[0] < 0 ? null : classConstant(f.getStack(base + role[0]), frames, insns, m);
+                    if (owner != null && (owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/"))) {
+                        // CenturyBridge's own classes keep their token-named members past the wall (the remapper's
+                        // rule); a facade not declaring the token answers to the table's name (keepFacadeTokens)
+                        String fm = table.facadeMember(owner, name);
+                        if (fm != null && !fm.equals(name)) {
+                            nameLdc.cst = fm;
+                            changed = true;
+                            table.reflectNotes.add("reflection string translated past the wall: " + where + " -> \"" + fm + "\"");
+                        }
+                        continue;
+                    }
+                    if (owner != null) {
+                        to = table.byOwner.get(owner + "." + name);
+                        if (to == null) {
+                            to = superMember(table, owner, name);
+                        }
+                    }
+                    if (to == null) {
+                        to = table.members.get(name);
+                    }
+                    why = owner == null ? "owner not a class constant, and the table gives the id more than one name"
+                        : "the table renames no member " + name + " of " + owner + " or its supertypes";
+                }
+                if (to == null && role[2] != 'c' && !table.renamesId(name)) {
+                    continue; // an id the table renames nowhere: no class past the wall spells it otherwise
+                }
+                if (to != null && !to.equals(name)) {
+                    nameLdc.cst = to;
+                    changed = true;
+                    table.reflectNotes.add("reflection string translated past the wall: " + where + " -> \"" + to + "\"");
+                } else if (to == null) {
+                    table.reflectNotes.add("reflection string unproven past the wall: " + where + " (" + why + ")");
+                }
+            }
+        }
+        if (!changed) {
+            return null;
+        }
+        ClassWriter w = new ClassWriter(0);
+        cn.accept(w);
+        return w.toByteArray();
+    }
+
+    /**
+     * {owner argument index or -1 (none / the receiver of a Class method: index 0), name argument index, kind 'c' class
+     * / 'm' method / 'f' field} of a reflective call, argument indices counting the receiver of an instance call
+     */
+    private static int[] reflectRole(org.objectweb.asm.tree.MethodInsnNode mi) {
+        String o = mi.owner;
+        String n = mi.name;
+        if (o.equals("java/lang/Class")) {
+            if (n.equals("forName") && mi.desc.startsWith("(Ljava/lang/String;")) return new int[] {-1, 0, 'c'};
+            if (n.equals("getDeclaredMethod") || n.equals("getMethod")) return new int[] {0, 1, 'm'};
+            if (n.equals("getDeclaredField") || n.equals("getField")) return new int[] {0, 1, 'f'};
+            return null;
+        }
+        if (o.equals("java/lang/ClassLoader") && n.equals("loadClass") && mi.desc.startsWith("(Ljava/lang/String;")) {
+            return new int[] {-1, 1, 'c'};
+        }
+        if (o.equals("java/lang/invoke/MethodHandles$Lookup")) {
+            switch (n) {
+                case "findVirtual", "findStatic", "findSpecial":
+                    return new int[] {1, 2, 'm'};
+                case "findGetter", "findSetter", "findStaticGetter", "findStaticSetter", "findVarHandle", "findStaticVarHandle":
+                    return new int[] {1, 2, 'f'};
+                default:
+                    return null;
+            }
+        }
+        if (o.endsWith("/CbSuper") && n.equals("special") && mi.desc.startsWith("(Ljava/lang/Class;Ljava/lang/String;")) {
+            return new int[] {0, 1, 'm'};
+        }
+        return null;
+    }
+
+    private static org.objectweb.asm.tree.LdcInsnNode singleLdc(org.objectweb.asm.tree.analysis.SourceValue v) {
+        if (v == null || v.insns.size() != 1) return null;
+        return v.insns.iterator().next() instanceof org.objectweb.asm.tree.LdcInsnNode l ? l : null;
+    }
+
+    /** the internal name of the class a value always is: an ldc of a class, or Class.forName of a constant, else null */
+    private static String classConstant(org.objectweb.asm.tree.analysis.SourceValue v,
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue>[] frames,
+            org.objectweb.asm.tree.AbstractInsnNode[] insns, org.objectweb.asm.tree.MethodNode m) {
+        if (v == null || v.insns.size() != 1) return null;
+        org.objectweb.asm.tree.AbstractInsnNode src = v.insns.iterator().next();
+        if (src instanceof org.objectweb.asm.tree.LdcInsnNode l && l.cst instanceof Type t && t.getSort() == Type.OBJECT) {
+            return t.getInternalName();
+        }
+        if (src instanceof org.objectweb.asm.tree.MethodInsnNode mi && mi.owner.equals("java/lang/Class") && mi.name.equals("forName")) {
+            int k = m.instructions.indexOf(mi);
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue> f = frames[k];
+            if (f == null) return null;
+            int argc = Type.getArgumentTypes(mi.desc).length;
+            org.objectweb.asm.tree.LdcInsnNode l = singleLdc(f.getStack(f.getStackSize() - argc));
+            return l != null && l.cst instanceof String s ? s.replace('.', '/') : null;
+        }
+        return null;
+    }
+
+    /** the table's name for the id on a supertype of the owner (the input jar's and the target's hierarchy), or null */
+    private static String superMember(Table table, String owner, String name) {
+        if (table.targetSupers == null) return null;
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(java.util.List.of(owner));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String o = todo.poll();
+            if (!seen.add(o)) continue;
+            String hit = table.byOwner.get(o + "." + name);
+            if (hit != null) return hit;
+            String[] up = table.targetSupers.get(o);
+            if (up == null) up = table.targetSupers.get(table.classes.getOrDefault(o, o));
+            if (up != null) {
+                for (String s : up) {
+                    if (s == null) continue;
+                    todo.add(s);
+                    // the target's supertypes are in its own names: back to the table's intermediary key
+                    for (java.util.Map.Entry<String, String> e : table.classes.entrySet()) {
+                        if (e.getValue().equals(s)) {
+                            todo.add(e.getKey());
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private static int remapEntries(ZipInputStream zin, ZipOutputStream zout, Table table) throws IOException {
         java.util.Map<String, String> byOwner = table.byOwner;
         java.util.Map<String, String> members = table.members;
@@ -990,6 +1215,10 @@ public final class JarRemapper {
                 }
                 ClassReader cr = new ClassReader(data);
                 ClassWriter cw = new ClassWriter(0);
+                byte[] reflected = reflectStrings(cr, table, remapper);
+                if (reflected != null) {
+                    cr = new ClassReader(reflected);
+                }
                 cr.accept(mixinStrings(new ClassRemapper(table.targetKinds == null ? cw : new KindFix(cw, table.targetKinds), remapper), table), 0);
                 String outName = remapper.map(cr.getClassName()) + ".class";
                 if (!outName.equals(e.getName()) && !written.add(outName)) {

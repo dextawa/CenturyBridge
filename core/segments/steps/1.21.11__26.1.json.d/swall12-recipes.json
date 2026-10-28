@@ -18,11 +18,11 @@
  },
  "callReshapes": {
   "net/minecraft/class_2450.method_10447(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2450;": {
-   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_2450;",
+   "desc": "(Lnet/minecraft/class_7871;Lnet/minecraft/class_7800;Lnet/minecraft/class_10591;)Lnet/minecraft/class_2450;",
    "ops": [
     "keep",
     "keep",
-    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;"
    ],
    "basis": "26.1's ShapelessRecipeBuilder.shapeless(items, category, result) takes the result as a template; 1.21.11's took the stack (javap)"
   },
@@ -116,10 +116,10 @@
    "basis": "26.1's RecipeProvider.cookRecipes(name, factory, time) has no serializer; the old factory is kept with it, so each recipe gets the category 1.21.11's generic chose for it (rt/CbWallRecipeBuilders.LegacyCookingFactory)"
   },
   "net/minecraft/class_2446.method_62745(Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2450;": {
-   "desc": "(Lnet/minecraft/class_7800;Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_2450;",
+   "desc": "(Lnet/minecraft/class_7800;Lnet/minecraft/class_10591;)Lnet/minecraft/class_2450;",
    "ops": [
     "keep",
-    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;"
    ],
    "basis": "26.1's RecipeProvider.shapeless(category, result) takes the result as a template; 1.21.11's took the stack (javap)"
   }
@@ -130,13 +130,13 @@
  },
  "superCtorReshapes": {
   "net/minecraft/class_8074.<init>(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1792;)V": {
-   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_10591;)V",
    "ops": [
     "keep",
     "keep",
     "keep",
     "keep",
-    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#template(Lnet/minecraft/class_1792;)Lnet/minecraft/world/item/ItemStackTemplate;"
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#template(Lnet/minecraft/class_1792;)Lnet/minecraft/class_10591;"
    ],
    "basis": "26.1's SmithingTransformRecipeBuilder takes the result as a template; 1.21.11's took the item (javap)"
   },
@@ -160,9 +160,9 @@
   },
   {
    "old": "method_62745(Lnet/minecraft/class_7800;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2450;",
-   "new": "method_62745(Lnet/minecraft/class_7800;Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_2450;",
+   "new": "method_62745(Lnet/minecraft/class_7800;Lnet/minecraft/class_10591;)Lnet/minecraft/class_2450;",
    "onlyUnder": "net/minecraft/class_2446",
-   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders.shapeless(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders$LegacyShapeless;Lnet/minecraft/class_7800;Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_2450;",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders.shapeless(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders$LegacyShapeless;Lnet/minecraft/class_7800;Lnet/minecraft/class_10591;)Lnet/minecraft/class_2450;",
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders$LegacyShapeless",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "26.1 calls shapeless(category, template); a 1.21.11 override gets the template's stack"
