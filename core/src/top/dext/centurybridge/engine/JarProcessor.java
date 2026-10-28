@@ -2576,6 +2576,11 @@ public final class JarProcessor {
         // repair and triage judge the retargeted mixin (MixinBridge; every step but the wall --
         // across it the refmaps take their names later, see repairPastWall)
         MixinBridge.Result bridged = null;
+        // C23: bare-name selectors spelled with the descriptor of the V method Mixin resolved them to, before anything
+        // renames the mixin's targets: every route below then treats them as spelled ones
+        if (chain.sourceCode != null) {
+            for (String n : chain.sourceCode.respellBare(entries)) rpt.notes.add(tag + n);
+        }
         // a mixin of a class the step renames into a class W adds in its place goes there first (Chain.mixinFollow)
         List<String> followed = MixinClassRenames.followTargets(entries, chain.mixinFollow(), chain.classRenames);
         for (String moved : followed) {

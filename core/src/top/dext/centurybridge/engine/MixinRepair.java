@@ -459,6 +459,107 @@ public final class MixinRepair {
         if (curKey != null) mixedSide.put(mixin, curKey);
     }
 
+    /**
+     * C23: an injector selector naming its method by a bare name (method = "method_4725", how most mods write it),
+     * respelled with the descriptor of the V method it named -- this model is V's code. Mixin resolves a bare name with
+     * the default quantifier as SINGLE (MemberInfo.configure(SELECT_MEMBER), javap of sponge-mixin 0.17.3): the target
+     * class's first method of that name. Spelled, the selector takes every route a spelled one takes (mixinTargets,
+     * mixinMoves, follow+W, restored members), and on W it cannot bind to another method that took the name. Only where
+     * every target class of the mixin names the same V method; regex and wildcard selectors stay. Run before the step
+     * renames anything (the mixin's targets are V's classes). Returns the report notes.
+     */
+    public List<String> respellBare(Map<String, byte[]> entries) {
+        List<String> notes = new ArrayList<>();
+        byte[] fmjBytes = entries.get("fabric.mod.json");
+        if (fmjBytes == null) return notes;
+        JsonObject fmj;
+        try {
+            fmj = GSON.fromJson(new String(fmjBytes, StandardCharsets.UTF_8), JsonObject.class);
+        } catch (RuntimeException ex) {
+            return notes;
+        }
+        for (JsonElement ref : fmj.has("mixins") ? fmj.getAsJsonArray("mixins") : new JsonArray()) {
+            String cfgName = ref.isJsonObject() ? ref.getAsJsonObject().get("config").getAsString() : ref.getAsString();
+            byte[] cfgBytes = entries.get(cfgName);
+            if (cfgBytes == null) continue;
+            JsonObject cfg;
+            try {
+                cfg = GSON.fromJson(new String(cfgBytes, StandardCharsets.UTF_8), JsonObject.class);
+            } catch (RuntimeException ex) {
+                continue;
+            }
+            String pkg = cfg.has("package") ? cfg.get("package").getAsString().replace('.', '/') : "";
+            String refmapName = cfg.has("refmap") ? cfg.get("refmap").getAsString() : null;
+            JsonObject refmapRoot = null;
+            if (refmapName != null && entries.get(refmapName) != null) {
+                try {
+                    refmapRoot = GSON.fromJson(new String(entries.get(refmapName), StandardCharsets.UTF_8), JsonObject.class);
+                } catch (RuntimeException ex) {
+                    refmapRoot = null;
+                }
+            }
+            boolean refmapDirty = false;
+            for (String key : new String[] {"mixins", "client", "server"}) {
+                if (!cfg.has(key)) continue;
+                for (JsonElement e : cfg.getAsJsonArray(key)) {
+                    String cls = (pkg.isEmpty() ? "" : pkg + "/") + e.getAsString().replace('.', '/');
+                    byte[] bytes = entries.get(cls + ".class");
+                    if (bytes == null) continue;
+                    JsonObject table = refmapRoot != null && refmapRoot.has("mappings")
+                        && refmapRoot.getAsJsonObject("mappings").has(cls)
+                        ? refmapRoot.getAsJsonObject("mappings").getAsJsonObject(cls) : null;
+                    ClassNode mx = new ClassNode();
+                    new ClassReader(bytes).accept(mx, 0);
+                    List<String> targets = mixinTargets(mx, table);
+                    boolean changed = false;
+                    for (MethodNode h : mx.methods) {
+                        for (AnnotationNode an : annotations(h)) {
+                            List<String> methods = strings(values(an).get("method"));
+                            for (int idx = 0; idx < methods.size(); idx++) {
+                                String sel = methods.get(idx);
+                                if (sel.startsWith("/")) continue;
+                                String mapped = refmapLookup(table, sel);
+                                Sel s = Sel.parse(mapped);
+                                if (s.desc != null || s.wildcard || s.name.isEmpty()) continue;
+                                String desc = null;
+                                boolean ok = true;
+                                for (String o : s.owner != null ? List.of(s.owner) : targets) {
+                                    ClassNode vc = target(o);
+                                    MethodNode first = null;
+                                    if (vc != null) {
+                                        for (MethodNode m : vc.methods) {
+                                            if (m.name.equals(s.name)) { first = m; break; }
+                                        }
+                                    }
+                                    if (first == null || desc != null && !desc.equals(first.desc)) { ok = false; break; }
+                                    desc = first.desc;
+                                }
+                                if (!ok || desc == null) continue;
+                                String repl = mapped + desc;
+                                if (!mapped.equals(sel)) {
+                                    refmapPut(table, sel, repl);
+                                    refmapDirty = true;
+                                } else {
+                                    setMethodSelector(an, idx, repl);
+                                    changed = true;
+                                }
+                                notes.add("bare selector spelled as on V: " + cls.substring(cls.lastIndexOf('/') + 1) + "." + h.name + " -> "
+                                    + repl + " (the first method of that name, as Mixin resolved it)");
+                            }
+                        }
+                    }
+                    if (changed) {
+                        ClassWriter cw = new ClassWriter(0);
+                        mx.accept(cw);
+                        entries.put(cls + ".class", cw.toByteArray());
+                    }
+                }
+            }
+            if (refmapDirty) entries.put(refmapName, GSON.toJson(refmapRoot).getBytes(StandardCharsets.UTF_8));
+        }
+        return notes;
+    }
+
     /** rewrites mixin classes / refmaps in {@code entries} in place */
     public Outcome repair(Map<String, byte[]> entries) {
         mixedByMixin.clear();
