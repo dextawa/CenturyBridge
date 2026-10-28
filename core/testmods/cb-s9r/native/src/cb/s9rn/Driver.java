@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,6 +18,13 @@ import net.minecraft.class_310;
 import net.minecraft.class_339;
 import net.minecraft.class_364;
 import net.minecraft.class_437;
+import net.minecraft.class_1058;
+import net.minecraft.class_10725;
+import net.minecraft.class_11697;
+import net.minecraft.class_20;
+import net.minecraft.class_21;
+import net.minecraft.class_2960;
+import net.minecraft.class_8689;
 import net.minecraft.class_5599;
 import net.minecraft.class_5601;
 import net.minecraft.class_5602;
@@ -105,6 +113,49 @@ public class Driver implements ClientModInitializer {
         }
     }
 
+    static String name(Object sprite) {
+        return sprite instanceof class_1058 s ? String.valueOf(s.method_45851().method_45816()) : String.valueOf(sprite);
+    }
+
+    @SuppressWarnings("unchecked")
+    static void checkAtlases(class_310 mc) throws Exception {
+        Class<?> c = Class.forName("cb.s9r.AtlasCheck");
+        Map<String, Object> h = CompletableFuture.supplyAsync(() -> {
+            try {
+                return (Map<String, Object>) c.getMethod("holders").invoke(null);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        }, mc).get(20, TimeUnit.SECONDS);
+        class_11697 atlases = mc.method_72703();
+        class_1058 back = atlases.method_73025(class_10725.field_56388).method_4608(class_2960.method_60656("back"));
+        check("D.paintings", h.get("paintings.back") == back && name(back).equals("minecraft:back"),
+            "getPaintingTextures().getBackSprite() = " + name(h.get("paintings.back")) + ", AtlasManager paintings back = " + name(back));
+        class_2960 player = new class_20(class_21.field_91, (byte) 0, (byte) 0, (byte) 0, Optional.empty()).method_58451();
+        class_1058 map = atlases.method_73025(class_10725.field_56386).method_4608(player);
+        check("D.map", h.get("map.player") == map && name(map).equals(player.toString()),
+            "getMapDecorationTextures().get(player) = " + name(h.get("map.player")) + ", AtlasManager = " + name(map));
+        class_1058 heart = atlases.method_73025(class_10725.field_56385).method_4608(class_2960.method_60656("hud/heart/full"));
+        check("D.gui", h.get("gui.heart") == heart && name(heart).equals("minecraft:hud/heart/full"),
+            "getGuiSprites().getSprite(hud/heart/full) = " + name(h.get("gui.heart")) + ", AtlasManager = " + name(heart));
+        class_1058 button = (class_1058) h.get("gui.button");
+        Object scaling = button.method_45851().method_73021(class_8689.field_45647).orElse(class_8689.field_45645).comp_1636();
+        check("D.scaling", scaling.equals(h.get("gui.button.scaling")) && !scaling.equals(class_8689.field_45645.comp_1636()),
+            "getGuiSprites().getSpriteScaling(widget/button) = " + h.get("gui.button.scaling") + ", 1.21.9's = " + scaling);
+        class_1058 stone = atlases.method_73025(class_10725.field_56382).method_4608(class_2960.method_60656("block/stone"));
+        check("D.blocks", h.get("blocks.stone") == stone && name(stone).equals("minecraft:block/stone"),
+            "getTextureAtlas(blocks).apply(block/stone) = " + name(h.get("blocks.stone")) + ", AtlasManager = " + name(stone));
+        check("D.same", Boolean.TRUE.equals(h.get("same.holder")), "getPaintingTextures() answers the same holder each time: " + h.get("same.holder"));
+        check("D.models", h.get("models.blocks") == atlases.method_73025(class_10725.field_56382),
+            "getModelManager().getAtlas(textures/atlas/blocks.png) is AtlasManager's blocks atlas: " + (h.get("models.blocks") == atlases.method_73025(class_10725.field_56382)));
+        Object ownSet = c.getMethod("ownAtlasSet").invoke(null);
+        check("D.atlasSet", name(ownSet).equals("minecraft:block/stone"),
+            "a 1.21.8 mod's own AtlasSet stitched and uploaded the 1.21.8 way has block/stone in its atlas and result: " + name(ownSet));
+        Object own = c.getMethod("ownAtlas").invoke(null);
+        check("D.own", name(own).equals("minecraft:block/stone"),
+            "a 1.21.8 mod's own TextureAtlasHolder reloaded the 1.21.8 way has block/stone: " + name(own));
+    }
+
     static String counts(Map<String, Set<Vector3f>> parts) {
         StringBuilder b = new StringBuilder();
         parts.forEach((k, v) -> b.append(k).append('=').append(v.size()).append(' '));
@@ -158,6 +209,9 @@ public class Driver implements ClientModInitializer {
 
             // armor layers
             checkArmor(mc.method_31974());
+
+            // atlas holders
+            checkAtlases(mc);
         } catch (Throwable t) {
             check("driver", false, String.valueOf(t));
             t.printStackTrace();
