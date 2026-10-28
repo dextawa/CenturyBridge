@@ -1452,3 +1452,63 @@ accessible class net/minecraft/class_5624
 accessible method net/minecraft/class_5624 <init> ()V
 # Options.skipRealms32bitWarning restored (mixin/Cb*OptionsMixin): its processOptions handler takes the package-private FieldAccess
 accessible class net/minecraft/class_315$class_5823
+# s205: fields 1.20.5 reshaped, given back through instanceFieldGetters (rt/Cb*GiveBack): the getters read 1.20.5's
+# counterpart -- MobEffect.AttributeTemplate (package-private record, the getter's parameter), FlowerBlock's stew effects,
+# ServerAdvancementManager's registry lookup, HoverEvent.Action's codecs, Arrow's potion contents
+accessible class net/minecraft/class_1291$class_8634
+accessible field net/minecraft/class_2356 field_45775 Lnet/minecraft/class_9298;
+accessible field net/minecraft/class_2989 field_48787 Lnet/minecraft/class_7225$class_7874;
+accessible field net/minecraft/class_2568$class_5247 field_46605 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_2568$class_5247 field_46606 Lcom/mojang/serialization/MapCodec;
+accessible method net/minecraft/class_1667 method_57315 ()Lnet/minecraft/class_1844;
+accessible method net/minecraft/class_1667 method_57316 (Lnet/minecraft/class_1844;)V
+# ---- BEGIN GENERATED (s205 fields): core/tools/gen_s205_fields.py ----
+accessible class net/minecraft/class_3853$class_4166
+accessible class net/minecraft/class_466$class_469
+accessible class net/minecraft/class_8888
+accessible class net/minecraft/class_8892
+accessible class net/minecraft/class_8893
+accessible field net/minecraft/class_1299 field_16526 Lnet/minecraft/class_5321;
+accessible field net/minecraft/class_1308 field_6198 Lnet/minecraft/class_5321;
+accessible field net/minecraft/class_1324 field_23700 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_1438 field_45752 Lnet/minecraft/class_9298;
+accessible field net/minecraft/class_144 field_1116 Lnet/minecraft/class_5321;
+accessible field net/minecraft/class_1584 field_30483 F
+accessible field net/minecraft/class_1584 field_30484 F
+accessible field net/minecraft/class_1584 field_30485 F
+accessible field net/minecraft/class_1693 field_7734 Lnet/minecraft/class_5321;
+accessible field net/minecraft/class_1866 field_46106 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_1867$class_1868 field_46104 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_1927 field_47330 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_2568$class_5249 field_24355 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_2580 field_11795 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_2580 field_11799 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_2664 field_47518 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_2783 field_12725 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_2939 field_24831 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_3031 field_24837 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_3853$class_4166 field_45756 Lnet/minecraft/class_9298;
+accessible field net/minecraft/class_3957 field_46105 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_3972$class_3973 field_46107 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_4648 field_24932 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_4652 field_24939 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_466 field_17412 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_466 field_17413 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_466$class_469 field_2813 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_4663 field_24963 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_4970$class_2251 field_10666 Lnet/minecraft/class_5321;
+accessible field net/minecraft/class_5142 field_24973 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_5202 field_24923 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_5712$class_7447 field_39177 Lnet/minecraft/class_6880;
+accessible field net/minecraft/class_7264 field_38205 Lnet/minecraft/class_5321;
+accessible field net/minecraft/class_7388 field_38782 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_8060$class_8061 field_46108 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_8062$class_8063 field_46109 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_8174 field_42814 Lnet/minecraft/class_5321;
+accessible field net/minecraft/class_8244 field_43338 Lnet/minecraft/class_5321;
+accessible field net/minecraft/class_8492 field_44507 Lnet/minecraft/class_5321;
+accessible field net/minecraft/class_8690$class_8695 field_45661 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_8888 field_46824 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_8892 field_46827 Lcom/mojang/serialization/MapCodec;
+accessible field net/minecraft/class_8893 field_46828 Lcom/mojang/serialization/MapCodec;
+# ---- END GENERATED (s205 fields) ----

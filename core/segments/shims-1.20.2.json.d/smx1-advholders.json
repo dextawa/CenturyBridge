@@ -1,0 +1,82 @@
+{
+ "_smx1_advholders_basis": "smx1c 2026-10-26: 1.20.2 private members that take the AdvancementHolder / AdvancementNode where 1.20.1 took the Advancement, each judged against both bodies (javap -c -p, same code, the advancement reached through the holder / node). Mods reach them only through mixins: @Invoker / @Shadow callers pass a 1.20.1 Advancement, converted by the layer (CbAdvNodes: the holder / tree node the record was placed at); selectors and anchors follow. Left out: PlayerAdvancements.method_48025 (Set<Advancement> -> Set<AdvancementHolder>, an out-parameter the method fills), AdvancementCommands.method_12990 (List out-parameter), method_12996 (1.20.2 adds the CommandContext), VisibilityEvaluator.method_48030 (its Predicate and Output change element type too).",
+ "callReshapes": {
+  "net/minecraft/class_2985.method_12874(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8779;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "PlayerAdvancements.registerListeners(Advancement) -> (AdvancementHolder): javap -c -p both: same loop over the criteria adding the player listener (1.20.2 reads them through holder.value().criteria())"
+  },
+  "net/minecraft/class_2985.method_12880(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8779;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "PlayerAdvancements.unregisterListeners(Advancement) -> (AdvancementHolder): javap -c -p both: same loop removing the player listener of each unfinished criterion"
+  },
+  "net/minecraft/class_2985.method_12884(Lnet/minecraft/class_161;Lnet/minecraft/class_167;)V": {
+   "desc": "(Lnet/minecraft/class_8779;Lnet/minecraft/class_167;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;",
+    "keep:1"
+   ],
+   "basis": "PlayerAdvancements.startProgress(Advancement, AdvancementProgress) -> (AdvancementHolder, ..): javap -c -p both: progress.update with the advancement's requirements, then the progress map put"
+  },
+  "net/minecraft/class_2985.method_48028(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8779;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "PlayerAdvancements.markForVisibilityUpdate(Advancement) -> (AdvancementHolder): javap -c -p both: the root of the advancement goes into the visibility-update set (1.20.2 finds it through the tree node)"
+  },
+  "net/minecraft/class_163.method_718(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "AdvancementList.remove(Advancement) -> AdvancementTree.remove(AdvancementNode): javap -c -p both: the same recursive removal of the children, the id from the roots / tasks, the listener told"
+  },
+  "net/minecraft/class_194.method_846(Lnet/minecraft/class_161;Lnet/minecraft/class_194;)Lnet/minecraft/class_194;": {
+   "desc": "(Lnet/minecraft/class_8781;Lnet/minecraft/class_194;)Lnet/minecraft/class_194;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;",
+    "keep:1"
+   ],
+   "basis": "TreeNodePosition.addChild(Advancement, ..) -> (AdvancementNode, ..): javap -c -p both: display check, then a new TreeNodePosition of it, children recursed"
+  },
+  "net/minecraft/class_454.method_2319(Lnet/minecraft/class_456;Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_456;Lnet/minecraft/class_8779;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "AdvancementTab.addWidget(AdvancementWidget, Advancement) -> (.., AdvancementHolder): javap -c -p both: same body (widget map put, bounds updated)"
+  },
+  "net/minecraft/class_456.method_2328(Lnet/minecraft/class_161;)Lnet/minecraft/class_456;": {
+   "desc": "(Lnet/minecraft/class_8781;)Lnet/minecraft/class_456;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "AdvancementWidget.getFirstVisibleParent(Advancement) -> (AdvancementNode): javap -c -p both: parent walk until one with display, then the tab's widget of it"
+  },
+  "net/minecraft/class_457.method_2336(Lnet/minecraft/class_161;)Lnet/minecraft/class_454;": {
+   "desc": "(Lnet/minecraft/class_8781;)Lnet/minecraft/class_454;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "AdvancementsScreen.getTab(Advancement) -> (AdvancementNode): javap -c -p both: walk to the root, the tab of the root"
+  },
+  "net/minecraft/class_3008.method_12981(Lnet/minecraft/class_2168;Ljava/util/Collection;Lnet/minecraft/class_3008$class_3009;Lnet/minecraft/class_161;Ljava/lang/String;)I": {
+   "desc": "(Lnet/minecraft/class_2168;Ljava/util/Collection;Lnet/minecraft/class_3008$class_3009;Lnet/minecraft/class_8779;Ljava/lang/String;)I",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;",
+    "keep:4"
+   ],
+   "basis": "AdvancementCommands.performCriterion(source, players, action, Advancement, criterion) -> (.., AdvancementHolder, ..): javap -c -p both: same criterion check, the action per player, the same messages (1.20.2 names it through Advancement.name(holder))"
+  }
+ }
+}

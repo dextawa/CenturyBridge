@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition;
@@ -63,10 +64,17 @@ public final class CbLegacyConditions {
     /** the 1.20.5 type carrying a JSON condition of an id (registered for 1.20.4 predicates, unregistered for datagen) */
     private static final Map<net.minecraft.class_2960, ResourceConditionType<JsonCondition>> JSON_TYPES = new ConcurrentHashMap<>();
 
+    /*
+     * 1.20.4's LOADED_TAGS and CURRENT_REGISTRIES were thread-locals: 1.20.4 (and 1.20.5 to 1.21.1) set them and tested
+     * conditions on the reload's game executor. Here they are held for the whole process, as Fabric API 1.21.2 holds
+     * its own LOADED_TAGS (an AtomicReference): from 1.21.2 on Fabric API tests conditions while JSON loaders prepare,
+     * on the background executor, which a thread-local set on the reload's thread does not reach. One reload runs at a
+     * time, so each reload's conditions read that reload's values either way.
+     */
     /** 1.20.4's ResourceConditionsImpl.LOADED_TAGS: the tags the current reload read, by registry */
-    private static final ThreadLocal<Map<net.minecraft.class_5321<?>, Map<net.minecraft.class_2960, Collection<?>>>> LOADED_TAGS = new ThreadLocal<>();
+    private static final AtomicReference<Map<net.minecraft.class_5321<?>, Map<net.minecraft.class_2960, Collection<?>>>> LOADED_TAGS = new AtomicReference<>();
     /** 1.20.4's ResourceConditionsImpl.CURRENT_REGISTRIES: the current reload's registries */
-    private static final ThreadLocal<net.minecraft.class_7225.class_7874> CURRENT_REGISTRIES = new ThreadLocal<>();
+    private static final AtomicReference<net.minecraft.class_7225.class_7874> CURRENT_REGISTRIES = new AtomicReference<>();
 
     private CbLegacyConditions() {
     }
@@ -263,8 +271,8 @@ public final class CbLegacyConditions {
 
     /** CbFapiConditionReloadMixin: DataPackContents.refresh, the reload's end (1.20.4 cleared both here) */
     public static void reloadEnded() {
-        LOADED_TAGS.remove();
-        CURRENT_REGISTRIES.remove();
+        LOADED_TAGS.set(null);
+        CURRENT_REGISTRIES.set(null);
     }
 
     /** CbFapiConditionTagsMixin: the tags TagManagerLoader read, at the end of its apply step */

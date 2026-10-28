@@ -1,0 +1,22 @@
+{
+ "mixinTargets": {
+  "net/minecraft/class_5350.method_29466(Lnet/minecraft/class_3300;Lnet/minecraft/class_7780;Lnet/minecraft/class_7699;Lnet/minecraft/class_2170$class_5364;ILjava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
+   "to": "method_29466(Lnet/minecraft/class_3300;Lnet/minecraft/class_7780;Ljava/util/List;Lnet/minecraft/class_7699;Lnet/minecraft/class_2170$class_5364;ILjava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "args": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "ReloadableServerResources.loadResources: the same static (javap -c both: ReloadableServerRegistries.reload of the layers, thenCompose into the lambda that makes the ReloadableServerResources and runs SimpleReloadInstance over its listeners); 1.21.2 takes the tags already loaded as a List<Registry.PendingTags> after the layers (CbRestServer's call reshape loads them with TagLoader.loadTagsForExistingRegistries); every 1.21.1 argument arrives unchanged. Fabric API 1.21.2 hooks the same method at HEAD where 1.21.1's did"
+  },
+  "net/minecraft/class_5350.method_40421()V": {
+   "to": "method_61248()V",
+   "args": [],
+   "basis": "ReloadableServerResources.updateRegistryTags -> updateStaticRegistryTags: javap -c both, 1.21.1 binds TagManager.getResult()'s tags into the registries (forEach method_40426); 1.21.2 binds the reload's pending tags (field_52345.forEach(PendingTags::apply)); MinecraftServer / WorldLoader call it at the same point, after the reload completed (CbRestServer#updateRegistryTags wires the plain calls the same way). Fabric API 1.21.2 clears its loaded tags there (DataPackContentsMixin applyPendingTagLoads) as 1.21.1 did at updateRegistryTags. 1.21.1's trailing furnace fuel / Blocks cache rebuild is not in it: an anchor on those calls does not follow"
+  }
+ }
+}

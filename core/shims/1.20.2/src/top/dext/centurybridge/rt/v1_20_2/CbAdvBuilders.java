@@ -96,6 +96,40 @@ public final class CbAdvBuilders {
     public static final boolean ROUTE = CbRecipeJson.ROUTE;
 
     /**
+     * the advancement files ServerAdvancementManager.apply (method_20724) is reading on this thread: its Map argument,
+     * taken at HEAD by its erased type (CbAdvJsonVanillaMixin) and cleared at its return. Up to 1.21.1 its values are
+     * the files' JSON; from 1.21.2 the loader hands decoded advancements, and {@link #consultCarried} finds no JSON.
+     */
+    private static final ThreadLocal<java.util.Map<?, ?>> CURRENT_FILES = new ThreadLocal<>();
+
+    public static void carryFiles(java.util.Map<?, ?> files) {
+        if (files == null) {
+            CURRENT_FILES.remove();
+        } else {
+            CURRENT_FILES.set(files);
+        }
+    }
+
+    /** the id of the advancement the step (method_20723) is reading on this thread, taken at its HEAD by type */
+    private static final ThreadLocal<net.minecraft.class_2960> CURRENT_ID = new ThreadLocal<>();
+
+    public static void carryId(net.minecraft.class_2960 id) {
+        CURRENT_ID.set(id);
+    }
+
+    /**
+     * {@link #consult} for the advancement the step is about to hold, with the carried id and that file's carried JSON;
+     * {@code read} unchanged when no JSON is carried for it (none carried, or a release whose loader decodes first)
+     */
+    public static net.minecraft.class_161 consultCarried(net.minecraft.class_161 read, net.minecraft.class_60 lootData) {
+        net.minecraft.class_2960 id = CURRENT_ID.get();
+        CURRENT_ID.remove();
+        java.util.Map<?, ?> files = CURRENT_FILES.get();
+        Object json = files == null || id == null ? null : files.get(id);
+        return json instanceof com.google.gson.JsonElement element ? consult(read, id, element, lootData) : read;
+    }
+
+    /**
      * ServerAdvancementManager has read {@code read} with 1.20.2's Advancement.fromJson. The advancement vanilla keeps:
      * {@code read}, unless the restored 1.20.1 Builder.fromJson (which a converted mod's mixin may change) answers
      * otherwise than its unmixed copy {@link #goldenFromJson} -- then what that builder builds (or its exception), as
@@ -104,7 +138,7 @@ public final class CbAdvBuilders {
      */
     public static net.minecraft.class_161 consult(net.minecraft.class_161 read, net.minecraft.class_2960 id,
                                                   com.google.gson.JsonElement element, net.minecraft.class_60 lootData) {
-        if (!ROUTE || read == null) {
+        if (!ROUTE || read == null || !CbAdvPredicateJson.mixed()) {
             return read;
         }
         JsonObject json = net.minecraft.class_3518.method_15295(element, "advancement");
