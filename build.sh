@@ -94,6 +94,29 @@ FAPI="${CB_FAPI:-$DATA/runtime/client-$VERSION/.fabric/processedMods}"
 if [ -d "$FAPI" ]; then
     while IFS= read -r jar; do CP="$CP:$jar"; done < <(find "$FAPI" -name '*.jar')
 fi
+# MixinExtras: Fabric Loader nests it (META-INF/jars/mixinextras-fabric-*.jar) and provides it to every mod at run
+# time. Older runtimes extracted it into processedMods; newer ones (Loader 0.19 on 1.21.9) do not, so compile against
+# the copy the release's own loader jar carries -- the same MixinExtras the game runs.
+case "$CP" in *mixinextras*) ;; *)
+    LOADER_JAR=$(find "$LIBS" -name 'fabric-loader-*.jar' 2>/dev/null | sed -n 1p)
+    if [ -n "$LOADER_JAR" ]; then
+        MX=$(python3 - "$LOADER_JAR" "$OUT/mixinextras" <<'PY'
+import sys, zipfile, os
+src, out = sys.argv[1], sys.argv[2]
+with zipfile.ZipFile(src) as z:
+    for n in z.namelist():
+        if n.startswith("META-INF/jars/mixinextras-") and n.endswith(".jar"):
+            os.makedirs(out, exist_ok=True)
+            p = os.path.join(out, os.path.basename(n))
+            with open(p, "wb") as f:
+                f.write(z.read(n))
+            print(p)
+            break
+PY
+)
+        [ -n "$MX" ] && CP="$CP:$MX"
+    fi;;
+esac
 # Windows toolchains want ';' between classpath entries
 SEP=":"
 case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) CP="${CP//:/;}"; SEP=";";; esac
@@ -126,6 +149,23 @@ for fmj in sorted(glob.glob("core/mods/*/resources/fabric.mod.json")):
         print(os.path.dirname(os.path.dirname(fmj)), f"{m['id']}-{m['version']}.jar")
 PYDEP
 )
+
+# MixinExtras (@WrapOperation & co.): Fabric Loader 0.15+ nests it (META-INF/jars/mixinextras-fabric-*.jar) and
+# initializes it for every mod, so a layer uses it like any Fabric mod. javac and the gates read the loader's own nested
+# copy, extracted under $OUT: the runtime's processedMods holds one only once that client has launched.
+LOADER_JAR=$(find "$LIBS" -name 'fabric-loader-*.jar' 2>/dev/null | sed -n 1p)
+if [ -n "$LOADER_JAR" ]; then
+    rm -rf "$OUT/loader-nested" && mkdir -p "$OUT/loader-nested"
+    python3 - "$LOADER_JAR" "$OUT/loader-nested" <<'PYNEST' || { echo "build aborted: could not read $LOADER_JAR"; exit 1; }
+import os, sys, zipfile
+with zipfile.ZipFile(sys.argv[1]) as z:
+    for n in z.namelist():
+        if n.startswith("META-INF/jars/mixinextras-") and n.endswith(".jar"):
+            with open(os.path.join(sys.argv[2], os.path.basename(n)), "wb") as f:
+                f.write(z.read(n))
+PYNEST
+    for j in "$OUT"/loader-nested/*.jar; do [ -f "$j" ] && CP="$CP$SEP$j"; done
+fi
 
 # A mixin listed in the config but missing from src is fatal at PREPARE, before
 # a single class loads -- worse than a compile error, because the build looks
@@ -204,6 +244,15 @@ if cfgs:
             sys.exit(1)
 PYGATE
 [ $? -eq 0 ] || { echo "build aborted: mixin config out of sync with sources"; exit 1; }
+
+# Climb step layers only (the 1.20.2 tree is step 1's layer): a layer mixin that merges members sits below the mods'
+# priority (CbVanillaReads.PRIORITY), or Mixin keeps a converted mod's INVOKE / other non-HEAD/RETURN/TAIL injectors out
+# of the restored member; and such a restorer carries no injectors into W's own methods (they move to a default-priority
+# <name>Hooks mixin), except a route declared CbVanillaReads.ROUTE_FIRST. Rules: core/tools/mixin_priority.py.
+case "$SHIM" in
+    core/shims/steps/*|core/shims/1.20.2|*/core/shims/steps/*|*/core/shims/1.20.2)
+        python3 core/tools/mixin_priority.py "$SHIM" || { echo "build aborted: layer mixin priorities"; exit 1; } ;;
+esac
 
 # The wiring and mixin gates below run the engine's own checkers against the
 # COMPILED tree, so the engine must be built first (see CLAUDE.md). Skipping

@@ -6,7 +6,12 @@
   "mixins": [
     "MobAttackTypeMixin",
     "EntityAttackRangeMixin",
-    "FurnaceBurnMixin"
+    "FurnaceBurnMixin",
+    "BundleWeightMixin",
+    "ItemStackCodecLambdaMixin",
+    "FrogAttackMixin",
+    "FancyLimbMixin",
+    "LootMineMixin"
   ],
   "injectors": {
     "defaultRequire": 1

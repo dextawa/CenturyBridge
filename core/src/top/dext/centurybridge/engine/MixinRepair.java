@@ -402,7 +402,9 @@ public final class MixinRepair {
      * names) -- the conversion-time signal "a converted mod mixed this restored member" (smx4 (l)). A layer route
      * that cannot compare answers consults the restored member only when a loaded mod's jar lists it (the layer
      * reads every jar's file through its class loader's getResources), and otherwise leaves W's own path exactly
-     * as it is. Lines of mixins stripped later in the conversion are dropped ({@link #dropMixed})
+     * as it is. Lines of mixins stripped later in the conversion are dropped ({@link #dropMixed}). A kept injector on a
+     * facade's member (the step renames the target class to one of the layer's) is written too, keyed by the facade's
+     * name (s6e B1); so is an injector moved onto a layer class's static (s6e B6)
      */
     public String stepTo;
     public static final String MIXED_DIR = "META-INF/centurybridge/mixed/";
@@ -531,6 +533,8 @@ public final class MixinRepair {
                 entries.put(refmapName, GSON.toJson(refmapRoot).getBytes(StandardCharsets.UTF_8));
             }
         }
+        retargetInvokerCalls(entries);
+        invokerMoves.clear();
         writeMixed(entries, fatal);
         return new Outcome(fatal, why, repairs, disabledAll);
     }
@@ -578,9 +582,23 @@ public final class MixinRepair {
             }
             if (fatalWhy != null) return new MixinResult(null, false, repairs, disabled, fatalWhy);
         }
+        // smx4d (6): an anonymous class javac renumbered (ByteBufCodecs$20 -> $22 at 1.21.2, the same methods)
+        for (String t : new ArrayList<>(targets)) {
+            String to = renumberedAnonymous(mx, refmap, t);
+            if (to != null && retargetMixin(mx, refmap, t, to)) {
+                classChanged = true;
+                if (refmap != null) refmapChanged = true;
+                targets.set(targets.indexOf(t), to);
+                repairs.add("anonymous-renumbered " + shortName + ": " + t + " -> " + to
+                    + " (the one sibling anonymous class declaring every member the mixin names)");
+            }
+        }
+        if ((mx.access & Opcodes.ACC_INTERFACE) != 0 && moveInvokers(mx, refmap, targets, shortName, repairs)) {
+            classChanged = true;
+        }
 
         boolean[] dirty = {false, false}; // class, refmap
-        for (MethodNode handler : mx.methods) {
+        for (MethodNode handler : new ArrayList<>(mx.methods)) { // a copy: reshapeCaptured adds a handler
             for (AnnotationNode an : annotations(handler)) {
                 Map<String, Object> v = values(an);
                 List<String> methods = strings(v.get("method"));
@@ -647,13 +665,14 @@ public final class MixinRepair {
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
                         if (cands.isEmpty() && s.desc != null && mixinMoves.containsKey(owner + "." + s.name + s.desc)) {
-                            // the static moved, the same code, to another W class (mixinMoves): onto a mixin of that class
-                            String why0 = movable(mx, handler, an, anchors, mixinMoves.get(owner + "." + s.name + s.desc));
+                            // the method moved, the same code, to another W class (mixinMoves): onto a mixin of that class
+                            List<String[]> self = mixinMoveSelf.get(owner + "." + s.name + s.desc);
+                            String why0 = movable(mx, handler, an, anchors, mixinMoves.get(owner + "." + s.name + s.desc), owner, self);
                             if (why0 == null) {
                                 String to = mixinMoves.get(owner + "." + s.name + s.desc);
                                 fixNotes.add("move " + where + " => " + to + " (mixinMoves: the same code in another class)");
                                 fixes.add(() -> {
-                                    moveInjector(mx, handler, an, to);
+                                    moveInjector(mx, handler, an, to, owner, self);
                                     dirty[0] = true;
                                 });
                             } else if (deadWhy == null) {
@@ -675,14 +694,60 @@ public final class MixinRepair {
                                     if (viaRefmap) { refmapPut(refmap, sel, repl); dirty[1] = true; }
                                     else { setMethodSelector(an, idx, repl); dirty[0] = true; }
                                 });
-                            } else if (deadWhy == null) {
-                                deadWhy = "target gone: @" + kind + " " + where;
+                            } else {
+                                String toLayer = s.desc != null && staticMove != null ? staticMove.apply(owner + "." + s.name + s.desc) : null;
+                                if (toLayer != null && toLayer.startsWith("top/dext/")) {
+                                    // s6e B6, the last resort for a V static W lost: the step staticRedirects it into a layer
+                                    // class (a class mixin cannot restore a non-private static), which holds V's code for
+                                    // converted mods' calls. The injector moves onto a mixin of that method, and the move is
+                                    // recorded in the mixed signal: a layer route sending W's path through the method
+                                    // (@CbVanillaReads) consults it only when mixed. Taken only where nothing W runs itself
+                                    // holds the code (no restored member, no mixinMoves, no same-name method to drop onto)
+                                    String why0 = (handler.access & Opcodes.ACC_STATIC) == 0 ? "an instance handler on a static"
+                                        : movable(mx, handler, an, anchors, toLayer, owner, null);
+                                    if (why0 == null) {
+                                        fixNotes.add("move " + where + " => " + toLayer + " (staticRedirects: V's static held by a layer class)");
+                                        fixes.add(() -> {
+                                            moveInjector(mx, handler, an, toLayer, owner, null);
+                                            int d = toLayer.indexOf('.');
+                                            ClassNode lc = target(toLayer.substring(0, d));
+                                            mixed(crossMixinName(toLayer.substring(0, d)), toLayer.substring(0, d),
+                                                new Sel(null, toLayer.substring(d + 1, toLayer.indexOf('(')), toLayer.substring(toLayer.indexOf('(')), false).match(lc));
+                                            dirty[0] = true;
+                                        });
+                                    } else if (deadWhy == null) {
+                                        deadWhy = "target gone: @" + kind + " " + where + " (staticRedirects to " + toLayer + ": " + why0 + ")";
+                                    }
+                                } else if (deadWhy == null) {
+                                    deadWhy = "target gone: @" + kind + " " + where;
+                                }
                             }
                             continue;
                         }
                         if (anchors == null || anchors.isEmpty() || cands.stream().anyMatch(m -> anchorsIn(m, tc, anchors))) {
+                            // the handler's captured target arguments must be what the target takes now (smx1 CASE 14)
+                            List<MethodNode> hit = anchors == null || anchors.isEmpty() ? cands
+                                : cands.stream().filter(m -> anchorsIn(m, tc, anchors)).toList();
+                            CapturedFit fit = capturedFit(an, handler, anchors, hit, owner);
+                            if (fit.why() != null) {
+                                if (deadWhy == null) deadWhy = "captured args: @" + kind + " " + where + " (" + fit.why() + ")";
+                                continue;
+                            }
+                            if (fit.changes()) {
+                                fixNotes.add("captured-args " + where + " " + fit.note()
+                                    + " (the target's arguments changed; a wrapper handler takes W's and calls the mod's handler with V's)");
+                                fixes.add(() -> {
+                                    reshapeCaptured(mx, handler, fit);
+                                    dirty[0] = true;
+                                });
+                                continue;
+                            }
                             if (cands.stream().allMatch(layerMembers::isMember)) {
                                 mixed(mx.name, owner, cands); // a converted mod mixes the layer's restored member
+                            } else if (owner.startsWith("top/dext/") && layerEntry(owner) != null) {
+                                // a member of a facade (a class the step renames to one of the layer's, s6e B1:
+                                // TerracottaBlock): keyed by the facade's own name, as the layer's route reads it
+                                mixed(mx.name, owner, cands);
                             }
                             live = true;
                             break;
@@ -903,8 +968,32 @@ public final class MixinRepair {
         return f;
     }
 
+    private String crossMixinName(String decl) {
+        return (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$xguard$" + decl.replace('/', '_').replace('$', '_');
+    }
+
+    /** a @Shadow on the guard mixin, {kind 'f'/'m', name, desc, static}, unless it has one of that shape */
+    private static void addShadow(ClassNode gc, Object[] sh) {
+        String name = (String) sh[1];
+        String desc = (String) sh[2];
+        boolean st = (Boolean) sh[3];
+        AnnotationNode a = new AnnotationNode(SHADOW);
+        if ((Character) sh[0] == 'f') {
+            if (gc.fields.stream().anyMatch(f -> f.name.equals(name) && f.desc.equals(desc))) return;
+            FieldNode f = new FieldNode(Opcodes.ACC_PRIVATE | (st ? Opcodes.ACC_STATIC : 0), name, desc, null, null);
+            f.visibleAnnotations = new ArrayList<>(List.of(a));
+            gc.fields.add(f);
+        } else {
+            if (gc.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc))) return;
+            MethodNode m = new MethodNode(st ? Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_NATIVE : Opcodes.ACC_PROTECTED | Opcodes.ACC_ABSTRACT,
+                name, desc, null, null);
+            m.visibleAnnotations = new ArrayList<>(List.of(a));
+            gc.methods.add(m);
+        }
+    }
+
     private ClassNode crossMixin(String decl, int version) {
-        String name = (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$xguard$" + decl.replace('/', '_').replace('$', '_');
+        String name = crossMixinName(decl);
         return crossMixins.computeIfAbsent(name, k -> {
             ClassNode gc = new ClassNode();
             gc.version = version;
@@ -1205,7 +1294,8 @@ public final class MixinRepair {
     }
 
     /** why an injector cannot move onto a mixin of the class a mixinMoves entry names, or null */
-    private String movable(ClassNode mx, MethodNode h, AnnotationNode an, List<Anchor> anchors, String to) {
+    private String movable(ClassNode mx, MethodNode h, AnnotationNode an, List<Anchor> anchors, String to, String vOwner,
+                           List<String[]> self) {
         if (!crossAllowed) return "not in a config being repaired";
         int dot = to.indexOf('.');
         int paren = to.indexOf('(');
@@ -1217,21 +1307,197 @@ public final class MixinRepair {
         boolean ws = (wm.access & Opcodes.ACC_STATIC) != 0;
         boolean hs = (h.access & Opcodes.ACC_STATIC) != 0;
         if (ws != hs) return ws ? "a static target with an instance handler" : "an instance target with a static handler";
-        // an instance method moved to another class runs on another object: the handler may not read its own
-        // instance (s9: ParticleEngine.registerProviders -> ParticleResources.registerProviders)
-        if (!hs && !touchesThisFree(h)) return "the handler reads this, which is another object in the moved method";
-        if (usesOwnClass(h, mx.name)) return "the handler uses its own mixin's members";
+        // an instance method moved to another class runs on another object: the handler may read its own instance
+        // only through the entry's self hops (C17), its own mixin's members only as @Shadows of the W class or V's
+        if (!hs && !touchesThisFree(h) || usesOwnClass(h, mx.name)) {
+            if (self == null || self.isEmpty() || hs) {
+                if (!hs && !touchesThisFree(h)) return "the handler reads this, which is another object in the moved method";
+                return "the handler uses its own mixin's members";
+            }
+            List<String> why = new ArrayList<>();
+            if (selfHopCopy(mx, h, to.substring(0, dot), vOwner, self, why, new ArrayList<>()) == null) return why.get(0);
+        }
         if (anchors == null) return "an anchor not statically evaluable";
-        if (!anchors.isEmpty() && !anchorsIn(wm, wc, anchors)) return "its anchor is not in the moved method " + anchors;
+        if (!anchors.isEmpty() && !anchorsIn(wm, wc, anchors)) {
+            // s11 C6(a): an INVOKE anchor on another V method that moved too (a RenderType factory overload calling
+            // another factory): in the moved code the call names where that one went (moveInjector respells it)
+            List<Anchor> tr = movedAnchors(anchors);
+            if (tr == null || !anchorsIn(wm, wc, tr)) return "its anchor is not in the moved method " + anchors;
+        }
+        return null;
+    }
+
+    /** the anchors with each INVOKE of a mixinMoves key respelled as its W method, or null when none is one */
+    private List<Anchor> movedAnchors(List<Anchor> anchors) {
+        List<Anchor> out = new ArrayList<>();
+        boolean any = false;
+        for (Anchor a : anchors) {
+            String to = a.kind.equals("INVOKE") && a.owner != null && a.desc != null ? mixinMoves.get(a.owner + "." + a.name + a.desc) : null;
+            if (to != null) {
+                int d = to.indexOf('.');
+                int p = to.indexOf('(');
+                out.add(new Anchor(a.kind, to.substring(0, d), to.substring(d + 1, p), to.substring(p), a.constant, a.ordinal, a.role));
+                any = true;
+            } else {
+                out.add(a);
+            }
+        }
+        return any ? out : null;
+    }
+
+    /** every @At target (slices included) naming a mixinMoves key, respelled as its W method (s11 C6(a)) */
+    private void respellMovedTargets(AnnotationNode an) {
+        if (an.values == null) return;
+        for (int i = 0; i + 1 < an.values.size(); i += 2) {
+            Object v = an.values.get(i + 1);
+            if ("target".equals(an.values.get(i)) && v instanceof String t && t.startsWith("L") && t.indexOf(';') > 0 && t.indexOf('(') > t.indexOf(';')) {
+                String key = t.substring(1, t.indexOf(';')) + "." + t.substring(t.indexOf(';') + 1);
+                String to = mixinMoves.get(key);
+                if (to != null) an.values.set(i + 1, "L" + to.substring(0, to.indexOf('.')) + ";" + to.substring(to.indexOf('.') + 1));
+            } else if (v instanceof AnnotationNode a) {
+                respellMovedTargets(a);
+            } else if (v instanceof List<?> l) {
+                for (Object o : l) if (o instanceof AnnotationNode a) respellMovedTargets(a);
+            }
+        }
+    }
+
+    private static final String SHADOW = "Lorg/spongepowered/asm/mixin/Shadow;";
+
+    /**
+     * The handler as it runs in the W class's guard mixin (C17): its own mixin's name becomes the guard mixin's, so
+     * {@code this} is the W class's instance; a @Shadow member the W class declares stays on {@code this} (a @Shadow
+     * of it is declared on the guard mixin, {@code shadows}: {kind, name, desc, static}); a @Shadow member only V's
+     * class declares (public: the guard runs in another class) is called on V's instance; every use of {@code this}
+     * other than as the receiver of a member the W class declares reads the self hops -- the first a field of the W
+     * class (shadowed too), the rest public. Null with the reason when the handler does anything else with its own
+     * class (a @Unique member, a cast to it, {@code this} duplicated or stored, a frame holding it on the stack)
+     */
+    private MethodNode selfHopCopy(ClassNode mx, MethodNode h, String wOwner, String vOwner, List<String[]> hops,
+                                   List<String> why, List<Object[]> shadows) {
+        String gname = crossMixinName(wOwner);
+        ClassNode wc = target(wOwner);
+        ClassNode vc = target(vOwner);
+        if (wc == null || vc == null) { why.add("no W code for " + wOwner + " / " + vOwner); return null; }
+        if (!hops.get(0)[0].equals(wOwner)) { why.add("the first self hop is not a field of " + wOwner); return null; }
+        org.objectweb.asm.commons.SimpleRemapper rm = new org.objectweb.asm.commons.SimpleRemapper(mx.name, gname);
+        MethodNode c = new MethodNode(h.access, h.name, rm.mapMethodDesc(h.desc), null,
+            h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
+        h.accept(new org.objectweb.asm.commons.MethodRemapper(c, rm));
+        c.desc = rm.mapMethodDesc(h.desc);
+        // the mod mixin's @Shadow members: insn name+desc -> the target's name
+        Map<String, String> shadowed = new HashMap<>();
+        for (FieldNode f : mx.fields) {
+            if (hasAnnotation(f.visibleAnnotations, SHADOW) || hasAnnotation(f.invisibleAnnotations, SHADOW)) shadowed.put(f.name + ":" + rm.mapDesc(f.desc), f.name);
+        }
+        for (MethodNode m : mx.methods) {
+            AnnotationNode sh = null;
+            for (AnnotationNode a : annotations(m)) if (a.desc.equals(SHADOW)) sh = a;
+            if (sh == null) continue;
+            String prefix = values(sh).get("prefix") instanceof String p ? p : "shadow$";
+            shadowed.put(m.name + rm.mapMethodDesc(m.desc), m.name.startsWith(prefix) ? m.name.substring(prefix.length()) : m.name);
+        }
+        org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue>[] fr;
+        try {
+            fr = new org.objectweb.asm.tree.analysis.Analyzer<>(new org.objectweb.asm.tree.analysis.SourceInterpreter()).analyze(gname, c);
+        } catch (org.objectweb.asm.tree.analysis.AnalyzerException ex) {
+            why.add("the handler's code cannot be analysed: " + ex.getMessage());
+            return null;
+        }
+        AbstractInsnNode[] insns = c.instructions.toArray();
+        Set<AbstractInsnNode> keep = new java.util.HashSet<>();
+        Set<AbstractInsnNode> hop = new java.util.HashSet<>();
+        for (int i = 0; i < insns.length; i++) {
+            AbstractInsnNode in = insns[i];
+            if (in instanceof TypeInsnNode ti && ti.desc.equals(gname)) { why.add("the handler casts to its own mixin"); return null; }
+            if (fr[i] == null) continue; // unreachable
+            if (in.getOpcode() >= Opcodes.DUP && in.getOpcode() <= Opcodes.SWAP || in.getOpcode() == Opcodes.ASTORE) {
+                org.objectweb.asm.tree.analysis.SourceValue top = fr[i].getStack(fr[i].getStackSize() - 1);
+                if (top.insns.stream().anyMatch(MixinRepair::isThis)) { why.add("the handler duplicates or stores this"); return null; }
+            }
+            String owner, name, desc;
+            boolean field = in instanceof FieldInsnNode;
+            if (in instanceof FieldInsnNode fi) { owner = fi.owner; name = fi.name; desc = fi.desc; }
+            else if (in instanceof MethodInsnNode mi) { owner = mi.owner; name = mi.name; desc = mi.desc; }
+            else continue;
+            if (!owner.equals(gname)) continue;
+            String real = shadowed.get(field ? name + ":" + desc : name + desc);
+            if (real == null) { why.add("the handler uses its own mixin's member " + name + " (not a @Shadow)"); return null; }
+            boolean st = in.getOpcode() == Opcodes.GETSTATIC || in.getOpcode() == Opcodes.PUTSTATIC || in.getOpcode() == Opcodes.INVOKESTATIC;
+            boolean onW = declares(wc, field, real, desc);
+            Integer vAcc = access(vc, field, real, desc);
+            int recv;
+            if (onW) {
+                shadows.add(new Object[] {field ? 'f' : 'm', real, desc, st});
+                recv = 1;
+            } else if (vAcc != null && (vAcc & Opcodes.ACC_PUBLIC) != 0) {
+                if (field) ((FieldInsnNode) in).owner = vOwner; else ((MethodInsnNode) in).owner = vOwner;
+                recv = 2;
+            } else {
+                why.add("@Shadow " + real + " is on neither " + wOwner + " nor (public) on " + vOwner);
+                return null;
+            }
+            if (field) ((FieldInsnNode) in).name = real; else ((MethodInsnNode) in).name = real;
+            if (!st) {
+                int depth = field ? (in.getOpcode() == Opcodes.PUTFIELD ? 1 : 0) : Type.getArgumentTypes(desc).length;
+                org.objectweb.asm.tree.analysis.SourceValue r = fr[i].getStack(fr[i].getStackSize() - 1 - depth);
+                for (AbstractInsnNode src : r.insns) if (isThis(src)) (recv == 1 ? keep : hop).add(src);
+            }
+        }
+        for (AbstractInsnNode in : insns) {
+            if (in instanceof FrameNode f && f.stack != null && f.stack.contains(gname)) { why.add("a frame holds this on the stack"); return null; }
+        }
+        for (AbstractInsnNode in : insns) {
+            if (!isThis(in) || keep.contains(in) && !hop.contains(in)) continue;
+            if (keep.contains(in)) { why.add("one this is the receiver of members of both classes"); return null; }
+            InsnList hl = new InsnList();
+            for (int k = 0; k < hops.size(); k++) {
+                String[] hp = hops.get(k);
+                if (k == 0) {
+                    shadows.add(new Object[] {'f', hp[1], hp[2], false});
+                    hl.add(new FieldInsnNode(Opcodes.GETFIELD, gname, hp[1], hp[2]));
+                } else {
+                    Integer a = access(target(hp[0]), true, hp[1], hp[2]);
+                    if (a == null || (a & Opcodes.ACC_PUBLIC) == 0) { why.add("self hop " + hp[0] + "." + hp[1] + " is not public"); return null; }
+                    hl.add(new FieldInsnNode(Opcodes.GETFIELD, hp[0], hp[1], hp[2]));
+                }
+            }
+            c.instructions.insert(in, hl);
+        }
+        c.maxStack += 1;
+        return c;
+    }
+
+    private static boolean isThis(AbstractInsnNode n) {
+        return n instanceof VarInsnNode v && v.getOpcode() == Opcodes.ALOAD && v.var == 0;
+    }
+
+    private static boolean hasAnnotation(List<AnnotationNode> l, String desc) {
+        return l != null && l.stream().anyMatch(a -> a.desc.equals(desc));
+    }
+
+    private static boolean declares(ClassNode cn, boolean field, String name, String desc) {
+        return access(cn, field, name, desc) != null;
+    }
+
+    /** the access of a member a class declares itself, or null */
+    private static Integer access(ClassNode cn, boolean field, String name, String desc) {
+        if (cn == null) return null;
+        if (field) {
+            for (FieldNode f : cn.fields) if (f.name.equals(name) && f.desc.equals(desc)) return f.access;
+        } else {
+            for (MethodNode m : cn.methods) if (m.name.equals(name) && m.desc.equals(desc)) return m.access;
+        }
         return null;
     }
 
     /**
-     * the injector onto a mixin of the W class (the config's cb$xguard$ mixin of it): a copy of the static handler
+     * the injector onto a mixin of the W class (the config's cb$xguard$ mixin of it): a copy of the handler
      * selecting the W method; the mod's handler stays a plain method marked like a guarded one, so MixinJudge
-     * judges the copy where it now stands
+     * judges the copy where it now stands. The copy is spelled in the guard mixin's name (its own class's members
+     * are the guard's); with self hops (C17) {@code this} is read as {@link #selfHopCopy} says
      */
-    private void moveInjector(ClassNode mx, MethodNode h, AnnotationNode an, String to) {
+    private void moveInjector(ClassNode mx, MethodNode h, AnnotationNode an, String to, String vOwner, List<String[]> self) {
         int dot = to.indexOf('.');
         String wOwner = to.substring(0, dot);
         ClassNode gc = crossMixin(wOwner, mx.version);
@@ -1244,8 +1510,18 @@ public final class MixinRepair {
         }
         AnnotationNode moved = copyAnnotation(an);
         setSelector(moved, "L" + wOwner + ";" + to.substring(dot + 1));
-        MethodNode g = new MethodNode(h.access, gname, h.desc, h.signature, h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
-        h.accept(g);
+        respellMovedTargets(moved);
+        List<Object[]> shadows = new ArrayList<>();
+        MethodNode g = self != null && !self.isEmpty() && (h.access & Opcodes.ACC_STATIC) == 0
+            ? selfHopCopy(mx, h, wOwner, vOwner, self, new ArrayList<>(), shadows) : null;
+        if (g == null) {
+            org.objectweb.asm.commons.SimpleRemapper rm = new org.objectweb.asm.commons.SimpleRemapper(mx.name, gc.name);
+            g = new MethodNode(h.access, gname, rm.mapMethodDesc(h.desc), null, h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
+            h.accept(new org.objectweb.asm.commons.MethodRemapper(g, rm));
+            g.desc = rm.mapMethodDesc(h.desc);
+        }
+        g.signature = null;
+        for (Object[] sh : shadows) addShadow(gc, sh);
         g.name = gname;
         g.visibleAnnotations = new ArrayList<>(List.of(moved));
         g.invisibleAnnotations = null;
@@ -1257,6 +1533,153 @@ public final class MixinRepair {
         mark.values = new ArrayList<>(List.of("of", oldName, "mixin", gc.name, "handler", gname));
         h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
         h.invisibleAnnotations.add(mark);
+    }
+
+    // ------------------------------------------------------------------ invokers on statics W moved to another class
+
+    private static final String INVOKER = "Lorg/spongepowered/asm/mixin/gen/Invoker;";
+
+    /** "accessor interface.name desc" of an invoker moved by {@link #moveInvokers} -> "W interface.name" (the calls follow) */
+    private final Map<String, String> invokerMoves = new LinkedHashMap<>();
+
+    /**
+     * A static @Invoker on a static V method that W keeps, the same code, in another class (a mixinMoves entry: 1.20.3
+     * moved ShapedRecipe.shrink to ShapedRecipePattern; 1.21.11 RenderType's factories to RenderTypes): the invoker
+     * moves onto an accessor interface mixin of the W class, naming the W method, and the jar's calls of it follow
+     * ({@link #retargetInvokerCalls}). Left where it was, the target no longer declares the method: the whole
+     * accessor is stripped (L3 target-decl) and every call into it runs its {@code throw new AssertionError()} body.
+     * Only an invoker whose descriptor is the W method's (the same code: same arguments, same answer) and whose V
+     * method the target class no longer declares; an instance invoker stays (its receiver is the V class's object).
+     */
+    private boolean moveInvokers(ClassNode mx, JsonObject refmap, List<String> targets, String shortName, List<String> repairs) {
+        if (mixinMoves.isEmpty() || targets.size() != 1 || !crossAllowed) return false;
+        String owner = targets.get(0);
+        ClassNode tc = target(owner);
+        boolean changed = false;
+        for (MethodNode m : new ArrayList<>(mx.methods)) {
+            if ((m.access & Opcodes.ACC_STATIC) == 0) continue;
+            AnnotationNode inv = annotations(m).stream().filter(a -> INVOKER.equals(a.desc)).findFirst().orElse(null);
+            if (inv == null) continue;
+            String name = values(inv).get("value") instanceof String s && !s.isEmpty() ? refmapLookup(refmap, s) : invokerName(m.name);
+            if (name == null) continue;
+            String desc = m.desc;
+            if (name.contains("(")) {
+                desc = name.substring(name.indexOf('('));
+                name = name.substring(0, name.indexOf('('));
+                if (!desc.equals(m.desc)) continue;
+            }
+            String to = mixinMoves.get(owner + "." + name + desc);
+            if (to == null) continue;
+            String n0 = name, d0 = desc;
+            if (tc != null && tc.methods.stream().anyMatch(x -> x.name.equals(n0) && x.desc.equals(d0))) continue;
+            int dot = to.indexOf('.');
+            String wOwner = to.substring(0, dot);
+            String wName = to.substring(dot + 1, to.indexOf('('));
+            String wDesc = to.substring(to.indexOf('('));
+            ClassNode wc = target(wOwner);
+            if (!wDesc.equals(desc) || wc == null || wc.methods.stream().noneMatch(x -> x.name.equals(wName) && x.desc.equals(wDesc)
+                    && (x.access & Opcodes.ACC_STATIC) != 0)) {
+                continue;
+            }
+            ClassNode ac = crossInvoker(wOwner, mx.version);
+            String gname = m.name;
+            while (true) {
+                String g0 = gname;
+                if (ac.methods.stream().noneMatch(x -> x.name.equals(g0) && x.desc.equals(m.desc))) break;
+                gname += "_";
+            }
+            MethodNode g = new MethodNode(m.access, gname, m.desc, m.signature, m.exceptions == null ? null : m.exceptions.toArray(new String[0]));
+            m.accept(g);
+            g.name = gname;
+            for (AnnotationNode a : annotations(g)) {
+                if (!INVOKER.equals(a.desc)) continue;
+                a.values = new ArrayList<>(List.of("value", wName));
+            }
+            ac.methods.add(g);
+            mx.methods.remove(m);
+            invokerMoves.put(mx.name + "." + m.name + m.desc, ac.name + "." + gname);
+            repairs.add("invoker-move " + shortName + "." + m.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1) + "." + name
+                + " => " + to + " (mixinMoves: the same code in another class; the jar's calls follow)");
+            changed = true;
+        }
+        return changed;
+    }
+
+    /** the member an @Invoker without a value names (Mixin: call/invoke/new/create prefix dropped, first letter lowered) */
+    private static String invokerName(String method) {
+        for (String p : new String[] {"call", "invoke", "new", "create"}) {
+            if (method.startsWith(p) && method.length() > p.length() && Character.isUpperCase(method.charAt(p.length()))) {
+                String rest = method.substring(p.length());
+                return Character.toLowerCase(rest.charAt(0)) + rest.substring(1);
+            }
+        }
+        return null;
+    }
+
+    private ClassNode crossInvoker(String decl, int version) {
+        String name = (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$xinvoke$" + decl.replace('/', '_').replace('$', '_');
+        return crossMixins.computeIfAbsent(name, k -> {
+            ClassNode ac = new ClassNode();
+            ac.version = Math.max(version, Opcodes.V1_8);
+            ac.access = Opcodes.ACC_PUBLIC | Opcodes.ACC_INTERFACE | Opcodes.ACC_ABSTRACT;
+            ac.name = k;
+            ac.superName = "java/lang/Object";
+            AnnotationNode mixin = new AnnotationNode(MIXIN);
+            mixin.values = new ArrayList<>(List.of("value", new ArrayList<>(List.of(Type.getObjectType(decl)))));
+            ac.invisibleAnnotations = new ArrayList<>(List.of(mixin));
+            return ac;
+        });
+    }
+
+    /** every class of the jar: a call (or method handle) of a moved invoker names its new interface */
+    private void retargetInvokerCalls(Map<String, byte[]> entries) {
+        if (invokerMoves.isEmpty()) return;
+        for (Map.Entry<String, byte[]> e : entries.entrySet()) {
+            if (!e.getKey().endsWith(".class")) continue;
+            ClassReader cr = new ClassReader(e.getValue());
+            ClassWriter cw = new ClassWriter(cr, 0);
+            boolean[] hit = {false};
+            java.util.function.UnaryOperator<Object> h = o -> {
+                if (o instanceof org.objectweb.asm.Handle hd && hd.getTag() == Opcodes.H_INVOKESTATIC) {
+                    String to = invokerMoves.get(hd.getOwner() + "." + hd.getName() + hd.getDesc());
+                    if (to != null) {
+                        hit[0] = true;
+                        return new org.objectweb.asm.Handle(hd.getTag(), to.substring(0, to.indexOf('.')), to.substring(to.indexOf('.') + 1), hd.getDesc(), true);
+                    }
+                }
+                return o;
+            };
+            cr.accept(new org.objectweb.asm.ClassVisitor(Opcodes.ASM9, cw) {
+                @Override
+                public org.objectweb.asm.MethodVisitor visitMethod(int acc, String n, String d, String sig, String[] ex) {
+                    return new org.objectweb.asm.MethodVisitor(Opcodes.ASM9, super.visitMethod(acc, n, d, sig, ex)) {
+                        @Override
+                        public void visitMethodInsn(int op, String ow, String nm, String ds, boolean itf) {
+                            String to = op == Opcodes.INVOKESTATIC ? invokerMoves.get(ow + "." + nm + ds) : null;
+                            if (to != null) {
+                                hit[0] = true;
+                                super.visitMethodInsn(op, to.substring(0, to.indexOf('.')), to.substring(to.indexOf('.') + 1), ds, true);
+                            } else {
+                                super.visitMethodInsn(op, ow, nm, ds, itf);
+                            }
+                        }
+
+                        @Override
+                        public void visitLdcInsn(Object v) {
+                            super.visitLdcInsn(h.apply(v));
+                        }
+
+                        @Override
+                        public void visitInvokeDynamicInsn(String nm, String ds, org.objectweb.asm.Handle bsm, Object... args) {
+                            Object[] a2 = new Object[args.length];
+                            for (int i = 0; i < args.length; i++) a2[i] = h.apply(args[i]);
+                            super.visitInvokeDynamicInsn(nm, ds, bsm, a2);
+                        }
+                    };
+                }
+            }, 0);
+            if (hit[0]) e.setValue(cw.toByteArray());
+        }
     }
 
     private static AnnotationNode copyAnnotation(AnnotationNode an) {
@@ -2235,8 +2658,15 @@ public final class MixinRepair {
     public LayerMembers layerMembers = LayerMembers.none();
     /** the step's classRenames (W side: a restored body calls the facade a V class is renamed to) */
     public Map<String, String> classRenames = Map.of();
+    /**
+     * Chain.staticRedirects as a move (s6e B6, set by Main): "V owner.name(desc)" -> "layer class.name(desc as the jar
+     * spells it)" of the static the step redirects V's static to, or null
+     */
+    public java.util.function.Function<String, String> staticMove;
     /** Chain.mixinMoves: "V owner.name(desc)" -> "W owner.name(desc)" of a static W keeps in another class */
     public Map<String, String> mixinMoves = Map.of();
+    /** Chain.mixinMoveSelf: per mixinMoves key, the field hops from the W class's instance to V's (C17) */
+    public Map<String, List<String[]>> mixinMoveSelf = Map.of();
 
     /** overrides MixinBridge.restoreOverride put back (restoring mixins of the jar being repaired), by target */
     private Map<String, List<MethodNode>> restoredByTarget = Map.of();
@@ -2315,6 +2745,43 @@ public final class MixinRepair {
             }
         }
         return implIndex.getOrDefault(iface, List.of());
+    }
+
+    /**
+     * smx4d (6): javac numbers anonymous classes in order (Outer$N), and the number moves when the outer class gains or
+     * loses one before it while the members inside keep their names. For a target "Outer$N" (digits) that lacks a
+     * member the mixin names with a descriptor (injector selectors, @Shadow / @Accessor / @Invoker by name + the
+     * method's own descriptor): the one W class Outer$M (digits) declaring every such member, or null (none, or
+     * several: no evidence which). Only exact name + descriptor; a renamed method needs a body follow (not here).
+     */
+    private String renumberedAnonymous(ClassNode mx, JsonObject refmap, String t) {
+        int d = t.lastIndexOf('$');
+        if (d < 0 || !t.substring(d + 1).matches("\\d+")) return null;
+        List<String> wanted = new ArrayList<>();
+        for (MethodNode m : mx.methods) {
+            for (AnnotationNode an : annotations(m)) {
+                for (String sel : strings(values(an).get("method"))) {
+                    Sel sp = Sel.parse(refmapLookup(refmap, sel));
+                    if (sp.desc != null && !sp.wildcard && (sp.owner == null || sp.owner.equals(t))) wanted.add(sp.name + sp.desc);
+                }
+                if (an.desc.equals(SHADOW) && !m.name.startsWith("<")) wanted.add(m.name + m.desc);
+            }
+        }
+        if (wanted.isEmpty()) return null;
+        ClassNode tc = target(t);
+        if (tc != null && wanted.stream().allMatch(w -> tc.methods.stream().anyMatch(m -> (m.name + m.desc).equals(w)))) return null;
+        String outer = t.substring(0, d + 1);
+        List<String> hits = new ArrayList<>();
+        var en = code.entries();
+        while (en.hasMoreElements()) {
+            String n = en.nextElement().getName();
+            if (!n.startsWith(outer) || !n.endsWith(".class")) continue;
+            String c = n.substring(0, n.length() - 6);
+            if (c.equals(t) || !c.substring(outer.length()).matches("\\d+")) continue;
+            ClassNode cc = target(c);
+            if (cc != null && wanted.stream().allMatch(w -> cc.methods.stream().anyMatch(m -> (m.name + m.desc).equals(w)))) hits.add(c);
+        }
+        return hits.size() == 1 ? hits.get(0) : null;
     }
 
     /** replace one @Mixin target (value= Type or targets= string, via refmap if mapped) */
@@ -2744,6 +3211,365 @@ public final class MixinRepair {
         if (an.desc.endsWith("/WrapOperation;")) return hp.length != operands + 1;
         if (an.desc.endsWith("/ModifyArg;") || an.desc.endsWith("/ModifyArgs;")) return hp.length != 1;
         return true;
+    }
+
+    /**
+     * W -> V converters of the step's wiring (Chain.argConverter: (W type, V type) -> {owner, name, desc}, or null);
+     * set by Main. A captured target argument whose type the step changed is handed to the handler through one
+     */
+    public java.util.function.BiFunction<Type, Type, String[]> converter;
+
+    private static final String COERCE = "Lorg/spongepowered/asm/mixin/injection/Coerce;";
+
+    /**
+     * the handler parameters Mixin fills with the target's arguments, {first, end} (end exclusive; the k-th of them
+     * is the target's k-th argument), or null when the handler's shape does not say: @Inject before its
+     * CallbackInfo(Returnable); the value-modifying injectors after their one value; @ModifyArg(s) after the
+     * argument / Args; @Redirect / @WrapWithCondition / @WrapOperation of one INVOKE after the call's operands (and
+     * the Operation)
+     */
+    static int[] capturedRange(AnnotationNode an, MethodNode h, List<Anchor> anchors, List<MethodNode> targets) {
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        if (an.desc.equals(INJECT)) {
+            for (int i = 0; i < hp.length; i++) {
+                if (hp[i].getDescriptor().equals(CI) || hp[i].getDescriptor().equals(CIR)) return new int[] {0, i};
+            }
+            return null;
+        }
+        if (an.desc.endsWith("/ModifyVariable;") || an.desc.endsWith("/ModifyConstant;") || an.desc.endsWith("/ModifyReturnValue;")
+                || an.desc.endsWith("/ModifyExpressionValue;") || an.desc.endsWith("/ModifyArg;") || an.desc.endsWith("/ModifyArgs;")) {
+            return new int[] {1, hp.length};
+        }
+        boolean wrap = an.desc.endsWith("/WrapOperation;");
+        if (!wrap && !an.desc.endsWith("/Redirect;") && !an.desc.endsWith("/WrapWithCondition;")) return null;
+        if (anchors == null || anchors.size() != 1 || !anchors.get(0).kind.equals("INVOKE") || anchors.get(0).desc == null
+                || anchors.get(0).name.equals("<init>")) return null;
+        Anchor a = anchors.get(0);
+        // the call's receiver is an operand when the call is an instance one -- whatever type the handler gives it
+        // (a type match fails when the step moved or renamed the anchor's owner): read off the matched call in W's body
+        Boolean isStatic = null;
+        for (MethodNode m : targets) {
+            for (AbstractInsnNode in : m.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.name.equals(a.name) && mi.desc.equals(a.desc)) {
+                    boolean s = mi.getOpcode() == Opcodes.INVOKESTATIC;
+                    if (isStatic != null && isStatic != s) return null;
+                    isStatic = s;
+                }
+            }
+        }
+        if (isStatic == null) return null;
+        int start = Type.getArgumentTypes(a.desc).length + (isStatic ? 0 : 1) + (wrap ? 1 : 0);
+        return start <= hp.length ? new int[] {start, hp.length} : null;
+    }
+
+    /**
+     * a kept injector's captured arguments against its target(s): why it cannot apply, or the conversions it needs
+     * (convs / types: by handler parameter index) and, for an @Inject, the target's trailing arguments the handler
+     * never took (Mixin's callback takes all of them or none), accepted and dropped at {@code insertAt}
+     */
+    record CapturedFit(String why, Map<Integer, String[]> convs, Map<Integer, Type> types, String note, List<Type> extra, int insertAt,
+                       int[] pos, Type[] wArgs) {
+        CapturedFit(String why, Map<Integer, String[]> convs, Map<Integer, Type> types, String note) {
+            this(why, convs, types, note, List.of(), -1, null, null);
+        }
+
+        CapturedFit(String why, Map<Integer, String[]> convs, Map<Integer, Type> types, String note, List<Type> extra, int insertAt) {
+            this(why, convs, types, note, extra, insertAt, null, null);
+        }
+
+        boolean changes() {
+            return !convs.isEmpty() || !extra.isEmpty() || pos != null;
+        }
+    }
+
+    /**
+     * Where the step's wiring says a V method's arguments arrive in W's method of the same class (set by Main): for
+     * ("owner", "name W-desc"), each {V desc, int[] args (per V argument the W index), String[][] wrap (per V argument a
+     * W -> V static or null)} -- the overrideHooks of a same-class change (1.21 LivingEntity.method_20235:
+     * (EquipmentSlot) -> (Item, EquipmentSlot), args [1]) and the mixinTargets. The selector of a kept injector still
+     * names the method; its handler captured V's arguments.
+     */
+    public java.util.function.BiFunction<String, String, List<Object[]>> argMaps;
+
+    /**
+     * smx1 CASE 14: a handler capturing the target's arguments fails at apply once the step changed one's type (Mixin
+     * compares each captured parameter with the target's argument; only an @Coerce parameter may differ). Per
+     * captured parameter: the same type (or the type the step's classRenames give it) fits; another reference type
+     * the step's wiring converts W -> V ({@link #converter}) is converted in a wrapper handler; anything else -- or
+     * more captured parameters than the target now takes -- cannot apply, and the injector is dropped with a WARN
+     */
+    CapturedFit capturedFit(AnnotationNode an, MethodNode h, List<Anchor> anchors, List<MethodNode> targets, String owner) {
+        String argsOnly = argsOnlyFit(an, h, targets);
+        if (argsOnly != null) return new CapturedFit(argsOnly, new java.util.TreeMap<>(), new HashMap<>(), "");
+        CapturedFit direct = capturedFitInPlace(an, h, anchors, targets);
+        if (direct.why() == null || !an.desc.equals(INJECT) || argMaps == null || targets.isEmpty()) return direct;
+        CapturedFit mapped = capturedFitMapped(h, targets, owner);
+        return mapped != null ? mapped : direct;
+    }
+
+    /**
+     * smx1 CASE 14 (third instance): an @Inject whose handler captured all of V's arguments, on a method the step
+     * reshaped in place with a known argument mapping ({@link #argMaps}): Mixin hands the callback all of W's arguments,
+     * a wrapper takes them and calls the mod's handler with V's -- each from the W argument the mapping names, through
+     * the mapping's static or the step's converter when the type changed. Null when no mapping fits.
+     */
+    private CapturedFit capturedFitMapped(MethodNode h, List<MethodNode> targets, String owner) {
+        int[] r = capturedRange(new AnnotationNode(INJECT), h, null, targets);
+        if (r == null || r[0] >= r[1] || owner == null) return null;
+        String wDesc = targets.get(0).desc;
+        String name = targets.get(0).name;
+        if (targets.stream().anyMatch(m -> !m.desc.equals(wDesc) || !m.name.equals(name))) return null;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        Type[] ta = Type.getArgumentTypes(wDesc);
+        for (Object[] e : argMaps.apply(owner, name + wDesc)) {
+            Type[] va = Type.getArgumentTypes((String) e[0]);
+            int[] args = (int[]) e[1];
+            String[][] wrap = (String[][]) e[2];
+            if (va.length != r[1] - r[0] || args == null || args.length != va.length) continue;
+            boolean sameV = true;
+            for (int i = 0; sameV && i < va.length; i++) {
+                Type p = hp[r[0] + i];
+                sameV = p.equals(va[i]) || renamed.apply(va[i].getDescriptor()).equals(p.getDescriptor());
+            }
+            if (!sameV) continue;
+            Map<Integer, String[]> convs = new java.util.TreeMap<>();
+            StringBuilder note = new StringBuilder("V arguments from W's " + java.util.Arrays.toString(args));
+            boolean ok = true;
+            for (int i = 0; ok && i < va.length; i++) {
+                int k = r[0] + i;
+                if (args[i] < 0 || args[i] >= ta.length) {
+                    ok = false;
+                    break;
+                }
+                Type p = hp[k];
+                Type t = ta[args[i]];
+                if (p.equals(t) || renamed.apply(p.getDescriptor()).equals(t.getDescriptor()) || coerced(h, k)) continue;
+                String[] c = wrap != null && i < wrap.length && wrap[i] != null ? wrap[i]
+                    : (p.getSort() == Type.OBJECT || p.getSort() == Type.ARRAY) && converter != null ? converter.apply(t, p) : null;
+                if (c == null) {
+                    ok = false;
+                    break;
+                }
+                convs.put(k, c);
+                note.append(", arg ").append(i).append(" by ").append(c[0].substring(c[0].lastIndexOf('/') + 1)).append('.').append(c[1]);
+            }
+            if (!ok) continue;
+            return new CapturedFit(null, convs, new HashMap<>(), note.toString(), List.of(), r[0], args.clone(), ta);
+        }
+        return null;
+    }
+
+    /**
+     * A @ModifyVariable(argsOnly = true) with no index or name picks the target argument by the handler's type
+     * (LocalVariableDiscriminator over the method's arguments): exactly one argument of that type without an ordinal,
+     * more than the ordinal with one. A step that retyped the argument (1.21.2 RecipeManager.fromJson ResourceLocation
+     * -> ResourceKey) leaves none, and Mixin fails the whole mixin at apply ("Found 0 candidate variables but exactly 1
+     * is required"). Null when it fits on every target, else why not
+     */
+    private static String argsOnlyFit(AnnotationNode an, MethodNode h, List<MethodNode> targets) {
+        if (!an.desc.endsWith("/ModifyVariable;")) return null;
+        Map<String, Object> v = values(an);
+        if (!Boolean.TRUE.equals(v.get("argsOnly")) || v.get("index") instanceof Integer i && i >= 0
+                || v.get("name") != null && !list(v.get("name")).isEmpty()) return null;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        if (hp.length == 0) return null;
+        Type want = hp[0];
+        int ord = v.get("ordinal") instanceof Integer o ? o : -1;
+        for (MethodNode m : targets) {
+            int n = 0;
+            for (Type t : Type.getArgumentTypes(m.desc)) if (t.equals(want)) n++;
+            if (ord < 0 ? n != 1 : n <= ord) {
+                return "@ModifyVariable(argsOnly) of type " + want.getDescriptor() + (ord < 0 ? "" : " ordinal " + ord) + ": "
+                    + m.name + m.desc + " takes " + n + " argument(s) of that type";
+            }
+        }
+        return null;
+    }
+
+    private CapturedFit capturedFitInPlace(AnnotationNode an, MethodNode h, List<Anchor> anchors, List<MethodNode> targets) {
+        int[] r = capturedRange(an, h, anchors, targets);
+        Map<Integer, String[]> convs = new java.util.TreeMap<>();
+        Map<Integer, Type> types = new HashMap<>();
+        if (r == null || r[0] >= r[1]) return new CapturedFit(null, convs, types, "");
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        StringBuilder note = new StringBuilder();
+        List<Type> extra = null;
+        for (MethodNode m : targets) {
+            Type[] ta = Type.getArgumentTypes(m.desc);
+            if (an.desc.equals(INJECT) && r[1] - r[0] < ta.length) {
+                // the target gained trailing arguments: the callback takes them and drops them
+                List<Type> ex = List.of(ta).subList(r[1] - r[0], ta.length);
+                if (extra != null && !extra.equals(ex)) {
+                    return new CapturedFit("the target methods' trailing arguments differ", convs, types, "");
+                }
+                extra = ex;
+            }
+            for (int k = r[0]; k < r[1]; k++) {
+                int i = k - r[0];
+                if (i >= ta.length) {
+                    return new CapturedFit("the handler captures " + (r[1] - r[0]) + " target arguments, " + m.name + m.desc
+                        + " takes " + ta.length, convs, types, "");
+                }
+                Type p = hp[k];
+                Type t = ta[i];
+                if (p.equals(t) || renamed.apply(p.getDescriptor()).equals(t.getDescriptor()) || coerced(h, k)) continue;
+                boolean refs = (p.getSort() == Type.OBJECT || p.getSort() == Type.ARRAY) && (t.getSort() == Type.OBJECT || t.getSort() == Type.ARRAY);
+                String[] c = refs && converter != null ? converter.apply(t, p) : null;
+                if (c != null && (!types.containsKey(k) || types.get(k).equals(t))) {
+                    if (!types.containsKey(k)) note.append(" arg ").append(i).append(' ').append(t.getClassName()).append(" -> ")
+                        .append(p.getClassName()).append(" by ").append(c[0].substring(c[0].lastIndexOf('/') + 1)).append('.').append(c[1]);
+                    convs.put(k, c);
+                    types.put(k, t);
+                    continue;
+                }
+                return new CapturedFit("captures " + p.getDescriptor() + " as target argument " + i + ", " + m.name + m.desc
+                    + " takes " + t.getDescriptor() + (refs ? "; the step's wiring has no W -> V converter for it" : ""), convs, types, "");
+            }
+        }
+        if (extra != null) {
+            note.append(" accepts and drops ").append(extra.size()).append(" trailing target argument(s)");
+        }
+        return new CapturedFit(null, convs, types, note.toString().trim(), extra == null ? List.of() : extra, r[1]);
+    }
+
+    private static boolean coerced(MethodNode h, int k) {
+        for (List<AnnotationNode>[] pa : java.util.Arrays.<List<AnnotationNode>[]>asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+            if (pa != null && k < pa.length && pa[k] != null && pa[k].stream().anyMatch(a -> a.desc.equals(COERCE))) return true;
+        }
+        return false;
+    }
+
+    /** parameter annotations of the handler as the wrapper's: the inserted trailing target arguments carry none */
+    @SuppressWarnings("unchecked")
+    private static List<AnnotationNode>[] widen(List<AnnotationNode>[] pa, CapturedFit fit) {
+        if (pa == null || fit.extra().isEmpty()) return pa;
+        List<AnnotationNode>[] out = new List[pa.length + fit.extra().size()];
+        for (int k = 0; k < pa.length; k++) out[k < fit.insertAt() ? k : k + fit.extra().size()] = pa[k];
+        return out;
+    }
+
+    /**
+     * The handler takes the target's new argument types: the mod's handler keeps its body under {@code <name>$cbcap}
+     * (a plain private method, no annotations), and a handler of the new shape -- carrying the injector and parameter
+     * annotations -- converts each changed argument by the step's W -> V static and calls it with the rest as they came
+     */
+    void reshapeCaptured(ClassNode mx, MethodNode h, CapturedFit fit) {
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        if (fit.pos() != null) {
+            reshapeMapped(mx, h, fit);
+            return;
+        }
+        List<Type> np = new ArrayList<>(List.of(hp));
+        for (Map.Entry<Integer, Type> e : fit.types().entrySet()) np.set(e.getKey(), e.getValue());
+        if (!fit.extra().isEmpty()) np.addAll(fit.insertAt(), fit.extra());
+        Type ret = Type.getReturnType(h.desc);
+        boolean isStatic = (h.access & Opcodes.ACC_STATIC) != 0;
+        boolean itf = (mx.access & Opcodes.ACC_INTERFACE) != 0;
+        MethodNode w = new MethodNode(h.access, h.name, Type.getMethodDescriptor(ret, np.toArray(new Type[0])), null,
+            h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
+        w.visibleAnnotations = h.visibleAnnotations;
+        w.invisibleAnnotations = h.invisibleAnnotations;
+        w.visibleParameterAnnotations = widen(h.visibleParameterAnnotations, fit);
+        w.invisibleParameterAnnotations = widen(h.invisibleParameterAnnotations, fit);
+        h.visibleAnnotations = null;
+        h.invisibleAnnotations = null;
+        h.visibleParameterAnnotations = null;
+        h.invisibleParameterAnnotations = null;
+        h.visibleAnnotableParameterCount = 0;
+        h.invisibleAnnotableParameterCount = 0;
+        h.name = h.name + "$cbcap";
+        // synthetic: kept out of the merged-member indexes (LayerMembers), as a lambda body is
+        h.access = (h.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE | Opcodes.ACC_SYNTHETIC;
+        int slot = 0;
+        if (!isStatic) {
+            w.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            slot = 1;
+        }
+        int stack = slot;
+        for (int k = 0; k < np.size(); k++) {
+            Type t = np.get(k);
+            boolean dropped = !fit.extra().isEmpty() && k >= fit.insertAt() && k < fit.insertAt() + fit.extra().size();
+            if (!dropped) {
+                int hk = !fit.extra().isEmpty() && k >= fit.insertAt() ? k - fit.extra().size() : k;
+                w.instructions.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+                String[] c = fit.convs().get(hk);
+                if (c != null) w.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, c[0], c[1], c[2], false));
+                stack += Math.max(t.getSize(), hp[hk].getSize());
+            }
+            slot += t.getSize();
+        }
+        w.instructions.add(new MethodInsnNode(isStatic ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, h.name, h.desc, itf));
+        w.instructions.add(new InsnNode(ret.getOpcode(Opcodes.IRETURN)));
+        w.maxLocals = slot;
+        w.maxStack = Math.max(stack, ret.getSize());
+        mx.methods.add(w);
+    }
+
+    /**
+     * The @Inject handler of a mapped fit: W's arguments replace the captured V ones (fit.insertAt() .. + pos.length),
+     * the rest (CallbackInfo, captured locals) stay; the wrapper loads V argument i from W argument pos[i] (converted
+     * when fit.convs() says) and calls the mod's handler, kept as {@code <name>$cbcap}
+     */
+    private void reshapeMapped(ClassNode mx, MethodNode h, CapturedFit fit) {
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        int r0 = fit.insertAt();
+        int n = fit.pos().length;
+        int m = fit.wArgs().length;
+        List<Type> np = new ArrayList<>();
+        for (int k = 0; k < r0; k++) np.add(hp[k]);
+        np.addAll(List.of(fit.wArgs()));
+        for (int k = r0 + n; k < hp.length; k++) np.add(hp[k]);
+        Type ret = Type.getReturnType(h.desc);
+        boolean isStatic = (h.access & Opcodes.ACC_STATIC) != 0;
+        boolean itf = (mx.access & Opcodes.ACC_INTERFACE) != 0;
+        MethodNode w = new MethodNode(h.access, h.name, Type.getMethodDescriptor(ret, np.toArray(new Type[0])), null,
+            h.exceptions == null ? null : h.exceptions.toArray(new String[0]));
+        w.visibleAnnotations = h.visibleAnnotations;
+        w.invisibleAnnotations = h.invisibleAnnotations;
+        w.visibleParameterAnnotations = remapParamAnnotations(h.visibleParameterAnnotations, r0, n, m);
+        w.invisibleParameterAnnotations = remapParamAnnotations(h.invisibleParameterAnnotations, r0, n, m);
+        h.visibleAnnotations = null;
+        h.invisibleAnnotations = null;
+        h.visibleParameterAnnotations = null;
+        h.invisibleParameterAnnotations = null;
+        h.visibleAnnotableParameterCount = 0;
+        h.invisibleAnnotableParameterCount = 0;
+        h.name = h.name + "$cbcap";
+        h.access = (h.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE | Opcodes.ACC_SYNTHETIC;
+        int[] slot = new int[np.size()];
+        int s0 = isStatic ? 0 : 1;
+        for (int k = 0; k < np.size(); k++) {
+            slot[k] = s0;
+            s0 += np.get(k).getSize();
+        }
+        if (!isStatic) w.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+        int stack = isStatic ? 0 : 1;
+        for (int k = 0; k < hp.length; k++) {
+            int wk = k < r0 ? k : k < r0 + n ? r0 + fit.pos()[k - r0] : k - n + m;
+            Type t = np.get(wk);
+            w.instructions.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot[wk]));
+            String[] c = fit.convs().get(k);
+            if (c != null) w.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, c[0], c[1], c[2], false));
+            stack += Math.max(t.getSize(), hp[k].getSize());
+        }
+        w.instructions.add(new MethodInsnNode(isStatic ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, h.name, h.desc, itf));
+        w.instructions.add(new InsnNode(ret.getOpcode(Opcodes.IRETURN)));
+        w.maxLocals = s0;
+        w.maxStack = Math.max(stack, ret.getSize());
+        mx.methods.add(w);
+    }
+
+    /** parameter annotations after n captured parameters at r0 became m W arguments (those carry none) */
+    @SuppressWarnings("unchecked")
+    private static List<AnnotationNode>[] remapParamAnnotations(List<AnnotationNode>[] pa, int r0, int n, int m) {
+        if (pa == null) return null;
+        if (pa.length <= r0) return pa;
+        List<AnnotationNode>[] out = new List[Math.max(pa.length, r0 + n) - n + m];
+        for (int k = 0; k < pa.length; k++) {
+            if (k < r0) out[k] = pa[k];
+            else if (k >= r0 + n) out[k - n + m] = pa[k];
+        }
+        return out;
     }
 
     static boolean touchesThisFree(MethodNode h) {

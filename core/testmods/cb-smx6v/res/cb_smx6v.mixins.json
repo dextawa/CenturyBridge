@@ -6,7 +6,13 @@
   "mixins": [
     "ServerDriverMixin",
     "TridentAccess",
-    "TamableTeleportMixin"
+    "TamableTeleportMixin",
+    "FollowOwnerWrapMixin",
+    "ReportCommentMixin",
+    "RaidOmenWrapMixin",
+    "LeashRestoreWrapMixin",
+    "LeashDataNew",
+    "TagVisitorWrapMixin"
   ],
   "injectors": {
     "defaultRequire": 1

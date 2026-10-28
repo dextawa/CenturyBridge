@@ -44,4 +44,28 @@ public final class CbS26RenderLevelClient {
         throw new ClassCastException("WeatherEffectRenderer.extractRenderState: 26.2 extracts weather of a ClientLevel only, got "
             + (level == null ? "null" : level.getClass().getName()));
     }
+
+    /**
+     * instance redirect: 26.1.2 LevelRenderer.needsUpdate() = sectionOcclusionGraph.invalidate(); cloudRenderer.markForRebuild().
+     * 26.2 keeps both objects on the renderer (sectionOcclusionGraph(), cloudRenderer()) and both calls (resize /
+     * invalidateCompiledGeometry), without the method that made them together.
+     */
+    public static void needsUpdate(LevelRenderer renderer) {
+        renderer.sectionOcclusionGraph().invalidate();
+        renderer.cloudRenderer().markForRebuild();
+    }
+
+    /**
+     * instance redirect: 26.1.2 LevelRenderer.addRecentlyCompiledSection(section) = sectionOcclusionGraph.schedulePropagationFrom
+     * (section); 26.2 keeps schedulePropagationFrom on the graph its renderer holds.
+     */
+    public static void addRecentlyCompiledSection(LevelRenderer renderer,
+            net.minecraft.client.renderer.chunk.SectionRenderDispatcher.RenderSection section) {
+        renderer.sectionOcclusionGraph().schedulePropagationFrom(section);
+    }
+
+    /** fieldGetters: 26.1.2 LevelRenderer.HALF_SECTION_SIZE, the constant 8 (javap ConstantValue) */
+    public static int halfSectionSize() {
+        return 8;
+    }
 }

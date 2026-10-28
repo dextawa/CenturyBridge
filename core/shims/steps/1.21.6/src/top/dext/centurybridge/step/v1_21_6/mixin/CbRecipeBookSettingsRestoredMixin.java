@@ -7,14 +7,9 @@ import net.minecraft.class_2487;
 import net.minecraft.class_2540;
 import net.minecraft.class_5411;
 import net.minecraft.class_5421;
-import net.minecraft.class_9139;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.dext.centurybridge.step.v1_21_6.rt.CbPrioritySplit;
 import top.dext.centurybridge.step.v1_21_6.rt.CbRecipeBooks;
 import top.dext.centurybridge.step.v1_21_6.rt.CbVanillaReads;
 
@@ -28,10 +23,11 @@ import top.dext.centurybridge.step.v1_21_6.rt.CbVanillaReads;
  * <ul>
  * <li>field_25736 is a live view of the four fields (CbRecipeBooks.SettingsView: get / put / remove / clear read and
  *     write them), so a mod's shadow or accessor on the map, and the restored bodies, see and change 1.21.6's state;
- *     field_25735 is 1.21.5's key table (set at &lt;clinit&gt; TAIL from CbRecipeBooks.KEYS, not in &lt;clinit&gt;'s body).</li>
+ *     field_25735 is 1.21.5's key table (from CbRecipeBooks.KEYS; its initializer is merged into &lt;clinit&gt;).</li>
  * <li>write(CompoundTag): 1.21.5's body (the key table's forEach writing each type's two booleans); the restored
  *     ServerRecipeBook.toNbt calls it, as 1.21.5's did.</li>
- * <li>read / write(FriendlyByteBuf): STREAM_CODEC is wrapped at &lt;clinit&gt; TAIL; it decodes / encodes through the
+ * <li>read / write(FriendlyByteBuf): STREAM_CODEC is wrapped at &lt;clinit&gt; TAIL (CbRecipeBookSettingsRestoredMixinHooks, at
+ *     the default priority, through CbPrioritySplit.RecipeBookSettingsNet); it decodes / encodes through the
  *     restored member only when a converted mod mixed it (CbMixedMembers), otherwise through 1.21.6's own codec
  *     untouched. Same wire format both ways. 1.21.5's private constructor RecipeBookSettings(Map) has no 1.21.6
  *     counterpart (a mixin adds no constructor): read builds the settings with the public one and fills the map.</li>
@@ -45,7 +41,7 @@ import top.dext.centurybridge.step.v1_21_6.rt.CbVanillaReads;
  * could mix.
  */
 @Mixin(value = class_5411.class, priority = CbVanillaReads.PRIORITY)
-public abstract class CbRecipeBookSettingsRestoredMixin implements CbRecipeBooks.LegacySettings {
+public abstract class CbRecipeBookSettingsRestoredMixin implements CbRecipeBooks.LegacySettings, CbPrioritySplit.RecipeBookSettingsNet {
 
     /** the four types' settings, in RecipeBookType order (crafting, furnace, blast furnace, smoker; javap) */
     @Shadow
@@ -60,32 +56,14 @@ public abstract class CbRecipeBookSettingsRestoredMixin implements CbRecipeBooks
     @Shadow
     private class_5411.class_5412 field_60339;
 
-    @Shadow
-    @Final
-    @Mutable
-    public static class_9139<class_2540, class_5411> field_54548;
-
-    /** 1.21.5's TAG_FIELDS: each type's two CompoundTag keys (set at &lt;clinit&gt; TAIL) */
-    private static Map<class_5421, Pair<String, String>> field_25735;
+    /** 1.21.5's TAG_FIELDS: each type's two CompoundTag keys (merged into &lt;clinit&gt;) */
+    private static Map<class_5421, Pair<String, String>> field_25735 = CbRecipeBooks.tagFields();
 
     /** 1.21.5's states map: a live view of the four fields */
     private final Map<class_5421, class_5411.class_5412> field_25736 = new CbRecipeBooks.SettingsView(this);
 
-    @Inject(method = "<clinit>", at = @At("TAIL"))
-    private static void cb$legacyMembers(CallbackInfo ci) {
-        field_25735 = CbRecipeBooks.tagFields();
-        class_9139<class_2540, class_5411> native16 = field_54548;
-        field_54548 = class_9139.method_56438((settings, buf) -> {
-            if (CbRecipeBooks.routeNetWrite()) {
-                ((CbRecipeBookSettingsRestoredMixin) (Object) settings).method_30190(buf);
-            } else {
-                native16.encode(buf, settings);
-            }
-        }, buf -> CbRecipeBooks.routeNetRead() ? method_30186(buf) : native16.decode(buf));
-    }
-
     /** read(FriendlyByteBuf) */
-    @CbVanillaReads("CbRecipeBookSettingsRestoredMixin: RecipeBookSettings.STREAM_CODEC (wrapped at <clinit> TAIL) decodes "
+    @CbVanillaReads("CbRecipeBookSettingsRestoredMixin: RecipeBookSettings.STREAM_CODEC (wrapped by CbRecipeBookSettingsRestoredMixinHooks) decodes "
         + "through it when a converted mod mixed it")
     private static class_5411 method_30186(class_2540 buf) {
         Map<class_5421, class_5411.class_5412> map = new EnumMap<>(class_5421.class);
@@ -102,7 +80,7 @@ public abstract class CbRecipeBookSettingsRestoredMixin implements CbRecipeBooks
     }
 
     /** write(FriendlyByteBuf) */
-    @CbVanillaReads("CbRecipeBookSettingsRestoredMixin: RecipeBookSettings.STREAM_CODEC (wrapped at <clinit> TAIL) encodes "
+    @CbVanillaReads("CbRecipeBookSettingsRestoredMixin: RecipeBookSettings.STREAM_CODEC (wrapped by CbRecipeBookSettingsRestoredMixinHooks) encodes "
         + "through it when a converted mod mixed it")
     private void method_30190(class_2540 buf) {
         for (class_5421 type : class_5421.values()) {
@@ -124,6 +102,16 @@ public abstract class CbRecipeBookSettingsRestoredMixin implements CbRecipeBooks
         class_5411.class_5412 s = this.field_25736.getOrDefault(type, class_5411.class_5412.field_54549);
         tag.method_10556(keys.getFirst(), s.comp_3247);
         tag.method_10556(keys.getSecond(), s.comp_3248);
+    }
+
+    @Override
+    public void cb$v1_21_6$netWrite(class_2540 buf) {
+        this.method_30190(buf);
+    }
+
+    @Override
+    public class_5411 cb$v1_21_6$netRead(class_2540 buf) {
+        return method_30186(buf);
     }
 
     @Override

@@ -1,0 +1,45 @@
+{
+ "covers": [
+  "net/minecraft/class_846.method_19420()Lnet/minecraft/class_243;",
+  "net/minecraft/class_846$class_851.method_3668()D"
+ ],
+ "_covers_basis_s6h_sections": "SectionRenderDispatcher.getCameraPosition() and RenderSection.getDistToPlayerSqr() are restored on their classes by the layer (CbSectionDispatcherRestoredMixin / CbSectionDistanceRestoredMixin, s6g) but were not listed as covered, so the step tombstoned converted mods' calls to them (h1: KNOWN TOMBSTONE 'method not declared on the owner' for call / call-inherited / call-protected / override+super)",
+ "classRenames": {
+  "net/minecraft/class_846$class_849": "net/minecraft/class_11517"
+ },
+ "_classRenames_basis_s6h_sections": "1.21.5 SectionRenderDispatcher.CompiledSection (class_846$class_849: UNCOMPILED / EMPTY, the render types with geometry, block entities, visibility set) is 1.21.6's SectionMesh (class_11517), the type RenderSection.sectionMesh / getSectionMesh hand out (CompiledSectionMesh implements it with the per-layer buffers, block entities and visibility set; CompiledSectionMesh.UNCOMPILED / EMPTY are SectionMesh constants): javap of both, rt/CbSectionMeshes",
+ "methodRenames": {
+  "net/minecraft/class_846$class_849.method_62972()Z": "method_72027",
+  "net/minecraft/class_846$class_849.method_3642()Ljava/util/List;": "method_72033",
+  "net/minecraft/class_846$class_851.method_3677()Lnet/minecraft/class_846$class_849;": "method_72052"
+ },
+ "_methodRenames_basis_s6h_sections": "CompiledSection.hasRenderableLayers (method_62972: !renderTypes.isEmpty()) is SectionMesh.method_72027 (CompiledSectionMesh: !buffers.isEmpty(), the layers it uploaded; the constants false); getRenderableBlockEntities (method_3642) is method_72033 (the same list from the compile results; constants empty); RenderSection.getCompiled (method_3677: compiled.get()) is getSectionMesh (method_72052: sectionMesh.get()) -- javap of both",
+ "fieldRenames": {
+  "net/minecraft/class_846$class_851.field_4459:Ljava/util/concurrent/atomic/AtomicReference;": "field_60949"
+ },
+ "_fieldRenames_basis_s6h_sections": "RenderSection.compiled (AtomicReference<CompiledSection>, field_4459) is 1.21.6's sectionMesh (AtomicReference<SectionMesh>, field_60949): the reference getCompiled / getSectionMesh read and the compile result's setter writes (javap of both)",
+ "overrideRenames": [
+  {
+   "old": "method_3677()Lnet/minecraft/class_846$class_849;",
+   "new": "method_72052",
+   "onlyUnder": "net/minecraft/class_846$class_851",
+   "superCalls": "rename",
+   "basis": "RenderSection.getCompiled lives on as getSectionMesh (methodRenames basis); the same callers (LevelRenderer, SectionOcclusionGraph, class_9986, RenderSection itself; constant-pool scan of both code jars) call method_72052 where 1.21.5 called method_3677"
+  }
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_846$class_849.field_4451:Lnet/minecraft/class_846$class_849;": "top/dext/centurybridge/step/v1_21_6/rt/CbSectionMeshes",
+  "net/minecraft/class_846$class_849.field_52172:Lnet/minecraft/class_846$class_849;": "top/dext/centurybridge/step/v1_21_6/rt/CbSectionMeshes"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_846$class_849.<init>()V": "top/dext/centurybridge/step/v1_21_6/rt/CbSectionMeshes#newCompiledSection"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_846$class_849.method_3641(Lnet/minecraft/class_1921;)Z": "top/dext/centurybridge/step/v1_21_6/rt/CbSectionMeshes#isEmpty",
+  "net/minecraft/class_846$class_851.method_3656(Lnet/minecraft/class_1921;)Lnet/minecraft/class_846$class_10896;": "top/dext/centurybridge/step/v1_21_6/rt/CbSectionMeshes#getBuffers",
+  "net/minecraft/class_846$class_851.method_68533(Lnet/minecraft/class_1921;Lnet/minecraft/class_9801;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_6/rt/CbSectionMeshes#uploadSectionLayer",
+  "net/minecraft/class_846$class_851.method_68531(Lnet/minecraft/class_9799$class_9800;Lnet/minecraft/class_1921;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_6/rt/CbSectionMeshes#uploadSectionIndexBuffer",
+  "net/minecraft/class_846$class_851.method_22777(Lnet/minecraft/class_846;Lnet/minecraft/class_6850;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbSectionMeshes#rebuildSectionAsync"
+ },
+ "_instanceRedirects_basis_s6h_sections": "isEmpty(RenderType) / getBuffers(RenderType) / uploadSectionLayer(RenderType, MeshData) / uploadSectionIndexBuffer(Result, RenderType): 1.21.6 keys them by ChunkSectionLayer on the section's CompiledSectionMesh (method_72028 / method_72034 / RenderSection.method_72050(Map, mesh) / method_68531(mesh, result, layer)); rebuildSectionAsync(dispatcher, cache): 1.21.5 scheduled on the dispatcher given, 1.21.6 on its own -- rt/CbSectionMeshes has the javap of each"
+}

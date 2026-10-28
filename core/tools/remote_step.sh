@@ -37,6 +37,8 @@ else
 fi
 $SSH "set -e; $WTX; cd ~/cbwork/agents/$NAME && rm -rf core build.sh build && tar xf up.tar && rm up.tar
   find core build.sh -name '*.sh' -o -name '*.py' | xargs sed -i 's/\r\$//'
+  # a worktree has no gitignored segment diffs (core/segments/<V>__<W>.json): take the shared copies
+  for f in ~/cbwork/core/segments/*__*.json; do [ -e core/segments/\$(basename \$f) ] || cp \$f core/segments/; done
   export PATH=\$HOME/cbtest/jdk-25.0.4.1+1/bin:\$PATH
   LIBS=\$(find ~/cbwork/data/runtime/client-1.20.4/libraries/org/ow2/asm ~/cbwork/data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
   mkdir -p core/build/classes

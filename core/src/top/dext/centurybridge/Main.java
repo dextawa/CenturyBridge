@@ -218,14 +218,24 @@ public final class Main {
             System.out.println("step layer for redirect bodies and restored members: " + lj);
         }
         // in a climb every earlier step's layer is in the runtime at W as well (climbed like a mod): the members it
-        // restores on W's classes are declared there at runtime too (LayerMembers.inherit), read off its built jar
+        // restores on W's classes are declared there at runtime too (LayerMembers.inherit). Read off that layer as it
+        // stands at W when its own climb already passed this step (<layersDir>/climb-<R>/steps/<V>__<W>/, climb_runtime
+        // climbs the newest layers first): a restorer its climb stripped at an earlier step is not in the runtime, so
+        // a mixin of this jar resolving against it fails at apply (the 1.21.2 layer's CbRenderState922Mixin, stripped
+        // at 1.21.9, served the 1.20.3 layer's @Invoker of LivingEntityRenderer.scale). Else its built jar
         if (System.getProperty("cb.layersDir") != null && System.getProperty("cb.layerJar") == null) {
             int wi = top.dext.centurybridge.engine.Chain.RELEASES.indexOf(args[3]);
             for (int ri = 0; ri < wi; ri++) {
-                Path ej = Path.of(System.getProperty("cb.layersDir"),
-                    "centurybridge-0.3.0+" + top.dext.centurybridge.engine.Chain.RELEASES.get(ri) + ".jar");
+                String rel = top.dext.centurybridge.engine.Chain.RELEASES.get(ri);
+                Path climbed = Path.of(System.getProperty("cb.layersDir"), "climb-" + rel, "steps", args[2] + "__" + args[3],
+                    "centurybridge-0.3.0+" + rel + "+" + args[3] + ".jar");
+                Path ej = Files.exists(climbed) ? climbed
+                    : Path.of(System.getProperty("cb.layersDir"), "centurybridge-0.3.0+" + rel + ".jar");
                 if (Files.exists(ej)) {
                     chain.layerMembers.inherit(top.dext.centurybridge.engine.LayerMembers.read(ej));
+                    if (ej == climbed) {
+                        System.out.println("earlier layer as climbed to " + args[3] + ": " + climbed);
+                    }
                 }
             }
         }
@@ -267,6 +277,18 @@ public final class Main {
                 chain.mixinRepair.classRenames = chain.classRenames; // anchor-facade: what restored bodies call
                 chain.mixinRepair.stepTo = args[3]; // the mixed-member signal (MixinRepair.MIXED_DIR)
                 chain.mixinRepair.mixinMoves = chain.mixinMoves; // injectors on static methods W moved to another class
+                chain.mixinRepair.mixinMoveSelf = chain.mixinMoveSelf; // and on instance methods, this through the hops (C17)
+                chain.mixinRepair.converter = chain::argConverter; // captured target arguments the step retyped (CASE 14)
+                chain.mixinRepair.argMaps = chain::mixinArgMaps; // and arguments a same-class reshape moved (CASE 14, third)
+                // injectors on statics the step redirects into a layer class move onto that class's method (s6e B6)
+                chain.mixinRepair.staticMove = k -> {
+                    String r = chain.staticRedirects.get(k);
+                    if (r == null) return null;
+                    int p = k.indexOf('(');
+                    String nm = r.contains("#") ? r.substring(r.indexOf('#') + 1) : k.substring(k.lastIndexOf('.', p) + 1, p);
+                    if (nm.contains("(")) nm = nm.substring(0, nm.indexOf('('));
+                    return (r.contains("#") ? r.substring(0, r.indexOf('#')) : r) + "." + nm + chain.renamedDesc(k.substring(p));
+                };
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");

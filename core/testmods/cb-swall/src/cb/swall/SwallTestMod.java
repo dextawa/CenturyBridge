@@ -28,6 +28,11 @@ public class SwallTestMod implements ModInitializer {
     private static final List<String> FAILS = new ArrayList<>();
     /** calls of the restored 1.21.11 furnace burn (mixin/FurnaceBurnMixin) */
     public static final java.util.concurrent.atomic.AtomicInteger BURN_CALLS = new java.util.concurrent.atomic.AtomicInteger();
+    /** calls of ItemStack.CODEC's components getter lambda (mixin/ItemStackCodecLambdaMixin) */
+    public static final java.util.concurrent.atomic.AtomicInteger CODEC_PATCH_CALLS = new java.util.concurrent.atomic.AtomicInteger();
+    public static final java.util.concurrent.atomic.AtomicInteger FROG_ATTACK_CALLS = new java.util.concurrent.atomic.AtomicInteger();
+    public static final java.util.concurrent.atomic.AtomicInteger FANCY_LIMB_CALLS = new java.util.concurrent.atomic.AtomicInteger();
+    public static final java.util.concurrent.atomic.AtomicInteger LOOT_MINE_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     private static int passed;
 
     private static void check(String name, boolean ok, Object detail) {
@@ -1025,6 +1030,10 @@ public class SwallTestMod implements ModInitializer {
             blockStatics(server);
             legacyConstructors(server);
             timeCommand(server);
+            swall12Batch();
+            frogAttack(server);
+            fancyLimb(server);
+            lootMine(server);
             clocks(server);
             fluidHeights(server);
             check("server.throwIfFatalException", MinecraftServer.method_60584(), "");
@@ -1965,6 +1974,134 @@ public class SwallTestMod implements ModInitializer {
                 && own.method_11654(net.minecraft.class_2453.field_11413), json);
         } catch (Throwable t) {
             check("states.codecAndField", false, t);
+        }
+    }
+
+    /** 1.21.11 BlockableEventLoop(name) subclass: super(name) gets propagatesCrashes = false (rt/CbWallEventLoops) */
+    static class LegacyLoop extends net.minecraft.class_1255<Runnable> {
+        private final Thread other = new Thread(() -> { });
+
+        LegacyLoop() {
+            super("cbtest-loop");
+        }
+
+        @Override
+        public Runnable method_16211(Runnable r) {
+            return r;
+        }
+
+        @Override
+        protected boolean method_18856(Runnable r) {
+            return true;
+        }
+
+        @Override
+        protected Thread method_3777() {
+            return this.other;
+        }
+    }
+
+    /** swall12 batch: event loop super(name), BuiltInMetadata, data/recipes builders */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void swall12Batch() {
+        try {
+            LegacyLoop loop = new LegacyLoop();
+            java.util.concurrent.atomic.AtomicBoolean ran = new java.util.concurrent.atomic.AtomicBoolean();
+            loop.execute(() -> ran.set(true));
+            loop.method_18857(ran::get);
+            check("swall12.eventLoopSuperName", ran.get() && "cbtest-loop".equals(loop.method_16898()), loop.method_16898());
+        } catch (Throwable t) {
+            check("swall12.eventLoopSuperName", false, t);
+        }
+        try {
+            net.minecraft.class_7677 type = net.minecraft.class_3272.field_61155;
+            net.minecraft.class_7662 empty = net.minecraft.class_7662.method_45172();
+            net.minecraft.class_7662 one = net.minecraft.class_7662.method_45174(type, "cb-value");
+            check("swall12.builtInMetadata", empty.method_45173(type) == null && "cb-value".equals(one.method_45173(type)),
+                one.method_45173(type));
+        } catch (Throwable t) {
+            check("swall12.builtInMetadata", false, t);
+        }
+        try {
+            net.minecraft.class_7800 category = net.minecraft.class_7800.values()[0];
+            net.minecraft.class_1856 stone = net.minecraft.class_1856.method_8091(net.minecraft.class_1802.field_20391);
+            net.minecraft.class_3981 cutting = net.minecraft.class_3981.method_17968(stone, category, net.minecraft.class_1802.field_20395);
+            net.minecraft.class_2454 smelting = net.minecraft.class_2454.method_17802(stone, category, net.minecraft.class_1802.field_20395, 0.1F, 200);
+            net.minecraft.class_5797 asInterface = smelting;
+            net.minecraft.class_2960 id = net.minecraft.class_5797.method_36442(net.minecraft.class_1802.field_20391);
+            check("swall12.recipeBuilders", cutting.method_36441() == net.minecraft.class_1802.field_20395
+                && smelting.method_36441() == net.minecraft.class_1802.field_20395 && asInterface.method_36441() == net.minecraft.class_1802.field_20395
+                && "minecraft:stone".equals(id.toString()), id);
+            net.minecraft.class_2456 special = new net.minecraft.class_2456(cat -> null);
+            check("swall12.specialRecipeBuilder", special != null, "");
+            // BundleWeightMixin (a 1.21.11 mixin on getWeight): stone weighs 1/2, so a bundle takes 2 of 64
+            net.minecraft.class_9276.class_9277 bundle = new net.minecraft.class_9276.class_9277(net.minecraft.class_9276.field_49289);
+            int took = bundle.method_57432(new net.minecraft.class_1799(net.minecraft.class_1802.field_20391, 64));
+            int dirt = new net.minecraft.class_9276.class_9277(net.minecraft.class_9276.field_49289)
+                .method_57432(new net.minecraft.class_1799(net.minecraft.class_1802.field_20395, 64));
+            check("swall12b.bundleWeightMixin", took == 2 && dirt > 2, took + " " + dirt);
+        } catch (Throwable t) {
+            check("swall12.recipeBuilders", false, t);
+        }
+        try {
+            // ItemStackCodecLambdaMixin: encoding a stack runs the codec's components getter lambda
+            int before = CODEC_PATCH_CALLS.get();
+            net.minecraft.class_1799 named = new net.minecraft.class_1799(net.minecraft.class_1802.field_20391, 3);
+            com.google.gson.JsonElement json = net.minecraft.class_1799.field_24671.encodeStart(JsonOps.INSTANCE, named).getOrThrow();
+            check("swall12b.codecLambdaMixin", CODEC_PATCH_CALLS.get() > before && json.toString().contains("stone"),
+                (CODEC_PATCH_CALLS.get() - before) + " " + json);
+        } catch (Throwable t) {
+            check("swall12b.codecLambdaMixin", false, t);
+        }
+    }
+
+    /**
+     * FrogAttackMixin (a 1.21.11 mixin on the private FrogAi.canAttack(frog)): a frog's brain ticking with no attack target
+     * runs its StartAttacking behaviour, whose gate is canAttack, so the mixin counts
+     */
+    private static void frogAttack(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            net.minecraft.class_7102 frog = net.minecraft.class_1299.field_37419.method_5883(level, net.minecraft.class_3730.field_16471);
+            frog.method_5814(0.5, 100, 0.5);
+            int before = FROG_ATTACK_CALLS.get();
+            for (int i = 0; i < 5; i++) {
+                frog.method_18868().method_19542(level, frog);
+            }
+            check("swall12b.frogAttackMixin", FROG_ATTACK_CALLS.get() > before, FROG_ATTACK_CALLS.get() - before);
+        } catch (Throwable t) {
+            check("swall12b.frogAttackMixin", false, t);
+        }
+    }
+
+    /**
+     * FancyLimbMixin (a 1.21.11 mixin on the private FancyTrunkPlacer.makeLimb(reader, ..)): a fancy oak placed on grass
+     * checks and lays its limbs through makeLimb, so the mixin counts
+     */
+    private static void fancyLimb(MinecraftServer server) {
+        try {
+            net.minecraft.class_3218 level = server.method_30002();
+            net.minecraft.class_2338 ground = new net.minecraft.class_2338(72, 200, 72);
+            level.method_8501(ground, net.minecraft.class_2246.field_10219.method_9564());
+            net.minecraft.class_2975<?, ?> fancy = server.method_30611().method_30530(net.minecraft.class_7924.field_41239)
+                .method_63535(net.minecraft.class_2960.method_60656("fancy_oak"));
+            int before = FANCY_LIMB_CALLS.get();
+            boolean placed = fancy.method_12862(level, level.method_14178().method_12129(), net.minecraft.class_5819.method_43049(5L), ground.method_10084());
+            check("swall12b.fancyLimbMixin", placed && FANCY_LIMB_CALLS.get() > before, placed + " " + (FANCY_LIMB_CALLS.get() - before));
+        } catch (Throwable t) {
+            check("swall12b.fancyLimbMixin", false, t);
+        }
+    }
+
+    /** LootMineMixin (a 1.21.11 mixin on the private LootCommand.dropBlockLoot(.., ItemStack, ..)): "/loot spawn .. mine" runs it */
+    private static void lootMine(MinecraftServer server) {
+        try {
+            server.method_30002().method_8501(new net.minecraft.class_2338(88, 200, 88), net.minecraft.class_2246.field_10340.method_9564());
+            int before = LOOT_MINE_CALLS.get();
+            server.method_3734().method_44252(server.method_3739().method_9217(), "loot spawn 88 202 88 mine 88 200 88");
+            check("swall12b.lootMineMixin", LOOT_MINE_CALLS.get() > before, LOOT_MINE_CALLS.get() - before);
+        } catch (Throwable t) {
+            check("swall12b.lootMineMixin", false, t);
         }
     }
 }

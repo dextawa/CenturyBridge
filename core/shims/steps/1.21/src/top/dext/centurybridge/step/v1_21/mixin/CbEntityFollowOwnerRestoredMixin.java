@@ -3,12 +3,8 @@ package top.dext.centurybridge.step.v1_21.mixin;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_21.rt.CbEntityRest;
-import top.dext.centurybridge.step.v1_21.rt.CbMixedMembers;
+import top.dext.centurybridge.step.v1_21.rt.CbPrioritySplit;
 import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
 
 /**
@@ -25,16 +21,13 @@ import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
  * 1.20.6's vanilla goals were built); a converted mod's 1.20.6 constructor call hands its argument over through the
  * step's constructor factory (CbEntityRest.setFollowCanFly, cb$setCanFly).
  * 1.21's calls go through them only when a converted mod's mixin injects into one of them (CbMixedMembers, smixin3 (l));
- * otherwise the goal runs 1.21's path untouched.
+ * otherwise the goal runs 1.21's path untouched. This mixin holds only the restored members and fields, at
+ * CbVanillaReads.PRIORITY so a mod's 1.20.6 injectors can anchor inside them; the routes in 1.21's own methods and the
+ * constructor's field set are CbEntityFollowOwnerRestoredMixinHooks (default priority), which reaches them through
+ * CbPrioritySplit.FollowOwner.
  */
-@Mixin(value = net.minecraft.class_1350.class, priority = 1)
-public abstract class CbEntityFollowOwnerRestoredMixin implements CbEntityRest.LegacyFollowCanFly {
-
-    private static final String TELEPORT = "net/minecraft/class_1350.method_23345()V";
-    private static final String MAYBE = "net/minecraft/class_1350.method_23343(III)Z";
-    private static final String CAN = "net/minecraft/class_1350.method_23344(Lnet/minecraft/class_2338;)Z";
-    private static final String RANDOM = "net/minecraft/class_1350.method_23342(II)I";
-    private static final String UNABLE = "net/minecraft/class_1350.method_49121()Z";
+@Mixin(value = net.minecraft.class_1350.class, priority = CbVanillaReads.PRIORITY)
+public abstract class CbEntityFollowOwnerRestoredMixin implements CbEntityRest.LegacyFollowCanFly, CbPrioritySplit.FollowOwner {
 
     @Shadow
     @Final
@@ -58,21 +51,30 @@ public abstract class CbEntityFollowOwnerRestoredMixin implements CbEntityRest.L
     /** 1.20.6 FollowOwnerGoal.canFly (final there; set at construction, see the class note) */
     private boolean field_21078;
 
-    /** 1.20.6's constructor set level from the animal; canFly as the class note says */
-    @Inject(method = "<init>(Lnet/minecraft/class_1321;DFF)V", at = @At("RETURN"))
-    private void cb$restoreFields(net.minecraft.class_1321 tamable, double speed, float start, float stop, CallbackInfo ci) {
-        this.field_6445 = tamable.method_37908();
-        this.field_21078 = tamable.method_60716();
-    }
-
     @Override
     public void cb$setCanFly(boolean canFly) {
         this.field_21078 = canFly;
     }
 
+    @Override
+    public void cb$v1_21$constructed(net.minecraft.class_4538 level, boolean canFly) {
+        this.field_6445 = level;
+        this.field_21078 = canFly;
+    }
+
+    @Override
+    public void cb$v1_21$teleportToOwner() {
+        this.method_23345();
+    }
+
+    @Override
+    public boolean cb$v1_21$unableToMove() {
+        return this.method_49121();
+    }
+
     /** 1.20.6 FollowOwnerGoal.teleportToOwner: ten tries around the owner's block */
-    @CbVanillaReads("CbEntityFollowOwnerRestoredMixin: tick (method_6268) teleports through this method instead of 1.21's "
-        + "TamableAnimal.tryToTeleportToOwner when a converted mod mixes it or the helpers it calls (cb$teleport); body 1.20.6's")
+    @CbVanillaReads("CbEntityFollowOwnerRestoredMixinHooks: tick (method_6268) teleports through this method instead of 1.21's "
+        + "TamableAnimal.tryToTeleportToOwner when a converted mod mixes it or the helpers it calls (cb$v1_21$teleport); body 1.20.6's")
     private void method_23345() {
         net.minecraft.class_2338 pos = this.field_6444.method_24515();
         for (int i = 0; i < 10; i++) {
@@ -87,7 +89,7 @@ public abstract class CbEntityFollowOwnerRestoredMixin implements CbEntityRest.L
     }
 
     /** 1.20.6 FollowOwnerGoal.maybeTeleportTo: not within two blocks of the owner, then canTeleportTo, then move */
-    @CbVanillaReads("CbEntityFollowOwnerRestoredMixin: reached from the restored teleportToOwner (method_23345), which tick "
+    @CbVanillaReads("CbEntityFollowOwnerRestoredMixinHooks: reached from the restored teleportToOwner (method_23345), which tick "
         + "takes when a converted mod mixes this chain; body 1.20.6's")
     private boolean method_23343(int x, int y, int z) {
         if (Math.abs((double) x - this.field_6444.method_23317()) < 2.0 && Math.abs((double) z - this.field_6444.method_23321()) < 2.0) {
@@ -102,7 +104,7 @@ public abstract class CbEntityFollowOwnerRestoredMixin implements CbEntityRest.L
     }
 
     /** 1.20.6 FollowOwnerGoal.canTeleportTo: a walkable spot, not onto leaves unless the animal flies, no collision */
-    @CbVanillaReads("CbEntityFollowOwnerRestoredMixin: reached from the restored maybeTeleportTo (method_23343) in the chain "
+    @CbVanillaReads("CbEntityFollowOwnerRestoredMixinHooks: reached from the restored maybeTeleportTo (method_23343) in the chain "
         + "tick takes when a converted mod mixes it; body 1.20.6's")
     private boolean method_23344(net.minecraft.class_2338 pos) {
         net.minecraft.class_7 type = net.minecraft.class_14.method_57625(this.field_6448, pos);
@@ -122,39 +124,16 @@ public abstract class CbEntityFollowOwnerRestoredMixin implements CbEntityRest.L
     }
 
     /** 1.20.6 FollowOwnerGoal.unableToMove: sitting, riding or leashed */
-    @CbVanillaReads("CbEntityFollowOwnerRestoredMixin: canUse (method_6264) and canContinueToUse (method_6266) ask this method "
-        + "instead of 1.21's TamableAnimal.unableToMoveToOwner when a converted mod mixes it (cb$unable); body 1.20.6's")
+    @CbVanillaReads("CbEntityFollowOwnerRestoredMixinHooks: canUse (method_6264) and canContinueToUse (method_6266) ask this method "
+        + "instead of 1.21's TamableAnimal.unableToMoveToOwner when a converted mod mixes it (cb$v1_21$unable); body 1.20.6's")
     private boolean method_49121() {
         return this.field_6448.method_24345() || this.field_6448.method_5765() || this.field_6448.method_60954();
     }
 
     /** 1.20.6 FollowOwnerGoal.randomIntInclusive */
-    @CbVanillaReads("CbEntityFollowOwnerRestoredMixin: reached from the restored teleportToOwner (method_23345); body 1.20.6's")
+    @CbVanillaReads("CbEntityFollowOwnerRestoredMixinHooks: reached from the restored teleportToOwner (method_23345); body 1.20.6's")
     private int method_23342(int min, int max) {
         // 1.20.6's LivingEntity.getRandom (method_6051) is Entity.getRandom (method_59922) in 1.21, same field
         return this.field_6448.method_59922().method_43048(max - min + 1) + min;
-    }
-
-    /** tick's teleport: the restored 1.20.6 chain when a converted mod mixes it, else 1.21's */
-    @Redirect(method = "method_6268()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_1321;method_60713()V"))
-    private void cb$teleport(net.minecraft.class_1321 animal) {
-        if (CbMixedMembers.mixed(TELEPORT) || CbMixedMembers.mixed(MAYBE) || CbMixedMembers.mixed(CAN) || CbMixedMembers.mixed(RANDOM)) {
-            this.method_23345();
-        } else {
-            animal.method_60713();
-        }
-    }
-
-    /**
-     * canUse / canContinueToUse: 1.21's unableToMoveToOwner is 1.20.6's unableToMove plus a spectating owner; when a converted
-     * mod mixes the restored member, its answer stands for 1.20.6's part and 1.21's spectator test is kept
-     */
-    @Redirect(method = {"method_6264()Z", "method_6266()Z"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/class_1321;method_60715()Z"))
-    private boolean cb$unable(net.minecraft.class_1321 animal) {
-        if (!CbMixedMembers.mixed(UNABLE)) {
-            return animal.method_60715();
-        }
-        net.minecraft.class_1309 owner = animal.method_35057();
-        return this.method_49121() || owner != null && owner.method_7325();
     }
 }

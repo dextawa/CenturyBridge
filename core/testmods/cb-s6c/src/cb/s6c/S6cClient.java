@@ -101,9 +101,11 @@ public class S6cClient implements ClientModInitializer {
             "hud.callbackOnce", "hud.duplicateId", "hud.missingAnchor", "hud.order", "hud.shot",
             "font.drawInBatchReturn", "font.worldShot",
             "widgets.textFieldSetValue", "widgets.editBoxValue", "widgets.toastManager",
-            "screen.mode1Shot", "screen.mode2Shot", "screen.mode3Shot");
+            "screen.mode1Shot", "screen.mode2Shot", "screen.mode3Shot", "screen.mode4Shot",
+            "scissor.renderSystem", "scissor.renderSystemEdges", "scissor.guiGraphics", "scissor.afterDisable");
         if (nativeW) {
-            declare("nativeW.guiInit", "nativeW.renderDeferredTooltip");
+            declare("nativeW.guiInit", "nativeW.renderDeferredTooltip", "nativeW.guiEnableScissor", "nativeW.guiDisableScissor",
+                "nativeW.scissorPeek");
         }
 
         KeyBindingRegistry.INSTANCE.addCategory("cb_s6c.cat");
@@ -289,7 +291,12 @@ public class S6cClient implements ClientModInitializer {
             });
             check("widgets.toastManager", toast.equals("true"), "new ToastManager(minecraft): " + toast);
 
-            for (int mode = 1; mode <= 3; mode++) {
+            String[] scissorBefore = null;
+            for (int mode = 1; mode <= 4; mode++) {
+                if (mode == 4) {
+                    scissorBefore = new String[] {System.getProperty("cb.s6n.enableScissor", "0"),
+                        System.getProperty("cb.s6n.disableScissor", "0"), System.getProperty("cb.s6n.scissorPeek", "0")};
+                }
                 S6cScreen s = new S6cScreen(mode);
                 run(mc, () -> mc.method_1507(s));
                 long su = System.currentTimeMillis() + 10_000;
@@ -302,12 +309,27 @@ public class S6cClient implements ClientModInitializer {
                     String v = box == null ? "no box" : on(mc, box::method_44405);
                     check("widgets.editBoxValue", "multi line\nedit box".equals(v), "MultiLineEditBox.getValue() = " + v.replace("\n", "\\n"));
                 }
+                if (mode == 4) {
+                    scissorChecks(mc);
+                    if (nativeW) {
+                        String[] after = {System.getProperty("cb.s6n.enableScissor", "0"), System.getProperty("cb.s6n.disableScissor", "0"),
+                            System.getProperty("cb.s6n.scissorPeek", "0")};
+                        String[] names = {"nativeW.guiEnableScissor", "nativeW.guiDisableScissor", "nativeW.scissorPeek"};
+                        String[] what = {"GuiGraphics.enableScissor", "GuiGraphics.disableScissor", "GuiGraphics.ScissorStack.peek"};
+                        for (int i = 0; i < 3; i++) {
+                            check(names[i], Long.parseLong(after[i]) > Long.parseLong(scissorBefore[i]), "native @Inject(HEAD) " + what[i]
+                                + " fired " + scissorBefore[i] + " -> " + after[i] + " over the scissor screen's frames");
+                        }
+                    }
+                }
                 shot(mc, "cb-s6c-screen" + mode + ".png");
                 String what = mode == 1
                     ? "end portal effect over the whole screen; blue box covering 'UNDER'; a diamond; 'cb positioned tooltip'; the edit box "
                         + "light grey text with shadow, cursor, background and scroll decorations; three splashes: opaque, half-transparent, opaque yellow"
                     : mode == 2 ? "the world blurred behind the screen; tooltip 'cb' at the mouse"
-                    : "the title panorama; no 'cb' tooltip";
+                    : mode == 3 ? "the title panorama; no 'cb' tooltip"
+                    : "a red square at GUI (20,20)-(80,80), a green square at (100,20)-(160,80), a blue box at (100,100)-(120,120), "
+                        + "the world elsewhere";
                 check("screen.mode" + mode + "Shot", s.frames > 0, "screenshot cb-s6c-screen" + mode + ".png, " + s.frames
                     + " frames (judge by eye: " + what + ")");
             }
@@ -324,6 +346,59 @@ public class S6cClient implements ClientModInitializer {
             t.printStackTrace();
         }
         finish(class_310.method_1551());
+    }
+
+    /** reads the main framebuffer (Screenshot.takeScreenshot, top-down pixels) at the given points, ARGB */
+    static int[] pixels(class_310 mc, int[][] at) throws Exception {
+        CompletableFuture<int[]> f = new CompletableFuture<>();
+        run(mc, () -> class_318.method_1663(mc.method_1522(), img -> {
+            try {
+                int[] out = new int[at.length];
+                for (int i = 0; i < at.length; i++) {
+                    out[i] = img.method_61940(at[i][0], at[i][1]);
+                }
+                f.complete(out);
+            } catch (Throwable e) {
+                f.completeExceptionally(e);
+            } finally {
+                img.close();
+            }
+        }));
+        return f.get(20, TimeUnit.SECONDS);
+    }
+
+    static boolean is(int argb, int want) {
+        int r = argb >> 16 & 255, g = argb >> 8 & 255, b = argb & 255;
+        int wr = want >> 16 & 255, wg = want >> 8 & 255, wb = want & 255;
+        return Math.abs(r - wr) < 40 && Math.abs(g - wg) < 40 && Math.abs(b - wb) < 40;
+    }
+
+    /** mode 4 of S6cScreen: where red, green and blue landed */
+    static void scissorChecks(class_310 mc) throws Exception {
+        int s = on(mc, () -> (int) mc.method_22683().method_4495());
+        int[][] at = {
+            {50 * s, 50 * s}, {90 * s, 50 * s}, {50 * s, 100 * s},                                   // 0 in A, 1 right of A, 2 below A
+            {20 * s, 50 * s}, {20 * s - 1, 50 * s}, {80 * s - 1, 50 * s}, {80 * s, 50 * s},          // 3..6 A's left / right edges
+            {50 * s, 20 * s}, {50 * s, 20 * s - 1}, {50 * s, 80 * s - 1}, {50 * s, 80 * s},          // 7..10 A's top / bottom edges
+            {130 * s, 50 * s}, {130 * s, 90 * s}, {170 * s, 50 * s},                                 // 11 in B, 12 below B, 13 right of B
+            {110 * s, 110 * s}};                                                                     // 14 the blue box
+        int[] p = pixels(mc, at);
+        StringBuilder raw = new StringBuilder("scale " + s + ", pixels");
+        for (int v : p) {
+            raw.append(' ').append(Integer.toHexString(v));
+        }
+        int red = 0xFF0000, green = 0x00FF00, blue = 0x0000FF;
+        check("scissor.renderSystem", is(p[0], red) && !is(p[1], red) && !is(p[2], red),
+            "RenderSystem.enableScissor around a GuiGraphics fill: red inside the rectangle " + is(p[0], red) + ", outside right "
+                + is(p[1], red) + ", below " + is(p[2], red) + " (" + raw + ")");
+        check("scissor.renderSystemEdges", is(p[3], red) && !is(p[4], red) && is(p[5], red) && !is(p[6], red)
+                && is(p[7], red) && !is(p[8], red) && is(p[9], red) && !is(p[10], red),
+            "red exactly on the scissor's pixel edges (left/right/top/bottom in, out): " + is(p[3], red) + is(p[4], red) + is(p[5], red)
+                + is(p[6], red) + is(p[7], red) + is(p[8], red) + is(p[9], red) + is(p[10], red));
+        check("scissor.guiGraphics", is(p[11], green) && !is(p[12], green) && !is(p[13], green) && !is(p[1], green),
+            "GuiGraphics.enableScissor after the RenderSystem pair: green inside " + is(p[11], green) + ", below " + is(p[12], green)
+                + ", right " + is(p[13], green));
+        check("scissor.afterDisable", is(p[14], blue), "the blue box after GuiGraphics.disableScissor: " + Integer.toHexString(p[14]));
     }
 
     static void finish(class_310 mc) {

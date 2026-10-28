@@ -911,10 +911,14 @@ class Table:
             if self.w_has(w, "M", n, dt, []):
                 matched += 0.5  # inherited on W: an override every subclass of the parent may have
                 continue
-            if any(x.name == n for x in own_w):
-                matched += 0.5  # the same name, reshaped in place
-                continue
+            # the same name with another descriptor: reshaped in place, unless the body moved to another member of
+            # the class and the name went to new code (26.1 BundleContents: 1.21.11's int getSelectedItem() is
+            # getSelectedItemIndex(), the same code; getSelectedItem() now answers an ItemStackTemplate) -- looked
+            # for below, the same name counting half when nothing else is the same code
+            reshaped = any(x.name == n for x in own_w)
             if not (self.identity or TOKEN.match(m.name)):
+                if reshaped:
+                    matched += 0.5
                 continue
             cands = []
             for x in own_w:
@@ -926,14 +930,17 @@ class Table:
                 ok, bv = self.same_code(m, x)
                 if ok:
                     cands.append((x, v + bv, self.last_anchors))
-            if len(cands) == 1:
+            if len(cands) == 1 and not (reshaped and cands[0][2] < 1):
                 x, v, anchors = cands[0]
                 matched += 1
                 wused.add((x.name, x.desc))
                 cvotes.extend(e for e in v if e[0] == "C")
-                renames.append(("M", c, m.name, x.name, anchors, "same code"))
+                renames.append(("M", c, m.name, x.name, anchors,
+                                "same code (its name went to another descriptor)" if reshaped else "same code"))
                 renames.extend(("M" if e[0] == "M" else "F", e[1], e[2], e[4], anchors, "named in a body that is the same code")
                                for e in v if e[0] in ("M", "F"))
+            elif reshaped:
+                matched += 0.5  # the same name, reshaped in place
         fmoved = self.field_reuse(c, w) if commit else {}
         if commit:
             for k, v in self.same_init_constants(c, w).items():
@@ -966,6 +973,80 @@ class Table:
                 matched += 0.5
         nw = len(own_w) + len(own_wf)
         return matched, total, nw, renames, cvotes
+
+    def match_synthetics(self, log):
+        """Synthetic methods (lambda bodies, bridges) of decided class pairs, by body.
+
+        The rounds above never look at a synthetic member: it keeps the name the base table gives it, which
+        is the 1.21.11 compiler's own numbering (lambda$static$3). The target release's compiler numbers its
+        lambdas anew, so that name is often another lambda of the class or none (26.1 rebuilt ItemStack's
+        codecs: 1.21.11's DataComponentPatch (ItemStack) getter lambda$static$3 is 26.1's lambda$static$2;
+        26.1's lambda$static$3 is ItemStack (Optional)). A mixin selecting a lambda, and a converted
+        invokedynamic naming one, then names the wrong code or nothing. A synthetic V method keeps its
+        translated name only when the target class declares it with that descriptor AND the same code;
+        otherwise it maps to the one synthetic method of the target class (same static-ness, descriptor
+        unifying) whose body is its code, with at least one reference or constant matched as it is (one
+        candidate; several V synthetics of identical code may share it). Lambdas calling other renumbered lambdas pair over rounds (a pair found
+        makes the caller's body comparable). Bodies that changed stay as they are: damage, not guessed.
+        Intermediary names only (identity mode's lambda$ names are not tokens: 26.1.2 -> 26.2 is not covered).
+        """
+        V, W = self.V, self.W
+        done = set()
+        for rnd in range(8):
+            props = collections.defaultdict(list)   # (W class, W name, W desc) -> [(V class, V method, anchors)]
+            for c, w in self.cm.items():
+                vk, wk = V.get(c), W.get(w)
+                if vk is None or wk is None:
+                    continue
+                wsyn = [x for x in wk.methods if x.access & bytecode.ACC_SYNTHETIC and x.insns is not None]
+                if not wsyn:
+                    continue
+                keep, todo = set(), []
+                for m in vk.methods:
+                    if not m.access & bytecode.ACC_SYNTHETIC or m.insns is None or not TOKEN.match(m.name):
+                        continue
+                    n = self.mname(c, m.name)
+                    dt = self.tdesc(m.desc)
+                    x = next((x for x in wk.methods if x.name == n and unify_desc(dt, x.desc, [])), None)
+                    if x is not None and self.same_code(m, x)[0]:
+                        keep.add((x.name, x.desc))
+                        continue
+                    if m.name not in done:
+                        todo.append(m)
+                for m in todo:
+                    dt = self.tdesc(m.desc)
+                    cands = []
+                    for x in wsyn:
+                        if (x.name, x.desc) in keep or bool(x.access & bytecode.ACC_STATIC) != bool(m.access & bytecode.ACC_STATIC):
+                            continue
+                        if not unify_desc(dt, x.desc, []):
+                            continue
+                        ok, _ = self.same_code(m, x)
+                        if ok and self.last_anchors >= 1:
+                            cands.append((x, self.last_anchors))
+                    if len(cands) == 1:
+                        x, anchors = cands[0]
+                        props[(w, x.name, x.desc)].append((c, m, anchors))
+            changed = 0
+            for (w, wn, wd), ev in props.items():
+                # several V synthetics whose only counterpart is this one body: their code is the same as each
+                # other's and the target keeps it once (26.1's ItemStack builds CODEC and the single-item
+                # codec on one MapCodec, so 1.21.11's two "stack -> components patch" getters are its one
+                # lambda$static$2); each maps there -- a private synthetic member nothing overrides, and every
+                # role its V copies had runs through it
+                for c, m, anchors in ev:
+                    if self.mname(c, m.name) == wn:
+                        done.add(m.name)
+                        continue
+                    self.ren[m.name] = wn
+                    self.ren_basis[m.name] = (f"synthetic: same code as {w}.{wn}{wd} (strength {anchors}; base name "
+                                              f"{self.base_m.get(c + '.' + m.name, m.name)}"
+                                              + (f"; one of {len(ev)} V synthetics with this code" if len(ev) > 1 else "") + ")")
+                    done.add(m.name)
+                    changed += 1
+            log(f"synthetic round {rnd}: {changed} renames")
+            if not changed:
+                break
 
     def same_bodies(self, c, w):
         """how many of V class c's bodies (the class initializer and constructors included) are the same
@@ -1276,6 +1357,7 @@ class Table:
             log(f"round {rnd}: {changed} decisions; classes {len(self.cm)}/{len(V)}, member renames {len(self.ren)}")
             if not changed and rnd >= 1:
                 break
+        self.match_synthetics(log)
 
 
 def spelling_fix(a, b):

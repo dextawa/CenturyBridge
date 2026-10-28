@@ -27,6 +27,16 @@ public final class Driver {
     private Driver() {
     }
 
+    /** a report's comment ("// " stripped), the first comment line */
+    private static String commentOf(String report) {
+        for (String line : report.split("\n")) {
+            if (line.startsWith("// ")) {
+                return line.substring(3);
+            }
+        }
+        return "(no comment line)";
+    }
+
     private static void report(String c, boolean cond, String detail) {
         if (cond) {
             ok++;
@@ -121,7 +131,68 @@ public final class Driver {
 
     /** native 1.21 mixin TamableTeleportMixin: calls of TamableAnimal.tryToTeleportToOwner seen */
     public static volatile int nativeTeleports;
+    /** native 1.21 mixin FollowOwnerWrapMixin: FollowOwnerGoal's tryToTeleportToOwner / unableToMoveToOwner calls wrapped */
+    public static volatile int nativeTeleportWraps;
+    public static volatile int nativeUnableWraps;
+    /** native 1.21 mixin ReportCommentMixin: ReportType.getErrorComment answers seen, the last one */
+    public static volatile int nativeComments;
+    public static volatile String nativeLastComment;
+    /** native 1.21 mixin RaidOmenWrapMixin: Raid Omen's createOrExtendRaid calls wrapped */
+    public static volatile int nativeRaidWraps;
+    /** native 1.21 mixin LeashRestoreWrapMixin: tickLeash's restoreLeashFromSave calls wrapped */
+    public static volatile int nativeLeashRestoreWraps;
+    /** native 1.21 mixin TagVisitorWrapMixin: visitCompound's nested visits wrapped */
+    public static volatile int nativeNestedWraps;
+
+    /**
+     * a pig high above the terrain beside an oak fence, its leash saved as the fence's position (setLeashData with a saved
+     * LeashData, as 1.21's readLeashData makes it), one tick: "knot" when it is leashed to a fence knot afterwards, else "none"
+     */
+    private static String leash(class_3218 level, int dx) {
+        class_2338 spawn = level.method_43126();
+        class_2338 at = new class_2338(spawn.method_10263() + dx, 300, spawn.method_10260() + 64);
+        class_2338 fence = at.method_10069(2, 0, 0);
+        level.method_8501(at.method_10074(), net.minecraft.class_2246.field_10340.method_9564());
+        level.method_8501(fence, net.minecraft.class_2246.field_10620.method_9564());
+        net.minecraft.class_1452 pig = net.minecraft.class_1299.field_6093.method_5883(level);
+        pig.method_5808(at.method_10263() + 0.5, at.method_10264(), at.method_10260() + 0.5, 0.0F, 0.0F);
+        level.method_8649(pig);
+        pig.method_60960(cb.smx6v.mixin.LeashDataNew.cbsmx6v$saved(com.mojang.datafixers.util.Either.right(fence)));
+        pig.method_5773();
+        net.minecraft.class_1297 holder = pig.method_60952();
+        if (holder != null) {
+            holder.method_31472();
+        }
+        pig.method_31472();
+        return holder instanceof net.minecraft.class_1532 ? "knot" : holder == null ? "none" : holder.getClass().getSimpleName();
+    }
     private static net.minecraft.class_3222 followOwner;
+
+    /**
+     * cb-smx6's raid() on 1.21's API: a server player (no connection) at a village block (meeting-point POI) whose Raid Omen
+     * runs out there; whether a raid stands at the block afterwards (it is stopped)
+     */
+    private static boolean raid(net.minecraft.server.MinecraftServer server, class_3218 level, int dx) {
+        class_2338 spawn = level.method_43126();
+        class_2338 at = new class_2338(spawn.method_10263() + dx, 300, spawn.method_10260() + 64);
+        level.method_8501(at.method_10074(), net.minecraft.class_2246.field_10340.method_9564());
+        level.method_19494().method_19115(at, net.minecraft.class_7923.field_41128.method_40290(net.minecraft.class_7477.field_39292));
+        // a villager's claim (PoiManager.take): ServerLevel.isVillage counts occupied village POIs only
+        level.method_19494().method_19126(h -> true, (h, p) -> p.equals(at), at, 1);
+        if (followOwner == null) {
+            followOwner = new net.minecraft.class_3222(server, level,
+                new com.mojang.authlib.GameProfile(java.util.UUID.fromString("0c0b5121-0000-4000-8000-00000000c0b6"), "cbsmx6vowner"),
+                net.minecraft.class_8791.method_53821());
+        }
+        followOwner.method_5808(at.method_10263() + 0.5, at.method_10264(), at.method_10260() + 0.5, 0.0F, 0.0F);
+        followOwner.method_58586(at);
+        net.minecraft.class_1294.field_50117.comp_349().method_5572(followOwner, 0);
+        net.minecraft.class_3765 r = level.method_19502(at);
+        if (r != null) {
+            r.method_16506();
+        }
+        return r != null;
+    }
 
     /**
      * cb-smx6's follow() on 1.21's API: a wolf tamed by a server player (in the level's player list, no connection) 20 blocks east
@@ -152,6 +223,10 @@ public final class Driver {
         level.method_8649(wolf);
         wolf.method_6170(followOwner);
         wolf.method_24346(false);
+        // deterministic teleport target: the wolf's random seeded so that the first try (1.20.6's draw order dx, dy, dz;
+        // 1.21's dx, dz, dy) is a free floor spot 2-3 blocks from the owner, even if up to three draws happen before it
+        // (Java LCG simulated for both orders, s121d). Owner, wolf and platform stand at fixed offsets on an isolated floor.
+        wolf.method_59922().method_43052(1315L);
         net.minecraft.class_1350 goal = new net.minecraft.class_1350(wolf, 1.0, 10.0F, 2.0F);
         double d = -1.0;
         if (goal.method_6264()) {
@@ -199,9 +274,47 @@ public final class Driver {
             report(tag + " recipes", recipes.equals("minecraft:oak_planks minecraft:oak_planks minecraft:stone_button"), recipes);
             System.out.println("CB-SMX6V recipes " + tag + " " + recipes);
             nativeTeleports = 0;
+            nativeTeleportWraps = 0;
+            nativeUnableWraps = 0;
             double d = follow(server, level, 24);
             report(tag + " follow", d >= 0 && d < 5.0, "tamed wolf 20 blocks from its owner, one FollowOwnerGoal tick: distance " + d);
-            System.out.println("CB-SMX6V follow " + tag + " distance=" + d + " nativeTryToTeleportToOwner=" + nativeTeleports);
+            report(tag + " follow-wraps", nativeTeleportWraps == 1 && nativeUnableWraps == 1,
+                "native @WrapOperation on the goal's calls: teleport " + nativeTeleportWraps + ", unable " + nativeUnableWraps);
+            System.out.println("CB-SMX6V follow " + tag + " distance=" + d + " nativeTryToTeleportToOwner=" + nativeTeleports
+                + " nativeTeleportWraps=" + nativeTeleportWraps + " nativeUnableWraps=" + nativeUnableWraps);
+            // report comments: 1.21's ReportType lists (with the layer's route installed, unmixed: untouched); the native
+            // RETURN injector on ReportType.getErrorComment sees each answer
+            nativeComments = 0;
+            String crash = new net.minecraft.class_128("cb-smx6v test", new RuntimeException("cb-smx6v")).method_60920(net.minecraft.class_9813.field_52181);
+            String cc = commentOf(crash);
+            report(tag + " crash-comment", net.minecraft.class_9813.field_52181.comp_2857().contains(cc) && nativeComments == 1 && cc.equals(nativeLastComment),
+                "crash report comment: " + cc + "; native RETURN injector saw " + nativeComments + " answer(s), last " + nativeLastComment);
+            nativeComments = 0;
+            String prof = net.minecraft.class_9813.field_52182.method_60927();
+            report(tag + " profile-comment", net.minecraft.class_9813.field_52182.comp_2857().contains(prof) && nativeComments == 1 && prof.equals(nativeLastComment),
+                "profile comment: " + prof + "; native RETURN injector saw " + nativeComments + " answer(s)");
+            // Raid Omen running out at a village block: 1.21 starts the raid; the native wrap of its createOrExtendRaid call
+            // runs once (with the layer, unmixed: 1.21's call; with cb-smx6 mixing method_58613: around the routed call)
+            nativeRaidWraps = 0;
+            boolean raided = raid(server, level, 3000);
+            report(tag + " raid-omen", raided && nativeRaidWraps == 1,
+                "Raid Omen ending at a village block: raid " + raided + ", native @WrapOperation of createOrExtendRaid ran " + nativeRaidWraps);
+            // a pig's saved leash restored by tickLeash: 1.21's restoreLeashFromSave (with the layer, unmixed: untouched; with
+            // cb-smx6 mixing Mob.restoreLeashFromSave: the routed restored body), the native wrap of the call runs once
+            nativeLeashRestoreWraps = 0;
+            String leashed = leash(level, 3200);
+            report(tag + " leash-restore", leashed.equals("knot") && nativeLeashRestoreWraps == 1,
+                "pig saved leashed to a fence, one tick: " + leashed + ", native @WrapOperation of restoreLeashFromSave ran " + nativeLeashRestoreWraps);
+            // {a:{b:1}} as text: 1.21's in-place nested visits (with the layer, unmixed: untouched; with cb-smx6 mixing
+            // method_59850: the routed restored visit); the native wrap of visitCompound's nested visit runs once per compound value
+            nativeNestedWraps = 0;
+            net.minecraft.class_2487 inner = new net.minecraft.class_2487();
+            inner.method_10569("b", 1);
+            net.minecraft.class_2487 outer = new net.minecraft.class_2487();
+            outer.method_10566("a", inner);
+            String text = new net.minecraft.class_5628("").method_32305(outer).getString();
+            report(tag + " tagvisit", text.equals("{a: {b: 1}}") && nativeNestedWraps == 2,
+                "{a:{b:1}} as text: " + text + ", native @WrapOperation of the nested visit ran " + nativeNestedWraps);
         } catch (Throwable t) {
             report(tag + " exception", false, String.valueOf(t));
             t.printStackTrace();
