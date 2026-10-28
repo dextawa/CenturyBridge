@@ -99,8 +99,19 @@ public final class CbRecipeJson {
         return answer == recipe ? holder : new net.minecraft.class_8786(holder.comp_1932(), answer);
     }
 
+    /**
+     * The classes the layer restores the recipe readers' members on (CbRecipeJson* mixins: the serializers' fromJson, ShapedRecipe's
+     * and Ingredient's JSON statics). Only when a converted mod's mixin injects into one of those members (CbMixedMembers) can a
+     * restored reader answer otherwise than its unmixed copy, so only then is it consulted: unmixed, 1.20.2's recipe is kept
+     * without reading the JSON a second time.
+     */
+    private static final java.util.Set<String> RESTORED_ON = java.util.Set.of(
+        "net/minecraft/class_1856", "net/minecraft/class_1866", "net/minecraft/class_1867$class_1868", "net/minecraft/class_1869",
+        "net/minecraft/class_1869$class_1870", "net/minecraft/class_3957", "net/minecraft/class_3972$class_3973",
+        "net/minecraft/class_8060$class_8061", "net/minecraft/class_8062$class_8063");
+
     public static class_1860<?> consult(class_1860<?> read, class_2960 id, JsonObject json) {
-        if (!ROUTE || read == null) {
+        if (!ROUTE || read == null || !CbMixedMembers.mixedOn(RESTORED_ON)) {
             return read;
         }
         class_1865<?> serializer = read.method_8119();
@@ -248,40 +259,38 @@ public final class CbRecipeJson {
         return rows;
     }
 
-    /**
-     * 1.20.1 ShapedRecipe.shrink(rows) (1.20.2's shrink(List), the same code; javap class_1869 method_8146 with
-     * firstNonSpace method_8151 / lastNonSpace method_8153): the golden copy, unmixed
-     */
-    public static String[] shrink(java.util.List<String> rows) {
+    /** 1.20.1 ShapedRecipe.shrink(rows): the pattern without its blank border rows and columns */
+    public static String[] shrink(String... rows) {
         int first = Integer.MAX_VALUE;
         int last = 0;
-        int emptyTop = 0;
-        int emptyBottom = 0;
-        for (int i = 0; i < rows.size(); ++i) {
-            String row = rows.get(i);
+        int blankTop = 0;
+        int blankTail = 0;
+        for (int i = 0; i < rows.length; ++i) {
+            String row = rows[i];
             first = Math.min(first, firstNonSpace(row));
-            int lastOfRow = lastNonSpace(row);
-            last = Math.max(last, lastOfRow);
-            if (lastOfRow < 0) {
-                if (emptyTop == i) {
-                    ++emptyTop;
+            int end = lastNonSpace(row);
+            last = Math.max(last, end);
+            if (end < 0) {
+                if (blankTop == i) {
+                    ++blankTop;
                 }
-                ++emptyBottom;
+                ++blankTail;
             } else {
-                emptyBottom = 0;
+                blankTail = 0;
             }
         }
-        if (rows.size() == emptyBottom) {
+        if (rows.length == blankTail) {
             return new String[0];
         }
-        String[] out = new String[rows.size() - emptyBottom - emptyTop];
+        String[] out = new String[rows.length - blankTail - blankTop];
         for (int i = 0; i < out.length; ++i) {
-            out[i] = rows.get(i + emptyTop).substring(first, last + 1);
+            out[i] = rows[i + blankTop].substring(first, last + 1);
         }
         return out;
     }
 
-    private static int firstNonSpace(String row) {
+    /** 1.20.1 ShapedRecipe.firstNonSpace(row) */
+    public static int firstNonSpace(String row) {
         int i = 0;
         while (i < row.length() && row.charAt(i) == ' ') {
             ++i;
@@ -289,7 +298,8 @@ public final class CbRecipeJson {
         return i;
     }
 
-    private static int lastNonSpace(String row) {
+    /** 1.20.1 ShapedRecipe.lastNonSpace(row) */
+    public static int lastNonSpace(String row) {
         int i = row.length() - 1;
         while (i >= 0 && row.charAt(i) == ' ') {
             --i;

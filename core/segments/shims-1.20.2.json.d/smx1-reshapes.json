@@ -1,0 +1,176 @@
+{
+ "_smx1_reshapes_basis": "smx1c 2026-10-26: private statics 1.20.2 kept under the same name, taking the same values in a new type (an int display slot -> DisplaySlot; MinMaxBounds' nullable boxed bounds -> Optional). Mods reach them only through mixins: @Invoker / @Shadow callers pass 1.20.1 values, converted; selectors and anchors follow to the W member. Debug renderers: 1.20.2 hands BrainDebugRenderer / BeeDebugRenderer's private renderers the debug payload records where 1.20.1 handed its own info classes (now layer facades); the layer's converters (CbGuiDebug, as the step's existing reshapes of addOrUpdateBrainDump / addOrUpdateBeeInfo / addOrUpdateHiveInfo use them) build the record from the facade the caller holds.",
+ "callReshapes": {
+  "net/minecraft/class_3115.method_13592(Lnet/minecraft/class_2168;I)I": {
+   "desc": "(Lnet/minecraft/class_2168;Lnet/minecraft/class_8646;)I",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/rt/v1_20_2/CbScoreboard#slotOf(I)Lnet/minecraft/class_8646;"
+   ],
+   "basis": "ScoreboardCommand.clearDisplaySlot(source, int slot) -> (source, DisplaySlot): javap -c -p both: the same getDisplayObjective / setDisplayObjective(slot, null) and messages, the slot now the DisplaySlot of that id (ordinal = id)"
+  },
+  "net/minecraft/class_3115.method_13596(Lnet/minecraft/class_2168;ILnet/minecraft/class_266;)I": {
+   "desc": "(Lnet/minecraft/class_2168;Lnet/minecraft/class_8646;Lnet/minecraft/class_266;)I",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/rt/v1_20_2/CbScoreboard#slotOf(I)Lnet/minecraft/class_8646;",
+    "keep:2"
+   ],
+   "basis": "ScoreboardCommand.setDisplaySlot(source, int slot, objective) -> (source, DisplaySlot, objective): javap -c -p both: the same body on the DisplaySlot of that id"
+  },
+  "net/minecraft/class_2096$class_2099.method_9044(Ljava/lang/Double;)Ljava/lang/Double;": {
+   "desc": "(Ljava/util/Optional;)Ljava/util/Optional;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvBounds#ofDouble(Ljava/lang/Double;)Ljava/util/Optional;"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbAdvBounds#doubleOrNull(Ljava/util/Optional;)Ljava/lang/Double;",
+   "basis": "MinMaxBounds.Doubles.squareOpt(Double) -> (Optional<Double>): javap -c -p both: the bound squared, absent (1.20.1 null) stays absent"
+  },
+  "net/minecraft/class_2096$class_2100.method_9059(Ljava/lang/Integer;)Ljava/lang/Long;": {
+   "desc": "(Ljava/util/Optional;)Ljava/util/Optional;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvBounds#ofInt(Ljava/lang/Integer;)Ljava/util/Optional;"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbAdvBounds#longOrNull(Ljava/util/Optional;)Ljava/lang/Long;",
+   "basis": "MinMaxBounds.Ints.squareOpt(Integer) -> (Optional<Integer>) returning Optional<Long>: javap -c -p both: the bound widened and squared, absent (1.20.1 null) stays absent"
+  },
+  "net/minecraft/class_2096$class_2100.method_9055(Lcom/mojang/brigadier/StringReader;Ljava/lang/Integer;Ljava/lang/Integer;)Lnet/minecraft/class_2096$class_2100;": {
+   "desc": "(Lcom/mojang/brigadier/StringReader;Ljava/util/Optional;Ljava/util/Optional;)Lnet/minecraft/class_2096$class_2100;",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/rt/v1_20_2/CbAdvBounds#ofInt(Ljava/lang/Integer;)Ljava/util/Optional;",
+    "conv:2 top/dext/centurybridge/rt/v1_20_2/CbAdvBounds#ofInt(Ljava/lang/Integer;)Ljava/util/Optional;"
+   ],
+   "basis": "MinMaxBounds.Ints.create(reader, min, max): javap -c -p both: min > max (both present; 1.20.1 both non-null) throws ERROR_SWAPPED, else new Ints(min, max)"
+  },
+  "net/minecraft/class_2096$class_2099.method_9046(Lcom/mojang/brigadier/StringReader;Ljava/lang/Double;Ljava/lang/Double;)Lnet/minecraft/class_2096$class_2099;": {
+   "desc": "(Lcom/mojang/brigadier/StringReader;Ljava/util/Optional;Ljava/util/Optional;)Lnet/minecraft/class_2096$class_2099;",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/rt/v1_20_2/CbAdvBounds#ofDouble(Ljava/lang/Double;)Ljava/util/Optional;",
+    "conv:2 top/dext/centurybridge/rt/v1_20_2/CbAdvBounds#ofDouble(Ljava/lang/Double;)Ljava/util/Optional;"
+   ],
+   "basis": "MinMaxBounds.Doubles.create(reader, min, max): javap -c -p both: min > max (both present; 1.20.1 both non-null) throws ERROR_SWAPPED, else new Doubles(min, max)"
+  },
+  "net/minecraft/class_4207.method_23140(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_4207$class_4232;DDD)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_8708$class_4232;DDD)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbBrainDump(Lnet/minecraft/class_4207$class_4232;)Lnet/minecraft/class_8708$class_4232;",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "BrainDebugRenderer.method_23140, private: its BrainDump -> BrainDebugPayload.BrainDump argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_4207.method_23136(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_4207$class_4232;DDD)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_8708$class_4232;DDD)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbBrainDump(Lnet/minecraft/class_4207$class_4232;)Lnet/minecraft/class_8708$class_4232;",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "BrainDebugRenderer.method_23136, private: its BrainDump -> BrainDebugPayload.BrainDump argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_4207.method_23147(Lnet/minecraft/class_4207$class_4232;)Z": {
+   "desc": "(Lnet/minecraft/class_8708$class_4232;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbBrainDump(Lnet/minecraft/class_4207$class_4232;)Lnet/minecraft/class_8708$class_4232;"
+   ],
+   "basis": "BrainDebugRenderer.method_23147, private: its BrainDump -> BrainDebugPayload.BrainDump argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_4207.method_23145(Lnet/minecraft/class_4207$class_4232;)Z": {
+   "desc": "(Lnet/minecraft/class_8708$class_4232;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbBrainDump(Lnet/minecraft/class_4207$class_4232;)Lnet/minecraft/class_8708$class_4232;"
+   ],
+   "basis": "BrainDebugRenderer.method_23145, private: its BrainDump -> BrainDebugPayload.BrainDump argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_4703.method_23824(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_4703$class_5243;)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_8707$class_5243;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbBeeInfo(Lnet/minecraft/class_4703$class_5243;)Lnet/minecraft/class_8707$class_5243;"
+   ],
+   "basis": "BeeDebugRenderer.method_23824, private: its BeeInfo -> BeeDebugPayload.BeeInfo argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_4703.method_23820(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_4703$class_5243;)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_8707$class_5243;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbBeeInfo(Lnet/minecraft/class_4703$class_5243;)Lnet/minecraft/class_8707$class_5243;"
+   ],
+   "basis": "BeeDebugRenderer.method_23820, private: its BeeInfo -> BeeDebugPayload.BeeInfo argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_4703.method_23829(Lnet/minecraft/class_4703$class_5243;)Z": {
+   "desc": "(Lnet/minecraft/class_8707$class_5243;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbBeeInfo(Lnet/minecraft/class_4703$class_5243;)Lnet/minecraft/class_8707$class_5243;"
+   ],
+   "basis": "BeeDebugRenderer.method_23829, private: its BeeInfo -> BeeDebugPayload.BeeInfo argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_4703.method_23827(Lnet/minecraft/class_4703$class_5243;)Z": {
+   "desc": "(Lnet/minecraft/class_8707$class_5243;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbBeeInfo(Lnet/minecraft/class_4703$class_5243;)Lnet/minecraft/class_8707$class_5243;"
+   ],
+   "basis": "BeeDebugRenderer.method_23827, private: its BeeInfo -> BeeDebugPayload.BeeInfo argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_4703.method_23821(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_4703$class_4705;Ljava/util/Collection;)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_8718$class_8719;Ljava/util/Collection;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbHiveInfo(Lnet/minecraft/class_4703$class_4705;)Lnet/minecraft/class_8718$class_8719;",
+    "keep:3"
+   ],
+   "basis": "BeeDebugRenderer.method_23821, private: its HiveInfo -> HiveDebugPayload.HiveInfo argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_4703.method_23815(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;Lnet/minecraft/class_4703$class_4705;II)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;Lnet/minecraft/class_8718$class_8719;II)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbHiveInfo(Lnet/minecraft/class_4703$class_4705;)Lnet/minecraft/class_8718$class_8719;",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "BeeDebugRenderer.method_23815, private: its HiveInfo -> HiveDebugPayload.HiveInfo argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_4703.method_35796(Lnet/minecraft/class_4703$class_4705;)Ljava/util/Set;": {
+   "desc": "(Lnet/minecraft/class_8718$class_8719;)Ljava/util/Set;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbGuiDebug#cbHiveInfo(Lnet/minecraft/class_4703$class_4705;)Lnet/minecraft/class_8718$class_8719;"
+   ],
+   "basis": "BeeDebugRenderer.method_35796, private: its HiveInfo -> HiveDebugPayload.HiveInfo argument; javap -c -p both: the same code, 1.20.1's field reads of the debug info now the payload record's accessors"
+  },
+  "net/minecraft/class_370.method_29046(Lnet/minecraft/class_332;Lnet/minecraft/class_374;IIII)V": {
+   "desc": "(Lnet/minecraft/class_332;IIII)V",
+   "ops": [
+    "keep:0",
+    "drop:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "SystemToast.method_29046, private (draws one background row): javap -c -p both: the ToastComponent argument is never read in 1.20.1 (no aload_2); the four ints take the same places, the row drawn from the toast background (1.20.2 its sprite)"
+  },
+  "net/minecraft/class_2412.method_37316(Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2048;)Lnet/minecraft/class_6405$class_6406;": {
+   "desc": "(Lnet/minecraft/class_2096$class_2100;Ljava/util/Optional;)Lnet/minecraft/class_175;",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/rt/v1_20_2/CbAdvAny#entity(Lnet/minecraft/class_2048;)Ljava/util/Optional;"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbAdvDatagen#lightningStrikeInstance(Lnet/minecraft/class_175;)Lnet/minecraft/class_6405$class_6406;",
+   "basis": "VanillaAdventureAdvancements.fireCountAndBystander(Ints, EntityPredicate bystander), private: javap -c -p both: the same lightning predicate built and passed with the bystander (1.20.2 an Optional: ANY is absent) to LightningStrikeTrigger.TriggerInstance.lightningStrike, whose 1.20.2 answer is the criterion holding the instance 1.20.1 answered"
+  }
+ }
+}
