@@ -110,12 +110,20 @@ public final class CbAdvBuilders {
         }
     }
 
+    /** the id of the advancement the step (method_20723) is reading on this thread, taken at its HEAD by type */
+    private static final ThreadLocal<net.minecraft.class_2960> CURRENT_ID = new ThreadLocal<>();
+
+    public static void carryId(net.minecraft.class_2960 id) {
+        CURRENT_ID.set(id);
+    }
+
     /**
-     * {@link #consult} for the advancement {@code id} the manager is about to hold, with that file's carried JSON;
+     * {@link #consult} for the advancement the step is about to hold, with the carried id and that file's carried JSON;
      * {@code read} unchanged when no JSON is carried for it (none carried, or a release whose loader decodes first)
      */
-    public static net.minecraft.class_161 consultCarried(net.minecraft.class_2960 id, net.minecraft.class_161 read,
-                                                         net.minecraft.class_60 lootData) {
+    public static net.minecraft.class_161 consultCarried(net.minecraft.class_161 read, net.minecraft.class_60 lootData) {
+        net.minecraft.class_2960 id = CURRENT_ID.get();
+        CURRENT_ID.remove();
         java.util.Map<?, ?> files = CURRENT_FILES.get();
         Object json = files == null || id == null ? null : files.get(id);
         return json instanceof com.google.gson.JsonElement element ? consult(read, id, element, lootData) : read;

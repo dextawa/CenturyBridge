@@ -27,8 +27,9 @@ import top.dext.centurybridge.rt.v1_20_2.CbAdvBuilders;
  * lambda$apply$0 likewise): every release builds the holder with the same constructor call in the step, and apply
  * (method_20724) keeps the (Map, ResourceManager, ProfilerFiller) descriptor. No handler captures the step's arguments
  * (1.20.5 adds a RegistryOps first one; 1.21.2 hands the decoded advancement where 1.20.2 handed the JSON) and none
- * reads a local: the @ModifyArg takes the constructor call's own operands, and the files' JSON comes from apply's Map
- * argument, taken by its erased type. From 1.21.2 that map holds decoded advancements, so the consult finds no JSON and
+ * reads a local: the @ModifyArg takes only the constructor call's advancement operand, the id is the step's one
+ * ResourceLocation argument (argsOnly by type, at HEAD), and the files' JSON comes from apply's Map argument, taken by
+ * its erased type. From 1.21.2 that map holds decoded advancements, so the consult finds no JSON and
  * vanilla's advancement stays (the route's reach ends there unless the 1.21.2 step carries the JSON).
  */
 @Mixin(class_2989.class)
@@ -51,9 +52,15 @@ public abstract class CbAdvJsonVanillaMixin {
         CbAdvBuilders.carryFiles(null);
     }
 
+    @ModifyVariable(method = "method_20723", at = @At("HEAD"), argsOnly = true, require = 1)
+    private class_2960 cb$carryId(class_2960 id) {
+        CbAdvBuilders.carryId(id);
+        return id;
+    }
+
     @ModifyArg(method = "method_20723", at = @At(value = "INVOKE",
         target = "Lnet/minecraft/class_8779;<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_161;)V"), index = 1, require = 1)
-    private class_161 cb$consultLegacyReader(class_2960 id, class_161 read) {
-        return CbAdvBuilders.consultCarried(id, read, this.field_44468);
+    private class_161 cb$consultLegacyReader(class_161 read) {
+        return CbAdvBuilders.consultCarried(read, this.field_44468);
     }
 }
