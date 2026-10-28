@@ -1,0 +1,10 @@
+{
+ "_smixin7_basis": "mixinTargets judged from both bodies (javap -c -p client-1.21.1 / client-1.21.2 class_1863): what a 1.21.1 mixin on RecipeManager names, and where its arguments arrive on 1.21.2",
+ "mixinTargets": {
+  "net/minecraft/class_1863.method_17720(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_8786;": {
+   "to": "method_17720(Lnet/minecraft/class_5321;Lcom/google/gson/JsonObject;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_8786;",
+   "args": ["0 top/dext/centurybridge/step/v1_21_2/rt/CbItemDatagen#id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;", 1, 2],
+   "basis": "RecipeManager.fromJson: the same instructions on both releases, the recipe id (ResourceLocation) became the recipe key (ResourceKey) and goes into RecipeHolder's constructor the same way; V's id is the key's location() (CbItemDatagen.id, the step's converter for this pair)"
+  }
+ }
+}

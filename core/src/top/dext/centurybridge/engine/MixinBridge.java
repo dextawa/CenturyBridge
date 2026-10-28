@@ -152,12 +152,15 @@ final class MixinBridge {
     private String curKey = "mixins";
     /** restoring mixins made for the current config, by class name */
     private final Map<String, ClassNode> restorers = new LinkedHashMap<>();
+    /** the members the jar's own class mixins merge onto their targets, read before bridging (MixinTriage.ownMembers) */
+    private final LayerMembers own;
 
     private MixinBridge(Chain chain, Map<String, byte[]> entries, String helperName) {
         this.chain = chain;
         this.entries = entries;
         this.helperName = helperName;
         this.step = chain.to.replace('.', '_');
+        this.own = MixinTriage.ownMembers(entries);
     }
 
     /**
@@ -1136,6 +1139,13 @@ final class MixinBridge {
             if (chain.layerDeclares(target, kind, name, desc, mp)) {
                 member((kind == 'f' ? "field " : "member ") + sn + " -> " + shortName(target) + "." + name + (kind == 'f' ? ":" : "") + desc
                     + ": the layer's restored member");
+                return true;
+            }
+            // or one the jar's own class mixins merge onto the target (smx1 CASE 13: a climbing layer's invoker of a
+            // member it restores itself)
+            if (MixinTriage.ownDeclares(own, target, kind, name, desc, mp)) {
+                member((kind == 'f' ? "field " : "member ") + sn + " -> " + shortName(target) + "." + name + (kind == 'f' ? ":" : "") + desc
+                    + ": restored by the jar's own mixin");
                 return true;
             }
             return false;
@@ -3592,17 +3602,18 @@ final class MixinBridge {
             for (int i = 0; known && i < from.length; i++) {
                 known = from[i] >= 0;
             }
+            // a derived argument (s26 C13 (2)): V's value is the static of W's
+            String[][] wrap = from != null && mt.wrap() != null ? mt.wrap().clone() : new String[va.length][];
             // "narrow": an argument W widened (1.21.2 ItemStack.hurtEnemy: a LivingEntity attacker where 1.21.1 took a
             // Player, mobs now calling it too) reaches the handler only when it is V's type, as the override hooks'
             // narrowing: a handler written for V never saw another
             boolean[] narrow = new boolean[va.length];
-            String[][] wrap = new String[va.length][];
             Type[] mwa = Type.getArgumentTypes(mt.desc());
             for (int i = 0; known && i < va.length; i++) {
-                if (from[i] >= mwa.length || mwa[from[i]].equals(va[i]) || wAssignable(mwa[from[i]], va[i])) {
-                    continue;
+                if (wrap[i] != null || from[i] >= mwa.length || mwa[from[i]].equals(va[i]) || wAssignable(mwa[from[i]], va[i])) {
+                    continue; // a derived argument (converted by its own static) or one W hands as V's type
                 }
-                // CASE 18: the W argument of another type reaches the handler through the entry's wrap (the override
+                // CASE 18: the W argument of another type reaches the handler through the entry's "wrap" (the override
                 // hooks' rule: the static taking W's type to V's); else narrowed; else no W argument carries V's
                 String[] w = mt.wrapFor(mwa[from[i]], va[i]);
                 if (w != null) {
