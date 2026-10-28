@@ -2606,7 +2606,20 @@ public final class JarProcessor {
                 rpt.strippedMixins.add(tag + shortName(cls) + " -- " + repaired.fatalWhy().get(cls));
             }
         }
+        // K3: a mixin fatal only for members W no longer declares is taken apart member by member (MixinPeel)
+        MixinPeel peel = new MixinPeel(entries, chain, repaired != null || chain.injectorsJudgedPastWall,
+            "centurybridge/gen/MixinRefused_" + jarTag + "_" + chain.to.replace('.', '_')
+                + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count()));
         for (MixinTriage.MixinInfo mx : triage.mixins()) {
+            if (mx.vanilla() && mx.applyFatal(repaired != null || chain.injectorsJudgedPastWall)
+                    && !(repaired != null && repaired.fatal().contains(mx.className()))) {
+                MixinPeel.Result pr = peel.peel(mx.className());
+                if (pr != null) {
+                    rpt.notes.add(tag + pr.note());
+                    for (String d : pr.disabled()) rpt.disabledInjectors.add(tag + d);
+                    continue;
+                }
+            }
             if (mx.vanilla() && mx.applyFatal(repaired != null || chain.injectorsJudgedPastWall)) {
                 deadMixins.add(mx.className());
                 String lb = mx.loadBearing() ? " [load-bearing! may be unstable]" : "";
@@ -2618,6 +2631,7 @@ public final class JarProcessor {
                     + "): " + shortName(mx.className()));
             }
         }
+        for (String n : peel.finish()) rpt.notes.add(tag + n);
         // a mixin extending a stripped mixin cannot apply either ("super class
         // ... was not found in the hierarchy of target"): strip the subtree too
         boolean grew = true;
