@@ -68,6 +68,21 @@ public final class JarRemapper {
          * "unproven ..." lines, for the conversion report
          */
         public final java.util.List<String> reflectNotes = new java.util.ArrayList<>();
+        /** every intermediary member id the table renames on some owner (lazily, {@link #renamesId}) */
+        private java.util.Set<String> renamedIds;
+
+        /** whether the table renames the member id anywhere: an id it never names is left alone by every rename */
+        boolean renamesId(String id) {
+            if (renamedIds == null) {
+                java.util.Set<String> ids = new java.util.HashSet<>(members.keySet());
+                ids.addAll(candidates.keySet());
+                for (String k : byOwner.keySet()) {
+                    ids.add(k.substring(k.lastIndexOf('.') + 1));
+                }
+                renamedIds = ids;
+            }
+            return renamedIds.contains(id);
+        }
         /** how many bare ids were ambiguous (owner-qualified lookup only) */
         public int ambiguous;
         /** bare intermediary method id -> every mojang name the table gives it (more than one: reused ids) */
@@ -923,6 +938,17 @@ public final class JarRemapper {
                     why = "the table does not rename the class";
                 } else {
                     String owner = role[0] < 0 ? null : classConstant(f.getStack(base + role[0]), frames, insns, m);
+                    if (owner != null && (owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/"))) {
+                        // CenturyBridge's own classes keep their token-named members past the wall (the remapper's
+                        // rule); a facade not declaring the token answers to the table's name (keepFacadeTokens)
+                        String fm = table.facadeMember(owner, name);
+                        if (fm != null && !fm.equals(name)) {
+                            nameLdc.cst = fm;
+                            changed = true;
+                            table.reflectNotes.add("reflection string translated past the wall: " + where + " -> \"" + fm + "\"");
+                        }
+                        continue;
+                    }
                     if (owner != null) {
                         to = table.byOwner.get(owner + "." + name);
                         if (to == null) {
@@ -932,8 +958,11 @@ public final class JarRemapper {
                     if (to == null) {
                         to = table.members.get(name);
                     }
-                    why = owner == null ? "owner not a class constant, and the bare id is ambiguous or unknown to the table"
+                    why = owner == null ? "owner not a class constant, and the table gives the id more than one name"
                         : "the table renames no member " + name + " of " + owner + " or its supertypes";
+                }
+                if (to == null && role[2] != 'c' && !table.renamesId(name)) {
+                    continue; // an id the table renames nowhere: no class past the wall spells it otherwise
                 }
                 if (to != null && !to.equals(name)) {
                     nameLdc.cst = to;
