@@ -260,7 +260,24 @@ final class MixinPeel {
         }
     }
 
+    /** marks a method MixinPeel gave a throwing body ({"why": the message}): MixinJudge counts it open */
+    static final String PEELED = "Ltop/dext/centurybridge/Peeled;";
+
+    /** the message of a method MixinPeel made throw, or null */
+    static String peeled(MethodNode m) {
+        if (m.invisibleAnnotations != null) {
+            for (AnnotationNode a : m.invisibleAnnotations) {
+                if (a.desc.equals(PEELED)) return String.valueOf(MixinRepair.values(a).get("why"));
+            }
+        }
+        return null;
+    }
+
     private static void throwBody(MethodNode m, String msg) {
+        AnnotationNode mark = new AnnotationNode(PEELED);
+        mark.values = new ArrayList<>(List.of("why", msg));
+        m.invisibleAnnotations = m.invisibleAnnotations == null ? new ArrayList<>() : m.invisibleAnnotations;
+        m.invisibleAnnotations.add(mark);
         m.access &= ~(Opcodes.ACC_ABSTRACT | Opcodes.ACC_NATIVE);
         m.instructions.clear();
         m.tryCatchBlocks = new ArrayList<>();
