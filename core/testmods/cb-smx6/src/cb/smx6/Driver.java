@@ -56,6 +56,12 @@ public final class Driver {
     public static volatile boolean foldNested;
     public static volatile int nestedAsked;
     public static volatile int nestedVisits;
+    public static volatile int unloadAsked;
+    public static volatile long unloadWatch = Long.MIN_VALUE;
+    public static volatile String unloadSeen;
+    public static volatile int dimAsked;
+    public static volatile net.minecraft.class_3218 dimDest;
+    public static volatile boolean blockDim;
     private static net.minecraft.class_3222 followOwner;
     private static int ok;
     private static int fail;
@@ -291,6 +297,26 @@ public final class Driver {
             foldNested = false;
             check("tagvisit-folded", text.equals("{a: <cb>}") && nestedAsked == 1 && nestedVisits == 0,
                 "the mod answers the nested tag: " + text + ", asked " + nestedAsked + " time(s), nested visits " + nestedVisits);
+            // ---- ChunkMap unload body: ChunkUnloadMixin (1.21: mixinTargets method_18843 -> method_60440, the chunk from
+            // holder.getLatestChunk())
+            String unload = unload(level);
+            check("unload-args", "holder/chunk".equals(unloadSeen),
+                "a forced far chunk released and ticked out: " + unload + ", injector saw " + unloadSeen + " (holder/chunk)");
+            // ---- Entity.changeDimension HEAD: DimensionMixin (1.21: mixinTargets onto changeDimension(DimensionTransition))
+            net.minecraft.class_3218 end = server.method_3847(net.minecraft.class_1937.field_25181);
+            blockDim = false;
+            dimAsked = 0;
+            dimDest = null;
+            String dim = travel(level, end, 1400);
+            check("dim-passive", dim.equals("end") && dimAsked == 1 && dimDest == end,
+                "pig sent to the end: " + dim + ", changeDimension HEAD asked " + dimAsked + " time(s), dest end " + (dimDest == end));
+            blockDim = true;
+            dimAsked = 0;
+            dimDest = null;
+            dim = travel(level, end, 1500);
+            blockDim = false;
+            check("dim-blocked", dim.equals("stayed") && dimAsked == 1 && dimDest == end,
+                "move refused by the mod: " + dim + ", asked " + dimAsked + " time(s)");
             level.method_8519(1.0F);
             level.method_8496(1.0F);
             check("thunderstorm", level.method_8546(), "isThundering after rain/thunder level 1");
@@ -494,6 +520,48 @@ public final class Driver {
         }
         pig.method_31472();
         return (readBack ? "" : "unread:") + h + "/" + d + "/" + leashRestoreAsked + "/" + leashRestored;
+    }
+
+    /**
+     * A far chunk held by a forced ticket, loaded to FULL, released, then the chunk source ticked until the chunk map
+     * unloads it (at most 200 ticks); "unloaded after N tick(s)" or "not unloaded"
+     */
+    private static String unload(class_3218 level) {
+        net.minecraft.class_1923 pos = new net.minecraft.class_1923(4000, 4000);
+        net.minecraft.class_3215 cache = level.method_14178();
+        unloadAsked = 0;
+        unloadSeen = null;
+        unloadWatch = pos.method_8324();
+        cache.method_17297(net.minecraft.class_3230.field_14031, pos, 2, pos);
+        cache.method_12121(pos.field_9181, pos.field_9180, net.minecraft.class_2806.field_12803, true);
+        cache.method_17300(net.minecraft.class_3230.field_14031, pos, 2, pos);
+        for (int i = 1; i <= 200; i++) {
+            cache.method_12127(() -> true, true);
+            if (unloadSeen != null) {
+                unloadWatch = Long.MIN_VALUE;
+                return "unloaded after " + i + " tick(s)";
+            }
+        }
+        unloadWatch = Long.MIN_VALUE;
+        return "not unloaded (" + unloadAsked + " other unload(s))";
+    }
+
+    /** a pig at the surface dx blocks east of spawn, sent to {@code dest} with 1.20.6's changeDimension(dest) */
+    private static String travel(class_3218 level, class_3218 dest, int dx) {
+        class_2338 spawn = level.method_43126();
+        net.minecraft.class_1452 pig = class_1299.field_6093.method_5883(level);
+        pig.method_5808(spawn.method_10263() + dx + 0.5, 300, spawn.method_10260() + 0.5, 0.0F, 0.0F);
+        level.method_8649(pig);
+        net.minecraft.class_1297 moved = pig.method_5731(dest);
+        String r = moved == null ? (!pig.method_31481() && pig.method_37908() == level ? "stayed" : "lost")
+            : moved.method_37908() == dest ? "end" : "elsewhere";
+        if (moved != null) {
+            moved.method_31472();
+        }
+        if (!pig.method_31481()) {
+            pig.method_31472();
+        }
+        return r;
     }
 
     /** {a:{b:1}} through TextComponentTagVisitor("") as a string */
