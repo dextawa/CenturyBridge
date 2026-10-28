@@ -664,20 +664,22 @@ public final class MixinRepair {
                         }
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
-                        if (cands.isEmpty() && s.desc != null && mixinMoves.containsKey(owner + "." + s.name + s.desc)) {
+                        // the mixinMoves key the selector names: spelled, or a bare name resolved in V as Mixin resolved it there (C23)
+                        String moveKey = !cands.isEmpty() ? null : s.desc != null ? owner + "." + s.name + s.desc : bareMoveKey(owner, s);
+                        if (moveKey != null && mixinMoves.containsKey(moveKey)) {
                             // the method moved, the same code, to another W class (mixinMoves): onto a mixin of that class
-                            List<String[]> self = mixinMoveSelf.get(owner + "." + s.name + s.desc);
-                            String why0 = movable(mx, handler, an, anchors, mixinMoves.get(owner + "." + s.name + s.desc), owner, self);
+                            List<String[]> self = mixinMoveSelf.get(moveKey);
+                            String to = mixinMoves.get(moveKey);
+                            String whereK = s.desc != null ? where : where + " (bare: V's " + moveKey.substring(moveKey.lastIndexOf('.', moveKey.indexOf('(')) + 1) + ")";
+                            String why0 = movable(mx, handler, an, anchors, to, owner, self);
                             if (why0 == null) {
-                                String to = mixinMoves.get(owner + "." + s.name + s.desc);
-                                fixNotes.add("move " + where + " => " + to + " (mixinMoves: the same code in another class)");
+                                fixNotes.add("move " + whereK + " => " + to + " (mixinMoves: the same code in another class)");
                                 fixes.add(() -> {
                                     moveInjector(mx, handler, an, to, owner, self);
                                     dirty[0] = true;
                                 });
                             } else if (deadWhy == null) {
-                                deadWhy = "target gone: @" + kind + " " + where + " (mixinMoves to "
-                                    + mixinMoves.get(owner + "." + s.name + s.desc) + ": " + why0 + ")";
+                                deadWhy = "target gone: @" + kind + " " + whereK + " (mixinMoves to " + to + ": " + why0 + ")";
                             }
                             continue;
                         }
@@ -1309,6 +1311,23 @@ public final class MixinRepair {
         b.add(new FieldInsnNode(Opcodes.GETSTATIC, hc, field, "Ljava/lang/ThreadLocal;"));
         b.add(new VarInsnNode(Opcodes.ALOAD, prevSlot));
         b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "set", "(Ljava/lang/Object;)V", false));
+    }
+
+    /**
+     * The "owner.name(desc)" of the V method a descriptorless selector named, or null (C23). Mixin resolves a bare
+     * name with the default quantifier as SINGLE (MemberInfo.configure(SELECT_MEMBER), javap of sponge-mixin 0.17.3):
+     * the first method of the class by that name, in class-file order. So on V the selector meant V's first method of
+     * that name; once W no longer declares it, that V method's fate (a mixinMoves entry) is the selector's.
+     * A wildcard selector names every match: not resolved here.
+     */
+    private String bareMoveKey(String owner, Sel s) {
+        if (source == null || s.wildcard) return null;
+        ClassNode vtc = source.target(owner);
+        if (vtc == null) return null;
+        for (MethodNode m : vtc.methods) {
+            if (m.name.equals(s.name)) return owner + "." + m.name + m.desc;
+        }
+        return null;
     }
 
     /** why an injector cannot move onto a mixin of the class a mixinMoves entry names, or null */
