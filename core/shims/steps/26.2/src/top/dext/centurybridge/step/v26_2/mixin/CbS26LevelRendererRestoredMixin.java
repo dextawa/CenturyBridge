@@ -4,12 +4,17 @@ import com.mojang.blaze3d.pipeline.RenderTarget;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.SectionOcclusionGraph;
+import net.minecraft.client.renderer.state.OptionsRenderState;
 import net.minecraft.client.renderer.state.WindowRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.ChunkPos;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,6 +40,12 @@ import top.dext.centurybridge.step.v26_2.rt.CbVanillaReads;
  * <li>onChunkReadyToRender(ChunkPos): 26.1.2 queued the chunk's neighbour events on the graph. 26.2 keeps the loaded
  *     chunks as a set the graph derives those from (updateLoadedChunks(added, removed), fed from ClientChunkCache's
  *     addedLoadedChunks); a one-element addition is that event.</li>
+ * <li>update(Camera): 26.1.2 culled the terrain for the camera (repositioned the view area on the camera's section,
+ *     updated the occlusion graph, applied the frustum) and scheduled section compiles, before rendering. 26.2 does the
+ *     same work at the end of render(...) on the frame's CameraRenderState: repositionCamera(state), compileSections(state),
+ *     SectionOcclusionGraph.update(state, options fov, chunk-loading state); the frustum is applied to the visible
+ *     sections by LevelExtractor.extract at the next frame. The camera's state is the frame's own when it is the main
+ *     camera, else extracted from that camera as GameRenderer extracts the main one.</li>
  * </ul>
  * 26.2's vanilla never calls these (its paths run on render-state snapshots); they serve converted mods' calls and the
  * super calls of their overrides. Priority below every mod's.
@@ -58,6 +69,38 @@ public abstract class CbS26LevelRendererRestoredMixin {
     @Shadow
     @Final
     private RenderTarget entityOutlineTarget;
+
+    @Shadow
+    @Final
+    private OptionsRenderState optionsRenderState;
+
+    @Shadow
+    private void repositionCamera(CameraRenderState state) {
+        throw new AssertionError();
+    }
+
+    @Shadow
+    private void compileSections(CameraRenderState state) {
+        throw new AssertionError();
+    }
+
+    /** update(Camera) */
+    public void update(Camera camera) {
+        CameraRenderState state;
+        if (camera == this.gameRenderer.mainCamera()) {
+            state = this.levelRenderState.cameraRenderState;
+        } else {
+            state = new CameraRenderState();
+            camera.extractRenderState(state, Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false));
+        }
+        ProfilerFiller profiler = Profiler.get();
+        profiler.push("cullTerrain");
+        this.repositionCamera(state);
+        this.sectionOcclusionGraph.update(state, this.optionsRenderState.fov, this.levelRenderState.chunkLoadingRenderState);
+        profiler.popPush("compileSections");
+        this.compileSections(state);
+        profiler.pop();
+    }
 
     /** initOutline() */
     public void initOutline() {

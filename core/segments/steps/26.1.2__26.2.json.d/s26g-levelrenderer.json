@@ -44,12 +44,14 @@
   "net/minecraft/client/renderer/LevelRenderer.initOutline()V",
   "net/minecraft/client/renderer/LevelRenderer.shouldShowEntityOutlines()Z",
   "net/minecraft/client/renderer/LevelRenderer.onSectionBecomingNonEmpty(J)V",
-  "net/minecraft/client/renderer/LevelRenderer.onChunkReadyToRender(Lnet/minecraft/world/level/ChunkPos;)V"
+  "net/minecraft/client/renderer/LevelRenderer.onChunkReadyToRender(Lnet/minecraft/world/level/ChunkPos;)V",
+  "net/minecraft/client/renderer/LevelRenderer.update(Lnet/minecraft/client/Camera;)V"
  ],
  "_s26g_covers_basis": {
   "net/minecraft/client/renderer/LevelRenderer.initOutline()V": "restored on LevelRenderer by mixin/CbS26LevelRendererRestoredMixin (26.1.2's body over 26.2's state; the class javadoc has the mapping)",
   "net/minecraft/client/renderer/LevelRenderer.shouldShowEntityOutlines()Z": "restored on LevelRenderer by mixin/CbS26LevelRendererRestoredMixin (26.1.2's body over 26.2's state; the class javadoc has the mapping)",
   "net/minecraft/client/renderer/LevelRenderer.onSectionBecomingNonEmpty(J)V": "restored on LevelRenderer by mixin/CbS26LevelRendererRestoredMixin (26.1.2's body over 26.2's state; the class javadoc has the mapping)",
-  "net/minecraft/client/renderer/LevelRenderer.onChunkReadyToRender(Lnet/minecraft/world/level/ChunkPos;)V": "restored on LevelRenderer by mixin/CbS26LevelRendererRestoredMixin (26.1.2's body over 26.2's state; the class javadoc has the mapping)"
+  "net/minecraft/client/renderer/LevelRenderer.onChunkReadyToRender(Lnet/minecraft/world/level/ChunkPos;)V": "restored on LevelRenderer by mixin/CbS26LevelRendererRestoredMixin (26.1.2's body over 26.2's state; the class javadoc has the mapping)",
+  "net/minecraft/client/renderer/LevelRenderer.update(Lnet/minecraft/client/Camera;)V": "restored on LevelRenderer by mixin/CbS26LevelRendererRestoredMixin (s26h: 26.2's end-of-render cull and compile over a CameraRenderState of that camera; the class javadoc has the mapping)"
  }
 }
