@@ -218,6 +218,7 @@
     "CbRestGameRendererShadersRestored",
     "CbRestPostEffectRestored",
     "CbRestPostEffectRestoredHooks",
+    "CbRestPostEffectRouteMixin",
     "CbRestShaderReloadRoute",
     "CbRestShaderConfigsMixin",
     "CbLevelFuelClientMixin",

@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.s205.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": ["LoadEffectMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

@@ -27,5 +27,13 @@ public @interface CbVanillaReads {
      */
     int PRIORITY = 1;
 
+    /**
+     * The priority of a layer route mixin (one that merges nothing) whose injectors into a 1.21.2 method must go before
+     * every mod's at the same point: a route's @WrapOperation applied first is the innermost wrapper of the call, so a
+     * native 1.21.2 mod's @WrapOperation of the same call wraps the route and keeps running when the route takes the
+     * restored 1.21.1 path. Restored members stay in their own mixin at {@link #PRIORITY}.
+     */
+    int ROUTE_FIRST = 1;
+
     String value();
 }
