@@ -92,6 +92,8 @@ public final class JarRemapper {
         /** each mixin class's declared member names (fields and methods) and its superclass, as in the input ({@link #mixinMember}) */
         public final java.util.Map<String, java.util.Set<String>> mixinDeclared = new java.util.HashMap<>();
         public final java.util.Map<String, String> mixinSupers = new java.util.HashMap<>();
+        /** each mixin class's interfaces, as in the input ({@link #mixinMember}) */
+        public final java.util.Map<String, java.util.List<String>> mixinInterfaces = new java.util.HashMap<>();
 
         /**
          * Each mixin's own methods (name + descriptor as in the input), @Shadow / @Overwrite ones excluded. A member a
@@ -233,6 +235,14 @@ public final class JarRemapper {
             }
             for (String t : targets) {
                 String hit = byOwner.get(t + "." + name);
+                if (hit != null) {
+                    return hit;
+                }
+            }
+            // a member of a vanilla interface the mixin class adds to its target (1.20.3 layer CbDownloadedPackSourceMixin
+            // implements RepositorySource: its method_14453 is 26.1's loadPacks, else the merged class misses it)
+            for (String i : mixinInterfaces.getOrDefault(owner, java.util.List.of())) {
+                String hit = i.startsWith("top/dext/centurybridge/") ? null : byOwner.get(i + "." + name);
                 if (hit != null) {
                     return hit;
                 }
@@ -728,6 +738,7 @@ public final class JarRemapper {
             if (cn.superName != null) {
                 table.mixinSupers.put(cn.name, cn.superName);
             }
+            table.mixinInterfaces.put(cn.name, cn.interfaces);
         }
     }
 
