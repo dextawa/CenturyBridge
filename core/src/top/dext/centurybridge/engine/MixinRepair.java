@@ -752,6 +752,26 @@ public final class MixinRepair {
                             live = true;
                             break;
                         }
+                        // the V method stands on W, but the code at these anchors moved into another class's method
+                        // (mixinAnchorMoves): onto a mixin of that class, as mixinMoves moves a whole method
+                        String anchorTo = anchors == null || anchors.isEmpty() ? null : anchorMoveOf(owner, s);
+                        if (anchorTo != null) {
+                            String why0 = movable(mx, handler, an, anchors, anchorTo, owner, null);
+                            if (why0 == null) why0 = ordinalsKept(anchors, owner, cands, anchorTo);
+                            if (why0 == null) {
+                                fixNotes.add("move " + where + " => " + anchorTo + " (mixinAnchorMoves: the code at " + anchors
+                                    + " in another class)");
+                                fixes.add(() -> {
+                                    moveInjector(mx, handler, an, anchorTo, owner, null);
+                                    dirty[0] = true;
+                                });
+                                continue;
+                            }
+                            if (deadWhy == null) {
+                                deadWhy = "anchor gone: @" + kind + " " + where + " " + anchors + " (mixinAnchorMoves to " + anchorTo
+                                    + ": " + why0 + ")";
+                            }
+                        }
                         if (cands.stream().allMatch(MixinBridge::restoredMark)) {
                             // an override MixinBridge put back is one super call: the anchor stood in the body V's
                             // override had, and following it into the super call would move it before all of that
@@ -1325,6 +1345,54 @@ public final class MixinRepair {
             if (tr == null || !anchorsIn(wm, wc, tr)) return "its anchor is not in the moved method " + anchors;
         }
         return null;
+    }
+
+    /** the mixinAnchorMoves "to" of the V method a selector names on owner (a bare name: the one entry of that name), or null */
+    private String anchorMoveOf(String owner, Sel s) {
+        if (mixinAnchorMoves.isEmpty()) return null;
+        if (s.desc != null) return mixinAnchorMoves.get(owner + "." + s.name + s.desc);
+        String hit = null;
+        for (Map.Entry<String, String> e : mixinAnchorMoves.entrySet()) {
+            if (e.getKey().startsWith(owner + "." + s.name + "(")) {
+                if (hit != null) return null;
+                hit = e.getValue();
+            }
+        }
+        return hit;
+    }
+
+    /**
+     * why a mixinAnchorMoves move would land an ordinal-pinned anchor on another site, or null: the anchor must occur
+     * as many times in the "to" method as in V's method (V's body from {@link #source}), else the n-th site there is
+     * not V's n-th
+     */
+    private String ordinalsKept(List<Anchor> anchors, String vOwner, List<MethodNode> wCands, String to) {
+        int dot = to.indexOf('.');
+        int paren = to.indexOf('(');
+        ClassNode wc = target(to.substring(0, dot));
+        List<MethodNode> wms = wc == null ? List.of() : new Sel(null, to.substring(dot + 1, paren), to.substring(paren), false).match(wc);
+        if (wms.size() != 1) return "not a method of the target";
+        for (Anchor a : anchors) {
+            if (a.ordinal < 0 || a.kind.equals("LOCAL")) continue;
+            ClassNode vc = source == null ? null : source.target(vOwner);
+            MethodNode vm = null;
+            if (vc != null) {
+                for (MethodNode w : wCands) {
+                    for (MethodNode m : vc.methods) if (m.name.equals(w.name) && m.desc.equals(w.desc)) vm = m;
+                }
+            }
+            if (vm == null) return "ordinal-pinned anchor " + a + " and no V body to count it in";
+            int nv = countSites(vm, a), nw = countSites(wms.get(0), a);
+            if (nv != nw) return "ordinal-pinned anchor " + a + ": " + nv + " sites in V's method, " + nw + " in " + to;
+        }
+        return null;
+    }
+
+    private static int countSites(MethodNode m, Anchor a) {
+        int n = 0;
+        if (m.instructions == null) return 0;
+        for (AbstractInsnNode in : m.instructions) if (matchesAnchor(in, a)) n++;
+        return n;
     }
 
     /** the anchors with each INVOKE of a mixinMoves key respelled as its W method, or null when none is one */
@@ -2665,6 +2733,8 @@ public final class MixinRepair {
     public java.util.function.Function<String, String> staticMove;
     /** Chain.mixinMoves: "V owner.name(desc)" -> "W owner.name(desc)" of a static W keeps in another class */
     public Map<String, String> mixinMoves = Map.of();
+    /** Chain.mixinAnchorMoves: "V owner.name(desc)" -> "W owner.name(desc)" holding the code at some of its anchors */
+    public Map<String, String> mixinAnchorMoves = Map.of();
     /** Chain.mixinMoveSelf: per mixinMoves key, the field hops from the W class's instance to V's (C17) */
     public Map<String, List<String[]>> mixinMoveSelf = Map.of();
 

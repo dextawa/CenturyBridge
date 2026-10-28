@@ -31,7 +31,7 @@ public class SwallClient implements ClientModInitializer {
 
     static final String[] ROUTES = {"leash.addVertexPair", "shadow.shadowVertex", "playerGlyph.renderQuad", "lightning.quad",
         "glyph.render", "glyph.renderEffect", "glyph.renderChar", "glyph.buildEffect", "biomeColors.getAverageColor",
-        "fluid.calculateAverageHeight"};
+        "fluid.calculateAverageHeight", "specialModels.blockMapping"};
 
     public static void hit(String route) {
         HITS.computeIfAbsent(route, k -> new AtomicInteger()).incrementAndGet();
