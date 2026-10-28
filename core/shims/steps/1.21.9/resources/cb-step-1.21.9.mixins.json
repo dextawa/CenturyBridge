@@ -21,6 +21,8 @@
     "CbProjectileDeflectionMixinHooks"
   ],
   "client": [
+    "CbArmorMeshSetMixin",
+    "CbArmorModelSetMixin",
     "CbBlockEntityDispatchMixin",
     "CbBlockEntityStateMixin",
     "CbClientAvatarMixin",
