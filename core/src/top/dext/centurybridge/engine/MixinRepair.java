@@ -3382,7 +3382,19 @@ public final class MixinRepair {
         int operands = n + (withRecv ? 1 : 0);
         if (an.desc.endsWith("/Redirect;") || an.desc.endsWith("/WrapWithCondition;")) return hp.length != operands;
         if (an.desc.endsWith("/WrapOperation;")) return hp.length != operands + 1;
-        if (an.desc.endsWith("/ModifyArg;") || an.desc.endsWith("/ModifyArgs;")) return hp.length != 1;
+        // @ModifyArg's second form takes every argument of the invoked method (smx1 CASE 19): call operands, not the target's
+        if (an.desc.endsWith("/ModifyArg;")) return hp.length != 1 && !(hp.length == n && callArgsForm(hp, a.desc));
+        if (an.desc.endsWith("/ModifyArgs;")) return hp.length != 1;
+        return true;
+    }
+
+    /** whether the handler's first parameters are exactly the invoked method's arguments (@ModifyArg's second form) */
+    private static boolean callArgsForm(Type[] hp, String callDesc) {
+        Type[] ca = Type.getArgumentTypes(callDesc);
+        if (ca.length < 2 || hp.length < ca.length) return false;
+        for (int i = 0; i < ca.length; i++) {
+            if (!hp[i].equals(ca[i])) return false;
+        }
         return true;
     }
 
@@ -3428,6 +3440,11 @@ public final class MixinRepair {
                 if (hp[i].getDescriptor().equals(CI) || hp[i].getDescriptor().equals(CIR)) return new int[] {0, i};
             }
             return null;
+        }
+        if (an.desc.endsWith("/ModifyArg;") && anchors != null && anchors.size() == 1 && anchors.get(0).kind.equals("INVOKE")
+                && anchors.get(0).desc != null && callArgsForm(hp, anchors.get(0).desc)) {
+            // the second form (smx1 CASE 19): every argument of the invoked method, then the target's
+            return new int[] {Type.getArgumentTypes(anchors.get(0).desc).length, hp.length};
         }
         if (an.desc.endsWith("/ModifyVariable;") || an.desc.endsWith("/ModifyConstant;") || an.desc.endsWith("/ModifyReturnValue;")
                 || an.desc.endsWith("/ModifyExpressionValue;") || an.desc.endsWith("/ModifyArg;") || an.desc.endsWith("/ModifyArgs;")) {

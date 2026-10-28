@@ -2328,6 +2328,20 @@ final class MixinBridge {
             return new String[] {name, desc};
         }
 
+        /** whether a @ModifyArg handler's first parameters are exactly the invoked method's arguments (its second form) */
+        private static boolean modifyArgAll(Type[] hp, String callDesc) {
+            Type[] ca = Type.getArgumentTypes(callDesc);
+            if (ca.length < 2 || hp.length < ca.length) {
+                return false;
+            }
+            for (int i = 0; i < ca.length; i++) {
+                if (!hp[i].equals(ca[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         /** how many handler arguments the injector itself defines (the anchor's), -1 when unknown */
         private int anchorBase(MethodNode h, AnnotationNode an, String kind, MethodNode vmeth) {
             switch (kind) {
@@ -2367,7 +2381,9 @@ final class MixinBridge {
             return switch (kind) {
                 case "Redirect", "WrapWithCondition" -> n;
                 case "WrapOperation" -> n + 1;
-                case "ModifyArg" -> Type.getArgumentTypes(h.desc).length - sugarCount(h) == 1 ? 1 : -1;
+                // the one argument, or (second form, smx1 CASE 19) every argument of the invoked method: the call's operands
+                case "ModifyArg" -> Type.getArgumentTypes(h.desc).length - sugarCount(h) == 1 ? 1
+                    : modifyArgAll(Type.getArgumentTypes(h.desc), a.desc()) ? Type.getArgumentTypes(a.desc()).length : -1;
                 default -> -1;
             };
         }
