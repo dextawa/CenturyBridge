@@ -400,6 +400,14 @@ public final class Driver {
             check("region-ticket", added == before + 1 && removed == before, "before=" + before + " added=" + added + " removed=" + removed);
         });
 
+        run("shape-sample", () -> {
+            List<String> lines = ShapeSample.lines();
+            for (String line : lines) {
+                System.out.println("CB-S215 shape " + line);
+            }
+            check("shape-sample", lines.size() == 20, "n=" + lines.size());
+        });
+
         DONE = true;
         System.out.println("CB-S215 summary ok=" + ok + " fail=" + fail);
     }
