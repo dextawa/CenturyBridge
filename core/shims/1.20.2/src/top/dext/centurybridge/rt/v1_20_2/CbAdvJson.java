@@ -367,42 +367,32 @@ public final class CbAdvJson {
     // ------------------------------------------------------------------ EntitySubPredicate
 
     /**
-     * EntitySubPredicate.ANY: matches anything, of type "any". 1.20.2's Types.ANY wraps MapCodec.unit of that one
-     * vanilla instance; decoding an empty map with that type's own codec answers it. Not through the name dispatch
-     * ({"type": "any"} with EntitySubPredicate.CODEC): 1.20.5 registers no "any" (EntitySubPredicates, javap of
-     * client-1.20.5-intermediary-code.jar class_7378: lightning, fishing_hook, player, slime, ...), so once this layer
-     * climbs, that decode fails and this class could not initialise. Types.ANY itself climbs: the 1.20.5 step gives it
-     * back (facade EntitySubPredicateTypes.field_38724, the unit codec of an always-matching predicate).
-     *
-     * Built on first use (fieldGetters): nothing else in this class depends on it, so a later release whose own types
-     * cannot be built leaves every other 1.20.1 reader here working.
+     * EntitySubPredicate.ANY: matches anything, of type "any" (Types.ANY). Its own sentinel, built without the codecs
+     * (1.20.1's ANY was a constant too): {"type": "any"} through EntitySubPredicate.CODEC stops decoding from 1.20.5
+     * (javap client-1.20.5-intermediary-code.jar class_7378: no "any" registered), and Types.ANY is touched only when its
+     * type is asked (comp_1776), so nothing that builds this predicate depends on a later release's types table. Bridges
+     * that hand it to 1.20.2 records map it to Optional.empty() (isAny), as for CbAdvAny's sentinels.
      */
-    public static net.minecraft.class_7376 field_38723() {
-        net.minecraft.class_7376 a = any;
-        if (a == null) {
-            synchronized (CbAdvJson.class) {
-                a = any;
-                if (a == null) {
-                    any = a = anyPredicate();
-                }
-            }
+    private static final net.minecraft.class_7376 ANY = new net.minecraft.class_7376() {
+        @Override
+        public boolean method_22497(net.minecraft.class_1297 entity, net.minecraft.class_3218 level, net.minecraft.class_243 pos) {
+            return true;
         }
-        return a;
+
+        @Override
+        public net.minecraft.class_7376.class_8745 comp_1776() {
+            return net.minecraft.class_7376.class_7378.field_38724;
+        }
+    };
+
+    /** EntitySubPredicate.ANY (fieldGetters) */
+    public static net.minecraft.class_7376 field_38723() {
+        return ANY;
     }
 
-    private static volatile net.minecraft.class_7376 any;
-
-    /** whether {@code p} is EntitySubPredicate.ANY (never builds it: a predicate seen before it was built is not it) */
+    /** whether {@code p} is EntitySubPredicate.ANY (this sentinel) */
     public static boolean isAny(net.minecraft.class_7376 p) {
-        return p != null && p == any;
-    }
-
-    private static net.minecraft.class_7376 anyPredicate() {
-        @SuppressWarnings("unchecked")
-        MapCodec<net.minecraft.class_7376> unit =
-            (MapCodec<net.minecraft.class_7376>) net.minecraft.class_7376.class_7378.field_38724.comp_1774();
-        return unit.codec().parse(JsonOps.INSTANCE, new JsonObject()).result()
-            .orElseThrow(() -> new IllegalStateException("EntitySubPredicate Types.ANY's codec decodes no instance"));
+        return p == ANY;
     }
 
     /** EntitySubPredicate.fromJson(json): {"type": ..., the type's fields} through 1.20.2's dispatch codec */
