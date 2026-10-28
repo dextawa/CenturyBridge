@@ -23,7 +23,6 @@ public abstract class CbNetRealmsDataFetcherBridge {
 
     @Shadow
     @Final
-    @org.spongepowered.asm.mixin.Shadow
     public class_7581 field_39682;
 
     /** was liveStatsTask */

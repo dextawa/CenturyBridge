@@ -21,8 +21,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @org.spongepowered.asm.mixin.Mixin(value = class_7578.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class CbNetRealmsDataFetcherBridgeFields {
 
-    public class_7581 field_39682;
-
     /** was liveStatsTask */
     public class_7581.class_7586<class_4882> field_39684;
 }
