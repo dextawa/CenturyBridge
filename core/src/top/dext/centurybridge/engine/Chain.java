@@ -1382,6 +1382,11 @@ public final class Chain {
 
     /** the V-named members the layer's mixins merge onto game classes, from {@link #layerJar} ({@link LayerMembers}) */
     public LayerMembers layerMembers = LayerMembers.none();
+    /**
+     * whether {@link #layerMembers} is read in the analysis namespace (the wall step from 1.21.11: the layers' views
+     * through WallInverse, as MixinBridge and the triage query them) rather than in W's real names
+     */
+    public boolean layerMembersAnalysis;
 
     /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,
@@ -1713,13 +1718,14 @@ public final class Chain {
      * (LayerMembers: restored methods and fields), kind 'm' or 'f', desc null for any. Mixin applies a target's
      * mixins in priority order, so only a member merged by a layer mixin of lower priority is there when the
      * caller's @Shadow / @Accessor / @Invoker is resolved. The query is in the analysis namespace; past the wall the
-     * layer is built against W's real names, so the member is spelled as the wall renames it
+     * layer is built against W's real names, so the member is spelled as the wall renames it -- unless the layer's
+     * members are read in the analysis namespace already ({@link #layerMembersAnalysis})
      */
     public boolean layerDeclares(String owner, char kind, String name, String desc, int mixinPriority) {
         String o = owner;
         String n = name;
         String d = desc;
-        if (wallRemapper != null) {
+        if (wallRemapper != null && !layerMembersAnalysis) {
             n = kind == 'f' ? wallRemapper.mapFieldName(owner, name, desc == null ? "" : desc)
                             : wallRemapper.mapMethodName(owner, name, desc == null ? "()V" : desc);
             d = desc == null ? null : kind == 'f' ? wallRemapper.mapDesc(desc) : wallRemapper.mapMethodDesc(desc);

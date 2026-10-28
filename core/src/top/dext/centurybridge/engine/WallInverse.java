@@ -40,6 +40,23 @@ public final class WallInverse {
 
     /** writes W's code jar renamed into the analysis namespace to a temporary jar and returns it */
     public static Path intermediaryView(Path wCode, Path vCode, Path table) throws IOException {
+        String cacheKey = vCode.toAbsolutePath().normalize() + "|" + table.toAbsolutePath().normalize();
+        Inverse inv = INVERSES.get(cacheKey);
+        if (inv == null) {
+            inv = inverse(vCode, table);
+            INVERSES.put(cacheKey, inv);
+        }
+        return view(wCode, inv.classBack, inv.ownerBack, inv.globalBack, inv.nameBack);
+    }
+
+    /** the wall table taken back (by 1.21.11's declarations), per (vCode, table): one conversion views several jars */
+    private record Inverse(Map<String, String> classBack, Map<String, String> ownerBack,
+                           Map<String, Set<String>> globalBack, Map<String, Set<String>> nameBack) {
+    }
+
+    private static final Map<String, Inverse> INVERSES = new HashMap<>();
+
+    private static Inverse inverse(Path vCode, Path table) throws IOException {
         top.dext.centurybridge.data.JarRemapper.Table t = top.dext.centurybridge.data.JarRemapper.loadTable(table);
         Remapper fwd = t.remapper();
         Map<String, String> classBack = new HashMap<>();
@@ -82,6 +99,11 @@ public final class WallInverse {
             String o = t.classes.getOrDefault(k.substring(0, dot), k.substring(0, dot));
             nameBack.computeIfAbsent(o + "." + moj, x -> new HashSet<>()).add(k.substring(dot + 1));
         });
+        return new Inverse(classBack, ownerBack, globalBack, nameBack);
+    }
+
+    private static Path view(Path wCode, Map<String, String> classBack, Map<String, String> ownerBack,
+                             Map<String, Set<String>> globalBack, Map<String, Set<String>> nameBack) throws IOException {
         // W's hierarchy (mojang names): a call through a subclass finds the declaring owner's id
         Map<String, java.util.List<String>> supers = new HashMap<>();
         try (ZipFile z = new ZipFile(wCode.toFile())) {

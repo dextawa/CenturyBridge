@@ -223,6 +223,7 @@ public final class Main {
         // climbs the newest layers first): a restorer its climb stripped at an earlier step is not in the runtime, so
         // a mixin of this jar resolving against it fails at apply (the 1.21.2 layer's CbRenderState922Mixin, stripped
         // at 1.21.9, served the 1.20.3 layer's @Invoker of LivingEntityRenderer.scale). Else its built jar
+        java.util.List<Path> earlierLayers = new java.util.ArrayList<>();
         if (System.getProperty("cb.layersDir") != null && System.getProperty("cb.layerJar") == null) {
             int wi = top.dext.centurybridge.engine.Chain.RELEASES.indexOf(args[3]);
             for (int ri = 0; ri < wi; ri++) {
@@ -233,6 +234,7 @@ public final class Main {
                     : Path.of(System.getProperty("cb.layersDir"), "centurybridge-0.3.0+" + rel + ".jar");
                 if (Files.exists(ej)) {
                     chain.layerMembers.inherit(top.dext.centurybridge.engine.LayerMembers.read(ej));
+                    earlierLayers.add(ej);
                     if (ej == climbed) {
                         System.out.println("earlier layer as climbed to " + args[3] + ": " + climbed);
                     }
@@ -359,6 +361,15 @@ public final class Main {
                 // in it too (swall7: a selector on a restored member with a route stays there, rather than following
                 // V's code by similarity onto another 26.1 method); the repair past the wall keeps the real names
                 chain.layerMembers = top.dext.centurybridge.engine.LayerMembers.read(layerView);
+                // and the earlier layers' restored members (LayerMembers.inherit above, in 26.1's names) in the same
+                // view: a climbed layer's @Shadow of a member an earlier layer gives back (1.21.4's CbTextureAbstractMixin
+                // on AbstractTexture.field_5205, restored by 1.21.6's CbTextureBlurMixin) is declared at runtime on 26.1
+                // as before the wall. Chain.layerDeclares then takes the query as it is (layerMembersAnalysis)
+                for (Path ej : earlierLayers) {
+                    chain.layerMembers.inherit(top.dext.centurybridge.engine.LayerMembers.read(
+                        top.dext.centurybridge.engine.WallInverse.intermediaryView(ej, codeOf(args[2]), renameTable)));
+                }
+                chain.layerMembersAnalysis = true;
             }
             layerModel.layer(layerView);
         }
