@@ -38,6 +38,13 @@ public final class CbEffectAttributeRoute {
 
     public static final boolean ROUTE = !"false".equals(System.getProperty("centurybridge.legacyEffectAttributeRoute"));
 
+    /**
+     * MobEffect, where the layer restores 1.20.1's addAttributeModifiers / removeAttributeModifiers (StatusEffectBridge): only
+     * when a converted mod's mixin injects into them (CbMixedMembers) can they answer otherwise than their unmixed copies, so
+     * only then are they consulted; unmixed, 1.20.2's call alone runs.
+     */
+    private static final Set<String> RESTORED_ON = Set.of("net/minecraft/class_1291");
+
     private static final class_5132 NO_DEFAULTS = class_5132.method_26861().method_26866();
 
     private CbEffectAttributeRoute() {
@@ -49,7 +56,7 @@ public final class CbEffectAttributeRoute {
             legacy.method_5555(entity, attributes, amplifier);
             return;
         }
-        if (!ROUTE) {
+        if (!ROUTE || !CbMixedMembers.mixedOn(RESTORED_ON)) {
             effect.method_5555(attributes, amplifier);
             return;
         }
@@ -108,7 +115,7 @@ public final class CbEffectAttributeRoute {
             legacy.method_5562(entity, attributes, amplifier);
             return;
         }
-        if (!ROUTE) {
+        if (!ROUTE || !CbMixedMembers.mixedOn(RESTORED_ON)) {
             effect.method_5562(attributes);
             return;
         }

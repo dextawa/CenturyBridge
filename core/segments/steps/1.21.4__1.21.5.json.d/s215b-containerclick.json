@@ -1,0 +1,17 @@
+{
+ "_s215b_containerclick_basis": "1.21.5 made ServerboundContainerClickPacket (class_2813) a record carrying HashedStack instead of ItemStack, slot as short and button as byte (javap -p both releases; rt/CbContainerClick). A 1.21.4 subclass (the record is final) stays open.",
+ "methodRenames": {
+  "net/minecraft/class_2813.method_12194()I": "comp_3842",
+  "net/minecraft/class_2813.method_37440()I": "comp_3843",
+  "net/minecraft/class_2813.method_12195()Lnet/minecraft/class_1713;": "comp_3846"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2813.method_12190()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_5/rt/CbContainerClick",
+  "net/minecraft/class_2813.method_34678()Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "top/dext/centurybridge/step/v1_21_5/rt/CbContainerClick",
+  "net/minecraft/class_2813.method_12192()I": "top/dext/centurybridge/step/v1_21_5/rt/CbContainerClick",
+  "net/minecraft/class_2813.method_12193()I": "top/dext/centurybridge/step/v1_21_5/rt/CbContainerClick"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_2813.<init>(IIIILnet/minecraft/class_1713;Lnet/minecraft/class_1799;Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbContainerClick#newPacket"
+ }
+}

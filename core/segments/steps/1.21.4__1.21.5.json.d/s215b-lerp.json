@@ -1,0 +1,12 @@
+{
+ "_s215b_lerp_basis": "1.21.4's Entity lerp members, gone in 1.21.5 (InterpolationHandler, Entity.getInterpolation / moveOrInterpolateTo): calls answered over the entity's handler (rt/CbLerp; javap -c -p of both releases there). A 1.21.4 class overriding them is not called by 1.21.5 vanilla (override rows stay open).",
+ "instanceRedirects": {
+  "net/minecraft/class_1297.method_5759(DDDFFI)V": "top/dext/centurybridge/step/v1_21_5/rt/CbLerp#lerpTo",
+  "net/minecraft/class_1297.method_53830()D": "top/dext/centurybridge/step/v1_21_5/rt/CbLerp#lerpTargetX",
+  "net/minecraft/class_1297.method_53827()D": "top/dext/centurybridge/step/v1_21_5/rt/CbLerp#lerpTargetY",
+  "net/minecraft/class_1297.method_53828()D": "top/dext/centurybridge/step/v1_21_5/rt/CbLerp#lerpTargetZ",
+  "net/minecraft/class_1297.method_53829()F": "top/dext/centurybridge/step/v1_21_5/rt/CbLerp#lerpTargetXRot",
+  "net/minecraft/class_1297.method_53831()F": "top/dext/centurybridge/step/v1_21_5/rt/CbLerp#lerpTargetYRot",
+  "net/minecraft/class_1297.method_64610()V": "top/dext/centurybridge/step/v1_21_5/rt/CbLerp#cancelLerp"
+ }
+}

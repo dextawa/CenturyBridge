@@ -44,11 +44,11 @@
  },
  "superCtorReshapes": {
   "net/minecraft/class_10498.<init>(Lnet/minecraft/class_1767;Lnet/minecraft/class_823;)V": {
-   "desc": "(Lnet/minecraft/class_1767;Lnet/minecraft/class_823;Lnet/minecraft/world/level/block/BannerBlock$AttachmentType;)V",
+   "desc": "(Lnet/minecraft/class_1767;Lnet/minecraft/class_823;Lnet/minecraft/class_2215$AttachmentType;)V",
    "ops": [
     "keep:0",
     "keep:1",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#bannerAttachment()Lnet/minecraft/world/level/block/BannerBlock$AttachmentType;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallItemModels#bannerAttachment()Lnet/minecraft/class_2215$AttachmentType;"
    ],
    "basis": "26.1 BannerSpecialRenderer(baseColor, renderer, attachment) draws the attachment it is given (BannerRenderer.submitSpecial); 1.21.11 drew the standing models (BannerRenderer.method_65556: field_55154 / field_55156)"
   }

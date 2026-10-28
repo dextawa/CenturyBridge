@@ -313,24 +313,24 @@
   },
   {
    "old": "method_18867(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;",
-   "new": "method_18867(Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/class_4095;",
+   "new": "method_18867(Lnet/minecraft/class_4095$Packed;)Lnet/minecraft/class_4095;",
    "onlyUnder": "net/minecraft/class_1309",
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain$MakeBrain",
-   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.makeBrain(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$MakeBrain;Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/class_4095;",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.makeBrain(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$MakeBrain;Lnet/minecraft/class_4095$Packed;)Lnet/minecraft/class_4095;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "superBridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.superMakeBrain(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$SuperMakeBrain;Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;",
    "superAccess": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain$SuperMakeBrain",
    "superAccessors": [
-    "method_18867(Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/class_4095;"
+    "method_18867(Lnet/minecraft/class_4095$Packed;)Lnet/minecraft/class_4095;"
    ],
    "basis": "1.21.11 LivingEntity.makeBrain(Dynamic) read the saved brain as a Dynamic; 26.1's makeBrain(Brain.Packed) takes it decoded (same {\"memories\": ...} format): the mod's override gets the Packed re-encoded to NBT, its super.makeBrain(dynamic) reaches super's makeBrain(Packed) with the dynamic decoded, and Brain.Provider.makeBrain(dynamic) inside it builds for the entity being made (CbWallBrain)"
   },
   {
    "old": "method_28310(Lcom/mojang/serialization/DynamicOps;)Lcom/mojang/serialization/DataResult;",
-   "new": "pack()Lnet/minecraft/world/entity/ai/Brain$Packed;",
+   "new": "pack()Lnet/minecraft/class_4095$Packed;",
    "onlyUnder": "net/minecraft/class_4095",
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain$SerializeStart",
-   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.pack(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$SerializeStart;)Lnet/minecraft/world/entity/ai/Brain$Packed;",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.pack(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$SerializeStart;)Lnet/minecraft/class_4095$Packed;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "1.21.11 saved a brain through serializeStart(ops); 26.1 saves Brain.pack(): a mod brain overriding serializeStart is saved as its override writes (same {\"memories\": ...} format, read back through Brain.Packed's codec); its super.serializeStart reaches the covered 1.21.11 method, whose pack() falls through to 26.1's on re-entry"
   },
@@ -396,9 +396,9 @@
   },
   {
    "old": "method_64721()Lnet/minecraft/class_1799;",
-   "new": "method_64721()Lnet/minecraft/world/item/ItemStackTemplate;",
+   "new": "method_64721()Lnet/minecraft/class_10591;",
    "onlyUnder": "net/minecraft/class_3972",
-   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors.template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors.template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "a 1.21.11 single-item recipe subclass's result() answered its stack; 26.1 asks for the template: the template of the override's stack"
   },
@@ -445,8 +445,8 @@
   },
   {
    "old": "method_982()Lnet/minecraft/class_2499;",
-   "new": "pack()Lnet/minecraft/world/level/timers/TimerQueue$Packed;",
-   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers.pack(Ltop/dext/centurybridge/step/v26_1/rt/CbWallTimers$LegacyStore;)Lnet/minecraft/world/level/timers/TimerQueue$Packed;",
+   "new": "pack()Lnet/minecraft/class_236$Packed;",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers.pack(Ltop/dext/centurybridge/step/v26_1/rt/CbWallTimers$LegacyStore;)Lnet/minecraft/class_236$Packed;",
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers$LegacyStore",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "onlyUnder": "net/minecraft/class_236",
@@ -590,16 +590,16 @@
   },
   {
    "old": "method_10289()Lnet/minecraft/class_1799;",
-   "new": "getItem()Lnet/minecraft/world/item/ItemStackTemplate;",
-   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems.unwrap(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+   "new": "getItem()Lnet/minecraft/class_10591;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems.unwrap(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "onlyUnder": "net/minecraft/class_2392",
    "basis": "1.21.11 ItemParticleOption.getItem() answered the ItemStack, 26.1's its ItemStackTemplate: the template of the stack the mod's override answers"
   },
   {
    "old": "method_821()Lnet/minecraft/class_1799;",
-   "new": "getIcon()Lnet/minecraft/world/item/ItemStackTemplate;",
-   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons.unwrap(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+   "new": "getIcon()Lnet/minecraft/class_10591;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons.unwrap(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "onlyUnder": "net/minecraft/class_185",
    "basis": "1.21.11 DisplayInfo.getIcon() answered the ItemStack, 26.1's its ItemStackTemplate: the template of the stack the mod's override answers"
@@ -986,12 +986,12 @@
    ],
    "synth": [
     {
-     "new": "get(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
-     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites.bakerGet(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySpriteGetter;Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
+     "new": "get(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/class_10813;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites.bakerGet(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySpriteGetter;Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/class_10813;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
     },
     {
-     "new": "reportMissingReference(Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
-     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites.bakerReportMissingReference(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySpriteGetter;Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
+     "new": "reportMissingReference(Ljava/lang/String;Lnet/minecraft/class_10813;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites.bakerReportMissingReference(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySpriteGetter;Ljava/lang/String;Lnet/minecraft/class_10813;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
     }
    ],
    "basis": "a 1.21.11 model sprite getter answers 26.1 MaterialBaker: the material id in 1.21.11 virtual model atlas BLOCK_OR_ITEM (what every 1.21.11 model texture carried), its sprite with the material forceTranslucent flag"
@@ -1004,8 +1004,8 @@
    ],
    "synth": [
     {
-     "new": "resolveSlot(Lnet/minecraft/client/resources/model/sprite/TextureSlots;Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
-     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites.bakerResolveSlot(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySlotResolver;Lnet/minecraft/client/resources/model/sprite/TextureSlots;Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
+     "new": "resolveSlot(Lnet/minecraft/class_10419;Ljava/lang/String;Lnet/minecraft/class_10813;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites.bakerResolveSlot(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySlotResolver;Lnet/minecraft/class_10419;Ljava/lang/String;Lnet/minecraft/class_10813;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
     }
    ],
    "basis": "a 1.21.11 getter overriding the default resolveSlot keeps answering it in 26.1"
@@ -1444,23 +1444,23 @@
    ]
   },
   "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": {
-   "desc": "(Ljava/util/Collection;Ljava/util/Collection;Ljava/util/List;Lnet/minecraft/world/entity/ai/memory/MemoryMap;Lnet/minecraft/util/RandomSource;)V",
+   "desc": "(Ljava/util/Collection;Ljava/util/Collection;Ljava/util/List;Lnet/minecraft/world/entity/ai/memory/MemoryMap;Lnet/minecraft/class_5819;)V",
    "ops": [
     "keep",
     "keep",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallBrain#noActivities()Ljava/util/List;",
     "conv top/dext/centurybridge/step/v26_1/rt/CbWallBrain#memoryValues(Lcom/google/common/collect/ImmutableList;)Lnet/minecraft/world/entity/ai/memory/MemoryMap;",
     "drop",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallBrain#sensorDelays()Lnet/minecraft/util/RandomSource;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBrain#sensorDelays()Lnet/minecraft/class_5819;"
    ]
   },
   "net/minecraft/class_757.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_759;Lnet/minecraft/class_4599;Lnet/minecraft/class_776;)V": {
-   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_759;Lnet/minecraft/class_4599;Lnet/minecraft/client/resources/model/ModelManager;)V",
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_759;Lnet/minecraft/class_4599;Lnet/minecraft/class_1092;)V",
    "ops": [
     "keep",
     "keep",
     "keep",
-    "conv top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#modelManager(Lnet/minecraft/class_776;)Lnet/minecraft/client/resources/model/ModelManager;"
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#modelManager(Lnet/minecraft/class_776;)Lnet/minecraft/class_1092;"
    ]
   },
   "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": {
@@ -1550,114 +1550,114 @@
    "basis": "26.1's CustomRecipe takes no category and answers MISC; 1.21.11's took it in the constructor and answered it from category(): the recipe keeps it (CbWallCustomRecipeMixin)"
   },
   "net/minecraft/class_1869.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_8957;Lnet/minecraft/class_1799;Z)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;Lnet/minecraft/class_8957;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_3955$CraftingBookInfo;Lnet/minecraft/class_8957;Lnet/minecraft/class_10591;)V",
    "ops": [
-    "conv:4 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#commonInfo(Z)Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
-    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;",
+    "conv:4 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#commonInfo(Z)Lnet/minecraft/class_1860$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/class_3955$CraftingBookInfo;",
     "keep:2",
-    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;"
    ],
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_1869.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_8957;Lnet/minecraft/class_1799;)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;Lnet/minecraft/class_8957;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_3955$CraftingBookInfo;Lnet/minecraft/class_8957;Lnet/minecraft/class_10591;)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
-    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/class_3955$CraftingBookInfo;",
     "keep:2",
-    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;"
    ],
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_1867.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1799;Ljava/util/List;)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;Lnet/minecraft/world/item/ItemStackTemplate;Ljava/util/List;)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_3955$CraftingBookInfo;Lnet/minecraft/class_10591;Ljava/util/List;)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
-    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;",
-    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/class_3955$CraftingBookInfo;",
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;",
     "keep:3"
    ],
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_10223.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/advancements/criterion/MinMaxBounds$Ints;Lnet/minecraft/class_10591;Z)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_3955$CraftingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_10591;Z)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
-    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#craftingBook(Lnet/minecraft/class_7710;Ljava/lang/String;)Lnet/minecraft/class_3955$CraftingBookInfo;",
     "keep:2",
     "keep:3",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#oneMaterial()Lnet/minecraft/advancements/criterion/MinMaxBounds$Ints;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#oneMaterial()Lnet/minecraft/class_2096$class_2100;",
     "keep:4",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#materialCountNotInResult()Z"
    ],
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_1874.<init>(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;FI)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_1874$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;FI)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
-    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/class_1874$CookingBookInfo;",
     "keep:2",
-    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;",
     "keep:4",
     "keep:5"
    ],
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_3861.<init>(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;FI)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_1874$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;FI)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
-    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/class_1874$CookingBookInfo;",
     "keep:2",
-    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;",
     "keep:4",
     "keep:5"
    ],
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_3859.<init>(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;FI)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_1874$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;FI)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
-    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/class_1874$CookingBookInfo;",
     "keep:2",
-    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;",
     "keep:4",
     "keep:5"
    ],
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_3862.<init>(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;FI)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_1874$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;FI)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
-    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/class_1874$CookingBookInfo;",
     "keep:2",
-    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;",
     "keep:4",
     "keep:5"
    ],
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_3920.<init>(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;FI)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_1874$CookingBookInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;FI)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
-    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe$CookingBookInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
+    "conv:1,0 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#cookingBook(Lnet/minecraft/class_7709;Ljava/lang/String;)Lnet/minecraft/class_1874$CookingBookInfo;",
     "keep:2",
-    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "conv:3 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;",
     "keep:4",
     "keep:5"
    ],
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_3972.<init>(Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
     "keep:1",
-    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#singleItemGroup(Lnet/minecraft/class_3972;Ljava/lang/String;)V",
    "postArgs": [
@@ -1666,11 +1666,11 @@
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_3975.<init>(Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
     "keep:1",
-    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+    "conv:2 top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#template(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#singleItemGroup(Lnet/minecraft/class_3975;Ljava/lang/String;)V",
    "postArgs": [
@@ -1679,9 +1679,9 @@
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_8060.<init>(Ljava/util/Optional;Lnet/minecraft/class_1856;Ljava/util/Optional;Lnet/minecraft/class_10591;)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Ljava/util/Optional;Lnet/minecraft/class_1856;Ljava/util/Optional;Lnet/minecraft/class_10591;)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Ljava/util/Optional;Lnet/minecraft/class_1856;Ljava/util/Optional;Lnet/minecraft/class_10591;)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
     "keep:0",
     "keep:1",
     "keep:2",
@@ -1690,9 +1690,9 @@
    "basis": "26.1 gathers a recipe's notification flag (Recipe.CommonInfo), book category and group (its book info) into records and keeps the result as an item stack template; 1.21.11 took them one by one (CbWallRecipeCtors)"
   },
   "net/minecraft/class_8062.<init>(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_6880;)V": {
-   "desc": "(Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_6880;)V",
+   "desc": "(Lnet/minecraft/class_1860$CommonInfo;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_6880;)V",
    "ops": [
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/world/item/crafting/Recipe$CommonInfo;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#notifying()Lnet/minecraft/class_1860$CommonInfo;",
     "keep:0",
     "keep:1",
     "keep:2",
@@ -1712,18 +1712,18 @@
    "basis": "26.1's dye keeps its color as its default DYE component (Items registers each dye so); 1.21.11's constructor took it and recorded the item for byColor (CbWallDyes)"
   },
   "net/minecraft/class_2275.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_5620$class_8821;)V": {
-   "desc": "(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;)V",
+   "desc": "(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_5620$Dispatcher;)V",
    "ops": [
     "keep:0",
-    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#dispatcher(Lnet/minecraft/class_5620$class_8821;)Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;"
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#dispatcher(Lnet/minecraft/class_5620$class_8821;)Lnet/minecraft/class_5620$Dispatcher;"
    ],
    "basis": "26.1's cauldron blocks take the dispatcher a 1.21.11 interaction map stands for (CbWallCauldrons)"
   },
   "net/minecraft/class_5556.<init>(Lnet/minecraft/class_1959$class_1963;Lnet/minecraft/class_5620$class_8821;Lnet/minecraft/class_4970$class_2251;)V": {
-   "desc": "(Lnet/minecraft/class_1959$class_1963;Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;Lnet/minecraft/class_4970$class_2251;)V",
+   "desc": "(Lnet/minecraft/class_1959$class_1963;Lnet/minecraft/class_5620$Dispatcher;Lnet/minecraft/class_4970$class_2251;)V",
    "ops": [
     "keep:0",
-    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#dispatcher(Lnet/minecraft/class_5620$class_8821;)Lnet/minecraft/core/cauldron/CauldronInteraction$Dispatcher;",
+    "conv:1 top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#dispatcher(Lnet/minecraft/class_5620$class_8821;)Lnet/minecraft/class_5620$Dispatcher;",
     "keep:2"
    ],
    "basis": "26.1's cauldron blocks take the dispatcher a 1.21.11 interaction map stands for (CbWallCauldrons)"
@@ -1819,11 +1819,11 @@
    "basis": "a 1.21.11 TreeConfiguration subclass's super(.., dirtProvider, minimumSize, decorators, ignoreVines, forceDirt): 26.1 takes one below-trunk provider; the dirt pair as it (CbWallTrees.belowTrunk)"
   },
   "net/minecraft/class_1848.<init>(Lnet/minecraft/class_7710;)V": {
-   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V",
    "ops": [
     "drop",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#banners()Lnet/minecraft/class_1856;",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#whiteBanner()Lnet/minecraft/world/item/ItemStackTemplate;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#whiteBanner()Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1848;Lnet/minecraft/class_7710;)V",
    "postArgs": [
@@ -1832,13 +1832,13 @@
    "basis": "1.21.11's BannerDuplicateRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it -- one recipe for every banner colour, duplicating as 1.21.11 did (mixin/CbWallBannerDuplicateMixin)"
   },
   "net/minecraft/class_1850.<init>(Lnet/minecraft/class_7710;)V": {
-   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_10591;)V",
    "ops": [
     "drop",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#writtenBook()Lnet/minecraft/class_1856;",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#bookCloningTarget()Lnet/minecraft/class_1856;",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#bookGenerations()Lnet/minecraft/class_2096$class_2100;",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#writtenBookResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#writtenBookResult()Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1850;Lnet/minecraft/class_7710;)V",
    "postArgs": [
@@ -1847,11 +1847,11 @@
    "basis": "1.21.11's BookCloningRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
   },
   "net/minecraft/class_8164.<init>(Lnet/minecraft/class_7710;)V": {
-   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V",
    "ops": [
     "drop",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#potIngredient()Lnet/minecraft/class_1856;",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#decoratedPot()Lnet/minecraft/world/item/ItemStackTemplate;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#decoratedPot()Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_8164;Lnet/minecraft/class_7710;)V",
    "postArgs": [
@@ -1860,13 +1860,13 @@
    "basis": "1.21.11's DecoratedPotRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
   },
   "net/minecraft/class_1851.<init>(Lnet/minecraft/class_7710;)V": {
-   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V",
    "ops": [
     "drop",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#paper()Lnet/minecraft/class_1856;",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#gunpowder()Lnet/minecraft/class_1856;",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStar()Lnet/minecraft/class_1856;",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#threeRockets()Lnet/minecraft/world/item/ItemStackTemplate;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#threeRockets()Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1851;Lnet/minecraft/class_7710;)V",
    "postArgs": [
@@ -1875,12 +1875,12 @@
    "basis": "1.21.11's FireworkRocketRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
   },
   "net/minecraft/class_1854.<init>(Lnet/minecraft/class_7710;)V": {
-   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V",
    "ops": [
     "drop",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStar()Lnet/minecraft/class_1856;",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#dyes()Lnet/minecraft/class_1856;",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStarResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStarResult()Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1854;Lnet/minecraft/class_7710;)V",
    "postArgs": [
@@ -1889,7 +1889,7 @@
    "basis": "1.21.11's FireworkStarFadeRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
   },
   "net/minecraft/class_1853.<init>(Lnet/minecraft/class_7710;)V": {
-   "desc": "(Ljava/util/Map;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Ljava/util/Map;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V",
    "ops": [
     "drop",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#starShapes()Ljava/util/Map;",
@@ -1897,7 +1897,7 @@
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#glowstoneDust()Lnet/minecraft/class_1856;",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#gunpowder()Lnet/minecraft/class_1856;",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#dyes()Lnet/minecraft/class_1856;",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStarResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#fireworkStarResult()Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1853;Lnet/minecraft/class_7710;)V",
    "postArgs": [
@@ -1906,12 +1906,12 @@
    "basis": "1.21.11's FireworkStarRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
   },
   "net/minecraft/class_1861.<init>(Lnet/minecraft/class_7710;)V": {
-   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V",
    "ops": [
     "drop",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#filledMap()Lnet/minecraft/class_1856;",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#paper()Lnet/minecraft/class_1856;",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#filledMapResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#filledMapResult()Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1861;Lnet/minecraft/class_7710;)V",
    "postArgs": [
@@ -1931,12 +1931,12 @@
    "basis": "1.21.11's RepairItemRecipe(category): 26.1's constructor takes the recipe's parameters (its special recipes are data); 1.21.11's hard-coded recipe is 26.1's with the parameters 26.1's own data gives it (CbWallSpecialRecipes), the category kept as 1.21.11's category() answered it"
   },
   "net/minecraft/class_1872.<init>(Lnet/minecraft/class_7710;)V": {
-   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_10591;)V",
    "ops": [
     "drop",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#banners()Lnet/minecraft/class_1856;",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#shield()Lnet/minecraft/class_1856;",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#shieldResult()Lnet/minecraft/world/item/ItemStackTemplate;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#shieldResult()Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallSpecialRecipes#category(Lnet/minecraft/class_1872;Lnet/minecraft/class_7710;)V",
    "postArgs": [
@@ -2278,10 +2278,10 @@
    "basis": "26.1 RenderPass.Draw has a base vertex after the index count; 1.21.11's multi-draws drew every Draw from vertex 0 (GlCommandEncoder.executeDrawMultiple)"
   },
   "net/minecraft/class_2392.<init>(Lnet/minecraft/class_2396;Lnet/minecraft/class_1799;)V": {
-   "desc": "(Lnet/minecraft/class_2396;Lnet/minecraft/world/item/ItemStackTemplate;)V",
+   "desc": "(Lnet/minecraft/class_2396;Lnet/minecraft/class_10591;)V",
    "ops": [
     "keep",
-    "conv top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#superTemplate(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;"
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#superTemplate(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;"
    ],
    "post": "top/dext/centurybridge/step/v26_1/rt/CbWallParticleItems#superStack(Lnet/minecraft/class_2392;Lnet/minecraft/class_1799;)V",
    "postArgs": [
@@ -2290,9 +2290,9 @@
    "basis": "1.21.11 ItemParticleOption took the ItemStack, 26.1 its ItemStackTemplate; the subclass's getItem() answers the stack it passed (mixin/CbWallItemParticleStackMixin keeps it)"
   },
   "net/minecraft/class_185.<init>(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/Optional;Lnet/minecraft/class_189;ZZZ)V": {
-   "desc": "(Lnet/minecraft/world/item/ItemStackTemplate;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/Optional;Lnet/minecraft/class_189;ZZZ)V",
+   "desc": "(Lnet/minecraft/class_10591;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/Optional;Lnet/minecraft/class_189;ZZZ)V",
    "ops": [
-    "conv top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#superTemplate(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallDisplayIcons#superTemplate(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10591;",
     "keep",
     "keep",
     "keep",
@@ -2357,12 +2357,12 @@
    "basis": "26.1 SpreadingSnowyBlock takes the block it decays to; 1.21.11's SpreadingSnowyDirtBlock decayed to dirt"
   },
   "net/minecraft/class_7296.<init>(Ljava/util/function/Function;FI)V": {
-   "desc": "(Ljava/util/function/Function;FILnet/minecraft/world/entity/ai/behavior/GoAndGiveItemsToTarget$ItemThrower;)V",
+   "desc": "(Ljava/util/function/Function;FILnet/minecraft/class_7296$ItemThrower;)V",
    "ops": [
     "keep",
     "keep",
     "keep",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallGiveItems#legacyThrower()Lnet/minecraft/world/entity/ai/behavior/GoAndGiveItemsToTarget$ItemThrower;"
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallGiveItems#legacyThrower()Lnet/minecraft/class_7296$ItemThrower;"
    ],
    "basis": "26.1 GoAndGiveItemsToTarget takes what happens after a throw as an ItemThrower; 1.21.11's did it itself: the throw sound, and for an allay its liked player's drop trigger (CbWallGiveItems.legacyThrower)"
   },
@@ -2551,8 +2551,8 @@
   },
   {
    "under": "net/minecraft/class_6880",
-   "method": "components()Lnet/minecraft/core/component/DataComponentMap;",
-   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallInterfaceFills.components(Lnet/minecraft/class_6880;)Lnet/minecraft/core/component/DataComponentMap;",
+   "method": "components()Lnet/minecraft/class_9323;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallInterfaceFills.components(Lnet/minecraft/class_6880;)Lnet/minecraft/class_9323;",
    "basis": "1.21.11 holders carried no components"
   },
   {
@@ -2587,8 +2587,8 @@
   },
   {
    "under": "net/minecraft/class_11890",
-   "method": "getProfile()Lnet/minecraft/world/item/component/ResolvableProfile;",
-   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallInterfaceFills.getProfile(Lnet/minecraft/class_11890;)Lnet/minecraft/world/item/component/ResolvableProfile;",
+   "method": "getProfile()Lnet/minecraft/class_9296;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallInterfaceFills.getProfile(Lnet/minecraft/class_11890;)Lnet/minecraft/class_9296;",
    "basis": "a 1.21.11 avatar that is no player had no profile: 26.1's empty one (Mannequin's default)"
   },
   {
@@ -2605,8 +2605,8 @@
   },
   {
    "under": "net/minecraft/class_11785",
-   "method": "submitBreakingBlockModel(Lnet/minecraft/class_4587;Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;JI)V",
-   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallCollectorFills.submitBreakingBlockModel(Lnet/minecraft/class_11785;Lnet/minecraft/class_4587;Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;JI)V",
+   "method": "submitBreakingBlockModel(Lnet/minecraft/class_4587;Lnet/minecraft/class_1087;JI)V",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallCollectorFills.submitBreakingBlockModel(Lnet/minecraft/class_11785;Lnet/minecraft/class_4587;Lnet/minecraft/class_1087;JI)V",
    "basis": "1.21.11 drew the breaking overlay into the game's crumbling buffers, never through a collector: the game's own submit node storage draws it (CbWallCollectorFills)"
   },
   {
@@ -2774,9 +2774,9 @@
    "basis": "26.1 CubeMap.render(xRot, yRot): 1.21.11's minecraft argument only fed the window size its own projection now keeps"
   },
   "net/minecraft/class_3972.method_64721()Lnet/minecraft/class_1799;": {
-   "desc": "()Lnet/minecraft/world/item/ItemStackTemplate;",
+   "desc": "()Lnet/minecraft/class_10591;",
    "ops": [],
-   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#stack(Lnet/minecraft/world/item/ItemStackTemplate;)Lnet/minecraft/class_1799;",
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRecipeCtors#stack(Lnet/minecraft/class_10591;)Lnet/minecraft/class_1799;",
    "basis": "26.1's SingleItemRecipe.result() answers the result's template, 1.21.11's its stack: the template's stack"
   },
   "net/minecraft/class_9792.comp_2833()Lnet/minecraft/class_9791;": {

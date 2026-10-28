@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(net.minecraft.class_1044.class)
 public abstract class CbRenderTextureMixin {
 
+    @org.spongepowered.asm.mixin.Shadow
     protected boolean field_5203;
 
     @Inject(method = "method_4527", at = @At("HEAD"))

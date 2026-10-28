@@ -1,7 +1,7 @@
 {
  "mixinTargets": {
   "net/minecraft/class_761.method_62214(Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lnet/minecraft/class_11658;Lnet/minecraft/class_3695;Lorg/joml/Matrix4f;Lnet/minecraft/class_9925;Lnet/minecraft/class_9925;ZLnet/minecraft/class_9925;Lnet/minecraft/class_9925;)V": {
-   "to": "lambda$addMainPass$0(Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lnet/minecraft/class_11658;Lnet/minecraft/class_3695;Lnet/minecraft/client/renderer/chunk/ChunkSectionsToRender;Lnet/minecraft/class_9925;Lnet/minecraft/class_9925;Lnet/minecraft/class_9925;Lnet/minecraft/class_9925;Lnet/minecraft/class_9925;ZLorg/joml/Matrix4fc;)V",
+   "to": "lambda$addMainPass$0(Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lnet/minecraft/class_11658;Lnet/minecraft/class_3695;Lnet/minecraft/class_11532;Lnet/minecraft/class_9925;Lnet/minecraft/class_9925;Lnet/minecraft/class_9925;Lnet/minecraft/class_9925;Lnet/minecraft/class_9925;ZLorg/joml/Matrix4fc;)V",
    "args": [
     0,
     1,

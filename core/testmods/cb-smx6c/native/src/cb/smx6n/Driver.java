@@ -36,16 +36,29 @@ import net.minecraft.class_777;
  */
 public class Driver implements ClientModInitializer {
     public static final AtomicInteger FACES = new AtomicInteger();
+    /** BakeQuadCounter / BakeFaceWrapCounter: 1.21 bakeQuad HEAD, bakeFace's bakeQuad call wrapped (MixinExtras) */
+    public static final AtomicInteger QUADS = new AtomicInteger();
+    public static final AtomicInteger FACE_WRAPS = new AtomicInteger();
     /** MovedHomeCounter / LeashVertexCounter: calls of 1.21's homes of the members 1.21 moved */
     public static final AtomicInteger PREDICATE = new AtomicInteger();
     public static final AtomicInteger VALUE = new AtomicInteger();
     public static final AtomicInteger GROUP = new AtomicInteger();
     public static final AtomicInteger LEASH = new AtomicInteger();
+    /** BufferBuildCounter / SectionBuildCounter: 1.21 builders made, build() HEAD / RETURN, section-compile builds */
+    public static final AtomicInteger BUILDERS = new AtomicInteger();
+    public static final AtomicInteger BUILD_HEAD = new AtomicInteger();
+    public static final AtomicInteger BUILD_RETURN = new AtomicInteger();
+    public static final AtomicInteger SECTION_BUILDS = new AtomicInteger();
     static final Map<String, Boolean> OK = new LinkedHashMap<>();
 
     static void check(String name, boolean pass, String detail) {
         OK.put(name, pass);
         log((pass ? "ok " : "FAIL ") + name + " " + detail);
+    }
+
+    /** a case waiting on a known engine gap: logged "ok" or "known", not counted in the N/T tally */
+    static void known(String name, boolean pass, String detail) {
+        log((pass ? "ok " : "known ") + name + " " + detail);
     }
 
     static void log(String s) {
@@ -127,6 +140,12 @@ public class Driver implements ClientModInitializer {
             }
             log("dump-total models=" + dump.size() + " hash=" + Integer.toHexString(dump.hashCode()) + " faces=" + FACES.get());
 
+            // (e) native 1.21 injectors in the bake path, with or without the layer's bakeQuad route: once per face
+            check("e.nativeQuadOnce", FACES.get() > 0 && QUADS.get() == FACES.get(),
+                "native bakeQuad HEAD " + QUADS.get() + ", bakeFace calls " + FACES.get());
+            check("e.nativeWrap", FACE_WRAPS.get() == FACES.get(),
+                "native @WrapOperation of bakeFace's bakeQuad call " + FACE_WRAPS.get() + ", bakeFace calls " + FACES.get());
+
             // (b) / (c): the climbed 1.20.6 mixin, when loaded
             Class<?> counters = null;
             try {
@@ -147,6 +166,9 @@ public class Driver implements ClientModInitializer {
                         + sample.subList(0, Math.min(8, sample.size())));
                 check("b.noNull", nulls == 0, "calls with a null location " + nulls);
                 check("b.countEqualsFaces", calls == FACES.get(), "bakeQuad calls " + calls + ", 1.21 bakeFace calls " + FACES.get());
+                int noId = ((AtomicInteger) field(counters, "CALLS_NO_ID")).get();
+                check("b.noIdOnce", noId == FACES.get(), "bakeQuad HEAD calls of a handler not reading the id " + noId
+                    + " (on 1.21's bakeQuad through mixinTargets), 1.21 bakeFace calls " + FACES.get());
                 boolean stoneZero = on(mc, () -> allZero(mc.method_1554().method_4743().method_3335(class_2246.field_10340.method_9564()),
                     class_2246.field_10340.method_9564()));
                 boolean graniteDrawn = on(mc, () -> !allZero(mc.method_1554().method_4743().method_3335(class_2246.field_10474.method_9564()),
@@ -158,6 +180,9 @@ public class Driver implements ClientModInitializer {
                     int v = ((AtomicInteger) field(counters, n)).get();
                     int w = ((AtomicInteger) Driver.class.getField(n).get(null)).get();
                     check("d.moved." + n, v > 0 && v == w, "1.20.6 mixin calls " + v + ", 1.21 BlockStateModelLoader calls " + w);
+                    int b = ((AtomicInteger) field(counters, n + "_BARE")).get();
+                    known("d.movedBare." + n, b > 0 && b == w, "bare-name selector: 1.20.6 mixin calls " + b + ", 1.21 calls " + w
+                        + " (mixinMoves needs the selector's descriptor: cases_smixin3/s121.md C23)");
                 }
             }
 
@@ -195,8 +220,30 @@ public class Driver implements ClientModInitializer {
                 int w = LEASH.get();
                 check("e.moved.LEASH", v > 0 && v == w,
                     "1.20.6 MobRenderer.addVertexPair mixin calls " + v + ", 1.21 EntityRenderer.addVertexPair calls " + w);
+                int b = ((AtomicInteger) field(counters, "LEASH_BARE")).get();
+                known("e.movedBare.LEASH", b > 0 && b == w, "bare-name selector: 1.20.6 mixin calls " + b + ", 1.21 calls " + w
+                    + " (C23)");
             } else {
                 log("leash vertex pairs drawn by 1.21: " + LEASH.get());
+            }
+            // (f) BufferBuilder lifecycle routes: one snapshot on the render thread (every count moves on it, except
+            // section compiles and their builders on worker threads, which the snapshot reads as they stand: up to 32 in flight)
+            AtomicInteger zero = new AtomicInteger();
+            AtomicInteger vBegin = counters == null ? zero : (AtomicInteger) field(counters, "BEGIN");
+            AtomicInteger vEnd = counters == null ? zero : (AtomicInteger) field(counters, "END");
+            AtomicInteger vEod = counters == null ? zero : (AtomicInteger) field(counters, "END_OR_DISCARD");
+            int[] snap = on(mc, () -> new int[] {BUILDERS.get(), BUILD_HEAD.get(), BUILD_RETURN.get(), SECTION_BUILDS.get(),
+                vBegin.get(), vEnd.get(), vEod.get()});
+            log("buffers: made " + snap[0] + ", build HEAD " + snap[1] + ", RETURN " + snap[2] + ", section builds " + snap[3]
+                + "; 1.20.6 begin " + snap[4] + ", end " + snap[5] + ", endOrDiscardIfEmpty " + snap[6]);
+            check("f.nativeOnce", snap[1] > 0 && snap[1] == snap[2], "native build() HEAD " + snap[1] + " = RETURN " + snap[2]
+                + " (a native injector runs once per batch with the routes on)");
+            if (counters != null) {
+                check("f.begin", snap[4] > 0 && Math.abs(snap[4] - snap[0]) <= 32, "1.20.6 begin " + snap[4] + ", 1.21 builders made " + snap[0]);
+                check("f.endOrDiscard", snap[6] > 0 && Math.abs(snap[6] - snap[3]) <= 32,
+                    "1.20.6 endOrDiscardIfEmpty " + snap[6] + ", 1.21 section-compile builds " + snap[3]);
+                check("f.end", snap[5] > 0 && Math.abs(snap[5] + snap[3] - snap[2]) <= 32,
+                    "1.20.6 end " + snap[5] + " + section builds " + snap[3] + " vs 1.21 build() RETURN " + snap[2]);
             }
         } catch (Throwable t) {
             log("FAIL driver " + t);

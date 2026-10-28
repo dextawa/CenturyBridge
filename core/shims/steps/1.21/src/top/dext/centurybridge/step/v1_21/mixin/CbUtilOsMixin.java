@@ -15,7 +15,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbVanillaReads;
  * decides the command as on 1.20.6; any other URI (one no URL can stand for, or one a URL would spell differently) keeps
  * 1.21's answer.
  */
-@Mixin(value = net.minecraft.class_156.class_158.class, priority = 1)
+@Mixin(value = net.minecraft.class_156.class_158.class, priority = top.dext.centurybridge.step.v1_21.rt.CbVanillaReads.PRIORITY)
 public abstract class CbUtilOsMixin implements CbUtilOs.Restored {
 
     /** 1.21 Util.OS.getOpenUriArguments(uri) */

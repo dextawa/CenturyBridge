@@ -136,8 +136,54 @@ public final class Chain {
      * "narrow": true, for an argument W widened: a captured argument whose W type differs from V's reaches the
      * handler only when it is V's type (an instanceof test, as override hooks' "narrow"), otherwise the handler is
      * skipped -- a handler written for V was never handed another.
+     * "wrap": a static "owner.name(desc)", or a list of them, by the override hooks' rule ({@link OverrideHook#wrapFor}):
+     * a V argument whose W argument (by "args") has another type takes the static whose only parameter is that W type
+     * and whose return is V's type (1.20.2 AbstractFurnaceBlockEntity.canBurn hands a RecipeHolder where 1.20.1 handed
+     * the Recipe: CbRecipeIds.value), so a handler capturing it receives V's value.
      */
-    public record MixinTarget(String name, String desc, int[] args, String[][] wrap, String basis, boolean narrow) {}
+    public record MixinTarget(String name, String desc, int[] args, String[][] wrap, String basis, boolean narrow,
+                              java.util.List<String[]> wraps) {
+        /** the wrap static taking {@code from} to {@code to}, or null */
+        public String[] wrapFor(org.objectweb.asm.Type from, org.objectweb.asm.Type to) {
+            return Chain.wrapFor(wraps, from, to);
+        }
+    }
+
+    /**
+     * The one wrap rule of override hooks and mixinTargets: of {@code wraps} ({owner, name, desc} each), the static whose
+     * only parameter is {@code from} and whose return is {@code to}, or null
+     */
+    public static String[] wrapFor(java.util.List<String[]> wraps, org.objectweb.asm.Type from, org.objectweb.asm.Type to) {
+        for (String[] w : wraps) {
+            if (java.util.Arrays.equals(org.objectweb.asm.Type.getArgumentTypes(w[2]), new org.objectweb.asm.Type[] {from})
+                    && org.objectweb.asm.Type.getReturnType(w[2]).equals(to)) {
+                return w;
+            }
+        }
+        return null;
+    }
+
+    /** a "wrap" value (one "owner.name(desc)" static or a list of them) as {owner, name, desc} each, in wiring order */
+    static java.util.List<String[]> parseWraps(com.google.gson.JsonElement wel) {
+        java.util.List<String[]> out = new java.util.ArrayList<>();
+        if (wel == null) {
+            return out;
+        }
+        java.util.List<String> ws = new java.util.ArrayList<>();
+        if (wel.isJsonArray()) {
+            for (var x : wel.getAsJsonArray()) {
+                ws.add(x.getAsString());
+            }
+        } else {
+            ws.add(wel.getAsString());
+        }
+        for (String w : ws) {
+            int dot = w.lastIndexOf('.', w.indexOf('('));
+            String[] wsig = splitSig(w.substring(dot + 1));
+            out.add(new String[] {w.substring(0, dot), wsig[0], wsig[1]});
+        }
+        return out;
+    }
 
     public final java.util.Map<String, MixinTarget> mixinTargets = new java.util.HashMap<>();
 
@@ -545,13 +591,7 @@ public final class Chain {
 
         /** the wrap static taking {@code from} to {@code to}, or null */
         public String[] wrapFor(org.objectweb.asm.Type from, org.objectweb.asm.Type to) {
-            for (String[] w : wraps) {
-                if (java.util.Arrays.equals(org.objectweb.asm.Type.getArgumentTypes(w[2]), new org.objectweb.asm.Type[] {from})
-                        && org.objectweb.asm.Type.getReturnType(w[2]).equals(to)) {
-                    return w;
-                }
-            }
-            return null;
+            return Chain.wrapFor(wraps, from, to);
         }
         /**
          * "owner.name(desc)" static that converts the OLD override's return
@@ -2498,6 +2538,68 @@ public final class Chain {
      *  ("depRenames" in shims-<to>.json), on top of the per-segment ones. */
     public final java.util.Map<String, String> depRenames = new java.util.HashMap<>();
 
+    /**
+     * The target release's Fabric API: mod id -> version, for the fabric-api jar itself and every module
+     * it nests, the ids they "provide" included ({@link #readFabricApiVersions}). A mod's fabric.mod.json
+     * range on one of these names the source release's Fabric API; the converter re-states it for the
+     * target's (JarProcessor.patchFmj). Null: not read (the conversion then leaves those ranges alone).
+     */
+    public java.util.Map<String, String> targetFapiVersions;
+
+    /**
+     * The versions a release's Fabric API jar declares: its own fabric.mod.json and each nested module's
+     * (META-INF/jars), keyed by id and by every id they "provide". Null when the jar is absent.
+     */
+    public static java.util.Map<String, String> readFabricApiVersions(Path fapiJar) throws IOException {
+        if (fapiJar == null || !Files.isRegularFile(fapiJar)) {
+            return null;
+        }
+        java.util.Map<String, String> out = new java.util.TreeMap<>();
+        try (var z = new java.util.zip.ZipFile(fapiJar.toFile())) {
+            readFmjVersions(z.getInputStream(z.getEntry("fabric.mod.json")).readAllBytes(), out);
+            var en = z.entries();
+            while (en.hasMoreElements()) {
+                var e = en.nextElement();
+                String n = e.getName();
+                if (!n.startsWith("META-INF/jars/") || !n.endsWith(".jar")) {
+                    continue;
+                }
+                try (var zin = new java.util.zip.ZipInputStream(z.getInputStream(e))) {
+                    java.util.zip.ZipEntry ie;
+                    while ((ie = zin.getNextEntry()) != null) {
+                        if (ie.getName().equals("fabric.mod.json")) {
+                            readFmjVersions(zin.readAllBytes(), out);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return out;
+    }
+
+    private static void readFmjVersions(byte[] fmjBytes, java.util.Map<String, String> out) {
+        var reader = new com.google.gson.stream.JsonReader(new java.io.InputStreamReader(
+            new java.io.ByteArrayInputStream(fmjBytes), java.nio.charset.StandardCharsets.UTF_8));
+        reader.setLenient(true);
+        var fmj = com.google.gson.JsonParser.parseReader(reader).getAsJsonObject();
+        if (!fmj.has("id") || !fmj.has("version")) {
+            return;
+        }
+        String ver = fmj.get("version").getAsString();
+        out.put(fmj.get("id").getAsString(), ver);
+        if (fmj.has("provides") && fmj.get("provides").isJsonArray()) {
+            for (var p : fmj.getAsJsonArray("provides")) {
+                if (p.isJsonPrimitive()) {
+                    out.putIfAbsent(p.getAsString(), ver);
+                } else if (p.isJsonObject() && p.getAsJsonObject().has("id")) {
+                    var po = p.getAsJsonObject();
+                    out.putIfAbsent(po.get("id").getAsString(), po.has("version") ? po.get("version").getAsString() : ver);
+                }
+            }
+        }
+    }
+
     /** Runtime class serving cbLookup() for the hooks above ("lookupRt"). */
     public String lookupRt;
 
@@ -2923,20 +3025,7 @@ public final class Chain {
                     h.newName = nsig[0];
                     h.newDesc = nsig[1];
                     if (o.has("wrap")) {
-                        var wel = o.get("wrap");
-                        java.util.List<String> ws = new java.util.ArrayList<>();
-                        if (wel.isJsonArray()) {
-                            for (var x : wel.getAsJsonArray()) {
-                                ws.add(x.getAsString());
-                            }
-                        } else {
-                            ws.add(wel.getAsString());
-                        }
-                        for (String w : ws) {
-                            int dot = w.lastIndexOf('.', w.indexOf('('));
-                            String[] wsig = splitSig(w.substring(dot + 1));
-                            h.wraps.add(new String[] {w.substring(0, dot), wsig[0], wsig[1]});
-                        }
+                        h.wraps.addAll(parseWraps(o.get("wrap")));
                         h.wrapOwner = h.wraps.get(0)[0];
                         h.wrapName = h.wraps.get(0)[1];
                         h.wrapDesc = h.wraps.get(0)[2];
@@ -3322,7 +3411,7 @@ public final class Chain {
                     }
                     c.mixinTargets.put(k, new MixinTarget(mtTo.substring(0, mtP), mtTo.substring(mtP), mtArgs, mtWrap,
                         o.has("basis") ? o.get("basis").getAsString() : "",
-                        o.has("narrow") && o.get("narrow").getAsBoolean()));
+                        o.has("narrow") && o.get("narrow").getAsBoolean(), parseWraps(o.get("wrap"))));
                 }
             }
             if (root.has("mixinReceivers")) {

@@ -1,0 +1,22 @@
+{
+ "_s215b_rotations_basis": "1.21.5 made Rotations (class_2379) a record (x, y, z: comp_3776 / comp_3777 / comp_3778), same constructor normalisation; 1.21.4's getters, wrapped getters, save() and ListTag constructor are gone (javap -c -p both). Answered on the record (rt/CbRotations). A 1.21.4 subclass of Rotations (the record is final) stays open.",
+ "methodRenames": {
+  "net/minecraft/class_2379.method_10256()F": "comp_3776",
+  "net/minecraft/class_2379.method_10257()F": "comp_3777",
+  "net/minecraft/class_2379.method_10258()F": "comp_3778"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2379.method_35845()F": "top/dext/centurybridge/step/v1_21_5/rt/CbRotations#wrappedX",
+  "net/minecraft/class_2379.method_35846()F": "top/dext/centurybridge/step/v1_21_5/rt/CbRotations#wrappedY",
+  "net/minecraft/class_2379.method_35847()F": "top/dext/centurybridge/step/v1_21_5/rt/CbRotations#wrappedZ",
+  "net/minecraft/class_2379.method_10255()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_21_5/rt/CbRotations#save"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_2379.<init>(Lnet/minecraft/class_2499;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbRotations#fromList"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_2379.field_11165:F": "top/dext/centurybridge/step/v1_21_5/rt/CbRotations",
+  "net/minecraft/class_2379.field_11164:F": "top/dext/centurybridge/step/v1_21_5/rt/CbRotations",
+  "net/minecraft/class_2379.field_11163:F": "top/dext/centurybridge/step/v1_21_5/rt/CbRotations"
+ }
+}

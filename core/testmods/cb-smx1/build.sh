@@ -11,7 +11,8 @@
 # is printed to compare with -Dcenturybridge.legacyStatNameRoute=false), MobEffect add/removeAttributeModifiers (Strength
 # gets a modifier of the mod's own; every other effect's attributes are fingerprinted against
 # -Dcenturybridge.legacyEffectAttributeRoute=false), and cb-smx1n's native 1.20.2 mixins still acting (boot cb-smx1n beside it:
-# CB_NATIVE_MODS). ServerDriverMixin runs Driver
+# CB_NATIVE_MODS), and AbstractFurnaceBlockEntity.canBurn (a HEAD injector capturing the Recipe; 1.20.2 passes the
+# RecipeHolder: mixinTargets "wrap", the handler must be handed the Recipe). ServerDriverMixin runs Driver
 # once the world is loaded: "CB-SMX1 ok|FAIL <case> <detail>", ending "CB-SMX1 summary ok=N fail=M".
 #
 #   bash core/testmods/cb-smx1/build.sh <out.jar>     (from the repository root; javac only;

@@ -154,6 +154,10 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
     @Unique
     private boolean cb$closed;
 
+    /** inside method_43578's (storeRenderedBuffer's) call of 1.21's build() (CbRenderBufferBuilderRouteMixin's end route stands aside) */
+    @Unique
+    private boolean cb$storing;
+
     /** the cursor is on the position of a vertex it began (1.21 counts the position filled as the vertex begins) */
     @Unique
     private boolean cb$posPending;
@@ -180,20 +184,17 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
 
     /** begin(mode, format) */
     @Override
+    @CbVanillaReads(value = "CbRenderBufferBuilderRouteMixin: every 1.21 builder, made for one batch where 1.20.6 began one, is begun "
+        + "again through this member at its constructor's RETURN when a converted mod mixes it (the same setup; a cancelled "
+        + "begin leaves 1.21's caller its building builder)",
+        carries = {"Inject@HEAD", "Inject@RETURN", "Inject@TAIL"})
     public void method_1328(net.minecraft.class_293.class_5596 mode, net.minecraft.class_293 format) {
         if (this.field_1556) {
             throw new IllegalStateException("Already building!");
         }
-        this.cb$checkOpen();
+        this.method_54559();
         this.field_52073 = mode;
-        this.field_1565 = format;
-        this.field_52074 = format.method_1362();
-        this.field_52075 = format.method_60839() & ~net.minecraft.class_296.field_52107.method_60843();
-        this.field_52076 = format.method_60838();
-        boolean entity = format == net.minecraft.class_290.field_1580;
-        boolean block = format == net.minecraft.class_290.field_1590;
-        this.field_21594 = entity || block;
-        this.field_21595 = entity;
+        this.method_23918(format);
         this.field_52072 = -1L;
         this.field_1554 = 0;
         this.field_52077 = 0;
@@ -203,24 +204,35 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
 
     /** end() */
     @Override
+    @CbVanillaReads(value = "CbRenderBufferBuilderRouteMixin: 1.21's build() / buildOrThrow() at the sites 1.20.6 called end() answer "
+        + "this member's mesh when a converted mod mixes it (not the section compile: endOrDiscardIfEmpty there)",
+        carries = {"Inject@HEAD", "Inject@RETURN", "Inject@TAIL", "ModifyReturnValue@RETURN"})
     public BufferBuilderRenderedBuffer method_1326() {
-        this.cb$ensureBuilding();
-        BufferBuilderRenderedBuffer rendered = this.cb$store();
-        this.cb$reset();
+        this.method_43577();
+        BufferBuilderRenderedBuffer rendered = this.method_43578();
+        this.method_43579();
         return rendered;
     }
 
     /** endOrDiscardIfEmpty() */
     @Override
+    @CbVanillaReads(value = "CbRenderSectionCompileRouteMixin: 1.21's section compile (SectionCompiler.compile's build()) answers "
+        + "this member's mesh when a converted mod mixes it",
+        carries = {"Inject@HEAD", "Inject@RETURN", "Inject@TAIL", "ModifyReturnValue@RETURN"})
     public BufferBuilderRenderedBuffer method_43575() {
-        this.cb$ensureBuilding();
+        this.method_43577();
         if (this.method_43574()) {
-            this.cb$reset();
+            this.method_43579();
             return null;
         }
-        BufferBuilderRenderedBuffer rendered = this.cb$store();
-        this.cb$reset();
+        BufferBuilderRenderedBuffer rendered = this.method_43578();
+        this.method_43579();
         return rendered;
+    }
+
+    @Override
+    public boolean cb$v1_21$storing() {
+        return this.cb$storing;
     }
 
     /** isCurrentBatchEmpty() */
@@ -284,7 +296,7 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
     /** restoreSortState(state): the next end() answers the quads re-sorted, indices only */
     @Override
     public void method_1324(BufferBuilderSortState state) {
-        this.cb$checkOpen();
+        this.method_54559();
         this.field_52073 = state.field_27358;
         this.field_1554 = state.field_27359;
         this.cb$sortingPoints = state.field_27360;
@@ -292,23 +304,26 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
         this.cb$indexOnly = true;
     }
 
-    @Unique
-    private void cb$ensureBuilding() {
+    /** 1.20.6's ensureBuilding, its body as 1.20.6's (1.20.6 called it only from end and endOrDiscardIfEmpty, both routed) */
+    @CbVanillaReads("CbRenderBufferBuilderRouteMixin: 1.21's build() runs the restored end (CbRenderSectionCompileRouteMixin: endOrDiscardIfEmpty at the section compile), which calls this, when a converted mod mixes it")
+    private void method_43577() {
         if (!this.field_1556) {
             throw new IllegalStateException("Not building!");
         }
     }
 
-    @Unique
-    private void cb$checkOpen() {
+    /** 1.20.6's ensureNotClosed, its body as 1.20.6's on the layer's closed flag (1.20.6 called it from begin, routed, and restoreSortState) */
+    @CbVanillaReads("CbRenderBufferBuilderRouteMixin: 1.21's BufferBuilder constructor runs the restored begin, which calls this, when a converted mod mixes it")
+    private void method_54559() {
         if (this.cb$closed) {
             throw new IllegalStateException("This BufferBuilder has been closed");
         }
     }
 
     /** 1.20.6's storeRenderedBuffer on 1.21's build */
-    @Unique
-    private BufferBuilderRenderedBuffer cb$store() {
+    @CbVanillaReads(value = "CbRenderBufferBuilderRouteMixin: 1.21's build() runs the restored end (CbRenderSectionCompileRouteMixin: endOrDiscardIfEmpty at the section compile), which calls this, when a converted mod mixes it",
+        carries = {"Inject@HEAD", "Inject@RETURN", "Inject@TAIL", "ModifyReturnValue@RETURN"})
+    private BufferBuilderRenderedBuffer method_43578() {
         net.minecraft.class_293 format = this.field_1565;
         net.minecraft.class_293.class_5596 mode = this.field_52073;
         net.minecraft.class_287 self = (net.minecraft.class_287) (Object) this;
@@ -332,7 +347,13 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
         if (sorted && this.cb$sorting == null) {
             throw new IllegalStateException("Sorting state uninitialized");
         }
-        net.minecraft.class_9801 mesh = this.method_60794();
+        net.minecraft.class_9801 mesh;
+        this.cb$storing = true;
+        try {
+            mesh = this.method_60794();
+        } finally {
+            this.cb$storing = false;
+        }
         if (mesh == null) {
             return BufferBuilderRenderedBuffer.cbOf(self, new BufferBuilderDrawState(format, 0, mode.method_31973(0), mode,
                 net.minecraft.class_293.class_5595.method_31972(0), false, !sorted), null, null);
@@ -346,8 +367,9 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
     }
 
     /** 1.20.6's reset: idle, no vertices, no sorting */
-    @Unique
-    private void cb$reset() {
+    @CbVanillaReads(value = "CbRenderBufferBuilderRouteMixin: 1.21's build() runs the restored end (CbRenderSectionCompileRouteMixin: endOrDiscardIfEmpty at the section compile), which calls this, when a converted mod mixes it",
+        carries = {"Inject@HEAD", "Inject@RETURN", "Inject@TAIL"})
+    private void method_43579() {
         this.field_1556 = false;
         this.field_1554 = 0;
         this.field_52072 = -1L;
@@ -356,6 +378,20 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
         this.cb$sortingPoints = null;
         this.cb$sorting = null;
         this.cb$indexOnly = false;
+    }
+
+    /** 1.20.6's switchFormat(format): the format and what 1.21's constructor derives from it */
+    @CbVanillaReads(value = "CbRenderBufferBuilderRouteMixin: 1.21's BufferBuilder constructor runs the restored begin, which calls this, when a converted mod mixes it",
+        carries = {"Inject@HEAD", "Inject@RETURN", "Inject@TAIL"})
+    private void method_23918(net.minecraft.class_293 format) {
+        this.field_1565 = format;
+        this.field_52074 = format.method_1362();
+        this.field_52075 = format.method_60839() & ~net.minecraft.class_296.field_52107.method_60843();
+        this.field_52076 = format.method_60838();
+        boolean entity = format == net.minecraft.class_290.field_1580;
+        boolean block = format == net.minecraft.class_290.field_1590;
+        this.field_21594 = entity || block;
+        this.field_21595 = entity;
     }
 
     /** 1.20.6's makeQuadSortingPoints: each quad's centre, the midpoint of its vertices 0 and 2 */

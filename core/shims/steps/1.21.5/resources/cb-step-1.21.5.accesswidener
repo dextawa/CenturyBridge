@@ -1,1 +1,61 @@
 accessWidener	v2	intermediary
+# ServerScoreboard.createData: 1.21.4 ServerScoreboard.dataFactory() handed it as the factory constructor (rt/CbSavedData)
+accessible	method	net/minecraft/class_2995	method_32705	()Lnet/minecraft/class_273;
+# DimensionDataStorage.registries: 1.21.4 handed them to a saved data file's deserializer and save (rt/CbSavedData)
+accessible	field	net/minecraft/class_26	field_48926	Lnet/minecraft/class_7225$class_7874;
+# DistanceManager.ticketStorage: 1.21.4's ticket members on the DistanceManager reach 1.21.5's TicketStorage (rt/CbTickets)
+accessible	field	net/minecraft/class_3204	field_55591	Lnet/minecraft/class_10592;
+
+# ---- BEGIN GENERATED (s215b): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible field net/minecraft/class_1661 field_7545 I
+accessible field net/minecraft/class_1661 field_7547 Lnet/minecraft/class_2371;
+accessible field net/minecraft/class_2275 field_10746 Lnet/minecraft/class_265;
+accessible field net/minecraft/class_4014 field_18042 Ljava/util/concurrent/CompletableFuture;
+accessible field net/minecraft/class_4014 field_18043 Ljava/util/concurrent/CompletableFuture;
+accessible field net/minecraft/class_4609 field_21021 Ljava/util/Map;
+accessible field net/minecraft/class_4609 field_21022 Ljava/util/Map;
+accessible field net/minecraft/class_590 field_52928 Lnet/minecraft/class_9953;
+accessible method net/minecraft/class_1297 method_61409 ()V
+accessible method net/minecraft/class_1309 method_6023 ()V
+accessible method net/minecraft/class_1438 method_47846 (Lnet/minecraft/class_1438$class_4053;)V
+accessible method net/minecraft/class_1451 method_47842 (Lnet/minecraft/class_6880;)V
+accessible method net/minecraft/class_1453 method_47848 (Lnet/minecraft/class_1453$class_7989;)V
+accessible method net/minecraft/class_1462 method_61471 (Lnet/minecraft/class_1462$class_9869;)V
+accessible method net/minecraft/class_1463 method_47853 (Lnet/minecraft/class_1463$class_7990;)V
+accessible method net/minecraft/class_1474 method_47860 (Lnet/minecraft/class_1474$class_1475;)V
+accessible method net/minecraft/class_1493 method_58062 ()Lnet/minecraft/class_6880;
+accessible method net/minecraft/class_1493 method_58063 (Lnet/minecraft/class_6880;)V
+accessible method net/minecraft/class_1498 method_47873 (Lnet/minecraft/class_5149;)V
+accessible method net/minecraft/class_1501 method_47874 (Lnet/minecraft/class_1501$class_7993;)V
+accessible method net/minecraft/class_1534 method_43402 (Lnet/minecraft/class_6880;)V
+accessible method net/minecraft/class_1606 method_47880 (Ljava/util/Optional;)V
+accessible method net/minecraft/class_2487 <init> (Ljava/util/Map;)V
+accessible method net/minecraft/class_2509 <init> ()V
+accessible method net/minecraft/class_2688 method_61768 (Lnet/minecraft/class_2769;)Ljava/lang/Comparable;
+accessible method net/minecraft/class_4019 method_47844 (Lnet/minecraft/class_4019$class_4039;)V
+accessible method net/minecraft/class_4341 <init> (Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_310;)V
+accessible method net/minecraft/class_5762 method_33219 (Lnet/minecraft/class_5762$class_5767;)V
+accessible method net/minecraft/class_7102 method_41353 (Lnet/minecraft/class_6880;)V
+extendable method net/minecraft/class_1438 method_47846 (Lnet/minecraft/class_1438$class_4053;)V
+extendable method net/minecraft/class_1451 method_47842 (Lnet/minecraft/class_6880;)V
+extendable method net/minecraft/class_1453 method_47848 (Lnet/minecraft/class_1453$class_7989;)V
+extendable method net/minecraft/class_1462 method_61471 (Lnet/minecraft/class_1462$class_9869;)V
+extendable method net/minecraft/class_1463 method_47853 (Lnet/minecraft/class_1463$class_7990;)V
+extendable method net/minecraft/class_1474 method_47860 (Lnet/minecraft/class_1474$class_1475;)V
+extendable method net/minecraft/class_1493 method_58062 ()Lnet/minecraft/class_6880;
+extendable method net/minecraft/class_1493 method_58063 (Lnet/minecraft/class_6880;)V
+extendable method net/minecraft/class_1498 method_47873 (Lnet/minecraft/class_5149;)V
+extendable method net/minecraft/class_1501 method_47874 (Lnet/minecraft/class_1501$class_7993;)V
+extendable method net/minecraft/class_1534 method_43402 (Lnet/minecraft/class_6880;)V
+extendable method net/minecraft/class_1606 method_47880 (Ljava/util/Optional;)V
+extendable method net/minecraft/class_2688 method_61768 (Lnet/minecraft/class_2769;)Ljava/lang/Comparable;
+extendable method net/minecraft/class_4019 method_47844 (Lnet/minecraft/class_4019$class_4039;)V
+extendable method net/minecraft/class_5762 method_33219 (Lnet/minecraft/class_5762$class_5767;)V
+extendable method net/minecraft/class_7102 method_41353 (Lnet/minecraft/class_6880;)V
+mutable field net/minecraft/class_1771 field_55032 F
+mutable field net/minecraft/class_7952 field_41396 Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/class_7952 field_41397 Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/class_8104 field_42264 Lnet/minecraft/class_8104;
+# ---- END GENERATED (s215b) ----

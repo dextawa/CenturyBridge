@@ -1,0 +1,38 @@
+{
+  "_s215_saveddata_basis": "Family C (s215): 1.21.4's SavedData / DimensionDataStorage API on 1.21.5's SavedDataType storage (javap -c -p 1.21.4 / 1.21.5 class_18, class_26, class_10741). A converted mod's SavedData subclass extends the layer's facade SavedData (an abstract 1.21.5 SavedData keeping 1.21.4's save contract); storage calls go through rt/CbSavedData (one SavedDataType per storage and file name, codec = the factory's deserializer / the data's save, as 1.21.4's storage read and wrote the file's \"data\" compound); vanilla factory() methods answer a Factory standing for vanilla's 1.21.5 type of the file name.",
+  "superRenames": {
+    "net/minecraft/class_18": "top/dext/centurybridge/step/v1_21_5/facade/SavedData"
+  },
+  "classRenames": {
+    "net/minecraft/class_18$class_8645": "top/dext/centurybridge/step/v1_21_5/facade/SavedData$Factory"
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_26.method_17924(Lnet/minecraft/class_18$class_8645;Ljava/lang/String;)Lnet/minecraft/class_18;": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData#computeIfAbsent",
+    "net/minecraft/class_26.method_20786(Lnet/minecraft/class_18$class_8645;Ljava/lang/String;)Lnet/minecraft/class_18;": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData#get",
+    "net/minecraft/class_26.method_123(Ljava/lang/String;Lnet/minecraft/class_18;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData#set",
+    "net/minecraft/class_2995.method_52297()Lnet/minecraft/class_18$class_8645;": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData",
+    "net/minecraft/class_18.method_75(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData",
+    "net/minecraft/class_18.method_17919(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData"
+  },
+  "staticRedirects": {
+    "net/minecraft/class_8565.method_52511(J)Lnet/minecraft/class_18$class_8645;": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData",
+    "net/minecraft/class_3767.method_52559(Lnet/minecraft/class_3218;)Lnet/minecraft/class_18$class_8645;": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData",
+    "net/minecraft/class_3440.method_52601()Lnet/minecraft/class_18$class_8645;": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData",
+    "net/minecraft/class_3978.method_52610()Lnet/minecraft/class_18$class_8645;": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData",
+    "net/minecraft/class_22.method_52611()Lnet/minecraft/class_18$class_8645;": "top/dext/centurybridge/step/v1_21_5/rt/CbSavedData"
+  },
+  "_s215_saveddata_redirects_basis": "DimensionDataStorage.computeIfAbsent / get / set (1.21.4 keyed by file name) -> 1.21.5's computeIfAbsent / get / set of the file's SavedDataType, called on the storage itself (a native mixin on 1.21.5's methods still sees the call). The vanilla factory() methods (ServerScoreboard.dataFactory, RandomSequences / Raids / StructureFeatureIndexSavedData / MapIndex / MapItemSavedData.factory) answer a Factory the storage calls resolve to vanilla's 1.21.5 type of the file name: ServerScoreboard.TYPE, RandomSequences.TYPE, Raids.TYPE / TYPE_END by id, StructureFeatureIndexSavedData.type(name), MapIndex.TYPE, MapItemSavedData.type(MapId of map_<n>).",
+  "_s215_saveddata_save_basis": "SavedData.save(tag, registries) / save(registries) called through 1.21.5's SavedData (which has neither): a converted mod's data runs its own (facade SavedData); vanilla's data is written by its 1.21.5 type's codec, as 1.21.5's storage writes it under \"data\" (rt/CbSavedData.method_75).",
+  "superCtorReshapes": {
+    "net/minecraft/class_26.<init>(Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7225$class_7874;)V": {
+      "desc": "(Lnet/minecraft/class_18$class_10740;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7225$class_7874;)V",
+      "ops": [
+        "push top/dext/centurybridge/step/v1_21_5/rt/CbSavedData#detachedContext()Lnet/minecraft/class_18$class_10740;",
+        "keep",
+        "keep",
+        "keep"
+      ],
+      "basis": "DimensionDataStorage(path, fixer, registries) gained the SavedData.Context its types read (a level and a world seed); a storage a mod builds itself has no level: a Context without one (seed 0). A converted mod's data reads the storage's own registries (as 1.21.4's did), so only vanilla types that read the level refuse in such a storage"
+    }
+  }
+}

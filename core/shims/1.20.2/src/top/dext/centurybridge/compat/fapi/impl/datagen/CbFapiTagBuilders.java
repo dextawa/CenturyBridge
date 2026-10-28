@@ -70,6 +70,31 @@ public final class CbFapiTagBuilders {
         return builder;
     }
 
+    /**
+     * The tag builder whose file TagProvider is writing on this thread: set at the head of TagProvider's per-tag lambda
+     * (method_27046) from its entry, cleared at its return. DataProvider.saveJsonStable (method_10320) is called inside
+     * that lambda on the same thread -- directly in 1.20.2, through saveStable (method_53496) from 1.20.5 on -- and
+     * writes the removals of exactly this builder into the JSON before the file is written.
+     */
+    private static final ThreadLocal<net.minecraft.class_3495> WRITING = new ThreadLocal<>();
+
+    public static void carry(Object tagBuilder) {
+        if (tagBuilder instanceof net.minecraft.class_3495 builder) {
+            WRITING.set(builder);
+        } else {
+            WRITING.remove();
+        }
+    }
+
+    /** DataProvider.saveJsonStable's JSON: the carried builder's removals added, once */
+    public static void writeCarriedRemovals(JsonElement json) {
+        net.minecraft.class_3495 builder = WRITING.get();
+        if (builder != null && json != null && json.isJsonObject()) {
+            WRITING.remove();
+            writeRemovals(json, builder);
+        }
+    }
+
     /** the "fabric:remove" list of a generated tag file: its builder's removals, tags marked with #, as 1.20.1 wrote them */
     public static void writeRemovals(JsonElement json, net.minecraft.class_3495 tagBuilder) {
         if (!((Object) tagBuilder instanceof CbFapiTagBuilderRemovals removals)) {

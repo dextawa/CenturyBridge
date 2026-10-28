@@ -99,6 +99,14 @@ public final class CbScoreboard {
         return slotNames;
     }
 
+    /**
+     * the DisplaySlot of a 1.20.1 slot id (ordinal = id, javap of DisplaySlot.<clinit>); an id outside 0..18 throws
+     * ArrayIndexOutOfBoundsException, as 1.20.1's displayObjectives[slot] did
+     */
+    public static class_8646 slotOf(int slot) {
+        return class_8646.values()[slot];
+    }
+
     /** a DisplaySlot where 1.20.1 code holds the slot id */
     public static int slotId(class_8646 slot) {
         return slot.method_52621();
