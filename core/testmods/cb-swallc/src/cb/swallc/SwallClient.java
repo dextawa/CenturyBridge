@@ -19,7 +19,7 @@ import net.minecraft.class_310;
  * BiomeColors.getAverageColor / LiquidBlockRenderer.calculateAverageHeight; each counts its calls</li>
  * </ul>
  * In a world, the integrated server builds a grass pad with water, a leashed pig, a pig, a saddled mule and zombie horse
- * and strikes lightning in view; chat gets an underlined line, a struck line and a player-head glyph. After 160 ticks it
+ * (mule and zombie horse side-on at the pad's edges) and strikes lightning in view; chat gets an underlined line, a struck line and a player-head glyph. After 160 ticks it
  * prints "CB-SWALLC ok|FAIL check ..." and "CB-SWALLC n/m", waits 12 s for screenshots and stops the client.
  */
 public class SwallClient implements ClientModInitializer {
@@ -62,6 +62,11 @@ public class SwallClient implements ClientModInitializer {
                 setUp(mc);
             } else if (ticks == 30) {
                 Check20.run(mc, RESULTS);
+                // check 20 f) against native 26.1: the game's own third-person camera at the same spot
+                mc.field_1690.method_31043(net.minecraft.class_5498.field_26665);
+            } else if (ticks == 36) {
+                Check20.camera(mc, RESULTS);
+                mc.field_1690.method_31043(net.minecraft.class_5498.field_26664);
             } else if (ticks == 50) {
                 server(mc, "tellraw @a {text:\"cb-swallc underlined line\",underlined:true}");
                 server(mc, "tellraw @a [{text:\"cb-swallc head \"},{type:\"object\",object:\"player\",player:{name:\"cbtest\"}}]");
@@ -94,8 +99,8 @@ public class SwallClient implements ClientModInitializer {
             "setblock " + (bx - 2) + " " + by + " " + (bz + 4) + " oak_fence",
             "summon pig " + (bx - 1) + " " + by + " " + (bz + 5) + " {NoAI:1b,leash:[I;" + (bx - 2) + "," + by + "," + (bz + 4) + "]}",
             "summon pig " + (bx + 1) + " " + by + " " + (bz + 4) + " {NoAI:1b}",
-            "summon mule " + (bx - 2) + " " + by + " " + (bz + 8) + " {NoAI:1b,Tame:1b,equipment:{saddle:{id:\"minecraft:saddle\",count:1}}}",
-            "summon zombie_horse " + (bx + 2) + " " + by + " " + (bz + 8) + " {NoAI:1b,Tame:1b,equipment:{saddle:{id:\"minecraft:saddle\",count:1}}}",
+            "summon mule " + (bx - 3) + ".5 " + by + " " + (bz + 7) + ".5 {NoAI:1b,Tame:1b,Rotation:[90f,0f],equipment:{saddle:{id:\"minecraft:saddle\",count:1}}}",
+            "summon zombie_horse " + (bx + 3) + ".5 " + by + " " + (bz + 7) + ".5 {NoAI:1b,Tame:1b,Rotation:[270f,0f],equipment:{saddle:{id:\"minecraft:saddle\",count:1}}}",
         };
         for (String c : cmds) {
             server(mc, c);
