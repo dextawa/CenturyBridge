@@ -2814,7 +2814,7 @@ public final class JarProcessor {
                 }
             }
         }
-        if (!reg.stubs.isEmpty()) {
+        if (!reg.declared.isEmpty()) {
             entries.put(tombClass + ".class", reg.synthesize());
         }
         if (!chain.splitRenames.isEmpty()) {
@@ -3051,10 +3051,23 @@ public final class JarProcessor {
         final String clsName;
         final String targetVer;
         final Map<String, Stub> stubs = new LinkedHashMap<>();
+        /** The stubs as their call sites name them after the class's classRenames remapper: "name desc" -> stub. */
+        final Map<String, Stub> declared = new LinkedHashMap<>();
 
         Tombstones(String clsName, String targetVer) {
             this.clsName = clsName;
             this.targetVer = targetVer;
+        }
+
+        /**
+         * A site emits {@code s.staticDesc()} upstream of its class's classRenames remapper, which then renames the
+         * descriptor's types; the stub is declared with the descriptor the site ends up naming ({@code rm}: that
+         * class's remapper, a mixin's superRename variant included; null when the class is not renamed).
+         */
+        Stub declare(Stub s, org.objectweb.asm.commons.Remapper rm) {
+            String d = rm == null ? s.staticDesc() : rm.mapMethodDesc(s.staticDesc());
+            declared.putIfAbsent(s.name() + d, new Stub(s.name(), d, s.message()));
+            return s;
         }
 
         Stub get(String owner, String name, String desc, boolean isStatic, String boundary) {
@@ -3069,7 +3082,7 @@ public final class JarProcessor {
         byte[] synthesize() {
             org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
             cw.visit(Opcodes.V17, Opcodes.ACC_PUBLIC | Opcodes.ACC_SYNTHETIC, clsName, null, "java/lang/Object", null);
-            for (Stub s : stubs.values()) {
+            for (Stub s : declared.values()) {
                 MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, s.name(), s.staticDesc(), null, null);
                 mv.visitCode();
                 mv.visitTypeInsn(Opcodes.NEW, "java/lang/UnsupportedOperationException");
@@ -4709,6 +4722,9 @@ public final class JarProcessor {
             }
         }
         final Map<String, String> classRen = renames;
+        // tombstone stubs are declared with the descriptors this class's sites carry after the remapper below
+        final org.objectweb.asm.commons.Remapper tombRemap = needClassRename
+            ? new org.objectweb.asm.commons.SimpleRemapper(classRen) : null;
         ClassVisitor sink = needClassRename
             ? MixinClassRenames.annotations(new org.objectweb.asm.commons.ClassRemapper(kinds,
                 new org.objectweb.asm.commons.SimpleRemapper(classRen)), classRen, c -> wDeclares(chain, c))
@@ -5032,7 +5048,7 @@ public final class JarProcessor {
                         }
                         String boundary = tombstone.get(key);
                         if (boundary != null) {
-                            Tombstones.Stub s = reg.get(recv, name, desc, op == Opcodes.INVOKESTATIC, boundary);
+                            Tombstones.Stub s = reg.declare(reg.get(recv, name, desc, op == Opcodes.INVOKESTATIC, boundary), tombRemap);
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, reg.clsName, s.name(), s.staticDesc(), false);
                             return;
                         }
@@ -5136,7 +5152,7 @@ public final class JarProcessor {
                             String boundary = tombstone.get(key);
                             if (boundary != null) {
                                 boolean isStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
-                                Tombstones.Stub s = reg.get(recv, h.getName(), h.getDesc(), isStatic, boundary);
+                                Tombstones.Stub s = reg.declare(reg.get(recv, h.getName(), h.getDesc(), isStatic, boundary), tombRemap);
                                 rewritten[i] = new org.objectweb.asm.Handle(
                                     Opcodes.H_INVOKESTATIC, reg.clsName, s.name(), s.staticDesc(), false);
                             }
