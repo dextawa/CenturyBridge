@@ -56,9 +56,28 @@ public final class CbAdvPredicateJson {
         }
     }
 
+    /**
+     * The classes the layer restores the advancement readers' members on (Advancement.Builder.fromJson and the CbAdv*Json
+     * predicate readers). Only when a converted mod's mixin injects into one of those members (CbMixedMembers) can a restored
+     * reader answer otherwise than its unmixed copy, so only then are they consulted (here and in CbAdvBuilders.consult):
+     * unmixed, 1.20.2's advancement and predicates are kept without reading the JSON a second time.
+     */
+    private static final java.util.Set<String> RESTORED_ON = java.util.Set.of(
+        "net/minecraft/class_161$class_162", "net/minecraft/class_2019", "net/minecraft/class_2022", "net/minecraft/class_2025",
+        "net/minecraft/class_2035", "net/minecraft/class_2040", "net/minecraft/class_2048", "net/minecraft/class_2050",
+        "net/minecraft/class_2073", "net/minecraft/class_2090", "net/minecraft/class_2102", "net/minecraft/class_2102$class_2103",
+        "net/minecraft/class_2105", "net/minecraft/class_3735", "net/minecraft/class_4550", "net/minecraft/class_4551",
+        "net/minecraft/class_4552", "net/minecraft/class_4553", "net/minecraft/class_4559", "net/minecraft/class_4965",
+        "net/minecraft/class_5258", "net/minecraft/class_6404", "net/minecraft/class_7383", "net/minecraft/class_8129");
+
+    /** whether a converted mod's mixin injects into a restored advancement reader member */
+    public static boolean mixed() {
+        return CbMixedMembers.mixedOn(RESTORED_ON);
+    }
+
     /** null: keep 1.20.2's answer; otherwise 1.20.1's (thrown if it threw) */
     private static <T, R> R consult(Supplier<T> mixed, Supplier<T> golden, Function<T, JsonElement> json, Function<T, R> answer) {
-        if (!CbRecipeJson.ROUTE) {
+        if (!CbRecipeJson.ROUTE || !mixed()) {
             return null;
         }
         Object m = attempt(mixed);
@@ -187,12 +206,12 @@ public final class CbAdvPredicateJson {
 
     private static net.minecraft.class_7376 subPredicate(JsonElement element, boolean golden) {
         if (element == null || element.isJsonNull()) {
-            return CbAdvJson.field_38723;
+            return CbAdvJson.field_38723();
         }
         JsonObject json = net.minecraft.class_3518.method_15295(element, "type_specific");
         String type = net.minecraft.class_3518.method_15253(json, "type", null);
         if (type == null) {
-            return CbAdvJson.field_38723;
+            return CbAdvJson.field_38723();
         }
         if (!net.minecraft.class_7376.class_7378.field_38731.containsKey(type)) {
             throw new JsonSyntaxException("Unknown sub-predicate type: " + type);

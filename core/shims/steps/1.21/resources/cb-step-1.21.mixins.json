@@ -33,6 +33,8 @@
     "CbEntityLeashSaveRestoredMixin",
     "CbEntityLeashSaveRestoredMixinHooks",
     "CbEntityLeashSaveRouteMixin",
+    "CbNbtTagVisitorRestoredMixin",
+    "CbNbtTagVisitorRestoredMixinHooks",
     "CbEntityLivingInvoker",
     "CbEntityMobArrowMixin",
     "CbEntityMobInvoker",

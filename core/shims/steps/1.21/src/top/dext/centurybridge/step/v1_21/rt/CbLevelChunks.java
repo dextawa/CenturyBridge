@@ -76,6 +76,15 @@ public final class CbLevelChunks {
         return future == null ? null : future.getNow(CbLevelGenHolderAccessor.cb$notDoneYet()).method_57130(null);
     }
 
+    /**
+     * The chunk 1.20.6's ChunkMap unload lambda (method_18843) was handed: the holder's chunk to save, which its
+     * scheduleUnload took from holder.getChunkToSave(). 1.21's unload (method_60440) reads the same chunk from the
+     * holder itself, holder.getLatestChunk() (s121.json mixinTargets for mods' injectors).
+     */
+    public static class_2791 latestChunk(net.minecraft.class_3193 holder) {
+        return holder.method_60471();
+    }
+
     /** the 1.20.6 ChunkMap method CbLevelChunkMapMixin gives back that layer code calls (ResetChunksCommand) */
     public interface LegacyChunkMap {
         void method_37904();

@@ -58,6 +58,74 @@ public final class JarProcessor {
         return w != null && w.declares(cls);
     }
 
+    /**
+     * The superclass a mixin class keeps on W. Mixin requires a mixin's superclass to stand in the superclass
+     * chain of every class it targets ("Super class X of M was not found in the hierarchy of target T"), so it
+     * is not a mod class's superclass: a superRenames or classRenames facade (1.21.2's DiggerItem facade for
+     * AxeItemInject extends DiggerItem) is in no vanilla target's chain. The mixin keeps its own superclass
+     * where every target's W chain (above the target itself) still holds it; otherwise the nearest ancestor of
+     * it, in the source release's hierarchy, that every target's W chain holds (SwordItemInject extends
+     * TieredItem, which 1.21.2 removed and SwordItem no longer extends: Item; a mixin retargeted onto the
+     * class it extended: Object). Null when the class is no class mixin of game classes the target stub knows,
+     * or its superclass is no game class -- then nothing about it changes.
+     */
+    static String mixinSuperOnTarget(byte[] bytes, String superName, Chain chain) {
+        if (superName == null || !Chain.minecraftOwned(superName)
+                || !new String(bytes, StandardCharsets.ISO_8859_1).contains("Lorg/spongepowered/asm/mixin/Mixin;")) {
+            return null;
+        }
+        List<String> targets = new ArrayList<>();
+        boolean[] mixin = {false};
+        new ClassReader(bytes).accept(new ClassVisitor(Opcodes.ASM9) {
+            @Override
+            public org.objectweb.asm.AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+                if (!desc.equals("Lorg/spongepowered/asm/mixin/Mixin;")) {
+                    return null;
+                }
+                mixin[0] = true;
+                return new org.objectweb.asm.AnnotationVisitor(Opcodes.ASM9) {
+                    @Override
+                    public org.objectweb.asm.AnnotationVisitor visitArray(String name) {
+                        return new org.objectweb.asm.AnnotationVisitor(Opcodes.ASM9) {
+                            @Override
+                            public void visit(String n, Object v) {
+                                if (name.equals("value") && v instanceof org.objectweb.asm.Type t) {
+                                    targets.add(t.getInternalName());
+                                } else if (name.equals("targets") && v instanceof String s) {
+                                    targets.add(s.replace('.', '/'));
+                                }
+                            }
+                        };
+                    }
+                };
+            }
+        }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        if (!mixin[0] || targets.isEmpty()) {
+            return null;
+        }
+        Set<String> common = null;
+        for (String t : targets) {
+            if (!chain.targetSuperOf.containsKey(t)) {
+                return null; // a target the stub does not know (a mod's or a library's class): nothing to judge by
+            }
+            Set<String> above = new HashSet<>();
+            for (String c = chain.targetSuperOf.get(t); c != null && above.add(c); c = chain.targetSuperOf.get(c)) {
+            }
+            if (common == null) {
+                common = above;
+            } else {
+                common.retainAll(above);
+            }
+        }
+        Set<String> seen = new HashSet<>();
+        for (String c = superName; c != null && seen.add(c); c = chain.superOf.get(c)) {
+            if (common.contains(c)) {
+                return c;
+            }
+        }
+        return "java/lang/Object";
+    }
+
     /** verifier frame type for one parameter (locals are never widened here) */
     static Object frameType(org.objectweb.asm.Type t) {
         switch (t.getSort()) {
@@ -3264,6 +3332,14 @@ public final class JarProcessor {
             ctorChanged |= b4 != bytes;
             bytes = b4;
         }
+        // a mixin class's superclass is not a superclass a mod class keeps: Mixin requires it to stand in the
+        // target's own W superclass chain, so it follows the target -- never a superRenames / classRenames facade
+        final String origSuper = new ClassReader(bytes).getSuperName();
+        final String mixinSuper = mixinSuperOnTarget(bytes, origSuper, chain);
+        if (mixinSuper != null && !mixinSuper.equals(origSuper)) {
+            rpt.notes.add(tag + "mixin superclass follows its target: " + new ClassReader(bytes).getClassName()
+                + " extends " + origSuper + " -> " + mixinSuper);
+        }
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
         Map<String, String> ifaceCallRedirects = new HashMap<>(); // INVOKEINTERFACE only: receiver becomes arg 0
@@ -3437,7 +3513,7 @@ public final class JarProcessor {
                 ifacesOf[0] = ifaces;
                 checkClass(superName);
                 if (!chain.superRenames.isEmpty()) {
-                    if (superName != null && chain.superRenames.containsKey(superName)) {
+                    if (superName != null && chain.superRenames.containsKey(superName) && mixinSuper == null) {
                         needSuperRename[0] = true;
                     }
                     if (ifaces != null) {
@@ -3453,7 +3529,7 @@ public final class JarProcessor {
                 // or an implemented type that is gone / no longer an interface, is
                 // refused by the JVM before any bridge can run. Ledgered or not, the
                 // mod's verdict must say so.
-                if (superName != null && superName.startsWith("net/minecraft/")) {
+                if (superName != null && superName.startsWith("net/minecraft/") && mixinSuper == null) {
                     String why = chain.hierarchyBreak(superName, false);
                     if (why != null && !chain.sideOf(superName).equals("datagen")
                             && !chain.superRenames.containsKey(superName)
@@ -3579,7 +3655,8 @@ public final class JarProcessor {
                         // facade serves the member itself. Wired here as damage it would be redirected
                         // to a static (a virtual call again: back into the class's own override) or
                         // reported dead, though the facade answers it
-                        if (op == Opcodes.INVOKESPECIAL && needSuperRename[0] && chain.superRenames.containsKey(owner)) {
+                        if (op == Opcodes.INVOKESPECIAL && needSuperRename[0] && chain.superRenames.containsKey(owner)
+                                && !(mixinSuper != null && owner.equals(origSuper))) {
                             top.dext.centurybridge.data.FullAudit.record(site, "super-renamed");
                             return;
                         }
@@ -4372,6 +4449,7 @@ public final class JarProcessor {
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
                 && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty() && declaredRenames.isEmpty()
+                && (mixinSuper == null || mixinSuper.equals(origSuper))
                 && fillApply.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
                 && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)
@@ -4507,14 +4585,103 @@ public final class JarProcessor {
         // judged by the owner it finally names
         final Set<String> kindFixed = new java.util.TreeSet<>();
         ClassVisitor kinds = new ClassVisitor(Opcodes.ASM9, cw) {
+            /**
+             * an InnerClasses entry a class rename made impossible: a nested class renamed onto its outer class (1.21.11
+             * folds RenderType$CompositeRenderType into RenderType, s11-rendertypes classRenames) leaves "RenderType of
+             * RenderType", and the JVM refuses to define the class ("Class is both outer and inner class": the climbed
+             * 1.21.9 layer's CbParticles); one renamed to a top-level class (no '$') is no member of the outer any more.
+             * The entry only describes nesting; the references themselves stand renamed
+             */
+            @Override
+            public void visitInnerClass(String name, String outerName, String innerName, int access) {
+                if (outerName != null && (name.equals(outerName) || name.indexOf('$') < 0)) {
+                    return;
+                }
+                super.visitInnerClass(name, outerName, innerName, access);
+            }
+
+            private String self;
+
+            @Override
+            public void visit(int version, int acc, String name, String sig, String superName, String[] ifaces) {
+                self = name;
+                super.visit(version, acc, name, sig, superName, ifaces);
+            }
+
+            /** the same rename on the nest: a host listing itself as its own member */
+            @Override
+            public void visitNestMember(String member) {
+                if (!member.equals(self)) {
+                    super.visitNestMember(member);
+                }
+            }
+
             @Override
             public MethodVisitor visitMethod(int acc, String mName, String mDesc, String sig, String[] ex) {
                 return new KindNormalizer(super.visitMethod(acc, mName, mDesc, sig, ex), chain, kindFixed);
             }
         };
+        if (mixinSuper != null) {
+            // innermost, after every rename: the mixin extends the class mixinSuperOnTarget chose, and its super
+            // calls name that class (Mixin binds them in the target's superclass chain by name and descriptor)
+            final ClassVisitor downstream = kinds;
+            kinds = new ClassVisitor(Opcodes.ASM9, downstream) {
+                String arrived;
+
+                @Override
+                public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
+                    arrived = superName;
+                    super.visit(ver, acc, name, mixinSuper.equals(superName) ? sig : null, mixinSuper, ifaces);
+                }
+
+                @Override
+                public MethodVisitor visitMethod(int a, String mn, String md, String ms, String[] ex) {
+                    MethodVisitor mv = super.visitMethod(a, mn, md, ms, ex);
+                    if (mv == null || mixinSuper.equals(arrived)) {
+                        return mv;
+                    }
+                    return new MethodVisitor(Opcodes.ASM9, mv) {
+                        @Override
+                        public void visitMethodInsn(int op, String owner, String n, String d, boolean itf) {
+                            super.visitMethodInsn(op, op == Opcodes.INVOKESPECIAL && owner.equals(arrived) ? mixinSuper : owner,
+                                n, d, itf);
+                        }
+                    };
+                }
+            };
+        }
+        // s6c A1: a class the step both classRenames (as a type: its live superclass) and superRenames (as a super: the
+        // facade) -- 1.21.6 FlyingMob. A mixin aimed AT it applies to the facade (Mob declares none of its methods), so
+        // its names take the superRenames value; a mixin of another class extending it (@Mixin(Ghast) extends FlyingMob)
+        // must extend what the target's W hierarchy holds, the classRenames value, not the facade
+        Map<String, String> renames = chain.classRenames;
+        Set<String> superSkip = new HashSet<>();
+        if (!chain.superRenames.isEmpty()) {
+            org.objectweb.asm.tree.ClassNode hdr = new org.objectweb.asm.tree.ClassNode();
+            new ClassReader(bytes).accept(hdr, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+            List<String> mts = MixinRepair.mixinTargets(hdr, null).stream().map(t -> t.replace('.', '/')).toList();
+            if (!mts.isEmpty()) {
+                for (Map.Entry<String, String> sr : chain.superRenames.entrySet()) {
+                    if (!chain.classRenames.containsKey(sr.getKey())) {
+                        continue;
+                    }
+                    if (mts.contains(sr.getKey())) {
+                        if (renames == chain.classRenames) {
+                            renames = new HashMap<>(chain.classRenames);
+                        }
+                        renames.put(sr.getKey(), sr.getValue());
+                        rpt.notes.add(tag + "mixin on a split-renamed class: " + shortName(clsName[0]) + " aims at "
+                            + shortName(sr.getKey()) + ", applied to " + shortName(sr.getValue()));
+                    } else {
+                        superSkip.add(sr.getKey());
+                    }
+                }
+            }
+        }
+        final Map<String, String> classRen = renames;
         ClassVisitor sink = needClassRename
             ? MixinClassRenames.annotations(new org.objectweb.asm.commons.ClassRemapper(kinds,
-                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames)), chain.classRenames, c -> wDeclares(chain, c))
+                new org.objectweb.asm.commons.SimpleRemapper(classRen)), classRen, c -> wDeclares(chain, c))
             : kinds;
         // super/implements-only rename layer: rewrites the hierarchy declaration
         // and super-invocations to the facade, leaving every other reference to
@@ -4522,15 +4689,17 @@ public final class JarProcessor {
         // so the two never fight over the same owner.
         if (needSuperRename[0]) {
             final ClassVisitor downstream = sink;
+            java.util.function.Function<String, String> sup = c -> c == null || superSkip.contains(c) ? c : chain.superRenames.getOrDefault(c, c);
             sink = new ClassVisitor(Opcodes.ASM9, downstream) {
                 @Override
                 public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
-                    String sn = superName != null ? chain.superRenames.getOrDefault(superName, superName) : superName;
+                    // a mixin's superclass already follows its target (mixinSuperOnTarget): never the facade
+                    String sn = mixinSuper != null ? superName : sup.apply(superName);
                     String[] ifs = ifaces;
                     if (ifaces != null) {
                         ifs = new String[ifaces.length];
                         for (int i = 0; i < ifaces.length; i++) {
-                            ifs[i] = chain.superRenames.getOrDefault(ifaces[i], ifaces[i]);
+                            ifs[i] = sup.apply(ifaces[i]);
                         }
                     }
                     // the generic signature still names the old super/interfaces;
@@ -4552,7 +4721,8 @@ public final class JarProcessor {
                             // must follow the hierarchy to the facade; a facade
                             // mirroring the method surface answers them. Other
                             // opcodes keep the real owner (no type-split).
-                            if (op == Opcodes.INVOKESPECIAL && chain.superRenames.containsKey(owner)) {
+                            if (op == Opcodes.INVOKESPECIAL && chain.superRenames.containsKey(owner) && !superSkip.contains(owner)
+                                    && !(mixinSuper != null && owner.equals(mixinSuper))) {
                                 super.visitMethodInsn(op, chain.superRenames.get(owner), n, d, itf);
                             } else {
                                 super.visitMethodInsn(op, owner, n, d, itf);
@@ -5108,6 +5278,8 @@ public final class JarProcessor {
                 renameSets.add(s.depRenames);
             }
             renameSets.add(chain.depRenames);
+            // ids whose range a depRename stated ("newId@range"): the wiring's judgment, kept as written
+            Set<String> wiredRange = new HashSet<>();
             for (Map<String, String> set : renameSets) {
                 for (Map.Entry<String, String> e : set.entrySet()) {
                     if (dep.has(e.getKey())) {
@@ -5124,13 +5296,65 @@ public final class JarProcessor {
                         // several old ids may collapse onto one provider: keep the wider range
                         if (!dep.has(target)) {
                             dep.add(target, v);
+                            if (at > 0) {
+                                wiredRange.add(target);
+                            }
                         }
                         rpt.notes.add("dep " + e.getKey() + " -> " + target);
                     }
                 }
             }
+            restateFapiRanges(dep, chain, wiredRange, false, "depends", rpt);
+        }
+        for (String key : new String[] {"recommends", "suggests"}) {
+            if (fmj.has(key) && fmj.get(key).isJsonObject()) {
+                restateFapiRanges(fmj.getAsJsonObject(key), chain, Set.of(), false, key, rpt);
+            }
+        }
+        for (String key : new String[] {"breaks", "conflicts"}) {
+            if (fmj.has(key) && fmj.get(key).isJsonObject()) {
+                restateFapiRanges(fmj.getAsJsonObject(key), chain, Set.of(), true, key, rpt);
+            }
         }
         return GSON.toJson(fmj).getBytes(StandardCharsets.UTF_8);
+    }
+
+    /**
+     * A range on fabric-api or one of its modules names the source release's Fabric API (Kilt's
+     * "fabric-api": "&gt;=0.92.11+1.20.1"): measured against the target's versions it means nothing --
+     * 1.20.2's 0.91.6 is refused, 1.20.4's 0.97 passes only because the numbers happen to be larger. The
+     * climbed mod runs against the target release's Fabric API, the one the conversion measured, so a
+     * positive relation (depends/recommends/suggests) on an id the target's Fabric API declares becomes
+     * "&gt;=" that version; a negative one (breaks/conflicts) on such an id is dropped, since the source
+     * versions it excludes have no counterpart on the target. "*" says nothing about versions and stays.
+     * Ids the target no longer ships are left to depRenames (fapi_modules.py), ids a depRename gave a
+     * range keep the wiring's.
+     */
+    private static void restateFapiRanges(JsonObject rel, Chain chain, Set<String> keep, boolean negative,
+                                          String key, Report rpt) {
+        if (chain.targetFapiVersions == null) {
+            return;
+        }
+        for (String id : new ArrayList<>(rel.keySet())) {
+            String tv = chain.targetFapiVersions.get(id);
+            if (tv == null || keep.contains(id)) {
+                continue;
+            }
+            JsonElement v = rel.get(id);
+            if (v.isJsonPrimitive() && v.getAsString().trim().equals("*")) {
+                continue;
+            }
+            if (negative) {
+                rel.remove(id);
+                rpt.notes.add(key + " " + id + " " + v + " dropped (source release's Fabric API versions)");
+            } else {
+                String nv = ">=" + tv;
+                if (!(v.isJsonPrimitive() && v.getAsString().equals(nv))) {
+                    rel.add(id, new JsonPrimitive(nv));
+                    rpt.notes.add(key + " " + id + " " + v + " -> " + nv + " (target release's Fabric API)");
+                }
+            }
+        }
     }
 
     private static String shortName(String internal) {

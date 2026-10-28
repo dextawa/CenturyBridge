@@ -53,6 +53,15 @@ public final class Driver {
     public static volatile boolean blockLeashRestore;
     public static volatile int leashRestoreAsked;
     public static volatile int leashRestored;
+    public static volatile boolean foldNested;
+    public static volatile int nestedAsked;
+    public static volatile int nestedVisits;
+    public static volatile int unloadAsked;
+    public static volatile long unloadWatch = Long.MIN_VALUE;
+    public static volatile String unloadSeen;
+    public static volatile int dimAsked;
+    public static volatile net.minecraft.class_3218 dimDest;
+    public static volatile boolean blockDim;
     private static net.minecraft.class_3222 followOwner;
     private static int ok;
     private static int fail;
@@ -215,7 +224,7 @@ public final class Driver {
             System.out.println("CB-SMX6 follow-begin passive");
             double near = follow(server, level, -8);
             System.out.println("CB-SMX6 follow-end passive");
-            check("follow-passive", near >= 0 && near < 5.0 && followCanAsked > 0 && followMoved == 1,
+            check("follow-passive", near >= 0 && near < 5.0 && followCanAsked == 1 && followMoved == 1,
                 "tamed wolf 20 blocks from its owner, one goal tick: distance " + near + ", canTeleportTo asked " + followCanAsked
                 + " time(s), moved " + followMoved);
             blockFollowTeleport = true;
@@ -273,6 +282,41 @@ public final class Driver {
             blockLeashRestore = false;
             check("leash-blocked", "none/pos/1/0".equals(blocked),
                 "restore refused by the mod: " + blocked + " (holder/delayedLeashInfo after/asked/restored)");
+            // ---- TextComponentTagVisitor nested visits: TagVisitorMixin (1.21: visitList / visitCompound routed through the
+            // restored method_59850)
+            foldNested = false;
+            nestedAsked = 0;
+            nestedVisits = 0;
+            String text = tagText();
+            check("tagvisit-passive", text.equals("{a: {b: 1}}") && nestedAsked == 2 && nestedVisits == 2,
+                "{a:{b:1}} as text: " + text + ", method_59850 asked " + nestedAsked + " time(s), nested visits " + nestedVisits);
+            foldNested = true;
+            nestedAsked = 0;
+            nestedVisits = 0;
+            text = tagText();
+            foldNested = false;
+            check("tagvisit-folded", text.equals("{a: <cb>}") && nestedAsked == 1 && nestedVisits == 0,
+                "the mod answers the nested tag: " + text + ", asked " + nestedAsked + " time(s), nested visits " + nestedVisits);
+            // ---- ChunkMap unload body: ChunkUnloadMixin (1.21: mixinTargets method_18843 -> method_60440, the chunk from
+            // holder.getLatestChunk())
+            String unload = unload(level);
+            check("unload-args", "holder/chunk".equals(unloadSeen),
+                "a forced far chunk released and ticked out: " + unload + ", injector saw " + unloadSeen + " (holder/chunk)");
+            // ---- Entity.changeDimension HEAD: DimensionMixin (1.21: mixinTargets onto changeDimension(DimensionTransition))
+            net.minecraft.class_3218 end = server.method_3847(net.minecraft.class_1937.field_25181);
+            blockDim = false;
+            dimAsked = 0;
+            dimDest = null;
+            String dim = travel(level, end, 1400);
+            check("dim-passive", dim.equals("end") && dimAsked == 1 && dimDest == end,
+                "pig sent to the end: " + dim + ", changeDimension HEAD asked " + dimAsked + " time(s), dest end " + (dimDest == end));
+            blockDim = true;
+            dimAsked = 0;
+            dimDest = null;
+            dim = travel(level, end, 1500);
+            blockDim = false;
+            check("dim-blocked", dim.equals("stayed") && dimAsked == 1 && dimDest == end,
+                "move refused by the mod: " + dim + ", asked " + dimAsked + " time(s)");
             level.method_8519(1.0F);
             level.method_8496(1.0F);
             check("thunderstorm", level.method_8546(), "isThundering after rain/thunder level 1");
@@ -396,6 +440,7 @@ public final class Driver {
             forceMatch = false;
             blockFollowTeleport = false;
             forceComment = false;
+            foldNested = false;
         }
         System.out.println("CB-SMX6 summary ok=" + ok + " fail=" + fail);
     }
@@ -478,6 +523,57 @@ public final class Driver {
     }
 
     /**
+     * A far chunk held by a forced ticket, loaded to FULL, released, then the chunk source ticked until the chunk map
+     * unloads it (at most 200 ticks); "unloaded after N tick(s)" or "not unloaded"
+     */
+    private static String unload(class_3218 level) {
+        net.minecraft.class_1923 pos = new net.minecraft.class_1923(4000, 4000);
+        net.minecraft.class_3215 cache = level.method_14178();
+        unloadAsked = 0;
+        unloadSeen = null;
+        unloadWatch = pos.method_8324();
+        cache.method_17297(net.minecraft.class_3230.field_14031, pos, 2, pos);
+        cache.method_12121(pos.field_9181, pos.field_9180, net.minecraft.class_2806.field_12803, true);
+        cache.method_17300(net.minecraft.class_3230.field_14031, pos, 2, pos);
+        for (int i = 1; i <= 200; i++) {
+            cache.method_12127(() -> true, true);
+            if (unloadSeen != null) {
+                unloadWatch = Long.MIN_VALUE;
+                return "unloaded after " + i + " tick(s)";
+            }
+        }
+        unloadWatch = Long.MIN_VALUE;
+        return "not unloaded (" + unloadAsked + " other unload(s))";
+    }
+
+    /** a pig at the surface dx blocks east of spawn, sent to {@code dest} with 1.20.6's changeDimension(dest) */
+    private static String travel(class_3218 level, class_3218 dest, int dx) {
+        class_2338 spawn = level.method_43126();
+        net.minecraft.class_1452 pig = class_1299.field_6093.method_5883(level);
+        pig.method_5808(spawn.method_10263() + dx + 0.5, 300, spawn.method_10260() + 0.5, 0.0F, 0.0F);
+        level.method_8649(pig);
+        net.minecraft.class_1297 moved = pig.method_5731(dest);
+        String r = moved == null ? (!pig.method_31481() && pig.method_37908() == level ? "stayed" : "lost")
+            : moved.method_37908() == dest ? "end" : "elsewhere";
+        if (moved != null) {
+            moved.method_31472();
+        }
+        if (!pig.method_31481()) {
+            pig.method_31472();
+        }
+        return r;
+    }
+
+    /** {a:{b:1}} through TextComponentTagVisitor("") as a string */
+    private static String tagText() {
+        net.minecraft.class_2487 inner = new net.minecraft.class_2487();
+        inner.method_10569("b", 1);
+        net.minecraft.class_2487 outer = new net.minecraft.class_2487();
+        outer.method_10566("a", inner);
+        return new net.minecraft.class_5628("").method_32305(outer).getString();
+    }
+
+    /**
      * a wolf tamed by a server player (in the level's player list, no connection) 20 blocks east of it at the surface, and one
      * canUse / start / tick of a 1.20.6-made FollowOwnerGoal(wolf, 1.0, 10, 2, false): the wolf's distance to its owner
      * afterwards (-1 when the goal did not start). 1.20.6 teleports a wolf 12 or more blocks away next to its owner.
@@ -507,6 +603,10 @@ public final class Driver {
         level.method_8649(wolf);
         wolf.method_6170(followOwner);
         wolf.method_24346(false);
+        // deterministic teleport target: the wolf's random seeded so that the first try (1.20.6's draw order dx, dy, dz;
+        // 1.21's dx, dz, dy) is a free floor spot 2-3 blocks from the owner, even if up to three draws happen before it
+        // (Java LCG simulated for both orders, s121d). Owner, wolf and platform stand at fixed offsets on an isolated floor.
+        wolf.method_6051().method_43052(1315L);
         net.minecraft.class_1350 goal = new net.minecraft.class_1350(wolf, 1.0, 10.0F, 2.0F, false);
         double d = -1.0;
         if (goal.method_6264()) {

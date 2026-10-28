@@ -29,9 +29,9 @@ public interface CbRecipeJsonShapedAccess {
         throw new AssertionError();
     }
 
-    /** 1.20.2's ShapedRecipe.shrink(List) (1.20.1's shrink(String...), the same code), what 1.20.2's pattern codec calls */
+    /** 1.20.1's ShapedRecipe.shrink(String...), restored by CbRecipeJsonShapedStatics */
     @Invoker("method_8146")
-    static String[] cb$shrink(java.util.List<String> rows) {
+    static String[] cb$shrink(String[] rows) {
         throw new AssertionError();
     }
 

@@ -218,14 +218,24 @@ public final class Main {
             System.out.println("step layer for redirect bodies and restored members: " + lj);
         }
         // in a climb every earlier step's layer is in the runtime at W as well (climbed like a mod): the members it
-        // restores on W's classes are declared there at runtime too (LayerMembers.inherit), read off its built jar
+        // restores on W's classes are declared there at runtime too (LayerMembers.inherit). Read off that layer as it
+        // stands at W when its own climb already passed this step (<layersDir>/climb-<R>/steps/<V>__<W>/, climb_runtime
+        // climbs the newest layers first): a restorer its climb stripped at an earlier step is not in the runtime, so
+        // a mixin of this jar resolving against it fails at apply (the 1.21.2 layer's CbRenderState922Mixin, stripped
+        // at 1.21.9, served the 1.20.3 layer's @Invoker of LivingEntityRenderer.scale). Else its built jar
         if (System.getProperty("cb.layersDir") != null && System.getProperty("cb.layerJar") == null) {
             int wi = top.dext.centurybridge.engine.Chain.RELEASES.indexOf(args[3]);
             for (int ri = 0; ri < wi; ri++) {
-                Path ej = Path.of(System.getProperty("cb.layersDir"),
-                    "centurybridge-0.3.0+" + top.dext.centurybridge.engine.Chain.RELEASES.get(ri) + ".jar");
+                String rel = top.dext.centurybridge.engine.Chain.RELEASES.get(ri);
+                Path climbed = Path.of(System.getProperty("cb.layersDir"), "climb-" + rel, "steps", args[2] + "__" + args[3],
+                    "centurybridge-0.3.0+" + rel + "+" + args[3] + ".jar");
+                Path ej = Files.exists(climbed) ? climbed
+                    : Path.of(System.getProperty("cb.layersDir"), "centurybridge-0.3.0+" + rel + ".jar");
                 if (Files.exists(ej)) {
                     chain.layerMembers.inherit(top.dext.centurybridge.engine.LayerMembers.read(ej));
+                    if (ej == climbed) {
+                        System.out.println("earlier layer as climbed to " + args[3] + ": " + climbed);
+                    }
                 }
             }
         }
@@ -241,6 +251,11 @@ public final class Main {
             chain.loadTargetRaw(targetStub);
         }
         chain.loadTargetLibraryDecls(Path.of("data/runtime/client-" + args[3] + "/.fabric/processedMods"));
+        // the target's Fabric API versions: a mod's fabric-api / fabric-* dependency range names the source
+        // release's Fabric API and is re-stated for the target's (JarProcessor.patchFmj)
+        chain.targetFapiVersions = fabricApiVersionsOf(args[3]);
+        System.out.println("target Fabric API versions: " + (chain.targetFapiVersions == null ? "none"
+            : chain.targetFapiVersions.getOrDefault("fabric-api", "?") + " (" + chain.targetFapiVersions.size() + " ids)"));
         chain.wallRemapper = crossesWall && wallTable != null ? wallTable.remapper() : null;
         System.out.println("target Fabric API declarations: " + chain.targetLibDecls.size() + " classes");
         System.out.println("injected interfaces: " + tgtInjected.size() + " vanilla classes in " + args[3] + "'s Fabric API");
@@ -267,6 +282,18 @@ public final class Main {
                 chain.mixinRepair.classRenames = chain.classRenames; // anchor-facade: what restored bodies call
                 chain.mixinRepair.stepTo = args[3]; // the mixed-member signal (MixinRepair.MIXED_DIR)
                 chain.mixinRepair.mixinMoves = chain.mixinMoves; // injectors on static methods W moved to another class
+                chain.mixinRepair.mixinMoveSelf = chain.mixinMoveSelf; // and on instance methods, this through the hops (C17)
+                chain.mixinRepair.converter = chain::argConverter; // captured target arguments the step retyped (CASE 14)
+                chain.mixinRepair.argMaps = chain::mixinArgMaps; // and arguments a same-class reshape moved (CASE 14, third)
+                // injectors on statics the step redirects into a layer class move onto that class's method (s6e B6)
+                chain.mixinRepair.staticMove = k -> {
+                    String r = chain.staticRedirects.get(k);
+                    if (r == null) return null;
+                    int p = k.indexOf('(');
+                    String nm = r.contains("#") ? r.substring(r.indexOf('#') + 1) : k.substring(k.lastIndexOf('.', p) + 1, p);
+                    if (nm.contains("(")) nm = nm.substring(0, nm.indexOf('('));
+                    return (r.contains("#") ? r.substring(0, r.indexOf('#')) : r) + "." + nm + chain.renamedDesc(k.substring(p));
+                };
                 System.out.println("mixin anchors: checked against " + codeJar);
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");
@@ -352,6 +379,8 @@ public final class Main {
                         System.getenv("CB_TARGET_CODE") != null ? Path.of(System.getenv("CB_TARGET_CODE"))
                                                                 : Path.of("data/jars/client-" + args[3] + ".jar"));
                     Files.delete(tmp);
+                    // reflective strings the wall rename translated, or could not prove (JarRemapper.reflectStrings)
+                    r.notes.addAll(wallTable.reflectNotes);
                     if (wallRepair != null) {
                         JarProcessor.repairPastWall(r.outputJar, wallRepair, r);
                     }
@@ -538,6 +567,31 @@ public final class Main {
             return java.util.Map.of();
         }
         return Chain.readInjectedInterfaces(mods);
+    }
+
+    /**
+     * The versions of a release's Fabric API (data/runtime/client-&lt;version&gt;/mods/fabric-api-*.jar, its
+     * nested modules included; Chain.readFabricApiVersions). A missing jar fails the conversion: the climbed
+     * mod's fabric-api ranges would keep naming the source release -- unless -Dcb.allowMissingStubs=true.
+     */
+    private static java.util.Map<String, String> fabricApiVersionsOf(String version) throws java.io.IOException {
+        Path mods = Path.of("data/runtime/client-" + version + "/mods");
+        Path jar = null;
+        if (Files.isDirectory(mods)) {
+            try (var s = Files.list(mods)) {
+                jar = s.filter(f -> f.getFileName().toString().startsWith("fabric-api-") && f.toString().endsWith(".jar"))
+                    .sorted().findFirst().orElse(null);
+            }
+        }
+        if (jar == null) {
+            if (Boolean.getBoolean("cb.allowMissingStubs")) {
+                return null;
+            }
+            throw new IllegalStateException(mods.toAbsolutePath() + " holds no fabric-api-*.jar: a mod's fabric-api"
+                + " dependency ranges are re-stated for that release's Fabric API (or set -Dcb.allowMissingStubs=true"
+                + " to leave them as the source release wrote them, knowingly)");
+        }
+        return Chain.readFabricApiVersions(jar);
     }
 
     /** a release's jar with real method bodies, for mixin anchors: past the wall the plain jar carries them */

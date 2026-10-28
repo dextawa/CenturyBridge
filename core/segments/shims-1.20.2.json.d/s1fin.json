@@ -84,8 +84,7 @@
   "net/minecraft/class_7376$class_7378.field_38725:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
   "net/minecraft/class_7376$class_7378.field_38726:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
   "net/minecraft/class_7376$class_7378.field_38727:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
-  "net/minecraft/class_7376$class_7378.field_38728:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
-  "net/minecraft/class_7376.field_38723:Lnet/minecraft/class_7376;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson"
+  "net/minecraft/class_7376$class_7378.field_38728:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes"
  },
  "adapterHooks": [
   {
@@ -473,6 +472,7 @@
   "net/minecraft/class_7376$class_7377": "top/dext/centurybridge/facade/v1_20_2/class_7376$class_7377"
  },
  "fieldGetters": {
+  "net/minecraft/class_7376.field_38723:Lnet/minecraft/class_7376;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_7376$class_7378.field_38731:Lcom/google/common/collect/BiMap;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes"
  },
  "ctorRedirects": {

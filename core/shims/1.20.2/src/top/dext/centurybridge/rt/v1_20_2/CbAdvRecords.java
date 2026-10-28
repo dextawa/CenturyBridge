@@ -122,7 +122,7 @@ public final class CbAdvRecords {
             type == null || type == CbAdvAny.field_9609 ? Optional.empty() : Optional.of(type),
             CbAdvAny.distance(distance), CbAdvAny.location(location), CbAdvAny.location(steppingOn), CbAdvAny.effects(effects),
             CbAdvAny.nbt(nbt), CbAdvAny.flags(flags), CbAdvAny.equipment(equipment),
-            typeSpecific == null || typeSpecific == CbAdvJson.field_38723 ? Optional.empty() : Optional.of(typeSpecific),
+            typeSpecific == null || CbAdvJson.isAny(typeSpecific) ? Optional.empty() : Optional.of(typeSpecific),
             CbAdvAny.entity(vehicle), CbAdvAny.entity(passenger), CbAdvAny.entity(target), Optional.ofNullable(team));
     }
 

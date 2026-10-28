@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "minecraft:stick"
+  }
+ ],
+ "result": {
+  "item": "minecraft:stick",
+  "id": "minecraft:stick",
+  "count": 2
+ },
+ "fabric:load_conditions": [
+  {
+   "condition": "fabric:item_tags_populated",
+   "values": [
+    "cb_s205:empty"
+   ]
+  }
+ ]
+}
