@@ -8,7 +8,7 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbRenderStates;
 
 /** PlayerRenderState's 1.21.3 hand states (main hand, off hand), filled by the player renderer (CbStatePlayerRendererMixin) */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_10055.class)
+@org.spongepowered.asm.mixin.Mixin(value = net.minecraft.class_10055.class, priority = top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads.PRIORITY)
 public abstract class CbStatePlayerMixin implements CbRenderStates.CbLegacyExtract {
     /** mainHandState */
     public LegacyPlayerHandState field_53523 = new LegacyPlayerHandState();

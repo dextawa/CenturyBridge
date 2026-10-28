@@ -7,7 +7,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelFields;
 
 /** 1.21.1 FelineModel's protected state (field_3434; 1, standing, as 1.21.1's constructor set it), see CbRenderModelFields */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_582.class)
+@org.spongepowered.asm.mixin.Mixin(value = net.minecraft.class_582.class, priority = top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads.PRIORITY)
 public abstract class CbRenderFelineMixin implements CbRenderModelFields.Feline {
 
     protected int field_3434 = 1;

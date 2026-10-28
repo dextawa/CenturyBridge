@@ -11,7 +11,7 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbRenderStates;
  * render state; see {@link CbRenderStates}).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_10025.class)
+@org.spongepowered.asm.mixin.Mixin(value = net.minecraft.class_10025.class, priority = top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads.PRIORITY)
 public abstract class CbStateFireworkMixin implements CbRenderStates.CbLegacyExtract, CbRenderStates.CbLegacyFireworkState {
     /** itemModel */
     public net.minecraft.class_1087 field_53368;

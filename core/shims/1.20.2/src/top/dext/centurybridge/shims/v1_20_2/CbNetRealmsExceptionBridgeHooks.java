@@ -19,9 +19,11 @@ import top.dext.centurybridge.rt.v1_20_2.CbNetRealmsAccess;
 public abstract class CbNetRealmsExceptionBridgeHooks implements CbNetRealmsAccess.Failure {
 
     /** was httpResultCode */
+    @org.spongepowered.asm.mixin.Shadow
     public int field_19604;
 
     /** was rawResponse */
+    @org.spongepowered.asm.mixin.Shadow
     public String field_36319;
 
     @Unique

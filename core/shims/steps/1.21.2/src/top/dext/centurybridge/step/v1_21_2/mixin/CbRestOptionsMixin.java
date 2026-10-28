@@ -22,7 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(class_315.class)
 public abstract class CbRestOptionsMixin implements top.dext.centurybridge.step.v1_21_2.rt.CbRestTutorial.BundleOption {
 
-    public boolean field_28777 = false;
+    @org.spongepowered.asm.mixin.Shadow
+    public boolean field_28777;
 
     @Override
     public boolean cb$hideBundleTutorial() {

@@ -26,6 +26,7 @@ public abstract class CbNetRealmsDataFetcherBridge {
     public class_7581 field_39682;
 
     /** was liveStatsTask */
+    @org.spongepowered.asm.mixin.Shadow
     public class_7581.class_7586<class_4882> field_39684;
 
     @Inject(method = "<init>", at = @At("RETURN"))
