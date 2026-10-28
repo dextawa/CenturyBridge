@@ -45,27 +45,27 @@
    "basis": "26.1's UndeadHorseRenderer(context, saddleLayer, saddleModel, adult, baby) takes what 1.21.11's Type held, with 26.1's baby type; the arguments 26.1's EntityRenderers passes for the 1.21.11 Type's animal (SKELETON: SKELETON_HORSE_SADDLE, ModelLayers.SKELETON_HORSE_SADDLE, SKELETON, SKELETON_BABY; ZOMBIE likewise; javap)"
   },
   "net/minecraft/class_7528.<init>(IIIILnet/minecraft/class_2561;)V": {
-   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V",
+   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_7528$ScrollbarSettings;)V",
    "ops": ["keep", "keep", "keep", "keep", "keep",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;"],
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/class_7528$ScrollbarSettings;"],
    "basis": "26.1's AbstractScrollArea takes ScrollbarSettings; defaultSettings is 1.21.11's bar and the rate is read only by scrollRate(), which every 1.21.11 subclass declares (abstract in 1.21.11, javap class_7528) -- rt/CbWallScrollAreas"
   },
   "net/minecraft/class_9017.<init>(IIIILnet/minecraft/class_2561;)V": {
-   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V",
+   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_7528$ScrollbarSettings;)V",
    "ops": ["keep", "keep", "keep", "keep", "keep",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;"],
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/class_7528$ScrollbarSettings;"],
    "basis": "AbstractContainerWidget passes its arguments to AbstractScrollArea in both (javap class_9017 / 26.1): 1.21.11's bar, as for AbstractScrollArea"
   },
   "net/minecraft/class_10415.<init>(IIIILnet/minecraft/class_2561;)V": {
-   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V",
+   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_7528$ScrollbarSettings;)V",
    "ops": ["keep", "keep", "keep", "keep", "keep",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;"],
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/class_7528$ScrollbarSettings;"],
    "basis": "AbstractTextAreaWidget passes its arguments to AbstractScrollArea and shows background and decorations in both (javap class_10415 / 26.1): 1.21.11's bar, as for AbstractScrollArea"
   },
   "net/minecraft/class_10415.<init>(IIIILnet/minecraft/class_2561;ZZ)V": {
-   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;ZZ)V",
+   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_7528$ScrollbarSettings;ZZ)V",
    "ops": ["keep", "keep", "keep", "keep", "keep",
-    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallScrollAreas#legacySettings()Lnet/minecraft/class_7528$ScrollbarSettings;",
     "keep", "keep"],
    "basis": "AbstractTextAreaWidget(.., showBackground, showDecorations) sets the same two flags in both (javap class_10415 / 26.1): 1.21.11's bar, as for AbstractScrollArea"
   },
