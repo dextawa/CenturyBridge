@@ -19,11 +19,22 @@ build() { # <ver> <src> <res> <jar>
     cls=$(mktemp -d)
     cp="$DATA/jars/client-$1-intermediary.jar"
     for j in $(find "$DATA/runtime/client-$1/libraries" -name '*.jar'); do cp="$cp:$j"; done
+    for j in "$NEST"/*.jar; do cp="$cp:$j"; done
     javac --release 21 -nowarn -proc:none -cp "$cp" -d "$cls" $(find "$2" -name '*.java')
     cp -r "$3"/. "$cls/"
     (cd "$cls" && jar cf "$OUTD/$4" .)
     rm -rf "$cls"
     echo "-> $OUTD/$4"
 }
+# MixinExtras (the native BakeFaceWrapCounter): the copy Fabric Loader nests and initializes for every mod
+NEST=$(mktemp -d)
+python3 - "$(find "$DATA"/runtime/client-1.21/libraries -name 'fabric-loader-*.jar' | sed -n 1p)" "$NEST" <<'PYNEST'
+import os, sys, zipfile
+with zipfile.ZipFile(sys.argv[1]) as z:
+    for n in z.namelist():
+        if n.startswith("META-INF/jars/mixinextras-") and n.endswith(".jar"):
+            open(os.path.join(sys.argv[2], os.path.basename(n)), "wb").write(z.read(n))
+PYNEST
 build 1.20.6 core/testmods/cb-smx6c/src core/testmods/cb-smx6c/res cb-smx6c.jar
 build 1.21 core/testmods/cb-smx6c/native/src core/testmods/cb-smx6c/native/res cb-smx6n.jar
+rm -rf "$NEST"

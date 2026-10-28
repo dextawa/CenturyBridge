@@ -6,6 +6,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /** What the 1.20.6 mixins saw; read by the native 1.21 driver (cb-smx6n) through reflection. */
 public final class Counters {
+    /** FaceBakeryMixin.cb$countNoId: bakeQuad HEAD calls of a handler that does not read the id */
+    public static final AtomicInteger CALLS_NO_ID = new AtomicInteger();
     public static final AtomicInteger CALLS = new AtomicInteger();
     public static final AtomicInteger NULLS = new AtomicInteger();
     public static final AtomicInteger REPLACED = new AtomicInteger();
@@ -20,6 +22,11 @@ public final class Counters {
     public static final AtomicInteger VALUE_BARE = new AtomicInteger();
     public static final AtomicInteger GROUP_BARE = new AtomicInteger();
     public static final AtomicInteger LEASH_BARE = new AtomicInteger();
+
+    /** BufferBuilderLifecycleMixin: 1.20.6 begin / end / endOrDiscardIfEmpty calls */
+    public static final AtomicInteger BEGIN = new AtomicInteger();
+    public static final AtomicInteger END = new AtomicInteger();
+    public static final AtomicInteger END_OR_DISCARD = new AtomicInteger();
 
     private Counters() {
     }
