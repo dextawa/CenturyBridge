@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_swallc",
+  "version": "1.0.0",
+  "name": "CB swall client routes (1.21.11)",
+  "description": "1.21.11-era client mod: client check 20 of the 26.1 wall layer (turtle model, horse renderers, scroll areas, chat lines, Camera.setup) and its private-method mixin routes (Matrix4fc vertex helpers, glyphs, tint getter); tally CB-SWALLC n/m, then the client stops",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.swallc.SwallClient"] },
+  "mixins": ["cb_swallc.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.11", "fabric-rendering-v1": "*", "fabric-lifecycle-events-v1": "*" }
+}
