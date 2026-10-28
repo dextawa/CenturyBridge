@@ -708,7 +708,9 @@ public final class MixinRepair {
                 List<String> methods = strings(v.get("method"));
                 if (methods.isEmpty()) continue;
                 pendingDisable = null;
+                boolean remapped = false; // an ordinal moved to V's site's counterpart here: repaired, not left as written
                 if (source != null && remapOrdinals(an, refmap, methods, targets, shortName + "." + handler.name, repairs)) {
+                    remapped = true;
                     dirty[0] = true;
                     v = values(an);
                 }
@@ -1011,7 +1013,7 @@ public final class MixinRepair {
                     // K2: MixinBridge left it "not bridged" and nothing here repaired it: it would apply unchanged against
                     // W's changed body (or fail at apply), so it is disabled, never left live -- unless the reason is the
                     // target's locals and K1 judged them against W's frames
-                    if (notBridged != null && !(Boolean.TRUE.equals(notBridged[1]) && localsJudged)) {
+                    if (notBridged != null && !remapped && !(Boolean.TRUE.equals(notBridged[1]) && localsJudged)) {
                         dropInjector(handler, an);
                         dirty[0] = true;
                         disabled.add("not bridged: " + notBridged[0] + " (it would apply unchanged against " + stepTo
