@@ -21,7 +21,9 @@
     "BadOmenMixin",
     "LeashSaveMixin",
     "LeashFieldAccessor",
-    "TagVisitorMixin"
+    "TagVisitorMixin",
+    "ChunkUnloadMixin",
+    "DimensionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

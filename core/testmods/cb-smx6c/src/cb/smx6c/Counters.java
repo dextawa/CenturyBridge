@@ -15,6 +15,11 @@ public final class Counters {
     public static final AtomicInteger VALUE = new AtomicInteger();
     public static final AtomicInteger GROUP = new AtomicInteger();
     public static final AtomicInteger LEASH = new AtomicInteger();
+    /** the same mixins with bare-name selectors ("method_4725"), as most mods write them */
+    public static final AtomicInteger PREDICATE_BARE = new AtomicInteger();
+    public static final AtomicInteger VALUE_BARE = new AtomicInteger();
+    public static final AtomicInteger GROUP_BARE = new AtomicInteger();
+    public static final AtomicInteger LEASH_BARE = new AtomicInteger();
 
     private Counters() {
     }
