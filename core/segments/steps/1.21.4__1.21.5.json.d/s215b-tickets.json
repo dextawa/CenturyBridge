@@ -1,0 +1,11 @@
+{
+ "_s215b_tickets_basis": "1.21.4's keyed chunk tickets on 1.21.5's TicketStorage (no key; Ticket(type, level)). javap -c -p 1.21.4 / 1.21.5 class_3204, class_3215, class_10592 (rt/CbTickets). 1.21.4 method names checked against their bodies: DistanceManager method_17290 addTicket (level), method_20444 removeTicket (level), method_17291 addRegionTicket (FULL - radius, also simulation), method_17292 removeRegionTicket; ServerChunkCache method_17297 / method_17300 call the region pair.",
+ "instanceRedirects": {
+  "net/minecraft/class_3204.method_17290(Lnet/minecraft/class_3230;Lnet/minecraft/class_1923;ILjava/lang/Object;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbTickets#addTicket",
+  "net/minecraft/class_3204.method_20444(Lnet/minecraft/class_3230;Lnet/minecraft/class_1923;ILjava/lang/Object;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbTickets#removeTicket",
+  "net/minecraft/class_3204.method_17291(Lnet/minecraft/class_3230;Lnet/minecraft/class_1923;ILjava/lang/Object;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbTickets#addRegionTicket",
+  "net/minecraft/class_3204.method_17292(Lnet/minecraft/class_3230;Lnet/minecraft/class_1923;ILjava/lang/Object;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbTickets#removeRegionTicket",
+  "net/minecraft/class_3215.method_17297(Lnet/minecraft/class_3230;Lnet/minecraft/class_1923;ILjava/lang/Object;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbTickets#addRegionTicketOnCache",
+  "net/minecraft/class_3215.method_17300(Lnet/minecraft/class_3230;Lnet/minecraft/class_1923;ILjava/lang/Object;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbTickets#removeRegionTicketOnCache"
+ }
+}

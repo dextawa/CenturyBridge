@@ -1,0 +1,36 @@
+{
+  "_s215_predicates_basis": "Family D (s215): 1.21.4's EntitySubPredicates variant types (class_7378 static fields AXOLOTL ... WOLF and catVariant / frogVariant / wolfVariant), gone in 1.21.5 (variants are data components there). rt/CbEntityVariants builds them as 1.21.4 did on the facade types sruntime gave back and registers them under 1.21.4's names in the entity sub-predicate type registry (javap -c -p 1.21.4 class_7378 <clinit>, method_58153 / 58154 / 59667).",
+  "fieldGetters": {
+    "net/minecraft/class_7378.field_41534:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_41536:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_41537:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_41539:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_41540:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_41541:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_41542:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_41543:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_54227:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_41544:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_41538:Lnet/minecraft/class_7378$class_9419;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_38729:Lnet/minecraft/class_7378$class_9419;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_38730:Lnet/minecraft/class_7378$class_9419;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.field_49973:Lnet/minecraft/class_7378$class_9419;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7923.field_41163:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21_5/rt/CbVariants",
+    "net/minecraft/class_7923.field_41164:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21_5/rt/CbVariants",
+    "net/minecraft/class_7106.field_37462:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_5/rt/CbVariants",
+    "net/minecraft/class_7106.field_37463:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_5/rt/CbVariants",
+    "net/minecraft/class_7106.field_37464:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_5/rt/CbVariants"
+  },
+  "staticRedirects": {
+    "net/minecraft/class_7378.method_58153(Lnet/minecraft/class_6880;)Lnet/minecraft/class_7376;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.method_58154(Lnet/minecraft/class_6880;)Lnet/minecraft/class_7376;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants",
+    "net/minecraft/class_7378.method_59667(Lnet/minecraft/class_6885;)Lnet/minecraft/class_7376;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityVariants"
+  },
+  "ctorRedirects": {
+    "net/minecraft/class_7106.<init>(Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbVariants#newFrogVariant"
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_7106.comp_707()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_5/rt/CbVariants"
+  },
+  "_s215_predicates_variants_basis": "1.21.5 made cat and frog variants data-driven (javap 1.21.5: no BuiltInRegistries.CAT_VARIANT / FROG_VARIANT; Registries keys class_7924.field_41259 / field_41272; FrogVariant (ClientAsset, SpawnPrioritySelectors); keys on FrogVariants class_10689). rt/CbVariants: the static registries answer the running world's (server, else client connection); FrogVariant.TEMPERATE / WARM / COLD are FrogVariants' keys of the same ids; new FrogVariant(texture) is a 1.21.5 FrogVariant drawing that texture with no spawn conditions; texture() its ClientAsset's texture path."
+}

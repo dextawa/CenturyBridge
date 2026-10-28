@@ -1,0 +1,58 @@
+{
+  "_s215_spawns_basis": "Family B2 (s215): what 1.21.4's weighted lists answered from their entries, on 1.21.5's WeightedList of Weighted(value, int) records; SpawnerData's weight carried beside the 1.21.5 record (rt/CbSpawnWeights); EnchantmentInstance / PossibleJump record components. javap -c -p both releases.",
+  "callReshapes": {
+    "net/minecraft/class_6012.method_34994()Ljava/util/List;": {
+      "desc": "()Ljava/util/List;",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#unwrapList(Ljava/util/List;)Ljava/util/List;",
+      "basis": "WeightedRandomList.unwrap() answered its entries; 1.21.5's answers Weighted(value, int) (generic drift): an entry whose value is itself a 1.21.4 weighted entry (an intrusive list: SpawnerData, EnchantmentInstance, PossibleJump, a mod's own IntrusiveBase) answers the value, any other (a SimpleWeightedRandomList's Wrapper, which is 1.21.5's Weighted) the Weighted. WeightedList is final on 1.21.5: no override to convert."
+    },
+    "net/minecraft/class_5483$class_5496.method_31011(Lnet/minecraft/class_1311;Lnet/minecraft/class_5483$class_1964;)Lnet/minecraft/class_5483$class_5496;": {
+      "desc": "(Lnet/minecraft/class_1311;ILnet/minecraft/class_5483$class_1964;)Lnet/minecraft/class_5483$class_5496;",
+      "ops": [
+        "keep",
+        "conv:1 top/dext/centurybridge/step/v1_21_5/rt/CbSpawnWeights#weightOf(Lnet/minecraft/class_5483$class_1964;)I",
+        "keep:1"
+      ],
+      "basis": "MobSpawnSettings.Builder.addSpawn(category, data) added the data, its weight inside; 1.21.5's addSpawn(category, weight, data) takes the weight beside it: the weight the data carries"
+    },
+    "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$SpawnSettingsContext.addSpawn(Lnet/minecraft/class_1311;Lnet/minecraft/class_5483$class_1964;)V": {
+      "desc": "(Lnet/minecraft/class_1311;Lnet/minecraft/class_5483$class_1964;I)V",
+      "ops": [
+        "keep",
+        "keep",
+        "conv:1 top/dext/centurybridge/step/v1_21_5/rt/CbSpawnWeights#weightOf(Lnet/minecraft/class_5483$class_1964;)I"
+      ],
+      "basis": "Fabric API 1.21.5 SpawnSettingsContext.addSpawn(category, data, weight): the weight the 1.21.4 data carries"
+    }
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_6012.method_34992(Lnet/minecraft/class_5819;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#getRandom"
+  },
+  "_s215_spawns_instanceRedirects_basis": "WeightedRandomList.getRandom(random) answered the drawn entry; 1.21.5's getRandom draws the same way (nextInt(totalWeight), the entry at that weight) and answers its value. CbWeighted.getRandom calls 1.21.5's own getRandom (so a native mixin on it still sees the draw) and answers as unwrap() does: the value for an intrusive entry, else its Weighted (found by identity in the list).",
+  "staticRedirects": {
+    "net/minecraft/class_6012.method_34991(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_5/rt/CbWeighted#intrusiveCodec"
+  },
+  "_s215_spawns_staticRedirects_basis": "WeightedRandomList.codec(entryCodec) = entryCodec.listOf().xmap(create, unwrap) (javap 1.21.4 class_6012.method_34991): each entry encodes its own weight (SpawnerData's codec has a weight field). 1.21.5's codec(Codec) is the Weighted {data, weight} form (1.21.4 SimpleWeightedRandomList's), so the 1.21.4 form is rebuilt over create / unwrap.",
+  "ctorRedirects": {
+    "net/minecraft/class_5483$class_1964.<init>(Lnet/minecraft/class_1299;III)V": "top/dext/centurybridge/step/v1_21_5/rt/CbSpawnWeights#newSpawnerData",
+    "net/minecraft/class_5483$class_1964.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_6007;II)V": "top/dext/centurybridge/step/v1_21_5/rt/CbSpawnWeights#newSpawnerData"
+  },
+  "_s215_spawns_ctorRedirects_basis": "SpawnerData(type, weight, min, max): 1.21.5's record (type, min, max) -- its constructor maps a MISC type to PIG as 1.21.4's did -- carrying the weight (Weight.of checks it as 1.21.4's int constructor did)",
+  "instanceFieldGetters": {
+    "net/minecraft/class_5483$class_1964.field_9389:Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_5/rt/CbSpawnWeights",
+    "net/minecraft/class_5483$class_1964.field_9388:I": "top/dext/centurybridge/step/v1_21_5/rt/CbSpawnWeights",
+    "net/minecraft/class_5483$class_1964.field_9387:I": "top/dext/centurybridge/step/v1_21_5/rt/CbSpawnWeights",
+    "net/minecraft/class_1889.field_9093:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_5/rt/CbWeighted",
+    "net/minecraft/class_1889.field_9094:I": "top/dext/centurybridge/step/v1_21_5/rt/CbWeighted"
+  },
+  "_s215_spawns_instanceFieldGetters_basis": "1.21.4's public final fields of the classes 1.21.5 made records: SpawnerData type / minCount / maxCount = comp_3488 / comp_3489 / comp_3490; EnchantmentInstance enchantment / level = comp_3486 / comp_3487 (javap: same constructor order)",
+  "fieldGetters": {
+    "net/minecraft/class_5483$class_1964.field_24681:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_5/rt/CbSpawnWeights"
+  },
+  "_s215_spawns_fieldGetters_basis": "SpawnerData.CODEC: 1.21.4's Codec {type, weight, minCount, maxCount} (minCount <= maxCount checked); 1.21.5's field_24681 is the MapCodec of {type, minCount, maxCount} with the same check, the weight moved to Weighted. Rebuilt as that MapCodec plus the weight field, decoding to a record carrying its weight.",
+  "methodRenames": {
+    "net/minecraft/class_6030$class_6031.method_35084()Lnet/minecraft/class_2338;": "comp_3478"
+  },
+  "_s215_spawns_methodRenames_basis": "PossibleJump.getJumpTarget() answered its pos field; 1.21.5's record component pos (comp_3478)"
+}

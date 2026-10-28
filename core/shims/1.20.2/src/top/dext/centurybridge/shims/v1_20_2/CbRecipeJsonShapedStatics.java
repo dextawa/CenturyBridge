@@ -19,6 +19,7 @@ import net.minecraft.class_2960;
 import net.minecraft.class_3518;
 import net.minecraft.class_7923;
 import org.spongepowered.asm.mixin.Mixin;
+import top.dext.centurybridge.rt.v1_20_2.CbRecipeJson;
 import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
 
 /**
@@ -28,8 +29,11 @@ import top.dext.centurybridge.rt.v1_20_2.CbVanillaReads;
  * (CbRecipeJsonShapedAccess), and RecipeManager.fromJson consults those readers (CbRecipeJson.consult): a 1.20.1 mod's
  * mixin on one of these changes what vanilla loads as on 1.20.1; unmixed, the readers answer as their unmixable copies
  * (the same bodies in CbRecipeJson) and vanilla keeps 1.20.2's recipe. Ingredient.fromJson is Ingredient's restored
- * static (CbRecipeJsonIngredientAccess). shrink is not restored: 1.20.2 keeps it (shrink(List), the same code), and the
- * readers call that one, so a mod's mixin on 1.20.1's shrink follows to the method 1.20.2's own codec calls.
+ * static (CbRecipeJsonIngredientAccess). shrink(String...) is restored too (1.20.2 has only shrink(List), which 1.20.3
+ * moves into ShapedRecipePattern, so a reader calling it would stop linking once the layer climbs past 1.20.2). Its
+ * helpers firstNonSpace / lastNonSpace stand unchanged in 1.20.2 (1.20.2's own shrink and codec call them): the
+ * restored shrink computes them with CbRecipeJson's copies, so a mod's mixin on them acts on 1.20.2's codec path itself
+ * and the consulted readers answer as their unmixed copies there.
  */
 @Mixin(value = class_1869.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRecipeJsonShapedStatics {
@@ -72,6 +76,37 @@ public abstract class CbRecipeJsonShapedStatics {
             rows[i] = row;
         }
         return rows;
+    }
+
+    /** 1.20.1 ShapedRecipe.shrink(rows) (package-private static on 1.20.1; Mixin merges a class mixin's static only when private) */
+    @CbVanillaReads("CbRecipeJsonVanillaMixin: the restored shaped reader calls it; RecipeManager.fromJson consults that reader against its unmixed copy")
+    private static String[] method_8146(String... rows) {
+        int first = Integer.MAX_VALUE;
+        int last = 0;
+        int blankTop = 0;
+        int blankTail = 0;
+        for (int i = 0; i < rows.length; ++i) {
+            String row = rows[i];
+            first = Math.min(first, CbRecipeJson.firstNonSpace(row));
+            int end = CbRecipeJson.lastNonSpace(row);
+            last = Math.max(last, end);
+            if (end < 0) {
+                if (blankTop == i) {
+                    ++blankTop;
+                }
+                ++blankTail;
+            } else {
+                blankTail = 0;
+            }
+        }
+        if (rows.length == blankTail) {
+            return new String[0];
+        }
+        String[] out = new String[rows.length - blankTail - blankTop];
+        for (int i = 0; i < out.length; ++i) {
+            out[i] = rows[i + blankTop].substring(first, last + 1);
+        }
+        return out;
     }
 
     /** 1.20.1 ShapedRecipe.dissolvePattern(rows, key, width, height) */
