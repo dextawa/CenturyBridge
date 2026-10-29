@@ -1,0 +1,10 @@
+{
+ "_swall12b_enumcodecs_basis": "1.21.11 public static EnumCodec CODEC fields 26.1 declares as Codec, the value still StringRepresentable.fromEnum's EnumCodec (javap of each <clinit>); open KNOWN rows of the API damage table; the 1.21.5 layer's CbEntityVariants.<clinit> read Fox.Variant.CODEC and crashed the climbed 26.1 client (NoSuchFieldError)",
+ "fieldGetters": {
+  "net/minecraft/class_4019$class_4039.field_41548:Lnet/minecraft/class_3542$class_7292;": "top/dext/centurybridge/step/v26_1/rt/CbWallEnumCodecs#foxVariant",
+  "net/minecraft/class_1462$class_9869.field_52473:Lnet/minecraft/class_3542$class_7292;": "top/dext/centurybridge/step/v26_1/rt/CbWallEnumCodecs#salmonVariant",
+  "net/minecraft/class_11520.field_60966:Lnet/minecraft/class_3542$class_7292;": "top/dext/centurybridge/step/v26_1/rt/CbWallEnumCodecs#dialogAction",
+  "net/minecraft/class_11287$class_11292.field_60142:Lnet/minecraft/class_3542$class_7292;": "top/dext/centurybridge/step/v26_1/rt/CbWallEnumCodecsClient#uniformType",
+  "net/minecraft/class_11635.field_61596:Lnet/minecraft/class_3542$class_7292;": "top/dext/centurybridge/step/v26_1/rt/CbWallEnumCodecsClient#debugEntryStatus"
+ }
+}
