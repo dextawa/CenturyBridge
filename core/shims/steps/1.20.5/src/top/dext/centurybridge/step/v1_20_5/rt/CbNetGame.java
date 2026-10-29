@@ -232,7 +232,8 @@ public final class CbNetGame {
         net.minecraft.class_2960 id = buf.method_10810();
         net.minecraft.class_1865 serializer = net.minecraft.class_7923.field_41189.method_17966(key)
             .orElseThrow(() -> new IllegalArgumentException("Unknown recipe serializer " + key));
-        net.minecraft.class_1860 recipe = (net.minecraft.class_1860) serializer.method_56104().decode(CbNetBufs.cbRegistryBuf(buf));
+        net.minecraft.class_1860 recipe = (net.minecraft.class_1860) CbRecipeSync.decoding(id,
+            () -> serializer.method_56104().decode(CbNetBufs.cbRegistryBuf(buf)));
         return new net.minecraft.class_8786(id, recipe);
     }
 
