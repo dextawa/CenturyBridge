@@ -217,10 +217,20 @@ public final class CbVillagers {
         return class_7923.field_41194.method_47983(type);
     }
 
-    /** new Villager(EntityType, Level, VillagerType): 1.21.5's constructor with the type's holder */
+    /**
+     * new Villager(EntityType, Level, VillagerType). 1.21.5's (EntityType, Level, Holder) constructor is 1.21.5's
+     * (EntityType, Level) one -- which ends in setVillagerData(PLAINS, profession NONE) -- with the type holder in place of
+     * PLAINS (javap -c 1.21.5 class_1646: both reach super(type, level), the same fields and navigation, then
+     * setVillagerData(getVillagerData().withType(holder).withProfession(NONE))). Built through the members every later
+     * release keeps (26.2 declares only Villager(EntityType, Level); getVillagerData / setVillagerData /
+     * VillagerData.withType(Holder) stay): the two-argument constructor, then the data with the type swapped. The
+     * profession stays NONE, so setVillagerData keeps the (empty) offers exactly as the one call did.
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static net.minecraft.class_1646 newVillager(net.minecraft.class_1299 entityType, net.minecraft.class_1937 level, class_3854 type) {
-        return new net.minecraft.class_1646(entityType, level, typeHolder(type));
+        net.minecraft.class_1646 v = new net.minecraft.class_1646(entityType, level);
+        v.method_7195(v.method_7231().method_16922(typeHolder(type)));
+        return v;
     }
 
     /**
