@@ -732,6 +732,7 @@ public final class MixinRepair {
                 // (two alternatives repaired onto the same method would inject twice).
                 boolean live = false;
                 boolean localsJudged = false; // K1 judged the handler's captured locals against W's frames
+                boolean liveOnLayer = false; // live on a layer-restored member or a facade
                 String deadWhy = null;
                 List<String> fixNotes = new ArrayList<>();
                 List<Runnable> fixes = new ArrayList<>();
@@ -877,6 +878,9 @@ public final class MixinRepair {
                                 mixed(mx.name, owner, cands);
                             }
                             localsJudged = lv != null;
+                            // a member the layer restores (or a facade's): the layer carries V's method there, not W's
+                            // changed body -- MixinBridge's "not bridged" is about W's own methods
+                            liveOnLayer = cands.stream().allMatch(layerMembers::isMember) || owner.startsWith("top/dext/");
                             live = true;
                             break;
                         }
@@ -1013,7 +1017,7 @@ public final class MixinRepair {
                     // K2: MixinBridge left it "not bridged" and nothing here repaired it: it would apply unchanged against
                     // W's changed body (or fail at apply), so it is disabled, never left live -- unless the reason is the
                     // target's locals and K1 judged them against W's frames
-                    if (notBridged != null && !remapped && !(Boolean.TRUE.equals(notBridged[1]) && localsJudged)) {
+                    if (notBridged != null && !remapped && !liveOnLayer && !(Boolean.TRUE.equals(notBridged[1]) && localsJudged)) {
                         dropInjector(handler, an);
                         dirty[0] = true;
                         disabled.add("not bridged: " + notBridged[0] + " (it would apply unchanged against " + stepTo
