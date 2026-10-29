@@ -206,6 +206,8 @@ public final class Main {
                 System.out.println("WARNING: no layer jar (" + surfaces + "): every facade-only token keeps its intermediary name");
             }
             wallTable = top.dext.centurybridge.data.JarRemapper.loadTable(renameTable).keepFacadeTokens(chain.classRenames, declared);
+            // the target's Fabric API: a CB class overriding a vanilla method through a Fabric API interface takes its new name
+            wallTable.targetLibraries = Path.of("data/runtime/client-" + args[3] + "/.fabric/processedMods");
             // the wall table's source names are 1.21.11's: a bare method id in a mixin selector gets its 1.21.11
             // descriptor where the target class has several methods of the new name (Table.sourceMethods)
             if (Files.exists(codeOf("1.21.11"))) {

@@ -95,6 +95,16 @@ public final class JarRemapper {
         public java.util.Map<String, java.util.Set<String>> targetMethods;
         public java.util.Map<String, String[]> targetSupers;
         public final java.util.Map<String, String[]> jarSupers = new java.util.HashMap<>();
+        /**
+         * The target's Fabric API modules (a processedMods directory; null: none): their classes join the target's
+         * methods and supertypes, so a CenturyBridge class overriding a vanilla method through a Fabric API interface
+         * (the 1.20.4 layer's NoOverlay implements ModResourcePack, which extends PackResources) is seen to override
+         * it ({@link #remapper}'s cbOverride) and takes the method's new name past the wall instead of keeping its
+         * token (an AbstractMethodError at the first call). Read once ({@link #loadTargetLibraries}).
+         */
+        public Path targetLibraries;
+        private java.util.Map<String, java.util.Set<String>> libMethods;
+        private java.util.Map<String, String[]> libSupers;
 
         /**
          * The input jar's mixins (class name as in the input -> its @Mixin targets, value and targets alike) and the
@@ -665,6 +675,7 @@ public final class JarRemapper {
         if (targetJar != null && Files.exists(targetJar)) {
             table.targetKinds = loadKinds(targetJar);
             loadTarget(table, targetJar);
+            loadTargetLibraries(table);
             loadJarSupers(table, inJar);
         }
         int nClasses;
@@ -1404,6 +1415,47 @@ public final class JarRemapper {
         }
         table.targetMethods = methods;
         table.targetSupers = supers;
+    }
+
+    /** the target's Fabric API classes into its methods and supertypes ({@link Table#targetLibraries}); game classes win */
+    private static void loadTargetLibraries(Table table) throws IOException {
+        if (table.targetLibraries == null || !Files.isDirectory(table.targetLibraries)) {
+            return;
+        }
+        if (table.libMethods == null) {
+            table.libMethods = new java.util.HashMap<>();
+            table.libSupers = new java.util.HashMap<>();
+            java.util.List<Path> jars;
+            try (java.util.stream.Stream<Path> st = Files.list(table.targetLibraries)) {
+                jars = st.filter(f -> f.toString().endsWith(".jar")).sorted().toList();
+            }
+            for (Path j : jars) {
+                try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(j))) {
+                    ZipEntry e;
+                    while ((e = zin.getNextEntry()) != null) {
+                        String n = e.getName();
+                        if (!n.endsWith(".class") || n.startsWith("net/minecraft/") || n.startsWith("com/mojang/")) {
+                            continue;
+                        }
+                        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+                        new ClassReader(zin.readAllBytes()).accept(cn, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                        java.util.Set<String> ms = new java.util.HashSet<>();
+                        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                            ms.add(m.name + m.desc);
+                        }
+                        java.util.List<String> sup = new java.util.ArrayList<>();
+                        if (cn.superName != null) {
+                            sup.add(cn.superName);
+                        }
+                        sup.addAll(cn.interfaces);
+                        table.libMethods.putIfAbsent(cn.name, ms);
+                        table.libSupers.putIfAbsent(cn.name, sup.toArray(new String[0]));
+                    }
+                }
+            }
+        }
+        table.libMethods.forEach(table.targetMethods::putIfAbsent);
+        table.libSupers.forEach(table.targetSupers::putIfAbsent);
     }
 
     /** the input jar's classes' supertypes, renamed as the jar will be ({@link Table#jarSupers}) */
