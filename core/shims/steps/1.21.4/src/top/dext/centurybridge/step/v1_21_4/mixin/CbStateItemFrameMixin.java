@@ -7,7 +7,7 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbRenderStates;
 
 /** the state's 1.21.3 item fields; 1.21.3 ItemFrameRenderer.extractRenderState: the framed item (a copy) and, unless it is a map, its model (see {@link CbRenderStates}) */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_10040.class)
+@org.spongepowered.asm.mixin.Mixin(value = net.minecraft.class_10040.class, priority = top.dext.centurybridge.step.v1_21_4.rt.CbVanillaReads.PRIORITY)
 public abstract class CbStateItemFrameMixin implements CbRenderStates.CbLegacyExtract {
     /** itemStack */
     public net.minecraft.class_1799 field_53439 = net.minecraft.class_1799.field_8037;

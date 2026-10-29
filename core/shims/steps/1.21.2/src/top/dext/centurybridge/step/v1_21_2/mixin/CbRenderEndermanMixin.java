@@ -7,7 +7,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbRenderModelFields;
 
 /** 1.21.1 EndermanModel's public carrying / creepy (field_3371 / field_3370), see CbRenderModelFields */
 @Environment(EnvType.CLIENT)
-@Mixin(net.minecraft.class_566.class)
+@org.spongepowered.asm.mixin.Mixin(value = net.minecraft.class_566.class, priority = top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads.PRIORITY)
 public abstract class CbRenderEndermanMixin implements CbRenderModelFields.Enderman {
 
     public boolean field_3371;

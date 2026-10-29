@@ -10,7 +10,8 @@
     "LightningQuadMixin",
     "SheetGlyphMixin",
     "BiomeColorMixin",
-    "FluidHeightMixin"
+    "FluidHeightMixin",
+    "SpecialBlockMappingMixin"
   ],
   "injectors": { "defaultRequire": 1 }
 }

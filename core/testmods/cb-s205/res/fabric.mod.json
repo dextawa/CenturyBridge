@@ -3,8 +3,11 @@
  "id": "cb_s205",
  "version": "1.0.0",
  "name": "CB s205 resource-condition test (1.20.4 era)",
- "description": "Recipes guarded by Fabric API 1.20.4's item / block / fluid_tags_populated conditions (1.20.4 semantics: every listed tag loaded with at least one entry); checked once the server started. Client: 1.20.4's position_tex_color_normal / position_tex_lightmap_color core shaders present after the first load and after a resource reload (\"CB-S205C ...\").",
+ "description": "Recipes guarded by Fabric API 1.20.4's item / block / fluid_tags_populated conditions (1.20.4 semantics: every listed tag loaded with at least one entry); checked once the server started. Client: 1.20.4's position_tex_color_normal / position_tex_lightmap_color core shaders present after the first load and after a resource reload, cycleEffect, and a client mixin on 1.20.4's private loadEffect (HEAD location, TAIL) fed by cycleEffect and checkEntityPostEffect (\"CB-S205C ...\").",
  "environment": "*",
+ "mixins": [
+  "cb_s205.mixins.json"
+ ],
  "entrypoints": {
   "main": [
    "cb.s205.S205TestMod"

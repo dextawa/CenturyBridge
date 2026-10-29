@@ -26,14 +26,14 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbVanillaReads;
  * @Shadow / @Accessor) into the id: null clears it, a chain answered for an id sets that id. A chain a mod loaded from a
  * 1.21.1 json itself has no 1.21.2 id: the id is cleared and the hooks run, resize and close that chain where 1.21.1's
  * render, resize and close did. The layer writes the id only when the mirror was written or loadEffect is called:
- * unmixed, 1.21.2's state is untouched. Priority 0, below every mixin shadowing these members (as CbVanillaReads.PRIORITY
- * puts it below every mod's, so a mod's 1.21.1 injectors anchor inside loadEffect): Mixin applies a target's mixins in
- * priority order, and the climbed 1.20.5 layer's CbClientGameRendererShadersMixin (cycleEffect) shadows postEffect and
- * loadEffect at that layer's CbVanillaReads.PRIORITY (1); at 1 the 1.21.1 -> 1.21.2 step strips it (its shadow field
- * would not be declared yet when it applies).
+ * unmixed, 1.21.2's state is untouched. At this layer's CbVanillaReads.PRIORITY (mixin_priority.py rule 3: strictly below
+ * every earlier layer's mixins, and below every mod's, so a mod's 1.21.1 injectors anchor inside loadEffect): Mixin applies
+ * a target's mixins in priority order, and the climbed 1.20.5 layer's CbClientGameRendererShadersMixin (cycleEffect)
+ * shadows postEffect and loadEffect at that layer's higher CbVanillaReads.PRIORITY; at a tie or above the 1.21.1 -> 1.21.2
+ * step strips it (its shadow field would not be declared yet when it applies).
  */
 @Environment(EnvType.CLIENT)
-@Mixin(value = net.minecraft.class_757.class, priority = 0)
+@Mixin(value = net.minecraft.class_757.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbRestPostEffectRestored implements CbRestPostEffect.Game {
 
     @Shadow
@@ -111,6 +111,11 @@ public abstract class CbRestPostEffectRestored implements CbRestPostEffect.Game 
         return this.field_4013;
     }
 
+    @Override
+    public void cb$v1_21_2$loadEffect(net.minecraft.class_2960 location) {
+        this.method_3168(location);
+    }
+
     /** 1.21.1 currentEffect() */
     public PostChain method_3183() {
         this.cb$v1_21_2$reconcilePostEffect();
@@ -122,9 +127,11 @@ public abstract class CbRestPostEffectRestored implements CbRestPostEffect.Game 
      * 1.21.2's setPostEffect with the id 1.21.2 spells it (CbRestPostEffect.id) when the ShaderManager has that
      * post_effect, else the 1.21.1 json at location loaded as 1.21.1 loaded it; one that fails to load is logged and
      * leaves the effect inactive, as in 1.21.1 (1.21.2's ShaderManager treats an unknown id as a broken resource pack).
+     * One exit at the end, as 1.21.1's body had: a mod's TAIL injector runs after every load.
      */
-    @CbVanillaReads("loadEffect is private in 1.21.1: only a converted mod's @Shadow / @Invoker calls it (the 1.20.5 layer's "
-        + "cycleEffect among them); body 1.21.1's, the chain loaded through 1.21.2's post effect id")
+    @CbVanillaReads("CbRestPostEffectRouteMixin: checkEntityPostEffect (method_3167), 1.21.1's vanilla caller, runs this method "
+        + "with 1.21.1's location in place of its setPostEffect call when a converted mod mixes it; the 1.20.5 layer's "
+        + "cycleEffect calls it through its @Shadow")
     private void method_3168(net.minecraft.class_2960 location) {
         this.cb$v1_21_2$reconcilePostEffect();
         PostChain old = this.field_4024;
@@ -137,20 +144,20 @@ public abstract class CbRestPostEffectRestored implements CbRestPostEffect.Game 
         net.minecraft.class_2960 id = CbRestPostEffect.id(location);
         if (id != null && ((CbRestPostEffect.Configs) this.field_4015.method_62887()).cb$v1_21_2$hasPostEffect(id)) {
             this.method_62904(id);
-            return;
-        }
-        try {
-            PostChain chain = new PostChain(this.field_4015.method_1531(), this.field_4015.method_1478(), this.field_4015.method_1522(), location);
-            chain.method_1259(this.field_4015.method_22683().method_4489(), this.field_4015.method_22683().method_4506());
-            this.field_53898 = null;
-            this.field_4024 = this.cb$v1_21_2$synced = chain;
-            this.field_4013 = true;
-        } catch (java.io.IOException e) {
-            field_3993.warn("Failed to load shader: {}", location, e);
-            this.field_4013 = false;
-        } catch (com.google.gson.JsonSyntaxException e) {
-            field_3993.warn("Failed to parse shader: {}", location, e);
-            this.field_4013 = false;
+        } else {
+            try {
+                PostChain chain = new PostChain(this.field_4015.method_1531(), this.field_4015.method_1478(), this.field_4015.method_1522(), location);
+                chain.method_1259(this.field_4015.method_22683().method_4489(), this.field_4015.method_22683().method_4506());
+                this.field_53898 = null;
+                this.field_4024 = this.cb$v1_21_2$synced = chain;
+                this.field_4013 = true;
+            } catch (java.io.IOException e) {
+                field_3993.warn("Failed to load shader: {}", location, e);
+                this.field_4013 = false;
+            } catch (com.google.gson.JsonSyntaxException e) {
+                field_3993.warn("Failed to parse shader: {}", location, e);
+                this.field_4013 = false;
+            }
         }
     }
 }

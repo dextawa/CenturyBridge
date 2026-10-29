@@ -24,8 +24,23 @@ public @interface CbVanillaReads {
      * (a constructor-RETURN capture of 1.21.1's fields, which 1.21.1 set in the constructor body, so a mod's
      * constructor injector sees them set either way): its injectors into 1.21.2's own methods would run before every
      * mod's, so they stay in a mixin of default priority.
+     *
+     * Layer order (mixin_priority.py rule 3): -6 = 1 - (this release's index - 1.20.2's index) in Chain.RELEASES,
+     * one lower per later release. A climbing earlier layer's mixins @Shadow / @Accessor / @Invoker members a later
+     * layer restores (the 1.20.2 layer's Realms bridge reads 1.21.6's restored leftX / rightX); Mixin applies a
+     * target's mixins by priority and breaks ties by load order (MixinInfo.compareTo: priority, then the order the
+     * configs were read), so the later restorer must sit strictly lower or the reader may apply first and the climb
+     * strips it (Chain.layerDeclares, MixinJudge, MixinCheck judge strictly).
      */
-    int PRIORITY = 1;
+    int PRIORITY = -6;
+
+    /**
+     * The priority of a layer route mixin (one that merges nothing) whose injectors into a 1.21.2 method must go before
+     * every mod's at the same point: a route's @WrapOperation applied first is the innermost wrapper of the call, so a
+     * native 1.21.2 mod's @WrapOperation of the same call wraps the route and keeps running when the route takes the
+     * restored 1.21.1 path. Restored members stay in their own mixin at {@link #PRIORITY}.
+     */
+    int ROUTE_FIRST = 1;
 
     String value();
 }

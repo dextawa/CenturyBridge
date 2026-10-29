@@ -3,7 +3,7 @@ package cb.swallc;
 import java.util.Map;
 import net.minecraft.class_310;
 
-/** client check 20 a), c), d), f) in code (b: the renderers SwallClient registers; e, the cloud renderer call: not covered) */
+/** client check 20 a), c), d) and f) (camera) in code (b: the renderers SwallClient registers; e, the cloud renderer call: not covered) */
 final class Check20 {
     private Check20() {
     }
@@ -88,14 +88,23 @@ final class Check20 {
         } catch (Throwable t) {
             out.put("check20.d.guiMessage", "FAIL " + t);
         }
+    }
+
+    /**
+     * f) a mod Camera subclass's setup(level, player, detached, false, pt) against native 26.1's main camera in third
+     * person (the game set to THIRD_PERSON_BACK a few ticks before): the same distance from the eye, collision included
+     */
+    static void camera(class_310 mc, Map<String, String> out) {
         try {
+            double nativeDist = mc.field_1773.method_19418().method_71156().method_1022(mc.field_1724.method_33571());
             net.minecraft.class_4184 cam = new net.minecraft.class_4184() {
             };
             cam.method_19321(mc.field_1687, mc.field_1724, true, false, 0.37F);
             double dist = cam.method_71156().method_1022(mc.field_1724.method_33571());
             float pt = cam.method_55437();
             float mainPt = mc.field_1773.method_19418().method_55437();
-            out.put("check20.f.cameraSetup", (dist > 1.0 && dist <= 4.5 ? "ok" : "FAIL") + " behind=" + String.format("%.2f", dist));
+            out.put("check20.f.cameraSetup", (Math.abs(dist - nativeDist) < 0.25 ? "ok" : "FAIL") + " behind=" + String.format("%.2f", dist)
+                + " native26.1=" + String.format("%.2f", nativeDist));
             out.put("check20.f.cameraPartialTick", (Math.abs(pt - 0.37F) < 1e-6 ? "ok" : "FAIL") + " own=" + pt + " main=" + mainPt);
         } catch (Throwable t) {
             out.put("check20.f.cameraSetup", "FAIL " + t);

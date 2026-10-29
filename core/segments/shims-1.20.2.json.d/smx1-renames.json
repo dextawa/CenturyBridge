@@ -39,6 +39,14 @@
   "net/minecraft/class_3258.method_14399()Ljava/util/zip/ZipFile;": {
    "to": "net/minecraft/class_3258$class_8616.method_52426()Ljava/util/zip/ZipFile;",
    "basis": "FilePackResources.getOrCreateZipFile -> FilePackResources.SharedZipFileAccess (method_52426), the per-pack holder of the zip: javap -c -p both: the same open-once / failed-once logic and log line, on the holder's file / zip / failed fields"
+  },
+  "net/minecraft/class_761.method_3241(Lnet/minecraft/class_2338;Lnet/minecraft/class_846$class_851;Lnet/minecraft/class_2350;)Lnet/minecraft/class_846$class_851;": {
+   "to": "net/minecraft/class_8679.method_52831(Lnet/minecraft/class_2338;Lnet/minecraft/class_846$class_851;Lnet/minecraft/class_2350;)Lnet/minecraft/class_846$class_851;",
+   "basis": "LevelRenderer.getRelativeFrom -> SectionOcclusionGraph.getRelativeFrom (method_52831), the same parameters and return: javap -c -p both: the same neighbour lookup (relative section origin, the view-distance test, ViewArea.getRenderSectionAt), the reads of LevelRenderer's lastViewDistance (field_4062) / level (field_4085) now the graph's ViewArea (field_45623: getViewDistance / getLevelHeightAccessor), the distance test factored into isInViewDistance (method_52832). Anchors on those LevelRenderer fields have no counterpart in the moved body (MixinRepair keeps them open)"
+  },
+  "net/minecraft/class_761.method_38549(Lnet/minecraft/class_4184;Ljava/util/Queue;)V": {
+   "to": "net/minecraft/class_8679.method_52821(Lnet/minecraft/class_4184;Ljava/util/Queue;)V",
+   "basis": "LevelRenderer.initializeQueueForFullUpdate -> SectionOcclusionGraph.initializeQueueForFullUpdate (method_52821), the same erased parameters (the queue's RenderChunkInfo is the Node class_762, classRenamed class_761$class_762 -> class_8679$class_762 in smx1.json): javap -c -p both: the same camera-section lookup, the same below/above-world branch building the ring of sections and sorting it by distance, then the queue seeded with Nodes; 1.20.2 reads the level height through the ViewArea (field_45623) and also sets each Node's source directions (method_3299). Anchors on LevelRenderer's level (field_4085) / lastViewDistance (field_4062) have no counterpart in the moved body"
   }
  }
 }

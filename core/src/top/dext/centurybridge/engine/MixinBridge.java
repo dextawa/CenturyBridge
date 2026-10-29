@@ -1791,6 +1791,9 @@ final class MixinBridge {
             // a bare selector (a name, no descriptor) that W still matches by name, though a V method it meant has
             // another descriptor on W: kept only if nothing below carries it (see the bare-name test)
             Selection bareFallback = null;
+            // a selector naming a member the layer restores and routes vanilla through (@CbVanillaReads): its handler
+            // stays there unless the step's wiring for the V method carries it (s121 C24, below)
+            String marked = null;
             // any alternative that still selects a method of W: nothing moved under it
             for (String sel : sels) {
                 if (sel.startsWith("/") || sel.contains("*")) {
@@ -1828,20 +1831,27 @@ final class MixinBridge {
                 }
                 // a member the layer restores on the W class (LayerMembers) whose vanilla read path the layer
                 // routes through it (@CbVanillaReads): the selector names a method that exists at runtime and
-                // vanilla calls, nothing moves under it. An unmarked restored member (a delegate onto the code W
-                // kept) is not taken here: the selector follows V's code to W below, and only when nothing
-                // carries it does it stay on the restored member (MixinJudge: "vanilla path unmixed")
+                // vanilla calls. The step's wiring for the V method (mixinTargets, an override hook) is tried first,
+                // per handler: what it carries moves into W's code; a handler it cannot carry (one reading an
+                // argument W dropped) stays on the restored member (s121 C24: FaceBakery.bakeQuad's id). W's code of
+                // the same body (bodyFate) is not tried: the marked member is where the layer routes vanilla. An
+                // unmarked restored member (a delegate onto the code W kept) is not taken here: the selector
+                // follows V's code to W below, and only when nothing carries it does it stay on the restored member
+                // (MixinJudge: "vanilla path unmixed")
                 if (s.desc() != null && java.util.stream.Stream.concat(chain.layerMembers.match(target, s).stream(),
                             chain.layerMembers.match(target, new MixinRepair.Sel(s.owner(), s.name(), chain.renamedDesc(s.desc()), s.wildcard())).stream())
                         .anyMatch(m -> chain.layerMembers.vanillaReads(m) != null)) {
-                    injected("@" + kind + " " + sn + "." + h.name, "@" + kind + " " + sn + "." + h.name + " -> "
-                        + shortName(target) + "." + s.name() + s.desc() + ": the layer's restored member");
-                    return null;
+                    marked = "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "." + s.name() + s.desc() + ": the layer's restored member";
+                    break;
                 }
             }
             if (vt == null || itf) {
+                if (marked != null) {
+                    injected("@" + kind + " " + sn + "." + h.name, marked);
+                }
                 return null; // which V method was meant cannot be read / an interface mixin's injectors: not carried
             }
+            int leftMark = left.size();
             for (int idx = 0; idx < sels.size(); idx++) {
                 String sel = sels.get(idx);
                 String mapped = MixinRepair.refmapLookup(table, sel);
@@ -1853,6 +1863,9 @@ final class MixinBridge {
                 String where = "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "." + vmeth.name + vmeth.desc;
                 List<String> why = new ArrayList<>();
                 Fate fate = selectorFate(vk(target), vmeth.name, vmeth.desc, why);
+                if (fate == null && marked != null) {
+                    continue; // no wiring for the marked member's V method: the handler stays on the restored member
+                }
                 if (fate == null && method(wt, vmeth.name, vmeth.desc) == null) {
                     // no wiring for it, or wiring for mods' overrides that cannot carry an injector: where W keeps its code
                     List<String> bwhy = new ArrayList<>();
@@ -1951,6 +1964,11 @@ final class MixinBridge {
                     left.add(where + ": " + why.get(0));
                     continue;
                 }
+                if (marked != null && p.untouched()) {
+                    // the wiring would carry it only partly (the answer untouched): the marked restored member, which
+                    // vanilla's path reaches whole, carries it better (1.20.2 EntityPredicate.fromJson)
+                    continue;
+                }
                 String nm = respell(mapped, fate.name(), fate.desc());
                 if (ownKey(sel)) {
                     MixinRepair.refmapPut(table, sel, nm);
@@ -1995,6 +2013,13 @@ final class MixinBridge {
                     + (p.untouched() ? "; return type " + Type.getReturnType(chain.renamedDesc(vmeth.desc)) + " -> "
                         + Type.getReturnType(fate.desc()) + " with no converter: partial, the answer untouched" : "") + ")");
                 return new Selection(handler, an, List.of(vmeth), List.of(wmeth));
+            }
+            if (marked != null) {
+                // the wiring could not carry this handler: it stays on the restored member the layer routes
+                // vanilla through, which is no loss to report
+                left.subList(leftMark, left.size()).clear();
+                injected("@" + kind + " " + sn + "." + h.name, marked);
+                return null;
             }
             // a bare selector nothing carried: left on W's method of the name, as before (the report says why)
             return bareFallback;
@@ -3623,7 +3648,11 @@ final class MixinBridge {
             boolean[] narrow = new boolean[va.length];
             Type[] mwa = Type.getArgumentTypes(mt.desc());
             for (int i = 0; known && i < va.length; i++) {
-                if (wrap[i] != null || from[i] >= mwa.length || mwa[from[i]].equals(va[i]) || wAssignable(mwa[from[i]], va[i])) {
+                // V's type as the converted handler declares it: the step's classRenames rename it (1.21.11 class_1920
+                // BlockAndTintGetter -> 26.1 BlockAndLightGetter, a supertype of the client BlockAndTintGetter W passes)
+                Type vr = va[i].getSort() == Type.OBJECT ? Type.getType(chain.renamedDesc(va[i].getDescriptor())) : va[i];
+                if (wrap[i] != null || from[i] >= mwa.length || mwa[from[i]].equals(va[i]) || wAssignable(mwa[from[i]], va[i])
+                        || mwa[from[i]].equals(vr) || wAssignable(mwa[from[i]], vr)) {
                     continue; // a derived argument (converted by its own static) or one W hands as V's type
                 }
                 // CASE 18: the W argument of another type reaches the handler through the entry's "wrap" (the override

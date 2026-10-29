@@ -1,0 +1,154 @@
+{
+  "_s215c_gametest_basis": "1.21.4 -> 1.21.5 GameTestHelper messages and assertion exceptions (s215c): 1.21.5 made the messages Components (String -> Component, Supplier<String> -> Function<X, Component> / Supplier<Component>), getBlockEntity / assertBlockEntityData take the block entity class, the assertion exceptions take a Component and an int tick (javap -p 1.21.4 / 1.21.5 class_4516, class_4512, class_4513). The same members reshaped with rt/CbGameTests' converters (see its javadoc); assertBlock(pos, predicate, String), gone, is 1.21.4's body over assertBlock(pos, predicate, function). Open: the test registration framework 1.21.5 replaced (TestFunction, GameTestRegistry, @GameTest, TestFinder, TestCommand, GameTestInfo's TestFunction members).",
+  "callReshapes": {
+    "net/minecraft/class_4516.method_35957(Lnet/minecraft/class_1297;Ljava/util/function/Function;Ljava/lang/String;Ljava/lang/Object;)V": {
+      "desc": "(Lnet/minecraft/class_1297;Ljava/util/function/Function;Ljava/lang/Object;Lnet/minecraft/class_2561;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:3",
+        "conv:2 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_35958(Lnet/minecraft/class_1297;Ljava/util/function/Predicate;Ljava/lang/String;)V": {
+      "desc": "(Lnet/minecraft/class_1297;Ljava/util/function/Predicate;Lnet/minecraft/class_2561;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "conv:2 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_35988(Lnet/minecraft/class_2338;Lnet/minecraft/class_2769;Ljava/util/function/Predicate;Ljava/lang/String;)V": {
+      "desc": "(Lnet/minecraft/class_2338;Lnet/minecraft/class_2769;Ljava/util/function/Predicate;Lnet/minecraft/class_2561;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "conv:3 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_35992(Lnet/minecraft/class_2338;Ljava/util/function/Predicate;Ljava/util/function/Supplier;)V": {
+      "desc": "(Lnet/minecraft/class_2338;Ljava/util/function/Predicate;Ljava/util/function/Function;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "conv:2 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#textOf(Ljava/util/function/Supplier;)Ljava/util/function/Function;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_35995(Ljava/lang/String;)V": {
+      "desc": "(Lnet/minecraft/class_2561;)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_35996(Ljava/lang/String;Lnet/minecraft/class_1297;)V": {
+      "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_1297;)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;",
+        "keep:1"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_35997(Ljava/lang/String;Lnet/minecraft/class_2338;)V": {
+      "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_2338;)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;",
+        "keep:1"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_36014(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2586;": {
+      "desc": "(Lnet/minecraft/class_2338;Ljava/lang/Class;)Lnet/minecraft/class_2586;",
+      "ops": [
+        "keep:0",
+        "push top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#anyBlockEntity()Ljava/lang/Class;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_36017(Lnet/minecraft/class_2338;Ljava/util/function/Predicate;Ljava/util/function/Supplier;)V": {
+      "desc": "(Lnet/minecraft/class_2338;Ljava/util/function/Predicate;Ljava/util/function/Function;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "conv:2 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#textOf(Ljava/util/function/Supplier;)Ljava/util/function/Function;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_46226(ZLjava/lang/String;)V": {
+      "desc": "(ZLnet/minecraft/class_2561;)V",
+      "ops": [
+        "keep:0",
+        "conv:1 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_49994(ZLjava/lang/String;)V": {
+      "desc": "(ZLnet/minecraft/class_2561;)V",
+      "ops": [
+        "keep:0",
+        "conv:1 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_56606(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/String;)V": {
+      "desc": "(Ljava/lang/Object;Ljava/lang/Object;Lnet/minecraft/class_2561;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "conv:2 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_60651(Lnet/minecraft/class_2338;Ljava/util/function/Predicate;Ljava/util/function/Supplier;)V": {
+      "desc": "(Lnet/minecraft/class_2338;Ljava/lang/Class;Ljava/util/function/Predicate;Ljava/util/function/Supplier;)V",
+      "ops": [
+        "keep:0",
+        "push top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#anyBlockEntity()Ljava/lang/Class;",
+        "keep:1",
+        "conv:2 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#textSupplier(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    },
+    "net/minecraft/class_4516.method_61173(Lnet/minecraft/class_1297;Lnet/minecraft/class_238;Ljava/lang/String;)V": {
+      "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_238;Lnet/minecraft/class_2561;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "conv:2 top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;"
+      ],
+      "basis": "1.21.5 shape of the same member (javap -p both): the message as a Component / a function or supplier of one (rt/CbGameTests); the expected block entity class BlockEntity"
+    }
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_4516.method_35991(Lnet/minecraft/class_2338;Ljava/util/function/Predicate;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGameTests"
+  },
+  "ctorRedirects": {
+    "net/minecraft/class_4512.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#newAssert",
+    "net/minecraft/class_4513.<init>(Ljava/lang/String;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;J)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#newAssertPos"
+  },
+  "superCtorReshapes": {
+    "net/minecraft/class_4512.<init>(Ljava/lang/String;)V": {
+      "desc": "(Lnet/minecraft/class_2561;I)V",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;",
+        "push top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#noTick()I"
+      ],
+      "basis": "the message as its literal component; no tick (1.21.4 kept none)"
+    },
+    "net/minecraft/class_4513.<init>(Ljava/lang/String;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;J)V": {
+      "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;I)V",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#text(Ljava/lang/String;)Lnet/minecraft/class_2561;",
+        "keep",
+        "keep",
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbGameTests#tick(J)I"
+      ],
+      "basis": "the message as its literal component, the tick as 1.21.5 int"
+    }
+  }
+}
