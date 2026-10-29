@@ -905,6 +905,66 @@ public class SwallTestMod implements ModInitializer {
     }
 
     /** 1.21.11's TimerQueue subclass writing itself through store() */
+    /**
+     * A 1.21.11 class implementing Fabric API's ModResourcePack (extending PackResources): its PackResources methods
+     * (method_14406 getNamespaces, ...) must carry 26.1's names past the wall, reached through the vanilla interface
+     * and through the Fabric API one. (The climbed layers' copy of this case, CbModResourcePacks$NoOverlay, kept its
+     * tokens until the wall rename read Fabric API supertypes: JarRemapper.Table.targetLibraries.)
+     */
+    static final class TestModPack implements net.fabricmc.fabric.api.resource.ModResourcePack {
+        @Override
+        public net.fabricmc.loader.api.metadata.ModMetadata getFabricModMetadata() {
+            return net.fabricmc.loader.api.FabricLoader.getInstance().getModContainer("cb_swall").orElseThrow().getMetadata();
+        }
+
+        @Override
+        public net.fabricmc.fabric.api.resource.ModResourcePack createOverlay(String overlay) {
+            return this;
+        }
+
+        @Override
+        public net.minecraft.class_7367<java.io.InputStream> method_14410(String... path) {
+            return null;
+        }
+
+        @Override
+        public net.minecraft.class_7367<java.io.InputStream> method_14405(net.minecraft.class_3264 type, net.minecraft.class_2960 id) {
+            return null;
+        }
+
+        @Override
+        public void method_14408(net.minecraft.class_3264 type, String ns, String prefix, net.minecraft.class_3262.class_7664 out) {
+        }
+
+        @Override
+        public java.util.Set<String> method_14406(net.minecraft.class_3264 type) {
+            return java.util.Set.of("cb_swall_pack");
+        }
+
+        @Override
+        public <T> T method_14407(net.minecraft.class_7677<T> section) {
+            return null;
+        }
+
+        @Override
+        public net.minecraft.class_9224 method_56926() {
+            return null;
+        }
+
+        @Override
+        public void close() {
+        }
+    }
+
+    private static void modResourcePack() {
+        net.minecraft.class_3262 viaVanilla = new TestModPack();
+        net.fabricmc.fabric.api.resource.ModResourcePack viaFabric = new TestModPack();
+        java.util.Set<String> a = viaVanilla.method_14406(net.minecraft.class_3264.field_14190);
+        java.util.Set<String> b = viaFabric.method_14406(net.minecraft.class_3264.field_14190);
+        check("modResourcePack.namespaces", a.contains("cb_swall_pack") && b.contains("cb_swall_pack"), a + " / " + b);
+        check("modResourcePack.overlay", viaFabric.createOverlay("x") == viaFabric, "");
+    }
+
     static final class StoringQueue extends net.minecraft.class_236<MinecraftServer> {
         int stores;
 
@@ -1039,6 +1099,7 @@ public class SwallTestMod implements ModInitializer {
             check("server.throwIfFatalException", MinecraftServer.method_60584(), "");
             professions();
             levelSettings();
+            modResourcePack();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
