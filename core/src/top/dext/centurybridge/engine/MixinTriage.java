@@ -397,7 +397,11 @@ public final class MixinTriage {
         new ClassReader(bytes).accept(cv,
             ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
-        boolean vanilla = targets.stream().anyMatch(t -> t.startsWith("net/minecraft/"));
+        // a game class: the packages the stub index reads (StubDiff.index), blaze3d and realmsclient included -- past the
+        // wall (and for blaze3d already in 1.21.x intermediary) those are game classes too, and a mixin on one that
+        // cannot apply must be stripped like any other (s121f: CbRenderBufferBuilderMixin kept on 26.2's BufferBuilder)
+        boolean vanilla = targets.stream().anyMatch(t -> t.startsWith("net/minecraft/") || t.startsWith("com/mojang/blaze3d/")
+            || t.startsWith("com/mojang/realmsclient/"));
         String shortName = className.substring(className.lastIndexOf('/') + 1);
         return new MixinInfo(className, config, targets, vanilla, loadBearing[0], worst[0],
             broken.size() > 12 ? broken.subList(0, 12) : broken);
