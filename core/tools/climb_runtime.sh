@@ -97,3 +97,9 @@ for J in $LAYERS; do
 done
 echo "climbed layers -> $T link-check: $(count "" 0) dangling references, $(count "" 1) tombstoned calls ($LC/link-findings.tsv)"
 ls "$OUT"
+# the ratchet: no layer may dangle more on T than core/segments/layer-linkcheck-baseline.tsv allows (per layer x T,
+# dangling + tombstoned). CB_LAYER_BASELINE=write rewrites T's rows in <workDir>'s copy instead (a burn-down lowers
+# them; copy the file back and commit it). Every T at once: layer_linkcheck_steps.sh.
+BASE="$WD/core/segments/layer-linkcheck-baseline.tsv"
+python3 "$WD/core/tools/layer_linkcheck.py" ratchet "$LC/link-findings.tsv" "$T" "$BASE" \
+    $([ "${CB_LAYER_BASELINE:-}" = write ] && echo --write) || exit 1
