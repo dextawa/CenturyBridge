@@ -3,7 +3,6 @@ package top.dext.centurybridge.shims.v1_20_2;
 import java.util.Map;
 import net.minecraft.class_1291;
 import net.minecraft.class_1320;
-import net.minecraft.class_4081;
 import net.minecraft.class_8630;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,8 +26,12 @@ public abstract class CbEffectModifierOwner implements CbEffectModifierMap {
     @Final
     private Map<class_1320, class_8630> field_5885;
 
+    /**
+     * RETURN of every constructor, its arguments not taken (the handler reads none of them): 1.20.5 adds
+     * MobEffect(category, color, particle) beside (category, color), and a bare "<init>" selects both
+     */
     @Inject(method = "<init>", at = @At("RETURN"))
-    private void cb$ownModifiers(class_4081 category, int color, CallbackInfo ci) {
+    private void cb$ownModifiers(CallbackInfo ci) {
         CbEffects.ownModifiers(this.field_5885, (class_1291) (Object) this);
     }
 

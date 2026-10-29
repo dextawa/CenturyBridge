@@ -1,0 +1,21 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s205n",
+ "version": "1.0.0",
+ "name": "CB s205 native 1.21.2 post effect mixins",
+ "description": "A native 1.21.2 mod wrapping checkEntityPostEffect's setPostEffect calls and injecting at setPostEffect's HEAD, beside the 1.21.2 layer's loadEffect route (\"CB-S205N ...\"; read by cb-s205's climbed driver when it is loaded).",
+ "environment": "client",
+ "mixins": [
+  "cb_s205n.mixins.json"
+ ],
+ "entrypoints": {
+  "client": [
+   "cb.s205n.S205NDriver"
+  ]
+ },
+ "depends": {
+  "fabricloader": ">=0.15.0",
+  "minecraft": "1.21.2",
+  "fabric-lifecycle-events-v1": "*"
+ }
+}
