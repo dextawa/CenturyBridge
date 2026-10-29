@@ -344,6 +344,11 @@ public final class Main {
                 // instead of the injector being disabled as "target gone"
                 wallRepair.layerMembers = chain.layerMembers;
                 wallRepair.stepTo = args[3];
+                // a mixinAnchorMoves "to" may be a layer method (the given-back brain lists): the layer, real-named
+                // like the jar by now, as a place injectors move to
+                if (chain.layerJar != null) {
+                    wallRepair.moveLayer(chain.layerJar);
+                }
                 // the step's mixinMoves / mixinAnchorMoves keyed and spelled as the jar is by now (the wall rename; a W
                 // class born past the wall is spelled in its real name in the wiring already)
                 if (wallTable != null) {

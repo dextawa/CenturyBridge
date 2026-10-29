@@ -24,6 +24,7 @@
     "CbWallBossEventsAccess",
     "CbWallBossEventsMixin",
     "CbWallBrainAccess",
+    "CbWallBrainExtrasMixin",
     "CbWallBrainMixin",
     "CbWallBreezeAttackTypeMixin",
     "CbWallCauldronBlockAccess",
