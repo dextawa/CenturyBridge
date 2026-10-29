@@ -55,7 +55,7 @@ public class ReceivingLevelScreen extends class_437 {
     @Override
     public void method_25394(class_332 graphics, int mouseX, int mouseY, float partialTick) {
         super.method_25394(graphics, mouseX, mouseY, partialTick);
-        graphics.method_27534(this.field_22793, field_26544, this.field_22789 / 2, this.field_22790 / 2 - 50, -1);
+        graphics.method_27534(class_310.method_1551().field_1772, field_26544, ((class_437) this).field_22789 / 2, ((class_437) this).field_22790 / 2 - 50, -1);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ReceivingLevelScreen extends class_437 {
             GpuTextureView sky = textures.method_4619(class_840.field_4406).method_71659();
             GpuTextureView portal = textures.method_4619(class_840.field_4407).method_71659();
             class_11231 effect = class_11231.method_70901(sky, portal);
-            graphics.method_51739(class_10799.field_56828, effect, 0, 0, this.field_22789, this.field_22790);
+            graphics.method_51739(class_10799.field_56828, effect, 0, 0, ((class_437) this).field_22789, ((class_437) this).field_22790);
         }
     }
 
@@ -79,7 +79,7 @@ public class ReceivingLevelScreen extends class_437 {
         if (this.field_51486 != null) {
             return this.field_51486;
         }
-        this.field_51486 = this.field_22787.method_1541().method_3351().method_3339(class_2246.field_10316.method_9564());
+        this.field_51486 = class_310.method_1551().method_1541().method_3351().method_3339(class_2246.field_10316.method_9564());
         return this.field_51486;
     }
 
@@ -92,7 +92,7 @@ public class ReceivingLevelScreen extends class_437 {
 
     @Override
     public void method_25419() {
-        this.field_22787.method_44713().method_37015(class_2561.method_43471("narrator.ready_to_play"));
+        class_310.method_1551().method_44713().method_37015(class_2561.method_43471("narrator.ready_to_play"));
         super.method_25419();
     }
 
