@@ -11,7 +11,8 @@
     "ExplosionSeenMixin",
     "ExplosionSeenQualifiedMixin",
     "TeleportLookAtMixin",
-    "PropertiesDropsAccess"
+    "PropertiesDropsAccess",
+    "UseAnimInvoker"
   ],
   "injectors": {
     "defaultRequire": 1
