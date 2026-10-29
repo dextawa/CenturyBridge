@@ -223,7 +223,8 @@ public class Driver implements ClientModInitializer {
         class_310 mc = class_310.method_1551();
         try {
             long until = System.currentTimeMillis() + 240_000;
-            while (mc.field_1755 == null && System.currentTimeMillis() < until) {
+            // a screen and no loading overlay: the first resource reload (models, atlases) has finished
+            while ((mc.field_1755 == null || mc.method_18506() != null) && System.currentTimeMillis() < until) {
                 Thread.sleep(500);
             }
             Thread.sleep(3000);
