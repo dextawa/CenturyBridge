@@ -105,6 +105,22 @@ public final class JarRemapper {
         public Path targetLibraries;
         private java.util.Map<String, java.util.Set<String>> libMethods;
         private java.util.Map<String, String[]> libSupers;
+        /**
+         * The adapters of the step crossing the wall (its adapterHooks, and its override / convert hooks that name an
+         * adapter): adapter interface -> each {under, required V members (name + desc, intermediary)}. A CenturyBridge class keeps its token-named members past the wall, and a method whose
+         * vanilla shape changed at the wall no longer overrides anything, so the hierarchy rule leaves it under its
+         * token too -- while the converter gave the class the step's adapter for exactly that method, whose abstract
+         * method carries the table's name with V's shape (26.1's CbWallTintClient$LegacyBlockAndTintGetter.getShade):
+         * the adapter stayed unimplemented. A token method of a class that has such an adapter among its supertypes
+         * and that the adapter requires takes the table's name for it on the hook's {@code under} class; nothing else
+         * is renamed by this rule (remapper's adapterMember).
+         */
+        public final java.util.Map<String, java.util.List<Object[]>> wallAdapters = new java.util.HashMap<>();
+
+        /** registers one adapter hook of the wall step: see {@link #wallAdapters} */
+        public void wallAdapter(String adapter, String under, java.util.Collection<String> requires) {
+            wallAdapters.computeIfAbsent(adapter, k -> new java.util.ArrayList<>()).add(new Object[] {under, new java.util.HashSet<>(requires)});
+        }
 
         /**
          * The input jar's mixins (class name as in the input -> its @Mixin targets, value and targets alike) and the
@@ -482,6 +498,10 @@ public final class JarRemapper {
                     if (ir != null) {
                         return ir;
                     }
+                    String ad = adapterMember(owner, name, desc);
+                    if (ad != null) {
+                        return ad;
+                    }
                     String m = member(owner, name);
                     if (m.equals(name)) {
                         String ov = cbOverride(owner, name, desc);
@@ -493,6 +513,46 @@ public final class JarRemapper {
                         return name;
                     }
                     return targetMethods == null ? m : byDescriptor(owner, name, desc, m);
+                }
+
+                /** a CB class's token method a wall-step adapter among its supertypes requires: see {@link Table#wallAdapters} */
+                private String adapterMember(String owner, String name, String desc) {
+                    if (wallAdapters.isEmpty() || !(owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/"))) {
+                        return null;
+                    }
+                    java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(java.util.List.of(owner));
+                    java.util.Set<String> seen = new java.util.HashSet<>();
+                    while (!todo.isEmpty()) {
+                        String o = todo.poll();
+                        if (!seen.add(o)) {
+                            continue;
+                        }
+                        for (Object[] hook : wallAdapters.getOrDefault(o, java.util.List.of())) {
+                            if (!((java.util.Set<?>) hook[1]).contains(name + desc)) {
+                                continue;
+                            }
+                            String under = (String) hook[0];
+                            String to = under == null ? null : byOwner.get(under + "." + name);
+                            if (to == null && under != null) {
+                                to = superMember(Table.this, under, name);
+                            }
+                            if (to == null) {
+                                to = members.get(name);
+                            }
+                            if (to != null) {
+                                return to;
+                            }
+                        }
+                        String[] sup = jarSupers.get(o);
+                        if (sup != null) {
+                            for (String x : sup) {
+                                if (x != null) {
+                                    todo.add(x);
+                                }
+                            }
+                        }
+                    }
+                    return null;
                 }
 
                 /**
