@@ -8,7 +8,6 @@ import net.minecraft.class_4604;
 import net.minecraft.class_634;
 import net.minecraft.class_863;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
 
 /**
@@ -32,10 +31,6 @@ import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
 @Mixin(value = class_863.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbDebugRendererRestoredMixin {
 
-    @Shadow
-    public abstract void method_23099(class_4587 pose, class_4604 frustum, class_4597.class_4598 buffers, double x, double y, double z,
-        boolean translucent);
-
     /** DebugRenderer.switchRenderChunkborder() */
     public boolean method_3713() {
         return class_310.method_1551().field_61504.method_72775(class_11631.field_61582);
@@ -56,6 +51,8 @@ public abstract class CbDebugRendererRestoredMixin {
 
     /** DebugRenderer.render(pose, frustum, buffers, x, y, z): the opaque pass */
     public void method_23099(class_4587 pose, class_4604 frustum, class_4597.class_4598 buffers, double x, double y, double z) {
-        this.method_23099(pose, frustum, buffers, x, y, z, false);
+        // called through the class, not @Shadow-ed: 1.21.11 reshapes render, and a shadow of a reshaped member strips
+        // the mixin when the layer climbs there; a call site climbs through the later steps' wiring
+        ((class_863) (Object) this).method_23099(pose, frustum, buffers, x, y, z, false);
     }
 }
