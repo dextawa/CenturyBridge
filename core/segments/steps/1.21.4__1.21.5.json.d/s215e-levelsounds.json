@@ -1,0 +1,147 @@
+{
+ "_s215e_levelsounds_basis": "1.21.4 -> 1.21.5 Level / LevelAccessor / ServerLevel / ClientLevel / WorldGenRegion: the excepted Player of playSound / playSeededSound / levelEvent / mayInteract widened to Entity. Calls with two Entity arguments (not mechanical: same type twice) reshaped by position; 1.21.4's Entity overload method_45445 renamed onto method_8396; overrides hooked (rt/CbLevelSounds).",
+ "callReshapes": {
+  "net/minecraft/class_1937.method_8449(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_3419;FFJ)V": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_3419;FFJ)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_1297;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "playSeededSound(except, entity, sound, ..): 1.21.5 widened the excepted player to Entity, every other argument in place (javap -p both); the two Entity parameters keep their positions (1.21.5 ServerLevel method_8449 reads #1 as the except, #2 as the source position)"
+  },
+  "net/minecraft/class_3218.method_8449(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_3419;FFJ)V": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_3419;FFJ)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_1297;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "playSeededSound(except, entity, sound, ..): 1.21.5 widened the excepted player to Entity, every other argument in place (javap -p both); the two Entity parameters keep their positions (1.21.5 ServerLevel method_8449 reads #1 as the except, #2 as the source position)"
+  },
+  "net/minecraft/class_638.method_8449(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_3419;FFJ)V": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_3419;FFJ)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_1297;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "playSeededSound(except, entity, sound, ..): 1.21.5 widened the excepted player to Entity, every other argument in place (javap -p both); the two Entity parameters keep their positions (1.21.5 ServerLevel method_8449 reads #1 as the except, #2 as the source position)"
+  },
+  "net/minecraft/class_1937.method_43129(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_1297;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "playSound(except, entity, sound, ..): the excepted player widened to Entity, the rest in place (javap -p both; 1.21.5's body passes #1 / #2 to method_8449 in the same order)"
+  }
+ },
+ "methodRenames": {
+  "net/minecraft/class_1937.method_45445(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V": "method_8396"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_43128(Lnet/minecraft/class_1657;DDDLnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
+   "new": "method_43128(Lnet/minecraft/class_1297;DDDLnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbLevelSounds.player(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1657;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "basis": "1.21.5 widened the excepted player to Entity (javap -p both). 1.21.5 vanilla calls the Entity shape; a 1.21.4 override gets CbLevelSounds.player(entity) -- the player or null, which is how 1.21.5's own bodies (ServerLevel method_8465 / method_8444: instanceof Player ? : null) and 1.21.4's Entity overload method_45445 read it. The override's super call is the mechanical callReshape onto the Entity shape"
+  },
+  {
+   "old": "method_47967(Lnet/minecraft/class_1657;DDDLnet/minecraft/class_3414;Lnet/minecraft/class_3419;FFJ)V",
+   "new": "method_47967(Lnet/minecraft/class_1297;DDDLnet/minecraft/class_3414;Lnet/minecraft/class_3419;FFJ)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbLevelSounds.player(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1657;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "basis": "1.21.5 widened the excepted player to Entity (javap -p both). 1.21.5 vanilla calls the Entity shape; a 1.21.4 override gets CbLevelSounds.player(entity) -- the player or null, which is how 1.21.5's own bodies (ServerLevel method_8465 / method_8444: instanceof Player ? : null) and 1.21.4's Entity overload method_45445 read it. The override's super call is the mechanical callReshape onto the Entity shape"
+  },
+  {
+   "old": "method_54762(Lnet/minecraft/class_1657;DDDLnet/minecraft/class_3414;Lnet/minecraft/class_3419;)V",
+   "new": "method_54762(Lnet/minecraft/class_1297;DDDLnet/minecraft/class_3414;Lnet/minecraft/class_3419;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbLevelSounds.player(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1657;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "basis": "1.21.5 widened the excepted player to Entity (javap -p both). 1.21.5 vanilla calls the Entity shape; a 1.21.4 override gets CbLevelSounds.player(entity) -- the player or null, which is how 1.21.5's own bodies (ServerLevel method_8465 / method_8444: instanceof Player ? : null) and 1.21.4's Entity overload method_45445 read it. The override's super call is the mechanical callReshape onto the Entity shape"
+  },
+  {
+   "old": "method_60511(Lnet/minecraft/class_1657;DDDLnet/minecraft/class_6880;Lnet/minecraft/class_3419;FF)V",
+   "new": "method_60511(Lnet/minecraft/class_1297;DDDLnet/minecraft/class_6880;Lnet/minecraft/class_3419;FF)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbLevelSounds.player(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1657;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "basis": "1.21.5 widened the excepted player to Entity (javap -p both). 1.21.5 vanilla calls the Entity shape; a 1.21.4 override gets CbLevelSounds.player(entity) -- the player or null, which is how 1.21.5's own bodies (ServerLevel method_8465 / method_8444: instanceof Player ? : null) and 1.21.4's Entity overload method_45445 read it. The override's super call is the mechanical callReshape onto the Entity shape"
+  },
+  {
+   "old": "method_8465(Lnet/minecraft/class_1657;DDDLnet/minecraft/class_6880;Lnet/minecraft/class_3419;FFJ)V",
+   "new": "method_8465(Lnet/minecraft/class_1297;DDDLnet/minecraft/class_6880;Lnet/minecraft/class_3419;FFJ)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbLevelSounds.player(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1657;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "basis": "1.21.5 widened the excepted player to Entity (javap -p both). 1.21.5 vanilla calls the Entity shape; a 1.21.4 override gets CbLevelSounds.player(entity) -- the player or null, which is how 1.21.5's own bodies (ServerLevel method_8465 / method_8444: instanceof Player ? : null) and 1.21.4's Entity overload method_45445 read it. The override's super call is the mechanical callReshape onto the Entity shape"
+  },
+  {
+   "old": "method_8449(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_3419;FFJ)V",
+   "new": "method_8449(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_3419;FFJ)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbLevelSounds.player(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1657;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "basis": "1.21.5 widened the excepted player to Entity (javap -p both). 1.21.5 vanilla calls the Entity shape; a 1.21.4 override gets CbLevelSounds.player(entity) -- the player or null, which is how 1.21.5's own bodies (ServerLevel method_8465 / method_8444: instanceof Player ? : null) and 1.21.4's Entity overload method_45445 read it. The override's super call is the mechanical callReshape onto the Entity shape"
+  },
+  {
+   "old": "method_43129(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
+   "new": "method_43129(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbLevelSounds.player(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1657;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "basis": "1.21.5 widened the excepted player to Entity (javap -p both). 1.21.5 vanilla calls the Entity shape; a 1.21.4 override gets CbLevelSounds.player(entity) -- the player or null, which is how 1.21.5's own bodies (ServerLevel method_8465 / method_8444: instanceof Player ? : null) and 1.21.4's Entity overload method_45445 read it. The override's super call is the mechanical callReshape onto the Entity shape"
+  },
+  {
+   "old": "method_8396(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
+   "new": "method_8396(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbLevelSounds.player(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1657;",
+   "onlyUnder": "net/minecraft/class_1936",
+   "basis": "1.21.5 widened the excepted player to Entity (javap -p both). 1.21.5 vanilla calls the Entity shape; a 1.21.4 override gets CbLevelSounds.player(entity) -- the player or null, which is how 1.21.5's own bodies (ServerLevel method_8465 / method_8444: instanceof Player ? : null) and 1.21.4's Entity overload method_45445 read it. The override's super call is the mechanical callReshape onto the Entity shape",
+   "shadows": [
+    "method_45445(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V"
+   ]
+  },
+  {
+   "old": "method_45447(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;)V",
+   "new": "method_45447(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbLevelSounds.player(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1657;",
+   "onlyUnder": "net/minecraft/class_1936",
+   "basis": "1.21.5 widened the excepted player to Entity (javap -p both). 1.21.5 vanilla calls the Entity shape; a 1.21.4 override gets CbLevelSounds.player(entity) -- the player or null, which is how 1.21.5's own bodies (ServerLevel method_8465 / method_8444: instanceof Player ? : null) and 1.21.4's Entity overload method_45445 read it. The override's super call is the mechanical callReshape onto the Entity shape"
+  },
+  {
+   "old": "method_8444(Lnet/minecraft/class_1657;ILnet/minecraft/class_2338;I)V",
+   "new": "method_8444(Lnet/minecraft/class_1297;ILnet/minecraft/class_2338;I)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbLevelSounds.player(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1657;",
+   "onlyUnder": "net/minecraft/class_1936",
+   "basis": "1.21.5 widened the excepted player to Entity (javap -p both). 1.21.5 vanilla calls the Entity shape; a 1.21.4 override gets CbLevelSounds.player(entity) -- the player or null, which is how 1.21.5's own bodies (ServerLevel method_8465 / method_8444: instanceof Player ? : null) and 1.21.4's Entity overload method_45445 read it. The override's super call is the mechanical callReshape onto the Entity shape"
+  },
+  {
+   "old": "method_8505(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;)Z",
+   "new": "method_8505(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;)Z",
+   "narrow": true,
+   "onlyUnder": "net/minecraft/class_1937",
+   "basis": "mayInteract: 1.21.4 callers always passed a player (a 1.21.4 override never saw anything else); an entity that is not a player goes to super's 1.21.5 mayInteract (ServerLevel's answers true for it without the spawn-protection check, javap -c 1.21.5 class_3218 method_8505)"
+  },
+  {
+   "old": "method_45445(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
+   "new": "method_8396(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "basis": "1.21.4's playSound(Entity, BlockPos, ..) folded into 1.21.5's playSound(Entity, BlockPos, ..) (method_8396, the same descriptor; 1.21.4's body only narrowed the entity and called playSound(Player, ..)). A class declaring both 1.21.4 shapes keeps the method_8396 hook (its shadows): 1.21.4's default method_45445 ended in that override"
+  }
+ ]
+}

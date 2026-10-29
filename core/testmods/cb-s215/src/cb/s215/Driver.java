@@ -485,6 +485,39 @@ public final class Driver {
                 e.getMessage() + " / " + p.getMessage());
         });
 
+        run("level-sounds", () -> {
+            // 1.21.5's Entity shapes, called the way 1.21.5 vanilla calls them (this mod is compiled against 1.21.4)
+            java.lang.reflect.Field uf = sun.misc.Unsafe.class.getDeclaredField("theUnsafe");
+            uf.setAccessible(true);
+            SoundLevel sl = (SoundLevel) ((sun.misc.Unsafe) uf.get(null)).allocateInstance(SoundLevel.class);
+            java.lang.reflect.Field seen = SoundLevel.class.getField("seen");
+            seen.setAccessible(true);
+            seen.set(sl, new ArrayList<String>());
+            net.minecraft.class_1297 pig = class_1299.field_6093.method_5883(level, net.minecraft.class_3730.field_16462);
+            net.minecraft.class_3222 player = new net.minecraft.class_3222(server, level,
+                new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "cbs215"), net.minecraft.class_8791.method_53821());
+            Class<?> e = net.minecraft.class_1297.class;
+            class_6880<net.minecraft.class_3414> holder = class_6880.method_40223(net.minecraft.class_3417.field_14627);
+            var seeded = class_3218.class.getMethod("method_8465", e, double.class, double.class, double.class, class_6880.class,
+                net.minecraft.class_3419.class, float.class, float.class, long.class);
+            seeded.invoke(sl, pig, 1.0, 2.0, 3.0, holder, net.minecraft.class_3419.field_15254, 1.0F, 1.0F, 7L);
+            seeded.invoke(sl, player, 4.0, 2.0, 3.0, holder, net.minecraft.class_3419.field_15254, 1.0F, 1.0F, 8L);
+            class_3218.class.getMethod("method_8444", e, int.class, class_2338.class, int.class).invoke(sl, pig, 1000, class_2338.field_10980, 5);
+            var interact = class_3218.class.getMethod("method_8505", e, class_2338.class);
+            boolean asPlayer = (Boolean) interact.invoke(sl, player, class_2338.field_10980);
+            boolean asPig = (Boolean) interact.invoke(sl, pig, class_2338.field_10980);
+            class_3218.class.getMethod("method_8396", e, class_2338.class, net.minecraft.class_3414.class, net.minecraft.class_3419.class,
+                float.class, float.class).invoke(sl, pig, new class_2338(10, 64, 0), net.minecraft.class_3417.field_14627,
+                net.minecraft.class_3419.field_15254, 1.0F, 1.0F);
+            // 1.21.4 call sites (reshaped / renamed) on the real overworld: no player online, so nothing is sent
+            level.method_8449(null, pig, holder, net.minecraft.class_3419.field_15254, 1.0F, 1.0F, 3L);
+            level.method_43129(player, pig, net.minecraft.class_3417.field_14627, net.minecraft.class_3419.field_15254, 1.0F, 1.0F);
+            level.method_45445(pig, class_2338.field_10980, net.minecraft.class_3417.field_14627, net.minecraft.class_3419.field_15254, 1.0F, 1.0F);
+            String got = String.join(",", sl.seen);
+            check("level-sounds", got.equals("seeded:null:1:7,seeded:player:4:8,event:null:1000:5,interact:player,entity-overload,sound:null:10.5")
+                && asPlayer && asPig, got + " asPlayer=" + asPlayer + " asPig=" + asPig);
+        });
+
         DONE = true;
         System.out.println("CB-S215 summary ok=" + ok + " fail=" + fail);
     }
