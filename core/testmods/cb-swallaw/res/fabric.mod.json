@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_swallaw",
+  "version": "1.0.0",
+  "name": "CB swall access-widener climb test",
+  "environment": "*",
+  "entrypoints": { "main": ["cb.swallaw.SwallAwMod"] },
+  "accessWidener": "cb_swallaw.accesswidener",
+  "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.11" }
+}
