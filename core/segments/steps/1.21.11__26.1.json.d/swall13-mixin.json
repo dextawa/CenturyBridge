@@ -1,0 +1,9 @@
+{
+  "_swall13_mixin": "swall13: hand-judged mixin entries, each checked with javap -c -p of 1.21.11 and 26.1",
+  "mixinAnchorMoves": {
+    "net/minecraft/class_10517.<clinit>()V": {
+      "to": "net/minecraft/client/renderer/block/BuiltInBlockModels.addDefaults(Lnet/minecraft/client/renderer/block/BuiltInBlockModels$Builder;)V",
+      "basis": "1.21.11 SpecialModelRenderers.<clinit> registers the special renderer codecs (ID_MAPPER puts, CODEC) and builds the static block mapping STATIC_BLOCK_MAPPING (field_55454: Block -> SpecialModelRenderer.Unbaked for skulls, banners, beds, chests, shulker boxes, signs, copper golem statues, conduit, decorated pot). 26.1 SpecialModelRenderers.<clinit> keeps the codec registrations only (javap: ID_MAPPER.put x19, no Map, no Blocks read); the static mapping went to BuiltInBlockModels.addDefaults(Builder), called from createBlockModels (ModelManager, each model load), which puts a model factory for the same blocks (Builder.put(factory, block[, block])). Read counts per anchor, V <clinit> vs W addDefaults: 149 fields (every Blocks.* the mapping keys on) 1 = 1; DyeColor.* 4 vs 3 (V: banner, wall banner, bed, shulker; W: createBanners takes both banner blocks), WoodType.* 4 vs 1 (createSigns takes the four sign blocks), SkullBlock$Types.* 2 vs 1, WeatherState.* 2 vs 1 -- so an ordinal-pinned anchor moves only where the counts agree (MixinRepair.ordinalsKept). Not in addDefaults, stay: ChestSpecialRenderer textures and CopperGolemStatueBlock$Pose (read in createChest / createCopperGolem lambdas), NEW / INVOKE of the Unbaked records (per-state lambdas), ImmutableMap.Builder calls (W's Builder is another class). Known difference: a moved injector runs at each model load, not once at class initialization"
+    }
+  }
+}

@@ -95,6 +95,32 @@ public final class JarRemapper {
         public java.util.Map<String, java.util.Set<String>> targetMethods;
         public java.util.Map<String, String[]> targetSupers;
         public final java.util.Map<String, String[]> jarSupers = new java.util.HashMap<>();
+        /**
+         * The target's Fabric API modules (a processedMods directory; null: none): their classes join the target's
+         * methods and supertypes, so a CenturyBridge class overriding a vanilla method through a Fabric API interface
+         * (the 1.20.4 layer's NoOverlay implements ModResourcePack, which extends PackResources) is seen to override
+         * it ({@link #remapper}'s cbOverride) and takes the method's new name past the wall instead of keeping its
+         * token (an AbstractMethodError at the first call). Read once ({@link #loadTargetLibraries}).
+         */
+        public Path targetLibraries;
+        private java.util.Map<String, java.util.Set<String>> libMethods;
+        private java.util.Map<String, String[]> libSupers;
+        /**
+         * The adapters of the step crossing the wall (its adapterHooks, and its override / convert hooks that name an
+         * adapter): adapter interface -> each {under, required V members (name + desc, intermediary)}. A CenturyBridge class keeps its token-named members past the wall, and a method whose
+         * vanilla shape changed at the wall no longer overrides anything, so the hierarchy rule leaves it under its
+         * token too -- while the converter gave the class the step's adapter for exactly that method, whose abstract
+         * method carries the table's name with V's shape (26.1's CbWallTintClient$LegacyBlockAndTintGetter.getShade):
+         * the adapter stayed unimplemented. A token method of a class that has such an adapter among its supertypes
+         * and that the adapter requires takes the table's name for it on the hook's {@code under} class; nothing else
+         * is renamed by this rule (remapper's adapterMember).
+         */
+        public final java.util.Map<String, java.util.List<Object[]>> wallAdapters = new java.util.HashMap<>();
+
+        /** registers one adapter hook of the wall step: see {@link #wallAdapters} */
+        public void wallAdapter(String adapter, String under, java.util.Collection<String> requires) {
+            wallAdapters.computeIfAbsent(adapter, k -> new java.util.ArrayList<>()).add(new Object[] {under, new java.util.HashSet<>(requires)});
+        }
 
         /**
          * The input jar's mixins (class name as in the input -> its @Mixin targets, value and targets alike) and the
@@ -113,6 +139,8 @@ public final class JarRemapper {
         /** each mixin class's declared member names (fields and methods) and its superclass, as in the input ({@link #mixinMember}) */
         public final java.util.Map<String, java.util.Set<String>> mixinDeclared = new java.util.HashMap<>();
         public final java.util.Map<String, String> mixinSupers = new java.util.HashMap<>();
+        /** each mixin class's interfaces, as in the input ({@link #mixinMember}) */
+        public final java.util.Map<String, java.util.List<String>> mixinInterfaces = new java.util.HashMap<>();
 
         /**
          * Each mixin's own methods (name + descriptor as in the input), @Shadow / @Overwrite ones excluded. A member a
@@ -254,6 +282,14 @@ public final class JarRemapper {
             }
             for (String t : targets) {
                 String hit = byOwner.get(t + "." + name);
+                if (hit != null) {
+                    return hit;
+                }
+            }
+            // a member of a vanilla interface the mixin class adds to its target (1.20.3 layer CbDownloadedPackSourceMixin
+            // implements RepositorySource: its method_14453 is 26.1's loadPacks, else the merged class misses it)
+            for (String i : mixinInterfaces.getOrDefault(owner, java.util.List.of())) {
+                String hit = i.startsWith("top/dext/centurybridge/") ? null : byOwner.get(i + "." + name);
                 if (hit != null) {
                     return hit;
                 }
@@ -462,6 +498,10 @@ public final class JarRemapper {
                     if (ir != null) {
                         return ir;
                     }
+                    String ad = adapterMember(owner, name, desc);
+                    if (ad != null) {
+                        return ad;
+                    }
                     String m = member(owner, name);
                     if (m.equals(name)) {
                         String ov = cbOverride(owner, name, desc);
@@ -473,6 +513,46 @@ public final class JarRemapper {
                         return name;
                     }
                     return targetMethods == null ? m : byDescriptor(owner, name, desc, m);
+                }
+
+                /** a CB class's token method a wall-step adapter among its supertypes requires: see {@link Table#wallAdapters} */
+                private String adapterMember(String owner, String name, String desc) {
+                    if (wallAdapters.isEmpty() || !(owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/"))) {
+                        return null;
+                    }
+                    java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(java.util.List.of(owner));
+                    java.util.Set<String> seen = new java.util.HashSet<>();
+                    while (!todo.isEmpty()) {
+                        String o = todo.poll();
+                        if (!seen.add(o)) {
+                            continue;
+                        }
+                        for (Object[] hook : wallAdapters.getOrDefault(o, java.util.List.of())) {
+                            if (!((java.util.Set<?>) hook[1]).contains(name + desc)) {
+                                continue;
+                            }
+                            String under = (String) hook[0];
+                            String to = under == null ? null : byOwner.get(under + "." + name);
+                            if (to == null && under != null) {
+                                to = superMember(Table.this, under, name);
+                            }
+                            if (to == null) {
+                                to = members.get(name);
+                            }
+                            if (to != null) {
+                                return to;
+                            }
+                        }
+                        String[] sup = jarSupers.get(o);
+                        if (sup != null) {
+                            for (String x : sup) {
+                                if (x != null) {
+                                    todo.add(x);
+                                }
+                            }
+                        }
+                    }
+                    return null;
                 }
 
                 /**
@@ -655,6 +735,7 @@ public final class JarRemapper {
         if (targetJar != null && Files.exists(targetJar)) {
             table.targetKinds = loadKinds(targetJar);
             loadTarget(table, targetJar);
+            loadTargetLibraries(table);
             loadJarSupers(table, inJar);
         }
         int nClasses;
@@ -810,6 +891,7 @@ public final class JarRemapper {
             if (cn.superName != null) {
                 table.mixinSupers.put(cn.name, cn.superName);
             }
+            table.mixinInterfaces.put(cn.name, cn.interfaces);
         }
     }
 
@@ -1393,6 +1475,47 @@ public final class JarRemapper {
         }
         table.targetMethods = methods;
         table.targetSupers = supers;
+    }
+
+    /** the target's Fabric API classes into its methods and supertypes ({@link Table#targetLibraries}); game classes win */
+    private static void loadTargetLibraries(Table table) throws IOException {
+        if (table.targetLibraries == null || !Files.isDirectory(table.targetLibraries)) {
+            return;
+        }
+        if (table.libMethods == null) {
+            table.libMethods = new java.util.HashMap<>();
+            table.libSupers = new java.util.HashMap<>();
+            java.util.List<Path> jars;
+            try (java.util.stream.Stream<Path> st = Files.list(table.targetLibraries)) {
+                jars = st.filter(f -> f.toString().endsWith(".jar")).sorted().toList();
+            }
+            for (Path j : jars) {
+                try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(j))) {
+                    ZipEntry e;
+                    while ((e = zin.getNextEntry()) != null) {
+                        String n = e.getName();
+                        if (!n.endsWith(".class") || n.startsWith("net/minecraft/") || n.startsWith("com/mojang/")) {
+                            continue;
+                        }
+                        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+                        new ClassReader(zin.readAllBytes()).accept(cn, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                        java.util.Set<String> ms = new java.util.HashSet<>();
+                        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                            ms.add(m.name + m.desc);
+                        }
+                        java.util.List<String> sup = new java.util.ArrayList<>();
+                        if (cn.superName != null) {
+                            sup.add(cn.superName);
+                        }
+                        sup.addAll(cn.interfaces);
+                        table.libMethods.putIfAbsent(cn.name, ms);
+                        table.libSupers.putIfAbsent(cn.name, sup.toArray(new String[0]));
+                    }
+                }
+            }
+        }
+        table.libMethods.forEach(table.targetMethods::putIfAbsent);
+        table.libSupers.forEach(table.targetSupers::putIfAbsent);
     }
 
     /** the input jar's classes' supertypes, renamed as the jar will be ({@link Table#jarSupers}) */

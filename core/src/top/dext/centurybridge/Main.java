@@ -206,6 +206,17 @@ public final class Main {
                 System.out.println("WARNING: no layer jar (" + surfaces + "): every facade-only token keeps its intermediary name");
             }
             wallTable = top.dext.centurybridge.data.JarRemapper.loadTable(renameTable).keepFacadeTokens(chain.classRenames, declared);
+            // the target's Fabric API: a CB class overriding a vanilla method through a Fabric API interface takes its new name
+            wallTable.targetLibraries = Path.of("data/runtime/client-" + args[3] + "/.fabric/processedMods");
+            // the step's adapters: a CB class's token method an adapter requires takes the table's name (Table.wallAdapters)
+            for (Chain.AdapterHook h : chain.adapterHooks) {
+                wallTable.wallAdapter(h.adapter, h.under, h.requires);
+            }
+            for (Chain.OverrideHook h : chain.overrideHooks) {
+                if (h.adapter != null) {
+                    wallTable.wallAdapter(h.adapter, h.onlyUnder, java.util.List.of(h.oldName + h.oldDesc));
+                }
+            }
             // the wall table's source names are 1.21.11's: a bare method id in a mixin selector gets its 1.21.11
             // descriptor where the target class has several methods of the new name (Table.sourceMethods)
             if (Files.exists(codeOf("1.21.11"))) {
@@ -226,6 +237,7 @@ public final class Main {
         // built before the namespace wall names its targets in intermediary, so past the wall (the source release
         // already real-named) its built jar is read through the same rename the wall gives its climbed copy
         // (wallLayerView); a climbed copy is already real-named
+        java.util.List<Path> earlierLayers = new java.util.ArrayList<>();
         if (System.getProperty("cb.layersDir") != null && System.getProperty("cb.layerJar") == null) {
             int wi = top.dext.centurybridge.engine.Chain.RELEASES.indexOf(args[3]);
             int wallIdx = top.dext.centurybridge.engine.Chain.RELEASES.indexOf("1.21.11");
@@ -240,6 +252,7 @@ public final class Main {
                     Path view = ej != climbed && sourcePastWall && ri <= wallIdx
                         ? wallLayerView(ej, Path.of(args[1]), args[2]) : ej;
                     chain.layerMembers.inherit(top.dext.centurybridge.engine.LayerMembers.read(view));
+                    earlierLayers.add(view);
                     if (ej == climbed) {
                         System.out.println("earlier layer as climbed to " + args[3] + ": " + climbed);
                     }
@@ -290,6 +303,7 @@ public final class Main {
                 chain.mixinRepair.stepTo = args[3]; // the mixed-member signal (MixinRepair.MIXED_DIR)
                 chain.mixinRepair.mixinMoves = chain.mixinMoves; // injectors on static methods W moved to another class
                 chain.mixinRepair.mixinMoveSelf = chain.mixinMoveSelf; // and on instance methods, this through the hops (C17)
+                chain.mixinRepair.mixinAnchorMoves = chain.mixinAnchorMoves; // the code at some anchors of a kept method
                 chain.mixinRepair.converter = chain::argConverter; // captured target arguments the step retyped (CASE 14)
                 chain.mixinRepair.argMaps = chain::mixinArgMaps; // and arguments a same-class reshape moved (CASE 14, third)
                 // injectors on statics the step redirects into a layer class move onto that class's method (s6e B6)
@@ -330,6 +344,22 @@ public final class Main {
                 // instead of the injector being disabled as "target gone"
                 wallRepair.layerMembers = chain.layerMembers;
                 wallRepair.stepTo = args[3];
+                // a mixinAnchorMoves "to" may be a layer method (the given-back brain lists): the layer, real-named
+                // like the jar by now, as a place injectors move to
+                if (chain.layerJar != null) {
+                    wallRepair.moveLayer(chain.layerJar);
+                }
+                // the step's mixinMoves / mixinAnchorMoves keyed and spelled as the jar is by now (the wall rename; a W
+                // class born past the wall is spelled in its real name in the wiring already)
+                if (wallTable != null) {
+                    org.objectweb.asm.commons.Remapper wr = wallTable.remapper();
+                    wallRepair.mixinMoves = wallMoves(chain.mixinMoves, wr);
+                    wallRepair.mixinAnchorMoves = wallMoves(chain.mixinAnchorMoves, wr);
+                    java.util.Map<String, java.util.List<String[]>> self = new java.util.HashMap<>();
+                    chain.mixinMoveSelf.forEach((k, hops) -> self.put(wallMember(k, wr), hops.stream().map(h -> new String[] {
+                        wr.map(h[0]), wr.mapFieldName(h[0], h[1], h[2]), wr.mapDesc(h[2])}).toList()));
+                    wallRepair.mixinMoveSelf = self;
+                }
                 chain.injectorsJudgedPastWall = true;
                 System.out.println("mixin anchors past the wall: checked against " + code);
             } else {
@@ -366,6 +396,15 @@ public final class Main {
                 // in it too (swall7: a selector on a restored member with a route stays there, rather than following
                 // V's code by similarity onto another 26.1 method); the repair past the wall keeps the real names
                 chain.layerMembers = top.dext.centurybridge.engine.LayerMembers.read(layerView);
+                // and the earlier layers' restored members (LayerMembers.inherit above, in 26.1's names) in the same
+                // view: a climbed layer's @Shadow of a member an earlier layer gives back (1.21.4's CbTextureAbstractMixin
+                // on AbstractTexture.field_5205, restored by 1.21.6's CbTextureBlurMixin) is declared at runtime on 26.1
+                // as before the wall. Chain.layerDeclares then takes the query as it is (layerMembersAnalysis)
+                for (Path ej : earlierLayers) {
+                    chain.layerMembers.inherit(top.dext.centurybridge.engine.LayerMembers.read(
+                        top.dext.centurybridge.engine.WallInverse.intermediaryView(ej, codeOf(args[2]), renameTable)));
+                }
+                chain.layerMembersAnalysis = true;
             }
             layerModel.layer(layerView);
         }
@@ -681,6 +720,21 @@ public final class Main {
     }
 
     /** a release's jar with real method bodies, for mixin anchors: past the wall the plain jar carries them */
+    /** "owner.name(desc)" spelled through the wall rename */
+    private static String wallMember(String key, org.objectweb.asm.commons.Remapper wr) {
+        int p = key.indexOf('(');
+        int dot = key.lastIndexOf('.', p);
+        String o = key.substring(0, dot), n = key.substring(dot + 1, p), d = key.substring(p);
+        return wr.map(o) + "." + wr.mapMethodName(o, n, d) + wr.mapMethodDesc(d);
+    }
+
+    /** a mixinMoves-shaped map, key and value spelled through the wall rename */
+    private static java.util.Map<String, String> wallMoves(java.util.Map<String, String> moves, org.objectweb.asm.commons.Remapper wr) {
+        java.util.Map<String, String> out = new java.util.HashMap<>();
+        moves.forEach((k, v) -> out.put(wallMember(k, wr), wallMember(v, wr)));
+        return out;
+    }
+
     private static Path codeOf(String version) {
         return Path.of(postWall(version) ? "data/jars/client-" + version + ".jar"
                                           : "data/jars/client-" + version + "-intermediary-code.jar");

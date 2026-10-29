@@ -18,7 +18,7 @@ Ledgered (each reason is what mixin-cause verified; nothing else is):
                            vanilla no longer runs it, and no W method holds its code (mixin-cause searched W's bodies;
                            "disabled, target gone" did not search, so it stays open)
 Never ledgered: a member or class the step's other fragments say W runs elsewhere (mixinMoves, mixinTargets,
-mixinSplits) -- moved code.
+mixinAnchorMoves, mixinSplits) -- moved code -- or give back (fieldGetters / staticFieldSetters).
   anchor-member-gone / anchor-private-gone / constant-gone   (positional @Inject rows only; never
                            anchor-unused-here: there the member still exists and only moved)
                            the anchor no longer stands in the target, in what the target calls (depth 2) or in
@@ -95,14 +95,19 @@ def keep_open_keys(path):
 
 def moved_by_wiring(out):
     """the members and classes the step's other fragments say W runs elsewhere -- moved code, never ledgered:
-    mixinMoves / mixinTargets keys ("owner.name(desc)" -> "owner.name"), mixinSplits classes"""
+    mixinMoves / mixinTargets / mixinAnchorMoves keys ("owner.name(desc)" -> "owner.name"), mixinSplits classes,
+    and the static fields the wiring gives back (fieldGetters / staticFieldSetters keys "owner.name:desc": mods'
+    @Shadow / @Accessor on them are served there)"""
     members, classes = set(), set()
     for p in sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(out)), "*.json"))):
         if os.path.abspath(p) == os.path.abspath(out):
             continue
         with open(p, encoding="utf-8") as f:
             j = json.load(f)
-        for sec in ("mixinMoves", "mixinTargets"):
+        for sec in ("fieldGetters", "staticFieldSetters"):
+            for k in j.get(sec, {}):
+                members.add(k)
+        for sec in ("mixinMoves", "mixinTargets", "mixinAnchorMoves"):
             for k in j.get(sec, {}):
                 members.add(k.split("(", 1)[0])
                 members.add(k)

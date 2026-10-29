@@ -11,7 +11,9 @@
     "ItemStackCodecLambdaMixin",
     "FrogAttackMixin",
     "FancyLimbMixin",
-    "LootMineMixin"
+    "LootMineMixin",
+    "PiglinMemoryMixin",
+    "VillagerMemoryAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

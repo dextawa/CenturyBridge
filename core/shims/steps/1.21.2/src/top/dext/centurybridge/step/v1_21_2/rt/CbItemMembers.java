@@ -531,6 +531,21 @@ public final class CbItemMembers {
         return m != super_method_21830(item) ? m : null;
     }
 
+    /**
+     * UseAnim's constructor (name, ordinal) became (name, ordinal, id, serializedName) in 1.21.2. A constant a 1.21.1 mod
+     * makes itself (Forge's enum extension through an @Invoker("<init>"), Kilt's UseAnimAccessor) takes what every
+     * 1.21.2 constant has: the id equals the ordinal, and the serialized name is the constant name in lower case
+     * (UseAnim.&lt;clinit&gt;: NONE 0 "none" ... TOOT_HORN 8 "toot_horn")
+     */
+    public static int useAnimId(int ordinal) {
+        return ordinal;
+    }
+
+    /** see {@link #useAnimId} */
+    public static String useAnimName(String name) {
+        return name.toLowerCase(java.util.Locale.ROOT);
+    }
+
     private CbItemMembers() {
     }
 }

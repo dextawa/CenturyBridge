@@ -89,6 +89,16 @@ public class Swall120 implements ModInitializer {
         } catch (Throwable t) {
             check("adv120.anyNull", false, t);
         }
+        try {
+            // 1.20.1's Types table names the variant kinds by the variant predicates' own types (TYPES.put("cat", CAT.type()))
+            Object byName = net.minecraft.class_7376.class_7378.field_38731.get("cat");
+            Object own = net.minecraft.class_7376.class_7378.field_38729.method_43114();
+            Object name = net.minecraft.class_7376.class_7378.field_38731.inverse().get(own);
+            check("adv120.typesIdentity", byName != null && byName == own && "cat".equals(name),
+                "TYPES.get(cat) " + byName + ", CAT.type() " + own + ", name of CAT.type() " + name);
+        } catch (Throwable t) {
+            check("adv120.typesIdentity", false, t);
+        }
         // 1.20.1's EntitySubPredicate.ANY and its Types table (class_7376$class_7378: the "type" -> deserializer BiMap and
         // the variant types CAT / AXOLOTL): the 1.20.2 layer builds its ANY from Types, the 1.20.5 layer's Types read 1.21.4's
         // EntitySubPredicates.CAT, which 1.21.5 removed (queue_smx4: field_38729)
@@ -101,9 +111,6 @@ public class Swall120 implements ModInitializer {
             check("adv120.subPredicateTypes", any != null && cat != null && axolotl != null && types.containsKey("cat")
                 && types.containsKey("axolotl") && types.containsKey("lightning") && anyNull,
                 "any=" + any + " fromJson(null)==ANY " + anyNull + " cat=" + cat + " types=" + types.keySet());
-            // 1.20.1: TYPES.get("cat") is Types.CAT itself (one object per kind)
-            check("adv120.subPredicateTypesIdentity", types.get("cat") == cat && types.get("axolotl") == axolotl,
-                "TYPES.get(cat)=" + types.get("cat") + " CAT=" + cat + " TYPES.get(axolotl)=" + types.get("axolotl") + " AXOLOTL=" + axolotl);
         } catch (Throwable t) {
             check("adv120.subPredicateTypes", false, t);
         }

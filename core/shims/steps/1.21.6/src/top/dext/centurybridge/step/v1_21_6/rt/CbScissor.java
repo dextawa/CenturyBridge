@@ -122,8 +122,13 @@ public final class CbScissor {
         }
     }
 
-    /** the same, called on the GL render pass itself */
+    /**
+     * the same, called on the GL render pass itself.
+     * The cast goes through Object so javac keeps it: 26.1's GL classes are backends, no longer the GpuDevice /
+     * CommandEncoder / RenderPass they implement here, and an elided upcast fails verification of the whole class
+     * once climbed to 26.1 (VerifyError, the climbed client's first GUI frame).
+     */
     public static void enableScissor(net.minecraft.class_10866 pass, class_11219 state) {
-        enableScissor((RenderPass) pass, state);
+        enableScissor((RenderPass) (Object) pass, state);
     }
 }

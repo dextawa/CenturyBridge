@@ -1,0 +1,6 @@
+{
+ "_smx1_spawning_basis": "smx1e: MinecraftServer.isSpawningMonsters() (1.21.10 method_74056, 1.21.9's rename of method_3783) is gone from 1.21.11's MinecraftServer; 1.21.11's updateMobSpawningFlags calls ServerLevel.isSpawningMonsters (method_74962) per level instead, the same test (difficulty not peaceful, doMobSpawning, spawnMonsters) over the level's data (javap -c -p of both). Mods' calls, and the 1.21.2 layer's @Shadow call in CbRestMinecraftServerMixinHooks.cb$legacySpawnSettings, go to CbGameRules.method_74056: the overworld's answer, whose level data is the world data 1.21.10 read",
+ "instanceRedirects": {
+  "net/minecraft/server/MinecraftServer.method_74056()Z": "top/dext/centurybridge/step/v1_21_11/rt/CbGameRules"
+ }
+}
