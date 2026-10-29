@@ -727,9 +727,11 @@
  },
  "instanceFieldGetters": {
   "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_4970$class_2251.field_10666:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
   "net/minecraft/class_2791.field_34537:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks"
  },
  "instanceFieldSetters": {
+  "net/minecraft/class_4970$class_2251.field_10666:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
   "net/minecraft/class_2791.field_34537:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks",
   "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot"
  },

@@ -8,7 +8,8 @@
     "NativeCookTimeMixin",
     "NativeCanBurnMixin",
     "NativeSeenMixin",
-    "NativeLookAtMixin"
+    "NativeLookAtMixin",
+    "NativeDropsAccess"
   ],
   "injectors": {
     "defaultRequire": 1

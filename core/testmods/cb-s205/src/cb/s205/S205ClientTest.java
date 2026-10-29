@@ -12,7 +12,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
  * shipped: logged, no effect); ten steps reach invert, which is the current effect (and, from 1.21.2 on, the game's post
  * effect id, read by reflection); after 40 rendered ticks, fifteen more steps reach no effect again, which cycleEffect
  * sets by writing GameRenderer.postEffect = null (from 1.21.2 on the id follows that write); then one step and
- * shutdownEffect(). Ends "CB-S205C summary ok=N fail=M".
+ * shutdownEffect(). Then the client mixin on loadEffect (loadEffectMixin). Ends "CB-S205C summary ok=N fail=M".
  */
 public class S205ClientTest implements ClientModInitializer {
     private static int ticks;
@@ -70,9 +70,47 @@ public class S205ClientTest implements ClientModInitializer {
                 renderer.method_35771();
                 renderer.method_3207();
                 effect("shutdown", renderer, null, null);
+                loadEffectMixin(client, renderer);
                 System.out.println("CB-S205C summary ok=" + ok + " fail=" + fail);
             }
         });
+    }
+
+    /**
+     * cb.s205.mixin.LoadEffectMixin on loadEffect: the cycle's loads reached it with 1.20.4's spelling (invert among
+     * them); checkEntityPostEffect for a creeper camera (1.20.4's vanilla caller of loadEffect) reaches it once more with
+     * minecraft:shaders/post/creeper.json and makes creeper the current effect; every call reached TAIL. With the native
+     * 1.21.2 mod cb-s205n loaded, its @WrapOperation of checkEntityPostEffect's setPostEffect call and its HEAD injector on
+     * setPostEffect saw minecraft:creeper (read by reflection). Then shutdownEffect.
+     */
+    private static void loadEffectMixin(net.minecraft.class_310 client, net.minecraft.class_757 renderer) {
+        boolean cycle = S205Seen.LOADS.contains("minecraft:shaders/post/invert.json");
+        tally(cycle, "loadEffect cycle loads=" + S205Seen.LOADS.size() + " invert-seen=" + cycle);
+        int before = S205Seen.LOADS.size();
+        renderer.method_3167(new net.minecraft.class_1548(net.minecraft.class_1299.field_6046, client.field_1687));
+        String last = S205Seen.LOADS.isEmpty() ? null : S205Seen.LOADS.get(S205Seen.LOADS.size() - 1);
+        boolean creeper = S205Seen.LOADS.size() == before + 1 && "minecraft:shaders/post/creeper.json".equals(last);
+        tally(creeper, "loadEffect creeper-camera calls=" + (S205Seen.LOADS.size() - before) + " location=" + last);
+        effect("creeper", renderer, "minecraft:shaders/post/creeper.json", "minecraft:creeper");
+        tally(S205Seen.tails == S205Seen.LOADS.size(), "loadEffect tails=" + S205Seen.tails + " heads=" + S205Seen.LOADS.size());
+        try {
+            Class<?> n = Class.forName("cb.s205n.S205NSeen");
+            Object wrapped = n.getField("WRAPPED").get(null);
+            Object set = n.getField("SET").get(null);
+            tally(String.valueOf(wrapped).contains("minecraft:creeper"), "native wrap setPostEffect " + wrapped);
+            tally(String.valueOf(set).contains("minecraft:creeper"), "native setPostEffect head " + set);
+        } catch (ClassNotFoundException e) {
+            System.out.println("CB-S205C native cb-s205n not loaded");
+        } catch (ReflectiveOperationException e) {
+            tally(false, "native read " + e);
+        }
+        renderer.method_3207();
+        effect("shutdown2", renderer, null, null);
+    }
+
+    private static void tally(boolean pass, String what) {
+        if (pass) ok++; else fail++;
+        System.out.println("CB-S205C " + (pass ? "ok" : "FAIL") + " " + what);
     }
 
     private static void effect(String when, net.minecraft.class_757 renderer, String chain, String id) {

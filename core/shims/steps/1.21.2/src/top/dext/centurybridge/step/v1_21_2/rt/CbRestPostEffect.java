@@ -26,6 +26,9 @@ public final class CbRestPostEffect {
 
         /** GameRenderer.effectActive (field_4013) */
         boolean cb$v1_21_2$effectActive();
+
+        /** the restored 1.21.1 loadEffect(location) (method_3168), for CbRestPostEffectRouteMixin */
+        void cb$v1_21_2$loadEffect(net.minecraft.class_2960 location);
     }
 
     /** CbRestShaderConfigsMixin */
@@ -49,5 +52,10 @@ public final class CbRestPostEffect {
         }
         return net.minecraft.class_2960.method_60655(location.method_12836(),
             path.substring(PREFIX.length(), path.length() - SUFFIX.length()));
+    }
+
+    /** the inverse of {@link #id}: 1.21.2's post effect id as the location 1.21.1 read its json from */
+    public static net.minecraft.class_2960 location(net.minecraft.class_2960 id) {
+        return net.minecraft.class_2960.method_60655(id.method_12836(), PREFIX + id.method_12832() + SUFFIX);
     }
 }

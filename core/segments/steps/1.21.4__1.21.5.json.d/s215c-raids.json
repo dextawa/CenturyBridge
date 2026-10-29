@@ -1,0 +1,16 @@
+{
+  "_s215c_raids_basis": "1.21.4 -> 1.21.5 Raid (s215c): 1.21.5 took the level and id out of Raid (methods take the ServerLevel, Raids holds raids by id, Raid.MAP_CODEC replaces save / the NBT constructor). javap -c -p 1.21.4 / 1.21.5 class_3765, class_3767. rt/CbRaids gives back 1.21.4's constructors, save, getId, getLevel, tick, joinRaid, removeFromRaid, addWaveMob (see its javadoc). Open: subclasses' overrides of the removed members.",
+  "ctorRedirects": {
+    "net/minecraft/class_3765.<init>(ILnet/minecraft/class_3218;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids#newRaid",
+    "net/minecraft/class_3765.<init>(Lnet/minecraft/class_3218;Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids#loadRaid"
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_3765.method_16502(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids",
+    "net/minecraft/class_3765.method_16494()I": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids",
+    "net/minecraft/class_3765.method_16831()Lnet/minecraft/class_1937;": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids",
+    "net/minecraft/class_3765.method_16509()V": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids",
+    "net/minecraft/class_3765.method_16516(ILnet/minecraft/class_3763;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids",
+    "net/minecraft/class_3765.method_16510(Lnet/minecraft/class_3763;Z)V": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids",
+    "net/minecraft/class_3765.method_16487(ILnet/minecraft/class_3763;Z)Z": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids"
+  }
+}

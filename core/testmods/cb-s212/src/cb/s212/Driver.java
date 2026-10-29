@@ -1,6 +1,7 @@
 package cb.s212;
 
 import cb.s212.mixin.DataStorageInvoker;
+import cb.s212.mixin.PropertiesDropsAccess;
 import net.minecraft.class_1799;
 import net.minecraft.class_1802;
 import net.minecraft.class_2246;
@@ -203,6 +204,45 @@ public final class Driver {
                 + " (facing +x is -90)");
             checkNative("teleport.lookAt", "lookAt", n0);
             zombie.method_31472();
+        });
+
+        run("properties.drops", () -> {
+            // 1.21.1's Properties.drops, read and written both directly (the access widener's getfield / putfield) and
+            // through an @Accessor; cb-s212n reads what 1.21.2 then holds (its function, at a probe id)
+            net.minecraft.class_5321<net.minecraft.class_52> key = net.minecraft.class_5321.method_29179(
+                net.minecraft.class_7924.field_50079, net.minecraft.class_2960.method_60655("cb_s212", "blocks/probe"));
+            net.minecraft.class_4970.class_2251 fresh = net.minecraft.class_4970.class_2251.method_9637();
+            check("properties.drops.default", fresh.field_10666 == null && ((PropertiesDropsAccess) fresh).cbs212$drops() == null,
+                "a new Properties' drops " + fresh.field_10666 + " / " + ((PropertiesDropsAccess) fresh).cbs212$drops() + " (1.21.1: null)");
+            net.minecraft.class_4970.class_2251 none = net.minecraft.class_4970.class_2251.method_9637().method_42327();
+            check("properties.drops.noLootTable", none.field_10666 == net.minecraft.class_39.field_844,
+                "after noLootTable() " + none.field_10666 + " (1.21.1: BuiltInLootTables.EMPTY)");
+            net.minecraft.class_4970.class_2251 like = net.minecraft.class_4970.class_2251.method_9637().method_16228(net.minecraft.class_2246.field_10340);
+            check("properties.drops.dropsLike", net.minecraft.class_2246.field_10340.method_26162().equals(like.field_10666),
+                "after dropsLike(stone) " + like.field_10666 + " (stone's " + net.minecraft.class_2246.field_10340.method_26162() + ")");
+            net.minecraft.class_4970.class_2251 put = net.minecraft.class_4970.class_2251.method_9637();
+            put.field_10666 = key;
+            check("properties.drops.put", key.equals(put.field_10666), "written " + key + ", read " + put.field_10666);
+            net.minecraft.class_4970.class_2251 set = net.minecraft.class_4970.class_2251.method_9637();
+            ((PropertiesDropsAccess) set).cbs212$setDrops(key);
+            check("properties.drops.accessor", key.equals(((PropertiesDropsAccess) set).cbs212$drops()),
+                "written " + key + ", read " + ((PropertiesDropsAccess) set).cbs212$drops());
+            net.minecraft.class_4970.class_2251 back = net.minecraft.class_4970.class_2251.method_9637().method_42327();
+            back.field_10666 = null;
+            check("properties.drops.reset", back.field_10666 == null, "null written after noLootTable(), read " + back.field_10666);
+            try {
+                java.lang.reflect.Method of = Class.forName("cb.s212n.Drops").getMethod("of", Object.class);
+                String[] seen = new String[5];
+                Object[] props = {fresh, none, put, set, back};
+                for (int i = 0; i < props.length; i++) seen[i] = (String) of.invoke(null, props[i]);
+                check("properties.drops.native", "default".equals(seen[0]) && "none".equals(seen[1])
+                        && "cb_s212:blocks/probe".equals(seen[2]) && "cb_s212:blocks/probe".equals(seen[3]) && "default".equals(seen[4]),
+                    "1.21.2 holds new=" + seen[0] + " noLootTable=" + seen[1] + " put=" + seen[2] + " accessor=" + seen[3] + " reset=" + seen[4]);
+            } catch (ClassNotFoundException e) {
+                // without cb-s212n
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         System.out.println("CB-S212 summary ok=" + ok + " fail=" + fail);

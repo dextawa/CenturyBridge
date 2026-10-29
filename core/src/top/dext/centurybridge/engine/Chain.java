@@ -226,6 +226,17 @@ public final class Chain {
     public final java.util.Map<String, String> mixinMoves = new java.util.HashMap<>();
 
     /**
+     * Anchors of a V method W keeps, whose code at those anchors W moved into a method of another class
+     * ("mixinAnchorMoves", judged by an area agent from both bodies): key "V owner.name(desc)", value {"to": "W
+     * owner.name(desc)", "basis"}. Unlike mixinMoves the V method is still there (26.1 SpecialModelRenderers.<clinit>
+     * keeps the codec registrations; its static block mapping went to BuiltInBlockModels.addDefaults). MixinRepair
+     * moves an injector selecting the V method onto a mixin of the W class (as mixinMoves does) only when its anchors
+     * are not in the V method on W, every one is in the "to" method, and an ordinal-pinned anchor occurs as many
+     * times there as in V's method; an injector whose anchors W's own method still has stays.
+     */
+    public final java.util.Map<String, String> mixinAnchorMoves = new java.util.HashMap<>();
+
+    /**
      * a mixinMoves entry's "self": field hops ["owner.name:desc", ...] from an instance of the W class to the instance
      * of V's class whose method V ran (s26 C17: 26.2 LevelExtractor.levelRenderer). With it an INSTANCE method's
      * injector whose handler reads {@code this} moves too: in the moved handler a @Shadow member the W class declares
@@ -1422,6 +1433,11 @@ public final class Chain {
 
     /** the V-named members the layer's mixins merge onto game classes, from {@link #layerJar} ({@link LayerMembers}) */
     public LayerMembers layerMembers = LayerMembers.none();
+    /**
+     * whether {@link #layerMembers} is read in the analysis namespace (the wall step from 1.21.11: the layers' views
+     * through WallInverse, as MixinBridge and the triage query them) rather than in W's real names
+     */
+    public boolean layerMembersAnalysis;
 
     /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,
@@ -1753,13 +1769,14 @@ public final class Chain {
      * (LayerMembers: restored methods and fields), kind 'm' or 'f', desc null for any. Mixin applies a target's
      * mixins in priority order, so only a member merged by a layer mixin of lower priority is there when the
      * caller's @Shadow / @Accessor / @Invoker is resolved. The query is in the analysis namespace; past the wall the
-     * layer is built against W's real names, so the member is spelled as the wall renames it
+     * layer is built against W's real names, so the member is spelled as the wall renames it -- unless the layer's
+     * members are read in the analysis namespace already ({@link #layerMembersAnalysis})
      */
     public boolean layerDeclares(String owner, char kind, String name, String desc, int mixinPriority) {
         String o = owner;
         String n = name;
         String d = desc;
-        if (wallRemapper != null) {
+        if (wallRemapper != null && !layerMembersAnalysis) {
             n = kind == 'f' ? wallRemapper.mapFieldName(owner, name, desc == null ? "" : desc)
                             : wallRemapper.mapMethodName(owner, name, desc == null ? "()V" : desc);
             d = desc == null ? null : kind == 'f' ? wallRemapper.mapDesc(desc) : wallRemapper.mapMethodDesc(desc);
@@ -3446,6 +3463,12 @@ public final class Chain {
                         }
                         c.mixinMoveSelf.put(k, l);
                     }
+                }
+            }
+            if (root.has("mixinAnchorMoves")) {
+                var mm = root.getAsJsonObject("mixinAnchorMoves");
+                for (String k : mm.keySet()) {
+                    c.mixinAnchorMoves.put(k, mm.getAsJsonObject(k).get("to").getAsString());
                 }
             }
             if (root.has("mixinSplits")) {

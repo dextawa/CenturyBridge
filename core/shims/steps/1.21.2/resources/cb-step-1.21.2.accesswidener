@@ -19,6 +19,9 @@ mutable field net/minecraft/class_5699 field_45075 Lcom/mojang/serialization/Cod
 # ---- s7level: members 1.21.1 had public that 1.21.2 keeps private (same body, verified) ----
 accessible method net/minecraft/class_2852 method_12393 ([Lit/unimi/dsi/fastutil/shorts/ShortList;)Lnet/minecraft/class_2499;
 
+# s7level: Properties.drops (field_10666, a key) became the DependantName field_54007 (private): 1.21.1's field read and written through it (rt/CbLevelLoot)
+accessible field net/minecraft/class_4970$class_2251 field_54007 Lnet/minecraft/class_10162;
+
 # s7render: Blaze3D() public in 1.21.1, private in 1.21.2 (a utility class with only statics: the instance has no state)
 accessible method net/minecraft/class_3673 <init> ()V
 

@@ -1,0 +1,3 @@
+accessWidener	v2	intermediary
+# Properties.drops read and written directly (getfield / putfield), as the 1.20.5 layer's CbFieldReshapesGen and mods with an access widener do
+accessible field net/minecraft/class_4970$class_2251 field_10666 Lnet/minecraft/class_5321;

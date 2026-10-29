@@ -63,16 +63,21 @@ public final class CbBuffers {
         return remember(device.createBuffer(label, usage(type, usage), data), type, usage);
     }
 
-    /** GlDevice.createBuffer(Supplier, BufferType, BufferUsage, int size), called on the GL device itself */
+    /**
+     * GlDevice.createBuffer(Supplier, BufferType, BufferUsage, int size), called on the GL device itself.
+     * The cast goes through Object so javac keeps it: 26.1's GL classes are backends, no longer the GpuDevice /
+     * CommandEncoder / RenderPass they implement here, and an elided upcast fails verification of the whole class
+     * once climbed to 26.1 (VerifyError, the climbed client's first GUI frame).
+     */
     public static GpuBuffer createBuffer(net.minecraft.class_10865 device, java.util.function.Supplier<String> label,
             BufferType type, BufferUsage usage, int size) {
-        return createBuffer((GpuDevice) device, label, type, usage, size);
+        return createBuffer((GpuDevice) (Object) device, label, type, usage, size);
     }
 
     /** GlDevice.createBuffer(Supplier, BufferType, BufferUsage, ByteBuffer data), called on the GL device itself */
     public static GpuBuffer createBuffer(net.minecraft.class_10865 device, java.util.function.Supplier<String> label,
             BufferType type, BufferUsage usage, java.nio.ByteBuffer data) {
-        return createBuffer((GpuDevice) device, label, type, usage, data);
+        return createBuffer((GpuDevice) (Object) device, label, type, usage, data);
     }
 
     /**
@@ -98,17 +103,17 @@ public final class CbBuffers {
         encoder.writeToBuffer(buffer.slice(offset, data.remaining()), data);
     }
 
-    /** the same three, called on the GL command encoder itself */
+    /** the same three, called on the GL command encoder itself (the cast through Object: see createBuffer) */
     public static GpuBuffer.MappedView readBuffer(net.minecraft.class_10860 encoder, GpuBuffer buffer) {
-        return readBuffer((com.mojang.blaze3d.systems.CommandEncoder) encoder, buffer);
+        return readBuffer((com.mojang.blaze3d.systems.CommandEncoder) (Object) encoder, buffer);
     }
 
     public static GpuBuffer.MappedView readBuffer(net.minecraft.class_10860 encoder, GpuBuffer buffer, int offset, int length) {
-        return readBuffer((com.mojang.blaze3d.systems.CommandEncoder) encoder, buffer, offset, length);
+        return readBuffer((com.mojang.blaze3d.systems.CommandEncoder) (Object) encoder, buffer, offset, length);
     }
 
     public static void writeToBuffer(net.minecraft.class_10860 encoder, GpuBuffer buffer, java.nio.ByteBuffer data, int offset) {
-        writeToBuffer((com.mojang.blaze3d.systems.CommandEncoder) encoder, buffer, data, offset);
+        writeToBuffer((com.mojang.blaze3d.systems.CommandEncoder) (Object) encoder, buffer, data, offset);
     }
 
     /** GpuBuffer(BufferType, BufferUsage, int)'s super call, reshaped: the subclass instance keeps its 1.21.5 kind */

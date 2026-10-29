@@ -1619,13 +1619,6 @@
    ],
    "basis": "1.21.1 renderInner(display, subState, poseStack, buffers, light, interpolationProgress) is 1.21.2's renderInner(state, poseStack, buffers, light, interpolationProgress): the sub-state is the state's field extraction copied, the last argument the same value (javap both)"
   },
-  "net/minecraft/class_757.method_3168(Lnet/minecraft/class_2960;)V": {
-   "to": "method_62904(Lnet/minecraft/class_2960;)V",
-   "args": [
-    0
-   ],
-   "basis": "GameRenderer.loadEffect(location) -> setPostEffect(id) (javap both bodies): both make the given post effect the active one (1.21.1 built the PostChain there and set effectActive; 1.21.2 records the id, sets effectActive, and ShaderManager builds the chain when it runs). The argument names the same effect, spelled <ns>:shaders/post/<name>.json in 1.21.1 and <ns>:<name> in 1.21.2"
-  },
   "net/minecraft/class_584.method_17111(Lnet/minecraft/class_584$class_585;IFFFFF)V": {
    "to": "method_17112(Lnet/minecraft/class_10051;)V",
    "args": [
