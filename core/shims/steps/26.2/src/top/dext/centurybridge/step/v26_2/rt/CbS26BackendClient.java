@@ -30,6 +30,14 @@ public final class CbS26BackendClient {
         return () -> Minecraft.getInstance().loadCriticalShaders();
     }
 
+    /**
+     * RenderSystem.getModelViewMatrix(): 26.1.2 returned the live model-view stack (typed Matrix4f); 26.2 returns the same
+     * stack from getModelViewStack() (getModelViewMatrixCopy() is a copy, not the live matrix).
+     */
+    public static org.joml.Matrix4f getModelViewMatrix() {
+        return com.mojang.blaze3d.systems.RenderSystem.getModelViewStack();
+    }
+
     /** the draw buffer 26.1.2's single blend state was */
     public static int firstDrawBuffer() {
         return 0;

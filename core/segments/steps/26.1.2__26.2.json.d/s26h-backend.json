@@ -1,5 +1,5 @@
 {
- "_s26h_backend_basis": "26.1.2 graphics bootstrap members tombstoned in climbed layers at 26.1.2 -> 26.2 (layer link-check; the 26.1 layer's rt/CbWallGpu bootstrap), presume moved, javap of both: GLX._initGlfw / RenderSystem.initBackendSystem took a BackendOptions neither read (26.2: no argument; bodies identical but for local slots); GlBackend.createDevice gained the critical shader loader 26.2's Minecraft passes (Minecraft::loadCriticalShaders, run by GpuDevice.loadCriticalShaders); GpuDebugOptions gained useValidationLayers (26.2's Minecraft passes GameConfig.vulkanValidation, false by default); GlStateManager._disableBlend gained the draw-buffer index (BLEND[8], each state toggling the global GL_BLEND as 26.1.2's one did); GameRenderer.update(DeltaTracker, renderLevel) lost renderLevel: 26.2's update is 26.1.2's camera half, the terrain cull it guarded runs at the end of LevelRenderer.render every frame (release_notes_known.md). BackendOptions (gone) is the layer's record facade.",
+ "_s26h_backend_basis": "26.1.2 graphics bootstrap members tombstoned in climbed layers at 26.1.2 -> 26.2 (layer link-check; the 26.1 layer's rt/CbWallGpu bootstrap), presume moved, javap of both: GLX._initGlfw / RenderSystem.initBackendSystem took a BackendOptions neither read (26.2: no argument; bodies identical but for local slots); GlBackend.createDevice gained the critical shader loader 26.2's Minecraft passes (Minecraft::loadCriticalShaders, run by GpuDevice.loadCriticalShaders); GpuDebugOptions gained useValidationLayers (26.2's Minecraft passes GameConfig.vulkanValidation, false by default); GlStateManager._disableBlend gained the draw-buffer index (BLEND[8], each state toggling the global GL_BLEND as 26.1.2's one did); GameRenderer.update(DeltaTracker, renderLevel) lost renderLevel: 26.2's update is 26.1.2's camera half, the terrain cull it guarded runs at the end of LevelRenderer.render every frame (release_notes_known.md). BackendOptions (gone) is the layer's record facade. RenderSystem.getModelViewMatrix() returned the live modelViewStack; 26.2's getModelViewStack() returns the same object.",
  "classRenames": {
   "com/mojang/blaze3d/platform/BackendOptions": "top/dext/centurybridge/step/v26_2/facade/BackendOptions"
  },
@@ -53,5 +53,8 @@
    ],
    "basis": "26.2's update is 26.1.2's camera half; the terrain cull renderLevel guarded runs at the end of every LevelRenderer.render"
   }
+ },
+ "staticRedirects": {
+  "com/mojang/blaze3d/systems/RenderSystem.getModelViewMatrix()Lorg/joml/Matrix4f;": "top/dext/centurybridge/step/v26_2/rt/CbS26BackendClient"
  }
 }

@@ -29,7 +29,8 @@
     "CbS26DelayedCrashMixin",
     "CbS26TagsProviderRestoredMixin",
     "CbS26FapiTagsProviderRestoredMixin",
-    "CbS26TagsProviderKeyedMixin"
+    "CbS26TagsProviderKeyedMixin",
+    "CbS26RecipeProviderRestoredMixin"
   ],
   "client": [
     "CbS26LevelRendererRestoredMixin",
