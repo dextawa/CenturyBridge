@@ -245,6 +245,26 @@ public final class Driver {
             }
         });
 
+        run("useAnim.create", () -> {
+            // 1.21.1's UseAnim constructor through an @Invoker("<init>") (Forge-style enum extension, Kilt E6): on 1.21.2
+            // the constant gets id = ordinal and the lower-case name, as 1.21.2's own constants have
+            int n = net.minecraft.class_1839.values().length;
+            net.minecraft.class_1839 a = cb.s212.mixin.UseAnimInvoker.cbs212$create("CBS212_ANIM", n);
+            check("useAnim.create", a != null && a.name().equals("CBS212_ANIM") && a.ordinal() == n, "made " + a + " ordinal " + (a == null ? -1 : a.ordinal()));
+            try {
+                Class<?> u = Class.forName("cb.s212n.UseAnims");
+                String seen = (String) u.getMethod("describe", Object.class).invoke(null, a);
+                String nat = (String) u.getMethod("nativeMade").invoke(null);
+                check("useAnim.native", seen.equals("CBS212_ANIM/" + n + "/" + n + "/cbs212_anim")
+                        && nat.equals("CBS212N_ANIM/" + n + "/" + n + "/cbs212n_anim"),
+                    "1.21.2 reads the converted constant as " + seen + "; a native one as " + nat);
+            } catch (ClassNotFoundException e) {
+                // without cb-s212n
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         System.out.println("CB-S212 summary ok=" + ok + " fail=" + fail);
     }
 }
