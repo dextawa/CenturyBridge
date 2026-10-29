@@ -1,0 +1,65 @@
+{
+ "_s205d_vertexformat_basis": "1.21.4's VertexFormat / VertexFormat.Builder / VertexFormatElement (+ Type, Usage) on 1.21.5's com/mojang/blaze3d/vertex classes (sruntime-classmoves renames the classes; Builder class_293$class_9803 was left out there and is renamed here). Members that only changed their names (unobfuscated blaze3d) are methodRenames / fieldRenames, each pair from sruntime-classmoves' _check (member overlap and same-code bodies) and re-read by javap (Builder: 1.21.4 method_60842/60841/60840 and 1.21.5 add/padding/build have the same bodies). setupBufferState / clearBufferState, IndexType.asGLType / Mode.asGLMode and the 3-argument CompiledShaderProgram.link are bodies in rt/CbVertexFormats. Climbed 1.21.5 client: the 1.21 layer's CbRenderShaders.<clinit> failed NoSuchMethodError VertexFormat.method_60833 at the first reload (black screen). Type USHORT / UINT / INT and Usage GENERIC (left in sruntime-classmoves' missing list) are the same enum constants by their names in both <clinit>s (javap). VertexFormatElement.setupBufferState(index, offset, stride) and Type.getGlType() are bodies in rt/CbVertexFormats.",
+ "classRenames": {
+  "net/minecraft/class_293$class_9803": "com/mojang/blaze3d/vertex/VertexFormat$Builder"
+ },
+ "methodRenames": {
+  "net/minecraft/class_293$class_9803.method_60840()Lnet/minecraft/class_293;": "build",
+  "net/minecraft/class_293$class_9803.method_60841(I)Lnet/minecraft/class_293$class_9803;": "padding",
+  "net/minecraft/class_293$class_9803.method_60842(Ljava/lang/String;Lnet/minecraft/class_296;)Lnet/minecraft/class_293$class_9803;": "add",
+  "net/minecraft/class_293.method_1357()Ljava/util/List;": "getElements",
+  "net/minecraft/class_293.method_1362()I": "getVertexSize",
+  "net/minecraft/class_293.method_34445()Ljava/util/List;": "getElementAttributeNames",
+  "net/minecraft/class_293.method_60833()Lnet/minecraft/class_293$class_9803;": "builder",
+  "net/minecraft/class_293.method_60835(Lnet/minecraft/class_296;)I": "getOffset",
+  "net/minecraft/class_293.method_60836(Lnet/minecraft/class_296;)Z": "contains",
+  "net/minecraft/class_293.method_60837(Lnet/minecraft/class_296;)Ljava/lang/String;": "getElementName",
+  "net/minecraft/class_293.method_60838()[I": "getOffsetsByElement",
+  "net/minecraft/class_293.method_60839()I": "getElementsMask",
+  "net/minecraft/class_296$class_297.method_1391()I": "size",
+  "net/minecraft/class_296.comp_2842()I": "id",
+  "net/minecraft/class_296.comp_2843()I": "index",
+  "net/minecraft/class_296.comp_2844()Lnet/minecraft/class_296$class_297;": "type",
+  "net/minecraft/class_296.comp_2845()Lnet/minecraft/class_296$class_298;": "usage",
+  "net/minecraft/class_296.comp_2846()I": "count",
+  "net/minecraft/class_296.method_60843()I": "mask",
+  "net/minecraft/class_296.method_60844(I)Lnet/minecraft/class_296;": "byId",
+  "net/minecraft/class_296.method_60845(IILnet/minecraft/class_296$class_297;Lnet/minecraft/class_296$class_298;I)Lnet/minecraft/class_296;": "register",
+  "net/minecraft/class_296.method_60847()I": "byteSize",
+  "net/minecraft/class_296.method_60848(I)Ljava/util/stream/Stream;": "elementsFromMask"
+ },
+ "fieldRenames": {
+  "net/minecraft/class_296$class_297.field_1617:Lnet/minecraft/class_296$class_297;": "INT",
+  "net/minecraft/class_296$class_297.field_1619:Lnet/minecraft/class_296$class_297;": "UINT",
+  "net/minecraft/class_296$class_297.field_1621:Lnet/minecraft/class_296$class_297;": "BYTE",
+  "net/minecraft/class_296$class_297.field_1622:Lnet/minecraft/class_296$class_297;": "USHORT",
+  "net/minecraft/class_296$class_297.field_1623:Lnet/minecraft/class_296$class_297;": "FLOAT",
+  "net/minecraft/class_296$class_297.field_1624:Lnet/minecraft/class_296$class_297;": "UBYTE",
+  "net/minecraft/class_296$class_297.field_1625:Lnet/minecraft/class_296$class_297;": "SHORT",
+  "net/minecraft/class_296$class_298.field_1632:Lnet/minecraft/class_296$class_298;": "COLOR",
+  "net/minecraft/class_296$class_298.field_1633:Lnet/minecraft/class_296$class_298;": "POSITION",
+  "net/minecraft/class_296$class_298.field_1635:Lnet/minecraft/class_296$class_298;": "NORMAL",
+  "net/minecraft/class_296$class_298.field_1636:Lnet/minecraft/class_296$class_298;": "UV",
+  "net/minecraft/class_296$class_298.field_20782:Lnet/minecraft/class_296$class_298;": "GENERIC",
+  "net/minecraft/class_296.field_52107:Lnet/minecraft/class_296;": "POSITION",
+  "net/minecraft/class_296.field_52108:Lnet/minecraft/class_296;": "COLOR",
+  "net/minecraft/class_296.field_52109:Lnet/minecraft/class_296;": "UV0",
+  "net/minecraft/class_296.field_52110:Lnet/minecraft/class_296;": "UV",
+  "net/minecraft/class_296.field_52111:Lnet/minecraft/class_296;": "UV1",
+  "net/minecraft/class_296.field_52112:Lnet/minecraft/class_296;": "UV2",
+  "net/minecraft/class_296.field_52113:Lnet/minecraft/class_296;": "NORMAL"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_293.method_22649()V": "top/dext/centurybridge/step/v1_21_5/rt/CbVertexFormats",
+  "net/minecraft/class_293.method_22651()V": "top/dext/centurybridge/step/v1_21_5/rt/CbVertexFormats",
+  "net/minecraft/class_296.method_22652(IJI)V": "top/dext/centurybridge/step/v1_21_5/rt/CbVertexFormats",
+  "net/minecraft/class_296$class_297.method_1390()I": "top/dext/centurybridge/step/v1_21_5/rt/CbVertexFormats"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_293$class_5595.field_27374:I": "top/dext/centurybridge/step/v1_21_5/rt/CbVertexFormats",
+  "net/minecraft/class_293$class_5596.field_27383:I": "top/dext/centurybridge/step/v1_21_5/rt/CbVertexFormats"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_5944.method_62896(Lnet/minecraft/class_10141;Lnet/minecraft/class_10141;Lnet/minecraft/class_293;)Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_5/rt/CbVertexFormats#link"
+ }
+}
