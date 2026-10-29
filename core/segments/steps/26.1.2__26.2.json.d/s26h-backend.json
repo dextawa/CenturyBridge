@@ -1,0 +1,60 @@
+{
+ "_s26h_backend_basis": "26.1.2 graphics bootstrap members tombstoned in climbed layers at 26.1.2 -> 26.2 (layer link-check; the 26.1 layer's rt/CbWallGpu bootstrap), presume moved, javap of both: GLX._initGlfw / RenderSystem.initBackendSystem took a BackendOptions neither read (26.2: no argument; bodies identical but for local slots); GlBackend.createDevice gained the critical shader loader 26.2's Minecraft passes (Minecraft::loadCriticalShaders, run by GpuDevice.loadCriticalShaders); GpuDebugOptions gained useValidationLayers (26.2's Minecraft passes GameConfig.vulkanValidation, false by default); GlStateManager._disableBlend gained the draw-buffer index (BLEND[8], each state toggling the global GL_BLEND as 26.1.2's one did); GameRenderer.update(DeltaTracker, renderLevel) lost renderLevel: 26.2's update is 26.1.2's camera half, the terrain cull it guarded runs at the end of LevelRenderer.render every frame (release_notes_known.md). BackendOptions (gone) is the layer's record facade. RenderSystem.getModelViewMatrix() returned the live modelViewStack; 26.2's getModelViewStack() returns the same object.",
+ "classRenames": {
+  "com/mojang/blaze3d/platform/BackendOptions": "top/dext/centurybridge/step/v26_2/facade/BackendOptions"
+ },
+ "callReshapes": {
+  "com/mojang/blaze3d/platform/GLX._initGlfw(Lcom/mojang/blaze3d/platform/BackendOptions;)Ljava/util/function/LongSupplier;": {
+   "desc": "()Ljava/util/function/LongSupplier;",
+   "ops": [
+    "drop:0"
+   ],
+   "basis": "26.1.2's _initGlfw never read its BackendOptions"
+  },
+  "com/mojang/blaze3d/systems/RenderSystem.initBackendSystem(Lcom/mojang/blaze3d/platform/BackendOptions;)Lnet/minecraft/util/TimeSource$NanoTimeSource;": {
+   "desc": "()Lnet/minecraft/util/TimeSource$NanoTimeSource;",
+   "ops": [
+    "drop:0"
+   ],
+   "basis": "26.1.2 passed it only to _initGlfw, which never read it"
+  },
+  "com/mojang/blaze3d/shaders/GpuDebugOptions.<init>(IZZ)V": {
+   "desc": "(IZZZ)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v26_2/rt/CbS26BackendClient#noValidationLayers()Z"
+   ],
+   "basis": "26.1.2 had no validation layers"
+  },
+  "com/mojang/blaze3d/opengl/GlBackend.createDevice(JLcom/mojang/blaze3d/shaders/ShaderSource;Lcom/mojang/blaze3d/shaders/GpuDebugOptions;)Lcom/mojang/blaze3d/systems/GpuDevice;": {
+   "desc": "(JLcom/mojang/blaze3d/shaders/ShaderSource;Lcom/mojang/blaze3d/shaders/GpuDebugOptions;Ljava/lang/Runnable;)Lcom/mojang/blaze3d/systems/GpuDevice;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v26_2/rt/CbS26BackendClient#criticalShaderLoader()Ljava/lang/Runnable;"
+   ],
+   "basis": "the loader 26.2's Minecraft passes"
+  },
+  "com/mojang/blaze3d/opengl/GlStateManager._disableBlend()V": {
+   "desc": "(I)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v26_2/rt/CbS26BackendClient#firstDrawBuffer()I"
+   ],
+   "basis": "draw buffer 0; every per-buffer state toggles the one global GL_BLEND"
+  },
+  "net/minecraft/client/renderer/GameRenderer.update(Lnet/minecraft/client/DeltaTracker;Z)V": {
+   "desc": "(Lnet/minecraft/client/DeltaTracker;)V",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "26.2's update is 26.1.2's camera half; the terrain cull renderLevel guarded runs at the end of every LevelRenderer.render"
+  }
+ },
+ "staticRedirects": {
+  "com/mojang/blaze3d/systems/RenderSystem.getModelViewMatrix()Lorg/joml/Matrix4f;": "top/dext/centurybridge/step/v26_2/rt/CbS26BackendClient"
+ }
+}
