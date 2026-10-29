@@ -9,7 +9,8 @@
     "NativeCanBurnMixin",
     "NativeSeenMixin",
     "NativeLookAtMixin",
-    "NativeDropsAccess"
+    "NativeDropsAccess",
+    "NativeUseAnimInvoker"
   ],
   "injectors": {
     "defaultRequire": 1

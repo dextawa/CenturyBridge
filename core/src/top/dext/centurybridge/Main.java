@@ -206,6 +206,17 @@ public final class Main {
                 System.out.println("WARNING: no layer jar (" + surfaces + "): every facade-only token keeps its intermediary name");
             }
             wallTable = top.dext.centurybridge.data.JarRemapper.loadTable(renameTable).keepFacadeTokens(chain.classRenames, declared);
+            // the target's Fabric API: a CB class overriding a vanilla method through a Fabric API interface takes its new name
+            wallTable.targetLibraries = Path.of("data/runtime/client-" + args[3] + "/.fabric/processedMods");
+            // the step's adapters: a CB class's token method an adapter requires takes the table's name (Table.wallAdapters)
+            for (Chain.AdapterHook h : chain.adapterHooks) {
+                wallTable.wallAdapter(h.adapter, h.under, h.requires);
+            }
+            for (Chain.OverrideHook h : chain.overrideHooks) {
+                if (h.adapter != null) {
+                    wallTable.wallAdapter(h.adapter, h.onlyUnder, java.util.List.of(h.oldName + h.oldDesc));
+                }
+            }
             // the wall table's source names are 1.21.11's: a bare method id in a mixin selector gets its 1.21.11
             // descriptor where the target class has several methods of the new name (Table.sourceMethods)
             if (Files.exists(codeOf("1.21.11"))) {
@@ -333,6 +344,11 @@ public final class Main {
                 // instead of the injector being disabled as "target gone"
                 wallRepair.layerMembers = chain.layerMembers;
                 wallRepair.stepTo = args[3];
+                // a mixinAnchorMoves "to" may be a layer method (the given-back brain lists): the layer, real-named
+                // like the jar by now, as a place injectors move to
+                if (chain.layerJar != null) {
+                    wallRepair.moveLayer(chain.layerJar);
+                }
                 // the step's mixinMoves / mixinAnchorMoves keyed and spelled as the jar is by now (the wall rename; a W
                 // class born past the wall is spelled in its real name in the wiring already)
                 if (wallTable != null) {

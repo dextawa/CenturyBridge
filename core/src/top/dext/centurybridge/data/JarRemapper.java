@@ -95,6 +95,34 @@ public final class JarRemapper {
         public java.util.Map<String, java.util.Set<String>> targetMethods;
         public java.util.Map<String, String[]> targetSupers;
         public final java.util.Map<String, String[]> jarSupers = new java.util.HashMap<>();
+        /** the input jar's CenturyBridge classes' declared field names ({@link #remapper}: inherited facade fields) */
+        public final java.util.Map<String, java.util.Set<String>> jarFields = new java.util.HashMap<>();
+        /**
+         * The target's Fabric API modules (a processedMods directory; null: none): their classes join the target's
+         * methods and supertypes, so a CenturyBridge class overriding a vanilla method through a Fabric API interface
+         * (the 1.20.4 layer's NoOverlay implements ModResourcePack, which extends PackResources) is seen to override
+         * it ({@link #remapper}'s cbOverride) and takes the method's new name past the wall instead of keeping its
+         * token (an AbstractMethodError at the first call). Read once ({@link #loadTargetLibraries}).
+         */
+        public Path targetLibraries;
+        private java.util.Map<String, java.util.Set<String>> libMethods;
+        private java.util.Map<String, String[]> libSupers;
+        /**
+         * The adapters of the step crossing the wall (its adapterHooks, and its override / convert hooks that name an
+         * adapter): adapter interface -> each {under, required V members (name + desc, intermediary)}. A CenturyBridge class keeps its token-named members past the wall, and a method whose
+         * vanilla shape changed at the wall no longer overrides anything, so the hierarchy rule leaves it under its
+         * token too -- while the converter gave the class the step's adapter for exactly that method, whose abstract
+         * method carries the table's name with V's shape (26.1's CbWallTintClient$LegacyBlockAndTintGetter.getShade):
+         * the adapter stayed unimplemented. A token method of a class that has such an adapter among its supertypes
+         * and that the adapter requires takes the table's name for it on the hook's {@code under} class; nothing else
+         * is renamed by this rule (remapper's adapterMember).
+         */
+        public final java.util.Map<String, java.util.List<Object[]>> wallAdapters = new java.util.HashMap<>();
+
+        /** registers one adapter hook of the wall step: see {@link #wallAdapters} */
+        public void wallAdapter(String adapter, String under, java.util.Collection<String> requires) {
+            wallAdapters.computeIfAbsent(adapter, k -> new java.util.ArrayList<>()).add(new Object[] {under, new java.util.HashSet<>(requires)});
+        }
 
         /**
          * The input jar's mixins (class name as in the input -> its @Mixin targets, value and targets alike) and the
@@ -140,6 +168,91 @@ public final class JarRemapper {
          */
         public final java.util.Map<String, java.util.Set<String>> cbInterfaceMethods = new java.util.HashMap<>();
         public final java.util.Map<String, java.util.List<String>> cbImplementers = new java.util.HashMap<>();
+        /** CB interface -> its abstract methods (name + desc, input names) and its own superinterfaces ({@link #inheritedBridges}) */
+        public final java.util.Map<String, java.util.Set<String>> cbInterfaceAbstract = new java.util.HashMap<>();
+        public final java.util.Map<String, String[]> cbInterfaceSupers = new java.util.HashMap<>();
+
+        /**
+         * A layer mixin that makes its target implement a CenturyBridge interface whose abstract method the target
+         * itself declared under the same id (the 1.20.2 layer's CbNetRealmsTaskBridge: LongRunningTask implements the
+         * facade class_5221, 1.20.1's ErrorCallback, through LongRunningTask's own error, method_21067, opened by the
+         * layer's access widener). Past the wall the target's method carries the table's name (26.1
+         * LongRunningTask.error) while the interface keeps its token for mods' implementations and calls, so nothing
+         * implemented it any more (AbstractMethodError). Each such method, as {name, desc, target, newName} (input
+         * names): the mixin gets a public bridge under the token calling the target's renamed method ({@link #remap}).
+         * Only when the mixin declares no method of that name and descriptor itself, the table renames the target's
+         * member and the target release declares the new name with the renamed descriptor in the target's hierarchy,
+         * the same for every target of the mixin.
+         */
+        java.util.List<String[]> inheritedBridges(String mixin, Remapper r) {
+            java.util.List<String[]> out = new java.util.ArrayList<>();
+            java.util.List<String> targets = mixinTargets.get(mixin);
+            java.util.List<String> direct = mixinInterfaces.get(mixin);
+            if (targets == null || targets.isEmpty() || direct == null || targetMethods == null) {
+                return out;
+            }
+            java.util.Set<String> own = mixinOwnMethods.getOrDefault(mixin, java.util.Set.of());
+            java.util.Set<String> seen = new java.util.HashSet<>();
+            java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(direct);
+            java.util.Set<String> done = new java.util.HashSet<>();
+            while (!todo.isEmpty()) {
+                String i = todo.poll();
+                if (!done.add(i)) {
+                    continue;
+                }
+                String[] sup = cbInterfaceSupers.get(i);
+                if (sup != null) {
+                    todo.addAll(java.util.Arrays.asList(sup));
+                }
+                for (String nd : cbInterfaceAbstract.getOrDefault(i, java.util.Set.of())) {
+                    int p = nd.indexOf('(');
+                    String name = nd.substring(0, p);
+                    String desc = nd.substring(p);
+                    if (!name.startsWith("method_") || own.contains(nd) || !seen.add(nd)) {
+                        continue;
+                    }
+                    String agreed = null;
+                    for (String t : targets) {
+                        String n = byOwner.get(t + "." + name);
+                        if (n == null) {
+                            n = members.get(name);
+                        }
+                        if (n == null || n.equals(name) || !targetDeclares(r.map(t), n + r.mapMethodDesc(desc), new java.util.HashSet<>())) {
+                            agreed = null;
+                            break;
+                        }
+                        if (agreed != null && !agreed.equals(n)) {
+                            agreed = null;
+                            break;
+                        }
+                        agreed = n;
+                    }
+                    if (agreed != null) {
+                        out.add(new String[] {name, desc, targets.get(0), agreed});
+                    }
+                }
+            }
+            return out;
+        }
+
+        private boolean targetDeclares(String owner, String nameDesc, java.util.Set<String> seen) {
+            if (owner == null || !seen.add(owner)) {
+                return false;
+            }
+            java.util.Set<String> ms = targetMethods.get(owner);
+            if (ms != null && ms.contains(nameDesc)) {
+                return true;
+            }
+            String[] sup = targetSupers.get(owner);
+            if (sup != null) {
+                for (String x : sup) {
+                    if (targetDeclares(x, nameDesc, seen)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
         String interfaceMember(String owner, String name, String desc, Remapper r) {
             java.util.Set<String> declared = cbInterfaceMethods.get(owner);
@@ -472,6 +585,10 @@ public final class JarRemapper {
                     if (ir != null) {
                         return ir;
                     }
+                    String ad = adapterMember(owner, name, desc);
+                    if (ad != null) {
+                        return ad;
+                    }
                     String m = member(owner, name);
                     if (m.equals(name)) {
                         String ov = cbOverride(owner, name, desc);
@@ -483,6 +600,46 @@ public final class JarRemapper {
                         return name;
                     }
                     return targetMethods == null ? m : byDescriptor(owner, name, desc, m);
+                }
+
+                /** a CB class's token method a wall-step adapter among its supertypes requires: see {@link Table#wallAdapters} */
+                private String adapterMember(String owner, String name, String desc) {
+                    if (wallAdapters.isEmpty() || !(owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/"))) {
+                        return null;
+                    }
+                    java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(java.util.List.of(owner));
+                    java.util.Set<String> seen = new java.util.HashSet<>();
+                    while (!todo.isEmpty()) {
+                        String o = todo.poll();
+                        if (!seen.add(o)) {
+                            continue;
+                        }
+                        for (Object[] hook : wallAdapters.getOrDefault(o, java.util.List.of())) {
+                            if (!((java.util.Set<?>) hook[1]).contains(name + desc)) {
+                                continue;
+                            }
+                            String under = (String) hook[0];
+                            String to = under == null ? null : byOwner.get(under + "." + name);
+                            if (to == null && under != null) {
+                                to = superMember(Table.this, under, name);
+                            }
+                            if (to == null) {
+                                to = members.get(name);
+                            }
+                            if (to != null) {
+                                return to;
+                            }
+                        }
+                        String[] sup = jarSupers.get(o);
+                        if (sup != null) {
+                            for (String x : sup) {
+                                if (x != null) {
+                                    todo.add(x);
+                                }
+                            }
+                        }
+                    }
+                    return null;
                 }
 
                 /**
@@ -592,7 +749,53 @@ public final class JarRemapper {
                 public String mapFieldName(String owner, String name, String desc) {
                     // a record component's backing field carries the accessor's token
                     // and takes the accessor's mojang name
-                    return name.startsWith("field_") || name.startsWith("comp_") ? member(owner, name) : name;
+                    if (!name.startsWith("field_") && !name.startsWith("comp_")) {
+                        return name;
+                    }
+                    String m = member(owner, name);
+                    if (m.equals(name) && (owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/"))) {
+                        String inh = cbInheritedField(owner, name, new java.util.HashSet<>());
+                        if (inh != null) {
+                            return inh;
+                        }
+                    }
+                    return m;
+                }
+
+                /**
+                 * A field token named through a CenturyBridge class of the jar that does not declare it: an earlier
+                 * layer's facade (the 1.20.5 layer's GustDustParticle reading Particle's onGround, field_3862, as
+                 * this.field_3862) inherits it from the game class it extends, and the JVM resolves the reference
+                 * there -- under the game class's new name past the wall. The table's name of the token, when the
+                 * first non-CenturyBridge class up the jar's hierarchy is reached with no CenturyBridge class on
+                 * the way declaring the token; null otherwise (the CB class's own field keeps its name).
+                 */
+                private String cbInheritedField(String owner, String name, java.util.Set<String> seen) {
+                    if (!seen.add(owner)) {
+                        return null;
+                    }
+                    java.util.Set<String> declared = jarFields.get(owner);
+                    String[] sup = jarSupers.get(owner);
+                    if (declared == null || sup == null || declared.contains(name)) {
+                        return null; // not a class of this jar (nothing known), or its own field
+                    }
+                    for (String x : sup) {
+                        if (x == null) {
+                            continue;
+                        }
+                        if (x.startsWith("top/dext/centurybridge/") || x.startsWith("centurybridge/")) {
+                            String r = cbInheritedField(x, name, seen);
+                            if (r != null) {
+                                return r;
+                            }
+                        } else if (!x.equals("java/lang/Object") && !x.startsWith("java/")) {
+                            String hit = members.get(name);
+                            if (hit != null) {
+                                return hit;
+                            }
+                        }
+                    }
+                    return null;
                 }
 
                 /**
@@ -665,6 +868,7 @@ public final class JarRemapper {
         if (targetJar != null && Files.exists(targetJar)) {
             table.targetKinds = loadKinds(targetJar);
             loadTarget(table, targetJar);
+            loadTargetLibraries(table);
             loadJarSupers(table, inJar);
         }
         int nClasses;
@@ -764,6 +968,14 @@ public final class JarRemapper {
                 java.util.Set<String> ms = new java.util.HashSet<>();
                 cn.methods.forEach(m -> ms.add(m.name + m.desc));
                 table.cbInterfaceMethods.put(cn.name, ms);
+                java.util.Set<String> abs = new java.util.HashSet<>();
+                cn.methods.forEach(m -> {
+                    if ((m.access & org.objectweb.asm.Opcodes.ACC_ABSTRACT) != 0) {
+                        abs.add(m.name + m.desc);
+                    }
+                });
+                table.cbInterfaceAbstract.put(cn.name, abs);
+                table.cbInterfaceSupers.put(cn.name, cn.interfaces.toArray(new String[0]));
             }
             if (cn.interfaces != null) {
                 for (String i : cn.interfaces) {
@@ -1230,7 +1442,12 @@ public final class JarRemapper {
                 if (reflected != null) {
                     cr = new ClassReader(reflected);
                 }
-                cr.accept(mixinStrings(new ClassRemapper(table.targetKinds == null ? cw : new KindFix(cw, table.targetKinds), remapper), table), 0);
+                java.util.List<String[]> bridges = table.inheritedBridges(cr.getClassName(), remapper);
+                org.objectweb.asm.ClassVisitor sink = table.targetKinds == null ? cw : new KindFix(cw, table.targetKinds);
+                if (!bridges.isEmpty()) {
+                    sink = new InheritedBridges(sink, bridges, remapper);
+                }
+                cr.accept(mixinStrings(new ClassRemapper(sink, remapper), table), 0);
                 String outName = remapper.map(cr.getClassName()) + ".class";
                 if (!outName.equals(e.getName()) && !written.add(outName)) {
                     continue;
@@ -1242,6 +1459,49 @@ public final class JarRemapper {
             }
         }
         return nClasses;
+    }
+
+    /** adds {@link Table#inheritedBridges}' bridges to a mixin class (output names: the visitor sits after the remapper) */
+    private static final class InheritedBridges extends org.objectweb.asm.ClassVisitor {
+        private final java.util.List<String[]> bridges;
+        private final Remapper remapper;
+        private String owner;
+
+        InheritedBridges(org.objectweb.asm.ClassVisitor cv, java.util.List<String[]> bridges, Remapper remapper) {
+            super(org.objectweb.asm.Opcodes.ASM9, cv);
+            this.bridges = bridges;
+            this.remapper = remapper;
+        }
+
+        @Override
+        public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+            owner = name;
+            super.visit(version, access, name, signature, superName, interfaces);
+        }
+
+        @Override
+        public void visitEnd() {
+            for (String[] b : bridges) {
+                String desc = remapper.mapMethodDesc(b[1]);
+                String target = remapper.map(b[2]);
+                org.objectweb.asm.MethodVisitor mv = super.visitMethod(org.objectweb.asm.Opcodes.ACC_PUBLIC, b[0], desc, null, null);
+                mv.visitCode();
+                mv.visitVarInsn(org.objectweb.asm.Opcodes.ALOAD, 0);
+                int slot = 1;
+                for (org.objectweb.asm.Type t : org.objectweb.asm.Type.getArgumentTypes(desc)) {
+                    mv.visitVarInsn(t.getOpcode(org.objectweb.asm.Opcodes.ILOAD), slot);
+                    slot += t.getSize();
+                }
+                mv.visitMethodInsn(org.objectweb.asm.Opcodes.INVOKEVIRTUAL, target, b[3], desc, false);
+                org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(desc);
+                mv.visitInsn(ret.getOpcode(org.objectweb.asm.Opcodes.IRETURN));
+                mv.visitMaxs(Math.max(slot, ret.getSize()), slot);
+                mv.visitEnd();
+                System.out.println("wall bridge: " + owner + "." + b[0] + desc + " -> " + target + "." + b[3]
+                    + " (a CenturyBridge interface method the mixin's target implemented under the token)");
+            }
+            super.visitEnd();
+        }
     }
 
     public static void remapToIntermediary(Path tiny, Path inJar, Path outJar) throws IOException {
@@ -1406,6 +1666,47 @@ public final class JarRemapper {
         table.targetSupers = supers;
     }
 
+    /** the target's Fabric API classes into its methods and supertypes ({@link Table#targetLibraries}); game classes win */
+    private static void loadTargetLibraries(Table table) throws IOException {
+        if (table.targetLibraries == null || !Files.isDirectory(table.targetLibraries)) {
+            return;
+        }
+        if (table.libMethods == null) {
+            table.libMethods = new java.util.HashMap<>();
+            table.libSupers = new java.util.HashMap<>();
+            java.util.List<Path> jars;
+            try (java.util.stream.Stream<Path> st = Files.list(table.targetLibraries)) {
+                jars = st.filter(f -> f.toString().endsWith(".jar")).sorted().toList();
+            }
+            for (Path j : jars) {
+                try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(j))) {
+                    ZipEntry e;
+                    while ((e = zin.getNextEntry()) != null) {
+                        String n = e.getName();
+                        if (!n.endsWith(".class") || n.startsWith("net/minecraft/") || n.startsWith("com/mojang/")) {
+                            continue;
+                        }
+                        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+                        new ClassReader(zin.readAllBytes()).accept(cn, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                        java.util.Set<String> ms = new java.util.HashSet<>();
+                        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                            ms.add(m.name + m.desc);
+                        }
+                        java.util.List<String> sup = new java.util.ArrayList<>();
+                        if (cn.superName != null) {
+                            sup.add(cn.superName);
+                        }
+                        sup.addAll(cn.interfaces);
+                        table.libMethods.putIfAbsent(cn.name, ms);
+                        table.libSupers.putIfAbsent(cn.name, sup.toArray(new String[0]));
+                    }
+                }
+            }
+        }
+        table.libMethods.forEach(table.targetMethods::putIfAbsent);
+        table.libSupers.forEach(table.targetSupers::putIfAbsent);
+    }
+
     /** the input jar's classes' supertypes, renamed as the jar will be ({@link Table#jarSupers}) */
     private static void loadJarSupers(Table table, Path jar) throws IOException {
         Remapper r = table.remapper();
@@ -1424,6 +1725,17 @@ public final class JarRemapper {
                     sup.add(r.map(i));
                 }
                 table.jarSupers.put(r.map(cr.getClassName()), sup.toArray(new String[0]));
+                if (cr.getClassName().startsWith("top/dext/centurybridge/") || cr.getClassName().startsWith("centurybridge/")) {
+                    java.util.Set<String> fields = new java.util.HashSet<>();
+                    cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                        @Override
+                        public org.objectweb.asm.FieldVisitor visitField(int acc, String n, String d, String sig, Object v) {
+                            fields.add(n);
+                            return null;
+                        }
+                    }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                    table.jarFields.put(cr.getClassName(), fields);
+                }
             }
         }
     }

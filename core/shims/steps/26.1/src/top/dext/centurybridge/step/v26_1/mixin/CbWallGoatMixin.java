@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 /**
  * 1.21.11 Goat members 26.1 dropped, given back (covers): addHorns() / removeHorns() set both horn flags, as
- * 1.21.11's did (SENSOR_TYPES / MEMORY_TYPES: rt/CbWallGoats).
+ * 1.21.11's did (SENSOR_TYPES / MEMORY_TYPES: rt/brainlists/CbWallBrainListGoat).
  */
 @Mixin(value = Goat.class, priority = CbVanillaReads.PRIORITY)
 public abstract class CbWallGoatMixin {

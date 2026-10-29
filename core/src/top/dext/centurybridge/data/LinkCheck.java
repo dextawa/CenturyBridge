@@ -736,17 +736,141 @@ public final class LinkCheck {
     /** the instruction being checked is a constructor's super(...)/this(...) call */
     private boolean delegationSite;
 
-    private void checkAll() {
-        for (var e : subjects.entrySet()) {
-            curJar = e.getKey();
-            reported = new HashSet<>();
-            rules = rulesFor(curJar);
-            for (ClassNode cn : e.getValue()) {
-                if (cn.name.startsWith("centurybridge/gen/Tombstones")) continue; // lazy-fail by design
-                if (!live(cn)) continue; // stripped by triage: never applied
-                checkClass(cn);
+    /**
+     * -Dcb.linkcheck.sharedAw=<glob>: the subjects whose jar name matches are loaded together, so each one's access
+     * widener applies to the others too (the climbed CenturyBridge layers of one runtime: climb_runtime.sh packs them
+     * into one directory and the game loads them all). Such a subject is judged with every matching subject's access
+     * widener in force; what only another one's opened stays visible in shared-aw.tsv, naming the opener, so a layer
+     * that drops its line brings the finding back.
+     */
+    private static final String SHARED_AW = System.getProperty("cb.linkcheck.sharedAw", "");
+    private final java.nio.file.PathMatcher sharedMatcher = SHARED_AW.isEmpty() ? null
+        : FileSystems.getDefault().getPathMatcher("glob:" + SHARED_AW);
+
+    /** a finding only another subject's access widener satisfied: who opened it ("+"-joined when none alone did) */
+    record SharedSatisfied(String jar, String kind, String where, String ref, String openers) {}
+    private final List<SharedSatisfied> sharedSatisfied = new ArrayList<>();
+
+    private boolean shared(String tag) {
+        return sharedMatcher != null && sharedMatcher.matches(Path.of(tag));
+    }
+
+    private void checkSubject(List<ClassNode> classes) {
+        reported = new HashSet<>();
+        for (ClassNode cn : classes) {
+            if (cn.name.startsWith("centurybridge/gen/Tombstones")) continue; // lazy-fail by design
+            if (!live(cn)) continue; // stripped by triage: never applied
+            checkClass(cn);
+        }
+    }
+
+    /** the subject's access-widener files as rulesFor reads them, without its findings */
+    private void readOwnAws(AwRules r, String tag) {
+        for (AwFile f : subjectAws.getOrDefault(tag, List.of())) if (f.text() != null) r.read(AwRules.lines(f.text()), runtimeNamespace);
+    }
+
+    /** rulesFor once more, its AWFILE findings already recorded by the first call */
+    private AwRules rulesAgain(String tag) {
+        int n = findings.size();
+        AwRules r = rulesFor(tag);
+        findings.subList(n, findings.size()).clear();
+        return r;
+    }
+
+    /**
+     * The subject's own access-widener lines that name a game class or member T does not declare (the loader applies
+     * them to nothing, silently): a line written for the release its layer was built on that a later step's drift left
+     * behind (a constructor a reshape grew, a field that moved to a superclass). Listed with the shared set
+     * (aw-stale.tsv), never counted: the site that relied on the line is what fails, as an ACCESS finding.
+     */
+    record StaleAw(String jar, String line, String why) {}
+    private final List<StaleAw> staleAws = new ArrayList<>();
+
+    private void listStaleAws(String tag) {
+        for (AwFile f : subjectAws.getOrDefault(tag, List.of())) {
+            if (f.text() == null) continue;
+            for (String raw : AwRules.lines(f.text())) {
+                int hash = raw.indexOf('#');
+                String line = (hash >= 0 ? raw.substring(0, hash) : raw).trim();
+                String[] t = line.split("\\s+");
+                if (t.length < 3 || t[0].endsWith("inject-interface") || t[0].endsWith("extend-enum")
+                        || t[0].equals("accessWidener") || t[0].equals("classTweaker")) continue;
+                if (!AwRules.tweakable(t[2])) continue;
+                Cls c = cls(t[2]);
+                String why = null;
+                if (c == null) why = "no class " + t[2];
+                else if (t[1].equals("method") && t.length >= 5 && !c.methods.containsKey(t[3] + t[4])) why = "no method " + t[3] + t[4];
+                else if (t[1].equals("field") && t.length >= 5 && !c.fields.containsKey(t[3] + ":" + t[4])) why = "no field " + t[3] + ":" + t[4];
+                if (why != null && c != null && t.length >= 5 && !t[3].startsWith("<")) {
+                    // the member resolves up the hierarchy: it moved to a supertype, and the loader widens only the
+                    // exact owner a line names
+                    Object m = t[1].equals("method") ? findMethod(t[2], t[3] + t[4]) : findField(t[2], t[3], t[4]);
+                    if (m instanceof Member mm && !mm.owner().equals(t[2])) why += "; declared on " + mm.owner();
+                }
+                if (why != null) staleAws.add(new StaleAw(tag, line.replaceAll("\\s+", " "), why));
             }
         }
+    }
+
+    private static String findingKey(Finding f) {
+        return f.kind() + "\t" + f.where() + "\t" + f.ref();
+    }
+
+    private void checkAll() {
+        List<String> sharedTags = subjects.keySet().stream().filter(this::shared).toList();
+        for (var e : subjects.entrySet()) {
+            curJar = e.getKey();
+            AwRules own = rulesFor(curJar);
+            rules = own;
+            if (shared(curJar)) listStaleAws(curJar);
+            if (!shared(curJar) || sharedTags.size() < 2) {
+                checkSubject(e.getValue());
+                continue;
+            }
+            // own access wideners first, kept aside; then the shared set, whose findings stand
+            int start = findings.size();
+            checkSubject(e.getValue());
+            List<Finding> alone = new ArrayList<>(findings.subList(start, findings.size()));
+            findings.subList(start, findings.size()).clear();
+            AwRules all = rulesAgain(curJar);
+            for (String t : sharedTags) if (!t.equals(curJar)) readOwnAws(all, t);
+            rules = all;
+            checkSubject(e.getValue());
+            Set<String> still = new HashSet<>();
+            for (Finding f : findings.subList(start, findings.size())) still.add(findingKey(f));
+            for (Finding f : alone) {
+                if (still.contains(findingKey(f))) continue;
+                sharedSatisfied.add(new SharedSatisfied(curJar, f.kind(), f.where(), f.ref(), openers(e.getValue(), f, sharedTags)));
+            }
+        }
+    }
+
+    /** which other shared subject's access widener alone, added to the subject's own, clears the finding */
+    private String openers(List<ClassNode> classes, Finding f, List<String> sharedTags) {
+        int dot = f.where().indexOf('.');
+        String cls = dot < 0 ? f.where() : f.where().substring(0, dot);
+        ClassNode cn = null;
+        for (ClassNode c : classes) if (c.name.equals(cls)) { cn = c; break; }
+        List<String> out = new ArrayList<>();
+        AwRules keep = rules;
+        Set<String> keepReported = reported;
+        List<String> others = sharedTags.stream().filter(t -> !t.equals(curJar) && subjectAws.containsKey(t)).toList();
+        for (String t : others) {
+            if (cn == null) break;
+            AwRules r = rulesAgain(curJar);
+            readOwnAws(r, t);
+            rules = r;
+            reported = new HashSet<>();
+            int start = findings.size();
+            checkClass(cn);
+            boolean cleared = true;
+            for (Finding g : findings.subList(start, findings.size())) if (findingKey(g).equals(findingKey(f))) cleared = false;
+            findings.subList(start, findings.size()).clear();
+            if (cleared) out.add(t);
+        }
+        rules = keep;
+        reported = keepReported;
+        return out.isEmpty() ? String.join("+", others) + " (jointly)" : String.join(",", out);
     }
 
     private void checkClass(ClassNode cn) {
@@ -1515,6 +1639,22 @@ public final class LinkCheck {
         System.out.println("  jars with no broken reference (CLAIMED/BLIND/KNOWN, orphaned overrides aside): "
                            + unbroken + "/" + subjects.size());
         System.out.println("  jars fully intact (no CLAIMED/BLIND/KNOWN at all): " + intact + "/" + subjects.size());
+        if (sharedMatcher != null) {
+            try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(outDir.resolve("shared-aw.tsv")))) {
+                w.println("jar\tkind\twhere\tref\topened by");
+                for (SharedSatisfied x : sharedSatisfied) w.println(String.join("\t", x.jar(), x.kind(), x.where(), x.ref(), x.openers()));
+            }
+            try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(outDir.resolve("aw-stale.tsv")))) {
+                w.println("jar\tline\twhy");
+                for (StaleAw x : staleAws) w.println(String.join("\t", x.jar(), x.line(), x.why()));
+            }
+            System.out.println("  access-widener lines naming nothing on this runtime: " + staleAws.size() + " -> aw-stale.tsv");
+            Map<String, Integer> per = new TreeMap<>();
+            for (SharedSatisfied x : sharedSatisfied) per.merge(x.jar(), 1, Integer::sum);
+            System.out.println("  shared access wideners (" + SHARED_AW + "): " + sharedSatisfied.size()
+                               + " findings satisfied only by another subject's access widener -> shared-aw.tsv");
+            per.forEach((k, v) -> System.out.println("    " + k + ": " + v));
+        }
         System.out.println("link-check -> " + outDir.resolve("link-findings.tsv") + ", link-refs.tsv");
     }
 }

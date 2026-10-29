@@ -1541,7 +1541,13 @@ public final class Chain {
             for (String ln : java.nio.file.Files.readAllLines(interToMojangTsv)) {
                 String[] p = ln.split("\t");
                 if (p.length >= 3 && p[0].equals("C")) {
-                    back.put(p[2], p[1]);
+                    // a row for a token older than the source release whose target name the source already declares
+                    // (the table's --extra rows: class_293 -> com/mojang/blaze3d/vertex/VertexFormat): the source
+                    // spells the target class that way itself, so the target's name is not translated back to the
+                    // old token (a @Shadow VertexFormat field_1565 of a climbed layer is BufferBuilder.format)
+                    if (!(sourceClassNames.contains(p[2]) && !sourceClassNames.contains(p[1]))) {
+                        back.put(p[2], p[1]);
+                    }
                     fwd.put(p[1], p[2]);
                     wallClassFwd.put(p[1], p[2]);
                 } else if (p.length >= 3 && p[0].equals("M")) {
@@ -2867,8 +2873,8 @@ public final class Chain {
         if (wallTable != null && Files.exists(wallTable)) {
             for (String ln : Files.readAllLines(wallTable)) {
                 String[] p = ln.split("\t");
-                if (p.length >= 3 && p[0].equals("C")) {
-                    back.put(p[2], p[1]);
+                if (p.length >= 3 && p[0].equals("C") && !(sourceClassNames.contains(p[2]) && !sourceClassNames.contains(p[1]))) {
+                    back.put(p[2], p[1]); // an older token's row onto a class the source declares is not read back (loadTargetCtors)
                 }
             }
         }
@@ -2882,12 +2888,22 @@ public final class Chain {
         return java.util.List.copyOf(s);
     }
 
+    /**
+     * Every class the source stub declares, any package (loadHierarchy): a wall table row renaming an older token onto
+     * one of these (pkgmoves-blaze3d's class_293 -> com/mojang/blaze3d/vertex/VertexFormat, which 1.21.11's intermediary
+     * already spells that way) is not read backwards (loadTargetCtors)
+     */
+    public final java.util.Set<String> sourceClassNames = new java.util.HashSet<>();
+
     /** Load the class hierarchy of a stub jar so member lookups can walk it. */
     public void loadHierarchy(Path stubJar) throws IOException {
         try (java.util.zip.ZipInputStream zin =
                  new java.util.zip.ZipInputStream(Files.newInputStream(stubJar))) {
             java.util.zip.ZipEntry e;
             while ((e = zin.getNextEntry()) != null) {
+                if (e.getName().endsWith(".class")) {
+                    sourceClassNames.add(e.getName().substring(0, e.getName().length() - 6));
+                }
                 if (!e.getName().endsWith(".class") || !e.getName().startsWith("net/minecraft/")) {
                     continue;
                 }

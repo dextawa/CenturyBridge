@@ -125,3 +125,7 @@ accessible method net/minecraft/client/renderer/SectionOcclusionGraph offsetFrus
 # s26f: rt/CbS26TabBars.addTabs builds MenuTabButtons for a plain 26.2 TabNavigationBar.Builder handed to 26.1.2 code
 accessible field net/minecraft/client/gui/components/tabs/TabNavigationBar$Builder tabManager Lnet/minecraft/client/gui/components/tabs/TabManager;
 accessible field net/minecraft/client/gui/components/tabs/TabNavigationBar$Builder height I
+# s26h: rt/CbS26BackendClient hands a 26.1.2-shaped device 26.2 Minecraft's critical shader loader
+accessible method net/minecraft/client/Minecraft loadCriticalShaders ()V
+# s26h: mixin/CbS26ChunkCacheRestoredMixin reads the occlusion graph's running empty-section set for 26.1.2 getLoadedEmptySections
+accessible field net/minecraft/client/renderer/SectionOcclusionGraph emptySections Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;

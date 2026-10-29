@@ -166,6 +166,35 @@ public final class MixinRepair {
         this.layer = new ZipFile(jar.toFile());
     }
 
+    /**
+     * The step's layer jar as a place injectors move to only (mixinMoves / mixinAnchorMoves "to" a layer class, past
+     * the wall where the repair holds W's real-named code and no layer): {@link #moveTarget} finds its classes, every
+     * other lookup stays on {@link #target}.
+     */
+    private ZipFile moveLayer;
+    private final Map<String, ClassNode> moveCache = new HashMap<>();
+
+    public void moveLayer(Path jar) throws IOException {
+        this.moveLayer = new ZipFile(jar.toFile());
+    }
+
+    /** {@link #target}, else a step-layer class the injector may move to ({@link #moveLayer}) */
+    private ClassNode moveTarget(String owner) {
+        ClassNode cn = target(owner);
+        if (cn != null || moveLayer == null || !owner.startsWith("top/dext/")) return cn;
+        return moveCache.computeIfAbsent(owner, o -> {
+            try {
+                ZipEntry e = moveLayer.getEntry(o + ".class");
+                if (e == null) return null;
+                ClassNode c = new ClassNode();
+                new ClassReader(moveLayer.getInputStream(e).readAllBytes()).accept(c, ClassReader.SKIP_FRAMES);
+                return c;
+            } catch (IOException ex) {
+                return null;
+            }
+        });
+    }
+
     private ZipEntry layerEntry(String owner) {
         return layer != null && owner.startsWith("top/dext/") ? layer.getEntry(owner + ".class") : null;
     }
@@ -1338,7 +1367,7 @@ public final class MixinRepair {
         int dot = to.indexOf('.');
         int paren = to.indexOf('(');
         if (dot <= 0 || paren <= dot) return "not owner.name(desc)";
-        ClassNode wc = target(to.substring(0, dot));
+        ClassNode wc = moveTarget(to.substring(0, dot));
         List<MethodNode> wms = wc == null ? List.of() : new Sel(null, to.substring(dot + 1, paren), to.substring(paren), false).match(wc);
         MethodNode wm = wms.size() == 1 ? wms.get(0) : null;
         if (wm == null) return "not a method of the target";
@@ -1387,7 +1416,7 @@ public final class MixinRepair {
     private String ordinalsKept(List<Anchor> anchors, String vOwner, List<MethodNode> wCands, String to) {
         int dot = to.indexOf('.');
         int paren = to.indexOf('(');
-        ClassNode wc = target(to.substring(0, dot));
+        ClassNode wc = moveTarget(to.substring(0, dot));
         List<MethodNode> wms = wc == null ? List.of() : new Sel(null, to.substring(dot + 1, paren), to.substring(paren), false).match(wc);
         if (wms.size() != 1) return "not a method of the target";
         for (Anchor a : anchors) {
