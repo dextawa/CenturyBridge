@@ -62,7 +62,8 @@
     "CbS26GameRendererGettersMixin",
     "CbS26VersionTypeMixin",
     "CbS26VersionTypeMixinHooks",
-    "CbS26ParticleGroupRestoredMixin"
+    "CbS26ParticleGroupRestoredMixin",
+    "CbS26ChunkCacheRestoredMixin"
   ],
   "server": [],
   "injectors": {

@@ -127,3 +127,5 @@ accessible field net/minecraft/client/gui/components/tabs/TabNavigationBar$Build
 accessible field net/minecraft/client/gui/components/tabs/TabNavigationBar$Builder height I
 # s26h: rt/CbS26BackendClient hands a 26.1.2-shaped device 26.2 Minecraft's critical shader loader
 accessible method net/minecraft/client/Minecraft loadCriticalShaders ()V
+# s26h: mixin/CbS26ChunkCacheRestoredMixin reads the occlusion graph's running empty-section set for 26.1.2 getLoadedEmptySections
+accessible field net/minecraft/client/renderer/SectionOcclusionGraph emptySections Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;
