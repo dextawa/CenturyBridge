@@ -121,5 +121,17 @@
    ],
    "basis": "RecipeManager.byKeyTyped(type, id) (private) -> byKeyTyped(type, key): javap, the same lookup of the holder and type check, by the id's recipe key"
   }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_1839.<init>(Ljava/lang/String;I)V": {
+   "desc": "(Ljava/lang/String;IILjava/lang/String;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#useAnimId(I)I",
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#useAnimName(Ljava/lang/String;)Ljava/lang/String;"
+   ],
+   "basis": "UseAnim's enum constructor gained id and serializedName in 1.21.2; a constant a 1.21.1 mod makes itself (an @Invoker(\"<init>\") enum extension: Kilt UseAnimAccessor) takes id = ordinal and the lower-case name, as every 1.21.2 constant has (UseAnim.<clinit>; CbItemMembers.useAnimId / useAnimName)"
+  }
  }
 }

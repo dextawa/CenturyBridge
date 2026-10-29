@@ -1,0 +1,23 @@
+{
+ "_smx1_net_basis": "smx1e (layer-dangling 1.21.10__1.21.11): 1.21.11 replaced Connection / ServerConnectionListener's event loop group Suppliers by EventLoopGroupHolder (class_12239) and took the holder in Connection.connectToServer (method_10753) where 1.21.10 took the use-native-transport flag; it removed LazyLoadedValue (class_3528, a memoizing holder; the 1.20.2 layer's CbNetGroups is built on it); it made PendingInvite (class_4871) a record (public mutable fields -> components; the date a Date -> an Instant). javap -c -p of both. Given back in rt/CbLegacyNet, rt/CbLegacyRealms (client-only) and facade/LazyLoadedValue (bodies as 1.21.10's). The event loop groups are 1.21.10's kinds created lazily by CenturyBridge, not the groups vanilla 1.21.11 runs on (netty 4.2's MultiThreadIoEventLoopGroup is no NioEventLoopGroup): release_notes_known. PendingInvite's fields cannot be written (record) and its no-argument constructor is gone: those rows stay open",
+ "classRenames": {
+  "net/minecraft/class_3528": "top/dext/centurybridge/step/v1_21_11/facade/LazyLoadedValue"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_2535.field_11650:Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyNet",
+  "net/minecraft/class_2535.field_11657:Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyNet",
+  "net/minecraft/class_2535.field_11649:Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyNet",
+  "net/minecraft/class_3242.field_14111:Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyNet",
+  "net/minecraft/class_3242.field_14105:Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyNet"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_2535.method_10753(Ljava/net/InetSocketAddress;ZLnet/minecraft/class_9191;)Lnet/minecraft/class_2535;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyNet"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_4871.field_22580:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_4871.field_22581:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_4871.field_22582:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_4871.field_22583:Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_4871.field_22584:Ljava/util/Date;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms"
+ }
+}

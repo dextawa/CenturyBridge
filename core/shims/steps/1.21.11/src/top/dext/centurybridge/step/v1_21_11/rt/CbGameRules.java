@@ -880,6 +880,26 @@ public final class CbGameRules {
         }
     }
 
+    /**
+     * MinecraftServer.isSpawningMonsters() (1.21.10 method_74056), gone from 1.21.11's MinecraftServer: 1.21.10's body
+     * was "the world's difficulty is not peaceful, and doMobSpawning and spawnMonsters are on" over the server's world
+     * data; 1.21.11 runs that same test per level as ServerLevel.isSpawningMonsters (method_74962) over the level's data,
+     * which for the overworld is the world data 1.21.10 read (the other levels' data derives from it). So the
+     * overworld's answer; before any level exists, the same test on the world data directly.
+     */
+    public static boolean method_74056(MinecraftServer server) {
+        net.minecraft.class_3218 overworld = server.method_30002();
+        if (overworld != null) {
+            return overworld.method_74962();
+        }
+        net.minecraft.class_5219 data = server.method_27728();
+        if (data.method_207() == net.minecraft.class_1267.field_5801) {
+            return false;
+        }
+        class_1928 rules = data.method_27859().method_146();
+        return rules.method_76185(class_1928.field_19390) && rules.method_76185(class_1928.field_62436);
+    }
+
     // ---- registration (1.21.10 Fabric API GameRuleRegistry)
 
     /** whether a rule of that 1.21.10 id is registered (vanilla's included) */

@@ -34,6 +34,8 @@ public class SwallTestMod implements ModInitializer {
     public static final java.util.concurrent.atomic.AtomicInteger FANCY_LIMB_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     public static final java.util.concurrent.atomic.AtomicInteger LOOT_MINE_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     private static int passed;
+    private static int villagerMemoriesBefore = -1;
+    private static Throwable villagerWriteFailure;
 
     private static void check(String name, boolean ok, Object detail) {
         if (ok) {
@@ -79,6 +81,16 @@ public class SwallTestMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        // 1.21.11 Villager's private MEMORY_TYPES replaced with one more memory before any brain is built
+        // (VillagerMemoryAccessor; rt/brainlists): read back on a live villager's brain once the server runs
+        try {
+            com.google.common.collect.ImmutableList<class_4140<?>> vm = cb.swall.mixin.VillagerMemoryAccessor.cbswall$memories();
+            villagerMemoriesBefore = vm.size();
+            cb.swall.mixin.VillagerMemoryAccessor.cbswall$setMemories(com.google.common.collect.ImmutableList.<class_4140<?>>builder()
+                .addAll(vm).add(class_4140.field_30246).build());
+        } catch (Throwable t) {
+            villagerWriteFailure = t;
+        }
         // 1.21.11 Item.components read in the item's own constructor (CbWallItemComponentsMixin): 1.21.11 built them there
         try {
             net.minecraft.class_5321<net.minecraft.class_1792> key = net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41197,
@@ -905,6 +917,66 @@ public class SwallTestMod implements ModInitializer {
     }
 
     /** 1.21.11's TimerQueue subclass writing itself through store() */
+    /**
+     * A 1.21.11 class implementing Fabric API's ModResourcePack (extending PackResources): its PackResources methods
+     * (method_14406 getNamespaces, ...) must carry 26.1's names past the wall, reached through the vanilla interface
+     * and through the Fabric API one. (The climbed layers' copy of this case, CbModResourcePacks$NoOverlay, kept its
+     * tokens until the wall rename read Fabric API supertypes: JarRemapper.Table.targetLibraries.)
+     */
+    static final class TestModPack implements net.fabricmc.fabric.api.resource.ModResourcePack {
+        @Override
+        public net.fabricmc.loader.api.metadata.ModMetadata getFabricModMetadata() {
+            return net.fabricmc.loader.api.FabricLoader.getInstance().getModContainer("cb_swall").orElseThrow().getMetadata();
+        }
+
+        @Override
+        public net.fabricmc.fabric.api.resource.ModResourcePack createOverlay(String overlay) {
+            return this;
+        }
+
+        @Override
+        public net.minecraft.class_7367<java.io.InputStream> method_14410(String... path) {
+            return null;
+        }
+
+        @Override
+        public net.minecraft.class_7367<java.io.InputStream> method_14405(net.minecraft.class_3264 type, net.minecraft.class_2960 id) {
+            return null;
+        }
+
+        @Override
+        public void method_14408(net.minecraft.class_3264 type, String ns, String prefix, net.minecraft.class_3262.class_7664 out) {
+        }
+
+        @Override
+        public java.util.Set<String> method_14406(net.minecraft.class_3264 type) {
+            return java.util.Set.of("cb_swall_pack");
+        }
+
+        @Override
+        public <T> T method_14407(net.minecraft.class_7677<T> section) {
+            return null;
+        }
+
+        @Override
+        public net.minecraft.class_9224 method_56926() {
+            return null;
+        }
+
+        @Override
+        public void close() {
+        }
+    }
+
+    private static void modResourcePack() {
+        net.minecraft.class_3262 viaVanilla = new TestModPack();
+        net.fabricmc.fabric.api.resource.ModResourcePack viaFabric = new TestModPack();
+        java.util.Set<String> a = viaVanilla.method_14406(net.minecraft.class_3264.field_14190);
+        java.util.Set<String> b = viaFabric.method_14406(net.minecraft.class_3264.field_14190);
+        check("modResourcePack.namespaces", a.contains("cb_swall_pack") && b.contains("cb_swall_pack"), a + " / " + b);
+        check("modResourcePack.overlay", viaFabric.createOverlay("x") == viaFabric, "");
+    }
+
     static final class StoringQueue extends net.minecraft.class_236<MinecraftServer> {
         int stores;
 
@@ -1039,6 +1111,7 @@ public class SwallTestMod implements ModInitializer {
             check("server.throwIfFatalException", MinecraftServer.method_60584(), "");
             professions();
             levelSettings();
+            modResourcePack();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -1644,7 +1717,7 @@ public class SwallTestMod implements ModInitializer {
         }
     }
 
-    /** 1.21.11 Allay / Piglin SENSOR_TYPES / MEMORY_TYPES read by a subclass (rt/CbWallBrainLists) */
+    /** 1.21.11 Allay / Piglin SENSOR_TYPES / MEMORY_TYPES read by a subclass (rt/brainlists, generated) */
     private abstract static class AllayLists extends net.minecraft.class_7298 {
         AllayLists() {
             super(null, null);
@@ -1667,6 +1740,43 @@ public class SwallTestMod implements ModInitializer {
         static List<?> sensors() {
             return field_22376;
         }
+
+        static List<?> memories() {
+            return field_22381;
+        }
+    }
+
+    /** whether a live brain registers a memory (1.21.11 Brain.checkMemory(type, REGISTERED)) */
+    private static boolean registered(net.minecraft.class_1309 mob, class_4140<?> memory) {
+        return mob.method_18868().method_18876(memory, net.minecraft.class_4141.field_18458);
+    }
+
+    /**
+     * rt/brainlists + CbWallBrainExtrasMixin: what 1.21.11 mods put in a mob's MEMORY_TYPES (PiglinMemoryMixin's
+     * @ModifyArg in Piglin.<clinit>, onInitialize's write of Villager's private list) reaches the brains 26.1 builds,
+     * added to 26.1's own (a hoglin's brain, unchanged by any mod, stays 26.1's: no added memory, its own ATTACK_TARGET; a piglin keeps
+     * its own ADMIRING_ITEM / ANGRY_AT)
+     */
+    private static void brainListAppends(net.minecraft.class_3218 level) {
+        net.minecraft.class_3730 cmd = net.minecraft.class_3730.field_16462;
+        check("brainLists.piglinAppend", PiglinLists.memories().contains(class_4140.field_38394), PiglinLists.memories().size());
+        net.minecraft.class_1309 piglin = (net.minecraft.class_1309) net.minecraft.class_1299.field_22281.method_5883(level, cmd);
+        java.util.UUID liked = java.util.UUID.randomUUID();
+        boolean piglinHas = registered(piglin, class_4140.field_38394);
+        if (piglinHas) {
+            piglin.method_18868().method_18878(class_4140.field_38394, liked);
+        }
+        check("brainLists.piglinLive", piglinHas && piglin.method_18868().method_18904(class_4140.field_38394).equals(Optional.of(liked))
+            && registered(piglin, class_4140.field_22334) && registered(piglin, class_4140.field_22333), piglinHas);
+        check("brainLists.villagerWrite", villagerWriteFailure == null
+            && cb.swall.mixin.VillagerMemoryAccessor.cbswall$memories().size() == villagerMemoriesBefore + 1
+            && cb.swall.mixin.VillagerMemoryAccessor.cbswall$memories().contains(class_4140.field_30246),
+            villagerWriteFailure != null ? villagerWriteFailure : villagerMemoriesBefore);
+        net.minecraft.class_1309 villager = (net.minecraft.class_1309) net.minecraft.class_1299.field_6077.method_5883(level, cmd);
+        check("brainLists.villagerLive", registered(villager, class_4140.field_30246), "");
+        net.minecraft.class_1309 hoglin = (net.minecraft.class_1309) net.minecraft.class_1299.field_21973.method_5883(level, cmd);
+        check("brainLists.unchangedMob", !registered(hoglin, class_4140.field_38394) && !registered(hoglin, class_4140.field_30246)
+            && registered(hoglin, class_4140.field_22355), "");
     }
 
     /** a 1.21.11 Zombie subclass calling handleAttributes(difficulty) (callReshapes: CONVERSION, no health reset) */
@@ -1680,7 +1790,7 @@ public class SwallTestMod implements ModInitializer {
         }
     }
 
-    /** rt/CbWallServerStatics, CbWallBrainLists, CbWallLivingEntityAttackRangeMixin, Zombie.handleAttributes */
+    /** rt/CbWallServerStatics, rt/brainlists, CbWallLivingEntityAttackRangeMixin, Zombie.handleAttributes */
     private static void serverStatics(MinecraftServer server) {
         try {
             int packed = net.minecraft.class_8104.method_68888(300, 7);
@@ -1697,6 +1807,7 @@ public class SwallTestMod implements ModInitializer {
                 && net.minecraft.class_3767.field_56444 == net.minecraft.class_3767.field_56443, "");
             check("brainLists.allay", AllayLists.sensors().size() == 4 && AllayLists.memories().size() == 12
                 && PiglinLists.sensors().size() > 0, AllayLists.sensors());
+            brainListAppends(level);
             net.minecraft.class_3730 cmd = net.minecraft.class_3730.field_16462;
             net.minecraft.class_7260 warden = (net.minecraft.class_7260) net.minecraft.class_1299.field_38095.method_5883(level, cmd);
             net.minecraft.class_7261.method_42228(warden);
