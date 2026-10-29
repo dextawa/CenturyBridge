@@ -1256,8 +1256,11 @@ final class MixinBridge {
                 left.add(what + ": taken as a field handle");
                 return;
             }
-            // a write a static field setter takes does not store into W's field: its finality does not matter
-            if (r.puts > 0 && !(isStatic && chain.staticFieldSetters.containsKey(vk(target) + "." + f.name + ":" + f.desc))) {
+            // a write a static or instance field setter takes does not store into W's field (the converter turns the
+            // PUTSTATIC / PUTFIELD into the setter call): its finality, and the shadow's @Mutable, do not matter
+            String fk = vk(target) + "." + f.name + ":" + f.desc;
+            boolean setterWrites = isStatic ? chain.staticFieldSetters.containsKey(fk) : chain.instanceFieldSetters.containsKey(fk);
+            if (r.puts > 0 && !setterWrites) {
                 boolean mutable = has(f.visibleAnnotations, f.invisibleAnnotations, MUTABLE);
                 Found at = wResolveField(target, rn != null ? rn : f.name, rn != null ? chain.renamedDesc(f.desc) : f.desc);
                 if (mutable || at != null && (at.access() & Opcodes.ACC_FINAL) != 0) {
