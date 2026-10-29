@@ -1,0 +1,9 @@
+{
+ "_smx1_players_basis": "smx1e (layer-dangling 1.21.5__1.21.6): 1.21.6 removed PlayerList.getPlayerForLogin(GameProfile, ClientInformation) (method_14613; 1.21.5's body was new ServerPlayer(server, server.overworld(), profile, info), which 1.21.6 does inline in ServerConfigurationPacketListenerImpl) and made ServerPlayer.server (field_13995) private (Entity.getServer, method_5682, answers level().getServer(), the same server). javap -c -p of both. Calls given back in rt/CbPlayers; a mod's override of getPlayerForLogin is no longer called by vanilla and stays open",
+ "instanceRedirects": {
+  "net/minecraft/class_3324.method_14613(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_8791;)Lnet/minecraft/class_3222;": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayers"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_3222.field_13995:Lnet/minecraft/server/MinecraftServer;": "top/dext/centurybridge/step/v1_21_6/rt/CbPlayers"
+ }
+}
