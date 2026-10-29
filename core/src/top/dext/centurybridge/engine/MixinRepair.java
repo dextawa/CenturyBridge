@@ -742,6 +742,24 @@ public final class MixinRepair {
                                 });
                                 continue;
                             }
+                            // smixin K1: captured locals (LocalCapture after the CallbackInfo, MixinExtras @Local) judged
+                            // against V's and W's frames at the injection point (MixinLocals)
+                            ClassNode vtc = source != null ? source.target(owner) : null;
+                            List<MethodNode> vms = vtc != null ? s.match(vtc) : List.of();
+                            MixinLocals.Verdict lv = vms.size() == 1
+                                ? MixinLocals.judge(this, source, an, handler, hit, tc, vtc, vms.get(0), refmap) : null;
+                            if (lv != null && lv.why() != null) {
+                                if (deadWhy == null) deadWhy = "captured locals: @" + kind + " " + where + " (" + lv.why() + ")";
+                                continue;
+                            }
+                            if (lv != null && lv.fix() != null) {
+                                fixNotes.add("locals-remap " + where + " " + lv.note());
+                                fixes.add(() -> {
+                                    lv.fix().run();
+                                    dirty[0] = true;
+                                });
+                                continue; // a repaired injector: the fix runs when nothing else keeps it live
+                            }
                             if (cands.stream().allMatch(layerMembers::isMember)) {
                                 mixed(mx.name, owner, cands); // a converted mod mixes the layer's restored member
                             } else if (owner.startsWith("top/dext/") && layerEntry(owner) != null) {
@@ -3299,6 +3317,26 @@ public final class MixinRepair {
      * the Operation)
      */
     static int[] capturedRange(AnnotationNode an, MethodNode h, List<Anchor> anchors, List<MethodNode> targets) {
+        int[] r = capturedRange0(an, h, anchors, targets);
+        if (r == null) return null;
+        // MixinExtras sugar parameters (@Local, @Share, @Cancellable; LocalRef types) come last in a handler and are
+        // no target arguments: the captured range ends before the first of them
+        for (int k = r[0]; k < r[1]; k++) {
+            if (sugarParam(h, k)) return new int[] {r[0], k};
+        }
+        return r;
+    }
+
+    private static boolean sugarParam(MethodNode h, int k) {
+        if (Type.getArgumentTypes(h.desc)[k].getDescriptor().startsWith("Lcom/llamalad7/mixinextras/sugar/")) return true;
+        for (List<AnnotationNode>[] pa : java.util.Arrays.<List<AnnotationNode>[]>asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+            if (pa != null && k < pa.length && pa[k] != null
+                    && pa[k].stream().anyMatch(a -> a.desc.startsWith("Lcom/llamalad7/mixinextras/sugar/"))) return true;
+        }
+        return false;
+    }
+
+    private static int[] capturedRange0(AnnotationNode an, MethodNode h, List<Anchor> anchors, List<MethodNode> targets) {
         Type[] hp = Type.getArgumentTypes(h.desc);
         if (an.desc.equals(INJECT)) {
             for (int i = 0; i < hp.length; i++) {
@@ -3714,6 +3752,17 @@ public final class MixinRepair {
     private static void dropInjector(MethodNode h, AnnotationNode an) {
         if (h.visibleAnnotations != null) h.visibleAnnotations.remove(an);
         if (h.invisibleAnnotations != null) h.invisibleAnnotations.remove(an);
+        // MixinExtras' @Expression / @Definition(s) belong to the injector beside them: left alone they throw at
+        // apply (ExpressionInjectorWrapperTransformer finds no injector), so they go with it once none is left
+        boolean injectorLeft = false;
+        for (List<AnnotationNode> l : java.util.Arrays.asList(h.visibleAnnotations, h.invisibleAnnotations)) {
+            if (l != null) injectorLeft |= l.stream().anyMatch(a -> a.desc.contains("/mixin/injection/") || a.desc.contains("/mixinextras/injector/"));
+        }
+        if (!injectorLeft) {
+            for (List<AnnotationNode> l : java.util.Arrays.asList(h.visibleAnnotations, h.invisibleAnnotations)) {
+                if (l != null) l.removeIf(a -> a.desc.startsWith("Lcom/llamalad7/mixinextras/expression/"));
+            }
+        }
     }
 
     private static void setRequireZero(AnnotationNode an) {

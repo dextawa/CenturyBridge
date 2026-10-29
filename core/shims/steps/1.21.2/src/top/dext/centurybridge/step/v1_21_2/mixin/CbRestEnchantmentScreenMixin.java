@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(class_486.class)
 public abstract class CbRestEnchantmentScreenMixin {
 
+    @org.spongepowered.asm.mixin.Shadow
     public int field_2915;
 
     @Inject(method = "method_2478", at = @At(value = "FIELD", target = "Lnet/minecraft/class_486;field_2914:F", opcode = org.objectweb.asm.Opcodes.PUTFIELD))

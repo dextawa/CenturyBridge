@@ -222,10 +222,15 @@ public final class Main {
         // stands at W when its own climb already passed this step (<layersDir>/climb-<R>/steps/<V>__<W>/, climb_runtime
         // climbs the newest layers first): a restorer its climb stripped at an earlier step is not in the runtime, so
         // a mixin of this jar resolving against it fails at apply (the 1.21.2 layer's CbRenderState922Mixin, stripped
-        // at 1.21.9, served the 1.20.3 layer's @Invoker of LivingEntityRenderer.scale). Else its built jar
+        // at 1.21.9, served the 1.20.3 layer's @Invoker of LivingEntityRenderer.scale). Else its built jar; a layer
+        // built before the namespace wall names its targets in intermediary, so past the wall (the source release
+        // already real-named) its built jar is read through the same rename the wall gives its climbed copy
+        // (wallLayerView); a climbed copy is already real-named
         java.util.List<Path> earlierLayers = new java.util.ArrayList<>();
         if (System.getProperty("cb.layersDir") != null && System.getProperty("cb.layerJar") == null) {
             int wi = top.dext.centurybridge.engine.Chain.RELEASES.indexOf(args[3]);
+            int wallIdx = top.dext.centurybridge.engine.Chain.RELEASES.indexOf("1.21.11");
+            boolean sourcePastWall = top.dext.centurybridge.engine.Chain.RELEASES.indexOf(args[2]) > wallIdx;
             for (int ri = 0; ri < wi; ri++) {
                 String rel = top.dext.centurybridge.engine.Chain.RELEASES.get(ri);
                 Path climbed = Path.of(System.getProperty("cb.layersDir"), "climb-" + rel, "steps", args[2] + "__" + args[3],
@@ -233,8 +238,10 @@ public final class Main {
                 Path ej = Files.exists(climbed) ? climbed
                     : Path.of(System.getProperty("cb.layersDir"), "centurybridge-0.3.0+" + rel + ".jar");
                 if (Files.exists(ej)) {
-                    chain.layerMembers.inherit(top.dext.centurybridge.engine.LayerMembers.read(ej));
-                    earlierLayers.add(ej);
+                    Path view = ej != climbed && sourcePastWall && ri <= wallIdx
+                        ? wallLayerView(ej, Path.of(args[1]), args[2]) : ej;
+                    chain.layerMembers.inherit(top.dext.centurybridge.engine.LayerMembers.read(view));
+                    earlierLayers.add(view);
                     if (ej == climbed) {
                         System.out.println("earlier layer as climbed to " + args[3] + ": " + climbed);
                     }
@@ -574,6 +581,85 @@ public final class Main {
      * A release's compile stub under data/jars: the intermediary stub through 1.21.11; past the
      * namespace wall the plain jar itself (mojang names, nothing to remap).
      */
+    /**
+     * A pre-wall layer's built jar as the climbed copy in the runtime names it at {@code source}: renamed through the
+     * wall the way the climb renames it where it crosses (the wall table of the first release past 1.21.11,
+     * core/segments/wall-tables.tsv), then by the classRenames of every step from that crossing up to {@code source}
+     * (the 1.21.11 -> 26.1 step's Fabric API renames: the 1.21.6 layer's restore on FabricTagProvider is on
+     * FabricTagsProvider past the wall), for its restored members past the wall. Cached beside the jar under
+     * wallview/&lt;source&gt;/, rebuilt when the jar, the table or a step's wiring is newer.
+     */
+    private static Path wallLayerView(Path layerJar, Path segmentsDir, String source) throws java.io.IOException {
+        java.util.List<String> rel = top.dext.centurybridge.engine.Chain.RELEASES;
+        int wallIdx = rel.indexOf("1.21.11");
+        String cross = rel.get(wallIdx + 1);
+        Path table = top.dext.centurybridge.engine.WallTable.forTarget(segmentsDir, cross);
+        java.util.List<Path> wirings = new java.util.ArrayList<>();
+        for (int i = wallIdx; i < rel.indexOf(source); i++) {
+            Path w = segmentsDir.resolve("steps").resolve(rel.get(i) + "__" + rel.get(i + 1) + ".json");
+            if (top.dext.centurybridge.engine.Wiring.exists(w)) {
+                wirings.add(w);
+            }
+        }
+        Path dir = layerJar.getParent().resolve("wallview").resolve(source);
+        Path view = dir.resolve(layerJar.getFileName());
+        if (Files.exists(view)) {
+            java.nio.file.attribute.FileTime made = Files.getLastModifiedTime(view);
+            boolean fresh = made.compareTo(Files.getLastModifiedTime(layerJar)) > 0 && made.compareTo(Files.getLastModifiedTime(table)) > 0;
+            for (Path w : wirings) {
+                fresh &= made.compareTo(Files.getLastModifiedTime(w)) > 0;
+                Path d = top.dext.centurybridge.engine.Wiring.fragments(w);
+                if (Files.isDirectory(d)) {
+                    try (var files = Files.list(d)) {
+                        for (Path f : (Iterable<Path>) files::iterator) {
+                            fresh &= made.compareTo(Files.getLastModifiedTime(f)) > 0;
+                        }
+                    }
+                }
+            }
+            if (fresh) {
+                return view;
+            }
+        }
+        Files.createDirectories(dir);
+        Path walled = Files.createTempFile(dir, "wall", ".jar");
+        top.dext.centurybridge.data.JarRemapper.remapWithTable(table, layerJar, walled, codeOf(cross));
+        java.util.Map<String, String> renames = new java.util.HashMap<>();
+        for (Path w : wirings) {
+            com.google.gson.JsonObject o = top.dext.centurybridge.engine.Wiring.read(w);
+            if (!o.has("classRenames")) {
+                continue;
+            }
+            java.util.Map<String, String> step = new java.util.HashMap<>();
+            for (var e : o.getAsJsonObject("classRenames").entrySet()) {
+                step.put(e.getKey(), e.getValue().getAsString());
+            }
+            // compose: an earlier step's rename followed by this step's
+            renames.replaceAll((k, v) -> step.getOrDefault(v, v));
+            step.forEach(renames::putIfAbsent);
+        }
+        Path tmp = Files.createTempFile(dir, "view", ".jar");
+        org.objectweb.asm.commons.SimpleRemapper rm = new org.objectweb.asm.commons.SimpleRemapper(renames);
+        try (java.util.zip.ZipInputStream in = new java.util.zip.ZipInputStream(Files.newInputStream(walled));
+             java.util.zip.ZipOutputStream out = new java.util.zip.ZipOutputStream(Files.newOutputStream(tmp))) {
+            for (java.util.zip.ZipEntry e; (e = in.getNextEntry()) != null; ) {
+                byte[] b = in.readAllBytes();
+                if (e.getName().endsWith(".class")) {
+                    org.objectweb.asm.ClassReader cr = new org.objectweb.asm.ClassReader(b);
+                    org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(0);
+                    cr.accept(new org.objectweb.asm.commons.ClassRemapper(cw, rm), 0);
+                    b = cw.toByteArray();
+                }
+                out.putNextEntry(new java.util.zip.ZipEntry(e.getName()));
+                out.write(b);
+                out.closeEntry();
+            }
+        }
+        Files.delete(walled);
+        Files.move(tmp, view, java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.ATOMIC_MOVE);
+        return view;
+    }
+
     private static Path stubOf(String version) {
         return Path.of(postWall(version) ? "data/jars/client-" + version + ".jar"
                                           : "data/jars/client-" + version + "-intermediary.jar");

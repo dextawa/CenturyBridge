@@ -22,10 +22,13 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbEntityMisc;
 @Mixin(class_1297.class)
 public abstract class CbEntityMiscMixin implements CbEntityMisc.Fields {
 
+    @org.spongepowered.asm.mixin.Shadow
     public float field_5973;
 
+    @org.spongepowered.asm.mixin.Shadow
     public float field_6039;
 
+    @org.spongepowered.asm.mixin.Shadow
     public boolean field_5985;
 
     @Override

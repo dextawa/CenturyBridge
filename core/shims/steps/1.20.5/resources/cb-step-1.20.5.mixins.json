@@ -440,6 +440,7 @@
     "CbClientNativeImageAccessor",
     "CbClientOptionsListMixin",
     "CbClientOptionsMixin",
+    "CbClientOptionsMixinFields",
     "CbClientPanoramaMixin",
     "CbClientParticleInvoker",
     "CbClientPoseInvoker",

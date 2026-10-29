@@ -8,10 +8,10 @@ import top.dext.centurybridge.step.v26_2.rt.CbS26Bounce;
 
 /**
  * 26.1.2's BedBlock.updateEntityMovementAfterFallOn, restored with 26.1.2's body (rt/CbS26Bounce): Block's (the
- * vertical movement stopped) when the entity suppresses bouncing, else bounceUp at 0.66. Priority 1, below every
+ * vertical movement stopped) when the entity suppresses bouncing, else bounceUp at 0.66. Priority CbVanillaReads.PRIORITY, below every
  * mod's.
  */
-@Mixin(value = BedBlock.class, priority = 1)
+@Mixin(value = BedBlock.class, priority = top.dext.centurybridge.step.v26_2.rt.CbVanillaReads.PRIORITY)
 public abstract class CbS26BedFallOnMixin {
 
     public void updateEntityMovementAfterFallOn(BlockGetter level, Entity entity) {

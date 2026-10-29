@@ -16,6 +16,12 @@ mod's (InjectionPoint.checkPriority); mods sit at the default 1000. Two rules fo
    <name>Hooks mixin (shared state through the layer's rt/CbPrioritySplit[Client]). The one exception is a route
    that must run first and says so: priority = CbVanillaReads.ROUTE_FIRST. A route mixin that merges nothing and
    declares its own low priority (a literal or a route constant such as CbRoutes.ROUTE_PRIORITY) is not judged here.
+3. layer order: a climbing earlier layer's mixins @Shadow / @Accessor / @Invoker members a later layer restores, and
+   Mixin applies a target's mixins by priority, breaking ties by load order (MixinInfo.compareTo), so a later layer's
+   restorers sit strictly below every earlier layer's mixin. The layer's CbVanillaReads.PRIORITY is
+   1 - (index of its release - index of 1.20.2) in Release.ALL (1.20.2: 1, 1.20.3: 0, ... 26.2: -19); a restorer (merged
+   methods, or intermediary-named fields it declares) spells its priority CbVanillaReads.PRIORITY, never a literal; no
+   other mixin of the layer sits at or below that value.
 
 Sources are read as text (comments and string literals blanked); multi-line declarations are handled.
 """
@@ -73,10 +79,49 @@ def merged_members(s, name):
     return sorted(set(merged))
 
 
+def releases():
+    """Release.ALL, the engine's release list (core/src/.../res/Release.java)"""
+    here = os.path.dirname(os.path.abspath(__file__))
+    rel = os.path.join(here, '..', 'src', 'top', 'dext', 'centurybridge', 'res', 'Release.java')
+    s = re.sub(r'//.*', '', open(rel, encoding='utf-8').read())  # not strip(): it blanks string literals
+    body = s[s.index('ALL = List.of('):]
+    return re.findall(r'"([\d.]+)"', body[:body.index(');')])
+
+
+def layer_priority(shim):
+    """rule 3's CbVanillaReads.PRIORITY for the layer at shim (core/shims/1.20.2 or core/shims/steps/<W>), or None"""
+    p = os.path.normpath(os.path.abspath(shim)).replace('\\', '/').rstrip('/')
+    ver = p.rsplit('/', 1)[-1]
+    all_ = releases()
+    if ver not in all_ or not ('/steps/' in p or ver == '1.20.2'):
+        return None
+    return 1 - (all_.index(ver) - all_.index('1.20.2'))
+
+
+RESTORED_FIELD = re.compile(r'((?:@[\w.]+(?:\([^)]*\))?\s*)*)(?:(?:private|protected|public|static|final|transient|volatile)\s+)+'
+                            r'[\w.$<>\[\], ]+?\s+((?:field|comp)_\d+)\s*[;=]')
+
+
+def restored_fields(s, name):
+    """intermediary-named fields the class mixin declares unannotated (merged onto the target: a restored V field)"""
+    head = re.search(r'\bclass\s+' + re.escape(name) + r'\b', s)
+    if not head:
+        return []
+    return sorted({m.group(2) for m in RESTORED_FIELD.finditer(s[head.end():]) if not m.group(1).strip()})
+
+
 def check(shim):
     """(file, rule, detail) for every breach in one layer's src"""
     out = []
     src = os.path.join(shim, 'src')
+    want = layer_priority(shim)
+    for dp, _, fs in os.walk(src):
+        for f in fs:
+            if f == 'CbVanillaReads.java' and want is not None:
+                v = re.search(r'\bint\s+PRIORITY\s*=\s*(-?\d+)\s*;', strip(open(os.path.join(dp, f), encoding='utf-8').read()))
+                if not v or int(v.group(1)) != want:
+                    out.append((os.path.relpath(os.path.join(dp, f), shim).replace('\\', '/'), 'layer-order',
+                                'PRIORITY = %s, rule 3 wants %d' % (v.group(1) if v else '?', want)))
     for dp, _, fs in os.walk(src):
         for f in sorted(fs):
             if not f.endswith('.java'):
@@ -91,10 +136,16 @@ def check(shim):
             while depth:
                 depth += {'(': 1, ')': -1}.get(s[i], 0)
                 i += 1
-            pm = re.search(r'priority\s*=\s*([\w.]+)', s[m.end():i - 1])
+            pm = re.search(r'priority\s*=\s*(-?[\w.]+)', s[m.end():i - 1])
             prio = pm.group(1) if pm else '1000'
-            below = prio.endswith('PRIORITY') or prio.endswith('ROUTE_FIRST') or (prio.isdigit() and int(prio) < 1000)
+            literal = re.fullmatch(r'-?\d+', prio) is not None
+            below = prio.endswith('PRIORITY') or prio.endswith('ROUTE_FIRST') or (literal and int(prio) < 1000)
             rel = os.path.relpath(p, shim).replace('\\', '/')
+            restores = merged_members(s, name) + restored_fields(s, name)
+            if want is not None and restores and not prio.endswith('CbVanillaReads.PRIORITY') and prio != 'PRIORITY':
+                out.append((rel, 'layer-order-restorer-at-' + prio, ','.join(restores)))
+            elif want is not None and not restores and literal and int(prio) <= want:
+                out.append((rel, 'layer-order-at-or-below-' + str(want), prio))
             if not below:
                 merged = merged_members(s, name)
                 if merged:

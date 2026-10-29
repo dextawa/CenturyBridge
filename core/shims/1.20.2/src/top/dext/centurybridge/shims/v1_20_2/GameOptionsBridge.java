@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * them. The values are the settings' vanilla defaults. Writes land here and have no effect on vanilla,
  * which matches reality. (Ported from the 1.20.4 client battery; ten corpus mods read field_1866.)
  */
-@Mixin(class_315.class)
+@org.spongepowered.asm.mixin.Mixin(value = class_315.class, priority = top.dext.centurybridge.rt.v1_20_2.CbVanillaReads.PRIORITY)
 public abstract class GameOptionsBridge {
     /** debugEnabled, removed @1.20.1->1.20.2 */
     public boolean field_1866 = true;

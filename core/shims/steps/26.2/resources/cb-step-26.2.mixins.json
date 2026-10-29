@@ -26,9 +26,13 @@
     "CbS26BodyArmorRestoreMixin",
     "CbS26BodyArmorHorseRouteMixin",
     "CbS26BodyArmorWolfRouteMixin",
-    "CbS26DelayedCrashMixin"
+    "CbS26DelayedCrashMixin",
+    "CbS26TagsProviderRestoredMixin",
+    "CbS26FapiTagsProviderRestoredMixin",
+    "CbS26TagsProviderKeyedMixin"
   ],
   "client": [
+    "CbS26LevelRendererRestoredMixin",
     "CbS26BedLayersMixin",
     "CbS26BedRendererMixin",
     "CbS26BedSpecialMixin",

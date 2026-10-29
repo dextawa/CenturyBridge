@@ -26,8 +26,15 @@ public @interface CbVanillaReads {
      * ("cannot inject into ... merged by"). Such a mixin holds only the restored members and the state they read:
      * its injectors into 1.21's own methods would run before every mod's, so they stay in a mixin of default
      * priority ({@code <name>Hooks}).
+     *
+     * Layer order (mixin_priority.py rule 3): -4 = 1 - (this release's index - 1.20.2's index) in Chain.RELEASES,
+     * one lower per later release. A climbing earlier layer's mixins @Shadow / @Accessor / @Invoker members a later
+     * layer restores (the 1.20.2 layer's Realms bridge reads 1.21.6's restored leftX / rightX); Mixin applies a
+     * target's mixins by priority and breaks ties by load order (MixinInfo.compareTo: priority, then the order the
+     * configs were read), so the later restorer must sit strictly lower or the reader may apply first and the climb
+     * strips it (Chain.layerDeclares, MixinJudge, MixinCheck judge strictly).
      */
-    int PRIORITY = 1;
+    int PRIORITY = -4;
 
     /**
      * The priority of a layer route mixin (one that merges nothing) whose injectors into a 1.21 method must go before

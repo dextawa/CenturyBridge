@@ -22,7 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class CbClientOptionsMixin implements top.dext.centurybridge.step.v1_20_5.rt.CbClientRealms.Options32Bit {
 
     /** 1.20.4 Options.skipRealms32bitWarning */
-    public boolean field_37208 = false;
+    @org.spongepowered.asm.mixin.Shadow
+    public boolean field_37208;
 
     @Override
     public boolean cb$skipRealms32bitWarning() {

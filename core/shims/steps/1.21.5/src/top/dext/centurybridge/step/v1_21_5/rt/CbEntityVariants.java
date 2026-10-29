@@ -40,7 +40,10 @@ import top.dext.centurybridge.step.v1_21_5.facade.EntitySubPredicates.EntityVari
  * "type_specific" predicates through), so a converted mod's references and a 1.21.4 datapack's
  * {"type_specific": {"type": "cat", "variant": ...}} work as on 1.21.4. Getters: 1.21.4's (same intermediary members on
  * 1.21.5, javap), except villager type (1.21.5 VillagerData.type() is a Holder: its value), tropical fish (1.21.5
- * getPattern, method_66681) and wolf (1.21.5's getVariant is private: the layer access widener opens it).
+ * getPattern, method_66681) and wolf (1.21.5's getVariant is private: the layer access widener opens it). The fox and
+ * salmon variant codecs are StringRepresentable.fromEnum(values) built here, as 1.21.5's Fox.Variant.CODEC /
+ * Salmon.Variant.CODEC are (javap <clinit>): those fields are typed EnumCodec in 1.21.5 and Codec from 26.1, and a read
+ * of them under 1.21.5's type stops linking past the 26.1 wall.
  */
 public final class CbEntityVariants {
     private CbEntityVariants() {
@@ -49,7 +52,7 @@ public final class CbEntityVariants {
     public static final EntityVariantPredicateType<class_5762.class_5767> AXOLOTL = EntityVariantPredicateType.method_47840(
         class_5762.class_5767.field_41585, e -> e instanceof class_5762 a ? Optional.of(a.method_33225()) : Optional.empty());
     public static final EntityVariantPredicateType<class_4019.class_4039> FOX = EntityVariantPredicateType.method_47840(
-        class_4019.class_4039.field_41548, e -> e instanceof class_4019 f ? Optional.of(f.method_47845()) : Optional.empty());
+        net.minecraft.class_3542.method_28140(class_4019.class_4039::values), e -> e instanceof class_4019 f ? Optional.of(f.method_47845()) : Optional.empty());
     public static final EntityVariantPredicateType<class_1438.class_4053> MOOSHROOM = EntityVariantPredicateType.method_47840(
         class_1438.class_4053.field_41549, e -> e instanceof class_1438 m ? Optional.of(m.method_47847()) : Optional.empty());
     public static final EntityVariantPredicateType<class_1463.class_7990> RABBIT = EntityVariantPredicateType.method_47840(
@@ -64,7 +67,7 @@ public final class CbEntityVariants {
     public static final EntityVariantPredicateType<class_1453.class_7989> PARROT = EntityVariantPredicateType.method_47840(
         class_1453.class_7989.field_41555, e -> e instanceof class_1453 p ? Optional.of(p.method_6584()) : Optional.empty());
     public static final EntityVariantPredicateType<class_1462.class_9869> SALMON = EntityVariantPredicateType.method_47840(
-        class_1462.class_9869.field_52473, e -> e instanceof class_1462 s ? Optional.of(s.method_61472()) : Optional.empty());
+        net.minecraft.class_3542.method_28140(class_1462.class_9869::values), e -> e instanceof class_1462 s ? Optional.of(s.method_61472()) : Optional.empty());
     public static final EntityVariantPredicateType<class_1474.class_1475> TROPICAL_FISH = EntityVariantPredicateType.method_47840(
         class_1474.class_1475.field_41578, e -> e instanceof class_1474 t ? Optional.of(t.method_66681()) : Optional.empty());
     public static final EntityHolderVariantPredicateType<class_1535> PAINTING = EntityHolderVariantPredicateType.method_58354(

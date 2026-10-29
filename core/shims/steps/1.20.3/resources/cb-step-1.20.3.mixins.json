@@ -92,6 +92,7 @@
     "CbLivingEntityRendererInvoker",
     "CbMenuPositionerMixin",
     "CbNetRealmsTaskScreenMixin",
+    "CbNetRealmsTaskScreenMixinHooks",
     "CbOptionsSubScreenMixin",
     "CbRealmCreationTaskMixin",
     "CbRealmsConfigureWorldScreenMixin",

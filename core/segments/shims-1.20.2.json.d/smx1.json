@@ -7,6 +7,11 @@
   "net/minecraft/class_161.field_1139:Ljava/util/Map;": "comp_1915",
   "net/minecraft/class_161.field_1145:Lnet/minecraft/class_170;": "comp_1914",
   "net/minecraft/class_161.field_44782:Z": "comp_1917",
+  "net/minecraft/class_1688.field_7657:D": "field_45140",
+  "net/minecraft/class_1688.field_7659:D": "field_45139",
+  "net/minecraft/class_1688.field_7662:D": "field_45138",
+  "net/minecraft/class_1688.field_7665:D": "field_45136",
+  "net/minecraft/class_1688.field_7666:D": "field_45137",
   "net/minecraft/class_1688.field_7669:I": "field_45135",
   "net/minecraft/class_175.field_1214:Lnet/minecraft/class_184;": "comp_1924",
   "net/minecraft/class_179$class_180.field_1221:Ljava/lang/String;": "comp_1927",
@@ -97,6 +102,7 @@
   "net/minecraft/class_94$class_95.field_1014:I": "comp_1848"
  },
  "_smx1_fieldRenames_movedUp_basis": "ClientPacketListener / ServerGamePacketListenerImpl fields 1.20.2 moved up into ClientCommonPacketListenerImpl / ServerCommonPacketListenerImpl as protected fields (the super constructor stores connection, minecraft, serverData, telemetryManager, postDisconnectScreen = 1.20.1's callbackScreen; MinecraftServer; LATENCY_CHECK_INTERVAL 15000 both); the private keep-alive fields moved up stay private (a mixin on the subclass cannot reach them) and are not wired; ServerGamePacketListenerImpl.connection -> ServerCommonPacketListenerImpl's; ChatReportScreen's lastScreen / reportingContext (the new AbstractReportScreen constructor stores the same parameters) and its observed-what / select-reason / more-comments labels (the same labels under 1.20.2's gui.abuseReport.* keys, protected there; the other labels stayed private and are not wired)",
+ "_smx1_fieldRenames_lerp_basis": "AbstractMinecart's lerp target (lx / ly / lz / lyr / lxr): 1.20.2 re-declares the five private doubles under new ids; lerpTo (method_5759) stores its x, y, z, yRot, xRot parameters into field_7665 / 7666 / 7662 / 7659 / 7657 on 1.20.1 and into field_45136 / 45137 / 45138 / 45139 / 45140 on 1.20.2, in the same order (javap -c of both), beside lerpSteps (field_7669 -> field_45135); the lerp motion lxd / lyd / lzd (field_7658 / 7655 / 7656, stored by lerpMotion) fold into one Vec3 (field_45141) and are not wired",
  "_smx1_fieldRenames_records_basis": "classes 1.20.2 made records with several fields of one type (MapDecoration x / y / rot): each 1.20.1 field maps to the record component its constructor parameter is stored into, the parameter order being the same on both; recipe builders' Result.id (the first constructor parameter on both, the recipe id; advancementId has no 1.20.2 counterpart: the Result holds the AdvancementHolder) and PlayerPredicate.advancements (Map<ResourceLocation, AdvancementPredicate> on both; 1.20.2 made the stats map a list)",
  "methodRenames": {
   "net/minecraft/class_2342.method_10207()Lnet/minecraft/class_3218;": "comp_1967",
