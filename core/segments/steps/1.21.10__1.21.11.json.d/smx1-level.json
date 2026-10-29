@@ -1,0 +1,6 @@
+{
+ "_smx1_level_basis": "smx1e (layer-dangling 1.21.10__1.21.11, 1.21.2 layer CbLevelBlockEntities.gameTime tombstones): 1.21.10's Level.getGameTime() (class_1937.method_8510, levelData.getGameTime()) is gone from 1.21.11's Level; 1.21.11 has LevelAccessor.getGameTime() (class_1936.method_75260, a default: getLevelData().getGameTime()), which Level inherits, and Level.getLevelData() answers the same levelData field (javap -c -p of both). Same erased descriptor, same value: a rename",
+ "methodRenames": {
+  "net/minecraft/class_1937.method_8510()J": "method_75260"
+ }
+}
