@@ -1,0 +1,169 @@
+{
+ "_swall13_brainlists": "gen_wall_brain_lists.py (V bytecode); regenerate, never hand-edit",
+ "fieldGetters": {
+  "net/minecraft/class_10280.field_54585:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCreakingAi",
+  "net/minecraft/class_10280.field_54586:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCreakingAi",
+  "net/minecraft/class_11192.field_59700:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListHappyGhastAi",
+  "net/minecraft/class_11192.field_59701:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListHappyGhastAi",
+  "net/minecraft/class_11574.field_61285:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCopperGolemAi",
+  "net/minecraft/class_11574.field_61286:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCopperGolemAi",
+  "net/minecraft/class_12118.field_63350:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListNautilusAi",
+  "net/minecraft/class_12118.field_63351:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListNautilusAi",
+  "net/minecraft/class_12120.field_63364:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListZombieNautilusAi",
+  "net/minecraft/class_12120.field_63365:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListZombieNautilusAi",
+  "net/minecraft/class_1646.field_18538:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListVillager",
+  "net/minecraft/class_1646.field_18539:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListVillager",
+  "net/minecraft/class_4760.field_22365:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListHoglin",
+  "net/minecraft/class_4760.field_22366:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListHoglin",
+  "net/minecraft/class_4836.field_22376:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListPiglin",
+  "net/minecraft/class_4836.field_22381:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListPiglin",
+  "net/minecraft/class_5136.field_23731:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListZoglin",
+  "net/minecraft/class_5136.field_23733:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListZoglin",
+  "net/minecraft/class_5419.field_25760:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListPiglinBrute",
+  "net/minecraft/class_5419.field_25761:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListPiglinBrute",
+  "net/minecraft/class_5762.field_28333:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListAxolotl",
+  "net/minecraft/class_5762.field_28334:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListAxolotl",
+  "net/minecraft/class_6053.field_30400:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListGoat",
+  "net/minecraft/class_6053.field_30401:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListGoat",
+  "net/minecraft/class_7102.field_37449:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListFrog",
+  "net/minecraft/class_7102.field_37450:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListFrog",
+  "net/minecraft/class_7110.field_37497:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListTadpole",
+  "net/minecraft/class_7110.field_37498:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListTadpole",
+  "net/minecraft/class_7261.field_38416:Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListWardenAi",
+  "net/minecraft/class_7261.field_38417:Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListWardenAi",
+  "net/minecraft/class_7298.field_38398:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListAllay",
+  "net/minecraft/class_7298.field_38403:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListAllay",
+  "net/minecraft/class_7691.field_40158:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCamelAi",
+  "net/minecraft/class_7691.field_40159:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCamelAi",
+  "net/minecraft/class_8155.field_42673:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListSnifferAi",
+  "net/minecraft/class_8155.field_42674:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListSnifferAi",
+  "net/minecraft/class_8950.field_47287:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListBreezeAi",
+  "net/minecraft/class_8950.field_47288:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListBreezeAi",
+  "net/minecraft/class_9071.field_47803:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListArmadilloAi",
+  "net/minecraft/class_9071.field_47804:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListArmadilloAi"
+ },
+ "staticFieldSetters": {
+  "net/minecraft/class_10280.field_54585:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCreakingAi",
+  "net/minecraft/class_10280.field_54586:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCreakingAi",
+  "net/minecraft/class_11192.field_59700:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListHappyGhastAi",
+  "net/minecraft/class_11192.field_59701:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListHappyGhastAi",
+  "net/minecraft/class_11574.field_61285:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCopperGolemAi",
+  "net/minecraft/class_11574.field_61286:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCopperGolemAi",
+  "net/minecraft/class_12118.field_63350:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListNautilusAi",
+  "net/minecraft/class_12118.field_63351:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListNautilusAi",
+  "net/minecraft/class_12120.field_63364:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListZombieNautilusAi",
+  "net/minecraft/class_12120.field_63365:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListZombieNautilusAi",
+  "net/minecraft/class_1646.field_18538:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListVillager",
+  "net/minecraft/class_1646.field_18539:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListVillager",
+  "net/minecraft/class_4760.field_22365:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListHoglin",
+  "net/minecraft/class_4760.field_22366:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListHoglin",
+  "net/minecraft/class_4836.field_22376:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListPiglin",
+  "net/minecraft/class_4836.field_22381:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListPiglin",
+  "net/minecraft/class_5136.field_23731:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListZoglin",
+  "net/minecraft/class_5136.field_23733:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListZoglin",
+  "net/minecraft/class_5419.field_25760:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListPiglinBrute",
+  "net/minecraft/class_5419.field_25761:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListPiglinBrute",
+  "net/minecraft/class_5762.field_28333:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListAxolotl",
+  "net/minecraft/class_5762.field_28334:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListAxolotl",
+  "net/minecraft/class_6053.field_30400:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListGoat",
+  "net/minecraft/class_6053.field_30401:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListGoat",
+  "net/minecraft/class_7102.field_37449:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListFrog",
+  "net/minecraft/class_7102.field_37450:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListFrog",
+  "net/minecraft/class_7110.field_37497:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListTadpole",
+  "net/minecraft/class_7110.field_37498:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListTadpole",
+  "net/minecraft/class_7261.field_38416:Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListWardenAi",
+  "net/minecraft/class_7261.field_38417:Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListWardenAi",
+  "net/minecraft/class_7298.field_38398:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListAllay",
+  "net/minecraft/class_7298.field_38403:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListAllay",
+  "net/minecraft/class_7691.field_40158:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCamelAi",
+  "net/minecraft/class_7691.field_40159:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCamelAi",
+  "net/minecraft/class_8155.field_42673:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListSnifferAi",
+  "net/minecraft/class_8155.field_42674:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListSnifferAi",
+  "net/minecraft/class_8950.field_47287:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListBreezeAi",
+  "net/minecraft/class_8950.field_47288:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListBreezeAi",
+  "net/minecraft/class_9071.field_47803:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListArmadilloAi",
+  "net/minecraft/class_9071.field_47804:Lcom/google/common/collect/ImmutableList;": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListArmadilloAi"
+ },
+ "mixinAnchorMoves": {
+  "net/minecraft/class_10280.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCreakingAi.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 CreakingAi.<clinit> builds field_54585/field_54586 from 13 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_11192.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListHappyGhastAi.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 HappyGhastAi.<clinit> builds field_59700/field_59701 from 21 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_11574.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCopperGolemAi.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 CopperGolemAi.<clinit> builds field_61285/field_61286 from 16 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_12118.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListNautilusAi.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 NautilusAi.<clinit> builds field_63350/field_63351 from 21 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_12120.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListZombieNautilusAi.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 ZombieNautilusAi.<clinit> builds field_63364/field_63365 from 21 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_1646.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListVillager.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 Villager.<clinit> builds field_18538/field_18539 from 39 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_4760.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListHoglin.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 Hoglin.<clinit> builds field_22365/field_22366 from 24 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_4836.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListPiglin.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 Piglin.<clinit> builds field_22376/field_22381 from 49 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_5136.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListZoglin.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 Zoglin.<clinit> builds field_23731/field_23733 from 12 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_5419.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListPiglinBrute.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 PiglinBrute.<clinit> builds field_25761/field_25760 from 24 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_5762.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListAxolotl.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 Axolotl.<clinit> builds field_28333/field_28334 from 25 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_6053.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListGoat.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 Goat.<clinit> builds field_30400/field_30401 from 22 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_7102.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListFrog.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 Frog.<clinit> builds field_37449/field_37450 from 25 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_7110.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListTadpole.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 Tadpole.<clinit> builds field_37497/field_37498 from 15 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_7261.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListWardenAi.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 WardenAi.<clinit> builds field_38416/field_38417 from 28 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_7298.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListAllay.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 Allay.<clinit> builds field_38398/field_38403 from 16 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_7691.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListCamelAi.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 CamelAi.<clinit> builds field_40158/field_40159 from 18 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_8155.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListSnifferAi.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 SnifferAi.<clinit> builds field_42673/field_42674 from 19 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_8950.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListBreezeAi.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 BreezeAi.<clinit> builds field_47287/field_47288 from 21 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  },
+  "net/minecraft/class_9071.<clinit>()V": {
+   "to": "top/dext/centurybridge/step/v26_1/rt/brainlists/CbWallBrainListArmadilloAi.build()V",
+   "basis": "gen_wall_brain_lists: 1.21.11 ArmadilloAi.<clinit> builds field_47803/field_47804 from 20 element reads (javap); 26.1 keeps none of these fields and derives a brain's memories (provider list, sensors' requires(), behaviours' getRequiredMemories()); build() repeats the same reads through the same factory in the same order"
+  }
+ }
+}

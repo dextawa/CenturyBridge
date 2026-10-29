@@ -6,5 +6,5 @@
   "environment": "*",
   "entrypoints": { "main": ["cb.swalln.Driver"] },
   "mixins": ["cb_swalln.mixins.json"],
-  "depends": { "fabricloader": ">=0.15.0", "minecraft": "26.1", "fabric-lifecycle-events-v1": "*" }
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "26.1", "fabric-lifecycle-events-v1": "*", "fabric-events-interaction-v0": "*" }
 }
