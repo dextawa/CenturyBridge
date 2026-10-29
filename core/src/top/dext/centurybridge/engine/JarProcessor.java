@@ -2347,9 +2347,18 @@ public final class JarProcessor {
     private static String layerRestorer(String owner, String name, String desc, LayerIndex layer, Chain chain) {
         String cur = owner;
         String stripped = null;
+        // a climbed layer declares its restored members as the jar will be spelled at W: through this step's
+        // classRenames (s26h / s9e: the 1.21.11 layer restores DebugRenderer.emitGizmos with 26.2's facade
+        // MultiBufferSource$BufferSource, the 1.21.9 layer's call still names the vanilla type before the rename)
+        String wDesc = chain.renamedDesc(desc);
         for (int hops = 0; cur != null && hops < 64; hops++) {
-            for (org.objectweb.asm.tree.MethodNode m : chain.layerMembers.byName(cur, name)) {
-                if (m.desc.equals(desc)) {
+            List<org.objectweb.asm.tree.MethodNode> cands = new ArrayList<>(chain.layerMembers.byName(cur, name));
+            String renamedOwner = chain.classRenames.get(cur);
+            if (renamedOwner != null) {
+                cands.addAll(chain.layerMembers.byName(renamedOwner, name));
+            }
+            for (org.objectweb.asm.tree.MethodNode m : cands) {
+                if (m.desc.equals(desc) || m.desc.equals(wDesc)) {
                     String mx = chain.layerMembers.mixinOf(m);
                     if (mx != null && layer.liveMixins != null && layer.decls.containsKey(mx) && !layer.liveMixins.contains(mx)) {
                         stripped = stripped != null ? stripped : mx; // this jar's own restorer, stripped by now
@@ -2360,6 +2369,9 @@ public final class JarProcessor {
             }
             if (stripped == null) {
                 stripped = chain.layerMembers.strippedRestorer(cur, name, desc);
+            }
+            if (stripped == null && !wDesc.equals(desc)) {
+                stripped = chain.layerMembers.strippedRestorer(renamedOwner != null ? renamedOwner : cur, name, wDesc);
             }
             String next = layer.superOf.get(cur);
             if (next == null) {
