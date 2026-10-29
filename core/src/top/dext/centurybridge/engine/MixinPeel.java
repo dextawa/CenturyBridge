@@ -64,7 +64,20 @@ final class MixinPeel {
         this.stubName = stubName;
         MixinTriage.configs(entries, cfgs, refmaps);
         this.own = MixinTriage.ownMembers(entries);
+        byte[] fmj = entries.get("fabric.mod.json");
+        String id = null;
+        try {
+            id = fmj == null ? null : com.google.gson.JsonParser.parseString(new String(fmj, java.nio.charset.StandardCharsets.UTF_8))
+                .getAsJsonObject().get("id").getAsString();
+        } catch (RuntimeException ex) {
+            id = null;
+        }
+        // CenturyBridge's own climbing layers are not peeled: a layer mixin that loses a member is the step owner's to
+        // give back, and climb_mixin_check reports it delisted; peeled it would apply half-way, unreported
+        this.layerJar = id != null && id.startsWith("centurybridge");
     }
+
+    private final boolean layerJar;
 
     private boolean fatal(ClassNode cn) {
         return MixinTriage.reanalyze(write(cn), cn.name, cfgs, refmaps, chain, own).applyFatal(injectorsHandled);
@@ -73,8 +86,12 @@ final class MixinPeel {
     /** the peeled mixin's report, or null when nothing of it is a gone member alone (strip it as before) */
     Result peel(String cls) {
         byte[] b = entries.get(cls + ".class");
-        if (b == null) return null;
+        if (b == null || layerJar) return null;
         ClassNode cn = read(b);
+        for (String t : MixinRepair.mixinTargets(cn, null)) {
+            // a target class W no longer has (and the step does not rename): the whole mixin goes, as before
+            if (chain.resolveClass(t).level() != Chain.Level.OK && !chain.classRenames.containsKey(t)) return null;
+        }
         List<FieldNode> goneF = new ArrayList<>();
         List<MethodNode> goneM = new ArrayList<>();
         for (FieldNode f : cn.fields) {
