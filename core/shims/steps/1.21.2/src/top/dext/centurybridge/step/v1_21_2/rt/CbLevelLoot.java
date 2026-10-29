@@ -1,6 +1,7 @@
 package top.dext.centurybridge.step.v1_21_2.rt;
 
 import java.util.Optional;
+import net.minecraft.class_10162;
 import net.minecraft.class_1767;
 import net.minecraft.class_2248;
 import net.minecraft.class_2960;
@@ -61,6 +62,32 @@ public final class CbLevelLoot {
     /** a write of 1.21.1's BlockBehaviour.drops: the block's loot table from then on (CbPendingIdsBlockMixin's setter) */
     public static void field_23156(class_4970 self, class_5321<class_52> key) {
         ((CbPendingIdsItems.BlockFields) self).cb$setDrops(toOptional(key));
+    }
+
+    /**
+     * Properties.drops on 1.21.2. 1.21.1's field held a key: null by default (BlockBehaviour.getLootTable then worked out
+     * "blocks/&lt;id&gt;" from the registered block), EMPTY after noLootTable(), the block's key after dropsLike(block); every
+     * copy took it along (ofFullCopy). 1.21.2 holds a DependantName of the block id instead (field_54007): its constructor
+     * puts a function deriving the same "blocks/&lt;id&gt;" key, noLootTable() a fixed empty Optional, overrideLootTable(o)
+     * a fixed o; copies take it along as 1.21.1's did. A fixed value ignores the id, the default derives from it: the
+     * function answers what a fresh Properties' function answers for a probe id exactly when it is that default.
+     */
+    private static final class DefaultDrops {
+        static final class_5321<class_2248> PROBE =
+            class_5321.method_29179(class_7924.field_41254, class_2960.method_60655("centurybridge", "drops_probe"));
+        static final class_10162<class_2248, Optional<class_5321<class_52>>> FN = class_4970.class_2251.method_9637().field_54007;
+    }
+
+    /** a read of 1.21.1's Properties.drops: null for the default (the block's own table), EMPTY for none, else the key */
+    public static class_5321<class_52> field_10666(class_4970.class_2251 self) {
+        Optional<class_5321<class_52>> v = self.field_54007.get(DefaultDrops.PROBE);
+        if (v.equals(DefaultDrops.FN.get(DefaultDrops.PROBE))) return null;
+        return fromOptional(v);
+    }
+
+    /** a write of 1.21.1's Properties.drops: null puts the default back, EMPTY (or its equal) means none */
+    public static void field_10666(class_4970.class_2251 self, class_5321<class_52> key) {
+        self.field_54007 = key == null ? DefaultDrops.FN : class_10162.fixed(toOptional(key));
     }
 
     /** Properties.dropsLike(block): the properties take the block's loot table */

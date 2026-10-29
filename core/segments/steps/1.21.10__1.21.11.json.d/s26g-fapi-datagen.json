@@ -1,0 +1,6 @@
+{
+ "_s26g_fapi_datagen_basis": "Fabric API renamed its datagen TagBuilder hook interface at 1.21.11: fabric-data-generation-api-v1 23.2.27 (1.21.10) impl/datagen/FabricTagBuilder (fabric_setReplace(Z)V, fabric_isReplaced()Z, fabric_forceAddTag(class_2960)V) is 23.5.0's (1.21.11) impl/datagen/TagBuilderHooks, the same three members plus the removal ones (javap of both), implemented on every TagBuilder by its TagBuilderMixin as before. The 1.21.6 layer's FabricTagBuilder facade casts the raw builder to it for setReplace / forceAddTag; without the rename the climbed layer hit NoClassDefFoundError net/fabricmc/fabric/impl/datagen/FabricTagBuilder in any climbed 1.21.5 mod's Fabric datagen past 1.21.10 (s26g, cb-s6t datagen on 26.2). Found by the 26.2 owner (s26g) while proving the 26.2 tag datagen; reported to main for the 1.21.11 step owner.",
+ "classRenames": {
+  "net/fabricmc/fabric/impl/datagen/FabricTagBuilder": "net/fabricmc/fabric/impl/datagen/TagBuilderHooks"
+ }
+}

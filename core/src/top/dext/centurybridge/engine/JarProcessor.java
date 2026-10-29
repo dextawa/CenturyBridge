@@ -2325,6 +2325,35 @@ public final class JarProcessor {
      * a mod subclass of, say, RenderSystem (RenderSystem.initGameThread called as MyRenderSystem.initGameThread)
      * filed as a library member, so the vanilla class's redirects never applied to it.
      */
+    /**
+     * Whether a step layer in the runtime restores name+desc (a layer mixin's merged member, {@link LayerMembers}) on
+     * a class the site's owner reaches: the jar's own classes, then the source release's library and game
+     * superclasses. Such a member is declared on the game or library class at runtime though the target stub lacks
+     * it, so the target-decl judgment (the stub as the judge of real-named members) does not apply. Past the
+     * namespace wall every class is real-named, and a member an earlier, pre-wall layer restores (the 1.21.6 layer's
+     * TagsProvider.tag answering its facade TagAppender) reached the next step's stub check and was tombstoned
+     * there; Main reads those layers' members renamed through the wall ({@code inherit} of a wall view).
+     */
+    private static boolean layerRestored(String owner, String name, String desc, LayerIndex layer, Chain chain) {
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64; hops++) {
+            for (org.objectweb.asm.tree.MethodNode m : chain.layerMembers.byName(cur, name)) {
+                if (m.desc.equals(desc)) {
+                    return true;
+                }
+            }
+            String next = layer.superOf.get(cur);
+            if (next == null) {
+                next = chain.libSuperOf.get(cur);
+            }
+            if (next == null) {
+                next = chain.superOf.get(cur);
+            }
+            cur = next;
+        }
+        return false;
+    }
+
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer) {
         String cur = owner;
         for (int hops = 0; cur != null && hops < 64; hops++) {
@@ -2804,7 +2833,7 @@ public final class JarProcessor {
                 }
             }
         }
-        if (!reg.stubs.isEmpty()) {
+        if (!reg.declared.isEmpty()) {
             entries.put(tombClass + ".class", reg.synthesize());
         }
         if (!chain.splitRenames.isEmpty()) {
@@ -3041,10 +3070,23 @@ public final class JarProcessor {
         final String clsName;
         final String targetVer;
         final Map<String, Stub> stubs = new LinkedHashMap<>();
+        /** The stubs as their call sites name them after the class's classRenames remapper: "name desc" -> stub. */
+        final Map<String, Stub> declared = new LinkedHashMap<>();
 
         Tombstones(String clsName, String targetVer) {
             this.clsName = clsName;
             this.targetVer = targetVer;
+        }
+
+        /**
+         * A site emits {@code s.staticDesc()} upstream of its class's classRenames remapper, which then renames the
+         * descriptor's types; the stub is declared with the descriptor the site ends up naming ({@code rm}: that
+         * class's remapper, a mixin's superRename variant included; null when the class is not renamed).
+         */
+        Stub declare(Stub s, org.objectweb.asm.commons.Remapper rm) {
+            String d = rm == null ? s.staticDesc() : rm.mapMethodDesc(s.staticDesc());
+            declared.putIfAbsent(s.name() + d, new Stub(s.name(), d, s.message()));
+            return s;
         }
 
         Stub get(String owner, String name, String desc, boolean isStatic, String boundary) {
@@ -3059,7 +3101,7 @@ public final class JarProcessor {
         byte[] synthesize() {
             org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
             cw.visit(Opcodes.V17, Opcodes.ACC_PUBLIC | Opcodes.ACC_SYNTHETIC, clsName, null, "java/lang/Object", null);
-            for (Stub s : stubs.values()) {
+            for (Stub s : declared.values()) {
                 MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, s.name(), s.staticDesc(), null, null);
                 mv.visitCode();
                 mv.visitTypeInsn(Opcodes.NEW, "java/lang/UnsupportedOperationException");
@@ -3955,7 +3997,8 @@ public final class JarProcessor {
                         // advancements/Criterion) is unlockedBy(String, advancements/triggers/Criterion))
                         if (r.level() == Chain.Level.OK && !name.startsWith("<") && !Chain.intermediaryClass(owner)
                                 && Boolean.FALSE.equals(chain.resolvesOnTarget(chain.classRenames.getOrDefault(owner, owner),
-                                    name + chain.renamedDesc(desc)))) {
+                                    name + chain.renamedDesc(desc)))
+                                && !layerRestored(site.substring(0, site.indexOf('.')), name, desc, layer, chain)) {
                             // classes Mojang never obfuscated (blaze3d, ...) keep real member names,
                             // which the death tables -- keyed by intermediary name -- cannot see go:
                             // the target stub is the judge. (On an intermediary-named class a
@@ -4698,6 +4741,9 @@ public final class JarProcessor {
             }
         }
         final Map<String, String> classRen = renames;
+        // tombstone stubs are declared with the descriptors this class's sites carry after the remapper below
+        final org.objectweb.asm.commons.Remapper tombRemap = needClassRename
+            ? new org.objectweb.asm.commons.SimpleRemapper(classRen) : null;
         ClassVisitor sink = needClassRename
             ? MixinClassRenames.annotations(new org.objectweb.asm.commons.ClassRemapper(kinds,
                 new org.objectweb.asm.commons.SimpleRemapper(classRen)), classRen, c -> wDeclares(chain, c))
@@ -5021,7 +5067,7 @@ public final class JarProcessor {
                         }
                         String boundary = tombstone.get(key);
                         if (boundary != null) {
-                            Tombstones.Stub s = reg.get(recv, name, desc, op == Opcodes.INVOKESTATIC, boundary);
+                            Tombstones.Stub s = reg.declare(reg.get(recv, name, desc, op == Opcodes.INVOKESTATIC, boundary), tombRemap);
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, reg.clsName, s.name(), s.staticDesc(), false);
                             return;
                         }
@@ -5125,7 +5171,7 @@ public final class JarProcessor {
                             String boundary = tombstone.get(key);
                             if (boundary != null) {
                                 boolean isStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
-                                Tombstones.Stub s = reg.get(recv, h.getName(), h.getDesc(), isStatic, boundary);
+                                Tombstones.Stub s = reg.declare(reg.get(recv, h.getName(), h.getDesc(), isStatic, boundary), tombRemap);
                                 rewritten[i] = new org.objectweb.asm.Handle(
                                     Opcodes.H_INVOKESTATIC, reg.clsName, s.name(), s.staticDesc(), false);
                             }

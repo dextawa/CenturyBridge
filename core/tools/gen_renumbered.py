@@ -25,7 +25,9 @@ A pair is judged from bytecode only, never by name:
 Listed and not wired (reported for review):
   * weak: the body has no member or class reference and at most 3 instructions (`iconst_0; ireturn`): sameness of
     such a body says nothing about identity;
-  * narrowed: W's method is less accessible than V's (a V caller would hit IllegalAccessError);
+  * narrowed: W's method is less accessible than V's (a V caller would hit IllegalAccessError): calls are not
+    renamed, but mixins follow the code (--write puts a mixinTargets entry, unless the pair is weak or abstract or
+    another fragment already places it);
   * wired elsewhere: another fragment of the step already names (n, d) (a hook or reshape that knows the meaning
     changed is that fragment's).
 The wall step (1.21.11 -> 26.1) compares V's classes and members through the wall table (wall_tables.py, the
@@ -34,7 +36,8 @@ target's table); a pair there is a member the table missed, a wall_table.py matt
 Output (--write): core/segments/steps/<V>__<W>.json.d/renumbered-gen.json -- methodRenames for every declaring class
 (methodRenameHome stops at a source declaration, so each declarer needs its key) and guarded overrideHooks old ->
 new (vanilla calls the new name; a V override answers it, its super call falls through to vanilla's), one per
-renamed shape under the topmost declaring class of that family; mixinTargets follow from methodRenames. Regenerate,
+renamed shape under the topmost declaring class of that family; mixinTargets follow from methodRenames (narrowed
+pairs: explicit mixinTargets only). Regenerate,
 never hand-edit. Step 1 (1.20.1 -> 1.20.2) wires through shims-1.20.2.json: counted, not written.
 """
 import json
@@ -341,6 +344,8 @@ def find(V, W, wall):
                 pairs[(cn, gm.name, gm.desc)] = na[0].name
     # review lists
     review = {"weak": [], "narrowed": [], "links": []}
+    # the narrowed pairs' new names: their mixins follow (mixinTargets), their calls do not
+    narrowed_to = {}
     for key in sorted(pairs):
         cn, n, d = key
         gm = next(m for m in V[cn].methods if m.name == n and m.desc == d)
@@ -350,12 +355,14 @@ def find(V, W, wall):
             review["links"].append(key)
         elif rank(nm.access) < rank(gm.access):
             review["narrowed"].append(key)
+            if gm.insns is not None and not weak(gm.insns):
+                narrowed_to[key] = pairs[key]
         elif gm.insns is not None and weak(gm.insns):
             review["weak"].append(key)
     for lst in review.values():
         for k in lst:
             pairs.pop(k, None)
-    return pairs, review, wsupers
+    return pairs, review, wsupers, narrowed_to
 
 
 def wired_text(frag_dir):
@@ -372,15 +379,48 @@ def wired_text(frag_dir):
     return text
 
 
+def wired_mixin_targets(frag_dir):
+    """the mixinTargets keys the step's other fragments (and its base file) already wire"""
+    keys = set()
+    files = []
+    if os.path.isdir(frag_dir):
+        files = [os.path.join(frag_dir, f) for f in sorted(os.listdir(frag_dir))
+                 if f.endswith(".json") and f != OUT_NAME and f not in SUPERSEDED]
+    main = frag_dir[:-2] if frag_dir.endswith(".d") else None
+    if main and os.path.exists(main):
+        files.append(main)
+    for p in files:
+        with open(p, encoding="utf-8") as fh:
+            keys |= set(json.load(fh).get("mixinTargets", {}))
+    return keys
+
+
+def arg_types(desc):
+    """the argument descriptors of a method descriptor"""
+    out, i = [], 1
+    while desc[i] != ")":
+        j = i
+        while desc[j] == "[":
+            j += 1
+        j = desc.index(";", j) + 1 if desc[j] == "L" else j + 1
+        out.append(desc[i:j])
+        i = j
+    return out
+
+
 def step(v, w, V, W, write=False, quiet=False):
     is_wall = (v, w) == WALL
     wall = Wall(wall_tables.table_for(w, DATA)) if is_wall else Ident()
-    pairs, review, wsupers = find(V, W, wall)
+    pairs, review, wsupers, narrowed_to = find(V, W, wall)
     frag_dir = os.path.join(ROOT, "core", "segments", "steps", f"{v}__{w}.json.d")
     wired = wired_text(frag_dir)
     elsewhere = [k for k in pairs if k[1] + k[2] in wired]
     for k in elsewhere:
         del pairs[k]
+    # a narrowed pair another fragment already places for mixins keeps that judgment
+    have_mt = wired_mixin_targets(frag_dir)
+    for k in [k for k in narrowed_to if f"{k[0]}.{k[1]}{k[2]}" in have_mt]:
+        del narrowed_to[k]
     if not quiet:
         for (cn, n, d), nn in sorted(pairs.items()):
             print(f"{cn}.{n}{d} -> {nn}")
@@ -419,9 +459,19 @@ def step(v, w, V, W, write=False, quiet=False):
                     + "; gen_renumbered.py); vanilla calls the new name, the V override answers it, its super call"
                     " falls through to vanilla's",
                 })
+        # narrowed: W made the method less accessible, so V's calls are not renamed (IllegalAccessError; they stay
+        # with whatever else the step wires for them, e.g. a layer's restored public member) -- but the code a V
+        # mixin selects is the W method's, which Mixin injects into whatever its access
+        mt = {}
+        for (cn, n, d), nn in sorted(narrowed_to.items()):
+            mt[f"{cn}.{n}{d}"] = {
+                "to": nn + wall.desc(d), "args": list(range(len(arg_types(d)))),
+                "basis": f"renumbered, narrowed: {w} renamed {cn}.{n} to {nn} with less access (same descriptor, same "
+                "body; gen_renumbered.py): mixins follow the code, calls are not renamed",
+            }
         out = os.path.join(frag_dir, OUT_NAME)
         with open(out, "w", encoding="utf-8", newline="\n") as f:
-            json.dump({"methodRenames": renames, "overrideHooks": oh}, f, indent=1)
+            json.dump({"methodRenames": renames, "overrideHooks": oh, "mixinTargets": mt}, f, indent=1)
             f.write("\n")
         print("wrote " + os.path.relpath(out, ROOT), file=sys.stderr)
     return counts

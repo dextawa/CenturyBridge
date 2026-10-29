@@ -1,0 +1,16 @@
+{
+ "_s26g_removal_basis": "the 1.20.2 layer's 1.20.1 tag-removal datagen (CbFapiTagBuilders.remove* record on its own TagBuilder store, CbFapiTagBuilderRemoval; CbFapiTagProviderRemoval writes \"fabric:remove\" into the tag JSON) dies past the wall: the writer captures TagsProvider.lambda$run$5's locals positionally (CAPTURE_FAILHARD) and the 26.x bodies (26.1.2, 26.2) have no JsonElement local (they encode a TagFile), so TagsProvider fails to transform (InjectionError 'LVT ... Expected ... JsonElement') and no datagen with tags runs at all. 26.1.2's Fabric API (fabric-data-generation-api-v1 24.3.4) keeps the same store natively (TagBuilderHooks fabric_removeElement / fabric_removeTag / fabric_getRemove, the 1.20.2 interface's shape, implemented on every TagBuilder by TagBuilderMixin) and writes it (TagsProviderMixin): the store moves onto it (classRenames + methodRenames after the copies retire, beside sruntime2-tags' retirement of the 26.1 layer's copy at this step). Found by the 26.2 owner (s26g): on 26.1.2 and 26.2 TagsProvider failed to transform in every Fabric datagen run with tags (cb-s6t)",
+ "classRenames": {
+  "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilderRemovals": "net/fabricmc/fabric/impl/datagen/TagBuilderHooks"
+ },
+ "methodRenames": {
+  "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilderRemovals.cb$removeElement(Lnet/minecraft/resources/Identifier;)V": "fabric_removeElement",
+  "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilderRemovals.cb$removeTag(Lnet/minecraft/resources/Identifier;)V": "fabric_removeTag",
+  "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilderRemovals.cb$getRemove()Ljava/util/List;": "fabric_getRemove"
+ },
+ "retiredClasses": {
+  "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilderRemovals": "native returns: 26.1.2's Fabric API TagBuilderHooks (fabric-data-generation-api-v1 25.5.0) has the same three members (fabric_removeElement(Identifier), fabric_removeTag(Identifier), fabric_getRemove() List<TagEntry>); references move to it (classRenames + methodRenames)",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiTagBuilderRemoval": "native returns: 26.1.2's Fabric API TagBuilderMixin implements TagBuilderHooks on every TagBuilder, an element removal a required element entry, a tag removal a required tag entry, as this copy did",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiTagProviderRemoval": "native returns: 26.1.2's Fabric API TagsProviderMixin writes each builder's fabric_getRemove as the tag file's \"fabric:remove\"; this copy's positional capture of TagsProvider.lambda$run$5's locals (CAPTURE_FAILHARD) no longer matches 26.2's body and fails TagsProvider's transformation"
+ }
+}

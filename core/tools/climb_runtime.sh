@@ -60,6 +60,46 @@ for ((bi = ${#BUILT[@]} - 1; bi >= 0; bi--)); do
             || { echo "layer $W: CLIMB FAILED"; tail -5 "$WD/layers/climb-$W.log"; exit 1; }
         cp "$WD/layers/climb-$W/centurybridge-0.3.0+$W+$T.jar" "$OUT/"
     fi
-    echo "layer $W -> $T: $(grep -h 'unaccounted' "$WD/layers/climb-$W/steps"/*/report.md 2>/dev/null | head -1)"
+    # the converter's own account of the climb: the last step's verdict and the symbols it left as ISSUE (a layer's
+    # report has no "unaccounted" line; this used to print nothing for every layer)
+    if [ "$W" != "$T" ]; then
+        VERDICT=$(sed -n 's/^## .* -- \(.*\)$/\1/p' "$WD"/layers/climb-$W/steps/*__$T/report.md 2>/dev/null | head -1)
+        ISSUES=$(cat "$WD"/layers/climb-$W/steps/*/full-audit.tsv 2>/dev/null | awk -F'\t' '$2 ~ /^ISSUE/' | wc -l)
+        echo "layer $W -> $T: ${VERDICT:-no report}, $ISSUES converter ISSUE symbols"
+    else
+        echo "layer $W -> $T: built against $T (build.sh's gates)"
+    fi
 done
+# every reference the climbed layers make, judged on T (link-check: T's game jar, Fabric API, libraries, the other
+# layers and the dependency mods; access through the access wideners the game loads with each layer). build.sh's gates
+# judge a layer against its own W only, climb_mixin_check.sh judges its mixins, and the damage tables list V's
+# public/protected members: a layer's plain code reading a member its own access widener opened (the 1.20.5 layer's
+# CbFieldReshapesGen reading BlockBehaviour.Properties.field_10666, replaced at 1.21.2) is judged by nothing else.
+# CLAIMED/BLIND/KNOWN rows are references the JVM cannot link on T; listed in <runtime>/link-check/link-findings.tsv.
+case "$T" in 26.*) GAME="data/jars/client-$T.jar" ;; *) GAME="data/jars/client-$T-intermediary.jar" ;; esac
+FAPI=$(ls data/runtime/client-$T/mods/fabric-api-*.jar 2>/dev/null | head -1)
+LAYERS=$(ls "$OUT"/centurybridge-0.3.0+*.jar)
+OTHERS=$(ls "$OUT"/*.jar | grep -vxF "$LAYERS")
+LC="$OUT/link-check"
+rm -rf "$LC"
+"$JAVA" -Xmx16g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$LC" - $LAYERS -- \
+    $OTHERS "$GAME" $FAPI "data/runtime/client-$T/libraries" > "$WD/layers/link-check-$T.log" 2>&1 \
+    || { echo "climbed layers -> $T: LINK-CHECK FAILED"; tail -5 "$WD/layers/link-check-$T.log"; exit 1; }
+# CLAIMED / BLIND / KNOWN: a reference the JVM cannot link on T. TOMBSTONE rows (KNOWN) are calls the converter
+# replaced with a lazy failure (centurybridge/gen/Tombstones*), counted apart: still a crash where reached
+count() {
+    awk -F'\t' -v j="$1" -v t="$2" 'NR > 1 && (j == "" || $3 == j) && ($1 == "CLAIMED" || $1 == "BLIND" || $1 == "KNOWN") && (($2 == "TOMBSTONE") == (t == 1))' \
+        "$LC/link-findings.tsv" | wc -l
+}
+for J in $LAYERS; do
+    B=$(basename "$J")
+    echo "    link-check ${B%.jar}: $(count "$B" 0) dangling references, $(count "$B" 1) tombstoned calls"
+done
+echo "climbed layers -> $T link-check: $(count "" 0) dangling references, $(count "" 1) tombstoned calls ($LC/link-findings.tsv)"
 ls "$OUT"
+# the ratchet: no layer may dangle more on T than core/segments/layer-linkcheck-baseline.tsv allows (per layer x T,
+# dangling + tombstoned). CB_LAYER_BASELINE=write rewrites T's rows in <workDir>'s copy instead (a burn-down lowers
+# them; copy the file back and commit it). Every T at once: layer_linkcheck_steps.sh.
+BASE="$WD/core/segments/layer-linkcheck-baseline.tsv"
+python3 "$WD/core/tools/layer_linkcheck.py" ratchet "$LC/link-findings.tsv" "$T" "$BASE" \
+    $([ "${CB_LAYER_BASELINE:-}" = write ] && echo --write) || exit 1

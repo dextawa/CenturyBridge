@@ -40,6 +40,56 @@ public final class WallInverse {
 
     /** writes W's code jar renamed into the analysis namespace to a temporary jar and returns it */
     public static Path intermediaryView(Path wCode, Path vCode, Path table) throws IOException {
+        String cacheKey = vCode.toAbsolutePath().normalize() + "|" + table.toAbsolutePath().normalize();
+        Inverse inv = INVERSES.get(cacheKey);
+        if (inv == null) {
+            inv = inverse(vCode, table);
+            INVERSES.put(cacheKey, inv);
+        }
+        return view(wCode, inv.classBack, inv.ownerBack, inv.globalBack, inv.nameBack);
+    }
+
+    /**
+     * the classes a mixin class (a step layer's) names in @Mixin (value and targets), first in its lookup order: Mixin
+     * merges its members onto them, so a member it declares under a target's 26.1 name (a @Shadow, a restored field such
+     * as Item.components) is that target's member and takes the target's id in the view, as a call naming the target does
+     */
+    private static java.util.List<String> mixinTargets(ClassReader cr) {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
+            @Override
+            public org.objectweb.asm.AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+                if (!desc.equals("Lorg/spongepowered/asm/mixin/Mixin;")) {
+                    return null;
+                }
+                return new org.objectweb.asm.AnnotationVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                    @Override
+                    public org.objectweb.asm.AnnotationVisitor visitArray(String name) {
+                        return new org.objectweb.asm.AnnotationVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                            @Override
+                            public void visit(String n, Object value) {
+                                if (value instanceof org.objectweb.asm.Type t) {
+                                    out.add(t.getInternalName());
+                                } else if (value instanceof String str && "targets".equals(name)) {
+                                    out.add(str.replace('.', '/'));
+                                }
+                            }
+                        };
+                    }
+                };
+            }
+        }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        return out;
+    }
+
+    /** the wall table taken back (by 1.21.11's declarations), per (vCode, table): one conversion views several jars */
+    private record Inverse(Map<String, String> classBack, Map<String, String> ownerBack,
+                           Map<String, Set<String>> globalBack, Map<String, Set<String>> nameBack) {
+    }
+
+    private static final Map<String, Inverse> INVERSES = new HashMap<>();
+
+    private static Inverse inverse(Path vCode, Path table) throws IOException {
         top.dext.centurybridge.data.JarRemapper.Table t = top.dext.centurybridge.data.JarRemapper.loadTable(table);
         Remapper fwd = t.remapper();
         Map<String, String> classBack = new HashMap<>();
@@ -82,6 +132,11 @@ public final class WallInverse {
             String o = t.classes.getOrDefault(k.substring(0, dot), k.substring(0, dot));
             nameBack.computeIfAbsent(o + "." + moj, x -> new HashSet<>()).add(k.substring(dot + 1));
         });
+        return new Inverse(classBack, ownerBack, globalBack, nameBack);
+    }
+
+    private static Path view(Path wCode, Map<String, String> classBack, Map<String, String> ownerBack,
+                             Map<String, Set<String>> globalBack, Map<String, Set<String>> nameBack) throws IOException {
         // W's hierarchy (mojang names): a call through a subclass finds the declaring owner's id
         Map<String, java.util.List<String>> supers = new HashMap<>();
         try (ZipFile z = new ZipFile(wCode.toFile())) {
@@ -91,7 +146,7 @@ public final class WallInverse {
                 }
                 try (InputStream in = z.getInputStream(e)) {
                     ClassReader cr = new ClassReader(in);
-                    java.util.List<String> up = new java.util.ArrayList<>();
+                    java.util.List<String> up = new java.util.ArrayList<>(mixinTargets(cr));
                     if (cr.getSuperName() != null) {
                         up.add(cr.getSuperName());
                     }

@@ -84,18 +84,23 @@ public final class CbTextures {
         encoder.presentTexture(view(texture));
     }
 
-    /** the same three, called on the GL command encoder itself */
+    /**
+     * the same three, called on the GL command encoder itself.
+     * The cast goes through Object so javac keeps it: 26.1's GL classes are backends, no longer the GpuDevice /
+     * CommandEncoder / RenderPass they implement here, and an elided upcast fails verification of the whole class
+     * once climbed to 26.1 (VerifyError, the climbed client's first GUI frame).
+     */
     public static com.mojang.blaze3d.systems.RenderPass createRenderPass(net.minecraft.class_10860 encoder, GpuTexture color,
             java.util.OptionalInt clearColor) {
-        return createRenderPass((com.mojang.blaze3d.systems.CommandEncoder) encoder, color, clearColor);
+        return createRenderPass((com.mojang.blaze3d.systems.CommandEncoder) (Object) encoder, color, clearColor);
     }
 
     public static com.mojang.blaze3d.systems.RenderPass createRenderPass(net.minecraft.class_10860 encoder, GpuTexture color,
             java.util.OptionalInt clearColor, GpuTexture depth, java.util.OptionalDouble clearDepth) {
-        return createRenderPass((com.mojang.blaze3d.systems.CommandEncoder) encoder, color, clearColor, depth, clearDepth);
+        return createRenderPass((com.mojang.blaze3d.systems.CommandEncoder) (Object) encoder, color, clearColor, depth, clearDepth);
     }
 
     public static void presentTexture(net.minecraft.class_10860 encoder, GpuTexture texture) {
-        presentTexture((com.mojang.blaze3d.systems.CommandEncoder) encoder, texture);
+        presentTexture((com.mojang.blaze3d.systems.CommandEncoder) (Object) encoder, texture);
     }
 }

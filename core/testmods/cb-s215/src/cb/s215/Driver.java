@@ -408,6 +408,83 @@ public final class Driver {
             check("shape-sample", lines.size() == 20, "n=" + lines.size());
         });
 
+        run("villager-data", () -> {
+            net.minecraft.class_3850 d = new net.minecraft.class_3850(net.minecraft.class_3854.field_17073, net.minecraft.class_3852.field_17056, 3);
+            net.minecraft.class_3850 d2 = d.method_16921(net.minecraft.class_3852.field_17051).method_16922(net.minecraft.class_3854.field_17071);
+            String name = net.minecraft.class_3852.field_17056.comp_818();
+            check("villager-data", d.method_16924() == net.minecraft.class_3852.field_17056 && d.method_16919() == net.minecraft.class_3854.field_17073
+                && d.method_16925() == 3 && d2.method_16924() == net.minecraft.class_3852.field_17051 && d2.method_16919() == net.minecraft.class_3854.field_17071
+                && d2.method_16925() == 3 && "farmer".equals(name),
+                "profession=" + d.method_16924() + " type=" + d.method_16919() + " level=" + d.method_16925() + " name=" + name);
+        });
+
+        run("raid", () -> {
+            class_2338 center = new class_2338(30, 70, 30);
+            net.minecraft.class_3765 raid = new net.minecraft.class_3765(77, level, center);
+            net.minecraft.class_2487 saved = raid.method_16502(new net.minecraft.class_2487());
+            net.minecraft.class_3765 back = new net.minecraft.class_3765(level, saved);
+            check("raid", raid.method_16494() == 77 && raid.method_16831() == level && saved.method_10550("Id") == 77
+                && saved.method_10550("CX") == 30 && saved.method_10550("CZ") == 30 && back.method_16494() == 77 && back.method_16831() == level
+                && back.method_16495().equals(center) && "ongoing".equals(saved.method_10558("Status")),
+                "id=" + raid.method_16494() + " saved=" + saved + " back=" + back.method_16494() + "@" + back.method_16495());
+        });
+
+        run("villager-rest", () -> {
+            int pkg = net.minecraft.class_4129.method_19020(net.minecraft.class_3852.field_17056, 0.5F).size();
+            net.minecraft.class_1646 v = new net.minecraft.class_1646(net.minecraft.class_1299.field_6077, level, net.minecraft.class_3854.field_17071);
+            net.minecraft.class_3854 t0 = v.method_47882();
+            v.method_47883(net.minecraft.class_3854.field_17075);
+            java.util.UUID who = java.util.UUID.randomUUID();
+            net.minecraft.class_2487 g = new net.minecraft.class_2487();
+            g.method_10539("Target", net.minecraft.class_4844.method_26275(who));
+            g.method_10582("Type", "minor_positive");
+            g.method_10569("Value", 7);
+            net.minecraft.class_2499 gl = new net.minecraft.class_2499();
+            gl.add(g);
+            v.method_21650(gl);
+            int rep = v.method_21651().method_19073(who, x -> true);
+            check("villager-rest", pkg > 0 && t0 == net.minecraft.class_3854.field_17071 && v.method_7231().method_16919() == net.minecraft.class_3854.field_17075
+                && rep == 7, "corePackage=" + pkg + " type0=" + t0 + " type1=" + v.method_7231().method_16919() + " reputation=" + rep);
+        });
+
+        run("raids", () -> {
+            net.minecraft.class_3767 fresh = new net.minecraft.class_3767(level);
+            fresh.method_16539();
+            net.minecraft.class_2487 r = new net.minecraft.class_2487();
+            r.method_10569("Id", 3);
+            r.method_10569("CX", 5);
+            r.method_10569("CY", 64);
+            r.method_10569("CZ", 6);
+            r.method_10582("Status", "ongoing");
+            net.minecraft.class_2499 rl = new net.minecraft.class_2499();
+            rl.add(r);
+            net.minecraft.class_2487 file = new net.minecraft.class_2487();
+            file.method_10569("NextAvailableID", 4);
+            file.method_10569("Tick", 11);
+            file.method_10566("Raids", rl);
+            net.minecraft.class_3767 loaded = net.minecraft.class_3767.method_77(level, file);
+            net.minecraft.class_3765 raid = loaded.method_16541(3);
+            String fileId = net.minecraft.class_3767.method_16533(level.method_40134());
+            check("raids", raid != null && raid.method_16494() == 3 && raid.method_16831() == level && raid.method_16495().equals(new class_2338(5, 64, 6))
+                && "raids".equals(fileId) && !net.minecraft.class_3767.method_16838(null, raid),
+                "raid=" + raid + " id=" + (raid == null ? -1 : raid.method_16494()) + " fileId=" + fileId);
+        });
+
+        run("pink-petals", () -> {
+            net.minecraft.class_2248 petals = net.minecraft.class_2246.field_42750;
+            net.minecraft.class_2680 s = petals.method_9564().method_11657(net.minecraft.class_8169.field_42765, 3);
+            check("pink-petals", petals instanceof net.minecraft.class_8169 && s.method_11654(net.minecraft.class_8169.field_42765) == 3
+                && net.minecraft.class_8169.field_46409 != null && s.method_28498(net.minecraft.class_8169.field_42764),
+                petals.getClass().getName() + " amount=" + s.method_11654(net.minecraft.class_8169.field_42765));
+        });
+
+        run("gametest-assert", () -> {
+            net.minecraft.class_4512 e = new net.minecraft.class_4512("cb boom");
+            net.minecraft.class_4513 p = new net.minecraft.class_4513("cb pos", new class_2338(1, 2, 3), new class_2338(0, 0, 0), 9L);
+            check("gametest-assert", e.getMessage().contains("cb boom") && p.method_22151().equals(new class_2338(1, 2, 3)),
+                e.getMessage() + " / " + p.getMessage());
+        });
+
         DONE = true;
         System.out.println("CB-S215 summary ok=" + ok + " fail=" + fail);
     }

@@ -10,7 +10,8 @@
     "DataStorageInvoker",
     "ExplosionSeenMixin",
     "ExplosionSeenQualifiedMixin",
-    "TeleportLookAtMixin"
+    "TeleportLookAtMixin",
+    "PropertiesDropsAccess"
   ],
   "injectors": {
     "defaultRequire": 1

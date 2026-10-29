@@ -61,11 +61,64 @@ public class Driver implements ModInitializer {
         return r != null ? r : AttackRange.defaultFor(e);
     }
 
+    /** native 26.1 control of cb-swall's modResourcePack case: the same pack, written against 26.1 */
+    static final class NativeModPack implements net.fabricmc.fabric.api.resource.ModResourcePack {
+        @Override
+        public net.fabricmc.loader.api.metadata.ModMetadata getFabricModMetadata() {
+            return net.fabricmc.loader.api.FabricLoader.getInstance().getModContainer("cb_swalln").orElseThrow().getMetadata();
+        }
+
+        @Override
+        public net.fabricmc.fabric.api.resource.ModResourcePack createOverlay(String overlay) {
+            return this;
+        }
+
+        @Override
+        public net.minecraft.server.packs.resources.IoSupplier<java.io.InputStream> getRootResource(String... path) {
+            return null;
+        }
+
+        @Override
+        public net.minecraft.server.packs.resources.IoSupplier<java.io.InputStream> getResource(net.minecraft.server.packs.PackType type, net.minecraft.resources.Identifier id) {
+            return null;
+        }
+
+        @Override
+        public void listResources(net.minecraft.server.packs.PackType type, String ns, String prefix, net.minecraft.server.packs.PackResources.ResourceOutput out) {
+        }
+
+        @Override
+        public java.util.Set<String> getNamespaces(net.minecraft.server.packs.PackType type) {
+            return java.util.Set.of("cb_swalln_pack");
+        }
+
+        @Override
+        public <T> T getMetadataSection(net.minecraft.server.packs.metadata.MetadataSectionType<T> section) {
+            return null;
+        }
+
+        @Override
+        public net.minecraft.server.packs.PackLocationInfo location() {
+            return null;
+        }
+
+        @Override
+        public void close() {
+        }
+    }
+
     private static void onStarted(MinecraftServer server) {
         try {
             run(server);
         } catch (Throwable t) {
             check("driver", false, t);
+        }
+        try {
+            net.minecraft.server.packs.PackResources p = new NativeModPack();
+            java.util.Set<String> ns = p.getNamespaces(net.minecraft.server.packs.PackType.SERVER_DATA);
+            check("modResourcePack.namespaces", ns.contains("cb_swalln_pack"), ns);
+        } catch (Throwable t) {
+            check("modResourcePack", false, t);
         }
         System.out.println("CBNATIVE DONE fails=" + FAILS);
     }
