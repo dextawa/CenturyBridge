@@ -63,6 +63,15 @@ public final class Driver {
         System.out.println("CB-S215 " + (cond ? "ok " : "FAIL ") + c + " " + detail);
     }
 
+    /** a count cb-s215n's native mixins keep (cb.s215n.Seen), -1 when cb-s215n is absent */
+    static int nativeSeen(String field) {
+        try {
+            return Class.forName("cb.s215n.Seen").getField(field).getInt(null);
+        } catch (ReflectiveOperationException e) {
+            return -1;
+        }
+    }
+
     interface Body {
         void run() throws Exception;
     }
@@ -516,6 +525,150 @@ public final class Driver {
             String got = String.join(",", sl.seen);
             check("level-sounds", got.equals("seeded:null:1:7,seeded:player:4:8,event:null:1000:5,interact:player,entity-overload,sound:null:10.5")
                 && asPlayer && asPig, got + " asPlayer=" + asPlayer + " asPig=" + asPig);
+        });
+
+        run("steering-saddle", () -> {
+            SteerHolder h = new SteerHolder();
+            net.minecraft.class_4980 plain = new net.minecraft.class_4980(h.data, SteerHolder.BOOST, SteerHolder.SADDLE);
+            boolean before = plain.method_26311();
+            plain.method_26310(true);
+            boolean after = plain.method_26311() && h.data.method_12789(SteerHolder.SADDLE);
+            class_2487 tag = new class_2487();
+            plain.method_26309(tag);
+            boolean saved = tag.method_10577("Saddle");
+            SteerHolder.Steering own = new SteerHolder.Steering(h.data, SteerHolder.BOOST, SteerHolder.SADDLE);
+            own.method_26312(new class_2487());
+            boolean cleared = !own.method_26311() && !plain.method_26311();
+            class_2487 tag2 = new class_2487();
+            own.method_26309(tag2);
+            boolean boosted = own.method_26308(random) && h.data.method_12789(SteerHolder.BOOST) > 0;
+            check("steering-saddle", !before && after && saved && cleared && own.saves == 1 && tag2.method_10545("Saddle") && boosted,
+                "before=" + before + " after=" + after + " saved=" + saved + " cleared=" + cleared + " saves=" + own.saves
+                + " boosted=" + boosted + " synced=" + h.synced);
+        });
+
+        run("saddles", () -> {
+            net.minecraft.class_3222 player = new net.minecraft.class_3222(server, level,
+                new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "cbs215s"), net.minecraft.class_8791.method_53821());
+            net.minecraft.class_1792 saddle = net.minecraft.class_1802.field_8175;
+            int[] seen0 = {nativeSeen("equip"), nativeSeen("saddled"), nativeSeen("dispense"), nativeSeen("canUse")};
+            net.minecraft.class_1268 hand = net.minecraft.class_1268.field_5808;
+            // 1.21.5's members, looked up at run time (this mod is compiled against 1.21.4)
+            Class<?> slotCls = Class.forName("net.minecraft.class_1304");
+            Object saddleSlot = slotCls.getField("field_55946").get(null);
+            var isSaddledW = net.minecraft.class_1308.class.getMethod("method_66672");
+            var bySlot = net.minecraft.class_1309.class.getMethod("method_6118", slotCls);
+            // ItemStack.interactLivingEntity: the player's path on both releases (1.21.5 equips there, through EQUIPPABLE)
+            // a vanilla pig: still a 1.21.4 Saddleable, saddled through 1.21.5's slot
+            net.minecraft.class_1452 pig = new net.minecraft.class_1452(class_1299.field_6093, level);
+            boolean pigIsSaddleable = ((Object) pig) instanceof net.minecraft.class_5146;
+            boolean pigCan = pig.method_6765();
+            var pigR = new net.minecraft.class_1799(saddle).method_7920(player, pig, hand);
+            boolean pigSaddled = pig.method_6725() && !((net.minecraft.class_1799) bySlot.invoke(pig, saddleSlot)).method_7960();
+            // a converted Pig subclass overriding equipSaddle / isSaddled / isSaddleable
+            Saddles.OwnPig own = new Saddles.OwnPig(class_1299.field_6093, level);
+            boolean ownBefore = (Boolean) isSaddledW.invoke(own);
+            var ownR = new net.minecraft.class_1799(saddle).method_7920(player, own, hand);
+            boolean ownSlotEmpty = ((net.minecraft.class_1799) bySlot.invoke(own, saddleSlot)).method_7960();
+            boolean ownAfter = (Boolean) isSaddledW.invoke(own);
+            own.method_7217(true);
+            boolean babyCan = (Boolean) net.minecraft.class_1452.class.getMethod("method_56991", slotCls).invoke(own, saddleSlot);
+            // a mod's own Saddleable, refused by 1.21.5's saddle component: 1.21.4's SaddleItem body
+            Saddles.SaddleCow cow = new Saddles.SaddleCow(class_1299.field_6085, level);
+            net.minecraft.class_1799 cowStack = new net.minecraft.class_1799(saddle, 2);
+            var cowR = cowStack.method_7920(player, cow, hand);
+            // the dispenser in front of a mod's own Saddleable
+            class_2338 at = level.method_43126().method_10086(40);
+            net.minecraft.class_2680 disp = net.minecraft.class_2246.field_10200.method_9564()
+                .method_11657(net.minecraft.class_2315.field_10918, net.minecraft.class_2350.field_11034);
+            level.method_8501(at, disp);
+            Saddles.SaddleCow cow2 = new Saddles.SaddleCow(class_1299.field_6085, level);
+            cow2.method_5814(at.method_10263() + 1.5, at.method_10264(), at.method_10260() + 0.5);
+            level.method_8649(cow2);
+            net.minecraft.class_2342 src = new net.minecraft.class_2342(level, at, disp, (net.minecraft.class_2601) level.method_8321(at));
+            net.minecraft.class_1799 dStack = new net.minecraft.class_1799(saddle, 3);
+            boolean dispensed = (Boolean) Class.forName("net.minecraft.class_10205").getMethod("method_64106", net.minecraft.class_2342.class,
+                net.minecraft.class_1799.class).invoke(null, src, dStack);
+            cow2.method_31472();
+            level.method_8501(at, net.minecraft.class_2246.field_10124.method_9564());
+            // cb-s215n's own 1.21.5 mixins on the routed methods kept firing
+            boolean nativeFired = nativeSeen("equip") >= seen0[0] + 3 && nativeSeen("saddled") > seen0[1] && nativeSeen("dispense") > seen0[2]
+                && nativeSeen("canUse") > seen0[3];
+            check("saddles-native-mixins", nativeFired, "equip " + seen0[0] + "->" + nativeSeen("equip") + " saddled " + seen0[1] + "->"
+                + nativeSeen("saddled") + " dispense " + seen0[2] + "->" + nativeSeen("dispense") + " canUse " + seen0[3] + "->" + nativeSeen("canUse"));
+            check("saddles", pigIsSaddleable && pigCan && pigR == net.minecraft.class_1269.field_5812 && pigSaddled
+                    && !ownBefore && ownR == net.minecraft.class_1269.field_5812 && own.equips == 1 && own.lastSource == net.minecraft.class_3419.field_15254
+                    && ownSlotEmpty && ownAfter && babyCan
+                    && cowR == net.minecraft.class_1269.field_5812 && cow.equips == 1 && cow.saddled && cowStack.method_7947() == 1
+                    && dispensed && cow2.equips == 1 && cow2.lastSource == net.minecraft.class_3419.field_15245 && dStack.method_7947() == 2,
+                "pig=" + pigIsSaddleable + "/" + pigCan + "/" + pigR + "/" + pigSaddled + " own=" + ownBefore + "/" + ownR + "/" + own.equips
+                    + "/" + own.lastSource + "/" + ownSlotEmpty + "/" + ownAfter + "/" + babyCan + " cow=" + cowR + "/" + cow.equips + "/"
+                    + cowStack.method_7947() + " disp=" + dispensed + "/" + cow2.equips + "/" + cow2.lastSource + "/" + dStack.method_7947());
+        });
+
+        run("owners", () -> {
+            java.util.UUID u = java.util.UUID.randomUUID();
+            Class<?> refCls = Class.forName("net.minecraft.class_10583");
+            var getRef = net.minecraft.class_1321.class.getMethod("method_66287");
+            var refUuid = refCls.getMethod("method_66263");
+            // a converted Wolf subclass: 1.21.5 reads and sets the owner through its 1.21.4 overrides
+            Owners.OwnWolf wolf = new Owners.OwnWolf(class_1299.field_6055, level);
+            wolf.method_6174(u);
+            Object ref = getRef.invoke(wolf);
+            boolean wolfRead = ref != null && u.equals(refUuid.invoke(ref)) && wolf.gets >= 1 && u.equals(wolf.method_6139());
+            java.util.UUID u2 = java.util.UUID.randomUUID();
+            net.minecraft.class_1321.class.getMethod("method_66288", refCls).invoke(wolf, refCls.getConstructor(java.util.UUID.class).newInstance(u2));
+            boolean wolfSet = u2.equals(wolf.set) && u2.equals(wolf.method_6139());
+            // a vanilla horse through 1.21.4's calls, and a converted Horse subclass through 1.21.5's setOwner(entity)
+            net.minecraft.class_1498 horse = new net.minecraft.class_1498(class_1299.field_6139, level);
+            horse.method_6732(u);
+            Object hRef = net.minecraft.class_1496.class.getMethod("method_66287").invoke(horse);
+            boolean horseCalls = u.equals(horse.method_6139()) && hRef != null && u.equals(refUuid.invoke(hRef));
+            Owners.OwnHorse own = new Owners.OwnHorse(class_1299.field_6139, level);
+            net.minecraft.class_3222 player = new net.minecraft.class_3222(server, level,
+                new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "cbs215o"), net.minecraft.class_8791.method_53821());
+            net.minecraft.class_1496.class.getMethod("method_66323", net.minecraft.class_1309.class).invoke(own, player);
+            boolean horseHook = player.method_5667().equals(own.set) && player.method_5667().equals(own.method_6139());
+            check("owners", wolfRead && wolfSet && horseCalls && horseHook,
+                "wolfRead=" + wolfRead + " wolfSet=" + wolfSet + " horseCalls=" + horseCalls + " horseHook=" + horseHook + " gets=" + wolf.gets);
+        });
+
+        run("horse-inventory", () -> {
+            Owners.OwnHorse horse = new Owners.OwnHorse(class_1299.field_6139, level);
+            horse.sync();
+            net.minecraft.class_1263 body = horse.method_56680();
+            net.minecraft.class_1799 armor = new net.minecraft.class_1799(net.minecraft.class_1802.field_18138);
+            body.method_5447(0, armor);
+            Class<?> slotCls = Class.forName("net.minecraft.class_1304");
+            Object bodySlot = slotCls.getField("field_48824").get(null);
+            net.minecraft.class_1799 worn = (net.minecraft.class_1799) net.minecraft.class_1309.class.getMethod("method_6118", slotCls).invoke(horse, bodySlot);
+            check("horse-inventory", worn.method_31574(net.minecraft.class_1802.field_18138) && body.method_5438(0).method_31574(net.minecraft.class_1802.field_18138),
+                "worn=" + worn + " view=" + body.method_5438(0));
+        });
+
+        run("entity-helpers", () -> {
+            Saddles.SaddleCow cow = new Saddles.SaddleCow(class_1299.field_6085, level);
+            String got = cow.entityHelpers();
+            check("entity-helpers", got.equals("2:-2.0:1:0.25:false:false"), got);
+        });
+
+        run("saddle-sound", () -> {
+            int seen0 = nativeSeen("sound");
+            Owners.OwnHorse horse = new Owners.OwnHorse(class_1299.field_6139, level);
+            Class<?> slotCls = Class.forName("net.minecraft.class_1304");
+            Class<?> eqCls = Class.forName("net.minecraft.class_10192");
+            Object saddleSlot = slotCls.getField("field_55946").get(null);
+            net.minecraft.class_1799 stack = new net.minecraft.class_1799(net.minecraft.class_1802.field_8175);
+            Object eq = stack.method_57824((net.minecraft.class_9331<?>) Class.forName("net.minecraft.class_9334").getField("field_54196").get(null));
+            var m = net.minecraft.class_1496.class.getDeclaredMethod("method_66667", slotCls, net.minecraft.class_1799.class, eqCls);
+            m.setAccessible(true);
+            class_6880<?> sound = (class_6880<?>) m.invoke(horse, saddleSlot, stack, eq);
+            net.minecraft.class_1498 plain = new net.minecraft.class_1498(class_1299.field_6139, level);
+            class_6880<?> plainSound = (class_6880<?>) m.invoke(plain, saddleSlot, stack, eq);
+            boolean own = sound.comp_349() == net.minecraft.class_3417.field_14824 && horse.soundAsks == 1;
+            boolean vanilla = plainSound.comp_349() == net.minecraft.class_3417.field_14704;
+            check("saddle-sound", own && vanilla && nativeSeen("sound") >= seen0 + 2,
+                "own=" + sound.comp_349() + " asks=" + horse.soundAsks + " plain=" + plainSound.comp_349() + " native " + seen0 + "->" + nativeSeen("sound"));
         });
 
         DONE = true;
