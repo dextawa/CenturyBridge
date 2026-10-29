@@ -1,0 +1,11 @@
+{
+ "_s26h_basis": "26.1.2 members tombstoned in climbed layers at 26.1.2 -> 26.2 (layer link-check, beta2 agents/s26h/wt/layer-lc), given back over 26.2 state (javap of both): I18n.exists(key) asks Language.getInstance().has(key), the language 26.2's I18n.get reads (rt/CbS26I18nClient); ParticleGroup.getAll() returns the protected particles queue 26.2 keeps (mixin/CbS26ParticleGroupRestoredMixin). ClientChunkCache.getLoadedEmptySections() answers SectionOcclusionGraph.emptySections, the running set 26.2 keeps from the cache's per-frame deltas (mixin/CbS26ChunkCacheRestoredMixin). RecipeProvider.hangingSign(sign, planks) is 26.2's hangingSignBuilder(sign, Ingredient.of(planks)) plus 26.1.2's unlockedBy(has_stripped_logs, has(planks)).save(output) (mixin/CbS26RecipeProviderRestoredMixin; bodies identical through the pattern).",
+ "staticRedirects": {
+  "net/minecraft/client/resources/language/I18n.exists(Ljava/lang/String;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS26I18nClient"
+ },
+ "covers": [
+  "net/minecraft/client/particle/ParticleGroup.getAll()Ljava/util/Queue;",
+  "net/minecraft/client/multiplayer/ClientChunkCache.getLoadedEmptySections()Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;",
+  "net/minecraft/data/recipes/RecipeProvider.hangingSign(Lnet/minecraft/world/level/ItemLike;Lnet/minecraft/world/level/ItemLike;)V"
+ ]
+}
