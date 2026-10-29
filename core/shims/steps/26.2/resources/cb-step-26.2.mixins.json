@@ -61,7 +61,8 @@
     "CbS26LevelTicksClockMixin",
     "CbS26GameRendererGettersMixin",
     "CbS26VersionTypeMixin",
-    "CbS26VersionTypeMixinHooks"
+    "CbS26VersionTypeMixinHooks",
+    "CbS26ParticleGroupRestoredMixin"
   ],
   "server": [],
   "injectors": {

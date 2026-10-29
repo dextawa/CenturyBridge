@@ -1,0 +1,9 @@
+{
+ "_s26h_basis": "26.1.2 members tombstoned in climbed layers at 26.1.2 -> 26.2 (layer link-check, beta2 agents/s26h/wt/layer-lc), given back over 26.2 state (javap of both): I18n.exists(key) asks Language.getInstance().has(key), the language 26.2's I18n.get reads (rt/CbS26I18nClient); ParticleGroup.getAll() returns the protected particles queue 26.2 keeps (mixin/CbS26ParticleGroupRestoredMixin).",
+ "staticRedirects": {
+  "net/minecraft/client/resources/language/I18n.exists(Ljava/lang/String;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS26I18nClient"
+ },
+ "covers": [
+  "net/minecraft/client/particle/ParticleGroup.getAll()Ljava/util/Queue;"
+ ]
+}
