@@ -2375,6 +2375,31 @@ public final class JarProcessor {
 
     private static final java.util.regex.Pattern INTERMEDIARY_METHOD = java.util.regex.Pattern.compile("(?:method|comp)_\\d+");
 
+    /**
+     * whether a class or interface of this jar the JVM reaches from {@code owner} (its superclasses and every
+     * interface of each, as far as they are the jar's own) declares the method shape: the call links on the jar's
+     * own code whatever the target stub says
+     */
+    private static boolean jarServes(String owner, String shape, LayerIndex layer) {
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.poll();
+            if (!seen.add(c) || !layer.decls.containsKey(c)) {
+                continue;
+            }
+            if (layer.decls.get(c).contains(shape)) {
+                return true;
+            }
+            String sup = layer.superOf.get(c);
+            if (sup != null) {
+                todo.add(sup);
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(c, List.of()));
+        }
+        return false;
+    }
+
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer) {
         String cur = owner;
         for (int hops = 0; cur != null && hops < 64; hops++) {
@@ -4011,9 +4036,11 @@ public final class JarProcessor {
                             // it at the step it died, and a step layer's restorer kept it "covered" since; when
                             // that restorer is stripped at a later step (the 1.20.5 layer's
                             // CbRestRecAttributeModifierMixin at 1.20.6 -> 1.21: AttributeModifier.method_6189)
-                            // nothing else declares it, and the loss is this step's
+                            // nothing else declares it, and the loss is this step's. A class or interface of the jar
+                            // on the site's way declaring it serves the call itself (the 1.21.2 layer's facade
+                            // RecipeBookComponent calling its own PlaceRecipe default method_12816 on 1.21.3)
                             String lr = layerRestorer(site.substring(0, site.indexOf('.')), name, desc, layer, chain);
-                            if (!"".equals(lr)) {
+                            if (!"".equals(lr) && !jarServes(site.substring(0, site.indexOf('.')), name + desc, layer)) {
                                 r = new Chain.Issue(Chain.Level.L3, lr == null ? "target-decl"
                                     : "target-decl, restorer " + shortName(lr) + " stripped");
                             }
