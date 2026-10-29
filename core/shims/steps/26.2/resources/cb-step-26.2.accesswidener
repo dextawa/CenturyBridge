@@ -1,4 +1,11 @@
 accessWidener	v2	official
+# Lighting's light directions, 26.1.2's Vector3f constants (rt/CbS26LightingClient)
+accessible field com/mojang/blaze3d/platform/Lighting DIFFUSE_LIGHT_0 Lorg/joml/Vector3fc;
+accessible field com/mojang/blaze3d/platform/Lighting DIFFUSE_LIGHT_1 Lorg/joml/Vector3fc;
+accessible field com/mojang/blaze3d/platform/Lighting NETHER_DIFFUSE_LIGHT_0 Lorg/joml/Vector3fc;
+accessible field com/mojang/blaze3d/platform/Lighting NETHER_DIFFUSE_LIGHT_1 Lorg/joml/Vector3fc;
+accessible field com/mojang/blaze3d/platform/Lighting INVENTORY_DIFFUSE_LIGHT_0 Lorg/joml/Vector3fc;
+accessible field com/mojang/blaze3d/platform/Lighting INVENTORY_DIFFUSE_LIGHT_1 Lorg/joml/Vector3fc;
 # s26: hand-wired members (rt/CbS26Selector: EntitySelectorParser flags on 26.2 option states; rt/CbS26ChatFormatting: getChar; rt/CbS26Entity; rt/CbS26Dripstone: SpeleothemUtils members 26.2 added protected; rt/CbS26MinecraftClient: Gui.screen, ChatComponent.commandHistory; rt/CbS26Triggers: PlayerAdvancements trigger listeners; rt/CbS26EntityPredicates: EntityPredicate parts, MobEffectsPredicate.Builder effects; rt/CbS26Beds: bed properties' bounce restitution; rt/CbS26Enchanting: EnchantRandomlyFunction.Builder options; rt/CbS26DebugClient: GameRenderer's debug crosshair renderer; rt/CbS26SurfaceRules: the surface rule Condition and Context.getBiome; rt/CbS26CommandEncoderClient and 26.1.2 callers: CommandEncoder.isInRenderPass, public in 26.1.2; rt/CbS26ToastsClient: SystemToast lines and width; rt/CbS26Receivers: Gui.minecraft, GameRenderer.minecraft and Hud.minecraft; rt/CbS26OptionsClient: Options.minecraft for hideGui; rt/CbS26CommandEncoderClient.presentTexture: GpuSurface.backend, CommandEncoder.backend(), the objects holding mixinReceivers W receivers)
 accessible class net/minecraft/commands/arguments/selector/options/InvertableSetOptionState$Limitation
 accessible field net/minecraft/commands/arguments/selector/options/InvertableSetOptionState state Lnet/minecraft/commands/arguments/selector/options/InvertableSetOptionState$Limitation;
