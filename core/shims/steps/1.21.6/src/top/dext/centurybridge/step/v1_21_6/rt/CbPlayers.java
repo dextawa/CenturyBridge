@@ -27,4 +27,20 @@ public final class CbPlayers {
             CbValueIo.close(rep);
         }
     }
+
+    /**
+     * PlayerList.getPlayerForLogin(profile, clientInformation) (1.21.5 method_14613), gone from 1.21.6, which builds
+     * the player inline in ServerConfigurationPacketListenerImpl: 1.21.5's body, new ServerPlayer(server,
+     * server.overworld(), profile, clientInformation)
+     */
+    public static net.minecraft.class_3222 method_14613(net.minecraft.class_3324 self, com.mojang.authlib.GameProfile profile,
+                                                        net.minecraft.class_8791 clientInformation) {
+        net.minecraft.server.MinecraftServer server = self.method_14561();
+        return new net.minecraft.class_3222(server, server.method_30002(), profile, clientInformation);
+    }
+
+    /** ServerPlayer.server, private in 1.21.6: the player's server (Entity.getServer answers the same object) */
+    public static net.minecraft.server.MinecraftServer field_13995(net.minecraft.class_3222 self) {
+        return self.method_5682();
+    }
 }

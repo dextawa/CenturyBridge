@@ -93,7 +93,21 @@ public final class WallInverse {
         top.dext.centurybridge.data.JarRemapper.Table t = top.dext.centurybridge.data.JarRemapper.loadTable(table);
         Remapper fwd = t.remapper();
         Map<String, String> classBack = new HashMap<>();
-        t.classes.forEach((inter, moj) -> classBack.put(moj, inter));
+        // an older token's row onto a class V declares by that name (the table's --extra rows: class_293 ->
+        // com/mojang/blaze3d/vertex/VertexFormat, which 1.21.11 already spells that way) is not read backwards
+        Set<String> vClasses = new HashSet<>();
+        try (ZipFile z = new ZipFile(vCode.toFile())) {
+            for (ZipEntry e : Collections.list(z.entries())) {
+                if (e.getName().endsWith(".class")) {
+                    vClasses.add(e.getName().substring(0, e.getName().length() - 6));
+                }
+            }
+        }
+        t.classes.forEach((inter, moj) -> {
+            if (!(vClasses.contains(moj) && !vClasses.contains(inter))) {
+                classBack.put(moj, inter);
+            }
+        });
         Map<String, String> ownerBack = new HashMap<>();
         Map<String, Set<String>> globalBack = new HashMap<>();
         try (ZipFile z = new ZipFile(vCode.toFile())) {
