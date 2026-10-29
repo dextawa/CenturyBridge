@@ -7,6 +7,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 /** What the 1.20.6 mixins saw; read by the native 1.21 driver (cb-smx6n) through reflection. */
 public final class Counters {
     /** FaceBakeryMixin.cb$countNoId: bakeQuad HEAD calls of a handler that does not read the id */
+    /** DragonRaysMixin: 1.20.6 death-ray helper calls (centre, corners A / B / C) and impossible arguments */
+    public static final AtomicInteger RAY_CENTRE = new AtomicInteger();
+    public static final AtomicInteger RAY_A = new AtomicInteger();
+    public static final AtomicInteger RAY_B = new AtomicInteger();
+    public static final AtomicInteger RAY_C = new AtomicInteger();
+    public static final AtomicInteger RAY_BAD = new AtomicInteger();
     public static final AtomicInteger CALLS_NO_ID = new AtomicInteger();
     public static final AtomicInteger CALLS = new AtomicInteger();
     public static final AtomicInteger NULLS = new AtomicInteger();
