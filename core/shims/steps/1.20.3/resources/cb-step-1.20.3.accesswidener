@@ -209,3 +209,6 @@ extendable	method	net/minecraft/class_2757	equals	(Ljava/lang/Object;)Z
 accessible	method	net/minecraft/class_8957	method_55084	(Ljava/util/List;)[Ljava/lang/String;
 accessible	method	net/minecraft/class_8957	method_55083	(Ljava/lang/String;)I
 accessible	method	net/minecraft/class_8957	method_55089	(Ljava/lang/String;)I
+# skilteng: IdMapper.tToId / MappedRegistry.toId retyped Object2IntMap -> Reference2IntMap at 1.20.3 (private); CbFastutilViews reads them for 1.20.2's getters
+accessible	field	net/minecraft/class_2361	field_11100	Lit/unimi/dsi/fastutil/objects/Reference2IntMap;
+accessible	field	net/minecraft/class_2370	field_26683	Lit/unimi/dsi/fastutil/objects/Reference2IntMap;
