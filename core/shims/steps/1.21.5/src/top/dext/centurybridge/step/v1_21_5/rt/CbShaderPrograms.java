@@ -83,19 +83,32 @@ public final class CbShaderPrograms {
 
     /** 1.21.4 Uniform.getTypeFromString(type) with the count, as 1.21.5's UniformType */
     static net.minecraft.class_10789 type(String type, int count) {
+        String name = null;
         if ("int".equals(type)) {
-            return count == 1 ? net.minecraft.class_10789.field_56741 : count == 3 ? net.minecraft.class_10789.field_56742 : null;
-        }
-        if ("float".equals(type)) {
-            return switch (count) {
-                case 1 -> net.minecraft.class_10789.field_56743;
-                case 2 -> net.minecraft.class_10789.field_56744;
-                case 3 -> net.minecraft.class_10789.field_56745;
-                case 4 -> net.minecraft.class_10789.field_56746;
+            name = count == 1 ? "INT" : count == 3 ? "IVEC3" : null;
+        } else if ("float".equals(type)) {
+            name = switch (count) {
+                case 1 -> "FLOAT";
+                case 2 -> "VEC2";
+                case 3 -> "VEC3";
+                case 4 -> "VEC4";
                 default -> null;
             };
+        } else if (type != null && type.startsWith("matrix") && type.endsWith("4x4")) {
+            name = "MATRIX4X4";
         }
-        return type != null && type.startsWith("matrix") && type.endsWith("4x4") ? net.minecraft.class_10789.field_56747 : null;
+        // by the enum constant's name (1.21.5's UniformType: INT, IVEC3, FLOAT, VEC2, VEC3, VEC4, MATRIX4X4; javap -c of
+        // its <clinit>), not its field: 1.21.6 replaced these constants (UNIFORM_BUFFER / TEXEL_BUFFER), and a field
+        // reference would dangle once the layer climbs on; there a type this method cannot name is null (left out)
+        if (name == null) {
+            return null;
+        }
+        for (net.minecraft.class_10789 t : net.minecraft.class_10789.class.getEnumConstants()) {
+            if (t.name().equals(name)) {
+                return t;
+            }
+        }
+        return null;
     }
 
     /** 1.21.4 Uniform.setFromConfig(values, count) */
