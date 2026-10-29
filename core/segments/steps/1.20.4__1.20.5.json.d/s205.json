@@ -18,6 +18,13 @@
   "net/minecraft/class_2788.method_17817(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8786;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#recipeFromNetwork"
  },
  "mixinTargets": {
+  "net/minecraft/class_2535.method_10763(Lnet/minecraft/class_2547;)V": {
+   "to": "method_56330(Lnet/minecraft/class_9127;Lnet/minecraft/class_2547;)V",
+   "args": [
+    1
+   ],
+   "basis": "Connection.setListener(listener) -> setupInboundProtocol(protocolInfo, listener) (javap -c both): the same body -- the listener's flow checked against the connection's receiving side (IllegalStateException 'Trying to set listener for wrong side'), the protocol checked (1.20.4: the channel's inbound protocol attribute, set before by setProtocol, must be listener.protocol(); 1.20.5: the info's flow) and the protocol installed (1.20.5 does here what 1.20.4's setProtocol did just before), packetListener / disconnectListener set. Vanilla 1.20.5 makes every inbound protocol switch there, as 1.20.4 did in setListener (s4fin-netty's override hook stays for mods' overrides; an adapter cannot carry a selector)"
+  },
   "net/minecraft/class_2370.method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;": {
    "to": "method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lnet/minecraft/class_9248;)Lnet/minecraft/class_6880$class_6883;",
    "args": [
