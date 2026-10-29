@@ -51,6 +51,8 @@ public final class LayerMembers {
     private final Map<String, List<MethodNode>> byTarget = new HashMap<>();
     /** the @Mixin priority of the layer mixin that merges each restored member (Mixin's default 1000) */
     private final Map<MethodNode, Integer> priority = new java.util.IdentityHashMap<>();
+    /** the layer mixin (internal name) that merges each restored member */
+    private final Map<MethodNode, String> mixinOf = new java.util.IdentityHashMap<>();
     /**
      * restored fields by game class: a layer mixin's own fields (not @Shadow / @Unique) Mixin merges onto its
      * targets under the names the mixin declares -- a field W dropped, given back on the W class (1.21.11's
@@ -60,6 +62,12 @@ public final class LayerMembers {
     private final Map<FieldNode, Integer> fieldPriority = new java.util.IdentityHashMap<>();
     /** the layer's mixin classes */
     private final Set<String> mixins = new HashSet<>();
+    /**
+     * the methods a mixin class the jar keeps but no config lists would merge (a restorer its climb stripped): by game
+     * class, "name+desc" -> the mixin's internal name. Not declared at runtime; kept to name the restorer a dangling
+     * call lost (JarProcessor's target-decl judgment)
+     */
+    private final Map<String, Map<String, String>> strippedByTarget = new HashMap<>();
 
     private LayerMembers() {
     }
@@ -86,6 +94,8 @@ public final class LayerMembers {
                 String n = e.getName();
                 if (n.endsWith(".class") && (listed == null || listed.contains(n.substring(0, n.length() - 6)))) {
                     out.add(z.getInputStream(e).readAllBytes());
+                } else if (n.endsWith(".class")) {
+                    out.addStripped(z.getInputStream(e).readAllBytes());
                 }
             }
         }
@@ -152,6 +162,50 @@ public final class LayerMembers {
         return out;
     }
 
+    /** the merged methods of an unlisted class mixin, as stripped restorers (not declared at runtime) */
+    private void addStripped(byte[] bytes) {
+        ClassNode cn = new ClassNode();
+        new ClassReader(bytes).accept(cn, ClassReader.SKIP_CODE);
+        AnnotationNode mx = annotation(cn.invisibleAnnotations, MIXIN);
+        if (mx == null) {
+            mx = annotation(cn.visibleAnnotations, MIXIN);
+        }
+        if (mx == null || (cn.access & Opcodes.ACC_INTERFACE) != 0) {
+            return;
+        }
+        for (String t : targets(mx)) {
+            for (MethodNode m : cn.methods) {
+                if (merged(m)) {
+                    String d = new org.objectweb.asm.commons.SimpleRemapper(cn.name, t).mapMethodDesc(m.desc);
+                    strippedByTarget.computeIfAbsent(t, k -> new HashMap<>()).putIfAbsent(m.name + d, cn.name);
+                }
+            }
+        }
+    }
+
+    /**
+     * the stripped layer mixin (internal name) that would merge name+desc onto a game class, or null. Only for naming
+     * a loss: a live restorer of the same member ({@link #member}) is asked first
+     */
+    public String strippedRestorer(String target, String name, String desc) {
+        return strippedByTarget.getOrDefault(target, Map.of()).get(name + desc);
+    }
+
+    private static List<String> targets(AnnotationNode mx) {
+        List<String> targets = new ArrayList<>();
+        for (Object o : MixinRepair.list(MixinRepair.values(mx).get("value"))) {
+            if (o instanceof Type t) {
+                targets.add(t.getInternalName());
+            }
+        }
+        for (Object o : MixinRepair.list(MixinRepair.values(mx).get("targets"))) {
+            if (o instanceof String t) {
+                targets.add(t.replace('.', '/'));
+            }
+        }
+        return targets;
+    }
+
     private void add(byte[] bytes) {
         ClassNode cn = new ClassNode();
         new ClassReader(bytes).accept(cn, ClassReader.SKIP_FRAMES);
@@ -185,6 +239,7 @@ public final class LayerMembers {
                     MethodNode a = applied(m, cn.name, t);
                     byTarget.computeIfAbsent(t, k -> new ArrayList<>()).add(a);
                     priority.put(a, prio);
+                    mixinOf.put(a, cn.name);
                 }
             }
         }
@@ -268,9 +323,14 @@ public final class LayerMembers {
     public void inherit(LayerMembers earlier) {
         earlier.byTarget.forEach((t, ms) -> byTarget.computeIfAbsent(t, k -> new ArrayList<>()).addAll(ms));
         priority.putAll(earlier.priority);
+        mixinOf.putAll(earlier.mixinOf);
         earlier.fieldsByTarget.forEach((t, fs) -> fieldsByTarget.computeIfAbsent(t, k -> new ArrayList<>()).addAll(fs));
         fieldPriority.putAll(earlier.fieldPriority);
         mixins.addAll(earlier.mixins);
+        earlier.strippedByTarget.forEach((t, m) -> {
+            Map<String, String> mine = strippedByTarget.computeIfAbsent(t, k -> new HashMap<>());
+            m.forEach(mine::putIfAbsent);
+        });
     }
 
     /**
@@ -350,6 +410,11 @@ public final class LayerMembers {
             }
         }
         return true;
+    }
+
+    /** the layer mixin (internal name) that merges a restored member, or null */
+    public String mixinOf(MethodNode m) {
+        return mixinOf.get(m);
     }
 
     public int priority(MethodNode m) {
