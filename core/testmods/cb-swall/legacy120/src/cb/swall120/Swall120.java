@@ -89,6 +89,16 @@ public class Swall120 implements ModInitializer {
         } catch (Throwable t) {
             check("adv120.anyNull", false, t);
         }
+        try {
+            // 1.20.1's Types table names the variant kinds by the variant predicates' own types (TYPES.put("cat", CAT.type()))
+            Object byName = net.minecraft.class_7376.class_7378.field_38731.get("cat");
+            Object own = net.minecraft.class_7376.class_7378.field_38729.method_43114();
+            Object name = net.minecraft.class_7376.class_7378.field_38731.inverse().get(own);
+            check("adv120.typesIdentity", byName != null && byName == own && "cat".equals(name),
+                "TYPES.get(cat) " + byName + ", CAT.type() " + own + ", name of CAT.type() " + name);
+        } catch (Throwable t) {
+            check("adv120.typesIdentity", false, t);
+        }
         System.out.println("CBTEST120 SUMMARY " + passed + "/" + (passed + FAILS.size()) + " passed" + (FAILS.isEmpty() ? "" : " fails=" + FAILS));
     }
 }
