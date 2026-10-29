@@ -107,10 +107,82 @@ def ratchet(findings, t, baseline, write):
 
 
 class Spelling:
-    """one spelling for findings on both sides of the wall"""
+    """
+    One spelling for a finding at every release. A climbed layer names a class or member the way the step that last
+    rewrote it left it: intermediary ids before the wall, 26.1 names after it, a step's classRenames target (a facade,
+    a moved package: 26.2's criterion -> predicates, MultiBufferSource -> step/v26_2/facade) from that step on. A site
+    that dangles before a rename and after it is the same finding, so every step's classRenames / methodRenames /
+    fieldRenames are folded into one map and applied to both sides of every comparison: intermediary-keyed class
+    renames (steps before the wall) on the intermediary tokens, then the 26.1 wall table, then the renames keyed in
+    26.x names (followed to their last target).
+    """
     TOKEN = re.compile(r"net/minecraft/class_\d+(?:\$class_\d+)*|\b(?:method|field|comp)_\d+\b")
+    CLS = re.compile(r"[A-Za-z_$][\w$]*(?:/[\w$]+)+")
+    MEM = re.compile(r"([A-Za-z_$][\w$]*(?:/[\w$]+)+)\.([\w$<>]+)")
 
     def __init__(self, data):
+        self._load_tables(data)
+        self.pre_cls, self.post_cls, self.post_mem = {}, {}, {}
+        wall = RELEASES.index("26.1")
+        files = sorted(glob.glob(os.path.join(ROOT, "core/segments/steps/*.json"))
+                       + glob.glob(os.path.join(ROOT, "core/segments/steps/*.json.d/*.json")))
+        for p in files:
+            base = os.path.basename(os.path.dirname(p)) if p.endswith(".json") and ".json.d" in p else os.path.basename(p)
+            step = base.split(".json")[0]
+            if "__" not in step or step.split("__")[1] not in RELEASES:
+                continue
+            post = RELEASES.index(step.split("__")[1]) >= wall
+            try:
+                d = json.load(open(p, encoding="utf-8"))
+            except (ValueError, OSError):
+                continue
+            for k, v in (d.get("classRenames") or {}).items():
+                if isinstance(v, str):
+                    (self.post_cls if post else self.pre_cls)[k] = v
+            if post:
+                for sec in ("methodRenames", "fieldRenames"):
+                    for k, v in (d.get(sec) or {}).items():
+                        if isinstance(v, str) and "." in k:
+                            owner, rest = k.split(".", 1)
+                            self.post_mem[owner + "." + re.split(r"[(:]", rest, maxsplit=1)[0]] = v
+
+    @staticmethod
+    def _fix(m, s):
+        seen = set()
+        while s in m and s not in seen:
+            seen.add(s)
+            s = m[s]
+        return s
+
+    def _classes(self, s):
+        def name(c):
+            if c in self.post_cls:
+                return self._fix(self.post_cls, c)
+            outer, _, inner = c.partition("$")
+            if inner and outer in self.post_cls:
+                return self._fix(self.post_cls, outer) + "$" + inner
+            return None
+
+        def one(x):
+            c = x.group(0)
+            n = name(c)
+            if n is not None:
+                return n
+            # a class inside a descriptor carries its "L" (Lnet/minecraft/...;): the name is what follows it
+            if c.startswith("L") and len(c) > 1:
+                n = name(c[1:])
+                if n is not None:
+                    return "L" + n
+            return c
+        return self.CLS.sub(one, s)
+
+    def __call__(self, s, release=None):
+        s = self.TOKEN.sub(lambda m: self.pre_cls.get(m.group(0), m.group(0)), s)
+        s = self.TOKEN.sub(lambda m: self.cls.get(m.group(0), self.mem.get(m.group(0), m.group(0))), s)
+        s = self.MEM.sub(lambda m: m.group(1) + "." + self.post_mem.get(m.group(1) + "." + m.group(2), m.group(2)), s)
+        return self._classes(s)
+
+    def _load_tables(self, data):
         sys.path.insert(0, HERE)
         import wall_tables
         self.cls, self.mem = {}, {}
@@ -122,19 +194,6 @@ class Spelling:
                 self.cls[f[1]] = f[2]
             elif f[0] in ("M", "F"):
                 self.mem[f[1].rsplit(".", 1)[1]] = f[2].rsplit(".", 1)[1]
-        self.moves = {}
-        for p in glob.glob(os.path.join(ROOT, "core/segments/steps/26.1.2__26.2.json.d/*.json")):
-            for k, v in json.load(open(p, encoding="utf-8")).get("classRenames", {}).items():
-                if isinstance(v, str):
-                    self.moves[k] = v
-        self.movere = re.compile("|".join(re.escape(k) for k in sorted(self.moves, key=len, reverse=True)) + r"(?=[;.$\s(]|$)") \
-            if self.moves else None
-
-    def __call__(self, s, release):
-        s = self.TOKEN.sub(lambda m: self.cls.get(m.group(0), self.mem.get(m.group(0), m.group(0))), s)
-        if self.movere is not None and RELEASES.index(release) < RELEASES.index("26.2"):
-            s = self.movere.sub(lambda m: self.moves[m.group(0)], s)
-        return s
 
 
 def steps(d, t, baseline, out):

@@ -29,7 +29,7 @@ for ((i = 1; i < ${#RELEASES[@]}; i++)); do
     [ -n "$SUBJ" ] || { [ "$R" = "$T" ] && break; continue; }
     case "$R" in 26.*) GAME="data/jars/client-$R.jar" ;; *) GAME="data/jars/client-$R-intermediary.jar" ;; esac
     FAPI=$(ls data/runtime/client-$R/mods/fabric-api-*.jar 2>/dev/null | head -1)
-    "$JAVA" -Xmx16g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/$R" - $SUBJ -- \
+    "$JAVA" -Xmx16g "-Dcb.linkcheck.sharedAw=centurybridge-0.3.0+*.jar" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/$R" - $SUBJ -- \
         $DEPS "$GAME" $FAPI "data/runtime/client-$R/libraries" > "$OUT/$R.log" 2>&1 \
         || { echo "$R: LINK-CHECK FAILED"; tail -5 "$OUT/$R.log"; exit 1; }
     echo "$R: $(echo $SUBJ | wc -w) layers, $(awk -F'\t' 'NR > 1 && ($1 == "CLAIMED" || $1 == "BLIND" || $1 == "KNOWN")' "$OUT/$R/link-findings.tsv" | wc -l) rows"

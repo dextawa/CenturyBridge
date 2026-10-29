@@ -29,7 +29,8 @@
     "CbS26DelayedCrashMixin",
     "CbS26TagsProviderRestoredMixin",
     "CbS26FapiTagsProviderRestoredMixin",
-    "CbS26TagsProviderKeyedMixin"
+    "CbS26TagsProviderKeyedMixin",
+    "CbS26RecipeProviderRestoredMixin"
   ],
   "client": [
     "CbS26LevelRendererRestoredMixin",
@@ -61,7 +62,9 @@
     "CbS26LevelTicksClockMixin",
     "CbS26GameRendererGettersMixin",
     "CbS26VersionTypeMixin",
-    "CbS26VersionTypeMixinHooks"
+    "CbS26VersionTypeMixinHooks",
+    "CbS26ParticleGroupRestoredMixin",
+    "CbS26ChunkCacheRestoredMixin"
   ],
   "server": [],
   "injectors": {
