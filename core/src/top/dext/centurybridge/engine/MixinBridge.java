@@ -3623,7 +3623,11 @@ final class MixinBridge {
             boolean[] narrow = new boolean[va.length];
             Type[] mwa = Type.getArgumentTypes(mt.desc());
             for (int i = 0; known && i < va.length; i++) {
-                if (wrap[i] != null || from[i] >= mwa.length || mwa[from[i]].equals(va[i]) || wAssignable(mwa[from[i]], va[i])) {
+                // V's type as the converted handler declares it: the step's classRenames rename it (1.21.11 class_1920
+                // BlockAndTintGetter -> 26.1 BlockAndLightGetter, a supertype of the client BlockAndTintGetter W passes)
+                Type vr = va[i].getSort() == Type.OBJECT ? Type.getType(chain.renamedDesc(va[i].getDescriptor())) : va[i];
+                if (wrap[i] != null || from[i] >= mwa.length || mwa[from[i]].equals(va[i]) || wAssignable(mwa[from[i]], va[i])
+                        || mwa[from[i]].equals(vr) || wAssignable(mwa[from[i]], vr)) {
                     continue; // a derived argument (converted by its own static) or one W hands as V's type
                 }
                 // CASE 18: the W argument of another type reaches the handler through the entry's "wrap" (the override
