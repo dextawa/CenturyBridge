@@ -124,7 +124,8 @@ public final class CbShaderPrograms {
         // array into a buffer of exactly the type's size (javap: FloatBuffer.put(float[]) after a too-small check)
         net.minecraft.class_10789 type = uniform.method_35662();
         f = Arrays.copyOf(f, type.method_68449());
-        if (type == net.minecraft.class_10789.field_56741 || type == net.minecraft.class_10789.field_56742) {
+        // int uniforms by the enum constant's name, as type(..) names them (no field reference that dangles past 1.21.6)
+        if ("INT".equals(type.name()) || "IVEC3".equals(type.name())) {
             int[] n = new int[f.length];
             for (int i = 0; i < n.length; i++) {
                 n[i] = (int) f[i];
