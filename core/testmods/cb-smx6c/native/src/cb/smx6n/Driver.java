@@ -49,6 +49,8 @@ public class Driver implements ClientModInitializer {
     public static final AtomicInteger BUILD_HEAD = new AtomicInteger();
     public static final AtomicInteger BUILD_RETURN = new AtomicInteger();
     public static final AtomicInteger SECTION_BUILDS = new AtomicInteger();
+    /** DragonRayCounter: 1.21 death-ray vertices (addVertex in EnderDragonRenderer.method_61158) */
+    public static final AtomicInteger RAY_VERTS = new AtomicInteger();
     static final Map<String, Boolean> OK = new LinkedHashMap<>();
 
     static void check(String name, boolean pass, String detail) {
@@ -244,6 +246,52 @@ public class Driver implements ClientModInitializer {
                     "1.20.6 endOrDiscardIfEmpty " + snap[6] + ", 1.21 section-compile builds " + snap[3]);
                 check("f.end", snap[5] > 0 && Math.abs(snap[5] + snap[3] - snap[2]) <= 32,
                     "1.20.6 end " + snap[5] + " + section builds " + snap[3] + " vs 1.21 build() RETURN " + snap[2]);
+            }
+            // (g) EnderDragonRenderer death rays: a dragon (no AI) above and south of the player, the player turned to it,
+            // its client copy held dying (dragonDeathTime 60) for three seconds; rays are drawn while dragonDeathTime > 0
+            int[] dragonId = new int[1];
+            CompletableFuture.runAsync(() -> {
+                class_3222 p = server.method_3760().method_14602(id);
+                class_3218 lvl = (class_3218) p.method_37908();
+                net.minecraft.class_1510 dragon = net.minecraft.class_1299.field_6116.method_5883(lvl);
+                dragon.method_5808(p.method_23317(), p.method_23318() + 8.0, p.method_23321() + 16.0, 0.0F, 0.0F);
+                dragon.method_5977(true);
+                lvl.method_8649(dragon);
+                dragonId[0] = dragon.method_5628();
+                p.method_14251(lvl, p.method_23317(), p.method_23318(), p.method_23321(), 0.0F, -20.0F);
+            }, server).get(20, TimeUnit.SECONDS);
+            int vertsBefore = RAY_VERTS.get();
+            long hold = System.currentTimeMillis() + 3000;
+            boolean seen = false;
+            while (System.currentTimeMillis() < hold) {
+                seen |= on(mc, () -> {
+                    net.minecraft.class_1297 e = mc.field_1687 == null ? null : mc.field_1687.method_8469(dragonId[0]);
+                    if (e instanceof net.minecraft.class_1510 d) {
+                        d.field_7031 = 60;
+                        return true;
+                    }
+                    return false;
+                });
+                Thread.sleep(50);
+            }
+            Thread.sleep(500);
+            AtomicInteger z0 = new AtomicInteger();
+            AtomicInteger rc = counters == null ? z0 : (AtomicInteger) field(counters, "RAY_CENTRE");
+            AtomicInteger ra = counters == null ? z0 : (AtomicInteger) field(counters, "RAY_A");
+            AtomicInteger rb = counters == null ? z0 : (AtomicInteger) field(counters, "RAY_B");
+            AtomicInteger rcc = counters == null ? z0 : (AtomicInteger) field(counters, "RAY_C");
+            AtomicInteger bad = counters == null ? z0 : (AtomicInteger) field(counters, "RAY_BAD");
+            int[] r = on(mc, () -> new int[] {RAY_VERTS.get(), rc.get(), ra.get(), rb.get(), rcc.get(), bad.get()});
+            log("dragon rays: client dragon seen " + seen + ", 1.21 ray vertices " + r[0] + " (" + (r[0] - vertsBefore)
+                + " while dying); 1.20.6 helpers centre " + r[1] + ", A " + r[2] + ", B " + r[3] + ", C " + r[4] + ", bad arguments " + r[5]);
+            check("g.nativeRayVerts", seen && r[0] > 0 && r[0] % 9 == 0, "native @WrapOperation of the ray addVertex " + r[0]
+                + " (nine per ray)");
+            if (counters != null) {
+                check("g.centre", r[1] * 3 == r[0], "1.20.6 vertex01 calls " + r[1] + " = a third of 1.21's ray vertices " + r[0]);
+                // per ray 1.20.6 drew centre A B, centre B C, centre C A: the centre three times, each corner twice
+                check("g.corners", r[1] > 0 && 3 * r[2] == 2 * r[1] && r[3] == r[2] && r[4] == r[2], "1.20.6 vertex2 / 3 / 4 calls " + r[2]
+                    + " / " + r[3] + " / " + r[4] + ", each two thirds of the centre's " + r[1]);
+                check("g.args", r[5] == 0, "helper calls with an alpha, height or width 1.20.6 could not pass: " + r[5]);
             }
         } catch (Throwable t) {
             log("FAIL driver " + t);

@@ -135,6 +135,8 @@
     "CbRenderDecalAccess",
     "CbRenderDoubleAccess",
     "CbRenderFaceBakeryMixin",
+    "CbRenderDragonRaysRestoredMixin",
+    "CbRenderDragonRaysRouteMixin",
     "CbRenderFaceBakeryRouteMixin",
     "CbRenderGameRendererMixin",
     "CbRenderLevelRendererAccess",
