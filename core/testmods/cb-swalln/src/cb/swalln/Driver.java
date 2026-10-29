@@ -18,6 +18,14 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.AttackRange;
+import net.fabricmc.fabric.api.entity.FakePlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.monster.hoglin.Hoglin;
+import net.minecraft.world.entity.monster.piglin.Piglin;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * A native 26.1 mod (never converted) whose mixins sit on the 26.1 methods the 26.1 step layer's canAttackType /
@@ -33,6 +41,44 @@ public class Driver implements ModInitializer {
     public static final AttackRange MIXED_RANGE = new AttackRange(1.0F, 2.0F, 3.0F, 4.0F, 0.25F, 1.0F);
 
     private static final List<String> FAILS = new ArrayList<>();
+    /** the entity Brain.Provider.makeBrain is building for (mixin/BrainProviderNativeMixin) */
+    public static final ThreadLocal<LivingEntity> BUILDING = new ThreadLocal<>();
+
+    private static boolean registered(LivingEntity e, MemoryModuleType<?> memory) {
+        return e.getBrain().checkMemory(memory, MemoryStatus.REGISTERED);
+    }
+
+    /**
+     * Piglins with the 26.1 layer's brain-list route (CbWallBrainExtrasMixin) installed: the native @ModifyArg on the
+     * same Brain.<init> call still acts, a piglin barters (admires a gold ingot handed to it) and angers (hurt by a
+     * player) as 26.1's does; with cb-swall beside it, the memory that mod appended to 1.21.11's Piglin.MEMORY_TYPES
+     * is registered as well, beside the native one.
+     */
+    private static void piglins(ServerLevel level) {
+        Piglin piglin = make(level, EntityType.PIGLIN, null);
+        Hoglin hoglin = make(level, EntityType.HOGLIN, null);
+        check("native.brainProviderArg", registered(piglin, MemoryModuleType.LIKED_NOTEBLOCK_POSITION)
+            && registered(piglin, MemoryModuleType.ADMIRING_ITEM) && !registered(hoglin, MemoryModuleType.LIKED_NOTEBLOCK_POSITION), "");
+        if (FabricLoader.getInstance().isModLoaded("cb_swall")) {
+            check("mixed.piglinUnion", registered(piglin, MemoryModuleType.LIKED_PLAYER)
+                && registered(piglin, MemoryModuleType.LIKED_NOTEBLOCK_POSITION), "");
+        }
+
+        Player player = FakePlayer.get(level);
+        piglin.setPos(0.5, 100, 0.5);
+        player.setPos(1.5, 100, 0.5);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.GOLD_INGOT, 2));
+        InteractionResult barter = piglin.mobInteract(player, InteractionHand.MAIN_HAND);
+        check("vanilla.piglinBarter", barter.consumesAction() && piglin.getOffhandItem().is(Items.GOLD_INGOT)
+            && piglin.getBrain().hasMemoryValue(MemoryModuleType.ADMIRING_ITEM) && player.getMainHandItem().getCount() == 1,
+            barter + " " + piglin.getOffhandItem() + " " + player.getMainHandItem());
+
+        Piglin angry = make(level, EntityType.PIGLIN, null);
+        angry.setPos(0.5, 100, 0.5);
+        boolean hurt = angry.hurtServer(level, level.damageSources().playerAttack(player), 1.0F);
+        check("vanilla.piglinAnger", hurt && angry.getBrain().getMemory(MemoryModuleType.ANGRY_AT).equals(java.util.Optional.of(player.getUUID())),
+            hurt + " " + angry.getBrain().getMemory(MemoryModuleType.ANGRY_AT));
+    }
 
     private static void check(String name, boolean ok, Object detail) {
         if (ok) {
@@ -99,6 +145,8 @@ public class Driver implements ModInitializer {
         check("unmixed.attackRange", held == zombie.getActiveItem() && plainRange.equals(w(zombie, held)), plainRange);
         AttackRange nRange = zombieN.getAttackRangeWith(zombieN.getMainHandItem());
         check("native.attackRangeReturn", zombieN.getMainHandItem() == zombieN.getActiveItem() && NATIVE_RANGE.equals(nRange), nRange);
+
+        piglins(level);
 
         if (!FabricLoader.getInstance().isModLoaded("cb_swall")) {
             return;
