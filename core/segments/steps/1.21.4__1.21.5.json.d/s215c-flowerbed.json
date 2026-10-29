@@ -1,0 +1,11 @@
+{
+  "_s215c_flowerbed_basis": "1.21.4 -> 1.21.5 PinkPetalsBlock (class_8169) is FlowerBedBlock (class_10594) in 1.21.5 (pink petals and wildflowers): same superclass (BushBlock class_2261) and interface (BonemealableBlock class_2256), the same constructor (protected, Properties) and every 1.21.4 instance member under the same name and descriptor (codec, rotate, mirror, canBeReplaced, getShape, getStateForPlacement, createBlockStateDefinition, isValidBonemealTarget, isBonemealSuccess, performBonemeal); bodies compared with javap -c -p: performBonemeal / isValidBonemealTarget the same, canBeReplaced's 1.21.4 body moved into SegmentableBlock.canBeReplaced (class_10596.method_66464, the same item and amount test against FLOWER_AMOUNT) which 1.21.5's calls. The static fields keep their roles under new names: CODEC field_46409 -> field_55761, FACING field_42764 -> field_55762, AMOUNT field_42765 -> field_55763 (fieldRedirects: the engine renames no field of a renamed class). MIN_FLOWERS / MAX_FLOWERS are compile-time constants (inlined).",
+  "classRenames": {
+    "net/minecraft/class_8169": "net/minecraft/class_10594"
+  },
+  "fieldRedirects": {
+    "net/minecraft/class_8169.field_46409:Lcom/mojang/serialization/MapCodec;": "net/minecraft/class_10594#field_55761",
+    "net/minecraft/class_8169.field_42764:Lnet/minecraft/class_2754;": "net/minecraft/class_10594#field_55762",
+    "net/minecraft/class_8169.field_42765:Lnet/minecraft/class_2758;": "net/minecraft/class_10594#field_55763"
+  }
+}

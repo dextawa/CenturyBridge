@@ -1,0 +1,127 @@
+{
+  "_s215d_villagers2_basis": "1.21.4 -> 1.21.5 villager / raid rest (s215d, after s215c-villagers / s215c-raids; javap -p / -c -p 1.21.4 and 1.21.5 class_4129, class_1646, class_1641, class_3851, class_4136, class_3767). VillagerGoalPackages' packages take Holder<VillagerProfession> (same bodies otherwise): the profession's holder in BuiltInRegistries.VILLAGER_PROFESSION. Villager's constructor takes Holder<VillagerType>: the type's holder likewise (new and super). Villager / ZombieVillager.setGossips take a GossipContainer: 1.21.5's GossipContainer.CODEC read of the 1.21.4 tag (rt/CbVillagers.gossips). VillagerDataHolder lost VariantHolder's getVariant / setVariant defaults: 1.21.4's default bodies. Raids: constructor, tick, canJoinRaid(raider, raid), load(level, tag), getFileId as 1.21.4 had them over 1.21.5's level-free Raids (rt/CbRaids). Still open: overrides of the removed members (ORPHAN rows: setGossips(Tag), getVariant / setVariant, Raids.save), VillagerData subclasses (final record), VillagerTrades.WANDERING_TRADER_TRADES (1.21.4's classic Int2ObjectMap pool; see _s215d_trades_basis), VillagerProfessionLayer.getHatData (client).",
+  "callReshapes": {
+    "net/minecraft/class_4129.method_19020(Lnet/minecraft/class_3852;F)Lcom/google/common/collect/ImmutableList;": {
+      "desc": "(Lnet/minecraft/class_6880;F)Lcom/google/common/collect/ImmutableList;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#professionHolder(Lnet/minecraft/class_3852;)Lnet/minecraft/class_6880;",
+        "keep"
+      ],
+      "basis": "the profession's registry holder (1.21.5 takes Holder<VillagerProfession>)"
+    },
+    "net/minecraft/class_4129.method_19021(Lnet/minecraft/class_3852;F)Lcom/google/common/collect/ImmutableList;": {
+      "desc": "(Lnet/minecraft/class_6880;F)Lcom/google/common/collect/ImmutableList;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#professionHolder(Lnet/minecraft/class_3852;)Lnet/minecraft/class_6880;",
+        "keep"
+      ],
+      "basis": "the profession's registry holder (1.21.5 takes Holder<VillagerProfession>)"
+    },
+    "net/minecraft/class_4129.method_19022(Lnet/minecraft/class_3852;F)Lcom/google/common/collect/ImmutableList;": {
+      "desc": "(Lnet/minecraft/class_6880;F)Lcom/google/common/collect/ImmutableList;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#professionHolder(Lnet/minecraft/class_3852;)Lnet/minecraft/class_6880;",
+        "keep"
+      ],
+      "basis": "the profession's registry holder (1.21.5 takes Holder<VillagerProfession>)"
+    },
+    "net/minecraft/class_4129.method_19023(Lnet/minecraft/class_3852;F)Lcom/google/common/collect/ImmutableList;": {
+      "desc": "(Lnet/minecraft/class_6880;F)Lcom/google/common/collect/ImmutableList;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#professionHolder(Lnet/minecraft/class_3852;)Lnet/minecraft/class_6880;",
+        "keep"
+      ],
+      "basis": "the profession's registry holder (1.21.5 takes Holder<VillagerProfession>)"
+    },
+    "net/minecraft/class_4129.method_19024(Lnet/minecraft/class_3852;F)Lcom/google/common/collect/ImmutableList;": {
+      "desc": "(Lnet/minecraft/class_6880;F)Lcom/google/common/collect/ImmutableList;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#professionHolder(Lnet/minecraft/class_3852;)Lnet/minecraft/class_6880;",
+        "keep"
+      ],
+      "basis": "the profession's registry holder (1.21.5 takes Holder<VillagerProfession>)"
+    },
+    "net/minecraft/class_4129.method_19025(Lnet/minecraft/class_3852;F)Lcom/google/common/collect/ImmutableList;": {
+      "desc": "(Lnet/minecraft/class_6880;F)Lcom/google/common/collect/ImmutableList;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#professionHolder(Lnet/minecraft/class_3852;)Lnet/minecraft/class_6880;",
+        "keep"
+      ],
+      "basis": "the profession's registry holder (1.21.5 takes Holder<VillagerProfession>)"
+    },
+    "net/minecraft/class_4129.method_19991(Lnet/minecraft/class_3852;F)Lcom/google/common/collect/ImmutableList;": {
+      "desc": "(Lnet/minecraft/class_6880;F)Lcom/google/common/collect/ImmutableList;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#professionHolder(Lnet/minecraft/class_3852;)Lnet/minecraft/class_6880;",
+        "keep"
+      ],
+      "basis": "the profession's registry holder (1.21.5 takes Holder<VillagerProfession>)"
+    },
+    "net/minecraft/class_4129.method_19992(Lnet/minecraft/class_3852;F)Lcom/google/common/collect/ImmutableList;": {
+      "desc": "(Lnet/minecraft/class_6880;F)Lcom/google/common/collect/ImmutableList;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#professionHolder(Lnet/minecraft/class_3852;)Lnet/minecraft/class_6880;",
+        "keep"
+      ],
+      "basis": "the profession's registry holder (1.21.5 takes Holder<VillagerProfession>)"
+    },
+    "net/minecraft/class_4129.method_19993(Lnet/minecraft/class_3852;F)Lcom/google/common/collect/ImmutableList;": {
+      "desc": "(Lnet/minecraft/class_6880;F)Lcom/google/common/collect/ImmutableList;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#professionHolder(Lnet/minecraft/class_3852;)Lnet/minecraft/class_6880;",
+        "keep"
+      ],
+      "basis": "the profession's registry holder (1.21.5 takes Holder<VillagerProfession>)"
+    },
+    "net/minecraft/class_1646.method_21650(Lnet/minecraft/class_2520;)V": {
+      "desc": "(Lnet/minecraft/class_4136;)V",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#gossips(Lnet/minecraft/class_2520;)Lnet/minecraft/class_4136;"
+      ],
+      "basis": "setGossips(Tag) -> setGossips(GossipContainer): the tag's gossips as 1.21.4 decoded them"
+    },
+    "net/minecraft/class_1641.method_21649(Lnet/minecraft/class_2520;)V": {
+      "desc": "(Lnet/minecraft/class_4136;)V",
+      "ops": [
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#gossips(Lnet/minecraft/class_2520;)Lnet/minecraft/class_4136;"
+      ],
+      "basis": "setGossips(Tag) -> setGossips(GossipContainer): the tag's gossips as 1.21.4 decoded them"
+    }
+  },
+  "ctorRedirects": {
+    "net/minecraft/class_1646.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Lnet/minecraft/class_3854;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#newVillager",
+    "net/minecraft/class_3767.<init>(Lnet/minecraft/class_3218;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids#newRaids"
+  },
+  "superCtorReshapes": {
+    "net/minecraft/class_1646.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Lnet/minecraft/class_3854;)V": {
+      "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Lnet/minecraft/class_6880;)V",
+      "ops": [
+        "keep",
+        "keep",
+        "conv top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#typeHolder(Lnet/minecraft/class_3854;)Lnet/minecraft/class_6880;"
+      ],
+      "basis": "the villager type's registry holder (1.21.5 Villager(EntityType, Level, Holder<VillagerType>))"
+    },
+    "net/minecraft/class_3767.<init>(Lnet/minecraft/class_3218;)V": {
+      "desc": "()V",
+      "ops": [
+        "drop"
+      ],
+      "basis": "1.21.5's Raids() holds no level: a subclass's level is the one whose getRaids answers it (rt/CbRaids.levelOf)"
+    }
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_3851.method_47882()Lnet/minecraft/class_3854;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3851.method_47883(Lnet/minecraft/class_3854;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3767.method_16539()V": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids"
+  },
+  "staticRedirects": {
+    "net/minecraft/class_3767.method_16838(Lnet/minecraft/class_3763;Lnet/minecraft/class_3765;)Z": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids",
+    "net/minecraft/class_3767.method_77(Lnet/minecraft/class_3218;Lnet/minecraft/class_2487;)Lnet/minecraft/class_3767;": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids",
+    "net/minecraft/class_3767.method_16533(Lnet/minecraft/class_6880;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_5/rt/CbRaids"
+  },
+  "fieldRenames": {
+    "net/minecraft/class_3853.field_45129:Ljava/util/List;": "field_17724"
+  },
+  "_s215d_trades_basis": "VillagerTrades.EXPERIMENTAL_WANDERING_TRADER_TRADES (1.21.4 field_45129, List<Pair<ItemListing[], Integer>>, the trade-rebalance experiment's wandering trader pools) is 1.21.5's WANDERING_TRADER_TRADES (field_17724, the same type; the experiment became the default): javap -c -p <clinit> of both, the 1.21.5 list is the 1.21.4 experimental list revised (pool counts 1 -> 2 in the first pool, one more listing, a price 13 -> 15), and 1.21.5's WanderingTrader.updateTrades reads it. A 1.21.4 mod reading the experimental list reads the list the trader uses now. 1.21.4's classic map (field_17724, Int2ObjectMap {1: common, 2: rare}) stays open: no 1.21.5 code reads such a pool."
+}

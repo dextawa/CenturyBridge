@@ -10,7 +10,7 @@ import net.fabricmc.api.ModInitializer;
  * A 1.20.1-era mod (intermediary names) using 1.20.1's JSON API of the advancement predicates, which 1.20.2 replaced by
  * codecs and the 1.20.2 layer restores (CbAdv*Json, read through CbAdv*Access invokers). Climbed 1.20.1 -> 26.1 with
  * every layer, it checks that a 1.20.1-format entity predicate (with flags), item predicate and location predicate
- * still read and write. Prints "CBTEST120 PASS|FAIL name" and "CBTEST120 SUMMARY n/m".
+ * still read and write, and that 1.20.1's EntitySubPredicate.ANY and Types table still initialise. Prints "CBTEST120 PASS|FAIL name" and "CBTEST120 SUMMARY n/m".
  * Known failures on 26.1 (queue_swall.md, expected-fail): adv120.mixedReader (CASE E: the invokers are stripped at the wall),
  * adv120.flags (CbAdvJson's static EntitySubPredicate.ANY does not parse), adv120.anyNull (null is not ANY).
  */
@@ -88,6 +88,24 @@ public class Swall120 implements ModInitializer {
             check("adv120.anyNull", net.minecraft.class_2048.method_8913(null) == net.minecraft.class_2048.field_9599, "");
         } catch (Throwable t) {
             check("adv120.anyNull", false, t);
+        }
+        // 1.20.1's EntitySubPredicate.ANY and its Types table (class_7376$class_7378: the "type" -> deserializer BiMap and
+        // the variant types CAT / AXOLOTL): the 1.20.2 layer builds its ANY from Types, the 1.20.5 layer's Types read 1.21.4's
+        // EntitySubPredicates.CAT, which 1.21.5 removed (queue_smx4: field_38729)
+        try {
+            Object any = net.minecraft.class_7376.field_38723;
+            Object cat = net.minecraft.class_7376.class_7378.field_38729;
+            Object axolotl = net.minecraft.class_7376.class_7378.field_41534;
+            com.google.common.collect.BiMap<String, net.minecraft.class_7376.class_7377> types = net.minecraft.class_7376.class_7378.field_38731;
+            boolean anyNull = net.minecraft.class_7376.method_43097(null) == any;
+            check("adv120.subPredicateTypes", any != null && cat != null && axolotl != null && types.containsKey("cat")
+                && types.containsKey("axolotl") && types.containsKey("lightning") && anyNull,
+                "any=" + any + " fromJson(null)==ANY " + anyNull + " cat=" + cat + " types=" + types.keySet());
+            // 1.20.1: TYPES.get("cat") is Types.CAT itself (one object per kind)
+            check("adv120.subPredicateTypesIdentity", types.get("cat") == cat && types.get("axolotl") == axolotl,
+                "TYPES.get(cat)=" + types.get("cat") + " CAT=" + cat + " TYPES.get(axolotl)=" + types.get("axolotl") + " AXOLOTL=" + axolotl);
+        } catch (Throwable t) {
+            check("adv120.subPredicateTypes", false, t);
         }
         System.out.println("CBTEST120 SUMMARY " + passed + "/" + (passed + FAILS.size()) + " passed" + (FAILS.isEmpty() ? "" : " fails=" + FAILS));
     }

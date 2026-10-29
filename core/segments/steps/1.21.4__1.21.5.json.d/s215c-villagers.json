@@ -1,0 +1,42 @@
+{
+  "_s215c_villagers_basis": "1.21.4 -> 1.21.5 VillagerData / VillagerProfession / VillagerType (s215c): VillagerData became a record of registry holders, the VillagerProfession / VillagerType constants ResourceKeys (VillagerType.byBiome answers a key), a profession's name a Component (javap -c -p 1.21.4 / 1.21.5 class_3850, class_3852, class_1646.method_23315). rt/CbVillagers gives back 1.21.4's members over them (see its javadoc for each). Open: subclasses of VillagerData (1.21.5's record is final) and their overrides.",
+  "ctorRedirects": {
+    "net/minecraft/class_3850.<init>(Lnet/minecraft/class_3854;Lnet/minecraft/class_3852;I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#newVillagerData",
+    "net/minecraft/class_3852.<init>(Ljava/lang/String;Ljava/util/function/Predicate;Ljava/util/function/Predicate;Lcom/google/common/collect/ImmutableSet;Lcom/google/common/collect/ImmutableSet;Lnet/minecraft/class_3414;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers#newVillagerProfession"
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_3850.method_16919()Lnet/minecraft/class_3854;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3850.method_16924()Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3850.method_16925()I": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3850.method_16922(Lnet/minecraft/class_3854;)Lnet/minecraft/class_3850;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3850.method_16921(Lnet/minecraft/class_3852;)Lnet/minecraft/class_3850;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.comp_818()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers"
+  },
+  "fieldGetters": {
+    "net/minecraft/class_3852.field_17051:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17052:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17053:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17054:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17055:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17056:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17057:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17058:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17059:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17060:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17061:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17062:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17063:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17064:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3852.field_17065:Lnet/minecraft/class_3852;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3854.field_17071:Lnet/minecraft/class_3854;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3854.field_17072:Lnet/minecraft/class_3854;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3854.field_17073:Lnet/minecraft/class_3854;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3854.field_17074:Lnet/minecraft/class_3854;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3854.field_17075:Lnet/minecraft/class_3854;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3854.field_17076:Lnet/minecraft/class_3854;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers",
+    "net/minecraft/class_3854.field_17077:Lnet/minecraft/class_3854;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers"
+  },
+  "staticRedirects": {
+    "net/minecraft/class_3854.method_16930(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3854;": "top/dext/centurybridge/step/v1_21_5/rt/CbVillagers"
+  }
+}
