@@ -203,6 +203,10 @@ def names_and_loot(f):
     f.put("instanceRedirects", BB + ".method_26162()" + RK, LT)
     f.put("instanceRedirects", BB + "$class_2251.method_16228(" + L("class_2248") + ")" + L("class_4970$class_2251"), LT)
     f.put("instanceFieldGetters", BB + ".field_23156:" + RK, LT)
+    # Properties.drops (package-private; mods and the 1.20.5 layer reach it through access wideners, so the
+    # public/protected damage table does not list it): a key in 1.21.1, the DependantName field_54007 in 1.21.2
+    f.put("instanceFieldGetters", BB + "$class_2251.field_10666:" + RK, LT)
+    f.put("instanceFieldSetters", BB + "$class_2251.field_10666:" + RK, LT)
     f.put("fieldGetters", MC + "class_39.field_844:" + RK, LT)
     for fld in ("field_869", "field_814", "field_224", "field_461", "field_385", "field_702", "field_629", "field_878",
                 "field_806", "field_365", "field_285", "field_394", "field_489", "field_607", "field_716", "field_778"):

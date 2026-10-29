@@ -3,8 +3,9 @@
   "id": "cb_s212",
   "version": "1.0.0",
   "name": "CB s212 Mixin Test",
-  "description": "1.21.1-era mixins on members step 1.21.1 -> 1.21.2 reshaped (furnace cook time / canBurn, DimensionDataStorage.getDataFile)",
+  "description": "1.21.1-era mixins on members step 1.21.1 -> 1.21.2 reshaped (furnace cook time / canBurn, DimensionDataStorage.getDataFile, Properties.drops)",
   "environment": "*",
   "mixins": ["cb_s212.mixins.json"],
+  "accessWidener": "cb_s212.accesswidener",
   "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.1" }
 }
