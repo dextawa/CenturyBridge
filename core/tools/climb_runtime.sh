@@ -76,13 +76,16 @@ done
 # public/protected members: a layer's plain code reading a member its own access widener opened (the 1.20.5 layer's
 # CbFieldReshapesGen reading BlockBehaviour.Properties.field_10666, replaced at 1.21.2) is judged by nothing else.
 # CLAIMED/BLIND/KNOWN rows are references the JVM cannot link on T; listed in <runtime>/link-check/link-findings.tsv.
+# The layers load together, so each one's access widener applies to all (-Dcb.linkcheck.sharedAw: the CenturyBridge
+# layer jars only, never the dependency mods); a finding only another layer's access widener satisfies is listed with
+# its opener in <runtime>/link-check/shared-aw.tsv: if the opener drops its line, the finding comes back.
 case "$T" in 26.*) GAME="data/jars/client-$T.jar" ;; *) GAME="data/jars/client-$T-intermediary.jar" ;; esac
 FAPI=$(ls data/runtime/client-$T/mods/fabric-api-*.jar 2>/dev/null | head -1)
 LAYERS=$(ls "$OUT"/centurybridge-0.3.0+*.jar)
 OTHERS=$(ls "$OUT"/*.jar | grep -vxF "$LAYERS")
 LC="$OUT/link-check"
 rm -rf "$LC"
-"$JAVA" -Xmx16g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$LC" - $LAYERS -- \
+"$JAVA" -Xmx16g "-Dcb.linkcheck.sharedAw=centurybridge-0.3.0+*.jar" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$LC" - $LAYERS -- \
     $OTHERS "$GAME" $FAPI "data/runtime/client-$T/libraries" > "$WD/layers/link-check-$T.log" 2>&1 \
     || { echo "climbed layers -> $T: LINK-CHECK FAILED"; tail -5 "$WD/layers/link-check-$T.log"; exit 1; }
 # CLAIMED / BLIND / KNOWN: a reference the JVM cannot link on T. TOMBSTONE rows (KNOWN) are calls the converter
@@ -96,6 +99,7 @@ for J in $LAYERS; do
     echo "    link-check ${B%.jar}: $(count "$B" 0) dangling references, $(count "$B" 1) tombstoned calls"
 done
 echo "climbed layers -> $T link-check: $(count "" 0) dangling references, $(count "" 1) tombstoned calls ($LC/link-findings.tsv)"
+echo "climbed layers -> $T link-check: $(($(wc -l < "$LC/shared-aw.tsv") - 1)) findings satisfied only by another layer's access widener ($LC/shared-aw.tsv)"
 ls "$OUT"
 # the ratchet: no layer may dangle more on T than core/segments/layer-linkcheck-baseline.tsv allows (per layer x T,
 # dangling + tombstoned). CB_LAYER_BASELINE=write rewrites T's rows in <workDir>'s copy instead (a burn-down lowers
