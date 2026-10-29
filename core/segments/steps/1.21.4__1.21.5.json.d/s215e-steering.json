@@ -1,0 +1,15 @@
+{
+ "_s215e_steering_basis": "1.21.4's ItemBasedSteering kept the entity's saddle in a synched Boolean the mod passed in (constructor (entityData, boostTime, hasSaddle), setSaddle / hasSaddle / addAdditionalSaveData / readAdditionalSaveData); 1.21.5 dropped that accessor with the saddle's move to the SADDLE equipment slot, every kept member has the same body (javap -c -p both class_4980). A converted mod's steering is facade/ItemBasedSteering, a 1.21.5 ItemBasedSteering keeping the saddle in the mod's accessor as 1.21.4 did: NEW sites build it (ctorRedirects), a converted subclass extends it (superRenames), the saddle members' calls reach it (rt/CbSteering). The class itself is not renamed: a mod's mixin on 1.21.5's ItemBasedSteering still targets vanilla's.",
+ "ctorRedirects": {
+  "net/minecraft/class_4980.<init>(Lnet/minecraft/class_2945;Lnet/minecraft/class_2940;Lnet/minecraft/class_2940;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbSteering#create"
+ },
+ "superRenames": {
+  "net/minecraft/class_4980": "top/dext/centurybridge/step/v1_21_5/facade/ItemBasedSteering"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_4980.method_26309(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbSteering#addAdditionalSaveData",
+  "net/minecraft/class_4980.method_26312(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbSteering#readAdditionalSaveData",
+  "net/minecraft/class_4980.method_26310(Z)V": "top/dext/centurybridge/step/v1_21_5/rt/CbSteering#setSaddle",
+  "net/minecraft/class_4980.method_26311()Z": "top/dext/centurybridge/step/v1_21_5/rt/CbSteering#hasSaddle"
+ }
+}
