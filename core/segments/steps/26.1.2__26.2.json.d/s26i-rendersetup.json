@@ -1,0 +1,6 @@
+{
+ "_s26i_rendersetup_basis": "26.1.2 RenderSetupBuilder.bufferSize(int) only stored an int (putfield bufferSize; areturn), which RenderBuffers.put read back through RenderType.bufferSize() as the initial capacity of that type's fixed ByteBufferBuilder. 26.2 removed the field from RenderSetup and RenderType, and a whole-jar search of client-26.2.jar finds no class reading a per-type buffer size: every ByteBufferBuilder grows on demand (ensureCapacity / resize). Nothing in 26.2 replaces the hint, so the call keeps the builder unchanged (rt/CbS26RenderSetup). Reached by the 1.21.11 layer's CbRenderTypeCreate.method_24049 unconditionally, i.e. by every climbed RenderType.create on 26.2 (incl. the 1.21.6 layer's Fabric renderer BlendMode <clinit>).",
+ "instanceRedirects": {
+  "net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.bufferSize(I)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;": "top/dext/centurybridge/step/v26_2/rt/CbS26RenderSetup"
+ }
+}
