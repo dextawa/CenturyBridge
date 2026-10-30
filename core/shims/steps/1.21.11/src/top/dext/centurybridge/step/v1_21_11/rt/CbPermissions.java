@@ -61,8 +61,21 @@ public final class CbPermissions {
         return level(server.method_74995());
     }
 
-    /** CommandSourceStack.withMaximumPermission(int) (method_9230): 1.21.11's form with the level as a set */
+    /**
+     * CommandSourceStack.withMaximumPermission(int) (method_9230). 1.21.10: the source itself when its level is at least
+     * n, else the source at level n (max(own, n)). Not 1.21.11's withMaximumPermission(set): it merges through
+     * PermissionSet.union (method_75034), and for two level-based sets class_12086's union answers the lower level
+     * (javap: "own.level >= other.level ? other : own"; a real 1.21.11 boot, cb-smx1p, confirmed it). A set that is not
+     * level-based keeps its other permissions through 1.21.11's union, which for such sets is a true union (class_12340).
+     */
     public static class_2168 method_9230(class_2168 source, int level) {
+        class_12096 own = source.method_75037();
+        if (grants(own, level)) {
+            return source;
+        }
+        if (own instanceof class_12086) {
+            return source.method_9206(permissions(level));
+        }
         return source.method_9230(permissions(level));
     }
 
