@@ -136,3 +136,10 @@ accessible field net/minecraft/client/gui/components/tabs/TabNavigationBar$Build
 accessible method net/minecraft/client/Minecraft loadCriticalShaders ()V
 # s26h: mixin/CbS26ChunkCacheRestoredMixin reads the occlusion graph's running empty-section set for 26.1.2 getLoadedEmptySections
 accessible field net/minecraft/client/renderer/SectionOcclusionGraph emptySections Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;
+# s26i: rt/CbS26BufferBuilderFields gives back 26.1.2 BufferBuilder.fastFormat / offsetsByElement over 26.2 blockFormat / entityFormat / elements[]
+accessible field com/mojang/blaze3d/vertex/BufferBuilder format Lcom/mojang/blaze3d/vertex/VertexFormat;
+accessible field com/mojang/blaze3d/vertex/BufferBuilder blockFormat Z
+mutable field com/mojang/blaze3d/vertex/BufferBuilder blockFormat Z
+accessible field com/mojang/blaze3d/vertex/BufferBuilder entityFormat Z
+accessible field com/mojang/blaze3d/vertex/BufferBuilder elements [Lcom/mojang/blaze3d/vertex/VertexFormatElement;
+accessible field com/mojang/blaze3d/vertex/BufferBuilder elementNames [Ljava/lang/String;

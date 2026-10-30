@@ -1,0 +1,21 @@
+{
+ "_s26i_bufferbuilder_basis": "26.1.2 BufferBuilder private fields that mixins (the climbed 1.21 layer's CbRenderBufferBuilderMixin) shadow, which mixin-ledger-gen had ledgered as gone; presume moved, javap of both constructors and addVertex: mode is 26.2's primitiveTopology (same constructor slot; VertexFormat$Mode is classRenamed to PrimitiveTopology), fullFormat (format == ENTITY) is entityFormat, fastFormat (ENTITY || BLOCK) is blockFormat || entityFormat, offsetsByElement (by element id, -1 when absent) is read off elements[] by semantic id and each element's offset() (rt/CbS26BufferBuilderFields). VertexFormatElement.id() / mask() and VertexFormat.getElementsMask() / getOffsetsByElement() (present 1.21.5 .. 26.1.2, gone at 26.2): id from the element's name in BufferBuilder.elementNames' order (26.1.2's ids 0..6), further names numbered on first sight as 26.1.2's register did; mask = 1 << id; the format's mask and offsets read off getElements().",
+ "fieldRenames": {
+  "com/mojang/blaze3d/vertex/BufferBuilder.mode:Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;": "primitiveTopology",
+  "com/mojang/blaze3d/vertex/BufferBuilder.fullFormat:Z": "entityFormat"
+ },
+ "instanceFieldGetters": {
+  "com/mojang/blaze3d/vertex/BufferBuilder.fastFormat:Z": "top/dext/centurybridge/step/v26_2/rt/CbS26BufferBuilderFields#fastFormat",
+  "com/mojang/blaze3d/vertex/BufferBuilder.offsetsByElement:[I": "top/dext/centurybridge/step/v26_2/rt/CbS26BufferBuilderFields#offsetsByElement"
+ },
+ "instanceFieldSetters": {
+  "com/mojang/blaze3d/vertex/BufferBuilder.fastFormat:Z": "top/dext/centurybridge/step/v26_2/rt/CbS26BufferBuilderFields#setFastFormat",
+  "com/mojang/blaze3d/vertex/BufferBuilder.offsetsByElement:[I": "top/dext/centurybridge/step/v26_2/rt/CbS26BufferBuilderFields#setOffsetsByElement"
+ },
+ "instanceRedirects": {
+  "com/mojang/blaze3d/vertex/VertexFormatElement.id()I": "top/dext/centurybridge/step/v26_2/rt/CbS26BufferBuilderFields#id",
+  "com/mojang/blaze3d/vertex/VertexFormatElement.mask()I": "top/dext/centurybridge/step/v26_2/rt/CbS26BufferBuilderFields#mask",
+  "com/mojang/blaze3d/vertex/VertexFormat.getElementsMask()I": "top/dext/centurybridge/step/v26_2/rt/CbS26BufferBuilderFields#getElementsMask",
+  "com/mojang/blaze3d/vertex/VertexFormat.getOffsetsByElement()[I": "top/dext/centurybridge/step/v26_2/rt/CbS26BufferBuilderFields#getOffsetsByElement"
+ }
+}
