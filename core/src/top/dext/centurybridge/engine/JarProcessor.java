@@ -467,6 +467,16 @@ public final class JarProcessor {
         mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
         if (nr.getSort() == org.objectweb.asm.Type.VOID && or.getSort() != org.objectweb.asm.Type.VOID) {
             mv.visitInsn(or.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP);
+        } else if (or.getSort() == org.objectweb.asm.Type.VOID && nr.getSort() != org.objectweb.asm.Type.VOID) {
+            // the old method answered nothing where the new shape answers a value V never had (26.1's
+            // TestEnvironmentDefinition.setup returns the state teardown receives): the type's zero value
+            switch (nr.getSort()) {
+                case org.objectweb.asm.Type.OBJECT, org.objectweb.asm.Type.ARRAY -> mv.visitInsn(Opcodes.ACONST_NULL);
+                case org.objectweb.asm.Type.LONG -> mv.visitInsn(Opcodes.LCONST_0);
+                case org.objectweb.asm.Type.FLOAT -> mv.visitInsn(Opcodes.FCONST_0);
+                case org.objectweb.asm.Type.DOUBLE -> mv.visitInsn(Opcodes.DCONST_0);
+                default -> mv.visitInsn(Opcodes.ICONST_0);
+            }
         }
         mv.visitLabel(tryEnd);
         mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.frames, "cbPop", "()V", false);
