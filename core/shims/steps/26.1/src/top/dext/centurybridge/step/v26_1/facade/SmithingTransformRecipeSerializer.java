@@ -13,6 +13,9 @@ import net.minecraft.world.item.crafting.SmithingTransformRecipe;
  */
 public class SmithingTransformRecipeSerializer implements RecipeSerializer<SmithingTransformRecipe> {
 
+    /** CODEC (private in 1.21.11; the 1.20.5 layer's access widener opened it and its CbFieldReshapesGen reads it) */
+    public static final MapCodec<SmithingTransformRecipe> field_46108 = SmithingTransformRecipe.MAP_CODEC;
+
     /** STREAM_CODEC */
     public static final StreamCodec<RegistryFriendlyByteBuf, SmithingTransformRecipe> field_48364 = SmithingTransformRecipe.STREAM_CODEC;
 
