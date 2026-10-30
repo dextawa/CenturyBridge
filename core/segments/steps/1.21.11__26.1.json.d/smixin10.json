@@ -1,0 +1,22 @@
+{
+ "mixinTargets": {
+  "net/minecraft/class_761.method_23793(Lnet/minecraft/class_761$class_10948;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)I": {
+   "to": "method_23793(Lnet/minecraft/class_761$class_10948;Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)I",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "basis": "LevelRenderer.getLightCoords(BrightnessGetter, getter, state, pos): javap -c -p of 1.21.11 method_23793 and 26.1 getLightCoords are the same instructions through offset 40 (emissiveRendering -> ldc 15728880; packedBrightness; LightCoordsUtil.block = class_765.method_24186; getLightEmission = method_26213; if_icmpge); the getter widened from class_1920 to BlockAndLightGetter, which this step's classRenames already gives class_1920. The tail differs (1.21.11 method_24187 + method_23687(emission, sky); 26.1 LightCoordsUtil.withBlock(packed, emission)): anchors there have no counterpart and stay disabled with their reasons"
+  },
+  "net/minecraft/class_761.method_23794(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": {
+   "to": "method_23794(Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/class_2338;)I",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "LevelRenderer.getLightCoords(getter, pos): javap -c -p of both are the same instructions (BrightnessGetter.DEFAULT, getBlockState = method_8320, the 4-argument overload); the getter widened from class_1920 to BlockAndLightGetter, which this step's classRenames already gives class_1920"
+  }
+ }
+}
