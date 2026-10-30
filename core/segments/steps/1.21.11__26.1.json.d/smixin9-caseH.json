@@ -1,0 +1,21 @@
+{
+ "_smixin9_basis": "CASE H (cases_smixin3/swall12b.md): V LightTexture members whose class the step renames to a facade while 26.1 keeps their code, the same, in a vanilla class (judged by swall12b, javap call for call). MixinBridge's follow+W takes a mixinMoves entry as the W counterpart before inferring one.",
+ "mixinMoves": {
+  "net/minecraft/class_765.method_3314()V": {
+   "to": "net/minecraft/client/renderer/LightmapRenderStateExtractor.tick()V",
+   "basis": "LightTexture.tick -> LightmapRenderStateExtractor.tick: the flicker random walk and needsUpdate = true, the same body"
+  },
+  "net/minecraft/class_765.method_42596(Lnet/minecraft/class_1309;FF)F": {
+   "to": "net/minecraft/client/renderer/LightmapRenderStateExtractor.calculateDarknessScale(Lnet/minecraft/class_1309;FF)F",
+   "basis": "LightTexture.calculateDarknessScale -> LightmapRenderStateExtractor.calculateDarknessScale: the same body (tickCount, Mth.cos, Math.max)"
+  },
+  "net/minecraft/class_765.close()V": {
+   "to": "net/minecraft/client/renderer/Lightmap.close()V",
+   "basis": "LightTexture.close -> Lightmap.close: texture, view and ring buffer closed in the same order"
+  },
+  "net/minecraft/class_765.method_71650()Lcom/mojang/blaze3d/textures/GpuTextureView;": {
+   "to": "net/minecraft/client/renderer/Lightmap.getTextureView()Lcom/mojang/blaze3d/textures/GpuTextureView;",
+   "basis": "LightTexture.getTextureView -> Lightmap.getTextureView: the same field read"
+  }
+ }
+}
