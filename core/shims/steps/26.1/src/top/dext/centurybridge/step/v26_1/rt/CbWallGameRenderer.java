@@ -25,6 +25,20 @@ public final class CbWallGameRenderer {
         return dispatcher.method_3351().method_3333();
     }
 
+    /**
+     * 1.21.11 GameRenderer.guiRenderState (field_59966): 26.1 moved the GUI render state into the renderer's
+     * GameRenderState (javap: GameRenderState.<init> builds it; GameRenderer reads it through gameRenderState) --
+     * the same object, the one 26.1's GUI extraction fills.
+     */
+    public static net.minecraft.client.renderer.state.gui.GuiRenderState guiRenderState(net.minecraft.client.renderer.GameRenderer renderer) {
+        return renderer.getGameRenderState().guiRenderState;
+    }
+
+    /** 1.21.11 GameRenderer.levelRenderState (field_61732): 26.1's GameRenderState.levelRenderState, as above */
+    public static net.minecraft.client.renderer.state.level.LevelRenderState levelRenderState(net.minecraft.client.renderer.GameRenderer renderer) {
+        return renderer.getGameRenderState().levelRenderState;
+    }
+
     /** GameRenderer.PROJECTION_Z_NEAR: 26.1's Camera.PROJECTION_Z_NEAR (both 0.05) */
     public static float field_32686() {
         return Camera.PROJECTION_Z_NEAR;
