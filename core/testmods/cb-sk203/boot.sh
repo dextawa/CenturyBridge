@@ -2,7 +2,7 @@
 # boot.sh <workDir> <tag> [native-only]: real 1.20.3 server check for Kilt E3 (skilteng). cb-sk203 (1.20.2, intermediary,
 # its own access widener) is compiled against the 1.20.2 stub widened by it, climbed 1.20.2 -> 1.20.3 (boot_climb.sh,
 # CB_FROM=1.20.2) and booted next to cb-sk203n (native 1.20.3, not converted) on agents/s203/srv-1.20.3.
-# Expected: "CB-SK203 DONE 7/7"; "CB-SK203N stoneId N (vanilla N) getIdCalls 2" (two getId calls on the probe keys
+# Expected: "CB-SK203 DONE 9/9"; "CB-SK203N stoneId N (vanilla N) getIdCalls 2" (two getId calls on the probe keys
 # after cb-sk203's removals; 0 in native-only). Run on beta2 from ~/cbwork after climb_runtime.sh <workDir> 1.20.3.
 set -uo pipefail
 cd ~/cbwork
