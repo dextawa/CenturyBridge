@@ -5,12 +5,13 @@ accessible	method	net/minecraft/class_2995	method_32705	()Lnet/minecraft/class_2
 accessible	field	net/minecraft/class_26	field_48926	Lnet/minecraft/class_7225$class_7874;
 # DistanceManager.ticketStorage: 1.21.4's ticket members on the DistanceManager reach 1.21.5's TicketStorage (rt/CbTickets)
 accessible	field	net/minecraft/class_3204	field_55591	Lnet/minecraft/class_10592;
+# CompiledShaderProgram(id, label): 1.21.4's CompiledShaderProgram(id) builds through it (rt/CbShaderPrograms)
+accessible	method	net/minecraft/class_5944	<init>	(ILjava/lang/String;)V
 # AbstractHorse.owner: 1.21.4 AbstractHorse.getOwnerUUID / setOwnerUUID answered and set its owner field, the reference
 # 1.21.5 keeps there (rt/CbOwners)
 accessible	field	net/minecraft/class_1496	field_55705	Lnet/minecraft/class_10583;
 # TamableAnimal.DATA_OWNERUUID_ID: 1.21.4 TamableAnimal.getOwnerUUID / setOwnerUUID read and wrote it (rt/CbOwners)
 accessible	field	net/minecraft/class_1321	field_6320	Lnet/minecraft/class_2940;
-
 
 # ---- BEGIN GENERATED (s215b): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same

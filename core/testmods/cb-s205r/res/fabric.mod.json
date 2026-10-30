@@ -1,0 +1,13 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s205r",
+ "version": "1.0.0",
+ "name": "CB s205 legacy recipe serializer test (1.20.1 era)",
+ "description": "Own recipe type and 1.20.1 recipe serializer (read(id, json) / read(id, buf) / write); the server's and the client's (synced) copy of cb_s205r:legacy_a checked (\"CB-S205R ...\").",
+ "environment": "*",
+ "entrypoints": {
+  "main": ["cb.s205r.S205RTestMod"],
+  "client": ["cb.s205r.S205RClient"]
+ },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.1" }
+}

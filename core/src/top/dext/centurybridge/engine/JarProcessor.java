@@ -4297,6 +4297,16 @@ public final class JarProcessor {
                                     return;
                                 }
                             }
+                            // a field that only changed its name with its class (1.21.5's unobfuscated blaze3d:
+                            // VertexFormatElement.field_52107 -> POSITION; 1.21.9 class_4003.field_17886) keeps its
+                            // site, renamed, and the ClassRemapper then names the new class, as methodRenames do
+                            // above. A layer facade is excluded: it keeps V's field names (1.20.5 facade/class_2582).
+                            String rfrn = chain.classRenames.get(owner).startsWith("top/dext/") ? null : chain.fieldRenames.get(rkey);
+                            if (rfrn != null) {
+                                fldRenames.put(fsite, rfrn);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "field-rename");
+                                return;
+                            }
                             String gap = chain.facadeGaps.get(owner + "." + name + ":" + desc);
                             if (gap != null) {
                                 rpt.ledgered++;
