@@ -27,7 +27,8 @@ public class CookingRecipeSerializer<T extends AbstractCookingRecipe> implements
         T create(String group, CookingBookCategory category, Ingredient input, ItemStack result, float experience, int cookingTime);
     }
 
-    private final MapCodec<T> codec;
+    /** public: 1.21.11 code reads it as a field (the 1.20.5 layer's CbFieldReshapesGen; its own access widener opened the vanilla field) */
+    public final MapCodec<T> codec;
     private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
     public CookingRecipeSerializer(Factory<T> factory, int defaultCookingTime) {

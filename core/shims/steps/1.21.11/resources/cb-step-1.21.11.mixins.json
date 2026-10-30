@@ -20,15 +20,20 @@
     "CbMinecartCommandSourceRestoredMixin"
   ],
   "client": [
+    "CbClientLevelColorsRestoredMixin",
     "CbClientLevelEffectsMixin",
     "CbClientLevelEffectsMixinHooks",
+    "CbCycleButtonBuilderRestoredMixin",
     "CbDebugRendererRestoredMixin",
     "CbDimEffectsFogMixin",
     "CbDimEffectsLightTextureMixin",
     "CbDimEffectsLightingMixin",
     "CbDimEffectsSkyMixin",
+    "CbFileUploadRestoredMixin",
     "CbLineWidthBufferSourceMixin",
-    "CbLineWidthBuilderMixin"
+    "CbLineWidthBuilderMixin",
+    "CbOptionInstanceGraphicsMixin",
+    "CbOptionsGraphicsModeRestoredMixin"
   ],
   "server": [],
   "injectors": {

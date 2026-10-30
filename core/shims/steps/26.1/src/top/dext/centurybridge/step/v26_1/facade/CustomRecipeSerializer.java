@@ -21,7 +21,8 @@ public class CustomRecipeSerializer<T extends CraftingRecipe> implements RecipeS
         T create(CraftingBookCategory category);
     }
 
-    private final MapCodec<T> codec;
+    /** public: 1.21.11 code reads it as a field (the 1.20.5 layer's CbFieldReshapesGen; its own access widener opened the vanilla field) */
+    public final MapCodec<T> codec;
     private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
     public CustomRecipeSerializer(Factory<T> factory) {

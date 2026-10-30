@@ -13,6 +13,9 @@ import net.minecraft.world.item.crafting.ShapelessRecipe;
  */
 public class ShapelessRecipeSerializer implements RecipeSerializer<ShapelessRecipe> {
 
+    /** CODEC (private in 1.21.11; the 1.20.5 layer's access widener opened it and its CbFieldReshapesGen reads it) */
+    public static final MapCodec<ShapelessRecipe> field_46104 = ShapelessRecipe.MAP_CODEC;
+
     /** STREAM_CODEC */
     public static final StreamCodec<RegistryFriendlyByteBuf, ShapelessRecipe> field_48360 = ShapelessRecipe.STREAM_CODEC;
 
