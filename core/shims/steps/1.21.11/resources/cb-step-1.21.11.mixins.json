@@ -29,7 +29,9 @@
     "CbDimEffectsLightingMixin",
     "CbDimEffectsSkyMixin",
     "CbLineWidthBufferSourceMixin",
-    "CbLineWidthBuilderMixin"
+    "CbLineWidthBuilderMixin",
+    "CbOptionInstanceGraphicsMixin",
+    "CbOptionsGraphicsModeRestoredMixin"
   ],
   "server": [],
   "injectors": {
