@@ -70,6 +70,15 @@ public final class Driver {
             class_3218 nether = server.method_3847(class_1937.field_25180);
             check("canSetSpawn(nether)", nether != null && class_4969.method_27353(nether), nether);
         });
+        run("rules", () -> {
+            Object last = net.minecraft.class_156.method_20793(java.util.List.of("a", "b", "c"));
+            check("Util.lastOf==c", "c".equals(last), last);
+            class_3218 nether = server.method_3847(class_1937.field_25180);
+            check("isLevelEnabled(overworld)", server.method_74057(overworld), true);
+            check("isLevelEnabled(nether)", nether != null && server.method_74057(nether), "allowEnteringNetherUsingPortals default true");
+            check("bed canSetSpawn(overworld)", net.minecraft.class_2244.method_27352(overworld), true);
+            check("!bed canSetSpawn(nether)", nether != null && !net.minecraft.class_2244.method_27352(nether), false);
+        });
         System.out.println("CB-SMX1P summary ok=" + ok + " fail=" + fail);
     }
 }
