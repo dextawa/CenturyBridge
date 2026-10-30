@@ -1,0 +1,14 @@
+{
+ "_s205d_shaders_basis": "1.21.4's CompiledShaderProgram-from-a-program-id path, which the climbed 1.21.2 layer's 1.21.1 ShaderInstance give-back (rt/CbRenderShaderLoad, run on every resource reload by the 1.20.3 layer's CbRender.cbReloadShaders) takes: ShaderProgramConfig.Sampler / Uniform (class_10157$class_10158 / $class_10159) gone in 1.21.5 (facades with 1.21.4's members and codecs), new CompiledShaderProgram(int) (1.21.5: (int, String label), opened by the layer's access widener), VertexFormat.bindAttributes (1.21.5 inlined it into GlProgram.link) and setupUniforms(List, List), whose element types 1.21.5 changed (RenderPipeline.UniformDescription / String). rt/CbShaderPrograms has each body and the javap basis. Climbed 26.1 client went black at the first reload with NoClassDefFoundError class_10157$class_10158 (swall13 k4).",
+ "classRenames": {
+  "net/minecraft/class_10157$class_10158": "top/dext/centurybridge/step/v1_21_5/facade/ShaderProgramConfig$class_10158",
+  "net/minecraft/class_10157$class_10159": "top/dext/centurybridge/step/v1_21_5/facade/ShaderProgramConfig$class_10159"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_5944.<init>(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShaderPrograms#program"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_293.method_62886(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShaderPrograms",
+  "net/minecraft/class_5944.method_62900(Ljava/util/List;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShaderPrograms"
+ }
+}

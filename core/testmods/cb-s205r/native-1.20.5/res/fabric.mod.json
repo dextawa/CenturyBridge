@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s205rn",
+  "version": "1.0.0",
+  "name": "CB s205r native @W@ recipe route test",
+  "description": "@W@ mixins (not converted) on the call sites the recipe id routes wrap: they must keep firing",
+  "environment": "*",
+  "mixins": ["cb_s205rn.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "@W@" }
+}

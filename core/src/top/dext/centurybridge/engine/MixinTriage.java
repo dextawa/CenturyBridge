@@ -101,6 +101,20 @@ public final class MixinTriage {
         return new Result(out, configOfClass);
     }
 
+    /**
+     * K3 (MixinPeel): one listed mixin judged again from other bytes (a peeled copy), with the jar's configs and refmaps
+     * ({@code cfgs} / {@code refmaps} from {@link #configs}) and its own merged members
+     */
+    static MixinInfo reanalyze(byte[] bytes, String className, Map<String, String> cfgs, Map<String, Map<String, String>> refmaps,
+                               Chain chain, LayerMembers own) {
+        return analyze(bytes, className, cfgs.getOrDefault(className, ""), refmaps.getOrDefault(className, Map.of()), chain, own);
+    }
+
+    /** the jar's listed mixin classes -> config, and refmaps, into the two maps (see readConfigs) */
+    static void configs(Map<String, byte[]> entries, Map<String, String> cfgs, Map<String, Map<String, String>> refmaps) {
+        readConfigs(entries, cfgs, refmaps);
+    }
+
     /** the members the jar's listed class mixins merge onto their targets ({@link LayerMembers#ofJar}) */
     public static LayerMembers ownMembers(Map<String, byte[]> entries) {
         Map<String, String> configOfClass = new LinkedHashMap<>();

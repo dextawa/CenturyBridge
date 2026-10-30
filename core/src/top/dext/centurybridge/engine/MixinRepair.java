@@ -488,6 +488,107 @@ public final class MixinRepair {
         if (curKey != null) mixedSide.put(mixin, curKey);
     }
 
+    /**
+     * C23: an injector selector naming its method by a bare name (method = "method_4725", how most mods write it),
+     * respelled with the descriptor of the V method it named -- this model is V's code. Mixin resolves a bare name with
+     * the default quantifier as SINGLE (MemberInfo.configure(SELECT_MEMBER), javap of sponge-mixin 0.17.3): the target
+     * class's first method of that name. Spelled, the selector takes every route a spelled one takes (mixinTargets,
+     * mixinMoves, follow+W, restored members), and on W it cannot bind to another method that took the name. Only where
+     * every target class of the mixin names the same V method; regex and wildcard selectors stay. Run before the step
+     * renames anything (the mixin's targets are V's classes). Returns the report notes.
+     */
+    public List<String> respellBare(Map<String, byte[]> entries) {
+        List<String> notes = new ArrayList<>();
+        byte[] fmjBytes = entries.get("fabric.mod.json");
+        if (fmjBytes == null) return notes;
+        JsonObject fmj;
+        try {
+            fmj = GSON.fromJson(new String(fmjBytes, StandardCharsets.UTF_8), JsonObject.class);
+        } catch (RuntimeException ex) {
+            return notes;
+        }
+        for (JsonElement ref : fmj.has("mixins") ? fmj.getAsJsonArray("mixins") : new JsonArray()) {
+            String cfgName = ref.isJsonObject() ? ref.getAsJsonObject().get("config").getAsString() : ref.getAsString();
+            byte[] cfgBytes = entries.get(cfgName);
+            if (cfgBytes == null) continue;
+            JsonObject cfg;
+            try {
+                cfg = GSON.fromJson(new String(cfgBytes, StandardCharsets.UTF_8), JsonObject.class);
+            } catch (RuntimeException ex) {
+                continue;
+            }
+            String pkg = cfg.has("package") ? cfg.get("package").getAsString().replace('.', '/') : "";
+            String refmapName = cfg.has("refmap") ? cfg.get("refmap").getAsString() : null;
+            JsonObject refmapRoot = null;
+            if (refmapName != null && entries.get(refmapName) != null) {
+                try {
+                    refmapRoot = GSON.fromJson(new String(entries.get(refmapName), StandardCharsets.UTF_8), JsonObject.class);
+                } catch (RuntimeException ex) {
+                    refmapRoot = null;
+                }
+            }
+            boolean refmapDirty = false;
+            for (String key : new String[] {"mixins", "client", "server"}) {
+                if (!cfg.has(key)) continue;
+                for (JsonElement e : cfg.getAsJsonArray(key)) {
+                    String cls = (pkg.isEmpty() ? "" : pkg + "/") + e.getAsString().replace('.', '/');
+                    byte[] bytes = entries.get(cls + ".class");
+                    if (bytes == null) continue;
+                    JsonObject table = refmapRoot != null && refmapRoot.has("mappings")
+                        && refmapRoot.getAsJsonObject("mappings").has(cls)
+                        ? refmapRoot.getAsJsonObject("mappings").getAsJsonObject(cls) : null;
+                    ClassNode mx = new ClassNode();
+                    new ClassReader(bytes).accept(mx, 0);
+                    List<String> targets = mixinTargets(mx, table);
+                    boolean changed = false;
+                    for (MethodNode h : mx.methods) {
+                        for (AnnotationNode an : annotations(h)) {
+                            List<String> methods = strings(values(an).get("method"));
+                            for (int idx = 0; idx < methods.size(); idx++) {
+                                String sel = methods.get(idx);
+                                if (sel.startsWith("/")) continue;
+                                String mapped = refmapLookup(table, sel);
+                                Sel s = Sel.parse(mapped);
+                                if (s.desc != null || s.wildcard || s.name.isEmpty()) continue;
+                                String desc = null;
+                                boolean ok = true;
+                                for (String o : s.owner != null ? List.of(s.owner) : targets) {
+                                    ClassNode vc = target(o);
+                                    MethodNode first = null;
+                                    if (vc != null) {
+                                        for (MethodNode m : vc.methods) {
+                                            if (m.name.equals(s.name)) { first = m; break; }
+                                        }
+                                    }
+                                    if (first == null || desc != null && !desc.equals(first.desc)) { ok = false; break; }
+                                    desc = first.desc;
+                                }
+                                if (!ok || desc == null) continue;
+                                String repl = mapped + desc;
+                                if (!mapped.equals(sel)) {
+                                    refmapPut(table, sel, repl);
+                                    refmapDirty = true;
+                                } else {
+                                    setMethodSelector(an, idx, repl);
+                                    changed = true;
+                                }
+                                notes.add("bare selector spelled as on V: " + cls.substring(cls.lastIndexOf('/') + 1) + "." + h.name + " -> "
+                                    + repl + " (the first method of that name, as Mixin resolved it)");
+                            }
+                        }
+                    }
+                    if (changed) {
+                        ClassWriter cw = new ClassWriter(0);
+                        mx.accept(cw);
+                        entries.put(cls + ".class", cw.toByteArray());
+                    }
+                }
+            }
+            if (refmapDirty) entries.put(refmapName, GSON.toJson(refmapRoot).getBytes(StandardCharsets.UTF_8));
+        }
+        return notes;
+    }
+
     /** rewrites mixin classes / refmaps in {@code entries} in place */
     public Outcome repair(Map<String, byte[]> entries) {
         mixedByMixin.clear();
@@ -628,12 +729,17 @@ public final class MixinRepair {
 
         boolean[] dirty = {false, false}; // class, refmap
         for (MethodNode handler : new ArrayList<>(mx.methods)) { // a copy: reshapeCaptured adds a handler
+            int marks = handler.invisibleAnnotations == null ? 0 : handler.invisibleAnnotations.size();
+            Object[] notBridged = takeNotBridged(handler); // K2: MixinBridge could not carry it ({why, locals})
+            if (handler.invisibleAnnotations != null && handler.invisibleAnnotations.size() != marks) dirty[0] = true;
             for (AnnotationNode an : annotations(handler)) {
                 Map<String, Object> v = values(an);
                 List<String> methods = strings(v.get("method"));
                 if (methods.isEmpty()) continue;
                 pendingDisable = null;
+                boolean remapped = false; // an ordinal moved to V's site's counterpart here: repaired, not left as written
                 if (source != null && remapOrdinals(an, refmap, methods, targets, shortName + "." + handler.name, repairs)) {
+                    remapped = true;
                     dirty[0] = true;
                     v = values(an);
                 }
@@ -654,7 +760,10 @@ public final class MixinRepair {
                 // whole; repair only when no alternative is live, and apply one repair
                 // (two alternatives repaired onto the same method would inject twice).
                 boolean live = false;
+                boolean localsJudged = false; // K1 judged the handler's captured locals against W's frames
+                boolean liveOnLayer = false; // live on a layer-restored member or a facade
                 String deadWhy = null;
+                String followRefused = null;
                 List<String> fixNotes = new ArrayList<>();
                 List<Runnable> fixes = new ArrayList<>();
                 for (int mi = 0; mi < methods.size() && !live; mi++) {
@@ -693,20 +802,22 @@ public final class MixinRepair {
                         }
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
-                        if (cands.isEmpty() && s.desc != null && mixinMoves.containsKey(owner + "." + s.name + s.desc)) {
+                        // the mixinMoves key the selector names: spelled, or a bare name resolved in V as Mixin resolved it there (C23)
+                        String moveKey = !cands.isEmpty() ? null : s.desc != null ? owner + "." + s.name + s.desc : bareMoveKey(owner, s);
+                        if (moveKey != null && mixinMoves.containsKey(moveKey)) {
                             // the method moved, the same code, to another W class (mixinMoves): onto a mixin of that class
-                            List<String[]> self = mixinMoveSelf.get(owner + "." + s.name + s.desc);
-                            String why0 = movable(mx, handler, an, anchors, mixinMoves.get(owner + "." + s.name + s.desc), owner, self);
+                            List<String[]> self = mixinMoveSelf.get(moveKey);
+                            String to = mixinMoves.get(moveKey);
+                            String whereK = s.desc != null ? where : where + " (bare: V's " + moveKey.substring(moveKey.lastIndexOf('.', moveKey.indexOf('(')) + 1) + ")";
+                            String why0 = movable(mx, handler, an, anchors, to, owner, self);
                             if (why0 == null) {
-                                String to = mixinMoves.get(owner + "." + s.name + s.desc);
-                                fixNotes.add("move " + where + " => " + to + " (mixinMoves: the same code in another class)");
+                                fixNotes.add("move " + whereK + " => " + to + " (mixinMoves: the same code in another class)");
                                 fixes.add(() -> {
                                     moveInjector(mx, handler, an, to, owner, self);
                                     dirty[0] = true;
                                 });
                             } else if (deadWhy == null) {
-                                deadWhy = "target gone: @" + kind + " " + where + " (mixinMoves to "
-                                    + mixinMoves.get(owner + "." + s.name + s.desc) + ": " + why0 + ")";
+                                deadWhy = "target gone: @" + kind + " " + whereK + " (mixinMoves to " + to + ": " + why0 + ")";
                             }
                             continue;
                         }
@@ -796,6 +907,10 @@ public final class MixinRepair {
                                 // TerracottaBlock): keyed by the facade's own name, as the layer's route reads it
                                 mixed(mx.name, owner, cands);
                             }
+                            localsJudged = lv != null;
+                            // a member the layer restores (or a facade's): the layer carries V's method there, not W's
+                            // changed body -- MixinBridge's "not bridged" is about W's own methods
+                            liveOnLayer = cands.stream().allMatch(layerMembers::isMember) || owner.startsWith("top/dext/");
                             live = true;
                             break;
                         }
@@ -873,7 +988,15 @@ public final class MixinRepair {
                         if (an.desc.equals(INJECT) && anchors.size() == 1
                                 && (anchors.get(0).kind.equals("INVOKE") || anchors.get(0).kind.equals("FIELD"))) {
                             String moved = movedAnchor(cands, tc, anchors.get(0));
-                            if (moved != null) {
+                            // a wrapper follow puts the injection before the call that now holds V's code: the
+                            // target's locals there are not those V's anchor stood among (Kilt E8g, teleportTo's
+                            // sendAllPlayerInfo -> changeDimension(transition)); descend-site below judges it instead
+                            boolean wrapper = moved != null
+                                && !moved.substring(moved.indexOf(';') + 1).split("[(:]")[0].equals(anchors.get(0).name);
+                            if (wrapper && readsTargetLocals(handler)) {
+                                followRefused = "anchor-follow to " + moved + " refused: the handler reads the target's locals,"
+                                    + " which at the wrapper call are not those around V's anchor";
+                            } else if (moved != null) {
                                 fixNotes.add("anchor-follow " + where + " " + anchors.get(0) + " => " + moved);
                                 fixes.add(() -> {
                                     if (setAtTarget(an, refmap, moved)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
@@ -948,7 +1071,18 @@ public final class MixinRepair {
                         }
                     }
                 }
-                if (live) continue;
+                if (live) {
+                    // K2: MixinBridge left it "not bridged" and nothing here repaired it: it would apply unchanged against
+                    // W's changed body (or fail at apply), so it is disabled, never left live -- unless the reason is the
+                    // target's locals and K1 judged them against W's frames
+                    if (notBridged != null && !remapped && !liveOnLayer && !(Boolean.TRUE.equals(notBridged[1]) && localsJudged)) {
+                        dropInjector(handler, an);
+                        dirty[0] = true;
+                        disabled.add("not bridged: " + notBridged[0] + " (it would apply unchanged against " + stepTo
+                            + "'s changed body: disabled, not left live)");
+                    }
+                    continue;
+                }
                 if (!fixes.isEmpty()) {
                     fixes.get(0).run();
                     repairs.add(fixNotes.get(0));
@@ -959,7 +1093,7 @@ public final class MixinRepair {
                     // other injectors and interface merges keep working.
                     dropInjector(handler, an);
                     dirty[0] = true;
-                    disabled.add(deadWhy);
+                    disabled.add(followRefused == null ? deadWhy : deadWhy + " [" + followRefused + "]");
                 }
             }
         }
@@ -1358,6 +1492,40 @@ public final class MixinRepair {
         b.add(new FieldInsnNode(Opcodes.GETSTATIC, hc, field, "Ljava/lang/ThreadLocal;"));
         b.add(new VarInsnNode(Opcodes.ALOAD, prevSlot));
         b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "set", "(Ljava/lang/Object;)V", false));
+    }
+
+    /**
+     * The "owner.name(desc)" of the V method a descriptorless selector named, or null (C23). Mixin resolves a bare
+     * name with the default quantifier as SINGLE (MemberInfo.configure(SELECT_MEMBER), javap of sponge-mixin 0.17.3):
+     * the first method of the class by that name, in class-file order. So on V the selector meant V's first method of
+     * that name; once W no longer declares it, that V method's fate (a mixinMoves entry) is the selector's.
+     * A wildcard selector names every match: not resolved here.
+     */
+    private String bareMoveKey(String owner, Sel s) {
+        if (source == null || s.wildcard) return null;
+        ClassNode vtc = source.target(owner);
+        if (vtc == null) return null;
+        for (MethodNode m : vtc.methods) {
+            if (m.name.equals(s.name)) return owner + "." + m.name + m.desc;
+        }
+        return null;
+    }
+
+    /**
+     * K2: MixinBridge's "not bridged" mark for this step on a handler ({why, locals}), or null. Every such mark is taken
+     * off (one written for another step is stale: a jar converted again starts clean).
+     */
+    private Object[] takeNotBridged(MethodNode h) {
+        if (h.invisibleAnnotations == null) return null;
+        Object[] out = null;
+        for (java.util.Iterator<AnnotationNode> it = h.invisibleAnnotations.iterator(); it.hasNext(); ) {
+            AnnotationNode a = it.next();
+            if (!a.desc.equals(MixinBridge.NOT_BRIDGED)) continue;
+            Map<String, Object> v = values(a);
+            if (stepTo == null || stepTo.equals(v.get("to"))) out = new Object[] {v.get("why"), v.get("locals")};
+            it.remove();
+        }
+        return out;
     }
 
     /** why an injector cannot move onto a mixin of the class a mixinMoves entry names, or null */
@@ -2464,6 +2632,18 @@ public final class MixinRepair {
         return null;
     }
 
+    /** an @Inject handler reading the target's locals: captured locals after its callback, or a @Local parameter */
+    static boolean readsTargetLocals(MethodNode h) {
+        if (MixinBridge.capturesLocals(h)) return true;
+        int n = Type.getArgumentTypes(h.desc).length;
+        for (int k = 0; k < n; k++) {
+            for (List<AnnotationNode>[] pa : java.util.Arrays.<List<AnnotationNode>[]>asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+                if (pa != null && k < pa.length && pa[k] != null && pa[k].stream().anyMatch(x -> x.desc.equals(MixinLocals.LOCAL))) return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Whether W's site in callee c is the counterpart of an occurrence of the anchor in V's own copy of
      * c (same name and descriptor in V's class): then it stood in that method already in V.
@@ -3326,7 +3506,19 @@ public final class MixinRepair {
         int operands = n + (withRecv ? 1 : 0);
         if (an.desc.endsWith("/Redirect;") || an.desc.endsWith("/WrapWithCondition;")) return hp.length != operands;
         if (an.desc.endsWith("/WrapOperation;")) return hp.length != operands + 1;
-        if (an.desc.endsWith("/ModifyArg;") || an.desc.endsWith("/ModifyArgs;")) return hp.length != 1;
+        // @ModifyArg's second form takes every argument of the invoked method (smx1 CASE 19): call operands, not the target's
+        if (an.desc.endsWith("/ModifyArg;")) return hp.length != 1 && !(hp.length == n && callArgsForm(hp, a.desc));
+        if (an.desc.endsWith("/ModifyArgs;")) return hp.length != 1;
+        return true;
+    }
+
+    /** whether the handler's first parameters are exactly the invoked method's arguments (@ModifyArg's second form) */
+    private static boolean callArgsForm(Type[] hp, String callDesc) {
+        Type[] ca = Type.getArgumentTypes(callDesc);
+        if (ca.length < 2 || hp.length < ca.length) return false;
+        for (int i = 0; i < ca.length; i++) {
+            if (!hp[i].equals(ca[i])) return false;
+        }
         return true;
     }
 
@@ -3372,6 +3564,11 @@ public final class MixinRepair {
                 if (hp[i].getDescriptor().equals(CI) || hp[i].getDescriptor().equals(CIR)) return new int[] {0, i};
             }
             return null;
+        }
+        if (an.desc.endsWith("/ModifyArg;") && anchors != null && anchors.size() == 1 && anchors.get(0).kind.equals("INVOKE")
+                && anchors.get(0).desc != null && callArgsForm(hp, anchors.get(0).desc)) {
+            // the second form (smx1 CASE 19): every argument of the invoked method, then the target's
+            return new int[] {Type.getArgumentTypes(anchors.get(0).desc).length, hp.length};
         }
         if (an.desc.endsWith("/ModifyVariable;") || an.desc.endsWith("/ModifyConstant;") || an.desc.endsWith("/ModifyReturnValue;")
                 || an.desc.endsWith("/ModifyExpressionValue;") || an.desc.endsWith("/ModifyArg;") || an.desc.endsWith("/ModifyArgs;")) {

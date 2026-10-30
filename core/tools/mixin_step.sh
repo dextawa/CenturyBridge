@@ -70,9 +70,9 @@ fi
 "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-judge "$(code_of "$W")" "$(ls "$OUT"/mixin/conv/*.jar | head -1)" \
     "$OUT/mixin/mprobe-$V.jar.index.tsv" "$OUT/mixin/judged.tsv" --layer "$WD/build/centurybridge-0.3.0+$W.jar" "${SRC[@]}" \
     > "$OUT/mixin/judge.log" 2>&1 || { echo "mixin judge failed"; tail -3 "$OUT/mixin/judge.log"; exit 1; }
-python3 - "$OUT/mixin/judged.tsv" "$DAMAGE" "$AREA" "$OUT/open-mixin.tsv" <<'EOF'
+python3 - "$OUT/mixin/judged.tsv" "$DAMAGE" "$AREA" "$OUT/open-mixin.tsv" "$OUT/mixin/mprobe-$V.jar.index.tsv" <<'EOF'
 import collections, os, re, sys
-judged, damage, area, out = sys.argv[1:5]
+judged, damage, area, out, index = sys.argv[1:6]
 cm = {}
 names = "data/mappings/inter-to-mojang-classes.tsv"
 for line in open(names if os.path.exists(names) else "data/mappings/inter-to-mojang-1.21.11.tsv", encoding="utf-8"):
@@ -89,10 +89,24 @@ def rows(p):
         next(f)
         return [l.rstrip("\n").split("\t") for l in f]
 dmg = {tuple(r[:5]): r for r in rows(damage)}
+# C23: the probe gives each injector row whose V method a bare name selects a twin with a bare selector (usage
+# "<usage>@bare", MixinProbe.BARE): a damage row of its own, as most mods write the selector that way
+BARE = "@bare"
+for r in rows(index):
+    if r[2].endswith(BARE):
+        base = (r[2][:-len(BARE)],) + tuple(r[3:7])
+        if base in dmg:
+            dmg[(r[2],) + base[1:]] = [r[2]] + dmg[base][1:]
 inarea = {k for k in dmg if not area or re.search(area, moj(k[1]))}
 still = {tuple(r[:5]): r[6] for r in rows(judged)}
 open_rows = [dmg[k] + [still[k]] for k in sorted(inarea) if k in still]
 print(f"mixin probe: {len(open_rows)} of {len(inarea)} mixin damage entries still open" + (f" (area /{area}/)" if area else ""))
+bare = {k for k in inarea if k[0].endswith(BARE)}
+spelled_open = {k for k in inarea - bare if k in still}
+bare_open = {k for k in bare if k in still}
+lone = sum(1 for k in bare_open if (k[0][:-len(BARE)],) + k[1:] not in spelled_open)
+print(f"  spelled selectors {len(spelled_open)} of {len(inarea) - len(bare)} open; bare-selector twins {len(bare_open)} of {len(bare)} open, "
+      f"{lone} of them where the spelled row is closed")
 # an anchor that still stands, only a different number of times, applies (no crash) but injects at more or
 # fewer places than the mod was written for: counted apart from the entries Mixin rejects or drops
 drift = sum(1 for r in open_rows if r[-1].startswith("anchor count"))

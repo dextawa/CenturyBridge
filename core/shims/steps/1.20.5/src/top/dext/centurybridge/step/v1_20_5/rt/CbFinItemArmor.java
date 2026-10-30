@@ -237,7 +237,13 @@ public final class CbFinItemArmor {
      * so a 1.20.4 cast of a vanilla leather item holds) implements 1.20.4's DyeableLeatherItem.
      */
     static boolean declaresDyeable(net.minecraft.class_1792 item) {
-        for (Class<?> c = item.getClass(); c != null && c != net.minecraft.class_1738.class && c != net.minecraft.class_1792.class; c = c.getSuperclass()) {
+        // stop at the class CbFinItemDyeableArmorMixin gave the interface (it carries VanillaDyeable with it), not at an
+        // ArmorItem class literal: a later step folds ArmorItem into Item (1.21.5's classRenames) and the mixin follows
+        // onto that step's ArmorItem facade, so a literal would no longer name the class the mixin lands on
+        for (Class<?> c = item.getClass(); c != null && c != net.minecraft.class_1792.class; c = c.getSuperclass()) {
+            if (java.util.Arrays.asList(c.getInterfaces()).contains(VanillaDyeable.class)) {
+                break;
+            }
             for (Class<?> i : c.getInterfaces()) {
                 if (top.dext.centurybridge.step.v1_20_5.facade.DyeableLeatherItem.class.isAssignableFrom(i)) {
                     return true;
@@ -245,6 +251,10 @@ public final class CbFinItemArmor {
             }
         }
         return false;
+    }
+
+    /** marks the class CbFinItemDyeableArmorMixin makes a DyeableLeatherItem (vanilla's armor, not a mod's own class) */
+    public interface VanillaDyeable {
     }
 
     /** the ids of the items that are 1.20.4 dyeable by their class (CbFinItemDyeableTagMixin adds them to minecraft:dyeable) */
