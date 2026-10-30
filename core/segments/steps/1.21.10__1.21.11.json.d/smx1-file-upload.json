@@ -1,0 +1,8 @@
+{
+ "_smx1_file_upload_basis": "smx1g (javap -c -p of both code jars): 1.21.10 Realms FileUpload.upload() / cancel() / isFinished() (class_4337.method_20973 / 20970 / 20978) are gone; 1.21.11 starts the upload asynchronously (startUpload method_76241, a CompletableFuture over java.net.http), is AutoCloseable, and RealmsWorldUpload cancels the future then closes. Given back on the class with 1.21.10's contract (mixin/CbFileUploadRestoredMixin): upload() starts once, joins and closes; cancelled -> empty result or RealmsUploadCanceledException; cancel() cancels and closes; isFinished() = done or cancelled.",
+ "covers": [
+  "net/minecraft/class_4337.method_20973()Lnet/minecraft/class_4429;",
+  "net/minecraft/class_4337.method_20970()V",
+  "net/minecraft/class_4337.method_20978()Z"
+ ]
+}
