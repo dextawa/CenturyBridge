@@ -1,0 +1,7 @@
+{
+ "_smx1_client_level_colors_basis": "smx1g (javap -c -p of both code jars): 1.21.10 ClientLevel.getSkyColor(Vec3, float) / getCloudColor(float) (class_638.method_23777 / 23785) are gone; 1.21.11 reads the same inputs (biome colour, time of day, weather) as environment attributes SKY_COLOR / CLOUD_COLOR (class_12206.field_63746 / field_64126; ClientLevel's own time-based modifier method_76541). Given back on ClientLevel as the level's attribute value (mixin/CbClientLevelColorsRestoredMixin); the partial tick is not consulted (current-tick sample).",
+ "covers": [
+  "net/minecraft/class_638.method_23777(Lnet/minecraft/class_243;F)I",
+  "net/minecraft/class_638.method_23785(F)I"
+ ]
+}
