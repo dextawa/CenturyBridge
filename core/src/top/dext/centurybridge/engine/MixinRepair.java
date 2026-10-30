@@ -655,6 +655,7 @@ public final class MixinRepair {
                 // (two alternatives repaired onto the same method would inject twice).
                 boolean live = false;
                 String deadWhy = null;
+                String followRefused = null;
                 List<String> fixNotes = new ArrayList<>();
                 List<Runnable> fixes = new ArrayList<>();
                 for (int mi = 0; mi < methods.size() && !live; mi++) {
@@ -873,7 +874,15 @@ public final class MixinRepair {
                         if (an.desc.equals(INJECT) && anchors.size() == 1
                                 && (anchors.get(0).kind.equals("INVOKE") || anchors.get(0).kind.equals("FIELD"))) {
                             String moved = movedAnchor(cands, tc, anchors.get(0));
-                            if (moved != null) {
+                            // a wrapper follow puts the injection before the call that now holds V's code: the
+                            // target's locals there are not those V's anchor stood among (Kilt E8g, teleportTo's
+                            // sendAllPlayerInfo -> changeDimension(transition)); descend-site below judges it instead
+                            boolean wrapper = moved != null
+                                && !moved.substring(moved.indexOf(';') + 1).split("[(:]")[0].equals(anchors.get(0).name);
+                            if (wrapper && readsTargetLocals(handler)) {
+                                followRefused = "anchor-follow to " + moved + " refused: the handler reads the target's locals,"
+                                    + " which at the wrapper call are not those around V's anchor";
+                            } else if (moved != null) {
                                 fixNotes.add("anchor-follow " + where + " " + anchors.get(0) + " => " + moved);
                                 fixes.add(() -> {
                                     if (setAtTarget(an, refmap, moved)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
@@ -959,7 +968,7 @@ public final class MixinRepair {
                     // other injectors and interface merges keep working.
                     dropInjector(handler, an);
                     dirty[0] = true;
-                    disabled.add(deadWhy);
+                    disabled.add(followRefused == null ? deadWhy : deadWhy + " [" + followRefused + "]");
                 }
             }
         }
@@ -2462,6 +2471,18 @@ public final class MixinRepair {
         if (MixinBridge.capturesLocals(handler)) return "the handler captures locals";
         if (MixinBridge.sugarCount(handler) > 0) return "the handler takes sugar parameters";
         return null;
+    }
+
+    /** an @Inject handler reading the target's locals: captured locals after its callback, or a @Local parameter */
+    static boolean readsTargetLocals(MethodNode h) {
+        if (MixinBridge.capturesLocals(h)) return true;
+        int n = Type.getArgumentTypes(h.desc).length;
+        for (int k = 0; k < n; k++) {
+            for (List<AnnotationNode>[] pa : java.util.Arrays.<List<AnnotationNode>[]>asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+                if (pa != null && k < pa.length && pa[k] != null && pa[k].stream().anyMatch(x -> x.desc.equals(MixinLocals.LOCAL))) return true;
+            }
+        }
+        return false;
     }
 
     /**
