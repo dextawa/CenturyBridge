@@ -30,6 +30,7 @@ import net.minecraft.class_4099;
 import net.minecraft.class_4102;
 import net.minecraft.class_4139;
 import net.minecraft.class_4140;
+import net.minecraft.class_4135;
 import net.minecraft.class_4142;
 import net.minecraft.class_4156;
 import net.minecraft.class_4208;
@@ -61,9 +62,10 @@ import org.slf4j.Logger;
  * forwarder, the name / string helpers, and sendPacketToAllPlayers (a custom payload to every player of the level,
  * as 1.21.8).</li>
  * </ul>
- * 1.21.9 never calls this class. Members that take or build one of 1.21.8's debug payloads (addGameTestMarker,
- * clearGameTestMarkers, sendWireUpdates, sendGameEventInfo's payload helper, the goal list helper) need those payload
- * classes back first and are not here yet.
+ * 1.21.9 never calls this class. The members that take or build one of 1.21.8's debug payloads (addGameTestMarker,
+ * clearGameTestMarkers, sendWireUpdates, the game event payload helper, the goal list helper) build the layer's
+ * payload records ({@code *DebugPayload}, generated from 1.21.8's bytecode), whose types the layer registers in the
+ * gameplay custom payload codec as 1.21.8 did (CbDebugPayloadTypesMixin).
  */
 public class DebugPackets {
     public static final Logger field_18961 = LogUtils.getLogger();
@@ -226,6 +228,33 @@ public class DebugPackets {
         } else {
             return value.toString();
         }
+    }
+
+    /** addGameTestMarker(level, pos, text, color, lifetimeMillis) */
+    public static void method_22318(class_3218 level, class_2338 pos, String text, int color, int lifetimeMillis) {
+        method_22319(level, new GameTestAddMarkerDebugPayload(pos, color, text, lifetimeMillis));
+    }
+
+    /** clearGameTestMarkers(level) */
+    public static void method_22317(class_3218 level) {
+        method_22319(level, new GameTestClearMarkersDebugPayload());
+    }
+
+    /** sendWireUpdates(level, payload): to every player of a server level, nothing on a client level */
+    public static void method_61218(class_1937 level, RedstoneWireOrientationsDebugPayload payload) {
+        if (level instanceof class_3218 serverLevel) {
+            method_22319(serverLevel, payload);
+        }
+    }
+
+    /** the game event payload helper (level, pos, gameEvent key) */
+    public static void method_55630(class_3218 level, class_243 pos, class_5321<class_5712> gameEvent) {
+        method_22319(level, new GameEventDebugPayload(gameEvent, pos));
+    }
+
+    /** the goal list helper: one DebugGoal (priority, running, goal class simple name) per wrapped goal */
+    public static void method_36162(List<GoalDebugPayload.DebugGoal> out, class_4135 goal) {
+        out.add(new GoalDebugPayload.DebugGoal(goal.method_19057(), goal.method_19056(), goal.method_19058().getClass().getSimpleName()));
     }
 
     /** sendPacketToAllPlayers(level, payload) */

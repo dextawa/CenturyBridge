@@ -1,0 +1,31 @@
+{
+ "_s9f_payloads_basis": "1.21.9 removed the debug payload records of network/protocol/common/custom (javap: absent from the 1.21.9 jar) when debug information became subscriptions. They come back as layer records with 1.21.8's members and bodies, generated from 1.21.8's bytecode by core/tools/gen_s9f_debug_payloads.py (facade/*DebugPayload.java); converted mods' references move onto them.",
+ "classRenames": {
+  "net/minecraft/class_8707": "top/dext/centurybridge/step/v1_21_9/facade/BeeDebugPayload",
+  "net/minecraft/class_8707$class_5243": "top/dext/centurybridge/step/v1_21_9/facade/BeeDebugPayload$BeeInfo",
+  "net/minecraft/class_8708": "top/dext/centurybridge/step/v1_21_9/facade/BrainDebugPayload",
+  "net/minecraft/class_8708$class_4232": "top/dext/centurybridge/step/v1_21_9/facade/BrainDebugPayload$BrainDump",
+  "net/minecraft/class_8712": "top/dext/centurybridge/step/v1_21_9/facade/GameEventDebugPayload",
+  "net/minecraft/class_8713": "top/dext/centurybridge/step/v1_21_9/facade/GameEventListenerDebugPayload",
+  "net/minecraft/class_8714": "top/dext/centurybridge/step/v1_21_9/facade/GameTestAddMarkerDebugPayload",
+  "net/minecraft/class_8715": "top/dext/centurybridge/step/v1_21_9/facade/GameTestClearMarkersDebugPayload",
+  "net/minecraft/class_8716": "top/dext/centurybridge/step/v1_21_9/facade/GoalDebugPayload",
+  "net/minecraft/class_8716$class_8717": "top/dext/centurybridge/step/v1_21_9/facade/GoalDebugPayload$DebugGoal",
+  "net/minecraft/class_8718": "top/dext/centurybridge/step/v1_21_9/facade/HiveDebugPayload",
+  "net/minecraft/class_8718$class_8719": "top/dext/centurybridge/step/v1_21_9/facade/HiveDebugPayload$HiveInfo",
+  "net/minecraft/class_8720": "top/dext/centurybridge/step/v1_21_9/facade/NeighborUpdatesDebugPayload",
+  "net/minecraft/class_8721": "top/dext/centurybridge/step/v1_21_9/facade/PathfindingDebugPayload",
+  "net/minecraft/class_8722": "top/dext/centurybridge/step/v1_21_9/facade/PoiAddedDebugPayload",
+  "net/minecraft/class_8723": "top/dext/centurybridge/step/v1_21_9/facade/PoiRemovedDebugPayload",
+  "net/minecraft/class_8724": "top/dext/centurybridge/step/v1_21_9/facade/PoiTicketCountDebugPayload",
+  "net/minecraft/class_8725": "top/dext/centurybridge/step/v1_21_9/facade/RaidsDebugPayload",
+  "net/minecraft/class_8726": "top/dext/centurybridge/step/v1_21_9/facade/StructuresDebugPayload",
+  "net/minecraft/class_8726$class_8727": "top/dext/centurybridge/step/v1_21_9/facade/StructuresDebugPayload$PieceInfo",
+  "net/minecraft/class_8728": "top/dext/centurybridge/step/v1_21_9/facade/VillageSectionsDebugPayload",
+  "net/minecraft/class_8729": "top/dext/centurybridge/step/v1_21_9/facade/WorldGenAttemptDebugPayload",
+  "net/minecraft/class_9004": "top/dext/centurybridge/step/v1_21_9/facade/BreezeDebugPayload",
+  "net/minecraft/class_9004$class_9005": "top/dext/centurybridge/step/v1_21_9/facade/BreezeDebugPayload$BreezeInfo",
+  "net/minecraft/class_9831": "top/dext/centurybridge/step/v1_21_9/facade/RedstoneWireOrientationsDebugPayload",
+  "net/minecraft/class_9831$class_9832": "top/dext/centurybridge/step/v1_21_9/facade/RedstoneWireOrientationsDebugPayload$Wire"
+ }
+}

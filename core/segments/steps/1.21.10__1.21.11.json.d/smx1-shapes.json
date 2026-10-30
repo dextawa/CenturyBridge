@@ -1,0 +1,13 @@
+{
+ "_smx1_shapes_basis": "smx1g (javap -c -p of both code jars): 1.21.11's ShapeRenderer (class_9974) keeps only renderShape with an extra line-width float; renderLineBox (method_62292/62293/62295), addChainedFilledBoxVertices (method_62294/62300), renderFace (method_62297), renderVector (method_62298) are gone and 1.21.10's renderShape(.., int) shape too. Presume moved, checked: 1.21.11's former callers (BlockEntityWithBoundingBoxRenderer, LightSectionDebugRenderer, the debug renderers) emit gizmos (net/minecraft/gizmos, drawn by the level renderer itself, never into a caller's VertexConsumer); no 1.21.11 method writes a box/face/vector into a VertexConsumer it is handed (dump search over every static taking class_4588). Given back with 1.21.10's bodies in rt/CbShapeRenderer (each body's call and load sequence compared to 1.21.10's bytecode: identical); line vertices written without a width get the render type's 1.21.10 width from mixin/CbLineWidthBuilderMixin.",
+ "staticRedirects": {
+  "net/minecraft/class_9974.method_62296(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_265;DDDI)V": "top/dext/centurybridge/step/v1_21_11/rt/CbShapeRenderer",
+  "net/minecraft/class_9974.method_62295(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;Lnet/minecraft/class_238;FFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbShapeRenderer",
+  "net/minecraft/class_9974.method_62292(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;DDDDDDFFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbShapeRenderer",
+  "net/minecraft/class_9974.method_62293(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;DDDDDDFFFFFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbShapeRenderer",
+  "net/minecraft/class_9974.method_62300(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDDDDFFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbShapeRenderer",
+  "net/minecraft/class_9974.method_62294(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;FFFFFFFFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbShapeRenderer",
+  "net/minecraft/class_9974.method_62297(Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;Lnet/minecraft/class_2350;FFFFFFFFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbShapeRenderer",
+  "net/minecraft/class_9974.method_62298(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lorg/joml/Vector3f;Lnet/minecraft/class_243;I)V": "top/dext/centurybridge/step/v1_21_11/rt/CbShapeRenderer"
+ }
+}
