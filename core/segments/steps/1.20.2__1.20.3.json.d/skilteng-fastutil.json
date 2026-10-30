@@ -1,0 +1,7 @@
+{
+ "_skilteng_fastutil_basis": "javap 1.20.2 / 1.20.3 code jars: IdMapper.tToId and MappedRegistry.toId keep name and role, Object2IntMap (Object2IntOpenCustomHashMap(Util.identityStrategy())) -> Reference2IntMap (Reference2IntOpenHashMap); a read through the vanilla class or a mod subclass (JarProcessor inheritedVanillaOwner -> redirectHome) takes a write-through Object2IntMap view (Kilt E3)",
+ "instanceFieldGetters": {
+  "net/minecraft/class_2361.field_11100:Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "top/dext/centurybridge/step/v1_20_3/rt/CbFastutilViews",
+  "net/minecraft/class_2370.field_26683:Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "top/dext/centurybridge/step/v1_20_3/rt/CbFastutilViews"
+ }
+}
