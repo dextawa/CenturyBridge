@@ -136,3 +136,5 @@ accessible field net/minecraft/client/gui/components/tabs/TabNavigationBar$Build
 accessible method net/minecraft/client/Minecraft loadCriticalShaders ()V
 # s26h: mixin/CbS26ChunkCacheRestoredMixin reads the occlusion graph's running empty-section set for 26.1.2 getLoadedEmptySections
 accessible field net/minecraft/client/renderer/SectionOcclusionGraph emptySections Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;
+# VertexFormat.Builder.offset: 26.1.2 Builder.padding(n) advanced it (rt/CbS205fBlaze3d)
+accessible field com/mojang/blaze3d/vertex/VertexFormat$Builder offset I
