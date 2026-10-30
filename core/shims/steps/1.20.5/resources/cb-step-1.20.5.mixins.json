@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CbArmorItemAccessor",
+    "CbRecipeApplyIdRoute",
+    "CbRecipeHolderCodecRoute",
     "CbAttributeTemplateMixin",
     "CbBlockBannerAccessor",
     "CbBlockBannerItemMixin",
