@@ -70,6 +70,11 @@ for ((bi = ${#BUILT[@]} - 1; bi >= 0; bi--)); do
         echo "layer $W -> $T: built against $T (build.sh's gates)"
     fi
 done
+# no climbed layer may declare a method (or field) twice with one name and descriptor: the JVM refuses the class when
+# it loads (ClassFormatError), and nothing else notices -- a rename past the layer's own W can land on a member the
+# class already has (the wall's RealmsError.errorCode()I on a record component errorCode; dup_members.py)
+python3 "$WD/core/tools/dup_members.py" $(ls "$OUT"/centurybridge-0.3.0+*.jar) \
+    || { echo "climbed layers -> $T: DUPLICATE MEMBERS (ClassFormatError when the class loads)"; exit 1; }
 # every reference the climbed layers make, judged on T (link-check: T's game jar, Fabric API, libraries, the other
 # layers and the dependency mods; access through the access wideners the game loads with each layer). build.sh's gates
 # judge a layer against its own W only, climb_mixin_check.sh judges its mixins, and the damage tables list V's
