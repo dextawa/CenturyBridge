@@ -1820,7 +1820,7 @@ final class MixinBridge {
                         List<MethodNode> vmatch = s.match(vt);
                         boolean kept = true;
                         for (MethodNode m : vmatch) {
-                            kept &= method(wt, m.name, chain.renamedDesc(m.desc)) != null;
+                            kept &= wallLookup(wt, m.name, chain.renamedDesc(m.desc)) != null;
                         }
                         if (!kept) {
                             bareFallback = bareFallback == null ? same : bareFallback;
@@ -1866,7 +1866,7 @@ final class MixinBridge {
                 if (fate == null && marked != null) {
                     continue; // no wiring for the marked member's V method: the handler stays on the restored member
                 }
-                if (fate == null && method(wt, vmeth.name, vmeth.desc) == null) {
+                if (fate == null && wallLookup(wt, vmeth.name, vmeth.desc) == null) {
                     // no wiring for it, or wiring for mods' overrides that cannot carry an injector: where W keeps its code
                     List<String> bwhy = new ArrayList<>();
                     fate = bodyFate(vt, wt, vmeth, bwhy);
@@ -1887,24 +1887,11 @@ final class MixinBridge {
                         return new Selection(h, an, List.of(vmeth), List.of(restored));
                     }
                     if (!why.isEmpty()) {
-                        left.add(where + ": " + why.get(0));
+                        leftInjector(h, where + ": " + why.get(0));
                     }
                     continue;
                 }
-                MethodNode wmeth = method(wt, fate.name(), fate.desc());
-                if (wmeth == null && chain.wallRemapper != null) {
-                    // past the wall a class new in W nested in a class the table maps has two spellings: the wiring's
-                    // (W's own, AbstractScrollArea$ScrollbarSettings) and the wall view's (the outer's id + the nested
-                    // name, WallInverse; JarRemapper renames that one to W's). The same member when both descriptors
-                    // spell W's types alike (swall12 AbstractTextAreaWidget.<init>(.., ScrollbarSettings))
-                    String wd = chain.wallRemapper.mapMethodDesc(fate.desc());
-                    for (MethodNode m : wt.methods) {
-                        if (m.name.equals(fate.name()) && chain.wallRemapper.mapMethodDesc(m.desc).equals(wd)) {
-                            wmeth = m;
-                            break;
-                        }
-                    }
-                }
+                MethodNode wmeth = wallLookup(wt, fate.name(), fate.desc());
                 if (wmeth == null) {
                     // a W-named member a layer mixin declares on the target (an override of an inherited W method,
                     // say: SmithingTrimRecipe.matches, which 1.21.2 has only as SmithingRecipe's default): at runtime
@@ -1924,14 +1911,14 @@ final class MixinBridge {
                     }
                 }
                 if (wmeth == null) {
-                    left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", which "
+                    leftInjector(h, where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", which "
                         + shortName(target) + " does not declare in " + chain.to
                         + (inheritedFate != null ? " (inherited; an anchor inside V's body is not in the restored override)" : "")
                         + (!rwhy.isEmpty() ? "; " + rwhy.get(0) : ""));
                     continue;
                 }
                 if (((wmeth.access ^ vmeth.access) & Opcodes.ACC_STATIC) != 0) {
-                    left.add(where + ": static in one release and not in the other");
+                    leftInjector(h, where + ": static in one release and not in the other");
                     continue;
                 }
                 String gone = anchorGone(an, h, kind, vmeth, wmeth, wt);
@@ -1955,13 +1942,13 @@ final class MixinBridge {
                             + (d.makeStatic() ? "; handler made static" : "") + (d.toCir() ? "; callback as CallbackInfoReturnable" : "") + ")");
                         return new Selection(h, an, List.of(vmeth), List.of(d.callee()));
                     }
-                    left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", where its anchor " + gone
+                    leftInjector(h, where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", where its anchor " + gone
                         + " no longer stands" + (dwhy.isEmpty() ? "" : "; " + dwhy.get(0)));
                     continue;
                 }
                 Plan p = plan(h, an, kind, vmeth, fate, why);
                 if (p == null) {
-                    left.add(where + ": " + why.get(0));
+                    leftInjector(h, where + ": " + why.get(0));
                     continue;
                 }
                 if (marked != null && p.untouched()) {
@@ -2366,6 +2353,20 @@ final class MixinBridge {
             return new String[] {name, desc};
         }
 
+        /** whether a @ModifyArg handler's first parameters are exactly the invoked method's arguments (its second form) */
+        private static boolean modifyArgAll(Type[] hp, String callDesc) {
+            Type[] ca = Type.getArgumentTypes(callDesc);
+            if (ca.length < 2 || hp.length < ca.length) {
+                return false;
+            }
+            for (int i = 0; i < ca.length; i++) {
+                if (!hp[i].equals(ca[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         /** how many handler arguments the injector itself defines (the anchor's), -1 when unknown */
         private int anchorBase(MethodNode h, AnnotationNode an, String kind, MethodNode vmeth) {
             switch (kind) {
@@ -2405,7 +2406,9 @@ final class MixinBridge {
             return switch (kind) {
                 case "Redirect", "WrapWithCondition" -> n;
                 case "WrapOperation" -> n + 1;
-                case "ModifyArg" -> Type.getArgumentTypes(h.desc).length - sugarCount(h) == 1 ? 1 : -1;
+                // the one argument, or (second form, smx1 CASE 19) every argument of the invoked method: the call's operands
+                case "ModifyArg" -> Type.getArgumentTypes(h.desc).length - sugarCount(h) == 1 ? 1
+                    : modifyArgAll(Type.getArgumentTypes(h.desc), a.desc()) ? Type.getArgumentTypes(a.desc()).length : -1;
                 default -> -1;
             };
         }
@@ -2763,12 +2766,12 @@ final class MixinBridge {
                     String wired = af.how() + " gives " + af.name() + af.desc() + ", standing " + wc + " time(s) in "
                         + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from;
                     if (value.equals("INVOKE_ASSIGN") || !counterpartAt(sel, kind, at, value, t, a, wired)) {
-                        left.add(where + ": " + wired);
+                        leftInjector(sel.handler(), where + ": " + wired);
                     }
                     continue;
                 }
                 if (!af.desc().equals(a.desc()) && !kind.equals("Inject")) {
-                    left.add(where + ": the call's shape changed (" + af.how() + "), and @" + kind + " handles the call itself");
+                    leftInjector(sel.handler(), where + ": the call's shape changed (" + af.how() + "), and @" + kind + " handles the call itself");
                     continue;
                 }
                 if (RECEIVER_KINDS.contains(kind) && !af.owner().equals(a.owner()) && takesReceiver(sel.v(), a)) {
@@ -2781,7 +2784,7 @@ final class MixinBridge {
                         : hasSugar(sel.handler(), "Local;") ? "the handler captures the target's locals"
                         : receiverFront(sel.handler(), kind, a, af, mr);
                     if (rwhy != null) {
-                        left.add(where + ": " + af.how() + " gives " + shortName(af.owner()) + "." + af.name() + af.desc()
+                        leftInjector(sel.handler(), where + ": " + af.how() + " gives " + shortName(af.owner()) + "." + af.name() + af.desc()
                             + ", a call on another receiver than " + shortName(a.owner()) + ", which @" + kind + "'s handler takes ("
                             + rwhy + ")");
                         continue;
@@ -2792,7 +2795,7 @@ final class MixinBridge {
                 }
                 if (kind.equals("Inject") && capturesLocals(sel.handler()) || hasSugar(sel.handler(), "Local;")) {
                     // the locals Mixin hands it are read at the anchor, in a body that changed around it
-                    left.add(where + ": the handler captures the target's locals at the anchor");
+                    leftInjector(sel.handler(), where + ": the handler captures the target's locals at the anchor");
                     continue;
                 }
                 String nt = "L" + af.owner() + ";" + af.name() + (fld ? ":" : "") + af.desc();
@@ -2805,6 +2808,23 @@ final class MixinBridge {
                 changed = true;
                 injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + af.name() + (fld ? ":" : "") + af.desc() + " (" + af.how() + ")");
             }
+        }
+
+        /**
+         * K2: an injector this step cannot carry faithfully, reported "mixin not bridged", whose selector and anchors are
+         * left as they were. Marked on the handler for the step's repair (MixinRepair.notBridged): where the repair then
+         * finds it applying unchanged -- the name still stands in W, nothing repaired it -- it would run against W's
+         * changed body (locals, operands, another site) or fail at apply, so it is disabled with this reason, never left
+         * live. "locals": the reason is the target's locals, which the repair judges itself against W's frames (K1).
+         */
+        private void leftInjector(MethodNode h, String text) {
+            left.add(text);
+            AnnotationNode mark = new AnnotationNode(NOT_BRIDGED);
+            mark.values = new ArrayList<>(List.of("to", chain.to, "why", text, "locals", text.contains("locals")));
+            h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
+            h.invisibleAnnotations.removeIf(a -> a.desc.equals(NOT_BRIDGED));
+            h.invisibleAnnotations.add(mark);
+            changed = true;
         }
 
         /**
@@ -2824,7 +2844,7 @@ final class MixinBridge {
             MixinRepair.Anchor na = counterpartAnchor(kind, sel.handler(), a, sel.v(), sel.w(), why);
             if (na == null) {
                 if (!why.isEmpty()) {
-                    left.add(where + ": " + (wired != null ? wired + "; " : "") + "in its place " + why.get(0));
+                    leftInjector(sel.handler(), where + ": " + (wired != null ? wired + "; " : "") + "in its place " + why.get(0));
                 }
                 return false;
             }
@@ -3258,29 +3278,45 @@ final class MixinBridge {
             }
             MixinRepair.Sel s = MixinRepair.Sel.parse(MixinRepair.refmapLookup(table, sels.get(0)));
             ClassNode vraw = v(origin);
-            if (vraw == null || s.desc() == null || s.owner() != null && !s.owner().equals(target) && !s.owner().equals(origin)) {
+            if (vraw == null || s.wildcard() || s.owner() != null && !s.owner().equals(target) && !s.owner().equals(origin)) {
                 left.add(where + ": facade-only (follow+W: " + chain.from + "'s method not read)");
                 return;
             }
             ClassNode vc = vanillaView(vraw);
             MethodNode vm = null;
+            String vdesc = null;
             for (MethodNode m : vraw.methods) {
-                if (m.name.equals(s.name()) && (m.desc.equals(s.desc()) || chain.renamedDesc(m.desc).equals(s.desc()))) {
+                // a bare name: what Mixin selected on V, the class's first method of that name (C23)
+                if (m.name.equals(s.name()) && (s.desc() == null || m.desc.equals(s.desc()) || chain.renamedDesc(m.desc).equals(s.desc()))) {
                     vm = method(vc, m.name, vanillaDesc(m.desc));
+                    vdesc = m.desc;
+                    if (s.desc() == null) {
+                        break;
+                    }
                 }
             }
             if (vm == null) {
-                left.add(where + ": facade-only (follow+W: " + s.name() + s.desc() + " not in " + chain.from + "'s class)");
+                left.add(where + ": facade-only (follow+W: " + s.name() + (s.desc() != null ? s.desc() : "") + " not in " + chain.from + "'s class)");
                 return;
             }
             List<String> why = new ArrayList<>();
-            String[] cp = wCounterpart(origin, vm, why);
+            // CASE H: a judged mixinMoves entry for V's method names where W keeps its code; it wins over the inferred
+            // counterpart (which needs the very same instructions, and misses code whose fields W renamed)
+            String mv = chain.mixinMoves.get(origin + "." + vm.name + vdesc);
+            String[] cp;
+            if (mv != null) {
+                int d = mv.lastIndexOf('.', mv.indexOf('('));
+                cp = new String[] {mv.substring(0, d), mv.substring(d + 1, mv.indexOf('(')), mv.substring(mv.indexOf('('))};
+                why.add("mixinMoves: the same code in " + shortName(cp[0]));
+            } else {
+                cp = wCounterpart(origin, vm, why);
+            }
             if (cp == null) {
                 left.add(where + "." + vm.name + ": facade-only (follow+W: " + why.get(0) + ")");
                 return;
             }
             ClassNode yc = w(cp[0]);
-            MethodNode wm = yc == null ? null : method(yc, cp[1], cp[2]);
+            MethodNode wm = yc == null ? null : wallLookup(yc, cp[1], cp[2]);
             AnnotationNode moved = literalCopy(an, cp[1] + cp[2]);
             String refuse = null;
             if (wm == null) {
@@ -4183,6 +4219,31 @@ final class MixinBridge {
         return i < 0 ? "" : internal.substring(0, i);
     }
 
+    /**
+     * The target's method for a wiring-spelled name and descriptor. Past the wall the two sides spell one member two
+     * ways (CASE G): a class new in W nested in a class the table maps is the wiring's W name
+     * (AbstractScrollArea$ScrollbarSettings) and the view's outer id + nested name (WallInverse); a member whose
+     * descriptor a reshape changed keeps its mojang name in the view (WallInverse inverts by V's descriptor: 26.1
+     * ShapelessRecipeBuilder.shapeless(.., ItemStackTemplate)) while the wiring names it by its id (method_10447). Both
+     * are compared as the wall table renames them forward -- name and descriptor -- which is how JarRemapper will
+     * spell the selector. Before the wall: the plain lookup.
+     */
+    private MethodNode wallLookup(ClassNode wt, String name, String desc) {
+        MethodNode m = method(wt, name, desc);
+        if (m != null || chain.wallRemapper == null || wt == null) {
+            return m;
+        }
+        String wd = chain.wallRemapper.mapMethodDesc(desc);
+        String wn = name.startsWith("<") ? name : chain.wallRemapper.mapMethodName(wt.name, name, desc);
+        for (MethodNode c : wt.methods) {
+            String cn = c.name.startsWith("<") ? c.name : chain.wallRemapper.mapMethodName(wt.name, c.name, c.desc);
+            if ((c.name.equals(name) || cn.equals(wn)) && chain.wallRemapper.mapMethodDesc(c.desc).equals(wd)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
     static MethodNode method(ClassNode c, String name, String desc) {
         for (MethodNode m : c.methods) {
             if (m.name.equals(name) && m.desc.equals(desc)) {
@@ -4448,6 +4509,8 @@ final class MixinBridge {
      * mixin class and "handler" the copy (the judge follows it)
      */
     static final String ALSO_ON_W = "Ltop/dext/centurybridge/AlsoOnW;";
+    /** K2: an injector left "not bridged" by the step (leftInjector): {"to": W, "why", "locals"} */
+    static final String NOT_BRIDGED = "Ltop/dext/centurybridge/NotBridged;";
 
     /** the step's class renames into vanilla classes only (a facade rename left out) */
     private Map<String, String> vanillaRenames;

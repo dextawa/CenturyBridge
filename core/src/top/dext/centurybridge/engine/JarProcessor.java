@@ -2664,6 +2664,11 @@ public final class JarProcessor {
         // repair and triage judge the retargeted mixin (MixinBridge; every step but the wall --
         // across it the refmaps take their names later, see repairPastWall)
         MixinBridge.Result bridged = null;
+        // C23: bare-name selectors spelled with the descriptor of the V method Mixin resolved them to, before anything
+        // renames the mixin's targets: every route below then treats them as spelled ones
+        if (chain.sourceCode != null) {
+            for (String n : chain.sourceCode.respellBare(entries)) rpt.notes.add(tag + n);
+        }
         // a mixin of a class the step renames into a class W adds in its place goes there first (Chain.mixinFollow)
         List<String> followed = MixinClassRenames.followTargets(entries, chain.mixinFollow(), chain.classRenames);
         for (String moved : followed) {
@@ -2694,7 +2699,20 @@ public final class JarProcessor {
                 rpt.strippedMixins.add(tag + shortName(cls) + " -- " + repaired.fatalWhy().get(cls));
             }
         }
+        // K3: a mixin fatal only for members W no longer declares is taken apart member by member (MixinPeel)
+        MixinPeel peel = new MixinPeel(entries, chain, repaired != null || chain.injectorsJudgedPastWall,
+            "centurybridge/gen/MixinRefused_" + jarTag + "_" + chain.to.replace('.', '_')
+                + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count()));
         for (MixinTriage.MixinInfo mx : triage.mixins()) {
+            if (mx.vanilla() && mx.applyFatal(repaired != null || chain.injectorsJudgedPastWall)
+                    && !(repaired != null && repaired.fatal().contains(mx.className()))) {
+                MixinPeel.Result pr = peel.peel(mx.className());
+                if (pr != null) {
+                    rpt.notes.add(tag + pr.note());
+                    for (String d : pr.disabled()) rpt.disabledInjectors.add(tag + d);
+                    continue;
+                }
+            }
             if (mx.vanilla() && mx.applyFatal(repaired != null || chain.injectorsJudgedPastWall)) {
                 deadMixins.add(mx.className());
                 String lb = mx.loadBearing() ? " [load-bearing! may be unstable]" : "";
@@ -2706,6 +2724,7 @@ public final class JarProcessor {
                     + "): " + shortName(mx.className()));
             }
         }
+        for (String n : peel.finish()) rpt.notes.add(tag + n);
         // a mixin extending a stripped mixin cannot apply either ("super class
         // ... was not found in the hierarchy of target"): strip the subtree too
         boolean grew = true;
@@ -4296,6 +4315,16 @@ public final class JarProcessor {
                                         op == Opcodes.GETFIELD ? "instance-field-getter" : "instance-field-setter");
                                     return;
                                 }
+                            }
+                            // a field that only changed its name with its class (1.21.5's unobfuscated blaze3d:
+                            // VertexFormatElement.field_52107 -> POSITION; 1.21.9 class_4003.field_17886) keeps its
+                            // site, renamed, and the ClassRemapper then names the new class, as methodRenames do
+                            // above. A layer facade is excluded: it keeps V's field names (1.20.5 facade/class_2582).
+                            String rfrn = chain.classRenames.get(owner).startsWith("top/dext/") ? null : chain.fieldRenames.get(rkey);
+                            if (rfrn != null) {
+                                fldRenames.put(fsite, rfrn);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "field-rename");
+                                return;
                             }
                             String gap = chain.facadeGaps.get(owner + "." + name + ":" + desc);
                             if (gap != null) {

@@ -83,6 +83,17 @@ public final class Driver {
 
     public static void run(net.minecraft.server.MinecraftServer server) {
         class_3218 level = server.method_30002();
+        run("dyeable-classes", () -> {
+            // 1.20.4's instanceof DyeableLeatherItem (CbFinItemArmor.cbInstanceOf): vanilla leather yes, vanilla iron no,
+            // this mod's DyeableArmorItem subclass yes, its plain ArmorItem subclass no
+            boolean vLeather = ((Object) class_1802.field_8267) instanceof net.minecraft.class_1768;
+            boolean vIron = ((Object) class_1802.field_8743) instanceof net.minecraft.class_1768;
+            boolean mDye = ((Object) ModInit.dyeHelmet) instanceof net.minecraft.class_1768;
+            boolean mPlain = ((Object) ModInit.plainHelmet) instanceof net.minecraft.class_1768;
+            check("dyeable-classes", vLeather && !vIron && mDye && !mPlain,
+                "leather=" + vLeather + " iron=" + vIron + " modDye=" + mDye + " modPlain=" + mPlain);
+        });
+
         run("arrow-effects", () -> {
             class_1642 shooter = class_1299.field_6051.method_5883(level);
             class_1799 ammo = class_1844.method_8061(new class_1799(class_1802.field_8087), class_1847.field_8982);

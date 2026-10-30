@@ -141,7 +141,7 @@
    "old": "method_45445(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
    "new": "method_8396(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V",
    "onlyUnder": "net/minecraft/class_1937",
-   "basis": "1.21.4's playSound(Entity, BlockPos, ..) folded into 1.21.5's playSound(Entity, BlockPos, ..) (method_8396, the same descriptor; 1.21.4's body only narrowed the entity and called playSound(Player, ..)). A class declaring both 1.21.4 shapes keeps the method_8396 hook (its shadows): 1.21.4's default method_45445 ended in that override"
+   "basis": "1.21.4's playSound(Entity, BlockPos, ..) folded into 1.21.5's playSound(Entity, BlockPos, ..) (method_8396, the same descriptor; 1.21.4's body only narrowed the entity and called playSound(Player, ..)). A class declaring both 1.21.4 shapes keeps the method_8396 hook (its shadows): 1.21.4's default method_45445 ended in that override. Open on the work list (not ledgered), folded: Entity and Player shapes merged at 1.21.5; a class overriding both loses door-sound dispatch to its method_45445 (1.21.4 DoorBlock.method_10036 was the only vanilla caller of the Entity shape; release_notes_known.md)"
   }
  ]
 }
