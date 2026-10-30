@@ -382,12 +382,44 @@ public final class Chain {
         return coverHome(owner, nameDesc) != null;
     }
 
-    /** The class (owner or an ancestor) whose shim cover serves the member, nearest first; null when uncovered. */
+    /**
+     * The class or interface whose shim cover serves the member, in JVM resolution order: the owner and its
+     * superclasses, nearest first, then their superinterfaces breadth first (s9h: a default method an interface
+     * mixin restores -- Registry.getRandomElementOf on class_2378 -- serves a call through DefaultedRegistry or
+     * MappedRegistry and a super call from a subclass of the latter). As {@link #methodRenameHome}, a class on
+     * the way that declares the member itself in the source release ends the walk (its own body was what the
+     * site reached), and an interface declaring it without a cover is not looked through. Null when uncovered.
+     */
     public String coverHome(String owner, String nameDesc) {
+        java.util.Deque<String> todo = new java.util.ArrayDeque<>();
+        boolean declared = false;
         for (String o : selfAndSupers(owner)) {
             if (shimCovers.contains(o + "." + nameDesc)) {
                 return o;
             }
+            if (!declared && sourceDecls.getOrDefault(o, java.util.Set.of()).contains(nameDesc)) {
+                declared = true;
+            }
+            todo.addAll(interfacesOf.getOrDefault(o, java.util.List.of()));
+            todo.addAll(libInterfacesOf.getOrDefault(o, java.util.List.of()));
+        }
+        if (declared) {
+            return null;
+        }
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String i = todo.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            if (shimCovers.contains(i + "." + nameDesc)) {
+                return i;
+            }
+            if (sourceDecls.getOrDefault(i, java.util.Set.of()).contains(nameDesc)) {
+                continue;
+            }
+            todo.addAll(interfacesOf.getOrDefault(i, java.util.List.of()));
+            todo.addAll(libInterfacesOf.getOrDefault(i, java.util.List.of()));
         }
         return null;
     }
