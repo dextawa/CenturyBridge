@@ -491,6 +491,40 @@ public final class MixinProbe {
         if (!want(usage, x.name, target.name + target.desc, anchor, ordinal)) {
             return;
         }
+        if (only != null && firstByName(x, target)) {
+            // C23: the same injector once more with a bare selector (method = "method_4725", no owner, no descriptor,
+            // no refmap), as most mods write it -- a separate index row, usage "<usage>@bare". Only where the bare
+            // name meant this method on V: Mixin resolves it to the class's first method of that name
+            emit(inj, x, st, n, desc, ann, target.name, copy(at), atArray, index, usage + BARE, target, anchor, count, ordinal, false);
+        }
+        emit(inj, x, st, n, desc, ann, "L" + x.name + ";" + sel, at, atArray, index, usage, target, anchor, count, ordinal, true);
+    }
+
+    /** the usage suffix of a bare-selector twin row (C23) */
+    public static final String BARE = "@bare";
+
+    /** whether m is the first method of x named m.name in class-file order: what a bare selector names (Mixin's SINGLE) */
+    static boolean firstByName(ClassNode x, MethodNode m) {
+        for (MethodNode o : x.methods) {
+            if (o.name.equals(m.name)) return o == m;
+        }
+        return false;
+    }
+
+    private static AnnotationNode copy(AnnotationNode a) {
+        AnnotationNode c = new AnnotationNode(a.desc);
+        c.values = new ArrayList<>();
+        for (int i = 0; i < a.values.size(); i++) {
+            Object v = a.values.get(i);
+            c.values.add(v instanceof List<?> l ? new ArrayList<>(l) : v);
+        }
+        return c;
+    }
+
+    /** one handler; selector through the refmap (viaRef, as loom writes it) or written literally in the annotation */
+    private void emit(Chunked inj, ClassNode x, boolean st, int n, String desc, String ann, String selector, AnnotationNode at,
+                      boolean atArray, Integer index, String usage, MethodNode target, String anchor, int count, int ordinal,
+                      boolean viaRef) {
         ClassNode c = inj.cls();
         MethodNode h = method(c, Opcodes.ACC_PRIVATE | (st ? Opcodes.ACC_STATIC : 0), "h" + n, desc);
         Type r = Type.getReturnType(desc);
@@ -507,7 +541,7 @@ public final class MixinProbe {
         AnnotationNode an = new AnnotationNode(ann);
         an.values = new ArrayList<>();
         an.values.add("method");
-        an.values.add(new ArrayList<>(List.of(ref(c, "L" + x.name + ";" + sel))));
+        an.values.add(new ArrayList<>(List.of(viaRef ? ref(c, selector) : selector)));
         an.values.add("at");
         an.values.add(atArray ? new ArrayList<>(List.of(at)) : at);
         if (index != null) {

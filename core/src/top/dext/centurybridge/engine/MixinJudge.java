@@ -392,6 +392,11 @@ public final class MixinJudge {
             }
             return "member gone from the mixin";
         }
+        String peeled = MixinPeel.peeled(m);
+        if (peeled != null) {
+            // K3: the method names a member W lacks; MixinPeel kept its mixin and made it throw what is missing
+            return "peeled: " + peeled;
+        }
         return judgeMethod(mx, target, m, vcount, seen);
     }
 
