@@ -1900,6 +1900,27 @@ public final class JarProcessor {
      * through the jar's own classes and the source release's: superclasses and interfaces both
      * (a hook on FluidDrainable must reach a mod block that implements it directly).
      */
+    /**
+     * Whether the class declares the fill's method under the pre-wall id the wall table renames to the fill's name
+     * on {@code f.under} (a 1.21.11 override of Recipe.method_8112, which the wall rename makes group()): the
+     * class already implements what the fill would synthesize.
+     */
+    static boolean declaresUnderWallName(Set<String> declaredShapes, Chain.AbstractFill f, Chain chain) {
+        if (chain.wallMethodFwd.isEmpty()) {
+            return false;
+        }
+        for (String s : declaredShapes) {
+            int p = s.indexOf('(');
+            if (p <= 0 || !s.substring(p).equals(f.desc)) {
+                continue;
+            }
+            if (f.name.equals(chain.wallMethodFwd.get(f.under + "." + s.substring(0, p)))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static boolean isUnder(String superName, String[] ifaces, String target, LayerIndex layer, Chain chain) {
         java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
         if (superName != null) {
@@ -4648,6 +4669,12 @@ public final class JarProcessor {
                 }
                 if (fillApply.stream().anyMatch(x -> (x.name + x.desc).equals(shape))) {
                     continue; // two entries give the class the same method (it is under both types): the first fills it
+                }
+                if (declaresUnderWallName(declaredShapes, f, chain)) {
+                    // the class overrides the member under its pre-wall id (Recipe.method_8112, a 1.21.11 default
+                    // the mod overrode): the wall rename makes that override the method itself, and a fill beside
+                    // it would be a second group()Ljava/lang/String; -- a ClassFormatError when the class loads
+                    continue;
                 }
                 boolean synthesized = declaredOldOverrides.stream().anyMatch(h -> (h.newName + h.newDesc).equals(shape))
                     || adapterApply.stream().anyMatch(h -> h.synth.stream().anyMatch(sy -> (sy[0] + sy[1]).equals(shape)));
