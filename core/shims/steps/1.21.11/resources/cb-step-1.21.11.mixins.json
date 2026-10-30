@@ -28,6 +28,7 @@
     "CbDimEffectsLightTextureMixin",
     "CbDimEffectsLightingMixin",
     "CbDimEffectsSkyMixin",
+    "CbFileUploadRestoredMixin",
     "CbLineWidthBufferSourceMixin",
     "CbLineWidthBuilderMixin",
     "CbOptionInstanceGraphicsMixin",
