@@ -1,5 +1,5 @@
 {
-  "_sruntime_classmoves_basis": "the classes 1.21.5 moved or renamed with their members (blaze3d's VertexFormat / VertexFormatElement / GlStateManager / GlConst / ShaderType out of net/minecraft or into com/mojang/blaze3d/opengl, nested classes moved to other outers), unwired in this step so every reference died (the climbed 1.21.2 layer's CbFapiShaders: NoClassDefFoundError class_293 on the 1.21.8 client's resource reload). Output of: python3 core/tools/wall_table.py --identity data/jars/client-1.21.4-intermediary-code.jar data/jars/client-1.21.5-intermediary-code.jar <tmp>/id.tsv <tmp>/id-report.tsv --fragment <tmp>/pkgmoves-gen.json 1.21.4__1.21.5 (each class matched by member overlap and same-code bodies; per class check in _sruntime_classmoves_check). Only its classRenames: its 55 methodRenames / 34 fieldRenames / 37 overrideRenames overlap the step's area wiring (s5-components, s5-nbt-gen, tags-gen) in 7 keys and are left to the step's judgment (cases_steps/sruntime-1.21.4__1.21.5.md) Member renames of the moved classes (swall14, same run with wall_table.py's identity-mode synthetic key fix): a moved class's renamed members (VertexFormatElement.field_52107 -> POSITION, method_60843 -> mask, ...) were never wired, so every reference to them dangled from 1.21.5 on; only the moved classes' members are wired here (other renames of the run belong to renumbered-gen.json and the area fragments).",
+  "_sruntime_classmoves_basis": "the classes 1.21.5 moved or renamed with their members (blaze3d's VertexFormat / VertexFormatElement / GlStateManager / GlConst / ShaderType out of net/minecraft or into com/mojang/blaze3d/opengl, nested classes moved to other outers), unwired in this step so every reference died (the climbed 1.21.2 layer's CbFapiShaders: NoClassDefFoundError class_293 on the 1.21.8 client's resource reload). Output of: python3 core/tools/wall_table.py --identity data/jars/client-1.21.4-intermediary-code.jar data/jars/client-1.21.5-intermediary-code.jar <tmp>/id.tsv <tmp>/id-report.tsv --fragment <tmp>/pkgmoves-gen.json 1.21.4__1.21.5 (each class matched by member overlap and same-code bodies; per class check in _sruntime_classmoves_check). Only its classRenames: its 55 methodRenames / 34 fieldRenames / 37 overrideRenames overlap the step's area wiring (s5-components, s5-nbt-gen, tags-gen) in 7 keys and are left to the step's judgment (cases_steps/sruntime-1.21.4__1.21.5.md) Member renames of the moved classes not wired by agent/s205 (s205d-vertexformat.json wires VertexFormat / VertexFormatElement members, field_52107 -> POSITION included; swall14, wall_table.py identity run).",
   "classRenames": {
     "com/mojang/blaze3d/platform/GlConst": "com/mojang/blaze3d/opengl/GlConst",
     "com/mojang/blaze3d/platform/GlStateManager": "com/mojang/blaze3d/opengl/GlStateManager",
@@ -42,46 +42,10 @@
     "net/minecraft/class_10141$class_282.method_62884(Lnet/minecraft/class_2960;)Lnet/minecraft/class_10141$class_282;": "byLocation",
     "net/minecraft/class_10141$class_282.method_62885()Lnet/minecraft/class_7654;": "idConverter",
     "net/minecraft/class_10227$class_10228.method_64323()Ljava/nio/ByteBuffer;": "data",
-    "net/minecraft/class_293.method_1357()Ljava/util/List;": "getElements",
-    "net/minecraft/class_293.method_1362()I": "getVertexSize",
-    "net/minecraft/class_293.method_34445()Ljava/util/List;": "getElementAttributeNames",
-    "net/minecraft/class_293.method_60833()Lnet/minecraft/class_293$class_9803;": "builder",
-    "net/minecraft/class_293.method_60835(Lnet/minecraft/class_296;)I": "getOffset",
-    "net/minecraft/class_293.method_60836(Lnet/minecraft/class_296;)Z": "contains",
-    "net/minecraft/class_293.method_60837(Lnet/minecraft/class_296;)Ljava/lang/String;": "getElementName",
-    "net/minecraft/class_293.method_60838()[I": "getOffsetsByElement",
-    "net/minecraft/class_293.method_60839()I": "getElementsMask",
-    "net/minecraft/class_296$class_297.method_1391()I": "size",
-    "net/minecraft/class_296.comp_2842()I": "id",
-    "net/minecraft/class_296.comp_2843()I": "index",
-    "net/minecraft/class_296.comp_2844()Lnet/minecraft/class_296$class_297;": "type",
-    "net/minecraft/class_296.comp_2845()Lnet/minecraft/class_296$class_298;": "usage",
-    "net/minecraft/class_296.comp_2846()I": "count",
-    "net/minecraft/class_296.method_60843()I": "mask",
-    "net/minecraft/class_296.method_60844(I)Lnet/minecraft/class_296;": "byId",
-    "net/minecraft/class_296.method_60845(IILnet/minecraft/class_296$class_297;Lnet/minecraft/class_296$class_298;I)Lnet/minecraft/class_296;": "register",
-    "net/minecraft/class_296.method_60847()I": "byteSize",
-    "net/minecraft/class_296.method_60848(I)Ljava/util/stream/Stream;": "elementsFromMask",
     "net/minecraft/class_9119.findStructureBlockPos()Ljava/util/stream/Stream;": "findTestPos",
     "net/minecraft/class_9125.findTestFunctions()Ljava/util/stream/Stream;": "findTests"
   },
-  "fieldRenames": {
-    "net/minecraft/class_296$class_297.field_1621:Lnet/minecraft/class_296$class_297;": "BYTE",
-    "net/minecraft/class_296$class_297.field_1623:Lnet/minecraft/class_296$class_297;": "FLOAT",
-    "net/minecraft/class_296$class_297.field_1624:Lnet/minecraft/class_296$class_297;": "UBYTE",
-    "net/minecraft/class_296$class_297.field_1625:Lnet/minecraft/class_296$class_297;": "SHORT",
-    "net/minecraft/class_296$class_298.field_1632:Lnet/minecraft/class_296$class_298;": "COLOR",
-    "net/minecraft/class_296$class_298.field_1633:Lnet/minecraft/class_296$class_298;": "POSITION",
-    "net/minecraft/class_296$class_298.field_1635:Lnet/minecraft/class_296$class_298;": "NORMAL",
-    "net/minecraft/class_296$class_298.field_1636:Lnet/minecraft/class_296$class_298;": "UV",
-    "net/minecraft/class_296.field_52107:Lnet/minecraft/class_296;": "POSITION",
-    "net/minecraft/class_296.field_52108:Lnet/minecraft/class_296;": "COLOR",
-    "net/minecraft/class_296.field_52109:Lnet/minecraft/class_296;": "UV0",
-    "net/minecraft/class_296.field_52110:Lnet/minecraft/class_296;": "UV",
-    "net/minecraft/class_296.field_52111:Lnet/minecraft/class_296;": "UV1",
-    "net/minecraft/class_296.field_52112:Lnet/minecraft/class_296;": "UV2",
-    "net/minecraft/class_296.field_52113:Lnet/minecraft/class_296;": "NORMAL"
-  },
+  "fieldRenames": {},
   "overrideRenames": [
     {
       "old": "method_64323()Ljava/nio/ByteBuffer;",
@@ -89,62 +53,6 @@
       "onlyUnder": "net/minecraft/class_10227$class_10228",
       "superCalls": "rename",
       "basis": "wall_table.py --identity: net/minecraft/class_10227$class_10228.method_64323 is net/minecraft/class_10859$class_10228.data on W (same code (1 site(s), strength 1, in net/minecraft/class_10227$class_10228))"
-    },
-    {
-      "old": "method_1357()Ljava/util/List;",
-      "new": "getElements",
-      "onlyUnder": "net/minecraft/class_293",
-      "superCalls": "rename",
-      "basis": "wall_table.py --identity: net/minecraft/class_293.method_1357 is com/mojang/blaze3d/vertex/VertexFormat.getElements on W (same code (1 site(s), strength 1, in net/minecraft/class_293))"
-    },
-    {
-      "old": "method_1362()I",
-      "new": "getVertexSize",
-      "onlyUnder": "net/minecraft/class_293",
-      "superCalls": "rename",
-      "basis": "wall_table.py --identity: net/minecraft/class_293.method_1362 is com/mojang/blaze3d/vertex/VertexFormat.getVertexSize on W (named in a kept body that is the same code (2 site(s), strength 14, in net/minecraft/class_293))"
-    },
-    {
-      "old": "method_34445()Ljava/util/List;",
-      "new": "getElementAttributeNames",
-      "onlyUnder": "net/minecraft/class_293",
-      "superCalls": "rename",
-      "basis": "wall_table.py --identity: net/minecraft/class_293.method_34445 is com/mojang/blaze3d/vertex/VertexFormat.getElementAttributeNames on W (same code (1 site(s), strength 1, in net/minecraft/class_293))"
-    },
-    {
-      "old": "method_60835(Lnet/minecraft/class_296;)I",
-      "new": "getOffset",
-      "onlyUnder": "net/minecraft/class_293",
-      "superCalls": "rename",
-      "basis": "wall_table.py --identity: net/minecraft/class_293.method_60835 is com/mojang/blaze3d/vertex/VertexFormat.getOffset on W (named in a kept body that is the same code (1 site(s), strength 14, in net/minecraft/class_293))"
-    },
-    {
-      "old": "method_60836(Lnet/minecraft/class_296;)Z",
-      "new": "contains",
-      "onlyUnder": "net/minecraft/class_293",
-      "superCalls": "rename",
-      "basis": "wall_table.py --identity: net/minecraft/class_293.method_60836 is com/mojang/blaze3d/vertex/VertexFormat.contains on W (named in a kept body that is the same code (1 site(s), strength 13, in net/minecraft/class_293))"
-    },
-    {
-      "old": "method_60837(Lnet/minecraft/class_296;)Ljava/lang/String;",
-      "new": "getElementName",
-      "onlyUnder": "net/minecraft/class_293",
-      "superCalls": "rename",
-      "basis": "wall_table.py --identity: net/minecraft/class_293.method_60837 is com/mojang/blaze3d/vertex/VertexFormat.getElementName on W (named in a kept body that is the same code (1 site(s), strength 20, in net/minecraft/class_293))"
-    },
-    {
-      "old": "method_60838()[I",
-      "new": "getOffsetsByElement",
-      "onlyUnder": "net/minecraft/class_293",
-      "superCalls": "rename",
-      "basis": "wall_table.py --identity: net/minecraft/class_293.method_60838 is com/mojang/blaze3d/vertex/VertexFormat.getOffsetsByElement on W (named in a kept body that is the same code (1 site(s), strength 13, in net/minecraft/class_293))"
-    },
-    {
-      "old": "method_60839()I",
-      "new": "getElementsMask",
-      "onlyUnder": "net/minecraft/class_293",
-      "superCalls": "rename",
-      "basis": "wall_table.py --identity: net/minecraft/class_293.method_60839 is com/mojang/blaze3d/vertex/VertexFormat.getElementsMask on W (named in a kept body that is the same code (1 site(s), strength 13, in net/minecraft/class_293))"
     },
     {
       "old": "findStructureBlockPos()Ljava/util/stream/Stream;",
