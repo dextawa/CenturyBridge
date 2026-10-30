@@ -1,0 +1,19 @@
+{
+ "_smx1_debug_render_basis": "smx1g (javap -c -p of both code jars; requested by s9g/s9h for the 1.21.9 layer's restored debug renders): 1.21.10 DebugRenderer (class_863) static draw helpers renderFilledBox x4 (method_23098/23102/23103/23104), renderFilledUnitCube (54808), renderFloatingText x5 (23105/23106/23107/23108), renderTextOverMob / OverBlock (74784/74785), renderVoxelShape (62350) and PathfindingRenderer (class_868) renderPath / renderPathLine (method_23118/23117 with PoseStack and buffers) are gone from 1.21.11. Presume moved, checked: 1.21.11's debug renderers emit gizmos (Gizmos.cuboid / billboardText / line: collected primitives drawn by the level renderer, never into a caller's buffer source; class_868 keeps only the gizmo forms method_23118(Path,FZZDDD) / method_23117(Path,DDD)); no 1.21.11 method draws a box / text / path into the buffers it is handed (dump search). Given back with 1.21.10's bodies in rt/CbDebugRender over 1.21.11's calls (debugFilledBox / debugLineStrip from rt/CbRenderTypes / rt/CbRenderTypeCreate, ShapeRenderer writers from rt/CbShapeRenderer, Camera.getPosition = method_71156, same field).",
+ "staticRedirects": {
+  "net/minecraft/class_863.method_23098(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;DDDDDDFFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_23102(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_238;FFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_23103(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2338;FFFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_23104(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;FFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_54808(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2338;FFFF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_23105(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;DDDI)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_23106(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;DDDIF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_23107(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;DDDIFZFZ)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_23108(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;IIII)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_74784(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1297;ILjava/lang/String;IF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_74785(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;Lnet/minecraft/class_2338;IIF)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_863.method_62350(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_265;DDDFFFFZ)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_868.method_23118(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_11;FZZDDD)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender",
+  "net/minecraft/class_868.method_23117(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_11;DDD)V": "top/dext/centurybridge/step/v1_21_11/rt/CbDebugRender"
+ }
+}
