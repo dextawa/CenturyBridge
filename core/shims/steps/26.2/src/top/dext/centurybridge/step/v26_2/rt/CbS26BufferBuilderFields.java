@@ -1,5 +1,6 @@
 package top.dext.centurybridge.step.v26_2.rt;
 
+import com.mojang.blaze3d.GpuFormat;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormatElement;
@@ -106,5 +107,48 @@ public final class CbS26BufferBuilderFields {
             out[id(e)] = e.offset();
         }
         return out;
+    }
+
+    // ---- 26.1.2 VertexFormatElement constants (gone at 26.2, javap: 26.2 has no static elements). 26.1.2 registered
+    // POSITION (FLOAT x3), COLOR (UBYTE x4 normalized), UV0 = UV (FLOAT x2), UV1 / UV2 (SHORT x2), NORMAL (BYTE x3 normalized),
+    // LINE_WIDTH (FLOAT x1); 26.2's DefaultVertexFormat adds the same roles by name with the GpuFormats below. A 26.1.2 element
+    // had no offset of its own (the format held it): offset 0. Lookups that took a constant as a key go by name (id() here,
+    // VertexFormat.getOffset / contains in rt/CbS205fBlaze3d), since record equality includes the offset.
+
+    private static final VertexFormatElement POSITION = new VertexFormatElement("Position", 0, GpuFormat.RGB32_FLOAT);
+    private static final VertexFormatElement COLOR = new VertexFormatElement("Color", 0, GpuFormat.RGBA8_UNORM);
+    private static final VertexFormatElement UV0 = new VertexFormatElement("UV0", 0, GpuFormat.RG32_FLOAT);
+    private static final VertexFormatElement UV1 = new VertexFormatElement("UV1", 0, GpuFormat.RG16_SINT);
+    private static final VertexFormatElement UV2 = new VertexFormatElement("UV2", 0, GpuFormat.RG16_SINT);
+    private static final VertexFormatElement NORMAL = new VertexFormatElement("Normal", 0, GpuFormat.RGBA8_SNORM);
+    private static final VertexFormatElement LINE_WIDTH = new VertexFormatElement("LineWidth", 0, GpuFormat.R32_FLOAT);
+
+    public static VertexFormatElement position() {
+        return POSITION;
+    }
+
+    public static VertexFormatElement color() {
+        return COLOR;
+    }
+
+    /** UV0, and 26.1.2's UV alias of it (the same object) */
+    public static VertexFormatElement uv0() {
+        return UV0;
+    }
+
+    public static VertexFormatElement uv1() {
+        return UV1;
+    }
+
+    public static VertexFormatElement uv2() {
+        return UV2;
+    }
+
+    public static VertexFormatElement normal() {
+        return NORMAL;
+    }
+
+    public static VertexFormatElement lineWidth() {
+        return LINE_WIDTH;
     }
 }
