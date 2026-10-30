@@ -1,0 +1,13 @@
+{
+ "_s9d_warden_basis": "1.21.9 dropped WardenModel's four emissive part-list getters when the warden's emissive layers became model layers of their own (javap: ModelLayers warden/*). They come back with 1.21.8's lists over the same parts (mixin/CbWardenModelRestoredMixin).",
+ "covers": [
+  "net/minecraft/class_7280.method_42738(Lnet/minecraft/class_10081;)Ljava/util/List;",
+  "net/minecraft/class_7280.method_42739(Lnet/minecraft/class_10081;)Ljava/util/List;",
+  "net/minecraft/class_7280.method_42740(Lnet/minecraft/class_10081;)Ljava/util/List;",
+  "net/minecraft/class_7280.method_42741(Lnet/minecraft/class_10081;)Ljava/util/List;",
+  "net/minecraft/class_7280.field_38451:Ljava/util/List;",
+  "net/minecraft/class_7280.field_38452:Ljava/util/List;",
+  "net/minecraft/class_7280.field_38453:Ljava/util/List;",
+  "net/minecraft/class_7280.field_38454:Ljava/util/List;"
+ ]
+}

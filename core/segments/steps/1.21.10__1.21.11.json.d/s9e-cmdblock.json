@@ -1,0 +1,24 @@
+{
+ "_s9e_cmdblock_basis": "s9e (javap -c of 1.21.10 and 1.21.11): 1.21.11 dropped BaseCommandBlock.getLevel() and made onUpdated() / createCommandSourceStack(source) take the ServerLevel. getLevel comes back on the base and the two vanilla sources with 1.21.10's bodies (mixin/CbCommandBlock*RestoredMixin); a converted call of the two old shapes reaches 1.21.11's with the level 1.21.10's bodies read through getLevel() (instanceRedirects, rt/CbCommandBlocks), which is also the frameDefaults judgment for an old override's frameless super call. DebugRenderer.render(pose, frustum, buffers, x, y, z, translucent) comes back over emitGizmos (mixin/CbDebugRendererRestoredMixin). TextureSetup's three view-only factories come back taking AbstractTexture's default sampler (rt/CbTextureSetups; the per-texture sampling state 1.21.10 kept on the texture is the loss).",
+ "covers": [
+  "net/minecraft/class_1918.method_8293()Lnet/minecraft/class_3218;",
+  "net/minecraft/class_863.method_23099(Lnet/minecraft/class_4587;Lnet/minecraft/class_4604;Lnet/minecraft/class_4597$class_4598;DDDZ)V"
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_1918.method_8295()V": "top/dext/centurybridge/step/v1_21_11/rt/CbCommandBlocks",
+  "net/minecraft/class_1918.method_8303(Lnet/minecraft/class_2165;)Lnet/minecraft/class_2168;": "top/dext/centurybridge/step/v1_21_11/rt/CbCommandBlocks"
+ },
+ "frameDefaults": {
+  "method_8295()V": {
+   "0": "top/dext/centurybridge/step/v1_21_11/rt/CbCommandBlocks#level(Lnet/minecraft/class_1918;)Lnet/minecraft/class_3218;"
+  },
+  "method_8303(Lnet/minecraft/class_2165;)Lnet/minecraft/class_2168;": {
+   "0": "top/dext/centurybridge/step/v1_21_11/rt/CbCommandBlocks#level(Lnet/minecraft/class_1918;)Lnet/minecraft/class_3218;"
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_11231.method_70900(Lcom/mojang/blaze3d/textures/GpuTextureView;)Lnet/minecraft/class_11231;": "top/dext/centurybridge/step/v1_21_11/rt/CbTextureSetups",
+  "net/minecraft/class_11231.method_70902(Lcom/mojang/blaze3d/textures/GpuTextureView;)Lnet/minecraft/class_11231;": "top/dext/centurybridge/step/v1_21_11/rt/CbTextureSetups",
+  "net/minecraft/class_11231.method_70901(Lcom/mojang/blaze3d/textures/GpuTextureView;Lcom/mojang/blaze3d/textures/GpuTextureView;)Lnet/minecraft/class_11231;": "top/dext/centurybridge/step/v1_21_11/rt/CbTextureSetups"
+ }
+}

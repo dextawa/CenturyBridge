@@ -1,0 +1,18 @@
+{
+ "_s9d_customdata_basis": "1.21.9 dropped CustomData's entity / block entity members (parseEntityId, parseEntityType, loadInto x2), update / read x2, size, contains, getUnsafe and CODEC_WITH_ID when that data moved to TypedEntityData (javap -c both). The members come back on CustomData with 1.21.8's bodies (mixin/CbCustomDataRestoredMixin) over the same tag; every call they make is still in 1.21.9. CODEC_WITH_ID is public static, which a mixin cannot merge: get-static reads rt/CbCustomData.CODEC_WITH_ID (1.21.8's validate body).",
+ "covers": [
+  "net/minecraft/class_9279.method_65131()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_9279.method_65904(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_5321;)Ljava/lang/Object;",
+  "net/minecraft/class_9279.method_57445(Lnet/minecraft/class_1297;)V",
+  "net/minecraft/class_9279.method_57449(Lnet/minecraft/class_2586;Lnet/minecraft/class_7225$class_7874;)Z",
+  "net/minecraft/class_9279.method_57447(Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/MapEncoder;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;",
+  "net/minecraft/class_9279.method_57446(Lcom/mojang/serialization/MapDecoder;)Lcom/mojang/serialization/DataResult;",
+  "net/minecraft/class_9279.method_59980(Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/MapDecoder;)Lcom/mojang/serialization/DataResult;",
+  "net/minecraft/class_9279.method_57444()I",
+  "net/minecraft/class_9279.method_57450(Ljava/lang/String;)Z",
+  "net/minecraft/class_9279.method_57463()Lnet/minecraft/class_2487;"
+ ],
+ "fieldRedirects": {
+  "net/minecraft/class_9279.field_49304:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_9/rt/CbCustomData#CODEC_WITH_ID"
+ }
+}

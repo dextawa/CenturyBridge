@@ -1,0 +1,11 @@
+{
+ "_s9d_commandblock_basis": "1.21.8's BaseCommandBlock implemented CommandSource (sendSystemMessage recorded the output, acceptsSuccess / acceptsFailure / shouldInformAdmins) and declared createCommandSourceStack() abstract with the block as source (javap -c 1.21.8). 1.21.9 moved the four into a per-run source (BaseCommandBlock.CloseableCommandBlockSource) and takes it as createCommandSourceStack(source). The block is a CommandSource again with 1.21.8's bodies (mixin/CbCommandBlockRestoredMixin); while a converted mod mixes one of the four, the per-run source answers it from the block (CbCommandBlockOutputHooksMixin); a 1.21.8 subclass's createCommandSourceStack() is reached from 1.21.9's by mechanical.json's generated hook (its stack's source the block itself, recording through the restored sendSystemMessage).",
+ "covers": [
+  "net/minecraft/class_1918.method_43496(Lnet/minecraft/class_2561;)V",
+  "net/minecraft/class_1918.method_9200()Z",
+  "net/minecraft/class_1918.method_9202()Z",
+  "net/minecraft/class_1918.method_9201()Z",
+  "net/minecraft/class_1918.method_8303()Lnet/minecraft/class_2168;",
+  "net/minecraft/class_1918.field_9169:Ljava/text/SimpleDateFormat;"
+ ]
+}

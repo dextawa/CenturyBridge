@@ -1,0 +1,12 @@
+{
+ "_s9e_debugrenderer_basis": "1.21.9 dropped DebugRenderer's switchRenderChunkborder / toggleRenderOctree (state now the CHUNK_BORDERS / CHUNK_SECTION_OCTREE debug screen entries, flipped by DebugScreenEntryList.toggleStatus as 1.21.9's F3+G does), clear (renderer data now in the connection's ClientDebugSubscriber, cleared on login / respawn) and the 6-argument render (now render(.., translucent)). Minecraft.debugRenderer is gone too: 1.21.9's one DebugRenderer is LevelRenderer's (rt/CbDebugRenderers). They come back with those bodies (mixin/CbDebugRendererRestoredMixin). renderAfterTranslucents, the per-renderer fields and the constructor stay open (see the mixin).",
+ "covers": [
+  "net/minecraft/class_863.method_3713()Z",
+  "net/minecraft/class_863.method_62979()Z",
+  "net/minecraft/class_863.method_20413()V",
+  "net/minecraft/class_863.method_23099(Lnet/minecraft/class_4587;Lnet/minecraft/class_4604;Lnet/minecraft/class_4597$class_4598;DDD)V"
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_310.field_1709:Lnet/minecraft/class_863;": "top/dext/centurybridge/step/v1_21_9/rt/CbDebugRenderers"
+ }
+}

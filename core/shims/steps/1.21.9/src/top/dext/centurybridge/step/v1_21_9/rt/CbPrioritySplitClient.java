@@ -21,4 +21,13 @@ public final class CbPrioritySplitClient {
     public interface WidgetClick {
         boolean cb$v1_21_9$routeClick(class_11909 event, boolean doubleClick);
     }
+
+    /**
+     * CbWardenModelRestoredMixin: builds 1.21.8's four emissive part lists from the model's parts; called by
+     * CbWardenModelRestoredMixinHooks at the end of the constructor, where 1.21.8's constructor body filled them
+     */
+    @Environment(EnvType.CLIENT)
+    public interface WardenLists {
+        void cb$v1_21_9$fillWardenLists();
+    }
 }

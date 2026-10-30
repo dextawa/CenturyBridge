@@ -1,0 +1,11 @@
+{
+ "_s215e_entity_basis": "1.21.4 Entity members 1.21.5 dropped. isInWaterOrBubble / isInWaterRainOrBubble were isInWater() / isInWaterOrRain() or isInBubbleColumn(), the feet block being a bubble column (javap -c -p 1.21.4 class_1297 method_5816 / method_5637 / method_5798); a bubble column's fluid is a water source (1.21.4 class_2258.method_9545: Fluids.WATER.getSource(false)), which isInWater already counts, so 1.21.5 kept only isInWater / isInWaterOrRain: the calls are renamed onto them. newDoubleList / newFloatList: 1.21.4's bodies (rt/CbEntityLists). Overrides of these four stay open: 1.21.5 asks isInWater where 1.21.4 asked isInWaterOrBubble, and a hook on isInWater would also answer its other callers (not judged yet).",
+ "methodRenames": {
+  "net/minecraft/class_1297.method_5816()Z": "method_5799",
+  "net/minecraft/class_1297.method_5637()Z": "method_5721"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1297.method_5846([D)Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityLists#newDoubleList",
+  "net/minecraft/class_1297.method_5726([F)Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_21_5/rt/CbEntityLists#newFloatList"
+ }
+}

@@ -1944,6 +1944,12 @@ public final class JarProcessor {
         final Map<String, String> superOf = new HashMap<>();
         final Map<String, List<String>> interfacesOf = new HashMap<>();
         final Map<String, Set<String>> decls = new HashMap<>();
+        /**
+         * the class mixins the jar's configs still list once this step's triage stripped its dead ones (null before
+         * the strip): a member one of the jar's own mixins restores is declared at runtime only while that mixin is
+         * listed (a climbing layer reading its own built jar as an earlier layer saw its stripped restorers live)
+         */
+        Set<String> liveMixins;
     }
 
     /**
@@ -2333,14 +2339,39 @@ public final class JarProcessor {
      * namespace wall every class is real-named, and a member an earlier, pre-wall layer restores (the 1.21.6 layer's
      * TagsProvider.tag answering its facade TagAppender) reached the next step's stub check and was tombstoned
      * there; Main reads those layers' members renamed through the wall ({@code inherit} of a wall view).
+     *
+     * {@code ""} when a live layer mixin restores name+desc on a class the site's owner reaches; else the stripped
+     * layer mixin that would have restored it (internal name: a listed mixin of this jar its triage stripped, or a
+     * class mixin an earlier layer's climb delisted, {@link LayerMembers#strippedRestorer}); else null
      */
-    private static boolean layerRestored(String owner, String name, String desc, LayerIndex layer, Chain chain) {
+    private static String layerRestorer(String owner, String name, String desc, LayerIndex layer, Chain chain) {
         String cur = owner;
+        String stripped = null;
+        // a climbed layer declares its restored members as the jar will be spelled at W: through this step's
+        // classRenames (s26h / s9e: the 1.21.11 layer restores DebugRenderer.emitGizmos with 26.2's facade
+        // MultiBufferSource$BufferSource, the 1.21.9 layer's call still names the vanilla type before the rename)
+        String wDesc = chain.renamedDesc(desc);
         for (int hops = 0; cur != null && hops < 64; hops++) {
-            for (org.objectweb.asm.tree.MethodNode m : chain.layerMembers.byName(cur, name)) {
-                if (m.desc.equals(desc)) {
-                    return true;
+            List<org.objectweb.asm.tree.MethodNode> cands = new ArrayList<>(chain.layerMembers.byName(cur, name));
+            String renamedOwner = chain.classRenames.get(cur);
+            if (renamedOwner != null) {
+                cands.addAll(chain.layerMembers.byName(renamedOwner, name));
+            }
+            for (org.objectweb.asm.tree.MethodNode m : cands) {
+                if (m.desc.equals(desc) || m.desc.equals(wDesc)) {
+                    String mx = chain.layerMembers.mixinOf(m);
+                    if (mx != null && layer.liveMixins != null && layer.decls.containsKey(mx) && !layer.liveMixins.contains(mx)) {
+                        stripped = stripped != null ? stripped : mx; // this jar's own restorer, stripped by now
+                        continue;
+                    }
+                    return "";
                 }
+            }
+            if (stripped == null) {
+                stripped = chain.layerMembers.strippedRestorer(cur, name, desc);
+            }
+            if (stripped == null && !wDesc.equals(desc)) {
+                stripped = chain.layerMembers.strippedRestorer(renamedOwner != null ? renamedOwner : cur, name, wDesc);
             }
             String next = layer.superOf.get(cur);
             if (next == null) {
@@ -2350,6 +2381,33 @@ public final class JarProcessor {
                 next = chain.superOf.get(cur);
             }
             cur = next;
+        }
+        return stripped;
+    }
+
+    private static final java.util.regex.Pattern INTERMEDIARY_METHOD = java.util.regex.Pattern.compile("(?:method|comp)_\\d+");
+
+    /**
+     * whether a class or interface of this jar the JVM reaches from {@code owner} (its superclasses and every
+     * interface of each, as far as they are the jar's own) declares the method shape: the call links on the jar's
+     * own code whatever the target stub says
+     */
+    private static boolean jarServes(String owner, String shape, LayerIndex layer) {
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.poll();
+            if (!seen.add(c) || !layer.decls.containsKey(c)) {
+                continue;
+            }
+            if (layer.decls.get(c).contains(shape)) {
+                return true;
+            }
+            String sup = layer.superOf.get(c);
+            if (sup != null) {
+                todo.add(sup);
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(c, List.of()));
         }
         return false;
     }
@@ -2701,6 +2759,8 @@ public final class JarProcessor {
             }
         }
         stripConfigs(entries, triage, deadMixins);
+        layer.liveMixins = new HashSet<>(triage.configOfClass().keySet());
+        layer.liveMixins.removeAll(deadMixins);
         MixinRepair.dropMixed(entries, deadMixins); // a stripped mixin mixes no restored member
         markConfigsOptional(entries, triage);
         if (bridged != null) {
@@ -3976,15 +4036,26 @@ public final class JarProcessor {
                         // judged as the converted jar will spell the site: the step's classRenames move the
                         // owner and the descriptor's classes (26.2: RecipeBuilder.unlockedBy(String,
                         // advancements/Criterion) is unlockedBy(String, advancements/triggers/Criterion))
-                        if (r.level() == Chain.Level.OK && !name.startsWith("<") && !Chain.intermediaryClass(owner)
+                        if (r.level() == Chain.Level.OK && !name.startsWith("<")
+                                && (!Chain.intermediaryClass(owner) || INTERMEDIARY_METHOD.matcher(name).matches())
                                 && Boolean.FALSE.equals(chain.resolvesOnTarget(chain.classRenames.getOrDefault(owner, owner),
-                                    name + chain.renamedDesc(desc)))
-                                && !layerRestored(site.substring(0, site.indexOf('.')), name, desc, layer, chain)) {
+                                    name + chain.renamedDesc(desc)))) {
                             // classes Mojang never obfuscated (blaze3d, ...) keep real member names,
                             // which the death tables -- keyed by intermediary name -- cannot see go:
                             // the target stub is the judge. (On an intermediary-named class a
                             // real-named member is a JDK override or another mod's injection.)
-                            r = new Chain.Issue(Chain.Level.L3, "target-decl");
+                            // An intermediary-named member the stub lacks is judged too: the death tables list
+                            // it at the step it died, and a step layer's restorer kept it "covered" since; when
+                            // that restorer is stripped at a later step (the 1.20.5 layer's
+                            // CbRestRecAttributeModifierMixin at 1.20.6 -> 1.21: AttributeModifier.method_6189)
+                            // nothing else declares it, and the loss is this step's. A class or interface of the jar
+                            // on the site's way declaring it serves the call itself (the 1.21.2 layer's facade
+                            // RecipeBookComponent calling its own PlaceRecipe default method_12816 on 1.21.3)
+                            String lr = layerRestorer(site.substring(0, site.indexOf('.')), name, desc, layer, chain);
+                            if (!"".equals(lr) && !jarServes(site.substring(0, site.indexOf('.')), name + desc, layer)) {
+                                r = new Chain.Issue(Chain.Level.L3, lr == null ? "target-decl"
+                                    : "target-decl, restorer " + shortName(lr) + " stripped");
+                            }
                         }
                         if (r.level() == Chain.Level.OK) {
                             return;

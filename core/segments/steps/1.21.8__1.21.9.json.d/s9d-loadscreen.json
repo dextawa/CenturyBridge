@@ -1,0 +1,10 @@
+{
+ "_s9d_loadscreen_basis": "1.21.9 folded ReceivingLevelScreen into LevelLoadingScreen and moved its Reason enum there (LevelLoadingScreen.Reason: NETHER_PORTAL, END_PORTAL, OTHER, same constants; javap). ReceivingLevelScreen comes back as a facade with 1.21.8's bodies (facade/ReceivingLevelScreen), Minecraft.setLevel(level, reason) as 1.21.8's updateScreenAndTick(new ReceivingLevelScreen(() -> false, reason)) then 1.21.9's setLevel(level) (CbMinecraftRestoredMixin).",
+ "covers": [
+  "net/minecraft/class_310.method_1481(Lnet/minecraft/class_638;Lnet/minecraft/class_434$class_9678;)V"
+ ],
+ "classRenames": {
+  "net/minecraft/class_434": "top/dext/centurybridge/step/v1_21_9/facade/ReceivingLevelScreen",
+  "net/minecraft/class_434$class_9678": "net/minecraft/class_3928$class_9678"
+ }
+}

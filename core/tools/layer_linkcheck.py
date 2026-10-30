@@ -8,9 +8,11 @@ are calls the converter replaced with a lazy failure ("tombstoned"): both crash 
       per layer: dangling + tombstoned at T against the baseline's row for (T, layer). A layer above its baseline
       (or with no row: baseline 0) fails (exit 1). --write replaces T's rows with what was measured (lowering the
       baseline after a burn-down is a regenerate; raising it is a decision the commit has to state).
-  python3 layer_linkcheck.py steps <dir> <T> <baseline.tsv> <attributed.tsv>
+  python3 layer_linkcheck.py steps <dir> <T> <baseline.tsv> <attributed.tsv> [--write]
       <dir>/<R>/link-findings.tsv for every release R a layer was link-checked at (layer_linkcheck_steps.sh):
-      writes every R's rows into the baseline, and lists T's dangling / tombstoned rows with the step where each
+      ratchets every R, not only T: a layer whose dangling + tombstoned at any R is above the baseline's (R, layer)
+      row fails (exit 1, after the attribution). --write instead rewrites every R's rows into the baseline. Both
+      list T's dangling / tombstoned rows with the step where each
       started dangling: the first R of the unbroken run of releases ending at T in which the same finding stands.
       Findings are compared in one spelling: intermediary names translated through the wall table of the climb's
       wall step (26.1) and 26.2's class moves (core/segments/steps/26.1.2__26.2.json.d classRenames); a finding no
@@ -196,18 +198,25 @@ class Spelling:
                 self.mem[f[1].rsplit(".", 1)[1]] = f[2].rsplit(".", 1)[1]
 
 
-def steps(d, t, baseline, out):
+def steps(d, t, baseline, out, write):
     b = read_baseline(baseline)
     measured = [r for r in RELEASES if os.path.exists(os.path.join(d, r, "link-findings.tsv"))]
+    bad = []
     for r in measured:
-        f = os.path.join(d, r, "link-findings.tsv")
-        c = counts(f)
-        for k in [k for k in b if k[0] == r]:
-            del b[k]
-        for layer in c:
-            b[(r, layer)] = tuple(c.get(layer, (0, 0)))
-    write_baseline(baseline, b)
-    print(f"baseline {baseline}: rows for {len(measured)} releases ({measured[0]} .. {measured[-1]})")
+        c = counts(os.path.join(d, r, "link-findings.tsv"))
+        for layer in sorted(c, key=lambda x: RELEASES.index(x) if x in RELEASES else 99):
+            dd, tb = c[layer]
+            bd, btb = b.get((r, layer), (0, 0))
+            if dd + tb > bd + btb:
+                bad.append(f"layer {layer} on {r}: {dd} dangling + {tb} tombstoned = {dd + tb}, baseline {bd} + {btb} = {bd + btb}")
+        if write:
+            for k in [k for k in b if k[0] == r]:
+                del b[k]
+            for layer in c:
+                b[(r, layer)] = tuple(c[layer])
+    if write:
+        write_baseline(baseline, b)
+        print(f"baseline {baseline}: rows for {len(measured)} releases ({measured[0]} .. {measured[-1]})")
     if t not in measured:
         raise SystemExit(f"no {d}/{t}/link-findings.tsv")
     data = os.environ.get("CB_DATA", "data")
@@ -237,14 +246,23 @@ def steps(d, t, baseline, out):
     for s in sorted(per_step, key=lambda x: RELEASES.index(x.split("__")[-1].split(" ")[0])):
         print(f"  {s}: {per_step[s]}")
     print(f"{sum(per_step.values())} rows on {t} attributed -> {out}")
+    if write:
+        return 0
+    for line in bad:
+        print("RATCHET " + line)
+    if bad:
+        print(f"climbed layers, every release up to {t}: {len(bad)} (release, layer) row(s) above the baseline ({baseline}); "
+              "fix the new references, or regenerate (CB_LAYER_BASELINE=write) and name each raise in the commit")
+        return 1
+    print(f"climbed layers, every release up to {t}: within the baseline ({baseline})")
+    return 0
 
 
 def main(a):
     if len(a) >= 4 and a[0] == "ratchet":
         return ratchet(a[1], a[2], a[3], "--write" in a[4:])
-    if len(a) == 5 and a[0] == "steps":
-        steps(a[1], a[2], a[3], a[4])
-        return 0
+    if len(a) in (5, 6) and a[0] == "steps":
+        return steps(a[1], a[2], a[3], a[4], a[5:] == ["--write"])
     print(__doc__)
     return 2
 

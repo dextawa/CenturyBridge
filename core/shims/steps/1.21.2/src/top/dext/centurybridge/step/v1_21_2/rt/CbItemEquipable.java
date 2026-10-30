@@ -65,6 +65,12 @@ public final class CbItemEquipable {
      * CbItemMemberComponents too ({@link #vanillaEquippable}).
      */
     public static boolean restoredVanilla(class_1792 item) {
+        // Equipable first: the restore mixins are what make these classes Equipable. Once a later release folds
+        // ArmorItem / AnimalArmorItem into Item (1.21.5's classRenames), the class literals below read Item and the
+        // mixins follow onto the facades, so a plain Item (a saddle) must not pass as one of 1.21.1's Equipables
+        if (!(item instanceof Equipable)) {
+            return false;
+        }
         Class<?> c = item.getClass();
         return c == class_1738.class || c == class_4059.class || c == class_1819.class;
     }

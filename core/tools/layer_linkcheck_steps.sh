@@ -3,8 +3,9 @@
 # climb_runtime.sh run to T whose layers/ is still there (each layers/climb-<W>/steps/<V>__<R>/ holds layer W climbed
 # to R; layers/centurybridge-0.3.0+<R>.jar is R's own layer). At each R the subjects are every layer up to R as it
 # stands there, on R's game jar, Fabric API and libraries, as climb_runtime.sh judges them on T. Then
-# layer_linkcheck.py rewrites every R's rows of <workDir>/core/segments/layer-linkcheck-baseline.tsv and attributes
-# T's rows to the step where each started dangling (<workDir>/layer-lc/attributed-<T>.tsv).
+# layer_linkcheck.py ratchets every R's rows against <workDir>/core/segments/layer-linkcheck-baseline.tsv (exit 1 when
+# any (R, layer) rises; CB_LAYER_BASELINE=write rewrites every R's rows instead) and attributes T's rows to the step
+# where each started dangling (<workDir>/layer-lc/attributed-<T>.tsv).
 # Run on beta2 from ~/cbwork; <workDir> relative to it.
 set -uo pipefail
 cd ~/cbwork
@@ -35,4 +36,4 @@ for ((i = 1; i < ${#RELEASES[@]}; i++)); do
     echo "$R: $(echo $SUBJ | wc -w) layers, $(awk -F'\t' 'NR > 1 && ($1 == "CLAIMED" || $1 == "BLIND" || $1 == "KNOWN")' "$OUT/$R/link-findings.tsv" | wc -l) rows"
     [ "$R" = "$T" ] && break
 done
-CB_DATA=data python3 "$WD/core/tools/layer_linkcheck.py" steps "$OUT" "$T" "$WD/core/segments/layer-linkcheck-baseline.tsv" "$OUT/attributed-$T.tsv"
+CB_DATA=data python3 "$WD/core/tools/layer_linkcheck.py" steps "$OUT" "$T" "$WD/core/segments/layer-linkcheck-baseline.tsv" "$OUT/attributed-$T.tsv"     $([ "${CB_LAYER_BASELINE:-}" = write ] && echo --write)
