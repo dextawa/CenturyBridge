@@ -1,0 +1,7 @@
+{
+ "_s9f_basis": "FriendlyByteBuf.readSectionPos / writeSectionPos (javap: absent from 1.21.9's class_2540) come back as statics with 1.21.8's bodies (rt/CbSectionPosBuf); the generated debug payload records call them the same way.",
+ "instanceRedirects": {
+  "net/minecraft/class_2540.method_19456()Lnet/minecraft/class_4076;": "top/dext/centurybridge/step/v1_21_9/rt/CbSectionPosBuf",
+  "net/minecraft/class_2540.method_36131(Lnet/minecraft/class_4076;)Lnet/minecraft/class_2540;": "top/dext/centurybridge/step/v1_21_9/rt/CbSectionPosBuf"
+ }
+}
