@@ -1,0 +1,33 @@
+{
+ "_smx1_cyclebutton_basis": "smx1g (javap -c -p of both code jars): 1.21.10 CycleButton.Builder kept the initial value in a mutable field (withInitialValue(T) method_32619; unset: build took the default values list's index 0) and displayOnlyValue(boolean) method_71805 as a boolean; 1.21.11's Builder takes the initial value as a final Supplier in its constructor (field_63505, read once in build, then indexOf in the values) and a DisplayState (method_76614; VALUE = value only, NAME_AND_VALUE otherwise). withInitialValue / displayOnlyValue(boolean) come back on the Builder (mixin/CbCycleButtonBuilderRestoredMixin: a constant supplier, the DisplayState). new Builder(Function) / super(Function) reach the two-argument constructor and the post step gives it 1.21.10's default (the first default value, read when built); builder(Function) does the same (rt/CbCycleButtons). onOffBuilder(boolean) is 1.21.11's method_32614(Z) (same body over a supplier of the value); onOffBuilder() and booleanBuilder(on, off) start at BOOLEAN_OPTIONS.get(0) = TRUE in 1.21.10, which 1.21.11's boolean argument says.",
+ "covers": [
+  "net/minecraft/class_5676$class_5677.method_32619(Ljava/lang/Object;)Lnet/minecraft/class_5676$class_5677;",
+  "net/minecraft/class_5676$class_5677.method_71805(Z)Lnet/minecraft/class_5676$class_5677;"
+ ],
+ "methodRenames": {
+  "net/minecraft/class_5676.method_32613(Z)Lnet/minecraft/class_5676$class_5677;": "method_32614"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_5676.method_32606(Ljava/util/function/Function;)Lnet/minecraft/class_5676$class_5677;": "top/dext/centurybridge/step/v1_21_11/rt/CbCycleButtons"
+ },
+ "callReshapes": {
+  "net/minecraft/class_5676.method_32614()Lnet/minecraft/class_5676$class_5677;": {
+   "desc": "(Z)Lnet/minecraft/class_5676$class_5677;",
+   "ops": ["push top/dext/centurybridge/step/v1_21_11/rt/CbCycleButtons#initialTrue()Z"],
+   "basis": "1.21.10 onOffBuilder() started at BOOLEAN_OPTIONS.get(0), TRUE"
+  },
+  "net/minecraft/class_5676.method_32607(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;)Lnet/minecraft/class_5676$class_5677;": {
+   "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Z)Lnet/minecraft/class_5676$class_5677;",
+   "ops": ["keep", "keep", "push top/dext/centurybridge/step/v1_21_11/rt/CbCycleButtons#initialTrue()Z"],
+   "basis": "1.21.10 booleanBuilder(on, off) started at BOOLEAN_OPTIONS.get(0), TRUE"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_5676$class_5677.<init>(Ljava/util/function/Function;)V": {
+   "desc": "(Ljava/util/function/Function;Ljava/util/function/Supplier;)V",
+   "ops": ["keep", "push top/dext/centurybridge/step/v1_21_11/rt/CbCycleButtons#unset()Ljava/util/function/Supplier;"],
+   "post": "top/dext/centurybridge/step/v1_21_11/rt/CbCycleButtons#defaultFirst(Lnet/minecraft/class_5676$class_5677;Ljava/util/function/Function;)V",
+   "postArgs": [0]
+  }
+ }
+}
