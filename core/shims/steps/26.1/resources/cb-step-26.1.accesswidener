@@ -270,3 +270,6 @@ accessible	field	net/minecraft/data/recipes/ShapelessRecipeBuilder	result	Lnet/m
 accessible	field	net/minecraft/data/recipes/SimpleCookingRecipeBuilder	result	Lnet/minecraft/world/item/ItemStackTemplate;
 accessible	field	net/minecraft/data/recipes/SingleItemRecipeBuilder	result	Lnet/minecraft/world/item/ItemStackTemplate;
 accessible	field	net/minecraft/data/recipes/TransmuteRecipeBuilder	result	Lnet/minecraft/world/item/ItemStackTemplate;
+# skilteng: 1.21.11 WorldUpgrader.progressMap lives on as UpgradeProgress.progressMap (CbWallWorldUpgrader)
+accessible	field	net/minecraft/util/worldupdate/WorldUpgrader	upgradeProgress	Lnet/minecraft/util/worldupdate/UpgradeProgress;
+accessible	field	net/minecraft/util/worldupdate/UpgradeProgress	progressMap	Lit/unimi/dsi/fastutil/objects/Reference2FloatMap;

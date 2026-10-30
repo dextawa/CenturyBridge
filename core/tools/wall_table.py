@@ -1038,8 +1038,10 @@ class Table:
                     if self.mname(c, m.name) == wn:
                         done.add(m.name)
                         continue
-                    self.ren[m.name] = wn
-                    self.ren_basis[m.name] = (f"synthetic: same code as {w}.{wn}{wd} (strength {anchors}; base name "
+                    # identity mode keys a member "owner.name" (mname), token mode by its token
+                    rk = c + "." + m.name if self.identity else m.name
+                    self.ren[rk] = wn
+                    self.ren_basis[rk] = (f"synthetic: same code as {w}.{wn}{wd} (strength {anchors}; base name "
                                               f"{self.base_m.get(c + '.' + m.name, m.name)}"
                                               + (f"; one of {len(ev)} V synthetics with this code" if len(ev) > 1 else "") + ")")
                     done.add(m.name)

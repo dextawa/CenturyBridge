@@ -1,0 +1,20 @@
+{
+ "_smx1_vertex_matrix_basis": "smx1g (javap -c -p of both code jars): VertexConsumer.addVertex(Matrix4f, F, F, F) (class_4588.method_22918) is a default taking Lorg/joml/Matrix4f; through 1.21.10 and Lorg/joml/Matrix4fc; in 1.21.11, same name, same body (transformPosition into a new Vector3f, then addVertex(x, y, z)); no 1.21.11 class declares either form besides VertexConsumer. Matrix4f implements Matrix4fc: a call keeps all four arguments (a mod's own super call included, the callReshape rewrites it). A 1.21.10 override of the Matrix4f form gets the matrix 1.21.11's Matrix4fc form receives, the same object when it is a Matrix4f, a copy otherwise (rt/CbVertexMatrix; the wall's Font.drawInBatch hooks do the same).",
+ "callReshapes": {
+  "net/minecraft/class_4588.method_22918(Lorg/joml/Matrix4f;FFF)Lnet/minecraft/class_4588;": {
+   "desc": "(Lorg/joml/Matrix4fc;FFF)Lnet/minecraft/class_4588;",
+   "ops": ["keep:0 Lorg/joml/Matrix4fc;", "keep:1", "keep:2", "keep:3"],
+   "basis": "1.21.11 addVertex takes the pose as a Matrix4fc, which a 1.21.10 Matrix4f is"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_22918(Lorg/joml/Matrix4f;FFF)Lnet/minecraft/class_4588;",
+   "new": "method_22918(Lorg/joml/Matrix4fc;FFF)Lnet/minecraft/class_4588;",
+   "onlyUnder": "net/minecraft/class_4588",
+   "wrap": "top/dext/centurybridge/step/v1_21_11/rt/CbVertexMatrix.mutable(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "basis": "a 1.21.10 VertexConsumer's addVertex(Matrix4f, ..) is reached from 1.21.11's Matrix4fc form with the same matrix when it is a Matrix4f"
+  }
+ ]
+}
