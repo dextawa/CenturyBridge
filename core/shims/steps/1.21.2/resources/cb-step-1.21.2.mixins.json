@@ -205,7 +205,8 @@
     "CbRestPendingTagsMixin",
     "CbRestTagEntryAccessor",
     "CbRestTagResultsMixin",
-    "CbRestWorldLoaderMixin"
+    "CbRestWorldLoaderMixin",
+    "CbRecipeScanIdRoute"
   ],
   "client": [
     "CbEntityCullingInvoker",

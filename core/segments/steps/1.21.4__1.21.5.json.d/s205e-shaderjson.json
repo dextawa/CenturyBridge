@@ -1,0 +1,6 @@
+{
+ "_s205e_shaderjson_basis": "1.21.5 ships no assets/minecraft/shaders/core/*.json (1.21.4 shipped 56; the 1.21.5 client jar keeps only the .vsh/.fsh): each program is described in code as a RenderPipeline (class_10799). The climbed 1.21.2 layer's 1.21.1 ShaderInstance give-back (CbRenderShaderLoad.link) reads shaders/core/position_tex_color.json through ResourceProvider.openAsReader on every reload (1.21 layer CbRenderShaders.cbShadersLoaded); on a climbed 1.21.5 client that is FileNotFoundException and the first reload fails (s205d run sh5e). rt/CbShaderJsons calls W's openAsReader first and, only for a missing minecraft:shaders/core/<name>.json on a client, answers the 1.21.4 description built from the 1.21.5 pipeline of that program (rt/CbShaderJsonsClient, basis there).",
+ "interfaceCallRedirects": {
+  "net/minecraft/class_5912.openAsReader(Lnet/minecraft/class_2960;)Ljava/io/BufferedReader;": "top/dext/centurybridge/step/v1_21_5/rt/CbShaderJsons#openAsReader"
+ }
+}
