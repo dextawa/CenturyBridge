@@ -1,0 +1,13 @@
+{
+ "_smx1_graphics_mode_basis": "smx1g (javap -c -p of both code jars): 1.21.10 Options.graphicsMode() (class_315.method_42534, OptionInstance<GraphicsStatus>) is gone; 1.21.11 has graphicsPreset() (same enum class plus CUSTOM; setting it applies a preset to about 15 options) and improvedTransparency() (what useShaderTransparency reads where 1.21.10 read graphicsMode == FABULOUS). Given back as a live view (rt/CbGraphicsMode, mixin/CbOptionsGraphicsModeRestoredMixin, mixin/CbOptionInstanceGraphicsMixin): get() is FABULOUS when improvedTransparency is on, else FAST when the preset is FAST, else FANCY; set() writes improvedTransparency's value without its callback (1.21.10's graphicsMode callback was empty), preset untouched. GraphicsStatus getId / getKey / byId (method_7362 / 7359 / 29592) are gone from the enum: ordinal, the translation key (method_75305), ByIdMap WRAP over the three 1.21.10 values.",
+ "covers": [
+  "net/minecraft/class_315.method_42534()Lnet/minecraft/class_7172;"
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_5365.method_7362()I": "top/dext/centurybridge/step/v1_21_11/rt/CbGraphicsMode",
+  "net/minecraft/class_5365.method_7359()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbGraphicsMode"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_5365.method_29592(I)Lnet/minecraft/class_5365;": "top/dext/centurybridge/step/v1_21_11/rt/CbGraphicsMode"
+ }
+}
