@@ -170,7 +170,7 @@ public final class LayerMembers {
         if (mx == null) {
             mx = annotation(cn.visibleAnnotations, MIXIN);
         }
-        if (mx == null || (cn.access & Opcodes.ACC_INTERFACE) != 0) {
+        if (mx == null) {
             return;
         }
         for (String t : targets(mx)) {
@@ -217,9 +217,12 @@ public final class LayerMembers {
             return;
         }
         mixins.add(cn.name);
-        if ((cn.access & Opcodes.ACC_INTERFACE) != 0) {
+        boolean itf = (cn.access & Opcodes.ACC_INTERFACE) != 0;
+        if (itf) {
+            // its @Invoker / @Accessor methods are abstract (not merged); its default methods Mixin merges onto the
+            // target interface like a class mixin's methods (the 1.21.6 layer's CbLeashRestoredMixin gives back
+            // 1.21.5's Leashable.method_60956 / method_61162 as defaults): restored members too
             readInvokers(cn, mx);
-            return;
         }
         List<String> targets = new ArrayList<>();
         for (Object o : MixinRepair.list(MixinRepair.values(mx).get("value"))) {
@@ -243,7 +246,7 @@ public final class LayerMembers {
                 }
             }
         }
-        for (FieldNode f : cn.fields) {
+        for (FieldNode f : itf ? List.<FieldNode>of() : cn.fields) {
             if (mergedField(f)) {
                 for (String t : targets) {
                     FieldNode a = new FieldNode(f.access, f.name,

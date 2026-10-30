@@ -194,3 +194,5 @@ extendable method net/minecraft/class_799$class_5826 toString ()Ljava/lang/Strin
 accessible method net/minecraft/class_1092 method_62654 (Lnet/minecraft/class_324;Lnet/minecraft/class_9824$class_10095;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;
 # Options.hideBundleTutorial restored (mixin/Cb*OptionsMixin): its processOptions handler takes the package-private FieldAccess
 accessible class net/minecraft/class_315$class_5823
+# skilteng: AbstractFurnaceBlockEntity.recipesUsed retyped at 1.21.2 (private); CbFurnaceRecipesUsed reads it for 1.21.1 getters
+accessible	field	net/minecraft/class_2609	field_11986	Lit/unimi/dsi/fastutil/objects/Reference2IntOpenHashMap;

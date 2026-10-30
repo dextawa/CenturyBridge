@@ -78,6 +78,24 @@ public class Sk203TestMod implements ModInitializer {
             check(sub2.has("b") && sub2.raw("b") == 7, "two levels down, this.tToId reads the mapping");
             sub2.wipe();
             check(sub2.method_10206("b") == -1, "clear() through subclass this.tToId reaches vanilla getId");
+
+            // WorldUpgrader.progressMap (class_1257.field_5762, Object2FloatMap -> Reference2FloatMap at 1.20.3), on an
+            // upgrader of an empty scratch world, cancelled right after
+            java.nio.file.Path dir = java.nio.file.Files.createTempDirectory("cbsk203");
+            net.minecraft.class_32.class_5143 access = net.minecraft.class_32.method_26999(dir).method_27002("w");
+            net.minecraft.class_1257 up = new net.minecraft.class_1257(access, server.method_3855(),
+                server.method_30611().method_30530(net.minecraft.class_7924.field_41224), false);
+            try {
+                net.minecraft.class_5321<net.minecraft.class_1937> probe = net.minecraft.class_5321.method_29179(
+                    net.minecraft.class_7924.field_41223, new net.minecraft.class_2960("cbsk203", "probe"));
+                it.unimi.dsi.fastutil.objects.Object2FloatMap<net.minecraft.class_5321<net.minecraft.class_1937>> pm = up.field_5762;
+                pm.put(probe, 0.25f);
+                check(up.method_5393(probe) == 0.25f, "a progress written through WorldUpgrader.progressMap reads back via dimensionProgress");
+                check(pm.containsKey(probe) && pm.getFloat(probe) == 0.25f, "progressMap reads its own write");
+            } finally {
+                up.method_5402();
+                access.close();
+            }
         } catch (Throwable t) {
             LOG.error("CB-SK203 FAIL exception", t);
             checks++;
