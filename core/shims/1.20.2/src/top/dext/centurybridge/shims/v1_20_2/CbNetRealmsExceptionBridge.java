@@ -23,6 +23,6 @@ public abstract class CbNetRealmsExceptionBridge {
     /** was realmsErrorCodeOrDefault(fallback): the service's error code when 1.20.1 parsed a RealmsError */
     public int method_39980(int fallback) {
         CbNetLegacyRealmsError legacy = ((CbNetRealmsAccess.Failure) (Object) this).cb$legacy();
-        return legacy.parsed() ? legacy.errorCode() : fallback;
+        return legacy.parsed() ? legacy.serviceCode() : fallback;
     }
 }
