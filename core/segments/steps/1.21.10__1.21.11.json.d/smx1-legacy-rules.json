@@ -1,0 +1,10 @@
+{
+ "_smx1_legacy_rules_basis": "smx1f (1.21 layer tombstones at 1.21.10__1.21.11; javap -c -p of both code jars): Util.lastOf (class_156.method_20793) is gone with no replacement helper, given back with its body; MinecraftServer.method_74057(Level) (nether level -> allowEnteringNetherUsingPortals) is ServerLevel.method_75002(Level) in 1.21.11 (same body over the level's game rules; Entity's portal code calls it on the destination level), served by the overworld's; BedBlock.canSetSpawn(Level) (class_2244.method_27352, dimension flag bedWorks) became the bed_rule environment attribute (BedRule.canSetSpawn, method_75644). rt/CbLegacyRules.",
+ "staticRedirects": {
+  "net/minecraft/class_156.method_20793(Ljava/util/List;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRules",
+  "net/minecraft/class_2244.method_27352(Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRules"
+ },
+ "instanceRedirects": {
+  "net/minecraft/server/MinecraftServer.method_74057(Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRules"
+ }
+}

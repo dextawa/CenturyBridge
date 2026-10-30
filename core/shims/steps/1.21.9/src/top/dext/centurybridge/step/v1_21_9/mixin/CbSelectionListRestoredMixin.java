@@ -19,7 +19,7 @@ import top.dext.centurybridge.step.v1_21_9.rt.CbVanillaReads;
  * CbSelectionListHooksMixin's, so a later release dropping one of those methods loses only that hook.
  */
 @Mixin(value = class_350.class, priority = CbVanillaReads.PRIORITY)
-public abstract class CbSelectionListRestoredMixin<E extends class_350.class_351<E>> implements CbSelectionLists.LegacyHeader {
+public abstract class CbSelectionListRestoredMixin<E extends class_350.class_351<E>> implements CbSelectionLists.LegacyHeader, CbSelectionLists.LegacySelectedIndex {
 
     @Shadow
     @Final
@@ -97,6 +97,7 @@ public abstract class CbSelectionListRestoredMixin<E extends class_350.class_351
     }
 
     /** AbstractSelectionList.setSelectedIndex(index) */
+    @Override
     public void method_64847(int index) {
         if (index == -1) {
             this.cb$self().method_25313(null);

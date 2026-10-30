@@ -1,0 +1,36 @@
+{
+ "_s215e_owners_basis": "1.21.4's owner UUID members on 1.21.5's EntityReference owner (javap -c -p 1.21.4 / 1.21.5 class_6025, class_1321, class_1496; rt/CbOwners). AbstractHorse's getOwnerUUID / setOwnerUUID read and set the field 1.21.4's did (1.21.5 class_1496.field_55705, the layer's access widener). Overrides: 1.21.5 vanilla asks getOwnerReference where 1.21.4 asked getOwnerUUID (every OwnableEntity: TamableAnimal, AbstractHorse, a mod's own implementer, which 1.21.5 holds to getOwnerReference), sets TamableAnimal's owner through setOwnerReference and a horse's through setOwner(entity) where 1.21.4 called setOwnerUUID. A converted override's super call runs 1.21.4's body on 1.21.5's storage without a virtual call (superRedirects), so the override is entered once.",
+ "instanceRedirects": {
+  "net/minecraft/class_1496.method_6139()Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners#ownerUuidHorseCall",
+  "net/minecraft/class_1496.method_6732(Ljava/util/UUID;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners#setOwnerUuidHorse"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_6139()Ljava/util/UUID;",
+   "new": "method_66287()Lnet/minecraft/class_10583;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners.reference(Ljava/util/UUID;)Lnet/minecraft/class_10583;",
+   "onlyUnder": "net/minecraft/class_6025",
+   "basis": "getOwnerUUID -> getOwnerReference: 1.21.5 reads every OwnableEntity's owner through getOwnerReference (javap -c 1.21.5 class_6025.method_35057, TamableAnimal / AbstractHorse callers); the override's UUID as the reference to it"
+  },
+  {
+   "old": "method_6174(Ljava/util/UUID;)V",
+   "new": "method_66288(Lnet/minecraft/class_10583;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners.uuidOf(Lnet/minecraft/class_10583;)Ljava/util/UUID;",
+   "onlyUnder": "net/minecraft/class_1321",
+   "basis": "TamableAnimal.setOwnerUUID -> setOwnerReference: 1.21.5's tame / setOwner / load set the owner through setOwnerReference where 1.21.4 called setOwnerUUID (javap -c both class_1321); the reference's UUID"
+  },
+  {
+   "old": "method_6732(Ljava/util/UUID;)V",
+   "new": "method_66323(Lnet/minecraft/class_1309;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners.uuidOfEntity(Lnet/minecraft/class_1309;)Ljava/util/UUID;",
+   "onlyUnder": "net/minecraft/class_1496",
+   "basis": "AbstractHorse.setOwnerUUID -> setOwner(entity): 1.21.5's tameWithName sets the owner through setOwner(player) where 1.21.4 called setOwnerUUID(player's UUID) (javap -c both class_1496); 1.21.5's load writes the field directly (1.21.4 called setOwnerUUID there too: that path does not reach the override)"
+  }
+ ],
+ "superRedirects": {
+  "net/minecraft/class_1496.method_6139()Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners#ownerUuidHorse",
+  "net/minecraft/class_1496.method_6732(Ljava/util/UUID;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners#setOwnerUuidHorse",
+  "net/minecraft/class_1321.method_6139()Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners#ownerUuidTamableSuper",
+  "net/minecraft/class_1321.method_6174(Ljava/util/UUID;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbOwners#setOwnerUuidTamableSuper"
+ }
+}

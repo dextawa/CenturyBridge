@@ -34,9 +34,6 @@ public abstract class CbServerRestoredMixin implements CbPrioritySplit.ServerFli
     private Boolean cb$flightAllowed;
 
     @Shadow
-    public abstract class_1928 method_3767();
-
-    @Shadow
     public abstract class_7497 method_73550();
 
     /** MinecraftServer.getSpawnProtectionRadius() */
@@ -66,7 +63,7 @@ public abstract class CbServerRestoredMixin implements CbPrioritySplit.ServerFli
 
     /** MinecraftServer.setPvpAllowed(allowed): 1.21.9's pvp game rule */
     public void method_3815(boolean allowed) {
-        this.method_3767().method_20746(class_1928.field_62434).method_20758(allowed, (MinecraftServer) (Object) this);
+        ((MinecraftServer) (Object) this).method_3767().method_20746(class_1928.field_62434).method_20758(allowed, (MinecraftServer) (Object) this);
     }
 
     /** MinecraftServer.setFlightAllowed(allowed) */

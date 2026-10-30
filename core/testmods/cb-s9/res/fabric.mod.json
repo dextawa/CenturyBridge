@@ -4,6 +4,16 @@
  "version": "1.0.0",
  "name": "CB s9 Test",
  "environment": "*",
- "entrypoints": { "main": ["cb.s9.S9TestMod"] },
- "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.8" }
+ "entrypoints": {
+  "main": [
+   "cb.s9.S9TestMod"
+  ]
+ },
+ "depends": {
+  "fabricloader": ">=0.14.0",
+  "minecraft": "1.21.8"
+ },
+ "mixins": [
+  "cb_s9.mixins.json"
+ ]
 }

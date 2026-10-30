@@ -7,6 +7,8 @@
     "CbBiomeBuilderMixin",
     "CbBiomeEffectsBuilderMixin",
     "CbBiomeEffectsBuilderMixinHooks",
+    "CbCommandBlockEntitySourceRestoredMixin",
+    "CbCommandBlockRestoredMixin",
     "CbDimensionTypeCodecMixin",
     "CbGameRuleCommandMixin",
     "CbGameRuleDescriptionMixin",
@@ -14,11 +16,13 @@
     "CbGameRulesMixin",
     "CbGameRulesMixinHooks",
     "CbGameRulesServerMixin",
-    "CbGameRulesServerMixinHooks"
+    "CbGameRulesServerMixinHooks",
+    "CbMinecartCommandSourceRestoredMixin"
   ],
   "client": [
     "CbClientLevelEffectsMixin",
     "CbClientLevelEffectsMixinHooks",
+    "CbDebugRendererRestoredMixin",
     "CbDimEffectsFogMixin",
     "CbDimEffectsLightTextureMixin",
     "CbDimEffectsLightingMixin",

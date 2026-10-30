@@ -36,7 +36,7 @@ public final class CbRecipeSerializerSupport {
 
     /** the id of the recipe being decoded right now, for a 1.20.1 reader vanilla reached without one */
     public static class_2960 currentId() {
-        class_2960 id = CbRecipes.CURRENT_ID.get();
+        class_2960 id = CbRecipes.currentId();
         if (id == null) {
             throw new IllegalStateException("CenturyBridge: a 1.20.1 recipe reader needs the recipe id; 1.20.2 has"
                 + " one only while RecipeManager loads a recipe or the recipe-sync packet reads one");
@@ -83,7 +83,7 @@ public final class CbRecipeSerializerSupport {
 
             @Override
             public <O> DataResult<T> decode(DynamicOps<O> ops, MapLike<O> input) {
-                class_2960 id = CbRecipes.CURRENT_ID.get();
+                class_2960 id = CbRecipes.currentId();
                 if (id == null) {
                     return DataResult.error(() -> "CenturyBridge: a 1.20.1 recipe reader needs the recipe id; 1.20.2"
                         + " has one only while RecipeManager loads a recipe or the recipe-sync packet reads one");

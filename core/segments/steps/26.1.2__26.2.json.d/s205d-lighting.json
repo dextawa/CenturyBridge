@@ -1,0 +1,11 @@
+{
+ "_s205d_lighting_basis": "Lighting's six light-direction constants: private static final Vector3f in 26.1.2, Vector3fc in 26.2 (javap of both; same names, 26.2's <clinit> still stores new Vector3f(..).normalize() in each). A 26.1.2 read (the climbed 1.20.5 layer's CbClientLightingAccessor: InvalidAccessorException NETHER_DIFFUSE_LIGHT_0:Vector3f on the climbed 26.2 client, s26h) takes the getter, which answers the same object (rt/CbS26LightingClient; fields opened by the layer's access widener).",
+ "fieldGetters": {
+  "com/mojang/blaze3d/platform/Lighting.DIFFUSE_LIGHT_0:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v26_2/rt/CbS26LightingClient#DIFFUSE_LIGHT_0",
+  "com/mojang/blaze3d/platform/Lighting.DIFFUSE_LIGHT_1:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v26_2/rt/CbS26LightingClient#DIFFUSE_LIGHT_1",
+  "com/mojang/blaze3d/platform/Lighting.NETHER_DIFFUSE_LIGHT_0:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v26_2/rt/CbS26LightingClient#NETHER_DIFFUSE_LIGHT_0",
+  "com/mojang/blaze3d/platform/Lighting.NETHER_DIFFUSE_LIGHT_1:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v26_2/rt/CbS26LightingClient#NETHER_DIFFUSE_LIGHT_1",
+  "com/mojang/blaze3d/platform/Lighting.INVENTORY_DIFFUSE_LIGHT_0:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v26_2/rt/CbS26LightingClient#INVENTORY_DIFFUSE_LIGHT_0",
+  "com/mojang/blaze3d/platform/Lighting.INVENTORY_DIFFUSE_LIGHT_1:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v26_2/rt/CbS26LightingClient#INVENTORY_DIFFUSE_LIGHT_1"
+ }
+}

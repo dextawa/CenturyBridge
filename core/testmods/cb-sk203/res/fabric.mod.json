@@ -1,0 +1,10 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_sk203",
+ "version": "1.0.0",
+ "name": "CB sk203: retyped id maps read through vanilla and mod-subclass owners (1.20.2 -> 1.20.3)",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.sk203.Sk203TestMod"] },
+ "accessWidener": "cb_sk203.accesswidener",
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.2", "fabric-lifecycle-events-v1": "*" }
+}

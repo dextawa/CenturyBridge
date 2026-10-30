@@ -1,0 +1,21 @@
+{
+ "_s215e_sounds_basis": "1.21.4 SoundEvents constants whose field 1.21.5 changed or dropped (javap -p both class_3417): Holder.Reference fields read as their value, the wolf's sounds from 1.21.5's CLASSIC wolf sound set, WOLF_HOWL as 1.21.4's (unregistered) event (rt/CbSoundEvents).",
+ "fieldGetters": {
+  "net/minecraft/class_3417.field_40078:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_14704:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_15075:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_14824:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_15150:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_15239:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_23798:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_49174:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_14724:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_14659:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_14575:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_15218:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_14922:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_14807:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_15117:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents",
+  "net/minecraft/class_3417.field_14554:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_5/rt/CbSoundEvents"
+ }
+}

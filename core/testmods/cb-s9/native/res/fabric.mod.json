@@ -1,0 +1,14 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s9n",
+ "version": "1.0.0",
+ "name": "CB s9 native 1.21.9 checks",
+ "environment": "*",
+ "mixins": [
+  "cb_s9n.mixins.json"
+ ],
+ "depends": {
+  "fabricloader": ">=0.16.0",
+  "minecraft": "1.21.9"
+ }
+}

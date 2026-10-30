@@ -21,6 +21,7 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
+import top.dext.centurybridge.data.AwRules;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -1944,6 +1945,12 @@ public final class JarProcessor {
         final Map<String, String> superOf = new HashMap<>();
         final Map<String, List<String>> interfacesOf = new HashMap<>();
         final Map<String, Set<String>> decls = new HashMap<>();
+        /**
+         * the class mixins the jar's configs still list once this step's triage stripped its dead ones (null before
+         * the strip): a member one of the jar's own mixins restores is declared at runtime only while that mixin is
+         * listed (a climbing layer reading its own built jar as an earlier layer saw its stripped restorers live)
+         */
+        Set<String> liveMixins;
     }
 
     /**
@@ -2333,14 +2340,39 @@ public final class JarProcessor {
      * namespace wall every class is real-named, and a member an earlier, pre-wall layer restores (the 1.21.6 layer's
      * TagsProvider.tag answering its facade TagAppender) reached the next step's stub check and was tombstoned
      * there; Main reads those layers' members renamed through the wall ({@code inherit} of a wall view).
+     *
+     * {@code ""} when a live layer mixin restores name+desc on a class the site's owner reaches; else the stripped
+     * layer mixin that would have restored it (internal name: a listed mixin of this jar its triage stripped, or a
+     * class mixin an earlier layer's climb delisted, {@link LayerMembers#strippedRestorer}); else null
      */
-    private static boolean layerRestored(String owner, String name, String desc, LayerIndex layer, Chain chain) {
+    private static String layerRestorer(String owner, String name, String desc, LayerIndex layer, Chain chain) {
         String cur = owner;
+        String stripped = null;
+        // a climbed layer declares its restored members as the jar will be spelled at W: through this step's
+        // classRenames (s26h / s9e: the 1.21.11 layer restores DebugRenderer.emitGizmos with 26.2's facade
+        // MultiBufferSource$BufferSource, the 1.21.9 layer's call still names the vanilla type before the rename)
+        String wDesc = chain.renamedDesc(desc);
         for (int hops = 0; cur != null && hops < 64; hops++) {
-            for (org.objectweb.asm.tree.MethodNode m : chain.layerMembers.byName(cur, name)) {
-                if (m.desc.equals(desc)) {
-                    return true;
+            List<org.objectweb.asm.tree.MethodNode> cands = new ArrayList<>(chain.layerMembers.byName(cur, name));
+            String renamedOwner = chain.classRenames.get(cur);
+            if (renamedOwner != null) {
+                cands.addAll(chain.layerMembers.byName(renamedOwner, name));
+            }
+            for (org.objectweb.asm.tree.MethodNode m : cands) {
+                if (m.desc.equals(desc) || m.desc.equals(wDesc)) {
+                    String mx = chain.layerMembers.mixinOf(m);
+                    if (mx != null && layer.liveMixins != null && layer.decls.containsKey(mx) && !layer.liveMixins.contains(mx)) {
+                        stripped = stripped != null ? stripped : mx; // this jar's own restorer, stripped by now
+                        continue;
+                    }
+                    return "";
                 }
+            }
+            if (stripped == null) {
+                stripped = chain.layerMembers.strippedRestorer(cur, name, desc);
+            }
+            if (stripped == null && !wDesc.equals(desc)) {
+                stripped = chain.layerMembers.strippedRestorer(renamedOwner != null ? renamedOwner : cur, name, wDesc);
             }
             String next = layer.superOf.get(cur);
             if (next == null) {
@@ -2350,6 +2382,33 @@ public final class JarProcessor {
                 next = chain.superOf.get(cur);
             }
             cur = next;
+        }
+        return stripped;
+    }
+
+    private static final java.util.regex.Pattern INTERMEDIARY_METHOD = java.util.regex.Pattern.compile("(?:method|comp)_\\d+");
+
+    /**
+     * whether a class or interface of this jar the JVM reaches from {@code owner} (its superclasses and every
+     * interface of each, as far as they are the jar's own) declares the method shape: the call links on the jar's
+     * own code whatever the target stub says
+     */
+    private static boolean jarServes(String owner, String shape, LayerIndex layer) {
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.poll();
+            if (!seen.add(c) || !layer.decls.containsKey(c)) {
+                continue;
+            }
+            if (layer.decls.get(c).contains(shape)) {
+                return true;
+            }
+            String sup = layer.superOf.get(c);
+            if (sup != null) {
+                todo.add(sup);
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(c, List.of()));
         }
         return false;
     }
@@ -2701,6 +2760,8 @@ public final class JarProcessor {
             }
         }
         stripConfigs(entries, triage, deadMixins);
+        layer.liveMixins = new HashSet<>(triage.configOfClass().keySet());
+        layer.liveMixins.removeAll(deadMixins);
         MixinRepair.dropMixed(entries, deadMixins); // a stripped mixin mixes no restored member
         markConfigsOptional(entries, triage);
         if (bridged != null) {
@@ -2774,13 +2835,10 @@ public final class JarProcessor {
                     }
                 }
                 e.setValue(writeJar(nested));
-            } else if (!chain.wallClassFwd.isEmpty() && name.equals(awPath)) {
-                // A mod's own access widener is a resource, not a class, so the
-                // bytecode rewrite never touches it. Past the namespace wall the
-                // runtime rejects an intermediary-named AW ("Namespace
-                // (intermediary) does not match current runtime namespace"):
-                // translate owners/names/descriptors to the mojang namespace the
-                // converted bytecode now uses, and relabel the header to named.
+            } else if (name.equals(awPath)) {
+                // A mod's own access widener is a resource, not a class, so the bytecode rewrite never touches
+                // it: it climbs here, through the step's renames and reshapes (and across the wall into the
+                // mojang namespace, header official), or it widens members the step moved away.
                 byte[] rew = rewriteAccessWidener(e.getValue(), chain, tag, rpt);
                 if (rew != null) {
                     e.setValue(rew);
@@ -2947,23 +3005,32 @@ public final class JarProcessor {
     }
 
     /**
-     * Rewrite a mod's access widener / class tweaker across the namespace wall:
-     * intermediary owners/names/descriptors -> mojang, header namespace ->
-     * official. Lines are {@code <access> class <owner>}, {@code <access> field
-     * <owner> <name> <desc>}, {@code <access> method <owner> <name> <desc>},
-     * {@code inject-interface <owner> <interface>}, {@code extend-enum <owner>
-     * <constant>} (any of them "transitive-"), plus the {@code accessWidener} /
-     * {@code classTweaker} header and {@code #} comments. An owner/name with no
-     * mapping is left as is (survivors keep their name; only wall-renamed tokens
-     * move). Returns null to leave the file unchanged when nothing needed rewriting.
+     * Climb a mod's access widener / class tweaker through this step, the way the converter climbs its bytecode.
+     * A line names a game class or member as the source release declared it; the loader widens exactly what the
+     * line names, so a line the step's drift left behind widens nothing and the code that relied on it fails with
+     * IllegalAccessError. Per line, in the step's analysis namespace and then across the wall:
+     *  - the member's own step wiring: a callReshapes / superCtorReshapes entry gives its new descriptor (1.21.9
+     *    grew GameTestRunner's constructor a flag), methodRenames / fieldRenames its new name;
+     *  - classRenames onto a game class move owners, inject/extend targets and descriptor classes (26.2's
+     *    advancements/criterion -> predicates); a rename onto a CenturyBridge facade or another library is not
+     *    followed (the loader tweaks game classes only, and no game member names a facade);
+     *  - a member the target class no longer declares while an ancestor on the target does (26.2's TabNavigationBar
+     *    inherits width from AbstractWidget) moves to that ancestor -- the member the JVM resolves; a constructor is
+     *    never inherited;
+     *  - past the wall, intermediary owners/names/descriptors -> mojang and the header -> official.
+     * A line naming nothing on the target either way (a class gone before the wall, still intermediary-named after
+     * it; a member really removed) is kept as it is, which is harmless, and reported. Returns null when nothing
+     * changed.
      */
     private static byte[] rewriteAccessWidener(byte[] bytes, Chain chain, String tag, Report rpt) {
         String text = new String(bytes, java.nio.charset.StandardCharsets.UTF_8);
         String nl = text.contains("\r\n") ? "\r\n" : "\n";
         String[] lines = text.split("\r\n|\n", -1);
         java.util.regex.Pattern descCls = java.util.regex.Pattern.compile("L([^;]+);");
+        boolean wall = !chain.wallClassFwd.isEmpty();
         boolean changed = false;
-        int moved = 0;
+        int renamed = 0, reshaped = 0, lifted = 0;
+        List<String> stale = new ArrayList<>();
         for (int i = 0; i < lines.length; i++) {
             String ln = lines[i];
             String trimmed = ln.trim();
@@ -2978,71 +3045,155 @@ public final class JarProcessor {
                 comment = ln.substring(hash);
                 body = ln.substring(0, hash);
             }
-            String[] tok = body.split("\\s+");
+            String[] tok = body.trim().split("\\s+");
             if (tok.length >= 3 && (tok[0].equals("accessWidener") || tok[0].equals("classTweaker"))) {
-                // header: accessWidener v1 intermediary -> official. Past the
-                // wall the 26.x runtime names ARE the mojang/official ones the
-                // converted bytecode uses; fabric calls that namespace
-                // "official", so the AW must declare official (not named) to
-                // match the runtime it loads against.
-                if (tok[2].equals("intermediary")) {
+                // header: past the wall the 26.x runtime names ARE the mojang ones the converted bytecode uses;
+                // fabric calls that namespace "official"
+                if (wall && tok[2].equals("intermediary")) {
                     tok[2] = "official";
                     lines[i] = String.join("\t", tok) + comment;
                     changed = true;
                 }
                 continue;
             }
-            // directive lines start with the access verb; the kind is tok[1]
             if (tok.length < 3) {
                 continue;
             }
+            String[] before = tok.clone();
             String verb = tok[0].startsWith("transitive-") ? tok[0].substring("transitive-".length()) : tok[0];
             if (verb.equals("inject-interface") || verb.equals("extend-enum")) {
-                // class tweaker: <verb> <class> <interface|constant>; an enum constant is the
-                // mod's own new name, an interface may carry a generic signature
-                String moj = chain.wallClassFwd.get(tok[1]);
-                if (moj != null) { tok[1] = moj; changed = true; moved++; }
+                // class tweaker: <verb> <class> <interface|constant>; an enum constant is the mod's own new name, an
+                // interface may carry a generic signature
+                tok[1] = awWall(chain, awClass(chain, tok[1]));
                 if (verb.equals("inject-interface")) {
                     String itf = tok[2];
                     int lt = itf.indexOf('<');
                     String raw = lt < 0 ? itf : itf.substring(0, lt);
                     String rest = lt < 0 ? "" : descCls.matcher(itf.substring(lt)).replaceAll(mr -> "L"
-                        + java.util.regex.Matcher.quoteReplacement(
-                            chain.wallClassFwd.getOrDefault(mr.group(1), mr.group(1))) + ";");
-                    String nitf = chain.wallClassFwd.getOrDefault(raw, raw) + rest;
-                    if (!nitf.equals(itf)) { tok[2] = nitf; changed = true; }
+                        + java.util.regex.Matcher.quoteReplacement(awWall(chain, awClass(chain, mr.group(1)))) + ";");
+                    tok[2] = awWall(chain, awClass(chain, raw)) + rest;
                 }
-                lines[i] = String.join("\t", tok) + comment;
-                continue;
-            }
-            String kind = tok[1];
-            if (kind.equals("class") && tok.length >= 3) {
-                String moj = chain.wallClassFwd.get(tok[2]);
-                if (moj != null) { tok[2] = moj; changed = true; moved++; }
-            } else if ((kind.equals("field") || kind.equals("method")) && tok.length >= 5) {
-                String owner = tok[2];
-                String member = tok[3];
-                String desc = tok[4];
-                String key = owner + "." + member;
-                String mojName = kind.equals("field")
-                    ? chain.wallFieldFwd.get(key) : chain.wallMethodFwd.get(key);
-                String mojOwner = chain.wallClassFwd.get(owner);
-                if (mojOwner != null) { tok[2] = mojOwner; changed = true; moved++; }
-                if (mojName != null) { tok[3] = mojName; changed = true; }
-                String nd = descCls.matcher(desc).replaceAll(mr -> "L"
-                    + java.util.regex.Matcher.quoteReplacement(
-                        chain.wallClassFwd.getOrDefault(mr.group(1), mr.group(1))) + ";");
-                if (!nd.equals(desc)) { tok[4] = nd; changed = true; }
+            } else if (tok[1].equals("class")) {
+                String c = awClass(chain, tok[2]);
+                if (!c.equals(tok[2])) renamed++;
+                if (AwRules.tweakable(c) && !chain.targetClasses.isEmpty() && !chain.targetClasses.contains(c)) {
+                    stale.add(c);
+                }
+                tok[2] = awWall(chain, c);
+            } else if ((tok[1].equals("field") || tok[1].equals("method")) && tok.length >= 5) {
+                boolean field = tok[1].equals("field");
+                String owner = tok[2], name = tok[3], desc = tok[4];
+                if (AwRules.tweakable(owner)) {
+                    // the member's own wiring at this step, keyed as the source release spells it
+                    if (field) {
+                        String fr = chain.fieldRenames.get(owner + "." + name + ":" + desc);
+                        if (fr != null) { name = fr; reshaped++; }
+                    } else {
+                        String key = owner + "." + name + desc;
+                        Chain.CtorReshape sr = chain.superCtorReshapes.get(key);
+                        Chain.CallReshape cr = chain.callReshapes.get(key);
+                        String nd = sr != null ? sr.newDesc : cr != null ? cr.newDesc : null;
+                        String mr = chain.methodRenames.get(key);
+                        if (nd != null && !nd.equals(desc)) { desc = nd; reshaped++; }
+                        if (mr != null) { name = mr; reshaped++; }
+                    }
+                    String o = awClass(chain, owner);
+                    if (!o.equals(owner)) renamed++;
+                    owner = o;
+                    desc = descCls.matcher(desc).replaceAll(mr -> "L"
+                        + java.util.regex.Matcher.quoteReplacement(awClass(chain, mr.group(1))) + ";");
+                    String home = awDeclaring(chain, owner, name, desc, field);
+                    if (home == null) {
+                        stale.add(owner + "." + name + (field ? ":" : "") + desc);
+                    } else if (!home.equals(owner)) {
+                        owner = home;
+                        lifted++;
+                    }
+                }
+                // across the wall: the table lists a member on its declaring class
+                String mojName = field ? chain.wallFieldFwd.get(owner + "." + name) : chain.wallMethodFwd.get(owner + "." + name);
+                if (mojName == null && !owner.equals(tok[2])) {
+                    String k0 = tok[2] + "." + name;
+                    mojName = field ? chain.wallFieldFwd.get(k0) : chain.wallMethodFwd.get(k0);
+                }
+                tok[2] = awWall(chain, owner);
+                tok[3] = mojName != null ? mojName : name;
+                tok[4] = descCls.matcher(desc).replaceAll(mr -> "L"
+                    + java.util.regex.Matcher.quoteReplacement(awWall(chain, mr.group(1))) + ";");
             } else {
                 continue;
             }
-            lines[i] = String.join("\t", tok) + comment;
+            if (!java.util.Arrays.equals(before, tok)) {
+                lines[i] = String.join("\t", tok) + comment;
+                changed = true;
+            }
+        }
+        if (!stale.isEmpty()) {
+            rpt.notes.add(tag + "access widener: " + stale.size() + " line(s) name nothing on " + chain.to
+                + " (kept as they are, the loader applies them to nothing): "
+                + String.join(", ", stale.subList(0, Math.min(5, stale.size()))) + (stale.size() > 5 ? ", ..." : ""));
         }
         if (!changed) {
             return null;
         }
-        rpt.notes.add(tag + "access widener rewritten across wall (" + moved + " owners/classes -> mojang, header -> official)");
+        rpt.notes.add(tag + "access widener climbed: " + renamed + " class rename(s), " + reshaped
+            + " member reshape/rename(s), " + lifted + " member(s) moved to the declaring supertype"
+            + (wall ? ", names -> mojang, header -> official" : ""));
         return String.join(nl, lines).getBytes(java.nio.charset.StandardCharsets.UTF_8);
+    }
+
+    /** a class an access widener line names, through the step's classRenames when they land on a game class */
+    private static String awClass(Chain chain, String c) {
+        String t = chain.classRenames.get(c);
+        return t != null && AwRules.tweakable(t) ? t : c;
+    }
+
+    /** past the wall: the class as the target spells it */
+    private static String awWall(Chain chain, String c) {
+        return chain.wallClassFwd.getOrDefault(c, c);
+    }
+
+    /**
+     * The target class that declares the member a line names: the owner itself, else (not for a constructor) the
+     * first ancestor on the target that does -- superclasses, then superinterfaces. Null when nothing on the target
+     * declares it or the owner is no target class; the owner itself when the target is unknown.
+     */
+    private static String awDeclaring(Chain chain, String owner, String name, String desc, boolean field) {
+        if (chain.targetDecls.isEmpty()) {
+            return owner;
+        }
+        String shape = field ? name + ":" + desc : name + desc;
+        if (!chain.targetDecls.containsKey(owner)) {
+            return null;
+        }
+        if (chain.targetDecls.get(owner).contains(shape)) {
+            return owner;
+        }
+        if (name.startsWith("<")) {
+            return null;
+        }
+        List<String> supers = new ArrayList<>();
+        Set<String> seen = new HashSet<>();
+        for (String c = chain.targetSuperOf.get(owner); c != null && seen.add(c); c = chain.targetSuperOf.get(c)) {
+            if (chain.targetDecls.getOrDefault(c, Set.of()).contains(shape)) {
+                return c;
+            }
+            supers.add(c);
+        }
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        todo.add(owner);
+        todo.addAll(supers);
+        Set<String> seenI = new HashSet<>();
+        while (!todo.isEmpty()) {
+            for (String i : chain.targetInterfacesOf.getOrDefault(todo.poll(), List.of())) {
+                if (!seenI.add(i)) continue;
+                if (chain.targetDecls.getOrDefault(i, Set.of()).contains(shape)) {
+                    return i;
+                }
+                todo.add(i);
+            }
+        }
+        return null;
     }
 
     /** per-jar-layer registry of lazy-fail stubs, synthesized as one class */
@@ -3976,15 +4127,26 @@ public final class JarProcessor {
                         // judged as the converted jar will spell the site: the step's classRenames move the
                         // owner and the descriptor's classes (26.2: RecipeBuilder.unlockedBy(String,
                         // advancements/Criterion) is unlockedBy(String, advancements/triggers/Criterion))
-                        if (r.level() == Chain.Level.OK && !name.startsWith("<") && !Chain.intermediaryClass(owner)
+                        if (r.level() == Chain.Level.OK && !name.startsWith("<")
+                                && (!Chain.intermediaryClass(owner) || INTERMEDIARY_METHOD.matcher(name).matches())
                                 && Boolean.FALSE.equals(chain.resolvesOnTarget(chain.classRenames.getOrDefault(owner, owner),
-                                    name + chain.renamedDesc(desc)))
-                                && !layerRestored(site.substring(0, site.indexOf('.')), name, desc, layer, chain)) {
+                                    name + chain.renamedDesc(desc)))) {
                             // classes Mojang never obfuscated (blaze3d, ...) keep real member names,
                             // which the death tables -- keyed by intermediary name -- cannot see go:
                             // the target stub is the judge. (On an intermediary-named class a
                             // real-named member is a JDK override or another mod's injection.)
-                            r = new Chain.Issue(Chain.Level.L3, "target-decl");
+                            // An intermediary-named member the stub lacks is judged too: the death tables list
+                            // it at the step it died, and a step layer's restorer kept it "covered" since; when
+                            // that restorer is stripped at a later step (the 1.20.5 layer's
+                            // CbRestRecAttributeModifierMixin at 1.20.6 -> 1.21: AttributeModifier.method_6189)
+                            // nothing else declares it, and the loss is this step's. A class or interface of the jar
+                            // on the site's way declaring it serves the call itself (the 1.21.2 layer's facade
+                            // RecipeBookComponent calling its own PlaceRecipe default method_12816 on 1.21.3)
+                            String lr = layerRestorer(site.substring(0, site.indexOf('.')), name, desc, layer, chain);
+                            if (!"".equals(lr) && !jarServes(site.substring(0, site.indexOf('.')), name + desc, layer)) {
+                                r = new Chain.Issue(Chain.Level.L3, lr == null ? "target-decl"
+                                    : "target-decl, restorer " + shortName(lr) + " stripped");
+                            }
                         }
                         if (r.level() == Chain.Level.OK) {
                             return;
@@ -4134,6 +4296,16 @@ public final class JarProcessor {
                                         op == Opcodes.GETFIELD ? "instance-field-getter" : "instance-field-setter");
                                     return;
                                 }
+                            }
+                            // a field that only changed its name with its class (1.21.5's unobfuscated blaze3d:
+                            // VertexFormatElement.field_52107 -> POSITION; 1.21.9 class_4003.field_17886) keeps its
+                            // site, renamed, and the ClassRemapper then names the new class, as methodRenames do
+                            // above. A layer facade is excluded: it keeps V's field names (1.20.5 facade/class_2582).
+                            String rfrn = chain.classRenames.get(owner).startsWith("top/dext/") ? null : chain.fieldRenames.get(rkey);
+                            if (rfrn != null) {
+                                fldRenames.put(fsite, rfrn);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "field-rename");
+                                return;
                             }
                             String gap = chain.facadeGaps.get(owner + "." + name + ":" + desc);
                             if (gap != null) {

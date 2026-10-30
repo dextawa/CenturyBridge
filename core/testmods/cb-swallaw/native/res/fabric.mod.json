@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_swallawn",
+  "version": "1.0.0",
+  "name": "CB swall access-widener climb test (native 26.2 control)",
+  "environment": "*",
+  "entrypoints": { "main": ["cb.swallawn.SwallAwNative"] },
+  "accessWidener": "cb_swallawn.accesswidener",
+  "depends": { "fabricloader": ">=0.14.0", "minecraft": "26.2" }
+}

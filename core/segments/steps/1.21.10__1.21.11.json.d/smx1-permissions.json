@@ -1,0 +1,39 @@
+{
+ "_smx1_permissions_basis": "smx1f: 1.21.11 replaced 1.21.10's int permission levels with PermissionSet (class_12096); javap -c -p of both code jars. 1.21.10 CommandSourceStack.hasPermission(int) (method_9259) was permissionLevel >= n; 1.21.11's level-based set (class_12086.forLevel(PermissionLevel.byId(n)), method_75010(class_12094.method_75027)) answers Permission$HasCommandLevel(L) with own >= L, the same test. withPermission / withMaximumPermission (method_9206 / method_9230) take the set; the constructor takes it in the int's place; MinecraftServer.getOperatorUserPermissionLevel / getFunctionCompilationLevel (method_3798 / method_21714) are method_74994 / method_74995 answering sets; getProfilePermissions (method_3835) answers class_12086 for the int. rt/CbPermissions converts both ways (a set read as an int is the highest level it grants). RespawnAnchorBlock.canSetSpawn(Level): rt/CbRespawnAnchor (dimension flag -> the position-free value of the respawn_anchor_works environment attribute). withMaximumPermission(int) and getProfilePermissions(NameAndId) go through instanceRedirects (not callReshapes) so the step's mixin targeting is unchanged: a call reshape on them moved mods' injectors off the code-matched target (method_9230 -> method_9206 by body similarity).",
+ "instanceRedirects": {
+  "net/minecraft/class_2168.method_9259(I)Z": "top/dext/centurybridge/step/v1_21_11/rt/CbPermissions",
+  "net/minecraft/server/MinecraftServer.method_3798()I": "top/dext/centurybridge/step/v1_21_11/rt/CbPermissions",
+  "net/minecraft/server/MinecraftServer.method_21714()I": "top/dext/centurybridge/step/v1_21_11/rt/CbPermissions",
+  "net/minecraft/class_2168.method_9230(I)Lnet/minecraft/class_2168;": "top/dext/centurybridge/step/v1_21_11/rt/CbPermissions",
+  "net/minecraft/server/MinecraftServer.method_3835(Lnet/minecraft/class_11560;)I": "top/dext/centurybridge/step/v1_21_11/rt/CbPermissions"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_4969.method_27353(Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v1_21_11/rt/CbRespawnAnchor"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_2168.<init>(Lnet/minecraft/class_2165;Lnet/minecraft/class_243;Lnet/minecraft/class_241;Lnet/minecraft/class_3218;ILjava/lang/String;Lnet/minecraft/class_2561;Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_1297;)V": {
+   "desc": "(Lnet/minecraft/class_2165;Lnet/minecraft/class_243;Lnet/minecraft/class_241;Lnet/minecraft/class_3218;Lnet/minecraft/class_12096;Ljava/lang/String;Lnet/minecraft/class_2561;Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_1297;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v1_21_11/rt/CbPermissions#permissions(I)Lnet/minecraft/class_12096;",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8"
+   ],
+   "basis": "CommandSourceStack's constructor takes the permission set where 1.21.10 took the int level"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_2168.method_9206(I)Lnet/minecraft/class_2168;": {
+   "desc": "(Lnet/minecraft/class_12096;)Lnet/minecraft/class_2168;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_11/rt/CbPermissions#permissions(I)Lnet/minecraft/class_12096;"
+   ],
+   "basis": "withPermission(int) -> withPermission(PermissionSet): same identity test on the source's level"
+  }
+ }
+}
