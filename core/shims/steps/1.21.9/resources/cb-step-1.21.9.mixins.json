@@ -16,6 +16,7 @@
     "CbPaletteFieldsSingleValueMixin",
     "CbPalettedContainerTagMixin",
     "CbProfileCacheRestoredMixin",
+    "CbRegistryRandomRestoredMixin",
     "CbProfileCacheServerMixin",
     "CbServerRestoredMixin",
     "CbServerRestoredHooksMixin",
@@ -24,7 +25,9 @@
     "CbProjectileDeflectionMixinHooks",
     "CbDebugPayloadTypesMixin",
     "CbEntityRestoredMixin",
-    "CbItemRestoredMixin"
+    "CbItemRestoredMixin",
+    "CbItemVerifyHooksMixin",
+    "CbItemVerifyEquipmentHooksMixin"
   ],
   "client": [
     "CbArmorMeshSetMixin",
