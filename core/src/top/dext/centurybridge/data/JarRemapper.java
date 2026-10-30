@@ -917,6 +917,19 @@ public final class JarRemapper {
                         break;
                     }
                 }
+                if (moj == null) {
+                    // the table lists a member once, on its root declaration: an id the target inherits or overrides
+                    // (ZombifiedPiglin.method_6001 is Zombie's randomizeReinforcementsChance; the bare-name map drops
+                    // it, AbstractHorse reuses the id) is found up the target's supertypes, as superMember does
+                    for (String t : context) {
+                        String hit = superMember(table, t, id);
+                        if (hit != null) {
+                            moj = hit;
+                            ctxOwner = t;
+                            break;
+                        }
+                    }
+                }
             }
             if (moj == null) {
                 moj = table.members.getOrDefault(id, id);
