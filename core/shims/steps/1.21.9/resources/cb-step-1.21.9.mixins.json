@@ -21,7 +21,8 @@
     "CbServerRestoredHooksMixin",
     "CbProfilesServerMixin",
     "CbProjectileDeflectionMixin",
-    "CbProjectileDeflectionMixinHooks"
+    "CbProjectileDeflectionMixinHooks",
+    "CbDebugPayloadTypesMixin"
   ],
   "client": [
     "CbArmorMeshSetMixin",
