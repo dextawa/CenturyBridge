@@ -10,5 +10,5 @@ import top.dext.centurybridge.step.v1_20_5.facade.DyeableLeatherItem;
  * answer from the stack's display.color.
  */
 @Mixin(net.minecraft.class_1738.class)
-public abstract class CbFinItemDyeableArmorMixin implements DyeableLeatherItem {
+public abstract class CbFinItemDyeableArmorMixin implements DyeableLeatherItem, top.dext.centurybridge.step.v1_20_5.rt.CbFinItemArmor.VanillaDyeable {
 }
