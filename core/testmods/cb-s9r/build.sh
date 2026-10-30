@@ -4,11 +4,13 @@
 #   cb-s9r.jar   a 1.21.8-era mod (intermediary names, no refmap): an ObjectSelectionList subclass overriding
 #                isSelectedItem(index) (true for index 2, recording what it is asked), and a 1.21.8 @Inject HEAD on
 #                AbstractWidget.mouseClicked(x, y, button) answering false for the button labelled "blocked". Its
-#                screen holds that list and two buttons ("keep", "blocked"). Climb it one step (CB_FROM=1.21.8).
+#                screen holds that list and two buttons ("keep", "blocked"); ArmorCheck bakes 1.21.8's inner / outer
+#                armor layers (ModelLayers.*_INNER_ARMOR / _OUTER_ARMOR). Climb it one step (CB_FROM=1.21.8).
 #   cb-s9rn.jar  a native 1.21.9 mod: a @ModifyExpressionValue on entriesCanBeSelected() and an @Inject HEAD on
 #                renderSelection(graphics, entry, color) in AbstractSelectionList.renderItem, an @Inject HEAD on
 #                AbstractWidget.mouseClicked(MouseButtonEvent, doubleClick); its driver opens the climbed mod's screen
 #                from the title screen, clicks both buttons through vanilla's Screen.mouseClicked, prints
+#                compares the baked armor layers with 1.21.9's slot layers (C.*), prints
 #                "CB-S9R ok|FAIL ..", "CB-S9R N/T" and stops the client.
 #   bash core/testmods/cb-s9r/build.sh <outDir>   (from the repository root on beta2; CB_DATA=<data dir>)
 set -euo pipefail

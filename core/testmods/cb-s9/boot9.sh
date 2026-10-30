@@ -2,6 +2,7 @@
 # boot9.sh <tag> <mod jar...>: step 1.21.8 -> 1.21.9 real-server check for s9 -- 1.21.8 mods converted 1.21.8 -> 1.21.9
 # with this agent's engine and wiring, booted on a Fabric 1.21.9 server (own copy, $CB_WD/srv-1.21.9; CB_WD defaults to agents/s9) with Fabric API
 # and this agent's 1.21.9 step layer. Run on beta2 from ~/cbwork after remote_step.sh built the layer.
+# CB_NATIVE="<jar> ...": native 1.21.9 mods copied in unconverted (route checks: a native mixin on the same call).
 set -uo pipefail
 cd ~/cbwork
 WD=${CB_WD:-agents/s9}; TAG="$1"; shift 1
@@ -10,12 +11,13 @@ LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client
 SRV=$WD/srv-1.21.9
 CONV=$WD/boot/$TAG
 rm -rf "$CONV" && mkdir -p "$CONV"
-"$JAVA" -Xmx4g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" 1.21.8 1.21.9 "$CONV/conv" "$@" \
+"$JAVA" -Xmx4g -Dcb.layerJar="$WD/build/centurybridge-0.3.0+1.21.9.jar" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" 1.21.8 1.21.9 "$CONV/conv" "$@" \
     > "$CONV/climb.log" 2>&1 || { echo "climb failed"; tail -5 "$CONV/climb.log"; exit 1; }
 rm -rf "$SRV/mods" "$SRV/world-$TAG" "$SRV"/ops.json "$SRV"/whitelist.json "$SRV"/banned-players.json && mkdir -p "$SRV/mods"
 cp data/runtime/client-1.21.9/mods/fabric-api-*.jar "$SRV/mods/"
 cp $WD/build/centurybridge-0.3.0+1.21.9.jar "$SRV/mods/"
 cp "$CONV"/conv/*+1.21.9.jar "$SRV/mods/"
+for j in ${CB_NATIVE:-}; do cp "$j" "$SRV/mods/"; done
 cp "$SRV/server.properties.orig" "$SRV/server.properties"
 sed -i "s/^level-name=.*/level-name=world-$TAG/" "$SRV/server.properties"
 echo "mods: $(ls "$SRV/mods" | tr '\n' ' ')"

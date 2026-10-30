@@ -32,6 +32,15 @@ public @interface CbVanillaReads {
      */
     int PRIORITY = -13;
 
+    /**
+     * The priority of a layer mixin whose injectors into a 1.21.9 method must run before every mod's injectors at the
+     * same point (Mixin applies mixins in ascending priority; each injector at a point goes after the ones applied
+     * before it): the injectors split off a restorer into its Hooks mixin that fill restored state at a constructor's
+     * RETURN, which 1.21.8 had filled before any mod's RETURN injector ran (CbWardenModelRestoredMixinHooks).
+     * The priority gate (core/tools/mixin_priority.py) accepts injectors only under this name.
+     */
+    int ROUTE_FIRST = 1;
+
     String value();
 
     /** what vanilla's path carries, "&lt;injector&gt;@&lt;At value&gt;"; absent = the whole member */

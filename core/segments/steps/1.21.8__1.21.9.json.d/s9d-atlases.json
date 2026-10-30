@@ -1,0 +1,28 @@
+{
+ "_s9d_atlases_basis": "1.21.9 moved every atlas into AtlasManager and removed TextureAtlasHolder with PaintingTextureManager, MapDecorationTextureManager and GuiSpriteManager (javap: absent from the 1.21.9 jar). The four come back as facades with 1.21.8's bodies (facade/TextureAtlasHolder ...); Minecraft's getters for them, getTextureAtlas and the three session getters moved into Services come back on Minecraft (mixin/CbMinecraftRestoredMixin); SpriteLoader.loadAndStitch's default and Collection overloads and Preparations.waitForUpload come back on their classes (CbSpriteLoaderRestoredMixin, CbSpritePreparationsRestoredMixin). AtlasSet with StitchResult / AtlasEntry come back as a facade with 1.21.8's bodies (facade/AtlasSet); ModelManager's getAtlas / updateMaxMipLevel / close come back over the AtlasManager it is given (CbModelManagerRestoredMixin), EntityRendererProvider.Context.getModelManager with 1.21.8's body (CbEntityRendererContextRestoredMixin). Left open: new ModelManager(textureManager, blockColors, mipLevel) and its 1.21.8 reload(barrier, manager, ...) -- 1.21.9's ModelManager stitches nothing itself and reloads from the AtlasManager's stitch published in the shared reload state, which a ModelManager reloaded alone has no AtlasManager to publish.",
+ "covers": [
+  "net/minecraft/class_310.method_1495()Lcom/mojang/authlib/minecraft/MinecraftSessionService;",
+  "net/minecraft/class_310.method_44256()Lnet/minecraft/class_7500;",
+  "net/minecraft/class_310.method_55606()Z",
+  "net/minecraft/class_310.method_18321()Lnet/minecraft/class_4044;",
+  "net/minecraft/class_310.method_58476()Lnet/minecraft/class_9443;",
+  "net/minecraft/class_310.method_52699()Lnet/minecraft/class_8658;",
+  "net/minecraft/class_310.method_1549(Lnet/minecraft/class_2960;)Ljava/util/function/Function;",
+  "net/minecraft/class_7766.method_52849(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_7766.method_47661(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_7766$class_7767.method_45845()Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_1092.method_24153(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1059;",
+  "net/minecraft/class_1092.method_24152(I)V",
+  "net/minecraft/class_1092.close()V",
+  "net/minecraft/class_5617$class_5618.method_48481()Lnet/minecraft/class_1092;"
+ ],
+ "classRenames": {
+  "net/minecraft/class_4075": "top/dext/centurybridge/step/v1_21_9/facade/TextureAtlasHolder",
+  "net/minecraft/class_4044": "top/dext/centurybridge/step/v1_21_9/facade/PaintingTextureManager",
+  "net/minecraft/class_9443": "top/dext/centurybridge/step/v1_21_9/facade/MapDecorationTextureManager",
+  "net/minecraft/class_8658": "top/dext/centurybridge/step/v1_21_9/facade/GuiSpriteManager",
+  "net/minecraft/class_4724": "top/dext/centurybridge/step/v1_21_9/facade/AtlasSet",
+  "net/minecraft/class_4724$class_7774": "top/dext/centurybridge/step/v1_21_9/facade/AtlasSet$StitchResult",
+  "net/minecraft/class_4724$class_7772": "top/dext/centurybridge/step/v1_21_9/facade/AtlasSet$AtlasEntry"
+ }
+}
