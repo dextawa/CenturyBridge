@@ -62,6 +62,11 @@ public final class Driver {
     public static volatile int dimAsked;
     public static volatile net.minecraft.class_3218 dimDest;
     public static volatile boolean blockDim;
+    public static volatile int teleFired;
+    public static volatile net.minecraft.class_3218 teleOld;
+    public static volatile net.minecraft.class_3218 teleNew;
+    public static volatile net.minecraft.class_3218 teleAt;
+    public static volatile double teleX;
     private static net.minecraft.class_3222 followOwner;
     private static int ok;
     private static int fail;
@@ -317,6 +322,25 @@ public final class Driver {
             blockDim = false;
             check("dim-blocked", dim.equals("stayed") && dimAsked == 1 && dimDest == end,
                 "move refused by the mod: " + dim + ", asked " + dimAsked + " time(s)");
+            // ---- ServerPlayer.teleportTo before sendAllPlayerInfo, @Local(ordinal = 1) old level: TeleportLocalMixin (Kilt E8g
+            // shape; 1.21: guarded descend into changeDimension(transition), arguments stashed, @Local matched by role)
+            net.minecraft.class_3222 tp = telePlayer(server, level);
+            teleFired = 0;
+            teleOld = null;
+            teleNew = null;
+            teleAt = null;
+            teleX = Double.NaN;
+            tp.method_14251(end, 0.5, 100.0, 0.5, 0.0F, 0.0F);
+            check("tele-local", teleFired == 1 && teleOld == level && teleNew == end && teleAt == end && teleX == 0.5,
+                "player teleported overworld -> end: fired " + teleFired + ", old overworld " + (teleOld == level) + ", new end "
+                    + (teleNew == end) + ", player already in the end when it fired " + (teleAt == end) + ", x " + teleX);
+            teleFired = 0;
+            net.minecraft.class_1297 back = tp.method_5731(level);
+            check("tele-portal-quiet", teleFired == 0,
+                "portal-type move end -> overworld (changeDimension, no teleportTo): fired " + teleFired + ", moved " + (back != null));
+            if (!tp.method_31481()) {
+                ((net.minecraft.class_3218) tp.method_37908()).method_18770(tp, net.minecraft.class_1297.class_5529.field_26999);
+            }
             level.method_8519(1.0F);
             level.method_8496(1.0F);
             check("thunderstorm", level.method_8546(), "isThundering after rain/thunder level 1");
@@ -544,6 +568,16 @@ public final class Driver {
         }
         unloadWatch = Long.MIN_VALUE;
         return "not unloaded (" + unloadAsked + " other unload(s))";
+    }
+
+    /** a 1.20.6 server player with a server-side connection that is not open (packets queue, nothing is sent) */
+    static net.minecraft.class_3222 telePlayer(net.minecraft.server.MinecraftServer server, class_3218 level) {
+        com.mojang.authlib.GameProfile gp = new com.mojang.authlib.GameProfile(
+            java.util.UUID.fromString("0c0b5121-0000-4000-8000-00000000e8a6"), "cbsmx6tele");
+        net.minecraft.class_3222 p = new net.minecraft.class_3222(server, level, gp, net.minecraft.class_8791.method_53821());
+        new net.minecraft.class_3244(server, new net.minecraft.class_2535(net.minecraft.class_2598.field_11941), p,
+            net.minecraft.class_8792.method_53824(gp, false));
+        return p;
     }
 
     /** a pig at the surface dx blocks east of spawn, sent to {@code dest} with 1.20.6's changeDimension(dest) */

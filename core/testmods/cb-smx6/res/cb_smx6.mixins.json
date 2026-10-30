@@ -23,7 +23,8 @@
     "LeashFieldAccessor",
     "TagVisitorMixin",
     "ChunkUnloadMixin",
-    "DimensionMixin"
+    "DimensionMixin",
+    "TeleportLocalMixin"
   ],
   "injectors": {
     "defaultRequire": 1
