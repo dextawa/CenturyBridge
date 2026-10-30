@@ -9,9 +9,10 @@ import net.fabricmc.api.Environment;
  * class_10869$class_10870, class_5944). The members that only changed their names are methodRenames
  * (segments/steps/1.21.4__1.21.5.json.d/s205d-vertexformat.json).
  * <ul>
- * <li>setupBufferState(): 1.21.4 enabled each element's attribute array and set its pointer by the element's usage;
- *     1.21.5 does exactly that in GlDevice's vertex array setup (class_10869$class_10870.method_68430(format, true),
- *     opened by the layer's access widener) -- same per-usage pointer calls, normalized flags and offsets.</li>
+ * <li>setupBufferState(): 1.21.4's body (javap -c 1.21.4 class_293.method_22649): each element's attribute array
+ *     enabled and its pointer set by VertexFormatElement.setupBufferState(index, offset, vertex size) -- the per-usage
+ *     calls 1.21.5's GlDevice vertex array setup makes too (class_10869$class_10870.method_68430), here through public
+ *     members only, so the layer keeps no reference to a private method later releases rebuild.</li>
  * <li>clearBufferState(): 1.21.4 disabled each element's attribute array (GL20.glDisableVertexAttribArray on the render
  *     thread); 1.21.5's GlStateManager lost the wrapper, the GL call is the same.</li>
  * <li>IndexType.asGLType / Mode.asGLMode (int fields): 1.21.5 computes them in GlConst.toGl(IndexType / Mode), with the
@@ -29,7 +30,13 @@ public final class CbVertexFormats {
     /** VertexFormat.setupBufferState() of 1.21.4 */
     public static void method_22649(com.mojang.blaze3d.vertex.VertexFormat format) {
         com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread();
-        net.minecraft.class_10869.class_10870.method_68430(format, true);
+        int stride = format.getVertexSize();
+        java.util.List<com.mojang.blaze3d.vertex.VertexFormatElement> elements = format.getElements();
+        for (int i = 0; i < elements.size(); i++) {
+            com.mojang.blaze3d.opengl.GlStateManager._enableVertexAttribArray(i);
+            com.mojang.blaze3d.vertex.VertexFormatElement element = elements.get(i);
+            method_22652(element, i, format.getOffset(element), stride);
+        }
     }
 
     /** VertexFormat.clearBufferState() of 1.21.4 */

@@ -7,9 +7,6 @@ accessible	field	net/minecraft/class_26	field_48926	Lnet/minecraft/class_7225$cl
 accessible	field	net/minecraft/class_3204	field_55591	Lnet/minecraft/class_10592;
 # CompiledShaderProgram(id, label): 1.21.4's CompiledShaderProgram(id) builds through it (rt/CbShaderPrograms)
 accessible	method	net/minecraft/class_5944	<init>	(ILjava/lang/String;)V
-# GlDevice's vertex array setup: 1.21.4 VertexFormat.setupBufferState()'s body (rt/CbVertexFormats)
-accessible	class	net/minecraft/class_10869$class_10870
-accessible	method	net/minecraft/class_10869$class_10870	method_68430	(Lcom/mojang/blaze3d/vertex/VertexFormat;Z)V
 
 # ---- BEGIN GENERATED (s215b): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
