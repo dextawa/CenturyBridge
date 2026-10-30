@@ -73,6 +73,7 @@ public final class CbShaderPrograms {
         for (Object s : samplers) {
             names.add(s instanceof ShaderProgramConfig$class_10158 c ? c.comp_3121() : (String) s);
         }
+        describeBlocks(shader.method_1270(), descriptions);
         shader.method_62900(descriptions, names);
         if (configs.isEmpty()) {
             return;
@@ -89,6 +90,35 @@ public final class CbShaderPrograms {
             }
         } finally {
             com.mojang.blaze3d.opengl.GlStateManager._glUseProgram(previous);
+        }
+    }
+
+    /**
+     * The program's active uniform blocks, described as W's pipelines describe them (UniformType UNIFORM_BUFFER, 1.21.6+;
+     * javap of GlProgram.setupUniforms: a described block gets its binding and a Uniform.Ubo, an undescribed one that is
+     * not built in is left unbound). 1.21.4's json named no blocks (it had none); W's shader sources, which are what is
+     * compiled, declare them. 1.21.5 has no UNIFORM_BUFFER type and its core shaders no blocks: nothing added there.
+     */
+    private static void describeBlocks(int program, List<RenderPipeline.UniformDescription> descriptions) {
+        net.minecraft.class_10789 ubo = null;
+        for (net.minecraft.class_10789 t : net.minecraft.class_10789.class.getEnumConstants()) {
+            if (t.name().equals("UNIFORM_BUFFER")) {
+                ubo = t;
+            }
+        }
+        if (ubo == null) {
+            return;
+        }
+        int blocks = org.lwjgl.opengl.GL20.glGetProgrami(program, org.lwjgl.opengl.GL31.GL_ACTIVE_UNIFORM_BLOCKS);
+        for (int i = 0; i < blocks; i++) {
+            String name = org.lwjgl.opengl.GL31.glGetActiveUniformBlockName(program, i);
+            boolean described = false;
+            for (RenderPipeline.UniformDescription d : descriptions) {
+                described |= d.name().equals(name);
+            }
+            if (!described) {
+                descriptions.add(new RenderPipeline.UniformDescription(name, ubo));
+            }
         }
     }
 

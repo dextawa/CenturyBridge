@@ -19,10 +19,12 @@ import net.minecraft.class_4345;
  * @param rawResponse 1.20.1 rawResponse
  * @param errorMsg    the parsed RealmsError's errorMsg ("" when the JSON had none); null when 1.20.1
  *                    parsed no RealmsError (the exception's realmsError was null)
- * @param errorCode   the parsed RealmsError's errorCode (-1 when the JSON had none)
+ * @param serviceCode the parsed RealmsError's errorCode (-1 when the JSON had none)
  */
 @Environment(EnvType.CLIENT)
-public record CbNetLegacyRealmsError(int httpCode, String rawResponse, String errorMsg, int errorCode)
+/* the service code component is not named errorCode: past the 26.1 wall RealmsError.method_21037 is errorCode()I, and a
+ * record accessor of that name would be a duplicate method (ClassFormatError when the class loads) */
+public record CbNetLegacyRealmsError(int httpCode, String rawResponse, String errorMsg, int serviceCode)
         implements class_4345 {
 
     /** whether 1.20.1 had a RealmsError object for this failure */
@@ -33,7 +35,7 @@ public record CbNetLegacyRealmsError(int httpCode, String rawResponse, String er
     /** 1.20.2 errorCode(): the service's own code when it gave one, else the HTTP status (1.20.2's rule) */
     @Override
     public int method_21037() {
-        return parsed() && errorCode != -1 ? errorCode : httpCode;
+        return parsed() && serviceCode != -1 ? serviceCode : httpCode;
     }
 
     /**
@@ -46,7 +48,7 @@ public record CbNetLegacyRealmsError(int httpCode, String rawResponse, String er
         if (!parsed()) {
             return class_2561.method_30163(rawResponse);
         }
-        String key = "mco.errorMessage." + errorCode;
+        String key = "mco.errorMessage." + serviceCode;
         return class_1074.method_4663(key) ? class_2561.method_43471(key) : class_2561.method_30163(errorMsg);
     }
 
@@ -59,8 +61,8 @@ public record CbNetLegacyRealmsError(int httpCode, String rawResponse, String er
         if (!parsed()) {
             return String.format(Locale.ROOT, "Realms service error (%d) %s", httpCode, rawResponse);
         }
-        String key = "mco.errorMessage." + errorCode;
+        String key = "mco.errorMessage." + serviceCode;
         String message = class_1074.method_4663(key) ? class_1074.method_4662(key) : errorMsg;
-        return String.format(Locale.ROOT, "Realms service error (%d/%d) %s", httpCode, errorCode, message);
+        return String.format(Locale.ROOT, "Realms service error (%d/%d) %s", httpCode, serviceCode, message);
     }
 }

@@ -89,6 +89,12 @@ public final class CbShaderJsonsClient {
             String type;
             int count;
             net.minecraft.class_10789 t = u.type();
+            if (t != null && ("UNIFORM_BUFFER".equals(t.name()) || "TEXEL_BUFFER".equals(t.name()))) {
+                // 1.21.6+ (javap of UniformType): a uniform block or texel buffer, which 1.21.4's json had no form for
+                // (its uniforms were single GL uniforms); left out of the json -- the program's blocks are described
+                // to W by CbShaderPrograms.setupUniforms from the linked program itself
+                continue;
+            }
             switch (t == null ? "" : t.name()) {
                 case "INT" -> { type = "int"; count = 1; }
                 case "IVEC3" -> { type = "int"; count = 3; }

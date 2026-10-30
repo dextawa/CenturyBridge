@@ -201,12 +201,13 @@ PYEOF
     [ -n "$RT" ] && [ -f "$RT/jvmargs.txt" ] && [ -f "$RT/launch-info.json" ] \
         || end "===RESULT: NO LAUNCH RUNTIME for $T (python3 bootstrap_client.py $T $CLIENTS/client-$T --assets-from $CLIENTS)==="
     AIDX=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["assetIndex"])' "$RT/launch-info.json")
-    ASSETS="${CB_ASSETS:-}"
-    if [ -z "$ASSETS" ]; then
-        for d in "$CLIENTS/assets" "$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["assetsDir"])' "$RT/launch-info.json")"; do
-            [ -f "$d/indexes/$AIDX.json" ] && { ASSETS="$d"; break; }
-        done
-    fi
+    # CB_ASSETS first, then the shared assets and the runtime's own assetsDir (launch-info.json): a CB_ASSETS without
+    # T's index (e.g. <runtime>/assets for 26.1, whose index 30 lives in the shared src/assets) falls through to them
+    ASSETS=""
+    for d in ${CB_ASSETS:+"$CB_ASSETS"} "$CLIENTS/assets" "$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["assetsDir"])' "$RT/launch-info.json")"; do
+        [ -f "$d/indexes/$AIDX.json" ] && { ASSETS="$d"; break; }
+    done
+    [ -n "${CB_ASSETS:-}" ] && [ "$ASSETS" != "$CB_ASSETS" ] && [ -n "$ASSETS" ] && echo "CB_ASSETS $CB_ASSETS has no index $AIDX; using $ASSETS"
     [ -n "$ASSETS" ] && [ -f "$ASSETS/indexes/$AIDX.json" ] || end "===RESULT: NO ASSET INDEX $AIDX for $T==="
     # natives: LWJGL loads them from the natives jars on the classpath, so they must be Linux ones
     NAT=$(tr ':' '\n' < "$RT/jvmargs.txt" | grep -c 'natives-linux')

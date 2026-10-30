@@ -28,6 +28,9 @@ for ((i = 1; i < ${#RELEASES[@]}; i++)); do
         fi
     done
     [ -n "$SUBJ" ] || { [ "$R" = "$T" ] && break; continue; }
+    # the layers as they stand at R must not declare a member twice (ClassFormatError on load; dup_members.py)
+    python3 "$WD/core/tools/dup_members.py" $SUBJ > "$OUT/dup-$R.txt" 2>&1 \
+        || { echo "$R: DUPLICATE MEMBERS (ClassFormatError when the class loads)"; cat "$OUT/dup-$R.txt"; exit 1; }
     case "$R" in 26.*) GAME="data/jars/client-$R.jar" ;; *) GAME="data/jars/client-$R-intermediary.jar" ;; esac
     FAPI=$(ls data/runtime/client-$R/mods/fabric-api-*.jar 2>/dev/null | head -1)
     "$JAVA" -Xmx16g "-Dcb.linkcheck.sharedAw=centurybridge-0.3.0+*.jar" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/$R" - $SUBJ -- \
