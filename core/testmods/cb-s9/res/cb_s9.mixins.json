@@ -1,0 +1,14 @@
+{
+ "required": true,
+ "minVersion": "0.8",
+ "package": "cb.s9.mixin",
+ "compatibilityLevel": "JAVA_17",
+ "mixins": [
+  "CommandBlockOutputMixin",
+  "DebugPacketsInvoker",
+  "DebugPacketsMixin"
+ ],
+ "injectors": {
+  "defaultRequire": 1
+ }
+}

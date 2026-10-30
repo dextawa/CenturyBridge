@@ -1,0 +1,11 @@
+{
+ "_s9e_debug_basis": "1.21.9 removed DebugPackets (class_4209, javap: absent from the 1.21.9 jar) when debug information became subscriptions (util/debug). It comes back as a facade with 1.21.8's bodies (facade/DebugPackets): the public send statics were empty in a released 1.21.8 and stay empty; the private helpers keep their code (brain memory descriptions, POI forwarder, string helpers, sendPacketToAllPlayers), so mods' mixins and invokers on them, and the 1.20.2 layer's climbed CbDebugBrainRestored (@Shadow getMemoryDescriptions, method_36157), find them. The members that take or build 1.21.8's debug payloads wait for those payload classes.",
+ "classRenames": {
+  "net/minecraft/class_4209": "top/dext/centurybridge/step/v1_21_9/facade/DebugPackets"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_4209.method_22318(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Ljava/lang/String;II)V": "addGameTestMarker: takes or builds one of 1.21.8's debug payloads (GameTestAddMarker / GameTestClearMarkers / RedstoneWireOrientations DebugPayload), classes 1.21.9 removed; open until those payloads come back (s9e debug payloads)",
+  "net/minecraft/class_4209.method_22317(Lnet/minecraft/class_3218;)V": "clearGameTestMarkers: takes or builds one of 1.21.8's debug payloads (GameTestAddMarker / GameTestClearMarkers / RedstoneWireOrientations DebugPayload), classes 1.21.9 removed; open until those payloads come back (s9e debug payloads)",
+  "net/minecraft/class_4209.method_61218(Lnet/minecraft/class_1937;Lnet/minecraft/class_9831;)V": "sendWireUpdates: takes or builds one of 1.21.8's debug payloads (GameTestAddMarker / GameTestClearMarkers / RedstoneWireOrientations DebugPayload), classes 1.21.9 removed; open until those payloads come back (s9e debug payloads)"
+ }
+}

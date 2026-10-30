@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx1p",
+  "version": "1.0.0",
+  "name": "CB smx1 permissions test",
+  "description": "1.21.10-era mod using 1.21.10's int permission levels and RespawnAnchorBlock.canSetSpawn(Level), bridged by step 1.21.10 -> 1.21.11",
+  "environment": "*",
+  "mixins": ["cb_smx1p.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.10" }
+}

@@ -1,0 +1,23 @@
+{
+ "_s215e_saddles_basis": "1.21.4's Saddleable (class_5146) is gone in 1.21.5: the saddle is the SADDLE equipment slot, equipped by the saddle item's Equippable and the equipment dispenser behaviour (javap -c -p 1.21.4 class_5146 / class_1816 / class_2357$10 / class_1452 / class_4985 / class_1496, 1.21.5 class_10192 / class_10205 / class_1308 / class_1309). A converted mod's Saddleable is facade/Saddleable; Pig, Strider and AbstractHorse implement it again over their slot (CbSaddleableRestoredMixin, CbHorseSaddleableRestoredMixin), so 1.21.4's calls on them (isSaddleable / equipSaddle / isSaddled) link to the restored members. 1.21.5's readers route to a converted subclass's overrides (CbSaddleHooksMixin: Mob.isSaddled, CbSaddleSlotHooksMixin: canUseSlot(SADDLE)) and its equipSaddle (CbSaddleEquipHooksMixin, CbSaddleDispenseHooksMixin), and a mod's own Saddleable gets 1.21.4's SaddleItem / dispenser bodies (rt/CbSaddles). Llama's isSaddleable (false) and Camel's getSaddleSoundEvent (CAMEL_SADDLE) are restored on them (CbLlamaSaddleableRestoredMixin, CbCamelSaddleSoundRestoredMixin); a converted horse subclass's getSaddleSoundEvent answers the SADDLE equip sound (CbSaddleSoundHooksMixin). covers: the restored members.",
+ "classRenames": {
+  "net/minecraft/class_5146": "top/dext/centurybridge/step/v1_21_5/facade/Saddleable"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1496.method_56679()V": "top/dext/centurybridge/step/v1_21_5/rt/CbSaddles#syncSaddleToClients",
+  "net/minecraft/class_1496.method_56680()Lnet/minecraft/class_1263;": "top/dext/centurybridge/step/v1_21_5/rt/CbSaddles#bodyArmorAccess"
+ },
+ "covers": [
+  "net/minecraft/class_1452.method_6765()Z",
+  "net/minecraft/class_1452.method_6576(Lnet/minecraft/class_1799;Lnet/minecraft/class_3419;)V",
+  "net/minecraft/class_1452.method_6725()Z",
+  "net/minecraft/class_4985.method_6765()Z",
+  "net/minecraft/class_4985.method_6576(Lnet/minecraft/class_1799;Lnet/minecraft/class_3419;)V",
+  "net/minecraft/class_4985.method_6725()Z",
+  "net/minecraft/class_1496.method_6765()Z",
+  "net/minecraft/class_1496.method_6576(Lnet/minecraft/class_1799;Lnet/minecraft/class_3419;)V",
+  "net/minecraft/class_1496.method_6725()Z",
+  "net/minecraft/class_1501.method_6765()Z",
+  "net/minecraft/class_7689.method_45328()Lnet/minecraft/class_3414;"
+ ]
+}

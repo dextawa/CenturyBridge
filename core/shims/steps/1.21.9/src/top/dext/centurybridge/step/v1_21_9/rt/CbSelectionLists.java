@@ -20,6 +20,14 @@ public final class CbSelectionLists {
     private CbSelectionLists() {
     }
 
+    /**
+     * the restored 1.21.8 AbstractSelectionList.setSelectedIndex(index) (CbSelectionListRestoredMixin), for layer code
+     * calling it virtually (facade/RowButton), so a list overriding it answers
+     */
+    public interface LegacySelectedIndex {
+        void method_64847(int index);
+    }
+
     /** the restored 1.21.8 header state of a list (CbSelectionListRestoredMixin) */
     public interface LegacyHeader {
         boolean cb$hasHeader();
