@@ -152,11 +152,13 @@ public final class CbRestFapiResources {
         }
     }
 
-    private record InfoRegistryLookup<T>(class_5321<? extends class_2378<? extends T>> key, class_6903.class_7862<T> info)
+    // component not named key: past the 26.1 wall RegistryLookup.method_46765 is key(), and a record accessor of that
+    // name would be a duplicate method (ClassFormatError when the class loads)
+    private record InfoRegistryLookup<T>(class_5321<? extends class_2378<? extends T>> registryKey, class_6903.class_7862<T> info)
             implements class_7225.class_7226<T> {
         @Override
         public class_5321<? extends class_2378<? extends T>> method_46765() {
-            return this.key;
+            return this.registryKey;
         }
 
         @Override
@@ -176,13 +178,13 @@ public final class CbRestFapiResources {
 
         @Override
         public Stream<class_6880.class_6883<T>> method_42017() {
-            throw new UnsupportedOperationException("CenturyBridge: a 1.21.1 resource condition listed " + this.key
+            throw new UnsupportedOperationException("CenturyBridge: a 1.21.1 resource condition listed " + this.registryKey
                 + " through a 1.21.2 registry info lookup, which finds elements by key only");
         }
 
         @Override
         public Stream<class_6885.class_6888<T>> method_42020() {
-            throw new UnsupportedOperationException("CenturyBridge: a 1.21.1 resource condition listed the tags of " + this.key
+            throw new UnsupportedOperationException("CenturyBridge: a 1.21.1 resource condition listed the tags of " + this.registryKey
                 + " through a 1.21.2 registry info lookup, which finds tags by key only");
         }
     }

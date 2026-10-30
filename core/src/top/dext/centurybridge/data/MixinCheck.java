@@ -824,7 +824,11 @@ public final class MixinCheck {
         for (AnnotationNode a : all) {
             switch (a.desc) {
                 case SHADOW -> {
-                    if (!declaresMethod(target, m.name, m.desc)) {
+                    // or merged by a class mixin applying first (lower priority): Mixin applies a target's mixins in
+                    // priority order and resolves a shadow against what earlier ones merged, as for shadow fields
+                    // (26.2: the 1.20.2 layer's CbEntityRiding, priority 1, shadows getPassengerAttachmentPoint that
+                    // the 1.20.5 layer's CbRestEntityMixin, priority -2, restores)
+                    if (!declaresMethod(target, m.name, m.desc) && !mergedBefore(target.name, m.name + m.desc, currentMixin)) {
                         problems.add(me + ": @Shadow method " + m.name + m.desc + " not declared on " + target.name);
                     }
                 }

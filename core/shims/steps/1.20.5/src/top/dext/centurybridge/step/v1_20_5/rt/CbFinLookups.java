@@ -50,11 +50,13 @@ public final class CbFinLookups {
         return new RegistryLookupView<>(key, lifecycle, lookup);
     }
 
-    private record RegistryLookupView<T>(class_5321<? extends class_2378<? extends T>> key, Lifecycle lifecycle,
+    // component not named key: past the 26.1 wall RegistryLookup.method_46765 is key(), and a record accessor of that
+    // name would be a duplicate method (ClassFormatError when the class loads)
+    private record RegistryLookupView<T>(class_5321<? extends class_2378<? extends T>> registryKey, Lifecycle lifecycle,
             class_7225<T> lookup) implements class_7225.class_7226<T> {
         @Override
         public class_5321<? extends class_2378<? extends T>> method_46765() {
-            return key;
+            return registryKey;
         }
 
         @Override
