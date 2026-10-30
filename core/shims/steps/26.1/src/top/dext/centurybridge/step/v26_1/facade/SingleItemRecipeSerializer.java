@@ -26,7 +26,8 @@ public class SingleItemRecipeSerializer<T extends SingleItemRecipe> implements R
         T create(String group, Ingredient input, ItemStack result);
     }
 
-    private final MapCodec<T> codec;
+    /** public: 1.21.11 code reads it as a field (the 1.20.5 layer's CbFieldReshapesGen; its own access widener opened the vanilla field) */
+    public final MapCodec<T> codec;
     private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
     public SingleItemRecipeSerializer(Factory<T> factory) {

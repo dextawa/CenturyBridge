@@ -21,7 +21,10 @@
     "CbServerRestoredHooksMixin",
     "CbProfilesServerMixin",
     "CbProjectileDeflectionMixin",
-    "CbProjectileDeflectionMixinHooks"
+    "CbProjectileDeflectionMixinHooks",
+    "CbDebugPayloadTypesMixin",
+    "CbEntityRestoredMixin",
+    "CbItemRestoredMixin"
   ],
   "client": [
     "CbArmorMeshSetMixin",
@@ -53,7 +56,10 @@
     "CbWidgetClickRestoredMixin",
     "CbWidgetClickRestoredHooksMixin",
     "CbWorldRenderEventsMixin",
-    "CbWorldRenderTargetsMixin"
+    "CbWorldRenderTargetsMixin",
+    "CbModelPartRestoredMixin",
+    "CbMaterialRestoredMixin",
+    "CbWeatherRestoredMixin"
   ],
   "server": [],
   "injectors": {
