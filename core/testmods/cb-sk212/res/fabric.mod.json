@@ -1,0 +1,10 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_sk212",
+ "version": "1.0.0",
+ "name": "CB sk212: furnace recipesUsed read through vanilla and a mod subclass (1.21.1 -> 1.21.2)",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.sk212.Sk212TestMod"] },
+ "accessWidener": "cb_sk212.accesswidener",
+ "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.1", "fabric-lifecycle-events-v1": "*" }
+}

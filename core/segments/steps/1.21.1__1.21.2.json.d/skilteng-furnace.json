@@ -1,0 +1,6 @@
+{
+ "_skilteng_furnace_basis": "javap 1.21.1 / 1.21.2 code jars: AbstractFurnaceBlockEntity.recipesUsed keeps name and role (addTo per smelt, clear on award, saved as RecipesUsed by location), Object2IntOpenHashMap<ResourceLocation> -> Reference2IntOpenHashMap<ResourceKey<Recipe>>; a read through the vanilla class or a mod subclass takes a key-converting write-through view (CbFurnaceRecipesUsed)",
+ "instanceFieldGetters": {
+  "net/minecraft/class_2609.field_11986:Lit/unimi/dsi/fastutil/objects/Object2IntOpenHashMap;": "top/dext/centurybridge/step/v1_21_2/rt/CbFurnaceRecipesUsed"
+ }
+}

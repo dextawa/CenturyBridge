@@ -1,0 +1,10 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_sk212n",
+ "version": "1.0.0",
+ "name": "CB sk212 native 1.21.2 counterpart",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.sk212n.Sk212Native"] },
+ "mixins": ["cb_sk212n.mixins.json"],
+ "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.2", "fabric-lifecycle-events-v1": "*" }
+}

@@ -1,0 +1,6 @@
+{
+ "_skilteng_worldupgrader_basis": "javap 1.21.11 / 26.1: WorldUpgrader.progressMap (Reference2FloatMap, put per dimension by the upgrade thread, read by dimensionProgress) moved into UpgradeProgress.progressMap, held in WorldUpgrader.upgradeProgress; same map and role",
+ "instanceFieldGetters": {
+  "net/minecraft/class_1257.field_5762:Lit/unimi/dsi/fastutil/objects/Reference2FloatMap;": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldUpgrader#progressMap"
+ }
+}
