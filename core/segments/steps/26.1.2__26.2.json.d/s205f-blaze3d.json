@@ -7,6 +7,7 @@
     "com/mojang/blaze3d/opengl/GlProgram.setupUniforms(Ljava/util/List;Ljava/util/List;)V": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/vertex/VertexFormat.getElementAttributeNames()Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/vertex/VertexFormat.getOffset(Lcom/mojang/blaze3d/vertex/VertexFormatElement;)I": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
+    "com/mojang/blaze3d/vertex/VertexFormat.contains(Lcom/mojang/blaze3d/vertex/VertexFormatElement;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/pipeline/RenderPipeline.getSamplers()Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/pipeline/RenderPipeline.getUniforms()Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/vertex/VertexFormatElement.count()I": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",

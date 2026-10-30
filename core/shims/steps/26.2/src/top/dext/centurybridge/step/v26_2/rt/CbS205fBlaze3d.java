@@ -26,8 +26,9 @@ import top.dext.centurybridge.step.v26_2.facade.VertexFormatElement$Type;
  *     getElementAttributeNames() at their indices: the one-format array.</li>
  * <li>VertexFormat.getElementAttributeNames(): 26.1.2's names list, parallel to the elements; 26.2's elements carry
  *     their name.</li>
- * <li>VertexFormat.getOffset(element): 26.1.2 offsetsByElement[element.id()], -1 for an element not in the format;
- *     26.2's elements carry their offset.</li>
+ * <li>VertexFormat.getOffset(element) / contains(element): 26.1.2 offsetsByElement[element.id()] (-1 for an element
+ *     not in the format) / its mask bit; 26.2's elements carry their offset and the format answers by name
+ *     (getElement(name), contains(name)), so both look the element up by name.</li>
  * <li>RenderPipeline.getSamplers() / getUniforms(): 26.2 keeps them per bind group layout; flattened in order as 26.2's
  *     own GlProgram.setupBindGroupLayouts flattens them.</li>
  * <li>VertexFormatElement.count() / type() / normalized(), GlConst.toGl(Type): 26.2's vertex array setup
@@ -76,9 +77,18 @@ public final class CbS205fBlaze3d {
         return names;
     }
 
-    /** 26.1.2 VertexFormat.getOffset(element) */
+    /**
+     * 26.1.2 VertexFormat.getOffset(element): by the element's name (26.2 VertexFormat.getElement(name)), not record
+     * equality -- a 26.1.2 constant (offset 0) stands for the role wherever a format placed it
+     */
     public static int getOffset(VertexFormat format, VertexFormatElement element) {
-        return format.getElements().contains(element) ? element.offset() : -1;
+        VertexFormatElement own = format.getElement(element.name());
+        return own != null ? own.offset() : -1;
+    }
+
+    /** 26.1.2 VertexFormat.contains(element): 26.2 contains(name), by the element's name as getOffset */
+    public static boolean contains(VertexFormat format, VertexFormatElement element) {
+        return format.contains(element.name());
     }
 
     /** 26.1.2 RenderPipeline.getSamplers() */

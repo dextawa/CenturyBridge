@@ -336,7 +336,7 @@ public final class CbNetRealms {
      */
     public static int method_21037(class_4345 error) {
         if (error instanceof CbNetLegacyRealmsError legacy) {
-            return legacy.parsed() ? legacy.errorCode() : -1;
+            return legacy.parsed() ? legacy.serviceCode() : -1;
         }
         if (error instanceof class_4345.class_8654 json) {
             return json.comp_1599() == json.comp_1598() ? -1 : json.comp_1599();
