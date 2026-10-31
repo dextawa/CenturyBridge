@@ -422,6 +422,23 @@ public class SwallTestMod implements ModInitializer {
         net.minecraft.class_10215 resistBack = resist.method_58694(net.minecraft.class_9334.field_54273);
         check("componentValue.damageResistantOnStack", resistBack != null
             && resistBack.method_64198(sources.method_48794()) && !resistBack.method_64198(sources.method_48830()), resistBack);
+
+        // JukeboxPlayable(EitherHolder): by key (resolved in the registries in use) and by holder; reads back the song
+        net.minecraft.class_6880<net.minecraft.class_9793> cat = server.method_30611().method_30530(net.minecraft.class_7924.field_52176)
+            .method_46747(net.minecraft.class_9796.field_52038);
+        net.minecraft.class_9792 byKey = new net.minecraft.class_9792(new net.minecraft.class_9791<>(net.minecraft.class_9796.field_52038));
+        net.minecraft.class_9792 byHolder = new net.minecraft.class_9792(new net.minecraft.class_9791<>(cat));
+        for (Object[] c : new Object[][] {{"key", byKey}, {"holder", byHolder}}) {
+            net.minecraft.class_9791<net.minecraft.class_9793> e = ((net.minecraft.class_9792) c[1]).comp_2833();
+            boolean ok = e != null && e.comp_3636().left().isPresent()
+                && e.comp_3636().left().get().method_40230().get().equals(net.minecraft.class_9796.field_52038);
+            check("componentValue.jukeboxPlayableCtor." + c[0], ok, e);
+        }
+        net.minecraft.class_1799 disc = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600);
+        disc.method_57379(net.minecraft.class_9334.field_52175, byKey);
+        net.minecraft.class_9792 discBack = disc.method_58694(net.minecraft.class_9334.field_52175);
+        check("componentValue.jukeboxPlayableOnStack", discBack != null && discBack.comp_2833().comp_3636().left()
+            .map(h -> h.method_40230().get().equals(net.minecraft.class_9796.field_52038)).orElse(false), discBack);
     }
 
     /** 1.21.11's SelectorPattern, 26.1's CompilableString of an entity selector */
