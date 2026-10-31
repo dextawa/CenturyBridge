@@ -1,0 +1,1297 @@
+usage	owner	name	desc	kinds	w	used
+aw-call	net/minecraft/class_4910	method_34852	()V	METHOD	method method_34852(Lnet/minecraft/class_2248;Lnet/minecraft/class_2248;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_4910	method_25520	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_746	method_65525	()Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_310	method_29041	(Ljava/lang/String;)V	METHOD	method method_29041(Lnet/minecraft/class_338$class_11732;)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_310	method_18098	(Lnet/minecraft/class_437;)V	METHOD	method not declared on the owner	aw:0 mixin:3
+aw-get	net/minecraft/class_310	field_17405	Ljava/util/concurrent/atomic/AtomicReference;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_310	field_39420	Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_310	field_1723	Lcom/mojang/authlib/minecraft/MinecraftSessionService;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_310	field_18008	Lnet/minecraft/class_4044;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_310	field_50035	Lnet/minecraft/class_9443;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_310	field_45293	Lnet/minecraft/class_8658;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_310	field_17404	Ljava/util/Queue;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_312	method_1601	(JIII)V	METHOD	method method_1601(JLnet/minecraft/class_11910;I)V private	aw:0 mixin:15
+aw-get	net/minecraft/class_312	field_1780	I	FIELD	field Lnet/minecraft/class_11910; private	aw:0 mixin:0
+aw-put	net/minecraft/class_312	field_1780	I	FIELD	field Lnet/minecraft/class_11910; private	aw:0 mixin:0
+aw-call	net/minecraft/class_635	method_2891	()Lcom/mojang/authlib/minecraft/MinecraftSessionService;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_8819$class_8820	values	()[Lnet/minecraft/class_8819$class_8820;	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_8819$class_8820	valueOf	(Ljava/lang/String;)Lnet/minecraft/class_8819$class_8820;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8819$class_8820	<init>	(Ljava/lang/String;I)V	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_8819$class_8820	field_46584	Lnet/minecraft/class_8819$class_8820;	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_8819$class_8820	field_46585	Lnet/minecraft/class_8819$class_8820;	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_8819$class_8820	field_46586	Lnet/minecraft/class_8819$class_8820;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_638$class_5271	field_48402	Lnet/minecraft/class_2338;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_638$class_5271	field_48402	Lnet/minecraft/class_2338;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_638$class_5271	field_26372	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_638$class_5271	field_26372	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_8819	field_46579	Lnet/minecraft/class_746;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8819	field_46580	Lnet/minecraft/class_638;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8819	field_46581	Lnet/minecraft/class_761;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8819	field_46582	Lnet/minecraft/class_8819$class_8820;	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_8819	field_46582	Lnet/minecraft/class_8819$class_8820;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_634	method_59842	(ZLnet/minecraft/class_5321;Lnet/minecraft/class_5321;)Lnet/minecraft/class_434$class_9678;	METHOD	method method_59842(ZLnet/minecraft/class_5321;Lnet/minecraft/class_5321;)Lnet/minecraft/class_3928$class_9678; private	aw:0 mixin:0
+aw-call	net/minecraft/class_634	method_54133	(Lnet/minecraft/class_746;Lnet/minecraft/class_638;Lnet/minecraft/class_434$class_9678;)V	METHOD	method method_54133(Lnet/minecraft/class_746;Lnet/minecraft/class_638;Lnet/minecraft/class_3928$class_9678;)V private	aw:0 mixin:0
+aw-get	net/minecraft/class_634	field_48933	Lnet/minecraft/class_9211;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_634	field_46578	Lnet/minecraft/class_8819;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_634	field_46578	Lnet/minecraft/class_8819;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_634	field_45947	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_634	field_45947	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_9211	method_56831	(Lnet/minecraft/class_9192;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9211	field_48935	Lnet/minecraft/class_634;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9211	field_48936	Lnet/minecraft/class_340;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9211	field_48937	Ljava/util/EnumMap;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_7594	method_44737	(Lnet/minecraft/class_7471;Lnet/minecraft/class_2556$class_7602;Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7595;)V	METHOD	method method_44737(Lnet/minecraft/class_7471;Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7595;)V private	aw:0 mixin:0
+aw-new	net/minecraft/class_668	<init>	(Lnet/minecraft/class_638;DDDDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V (Lnet/minecraft/class_638;DDDDDDZLnet/minecraft/class_703$class_9213;Lnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_668	<init>	(Lnet/minecraft/class_638;DDDDDDZLnet/minecraft/class_703$class_9213;)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V (Lnet/minecraft/class_638;DDDDDDZLnet/minecraft/class_703$class_9213;Lnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_700	<init>	(Lnet/minecraft/class_638;DDD)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_700	field_21793	Lnet/minecraft/class_3879;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_700	field_21792	Lnet/minecraft/class_1921;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_677$class_678	<init>	(Lnet/minecraft/class_638;DDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_10335	<init>	(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_243;I)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_243;ILnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_702$class_7759	<init>	(Lnet/minecraft/class_2960;Ljava/util/Optional;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_702$class_7759	toString	()Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_702$class_7759	hashCode	()I	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_702$class_7759	equals	(Ljava/lang/Object;)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_702$class_7759	comp_1036	()Lnet/minecraft/class_2960;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_702$class_7759	comp_1037	()Ljava/util/Optional;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_702$class_7759	comp_1036	Lnet/minecraft/class_2960;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_702$class_7759	comp_1037	Ljava/util/Optional;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_663$class_4083	<init>	(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;Lnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_663$class_5692	<init>	(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;Lnet/minecraft/class_1058;)V	aw:3 mixin:0
+aw-call	net/minecraft/class_3940	method_60375	(Lnet/minecraft/class_4588;Lorg/joml/Quaternionf;FFFFFFFFI)V	METHOD	method method_60375(Lnet/minecraft/class_11944;Lorg/joml/Quaternionf;FFFF)V protected	aw:0 mixin:0
+aw-new	net/minecraft/class_684	<init>	(Lnet/minecraft/class_638;DDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_5786$class_5960	field_29577	D	ICCE	field D private static final	aw:0 mixin:0
+aw-new	net/minecraft/class_657	<init>	(Lnet/minecraft/class_638;DDDDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_5786$class_5959	field_29575	D	ICCE	field D private static final	aw:0 mixin:0
+aw-new	net/minecraft/class_719	<init>	(Lnet/minecraft/class_638;DDDDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V	aw:3 mixin:1
+aw-new	net/minecraft/class_736	<init>	(Lnet/minecraft/class_638;DDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_5737	<init>	(Lnet/minecraft/class_638;DDDLnet/minecraft/class_5716;I)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_5716;ILnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_693	<init>	(Lnet/minecraft/class_898;Lnet/minecraft/class_638;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_243;)V	METHOD	constructors (Lnet/minecraft/class_638;Lnet/minecraft/class_10017;Lnet/minecraft/class_1297;Lnet/minecraft/class_243;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_693	method_29358	(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1297;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_693	field_3823	Lnet/minecraft/class_1297;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_693	field_3824	Lnet/minecraft/class_898;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_5786	field_28457	Lnet/minecraft/class_5819;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5786$class_5956	field_29570	D	ICCE	field D private static final	aw:0 mixin:0
+aw-new	net/minecraft/class_663$class_4084	<init>	(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;Lnet/minecraft/class_1058;)V	aw:3 mixin:0
+aw-new	net/minecraft/class_663$class_4498	<init>	(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;Lnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_702	method_3062	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_702	method_3043	(Lnet/minecraft/class_2396;Lnet/minecraft/class_707;)V	METHOD	method not declared on the owner	aw:2 mixin:0
+aw-call	net/minecraft/class_702	method_49338	(Lnet/minecraft/class_2396;Lnet/minecraft/class_707$class_8187;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_702	method_18834	(Lnet/minecraft/class_2396;Lnet/minecraft/class_702$class_4091;)V	METHOD	method not declared on the owner	aw:3 mixin:0
+aw-call	net/minecraft/class_702	method_18836	(Lnet/minecraft/class_2960;Lnet/minecraft/class_3298;)Ljava/util/Optional;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_702	method_3048	(Ljava/util/Collection;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_702	method_3059	(Lnet/minecraft/class_703;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_702	method_65199	(Lnet/minecraft/class_4184;FLnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_3999;Ljava/util/Queue;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_702	method_65200	(Lnet/minecraft/class_4184;FLnet/minecraft/class_4597$class_4598;Ljava/util/Queue;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_702	field_40505	Lorg/slf4j/Logger;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_702	field_40506	Lnet/minecraft/class_7654;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_702	field_32657	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_702	field_3835	Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_702	field_18300	Ljava/util/Map;	FIELD	field not declared on the owner	aw:2 mixin:0
+aw-get	net/minecraft/class_702	field_18301	Lnet/minecraft/class_1059;	FIELD	field not declared on the owner	aw:6 mixin:0
+aw-new	net/minecraft/class_663	<init>	(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_723	<init>	(Lnet/minecraft/class_638;Lnet/minecraft/class_4002;DDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_723	<init>	(Lnet/minecraft/class_638;Lnet/minecraft/class_4002;DDDDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_698	<init>	(Lnet/minecraft/class_638;DDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_9479	<init>	(Lnet/minecraft/class_638;DDDDDDII)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDIILnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_687	<init>	(Lnet/minecraft/class_638;DDDDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V	aw:1 mixin:0
+aw-new	net/minecraft/class_702$class_4090	<init>	()V	CLASS	class gone	aw:8 mixin:0
+aw-call	net/minecraft/class_702$class_4090	method_18138	(II)Lnet/minecraft/class_1058;	CLASS	class gone	aw:8 mixin:0
+aw-call	net/minecraft/class_702$class_4090	method_18139	(Lnet/minecraft/class_5819;)Lnet/minecraft/class_1058;	CLASS	class gone	aw:8 mixin:0
+aw-call	net/minecraft/class_702$class_4090	method_18838	(Ljava/util/List;)V	CLASS	class gone	aw:8 mixin:0
+aw-get	net/minecraft/class_702$class_4090	field_18303	Ljava/util/List;	CLASS	class gone	aw:8 mixin:0
+aw-put	net/minecraft/class_702$class_4090	field_18303	Ljava/util/List;	CLASS	class gone	aw:8 mixin:0
+aw-new	net/minecraft/class_653	<init>	(Lnet/minecraft/class_638;DDDDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_5786$class_5958	field_29573	D	ICCE	field D private static final	aw:0 mixin:0
+aw-new	net/minecraft/class_663$class_4082	<init>	(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;Lnet/minecraft/class_1058;)V	aw:0 mixin:1
+aw-new	net/minecraft/class_3937	<init>	(Lnet/minecraft/class_638;DDDDDDZ)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDZLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_663$class_4085	<init>	(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_655	<init>	(Lnet/minecraft/class_638;DDDDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_647	<init>	(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_10444;)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V (Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_3999	comp_3341	Lnet/minecraft/class_1921;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_694	<init>	(Lnet/minecraft/class_638;DDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_729	<init>	(Lnet/minecraft/class_638;DDDDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_7281	<init>	(Lnet/minecraft/class_638;DDDI)V	METHOD	constructors (Lnet/minecraft/class_638;DDDILnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_8253	field_43370	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_8253	field_55128	Z	ACCESS	field Z private final	aw:0 mixin:0
+aw-put	net/minecraft/class_8253	field_55129	Z	ACCESS	field Z private final	aw:0 mixin:0
+aw-put	net/minecraft/class_8253	field_55130	D	ACCESS	field D private final	aw:0 mixin:0
+aw-put	net/minecraft/class_8253	field_55131	D	ACCESS	field D private final	aw:0 mixin:0
+aw-put	net/minecraft/class_8253	field_55132	D	ACCESS	field D private final	aw:0 mixin:0
+aw-new	net/minecraft/class_663$class_4497	<init>	(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_1058;)V (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;ILnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-new	net/minecraft/class_663$class_4497	<init>	(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;I)V	METHOD	constructors (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_1058;)V (Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;ILnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_677$class_680	method_3074	(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V	METHOD	method method_3074(Lnet/minecraft/class_11944;Lnet/minecraft/class_4184;F)V public	aw:0 mixin:0
+aw-new	net/minecraft/class_10748	<init>	(Lnet/minecraft/class_638;DDDDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_702$class_4091	create	(Lnet/minecraft/class_4002;)Lnet/minecraft/class_707;	CLASS	class gone	aw:10 mixin:0
+aw-new	net/minecraft/class_4974	<init>	(Lnet/minecraft/class_638;DDDDDD)V	METHOD	constructors (Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_320	field_1984	Lnet/minecraft/class_320$class_321;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_309	method_35696	(I)Z	METHOD	method method_35696(Lnet/minecraft/class_11908;)Z private	aw:0 mixin:0
+aw-call	net/minecraft/class_309	method_1468	(I)Z	METHOD	method method_1468(Lnet/minecraft/class_11908;)Z private	aw:0 mixin:4
+aw-call	net/minecraft/class_309	method_1457	(JII)V	METHOD	method method_1457(JLnet/minecraft/class_11905;)V private	aw:1 mixin:1
+aw-get	net/minecraft/class_330	field_50036	Lnet/minecraft/class_9443;	FIELD	field Lnet/minecraft/class_1059; private final	aw:0 mixin:0
+aw-call	net/minecraft/class_9978	method_67551	(Lnet/minecraft/class_2784;DDDFFF)V	METHOD	method method_67551(Lnet/minecraft/class_12078;DDDFFF)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_9978	method_67550	(Lnet/minecraft/class_2784;)Z	METHOD	method method_67550(Lnet/minecraft/class_12078;)Z private	aw:0 mixin:0
+aw-get	net/minecraft/class_4618	field_21058	Lnet/minecraft/class_4597$class_4598;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4618	field_21060	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4618	field_21060	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4618	field_21061	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4618	field_21061	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4618	field_21062	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4618	field_21062	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4618	field_21063	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4618	field_21063	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_759	method_3216	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1306;)V	METHOD	method method_3216(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_1306;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_759	method_3222	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IFLnet/minecraft/class_1306;FLnet/minecraft/class_1799;)V	METHOD	method method_3222(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IFLnet/minecraft/class_1306;FLnet/minecraft/class_1799;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_759	method_3231	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IFFF)V	METHOD	method method_3231(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IFFF)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_759	method_3223	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;)V	METHOD	method method_3223(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_1799;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_759	method_3219	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IFFLnet/minecraft/class_1306;)V	METHOD	method method_3219(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IFFLnet/minecraft/class_1306;)V private	aw:2 mixin:1
+aw-call	net/minecraft/class_759	method_3228	(Lnet/minecraft/class_742;FFLnet/minecraft/class_1268;FLnet/minecraft/class_1799;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V	METHOD	method method_3228(Lnet/minecraft/class_742;FFLnet/minecraft/class_1268;FLnet/minecraft/class_1799;FLnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V private	aw:0 mixin:14
+aw-get	net/minecraft/class_10535	field_55526	Lnet/minecraft/class_3879;	FIELD	field Lnet/minecraft/class_3879$class_9948; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_10533	field_55522	Lnet/minecraft/class_3879;	FIELD	field Lnet/minecraft/class_3879$class_9948; private final	aw:0 mixin:0
+aw-call-static	net/minecraft/class_11533$class_11534	method_72179	(Lnet/minecraft/class_8685;)Lnet/minecraft/class_11533$class_11534;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_11533$class_11534	comp_4406	Lnet/minecraft/class_1921;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_11533	<init>	(Lnet/minecraft/class_1071;Lnet/minecraft/class_5598;Lnet/minecraft/class_11533$class_11534;)V	METHOD	constructors (Lnet/minecraft/class_11786;Lnet/minecraft/class_5598;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_11533	method_72177	(Lnet/minecraft/class_9296;)Lnet/minecraft/class_11533$class_11534;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_11533	field_61032	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_11533	field_61033	Lnet/minecraft/class_1071;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_11533	field_61035	Lnet/minecraft/class_11533$class_11534;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_870	field_4624	Lnet/minecraft/class_310;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_870	field_4626	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_870	field_4627	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_870	field_32916	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4841	method_24810	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_4076;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4841	field_32917	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4841	field_22409	Ljava/util/Set;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_4205$class_8683	<init>	(Lnet/minecraft/class_2338;Ljava/util/List;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4205$class_8683	toString	()Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4205$class_8683	hashCode	()I	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4205$class_8683	equals	(Ljava/lang/Object;)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4205$class_8683	comp_1624	()Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4205$class_8683	comp_1625	()Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4205$class_8683	comp_1624	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4205$class_8683	comp_1625	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_9987	<init>	(Lnet/minecraft/class_310;)V	METHOD	constructors ()V	aw:0 mixin:0
+aw-get	net/minecraft/class_9987	field_53175	Lnet/minecraft/class_310;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_9987	field_53176	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4503$class_4504	field_20521	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4503$class_4504	field_20521	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4503$class_4504	field_20522	Ljava/lang/String;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4503$class_4504	field_20522	Ljava/lang/String;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4503$class_4504	field_20523	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4503$class_4504	field_20523	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4304	field_19327	Ljava/util/Collection;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4304	field_19327	Ljava/util/Collection;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4205	field_18781	Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23952	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23819	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23823	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V	METHOD	method method_23823(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_12021;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_24084	()Ljava/util/Map;	METHOD	method method_24084(Lnet/minecraft/class_12021;)Ljava/util/Map; private	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23826	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V	METHOD	method method_23826(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_12021;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23821	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_8718$class_8719;Ljava/util/Collection;)V	METHOD	method method_23821(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2338;Lnet/minecraft/class_12012;Ljava/util/Collection;Lnet/minecraft/class_12021;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23820	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_8707$class_5243;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23824	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_8707$class_5243;)V	METHOD	method method_23824(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1297;Lnet/minecraft/class_12005;Lnet/minecraft/class_12011;)V private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4703	method_23815	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;Lnet/minecraft/class_8718$class_8719;II)V	METHOD	method method_23815(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;Lnet/minecraft/class_2338;Lnet/minecraft/class_12012;II)V private static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4703	method_23816	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;Lnet/minecraft/class_2338;II)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4703	method_23814	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2374;ILjava/lang/String;IF)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_35796	(Lnet/minecraft/class_8718$class_8719;)Ljava/util/Set;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23806	(Lnet/minecraft/class_8707$class_5243;Lnet/minecraft/class_2338;)Ljava/lang/String;	METHOD	method method_23806(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;)Ljava/lang/String; private	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23827	(Lnet/minecraft/class_8707$class_5243;)Z	METHOD	method method_23827(Lnet/minecraft/class_1297;)Z private	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23829	(Lnet/minecraft/class_8707$class_5243;)Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23822	(Lnet/minecraft/class_2338;)Ljava/util/Collection;	METHOD	method method_23822(Lnet/minecraft/class_2338;Lnet/minecraft/class_12021;)Ljava/util/Collection; private	aw:0 mixin:0
+aw-call	net/minecraft/class_4703	method_23830	()Ljava/util/Map;	METHOD	method method_23830(Lnet/minecraft/class_12021;)Ljava/util/Map; private	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4703	field_32846	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4703	field_32852	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4703	field_32858	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4703	field_21533	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4703	field_21534	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5739	field_28255	Lnet/minecraft/class_310;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_5739	field_32899	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5739	field_28256	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5739	field_28257	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_5739$class_5740	<init>	(JLnet/minecraft/class_5321;Lnet/minecraft/class_243;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5740	method_33093	()Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5740	toString	()Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5740	hashCode	()I	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5740	equals	(Ljava/lang/Object;)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5740	comp_678	()J	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5740	comp_679	()Lnet/minecraft/class_5321;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5740	comp_680	()Lnet/minecraft/class_243;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_5739$class_5740	comp_678	J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_5739$class_5740	comp_679	Lnet/minecraft/class_5321;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_5739$class_5740	comp_680	Lnet/minecraft/class_243;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8985	field_47473	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_24805	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_23135	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;DDD)V	METHOD	method method_23135(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;DDDLnet/minecraft/class_12021;)V private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4207	method_23138	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2338;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_23131	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2338;Ljava/util/List;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_23137	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_4207$class_4233;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_23136	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_8708$class_4232;DDD)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_23140	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_8708$class_4232;DDD)V	METHOD	method method_23140(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1297;Lnet/minecraft/class_12006;DDD)V private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4207	method_23133	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;Lnet/minecraft/class_4207$class_4233;II)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4207	method_23134	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Ljava/lang/String;Lnet/minecraft/class_2338;II)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4207	method_23132	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2374;ILjava/lang/String;IF)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_23141	(Lnet/minecraft/class_4207$class_4233;)Ljava/util/Set;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_29385	(Lnet/minecraft/class_4207$class_4233;)Ljava/util/Set;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_23145	(Lnet/minecraft/class_8708$class_4232;)Z	METHOD	method method_23145(Lnet/minecraft/class_1297;)Z private	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_23147	(Lnet/minecraft/class_8708$class_4232;)Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_23142	(Lnet/minecraft/class_2338;)Ljava/util/Collection;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_29386	(Lnet/minecraft/class_2338;)Ljava/util/Collection;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4207	method_23144	()Ljava/util/Map;	METHOD	method method_23144(Lnet/minecraft/class_12021;)Ljava/util/Map; public	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4207	field_18920	Lorg/slf4j/Logger;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4207	field_32880	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4207	field_32890	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4207	field_32893	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4207	field_32895	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4207	field_18787	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4207	field_18921	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_5739$class_5741	<init>	(Lnet/minecraft/class_5716;I)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5741	method_33095	(Lnet/minecraft/class_1937;Lnet/minecraft/class_243;)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5741	method_33094	(Lnet/minecraft/class_1937;)Ljava/util/Optional;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5741	method_32946	()Lnet/minecraft/class_5716;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5741	method_32948	()I	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_5739$class_5741	method_32947	(Lnet/minecraft/class_3218;Lnet/minecraft/class_6880;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_243;)Z	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_5739$class_5741	field_28261	Lnet/minecraft/class_5716;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_5739$class_5741	field_28262	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_863	field_4531	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_863	field_4531	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_863	field_53962	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_863	field_53962	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_868	field_4616	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_868	field_4617	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_868	field_4615	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_868	field_32906	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_4703$class_8682	<init>	(Lnet/minecraft/class_8718$class_8719;J)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4703$class_8682	toString	()Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4703$class_8682	hashCode	()I	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4703$class_8682	equals	(Ljava/lang/Object;)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4703$class_8682	comp_1622	()Lnet/minecraft/class_8718$class_8719;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4703$class_8682	comp_1623	()J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4703$class_8682	comp_1622	Lnet/minecraft/class_8718$class_8719;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4703$class_8682	comp_1623	J	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_869	<init>	(Lnet/minecraft/class_310;)V	METHOD	constructors ()V	aw:0 mixin:0
+aw-get	net/minecraft/class_869	field_4622	Lnet/minecraft/class_310;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_869	field_4623	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_873	field_4640	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_873	field_4635	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_873	field_4637	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_873	field_4639	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_873	field_4636	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_873	field_4638	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_881	field_53182	Lnet/minecraft/class_3879;	FIELD	field Lnet/minecraft/class_3879$class_9948; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_925	field_38892	Lnet/minecraft/class_776;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_1007	method_64258	(Lnet/minecraft/class_742;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;	METHOD	method method_64258(Lnet/minecraft/class_11890;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573; private static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_1007	method_4210	(Lnet/minecraft/class_1657;Lnet/minecraft/class_1799;Lnet/minecraft/class_1268;)Lnet/minecraft/class_572$class_573;	METHOD	method method_4210(Lnet/minecraft/class_11890;Lnet/minecraft/class_1799;Lnet/minecraft/class_1268;)Lnet/minecraft/class_572$class_573; private static	aw:0 mixin:8
+aw-call-static	net/minecraft/class_1007	method_62607	(Lnet/minecraft/class_742;Lnet/minecraft/class_10055;F)V	METHOD	method method_62607(Lnet/minecraft/class_11890;Lnet/minecraft/class_10055;F)V private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_1007	method_62609	(Lnet/minecraft/class_742;Lnet/minecraft/class_10055;F)V	METHOD	method method_62609(Lnet/minecraft/class_11890;Lnet/minecraft/class_10055;F)V private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_1007	method_62605	(Lnet/minecraft/class_742;Z)Lnet/minecraft/class_1453$class_7989;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_1007	method_23205	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;Lnet/minecraft/class_630;Z)V	METHOD	method method_23205(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_2960;Lnet/minecraft/class_630;Z)V private	aw:0 mixin:3
+aw-call-static	net/minecraft/class_907	method_62456	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_243;FFF)V	METHOD	method method_62456(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_243;FFF)V private static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_8138	method_52845	(Lnet/minecraft/class_4184;)F	METHOD	method method_52845(F)F private static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_8138	method_52847	(Lnet/minecraft/class_4184;)F	METHOD	method method_52847(F)F private static	aw:0 mixin:0
+aw-call	net/minecraft/class_928	method_4074	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;[IIILnet/minecraft/class_1058;Lnet/minecraft/class_1058;)V	METHOD	method method_4074(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_1921;[IIILnet/minecraft/class_1058;Lnet/minecraft/class_1058;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_991	method_37314	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IZLnet/minecraft/class_2680;ILnet/minecraft/class_1087;)V	METHOD	method method_37314(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IZILnet/minecraft/class_2680;ILnet/minecraft/class_1087;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_7288	method_42746	(Lnet/minecraft/class_10042;)Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_7288	method_42748	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7288	field_38355	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7288	field_38464	Lnet/minecraft/class_7288$class_7311;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_970	method_4169	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V	METHOD	method method_4169(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_1799;Lnet/minecraft/class_1304;ILnet/minecraft/class_10034;)V private	aw:0 mixin:11
+aw-get	net/minecraft/class_970	field_4830	Lnet/minecraft/class_572;	FIELD	field not declared on the owner	aw:1 mixin:0
+aw-get	net/minecraft/class_970	field_4831	Lnet/minecraft/class_572;	FIELD	field not declared on the owner	aw:1 mixin:0
+aw-get	net/minecraft/class_970	field_53218	Lnet/minecraft/class_572;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_970	field_53219	Lnet/minecraft/class_572;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_988	method_64083	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10043;Lnet/minecraft/class_1799;Lnet/minecraft/class_5321;I)V	METHOD	method method_64083(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_10043;Lnet/minecraft/class_1799;Lnet/minecraft/class_5321;I)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_4507	method_22130	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IFFF)V	METHOD	method method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IFFFI)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_9085	method_57819	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_3879;)V	METHOD	method method_57819(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_1799;Lnet/minecraft/class_3879;Lnet/minecraft/class_10085;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_5697	method_65576	(Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V	METHOD	method method_65576(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_983	method_62593	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;Lnet/minecraft/class_1453$class_7989;FFZ)V	METHOD	method method_62593(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_10055;Lnet/minecraft/class_1453$class_7989;FFZ)V private	aw:0 mixin:0
+aw-get	net/minecraft/class_983	field_54026	Lnet/minecraft/class_10051;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_5619	field_27769	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_897	method_61049	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10017$class_10018;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_897	method_61050	(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;FFFFFFFIZLnet/minecraft/class_10017$class_10018;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_897	field_53189	Lnet/minecraft/class_10017;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_918	field_55296	Lnet/minecraft/class_10442;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_918	field_55297	Lnet/minecraft/class_10444;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_956	field_38894	Lnet/minecraft/class_776;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_898	method_3954	(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_897;)V	METHOD	method not declared on the owner	aw:0 mixin:6
+aw-call	net/minecraft/class_898	method_68834	(Lnet/minecraft/class_10017;DDDLnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_897;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_898	method_68829	(DDDLnet/minecraft/class_897;Lnet/minecraft/class_128;)Lnet/minecraft/class_129;	METHOD	method method_68829(Lnet/minecraft/class_897;Lnet/minecraft/class_128;)Lnet/minecraft/class_129; private	aw:0 mixin:0
+aw-call	net/minecraft/class_898	method_68830	(Lnet/minecraft/class_4587;Lnet/minecraft/class_10017;Lnet/minecraft/class_10933;Lnet/minecraft/class_4597;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_898	method_68831	(Lnet/minecraft/class_4587;Lnet/minecraft/class_10933;Lnet/minecraft/class_4588;F)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_898	method_3956	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_10932;)V	METHOD	method not declared on the owner	aw:0 mixin:11
+aw-call	net/minecraft/class_898	method_23165	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10017;Lorg/joml/Quaternionf;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_898	method_23161	(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;FFFFF)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_898	method_23166	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10017;FLnet/minecraft/class_4538;F)V	METHOD	method not declared on the owner	aw:0 mixin:5
+aw-call-static	net/minecraft/class_898	method_23163	(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;Lnet/minecraft/class_2791;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;DDDFF)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_898	method_23162	(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IFFFFF)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_898	field_21009	Lnet/minecraft/class_1921;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_898	field_43377	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_898	field_43378	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_898	field_4684	Lnet/minecraft/class_1937;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_898	field_4684	Lnet/minecraft/class_1937;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_898	field_21794	Lorg/joml/Quaternionf;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_898	field_21794	Lorg/joml/Quaternionf;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_898	field_4681	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_898	field_4681	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_898	field_4680	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_898	field_4680	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_8138$class_8139	field_42528	Lnet/minecraft/class_776;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_895	method_61158	(Lnet/minecraft/class_4587;FLnet/minecraft/class_4588;)V	METHOD	method method_61158(Lnet/minecraft/class_4587;FLnet/minecraft/class_11659;Lnet/minecraft/class_1921;)V private static	aw:0 mixin:0
+aw-get	net/minecraft/class_957	field_38893	Lnet/minecraft/class_776;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_901	field_38890	Lnet/minecraft/class_776;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4603	method_70939	(Lnet/minecraft/class_4587;F)V	METHOD	method method_70939(Lnet/minecraft/class_4587;FLnet/minecraft/class_11659;)V private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4603	method_23070	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V	METHOD	method method_23070(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1058;)V private static	aw:0 mixin:2
+aw-call	net/minecraft/class_10483$class_10547	method_65914	(Lnet/minecraft/class_638;Lnet/minecraft/class_1799;Lnet/minecraft/class_1297;Lnet/minecraft/class_5819;)F	METHOD	method method_65914(Lnet/minecraft/class_638;Lnet/minecraft/class_1799;Lnet/minecraft/class_11566;Lnet/minecraft/class_5819;)F package abstract	aw:0 mixin:0
+aw-call	net/minecraft/class_10473	method_65650	(Lnet/minecraft/class_1297;JLnet/minecraft/class_2338;)F	METHOD	method method_65650(Lnet/minecraft/class_11566;JLnet/minecraft/class_2338;)F private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_10473	method_65652	(Lnet/minecraft/class_1297;Lnet/minecraft/class_4208;)Z	METHOD	method method_65652(Lnet/minecraft/class_11566;Lnet/minecraft/class_4208;)Z private static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_10473	method_65651	(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;)D	METHOD	method method_65651(Lnet/minecraft/class_11566;Lnet/minecraft/class_2338;)D private static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_10473	method_65649	(Lnet/minecraft/class_1297;)F	METHOD	method method_65649(Lnet/minecraft/class_11566;)F private static	aw:0 mixin:0
+aw-call	net/minecraft/class_10473$class_10474	method_65656	(Lnet/minecraft/class_638;Lnet/minecraft/class_1799;Lnet/minecraft/class_1297;)Lnet/minecraft/class_4208;	METHOD	method method_65656(Lnet/minecraft/class_638;Lnet/minecraft/class_1799;Lnet/minecraft/class_11566;)Lnet/minecraft/class_4208; package abstract	aw:0 mixin:0
+aw-call	net/minecraft/class_10444$class_10446	method_65614	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V	METHOD	method method_65614(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;III)V package	aw:0 mixin:0
+aw-get	net/minecraft/class_9959	field_53069	Lnet/minecraft/class_1937;	FIELD	field Lnet/minecraft/class_638; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_9959	field_53070	Lnet/minecraft/class_761;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_9975	method_62303	(FLnet/minecraft/class_4597;Lnet/minecraft/class_4587;)V	METHOD	method method_62303(FLnet/minecraft/class_4587;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_9975	method_62304	(IFLnet/minecraft/class_4597;Lnet/minecraft/class_4587;)V	METHOD	method method_62304(IFLnet/minecraft/class_4587;)V private	aw:0 mixin:0
+aw-get-static	net/minecraft/class_1921	field_55141	Ljava/util/function/Function;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_1921	field_55142	Ljava/util/function/Function;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_1921	field_55147	Lnet/minecraft/class_1921;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_1921	field_55149	Ljava/util/function/Function;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_1058	field_59983	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7764	field_45631	Lnet/minecraft/class_7368;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_10538	method_65865	(Ljava/nio/file/Path;Ljava/lang/String;)Lnet/minecraft/class_1011;	ICCE	method method_65865(Ljava/nio/file/Path;Ljava/lang/String;)Lnet/minecraft/class_1011; private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_10538	method_65860	(Lnet/minecraft/class_2960;Lnet/minecraft/class_1011;)Ljava/util/concurrent/CompletableFuture;	METHOD	method method_65860(Lnet/minecraft/class_12079$class_12081;Lnet/minecraft/class_1011;)Ljava/util/concurrent/CompletableFuture; private	aw:0 mixin:0
+aw-get	net/minecraft/class_5294	field_24613	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_822	method_3543	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;FFJIII)V	METHOD	method method_3543(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;FFIII)V private static	aw:0 mixin:1
+aw-call-static	net/minecraft/class_822	method_22741	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIIFFFFFFFFFFFF)V	METHOD	method method_22741(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIIFFFFFFFFFFFF)V private static	aw:0 mixin:0
+aw-call	net/minecraft/class_835	method_3575	(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1937;ZI)V	METHOD	method method_3575(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_6880;Lnet/minecraft/class_1937;)Lnet/minecraft/class_11791; private static	aw:0 mixin:0
+aw-get	net/minecraft/class_835	field_4389	Lnet/minecraft/class_776;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_826	method_22749	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_9944;FII)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_9214	field_55287	Lnet/minecraft/class_10428;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_823	method_65555	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IIFLnet/minecraft/class_10378;Lnet/minecraft/class_10377;FLnet/minecraft/class_1767;Lnet/minecraft/class_9307;)V	METHOD	method method_65555(Lnet/minecraft/class_11701;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIFLnet/minecraft/class_10378;Lnet/minecraft/class_10377;FLnet/minecraft/class_1767;Lnet/minecraft/class_9307;Lnet/minecraft/class_11683$class_11792;I)V private static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_823	method_58140	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;Lnet/minecraft/class_1767;)V	METHOD	method method_58140(Lnet/minecraft/class_11701;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_3879;Ljava/lang/Object;Lnet/minecraft/class_4730;Lnet/minecraft/class_1767;Lnet/minecraft/class_11683$class_11792;)V private static	aw:0 mixin:0
+aw-call	net/minecraft/class_825	method_3558	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_3879;Lnet/minecraft/class_2350;Lnet/minecraft/class_4730;IIZ)V	METHOD	method method_3558(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_3879$class_9948;Lnet/minecraft/class_2350;Lnet/minecraft/class_4730;IIZLnet/minecraft/class_11683$class_11792;I)V private	aw:0 mixin:0
+aw-get	net/minecraft/class_825	field_27744	Lnet/minecraft/class_3879;	FIELD	field Lnet/minecraft/class_3879$class_9948; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_825	field_27745	Lnet/minecraft/class_3879;	FIELD	field Lnet/minecraft/class_3879$class_9948; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_3941	field_38884	Lnet/minecraft/class_918;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_8188	method_65561	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_8526;)V	METHOD	method method_65561(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_8526;I)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_8188	method_49345	(Lnet/minecraft/class_630;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_4730;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_10529	method_65821	(Lnet/minecraft/class_2625;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_2680;Lnet/minecraft/class_2478;Lnet/minecraft/class_4719;Lnet/minecraft/class_3879;)V	METHOD	method method_65821(Lnet/minecraft/class_11971;Lnet/minecraft/class_4587;Lnet/minecraft/class_2680;Lnet/minecraft/class_2478;Lnet/minecraft/class_4719;Lnet/minecraft/class_3879$class_9948;Lnet/minecraft/class_11683$class_11792;Lnet/minecraft/class_11659;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_10529	method_65828	(Lnet/minecraft/class_2338;Lnet/minecraft/class_8242;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IIIZ)V	METHOD	method method_65828(Lnet/minecraft/class_11971;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Z)V private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_10529	method_65827	(Lnet/minecraft/class_2338;I)Z	METHOD	method method_65827(Lnet/minecraft/class_2338;)Z private static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_824	method_23079	(Lnet/minecraft/class_827;Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_243;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_829	field_27753	Lnet/minecraft/class_824;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_838	method_3585	(Lnet/minecraft/class_2586;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2382;Lnet/minecraft/class_4597;Lnet/minecraft/class_4587;)V	METHOD	method method_3585(Lnet/minecraft/class_11955;Lnet/minecraft/class_2338;Lnet/minecraft/class_2382;Lnet/minecraft/class_11659;Lnet/minecraft/class_4587;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_838	method_61047	(Lnet/minecraft/class_2586;Lnet/minecraft/class_2338;Lnet/minecraft/class_2382;Lnet/minecraft/class_4588;Lnet/minecraft/class_4587;)V	METHOD	method method_61047(Lnet/minecraft/class_11955;Lnet/minecraft/class_2338;Lnet/minecraft/class_2382;Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;)V private	aw:0 mixin:0
+aw-get	net/minecraft/class_5614$class_5615	field_27748	Lnet/minecraft/class_824;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5614$class_5615	field_27749	Lnet/minecraft/class_776;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5614$class_5615	field_55284	Lnet/minecraft/class_10442;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5614$class_5615	field_38882	Lnet/minecraft/class_918;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5614$class_5615	field_38883	Lnet/minecraft/class_898;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5614$class_5615	field_27750	Lnet/minecraft/class_5599;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5614$class_5615	field_27751	Lnet/minecraft/class_327;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_840	method_23084	(Lnet/minecraft/class_2640;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;)V	METHOD	method method_23084(Ljava/util/EnumSet;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_840	method_23085	(Lnet/minecraft/class_2640;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;FFFFFFFFLnet/minecraft/class_2350;)V	METHOD	method method_23085(Ljava/util/EnumSet;Lorg/joml/Matrix4f;Lnet/minecraft/class_4588;FFFFFFFFLnet/minecraft/class_2350;)V private	aw:0 mixin:0
+aw-get	net/minecraft/class_8189	field_42928	Lnet/minecraft/class_918;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_837$class_9985	<init>	(Lnet/minecraft/class_3879;Lnet/minecraft/class_3879;)V	METHOD	constructors (Lnet/minecraft/class_3879$class_9948;Lnet/minecraft/class_3879$class_9948;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_837$class_9985	comp_3055	()Lnet/minecraft/class_3879;	METHOD	method comp_3055()Lnet/minecraft/class_3879$class_9948; public	aw:0 mixin:0
+aw-call	net/minecraft/class_837$class_9985	comp_3056	()Lnet/minecraft/class_3879;	METHOD	method comp_3056()Lnet/minecraft/class_3879$class_9948; public	aw:0 mixin:0
+aw-get	net/minecraft/class_837$class_9985	comp_3055	Lnet/minecraft/class_3879;	FIELD	field Lnet/minecraft/class_3879$class_9948; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_837$class_9985	comp_3056	Lnet/minecraft/class_3879;	FIELD	field Lnet/minecraft/class_3879$class_9948; private final	aw:0 mixin:0
+aw-call	net/minecraft/class_834$class_9984	method_62341	(F)V	METHOD	method method_62341(Ljava/lang/Float;)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_9976	method_62315	(Lnet/minecraft/class_1937;IFLnet/minecraft/class_243;ILjava/util/List;Ljava/util/List;)V	METHOD	method method_62315(Lnet/minecraft/class_1937;IFLnet/minecraft/class_243;Lnet/minecraft/class_12077;)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_9976	method_62320	(Lnet/minecraft/class_4597;Lnet/minecraft/class_243;IFLjava/util/List;Ljava/util/List;)V	METHOD	method method_62320(Lnet/minecraft/class_4597;Lnet/minecraft/class_243;Lnet/minecraft/class_12077;)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_3273	(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;ZZ)V	METHOD	method not declared on the owner	aw:0 mixin:4
+aw-call	net/minecraft/class_761	method_62202	(Lnet/minecraft/class_9909;Lnet/minecraft/class_4604;Lnet/minecraft/class_4184;Lorg/joml/Matrix4f;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;ZZLnet/minecraft/class_9779;Lnet/minecraft/class_3695;)V	METHOD	method method_62202(Lnet/minecraft/class_9909;Lnet/minecraft/class_4604;Lorg/joml/Matrix4f;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;ZLnet/minecraft/class_11658;Lnet/minecraft/class_9779;Lnet/minecraft/class_3695;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_62201	(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;FLcom/mojang/blaze3d/buffers/GpuBufferSlice;)V	METHOD	method method_62201(Lnet/minecraft/class_9909;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_62203	(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;FLcom/mojang/blaze3d/buffers/GpuBufferSlice;)V	METHOD	method method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_62199	(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V	METHOD	method method_62199(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lnet/minecraft/class_4604;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_62211	(Lnet/minecraft/class_4184;Lnet/minecraft/class_4604;Ljava/util/List;)Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_62207	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4184;Lnet/minecraft/class_9779;Ljava/util/List;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_62208	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4184;F)V	METHOD	method method_62208(Lnet/minecraft/class_4587;Lnet/minecraft/class_11658;Lnet/minecraft/class_11661;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_62206	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4184;Lnet/minecraft/class_4597$class_4598;)V	METHOD	method method_62206(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_11658;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_62210	(Lnet/minecraft/class_4184;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4587;Z)V	METHOD	method method_62210(Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_4587;ZLnet/minecraft/class_11658;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_22977	(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V	METHOD	method not declared on the owner	aw:0 mixin:5
+aw-call	net/minecraft/class_761	method_62200	(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;FLcom/mojang/blaze3d/buffers/GpuBufferSlice;)V	METHOD	method method_62200(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_62197	(F)Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_22712	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_1297;DDDLnet/minecraft/class_2338;Lnet/minecraft/class_2680;I)V	METHOD	method method_22712(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDLnet/minecraft/class_12074;I)V private	aw:0 mixin:11
+aw-call	net/minecraft/class_761	method_3282	(Lnet/minecraft/class_2394;ZDDDDDD)Lnet/minecraft/class_703;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_761	method_3288	(Lnet/minecraft/class_2394;ZZDDDDDD)Lnet/minecraft/class_703;	METHOD	method not declared on the owner	aw:0 mixin:2
+aw-call	net/minecraft/class_761	method_3268	(Z)Lnet/minecraft/class_4066;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_761	field_61060	Ljava/util/Comparator;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_761	field_53072	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_761	field_53073	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_761	field_53073	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_761	field_27740	Lnet/minecraft/class_4604;	FIELD	field not declared on the owner	aw:1 mixin:0
+aw-put	net/minecraft/class_761	field_27740	Lnet/minecraft/class_4604;	FIELD	field not declared on the owner	aw:1 mixin:0
+aw-get	net/minecraft/class_761	field_4090	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_761	field_4090	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_10160	field_60934	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_10160	field_60934	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_4618$class_4586	<init>	(Lnet/minecraft/class_4588;IIII)V	METHOD	constructors (Lnet/minecraft/class_4588;I)V	aw:0 mixin:0
+aw-get-static	net/minecraft/class_304	field_1652	Ljava/util/Set;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_304	field_1656	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_304	field_1659	Ljava/lang/String;	FIELD	field Lnet/minecraft/class_304$class_11900; private final	aw:0 mixin:0
+aw-new	net/minecraft/class_320$class_321	<init>	(Ljava/lang/String;ILjava/lang/String;)V	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_320$class_321	field_1989	Ljava/util/Map;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_320$class_321	field_1986	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_1071$class_8687	<init>	(Ljava/nio/file/Path;Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;)V	METHOD	constructors (Lnet/minecraft/class_1071;Ljava/nio/file/Path;Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_1071	field_46910	Lcom/mojang/authlib/minecraft/MinecraftSessionService;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_1068	method_52855	(Ljava/lang/String;Lnet/minecraft/class_8685$class_7920;)Lnet/minecraft/class_8685;	METHOD	method method_52855(Ljava/lang/String;Lnet/minecraft/class_7920;)Lnet/minecraft/class_8685; private static	aw:0 mixin:0
+aw-call	net/minecraft/class_4075	method_18666	(Lnet/minecraft/class_7766$class_7767;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4075	field_18230	Lnet/minecraft/class_1059;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4075	field_41425	Lnet/minecraft/class_2960;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4075	field_45644	Ljava/util/Set;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8685	comp_1626	Lnet/minecraft/class_2960;	FIELD	field Lnet/minecraft/class_12079$class_12081; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_8685	comp_1911	Ljava/lang/String;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_8685	comp_1627	Lnet/minecraft/class_2960;	FIELD	field Lnet/minecraft/class_12079$class_12081; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_8685	comp_1628	Lnet/minecraft/class_2960;	FIELD	field Lnet/minecraft/class_12079$class_12081; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_8685	comp_1629	Lnet/minecraft/class_8685$class_7920;	FIELD	field Lnet/minecraft/class_7920; private final	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4044	field_18032	Lnet/minecraft/class_2960;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8685$class_7920	<init>	(Ljava/lang/String;ILjava/lang/String;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8685$class_7920	field_41124	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4724$class_7774	field_40564	Lnet/minecraft/class_1059;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4724$class_7774	field_40565	Lnet/minecraft/class_7766$class_7767;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4724	field_21746	Ljava/util/Map;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_1092$class_7779	<init>	(Lnet/minecraft/class_1088$class_10524;Lit/unimi/dsi/fastutil/objects/Object2IntMap;Ljava/util/Map;Ljava/util/Map;Lnet/minecraft/class_5599;Lnet/minecraft/class_10418;Ljava/util/concurrent/CompletableFuture;)V	METHOD	constructors (Lnet/minecraft/class_1088$class_10524;Lit/unimi/dsi/fastutil/objects/Object2IntMap;Ljava/util/Map;Lnet/minecraft/class_5599;Lnet/minecraft/class_10418;)V	aw:8 mixin:0
+aw-call	net/minecraft/class_1092$class_7779	comp_1061	()Ljava/util/Map;	METHOD	method not declared on the owner	aw:8 mixin:0
+aw-call	net/minecraft/class_1092$class_7779	comp_1062	()Ljava/util/concurrent/CompletableFuture;	METHOD	method not declared on the owner	aw:8 mixin:0
+aw-get	net/minecraft/class_1092$class_7779	comp_1061	Ljava/util/Map;	FIELD	field not declared on the owner	aw:8 mixin:0
+aw-get	net/minecraft/class_1092$class_7779	comp_1062	Ljava/util/concurrent/CompletableFuture;	FIELD	field not declared on the owner	aw:8 mixin:0
+aw-call-static	net/minecraft/class_1092	method_45883	(Ljava/util/Map;Lnet/minecraft/class_1088;Lit/unimi/dsi/fastutil/objects/Object2IntMap;Lnet/minecraft/class_5599;Lnet/minecraft/class_10418;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD	method method_45883(Lnet/minecraft/class_7766$class_7767;Lnet/minecraft/class_1088;Lit/unimi/dsi/fastutil/objects/Object2IntMap;Lnet/minecraft/class_5599;Lnet/minecraft/class_10418;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; private static	aw:0 mixin:3
+aw-call	net/minecraft/class_1092	method_18179	(Lnet/minecraft/class_1092$class_7779;Lnet/minecraft/class_3695;)V	METHOD	method method_18179(Lnet/minecraft/class_1092$class_7779;)V private	aw:0 mixin:1
+aw-get-static	net/minecraft/class_1092	field_40574	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_1092	field_21775	Lnet/minecraft/class_4724;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_1092	field_21777	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_1092	field_21777	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_4724$class_7772	<init>	(Lnet/minecraft/class_1059;Lnet/minecraft/class_2960;)V	CLASS	class gone	aw:6 mixin:0
+aw-call	net/minecraft/class_4724$class_7772	close	()V	CLASS	class gone	aw:6 mixin:0
+aw-call	net/minecraft/class_4724$class_7772	toString	()Ljava/lang/String;	CLASS	class gone	aw:6 mixin:0
+aw-call	net/minecraft/class_4724$class_7772	hashCode	()I	CLASS	class gone	aw:6 mixin:0
+aw-call	net/minecraft/class_4724$class_7772	equals	(Ljava/lang/Object;)Z	CLASS	class gone	aw:6 mixin:0
+aw-call	net/minecraft/class_4724$class_7772	comp_1051	()Lnet/minecraft/class_1059;	CLASS	class gone	aw:6 mixin:0
+aw-call	net/minecraft/class_4724$class_7772	comp_1168	()Lnet/minecraft/class_2960;	CLASS	class gone	aw:6 mixin:0
+aw-get	net/minecraft/class_4724$class_7772	comp_1051	Lnet/minecraft/class_1059;	CLASS	class gone	aw:6 mixin:0
+aw-get	net/minecraft/class_4724$class_7772	comp_1168	Lnet/minecraft/class_2960;	CLASS	class gone	aw:6 mixin:0
+aw-call	net/minecraft/class_8658	method_52715	(Lnet/minecraft/class_1058;)Lnet/minecraft/class_8689;	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_8658	field_45338	Ljava/util/Set;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_332	field_45337	Lnet/minecraft/class_8658;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_6385$class_6386	field_33801	Lnet/minecraft/class_6381;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_6385$class_6386	field_33802	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_386$class_388	getAdvance	()F	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_386$class_388	bake	(Ljava/util/function/Function;)Lnet/minecraft/class_382;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_391$class_393	getAdvance	()F	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_391$class_393	method_16800	()F	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_391$class_393	method_16799	()F	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_391$class_393	bake	(Ljava/util/function/Function;)Lnet/minecraft/class_382;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_378	method_57025	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_377;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_378	field_49111	Lnet/minecraft/class_377;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_378	field_49111	Lnet/minecraft/class_377;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_377$class_7647	<init>	(Lnet/minecraft/class_379;Lnet/minecraft/class_379;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_377$class_7647	method_45080	(Z)Lnet/minecraft/class_379;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_377$class_7647	toString	()Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_377$class_7647	hashCode	()I	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_377$class_7647	equals	(Ljava/lang/Object;)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_377$class_7647	comp_979	()Lnet/minecraft/class_379;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_377$class_7647	comp_980	()Lnet/minecraft/class_379;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_377$class_7647	comp_979	Lnet/minecraft/class_379;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_377$class_7647	comp_980	Lnet/minecraft/class_379;	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_377$class_7647	field_39935	Lnet/minecraft/class_377$class_7647;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_377	method_40038	(I)Lnet/minecraft/class_377$class_7647;	METHOD	method method_40038(I)Lnet/minecraft/class_377$class_11640; private	aw:0 mixin:0
+aw-call	net/minecraft/class_377	method_41832	(I)Lnet/minecraft/class_382;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_377	method_2012	(Lnet/minecraft/class_383;)Lnet/minecraft/class_382;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_377	field_54959	Lorg/slf4j/Logger;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_377	field_2252	Lnet/minecraft/class_5819;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_377	field_2248	Lnet/minecraft/class_1060;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_377	field_2246	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_377	field_2256	Lnet/minecraft/class_382;	FIELD	field Lnet/minecraft/class_11768; package	aw:0 mixin:0
+aw-put	net/minecraft/class_377	field_2256	Lnet/minecraft/class_382;	FIELD	field Lnet/minecraft/class_11768; package	aw:0 mixin:0
+aw-get	net/minecraft/class_377	field_20910	Lnet/minecraft/class_382;	FIELD	field Lnet/minecraft/class_11769; private	aw:0 mixin:0
+aw-put	net/minecraft/class_377	field_20910	Lnet/minecraft/class_382;	FIELD	field Lnet/minecraft/class_11769; private	aw:0 mixin:0
+aw-get	net/minecraft/class_377	field_2253	Lnet/minecraft/class_8532;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_377	field_2257	Lnet/minecraft/class_8532;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_377	field_2254	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_377	field_54819	Ljava/util/function/IntFunction;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_11470	comp_4372	Lorg/joml/Matrix3x2f;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_11470	comp_4373	Lnet/minecraft/class_382;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_11470	comp_4374	Lnet/minecraft/class_382$class_328;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_11470	comp_4069	Lnet/minecraft/class_8030;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_11243	comp_4375	Lnet/minecraft/class_382$class_10364;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_11250	comp_4119	Lnet/minecraft/class_630;	FIELD	field Lnet/minecraft/class_10377; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_11254	comp_4139	Lnet/minecraft/class_3879;	FIELD	field Lnet/minecraft/class_3879$class_9948; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_11246$class_11276	field_60049	Lnet/minecraft/class_11246$class_11276;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_11246$class_11276	field_60049	Lnet/minecraft/class_11246$class_11276;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_11228	method_71287	(Lnet/minecraft/class_11244;I)V	METHOD	method method_71287(Lnet/minecraft/class_11244;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_327	method_27526	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_377;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_327	field_1997	Ljava/util/function/Function;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_327	field_39925	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_426$class_4195$class_4194	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_426$class_4195$class_4194	method_25404	(III)Z	METHOD	method method_25404(Lnet/minecraft/class_11908;)Z public	aw:0 mixin:0
+aw-call	net/minecraft/class_426$class_4195$class_4194	method_25402	(DDI)Z	METHOD	method method_25402(Lnet/minecraft/class_11909;Z)Z public	aw:0 mixin:0
+aw-get	net/minecraft/class_426$class_4195$class_4194	field_44921	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_426$class_4195$class_4194	field_44921	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_459$class_460	field_2736	Lnet/minecraft/class_2561;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_459$class_460	field_2737	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_434	method_59838	()Lnet/minecraft/class_1058;	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_434	field_26544	Lnet/minecraft/class_2561;	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_434	field_36365	J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_434	field_36368	J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_434	field_46575	Ljava/util/function/BooleanSupplier;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_434	field_51485	Lnet/minecraft/class_434$class_9678;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_434	field_51486	Lnet/minecraft/class_1058;	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_434	field_51486	Lnet/minecraft/class_1058;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_413$class_4192	method_20094	(Lnet/minecraft/class_413$class_4192$class_4193;)V	METHOD	method method_20094(Lnet/minecraft/class_413$class_4192$class_11770;)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_413$class_4192	method_25312	(Lnet/minecraft/class_332;II)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_430$class_4196	method_25404	(III)Z	METHOD	method method_25404(Lnet/minecraft/class_11908;)Z public	aw:0 mixin:0
+aw-get	net/minecraft/class_4267$class_4269	field_19116	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4267$class_4269	field_19116	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_500	field_3048	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_500	field_3048	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7065	field_49539	Lnet/minecraft/class_8019;	FIELD	field Lnet/minecraft/class_8577; private	aw:0 mixin:0
+aw-put	net/minecraft/class_7065	field_49539	Lnet/minecraft/class_8019;	FIELD	field Lnet/minecraft/class_8577; private	aw:0 mixin:0
+aw-get	net/minecraft/class_4267$class_4270	field_19124	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4267$class_4270	field_19124	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_3928	method_37057	()Lnet/minecraft/class_2561;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3928	field_17406	Lnet/minecraft/class_3953;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3928	field_33810	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_3928	field_33810	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_447	field_49521	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_447	field_49522	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_447	field_49523	Lnet/minecraft/class_8132;	ACCESS	field Lnet/minecraft/class_8132; package final	aw:0 mixin:0
+aw-get	net/minecraft/class_447	field_2644	Lnet/minecraft/class_447$class_4198;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_447	field_2644	Lnet/minecraft/class_447$class_4198;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_447	field_2642	Lnet/minecraft/class_447$class_4200;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_447	field_2642	Lnet/minecraft/class_447$class_4200;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_447	field_2646	Lnet/minecraft/class_447$class_4202;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_447	field_2646	Lnet/minecraft/class_447$class_4202;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_447	field_2643	Lnet/minecraft/class_4280;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_447	field_2643	Lnet/minecraft/class_4280;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_447$class_4198$class_4197	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_447$class_4202$class_4201	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_447$class_4200	method_25312	(Lnet/minecraft/class_332;II)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_447$class_4200	method_25402	(DDI)Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_447$class_4200	method_65518	(II)Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_447$class_4200	method_25320	(Lnet/minecraft/class_332;II)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_447$class_4200	field_45422	[Lnet/minecraft/class_2960;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_447$class_4200	field_18756	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_447$class_4200	field_18756	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_447$class_4200$class_4199	method_37307	()Lnet/minecraft/class_1792;	ACCESS	method method_37307()Lnet/minecraft/class_1792; protected	aw:0 mixin:0
+aw-call	net/minecraft/class_447$class_4200$class_4199	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_447$class_4200$class_4199	method_37006	()Lnet/minecraft/class_2561;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_407	field_2373	Lnet/minecraft/class_2561;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_415$class_4190$class_4191	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_415$class_4190$class_4191	method_25402	(DDI)Z	METHOD	method method_25402(Lnet/minecraft/class_11909;Z)Z public	aw:0 mixin:0
+aw-call-static	net/minecraft/class_5521	method_45665	(Lnet/minecraft/class_7555;)Ljava/util/Collection;	METHOD	method method_45665(Lnet/minecraft/class_7555;)Ljava/util/Map; private static	aw:0 mixin:0
+aw-call	net/minecraft/class_528	method_43463	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_528	field_3237	Lnet/minecraft/class_526;	FIELD	field Lnet/minecraft/class_437; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_528$class_4272	field_19137	Lnet/minecraft/class_526;	FIELD	field Lnet/minecraft/class_437; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_528$class_4272	field_19142	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_528$class_4272	field_19142	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_7745$class_7746$class_7748	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call-static	net/minecraft/class_525	method_64244	(Lnet/minecraft/class_310;Lnet/minecraft/class_437;Ljava/util/function/Function;Lnet/minecraft/class_10221;Lnet/minecraft/class_5321;Lnet/minecraft/class_10241;)V	METHOD	method method_64244(Lnet/minecraft/class_310;Ljava/lang/Runnable;Ljava/util/function/Function;Lnet/minecraft/class_10221;Lnet/minecraft/class_5321;Lnet/minecraft/class_10241;)V private static	aw:0 mixin:0
+aw-new	net/minecraft/class_525	<init>	(Lnet/minecraft/class_310;Lnet/minecraft/class_437;Lnet/minecraft/class_7193;Ljava/util/Optional;Ljava/util/OptionalLong;Lnet/minecraft/class_10241;)V	METHOD	constructors (none reachable)	aw:0 mixin:2
+aw-get	net/minecraft/class_525	field_3187	Lnet/minecraft/class_437;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_430$class_4196$class_432	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_430$class_4196$class_432	method_25402	(DDI)Z	METHOD	method method_25402(Lnet/minecraft/class_11909;Z)Z public	aw:0 mixin:0
+aw-new	net/minecraft/class_413$class_4192$class_4193	<init>	(Lnet/minecraft/class_413$class_4192;)V	METHOD	constructors (Lnet/minecraft/class_413$class_4192;Lnet/minecraft/class_3229;I)V	aw:0 mixin:0
+aw-call	net/minecraft/class_413$class_4192$class_4193	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_413$class_4192$class_4193	method_25402	(DDI)Z	METHOD	method method_25402(Lnet/minecraft/class_11909;Z)Z public	aw:0 mixin:0
+aw-call	net/minecraft/class_521$class_4271	method_48478	()Z	METHOD	method method_48478()V private	aw:0 mixin:0
+aw-get	net/minecraft/class_5369	field_25458	Ljava/lang/Runnable;	FIELD	field Ljava/util/function/Consumer; package final	aw:0 mixin:0
+aw-call	net/minecraft/class_5375	method_29678	()V	METHOD	method method_29678(Lnet/minecraft/class_5369$class_5372;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_5375	method_29673	(Lnet/minecraft/class_521;Ljava/util/stream/Stream;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_408	method_2108	(Ljava/lang/String;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_11473$class_11514	<init>	(Lnet/minecraft/class_310;Lorg/apache/commons/lang3/mutable/MutableObject;)V	METHOD	constructors (none reachable)	aw:0 mixin:0
+aw-call	net/minecraft/class_507	method_62889	(Lnet/minecraft/class_516;Lnet/minecraft/class_10298;)Z	METHOD	method method_62889(Lnet/minecraft/class_516;Lnet/minecraft/class_10298;Z)Z private	aw:0 mixin:0
+aw-new	net/minecraft/class_434$class_9678	<init>	(Ljava/lang/String;I)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_437	method_48266	()Lnet/minecraft/class_8023$class_8026;	METHOD	method method_48266(Z)Lnet/minecraft/class_8023$class_8026; private	aw:0 mixin:0
+aw-call	net/minecraft/class_466$class_469	method_25306	()V	METHOD	method method_25306(Lnet/minecraft/class_11907;)V public	aw:0 mixin:0
+aw-get	net/minecraft/class_494	field_21694	Lnet/minecraft/class_630;	FIELD	field Lnet/minecraft/class_10377; private	aw:0 mixin:0
+aw-put	net/minecraft/class_494	field_21694	Lnet/minecraft/class_630;	FIELD	field Lnet/minecraft/class_10377; private	aw:0 mixin:0
+aw-get-static	net/minecraft/class_487	field_24283	Lnet/minecraft/class_2960;	FIELD	field Lnet/minecraft/class_11719; private static final	aw:0 mixin:0
+aw-call	net/minecraft/class_465	method_30107	(I)V	METHOD	method method_30107(Lnet/minecraft/class_11909;)V private	aw:0 mixin:0
+aw-get	net/minecraft/class_465	field_2788	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_465	field_2788	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_465	field_2786	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_465	field_2786	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_10643	field_60480	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_466$class_467	method_25306	()V	METHOD	method method_25306(Lnet/minecraft/class_11907;)V public	aw:0 mixin:0
+aw-get	net/minecraft/class_498	field_21525	Lnet/minecraft/class_3879;	FIELD	field Lnet/minecraft/class_3879$class_9948; private	aw:0 mixin:0
+aw-put	net/minecraft/class_498	field_21525	Lnet/minecraft/class_3879;	FIELD	field Lnet/minecraft/class_3879$class_9948; private	aw:0 mixin:0
+aw-call	net/minecraft/class_466$class_468	method_25306	()V	METHOD	method method_25306(Lnet/minecraft/class_11907;)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_327$class_5232	method_71804	(Lnet/minecraft/class_382$class_10364;)V	METHOD	method method_71804(Lnet/minecraft/class_11767;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_327$class_5232	method_27532	(Lnet/minecraft/class_382$class_328;)V	METHOD	method method_27532(Lnet/minecraft/class_11767;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_329	method_70838	(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V	METHOD	method method_70838(Lnet/minecraft/class_332;)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_329	method_70839	(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V	METHOD	method method_70839(Lnet/minecraft/class_332;Z)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_353$class_354	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_342	method_16873	(I)V	METHOD	method method_16873(IZ)V private	aw:0 mixin:0
+aw-get-static	net/minecraft/class_342	field_32198	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_342	field_2099	Ljava/util/function/BiFunction;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_342	field_2099	Ljava/util/function/BiFunction;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_357	method_25345	(D)V	METHOD	method method_25345(Lnet/minecraft/class_11909;)V private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_340	method_40205	(Lnet/minecraft/class_6880;)Ljava/lang/String;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_340	method_27871	()Ljava/lang/String;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_340	method_1845	(Ljava/util/Map$Entry;)Ljava/lang/String;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_340	method_1838	(J)J	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_340	field_19274	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_340	field_38985	Lnet/minecraft/class_340$class_7412;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_340	field_2082	Lnet/minecraft/class_239;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_340	field_2082	Lnet/minecraft/class_239;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_340	field_2083	Lnet/minecraft/class_239;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_340	field_2083	Lnet/minecraft/class_239;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_340	field_45988	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_340	field_45988	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_8089	method_48990	(I)I	METHOD	method method_48990(Lnet/minecraft/class_11908;)I private	aw:0 mixin:0
+aw-call	net/minecraft/class_8089	method_71520	(II)I	METHOD	method method_71520(ILnet/minecraft/class_11908;)I private	aw:0 mixin:0
+aw-new	net/minecraft/class_340$class_7412	<init>	()V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_340$class_7412	method_43448	(J)J	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_340$class_7412	method_43447	()J	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_340$class_7412	field_38986	I	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_340$class_7412	field_38987	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_340$class_7412	field_38988	J	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_340$class_7412	field_38988	J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_340$class_7412	field_38989	J	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_340$class_7412	field_38989	J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_340$class_7412	field_38990	J	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_340$class_7412	field_38990	J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_340$class_7412	field_38991	J	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_340$class_7412	field_38991	J	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_7842	method_48598	(F)Lnet/minecraft/class_7842;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7842	field_42121	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_7842	field_42121	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_350	field_22747	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_350	field_22747	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_8662$class_8663	field_45387	Lnet/minecraft/class_2960;	FIELD	field Lnet/minecraft/class_8666; private	aw:0 mixin:0
+aw-put	net/minecraft/class_8662$class_8663	field_45387	Lnet/minecraft/class_2960;	FIELD	field Lnet/minecraft/class_8666; private	aw:0 mixin:0
+aw-call	net/minecraft/class_350$class_351	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public abstract	aw:8 mixin:0
+aw-call	net/minecraft/class_350$class_351	method_49568	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method not declared on the owner	aw:8 mixin:0
+aw-get	net/minecraft/class_8019	field_60306	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_530	field_3253	Lcom/mojang/authlib/GameProfile;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_530	field_45578	Ljava/util/function/Supplier;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_620	field_27528	Lnet/minecraft/class_630;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_620	field_27529	Lnet/minecraft/class_630;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_619	field_17144	Lnet/minecraft/class_630;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_10332	field_54845	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7280	field_38451	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7280	field_38452	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7280	field_38453	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7280	field_38454	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_622	field_52944	Lnet/minecraft/class_630;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_622	field_52945	Lnet/minecraft/class_630;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_5602	method_32081	(Ljava/lang/String;)Lnet/minecraft/class_5601;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_5602	method_32083	(Ljava/lang/String;)Lnet/minecraft/class_5601;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_630$class_593	comp_3185	Lorg/joml/Vector3f;	FIELD	field Lorg/joml/Vector3fc; package final	aw:4 mixin:0
+aw-get	net/minecraft/class_5604	field_27709	Lorg/joml/Vector3f;	FIELD	field Lorg/joml/Vector3fc; private final	aw:1 mixin:0
+aw-get	net/minecraft/class_5604	field_27710	Lorg/joml/Vector3f;	FIELD	field Lorg/joml/Vector3fc; private final	aw:1 mixin:0
+aw-get	net/minecraft/class_630$class_618	comp_3186	Lorg/joml/Vector3f;	FIELD	field not declared on the owner	aw:4 mixin:0
+aw-get	net/minecraft/class_11509	field_60866	Lorg/joml/Vector3f;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7186	comp_601	Lorg/joml/Vector3f;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_1140	method_72233	(Lnet/minecraft/class_3419;)F	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4227	field_61062	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4227	field_61062	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_395$class_9908	field_52697	Lnet/minecraft/class_379;	FIELD	field Lnet/minecraft/class_11759; package	aw:0 mixin:0
+aw-put	net/minecraft/class_395$class_9908	field_52697	Lnet/minecraft/class_379;	FIELD	field Lnet/minecraft/class_11759; package	aw:0 mixin:0
+aw-call	net/minecraft/class_395	method_61901	(ILnet/minecraft/class_395$class_9908;)Lnet/minecraft/class_379;	METHOD	method method_61901(ILnet/minecraft/class_395$class_9908;)Lnet/minecraft/class_11759; private	aw:0 mixin:0
+aw-call	net/minecraft/class_395	method_61902	(ILorg/lwjgl/util/freetype/FT_Face;I)Lnet/minecraft/class_379;	METHOD	method method_61902(ILorg/lwjgl/util/freetype/FT_Face;I)Lnet/minecraft/class_11759; private	aw:0 mixin:0
+aw-call	net/minecraft/class_395$class_397	getAdvance	()F	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_395$class_397	bake	(Ljava/util/function/Function;)Lnet/minecraft/class_382;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_395$class_397	field_2332	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3674	method_15978	(JLjava/nio/ByteBuffer;[B)V	METHOD	method method_15978(Lnet/minecraft/class_1041;Ljava/nio/ByteBuffer;[B)V private static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_6417	method_37463	(J)Ljava/util/Optional;	METHOD	method method_37463(Lnet/minecraft/class_1041;)Ljava/util/Optional; private static	aw:0 mixin:0
+aw-get-static	com/mojang/blaze3d/systems/RenderSystem	modelOffset	Lorg/joml/Vector3f;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	com/mojang/blaze3d/systems/RenderSystem	QUAD_VERTEX_BUFFER	Lcom/mojang/blaze3d/buffers/GpuBuffer;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put-static	com/mojang/blaze3d/systems/RenderSystem	QUAD_VERTEX_BUFFER	Lcom/mojang/blaze3d/buffers/GpuBuffer;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_7168$class_7170	field_37849	Ljava/util/Optional;	FIELD	field Lnet/minecraft/class_7168; package static final	aw:0 mixin:0
+aw-call	net/minecraft/class_10874$class_10929	method_71027	(IILjava/nio/ByteBuffer;)V	METHOD	method method_71027(IILjava/nio/ByteBuffer;I)V package	aw:0 mixin:0
+aw-call	net/minecraft/class_10874$class_10929	method_71026	(IIII)Ljava/nio/ByteBuffer;	METHOD	method method_71026(IIIII)Ljava/nio/ByteBuffer; package	aw:0 mixin:0
+aw-call	net/minecraft/class_10874$class_10929	method_71024	(I)V	METHOD	method method_71024(II)V package	aw:0 mixin:0
+aw-call	net/minecraft/class_10874$class_10929	method_71025	(III)V	METHOD	method method_71025(IIII)V package	aw:0 mixin:0
+aw-get-static	com/mojang/blaze3d/opengl/GlStateManager	ON_LINUX	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_10874	method_71027	(IILjava/nio/ByteBuffer;)V	METHOD	method method_71027(IILjava/nio/ByteBuffer;I)V package abstract	aw:0 mixin:0
+aw-call	net/minecraft/class_10874	method_71026	(IIII)Ljava/nio/ByteBuffer;	METHOD	method method_71026(IIIII)Ljava/nio/ByteBuffer; package abstract	aw:0 mixin:0
+aw-call	net/minecraft/class_10874	method_71024	(I)V	METHOD	method method_71024(II)V package abstract	aw:0 mixin:0
+aw-call	net/minecraft/class_10874	method_71025	(III)V	METHOD	method method_71025(IIII)V package abstract	aw:0 mixin:0
+aw-call	net/minecraft/class_10874$class_10930	method_71027	(IILjava/nio/ByteBuffer;)V	METHOD	method method_71027(IILjava/nio/ByteBuffer;I)V package	aw:0 mixin:0
+aw-call	net/minecraft/class_10874$class_10930	method_71026	(IIII)Ljava/nio/ByteBuffer;	METHOD	method method_71026(IIIII)Ljava/nio/ByteBuffer; package	aw:0 mixin:0
+aw-call	net/minecraft/class_10874$class_10930	method_71024	(I)V	METHOD	method method_71024(II)V package	aw:0 mixin:0
+aw-call	net/minecraft/class_10874$class_10930	method_71025	(III)V	METHOD	method method_71025(IIII)V package	aw:0 mixin:0
+aw-call-static	net/minecraft/class_10865	method_72241	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	com/mojang/blaze3d/vertex/VertexFormat	uploadToBufferWithWorkaround	(Lcom/mojang/blaze3d/buffers/GpuBuffer;Ljava/nio/ByteBuffer;ILjava/util/function/Supplier;)Lcom/mojang/blaze3d/buffers/GpuBuffer;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	com/mojang/blaze3d/vertex/VertexFormat	USE_STAGING_BUFFER_WORKAROUND	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	com/mojang/blaze3d/vertex/VertexFormat	UPLOAD_STAGING_BUFFER	Lcom/mojang/blaze3d/buffers/GpuBuffer;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put-static	com/mojang/blaze3d/vertex/VertexFormat	UPLOAD_STAGING_BUFFER	Lcom/mojang/blaze3d/buffers/GpuBuffer;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_9801$class_9802	comp_2840	[Lorg/joml/Vector3f;	FIELD	field Lnet/minecraft/class_11899; private final	aw:0 mixin:0
+aw-call-static	net/minecraft/class_9801	method_60820	(Ljava/nio/ByteBuffer;ILcom/mojang/blaze3d/vertex/VertexFormat;)[Lorg/joml/Vector3f;	METHOD	method method_60820(Ljava/nio/ByteBuffer;ILcom/mojang/blaze3d/vertex/VertexFormat;)Lnet/minecraft/class_11899; private static	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8840	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8840	method_25402	(DDI)Z	METHOD	method method_25402(Lnet/minecraft/class_11909;Z)Z public	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8840	method_25404	(III)Z	METHOD	method method_25404(Lnet/minecraft/class_11908;)Z public	aw:0 mixin:0
+aw-new	net/minecraft/class_4325$class_8802	<init>	(Lnet/minecraft/class_4325;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8802	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8802	method_37006	()Lnet/minecraft/class_2561;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_4329	method_64840	(Lnet/minecraft/class_4325;Lnet/minecraft/class_4877;)V	METHOD	method method_64840(Lnet/minecraft/class_4325;)V package	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_4329	method_64842	(Lnet/minecraft/class_4877;)V	METHOD	method method_64842(Lnet/minecraft/class_4325$class_4866;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_4329	method_64841	(Lnet/minecraft/class_8204$class_8205;Lnet/minecraft/class_4325;)V	METHOD	method method_64841(Lnet/minecraft/class_8204$class_8205;Lnet/minecraft/class_4325;Lnet/minecraft/class_4325$class_4866;)V private	aw:0 mixin:0
+aw-get	net/minecraft/class_11308	field_60209	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_11308	field_60210	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_11308	field_60212	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_4325$class_8202	<init>	(Lnet/minecraft/class_4325;Lnet/minecraft/class_2561;ILnet/minecraft/class_8204;)V	METHOD	constructors (Lnet/minecraft/class_4325;Lnet/minecraft/class_4325;ILnet/minecraft/class_2561;Lnet/minecraft/class_8204$class_8205;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8202	method_25404	(III)Z	METHOD	method method_25404(Lnet/minecraft/class_11908;)Z public	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8202	method_49564	(I)V	METHOD	method method_49564()V private	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8202	method_49568	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8202	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8202	method_25402	(DDI)Z	METHOD	method method_25402(Lnet/minecraft/class_11909;Z)Z public	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4325$class_8202	field_43004	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4325$class_8202	field_46218	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4325	field_46215	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4325	field_46216	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4325	field_37267	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4325	field_37267	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_4330	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_4330	method_25402	(DDI)Z	METHOD	method method_25402(Lnet/minecraft/class_11909;Z)Z public	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_4330	method_25404	(III)Z	METHOD	method method_25404(Lnet/minecraft/class_11908;)Z public	aw:0 mixin:0
+aw-new	net/minecraft/class_4325$class_8651	<init>	(Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V	METHOD	constructors (Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;Lnet/minecraft/class_2561;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_4401$class_4403	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_4401$class_4403	method_25402	(DDI)Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4401$class_4403	method_21324	(Lnet/minecraft/class_332;Lnet/minecraft/class_4871;IIII)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4401$class_4403	method_37006	()Lnet/minecraft/class_2561;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4401$class_4403	field_19955	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4419	method_53514	()I	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4419	field_45975	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4419	field_20081	[Lnet/minecraft/class_2561;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4419	field_20081	[Lnet/minecraft/class_2561;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_4416$class_4417	<init>	(Lnet/minecraft/class_4416;Lnet/minecraft/class_34;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4416$class_4417	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4416$class_4417	method_25402	(DDI)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4416$class_4417	method_21411	(Lnet/minecraft/class_332;III)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4416$class_4417	method_37006	()Lnet/minecraft/class_2561;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4416$class_4417	field_22718	Lnet/minecraft/class_34;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4416$class_4417	field_26509	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4416$class_4417	field_26510	Lnet/minecraft/class_2561;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4416$class_4417	field_26511	Lnet/minecraft/class_2561;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4419$class_4421	method_25402	(DDI)Z	METHOD	method method_25402(Lnet/minecraft/class_11909;Z)Z public	aw:0 mixin:0
+aw-call	net/minecraft/class_4419$class_4421	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-get	net/minecraft/class_4419$class_4421	field_45984	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4419$class_4421	field_45984	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4416	method_21396	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4416	method_21401	()V	METHOD	method method_21401(Lnet/minecraft/class_528$class_4272;)V private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4416	method_21400	(Lnet/minecraft/class_34;)Lnet/minecraft/class_2561;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4416	method_21404	(Lnet/minecraft/class_34;)Ljava/lang/String;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4416	field_20058	Lnet/minecraft/class_2561;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4416	field_20054	Ljava/text/DateFormat;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4416	field_20055	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4416	field_20055	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4416	field_20056	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4416	field_20056	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4416	field_20057	Lnet/minecraft/class_4416$class_4418;	FIELD	field Lnet/minecraft/class_528; private	aw:0 mixin:0
+aw-put	net/minecraft/class_4416	field_20057	Lnet/minecraft/class_4416$class_4418;	FIELD	field Lnet/minecraft/class_528; private	aw:0 mixin:0
+aw-call	net/minecraft/class_4419$class_4420	method_25402	(DDI)Z	METHOD	method method_25402(Lnet/minecraft/class_11909;Z)Z public	aw:0 mixin:0
+aw-new	net/minecraft/class_4401$class_4402	<init>	(Lnet/minecraft/class_4401;)V	METHOD	constructors (Lnet/minecraft/class_4401;Lnet/minecraft/class_310;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_4401$class_4402	method_64847	(I)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4423	field_20122	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4423	field_20122	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4423	field_20125	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4423	field_20125	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4423	field_20127	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4423	field_20127	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4381$class_4383	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_4406$class_4408	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_4406$class_4407	method_25312	(Lnet/minecraft/class_332;II)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4379$class_5344	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_11316$class_11317$class_11318	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_11316$class_11317$class_11318	method_25402	(DDI)Z	METHOD	method method_25402(Lnet/minecraft/class_11909;Z)Z public	aw:0 mixin:0
+aw-new	net/minecraft/class_4401$class_4403$class_4404	<init>	(Lnet/minecraft/class_4401$class_4403;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4401$class_4403$class_4404	method_21112	(Lnet/minecraft/class_332;IIZ)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4401$class_4403$class_4404	method_21110	(I)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4401	method_52672	(Z)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4401	method_21307	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4401	field_45250	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4401	field_22702	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4401	field_45251	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4401	field_22703	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4401	field_26494	Lnet/minecraft/class_2561;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4401	field_26495	Lnet/minecraft/class_2561;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4401	field_19937	Lnet/minecraft/class_2561;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4401	field_19937	Lnet/minecraft/class_2561;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4401	field_19942	Lnet/minecraft/class_4185;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4401	field_19942	Lnet/minecraft/class_4185;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4401	field_19943	Lnet/minecraft/class_4185;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4401	field_19943	Lnet/minecraft/class_4185;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_4416$class_4418	<init>	(Lnet/minecraft/class_4416;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4416$class_4418	method_21412	(Lnet/minecraft/class_34;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4416$class_4418	method_25227	(Lnet/minecraft/class_4416$class_4417;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4416$class_4418	method_25322	()I	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_4401$class_4403$class_4405	<init>	(Lnet/minecraft/class_4401$class_4403;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4401$class_4403$class_4405	method_21112	(Lnet/minecraft/class_332;IIZ)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4401$class_4403$class_4405	method_21110	(I)V	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4367	method_27455	(Lnet/minecraft/class_4877;ZZ)Lnet/minecraft/class_4367$class_4368;	METHOD	method method_27455(ZZZ)Lnet/minecraft/class_4367$class_4368; package static	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8841	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public	aw:0 mixin:0
+aw-new	net/minecraft/class_4325$class_8200	<init>	(Lnet/minecraft/class_4325;Lnet/minecraft/class_4185;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8200	method_25402	(DDI)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8200	method_25404	(III)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8200	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8200	method_25365	(Z)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_4325$class_8200	method_37006	()Lnet/minecraft/class_2561;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_4325$class_8200	field_42999	Lnet/minecraft/class_4185;	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3797	method_70965	()Lnet/minecraft/class_6489;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_6489$class_11175	comp_4028	I	FIELD	field Lnet/minecraft/class_11555; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_6489$class_11175	comp_4029	I	FIELD	field Lnet/minecraft/class_11555; private final	aw:0 mixin:0
+aw-new	net/minecraft/class_2096$class_2099	<init>	(Ljava/util/Optional;Ljava/util/Optional;)V	METHOD	constructors (Lnet/minecraft/class_2096$class_11893;Lnet/minecraft/class_2096$class_11893;)V	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2096$class_2099	method_9046	(Lcom/mojang/brigadier/StringReader;Ljava/util/Optional;Ljava/util/Optional;)Lnet/minecraft/class_2096$class_2099;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2096$class_2099	method_9044	(Ljava/util/Optional;)Ljava/util/Optional;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2096$class_2099	comp_1805	Ljava/util/Optional;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2096$class_2099	comp_1806	Ljava/util/Optional;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2096$class_2099	comp_1807	Ljava/util/Optional;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2096$class_2099	comp_1808	Ljava/util/Optional;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_2096$class_2100	<init>	(Ljava/util/Optional;Ljava/util/Optional;)V	METHOD	constructors (Lnet/minecraft/class_2096$class_11893;Lnet/minecraft/class_2096$class_11893;)V	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2096$class_2100	method_9055	(Lcom/mojang/brigadier/StringReader;Ljava/util/Optional;Ljava/util/Optional;)Lnet/minecraft/class_2096$class_2100;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2096$class_2100	method_9059	(Ljava/util/Optional;)Ljava/util/Optional;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2096$class_2100	comp_1805	Ljava/util/Optional;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2096$class_2100	comp_1806	Ljava/util/Optional;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2096$class_2100	comp_1809	Ljava/util/Optional;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2096$class_2100	comp_1810	Ljava/util/Optional;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2096	method_9037	(Lcom/mojang/brigadier/StringReader;Ljava/util/function/Function;Ljava/util/function/Supplier;)Ljava/util/Optional;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2096	method_9040	(Lcom/mojang/brigadier/StringReader;)Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2152	method_9176	(Lcom/mojang/brigadier/StringReader;Z)Ljava/lang/Float;	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2152	method_9173	(Lcom/mojang/brigadier/StringReader;Z)Z	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2152	method_9174	(Ljava/lang/Float;Ljava/util/function/Function;)Ljava/lang/Float;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_2152	comp_1840	Ljava/lang/Float;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_2152	comp_1841	Ljava/lang/Float;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_2268	field_10714	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2268	field_10713	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2268	field_10712	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2278	field_10760	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2278	field_10758	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2280	field_10765	Lnet/minecraft/class_2278;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2280	field_10764	Lnet/minecraft/class_2278;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2280	field_10766	Lnet/minecraft/class_2278;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_2303	method_9859	(Lnet/minecraft/class_2152;Ljava/util/function/ToDoubleFunction;)Ljava/util/function/Predicate;	METHOD	method method_9859(Lnet/minecraft/class_2096$class_11894;Lnet/minecraft/class_11887;)Ljava/util/function/Predicate; private	aw:0 mixin:0
+aw-get	net/minecraft/class_2303	field_10877	Lnet/minecraft/class_2152;	FIELD	field Lnet/minecraft/class_2096$class_11894; private	aw:0 mixin:0
+aw-put	net/minecraft/class_2303	field_10877	Lnet/minecraft/class_2152;	FIELD	field Lnet/minecraft/class_2096$class_11894; private	aw:0 mixin:0
+aw-get	net/minecraft/class_2303	field_10859	Lnet/minecraft/class_2152;	FIELD	field Lnet/minecraft/class_2096$class_11894; private	aw:0 mixin:0
+aw-put	net/minecraft/class_2303	field_10859	Lnet/minecraft/class_2152;	FIELD	field Lnet/minecraft/class_2096$class_11894; private	aw:0 mixin:0
+aw-get	net/minecraft/class_10726	comp_3626	Lnet/minecraft/class_2960;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_10726	comp_3627	Lnet/minecraft/class_2960;	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_5168	method_27162	(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;)Z	METHOD	method method_27162(Lnet/minecraft/class_3218;Lnet/minecraft/class_1799;Lnet/minecraft/class_2338;)Z private static	aw:0 mixin:0
+aw-get	net/minecraft/class_5878	field_29078	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4521	field_60601	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_4521	field_60601	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_5624	method_32247	(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Ljava/lang/String;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4527	field_33183	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7417$class_8823	comp_1983	Lcom/mojang/serialization/MapCodec;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_7417$class_8823	comp_1984	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8824$class_8825	<init>	(Ljava/util/List;Ljava/util/function/Function;)V	METHOD	constructors (Ljava/util/Collection;Ljava/util/function/Function;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_8824$class_8825	field_46599	Ljava/util/List;	FIELD	field Ljava/util/Collection; private final	aw:0 mixin:0
+aw-new	net/minecraft/class_2583	<init>	(Lnet/minecraft/class_5251;Ljava/lang/Integer;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Lnet/minecraft/class_2558;Lnet/minecraft/class_2568;Ljava/lang/String;Lnet/minecraft/class_2960;)V	METHOD	constructors (none reachable)	aw:0 mixin:0
+aw-get	net/minecraft/class_2583	field_24361	Lnet/minecraft/class_2960;	FIELD	field Lnet/minecraft/class_11719; package final	aw:0 mixin:0
+aw-get	net/minecraft/class_7419$class_8827	comp_1987	Lcom/mojang/serialization/MapCodec;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_7419$class_8827	comp_1988	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8707$class_5243	comp_1649	Ljava/util/UUID;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8707$class_5243	comp_1650	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8707$class_5243	comp_1651	Lnet/minecraft/class_243;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8707$class_5243	comp_1652	Lnet/minecraft/class_11;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8707$class_5243	comp_1653	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8707$class_5243	comp_1654	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8707$class_5243	comp_1655	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8707$class_5243	comp_1656	Ljava/util/Set;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8707$class_5243	comp_1657	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8707	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8707	method_53028	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8707	comp_1648	Lnet/minecraft/class_8707$class_5243;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1659	Ljava/util/UUID;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1660	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1661	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1662	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1663	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1664	F	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1665	F	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1666	Lnet/minecraft/class_243;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1667	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1668	Lnet/minecraft/class_11;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1669	Z	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1670	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1671	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1672	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1673	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1674	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1675	Ljava/util/Set;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708$class_4232	comp_1676	Ljava/util/Set;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8708	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8708	method_56480	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8708	comp_1658	Lnet/minecraft/class_8708$class_4232;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9004$class_9005	comp_2116	Ljava/util/UUID;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9004$class_9005	comp_2117	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9004$class_9005	comp_2118	Ljava/lang/Integer;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9004$class_9005	comp_2119	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_9004	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9004	method_56482	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9004	comp_2115	Lnet/minecraft/class_9004$class_9005;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8712	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8712	method_56494	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8712	comp_1679	Lnet/minecraft/class_5321;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8712	comp_1680	Lnet/minecraft/class_243;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8713	comp_1681	Lnet/minecraft/class_5716;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8713	comp_1682	I	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8714	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8714	method_56495	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8714	comp_1683	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8714	comp_1684	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8714	comp_1685	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8714	comp_1686	I	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8715	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8715	method_56496	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8716$class_8717	comp_1690	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8716$class_8717	comp_1691	Z	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8716$class_8717	comp_1692	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8716	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8716	method_56497	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8716	comp_1687	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8716	comp_1688	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8716	comp_1689	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8718$class_8719	comp_1694	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8718$class_8719	comp_1695	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8718$class_8719	comp_1696	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8718$class_8719	comp_1697	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8718$class_8719	comp_1698	Z	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8718	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8718	method_56498	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8718	comp_1693	Lnet/minecraft/class_8718$class_8719;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8720	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8720	method_56499	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8720	comp_1699	J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8720	comp_1700	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8721	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8721	method_56500	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8721	comp_1701	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8721	comp_1702	Lnet/minecraft/class_11;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8721	comp_1703	F	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8722	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8722	method_56501	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8722	comp_1704	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8722	comp_1705	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8722	comp_1706	I	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8723	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8723	method_56502	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8723	comp_1707	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8724	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8724	method_56503	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8724	comp_1708	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8724	comp_1709	I	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8725	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8725	method_56504	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8725	comp_1710	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9831$class_9832	comp_2881	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9831$class_9832	comp_2882	Lnet/minecraft/class_9904;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9831	comp_2879	J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9831	comp_2880	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8726$class_8727	comp_1714	Lnet/minecraft/class_3341;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8726$class_8727	comp_1715	Z	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8726	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8726	method_56505	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_8726	method_53039	(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3341;	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_8726	method_53037	(Lnet/minecraft/class_2540;Lnet/minecraft/class_3341;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8726	comp_1711	Lnet/minecraft/class_5321;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8726	comp_1712	Lnet/minecraft/class_3341;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8726	comp_1713	Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8728	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8728	method_56506	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8728	comp_1716	Ljava/util/Set;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8728	comp_1717	Ljava/util/Set;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_8729	<init>	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_8729	method_56507	(Lnet/minecraft/class_2540;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8729	comp_1718	Lnet/minecraft/class_2338;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8729	comp_1719	F	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8729	comp_1720	F	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8729	comp_1721	F	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8729	comp_1722	F	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_8729	comp_1723	F	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_2604	field_33293	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_2604	field_33294	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2604	field_11951	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2604	field_11950	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2604	field_11949	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_2759	<init>	(Lnet/minecraft/class_2540;)V	METHOD	constructors (Lnet/minecraft/class_5217$class_12064;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_2759	method_55924	(Lnet/minecraft/class_2540;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2759	field_12615	Lnet/minecraft/class_2338;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2759	field_26381	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2743	field_12563	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2743	field_12562	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2743	field_12561	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4209	method_24819	(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;)V	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4209	method_36157	(Lnet/minecraft/class_1309;J)Ljava/util/List;	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4209	method_36156	(Lnet/minecraft/class_3218;Ljava/lang/Object;)Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4209	method_22319	(Lnet/minecraft/class_3218;Lnet/minecraft/class_8710;)V	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4209	field_18961	Lorg/slf4j/Logger;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_9179	<init>	(Lnet/minecraft/class_2540;)V	METHOD	constructors (Ljava/util/Set;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_9179	method_56621	(Lnet/minecraft/class_2540;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_9179	comp_2284	Lnet/minecraft/class_9192;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_2926$class_2927	field_42541	Lcom/mojang/serialization/Codec;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/server/MinecraftServer	method_27901	(Lnet/minecraft/class_3218;Lnet/minecraft/class_5268;ZZ)V	METHOD	method method_27901(Lnet/minecraft/class_3218;Lnet/minecraft/class_5268;ZZLnet/minecraft/class_11545;)V private static	aw:0 mixin:0
+aw-call	net/minecraft/server/MinecraftServer	method_3774	(Lnet/minecraft/class_3949;)V	METHOD	method method_3774()V private	aw:0 mixin:3
+aw-get	net/minecraft/server/MinecraftServer	field_17439	Lnet/minecraft/class_3950;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/server/MinecraftServer	field_4604	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/server/MinecraftServer	field_4604	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/server/MinecraftServer	field_4554	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/server/MinecraftServer	field_4554	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7497	comp_840	Lnet/minecraft/class_3312;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3127	method_13645	(Lnet/minecraft/class_2168;Ljava/util/Collection;Lnet/minecraft/class_2338;F)I	METHOD	method method_13645(Lnet/minecraft/class_2168;Ljava/util/Collection;Lnet/minecraft/class_2338;Lnet/minecraft/class_2267;)I private static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3128	method_13650	(Lnet/minecraft/class_2168;Lnet/minecraft/class_2338;F)I	METHOD	method method_13650(Lnet/minecraft/class_2168;Lnet/minecraft/class_2338;Lnet/minecraft/class_2267;)I private static	aw:0 mixin:0
+aw-get	net/minecraft/class_3176	field_48789	Lnet/minecraft/class_9188;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_3176	field_48789	Lnet/minecraft/class_9188;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_3898$class_3208	method_66006	(Lnet/minecraft/class_2596;Ljava/util/List;)V	METHOD	method not declared on the owner	aw:2 mixin:0
+aw-get	net/minecraft/class_3898	field_17442	Lnet/minecraft/class_3949;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3898	field_17230	Ljava/util/concurrent/atomic/AtomicInteger;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3215	field_13941	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_3215	field_13941	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_3231	method_49753	(Ljava/util/List;)Ljava/util/stream/Stream;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_3231	method_18758	(Lnet/minecraft/class_2596;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3231	field_18259	Ljava/util/function/Consumer;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3231	field_55595	Ljava/util/function/BiConsumer;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3218	field_48271	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_3218	field_48271	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3222$class_10766	comp_3683	Lnet/minecraft/class_5321;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3222$class_10766	comp_3684	Lnet/minecraft/class_2338;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3222$class_10766	comp_3685	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_3222$class_9773	<init>	(Lnet/minecraft/class_243;F)V	METHOD	constructors (Lnet/minecraft/class_243;FF)V	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3222$class_9773	method_60595	(Lnet/minecraft/class_243;Lnet/minecraft/class_2338;)Lnet/minecraft/class_3222$class_9773;	METHOD	method method_60595(Lnet/minecraft/class_243;Lnet/minecraft/class_2338;F)Lnet/minecraft/class_3222$class_9773; public static	aw:0 mixin:0
+aw-call	net/minecraft/class_3222	method_61274	(Lnet/minecraft/class_3218;Lnet/minecraft/class_238;)Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_3222	method_14244	(I)I	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_3230$class_10558	<init>	(Ljava/lang/String;I)V	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3230	method_66026	(Ljava/lang/String;JZLnet/minecraft/class_3230$class_10558;)Lnet/minecraft/class_3230;	METHOD	method method_66026(Ljava/lang/String;JI)Lnet/minecraft/class_3230; private static	aw:0 mixin:0
+aw-get	net/minecraft/class_3230	comp_3475	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3230	comp_3476	Lnet/minecraft/class_3230$class_10558;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_3951	<init>	(I)V	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_3951	field_17467	Lorg/slf4j/Logger;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3951	field_17468	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3951	field_17469	I	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_3951	field_17469	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3951	field_17470	J	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_3951	field_17470	J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3951	field_17471	J	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_3951	field_17471	J	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_3952	<init>	(Lnet/minecraft/class_3949;Ljava/util/concurrent/Executor;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3952	field_17472	Lnet/minecraft/class_3949;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3952	field_54054	Lnet/minecraft/class_10176;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3952	field_48272	Z	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_3952	field_48272	Z	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_3953	<init>	(Lnet/minecraft/class_3951;III)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3953	field_17474	Lnet/minecraft/class_3951;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3953	field_17475	Lit/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3953	field_17476	Lnet/minecraft/class_1923;	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_3953	field_17476	Lnet/minecraft/class_1923;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3953	field_17477	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3953	field_17478	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3953	field_17479	I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_3953	field_17480	Z	CLASS	class gone	aw:0 mixin:0
+aw-put	net/minecraft/class_3953	field_17480	Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_3244	method_44337	(Ljava/lang/String;Ljava/lang/Runnable;)V	METHOD	method method_44337(Ljava/lang/String;ZLjava/lang/Runnable;)V private	aw:1 mixin:0
+aw-get-static	net/minecraft/class_8617$class_8618	field_45048	Lcom/mojang/serialization/Codec;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_8617	field_45047	Lcom/mojang/serialization/Codec;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3272	comp_1581	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3272	comp_1582	Ljava/util/Optional;	FIELD	field Lnet/minecraft/class_6497; private final	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3288	method_52440	(Ljava/lang/String;Lnet/minecraft/class_3272;)Lnet/minecraft/class_6497;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_7368$class_8622	field_45058	Lcom/google/common/collect/ImmutableMap$Builder;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_7368	method_52444	(Lnet/minecraft/class_7368$class_8622;Lnet/minecraft/class_7677;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_4014$class_4047	create	(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3302;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD	method create(Lnet/minecraft/class_3302$class_11558;Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3302;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public abstract	aw:0 mixin:0
+aw-new	net/minecraft/class_3312$class_3313	<init>	(Lcom/mojang/authlib/GameProfile;Ljava/util/Date;)V	METHOD	constructors (Lnet/minecraft/class_11560;Ljava/util/Date;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_3312$class_3313	method_14519	()Lcom/mojang/authlib/GameProfile;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3312$class_3313	field_14321	Lcom/mojang/authlib/GameProfile;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3312	method_14509	(Lcom/mojang/authlib/GameProfileRepository;Ljava/lang/String;)Ljava/util/Optional;	ICCE	method method_14509(Lcom/mojang/authlib/GameProfileRepository;Ljava/lang/String;)Ljava/util/Optional; private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3312	method_53912	(Ljava/lang/String;)Ljava/util/Optional;	ICCE	method method_53912(Ljava/lang/String;)Ljava/util/Optional; private	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3312	method_14514	()Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_3312	field_14313	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put-static	net/minecraft/class_3312	field_14313	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3312	field_33860	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3312	field_33861	Ljava/util/concurrent/Executor;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_3312	field_33861	Ljava/util/concurrent/Executor;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3324	field_14352	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_3324	field_14352	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_3324	field_29791	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3327	method_14621	(Lcom/google/gson/JsonObject;)Lcom/mojang/authlib/GameProfile;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3336	method_14651	(Lcom/google/gson/JsonObject;)Lcom/mojang/authlib/GameProfile;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_3340	method_14656	(Lcom/google/gson/JsonObject;)Lcom/mojang/authlib/GameProfile;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_5699	field_45076	Lcom/mojang/serialization/MapCodec;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_9188$class_9189	<init>	(Lnet/minecraft/class_3222;Lnet/minecraft/class_9192;)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188$class_9189	toString	()Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188$class_9189	hashCode	()I	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188$class_9189	equals	(Ljava/lang/Object;)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188$class_9189	comp_2288	()Lnet/minecraft/class_3222;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188$class_9189	comp_2289	()Lnet/minecraft/class_9192;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9188$class_9189	comp_2288	Lnet/minecraft/class_3222;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9188$class_9189	comp_2289	Lnet/minecraft/class_9192;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_9188$class_9190	<init>	(JI)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188$class_9190	toString	()Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188$class_9190	hashCode	()I	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188$class_9190	equals	(Ljava/lang/Object;)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188$class_9190	comp_2290	()J	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188$class_9190	comp_2291	()I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9188$class_9190	comp_2290	J	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9188$class_9190	comp_2291	I	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188	method_56654	(JI)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_9188	method_56658	(JI)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9188	field_48810	Lnet/minecraft/class_3324;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9188	field_48811	Ljava/util/Map;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9188	field_48812	Ljava/util/Queue;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_9192	<init>	(Ljava/lang/String;I)V	METHOD	constructors (none reachable)	aw:0 mixin:0
+aw-get	net/minecraft/class_9193	field_48819	Lnet/minecraft/class_9188;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_1297$class_10365	<init>	(Lnet/minecraft/class_243;Lnet/minecraft/class_243;Z)V	METHOD	constructors (Lnet/minecraft/class_243;Lnet/minecraft/class_243;Lnet/minecraft/class_243;)V (Lnet/minecraft/class_243;Lnet/minecraft/class_243;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_1297$class_10365	comp_4400	()Z	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_1297$class_10365	comp_4400	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_1297	method_68261	(Lnet/minecraft/class_243;)Ljava/lang/Iterable;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_1297	method_72084	(Lnet/minecraft/class_243;Lnet/minecraft/class_243;Lnet/minecraft/class_10774$class_10775;Lit/unimi/dsi/fastutil/longs/LongSet;)V	METHOD	method method_72084(Lnet/minecraft/class_243;Lnet/minecraft/class_243;Lnet/minecraft/class_10774$class_10775;Lit/unimi/dsi/fastutil/longs/LongSet;I)I private	aw:0 mixin:0
+aw-call	net/minecraft/class_1297	method_72085	(Lnet/minecraft/class_2338;ZZ)V	METHOD	method method_72085(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;ZZ)V private	aw:0 mixin:0
+aw-get-static	net/minecraft/class_1297	field_57580	Lcom/google/common/collect/ImmutableList;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_1297	field_57581	Lcom/google/common/collect/ImmutableList;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_4050	<init>	(Ljava/lang/String;II)V	METHOD	constructors (none reachable)	aw:0 mixin:0
+aw-get	net/minecraft/class_1372	field_6544	Lnet/minecraft/class_1646;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_1372	field_6544	Lnet/minecraft/class_1646;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_7375	<init>	(Lnet/minecraft/class_10726;)V	METHOD	constructors (Lnet/minecraft/class_12079$class_10726;Lnet/minecraft/class_10702;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_7375	comp_3560	Lnet/minecraft/class_10726;	FIELD	field Lnet/minecraft/class_12079$class_10726; private final	aw:0 mixin:0
+aw-new	net/minecraft/class_7106	<init>	(Lnet/minecraft/class_10726;)V	METHOD	constructors (Lnet/minecraft/class_12079$class_10726;Lnet/minecraft/class_10702;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_7106	comp_3569	Lnet/minecraft/class_10726;	FIELD	field Lnet/minecraft/class_12079$class_10726; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_9346$class_10688	comp_3566	Lnet/minecraft/class_10726;	FIELD	field Lnet/minecraft/class_12079$class_10726; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_9346$class_10688	comp_3567	Lnet/minecraft/class_10726;	FIELD	field Lnet/minecraft/class_12079$class_10726; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_9346$class_10688	comp_3568	Lnet/minecraft/class_10726;	FIELD	field Lnet/minecraft/class_12079$class_10726; private final	aw:0 mixin:0
+aw-new	net/minecraft/class_1542	<init>	(Lnet/minecraft/class_1542;)V	METHOD	constructors (Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V (Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V (Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;DDD)V	aw:0 mixin:4
+aw-get	net/minecraft/class_1548	field_7226	I	FIELD	field Z private	aw:0 mixin:0
+aw-put	net/minecraft/class_1548	field_7226	I	FIELD	field Z private	aw:0 mixin:0
+aw-call	net/minecraft/class_1657	method_7313	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_1657	method_7267	(Lnet/minecraft/class_2487;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_1657	method_7296	(Lnet/minecraft/class_2487;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_1657	field_60364	Lorg/slf4j/Logger;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_1657	field_18134	Ljava/util/Map;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_1657	field_19428	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_1657	field_19428	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_1676	method_26961	()Z	METHOD	method method_26961()V protected	aw:0 mixin:0
+aw-call-static	net/minecraft/class_1684	method_71625	(Lnet/minecraft/class_3218;Ljava/util/UUID;)Lnet/minecraft/class_1297;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_10693	comp_3573	Lnet/minecraft/class_10726;	FIELD	field Lnet/minecraft/class_12079$class_10726; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_1826	field_8917	Lnet/minecraft/class_1299;	FIELD	field not declared on the owner	aw:6 mixin:0
+aw-get-static	net/minecraft/class_9279	field_51522	Lorg/slf4j/Logger;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_9279	field_55048	Ljava/lang/String;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_9296	method_72088	(Ljava/util/Optional;)Lnet/minecraft/class_9296;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_9296	method_72089	(Ljava/util/Optional;Ljava/util/Optional;)Lcom/mojang/authlib/GameProfile;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_9296	method_57509	(Ljava/util/Optional;Ljava/util/Optional;Lcom/mojang/authlib/properties/PropertyMap;)Lcom/mojang/authlib/GameProfile;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_9296	comp_2410	Ljava/util/Optional;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_9296	comp_2411	Ljava/util/Optional;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_9296	comp_2412	Lcom/mojang/authlib/properties/PropertyMap;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_9296	comp_2413	Lcom/mojang/authlib/GameProfile;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_9296	field_49752	Lcom/mojang/serialization/Codec;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_1918	field_9169	Ljava/text/SimpleDateFormat;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_1922	method_61715	(Lit/unimi/dsi/fastutil/longs/LongSet;Lnet/minecraft/class_243;Lnet/minecraft/class_243;Lnet/minecraft/class_238;Lnet/minecraft/class_1922$class_10781;)I	METHOD	method method_61715(Lit/unimi/dsi/fastutil/longs/LongSet;Lnet/minecraft/class_243;Lnet/minecraft/class_238;Lnet/minecraft/class_1922$class_10781;)I private static	aw:0 mixin:0
+aw-get	net/minecraft/class_1937	field_9223	Lnet/minecraft/class_2784;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_4481	field_31012	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_2281	method_9753	(Lnet/minecraft/class_1750;Lnet/minecraft/class_2350;)Lnet/minecraft/class_2350;	METHOD	method method_9753(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)Lnet/minecraft/class_2350; private	aw:0 mixin:0
+aw-call	net/minecraft/class_7714	method_47580	(Lnet/minecraft/class_3965;Lnet/minecraft/class_2680;)Ljava/util/OptionalInt;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_7714	method_47579	(Lnet/minecraft/class_3965;Lnet/minecraft/class_2350;)Ljava/util/Optional;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_7714	method_47577	(F)I	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_4482$class_9309	comp_2431	Lnet/minecraft/class_9279;	FIELD	field Lnet/minecraft/class_11580; package final	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2631	method_59536	(Ljava/lang/String;Lnet/minecraft/class_7497;)Ljava/util/concurrent/CompletableFuture;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2631	method_59540	(Ljava/util/UUID;Lnet/minecraft/class_7497;Ljava/util/function/BooleanSupplier;)Ljava/util/concurrent/CompletableFuture;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_2631	method_11339	()V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_2631	field_34029	Ljava/util/concurrent/Executor;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put-static	net/minecraft/class_2631	field_34029	Ljava/util/concurrent/Executor;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_2631	field_51356	Lcom/google/common/cache/LoadingCache;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put-static	net/minecraft/class_2631	field_51356	Lcom/google/common/cache/LoadingCache;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_2631	field_51357	Lcom/google/common/cache/LoadingCache;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put-static	net/minecraft/class_2631	field_51357	Lcom/google/common/cache/LoadingCache;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2780$class_3976	field_17652	Lnet/minecraft/class_2784;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_10763	comp_3671	Lnet/minecraft/class_2350;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_10763	comp_3672	D	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_5200	field_24123	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_5200	field_24124	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_5200	field_24125	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_5200	field_24126	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_5200	field_24127	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_5200	field_24128	I	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_5200	field_24129	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_5200	field_24130	J	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2784$class_5200	field_24131	D	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2791	method_38256	(Lnet/minecraft/class_2378;[Lnet/minecraft/class_2826;)V	METHOD	method method_38256(Lnet/minecraft/class_11897;[Lnet/minecraft/class_2826;)V private static	aw:0 mixin:0
+aw-new	net/minecraft/class_2814	<init>	(Lnet/minecraft/class_2359;ILnet/minecraft/class_2835;Lnet/minecraft/class_3513;)V	METHOD	constructors (ILjava/util/List;)V (I)V	aw:0 mixin:0
+aw-get	net/minecraft/class_2814	field_12821	Lnet/minecraft/class_2359;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2814	field_12825	Lnet/minecraft/class_2835;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_2834	<init>	(Lnet/minecraft/class_2359;ILnet/minecraft/class_2835;Ljava/util/List;)V	METHOD	constructors (none reachable)	aw:0 mixin:0
+aw-new	net/minecraft/class_2834	<init>	(Lnet/minecraft/class_2359;[Ljava/lang/Object;Lnet/minecraft/class_2835;II)V	METHOD	constructors (none reachable)	aw:0 mixin:0
+aw-get	net/minecraft/class_2834	field_12900	Lnet/minecraft/class_2359;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2834	field_12905	Lnet/minecraft/class_2835;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-new	net/minecraft/class_2841$class_6560	<init>	(Lnet/minecraft/class_2837$class_6559;I)V	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6560	method_38305	(Lnet/minecraft/class_2359;Lnet/minecraft/class_2835;I)Lnet/minecraft/class_2841$class_6561;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6560	toString	()Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6560	hashCode	()I	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6560	equals	(Ljava/lang/Object;)Z	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6560	comp_72	()Lnet/minecraft/class_2837$class_6559;	CLASS	class gone	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6560	comp_73	()I	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_2841$class_6560	comp_72	Lnet/minecraft/class_2837$class_6559;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_2841$class_6560	comp_73	I	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_2841$class_6561	<init>	(Lnet/minecraft/class_2841$class_6560;Lnet/minecraft/class_6490;Lnet/minecraft/class_2837;)V	METHOD	constructors (Lnet/minecraft/class_11895;Lnet/minecraft/class_6490;Lnet/minecraft/class_2837;)V	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6561	method_38306	()I	METHOD	method method_38306(Lnet/minecraft/class_2359;)I public	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6561	method_38309	(Lnet/minecraft/class_2540;)V	METHOD	method method_38309(Lnet/minecraft/class_2540;Lnet/minecraft/class_2359;)V public	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6561	method_44338	(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2841$class_6561;	METHOD	method method_44338()Lnet/minecraft/class_2841$class_6561; public	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6561	comp_74	()Lnet/minecraft/class_2841$class_6560;	METHOD	method comp_74()Lnet/minecraft/class_11895; public	aw:0 mixin:0
+aw-get	net/minecraft/class_2841$class_6561	comp_74	Lnet/minecraft/class_2841$class_6560;	FIELD	field Lnet/minecraft/class_11895; private final	aw:0 mixin:0
+aw-call	net/minecraft/class_2841$class_6563	method_38315	(Lnet/minecraft/class_2359;I)I	CLASS	class gone	aw:0 mixin:0
+aw-get-static	net/minecraft/class_2841$class_6563	field_34571	Lnet/minecraft/class_2837$class_6559;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_2841$class_6563	field_34572	I	CLASS	class gone	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2841	method_38298	(Lnet/minecraft/class_2359;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_2841$class_6563;Ljava/lang/Object;Lnet/minecraft/class_7522$class_7523;)Lcom/mojang/serialization/Codec;	METHOD	method method_38298(Lcom/mojang/serialization/Codec;Lnet/minecraft/class_6563;Ljava/lang/Object;Lnet/minecraft/class_7522$class_7523;)Lcom/mojang/serialization/Codec; private static	aw:0 mixin:0
+aw-new	net/minecraft/class_2841	<init>	(Lnet/minecraft/class_2359;Lnet/minecraft/class_2841$class_6563;Lnet/minecraft/class_2841$class_6561;)V	METHOD	constructors (Ljava/lang/Object;Lnet/minecraft/class_6563;)V	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2841	method_44346	(Lnet/minecraft/class_2359;Lnet/minecraft/class_2841$class_6563;Lnet/minecraft/class_7522$class_6562;)Lcom/mojang/serialization/DataResult;	METHOD	method method_44346(Lnet/minecraft/class_6563;Lnet/minecraft/class_7522$class_6562;)Lcom/mojang/serialization/DataResult; public static	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2841	method_39894	([ILjava/util/function/IntUnaryOperator;)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2841	field_34558	Lnet/minecraft/class_2835;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2841	field_34559	Lnet/minecraft/class_2359;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2841	field_34561	Lnet/minecraft/class_2841$class_6563;	FIELD	field Lnet/minecraft/class_6563; private final	aw:0 mixin:0
+aw-get	net/minecraft/class_6564	field_34573	Lnet/minecraft/class_2359;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_6564	field_34575	Lnet/minecraft/class_2835;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_4180	method_20369	(Lcom/mojang/serialization/Dynamic;)I	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_2852	method_39036	(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/Codec;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_2852	comp_2945	Lnet/minecraft/class_2378;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_2852	field_34576	Lcom/mojang/serialization/Codec;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5707	field_28138	Lnet/minecraft/class_2338;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_6350$class_5832	method_33734	(I)I	ICCE	method method_33734(I)I private static	aw:0 mixin:0
+aw-call	net/minecraft/class_6350$class_5832	method_33740	(I)I	ICCE	method method_33740(I)I private static	aw:0 mixin:0
+aw-call	net/minecraft/class_6350$class_5832	method_33743	(I)I	ICCE	method method_33743(I)I private static	aw:0 mixin:0
+aw-call	net/minecraft/class_6350$class_5832	method_33738	(J)Lnet/minecraft/class_6350$class_6351;	METHOD	method method_33738(I)Lnet/minecraft/class_6350$class_6351; private	aw:0 mixin:0
+aw-get	net/minecraft/class_5817	field_28744	Lit/unimi/dsi/fastutil/objects/ObjectListIterator;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5817	field_28745	Lit/unimi/dsi/fastutil/objects/ObjectListIterator;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_6568$class_6951	field_36613	[[D	FIELD	field [D package final	aw:0 mixin:0
+aw-get	net/minecraft/class_6568	field_36273	Lit/unimi/dsi/fastutil/longs/Long2IntMap;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_6568	field_36583	Lnet/minecraft/class_6910;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_6953	comp_486	Lnet/minecraft/class_6910;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5434	field_38268	I	FIELD	field Lnet/minecraft/class_5434$class_11600; private final	aw:0 mixin:0
+aw-call	net/minecraft/class_5193	method_27258	(Lnet/minecraft/class_5819;Lnet/minecraft/class_2680;)Lnet/minecraft/class_2680;	METHOD	method method_27258(Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680; private	aw:0 mixin:0
+aw-call	net/minecraft/class_5193	method_27261	(Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680;	METHOD	method method_27261(Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680; private	aw:0 mixin:0
+aw-call	net/minecraft/class_5193	method_27262	(Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680;	METHOD	method method_27262(Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680; private	aw:0 mixin:0
+aw-get-static	net/minecraft/class_13	field_31808	Z	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_29	method_55787	(Lnet/minecraft/class_1657;Ljava/lang/String;)V	METHOD	method method_55787(Lnet/minecraft/class_11560;Ljava/lang/String;)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_29	method_261	(Lnet/minecraft/class_1657;Ljava/lang/String;)Ljava/util/Optional;	METHOD	method method_261(Lnet/minecraft/class_11560;Ljava/lang/String;)Ljava/util/Optional; private	aw:0 mixin:0
+aw-new	net/minecraft/class_31	<init>	(Lnet/minecraft/class_2487;ZLnet/minecraft/class_2338;FJJIIIZIZZZLnet/minecraft/class_2784$class_5200;IILjava/util/UUID;Ljava/util/Set;Ljava/util/Set;Lnet/minecraft/class_236;Lnet/minecraft/class_2487;Lnet/minecraft/class_2881$class_8576;Lnet/minecraft/class_1940;Lnet/minecraft/class_5285;Lnet/minecraft/class_31$class_7729;Lcom/mojang/serialization/Lifecycle;)V	METHOD	constructors (Lnet/minecraft/class_1940;Lnet/minecraft/class_5285;Lnet/minecraft/class_31$class_7729;Lcom/mojang/serialization/Lifecycle;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_31	field_48380	Lnet/minecraft/class_2338;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_31	field_48380	Lnet/minecraft/class_2338;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_31	field_26367	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-put	net/minecraft/class_31	field_26367	F	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_31	field_24193	Lnet/minecraft/class_2784$class_5200;	FIELD	field Ljava/util/Optional; private	aw:0 mixin:0
+aw-put	net/minecraft/class_31	field_24193	Lnet/minecraft/class_2784$class_5200;	FIELD	field Ljava/util/Optional; private	aw:0 mixin:0
+aw-new	net/minecraft/class_9317$class_9318	<init>	(Lnet/minecraft/class_9317$class_9319;)V	METHOD	constructors (Lnet/minecraft/class_9317$class_12069;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_9317$class_9318	field_49434	Lnet/minecraft/class_9317$class_9319;	FIELD	field Lnet/minecraft/class_9317$class_12069; private final	aw:0 mixin:0
+aw-new	net/minecraft/class_9317$class_9319	<init>	(Ljava/lang/String;ILjava/lang/String;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_9317$class_9319	field_49438	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_9317	<init>	(Ljava/util/List;Lnet/minecraft/class_9317$class_9319;Ljava/util/Optional;Ljava/util/Optional;)V	METHOD	constructors (Ljava/util/List;Lnet/minecraft/class_9317$class_12069;Ljava/util/Optional;Ljava/util/Optional;)V	aw:0 mixin:0
+aw-get	net/minecraft/class_9317	field_49431	Lnet/minecraft/class_9317$class_9319;	FIELD	field Lnet/minecraft/class_9317$class_12069; private final	aw:0 mixin:0
+aw-new	net/minecraft/class_101$class_102	<init>	(Ljava/lang/String;ILjava/lang/String;Lnet/minecraft/class_169;)V	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_101$class_102	field_1025	Ljava/lang/String;	CLASS	class gone	aw:0 mixin:0
+aw-get	net/minecraft/class_101$class_102	field_1024	Lnet/minecraft/class_169;	CLASS	class gone	aw:0 mixin:0
+aw-new	net/minecraft/class_101	<init>	(Ljava/util/List;Lnet/minecraft/class_101$class_102;)V	METHOD	constructors (none reachable)	aw:0 mixin:0
+aw-get	net/minecraft/class_101	field_1018	Lnet/minecraft/class_101$class_102;	FIELD	field Lnet/minecraft/class_101$class_12070; private final	aw:0 mixin:0
+aw-call	net/minecraft/class_5646$class_5648	method_32434	()Ljava/lang/String;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_5646$class_5648	method_32436	()Ljava/util/Set;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call-static	net/minecraft/class_5646	method_32430	(Lnet/minecraft/class_47$class_50;)Lnet/minecraft/class_5646$class_5648;	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_5646	field_31875	Ljava/lang/String;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get-static	net/minecraft/class_5646	field_27915	Lnet/minecraft/class_5646$class_5648;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_5646	field_27916	Lnet/minecraft/class_5646$class_5648;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-get	net/minecraft/class_3727	field_24425	Ljava/util/function/Predicate;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_11200$class_11201	method_71153	(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11297;)D	METHOD	method method_71153(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11297;Lnet/minecraft/class_11728;)D public	aw:0 mixin:0
+aw-call	net/minecraft/class_11200$class_11201	method_71154	(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11204;)Lnet/minecraft/class_11200$class_11379;	METHOD	method method_71154(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11204;Lnet/minecraft/class_11728;)Lnet/minecraft/class_11200$class_11379; public	aw:0 mixin:0
+aw-call	net/minecraft/class_11200$class_11202	method_71153	(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11297;)D	METHOD	method method_71153(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11297;Lnet/minecraft/class_11728;)D public	aw:0 mixin:0
+aw-call	net/minecraft/class_11200$class_11202	method_71154	(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11204;)Lnet/minecraft/class_11200$class_11379;	METHOD	method method_71154(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11204;Lnet/minecraft/class_11728;)Lnet/minecraft/class_11200$class_11379; public	aw:0 mixin:0
+aw-call	net/minecraft/class_11200$class_11203	method_71153	(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11297;)D	METHOD	method method_71153(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11297;Lnet/minecraft/class_11728;)D public	aw:0 mixin:0
+aw-call	net/minecraft/class_11200$class_11203	method_71154	(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11204;)Lnet/minecraft/class_11200$class_11379;	METHOD	method method_71154(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11204;Lnet/minecraft/class_11728;)Lnet/minecraft/class_11200$class_11379; public	aw:0 mixin:0
+aw-call	net/minecraft/class_11200$class_11206	method_70780	(Lnet/minecraft/class_1937;)Lnet/minecraft/class_243;	METHOD	method method_70780(Lnet/minecraft/class_1937;Lnet/minecraft/class_11728;)Lnet/minecraft/class_243; private	aw:0 mixin:0
+aw-call	net/minecraft/class_11200$class_11206	method_71153	(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11297;)D	METHOD	method method_71153(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11297;Lnet/minecraft/class_11728;)D public	aw:0 mixin:0
+aw-call	net/minecraft/class_11200$class_11206	method_71154	(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11204;)Lnet/minecraft/class_11200$class_11379;	METHOD	method method_71154(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11204;Lnet/minecraft/class_11728;)Lnet/minecraft/class_11200$class_11379; public	aw:0 mixin:0
