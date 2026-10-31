@@ -46,4 +46,23 @@ public final class CbTickets {
     public static void removeRegionTicketOnCache(class_3215 cache, class_3230 type, class_1923 pos, int radius, Object key) {
         cache.method_66010(type, pos, radius);
     }
+
+    /**
+     * 1.21.4 TicketType.create(name, comparator) / create(name, comparator, timeout) (javap -c 1.21.4 class_3230:
+     * method_14291 = new TicketType(name, comparator, 0L), method_20628 = timeout as long). 1.21.5's TicketType is a
+     * record (timeout, persist, use) built by its public constructor; its own types are registered by name in
+     * &lt;clinit&gt; (BuiltInRegistries.TICKET_TYPE, frozen afterwards), so a 1.21.4 type -- never registered in 1.21.4
+     * either -- is constructed, not registered. persist false: 1.21.4 saved no ticket (TicketStorage saves only types
+     * flagged persist, javap class_10592.method_67396). use LOADING_AND_SIMULATION: a 1.21.4 ticket both loaded and
+     * ticked chunks by its level, as 1.21.5's own non-forced types with that use do. The comparator ordered ticket
+     * keys, which 1.21.5 tickets no longer have (see addTicket); it is dropped.
+     */
+    public static class_3230 create(String name, java.util.Comparator<?> comparator) {
+        return create(name, comparator, 0);
+    }
+
+    /** 1.21.4 TicketType.create(name, comparator, timeout) */
+    public static class_3230 create(String name, java.util.Comparator<?> comparator, int timeout) {
+        return new class_3230(timeout, false, class_3230.class_10558.field_55603);
+    }
 }
