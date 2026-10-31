@@ -5,5 +5,10 @@
   },
   "_redirects_basis": {
     "net/minecraft/data/loot/EntityLootSubProvider.createSheepDispatchPool(Ljava/util/Map;)Lnet/minecraft/world/level/storage/loot/LootPool$Builder;": "26.1.2 made one alternative per map entry, in the map's order (a map without some colours had no alternative for them); 26.2 makes one per DyeColor.VALUES from a ColorCollection. The layer keeps 26.1.2's per-entry loop and builds each alternative as 26.2 does (the exact SHEEP_COLOR component and SheepPredicate.hasWool, which 26.1.2 put in DataComponentMatchers and a sub-predicate)"
-  }
+  },
+  "fieldGetters": {
+    "net/minecraft/world/level/storage/loot/BuiltInLootTables.SHEEP_BY_DYE:Ljava/util/Map;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityLoot#sheepByDye",
+    "net/minecraft/world/level/storage/loot/BuiltInLootTables.SHEAR_SHEEP_BY_DYE:Ljava/util/Map;": "top/dext/centurybridge/step/v26_2/rt/CbS26EntityLoot#shearSheepByDye"
+  },
+  "_s26k_sheep_maps_basis": "26.1.2 SHEEP_BY_DYE / SHEAR_SHEEP_BY_DYE = makeDyeKeyMap(\"entities/sheep\" / \"shearing/sheep\"): EnumMap over DyeColor of register(prefix + \"/\" + getName()). 26.2's SHEEP / SHEAR_DYED_SHEEP are ColorCollection.NAMES (DyeColor::getName) mapped to register(\"entities/sheep/\" + n) / register(\"shearing/sheep/\" + n) (javap -c -v of both <clinit>): the same keys; the getters hand back one EnumMap each built from them (rt/CbS26EntityLoot). Read by the climbed 1.21.2 layer's CbEntityLoot."
 }

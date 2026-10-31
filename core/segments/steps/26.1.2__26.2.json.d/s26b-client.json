@@ -14,10 +14,12 @@
     }
   },
   "instanceFieldGetters": {
-    "net/minecraft/client/Options.hideGui:Z": "top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#hideGui"
+    "net/minecraft/client/Options.hideGui:Z": "top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#hideGui",
+    "net/minecraft/client/Minecraft.particleResources:Lnet/minecraft/client/particle/ParticleResources;": "top/dext/centurybridge/step/v26_2/rt/CbS26ParticlesClient#particleResources"
   },
   "instanceFieldSetters": {
     "net/minecraft/client/Options.hideGui:Z": "top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#setHideGui"
   },
-  "_hideGui_basis": "javap: 26.1.2 Options.hideGui (public boolean, flipped by KeyboardHandler's F1, read by Gui.extractRenderState and the hand renderer) is gone in 26.2; F1 calls Hud.toggle(), which flips Hud.isHidden, and Hud.extractRenderState reads isHidden where 26.1.2's Gui read options.hideGui. Reads give that Hud's isHidden(), writes toggle it to the value (options.minecraft.gui.hud: the Options of a Minecraft and its Gui's Hud)"
+  "_hideGui_basis": "javap: 26.1.2 Options.hideGui (public boolean, flipped by KeyboardHandler's F1, read by Gui.extractRenderState and the hand renderer) is gone in 26.2; F1 calls Hud.toggle(), which flips Hud.isHidden, and Hud.extractRenderState reads isHidden where 26.1.2's Gui read options.hideGui. Reads give that Hud's isHidden(), writes toggle it to the value (options.minecraft.gui.hud: the Options of a Minecraft and its Gui's Hud)",
+  "_s26k_particle_resources_basis": "26.1.2 Minecraft kept its ParticleResources in a field and passed it to new ParticleEngine(level, it); 26.2 passes the same new object from a local, and ParticleEngine keeps it as resourceManager (javap -c of both Minecraft.<init> and ParticleEngine.<init>). Read by the climbed 1.21.9 layer's CbDripParticles."
 }
