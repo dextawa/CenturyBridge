@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx1d",
+  "version": "1.0.0",
+  "name": "CB smx1d 1.21.10-era landings of the 1.21.11 step",
+  "description": "1.21.10-era client mod exercising VertexConsumer Matrix4f, ShapeRenderer, CycleButton builder, graphicsMode, FileUpload, ClientLevel colours and DebugRenderer statics; judged by the native 1.21.11 driver cb_smx1dn",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.smx1d.Smx1dOld"] },
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.10" }
+}

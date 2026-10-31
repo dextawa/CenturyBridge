@@ -848,7 +848,9 @@ final class MixinBridge {
         }
         String rn = chain.fieldRenames.get(key);
         if (rn != null) {
-            Found at = wResolveField(owner, rn, desc);
+            // W declares the renamed field with the descriptor the converted jar spells (classRenames: 26.2
+            // BufferBuilder.mode:VertexFormat$Mode is primitiveTopology:PrimitiveTopology)
+            Found at = wResolveField(owner, rn, chain.renamedDesc(desc));
             if (at == null) {
                 why.add("renamed to " + rn + ", which does not resolve on " + shortName(owner) + " in " + chain.to);
                 return null;
@@ -1222,7 +1224,7 @@ final class MixinBridge {
             String what = "shadow field " + sn + "." + f.name + ":" + f.desc;
             Refs r = refs(f.name, f.desc, true);
             String rn = chain.fieldRenames.get(vk(target) + "." + f.name + ":" + f.desc);
-            if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, f.desc))) {
+            if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, chain.renamedDesc(f.desc)))) {
                 for (FieldInsnNode fi : r.fieldInsns) {
                     fi.name = rn;
                 }
@@ -1254,10 +1256,13 @@ final class MixinBridge {
                 left.add(what + ": taken as a field handle");
                 return;
             }
-            // a write a static field setter takes does not store into W's field: its finality does not matter
-            if (r.puts > 0 && !(isStatic && chain.staticFieldSetters.containsKey(vk(target) + "." + f.name + ":" + f.desc))) {
+            // a write a static or instance field setter takes does not store into W's field (the converter turns the
+            // PUTSTATIC / PUTFIELD into the setter call): its finality, and the shadow's @Mutable, do not matter
+            String fk = vk(target) + "." + f.name + ":" + f.desc;
+            boolean setterWrites = isStatic ? chain.staticFieldSetters.containsKey(fk) : chain.instanceFieldSetters.containsKey(fk);
+            if (r.puts > 0 && !setterWrites) {
                 boolean mutable = has(f.visibleAnnotations, f.invisibleAnnotations, MUTABLE);
-                Found at = wResolveField(target, rn != null ? rn : f.name, f.desc);
+                Found at = wResolveField(target, rn != null ? rn : f.name, rn != null ? chain.renamedDesc(f.desc) : f.desc);
                 if (mutable || at != null && (at.access() & Opcodes.ACC_FINAL) != 0) {
                     left.add(what + ": written, and the field is final on " + chain.to + " (@Mutable lifts that only through the shadow)");
                     return;
@@ -1604,7 +1609,7 @@ final class MixinBridge {
             String what = "accessor " + sn + "." + m.name + m.desc;
             String fkey = vk(target) + "." + name + ":" + fdesc;
             String rn = chain.fieldRenames.get(fkey);
-            if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, fdesc))) {
+            if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, chain.renamedDesc(fdesc)))) {
                 pin(an, key, respell(mapped, rn, spec.contains(":") ? fdesc : null));
                 member(what + " -> " + rn + " (renamed " + name + " -> " + rn + ")");
                 return;
@@ -1643,7 +1648,7 @@ final class MixinBridge {
                 how = "static field setter " + JarProcessor.redirCls(v);
             } else {
                 String fname = rn != null ? rn : name;
-                Found at = wResolveField(target, fname, fdesc);
+                Found at = wResolveField(target, fname, rn != null ? chain.renamedDesc(fdesc) : fdesc);
                 boolean covered = rn == null && chain.coveredAnywhere(vk(target), name + ":" + fdesc);
                 if (at == null && !covered) {
                     if (rn != null) {
@@ -2718,7 +2723,7 @@ final class MixinBridge {
                 List<String> cwhy = new ArrayList<>();
                 boolean byContext = a.role().equals("main") && counterpartAnchor(kind, h, a, List.of(vmeth), List.of(wmeth), cwhy) != null;
                 String gone = a + (cwhy.isEmpty() ? "" : " (in its place " + cwhy.get(0) + ")");
-                if (af == null || !af.desc().equals(a.desc()) && !kind.equals("Inject")
+                if (af == null || !sameShape(af, a) && !kind.equals("Inject")
                         || kind.equals("Inject") && capturesLocals(h) || hasSugar(h, "Local;")) {
                     if (byContext) {
                         continue; // ats() retargets it to what stands in its place
@@ -2792,7 +2797,7 @@ final class MixinBridge {
                     }
                     continue;
                 }
-                if (!af.desc().equals(a.desc()) && !kind.equals("Inject")) {
+                if (!sameShape(af, a) && !kind.equals("Inject")) {
                     leftInjector(sel.handler(), where + ": the call's shape changed (" + af.how() + "), and @" + kind + " handles the call itself");
                     continue;
                 }
@@ -3969,7 +3974,8 @@ final class MixinBridge {
             for (String o : chain.selfAndSupers(a.owner())) {
                 String rn = chain.fieldRenames.get(o + "." + a.name() + ":" + a.desc());
                 if (rn != null) {
-                    return new AtFate(a.owner(), rn, a.desc(), "field renamed");
+                    // as W declares it: the field's type spelled through the step's classRenames
+                    return new AtFate(a.owner(), rn, chain.renamedDesc(a.desc()), "field renamed");
                 }
             }
             return null;
@@ -4078,6 +4084,12 @@ final class MixinBridge {
                 return null;
             }
         });
+    }
+
+    /** the wired anchor has the old one's shape: the same descriptor, or the same one spelled through the step's classRenames
+     *  (the converted handler is remapped the same way) */
+    private boolean sameShape(AtFate af, MixinRepair.Anchor a) {
+        return af.desc().equals(a.desc()) || af.desc().equals(chain.renamedDesc(a.desc()));
     }
 
     private static int count(List<MethodNode> ms, MixinRepair.Anchor a) {

@@ -161,6 +161,15 @@ public final class LinkCheck {
      */
     private final Map<String, String> superCtorFate = new HashMap<>();
 
+    /**
+     * A converter tombstone stub (centurybridge/gen/Tombstones_*.tN) -> the member it stands in for, read off the
+     * stub's own message ("CenturyBridge tombstone: a.b.C.name no longer exists in ..."), slash-separated owner.
+     * TOMBSTONE rows carry it, so a call tombstoned at one release joins the same call left dangling at an earlier
+     * one (layer_linkcheck.py steps).
+     */
+    private final Map<String, String> tombstoneOf = new HashMap<>();
+    private static final Pattern TOMBSTONE_MSG = Pattern.compile("^CenturyBridge tombstone: (\\S+)\\.([^.\\s]+) no longer exists");
+
     record Finding(String bucket, String kind, String jar, String where, String ref, String note) {}
     private final List<Finding> findings = new ArrayList<>();
 
@@ -267,6 +276,18 @@ public final class LinkCheck {
                     continue;
                 }
                 if (index.containsKey(cn.name)) continue; // first on the path wins, like the loader
+                if (subjectTag != null && cn.name.startsWith("centurybridge/gen/Tombstones")) {
+                    for (MethodNode m : cn.methods) {
+                        if (m.instructions == null) continue;
+                        for (AbstractInsnNode in : m.instructions) {
+                            if (in instanceof LdcInsnNode l && l.cst instanceof String msg) {
+                                java.util.regex.Matcher mm = TOMBSTONE_MSG.matcher(msg);
+                                if (mm.find()) tombstoneOf.put(cn.name + "." + m.name + m.desc, mm.group(1).replace('.', '/') + "." + mm.group(2));
+                                break;
+                            }
+                        }
+                    }
+                }
                 index.put(cn.name, model(cn, origin));
                 if (isMixin(cn)) { mixins.add(cn); mixinNames.add(cn.name); mixinNodes.put(cn.name, cn); }
                 if (subjectTag != null) subjects.computeIfAbsent(subjectTag, k -> new ArrayList<>()).add(cn);
@@ -1188,7 +1209,9 @@ public final class LinkCheck {
         if (owner.startsWith("centurybridge/gen/Tombstones")) {
             // a dead reference the converter swapped for a lazy-fail stub: it links, and it throws
             // the moment it is reached -- open, not bridged
-            report("TOMBSTONE", where, owner + "." + name + desc, "throws when reached");
+            String replaced = tombstoneOf.get(owner + "." + name + desc);
+            report("TOMBSTONE", where, owner + "." + name + desc,
+                "throws when reached" + (replaced != null ? "; replaces " + replaced : ""));
             return;
         }
         if (!needClass(owner, where, "owner")) return;
