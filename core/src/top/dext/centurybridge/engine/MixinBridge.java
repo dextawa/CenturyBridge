@@ -2855,8 +2855,10 @@ final class MixinBridge {
          * methodRenames / fieldRenames only (a definition names what vanilla calls, never a facade or layer member);
          * one standing nowhere in W's body after that leaves the injector "not bridged" (repair disables it).
          */
-        private void expressionDefinitions(Selection sel, String kind) {
+        private void expressionDefinitions(Selection sel0, String kind) {
             Map<String, String> vanilla = MixinClassRenames.vanillaOnly(chain.classRenames);
+            Selection descended = expressionDescend(sel0, kind, vanilla);
+            Selection sel = descended != null ? descended : sel0;
             for (AnnotationNode def : definitions(sel.handler())) {
                 Map<String, Object> dv = MixinRepair.values(def);
                 String id = String.valueOf(dv.get("id"));
@@ -2887,6 +2889,114 @@ final class MixinBridge {
                     }
                 }
             }
+        }
+
+        /**
+         * An expression whose definitions W's selected method no longer references, because W moved that code into
+         * one of the class's own methods (1.20.5 Cat / Wolf mobInteract -> the private tame method_58168 / method_58169):
+         * the selector descends there when exactly one callee of the selected method references every definition (as
+         * the step renames it), that callee is called nowhere else in the class (the injector fires for the same
+         * calls), its static-ness is the selected method's, and every captured @Local is argsOnly by a type standing
+         * exactly once among both methods' arguments. Returns the descended selection, or null (nothing moved).
+         */
+        private Selection expressionDescend(Selection sel, String kind, Map<String, String> vanilla) {
+            if (sel.w().size() != 1 || sel.v().size() != 1) {
+                return null;
+            }
+            MethodNode wm = sel.w().get(0);
+            List<MixinRepair.Anchor> want = new ArrayList<>();
+            boolean missing = false;
+            for (AnnotationNode def : definitions(sel.handler())) {
+                Map<String, Object> dv = MixinRepair.values(def);
+                for (String key : List.of("method", "field")) {
+                    for (String spec : MixinRepair.strings(dv.get(key))) {
+                        MixinRepair.Anchor a = definitionAnchor(spec, key.equals("field"));
+                        if (a == null) {
+                            continue;
+                        }
+                        if (count(sel.v(), a) == 0) {
+                            return null; // not where the mod wrote it in V either
+                        }
+                        String rn = definitionRename(a);
+                        MixinRepair.Anchor na = renamedAnchor(rn == null ? a : new MixinRepair.Anchor(a.kind(), a.owner(), rn, a.desc(), null, -1), vanilla);
+                        want.add(na);
+                        missing |= count(sel.w(), na) == 0;
+                    }
+                }
+            }
+            ClassNode wc = w(target);
+            if (!missing || want.isEmpty() || wc == null) {
+                return null;
+            }
+            List<MethodNode> holders = new ArrayList<>();
+            for (AbstractInsnNode in : wm.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.owner.equals(target)) {
+                    MethodNode c = method(wc, mi.name, mi.desc);
+                    if (c != null && c != wm && !holders.contains(c) && want.stream().allMatch(na -> count(List.of(c), na) > 0)) {
+                        holders.add(c);
+                    }
+                }
+            }
+            if (holders.size() != 1) {
+                return null;
+            }
+            MethodNode callee = holders.get(0);
+            int calls = 0;
+            for (MethodNode m : wc.methods) {
+                for (AbstractInsnNode in : m.instructions == null ? new InsnList() : m.instructions) {
+                    if (in instanceof MethodInsnNode mi && mi.owner.equals(target) && mi.name.equals(callee.name) && mi.desc.equals(callee.desc)) {
+                        calls++;
+                    }
+                }
+            }
+            if (calls != 1 || ((callee.access ^ wm.access) & Opcodes.ACC_STATIC) != 0
+                    || !argsOnlyLocalsFit(sel.handler(), sel.v().get(0), callee)) {
+                return null;
+            }
+            List<String> sels = MixinRepair.strings(MixinRepair.values(sel.an()).get("method"));
+            if (sels.size() != 1) {
+                return null;
+            }
+            String s0 = sels.get(0);
+            String nm = respell(MixinRepair.refmapLookup(table, s0), callee.name, callee.desc);
+            if (ownKey(s0)) {
+                MixinRepair.refmapPut(table, s0, nm);
+                refmapDirty = true;
+            } else {
+                MixinRepair.setMethodSelector(sel.an(), 0, nm);
+            }
+            changed = true;
+            injected("@" + kind + " " + sn + "." + sel.handler().name, "@" + kind + " " + sn + "." + sel.handler().name + " -> "
+                + shortName(target) + "." + wm.name + wm.desc + " expression => " + callee.name + callee.desc
+                + " (the one callee referencing every definition, called only there in " + chain.to + ")");
+            return new Selection(sel.handler(), sel.an(), sel.v(), List.of(callee));
+        }
+
+        /** every @Local the handler takes is argsOnly (no index / ordinal / name) by a type once among both methods' arguments */
+        private boolean argsOnlyLocalsFit(MethodNode h, MethodNode vm, MethodNode wm) {
+            Type[] ha = Type.getArgumentTypes(h.desc);
+            for (int k = 0; k < ha.length; k++) {
+                for (List<AnnotationNode>[] pa : Arrays.asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+                    if (pa == null || k >= pa.length || pa[k] == null) {
+                        continue;
+                    }
+                    for (AnnotationNode a : pa[k]) {
+                        if (!a.desc.equals(MixinLocals.LOCAL)) {
+                            continue;
+                        }
+                        Map<String, Object> lv = MixinRepair.values(a);
+                        if (!Boolean.TRUE.equals(lv.get("argsOnly")) || lv.containsKey("index") || lv.containsKey("ordinal") || lv.containsKey("name")) {
+                            return false;
+                        }
+                        Type t = ha[k];
+                        if (Arrays.stream(Type.getArgumentTypes(vm.desc)).filter(t::equals).count() != 1
+                                || Arrays.stream(Type.getArgumentTypes(wm.desc)).filter(t::equals).count() != 1) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         /** the step's vanilla rename of a definition's member, or null */
