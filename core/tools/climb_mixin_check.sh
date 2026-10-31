@@ -63,4 +63,10 @@ done | sort -t$'	' -k1,3 | awk -F'	' '
     END { if (n > 1) print pk "	" pi by }' > "$OUT/collisions.tsv"
 C=$(wc -l < "$OUT/collisions.tsv")
 echo "climbed layers -> $T: $TOTAL problems, $C redirect collisions (per layer: $OUT/<layer>.txt; $OUT/collisions.tsv)"
-cut -f1-4 "$OUT/collisions.tsv" | sed 's/^/    collision: /' 
+cut -f1-4 "$OUT/collisions.tsv" | sed 's/^/    collision: /'
+# return-value chain: one target method answered by two or more layers' cancellable RETURN/TAIL injectors that call
+# setReturnValue -- the first-applied cancels, every later one (another layer's, Fabric API's, a mod's) never runs
+# (core/tools/return_chain_check.py; 26.2 bed layers lost to the 26.1 / 1.20.5 createRoots injectors). A failing check.
+python3 "$WD/core/tools/return_chain_check.py" "$OUT/return-chain.tsv" "$RT"/centurybridge-0.3.0+*.jar
+RCC=$?
+[ "$RCC" -eq 0 ] || { echo "climbed layers -> $T: return-value chain broken ($OUT/return-chain.tsv)"; exit 1; } 
