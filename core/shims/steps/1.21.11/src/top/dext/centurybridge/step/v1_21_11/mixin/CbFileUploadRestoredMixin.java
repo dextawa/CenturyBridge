@@ -18,7 +18,7 @@ import top.dext.centurybridge.step.v1_21_11.rt.CbVanillaReads;
  * Given back with 1.21.10's contract: upload() starts the upload once (a second call answers an empty result, as
  * 1.21.10's did), waits for it and closes the client after (1.21.10 had no close: the upload was the whole lifecycle);
  * cancelled before or during, it answers an empty result or throws RealmsUploadCanceledException as 1.21.10's request
- * loop did. cancel() cancels the running future and closes the client (1.21.10 set a flag its loop polled; 1.21.11's
+ * loop did; any other failure is logged and answers an empty result (status -1), as 1.21.10's loop did. cancel() cancels the running future and closes the client (1.21.10 set a flag its loop polled; 1.21.11's
  * loop polls none). isFinished(): the future is done or cancelled. 1.21.11 never calls these.
  */
 @Mixin(value = class_4337.class, priority = CbVanillaReads.PRIORITY)
@@ -47,7 +47,9 @@ public abstract class CbFileUploadRestoredMixin {
             if (this.cb$cancelled.get()) {
                 throw new class_10232();
             }
-            throw e;
+            // 1.21.10's request loop logged any other failure and answered the result built so far (status -1)
+            org.slf4j.LoggerFactory.getLogger(class_4337.class).error("Caught exception while uploading: ", e.getCause());
+            return new class_4429.class_4430().method_21541();
         } finally {
             self.close();
         }
