@@ -1,0 +1,21 @@
+{
+  "_s215g_rendersystem_basis": "1.21.4 RenderSystem state calls 1.21.5 removed (found as tombstones in the climbed layers, layer-dangling rows of 1.21.4__1.21.5): 1.21.4's bodies (javap -c -p 1.21.4 RenderSystem) over 1.21.5's com.mojang.blaze3d.opengl.GlStateManager, which keeps every one of these entry points through 26.2 (javap 1.21.11 / 26.1 / 26.2). Still open: recordRenderCall, setShader, getShader, setShaderTexture.",
+  "staticRedirects": {
+    "com/mojang/blaze3d/systems/RenderSystem.enableDepthTest()V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.disableDepthTest()V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.depthFunc(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.depthMask(Z)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.enableBlend()V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.disableBlend()V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.defaultBlendFunc()V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.blendEquation(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.activeTexture(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.texParameter(III)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.bindTexture(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.viewport(IIII)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.clearColor(FFFF)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.clear(I)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.isOnRenderThreadOrInit()Z": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.assertOnRenderThreadOrInit()V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem"
+  }
+}

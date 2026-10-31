@@ -1,0 +1,12 @@
+{
+  "_s215g_blend_basis": "26.1.2 -> 26.2: GlStateManager._enableBlend() became _enableBlend(int drawBuffer) (javap 26.2: BLEND is BlendState[], each toggling the one global GL_BLEND), the twin of s26h-backend.json's _disableBlend() entry, which this mirrors: 26.1.2's call is draw buffer 0's. Found by the climbed 1.21.5 layer's ratchet at 26.2 (rt/CbGlRenderSystem.enableBlend, 1.21.4's RenderSystem.enableBlend).",
+  "callReshapes": {
+    "com/mojang/blaze3d/opengl/GlStateManager._enableBlend()V": {
+      "desc": "(I)V",
+      "ops": [
+        "push top/dext/centurybridge/step/v26_2/rt/CbS26BackendClient#firstDrawBuffer()I"
+      ],
+      "basis": "draw buffer 0; every per-buffer state toggles the one global GL_BLEND"
+    }
+  }
+}
