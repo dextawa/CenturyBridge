@@ -365,6 +365,17 @@ final class MixinLocals {
      */
     static int[] roleOrdinals(MixinRepair v, ClassNode vc, MethodNode vm, AbstractInsnNode vSite, MixinRepair w, ClassNode wc,
             MethodNode into, AbstractInsnNode wSite, MethodNode h, int ci, AnnotationNode an, List<String> why) {
+        return roleOrdinals(v, vc, vm, vSite, w, wc, into, wSite, h, ci, an, why, false);
+    }
+
+    /**
+     * As above; {@code inherited} (smixin12, Kilt E8i checkIsTNTBlock): producers compare by the class that declares
+     * the member they call or read, each side resolved in its own jar (1.21 javac names ServerLevel as the owner of
+     * Level.getBlockState, which ServerLevel inherits: the same call), and a @Local V picked implicitly that W's site
+     * also holds exactly one local of its type for answers -2 (leave it implicit).
+     */
+    static int[] roleOrdinals(MixinRepair v, ClassNode vc, MethodNode vm, AbstractInsnNode vSite, MixinRepair w, ClassNode wc,
+            MethodNode into, AbstractInsnNode wSite, MethodNode h, int ci, AnnotationNode an, List<String> why, boolean inherited) {
         Type[] hp = Type.getArgumentTypes(h.desc);
         int[] out = new int[hp.length];
         java.util.Arrays.fill(out, -1);
@@ -410,7 +421,7 @@ final class MixinLocals {
                     + " picks no single local at V's site");
                 return null;
             }
-            String vRole = producer(vm, vs, vs[vAt].getLocal(vSlot), w);
+            String vRole = producer(vm, vs, vs[vAt].getLocal(vSlot), w, inherited ? v : null);
             if (vRole == null) {
                 why.add("@Local role: V's local (slot " + vSlot + ") has no single store fed by one call or field read");
                 return null;
@@ -425,7 +436,7 @@ final class MixinLocals {
                     continue;
                 }
                 ord++;
-                if (vRole.equals(producer(into, ws, ws[wAt].getLocal(s), null))) {
+                if (vRole.equals(producer(into, ws, ws[wAt].getLocal(s), null, inherited ? w : null))) {
                     if (hit >= 0) {
                         why.add("@Local role: two locals in " + into.name + into.desc + " are fed by " + vRole);
                         return null;
@@ -438,9 +449,35 @@ final class MixinLocals {
                 why.add("@Local role: no " + tw.getDescriptor() + " local at W's site in " + into.name + into.desc + " is fed by " + vRole);
                 return null;
             }
-            out[k] = hitOrd;
+            out[k] = inherited && ordinal < 0 && ord == 0 ? -2 : hitOrd;
         }
         return out;
+    }
+
+    /** the class declaring owner's member name+desc (a method, or a field when desc has no parenthesis): owner, its superclasses, then interfaces */
+    static String declaring(MixinRepair code, String owner, String name, String desc) {
+        boolean field = !desc.startsWith("(");
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.poll();
+            if (!seen.add(c)) {
+                continue;
+            }
+            ClassNode cn = code.target(c);
+            if (cn == null) {
+                continue;
+            }
+            if (field ? cn.fields.stream().anyMatch(x -> x.name.equals(name) && x.desc.equals(desc))
+                    : cn.methods.stream().anyMatch(x -> x.name.equals(name) && x.desc.equals(desc))) {
+                return c;
+            }
+            if (cn.superName != null) {
+                todo.addFirst(cn.superName);
+            }
+            todo.addAll(cn.interfaces);
+        }
+        return null;
     }
 
     /** the slot a @Local of type t picks in frame f (ordinal counted from slot 0; implicit: the one local of t), or -1 */
@@ -468,7 +505,7 @@ final class MixinLocals {
      * given: the step's classRenames applied), or null: an argument, several stores, or a store of anything but one
      * method call or field read
      */
-    private static String producer(MethodNode m, Frame<SourceValue>[] fs, SourceValue local, MixinRepair w) {
+    private static String producer(MethodNode m, Frame<SourceValue>[] fs, SourceValue local, MixinRepair w, MixinRepair resolveIn) {
         if (local == null || local.insns.size() != 1) {
             return null;
         }
@@ -488,9 +525,17 @@ final class MixinLocals {
         AbstractInsnNode p = top.insns.iterator().next();
         String key;
         if (p instanceof org.objectweb.asm.tree.MethodInsnNode mi) {
-            key = mi.getOpcode() + " " + mi.owner + "." + mi.name + " " + mi.desc;
+            String o = resolveIn == null ? mi.owner : declaring(resolveIn, mi.owner, mi.name, mi.desc);
+            if (o == null) {
+                return null;
+            }
+            key = mi.getOpcode() + " " + o + "." + mi.name + " " + mi.desc;
         } else if (p instanceof org.objectweb.asm.tree.FieldInsnNode fi) {
-            key = fi.getOpcode() + " " + fi.owner + "." + fi.name + " " + fi.desc;
+            String o = resolveIn == null ? fi.owner : declaring(resolveIn, fi.owner, fi.name, fi.desc);
+            if (o == null) {
+                return null;
+            }
+            key = fi.getOpcode() + " " + o + "." + fi.name + " " + fi.desc;
         } else {
             return null;
         }

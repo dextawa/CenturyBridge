@@ -902,6 +902,10 @@ final class MixinBridge {
         final List<String> left = new ArrayList<>();
         boolean changed;
         boolean refmapDirty;
+        /** set by counterpartAnchor's inherited-owner path: per handler parameter its @Local's W ordinal (-1 none, -2 implicit) */
+        int[] lastRoles;
+        /** with lastRoles: {V owner as W spells it, W owner} of the call the stand-in reaches through a subclass */
+        String[] lastInherited;
 
         /** a carried shadow, invoker, accessor or overwrite */
         void member(String text) {
@@ -3202,6 +3206,15 @@ final class MixinBridge {
                 }
                 return false;
             }
+            String inheritedNote = "";
+            if (lastRoles != null) {
+                String rwhy = applyInherited(sel.handler(), kind, sel.v(), a);
+                if (rwhy != null) {
+                    leftInjector(sel.handler(), where + ": in its place " + rwhy);
+                    return false;
+                }
+                inheritedNote = "; the same call through " + shortName(lastInherited[1]) + ", @Local matched by role";
+            }
             switch (value) {
                 case "INVOKE", "FIELD" -> {
                     if (!na.kind().equals(value)) {
@@ -3250,20 +3263,195 @@ final class MixinBridge {
             }
             changed = true;
             injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + na + " (the instruction standing in its place in "
-                + chain.to + ", by context" + (wired != null ? "; the wiring's own count differs" : "") + ")");
+                + chain.to + ", by context" + (wired != null ? "; the wiring's own count differs" : "") + inheritedNote + ")");
             return true;
         }
 
-        /** the anchor standing where V's sites of {@code a} stood (see counterpartAt), or null with why */
+        /**
+         * The inherited-owner stand-in (lastRoles / lastInherited) applied to the handler: each @Local whose W ordinal
+         * differs from implicit gets that ordinal; a handler taking the call's receiver as V's owner takes W's owner
+         * (a subclass, so its body reads it unchanged). Null when done, else why not (nothing changed then).
+         */
+        private String applyInherited(MethodNode h, String kind, List<MethodNode> vms, MixinRepair.Anchor a) {
+            Type[] hp = Type.getArgumentTypes(h.desc);
+            String newDesc = h.desc;
+            if (RECEIVER_KINDS.contains(kind) && takesReceiver(vms, a) && hp.length > 0) {
+                Type vo = Type.getObjectType(lastInherited[0]);
+                if (!hp[0].equals(vo) && !hp[0].equals(Type.getObjectType(a.owner()))) {
+                    return "the handler's receiver " + hp[0].getClassName() + " is not " + shortName(lastInherited[0]);
+                }
+                hp[0] = Type.getObjectType(lastInherited[1]);
+                newDesc = Type.getMethodDescriptor(Type.getReturnType(h.desc), hp);
+            }
+            if (!newDesc.equals(h.desc)) {
+                Refs r = refs(h.name, h.desc, false);
+                if (!r.handles.isEmpty()) {
+                    return "the handler is referenced by a method handle; its receiver type cannot change";
+                }
+                for (MethodInsnNode mi : r.calls) {
+                    mi.desc = newDesc;
+                }
+                int slot = (h.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
+                if (h.localVariables != null) {
+                    for (var lv : h.localVariables) {
+                        if (lv.index == slot) {
+                            lv.desc = hp[0].getDescriptor();
+                            lv.signature = null;
+                        }
+                    }
+                }
+                h.desc = newDesc;
+                h.signature = null;
+            }
+            for (int k = 0; k < lastRoles.length; k++) {
+                if (lastRoles[k] < 0) {
+                    continue;
+                }
+                for (List<AnnotationNode>[] pa : Arrays.<List<AnnotationNode>[]>asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+                    if (pa != null && k < pa.length && pa[k] != null) {
+                        for (AnnotationNode x : pa[k]) {
+                            if (x.desc.equals(MixinLocals.LOCAL)) {
+                                setValue(x, "ordinal", lastRoles[k]);
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        /**
+         * The anchor standing where V's sites of {@code a} stood (see counterpartAt), or null with why. A handler reading
+         * the target's locals (@Local) is carried only when the stand-in is V's very call reached through a subclass
+         * owner (inheritedLocals), its @Local parameters matched by role; lastRoles / lastInherited say how.
+         */
         private MixinRepair.Anchor counterpartAnchor(String kind, MethodNode h, MixinRepair.Anchor a, List<MethodNode> vms,
                                                      List<MethodNode> wms, List<String> why) {
+            lastRoles = null;
+            lastInherited = null;
+            String lw = "the handler reads the target's locals, in a body that changed around the anchor";
+            if (capturesLocals(h)) {
+                why.add(lw);
+                return null;
+            }
+            if (!hasSugar(h, "Local;")) {
+                return counterpartAnchor0(kind, h, a, vms, wms, why, false);
+            }
+            if (vms.size() != 1 || wms.size() != 1) {
+                why.add(lw);
+                return null;
+            }
+            List<String> w0 = new ArrayList<>();
+            MixinRepair.Anchor na = counterpartAnchor0(kind, h, a, vms, wms, w0, true);
+            if (na == null) {
+                why.add(lw + (w0.isEmpty() ? "" : " (" + w0.get(0) + ")"));
+                return null;
+            }
+            String iw = inheritedLocals(kind, h, a, na, vms.get(0), wms.get(0));
+            if (iw != null) {
+                lastRoles = null;
+                lastInherited = null;
+                why.add(lw + " (" + iw + ")");
+                return null;
+            }
+            return na;
+        }
+
+        /**
+         * smixin12, Kilt E8i checkIsTNTBlock: why a @Local-reading handler may not follow V's site a to its stand-in na,
+         * or null (lastRoles / lastInherited set). Taken only when na is V's very call: the same name, descriptor and
+         * invocation, its W owner a subclass of V's owner (as W spells it) that inherits the member from the same
+         * declaring class on both sides (1.21 javac names ServerLevel where 1.20.6 named Level for removeBlock, which
+         * ServerLevel does not declare), one site on each side, and every @Local parameter matched by role
+         * (MixinLocals.roleOrdinals, producers compared by declaring class), never by position.
+         */
+        private String inheritedLocals(String kind, MethodNode h, MixinRepair.Anchor a, MixinRepair.Anchor na, MethodNode vm, MethodNode wm) {
+            MixinRepair wc = wcode(chain);
+            if (chain.sourceCode == null || wc == null) {
+                return "no " + chain.from + " or " + chain.to + " bodies";
+            }
+            List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> MixinRepair.matchesAnchor(in, a));
+            List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, na));
+            AbstractInsnNode site = a.ordinal() >= 0 ? (a.ordinal() < vo.size() ? vo.get(a.ordinal()) : null) : vo.size() == 1 ? vo.get(0) : null;
+            AbstractInsnNode c = na.ordinal() >= 0 ? (na.ordinal() < wo.size() ? wo.get(na.ordinal()) : null) : wo.size() == 1 ? wo.get(0) : null;
+            if (site == null || c == null) {
+                return "not one site on each side";
+            }
+            String iw = inheritedWhy(site, c);
+            if (iw != null) {
+                return iw;
+            }
+            MethodInsnNode m = (MethodInsnNode) c;
+            String vOwner = MixinClassRenames.vanillaOnly(chain.classRenames).getOrDefault(((MethodInsnNode) site).owner, ((MethodInsnNode) site).owner);
+            ClassNode vcn = v(target);
+            ClassNode wcn = w(target);
+            AnnotationNode an = null;
+            for (AnnotationNode x : MixinRepair.annotations(h)) {
+                if (MixinRepair.values(x).containsKey("at")) {
+                    an = x;
+                }
+            }
+            if (vcn == null || wcn == null || an == null) {
+                return "the target class or the injector cannot be read";
+            }
+            int ci = Type.getArgumentTypes(h.desc).length - sugarCount(h) - 1;
+            List<String> rw = new ArrayList<>();
+            int[] roles = MixinLocals.roleOrdinals(chain.sourceCode, vcn, vm, site, wc, wcn, wm, c, h, ci, an, rw, true);
+            if (roles == null) {
+                return rw.isEmpty() ? "@Local role not judged" : rw.get(0);
+            }
+            lastRoles = roles;
+            lastInherited = new String[] {vOwner, m.owner};
+            return null;
+        }
+
+        /**
+         * Why W's c is not V's site as the same instance call reached through a subclass owner (same name, descriptor
+         * and invocation; W's owner a subclass of V's owner as W spells it; the member declared by the same class on
+         * both sides), or null.
+         */
+        private String inheritedWhy(AbstractInsnNode site, AbstractInsnNode c) {
+            if (!(site instanceof MethodInsnNode s) || !(c instanceof MethodInsnNode m) || !s.name.equals(m.name) || !s.desc.equals(m.desc)
+                    || s.getOpcode() != m.getOpcode() || s.getOpcode() == Opcodes.INVOKESTATIC) {
+                return "the stand-in " + anchorOf(c) + " is not the same instance call";
+            }
+            MixinRepair wc = wcode(chain);
+            if (chain.sourceCode == null || wc == null) {
+                return "no " + chain.from + " or " + chain.to + " bodies";
+            }
+            Map<String, String> vanilla = MixinClassRenames.vanillaOnly(chain.classRenames);
+            String vOwner = vanilla.getOrDefault(s.owner, s.owner);
+            if (vOwner.equals(m.owner)) {
+                return "the stand-in names the same owner";
+            }
+            boolean sub = false;
+            for (String x = m.owner; x != null && !sub; ) {
+                ClassNode cn = w(x);
+                x = cn == null ? null : cn.superName;
+                sub = vOwner.equals(x);
+            }
+            if (!sub) {
+                return shortName(m.owner) + " is not a subclass of " + shortName(vOwner) + " in " + chain.to;
+            }
+            String vd = MixinLocals.declaring(chain.sourceCode, s.owner, s.name, s.desc);
+            String wd = MixinLocals.declaring(wc, m.owner, m.name, m.desc);
+            if (vd == null || wd == null || !vanilla.getOrDefault(vd, vd).equals(wd)) {
+                return shortName(m.owner) + "." + m.name + m.desc + " resolves to " + (wd == null ? "nothing" : shortName(wd))
+                    + ", not to " + (vd == null ? "nothing" : shortName(vd)) + " as in " + chain.from;
+            }
+            return null;
+        }
+
+        /**
+         * counterpartAnchor without locals: the anchor standing where V's sites of {@code a} stood, or null with why.
+         * {@code inherited}: a stand-in that is V's very call through a subclass owner (inheritedWhy) passes the operand
+         * and same-member tests (inheritedLocals then retypes the receiver and matches the @Locals by role).
+         */
+        private MixinRepair.Anchor counterpartAnchor0(String kind, MethodNode h, MixinRepair.Anchor a, List<MethodNode> vms,
+                                                      List<MethodNode> wms, List<String> why, boolean inherited) {
             boolean operands = OPERAND_KINDS.contains(kind);
             if (!kind.equals("Inject") && !operands) {
                 why.add("@" + kind + " is not carried to a stand-in");
-                return null;
-            }
-            if (capturesLocals(h) || hasSugar(h, "Local;")) {
-                why.add("the handler reads the target's locals, in a body that changed around the anchor");
                 return null;
             }
             if (vms.size() != 1 || wms.size() != 1) {
@@ -3289,12 +3477,13 @@ final class MixinBridge {
                         + (sites.size() == 1 ? "the site" : found.size() + " of " + sites.size() + " sites found") + ")");
                     return null;
                 }
-                if (operands && !sameOperands(kind, site, c)) {
+                boolean inh = inherited && inheritedWhy(site, c) == null;
+                if (operands && !inh && !sameOperands(kind, site, c)) {
                     // the handler takes the call's / value's operands: they must be exactly V's
                     why.add("what stands there (" + anchorOf(c) + ") does not take the operands @" + kind + "'s handler is written for");
                     return null;
                 }
-                if (operands && !sameMember(site, c) && wLinks(site)) {
+                if (operands && !inh && !sameMember(site, c) && wLinks(site)) {
                     // W still has V's member and calls another in its place (IntStream.range -> rangeClosed):
                     // another operation, whose operands mean something else to a handler written for V's
                     why.add("what stands there (" + anchorOf(c) + ") is another member, and " + chain.to + " still has "
