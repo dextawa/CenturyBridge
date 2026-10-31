@@ -119,6 +119,9 @@ class Spelling:
     26.x names (followed to their last target).
     """
     TOKEN = re.compile(r"net/minecraft/class_\d+(?:\$class_\d+)*|\b(?:method|field|comp)_\d+\b")
+    INTER = re.compile(r"net/minecraft/class_\d+(?:\$class_\d+)*$")
+    # a non-intermediary outer with an intermediary inner (com/mojang/blaze3d/vertex/VertexFormat$class_5596)
+    NAMED_INNER = re.compile(r"L?(?:[\w]+/)+[\w]+(?:\$[\w]+)*\$class_\d+")
     CLS = re.compile(r"[A-Za-z_$][\w$]*(?:/[\w$]+)+")
     MEM = re.compile(r"([A-Za-z_$][\w$]*(?:/[\w$]+)+)\.([\w$<>]+)")
 
@@ -140,7 +143,9 @@ class Spelling:
                 continue
             for k, v in (d.get("classRenames") or {}).items():
                 if isinstance(v, str):
-                    (self.post_cls if post else self.pre_cls)[k] = v
+                    # the wall step keys its renames in intermediary (class_918 -> facade ItemRenderer): those apply
+                    # where intermediary is spelled, like any pre-wall step's
+                    (self.post_cls if post and not self.INTER.match(k) else self.pre_cls)[k] = v
             if post:
                 for sec in ("methodRenames", "fieldRenames"):
                     for k, v in (d.get(sec) or {}).items():
@@ -190,9 +195,18 @@ class Spelling:
             return self.cls[outer] + "$" + inner
         return t
 
+    def _named_inner(self, m):
+        t = m.group(0)
+        if t in self.cls:
+            return self.cls[t]
+        if t.startswith("L") and t[1:] in self.cls:
+            return "L" + self.cls[t[1:]]
+        return t
+
     def __call__(self, s, release=None):
         s = self.TOKEN.sub(lambda m: self.pre_cls.get(m.group(0), m.group(0)), s)
         s = self.TOKEN.sub(lambda m: self._wall(m.group(0)), s)
+        s = self.NAMED_INNER.sub(self._named_inner, s)
         s = self.MEM.sub(lambda m: m.group(1) + "." + self.post_mem.get(m.group(1) + "." + m.group(2), m.group(2)), s)
         return self._classes(s)
 
