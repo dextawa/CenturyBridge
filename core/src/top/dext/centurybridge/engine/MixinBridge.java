@@ -2756,6 +2756,10 @@ final class MixinBridge {
             for (AnnotationNode at : atNodes(sel.an())) {
                 Map<String, Object> av = MixinRepair.values(at);
                 String value = String.valueOf(av.get("value"));
+                if (value.equals(EXPRESSION_POINT)) {
+                    expressionDefinitions(sel, kind);
+                    continue;
+                }
                 if (value.equals("NEW") || value.equals("CONSTANT")) {
                     // no wiring speaks of allocations or constants: only what W's body has in their place
                     MixinRepair.Anchor a = MixinRepair.parseAt(av, table);
@@ -2835,6 +2839,62 @@ final class MixinBridge {
                 changed = true;
                 injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + af.name() + (fld ? ":" : "") + af.desc() + " (" + af.how() + ")");
             }
+        }
+
+        /**
+         * A MIXINEXTRAS:EXPRESSION point: its @Definition members (method= / field=) are the anchors, matched by
+         * MixinExtras in the target body. Each one V's body holds and W's does not follows the step's vanilla
+         * methodRenames / fieldRenames only (a definition names what vanilla calls, never a facade or layer member);
+         * one standing nowhere in W's body after that leaves the injector "not bridged" (repair disables it).
+         */
+        private void expressionDefinitions(Selection sel, String kind) {
+            Map<String, String> vanilla = MixinClassRenames.vanillaOnly(chain.classRenames);
+            for (AnnotationNode def : definitions(sel.handler())) {
+                Map<String, Object> dv = MixinRepair.values(def);
+                String id = String.valueOf(dv.get("id"));
+                for (String key : List.of("method", "field")) {
+                    boolean fld = key.equals("field");
+                    List<String> specs = MixinRepair.strings(dv.get(key));
+                    for (int i = 0; i < specs.size(); i++) {
+                        String spec = specs.get(i);
+                        MixinRepair.Anchor a = definitionAnchor(spec, fld);
+                        if (a == null || count(sel.w(), renamedAnchor(a, vanilla)) > 0 || count(sel.v(), a) == 0) {
+                            continue; // stands in W (as the class rewrite spells it), or not this step's doing
+                        }
+                        String where = "@" + kind + " " + sn + "." + sel.handler().name + " -> " + shortName(target) + "."
+                            + sel.v().get(0).name + sel.v().get(0).desc + " expression definition " + id + " " + spec;
+                        String rn = definitionRename(a);
+                        MixinRepair.Anchor na = rn == null ? null
+                            : new MixinRepair.Anchor(a.kind(), a.owner(), rn, a.desc(), null, -1);
+                        if (na == null || count(sel.w(), renamedAnchor(na, vanilla)) == 0) {
+                            leftInjector(sel.handler(), where + ": expression definition " + id + " not in " + shortName(target) + "."
+                                + sel.w().get(0).name + sel.w().get(0).desc + " in " + chain.to
+                                + (rn == null ? " (no vanilla rename)" : " (renamed to " + rn + ", which it does not reference either)"));
+                            return;
+                        }
+                        String nt = "L" + na.owner() + ";" + rn + (fld ? ":" : "") + na.desc();
+                        setDefinition(def, key, i, nt);
+                        changed = true;
+                        injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + rn + " (renamed)");
+                    }
+                }
+            }
+        }
+
+        /** the step's vanilla rename of a definition's member, or null */
+        private String definitionRename(MixinRepair.Anchor a) {
+            if (a.kind().equals("FIELD")) {
+                for (String o : chain.selfAndSupers(a.owner())) {
+                    String rn = chain.fieldRenames.get(o + "." + a.name() + ":" + a.desc());
+                    if (rn != null) {
+                        return rn;
+                    }
+                }
+                return null;
+            }
+            String nd = a.name() + a.desc();
+            String rh = chain.instanceRedirectHome(chain.methodRenames, a.owner(), nd);
+            return rh == null ? null : chain.methodRenames.get(rh + "." + nd);
         }
 
         /**
@@ -4679,5 +4739,79 @@ final class MixinBridge {
     private static String pkg(String internal) {
         int i = internal.lastIndexOf('/');
         return i < 0 ? "" : internal.substring(0, i);
+    }
+
+    // ------------------------------------------------------------------ MixinExtras expressions
+
+    /** MixinExtras' expression injection point */
+    static final String EXPRESSION_POINT = "MIXINEXTRAS:EXPRESSION";
+    static final String DEFINITION = "Lcom/llamalad7/mixinextras/expression/Definition;";
+    static final String DEFINITIONS = "Lcom/llamalad7/mixinextras/expression/Definitions;";
+
+    /** a handler's @Definition annotations, single or inside @Definitions */
+    static List<AnnotationNode> definitions(MethodNode h) {
+        List<AnnotationNode> out = new ArrayList<>();
+        for (AnnotationNode a : MixinRepair.annotations(h)) {
+            if (a.desc.equals(DEFINITION)) {
+                out.add(a);
+            } else if (a.desc.equals(DEFINITIONS) && a.values != null) {
+                for (int i = 0; i + 1 < a.values.size(); i += 2) {
+                    if ("value".equals(a.values.get(i))) {
+                        for (Object o : MixinRepair.list(a.values.get(i + 1))) {
+                            if (o instanceof AnnotationNode d) {
+                                out.add(d);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return out;
+    }
+
+    /**
+     * a definition's member as an anchor: method= "Lowner;name(desc)ret", field= "Lowner;name:desc"; null for a
+     * spelling without owner and descriptor (not judged)
+     */
+    static MixinRepair.Anchor definitionAnchor(String spec, boolean field) {
+        if (!spec.startsWith("L") || spec.indexOf(';') < 0) {
+            return null;
+        }
+        String owner = spec.substring(1, spec.indexOf(';'));
+        String rest = spec.substring(spec.indexOf(';') + 1);
+        int d = field ? rest.indexOf(':') : rest.indexOf('(');
+        if (d <= 0) {
+            return null;
+        }
+        return new MixinRepair.Anchor(field ? "FIELD" : "INVOKE", owner, rest.substring(0, d),
+            rest.substring(field ? d + 1 : d), null, -1);
+    }
+
+    /** the anchor as the class rewrite will spell it (vanilla class renames only) */
+    static MixinRepair.Anchor renamedAnchor(MixinRepair.Anchor a, Map<String, String> renames) {
+        if (renames.isEmpty()) {
+            return a;
+        }
+        String owner = renames.getOrDefault(a.owner(), a.owner());
+        String desc = MixinClassRenames.rename(a.desc(), renames);
+        return new MixinRepair.Anchor(a.kind(), owner, a.name(), desc, null, -1);
+    }
+
+    /** sets the idx-th string of a definition's method= / field= array */
+    @SuppressWarnings("unchecked")
+    static void setDefinition(AnnotationNode def, String key, int idx, String value) {
+        for (int i = 0; def.values != null && i + 1 < def.values.size(); i += 2) {
+            if (key.equals(def.values.get(i))) {
+                Object v = def.values.get(i + 1);
+                if (v instanceof List<?> l) {
+                    List<Object> nl = new ArrayList<>((List<Object>) l);
+                    nl.set(idx, value);
+                    def.values.set(i + 1, nl);
+                } else {
+                    def.values.set(i + 1, value);
+                }
+                return;
+            }
+        }
     }
 }

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_s205fr",
+  "version": "1.0.0",
+  "name": "CB S205FR renderer API test",
+  "description": "1.20.1-era client mod: once the client has started, loads the Fabric renderer API's BlendMode, finds a translucent material through RendererAccess / MaterialFinder, and asks for RenderType.translucent(); one CB-S205FR PASS/FAIL line per call, then the tally CB-S205FR n/n; and a RenderType.create(name, format, mode, bufferSize, state) of its own whose state leaves the output target at its default (no TRANSLUCENT_TARGET), so the climbed create path and its buffer size run on their own",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "cb.s205fr.S205frTestMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": "1.20.1",
+    "fabric-renderer-api-v1": "*",
+    "fabric-lifecycle-events-v1": "*"
+  },
+  "accessWidener": "cb_s205fr.accesswidener"
+}

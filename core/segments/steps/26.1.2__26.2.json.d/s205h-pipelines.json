@@ -1,0 +1,7 @@
+{
+  "_s205h_pipelines": "26.1.2 RenderPipeline.Builder.withVertexFormat(VertexFormat, Mode) and withSampler(String), gone at 26.2 (damage rows 26.1.2__26.2 lines 94 / 91). withVertexFormat -> withVertexBinding(0, format).withPrimitiveTopology(mode): javap of 26.2 RenderPipelines.<clinit> builds every single-format pipeline exactly so; Mode -> PrimitiveTopology is a step classRename (pkgmoves-gen, members 12/12) and javap shows both enums with the same 8 constants in the same order (LINES, DEBUG_LINES, DEBUG_LINE_STRIP, POINTS, TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN, QUADS), so the value passes one-to-one. withSampler(name) -> withBindGroupLayout(one-sampler layout), as 26.2's BindGroupLayouts.SAMPLER0..2. Bodies in rt/CbS205hPipelines. Seen failing on the cb-s205fr fix3 client (CbRenderTypeCreate.<clinit>, BlendMode.<clinit>: NoSuchMethodError withVertexFormat(VertexFormat, PrimitiveTopology)).",
+  "instanceRedirects": {
+    "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.withVertexFormat(Lcom/mojang/blaze3d/vertex/VertexFormat;Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS205hPipelines#withVertexFormat",
+    "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.withSampler(Ljava/lang/String;)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS205hPipelines#withSampler"
+  }
+}
