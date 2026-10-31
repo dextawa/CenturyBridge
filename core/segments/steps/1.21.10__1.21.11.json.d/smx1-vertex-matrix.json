@@ -16,5 +16,19 @@
    "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
    "basis": "a 1.21.10 VertexConsumer's addVertex(Matrix4f, ..) is reached from 1.21.11's Matrix4fc form with the same matrix when it is a Matrix4f"
   }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_4588",
+   "method": "method_39415(I)Lnet/minecraft/class_4588;",
+   "call": "top/dext/centurybridge/step/v1_21_11/rt/CbVertexConsumers.setColor(Lnet/minecraft/class_4588;I)Lnet/minecraft/class_4588;",
+   "basis": "setColor(int) was a default in 1.21.10 (setColor(ARGB.red, green, blue, alpha)) and is abstract in 1.21.11 (javap both); a 1.21.10 implementation gets 1.21.10's default"
+  },
+  {
+   "under": "net/minecraft/class_4588",
+   "method": "method_75298(F)Lnet/minecraft/class_4588;",
+   "call": "top/dext/centurybridge/step/v1_21_11/rt/CbVertexConsumers.setLineWidth(Lnet/minecraft/class_4588;F)Lnet/minecraft/class_4588;",
+   "basis": "setLineWidth(float) is new and abstract in 1.21.11 (absent from 1.21.10's class_4588, javap both); a 1.21.10 implementation wrote no per-vertex width"
+  }
  ]
 }
