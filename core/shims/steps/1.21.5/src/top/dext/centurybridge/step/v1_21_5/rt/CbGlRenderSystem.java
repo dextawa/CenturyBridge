@@ -20,6 +20,17 @@ public final class CbGlRenderSystem {
     private CbGlRenderSystem() {
     }
 
+    /**
+     * 1.21.4 RenderSystem.recordRenderCall(call): added the call to a queue the render thread replayed in flipFrame
+     * (each frame, before the buffer swap) and in finishInitialization, from any thread, the render thread included
+     * (javap -c -p 1.21.4 RenderSystem). 1.21.5 has no such queue; the call is scheduled on Minecraft's task queue
+     * (BlockableEventLoop.schedule: always queued, never run inline, as 1.21.4), which 1.21.5 drains on the render
+     * thread every frame (at another point of the frame).
+     */
+    public static void recordRenderCall(top.dext.centurybridge.step.v1_21_5.facade.RenderCall call) {
+        net.minecraft.class_310.method_1551().method_63588(call::execute);
+    }
+
     public static void blendFunc(GlStateManager$class_4535 src, GlStateManager$class_4534 dst) {
         com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread();
         CbGlStateManager._blendFunc(src.value, dst.value);

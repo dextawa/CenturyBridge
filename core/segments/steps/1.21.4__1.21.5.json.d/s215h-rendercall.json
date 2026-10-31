@@ -1,0 +1,9 @@
+{
+ "_s215h_rendercall_basis": "1.21.4 RenderSystem.recordRenderCall(RenderCall) queued the call for the render thread (replayed in flipFrame / finishInitialization; javap -c -p 1.21.4 RenderSystem); 1.21.5 dropped the queue and RenderCall (class_4573; javap 1.21.5: no class_4573, flipFrame replays nothing). RenderCall is facade/RenderCall; recordRenderCall schedules on Minecraft's task queue (class_1255.method_63588 schedule, kept through 26.2 as BlockableEventLoop.schedule; rt/CbGlRenderSystem). Loss: run at a different point of the frame (release_notes_known.md).",
+ "classRenames": {
+  "net/minecraft/class_4573": "top/dext/centurybridge/step/v1_21_5/facade/RenderCall"
+ },
+ "staticRedirects": {
+  "com/mojang/blaze3d/systems/RenderSystem.recordRenderCall(Lnet/minecraft/class_4573;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem"
+ }
+}
