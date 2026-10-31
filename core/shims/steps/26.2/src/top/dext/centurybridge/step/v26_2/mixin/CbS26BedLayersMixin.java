@@ -1,6 +1,7 @@
 package top.dext.centurybridge.step.v26_2.mixin;
 
 import com.google.common.collect.ImmutableMap;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import java.util.Map;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -9,8 +10,6 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v26_2.facade.BedRenderer;
 import top.dext.centurybridge.step.v26_2.rt.CbS26BedsClient;
 
@@ -23,12 +22,14 @@ import top.dext.centurybridge.step.v26_2.rt.CbS26BedsClient;
 @Mixin(LayerDefinitions.class)
 public abstract class CbS26BedLayersMixin {
 
-    @Inject(method = "createRoots", at = @At("RETURN"), cancellable = true)
-    private static void cbS26$bedLayers(CallbackInfoReturnable<Map<ModelLayerLocation, LayerDefinition>> cir) {
+    // chained, never cancelled: a cancelled RETURN callback returns at once, so every later createRoots RETURN
+    // injector (Fabric API's, the other layers') would be skipped and its layers never defined
+    @ModifyReturnValue(method = "createRoots", at = @At("RETURN"))
+    private static Map<ModelLayerLocation, LayerDefinition> cbS26$bedLayers(Map<ModelLayerLocation, LayerDefinition> original) {
         ImmutableMap.Builder<ModelLayerLocation, LayerDefinition> roots = ImmutableMap.builder();
-        roots.putAll(cir.getReturnValue());
+        roots.putAll(original);
         roots.put(CbS26BedsClient.BED_FOOT(), BedRenderer.createFootLayer());
         roots.put(CbS26BedsClient.BED_HEAD(), BedRenderer.createHeadLayer());
-        cir.setReturnValue(roots.buildOrThrow());
+        return roots.buildOrThrow();
     }
 }
