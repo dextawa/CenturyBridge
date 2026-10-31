@@ -269,7 +269,27 @@ final class MixinClassRenames {
     }
 
     private static AnnotationVisitor wrap(AnnotationVisitor av, String desc, Map<String, String> renames) {
-        return av == null || !mixinAnnotation(desc) ? av : strings(av, renames);
+        return av == null || !mixinAnnotation(desc) ? av : strings(av, expression(desc) ? vanillaOnly(renames) : renames);
+    }
+
+    /** MixinExtras' @Expression / @Definition(s): what they name is what vanilla's body references */
+    static boolean expression(String desc) {
+        return desc.startsWith("Lcom/llamalad7/mixinextras/expression/");
+    }
+
+    /**
+     * the renames a MixinExtras @Definition takes: a definition names a member or type vanilla's body references, and
+     * vanilla never references CenturyBridge's classes, so no rename into a facade or layer class -- whether or not W
+     * still declares the class (an @At / selector keeps a facade rename of a class W lost: the mod's own code calls it)
+     */
+    static Map<String, String> vanillaOnly(Map<String, String> renames) {
+        Map<String, String> out = new HashMap<>();
+        renames.forEach((from, to) -> {
+            if (!toLayer(to)) {
+                out.put(from, to);
+            }
+        });
+        return out;
     }
 
     /** every string value of an annotation, its arrays and nested annotations (@At, @Slice, @Desc) */
@@ -283,7 +303,7 @@ final class MixinClassRenames {
             @Override
             public AnnotationVisitor visitAnnotation(String name, String desc) {
                 AnnotationVisitor n = super.visitAnnotation(name, desc);
-                return n == null ? null : strings(n, renames);
+                return n == null ? null : strings(n, expression(desc) ? vanillaOnly(renames) : renames);
             }
 
             @Override
