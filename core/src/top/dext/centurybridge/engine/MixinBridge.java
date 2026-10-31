@@ -1717,6 +1717,26 @@ final class MixinBridge {
         }
 
         /** a method name not yet used in the mixin */
+        /**
+         * A front's name: the handler's own unless the mixin already declares that name with the front's descriptor --
+         * two V handlers of one name (pomkots GuiMixin.renderCrosshair on renderHotbar and on renderCrosshair) whose
+         * W-shaped fronts come out alike would be a duplicate method, a ClassFormatError when the mixin loads. Mixin
+         * finds a handler by its annotation, never by name, and calls to the old handler already reach its delegate.
+         */
+        private String freeShape(String base, String desc) {
+            String n = base;
+            while (true) {
+                boolean taken = false;
+                for (MethodNode m : mx.methods) {
+                    taken |= m.name.equals(n) && m.desc.equals(desc);
+                }
+                if (!taken) {
+                    return n;
+                }
+                n = n + "$cbfront";
+            }
+        }
+
         private String unique(String base) {
             String n = base;
             while (true) {
@@ -2489,6 +2509,7 @@ final class MixinBridge {
             in.add(new InsnNode(Type.getReturnType(oldDesc).getOpcode(Opcodes.IRETURN)));
             syn.maxLocals = slot;
             syn.maxStack = slot + 2;
+            syn.name = freeShape(syn.name, syn.desc);
             mx.methods.add(syn);
             changed = true;
             return null;
@@ -2653,6 +2674,7 @@ final class MixinBridge {
             }
             syn.maxLocals = s + 2;
             syn.maxStack = s + 6;
+            syn.name = freeShape(syn.name, syn.desc);
             mx.methods.add(syn);
             return syn;
         }
