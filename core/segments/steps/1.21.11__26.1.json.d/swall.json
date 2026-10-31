@@ -3094,6 +3094,8 @@
   }
  },
  "instanceFieldGetters": {
+  "net/minecraft/class_757.field_59966:Lnet/minecraft/class_11246;": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#guiRenderState",
+  "net/minecraft/class_757.field_61732:Lnet/minecraft/class_11658;": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#levelRenderState",
   "net/minecraft/class_757.field_60579:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#guiCubeMap",
   "net/minecraft/class_2275.field_27084:Lnet/minecraft/class_5620$class_8821;": "top/dext/centurybridge/step/v26_1/rt/CbWallCauldrons#interactions",
   "net/minecraft/class_2574.field_11779:Lnet/minecraft/class_2203$class_2209;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponents#compiledNbtPath",

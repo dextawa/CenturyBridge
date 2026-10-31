@@ -1,0 +1,16 @@
+{
+ "_s9i_tickets_basis": "TicketType (class_3230) went from (long timeout, boolean persist, TicketUse use) at 1.21.8 to (long timeout, int flags) at 1.21.9; the TicketUse enum class_3230$class_10558 is absent from the 1.21.9 jar (whole-jar listing). javap -c of both TicketType, TicketStorage class_10592, ServerChunkCache class_3215, ServerLevel class_3218: flags 1 persist / 2 loading / 4 simulation / 8 keep-awake (1.21.8: equal to FORCED) / 16 timed countdown while loaded (1.21.8: every non-simulation timed ticket). The old constructor computes the flags (rt/CbTicketTypes); persist() and use() read them back; the enum is a layer enum with 1.21.8's constants; START (1.21.8's spawn-chunk ticket, 0/false/LOADING_AND_SIMULATION) is a layer type (0, 6).",
+ "classRenames": {
+  "net/minecraft/class_3230$class_10558": "top/dext/centurybridge/step/v1_21_9/facade/class_3230$class_10558"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_3230.<init>(JZLnet/minecraft/class_3230$class_10558;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbTicketTypes#ticketType"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_3230.comp_3475()Z": "top/dext/centurybridge/step/v1_21_9/rt/CbTicketTypes",
+  "net/minecraft/class_3230.comp_3476()Lnet/minecraft/class_3230$class_10558;": "top/dext/centurybridge/step/v1_21_9/rt/CbTicketTypes"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_3230.field_14030:Lnet/minecraft/class_3230;": "top/dext/centurybridge/step/v1_21_9/rt/CbTicketTypes"
+ }
+}
