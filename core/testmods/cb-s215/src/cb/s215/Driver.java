@@ -671,6 +671,42 @@ public final class Driver {
                 "own=" + sound.comp_349() + " asks=" + horse.soundAsks + " plain=" + plainSound.comp_349() + " native " + seen0 + "->" + nativeSeen("sound"));
         });
 
+        run("ticket-load", () -> {
+            // a mod's own ticket types through 1.21.4's TicketType.create (both shapes), region tickets on chunks far from
+            // spawn; chunk loading is asynchronous, so a daemon thread asks the server thread (the server is an Executor)
+            // once a second whether both chunks are FULL, and logs "CB-S215 ok|FAIL ticket-load" after the summary
+            java.util.Comparator<net.minecraft.class_1923> byPos = java.util.Comparator.comparingLong(net.minecraft.class_1923::method_8324);
+            net.minecraft.class_3230<net.minecraft.class_1923> plain = net.minecraft.class_3230.method_14291("cb_s215_plain", byPos);
+            net.minecraft.class_3230<net.minecraft.class_1923> timed = net.minecraft.class_3230.method_20628("cb_s215_timed", byPos, 2400);
+            net.minecraft.class_3215 cache = level.method_14178();
+            net.minecraft.class_1923 a = new net.minecraft.class_1923(300, 300);
+            net.minecraft.class_1923 b = new net.minecraft.class_1923(-300, 300);
+            boolean before = cache.method_21730(a.field_9181, a.field_9180) != null || cache.method_21730(b.field_9181, b.field_9180) != null;
+            cache.method_17297(plain, a, 2, a);
+            cache.method_17297(timed, b, 2, b);
+            Thread t = new Thread(() -> {
+                boolean la = false;
+                boolean lb = false;
+                int s = 0;
+                try {
+                    for (; s < 120 && !(la && lb); s++) {
+                        Thread.sleep(1000);
+                        boolean[] got = java.util.concurrent.CompletableFuture.supplyAsync(() -> new boolean[] {
+                            cache.method_21730(a.field_9181, a.field_9180) != null, cache.method_21730(b.field_9181, b.field_9180) != null}, server).get();
+                        la = got[0];
+                        lb = got[1];
+                    }
+                    check("ticket-load", !before && la && lb && plain != timed,
+                        "before=" + before + " plain(300,300)=" + la + " timed(-300,300)=" + lb + " after " + s + "s types=" + plain + "," + timed);
+                } catch (Throwable e) {
+                    check("ticket-load", false, "threw " + e + " after " + s + "s");
+                    e.printStackTrace(System.out);
+                }
+            }, "cb-s215-tickets");
+            t.setDaemon(true);
+            t.start();
+        });
+
         DONE = true;
         System.out.println("CB-S215 summary ok=" + ok + " fail=" + fail);
     }
