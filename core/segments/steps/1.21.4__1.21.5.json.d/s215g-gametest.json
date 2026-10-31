@@ -1,0 +1,12 @@
+{
+  "_s215g_gametest_basis": "1.21.4 -> 1.21.5 game test registration (s215g, design approved by main as 'A'): 1.21.5 deleted GameTestRegistry / TestFunction / @GameTest / @GameTestGenerator / @BeforeBatch / @AfterBatch (javap -p: class_4519, class_4529, class_6300-6303 absent from the 1.21.5 jar) and runs test_instance registry entries (FunctionGameTestInstance class_10657 over a test_function and a test_environment, TestData class_10664). The classes come back as layer facades with 1.21.4's members and bodies (javap -c -p 1.21.4); every TestFunction entering the facade registry is registered as a 1.21.5 test function / environment (one per batch, setup = @BeforeBatch, teardown = @AfterBatch) / instance by rt/CbLegacyGameTests, under fabric-gametest-api-v1 3.1.3's gate. fabric-gametest-api-v1 2.0.26's FabricGameTest (dropped by 3.1.3) comes back as compat/fapi/gametest/v1/FabricGameTest, 2.0.26's entrypoint registration and makeTestFunction as rt/CbLegacyGameTests. Still open: GameTestInfo's TestFunction members (class_4517), TestFunctionArgument (class_4530), class_9113.method_56198.",
+  "classRenames": {
+    "net/minecraft/class_4519": "top/dext/centurybridge/step/v1_21_5/facade/GameTestRegistry",
+    "net/minecraft/class_4529": "top/dext/centurybridge/step/v1_21_5/facade/TestFunction",
+    "net/minecraft/class_6300": "top/dext/centurybridge/step/v1_21_5/facade/AfterBatch",
+    "net/minecraft/class_6301": "top/dext/centurybridge/step/v1_21_5/facade/BeforeBatch",
+    "net/minecraft/class_6302": "top/dext/centurybridge/step/v1_21_5/facade/GameTest",
+    "net/minecraft/class_6303": "top/dext/centurybridge/step/v1_21_5/facade/GameTestGenerator",
+    "net/fabricmc/fabric/api/gametest/v1/FabricGameTest": "top/dext/centurybridge/step/v1_21_5/compat/fapi/gametest/v1/FabricGameTest"
+  }
+}

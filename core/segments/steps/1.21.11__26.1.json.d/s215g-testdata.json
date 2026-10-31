@@ -1,0 +1,22 @@
+{
+  "_s215g_testdata_basis": "1.21.11 -> 26.1: TestData's 10-argument constructor gained padding (javap 26.1 TestData(Object, Identifier, int, int, boolean, Rotation, boolean, int, int, boolean, int); its short constructors pass 0, the codec defaults it to 0). A 1.21.11 new TestData(..) (superCtorReshapes reshape NEW sites in place) passes 0 (rt/CbWallGameTests). Found by the climbed 1.21.5 layer's link-check at 26.2 (rt/CbLegacyGameTests builds 1.21.5 test instances).",
+  "superCtorReshapes": {
+    "net/minecraft/class_10664.<init>(Ljava/lang/Object;Lnet/minecraft/class_2960;IIZLnet/minecraft/class_2470;ZIIZ)V": {
+      "desc": "(Ljava/lang/Object;Lnet/minecraft/class_2960;IIZLnet/minecraft/class_2470;ZIIZI)V",
+      "ops": [
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v26_1/rt/CbWallGameTests#noPadding()I"
+      ],
+      "basis": "1.21.11 had no padding; 26.1's short constructors pass 0"
+    }
+  }
+}
