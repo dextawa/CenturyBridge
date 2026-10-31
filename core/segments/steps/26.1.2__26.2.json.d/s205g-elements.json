@@ -1,0 +1,17 @@
+{
+  "_s205g_elements": "26.1.2 VertexFormatElement construction and registry (constructor (id, index, type, normalized, count), register, byId, index(), elementsFromMask, MAX_COUNT), gone at 26.2 (javap: 26.2's element is (name, offset, GpuFormat), no id / index / registry); bodies and basis in rt/CbS205fElements. id() / mask() and the role constants stay s26i's (s26i-bufferbuilder.json).",
+  "ctorRedirects": {
+    "com/mojang/blaze3d/vertex/VertexFormatElement.<init>(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;ZI)V": "top/dext/centurybridge/step/v26_2/rt/CbS205fElements#create"
+  },
+  "staticRedirects": {
+    "com/mojang/blaze3d/vertex/VertexFormatElement.register(IILcom/mojang/blaze3d/vertex/VertexFormatElement$Type;ZI)Lcom/mojang/blaze3d/vertex/VertexFormatElement;": "top/dext/centurybridge/step/v26_2/rt/CbS205fElements#register",
+    "com/mojang/blaze3d/vertex/VertexFormatElement.byId(I)Lcom/mojang/blaze3d/vertex/VertexFormatElement;": "top/dext/centurybridge/step/v26_2/rt/CbS205fElements#byId",
+    "com/mojang/blaze3d/vertex/VertexFormatElement.elementsFromMask(I)Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v26_2/rt/CbS205fElements#elementsFromMask"
+  },
+  "instanceRedirects": {
+    "com/mojang/blaze3d/vertex/VertexFormatElement.index()I": "top/dext/centurybridge/step/v26_2/rt/CbS205fElements#index"
+  },
+  "fieldGetters": {
+    "com/mojang/blaze3d/vertex/VertexFormatElement.MAX_COUNT:I": "top/dext/centurybridge/step/v26_2/rt/CbS205fElements#maxCount"
+  }
+}

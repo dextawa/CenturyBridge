@@ -1,0 +1,7 @@
+{
+ "_s9i_outputs_basis": "RenderStateShard.TRANSLUCENT_TARGET / PARTICLES_TARGET (class_4668 field_25280 / field_25281) are built by 1.21.8's class_4668 <clinit> and not by 1.21.9's (javap -c, both code jars). 1.21.8's suppliers read LevelRenderer.getTranslucentTarget / getParticlesTarget (class_761 method_29360 / method_29362), both still in 1.21.9 and still filled. rt/CbOutputTargets builds the two OutputStateShards with 1.21.8's names and suppliers. Reported by s205f / s26i (climbed 1.21.6 CbChunkTypes and 1.20.3 CbNoCrumblingRenderType read field_25280; NoSuchFieldError on 26.2).",
+ "fieldGetters": {
+  "net/minecraft/class_4668.field_25280:Lnet/minecraft/class_4668$class_4678;": "top/dext/centurybridge/step/v1_21_9/rt/CbOutputTargets",
+  "net/minecraft/class_4668.field_25281:Lnet/minecraft/class_4668$class_4678;": "top/dext/centurybridge/step/v1_21_9/rt/CbOutputTargets"
+ }
+}
