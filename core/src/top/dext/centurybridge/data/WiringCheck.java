@@ -986,6 +986,26 @@ public final class WiringCheck {
                 }
             }
         }
+        // mixinExpressionReturns: "owner.name(desc)" with "locals" OWNER#name((Lowner;)LT;) existing exactly, and a basis
+        if (root.has("mixinExpressionReturns")) {
+            for (var e : root.getAsJsonObject("mixinExpressionReturns").entrySet()) {
+                checked++;
+                var o = e.getValue().getAsJsonObject();
+                String where = "mixinExpressionReturns " + e.getKey();
+                int dot = e.getKey().indexOf('.');
+                if (dot <= 0 || e.getKey().indexOf('(') <= dot || !o.has("locals") || !o.has("basis")) {
+                    problems.add(where + ": key \"owner.name(desc)\" with \"locals\" and \"basis\"");
+                    continue;
+                }
+                String lo = o.get("locals").getAsString().trim();
+                int pl = lo.indexOf('(');
+                if (pl <= 0 || !lo.substring(pl).startsWith("(L" + e.getKey().substring(0, dot) + ";)L")) {
+                    problems.add(where + ": locals is not OWNER#name(L" + e.getKey().substring(0, dot) + ";)LT;");
+                    continue;
+                }
+                wantMethod(where + " locals", lo.substring(0, pl), null, methodDesc(lo.substring(pl)));
+            }
+        }
         // convertHooks (the override side of a same-shape reshape): the member is one the target's
         // `under` has with that very descriptor, and every converter exists with its exact descriptor
         java.util.Set<String> convertHooked = new java.util.HashSet<>();

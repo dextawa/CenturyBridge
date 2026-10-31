@@ -2893,6 +2893,9 @@ final class MixinBridge {
                                 return;
                             }
                         }
+                        if (na == null && expressionReturn(sel, kind, where, vanilla)) {
+                            return; // E8c: the expression's value is the method's return value (mixinExpressionReturns)
+                        }
                         if (na == null || count(sel.w(), renamedAnchor(na, vanilla)) == 0) {
                             leftInjector(sel.handler(), where + ": expression definition " + id + " not in " + shortName(target) + "."
                                 + sel.w().get(0).name + sel.w().get(0).desc + " in " + chain.to
@@ -3064,6 +3067,85 @@ final class MixinBridge {
             }
             why.add("the handler reads none of the changed types; " + wc + " call(s) on both sides");
             return na;
+        }
+
+        /**
+         * smixin12, Kilt E8c: a @ModifyExpressionValue whose definitions W's method no longer evaluates, where the wiring
+         * says the expression's value is the method's return value (mixinExpressionReturns: its "locals" static
+         * recomputes the expression's one @Local on W, null exactly where V never reached the expression). Checked from
+         * both bodies (expressionReturnWhy): in V's the definitions are evaluated once and feed the @Expression's one
+         * == / != test, whose two outcomes return 1 and 0 directly -- the method's return is the expression's value on
+         * every path that evaluates it (returned negated or combined: refused); W's method returns the outcome of one
+         * test; the handler is (R original, @Local(type) T)R with T the static's answer. Then the handler becomes a plain
+         * method and a @ModifyReturnValue on W's method calls it only where the static answers, else returns W's value
+         * unchanged (native mixins of W's method and its callees still run: their answer is the value it sees).
+         * False when no entry names the method; true when it answered (bridged, or left with the reason).
+         */
+        private boolean expressionReturn(Selection sel, String kind, String where, Map<String, String> vanilla) {
+            if (sel.v().size() != 1 || sel.w().size() != 1) {
+                return false;
+            }
+            MethodNode vm = sel.v().get(0);
+            MethodNode wm = sel.w().get(0);
+            String[] lo = chain.mixinExpressionReturns.get(target + "." + vm.name + vm.desc);
+            if (lo == null) {
+                return false;
+            }
+            String why = expressionReturnWhy(sel.handler(), kind, vm, wm, lo, vanilla);
+            if (why != null) {
+                leftInjector(sel.handler(), where + ": mixinExpressionReturns refused: " + why);
+                return true;
+            }
+            MethodNode h = sel.handler();
+            Type r = Type.getArgumentTypes(h.desc)[0];
+            Type lt = Type.getReturnType(lo[2]);
+            MethodNode syn = new MethodNode(Opcodes.ACC_PRIVATE, unique("cb$exprret$" + h.name), Type.getMethodDescriptor(r, r), null, null);
+            AnnotationNode mrv = new AnnotationNode(MODIFY_RETURN_VALUE);
+            AnnotationNode at = new AnnotationNode("Lorg/spongepowered/asm/mixin/injection/At;");
+            at.values = new ArrayList<>(List.of("value", "RETURN"));
+            mrv.values = new ArrayList<>(List.of("method", new ArrayList<>(List.of(wm.name + wm.desc)), "at", new ArrayList<>(List.of(at))));
+            Object req = MixinRepair.values(sel.an()).get("require");
+            if (req != null) {
+                mrv.values.addAll(List.of("require", req));
+            }
+            syn.visibleAnnotations = new ArrayList<>(List.of(mrv));
+            int ls = 1 + r.getSize();
+            InsnList in = syn.instructions;
+            LabelNode skip = new LabelNode();
+            in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            in.add(new TypeInsnNode(Opcodes.CHECKCAST, target));
+            in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, lo[0], lo[1], lo[2], false));
+            in.add(new VarInsnNode(Opcodes.ASTORE, ls));
+            in.add(new VarInsnNode(Opcodes.ALOAD, ls));
+            in.add(new JumpInsnNode(Opcodes.IFNULL, skip));
+            in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            in.add(new VarInsnNode(r.getOpcode(Opcodes.ILOAD), 1));
+            in.add(new VarInsnNode(Opcodes.ALOAD, ls));
+            in.add(new MethodInsnNode(Opcodes.INVOKESPECIAL, mx.name, h.name, h.desc, false));
+            in.add(new InsnNode(r.getOpcode(Opcodes.IRETURN)));
+            in.add(skip);
+            in.add(new FrameNode(Opcodes.F_NEW, 3, new Object[] {mx.name, JarProcessor.frameType(r), lt.getInternalName()}, 0, new Object[0]));
+            in.add(new VarInsnNode(r.getOpcode(Opcodes.ILOAD), 1));
+            in.add(new InsnNode(r.getOpcode(Opcodes.IRETURN)));
+            syn.maxLocals = ls + 1;
+            syn.maxStack = 3 + r.getSize();
+            // the mod's handler: a plain private method now (its injector, definitions, expression and sugar go)
+            for (List<AnnotationNode> l : Arrays.asList(h.visibleAnnotations, h.invisibleAnnotations)) {
+                if (l != null) {
+                    l.removeIf(a -> a == sel.an() || a.desc.equals(DEFINITION) || a.desc.equals(DEFINITIONS) || a.desc.equals(EXPRESSION));
+                }
+            }
+            h.visibleParameterAnnotations = null;
+            h.invisibleParameterAnnotations = null;
+            h.visibleAnnotableParameterCount = 0;
+            h.invisibleAnnotableParameterCount = 0;
+            h.access = (h.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE;
+            mx.methods.add(syn);
+            changed = true;
+            injected("@" + kind + " " + sn + "." + h.name, where + " => @ModifyReturnValue " + syn.name + " on " + wm.name + wm.desc
+                + " (mixinExpressionReturns: the expression's value is the method's return on both sides; the @Local from "
+                + shortName(lo[0]) + "." + lo[1] + ", the handler called only where it answers)");
+            return true;
         }
 
         /** the step's vanilla rename of a definition's member, or null */
@@ -4932,6 +5014,150 @@ final class MixinBridge {
     static final String EXPRESSION_POINT = "MIXINEXTRAS:EXPRESSION";
     static final String DEFINITION = "Lcom/llamalad7/mixinextras/expression/Definition;";
     static final String DEFINITIONS = "Lcom/llamalad7/mixinextras/expression/Definitions;";
+
+    /** why Mixin.expressionReturn may not carry the injector (V's body vm, W's wm, the handler h), or null */
+    @SuppressWarnings("unchecked")
+    static String expressionReturnWhy(MethodNode h, String kind, MethodNode vm, MethodNode wm, String[] lo, Map<String, String> vanilla) {
+        if (!kind.equals("ModifyExpressionValue")) {
+            return "@" + kind + " is not @ModifyExpressionValue";
+        }
+        if ((h.access & Opcodes.ACC_STATIC) != 0) {
+            return "the handler is static";
+        }
+        if (!vm.name.equals(wm.name) || !MixinClassRenames.rename(vm.desc, vanilla).equals(wm.desc)) {
+            return "W's method is not V's (" + wm.name + wm.desc + ")";
+        }
+        Type vr = Type.getReturnType(vm.desc);
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        if (hp.length != 2 || !hp[0].equals(vr) || !Type.getReturnType(h.desc).equals(vr)) {
+            return "the handler is not (" + vr.getClassName() + ", @Local)" + vr.getClassName();
+        }
+        if (!Type.getReturnType(lo[2]).equals(hp[1])) {
+            return "the handler's @Local is " + hp[1].getClassName() + ", the static answers " + Type.getReturnType(lo[2]).getClassName();
+        }
+        AnnotationNode loc = null;
+        for (List<AnnotationNode>[] pa : new List[][] {h.visibleParameterAnnotations, h.invisibleParameterAnnotations}) {
+            if (pa == null) {
+                continue;
+            }
+            if (pa.length > 0 && pa[0] != null && !pa[0].isEmpty()) {
+                return "the expression value parameter carries " + pa[0].get(0).desc;
+            }
+            if (pa.length > 1 && pa[1] != null) {
+                for (AnnotationNode a : pa[1]) {
+                    if (a.desc.equals(MixinLocals.LOCAL)) {
+                        loc = a;
+                    }
+                }
+            }
+        }
+        if (loc == null) {
+            return "parameter 1 is not a @Local";
+        }
+        for (String k : MixinRepair.values(loc).keySet()) {
+            if (!k.equals("type")) {
+                return "the @Local picks by " + k + ", not by type alone";
+            }
+        }
+        List<String> ex = new ArrayList<>();
+        for (AnnotationNode a : MixinRepair.annotations(h)) {
+            if (a.desc.equals(EXPRESSION)) {
+                ex.addAll(MixinRepair.strings(MixinRepair.values(a).get("value")));
+            }
+        }
+        if (ex.size() != 1) {
+            return "not one @Expression";
+        }
+        String e = ex.get(0);
+        int eqs = e.split("==", -1).length - 1;
+        int nes = e.split("!=", -1).length - 1;
+        if (eqs + nes != 1 || e.contains("&&") || e.contains("||") || e.contains("!(")) {
+            return "the expression \"" + e + "\" is not one == / != comparison";
+        }
+        boolean eq = eqs == 1;
+        // V: every member definition evaluated once; the last feeds the comparison, whose outcomes are returned as they are
+        int last = -1;
+        for (AnnotationNode def : definitions(h)) {
+            Map<String, Object> dv = MixinRepair.values(def);
+            for (String key : List.of("method", "field")) {
+                for (String spec : MixinRepair.strings(dv.get(key))) {
+                    MixinRepair.Anchor a = definitionAnchor(spec, key.equals("field"));
+                    if (a == null) {
+                        return "definition " + spec + " is not owner-qualified";
+                    }
+                    int hits = 0;
+                    for (AbstractInsnNode in : vm.instructions) {
+                        if (MixinRepair.matchesAnchor(in, a)) {
+                            hits++;
+                            last = Math.max(last, vm.instructions.indexOf(in));
+                        }
+                    }
+                    if (hits != 1) {
+                        return "V's " + vm.name + vm.desc + " evaluates " + spec + " " + hits + " times";
+                    }
+                }
+            }
+        }
+        if (last < 0) {
+            return "no member definition";
+        }
+        AbstractInsnNode p = vm.instructions.get(last).getNext();
+        while (p != null && (p.getOpcode() < 0 || OPERAND_PUSH.contains(p.getOpcode()))) {
+            p = p.getNext();
+        }
+        if (!(p instanceof JumpInsnNode j) || !COMPARE_EQ.containsKey(j.getOpcode())) {
+            return "in V's body the expression feeds no == / != test";
+        }
+        boolean truthOnJump = COMPARE_EQ.get(j.getOpcode()) == eq;
+        int cj = constReturn(j.label);
+        int cf = constReturn(j.getNext());
+        if (cj != (truthOnJump ? 1 : 0) || cf != (truthOnJump ? 0 : 1)) {
+            return "in V's body the method does not return the expression's value (returns " + cj + " / " + cf
+                + " where the expression is " + truthOnJump + " / " + !truthOnJump + ")";
+        }
+        // W: the method returns the outcome of one test
+        int tests = 0;
+        for (AbstractInsnNode in : wm.instructions) {
+            if (in instanceof JumpInsnNode wj && wj.getOpcode() != Opcodes.GOTO) {
+                tests++;
+                int a = constReturn(wj.label);
+                int b = constReturn(wj.getNext());
+                if (a < 0 || b < 0 || a == b) {
+                    return "W's " + wm.name + wm.desc + " does not return the outcome of its test";
+                }
+            }
+        }
+        return tests == 1 ? null : "W's " + wm.name + wm.desc + " holds " + tests + " tests, not one";
+    }
+
+    static final String EXPRESSION = "Lcom/llamalad7/mixinextras/expression/Expression;";
+    static final String MODIFY_RETURN_VALUE = "Lcom/llamalad7/mixinextras/injector/ModifyReturnValue;";
+    /** instructions that push one comparison operand (between an expression's member and its test) */
+    private static final Set<Integer> OPERAND_PUSH = Set.of(Opcodes.GETSTATIC, Opcodes.ACONST_NULL, Opcodes.LDC, Opcodes.ICONST_M1,
+        Opcodes.ICONST_0, Opcodes.ICONST_1, Opcodes.ICONST_2, Opcodes.ICONST_3, Opcodes.ICONST_4, Opcodes.ICONST_5, Opcodes.BIPUSH,
+        Opcodes.SIPUSH, Opcodes.ILOAD, Opcodes.ALOAD);
+    /** == / != tests: whether the jump is taken when the operands are equal */
+    private static final Map<Integer, Boolean> COMPARE_EQ = Map.of(Opcodes.IF_ACMPEQ, true, Opcodes.IF_ACMPNE, false,
+        Opcodes.IF_ICMPEQ, true, Opcodes.IF_ICMPNE, false, Opcodes.IFNULL, true, Opcodes.IFNONNULL, false);
+
+    /** the 0 / 1 constant the code from p returns directly (through labels and gotos), or -1 */
+    static int constReturn(AbstractInsnNode p) {
+        int c = -1;
+        for (int guard = 0; p != null && guard < 64; guard++) {
+            int op = p.getOpcode();
+            if (op < 0) {
+                p = p.getNext();
+            } else if (op == Opcodes.GOTO) {
+                p = ((JumpInsnNode) p).label;
+            } else if (c < 0 && (op == Opcodes.ICONST_0 || op == Opcodes.ICONST_1)) {
+                c = op - Opcodes.ICONST_0;
+                p = p.getNext();
+            } else {
+                return c >= 0 && op == Opcodes.IRETURN ? c : -1;
+            }
+        }
+        return -1;
+    }
 
     /** a handler's @Definition annotations, single or inside @Definitions */
     static List<AnnotationNode> definitions(MethodNode h) {

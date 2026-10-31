@@ -246,6 +246,18 @@ public final class Chain {
     public final java.util.Set<String> mixinAnchorGuarded = new java.util.HashSet<>();
 
     /**
+     * A MIXINEXTRAS:EXPRESSION whose definitions W's method no longer evaluates, where the expression's value is that
+     * method's return value ("mixinExpressionReturns", judged by an area agent from both bodies; smixin12, Kilt E8c
+     * 1.21.2 Bee.isHiveValid: V {@code be.getType() == BEEHIVE}, W {@code getBeehiveBlockEntity() != null}): key the V
+     * method "owner.name(desc)", value {"locals": "OWNER#name((Lowner;)LLocal;)" -- the expression's @Local recomputed on
+     * W, null exactly where V never reached the expression --, "basis": why W's return equals V's expression value
+     * wherever the static answers non-null}. MixinBridge turns a @ModifyExpressionValue taking that one @Local into a
+     * @ModifyReturnValue on W's method that calls the mod's handler only where the static answers, after checking in
+     * V's body that the expression's value is returned unchanged on every path that evaluates it (expressionIsReturn).
+     */
+    public final java.util.Map<String, String[]> mixinExpressionReturns = new java.util.HashMap<>();
+
+    /**
      * a mixinMoves entry's "self": field hops ["owner.name:desc", ...] from an instance of the W class to the instance
      * of V's class whose method V ran (s26 C17: 26.2 LevelExtractor.levelRenderer). With it an INSTANCE method's
      * injector whose handler reads {@code this} moves too: in the moved handler a @Shadow member the W class declares
@@ -3498,6 +3510,13 @@ public final class Chain {
                     if (amo.has("guarded") && amo.get("guarded").getAsBoolean()) {
                         c.mixinAnchorGuarded.add(k);
                     }
+                }
+            }
+            if (root.has("mixinExpressionReturns")) {
+                var mer = root.getAsJsonObject("mixinExpressionReturns");
+                for (String k : mer.keySet()) {
+                    c.mixinExpressionReturns.put(k, parseStaticRef("mixinExpressionReturns " + k,
+                        mer.getAsJsonObject(k).get("locals").getAsString()));
                 }
             }
             if (root.has("mixinSplits")) {
