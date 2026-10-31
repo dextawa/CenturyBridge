@@ -318,6 +318,14 @@ public final class Driver {
             String text = new net.minecraft.class_5628("").method_32305(outer).getString();
             report(tag + " tagvisit", text.equals("{a: {b: 1}}") && nativeNestedWraps == 2,
                 "{a:{b:1}} as text: " + text + ", native @WrapOperation of the nested visit ran " + nativeNestedWraps);
+            // native code sees 1.21's own root: no minecraft:enchantment (a datapack registry), minecraft:item as ITEM
+            net.minecraft.class_2960 enchId = net.minecraft.class_2960.method_60656("enchantment");
+            report(tag + " root-native", net.minecraft.class_7923.field_41167.method_17966(enchId).isEmpty()
+                    && !net.minecraft.class_7923.field_41167.method_10250(enchId)
+                    && !net.minecraft.class_7923.field_41167.method_10235().contains(enchId)
+                    && net.minecraft.class_7923.field_41167.method_17966(net.minecraft.class_2960.method_60656("item")).orElse(null) == net.minecraft.class_7923.field_41178,
+                "native REGISTRY minecraft:enchantment present " + net.minecraft.class_7923.field_41167.method_17966(enchId).isPresent()
+                    + ", containsKey " + net.minecraft.class_7923.field_41167.method_10250(enchId));
             // a player's cross-level moves: native @Inject + @Local in changeDimension(transition) before sendAllPlayerInfo
             // fires once per move, teleportTo-driven or a direct (portal-type) changeDimension
             class_3218 end = server.method_3847(net.minecraft.class_1937.field_25181);

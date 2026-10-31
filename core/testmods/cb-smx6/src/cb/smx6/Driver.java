@@ -322,6 +322,23 @@ public final class Driver {
             blockDim = false;
             check("dim-blocked", dim.equals("stayed") && dimAsked == 1 && dimDest == end,
                 "move refused by the mod: " + dim + ", asked " + dimAsked + " time(s)");
+            // ---- BuiltInRegistries.REGISTRY by name (Kilt E9): 1.20.6's root held minecraft:enchantment, the same registry
+            // BuiltInRegistries.ENCHANTMENT reads; other names unchanged (1.21: CbRootRegistry)
+            net.minecraft.class_2960 enchId = net.minecraft.class_2960.method_43902("minecraft", "enchantment");
+            net.minecraft.class_2960 itemId = net.minecraft.class_2960.method_43902("minecraft", "item");
+            java.util.Optional<?> rootEnch = net.minecraft.class_7923.field_41167.method_17966(enchId);
+            check("root-enchantment", rootEnch.isPresent() && rootEnch.get() == net.minecraft.class_7923.field_41176
+                    && net.minecraft.class_7923.field_41167.method_10223(enchId) == net.minecraft.class_7923.field_41176
+                    && net.minecraft.class_7923.field_41167.method_10250(enchId)
+                    && net.minecraft.class_7923.field_41167.method_10235().contains(enchId),
+                "REGISTRY by name minecraft:enchantment: present " + rootEnch.isPresent() + ", same as ENCHANTMENT "
+                    + (rootEnch.isPresent() && rootEnch.get() == net.minecraft.class_7923.field_41176) + ", containsKey "
+                    + net.minecraft.class_7923.field_41167.method_10250(enchId) + ", in keySet "
+                    + net.minecraft.class_7923.field_41167.method_10235().contains(enchId));
+            check("root-other-key", net.minecraft.class_7923.field_41167.method_17966(itemId).orElse(null) == net.minecraft.class_7923.field_41178
+                    && !net.minecraft.class_7923.field_41167.method_10250(net.minecraft.class_2960.method_43902("minecraft", "cb_no_such_registry")),
+                "REGISTRY minecraft:item is ITEM " + (net.minecraft.class_7923.field_41167.method_17966(itemId).orElse(null) == net.minecraft.class_7923.field_41178)
+                    + ", unknown name absent " + !net.minecraft.class_7923.field_41167.method_10250(net.minecraft.class_2960.method_43902("minecraft", "cb_no_such_registry")));
             // ---- ServerPlayer.teleportTo before sendAllPlayerInfo, @Local(ordinal = 1) old level: TeleportLocalMixin (Kilt E8g
             // shape; 1.21: guarded descend into changeDimension(transition), arguments stashed, @Local matched by role)
             net.minecraft.class_3222 tp = telePlayer(server, level);
