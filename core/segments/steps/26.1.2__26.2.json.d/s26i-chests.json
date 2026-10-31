@@ -1,0 +1,9 @@
+{
+ "_s26i_chests_basis": "26.1.2 ChestSpecialRenderer.COPPER_UNAFFECTED / EXPOSED / WEATHERED / OXIDIZED are 26.2's COPPER (WeatheringCopperCollection.ByState) components: javap of both <clinit> builds the same four createDefaultTextures(\"copper\" / \"copper_exposed\" / \"copper_weathered\" / \"copper_oxidized\") in that order (rt/CbS26Chests). Read by the climbed 26.1 layer's CbWallSpriteIds.",
+ "fieldGetters": {
+  "net/minecraft/client/renderer/special/ChestSpecialRenderer.COPPER_UNAFFECTED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "top/dext/centurybridge/step/v26_2/rt/CbS26Chests#copperUnaffected",
+  "net/minecraft/client/renderer/special/ChestSpecialRenderer.COPPER_EXPOSED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "top/dext/centurybridge/step/v26_2/rt/CbS26Chests#copperExposed",
+  "net/minecraft/client/renderer/special/ChestSpecialRenderer.COPPER_WEATHERED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "top/dext/centurybridge/step/v26_2/rt/CbS26Chests#copperWeathered",
+  "net/minecraft/client/renderer/special/ChestSpecialRenderer.COPPER_OXIDIZED:Lnet/minecraft/client/renderer/MultiblockChestResources;": "top/dext/centurybridge/step/v26_2/rt/CbS26Chests#copperOxidized"
+ }
+}
