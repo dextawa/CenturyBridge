@@ -7,6 +7,7 @@
 # are still open -- optionally only those whose owner's mojang name matches areaRegex.
 # CB_PROBE=fapi measures the Fabric API side instead: V's Fabric API probe (probe/fapi, from
 # fapi_probe_segments.sh) against the step's Fabric API damage table (probe/fapi-damage).
+# CB_PROBE=aw: the access-widener surface (core/segments/damage-aw), open entries under step-aw/.
 # Run on beta2 from ~/cbwork; <workDir> is relative to it (an agent's own directory, or "." for main).
 set -uo pipefail
 cd ~/cbwork
@@ -16,6 +17,15 @@ LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client
 SEG="${V}__${W}"
 PROBES=probe/seg; DAMAGE=probe/damage; OUT="$WD/step/$SEG"
 [ "${CB_PROBE:-}" = fapi ] && { PROBES=probe/fapi; DAMAGE=probe/fapi-damage; OUT="$WD/step-fapi/$SEG"; }
+# CB_PROBE=aw measures the access-widener surface (api-probe -Dcb.apiprobe.nonpublic: non-public members a mod reaches
+# through its own access widener, usages aw-*) against the step's table in <workDir>/core/segments/damage-aw; the
+# probe of V depends only on V's stub and is built once into probe/aw/<V>__<W>/
+if [ "${CB_PROBE:-}" = aw ]; then
+    PROBES=probe/aw; DAMAGE="$WD/core/segments/damage-aw"; OUT="$WD/step-aw/$SEG"
+    case "$V" in 26.*) VSTUB="data/jars/client-$V.jar" ;; *) VSTUB="data/jars/client-$V-intermediary.jar" ;; esac
+    mkdir -p "$PROBES/$SEG"
+    [ -f "$PROBES/$SEG/probe-$V.jar.index.tsv" ] || "$JAVA" -Xmx8g -Dcb.apiprobe.nonpublic=true -cp "$WD/core/build/classes:$LIBS"         top.dext.centurybridge.Main api-probe "$VSTUB" "$PROBES/$SEG/probe-$V.jar" "data/runtime/client-$V/libraries" > /dev/null 2>&1         || { echo "aw probe failed"; exit 1; }
+fi
 rm -rf "$OUT" && mkdir -p "$OUT"
 case "$W" in 26.*) GAME="data/jars/client-$W.jar" ;; *) GAME="data/jars/client-$W-intermediary.jar" ;; esac
 FAPI=$(ls data/runtime/client-$W/mods/fabric-api-*.jar 2>/dev/null | head -1)
@@ -73,7 +83,7 @@ EOF
 # Generic drift (generic_drift.py): members whose erased descriptor V and W share while their type
 # arguments changed -- linked fine, so the probe above cannot see them; the first element a mod takes
 # out is a ClassCastException. Counted against the same wiring (and area) as the probe's rows.
-if [ "${CB_PROBE:-}" != fapi ]; then
+if [ "${CB_PROBE:-}" != fapi ] && [ "${CB_PROBE:-}" != aw ]; then
     case "$V" in 26.*) VJAR="data/jars/client-$V.jar" ;; *) VJAR="data/jars/client-$V-intermediary.jar" ;; esac
     WALL=""
     [ "$SEG" = "1.21.11__26.1" ] && WALL="--wall $(python3 "$WD/core/tools/wall_tables.py" "$W")"
@@ -110,13 +120,13 @@ fi
 # Frames hooks (frames_review.py): an argument the old shape has no place for, read back from the frame
 # when vanilla called the new shape, is its type's zero when the mod enters its old method itself --
 # a NullPointerException where V had a real value. Each needs a frameDefaults judgment.
-if [ "${CB_PROBE:-}" != fapi ]; then
+if [ "${CB_PROBE:-}" != fapi ] && [ "${CB_PROBE:-}" != aw ]; then
     python3 "$WD/core/tools/frames_review.py" "$WIRING" "$OUT/frames-open.tsv" || echo "frames review failed"
 fi
 # Mixins (mixin_step.sh): the step's mixin damage table (core/segments/damage-mixin, from the mixin probe:
 # every injector / shadow / accessor / invoker point of V's code that W's real bodies no longer take) as
 # separate probe mixins, converted with this step's wiring and judged on W with the layer: "mixin probe:
 # N of M still open" for the same area, open entries in $OUT/open-mixin.tsv.
-if [ "${CB_PROBE:-}" != fapi ] && [ -f "$WD/core/tools/mixin_step.sh" ]; then
+if [ "${CB_PROBE:-}" != fapi ] && [ "${CB_PROBE:-}" != aw ] && [ -f "$WD/core/tools/mixin_step.sh" ]; then
     bash "$WD/core/tools/mixin_step.sh" "$WD" "$V" "$W" "$AREA" || echo "mixin probe failed"
 fi
