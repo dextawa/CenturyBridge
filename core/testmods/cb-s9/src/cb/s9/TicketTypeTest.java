@@ -64,5 +64,28 @@ final class TicketTypeTest {
             }
             S9TestMod.check(!left, "a timed (1) LOADING ticket expired with its chunk loaded (holder present " + held + ")");
         });
+        S9TestMod.run("tickets: persist flag on TicketStorage's save path", () -> {
+            // TicketStorage.CODEC writes only the tickets its save filter (method_67396) keeps: persist() on 1.21.8,
+            // flag 1 on 1.21.9. A mod's unregistered type cannot be named by the registry codec, so a ticket the
+            // filter keeps makes the encoding fail on its type, one it drops leaves the list empty. Control: vanilla's
+            // registered FORCED is written by name.
+            class_3230 persistent = new class_3230(0L, true, class_3230.class_10558.field_55601);
+            class_3230 transientType = new class_3230(0L, false, class_3230.class_10558.field_55601);
+            var ops = com.mojang.serialization.JsonOps.INSTANCE;
+            class_10592 dropped = new class_10592();
+            dropped.method_66358(transientType, new class_1923(6, 6), 0);
+            var droppedOut = class_10592.field_56450.encodeStart(ops, dropped);
+            class_10592 kept = new class_10592();
+            kept.method_66358(persistent, new class_1923(5, 5), 0);
+            var keptOut = class_10592.field_56450.encodeStart(ops, kept);
+            class_10592 control = new class_10592();
+            control.method_66358(class_3230.field_14031, new class_1923(7, 7), 0);
+            String controlOut = String.valueOf(class_10592.field_56450.encodeStart(ops, control).result().orElse(null));
+            S9TestMod.check(controlOut.contains("forced"), "control: vanilla FORCED is saved by name, got " + controlOut);
+            S9TestMod.check(droppedOut.result().isPresent() && !droppedOut.result().get().toString().contains("\"type\""),
+                "a non-persist 1.21.8 ticket is not written, got " + droppedOut);
+            S9TestMod.check(keptOut.error().isPresent(),
+                "a persist 1.21.8 ticket is written (its unregistered type reaches the codec), got " + keptOut);
+        });
     }
 }
