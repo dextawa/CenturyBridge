@@ -881,6 +881,10 @@ public final class MixinCheck {
                 default -> {
                     if (a.desc.startsWith(INJECT_PKG)) {
                         checkInjection(me, m, a, target);
+                    } else if (a.desc.startsWith("Lcom/llamalad7/mixinextras/injector/") && expressionPoint(a)) {
+                        // a MixinExtras injector on an expression: only its definitions are judged here (its selectors
+                        // and other points are not modelled for MixinExtras injectors)
+                        checkExpression(me, m, a, target);
                     }
                 }
             }
@@ -1001,10 +1005,21 @@ public final class MixinCheck {
                 problems.add(me + ": @At target \"" + sel + "\" unresolved (" + m.name + ")");
             }
         }
-        if (ats.stream().anyMatch(an -> "MIXINEXTRAS:EXPRESSION".equals(str(get(an, "value"))))) {
+        if (expressionPoint(a)) {
             checkExpression(me, m, a, target);
         }
         scanBodies(me, m, a, target);
+    }
+
+    /** does the injector's at= name MixinExtras' expression point */
+    private static boolean expressionPoint(AnnotationNode a) {
+        Object at = get(a, "at");
+        for (Object o : at instanceof List<?> l ? l : at == null ? List.of() : List.of(at)) {
+            if (o instanceof AnnotationNode an && "MIXINEXTRAS:EXPRESSION".equals(str(get(an, "value")))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -1022,6 +1037,9 @@ public final class MixinCheck {
         List<MethodNode> tms = targetMethods(a, code);
         if (tms.isEmpty()) {
             return; // the selector itself is reported
+        }
+        if (!a.desc.startsWith(INJECT_PKG)) {
+            scanned++; // a MixinExtras injector: scanBodies does not count it
         }
         List<AnnotationNode> defs = new ArrayList<>();
         for (List<AnnotationNode> l : java.util.Arrays.asList(h.visibleAnnotations, h.invisibleAnnotations)) {
