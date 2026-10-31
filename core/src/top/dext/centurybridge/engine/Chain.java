@@ -237,6 +237,15 @@ public final class Chain {
     public final java.util.Map<String, String> mixinAnchorMoves = new java.util.HashMap<>();
 
     /**
+     * mixinAnchorMoves keys with "guarded": true (s121g, Kilt E8g): the "to" is another method of the SAME class, which the
+     * V method's W copy calls exactly once on this, and the code at the anchor runs there for that call only (1.21
+     * teleportTo's cross-level branch is changeDimension(transition)). MixinRepair moves a void @Inject there behind a
+     * guard (it acts only while that call runs); a handler taking the target's arguments gets them stashed by the guard,
+     * its @Local parameters matched by role (MixinLocals.roleOrdinals). Nothing else reaches that path.
+     */
+    public final java.util.Set<String> mixinAnchorGuarded = new java.util.HashSet<>();
+
+    /**
      * a mixinMoves entry's "self": field hops ["owner.name:desc", ...] from an instance of the W class to the instance
      * of V's class whose method V ran (s26 C17: 26.2 LevelExtractor.levelRenderer). With it an INSTANCE method's
      * injector whose handler reads {@code this} moves too: in the moved handler a @Shadow member the W class declares
@@ -3484,7 +3493,11 @@ public final class Chain {
             if (root.has("mixinAnchorMoves")) {
                 var mm = root.getAsJsonObject("mixinAnchorMoves");
                 for (String k : mm.keySet()) {
-                    c.mixinAnchorMoves.put(k, mm.getAsJsonObject(k).get("to").getAsString());
+                    var amo = mm.getAsJsonObject(k);
+                    c.mixinAnchorMoves.put(k, amo.get("to").getAsString());
+                    if (amo.has("guarded") && amo.get("guarded").getAsBoolean()) {
+                        c.mixinAnchorGuarded.add(k);
+                    }
                 }
             }
             if (root.has("mixinSplits")) {

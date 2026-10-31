@@ -764,6 +764,7 @@ public final class MixinRepair {
                 boolean liveOnLayer = false; // live on a layer-restored member or a facade
                 String deadWhy = null;
                 String followRefused = null;
+                String guardedRefused = null;
                 List<String> fixNotes = new ArrayList<>();
                 List<Runnable> fixes = new ArrayList<>();
                 for (int mi = 0; mi < methods.size() && !live; mi++) {
@@ -916,7 +917,35 @@ public final class MixinRepair {
                         }
                         // the V method stands on W, but the code at these anchors moved into another class's method
                         // (mixinAnchorMoves): onto a mixin of that class, as mixinMoves moves a whole method
-                        String anchorTo = anchors == null || anchors.isEmpty() ? null : anchorMoveOf(owner, s);
+                        String anchorTo0 = anchors == null || anchors.isEmpty() ? null : anchorMoveOf(owner, s);
+                        String guardedKey = anchorTo0 == null ? null : guardedKeyOf(owner, s);
+                        if (guardedKey != null) {
+                            // a same-class "to" judged in the wiring (Kilt E8g): only this entry reaches the guarded,
+                            // argument-stashing descend; nothing is inferred
+                            List<String> gwhy = new ArrayList<>();
+                            Descend d = cands.size() == 1 ? guardedMove(an, handler, owner, tc, cands.get(0), anchors, anchorTo0, gwhy) : null;
+                            if (d == null && gwhy.isEmpty()) gwhy.add("the selector matches " + cands.size() + " methods");
+                            if (d != null) {
+                                String repl = "L" + owner + ";" + d.callee().name + d.callee().desc;
+                                fixNotes.add("guarded move " + where + " " + anchors + " => " + d.callee().name + d.callee().desc
+                                    + (d.ordinal() >= 0 ? " #" + d.ordinal() : "")
+                                    + (d.stash() != null ? " (the target's arguments stashed by the guard"
+                                        + (d.localOrd() != null ? ", @Local by role" : "") + ")" : "")
+                                    + " (mixinAnchorMoves, guarded: acts only while " + tc.name.substring(tc.name.lastIndexOf('/') + 1)
+                                    + "." + cands.get(0).name + "'s one call of it on this runs)");
+                                fixes.add(() -> {
+                                    applyDescend(d, handler, an, mx);
+                                    if (viaRefmap) { refmapPut(refmap, sel, repl); dirty[1] = true; }
+                                    else setMethodSelector(an, idx, repl);
+                                    dirty[0] = true;
+                                });
+                                continue;
+                            }
+                            // refused: the paths below judge it as they would without the entry (a descend-site may hold it)
+                            guardedRefused = "mixinAnchorMoves guarded to " + anchorTo0 + " refused: " + gwhy.get(0);
+                        }
+                        // a guarded entry is not an ordinary anchor move: refused, the paths below judge it as without it
+                        String anchorTo = guardedKey != null ? null : anchorTo0;
                         if (anchorTo != null) {
                             String why0 = movable(mx, handler, an, anchors, anchorTo, owner, null);
                             if (why0 == null) why0 = ordinalsKept(anchors, owner, cands, anchorTo);
@@ -1093,7 +1122,8 @@ public final class MixinRepair {
                     // other injectors and interface merges keep working.
                     dropInjector(handler, an);
                     dirty[0] = true;
-                    disabled.add(followRefused == null ? deadWhy : deadWhy + " [" + followRefused + "]");
+                    disabled.add(deadWhy + (followRefused == null ? "" : " [" + followRefused + "]")
+                        + (guardedRefused == null ? "" : " [" + guardedRefused + "]"));
                 }
             }
         }
@@ -1113,11 +1143,22 @@ public final class MixinRepair {
     // ------------------------------------------------------------------ descend by site
 
     /** sibling: the callee is not reached from the target but is another entry point of the same framework class */
+    /**
+     * stash: the target's argument types a guarded descend carries to a handler that takes them (the guard's
+     * @WrapOperation hands them over per thread); localOrd: per handler parameter, the ordinal its @Local takes in the
+     * callee (-1: not a @Local) -- both null when the handler takes neither
+     */
     record Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic, boolean sibling,
                    MethodInsnNode guardCall, String guardOwner, MethodNode guardIn, AbstractInsnNode site,
-                   String crossOwner, boolean onThis) {
+                   String crossOwner, boolean onThis, Type[] stash, int[] localOrd) {
         Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic, boolean sibling) {
             this(callee, ordinal, toCir, makeStatic, sibling, null, null, null, null, null, false);
+        }
+
+        Descend(MethodNode callee, int ordinal, boolean toCir, boolean makeStatic, boolean sibling,
+                MethodInsnNode guardCall, String guardOwner, MethodNode guardIn, AbstractInsnNode site,
+                String crossOwner, boolean onThis) {
+            this(callee, ordinal, toCir, makeStatic, sibling, guardCall, guardOwner, guardIn, site, crossOwner, onThis, null, null);
         }
 
         String how() {
@@ -1562,6 +1603,101 @@ public final class MixinRepair {
         return null;
     }
 
+    /** the mixinAnchorMoves key the selector names on owner when that entry is "guarded", or null */
+    private String guardedKeyOf(String owner, Sel s) {
+        if (mixinAnchorGuarded.isEmpty()) return null;
+        if (s.desc != null) {
+            String k = owner + "." + s.name + s.desc;
+            return mixinAnchorGuarded.contains(k) ? k : null;
+        }
+        String hit = null;
+        for (String k : mixinAnchorMoves.keySet()) {
+            if (k.startsWith(owner + "." + s.name + "(")) {
+                if (hit != null) return null;
+                hit = k;
+            }
+        }
+        return hit != null && mixinAnchorGuarded.contains(hit) ? hit : null;
+    }
+
+    /**
+     * The guarded move of a mixinAnchorMoves "guarded" entry (s121g, Kilt E8g), or null with why. The "to" is a method of
+     * the same class; wm (the V method's W copy) calls it exactly once, on this, after any super call; no subclass
+     * overrides it; the anchor is gone from wm and stands in the "to" as often as in V's method (its ordinal kept). The
+     * injector is a void instance @Inject that does not cancel. A handler taking the target's arguments is carried with
+     * them stashed by the guard (they must be wm's own, in order); its parameters after the callback must be plain
+     * @Local, each matched by role in the "to" (MixinLocals.roleOrdinals). Outside the guarded call the handler returns.
+     */
+    private Descend guardedMove(AnnotationNode an, MethodNode handler, String owner, ClassNode tc, MethodNode wm, List<Anchor> anchors,
+                                String to, List<String> why) {
+        if (!an.desc.equals(INJECT)) { why.add("only @Inject takes a guarded move"); return null; }
+        if (anchors.size() != 1 || anchors.get(0) == POSITIONAL || anchors.get(0).kind.equals("LOCAL")) {
+            why.add("one statically evaluable anchor is needed"); return null;
+        }
+        Anchor a = anchors.get(0);
+        int dot = to.indexOf('.');
+        int paren = to.indexOf('(');
+        if (dot <= 0 || paren <= dot || !to.substring(0, dot).equals(owner)) { why.add("the \"to\" is not a method of " + owner); return null; }
+        MethodNode into = null;
+        for (MethodNode m : tc.methods) if (m.name.equals(to.substring(dot + 1, paren)) && m.desc.equals(to.substring(paren))) into = m;
+        if (into == null || into == wm) { why.add("no other method " + to + " on " + owner); return null; }
+        if ((into.access & Opcodes.ACC_STATIC) != 0 || (handler.access & Opcodes.ACC_STATIC) != 0 || (wm.access & Opcodes.ACC_STATIC) != 0) {
+            why.add("a static target, callee or handler"); return null;
+        }
+        if (Type.getReturnType(handler.desc).getSort() != Type.VOID || cancels(handler)) { why.add("the handler returns a value or cancels"); return null; }
+        if (anchorIn(wm, a)) { why.add("the anchor is still in the target"); return null; }
+        MethodInsnNode call = callOf(wm, tc, into);
+        if (call == null || callCount(wm, tc.name, into) != 1) { why.add("the target does not call " + into.name + into.desc + " exactly once"); return null; }
+        if (!receiverIsThis(tc.name, wm, call)) { why.add("the target's call of it is not on this"); return null; }
+        if (!afterSuper(tc, wm, call)) { why.add("the call precedes the constructor's super call"); return null; }
+        if (overriddenBelow(tc.name, into)) { why.add("a subclass overrides " + into.name + into.desc); return null; }
+        ClassNode vc = source == null ? null : source.target(owner);
+        MethodNode vm = null;
+        if (vc != null) for (MethodNode m : vc.methods) if (m.name.equals(wm.name) && m.desc.equals(wm.desc)) vm = m;
+        if (vm == null) { why.add("V's body of the target is not at hand"); return null; }
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> matchesAnchor(in, a));
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(into, in -> matchesAnchor(in, a));
+        if (vo.isEmpty() || wo.isEmpty() || a.ordinal >= vo.size()) {
+            why.add("the anchor occurs " + vo.size() + " time(s) in V's method and " + wo.size() + " in " + into.name + into.desc); return null;
+        }
+        // the site: the one occurrence on both sides, or V's pinned site's counterpart by context (SiteMatch, no
+        // alignment); never by position
+        int vi = a.ordinal >= 0 ? a.ordinal : 0;
+        if (a.ordinal < 0 && vo.size() != 1) { why.add("an unpinned anchor at " + vo.size() + " sites in V's method"); return null; }
+        int wi;
+        if (vo.size() == 1 && wo.size() == 1) {
+            wi = 0;
+        } else {
+            wi = SiteMatch.match(vm, vo, into, wo, 3, false)[vi];
+            if (wi < 0) { why.add("V's site #" + vi + " has no counterpart by context among " + wo.size() + " in " + into.name + into.desc); return null; }
+        }
+        int ordinal = a.ordinal >= 0 || wo.size() > 1 ? wi : -1; // a pinned V site stays pinned (as descend-site keeps it)
+        AbstractInsnNode site = wo.get(wi);
+        AbstractInsnNode vSite = vo.get(vi);
+        Type[] hp = Type.getArgumentTypes(handler.desc);
+        int ci = -1;
+        for (int k = 0; k < hp.length && ci < 0; k++) if (hp[k].getDescriptor().equals(CI) || hp[k].getDescriptor().equals(CIR)) ci = k;
+        if (ci < 0) { why.add("the handler takes no callback"); return null; }
+        boolean wantCir = Type.getReturnType(into.desc).getSort() != Type.VOID;
+        if (hp[ci].getDescriptor().equals(CIR) && !wantCir) { why.add(into.name + " returns nothing, the handler takes CallbackInfoReturnable"); return null; }
+        if (!capturesTargetArgs(an, handler)) {
+            if (guardFallback(an, handler, site) == null) { why.add("no fallback for this handler's shape"); return null; }
+            return new Descend(into, ordinal, wantCir && !hp[ci].getDescriptor().equals(CIR), false, false, call, tc.name, wm, site, null, false);
+        }
+        if (!stashable(an, handler)) { why.add("only arguments and plain @Local parameters are carried"); return null; }
+        Type[] wa = Type.getArgumentTypes(wm.desc);
+        if (ci > wa.length) { why.add("the handler takes more arguments than the target has"); return null; }
+        for (int k = 0; k < ci; k++) {
+            if (!hp[k].equals(wa[k])) { why.add("handler argument " + k + " is " + hp[k] + ", the target's is " + wa[k]); return null; }
+        }
+        int[] lo = null;
+        if (ci + 1 < hp.length) {
+            lo = MixinLocals.roleOrdinals(source, vc, vm, vSite, this, tc, into, site, handler, ci, an, why);
+            if (lo == null) return null;
+        }
+        return new Descend(into, ordinal, false, false, false, call, tc.name, wm, site, null, false, java.util.Arrays.copyOf(hp, ci), lo);
+    }
+
     /** the mixinAnchorMoves "to" of the V method a selector names on owner (a bare name: the one entry of that name), or null */
     private String anchorMoveOf(String owner, Sel s) {
         if (mixinAnchorMoves.isEmpty()) return null;
@@ -1979,6 +2115,11 @@ public final class MixinRepair {
 
     /** the descend's handler and annotation changes (the selector is the caller's to set) */
     static void applyDescend(Descend d, MethodNode handler, AnnotationNode an, ClassNode mx) {
+        if (d.stash() != null) {
+            setAtOrdinal(an, d.ordinal());
+            guard(d, mx, stashed(d, mx, handler, an), an);
+            return;
+        }
         if (d.makeStatic()) makeStatic(handler);
         if (d.toCir()) toReturnable(handler);
         setAtOrdinal(an, d.ordinal());
@@ -2030,15 +2171,111 @@ public final class MixinRepair {
      * did without it: returns (@Inject), hands its value back (@Modify*), lets the call run (@WrapWithCondition)
      * or makes the call itself (@Redirect).
      */
-    static void guard(Descend d, ClassNode mx, MethodNode h, AnnotationNode an) {
-        String mode = guardFallback(an, h, d.site());
+    /** the index the next guard of mx takes (its cb$guard$ / cb$stash$ / cb$guardcall$ / cb$stashed$ names) */
+    private static int guardIndex(ClassNode mx) {
         int n = 0;
         for (FieldNode f : mx.fields) if (f.name.startsWith("cb$guard$")) n++;
+        return n;
+    }
+
+    /**
+     * A guarded descend of a handler that takes the target's arguments and/or @Local sugar (Kilt E8g: an @Inject in
+     * teleportTo before sendAllPlayerInfo, reading teleportTo's level and the old level, whose code 1.21 moved into
+     * changeDimension(transition)): the handler stays as it is, a plain method; a new handler in the callee's shape
+     * (the callee's arguments, its callback, the same @Local parameters with the ordinals the role match gave in the
+     * callee) takes the injector and calls it with the target's arguments the guard stashed for this thread
+     * (cb$stash$n, set around the target's one call of the callee and restored in a finally).
+     */
+    private static MethodNode stashed(Descend d, ClassNode mx, MethodNode h, AnnotationNode an) {
+        int n = guardIndex(mx);
+        String stash = "cb$stash$" + n;
+        boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        int ci = -1;
+        for (int k = 0; k < hp.length && ci < 0; k++) if (hp[k].getDescriptor().equals(CI) || hp[k].getDescriptor().equals(CIR)) ci = k;
+        Type[] ca = Type.getArgumentTypes(d.callee().desc);
+        boolean calleeVoid = Type.getReturnType(d.callee().desc).getSort() == Type.VOID;
+        List<Type> np = new ArrayList<>(List.of(ca));
+        np.add(Type.getType(calleeVoid ? CI : CIR));
+        int cbAt = np.size() - 1;
+        for (int k = ci + 1; k < hp.length; k++) np.add(hp[k]);
+        MethodNode h2 = new MethodNode(Opcodes.ACC_PRIVATE | (st ? Opcodes.ACC_STATIC : 0), "cb$stashed$" + n,
+            Type.getMethodDescriptor(Type.VOID_TYPE, np.toArray(new Type[0])), null, null);
+        // the injector moves to the new handler; the handler's @Local annotations go with their parameters
+        if (h.visibleAnnotations != null && h.visibleAnnotations.remove(an)) h2.visibleAnnotations = new ArrayList<>(List.of(an));
+        else if (h.invisibleAnnotations != null && h.invisibleAnnotations.remove(an)) h2.invisibleAnnotations = new ArrayList<>(List.of(an));
+        @SuppressWarnings("unchecked")
+        List<AnnotationNode>[] vis = new List[np.size()], inv = new List[np.size()];
+        boolean anyVis = false, anyInv = false;
+        for (int k = ci + 1; k < hp.length; k++) {
+            int to = cbAt + (k - ci);
+            for (int pass = 0; pass < 2; pass++) {
+                List<AnnotationNode>[] src = pass == 0 ? h.visibleParameterAnnotations : h.invisibleParameterAnnotations;
+                if (src == null || k >= src.length || src[k] == null) continue;
+                List<AnnotationNode> moved = new ArrayList<>();
+                for (AnnotationNode a : src[k]) {
+                    if (a.desc.equals(MixinLocals.LOCAL) && d.localOrd() != null && d.localOrd()[k] >= 0) {
+                        AnnotationNode c = new AnnotationNode(a.desc);
+                        c.values = new ArrayList<>(List.of("ordinal", d.localOrd()[k]));
+                        moved.add(c);
+                    } else {
+                        moved.add(a);
+                    }
+                }
+                src[k] = null;
+                if (pass == 0) { vis[to] = moved; anyVis = true; } else { inv[to] = moved; anyInv = true; }
+            }
+        }
+        if (anyVis) h2.visibleParameterAnnotations = vis;
+        if (anyInv) h2.invisibleParameterAnnotations = inv;
+        // body: h(stash[0..ci), callback, locals...)
+        int slot = st ? 0 : 1;
+        int[] at = new int[np.size()];
+        for (int k = 0; k < np.size(); k++) { at[k] = slot; slot += np.get(k).getSize(); }
+        int sSlot = slot;
+        InsnList b = h2.instructions;
+        b.add(new FieldInsnNode(Opcodes.GETSTATIC, mx.name, stash, "Ljava/lang/ThreadLocal;"));
+        b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "get", "()Ljava/lang/Object;", false));
+        b.add(new TypeInsnNode(Opcodes.CHECKCAST, "[Ljava/lang/Object;"));
+        b.add(new VarInsnNode(Opcodes.ASTORE, sSlot));
+        if (!st) b.add(new VarInsnNode(Opcodes.ALOAD, 0));
+        int hSize = 0;
+        for (int k = 0; k < ci; k++) {
+            b.add(new VarInsnNode(Opcodes.ALOAD, sSlot));
+            b.add(new IntInsnNode(Opcodes.SIPUSH, k));
+            b.add(new InsnNode(Opcodes.AALOAD));
+            unbox(b, hp[k]);
+            hSize += hp[k].getSize();
+        }
+        b.add(new VarInsnNode(Opcodes.ALOAD, at[cbAt]));
+        for (int k = ci + 1; k < hp.length; k++) {
+            int from = cbAt + (k - ci);
+            b.add(new VarInsnNode(np.get(from).getOpcode(Opcodes.ILOAD), at[from]));
+            hSize += hp[k].getSize();
+        }
+        b.add(new MethodInsnNode(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, h.name, h.desc,
+            (mx.access & Opcodes.ACC_INTERFACE) != 0));
+        b.add(new InsnNode(Opcodes.RETURN));
+        h2.maxLocals = sSlot + 1;
+        h2.maxStack = hSize + 4;
+        PENDING.computeIfAbsent(mx, k -> new ArrayList<>()).add(h2);
+        return h2;
+    }
+
+    static void guard(Descend d, ClassNode mx, MethodNode h, AnnotationNode an) {
+        String mode = guardFallback(an, h, d.site());
+        int n = guardIndex(mx);
         // the guard's methods join the mixin after its handlers were walked (flushGuards): callers iterate mx.methods
         String field = "cb$guard$" + n;
         FieldNode fn = new FieldNode(Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_FINAL, field, "Ljava/lang/ThreadLocal;", null, null);
         fn.invisibleAnnotations = new ArrayList<>(List.of(new AnnotationNode(UNIQUE)));
         mx.fields.add(fn);
+        String stash = d.stash() == null ? null : "cb$stash$" + n;
+        if (stash != null) {
+            FieldNode sf = new FieldNode(Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_FINAL, stash, "Ljava/lang/ThreadLocal;", null, null);
+            sf.invisibleAnnotations = new ArrayList<>(List.of(new AnnotationNode(UNIQUE)));
+            mx.fields.add(sf);
+        }
         MethodNode clinit = null;
         List<MethodNode> pending = PENDING.computeIfAbsent(mx, k -> new ArrayList<>());
         for (MethodNode m : mx.methods) if (m.name.equals("<clinit>")) clinit = m;
@@ -2054,6 +2291,12 @@ public final class MixinRepair {
         ci.add(new InsnNode(Opcodes.DUP));
         ci.add(new MethodInsnNode(Opcodes.INVOKESPECIAL, "java/lang/ThreadLocal", "<init>", "()V", false));
         ci.add(new FieldInsnNode(Opcodes.PUTSTATIC, mx.name, field, "Ljava/lang/ThreadLocal;"));
+        if (stash != null) {
+            ci.add(new TypeInsnNode(Opcodes.NEW, "java/lang/ThreadLocal"));
+            ci.add(new InsnNode(Opcodes.DUP));
+            ci.add(new MethodInsnNode(Opcodes.INVOKESPECIAL, "java/lang/ThreadLocal", "<init>", "()V", false));
+            ci.add(new FieldInsnNode(Opcodes.PUTSTATIC, mx.name, stash, "Ljava/lang/ThreadLocal;"));
+        }
         clinit.instructions.insert(ci);
         clinit.maxStack = Math.max(clinit.maxStack, 2);
 
@@ -2096,7 +2339,11 @@ public final class MixinRepair {
         if (!callStatic) wp.add(Type.getObjectType(call.owner));
         wp.addAll(List.of(ca));
         wp.add(Type.getType(OPERATION));
-        String wdesc = Type.getMethodDescriptor(cr, wp.toArray(new Type[0]));
+        // a stashing guard also takes the target's arguments (MixinExtras hands a @WrapOperation handler the target's
+        // arguments after its Operation)
+        List<Type> wpAll = new ArrayList<>(wp);
+        if (stash != null) wpAll.addAll(List.of(d.stash()));
+        String wdesc = Type.getMethodDescriptor(cr, wpAll.toArray(new Type[0]));
         String wname = "cb$guardcall$" + n;
         MethodNode w = new MethodNode(Opcodes.ACC_PRIVATE, wname, wdesc, null, null);
         // instance or static: a static wrapper works in either kind of method only when the method is static
@@ -2111,8 +2358,11 @@ public final class MixinRepair {
         int base = wmStatic ? 0 : 1;
         int opSlot = base;
         for (Type t : wp.subList(0, wp.size() - 1)) opSlot += t.getSize();
-        int cSlot = opSlot + 1;
-        int rSlot = cSlot + 1;
+        int tSlot = opSlot + 1; // the target's arguments (stashing guard only)
+        int cSlot = tSlot;
+        if (stash != null) for (Type t : d.stash()) cSlot += t.getSize();
+        int pSlot = cSlot + 1; // the stash this thread held before (stashing guard only), put back on both exits
+        int rSlot = stash != null ? pSlot + 1 : cSlot + 1;
         LabelNode tryStart = new LabelNode(), tryEnd = new LabelNode(), handler = new LabelNode();
         InsnList b = w.instructions;
         // int[] c = tl.get(); if (c == null) { c = new int[1]; tl.set(c); }
@@ -2132,10 +2382,31 @@ public final class MixinRepair {
         b.add(have);
         List<Object> locals = new ArrayList<>();
         if (!wmStatic) locals.add(mx.name);
-        for (Type t : wp) locals.add(frameType(t));
+        for (Type t : wpAll) locals.add(frameType(t));
         List<Object> withC = new ArrayList<>(locals);
         withC.add("[I");
         b.add(new FrameNode(Opcodes.F_FULL, withC.size(), withC.toArray(), 0, new Object[0]));
+        if (stash != null) {
+            // Object prev = stash.get(); stash.set(new Object[]{targetArgs...})
+            b.add(new FieldInsnNode(Opcodes.GETSTATIC, mx.name, stash, "Ljava/lang/ThreadLocal;"));
+            b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "get", "()Ljava/lang/Object;", false));
+            b.add(new VarInsnNode(Opcodes.ASTORE, pSlot));
+            b.add(new FieldInsnNode(Opcodes.GETSTATIC, mx.name, stash, "Ljava/lang/ThreadLocal;"));
+            b.add(new IntInsnNode(Opcodes.SIPUSH, d.stash().length));
+            b.add(new TypeInsnNode(Opcodes.ANEWARRAY, "java/lang/Object"));
+            int ts = tSlot;
+            for (int i = 0; i < d.stash().length; i++) {
+                Type t = d.stash()[i];
+                b.add(new InsnNode(Opcodes.DUP));
+                b.add(new IntInsnNode(Opcodes.SIPUSH, i));
+                b.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), ts));
+                box(b, t);
+                b.add(new InsnNode(Opcodes.AASTORE));
+                ts += t.getSize();
+            }
+            b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "set", "(Ljava/lang/Object;)V", false));
+            withC.add("java/lang/Object");
+        }
         // c[0]++
         b.add(new VarInsnNode(Opcodes.ALOAD, cSlot));
         b.add(new InsnNode(Opcodes.ICONST_0));
@@ -2169,6 +2440,7 @@ public final class MixinRepair {
             b.add(new VarInsnNode(cr.getOpcode(Opcodes.ISTORE), rSlot));
         }
         decrement(b, cSlot);
+        if (stash != null) restoreStash(b, mx.name, stash, pSlot);
         if (cr.getSort() == Type.VOID) {
             b.add(new InsnNode(Opcodes.RETURN));
         } else {
@@ -2179,6 +2451,7 @@ public final class MixinRepair {
         b.add(new FrameNode(Opcodes.F_FULL, withC.size(), withC.toArray(), 1, new Object[] {"java/lang/Throwable"}));
         b.add(new VarInsnNode(Opcodes.ASTORE, rSlot));
         decrement(b, cSlot);
+        if (stash != null) restoreStash(b, mx.name, stash, pSlot); // a throw in the callee leaves no stash behind
         b.add(new VarInsnNode(Opcodes.ALOAD, rSlot));
         b.add(new InsnNode(Opcodes.ATHROW));
         w.tryCatchBlocks.add(new TryCatchBlockNode(tryStart, tryEnd, handler, null));
@@ -2190,6 +2463,13 @@ public final class MixinRepair {
             "call", call.owner + "." + call.name + call.desc, "wrap", wname));
         h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
         h.invisibleAnnotations.add(mark);
+    }
+
+    /** stash.set(prev): the stash this thread held before the guarded call */
+    private static void restoreStash(InsnList b, String owner, String stash, int pSlot) {
+        b.add(new FieldInsnNode(Opcodes.GETSTATIC, owner, stash, "Ljava/lang/ThreadLocal;"));
+        b.add(new VarInsnNode(Opcodes.ALOAD, pSlot));
+        b.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/ThreadLocal", "set", "(Ljava/lang/Object;)V", false));
     }
 
     /** what the site did without the handler, as the handler's early exit (guardFallback's mode) */
@@ -2632,14 +2912,44 @@ public final class MixinRepair {
         return null;
     }
 
+    /** does the handler have parameter k annotated desc */
+    private static boolean paramAnn(MethodNode h, int k, String desc) {
+        for (List<AnnotationNode>[] pa : java.util.Arrays.<List<AnnotationNode>[]>asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+            if (pa != null && k < pa.length && pa[k] != null && pa[k].stream().anyMatch(x -> x.desc.equals(desc))) return true;
+        }
+        return false;
+    }
+
     /** an @Inject handler reading the target's locals: captured locals after its callback, or a @Local parameter */
     static boolean readsTargetLocals(MethodNode h) {
         if (MixinBridge.capturesLocals(h)) return true;
         int n = Type.getArgumentTypes(h.desc).length;
-        for (int k = 0; k < n; k++) {
-            for (List<AnnotationNode>[] pa : java.util.Arrays.<List<AnnotationNode>[]>asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
-                if (pa != null && k < pa.length && pa[k] != null && pa[k].stream().anyMatch(x -> x.desc.equals(MixinLocals.LOCAL))) return true;
-            }
+        for (int k = 0; k < n; k++) if (paramAnn(h, k, MixinLocals.LOCAL)) return true;
+        return false;
+    }
+
+    /**
+     * a handler a guarded descend can carry the target's arguments and @Locals to (stashed): a void @Inject without
+     * locals capture whose parameters after the callback are all MixinExtras @Local (no other sugar)
+     */
+    static boolean stashable(AnnotationNode an, MethodNode h) {
+        if (!an.desc.equals(INJECT) || values(an).get("locals") != null || Type.getReturnType(h.desc).getSort() != Type.VOID) return false;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        int ci = -1;
+        for (int k = 0; k < hp.length && ci < 0; k++) if (hp[k].getDescriptor().equals(CI) || hp[k].getDescriptor().equals(CIR)) ci = k;
+        if (ci < 0) return false;
+        for (int k = 0; k < ci; k++) if (MixinBridge.sugarCount(h) > 0 && paramSugar(h, k)) return false;
+        for (int k = ci + 1; k < hp.length; k++) {
+            if (!paramAnn(h, k, MixinLocals.LOCAL)) return false;
+            if (hp[k].getDescriptor().startsWith("Lcom/llamalad7/mixinextras/sugar/")) return false; // a LocalRef: written back, not carried
+        }
+        return ci > 0 || ci + 1 < hp.length;
+    }
+
+    private static boolean paramSugar(MethodNode h, int k) {
+        for (List<AnnotationNode>[] pa : java.util.Arrays.<List<AnnotationNode>[]>asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+            if (pa != null && k < pa.length && pa[k] != null
+                    && pa[k].stream().anyMatch(x -> x.desc.startsWith("Lcom/llamalad7/mixinextras/sugar/"))) return true;
         }
         return false;
     }
@@ -2962,6 +3272,8 @@ public final class MixinRepair {
     public Map<String, String> mixinMoves = Map.of();
     /** Chain.mixinAnchorMoves: "V owner.name(desc)" -> "W owner.name(desc)" holding the code at some of its anchors */
     public Map<String, String> mixinAnchorMoves = Map.of();
+    /** Chain.mixinAnchorGuarded: mixinAnchorMoves keys whose "to" is a same-class method reached through one guarded call */
+    public java.util.Set<String> mixinAnchorGuarded = java.util.Set.of();
     /** Chain.mixinMoveSelf: per mixinMoves key, the field hops from the W class's instance to V's (C17) */
     public Map<String, List<String[]>> mixinMoveSelf = Map.of();
 
