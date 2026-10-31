@@ -63,6 +63,21 @@ import org.objectweb.asm.tree.MethodNode;
  *
  *   api-probe <sourceStub.jar> <out.jar> [<libraries jar or dir>...]
  * also writes <out.jar>.index.tsv: probeClass, probeMember, usage, owner, name, desc.
+ *
+ * With -Dcb.apiprobe.nonpublic=true it writes the other surface instead: what a mod reaches only through its own
+ * access widener (the loader tweaks game classes only, so every game class of the stub qualifies). Mixin's @Shadow /
+ * @Accessor / @Invoker reach the same members and are measured by the mixin probe (MixinProbe, damage-mixin);
+ * this is the access-widener route -- a direct call, NEW, field read or write in the mod's own code:
+ *
+ *   cbprobe/w/X   one static method per use of a member of X that another package reaches only through an
+ *                 access widener: private and package-private members of every class, and every member of a
+ *                 class that is itself not visible (package-private, or nested in one); usages aw-call,
+ *                 aw-call-static, aw-new, aw-get, aw-get-static, aw-put, aw-put-static (puts of non-final fields
+ *                 only: a final field needs "mutable" as well)
+ *
+ * The jar carries the access widener those uses need (cbprobe.accesswidener: accessible class / method / field, in
+ * the stub's namespace), so the probe links on its own release (the control) and a finding on W is W's damage. Its
+ * usages are their own kind (aw-*), never counted with the public API.
  */
 public final class ApiProbe {
 
@@ -85,7 +100,11 @@ public final class ApiProbe {
                     p.injected.computeIfAbsent(cls, k -> new LinkedHashSet<>()).addAll(itfs));
             }
         }
-        p.write(Path.of(args[2]));
+        if (Boolean.getBoolean("cb.apiprobe.nonpublic")) {
+            p.writeNonPublic(Path.of(args[2]));
+        } else {
+            p.write(Path.of(args[2]));
+        }
     }
 
     /** vanilla class -> the API interfaces Fabric API injects into it, from the libraries' module jars */
@@ -258,6 +277,147 @@ public final class ApiProbe {
         }
         System.out.println("api-probe: " + classes + " probe classes, " + sites + " probe sites over "
             + api.values().stream().filter(this::visible).count() + " visible API classes -> " + out);
+    }
+
+    /** the access-widener surface (-Dcb.apiprobe.nonpublic): cbprobe/w/X and the access widener its uses need */
+    private void writeNonPublic(Path out) throws IOException {
+        Files.createDirectories(out.toAbsolutePath().getParent());
+        String ns = api.containsKey("net/minecraft/class_1297") ? "intermediary" : "official";
+        StringBuilder aw = new StringBuilder("accessWidener v2 " + ns + "\n");
+        int classes = 0;
+        try (ZipOutputStream zip = new ZipOutputStream(Files.newOutputStream(out))) {
+            zip.putNextEntry(new ZipEntry("fabric.mod.json"));
+            zip.write(("{\"schemaVersion\":1,\"id\":\"cb_apiprobe_aw\",\"version\":\"1\",\"name\":\"CenturyBridge API probe (access-widener surface)\","
+                + "\"environment\":\"*\",\"accessWidener\":\"cbprobe.accesswidener\",\"depends\":{\"minecraft\":\"*\"}}")
+                .getBytes(StandardCharsets.UTF_8));
+            zip.closeEntry();
+            for (ClassNode cn : api.values()) {
+                if (localOrAnonymous(cn.name) || is(cn.access, Opcodes.ACC_SYNTHETIC)) {
+                    continue;
+                }
+                byte[] use = awUseClass(cn, aw);
+                if (use != null) {
+                    put(zip, "cbprobe/w/" + mangle(cn.name), use);
+                    classes++;
+                }
+            }
+            zip.putNextEntry(new ZipEntry("cbprobe.accesswidener"));
+            zip.write(aw.toString().getBytes(StandardCharsets.UTF_8));
+            zip.closeEntry();
+        }
+        try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(Path.of(out + ".index.tsv"), StandardCharsets.UTF_8))) {
+            w.println("probeClass\tprobeMember\tusage\towner\tname\tdesc");
+            for (String[] r : index) {
+                w.println(String.join("\t", r));
+            }
+        }
+        System.out.println("api-probe (access-widener surface): " + classes + " probe classes, " + sites + " probe sites -> " + out);
+    }
+
+    /** a local or anonymous class ($1, $1Local): its name is no stable target for any mechanism */
+    private static boolean localOrAnonymous(String name) {
+        for (int d = name.indexOf('$'); d > 0; d = name.indexOf('$', d + 1)) {
+            if (d + 1 < name.length() && Character.isDigit(name.charAt(d + 1))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** cbprobe/w/X: every use of a member of X a mod reaches only through its access widener; null when none */
+    private byte[] awUseClass(ClassNode cn, StringBuilder aw) {
+        boolean hidden = !visible(cn);
+        String self = "cbprobe/w/" + mangle(cn.name);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        cw.visit(Opcodes.V17, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, self, null, "java/lang/Object", null);
+        boolean itf = is(cn.access, Opcodes.ACC_INTERFACE);
+        boolean instantiable = !itf && !is(cn.access, Opcodes.ACC_ABSTRACT);
+        StringBuilder lines = new StringBuilder();
+        int n = 0;
+        for (MethodNode m : cn.methods) {
+            if (skipMethod(m) || !(hidden || !memberReachable(m.access)) || (m.name.equals("<init>") && !instantiable)) {
+                continue;
+            }
+            String probe = "w" + (n++);
+            MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, probe, "()V", null, null);
+            mv.visitCode();
+            marker(mv);
+            Type[] params = Type.getArgumentTypes(m.desc);
+            String usage;
+            if (m.name.equals("<init>")) {
+                mv.visitTypeInsn(Opcodes.NEW, cn.name);
+                mv.visitInsn(Opcodes.DUP);
+                pushDefaults(mv, params);
+                mv.visitMethodInsn(Opcodes.INVOKESPECIAL, cn.name, "<init>", m.desc, false);
+                mv.visitInsn(Opcodes.POP);
+                usage = "aw-new";
+            } else if (is(m.access, Opcodes.ACC_STATIC)) {
+                pushDefaults(mv, params);
+                mv.visitMethodInsn(Opcodes.INVOKESTATIC, cn.name, m.name, m.desc, itf);
+                popResult(mv, Type.getReturnType(m.desc));
+                usage = "aw-call-static";
+            } else {
+                // the loader makes an accessible private method public and final: a virtual call links
+                mv.visitInsn(Opcodes.ACONST_NULL);
+                pushDefaults(mv, params);
+                mv.visitMethodInsn(itf ? Opcodes.INVOKEINTERFACE : Opcodes.INVOKEVIRTUAL, cn.name, m.name, m.desc, itf);
+                popResult(mv, Type.getReturnType(m.desc));
+                usage = "aw-call";
+            }
+            mv.visitInsn(Opcodes.RETURN);
+            mv.visitMaxs(0, 0);
+            mv.visitEnd();
+            record(self, probe + "()V", usage, cn.name, m.name, m.desc);
+            if (!is(m.access, Opcodes.ACC_PUBLIC)) {
+                lines.append("accessible method ").append(cn.name).append(' ').append(m.name).append(' ').append(m.desc).append('\n');
+            }
+        }
+        for (FieldNode f : cn.fields) {
+            if (is(f.access, Opcodes.ACC_SYNTHETIC) || !(hidden || !memberReachable(f.access))) {
+                continue;
+            }
+            boolean st = is(f.access, Opcodes.ACC_STATIC);
+            for (int put = 0; put < (is(f.access, Opcodes.ACC_FINAL) ? 1 : 2); put++) {
+                String probe = "w" + (n++);
+                MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, probe, "()V", null, null);
+                mv.visitCode();
+                marker(mv);
+                if (!st) {
+                    mv.visitInsn(Opcodes.ACONST_NULL);
+                }
+                if (put == 0) {
+                    mv.visitFieldInsn(st ? Opcodes.GETSTATIC : Opcodes.GETFIELD, cn.name, f.name, f.desc);
+                    popResult(mv, Type.getType(f.desc));
+                } else {
+                    pushDefault(mv, Type.getType(f.desc));
+                    mv.visitFieldInsn(st ? Opcodes.PUTSTATIC : Opcodes.PUTFIELD, cn.name, f.name, f.desc);
+                }
+                mv.visitInsn(Opcodes.RETURN);
+                mv.visitMaxs(0, 0);
+                mv.visitEnd();
+                record(self, probe + "()V", (put == 0 ? "aw-get" : "aw-put") + (st ? "-static" : ""), cn.name, f.name, f.desc);
+            }
+            if (!is(f.access, Opcodes.ACC_PUBLIC)) {
+                lines.append("accessible field ").append(cn.name).append(' ').append(f.name).append(' ').append(f.desc).append('\n');
+            }
+        }
+        if (n == 0) {
+            return null;
+        }
+        if (hidden) {
+            // the class and every enclosing class a mod must name on the way
+            for (String c = cn.name; c != null; ) {
+                ClassNode k = api.get(c);
+                if (k != null && (classAccess(k) & Opcodes.ACC_PUBLIC) == 0) {
+                    aw.append("accessible class ").append(c).append('\n');
+                }
+                int d = c.lastIndexOf('$');
+                c = d > 0 ? c.substring(0, d) : null;
+            }
+        }
+        aw.append(lines);
+        cw.visitEnd();
+        return cw.toByteArray();
     }
 
     private static void put(ZipOutputStream zip, String name, byte[] bytes) throws IOException {
