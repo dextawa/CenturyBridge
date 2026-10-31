@@ -143,3 +143,5 @@ mutable field com/mojang/blaze3d/vertex/BufferBuilder blockFormat Z
 accessible field com/mojang/blaze3d/vertex/BufferBuilder entityFormat Z
 accessible field com/mojang/blaze3d/vertex/BufferBuilder elements [Lcom/mojang/blaze3d/vertex/VertexFormatElement;
 accessible field com/mojang/blaze3d/vertex/BufferBuilder elementNames [Ljava/lang/String;
+# VertexFormat.Builder.offset: 26.1.2 Builder.padding(n) advanced it (rt/CbS205fBlaze3d)
+accessible field com/mojang/blaze3d/vertex/VertexFormat$Builder offset I
