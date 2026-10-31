@@ -1,0 +1,5 @@
+accessWidener	v2	intermediary
+# RenderType.create(name, format, mode, bufferSize, state): package-private in 1.20.1; mods open it this way
+accessible	method	net/minecraft/class_1921	method_24048	(Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;ILnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+accessible	class	net/minecraft/class_1921$class_4687
+accessible	class	net/minecraft/class_1921$class_4688

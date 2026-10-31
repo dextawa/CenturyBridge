@@ -1,0 +1,7 @@
+{
+  "_s205g_snippets": "26.1.2 RenderPipelines.MATRICES_PROJECTION_SNIPPET / FOG_SNIPPET (private, opened by the 1.21.11 layer AW as field_60125 / read by 26.1 layer code), gone at 26.2; rebuilt over 26.2's BindGroupLayouts.MATRICES_PROJECTION / FOG (same uniforms), basis in rt/CbS205gSnippets. Found by cb-s205fr on the 26.2 client (NoSuchFieldError in CbRenderTypeCreate.<clinit>, which broke BlendMode and RenderType.translucent).",
+  "fieldGetters": {
+    "net/minecraft/client/renderer/RenderPipelines.MATRICES_PROJECTION_SNIPPET:Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;": "top/dext/centurybridge/step/v26_2/rt/CbS205gSnippets#matricesProjection",
+    "net/minecraft/client/renderer/RenderPipelines.FOG_SNIPPET:Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;": "top/dext/centurybridge/step/v26_2/rt/CbS205gSnippets#fog"
+  }
+}
