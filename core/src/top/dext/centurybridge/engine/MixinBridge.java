@@ -2876,6 +2876,23 @@ final class MixinBridge {
                         String rn = definitionRename(a);
                         MixinRepair.Anchor na = rn == null ? null
                             : new MixinRepair.Anchor(a.kind(), a.owner(), rn, a.desc(), null, -1);
+                        if (na == null && !fld) {
+                            // the same method under another descriptor (1.21.2 ItemCooldowns.isOnCooldown(Item) -> (ItemStack))
+                            List<String> rwhy = new ArrayList<>();
+                            MixinRepair.Anchor re = respelledDefinition(sel, a, vanilla, rwhy);
+                            if (re != null) {
+                                String nt = "L" + re.owner() + ";" + re.name() + re.desc();
+                                setDefinition(def, key, i, nt);
+                                changed = true;
+                                injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + re.name() + re.desc()
+                                    + " (the same method, descriptor changed; " + rwhy.get(0) + ")");
+                                continue;
+                            }
+                            if (!rwhy.isEmpty()) {
+                                leftInjector(sel.handler(), where + ": " + rwhy.get(0));
+                                return;
+                            }
+                        }
                         if (na == null || count(sel.w(), renamedAnchor(na, vanilla)) == 0) {
                             leftInjector(sel.handler(), where + ": expression definition " + id + " not in " + shortName(target) + "."
                                 + sel.w().get(0).name + sel.w().get(0).desc + " in " + chain.to
@@ -2997,6 +3014,56 @@ final class MixinBridge {
                 }
             }
             return true;
+        }
+
+        /**
+         * A method definition W's body references under another descriptor only: the one method of the definition's
+         * owner (W's class) with the same name and return type and another descriptor that W's selected body calls as
+         * often as V's called the old one. Taken only when the handler reads none of the changed types (its parameters
+         * other than MixinExtras sugar hold no argument type V and W do not share): what it reads is then unchanged.
+         * Null with why empty: no such method; null with why: refused (why), the answer with why its basis.
+         */
+        private MixinRepair.Anchor respelledDefinition(Selection sel, MixinRepair.Anchor a, Map<String, String> vanilla, List<String> why) {
+            String owner = vanilla.getOrDefault(a.owner(), a.owner());
+            ClassNode oc = w(owner);
+            if (oc == null) {
+                return null;
+            }
+            String vdesc = MixinClassRenames.rename(a.desc(), vanilla);
+            List<MethodNode> cands = new ArrayList<>();
+            for (MethodNode m : oc.methods) {
+                if (m.name.equals(a.name()) && !m.desc.equals(vdesc)
+                        && Type.getReturnType(m.desc).equals(Type.getReturnType(vdesc))) {
+                    cands.add(m);
+                }
+            }
+            if (cands.size() != 1) {
+                return null;
+            }
+            MethodNode wm = cands.get(0);
+            MixinRepair.Anchor na = new MixinRepair.Anchor("INVOKE", owner, wm.name, wm.desc, null, -1);
+            int vc = count(sel.v(), a);
+            int wc = count(sel.w(), na);
+            if (wc != vc) {
+                return null;
+            }
+            Set<Type> changedTypes = new HashSet<>(Arrays.asList(Type.getArgumentTypes(vdesc)));
+            changedTypes.addAll(Arrays.asList(Type.getArgumentTypes(wm.desc)));
+            changedTypes.removeIf(t -> Arrays.asList(Type.getArgumentTypes(vdesc)).contains(t)
+                && Arrays.asList(Type.getArgumentTypes(wm.desc)).contains(t));
+            Type[] ha = Type.getArgumentTypes(sel.handler().desc);
+            for (int k = 0; k < ha.length; k++) {
+                if (sugarAt(sel.handler(), k, "")) {
+                    continue;
+                }
+                if (changedTypes.contains(ha[k]) || ha[k].getDescriptor().equals(OPERATION)) {
+                    why.add("the descriptor changed (" + a.desc() + " -> " + wm.desc + ") and the handler takes "
+                        + ha[k].getClassName() + " at " + k + ", which reads the changed call");
+                    return null;
+                }
+            }
+            why.add("the handler reads none of the changed types; " + wc + " call(s) on both sides");
+            return na;
         }
 
         /** the step's vanilla rename of a definition's member, or null */
