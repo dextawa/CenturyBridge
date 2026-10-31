@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx1dn",
+  "version": "1.0.0",
+  "name": "CB smx1d native 1.21.11 probe and driver",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.smx1dn.Smx1dNative"] },
+  "mixins": ["cb_smx1dn.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.11" }
+}
