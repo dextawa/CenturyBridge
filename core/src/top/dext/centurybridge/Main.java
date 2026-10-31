@@ -304,6 +304,7 @@ public final class Main {
                 chain.mixinRepair.mixinMoves = chain.mixinMoves; // injectors on static methods W moved to another class
                 chain.mixinRepair.mixinMoveSelf = chain.mixinMoveSelf; // and on instance methods, this through the hops (C17)
                 chain.mixinRepair.mixinAnchorMoves = chain.mixinAnchorMoves; // the code at some anchors of a kept method
+                chain.mixinRepair.mixinAnchorGuarded = chain.mixinAnchorGuarded; // ... moved into a same-class method, guarded
                 chain.mixinRepair.converter = chain::argConverter; // captured target arguments the step retyped (CASE 14)
                 chain.mixinRepair.argMaps = chain::mixinArgMaps; // and arguments a same-class reshape moved (CASE 14, third)
                 // injectors on statics the step redirects into a layer class move onto that class's method (s6e B6)
@@ -355,6 +356,8 @@ public final class Main {
                     org.objectweb.asm.commons.Remapper wr = wallTable.remapper();
                     wallRepair.mixinMoves = wallMoves(chain.mixinMoves, wr);
                     wallRepair.mixinAnchorMoves = wallMoves(chain.mixinAnchorMoves, wr);
+                    wallRepair.mixinAnchorGuarded = chain.mixinAnchorGuarded.stream().map(k -> wallMember(k, wr))
+                        .collect(java.util.stream.Collectors.toSet());
                     java.util.Map<String, java.util.List<String[]>> self = new java.util.HashMap<>();
                     chain.mixinMoveSelf.forEach((k, hops) -> self.put(wallMember(k, wr), hops.stream().map(h -> new String[] {
                         wr.map(h[0]), wr.mapFieldName(h[0], h[1], h[2]), wr.mapDesc(h[2])}).toList()));

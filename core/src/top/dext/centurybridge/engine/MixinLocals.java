@@ -18,6 +18,8 @@ import org.objectweb.asm.tree.analysis.AnalyzerException;
 import org.objectweb.asm.tree.analysis.BasicValue;
 import org.objectweb.asm.tree.analysis.Frame;
 import org.objectweb.asm.tree.analysis.SimpleVerifier;
+import org.objectweb.asm.tree.analysis.SourceInterpreter;
+import org.objectweb.asm.tree.analysis.SourceValue;
 
 /**
  * smixin K1: a kept injector whose handler captures the target's locals -- an @Inject with locals =
@@ -349,6 +351,165 @@ final class MixinLocals {
                 return null;
             }
         }
+        return out;
+    }
+
+    /**
+     * smx6 E8g, a @Local carried by a guarded descend (MixinRepair.stashed) from V's site in vm to W's site in the callee
+     * into: per handler parameter the ordinal its @Local takes in into (-1 for a parameter that is not a @Local), or
+     * null with why. A @Local is carried only by role: the local it picks at V's site (ordinal or implicit, as
+     * LocalVariableDiscriminator counts) holds one definition there, a store fed by one producer instruction (a
+     * method call or field read); in into exactly one local of the same type at W's site holds one definition, a store
+     * fed by the same instruction (opcode, owner, name, descriptor, in W's spelling). Anything else -- an argument, an
+     * index / name / argsOnly discriminator, a merged definition, no or several same-role locals -- is refused.
+     */
+    static int[] roleOrdinals(MixinRepair v, ClassNode vc, MethodNode vm, AbstractInsnNode vSite, MixinRepair w, ClassNode wc,
+            MethodNode into, AbstractInsnNode wSite, MethodNode h, int ci, AnnotationNode an, List<String> why) {
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        int[] out = new int[hp.length];
+        java.util.Arrays.fill(out, -1);
+        Map<String, Object> av = MixinRepair.values(an);
+        List<Object> ats = MixinRepair.list(av.get("at"));
+        int shift = 0;
+        if (ats.size() == 1 && ats.get(0) instanceof Map<?, ?> am && am.get("shift") instanceof String[] sh && sh.length == 2) {
+            if (sh[1].equals("AFTER")) {
+                shift = 1;
+            } else if (!sh[1].equals("BEFORE")) {
+                why.add("@Local role: the injector's @At shift " + sh[1] + " is not modelled");
+                return null;
+            }
+        }
+        int vAt = vm.instructions.indexOf(vSite) + shift;
+        int wAt = into.instructions.indexOf(wSite) + shift;
+        Frame<BasicValue>[] vt = frames(v, vc, vm);
+        Frame<BasicValue>[] wt = frames(w, wc, into);
+        Frame<SourceValue>[] vs = sources(vc.name, vm);
+        Frame<SourceValue>[] ws = sources(wc.name, into);
+        if (vt == null || wt == null || vs == null || ws == null || vt[vAt] == null || wt[wAt] == null || vs[vAt] == null || ws[wAt] == null) {
+            why.add("@Local role: V's or W's frames at the site cannot be computed");
+            return null;
+        }
+        for (int k = ci + 1; k < hp.length; k++) {
+            AnnotationNode loc = paramAnnotation(h, k, LOCAL);
+            if (loc == null) {
+                why.add("@Local role: parameter " + k + " is not a @Local");
+                return null;
+            }
+            Map<String, Object> lv = MixinRepair.values(loc);
+            if (lv.get("index") != null || Boolean.TRUE.equals(lv.get("argsOnly"))
+                    || lv.get("name") != null && !MixinRepair.list(lv.get("name")).isEmpty()) {
+                why.add("@Local role: parameter " + k + " picks by index, name or argsOnly, not carried");
+                return null;
+            }
+            int ordinal = lv.get("ordinal") instanceof Integer o ? o : -1;
+            Type t = hp[k];
+            Type tw = renamed(w, t);
+            int vSlot = slotOf(vt[vAt], t, ordinal);
+            if (vSlot < 0) {
+                why.add("@Local role: " + t.getDescriptor() + (ordinal >= 0 ? " ordinal " + ordinal : " (implicit)")
+                    + " picks no single local at V's site");
+                return null;
+            }
+            String vRole = producer(vm, vs, vs[vAt].getLocal(vSlot), w);
+            if (vRole == null) {
+                why.add("@Local role: V's local (slot " + vSlot + ") has no single store fed by one call or field read");
+                return null;
+            }
+            int hit = -1;
+            int hitOrd = -1;
+            int ord = -1;
+            Frame<BasicValue> f = wt[wAt];
+            for (int s = 0; s < f.getLocals(); s++) {
+                Type lt = type(f.getLocal(s));
+                if (lt == null || !compatible(tw, lt)) {
+                    continue;
+                }
+                ord++;
+                if (vRole.equals(producer(into, ws, ws[wAt].getLocal(s), null))) {
+                    if (hit >= 0) {
+                        why.add("@Local role: two locals in " + into.name + into.desc + " are fed by " + vRole);
+                        return null;
+                    }
+                    hit = s;
+                    hitOrd = ord;
+                }
+            }
+            if (hit < 0) {
+                why.add("@Local role: no " + tw.getDescriptor() + " local at W's site in " + into.name + into.desc + " is fed by " + vRole);
+                return null;
+            }
+            out[k] = hitOrd;
+        }
+        return out;
+    }
+
+    /** the slot a @Local of type t picks in frame f (ordinal counted from slot 0; implicit: the one local of t), or -1 */
+    private static int slotOf(Frame<BasicValue> f, Type t, int ordinal) {
+        int ord = -1;
+        int one = -1;
+        int count = 0;
+        for (int s = 0; s < f.getLocals(); s++) {
+            Type lt = type(f.getLocal(s));
+            if (lt == null || !compatible(t, lt)) {
+                continue;
+            }
+            ord++;
+            if (ordinal >= 0 && ord == ordinal) {
+                return s;
+            }
+            count++;
+            one = s;
+        }
+        return ordinal < 0 && count == 1 ? one : -1;
+    }
+
+    /**
+     * the instruction feeding the one store a local holds, as "opcode owner.name desc" (in W's spelling when w is
+     * given: the step's classRenames applied), or null: an argument, several stores, or a store of anything but one
+     * method call or field read
+     */
+    private static String producer(MethodNode m, Frame<SourceValue>[] fs, SourceValue local, MixinRepair w) {
+        if (local == null || local.insns.size() != 1) {
+            return null;
+        }
+        AbstractInsnNode store = local.insns.iterator().next();
+        int op = store.getOpcode();
+        if (op < Opcodes.ISTORE || op > Opcodes.ASTORE) {
+            return null;
+        }
+        Frame<SourceValue> sf = fs[m.instructions.indexOf(store)];
+        if (sf == null || sf.getStackSize() == 0) {
+            return null;
+        }
+        SourceValue top = sf.getStack(sf.getStackSize() - 1);
+        if (top.insns.size() != 1) {
+            return null;
+        }
+        AbstractInsnNode p = top.insns.iterator().next();
+        String key;
+        if (p instanceof org.objectweb.asm.tree.MethodInsnNode mi) {
+            key = mi.getOpcode() + " " + mi.owner + "." + mi.name + " " + mi.desc;
+        } else if (p instanceof org.objectweb.asm.tree.FieldInsnNode fi) {
+            key = fi.getOpcode() + " " + fi.owner + "." + fi.name + " " + fi.desc;
+        } else {
+            return null;
+        }
+        return w == null || w.classRenames.isEmpty() ? key : MixinClassRenames.rename(key, w.classRenames);
+    }
+
+    private static final Map<MethodNode, Frame<SourceValue>[]> SOURCES = java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
+
+    private static Frame<SourceValue>[] sources(String owner, MethodNode m) {
+        if (SOURCES.containsKey(m)) {
+            return SOURCES.get(m);
+        }
+        Frame<SourceValue>[] out;
+        try {
+            out = new Analyzer<>(new SourceInterpreter()).analyze(owner, m);
+        } catch (AnalyzerException | RuntimeException ex) {
+            out = null;
+        }
+        SOURCES.put(m, out);
         return out;
     }
 
