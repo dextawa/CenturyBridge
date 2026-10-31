@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.smx1dn.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["NativeVertexMixin", "NativeOptionMixin", "NativePresetMixin", "NativeCycleBuildMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

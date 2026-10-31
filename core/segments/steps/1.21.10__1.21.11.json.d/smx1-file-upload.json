@@ -4,5 +4,10 @@
   "net/minecraft/class_4337.method_20973()Lnet/minecraft/class_4429;",
   "net/minecraft/class_4337.method_20970()V",
   "net/minecraft/class_4337.method_20978()Z"
- ]
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_4429.field_20205:I": "top/dext/centurybridge/step/v1_21_11/rt/CbUploadResults",
+  "net/minecraft/class_4429.field_20206:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbUploadResults"
+ },
+ "_smx1_upload_result_basis": "smx1h (javap -p both; found by the cb-smx1d client fixture: NoSuchFieldError class_4429.field_20205): 1.21.10 UploadResult's public final fields statusCode / errorMessage (field_20205 / field_20206) are the components of 1.21.11's record UploadResult, same order, same constructor (int, String); reads go to the accessors comp_5175 / comp_5176 (rt/CbUploadResults). Final fields: no writes outside the class."
 }
