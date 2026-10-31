@@ -12,7 +12,8 @@
     "RaidOmenWrapMixin",
     "LeashRestoreWrapMixin",
     "LeashDataNew",
-    "TagVisitorWrapMixin"
+    "TagVisitorWrapMixin",
+    "ChangeDimensionLocalMixin"
   ],
   "injectors": {
     "defaultRequire": 1

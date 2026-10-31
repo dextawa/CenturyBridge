@@ -26,8 +26,9 @@ import top.dext.centurybridge.step.v26_2.facade.VertexFormatElement$Type;
  *     getElementAttributeNames() at their indices: the one-format array.</li>
  * <li>VertexFormat.getElementAttributeNames(): 26.1.2's names list, parallel to the elements; 26.2's elements carry
  *     their name.</li>
- * <li>VertexFormat.getOffset(element): 26.1.2 offsetsByElement[element.id()], -1 for an element not in the format;
- *     26.2's elements carry their offset.</li>
+ * <li>VertexFormat.getOffset(element) / contains(element): 26.1.2 offsetsByElement[element.id()] (-1 for an element
+ *     not in the format) / its mask bit; 26.2's elements carry their offset and the format answers by name
+ *     (getElement(name), contains(name)), so both look the element up by name.</li>
  * <li>RenderPipeline.getSamplers() / getUniforms(): 26.2 keeps them per bind group layout; flattened in order as 26.2's
  *     own GlProgram.setupBindGroupLayouts flattens them.</li>
  * <li>VertexFormatElement.count() / type() / normalized(), GlConst.toGl(Type): 26.2's vertex array setup
@@ -76,9 +77,18 @@ public final class CbS205fBlaze3d {
         return names;
     }
 
-    /** 26.1.2 VertexFormat.getOffset(element) */
+    /**
+     * 26.1.2 VertexFormat.getOffset(element): by the element's name (26.2 VertexFormat.getElement(name)), not record
+     * equality -- a 26.1.2 constant (offset 0) stands for the role wherever a format placed it
+     */
     public static int getOffset(VertexFormat format, VertexFormatElement element) {
-        return format.getElements().contains(element) ? element.offset() : -1;
+        VertexFormatElement own = format.getElement(element.name());
+        return own != null ? own.offset() : -1;
+    }
+
+    /** 26.1.2 VertexFormat.contains(element): 26.2 contains(name), by the element's name as getOffset */
+    public static boolean contains(VertexFormat format, VertexFormatElement element) {
+        return format.contains(element.name());
     }
 
     /** 26.1.2 RenderPipeline.getSamplers() */
@@ -91,9 +101,58 @@ public final class CbS205fBlaze3d {
         return BindGroupLayout.flattenUniforms(pipeline.getBindGroupLayouts());
     }
 
-    /** 26.1.2 VertexFormatElement.count() */
+    /**
+     * 26.1.2's seven standard elements (javap -c 26.1.2 VertexFormatElement.&lt;clinit&gt;: register(id, index, type,
+     * normalized, count)) by their 26.2 name and format (26.2 DefaultVertexFormat's *_FORMAT statics and attribute names):
+     * the 26.1.2 count each had. Only NORMAL differs from the format's channels: BYTE x3 in 26.1.2 (its formats followed
+     * it with padding(1)), RGBA8_SNORM (4 channels) in 26.2.
+     */
+    private static int standardCount(VertexFormatElement element) {
+        GpuFormat f = element.format();
+        return switch (element.name()) {
+            case "Position" -> f == GpuFormat.RGB32_FLOAT ? 3 : -1;
+            case "Color" -> f == GpuFormat.RGBA8_UNORM ? 4 : -1;
+            case "UV0" -> f == GpuFormat.RG32_FLOAT ? 2 : -1;
+            case "UV1", "UV2" -> f == GpuFormat.RG16_SINT ? 2 : -1;
+            case "Normal" -> f == GpuFormat.RGBA8_SNORM ? 3 : -1;
+            case "LineWidth" -> f == GpuFormat.R32_FLOAT ? 1 : -1;
+            default -> -1;
+        };
+    }
+
+    /** 26.1.2 VertexFormatElement.count(): a standard element's 26.1.2 count, else the format's channels (26.2's setup) */
     public static int count(VertexFormatElement element) {
-        return GlConst.glFormatChannelCount(GlConst.toGlExternalId(element.format()));
+        int standard = standardCount(element);
+        return standard != -1 ? standard : GlConst.glFormatChannelCount(GlConst.toGlExternalId(element.format()));
+    }
+
+    /**
+     * 26.1.2 VertexFormatElement.byteSize(): type.size() * count (javap), with count() and type() as above -- the
+     * format's block size for every element but NORMAL (3 bytes, as 26.1.2's NORMAL took before its padding(1))
+     */
+    public static int byteSize(VertexFormatElement element) {
+        VertexFormatElement$Type type = type(element);
+        return type != null ? type.size() * count(element) : element.format().blockSize();
+    }
+
+    /** 26.1.2 VertexFormat.builder(): 26.2 builder(stepRate) with 0, the per-vertex divisor DefaultVertexFormat passes */
+    public static VertexFormat.Builder builder() {
+        return VertexFormat.builder(0);
+    }
+
+    /**
+     * 26.1.2 VertexFormat.Builder.add(name, element): the element at the running offset, which then advances by
+     * element.byteSize() -- 26.2 addAttribute(name, offsetAdvance, format) places the attribute at the running offset and
+     * advances it by offsetAdvance; the element's own offset (0 for a role constant) is not used, as in 26.1.2
+     */
+    public static VertexFormat.Builder add(VertexFormat.Builder builder, String name, VertexFormatElement element) {
+        return builder.addAttribute(name, byteSize(element), element.format());
+    }
+
+    /** 26.1.2 VertexFormat.Builder.padding(n): offset += n, the counter 26.2's addAttribute advances (layer AW) */
+    public static VertexFormat.Builder padding(VertexFormat.Builder builder, int bytes) {
+        builder.offset += bytes;
+        return builder;
     }
 
     /** 26.1.2 VertexFormatElement.normalized() */
