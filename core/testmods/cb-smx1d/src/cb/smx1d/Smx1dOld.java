@@ -1,0 +1,352 @@
+package cb.smx1d;
+
+import java.io.File;
+import java.util.List;
+import java.util.UUID;
+import java.util.Optional;
+import java.util.function.Function;
+import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.class_11;
+import net.minecraft.class_1921;
+import net.minecraft.class_238;
+import net.minecraft.class_2338;
+import net.minecraft.class_2350;
+import net.minecraft.class_243;
+import net.minecraft.class_2561;
+import net.minecraft.class_259;
+import net.minecraft.class_287;
+import net.minecraft.class_290;
+import net.minecraft.class_310;
+import net.minecraft.class_315;
+import net.minecraft.class_320;
+import net.minecraft.class_4337;
+import net.minecraft.class_4351;
+import net.minecraft.class_4429;
+import net.minecraft.class_4587;
+import net.minecraft.class_4588;
+import net.minecraft.class_4597;
+import net.minecraft.class_4888;
+import net.minecraft.class_5365;
+import net.minecraft.class_5676;
+import net.minecraft.class_638;
+import net.minecraft.class_7172;
+import net.minecraft.class_863;
+import net.minecraft.class_868;
+import net.minecraft.class_9;
+import net.minecraft.class_9799;
+import net.minecraft.class_9974;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+
+/**
+ * A 1.21.10-era client mod (intermediary names) climbed 1.21.10 -> 1.21.11, exercising the seven landings of the
+ * 1.21.11 step layer: VertexConsumer.addVertex(Matrix4f, ..) (call, own override, own super call) and the abstracts
+ * 1.21.11 demands, ShapeRenderer's removed writers, the CycleButton builder, Options.graphicsMode(), Realms FileUpload,
+ * ClientLevel sky / cloud colours, DebugRenderer / PathfindingRenderer statics. Started by the native 1.21.11 driver
+ * cb_smx1dn ("cbsmx1d.go" set once the world is joined); writes each result to "cbsmx1d.r.<check>" ("ok .." / "FAIL ..")
+ * and "cbsmx1d.old.done" at the end. Native counters ("cbsmx1d.n.<key>", bumped by the driver's mixins) and same-tick
+ * reference values (JDK Function / Runnable objects the driver puts into the system properties) connect the two mods
+ * without a class link.
+ */
+public class Smx1dOld implements ClientModInitializer {
+
+    /** a VertexConsumer written against 1.21.10: the six abstracts and an override of addVertex(Matrix4f, ..) */
+    static final class Counting implements class_4588 {
+        int starts, overrides, colors;
+        int lastR, lastG, lastB, lastA;
+        Matrix4f lastMatrix;
+
+        @Override
+        public class_4588 method_22912(float x, float y, float z) {
+            starts++;
+            return this;
+        }
+
+        @Override
+        public class_4588 method_1336(int r, int g, int b, int a) {
+            colors++;
+            lastR = r;
+            lastG = g;
+            lastB = b;
+            lastA = a;
+            return this;
+        }
+
+        @Override
+        public class_4588 method_22913(float u, float v) {
+            return this;
+        }
+
+        @Override
+        public class_4588 method_60796(int u, int v) {
+            return this;
+        }
+
+        @Override
+        public class_4588 method_22921(int u, int v) {
+            return this;
+        }
+
+        @Override
+        public class_4588 method_22914(float x, float y, float z) {
+            return this;
+        }
+
+        @Override
+        public class_4588 method_22918(Matrix4f matrix, float x, float y, float z) {
+            overrides++;
+            lastMatrix = matrix;
+            return class_4588.super.method_22918(matrix, x, y, z);
+        }
+    }
+
+    /** a 1.21.10 MultiBufferSource handing one counting consumer out for every render type */
+    static final class Buffers implements class_4597 {
+        final Counting out = new Counting();
+        final StringBuilder types = new StringBuilder();
+
+        @Override
+        public class_4588 method_73477(class_1921 type) {
+            types.append(type).append(' ');
+            return out;
+        }
+    }
+
+    static void r(String name, boolean pass, String detail) {
+        System.setProperty("cbsmx1d.r." + name, (pass ? "ok " : "FAIL ") + detail);
+    }
+
+    static long n(String key) {
+        return Long.parseLong(System.getProperty("cbsmx1d.n." + key, "0"));
+    }
+
+    interface Check {
+        void run() throws Exception;
+    }
+
+    static void guarded(String name, Check c) {
+        try {
+            c.run();
+        } catch (Throwable t) {
+            t.printStackTrace();
+            r(name, false, "threw " + t);
+        }
+    }
+
+    static void sleep(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    @Override
+    public void onInitializeClient() {
+        Thread t = new Thread(Smx1dOld::drive, "cb-smx1d-old");
+        t.setDaemon(true);
+        t.start();
+    }
+
+    static void drive() {
+        while (System.getProperty("cbsmx1d.go") == null) {
+            sleep(500);
+        }
+        class_310 mc = class_310.method_1551();
+        Object lock = new Object();
+        boolean[] done = {false};
+        mc.execute(() -> {
+            try {
+                onRenderThread(mc);
+            } finally {
+                synchronized (lock) {
+                    done[0] = true;
+                    lock.notifyAll();
+                }
+            }
+        });
+        synchronized (lock) {
+            long until = System.currentTimeMillis() + 60000;
+            while (!done[0] && System.currentTimeMillis() < until) {
+                try {
+                    lock.wait(1000);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        }
+        guarded("fileUpload", Smx1dOld::fileUpload);
+        System.setProperty("cbsmx1d.old.done", "1");
+    }
+
+    static void onRenderThread(class_310 mc) {
+        guarded("vertex", Smx1dOld::vertex);
+        guarded("shapes", Smx1dOld::shapes);
+        guarded("cycleButton", Smx1dOld::cycleButton);
+        guarded("graphicsMode", () -> graphicsMode(mc));
+        guarded("levelColors", () -> levelColors(mc));
+        guarded("debugRender", Smx1dOld::debugRender);
+    }
+
+    // 1. VertexConsumer.addVertex(Matrix4f, ..): 1.21.11's takes a Matrix4fc
+    static void vertex() {
+        Counting c = new Counting();
+        long nat = n("addVertex");
+        Matrix4f m = new Matrix4f();
+        c.method_22918(m, 1, 2, 3);
+        r("vertex.callOwn", c.overrides == 1 && c.starts == 1 && c.lastMatrix == m,
+            "overrides=" + c.overrides + " starts=" + c.starts + " sameMatrix=" + (c.lastMatrix == m));
+        r("vertex.ownSuperReachesNative", n("addVertex") - nat == 1, "native=" + (n("addVertex") - nat));
+
+        // vanilla's Pose form calls 1.21.11's Matrix4fc form; the 1.21.10 override must answer it with the same matrix
+        class_4587.class_4665 pose = new class_4587().method_23760();
+        c.method_56824(pose, 0, 0, 0);
+        r("vertex.overrideFromVanilla", c.overrides == 2 && c.lastMatrix == pose.method_23761(),
+            "overrides=" + c.overrides + " sameMatrix=" + (c.lastMatrix == pose.method_23761()));
+
+        // setColor(int): a 1.21.10 default, abstract in 1.21.11
+        c.method_39415(0xFF102030);
+        r("vertex.setColorFill", c.lastR == 0x10 && c.lastG == 0x20 && c.lastB == 0x30 && c.lastA == 0xFF,
+            "argb=" + c.lastA + "," + c.lastR + "," + c.lastG + "," + c.lastB);
+
+        // a vanilla BufferBuilder through the converted call; the native default (and its mixin) runs
+        try (class_9799 bytes = new class_9799(1536)) {
+            class_287 bb = new class_287(bytes, com.mojang.blaze3d.vertex.VertexFormat.class_5596.field_27382, class_290.field_1592);
+            nat = n("addVertex");
+            for (int i = 0; i < 4; i++) {
+                bb.method_22918(m, i, 0, 0);
+            }
+            r("vertex.bufferBuilderNative", n("addVertex") - nat == 4, "native=" + (n("addVertex") - nat));
+        }
+    }
+
+    // 2. ShapeRenderer writers gone from 1.21.11, given back with 1.21.10's bodies
+    static void shapes() {
+        class_4587 stack = new class_4587();
+        class_4587.class_4665 pose = stack.method_23760();
+        int[] got = new int[7];
+        Counting c = new Counting();
+        class_9974.method_62293(pose, c, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0);
+        got[0] = c.starts;
+        c = new Counting();
+        class_9974.method_62292(pose, c, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1);
+        got[1] = c.starts;
+        c = new Counting();
+        class_9974.method_62295(pose, c, new class_238(0, 0, 0, 1, 1, 1), 1, 0, 0, 1);
+        got[2] = c.starts;
+        c = new Counting();
+        class_9974.method_62294(stack, c, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1);
+        got[3] = c.starts;
+        c = new Counting();
+        class_9974.method_62297(pose.method_23761(), c, class_2350.field_11036, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1);
+        got[4] = c.starts;
+        c = new Counting();
+        class_9974.method_62298(stack, c, new Vector3f(), new class_243(0, 1, 0), 0xFFFF0000);
+        got[5] = c.starts;
+        c = new Counting();
+        class_9974.method_62296(stack, c, class_259.method_1077(), 0, 0, 0, 0xFFFFFFFF);
+        got[6] = c.starts;
+        int[] want = {24, 24, 24, 30, 4, 2, 24};
+        String[] names = {"renderLineBox62293", "renderLineBox62292", "renderLineBox62295", "filledBox62294", "renderFaceUp62297",
+            "renderVector62298", "renderShapeCube62296"};
+        for (int i = 0; i < want.length; i++) {
+            r("shapes." + names[i], got[i] == want[i], "vertices=" + got[i] + " want=" + want[i]);
+        }
+    }
+
+    // 3. CycleButton builder: withInitialValue / displayOnlyValue(boolean) / onOffBuilder(boolean) / builder(Function)
+    static void cycleButton() {
+        long builds = n("cycleBuild");
+        class_5676<String> b = class_5676.<String>method_32606(v -> class_2561.method_43470(v))
+            .method_32624("a", "b", "c").method_32619("b").method_35723(0, 0, 100, 20, class_2561.method_43470("cap"));
+        r("cycle.initialValue", "b".equals(b.method_32603()), "value=" + b.method_32603());
+        class_5676<String> d = class_5676.<String>method_32606(v -> class_2561.method_43470(v))
+            .method_32624("a", "b", "c").method_35723(0, 0, 100, 20, class_2561.method_43470("cap"));
+        r("cycle.defaultFirst", "a".equals(d.method_32603()), "value=" + d.method_32603());
+        class_5676<Boolean> o = class_5676.method_32613(false).method_35723(0, 0, 100, 20, class_2561.method_43470("cap"));
+        r("cycle.onOffFalse", Boolean.FALSE.equals(o.method_32603()), "value=" + o.method_32603());
+        class_5676<String> only = class_5676.<String>method_32606(v -> class_2561.method_43470(v))
+            .method_32624("x", "y").method_71805(true).method_35723(0, 0, 100, 20, class_2561.method_43470("cap"));
+        String msg = only.method_25369().getString();
+        r("cycle.displayOnlyValue", "x".equals(msg), "message=" + msg);
+        r("cycle.nativeBuild", n("cycleBuild") - builds == 4, "native builds=" + (n("cycleBuild") - builds));
+    }
+
+    // 4. Options.graphicsMode(): a view over 1.21.11's improvedTransparency / graphicsPreset
+    static void graphicsMode(class_310 mc) {
+        class_315 options = mc.field_1690;
+        Runnable snap = (Runnable) System.getProperties().get("cbsmx1d.snapGraphics");
+        int rd = options.method_42503().method_41753();
+        long sets = n("optionSet"), gets = n("optionGet"), presets = n("applyPreset");
+        class_7172<class_5365> gm = options.method_42534();
+        gm.method_41748(class_5365.field_25429);
+        System.setProperty("cbsmx1d.g.phase", "fabulous");
+        snap.run();
+        class_5365 after = gm.method_41753();
+        r("graphics.getFabulous", after == class_5365.field_25429, "get=" + after);
+        gm.method_41748(class_5365.field_25428);
+        System.setProperty("cbsmx1d.g.phase", "fancy");
+        snap.run();
+        class_5365 fancy = gm.method_41753();
+        r("graphics.getNotFabulous", fancy != class_5365.field_25429, "get=" + fancy);
+        r("graphics.renderDistanceKept", options.method_42503().method_41753() == rd, "rd " + rd + " -> " + options.method_42503().method_41753());
+        r("graphics.noPresetApplied", n("applyPreset") - presets == 0, "applyGraphicsPreset=" + (n("applyPreset") - presets));
+        r("graphics.nativeSetGet", n("optionSet") - sets >= 2 && n("optionGet") - gets >= 2,
+            "sets=" + (n("optionSet") - sets) + " gets=" + (n("optionGet") - gets));
+        r("graphics.statusIds", class_5365.field_25429.method_7362() == 2 && "options.graphics.fabulous".equals(class_5365.field_25429.method_7359())
+            && class_5365.method_29592(1) == class_5365.field_25428 && class_5365.method_29592(3) == class_5365.field_25427,
+            "id=" + class_5365.field_25429.method_7362() + " key=" + class_5365.field_25429.method_7359() + " byId(1)=" + class_5365.method_29592(1));
+    }
+
+    // 6. ClientLevel.getSkyColor / getCloudColor, compared with 1.21.11's attributes in the same tick
+    @SuppressWarnings("unchecked")
+    static void levelColors(class_310 mc) {
+        class_638 level = mc.field_1687;
+        class_243 pos = mc.field_1724.method_73189();
+        int sky = level.method_23777(pos, 0.0F);
+        int cloud = level.method_23785(0.0F);
+        int[] want = ((Function<Object, int[]>) System.getProperties().get("cbsmx1d.expectColors")).apply(pos);
+        r("level.skyColor", sky == want[0], String.format("old=%08x attr=%08x", sky, want[0]));
+        r("level.cloudColor", cloud == want[1], String.format("old=%08x attr=%08x", cloud, want[1]));
+    }
+
+    // 7. DebugRenderer / PathfindingRenderer statics into a MultiBufferSource
+    static void debugRender() {
+        class_4587 stack = new class_4587();
+        Buffers box = new Buffers();
+        class_863.method_23102(stack, box, new class_238(0, 0, 0, 1, 1, 1), 1, 0, 0, 1);
+        r("debug.filledBox", box.out.starts > 0, "vertices=" + box.out.starts + " types=" + box.types);
+        Buffers text = new Buffers();
+        class_863.method_23107(stack, text, "cb", 0, 64, 0, -1, 0.02F, true, 0.0F, true);
+        r("debug.floatingText", true, "vertices=" + text.out.starts + " types=" + text.types);
+        Counting shape = new Counting();
+        class_863.method_62350(stack, shape, class_259.method_1077(), 0, 0, 0, 1, 1, 1, 1, true);
+        r("debug.voxelShape", shape.starts == 24, "vertices=" + shape.starts + " want=24");
+        Buffers path = new Buffers();
+        class_11 p = new class_11(List.of(new class_9(0, 64, 0), new class_9(1, 64, 0), new class_9(2, 64, 0)), new class_2338(2, 64, 0), true);
+        class_868.method_23118(stack, path, p, 0.5F, true, true, 0, 64, 0);
+        r("debug.path", path.out.starts > 0, "vertices=" + path.out.starts + " types=" + path.types);
+    }
+
+    // 5. Realms FileUpload.upload() / cancel() / isFinished()
+    static void fileUpload() throws Exception {
+        File f = File.createTempFile("cbsmx1d", ".tar.gz");
+        f.deleteOnExit();
+        java.nio.file.Files.write(f.toPath(), new byte[64]);
+        class_4888 info = class_4888.method_25088("{\"uploadEndpoint\":\"127.0.0.1\",\"port\":9,\"worldClosed\":true,\"token\":\"t\"}");
+        class_320 session = new class_320("cbtest", UUID.randomUUID(), "0", Optional.empty(), Optional.empty());
+
+        class_4337 cancelled = new class_4337(f, 1L, 1, info, session, "1.21.10", "release", new class_4351());
+        cancelled.method_20970();
+        class_4429 a = cancelled.method_20973();
+        r("upload.cancelledFirst", a.field_20205 == -1, "status=" + a.field_20205);
+
+        class_4337 up = new class_4337(f, 1L, 1, info, session, "1.21.10", "release", new class_4351());
+        long t0 = System.currentTimeMillis();
+        class_4429 b = up.method_20973();
+        r("upload.unreachableEmpty", b.field_20205 == -1, "status=" + b.field_20205 + " in " + (System.currentTimeMillis() - t0) + " ms");
+        r("upload.finished", up.method_20978(), "isFinished=" + up.method_20978());
+        class_4429 again = up.method_20973();
+        r("upload.secondCallEmpty", again.field_20205 == -1, "status=" + again.field_20205);
+    }
+}
