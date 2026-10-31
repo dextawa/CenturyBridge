@@ -224,6 +224,32 @@ class Spelling:
                 self.mem[f[1].rsplit(".", 1)[1]] = f[2].rsplit(".", 1)[1]
 
 
+REPLACES = re.compile(r"replaces (\S+)\.([^.\s;]+)")
+
+
+def replaced_calls(sp, layer, row):
+    """
+    A TOMBSTONE row's note names the member its stub stands in for (link-check reads it off the stub's message:
+    "replaces <owner>.<name>"); the stub's descriptor is the member's, with the receiver first for an instance member.
+    Returns the METHOD finding keys that call would have been, at the same site: the static and the instance reading
+    (at most one is the member that dangled; the caller requires exactly one hit).
+    """
+    if row[1] != "TOMBSTONE" or len(row) < 6:
+        return []
+    m = REPLACES.search(row[5])
+    if not m:
+        return []
+    desc = row[4][row[4].index("("):]
+    owner, name = sp(m.group(1)), m.group(2)
+    where = sp(row[3])
+    sdesc = sp(desc)
+    out = [(layer, "METHOD", where, sp(owner + "." + name + desc))]
+    recv = "(L" + owner + ";"
+    if sdesc.startswith(recv):
+        out.append((layer, "METHOD", where, sp(owner + "." + name) + "(" + sdesc[len(recv):]))
+    return out
+
+
 def steps(d, t, baseline, out, write):
     b = read_baseline(baseline)
     measured = [r for r in RELEASES if os.path.exists(os.path.join(d, r, "link-findings.tsv"))]
@@ -262,8 +288,17 @@ def steps(d, t, baseline, out, write):
         o.write("step\tbucket\tkind\tlayer jar\twhere\tref\tnote\n")
         for layer, row in sorted(rows(os.path.join(d, t, "link-findings.tsv")), key=lambda x: (RELEASES.index(x[0]), x[1][1], x[1][3])):
             key = (layer, row[1], sp(row[3], t), sp(row[4], t))
+            joins = replaced_calls(sp, layer, row)
             i = ti
-            while i > 0 and key in present[measured[i - 1]] and RELEASES.index(measured[i - 1]) == RELEASES.index(measured[i]) - 1:
+            while i > 0 and RELEASES.index(measured[i - 1]) == RELEASES.index(measured[i]) - 1:
+                prev = present[measured[i - 1]]
+                if key not in prev:
+                    # a tombstone joins only the call it replaced: the same member (owner, name, descriptor), dangling
+                    # at the same site of the same layer the release before. Anything else starts here.
+                    hit = [k for k in joins if k in prev]
+                    if len(hit) != 1:
+                        break
+                    key, joins = hit[0], []
                 i -= 1
             r = measured[i]
             step = (RELEASES[RELEASES.index(r) - 1] + "__" + r) if r != layer else r + " (layer built there)"
