@@ -313,7 +313,15 @@ final class MixinBridge {
         } catch (RuntimeException ex) {
             return false;
         }
+        // E8i: an anonymous target class javac renumbered between V and W, found by its body (anonymousRetarget)
+        boolean[] tableChanged = {false};
+        String anon = anonymousRetarget(mx, table, tableChanged);
         Mixin m = new Mixin(mx, table == null ? null : table.deepCopy());
+        if (anon != null) {
+            m.changed = true;
+            m.refmapDirty |= tableChanged[0];
+            m.member(anon);
+        }
         byte[] out;
         Map<String, byte[]> others = new LinkedHashMap<>();
         // the restoring and guard mixins as they stood: a mixin not committed takes back what it added there
@@ -4813,5 +4821,168 @@ final class MixinBridge {
                 return;
             }
         }
+    }
+
+    // ------------------------------------------------------------------ anonymous classes by body (E8i)
+
+    /** the least body similarity (SiteMatch.similarity of sigSelf) of a renumbered anonymous class's method */
+    static final double ANON_MIN = 0.75;
+    /** how far the best sibling must stand above the next: two similar bodies are never told apart by a guess */
+    static final double ANON_MARGIN = 0.2;
+
+    /**
+     * A mixin aimed at one anonymous class (Outer$N) of a game class: the W sibling (Outer$K) whose methods the mixin
+     * selects hold V's bodies, when javac numbered it differently (1.20.4 DispenseItemBehavior$10, the TNT behaviour,
+     * is 1.20.5's $17, and 1.20.5's $10 is another behaviour). Every W sibling declaring each selected V method (its
+     * descriptor as classRenames spell it) is scored by body (anonymousByBody); the one clearly best is taken, never
+     * W's class of the same number unless it is that one. The @Mixin target (and its refmap entry) is rewritten
+     * before the mixin is judged. Returns the report text, or null when nothing moved.
+     */
+    private String anonymousRetarget(ClassNode mx, JsonObject table, boolean[] tableChanged) {
+        List<String> targets = MixinRepair.mixinTargets(mx, table);
+        if (targets.size() != 1 || chain.sourceCode == null) {
+            return null;
+        }
+        String t = targets.get(0);
+        int d = t.lastIndexOf('$');
+        if (d < 0 || !t.substring(d + 1).matches("\\d+") || !Chain.minecraftOwned(t)) {
+            return null;
+        }
+        ClassNode vc = v(t);
+        if (vc == null) {
+            return null;
+        }
+        List<MethodNode> vms = new ArrayList<>();
+        for (MethodNode h : mx.methods) {
+            for (AnnotationNode an : MixinRepair.annotations(h)) {
+                for (String sel : MixinRepair.strings(MixinRepair.values(an).get("method"))) {
+                    if (sel.startsWith("/") || sel.contains("*")) {
+                        return null;
+                    }
+                    MixinRepair.Sel s = MixinRepair.Sel.parse(MixinRepair.refmapLookup(table, sel));
+                    if (s.owner() != null && !s.owner().equals(t)) {
+                        continue;
+                    }
+                    for (MethodNode m : s.match(vc)) {
+                        if (!vms.contains(m)) {
+                            vms.add(m);
+                        }
+                    }
+                }
+            }
+        }
+        if (vms.isEmpty()) {
+            return null;
+        }
+        String outer = t.substring(0, d + 1);
+        Map<String, ClassNode> siblings = new LinkedHashMap<>();
+        for (int k = 1, miss = 0; k < 1000 && miss < 10; k++) {
+            ClassNode wc = w(outer + k);
+            if (wc == null) {
+                miss++;
+            } else {
+                miss = 0;
+                siblings.put(outer + k, wc);
+            }
+        }
+        List<String> why = new ArrayList<>();
+        String to = anonymousByBody(t, vms, siblings, chain::renamedDesc, why);
+        if (to == null || to.equals(t)) {
+            return null;
+        }
+        if (!retargetAnonymous(mx, table, t, to, tableChanged)) {
+            return null;
+        }
+        return "anonymous class by body " + shortName(t) + " -> " + shortName(to) + " (" + why.get(0) + ")";
+    }
+
+    /**
+     * The sibling of {@code siblings} holding V class {@code vName}'s methods {@code vms}: each candidate declaring every
+     * one of them (name, descriptor through descMap) scores the mean SiteMatch.similarity of their sigSelf bodies; the
+     * best must reach ANON_MIN and stand ANON_MARGIN above the next. Null (why: the reason) otherwise; why.get(0) holds
+     * the scores of an answer.
+     */
+    static String anonymousByBody(String vName, List<MethodNode> vms, Map<String, ClassNode> siblings,
+                                  java.util.function.UnaryOperator<String> descMap, List<String> why) {
+        String best = null;
+        double b1 = -1;
+        double b2 = -1;
+        for (Map.Entry<String, ClassNode> e : siblings.entrySet()) {
+            double sum = 0;
+            boolean all = true;
+            for (MethodNode vm : vms) {
+                MethodNode wm = null;
+                for (MethodNode m : e.getValue().methods) {
+                    if (m.name.equals(vm.name) && m.desc.equals(descMap.apply(vm.desc))) {
+                        wm = m;
+                    }
+                }
+                List<String> vs = SiteMatch.sigSelf(vm, vName);
+                if (wm == null || vs.size() < 5) {
+                    all = false;
+                    break;
+                }
+                sum += SiteMatch.similarity(vs, SiteMatch.sigSelf(wm, e.getKey()));
+            }
+            if (!all) {
+                continue;
+            }
+            double sc = sum / vms.size();
+            if (sc > b1) {
+                b2 = b1;
+                b1 = sc;
+                best = e.getKey();
+            } else if (sc > b2) {
+                b2 = sc;
+            }
+        }
+        String scores = String.format(Locale.ROOT, "body similarity %.2f, next sibling %.2f", b1, Math.max(b2, 0));
+        if (best == null) {
+            why.add("no sibling declares the selected methods");
+            return null;
+        }
+        if (b1 < ANON_MIN) {
+            why.add("no sibling's body is close enough (" + scores + ")");
+            return null;
+        }
+        if (b2 > b1 - ANON_MARGIN) {
+            why.add("two siblings' bodies are alike (" + scores + ")");
+            return null;
+        }
+        why.add(scores);
+        return best;
+    }
+
+    /** the @Mixin target from -> to, in value= types, targets= strings, or the refmap entry a string names */
+    @SuppressWarnings("unchecked")
+    private static boolean retargetAnonymous(ClassNode mx, JsonObject table, String from, String to, boolean[] tableChanged) {
+        boolean done = false;
+        for (List<AnnotationNode> l : Arrays.asList(mx.visibleAnnotations, mx.invisibleAnnotations)) {
+            for (AnnotationNode a : l == null ? List.<AnnotationNode>of() : l) {
+                if (!a.desc.equals(MIXIN) || a.values == null) {
+                    continue;
+                }
+                for (int i = 0; i + 1 < a.values.size(); i += 2) {
+                    Object v = a.values.get(i + 1);
+                    List<Object> list = v instanceof List<?> vl ? (List<Object>) vl : null;
+                    for (int j = 0; list != null && j < list.size(); j++) {
+                        Object o = list.get(j);
+                        if (o instanceof Type ty && ty.getInternalName().equals(from)) {
+                            list.set(j, Type.getObjectType(to));
+                            done = true;
+                        } else if (o instanceof String str && MixinRepair.refmapLookup(table, str).replace('.', '/').equals(from)) {
+                            if (table != null && table.has(str)) {
+                                table.addProperty(str, to);
+                                tableChanged[0] = true;
+                            } else {
+                                list.set(j, str.indexOf('.') >= 0 ? to.replace('/', '.') : to);
+                            }
+                            done = true;
+                        }
+                    }
+                }
+            }
+        }
+        return done;
     }
 }
