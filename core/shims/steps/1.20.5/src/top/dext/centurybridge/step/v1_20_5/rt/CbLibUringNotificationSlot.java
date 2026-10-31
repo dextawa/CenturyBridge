@@ -31,6 +31,22 @@ import static org.lwjgl.system.MemoryStack.*;
 @Environment(EnvType.CLIENT)
 public class CbLibUringNotificationSlot extends Struct<CbLibUringNotificationSlot> implements NativeResource {
 
+    /**
+     * LWJGL 3.3.3's Pointer.Default.UNSAFE, which this copy of 3.3.3's struct read as an inherited field; LWJGL 3.4.1
+     * (26.1) dropped it. The same JDK singleton, held here (as CbLibLwjgl holds it).
+     */
+    private static final sun.misc.Unsafe UNSAFE;
+
+    static {
+        try {
+            java.lang.reflect.Field f = sun.misc.Unsafe.class.getDeclaredField("theUnsafe");
+            f.setAccessible(true);
+            UNSAFE = (sun.misc.Unsafe) f.get(null);
+        } catch (ReflectiveOperationException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
     /** The struct size in bytes. */
     public static final int SIZEOF;
 
