@@ -178,9 +178,21 @@ class Spelling:
             return c
         return self.CLS.sub(one, s)
 
+    def _wall(self, t):
+        if t in self.cls:
+            return self.cls[t]
+        if t in self.mem:
+            return self.mem[t]
+        # an inner class that died before the wall is not in the table, but the converter still renames its outer
+        # (net/minecraft/class_2096$class_2097 -> .../MinMaxBounds$class_2097): spell it the same way
+        outer, sep, inner = t.partition("$")
+        if sep and outer in self.cls:
+            return self.cls[outer] + "$" + inner
+        return t
+
     def __call__(self, s, release=None):
         s = self.TOKEN.sub(lambda m: self.pre_cls.get(m.group(0), m.group(0)), s)
-        s = self.TOKEN.sub(lambda m: self.cls.get(m.group(0), self.mem.get(m.group(0), m.group(0))), s)
+        s = self.TOKEN.sub(lambda m: self._wall(m.group(0)), s)
         s = self.MEM.sub(lambda m: m.group(1) + "." + self.post_mem.get(m.group(1) + "." + m.group(2), m.group(2)), s)
         return self._classes(s)
 
