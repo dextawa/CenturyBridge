@@ -143,6 +143,7 @@ public class SwallTestMod implements ModInitializer {
         STEP_TYPE = net.minecraft.class_6018.method_35014("cbswall_step", StepInt.CODEC);
         HALF_TYPE = net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41139,
             net.minecraft.class_2960.method_60655("cbswall", "half"), () -> HalfFloat.CODEC);
+        EARLY_RESISTANT = new net.minecraft.class_10215(net.minecraft.class_8103.field_42246);
         EARLY_ATTACKS = new net.minecraft.class_10707(0.25F, 1.0F, List.of(), net.minecraft.class_10707.class_10709.field_56308,
             Optional.of(net.minecraft.class_8103.field_56242), Optional.empty(), Optional.empty());
         // before any registries are up: the clock is looked up on first use (rt/CbWallClocks.Lazy)
@@ -270,6 +271,8 @@ public class SwallTestMod implements ModInitializer {
     }
 
     static net.minecraft.class_10707 EARLY_ATTACKS;
+    /** 1.21.11 new DamageResistant(TagKey) while the item registry fills, before any registries are loaded */
+    static net.minecraft.class_10215 EARLY_RESISTANT;
     static net.minecraft.class_6018<StepInt> STEP_TYPE;
     static net.minecraft.class_5864<HalfFloat> HALF_TYPE;
 
@@ -399,6 +402,26 @@ public class SwallTestMod implements ModInitializer {
             server.method_30611().method_57093(com.mojang.serialization.JsonOps.INSTANCE), early).getOrThrow();
         check("componentValue.blocksAttacksEarlyTag", earlyBack.comp_3637().get().equals(net.minecraft.class_8103.field_56242)
             && earlyJson.toString().contains("#minecraft:bypasses_shield"), earlyJson);
+
+        // DamageResistant(TagKey): built before and after the registries load, both resist fire and not generic
+        // damage, both read back the tag, both encode as the tag
+        net.minecraft.class_8109 sources = server.method_30002().method_48963();
+        net.minecraft.class_10215 late = new net.minecraft.class_10215(net.minecraft.class_8103.field_42246);
+        for (Object[] c : new Object[][] {{"early", EARLY_RESISTANT}, {"late", late}}) {
+            net.minecraft.class_10215 r = (net.minecraft.class_10215) c[1];
+            boolean fire = r.method_64198(sources.method_48794());
+            boolean notFire = r.method_64198(sources.method_48830());
+            String json = String.valueOf(net.minecraft.class_10215.field_54229.encodeStart(
+                server.method_30611().method_57093(com.mojang.serialization.JsonOps.INSTANCE), r).result().orElse(null));
+            check("componentValue.damageResistantCtor." + c[0], fire && !notFire
+                && net.minecraft.class_8103.field_42246.equals(r.comp_3210()) && json.contains("#minecraft:is_fire"),
+                fire + " " + notFire + " " + r.comp_3210() + " " + json);
+        }
+        net.minecraft.class_1799 resist = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600);
+        resist.method_57379(net.minecraft.class_9334.field_54273, EARLY_RESISTANT);
+        net.minecraft.class_10215 resistBack = resist.method_58694(net.minecraft.class_9334.field_54273);
+        check("componentValue.damageResistantOnStack", resistBack != null
+            && resistBack.method_64198(sources.method_48794()) && !resistBack.method_64198(sources.method_48830()), resistBack);
     }
 
     /** 1.21.11's SelectorPattern, 26.1's CompilableString of an entity selector */
