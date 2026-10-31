@@ -95,6 +95,45 @@ public final class JarRemapper {
         public java.util.Map<String, java.util.Set<String>> targetMethods;
         public java.util.Map<String, String[]> targetSupers;
         public final java.util.Map<String, String[]> jarSupers = new java.util.HashMap<>();
+        /**
+         * The input jar's classes (source names) -> the methods each declares under a non-token name, descriptor
+         * renamed: a token the table would rename onto one of them keeps its token ({@link #nativeClash}).
+         */
+        public final java.util.Map<String, java.util.Set<String>> jarNativeMethods = new java.util.HashMap<>();
+        /** the input jar's classes (source names) -> their superclass and interfaces (source names) */
+        public final java.util.Map<String, String[]> jarSupersSource = new java.util.HashMap<>();
+
+        /**
+         * Whether renaming {@code owner}'s token {@code name} to {@code moj} lands on a method {@code owner} or a jar
+         * superclass of it already declares under that very name with the same (renamed) descriptor: a mod that
+         * declared both getSerializedName() and StringRepresentable.method_15434() (redeco Upholstery), or its own
+         * loadAdditional(CompoundTag) beside BlockEntity.method_11014(CompoundTag) (no-tree-punching) -- the rename
+         * would give the class one name+desc twice, a ClassFormatError when it loads. The token stays: the mod's
+         * own method keeps answering under the target's name, the token under its own.
+         */
+        boolean nativeClash(String owner, String name, String moj, String mappedDesc) {
+            if (moj.equals(name) || jarNativeMethods.isEmpty()) {
+                return false;
+            }
+            String shape = moj + mappedDesc;
+            java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(java.util.List.of(owner));
+            java.util.Set<String> seen = new java.util.HashSet<>();
+            while (!todo.isEmpty()) {
+                String c = todo.poll();
+                if (!seen.add(c)) {
+                    continue;
+                }
+                java.util.Set<String> own = jarNativeMethods.get(c);
+                if (own != null && own.contains(shape)) {
+                    return true;
+                }
+                String[] sup = jarSupersSource.get(c);
+                if (sup != null) {
+                    todo.addAll(java.util.List.of(sup));
+                }
+            }
+            return false;
+        }
         /** the input jar's CenturyBridge classes' declared field names ({@link #remapper}: inherited facade fields) */
         public final java.util.Map<String, java.util.Set<String>> jarFields = new java.util.HashMap<>();
         /**
@@ -599,7 +638,8 @@ public final class JarRemapper {
                     if (keepsToken(owner, name, desc, m, this)) {
                         return name;
                     }
-                    return targetMethods == null ? m : byDescriptor(owner, name, desc, m);
+                    String res = targetMethods == null ? m : byDescriptor(owner, name, desc, m);
+                    return nativeClash(owner, name, res, mapMethodDesc(desc)) ? name : res;
                 }
 
                 /** a CB class's token method a wall-step adapter among its supertypes requires: see {@link Table#wallAdapters} */
@@ -1725,6 +1765,25 @@ public final class JarRemapper {
                     sup.add(r.map(i));
                 }
                 table.jarSupers.put(r.map(cr.getClassName()), sup.toArray(new String[0]));
+                java.util.List<String> supSrc = new java.util.ArrayList<>();
+                if (cr.getSuperName() != null) {
+                    supSrc.add(cr.getSuperName());
+                }
+                supSrc.addAll(java.util.List.of(cr.getInterfaces()));
+                table.jarSupersSource.put(cr.getClassName(), supSrc.toArray(new String[0]));
+                java.util.Set<String> nat = new java.util.HashSet<>();
+                cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                    @Override
+                    public org.objectweb.asm.MethodVisitor visitMethod(int acc, String n, String d, String sig, String[] x) {
+                        if (!n.startsWith("method_") && !n.startsWith("comp_") && !n.startsWith("<")) {
+                            nat.add(n + r.mapMethodDesc(d));
+                        }
+                        return null;
+                    }
+                }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                if (!nat.isEmpty()) {
+                    table.jarNativeMethods.put(cr.getClassName(), nat);
+                }
                 if (cr.getClassName().startsWith("top/dext/centurybridge/") || cr.getClassName().startsWith("centurybridge/")) {
                     java.util.Set<String> fields = new java.util.HashSet<>();
                     cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
