@@ -255,6 +255,10 @@ public final class LinkCheck {
         ZipEntry e;
         byte[] modJson = null;
         Map<String, byte[]> texts = new HashMap<>(); // candidates for the access widener fabric.mod.json names
+        // a text of 1 MiB or more is kept aside: it becomes a candidate only when fabric.mod.json names it as the
+        // access widener (the loader reads that file whatever its size -- a probe's AW over every non-public member
+        // is 2.8 MB), and is dropped otherwise; fabric.mod.json may come after it in the jar
+        Map<String, byte[]> large = new HashMap<>();
         while ((e = zin.getNextEntry()) != null) {
             String n = e.getName();
             if (n.endsWith(".jar")) {
@@ -266,7 +270,7 @@ public final class LinkCheck {
                 collectMixinConfig(zin.readAllBytes());
             } else if (!n.endsWith("/") && !n.endsWith(".class") && !ASSET.matcher(n).find()) {
                 byte[] b = zin.readAllBytes();
-                if (b.length < (1 << 20)) texts.put(n, b);
+                (b.length < (1 << 20) ? texts : large).put(n, b);
             } else if (n.endsWith(".class") && !n.startsWith("META-INF/versions/") && !n.endsWith("module-info.class")) {
                 byte[] b = zin.readAllBytes();
                 ClassNode cn = new ClassNode();
@@ -293,7 +297,26 @@ public final class LinkCheck {
                 if (subjectTag != null) subjects.computeIfAbsent(subjectTag, k -> new ArrayList<>()).add(cn);
             }
         }
-        if (modJson != null) collectModMetadata(modJson, texts, subjectTag, origin);
+        if (modJson != null) {
+            String aw = accessWidenerPath(modJson);
+            if (aw != null && large.containsKey(aw)) texts.put(aw, large.get(aw));
+            collectModMetadata(modJson, texts, subjectTag, origin);
+        }
+    }
+
+    /** the access widener path a fabric.mod.json names, as the texts map keys it (no leading '/'); null when none */
+    private static String accessWidenerPath(byte[] modJson) {
+        try {
+            var r = new com.google.gson.stream.JsonReader(new java.io.StringReader(
+                new String(modJson, java.nio.charset.StandardCharsets.UTF_8)));
+            r.setLenient(true);
+            var o = com.google.gson.JsonParser.parseReader(r).getAsJsonObject();
+            if (!o.has("accessWidener") || !o.get("accessWidener").isJsonPrimitive()) return null;
+            String p = o.get("accessWidener").getAsString();
+            return p.startsWith("/") ? p.substring(1) : p;
+        } catch (RuntimeException ex) {
+            return null;
+        }
     }
 
     private static final Pattern ASSET = Pattern.compile(
