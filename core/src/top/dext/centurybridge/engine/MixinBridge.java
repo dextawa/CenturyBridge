@@ -2806,8 +2806,13 @@ final class MixinBridge {
                 MixinRepair.Anchor na = new MixinRepair.Anchor(a.kind(), af.owner(), af.name(), af.desc(), null, a.ordinal());
                 int wc = count(sel.w(), na);
                 if (wc != vc) {
+                    String ew = chain.bridgeCode != null && af.how().equals("call reshape") && !fld
+                        ? erasedWallSite(sel, kind, at, t, a, af, vc, where) : "";
+                    if (ew == null) {
+                        continue;
+                    }
                     String wired = af.how() + " gives " + af.name() + af.desc() + ", standing " + wc + " time(s) in "
-                        + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from;
+                        + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from + (ew.isEmpty() ? "" : "; " + ew);
                     if (value.equals("INVOKE_ASSIGN") || !counterpartAt(sel, kind, at, value, t, a, wired)) {
                         leftInjector(sel.handler(), where + ": " + wired);
                     }
@@ -2851,6 +2856,140 @@ final class MixinBridge {
                 changed = true;
                 injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + af.name() + (fld ? ":" : "") + af.desc() + " (" + af.how() + ")");
             }
+        }
+
+        /**
+         * smixin13 (immersive_weathering GrassBlockMixin, 1.21.11 -> 26.1): a call the wall step reshapes only by erasing
+         * parameters to Object (BlockState.is(Block) -> TypedInstance.is(T), erased is(Object)) stands in W's body under the
+         * wall table's name for V's member, which the analysis view cannot map back (several overloads share the name).
+         * A W call is V's site when it is on V's owner (or a supertype), named as the reshape or the wall table names V's
+         * member, with the reshaped descriptor, and every erased argument's producer typed exactly as V's parameter
+         * (checkcast / field / call result): an is(Object) on another TypedInstance kind, or with an argument of unknown
+         * type, is not. Taken only when such sites stand as often as V's did. The @At follows to W's call; a handler
+         * taking the call's arguments (@Redirect / @WrapOperation / @WrapWithCondition) gets a front taking Object there,
+         * cast to V's type (sound: every site's argument is typed so). Returns null when carried, a reason when not, ""
+         * when this is no such reshape.
+         */
+        private String erasedWallSite(Selection sel, String kind, AnnotationNode at, String t, MixinRepair.Anchor a, AtFate af,
+                int vc, String where) {
+            Type[] vp = Type.getArgumentTypes(a.desc());
+            Type[] wp = Type.getArgumentTypes(af.desc());
+            if (vp.length != wp.length || !Type.getReturnType(a.desc()).equals(Type.getReturnType(af.desc()))) {
+                return "";
+            }
+            List<Integer> erased = new ArrayList<>();
+            for (int i = 0; i < vp.length; i++) {
+                if (!vp[i].equals(wp[i])) {
+                    if (vp[i].getSort() != Type.OBJECT || !wp[i].getDescriptor().equals("Ljava/lang/Object;")) {
+                        return "";
+                    }
+                    erased.add(i);
+                }
+            }
+            if (erased.isEmpty()) {
+                return "";
+            }
+            Set<String> owners = new HashSet<>(chain.selfAndSupers(a.owner()));
+            Set<String> names = new java.util.LinkedHashSet<>(List.of(af.name()));
+            for (String o : chain.selfAndSupers(a.owner())) {
+                String wn = chain.wallMethodFwd.get(o + "." + a.name());
+                if (wn != null) {
+                    names.add(wn);
+                }
+            }
+            List<MethodInsnNode> sites = erasedSites(sel.w(), owners, names, af.desc(), vp, erased);
+            Set<String> spelled = new HashSet<>();
+            for (MethodInsnNode mi : sites) {
+                spelled.add(mi.owner + "." + mi.name);
+            }
+            String seen = "erased-argument sites (" + String.join("/", names) + af.desc() + " with the argument typed "
+                + shortName(vp[erased.get(0)].getInternalName()) + "): " + sites.size();
+            if (sites.size() != vc || spelled.size() != 1) {
+                return seen + (spelled.size() > 1 ? " under " + spelled.size() + " spellings" : "");
+            }
+            if (kind.equals("ModifyArg") || kind.equals("ModifyArgs")) {
+                return seen + ", but @" + kind + " hands back the erased argument itself";
+            }
+            if (kind.equals("Inject") && capturesLocals(sel.handler()) || hasSugar(sel.handler(), "Local;")) {
+                return seen + ", but the handler captures the target's locals at the anchor";
+            }
+            MethodInsnNode w0 = sites.get(0);
+            if (RECEIVER_KINDS.contains(kind)) {
+                Type[] hp = Type.getArgumentTypes(sel.handler().desc);
+                int base = w0.getOpcode() == Opcodes.INVOKESTATIC ? 0 : 1;
+                int[] idx = new int[erased.size()];
+                for (int j = 0; j < idx.length; j++) {
+                    idx[j] = base + erased.get(j);
+                    if (idx[j] >= hp.length || !hp[idx[j]].equals(vp[erased.get(j)])) {
+                        return seen + ", but the handler does not take the call's argument " + erased.get(j) + " as "
+                            + shortName(vp[erased.get(j)].getInternalName());
+                    }
+                }
+                erasedFront(sel.handler(), idx);
+            }
+            String nt = "L" + w0.owner + ";" + w0.name + w0.desc;
+            if (ownKey(t)) {
+                MixinRepair.refmapPut(table, t, nt);
+                refmapDirty = true;
+            } else {
+                setValue(at, "target", nt);
+            }
+            changed = true;
+            injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + w0.name + w0.desc + " (" + af.how()
+                + ", " + seen + " as in " + chain.from + (RECEIVER_KINDS.contains(kind) ? "; a front takes Object there, cast to "
+                + shortName(vp[erased.get(0)].getInternalName()) : "") + ")");
+            return null;
+        }
+
+        /** the handler under a front of its own name whose parameters {@code idx} are Object, cast back to the handler's types */
+        private void erasedFront(MethodNode h, int[] idx) {
+            boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
+            Type[] hp = Type.getArgumentTypes(h.desc);
+            Type[] fp = hp.clone();
+            for (int k : idx) {
+                fp[k] = Type.getObjectType("java/lang/Object");
+            }
+            String oldName = h.name;
+            String oldDesc = h.desc;
+            String del = unique(oldName + "$cb" + step);
+            MethodNode syn = new MethodNode(h.access & ~(Opcodes.ACC_ABSTRACT | Opcodes.ACC_NATIVE | Opcodes.ACC_BRIDGE | Opcodes.ACC_VARARGS),
+                oldName, Type.getMethodDescriptor(Type.getReturnType(h.desc), fp), null, exceptions(h));
+            syn.visibleAnnotations = h.visibleAnnotations;
+            syn.invisibleAnnotations = h.invisibleAnnotations;
+            syn.visibleParameterAnnotations = h.visibleParameterAnnotations;
+            syn.invisibleParameterAnnotations = h.invisibleParameterAnnotations;
+            syn.visibleAnnotableParameterCount = h.visibleAnnotableParameterCount;
+            syn.invisibleAnnotableParameterCount = h.invisibleAnnotableParameterCount;
+            h.visibleAnnotations = null;
+            h.invisibleAnnotations = null;
+            h.visibleParameterAnnotations = null;
+            h.invisibleParameterAnnotations = null;
+            Refs r = refs(oldName, oldDesc, false);
+            for (MethodInsnNode mi : r.calls) {
+                mi.name = del;
+            }
+            retargetHandles(r, mx.name, del, itf);
+            h.name = del;
+            h.access = (h.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE;
+            InsnList in = syn.instructions;
+            int slot = st ? 0 : 1;
+            if (!st) {
+                in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            }
+            for (int i = 0; i < fp.length; i++) {
+                in.add(new VarInsnNode(fp[i].getOpcode(Opcodes.ILOAD), slot));
+                if (!fp[i].equals(hp[i])) {
+                    in.add(new TypeInsnNode(Opcodes.CHECKCAST, hp[i].getInternalName()));
+                }
+                slot += fp[i].getSize();
+            }
+            in.add(new MethodInsnNode(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, del, oldDesc, false));
+            in.add(new InsnNode(Type.getReturnType(oldDesc).getOpcode(Opcodes.IRETURN)));
+            syn.maxLocals = slot;
+            syn.maxStack = slot + 2;
+            syn.name = freeShape(syn.name, syn.desc);
+            mx.methods.add(syn);
+            changed = true;
         }
 
         /**
@@ -5804,5 +5943,66 @@ final class MixinBridge {
             }
         }
         return done;
+    }
+
+    /**
+     * smixin13: the calls in {@code ms} on one of {@code owners}, named one of {@code names}, with descriptor {@code wdesc},
+     * whose arguments at {@code erased} are each produced only by an instruction typed exactly as {@code vp} there (a
+     * checkcast to it, a field of it, a call answering it). An argument of any other or unknown origin (a local, a merge
+     * of such) does not count; a body the analyzer cannot read yields none.
+     */
+    static List<MethodInsnNode> erasedSites(List<MethodNode> ms, Set<String> owners, Set<String> names, String wdesc, Type[] vp,
+            List<Integer> erased) {
+        List<MethodInsnNode> out = new ArrayList<>();
+        int n = Type.getArgumentTypes(wdesc).length;
+        for (MethodNode m : ms) {
+            if (m.instructions == null || m.instructions.size() == 0) {
+                continue;
+            }
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue>[] fs = null;
+            for (int i = 0; i < m.instructions.size(); i++) {
+                if (!(m.instructions.get(i) instanceof MethodInsnNode mi) || !owners.contains(mi.owner) || !names.contains(mi.name)
+                        || !mi.desc.equals(wdesc)) {
+                    continue;
+                }
+                if (fs == null) {
+                    try {
+                        fs = new org.objectweb.asm.tree.analysis.Analyzer<>(new org.objectweb.asm.tree.analysis.SourceInterpreter())
+                            .analyze("java/lang/Object", m);
+                    } catch (org.objectweb.asm.tree.analysis.AnalyzerException | RuntimeException ex) {
+                        break;
+                    }
+                }
+                org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue> f = fs[i];
+                if (f == null || f.getStackSize() < n) {
+                    continue;
+                }
+                boolean typed = true;
+                for (int k : erased) {
+                    org.objectweb.asm.tree.analysis.SourceValue sv = f.getStack(f.getStackSize() - n + k);
+                    typed &= !sv.insns.isEmpty();
+                    for (AbstractInsnNode p : sv.insns) {
+                        typed &= producesType(p, vp[k]);
+                    }
+                }
+                if (typed) {
+                    out.add(mi);
+                }
+            }
+        }
+        return out;
+    }
+
+    private static boolean producesType(AbstractInsnNode p, Type t) {
+        if (p instanceof TypeInsnNode ti && ti.getOpcode() == Opcodes.CHECKCAST) {
+            return ti.desc.equals(t.getInternalName());
+        }
+        if (p instanceof FieldInsnNode fi && (fi.getOpcode() == Opcodes.GETSTATIC || fi.getOpcode() == Opcodes.GETFIELD)) {
+            return fi.desc.equals(t.getDescriptor());
+        }
+        if (p instanceof MethodInsnNode mi) {
+            return Type.getReturnType(mi.desc).equals(t);
+        }
+        return false;
     }
 }
