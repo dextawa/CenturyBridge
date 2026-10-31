@@ -1,0 +1,6 @@
+usage	owner	name	desc	kinds	w	used
+aw-get	net/minecraft/class_10444	field_59982	Ljava/util/List;	FIELD	field not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_7529	method_44403	(Lnet/minecraft/class_332;IIII)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_342	method_1886	(Lnet/minecraft/class_332;IIII)V	METHOD	method not declared on the owner	aw:0 mixin:0
+aw-call	net/minecraft/class_11228	method_70889	(Lnet/minecraft/class_10444;Lnet/minecraft/class_4587;III)V	METHOD	method method_70889(Lnet/minecraft/class_11540;Lnet/minecraft/class_4587;III)V private	aw:0 mixin:0
+aw-get	net/minecraft/class_11245	field_60993	Lnet/minecraft/class_10444;	FIELD	field Lnet/minecraft/class_11540; private final	aw:0 mixin:0

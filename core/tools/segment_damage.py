@@ -162,19 +162,21 @@ def main():
                 dropped += 1
                 continue
             usage, owner, name, desc, kinds = r[1], r[2], r[3], r[4], r[6]
+            # the access-widener surface (api-probe -Dcb.apiprobe.nonpublic): aw-<usage>, judged as the usage
+            base = usage[3:] if usage.startswith("aw-") else usage
             wo = tcls(owner)
             wn = mmap.get(owner + "." + name, name) if mmap else name
             c = W.get(wo)
             if c is None:
                 w = "class gone" + (f" ({wo})" if wo != owner else "")
-            elif usage in ("extend", "implement-interface"):
+            elif base in ("extend", "implement-interface"):
                 _, a, sup, itfs, _, _, sealed = c
                 w = "class " + flags(a) + (" interface" if a & ACC_INTERFACE else "") + (" enum" if a & ACC_ENUM else "") \
                     + (" sealed" if sealed else "") + (f" extends {sup}" if sup else "")
             elif name == "<init>":
                 ctors = [d for (nm, d, a) in c[5] if nm == "<init>" and not a & ACC_PRIVATE]
                 w = "constructors " + (" ".join(ctors) if ctors else "(none reachable)")
-            elif usage.startswith(("get", "put")):
+            elif base.startswith(("get", "put")):
                 same = [(d, a) for (nm, d, a) in c[4] if nm == wn]
                 w = "field " + (" ; ".join(f"{d} {flags(a)}" for d, a in same) if same else "not declared on the owner")
             else:
