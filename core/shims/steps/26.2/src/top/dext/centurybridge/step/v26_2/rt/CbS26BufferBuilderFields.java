@@ -68,8 +68,15 @@ public final class CbS26BufferBuilderFields {
 
     private static final Map<String, Integer> EXTRA_IDS = new ConcurrentHashMap<>();
 
-    /** 26.1.2 VertexFormatElement.id() */
+    /**
+     * 26.1.2 VertexFormatElement.id(): the id the element was built or registered with (CbS205fElements: as constructed,
+     * else its role by 26.2 name and format), else by name as above; a new name takes the lowest id no element holds
+     */
     public static int id(VertexFormatElement e) {
+        int built = CbS205fElements.id(e);
+        if (built >= 0) {
+            return built;
+        }
         String[] names = BufferBuilder.elementNames;
         for (int i = 0; i < names.length; i++) {
             if (names[i].equals(e.name())) {
@@ -77,11 +84,12 @@ public final class CbS26BufferBuilderFields {
             }
         }
         return EXTRA_IDS.computeIfAbsent(e.name(), n -> {
-            int id = BufferBuilder.elementNames.length + EXTRA_IDS.size();
-            if (id >= MAX_COUNT) {
-                throw new IllegalArgumentException("Element ID must be in range [0; " + MAX_COUNT + ")");
+            for (int id = BufferBuilder.elementNames.length; id < MAX_COUNT; id++) {
+                if (CbS205fElements.byId(id) == null && !EXTRA_IDS.containsValue(id)) {
+                    return id;
+                }
             }
-            return id;
+            throw new IllegalArgumentException("Element ID must be in range [0; " + MAX_COUNT + ")");
         });
     }
 
