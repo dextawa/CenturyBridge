@@ -5319,6 +5319,155 @@ final class MixinBridge {
         return tests == 1 ? null : "W's " + wm.name + wm.desc + " holds " + tests + " tests, not one";
     }
 
+    // ------------------------------------------------------------------ @Share orphans (smixin12)
+
+    static final String SHARE = "Lcom/llamalad7/mixinextras/sugar/Share;";
+    private static final String REF_PREFIX = "com/llamalad7/mixinextras/sugar/ref/";
+
+    /**
+     * smixin12 (Kilt AbstractArrowInject): a live injector that reads a @Share which, in its mixin, only injectors no longer
+     * live write (their injector annotation dropped by the repair or peel) would read the share's default on every call --
+     * usActualImpulseValue's {@code original && currentImpulse.get()} forces hasImpulse false once handleOnHit is gone. Such
+     * a reader is disabled with them (annotation dropped as the repair does, handler kept as a plain method), to a fixpoint;
+     * one that some live injector also writes stays. A share written by nobody (read for its default) is not this rule's.
+     * Returns one "share orphaned: ..." reason per injector disabled; entries are rewritten in place.
+     */
+    static List<String> shareOrphans(Map<String, byte[]> entries) {
+        List<String> out = new ArrayList<>();
+        byte[] needle = "mixinextras/sugar/Share".getBytes(StandardCharsets.UTF_8);
+        for (Map.Entry<String, byte[]> e : new ArrayList<>(entries.entrySet())) {
+            if (!e.getKey().endsWith(".class") || !contains(e.getValue(), needle)) {
+                continue;
+            }
+            ClassNode cn = new ClassNode();
+            try {
+                new ClassReader(e.getValue()).accept(cn, 0);
+            } catch (RuntimeException ex) {
+                continue;
+            }
+            boolean changed = false;
+            while (true) {
+                Map<String, List<MethodNode>> liveW = new HashMap<>();
+                Map<String, List<MethodNode>> deadW = new HashMap<>();
+                List<Object[]> readers = new ArrayList<>();
+                for (MethodNode m : cn.methods) {
+                    boolean live = injectorAnnotation(m) != null;
+                    Type[] hp = Type.getArgumentTypes(m.desc);
+                    int slot = (m.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
+                    for (int k = 0; k < hp.length; slot += hp[k].getSize(), k++) {
+                        String key = shareKey(m, k);
+                        if (key == null) {
+                            continue;
+                        }
+                        if (refUse(cn.name, m, slot, "set")) {
+                            (live ? liveW : deadW).computeIfAbsent(key, x -> new ArrayList<>()).add(m);
+                        } else if (live && refUse(cn.name, m, slot, "get")) {
+                            readers.add(new Object[] {m, key});
+                        }
+                    }
+                }
+                Object[] hit = null;
+                for (Object[] r : readers) {
+                    String key = (String) r[1];
+                    if (!liveW.containsKey(key) && deadW.containsKey(key)) {
+                        hit = r;
+                        break;
+                    }
+                }
+                if (hit == null) {
+                    break;
+                }
+                MethodNode m = (MethodNode) hit[0];
+                AnnotationNode an = injectorAnnotation(m);
+                String kind = an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
+                List<String> writers = new ArrayList<>();
+                for (MethodNode w : deadW.get((String) hit[1])) {
+                    writers.add(shortName(cn.name) + "." + w.name);
+                }
+                for (List<AnnotationNode> l : Arrays.asList(m.visibleAnnotations, m.invisibleAnnotations)) {
+                    if (l != null) {
+                        l.remove(an);
+                    }
+                }
+                if (injectorAnnotation(m) == null) {
+                    for (List<AnnotationNode> l : Arrays.asList(m.visibleAnnotations, m.invisibleAnnotations)) {
+                        if (l != null) {
+                            l.removeIf(a -> a.desc.startsWith("Lcom/llamalad7/mixinextras/expression/"));
+                        }
+                    }
+                }
+                changed = true;
+                out.add("share orphaned: @" + kind + " " + shortName(cn.name) + "." + m.name + " reads @Share \""
+                    + ((String) hit[1]).substring(((String) hit[1]).indexOf('|') + 1) + "\" written only by disabled " + String.join(", ", writers)
+                    + " (it would read the share's default on every call)");
+            }
+            if (changed) {
+                ClassWriter cw = new ClassWriter(0);
+                cn.accept(cw);
+                e.setValue(cw.toByteArray());
+                entries.put(e.getKey(), e.getValue());
+            }
+        }
+        return out;
+    }
+
+    /** the method's top-level injector annotation (Mixin's or MixinExtras'), or null */
+    static AnnotationNode injectorAnnotation(MethodNode m) {
+        for (List<AnnotationNode> l : Arrays.asList(m.visibleAnnotations, m.invisibleAnnotations)) {
+            if (l != null) {
+                for (AnnotationNode a : l) {
+                    if (a.desc.contains("/mixin/injection/") || a.desc.contains("/mixinextras/injector/")) {
+                        return a;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /** "namespace|value" of parameter k's @Share, or null */
+    private static String shareKey(MethodNode m, int k) {
+        for (List<AnnotationNode>[] pa : Arrays.<List<AnnotationNode>[]>asList(m.visibleParameterAnnotations, m.invisibleParameterAnnotations)) {
+            if (pa != null && k < pa.length && pa[k] != null) {
+                for (AnnotationNode a : pa[k]) {
+                    if (a.desc.equals(SHARE)) {
+                        Map<String, Object> v = MixinRepair.values(a);
+                        return (v.get("namespace") instanceof String ns ? ns : "") + "|" + v.get("value");
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /** does m call {@code name} (get / set) on a LocalRef whose receiver is parameter slot {@code slot} */
+    private static boolean refUse(String owner, MethodNode m, int slot, String name) {
+        if (m.instructions == null || m.instructions.size() == 0) {
+            return false;
+        }
+        org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue>[] fs;
+        try {
+            fs = new org.objectweb.asm.tree.analysis.Analyzer<>(new org.objectweb.asm.tree.analysis.SourceInterpreter()).analyze(owner, m);
+        } catch (org.objectweb.asm.tree.analysis.AnalyzerException | RuntimeException ex) {
+            return true; // not analysable: counted as a use (never disables on doubt)
+        }
+        for (int i = 0; i < m.instructions.size(); i++) {
+            if (m.instructions.get(i) instanceof MethodInsnNode mi && mi.owner.startsWith(REF_PREFIX) && mi.name.equals(name)
+                    && fs[i] != null) {
+                int recv = fs[i].getStackSize() - 1 - Type.getArgumentTypes(mi.desc).length;
+                if (recv < 0) {
+                    continue;
+                }
+                for (AbstractInsnNode src : fs[i].getStack(recv).insns) {
+                    if (src instanceof VarInsnNode v && v.getOpcode() == Opcodes.ALOAD && v.var == slot) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     static final String EXPRESSION = "Lcom/llamalad7/mixinextras/expression/Expression;";
     static final String MODIFY_RETURN_VALUE = "Lcom/llamalad7/mixinextras/injector/ModifyReturnValue;";
     /** instructions that push one comparison operand (between an expression's member and its test) */
