@@ -1,0 +1,7 @@
+{
+  "_s205f_tickets": "1.21.4 TicketType.create factories, gone at 1.21.5 (TicketType became a record built by its constructor); bodies and basis in rt/CbTickets#create. Reached from the 1.21 layer's CbLevelChunks.<clinit> and the 1.21.4 layer's CbRestConstants.<clinit> (clinit_scan).",
+  "staticRedirects": {
+    "net/minecraft/class_3230.method_14291(Ljava/lang/String;Ljava/util/Comparator;)Lnet/minecraft/class_3230;": "top/dext/centurybridge/step/v1_21_5/rt/CbTickets#create",
+    "net/minecraft/class_3230.method_20628(Ljava/lang/String;Ljava/util/Comparator;I)Lnet/minecraft/class_3230;": "top/dext/centurybridge/step/v1_21_5/rt/CbTickets#create"
+  }
+}
