@@ -5330,9 +5330,15 @@ final class MixinBridge {
      * usActualImpulseValue's {@code original && currentImpulse.get()} forces hasImpulse false once handleOnHit is gone. Such
      * a reader is disabled with them (annotation dropped as the repair does, handler kept as a plain method), to a fixpoint;
      * one that some live injector also writes stays. A share written by nobody (read for its default) is not this rule's.
+     * Scoped as MixinExtras scopes it (ShareInfo.getOrCreate: one local per injection Target, keyed ShareId(namespace, id),
+     * namespace defaulting to the mixin's class name): a writer feeds a reader only on a target method both select. A reader
+     * is disabled only when on every method it targets the share has a disabled writer and no live one. Handlers are judged
+     * one by one whatever their names (two overloads of one handler name are two injectors sharing one variable). A share
+     * with an explicit other namespace can be written by other mixins (other mods): never judged. A disabled writer's
+     * targets are read from {@code before} (the class before the pass that disabled it); one not found there is not counted.
      * Returns one "share orphaned: ..." reason per injector disabled; entries are rewritten in place.
      */
-    static List<String> shareOrphans(Map<String, byte[]> entries) {
+    static List<String> shareOrphans(Map<String, byte[]> entries, Map<String, byte[]> before) {
         List<String> out = new ArrayList<>();
         byte[] needle = "mixinextras/sugar/Share".getBytes(StandardCharsets.UTF_8);
         for (Map.Entry<String, byte[]> e : new ArrayList<>(entries.entrySet())) {
@@ -5345,32 +5351,79 @@ final class MixinBridge {
             } catch (RuntimeException ex) {
                 continue;
             }
+            Map<String, MethodNode> pre = new HashMap<>();
+            byte[] b = before.get(e.getKey());
+            if (b != null) {
+                ClassNode pc = new ClassNode();
+                try {
+                    new ClassReader(b).accept(pc, ClassReader.SKIP_CODE);
+                    for (MethodNode pm : pc.methods) {
+                        pre.put(pm.name + pm.desc, pm);
+                    }
+                } catch (RuntimeException ex) {
+                    pre.clear();
+                }
+            }
+            String self = cn.name.replace('/', '.');
             boolean changed = false;
             while (true) {
-                Map<String, List<MethodNode>> liveW = new HashMap<>();
-                Map<String, List<MethodNode>> deadW = new HashMap<>();
+                // per share id: writers as {handler, target names (null = any), live}
+                Map<String, List<Object[]>> writersOf = new HashMap<>();
                 List<Object[]> readers = new ArrayList<>();
                 for (MethodNode m : cn.methods) {
-                    boolean live = injectorAnnotation(m) != null;
+                    AnnotationNode inj = injectorAnnotation(m);
+                    boolean live = inj != null;
+                    if (!live) {
+                        MethodNode pm = pre.get(m.name + m.desc);
+                        inj = pm == null ? null : injectorAnnotation(pm);
+                        if (inj == null) {
+                            continue; // not an injector before this pass either: its targets are unknown
+                        }
+                    }
+                    Set<String> targets = shareTargets(inj);
                     Type[] hp = Type.getArgumentTypes(m.desc);
                     int slot = (m.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
                     for (int k = 0; k < hp.length; slot += hp[k].getSize(), k++) {
-                        String key = shareKey(m, k);
+                        String key = shareKey(m, k, self);
                         if (key == null) {
                             continue;
                         }
                         if (refUse(cn.name, m, slot, "set")) {
-                            (live ? liveW : deadW).computeIfAbsent(key, x -> new ArrayList<>()).add(m);
-                        } else if (live && refUse(cn.name, m, slot, "get")) {
-                            readers.add(new Object[] {m, key});
+                            if (targets != null || live) { // a disabled writer selecting any method: doubt, not counted
+                                writersOf.computeIfAbsent(key, x -> new ArrayList<>()).add(new Object[] {m, targets, live});
+                            }
+                        } else if (live && targets != null && refUse(cn.name, m, slot, "get")) {
+                            readers.add(new Object[] {m, key, targets});
                         }
                     }
                 }
                 Object[] hit = null;
+                List<String> writers = new ArrayList<>();
                 for (Object[] r : readers) {
-                    String key = (String) r[1];
-                    if (!liveW.containsKey(key) && deadW.containsKey(key)) {
+                    @SuppressWarnings("unchecked")
+                    Set<String> rt = (Set<String>) r[2];
+                    List<Object[]> ws = writersOf.getOrDefault((String) r[1], List.of());
+                    Set<String> deadOn = new java.util.TreeSet<>();
+                    boolean orphanedEverywhere = !rt.isEmpty();
+                    for (String t : rt) {
+                        boolean liveOn = false, dead = false;
+                        for (Object[] w : ws) {
+                            @SuppressWarnings("unchecked")
+                            Set<String> wt = (Set<String>) w[1];
+                            if (wt == null || wt.contains(t)) {
+                                if ((Boolean) w[2]) {
+                                    liveOn = true;
+                                } else {
+                                    dead = true;
+                                    deadOn.add(shortName(cn.name) + "." + ((MethodNode) w[0]).name + ((MethodNode) w[0]).desc.substring(0, ((MethodNode) w[0]).desc.indexOf(')') + 1));
+                                }
+                            }
+                        }
+                        orphanedEverywhere &= dead && !liveOn;
+                    }
+                    if (orphanedEverywhere) {
                         hit = r;
+                        writers.addAll(deadOn);
                         break;
                     }
                 }
@@ -5380,10 +5433,6 @@ final class MixinBridge {
                 MethodNode m = (MethodNode) hit[0];
                 AnnotationNode an = injectorAnnotation(m);
                 String kind = an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
-                List<String> writers = new ArrayList<>();
-                for (MethodNode w : deadW.get((String) hit[1])) {
-                    writers.add(shortName(cn.name) + "." + w.name);
-                }
                 for (List<AnnotationNode> l : Arrays.asList(m.visibleAnnotations, m.invisibleAnnotations)) {
                     if (l != null) {
                         l.remove(an);
@@ -5397,9 +5446,9 @@ final class MixinBridge {
                     }
                 }
                 changed = true;
-                out.add("share orphaned: @" + kind + " " + shortName(cn.name) + "." + m.name + " reads @Share \""
-                    + ((String) hit[1]).substring(((String) hit[1]).indexOf('|') + 1) + "\" written only by disabled " + String.join(", ", writers)
-                    + " (it would read the share's default on every call)");
+                out.add("share orphaned: @" + kind + " " + shortName(cn.name) + "." + m.name + m.desc.substring(0, m.desc.indexOf(')') + 1)
+                    + " reads @Share \"" + ((String) hit[1]).substring(((String) hit[1]).indexOf('|') + 1) + "\" on " + hit[2]
+                    + ", written there only by disabled " + String.join(", ", writers) + " (it would read the share's default on every call)");
             }
             if (changed) {
                 ClassWriter cw = new ClassWriter(0);
@@ -5425,19 +5474,49 @@ final class MixinBridge {
         return null;
     }
 
-    /** "namespace|value" of parameter k's @Share, or null */
-    private static String shareKey(MethodNode m, int k) {
+    /**
+     * "namespace|value" of parameter k's @Share (namespace defaulting to the mixin's dotted class name {@code self}, as
+     * ShareInfo.getId), or null: no @Share, or one in another namespace (other mixins may write it; never judged here)
+     */
+    private static String shareKey(MethodNode m, int k, String self) {
         for (List<AnnotationNode>[] pa : Arrays.<List<AnnotationNode>[]>asList(m.visibleParameterAnnotations, m.invisibleParameterAnnotations)) {
             if (pa != null && k < pa.length && pa[k] != null) {
                 for (AnnotationNode a : pa[k]) {
                     if (a.desc.equals(SHARE)) {
                         Map<String, Object> v = MixinRepair.values(a);
-                        return (v.get("namespace") instanceof String ns ? ns : "") + "|" + v.get("value");
+                        String ns = v.get("namespace") instanceof String s ? s : self;
+                        return ns.equals(self) ? ns + "|" + v.get("value") : null;
                     }
                 }
             }
         }
         return null;
+    }
+
+    /**
+     * the target method names an injector selects (its method= selectors, owner and descriptor dropped), or null when one
+     * selects by pattern (wildcard / regex) or it names none (target= @Desc): which methods it shares a Target with is unknown
+     */
+    static Set<String> shareTargets(AnnotationNode inj) {
+        Set<String> out = new java.util.TreeSet<>();
+        for (String s : MixinRepair.strings(MixinRepair.values(inj).get("method"))) {
+            if (s.isEmpty() || s.startsWith("/") || s.indexOf('*') >= 0) {
+                return null;
+            }
+            int semi = s.indexOf(';'), par = s.indexOf('(');
+            if (s.startsWith("L") && semi > 0 && (par < 0 || semi < par)) {
+                s = s.substring(semi + 1);
+            }
+            int end = s.length();
+            for (char c : new char[] {'(', ':'}) {
+                int i = s.indexOf(c);
+                if (i >= 0 && i < end) {
+                    end = i;
+                }
+            }
+            out.add(s.substring(0, end));
+        }
+        return out.isEmpty() ? null : out;
     }
 
     /** does m call {@code name} (get / set) on a LocalRef whose receiver is parameter slot {@code slot} */
