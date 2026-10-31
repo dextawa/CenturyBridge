@@ -1,0 +1,9 @@
+{
+ "_basis": "s121g Kilt E9: 1.20.6's BuiltInRegistries.REGISTRY (class_7923.field_41167) held the enchantment registry under minecraft:enchantment (javap 1.20.6 class_7923.<clinit>: field_41176 registered with Registries.ENCHANTMENT, class_7924.field_41265); 1.21 has no built-in enchantment registry (javap 1.21 class_7923: no field_41176, enchantment is a datapack registry), so the root answers that name with nothing. A converted mod's by-name root lookups answer minecraft:enchantment with the stand-in field_41176's fieldGetter already returns (CbEnchantments.legacy()); every other receiver and name goes to vanilla unchanged (rt/CbRootRegistry). Native code is not rewritten.",
+ "instanceRedirects": {
+  "net/minecraft/class_2378.method_17966(Lnet/minecraft/class_2960;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbRootRegistry",
+  "net/minecraft/class_2378.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21/rt/CbRootRegistry",
+  "net/minecraft/class_2378.method_10250(Lnet/minecraft/class_2960;)Z": "top/dext/centurybridge/step/v1_21/rt/CbRootRegistry",
+  "net/minecraft/class_2378.method_10235()Ljava/util/Set;": "top/dext/centurybridge/step/v1_21/rt/CbRootRegistry"
+ }
+}
