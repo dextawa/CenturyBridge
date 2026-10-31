@@ -15,6 +15,9 @@
   "entrypoints": {
     "main": [
       "cb.s215.Init"
+    ],
+    "fabric-gametest": [
+      "cb.s215.gt.LegacyGameTests"
     ]
   }
 }

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "cb_s215n:native_passes",
+  "max_ticks": 100,
+  "required": true,
+  "setup_ticks": 0,
+  "structure": "fabric-gametest-api-v1:empty"
+}
