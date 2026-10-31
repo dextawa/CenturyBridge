@@ -131,6 +131,9 @@ public final class Driver {
 
     /** native 1.21 mixin TamableTeleportMixin: calls of TamableAnimal.tryToTeleportToOwner seen */
     public static volatile int nativeTeleports;
+    public static volatile int nativeDimFired;
+    public static volatile net.minecraft.class_3218 nativeDimOld;
+    public static volatile net.minecraft.class_3218 nativeDimNew;
     /** native 1.21 mixin FollowOwnerWrapMixin: FollowOwnerGoal's tryToTeleportToOwner / unableToMoveToOwner calls wrapped */
     public static volatile int nativeTeleportWraps;
     public static volatile int nativeUnableWraps;
@@ -315,6 +318,30 @@ public final class Driver {
             String text = new net.minecraft.class_5628("").method_32305(outer).getString();
             report(tag + " tagvisit", text.equals("{a: {b: 1}}") && nativeNestedWraps == 2,
                 "{a:{b:1}} as text: " + text + ", native @WrapOperation of the nested visit ran " + nativeNestedWraps);
+            // a player's cross-level moves: native @Inject + @Local in changeDimension(transition) before sendAllPlayerInfo
+            // fires once per move, teleportTo-driven or a direct (portal-type) changeDimension
+            class_3218 end = server.method_3847(net.minecraft.class_1937.field_25181);
+            com.mojang.authlib.GameProfile gp = new com.mojang.authlib.GameProfile(
+                java.util.UUID.fromString("0c0b5121-0000-4000-8000-00000000e8a7"), "cbsmx6vtele");
+            net.minecraft.class_3222 tp = new net.minecraft.class_3222(server, level, gp, net.minecraft.class_8791.method_53821());
+            new net.minecraft.class_3244(server, new net.minecraft.class_2535(net.minecraft.class_2598.field_11941), tp,
+                net.minecraft.class_8792.method_53824(gp, false));
+            nativeDimFired = 0;
+            nativeDimOld = null;
+            nativeDimNew = null;
+            tp.method_14251(end, 0.5, 100.0, 0.5, 0.0F, 0.0F);
+            report(tag + " dim-local-teleport", nativeDimFired == 1 && nativeDimOld == level && nativeDimNew == end,
+                "teleportTo overworld -> end: native changeDimension @Local injector fired " + nativeDimFired + ", old overworld "
+                    + (nativeDimOld == level) + ", new end " + (nativeDimNew == end));
+            nativeDimFired = 0;
+            nativeDimOld = null;
+            tp.method_5731(new net.minecraft.class_5454(level, new net.minecraft.class_243(0.5, 100.0, 0.5),
+                net.minecraft.class_243.field_1353, 0.0F, 0.0F, net.minecraft.class_5454.field_52245));
+            report(tag + " dim-local-portal", nativeDimFired == 1 && nativeDimOld == end,
+                "changeDimension end -> overworld: native injector fired " + nativeDimFired + ", old end " + (nativeDimOld == end));
+            if (!tp.method_31481()) {
+                ((class_3218) tp.method_37908()).method_18770(tp, net.minecraft.class_1297.class_5529.field_26999);
+            }
         } catch (Throwable t) {
             report(tag + " exception", false, String.valueOf(t));
             t.printStackTrace();

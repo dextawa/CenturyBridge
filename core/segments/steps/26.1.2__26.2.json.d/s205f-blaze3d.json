@@ -11,10 +11,14 @@
     "com/mojang/blaze3d/pipeline/RenderPipeline.getSamplers()Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/pipeline/RenderPipeline.getUniforms()Ljava/util/List;": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/vertex/VertexFormatElement.count()I": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
+    "com/mojang/blaze3d/vertex/VertexFormatElement.byteSize()I": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
+    "com/mojang/blaze3d/vertex/VertexFormat$Builder.add(Ljava/lang/String;Lcom/mojang/blaze3d/vertex/VertexFormatElement;)Lcom/mojang/blaze3d/vertex/VertexFormat$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
+    "com/mojang/blaze3d/vertex/VertexFormat$Builder.padding(I)Lcom/mojang/blaze3d/vertex/VertexFormat$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/vertex/VertexFormatElement.normalized()Z": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/vertex/VertexFormatElement.type()Lcom/mojang/blaze3d/vertex/VertexFormatElement$Type;": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d"
   },
   "staticRedirects": {
+    "com/mojang/blaze3d/vertex/VertexFormat.builder()Lcom/mojang/blaze3d/vertex/VertexFormat$Builder;": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/opengl/GlProgram.link(Lcom/mojang/blaze3d/opengl/GlShaderModule;Lcom/mojang/blaze3d/opengl/GlShaderModule;Lcom/mojang/blaze3d/vertex/VertexFormat;Ljava/lang/String;)Lcom/mojang/blaze3d/opengl/GlProgram;": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d",
     "com/mojang/blaze3d/opengl/GlConst.toGl(Lcom/mojang/blaze3d/vertex/VertexFormatElement$Type;)I": "top/dext/centurybridge/step/v26_2/rt/CbS205fBlaze3d"
   }
