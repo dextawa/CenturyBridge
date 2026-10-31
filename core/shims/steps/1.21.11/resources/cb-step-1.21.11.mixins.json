@@ -17,7 +17,8 @@
     "CbGameRulesMixinHooks",
     "CbGameRulesServerMixin",
     "CbGameRulesServerMixinHooks",
-    "CbMinecartCommandSourceRestoredMixin"
+    "CbMinecartCommandSourceRestoredMixin",
+    "CbSavedDataServerMixin"
   ],
   "client": [
     "CbClientLevelColorsRestoredMixin",

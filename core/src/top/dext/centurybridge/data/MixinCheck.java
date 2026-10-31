@@ -881,6 +881,10 @@ public final class MixinCheck {
                 default -> {
                     if (a.desc.startsWith(INJECT_PKG)) {
                         checkInjection(me, m, a, target);
+                    } else if (a.desc.startsWith("Lcom/llamalad7/mixinextras/injector/") && expressionPoint(a)) {
+                        // a MixinExtras injector on an expression: only its definitions are judged here (its selectors
+                        // and other points are not modelled for MixinExtras injectors)
+                        checkExpression(me, m, a, target);
                     }
                 }
             }
@@ -1001,7 +1005,97 @@ public final class MixinCheck {
                 problems.add(me + ": @At target \"" + sel + "\" unresolved (" + m.name + ")");
             }
         }
+        if (expressionPoint(a)) {
+            checkExpression(me, m, a, target);
+        }
         scanBodies(me, m, a, target);
+    }
+
+    /** does the injector's at= name MixinExtras' expression point */
+    private static boolean expressionPoint(AnnotationNode a) {
+        Object at = get(a, "at");
+        for (Object o : at instanceof List<?> l ? l : at == null ? List.of() : List.of(at)) {
+            if (o instanceof AnnotationNode an && "MIXINEXTRAS:EXPRESSION".equals(str(get(an, "value")))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * A MIXINEXTRAS:EXPRESSION point: each @Definition member (method= "Lowner;name(desc)", field= "Lowner;name:desc")
+     * must be referenced in a selected target body, else MixinExtras matches nothing there (a critical injection
+     * failure at the default require). Definitions without owner and descriptor, and type= definitions, are not judged.
+     */
+    private void checkExpression(String me, MethodNode h, AnnotationNode a, ClassNode target) {
+        String what = me + ": " + short_(a.desc) + " " + h.name + " in " + target.name;
+        ClassNode code = codeBytes.isEmpty() ? null : codeClass(target.name);
+        if (code == null) {
+            unscanned.add(what + " (expression: no code for the target)");
+            return;
+        }
+        List<MethodNode> tms = targetMethods(a, code);
+        if (tms.isEmpty()) {
+            return; // the selector itself is reported
+        }
+        if (!a.desc.startsWith(INJECT_PKG)) {
+            scanned++; // a MixinExtras injector: scanBodies does not count it
+        }
+        List<AnnotationNode> defs = new ArrayList<>();
+        for (List<AnnotationNode> l : java.util.Arrays.asList(h.visibleAnnotations, h.invisibleAnnotations)) {
+            for (AnnotationNode d : l == null ? List.<AnnotationNode>of() : l) {
+                if (d.desc.equals("Lcom/llamalad7/mixinextras/expression/Definition;")) {
+                    defs.add(d);
+                } else if (d.desc.equals("Lcom/llamalad7/mixinextras/expression/Definitions;") && get(d, "value") instanceof List<?> dl) {
+                    for (Object o : dl) {
+                        if (o instanceof AnnotationNode dn) {
+                            defs.add(dn);
+                        }
+                    }
+                }
+            }
+        }
+        for (AnnotationNode d : defs) {
+            for (String key : List.of("method", "field")) {
+                boolean fld = key.equals("field");
+                Object v = get(d, key);
+                List<?> specs = v instanceof List<?> l ? l : v == null ? List.of() : List.of(v);
+                if (specs.isEmpty()) {
+                    continue;
+                }
+                boolean any = false;
+                boolean judged = false;
+                for (Object o : specs) {
+                    String spec = o.toString();
+                    int semi = spec.indexOf(';');
+                    int sep = semi < 0 ? -1 : spec.indexOf(fld ? ':' : '(', semi);
+                    if (!spec.startsWith("L") || semi < 0 || sep < 0) {
+                        continue;
+                    }
+                    judged = true;
+                    String owner = spec.substring(1, semi);
+                    String name = spec.substring(semi + 1, sep);
+                    String desc = spec.substring(fld ? sep + 1 : sep);
+                    for (MethodNode tm : tms) {
+                        for (AbstractInsnNode n : tm.instructions == null ? new AbstractInsnNode[0] : tm.instructions.toArray()) {
+                            any |= fld ? n instanceof FieldInsnNode fi && fi.owner.equals(owner) && fi.name.equals(name) && fi.desc.equals(desc)
+                                : n instanceof MethodInsnNode mi && mi.owner.equals(owner) && mi.name.equals(name) && mi.desc.equals(desc);
+                        }
+                    }
+                }
+                if (judged && !any) {
+                    Object r = get(a, "require");
+                    int require = r instanceof Integer i && i >= 0 ? i : defaultRequire.getOrDefault(currentMixin, 0);
+                    String text = what + ": expression definition " + str(get(d, "id")) + " " + specs + " not referenced in "
+                        + tms.stream().map(t -> t.name + t.desc).collect(java.util.stream.Collectors.joining(", "));
+                    if (require > 0) {
+                        problems.add(text + " (Critical injection failure at apply)");
+                    } else {
+                        silent.add(text + " (require 0: applies, does nothing)");
+                    }
+                }
+            }
+        }
     }
 
     private static final String INJECT = "Lorg/spongepowered/asm/mixin/injection/Inject;";
