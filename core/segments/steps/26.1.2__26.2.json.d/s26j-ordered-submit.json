@@ -1,0 +1,38 @@
+{
+ "_s26j_ordered_submit_basis": "26.1.2 classes implementing OrderedSubmitNodeCollector (the 26.1 layer's CbFapiSubmitBlocks$OrderedView, any 26.1.2 mod's): javap of the interface in both releases. 26.2 reshaped submitNameTag (distance dropped; NameTagFeatureRenderer$Submit.distanceToCameraSq() = TranslucentSubmit.computeDistanceToCameraSq(pose) of the pose SubmitNodeCollection.submitNameTag translated by (x, y + 0.5, z)) and submitBreakingBlockModel (26.2 LevelRenderer seeds the random with state.getSeed(pos) and collects the model's parts itself, what 26.1.2's BlockFeatureRenderer did from (model, seed)): bridged hooks give the old override those values. submitShapeOutline / submitGizmoPrimitives are new; submitQuadParticleGroup replaces submitParticleGroup(ParticleGroupRenderer), whose prepare/render types (ParticleBufferCache, PreparedBuffers) 26.2 dropped with no counterpart (whole-jar: QuadParticleFeatureRenderer builds layers from the state). Fills: OrderedView forwards to its wrapped collector (swall15: `private final OrderedSubmitNodeCollector target` keeps name and type), any other 26.1.2 implementation drops them (known loss, release_notes_known). Vanilla's collectors implement all three: concreteOnTarget never fills them.",
+ "overrideHooks": [
+  {
+   "old": "submitNameTag(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZIDLnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
+   "new": "submitNameTag(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZILnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
+   "onlyUnder": "net/minecraft/client/renderer/OrderedSubmitNodeCollector",
+   "bridge": "top/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit.submitNameTag(Ltop/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit$LegacyNameTag;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZILnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
+   "adapter": "top/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit$LegacyNameTag",
+   "guard": "top/dext/centurybridge/step/v26_2/rt/Guard"
+  },
+  {
+   "old": "submitBreakingBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;JI)V",
+   "new": "submitBreakingBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/List;I)V",
+   "onlyUnder": "net/minecraft/client/renderer/OrderedSubmitNodeCollector",
+   "bridge": "top/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit.submitBreakingBlockModel(Ltop/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit$LegacyBreakingBlockModel;Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/List;I)V",
+   "adapter": "top/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit$LegacyBreakingBlockModel",
+   "guard": "top/dext/centurybridge/step/v26_2/rt/Guard"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/client/renderer/OrderedSubmitNodeCollector",
+   "method": "submitShapeOutline(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/client/renderer/rendertype/RenderType;IFZ)V",
+   "call": "top/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit.submitShapeOutline(Lnet/minecraft/client/renderer/OrderedSubmitNodeCollector;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/client/renderer/rendertype/RenderType;IFZ)V"
+  },
+  {
+   "under": "net/minecraft/client/renderer/OrderedSubmitNodeCollector",
+   "method": "submitGizmoPrimitives(Lnet/minecraft/client/renderer/gizmos/DrawableGizmoPrimitives$Group;Lnet/minecraft/client/renderer/state/level/CameraRenderState;Z)V",
+   "call": "top/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit.submitGizmoPrimitives(Lnet/minecraft/client/renderer/OrderedSubmitNodeCollector;Lnet/minecraft/client/renderer/gizmos/DrawableGizmoPrimitives$Group;Lnet/minecraft/client/renderer/state/level/CameraRenderState;Z)V"
+  },
+  {
+   "under": "net/minecraft/client/renderer/OrderedSubmitNodeCollector",
+   "method": "submitQuadParticleGroup(Lnet/minecraft/client/renderer/state/level/QuadParticleRenderState;)V",
+   "call": "top/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit.submitQuadParticleGroup(Lnet/minecraft/client/renderer/OrderedSubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/QuadParticleRenderState;)V"
+  }
+ ]
+}
