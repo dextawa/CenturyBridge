@@ -1,0 +1,28 @@
+{
+ "_smx1_saved_data_context_basis": "smx1h (javap -p both; routed by swall15 / s205g: NoClassDefFoundError SavedData$class_10740 from the 1.21.5 layer's CbSavedData on 1.21.11+): 1.21.10 SavedData.Context (class_18$class_10740, record (ServerLevel, long seed)) is gone from 1.21.11 together with SavedDataType's Function form (constructor + accessors comp_3642/3643 returning Function) and DimensionDataStorage's Context constructor; 1.21.11's SavedDataType is (id, Supplier, Codec, DataFixTypes) and the storage takes no Context. Presume moved, checked: no 1.21.11 class carries a level/seed for saved data (WorldBorder / RandomSequences became plain Supplier/Codec types; ServerScoreboard.TYPE moved to ScoreboardSaveData.TYPE class_273.field_63438). The Context class is given back (facade/SavedDataContext, 1.21.10's members); a Function-form type becomes a 1.21.11 type applying the Context 1.21.10's server storage applied, Context(overworld) (rt/CbSavedDataTypes, server from mixin/CbSavedDataServerMixin); the storage constructor drops its Context.",
+ "classRenames": {
+  "net/minecraft/class_18$class_10740": "top/dext/centurybridge/step/v1_21_11/facade/SavedDataContext"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_10741.<init>(Ljava/lang/String;Ljava/util/function/Function;Ljava/util/function/Function;Lnet/minecraft/class_4284;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbSavedDataTypes"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_10741.comp_3642()Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbSavedDataTypes",
+  "net/minecraft/class_10741.comp_3643()Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbSavedDataTypes"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_2995.field_56414:Lnet/minecraft/class_10741;": "top/dext/centurybridge/step/v1_21_11/rt/CbSavedDataTypes"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_26.<init>(Lnet/minecraft/class_18$class_10740;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7225$class_7874;)V": {
+   "desc": "(Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "drop",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "1.21.11's storage takes no Context; every type applies the server's (rt/CbSavedDataTypes)"
+  }
+ }
+}
