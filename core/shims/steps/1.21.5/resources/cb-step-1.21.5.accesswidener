@@ -66,3 +66,14 @@ mutable field net/minecraft/class_7952 field_41396 Lcom/mojang/serialization/Cod
 mutable field net/minecraft/class_7952 field_41397 Lcom/mojang/serialization/Codec;
 mutable field net/minecraft/class_8104 field_42264 Lnet/minecraft/class_8104;
 # ---- END GENERATED (s215b) ----
+# RenderType give-back (rt/CbRenderTypes, facade/RenderStateShard$class_4671; javap 1.21.5 intermediary):
+# BooleanStateShard (class_4668$class_4670, private nested) is the super of 1.21.4's CullStateShard facade (ctor already public)
+accessible	class	net/minecraft/class_4668$class_4670
+# CompositeState.states: the layering shard of a state gives the pipeline's depth bias
+accessible	field	net/minecraft/class_1921$class_4688	field_21422	Lcom/google/common/collect/ImmutableList;
+# RenderType.create(name, size, crumbling, sort, pipeline, state) and its CompositeRenderType result, built for 1.21.4's create
+accessible	method	net/minecraft/class_1921	method_24049	(Ljava/lang/String;IZZLcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+accessible	class	net/minecraft/class_1921$class_4687
+# CompositeState.Builder.createCompositeState (protected): the redirected 1.21.4 calls run 1.21.5's own build
+accessible	method	net/minecraft/class_1921$class_4688$class_4689	method_23617	(Z)Lnet/minecraft/class_1921$class_4688;
+accessible	method	net/minecraft/class_1921$class_4688$class_4689	method_24297	(Lnet/minecraft/class_1921$class_4750;)Lnet/minecraft/class_1921$class_4688;
