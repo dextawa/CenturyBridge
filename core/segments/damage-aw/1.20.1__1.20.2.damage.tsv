@@ -1105,7 +1105,7 @@ aw-call-static	net/minecraft/class_2507	method_10626	(Ljava/io/DataInput;ILnet/m
 aw-new	net/minecraft/class_2535$class_2536	<init>	(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V	CLASS	class gone	aw:0 mixin:0
 aw-get	net/minecraft/class_2535$class_2536	field_11661	Lnet/minecraft/class_2596;	CLASS	class gone	aw:0 mixin:0
 aw-get	net/minecraft/class_2535$class_2536	field_11662	Lnet/minecraft/class_7648;	CLASS	class gone	aw:0 mixin:0
-aw-call	net/minecraft/class_2535	method_10764	(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V	METHOD	method method_10764(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V private	aw:0 mixin:2
+aw-call	net/minecraft/class_2535	method_10764	(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V	METHOD	method method_10764(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V private	aw:0 mixin:1
 aw-call	net/minecraft/class_2535	method_36942	(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Lnet/minecraft/class_2539;Lnet/minecraft/class_2539;)V	METHOD	method method_36942(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V private	aw:0 mixin:1
 aw-call	net/minecraft/class_2535	method_32306	()Lnet/minecraft/class_2539;	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-get	net/minecraft/class_2535	field_11644	Ljava/util/Queue;	FIELD	field not declared on the owner	aw:0 mixin:0

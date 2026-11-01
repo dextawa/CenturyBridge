@@ -1,0 +1,16 @@
+{
+ "_s9k_modelvectors_basis": "javap -c both code jars: CubeDefinition origin/dimensions (class_5604 field_27709/27710) Vector3f -> Vector3fc, still filled with new Vector3f(..); ModelPart.Polygon normal (class_630$class_593 comp_3185) Vector3f (a copy of the direction's normal) -> Vector3fc (Direction's own); ModelPart.Vertex (class_630$class_618) pos Vector3f comp_3186 -> three floats comp_4804/4805/4806 with the same values, and its (Vector3f, u, v) constructor -> (x, y, z, u, v), which 1.21.8's float constructor delegated to. rt/CbModelVectors answers 1.21.8's Vector3f (palladium / bendy-lib / estrogen / cynosure read them through their AW).",
+ "instanceFieldGetters": {
+  "net/minecraft/class_5604.field_27709:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_9/rt/CbModelVectors",
+  "net/minecraft/class_5604.field_27710:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_9/rt/CbModelVectors",
+  "net/minecraft/class_630$class_593.comp_3185:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_9/rt/CbModelVectors",
+  "net/minecraft/class_630$class_618.comp_3186:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_9/rt/CbModelVectors"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_630$class_593.comp_3185()Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_9/rt/CbModelVectors",
+  "net/minecraft/class_630$class_618.comp_3186()Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_9/rt/CbModelVectors"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_630$class_618.<init>(Lorg/joml/Vector3f;FF)V": "top/dext/centurybridge/step/v1_21_9/rt/CbModelVectors#createVertex"
+ }
+}
