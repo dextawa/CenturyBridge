@@ -176,6 +176,7 @@ public class Smx1dOld implements ClientModInitializer {
             }
         }
         guarded("fileUpload", Smx1dOld::fileUpload);
+        guarded("text", () -> text(mc));
         System.setProperty("cbsmx1d.old.done", "1");
     }
 
@@ -326,6 +327,93 @@ public class Smx1dOld implements ClientModInitializer {
         class_11 p = new class_11(List.of(new class_9(0, 64, 0), new class_9(1, 64, 0), new class_9(2, 64, 0)), new class_2338(2, 64, 0), true);
         class_868.method_23118(stack, path, p, 0.5F, true, true, 0, 64, 0);
         r("debug.path", path.out.starts > 0, "vertices=" + path.out.starts + " types=" + path.types);
+    }
+
+    // 8. text drawing: MultiLineLabel.render / getStyle, AbstractButton.renderString override + super, scrolling string
+    /** a 1.21.10 button overriding renderString and calling its super */
+    static final class OldButton extends net.minecraft.class_4185 {
+        int strings, lastColor;
+
+        OldButton(int x, int y) {
+            super(x, y, 120, 20, class_2561.method_43470("cb old button"), b -> { }, net.minecraft.class_4185.field_40754);
+        }
+
+        @Override
+        public void method_48589(net.minecraft.class_332 g, net.minecraft.class_327 font, int color) {
+            strings++;
+            lastColor = color;
+            super.method_48589(g, font, color);
+        }
+
+        /** AbstractWidget.renderScrollingString(graphics, font, message, minX, minY, maxX, maxY, color): protected static */
+        static void scrolling(net.minecraft.class_332 g, net.minecraft.class_327 font) {
+            method_52718(g, font, class_2561.method_43470("cb scrolling"), 10, 30, 60, 40, -1);
+        }
+    }
+
+    /** a 1.21.10 screen drawing a label through render(graphics, align, ..) and asking getStyle */
+    static final class OldScreen extends net.minecraft.class_437 {
+        net.minecraft.class_5489 label;
+        OldButton old;
+        int frames, lastEnd = -1, lines;
+        String style = "none";
+        String scrolled = "not run";
+        Throwable failed;
+
+        OldScreen() {
+            super(class_2561.method_43470("cb smx1d text"));
+        }
+
+        @Override
+        protected void method_25426() {
+            label = net.minecraft.class_5489.method_30890(this.field_22793,
+                class_2561.method_43470("cb label line").method_27696(net.minecraft.class_2583.field_24360.method_10975("cbins")), 200);
+            lines = label.method_30887();
+            old = this.method_37063(new OldButton(10, 60));
+            this.method_37063(net.minecraft.class_4185.method_46430(class_2561.method_43470("cb vanilla button"), b -> { })
+                .method_46434(10, 90, 120, 20).method_46431());
+        }
+
+        @Override
+        public void method_25394(net.minecraft.class_332 g, int mouseX, int mouseY, float delta) {
+            super.method_25394(g, mouseX, mouseY, delta);
+            try {
+                lastEnd = label.method_73212(g, net.minecraft.class_5489.class_11735.field_62009, 10, 10, 9, true, -1);
+                net.minecraft.class_2583 s = label.method_72103(net.minecraft.class_5489.class_11735.field_62009, 10, 10, 9, 13.0, 12.0);
+                style = s == null ? "null" : String.valueOf(s.method_10955());
+                OldButton.scrolling(g, this.field_22793);
+                scrolled = "ran";
+            } catch (Throwable t) {
+                failed = t;
+            }
+            frames++;
+        }
+    }
+
+    static void text(class_310 mc) throws Exception {
+        long labels0 = n("labelVisit"), oldLabel0 = n("defaultLabel.old"), vanLabel0 = n("defaultLabel.vanilla");
+        OldScreen[] s = {null};
+        mc.execute(() -> {
+            s[0] = new OldScreen();
+            mc.method_1507(s[0]);
+        });
+        sleep(4000);
+        OldScreen sc = s[0];
+        mc.execute(() -> mc.method_1507(null));
+        sleep(500);
+        if (sc.failed != null) {
+            sc.failed.printStackTrace();
+        }
+        r("text.frames", sc.frames > 0 && sc.failed == null, "frames=" + sc.frames + " failed=" + sc.failed);
+        r("text.labelRender", sc.lastEnd == 10 + 9 * sc.lines, "end=" + sc.lastEnd + " lines=" + sc.lines);
+        r("text.labelNative", n("labelVisit") - labels0 >= 2L * sc.frames, "visitLines=" + (n("labelVisit") - labels0));
+        r("text.labelStyle", "cbins".equals(sc.style), "insertion=" + sc.style);
+        r("text.scrollingStatic", "ran".equals(sc.scrolled), sc.scrolled);
+        r("text.oldRenderString", sc.old.strings > 0 && sc.old.lastColor == -1, "renderString=" + sc.old.strings
+            + String.format(" color=%08x", sc.old.lastColor));
+        r("text.oldDefaultLabelNative", n("defaultLabel.old") - oldLabel0 > 0, "renderDefaultLabel=" + (n("defaultLabel.old") - oldLabel0));
+        r("text.vanillaDefaultLabelNative", n("defaultLabel.vanilla") - vanLabel0 > 0,
+            "renderDefaultLabel=" + (n("defaultLabel.vanilla") - vanLabel0));
     }
 
     // 5. Realms FileUpload.upload() / cancel() / isFinished()
