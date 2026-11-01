@@ -885,6 +885,7 @@
   "net/minecraft/class_11617": "top/dext/centurybridge/step/v26_1/facade/DebugEntryLookingAtFluid"
  },
  "ctorRedirects": {
+  "net/minecraft/class_10215.<init>(Lnet/minecraft/class_6862;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#damageResistant",
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newModelBlockRenderer",
   "net/minecraft/class_775.<init>(Lnet/minecraft/class_11701;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newLiquidBlockRenderer",
