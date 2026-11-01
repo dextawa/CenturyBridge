@@ -85,6 +85,99 @@ public final class CbTextDrawing {
         void cb$v1_21_11$icon(class_332 graphics, int x, int y);
     }
 
+    /**
+     * 1.21.10 MultiLineLabel.render / getStyle, restored as defaults of MultiLineLabel
+     * (mixin/CbMultiLineLabelRestoredMixin): 1.21.11's labels take the defaults ({@link #method_73212} /
+     * {@link #method_72103} over visitLines); a 1.21.10 implementation overrides them.
+     */
+    public interface LegacyLabel {
+        int method_73212(class_332 graphics, class_11735 align, int x, int y, int lineHeight, boolean shadow, int color);
+
+        class_2583 method_72103(class_11735 align, int x, int y, int lineHeight, double mouseX, double mouseY);
+    }
+
+    /** implemented by GuiGraphics (mixin/CbGuiGraphicsMouseAccess): the mouse position its collectors hit-test with */
+    public interface GraphicsMouse {
+        int cb$v1_21_11$mouseX();
+
+        int cb$v1_21_11$mouseY();
+    }
+
+    /** implemented by ActiveTextCollector.ClickableStyleFinder (mixin/CbStyleFinderAccess) */
+    public interface StyleFinder {
+        int cb$v1_21_11$x();
+
+        int cb$v1_21_11$y();
+
+        /** the finder's own style filter (method_75776): kept when it has a click event (or an insertion, if asked) */
+        void cb$v1_21_11$offer(class_2583 style);
+    }
+
+    /**
+     * A 1.21.10 button's renderWidget override, renamed (overrideRenames): 1.21.11's AbstractButton.renderWidget is
+     * final; its head hands the call to this (mixin/CbAbstractButtonRenderWidgetMixinHooks).
+     */
+    public interface LegacyRenderWidget {
+        void cb$renderWidget(class_332 graphics, int mouseX, int mouseY, float partialTick);
+    }
+
+    private static final ThreadLocal<java.util.Set<Object>> RENDER_WIDGET =
+        ThreadLocal.withInitial(() -> java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()));
+
+    /**
+     * First entry into a 1.21.10 button's renderWidget on this thread: its override runs; its super.renderWidget(..)
+     * comes back as a re-entry and runs vanilla's final body. Its own set, not {@link Guard}'s: the renderString /
+     * renderScrollingString hooks that body reaches guard the same object.
+     */
+    public static boolean renderWidgetEnter(Object button) {
+        return RENDER_WIDGET.get().add(button);
+    }
+
+    public static void renderWidgetExit(Object button) {
+        RENDER_WIDGET.get().remove(button);
+    }
+
+    /**
+     * visitLines(align, x, y, lineHeight, collector) (method_75816, abstract in 1.21.11) of a 1.21.10 MultiLineLabel
+     * implementation, which has 1.21.10's render(graphics, ..) and getStyle(..) only (abstractFills). The collectors
+     * 1.21.11 hands a label (javap of every implementor and caller):
+     * <ul>
+     * <li>a GuiGraphics' collector (class_332$class_12229, every screen drawing a label): the label's render into
+     *     that GuiGraphics, with the colour that collector draws lines in (ARGB.white(params alpha)) and the shadow
+     *     1.21.10's screens passed (true; 1.21.11's collector draws with one too); then the style getStyle answers at
+     *     the GuiGraphics' mouse goes to the collector, which keeps it as hovered / clicked per its mode, as it does
+     *     for the styles of the lines it draws itself;</li>
+     * <li>a ClickableStyleFinder (class_12225$class_12226): getStyle at the finder's position, through the finder's
+     *     own filter;</li>
+     * <li>any other collector would need the lines, which a 1.21.10 implementation never exposes: nothing is handed
+     *     to it.</li>
+     * </ul>
+     * Answers the y below the last line, as visitLines does.
+     */
+    public static int visitLines(class_5489 label, class_11735 align, int x, int y, int lineHeight, class_12225 collector) {
+        if (collector instanceof CollectorGraphics g) {
+            class_332 graphics = g.cb$v1_21_11$graphics();
+            LegacyLabel old = (LegacyLabel) label;
+            int end = old.method_73212(graphics, align, x, y, lineHeight, true,
+                class_9848.method_61317(collector.method_75760().comp_5152()));
+            GraphicsMouse m = (GraphicsMouse) graphics;
+            class_2583 style = old.method_72103(align, x, y, lineHeight, m.cb$v1_21_11$mouseX(), m.cb$v1_21_11$mouseY());
+            if (style != null) {
+                @SuppressWarnings("unchecked")
+                java.util.function.Consumer<class_2583> styles = (java.util.function.Consumer<class_2583>) (Object) collector;
+                styles.accept(style); // GuiGraphics' collector is its own style consumer (method_75791)
+            }
+            return end;
+        }
+        if (collector instanceof StyleFinder f) {
+            class_2583 style = ((LegacyLabel) label).method_72103(align, x, y, lineHeight, f.cb$v1_21_11$x(), f.cb$v1_21_11$y());
+            if (style != null) {
+                f.cb$v1_21_11$offer(style);
+            }
+        }
+        return y + lineHeight * label.method_30887();
+    }
+
     /** the old renderString a 1.21.10 button declares (an override hook's adapter) */
     public interface LegacyRenderString {
         void method_48589(class_332 graphics, class_327 font, int color);
