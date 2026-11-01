@@ -4,6 +4,7 @@ import java.util.Map;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.class_1059;
+import net.minecraft.class_10725;
 import net.minecraft.class_11939;
 import net.minecraft.class_2394;
 import net.minecraft.class_2396;
@@ -40,8 +41,8 @@ public final class CbParticleResources {
         return engine.field_62618.field_62627;
     }
 
-    /** ParticleEngine.textureAtlas: the particle atlas, the AtlasManager's on 1.21.9 */
+    /** ParticleEngine.textureAtlas: the particle atlas: the AtlasManager's, keyed by AtlasIds.PARTICLES (not the 1.21.8 texture path) */
     public static class_1059 field_18301(class_702 engine) {
-        return class_310.method_1551().method_72703().method_73025(class_1059.field_17898);
+        return class_310.method_1551().method_72703().method_73025(class_10725.field_56389);
     }
 }
