@@ -41,7 +41,8 @@ public abstract class CbS26BlockOutlineRouteMixin {
     @Inject(method = "submitBlockOutline(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/LevelRenderState;)V",
         at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V", ordinal = 0), cancellable = true)
     private void cbS26$routeBlockOutline(PoseStack poseStack, SubmitNodeCollector collector, LevelRenderState state, CallbackInfo ci) {
-        if (!CbMixedMembers.mixed(CbS26BlockOutlineHook.MEMBER)) {
+        if (!CbMixedMembers.mixed(CbS26BlockOutlineHook.MEMBER) && !CbMixedMembers.mixed(CbS26BlockOutlineHook.HIT_MEMBER)) {
+            ((CbS26BlockOutlineHook) (Object) this).cbS26$noOutlineRoute();
             return;
         }
         boolean translucent = state.blockOutlineRenderState.isTranslucent();
