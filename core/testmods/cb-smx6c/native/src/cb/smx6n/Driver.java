@@ -128,6 +128,30 @@ public class Driver implements ClientModInitializer {
             Thread.sleep(4000);
             check("join", true, "player in world");
 
+            // (h) 1.20.6 BlockModel.bakeFace through cb-smx6c's access widener (damage-aw): a quad, and its location seen by
+            // the 1.20.6 bakeQuad mixin (the layer bakes it on the restored bakeQuad(.., location))
+            try {
+                Class<?> cc = Class.forName("cb.smx6c.Counters");
+                String loc = (String) field(cc, "PROBE_LOCATION");
+                @SuppressWarnings("unchecked")
+                Map<String, Integer> locs = (Map<String, Integer>) field(cc, "LOCATIONS");
+                int before = locs.getOrDefault(loc, 0);
+                boolean quad = on(mc, () -> {
+                    try {
+                        return (Boolean) cc.getMethod("bakeFaceProbe").invoke(null);
+                    } catch (ReflectiveOperationException e) {
+                        throw new RuntimeException(e.getCause() != null ? e.getCause() : e);
+                    }
+                });
+                int seen = locs.getOrDefault(loc, 0) - before;
+                check("h.awBakeFace", quad && seen == 1, "1.20.6 BlockModel.bakeFace via access widener: quad " + quad
+                    + ", its location seen by the 1.20.6 bakeQuad mixin " + seen + " time(s)");
+            } catch (ClassNotFoundException e) {
+                log("h: cb-smx6c not loaded");
+            } catch (Exception e) {
+                Throwable c = e.getCause() != null ? e.getCause() : e;
+                check("h.awBakeFace", false, "bakeFace probe failed: " + c);
+            }
             // (a) the dump: one hash per baked model (compare the layered run with the bare 1.21 run). Climbed past 1.21.4
             // the accessor's field (ModelManager.field_5408) is gone; that failure is this section's own, recorded, and the
             // later sections still run
