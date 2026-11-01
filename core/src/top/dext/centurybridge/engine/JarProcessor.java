@@ -1176,6 +1176,9 @@ public final class JarProcessor {
                             Chain.CallReshape r) {
         reshapeArgs(m, mi, r.args);
         mi.desc = r.newDesc;
+        if (r.newName != null) {
+            mi.name = r.newName;
+        }
         if (r.retKind != null) {
             org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
             org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
@@ -2717,10 +2720,14 @@ public final class JarProcessor {
         }
         // anchors are checked against real target bodies BEFORE triage: a repair
         // (desc-drop / descend) rewrites the selector triage then reads
+        // the injectors as they stand before repair / peel disable any: shareOrphans reads a disabled writer's targets here
+        Map<String, byte[]> preDisable = new HashMap<>(entries);
         MixinRepair.Outcome repaired = chain.mixinRepair != null ? chain.mixinRepair.repair(entries) : null;
         if (repaired != null) {
             for (String r : repaired.repairs()) rpt.notes.add(tag + "mixin repaired: " + r);
             for (String d : repaired.disabled()) rpt.disabledInjectors.add(tag + d);
+            // smixin12: a reader of a @Share only disabled injectors wrote goes with them
+            for (String d : MixinBridge.shareOrphans(entries, preDisable)) rpt.disabledInjectors.add(tag + d);
         }
         MixinTriage.Result triage = MixinTriage.run(entries, chain);
         Set<String> deadMixins = new HashSet<>();
@@ -2756,6 +2763,8 @@ public final class JarProcessor {
             }
         }
         for (String n : peel.finish()) rpt.notes.add(tag + n);
+        // peeled injectors are disabled too: their @Share readers go with them (smixin12)
+        for (String d : MixinBridge.shareOrphans(entries, preDisable)) rpt.disabledInjectors.add(tag + d);
         // a mixin extending a stripped mixin cannot apply either ("super class
         // ... was not found in the hierarchy of target"): strip the subtree too
         boolean grew = true;
@@ -3144,6 +3153,7 @@ public final class JarProcessor {
                         Chain.CallReshape cr = chain.callReshapes.get(key);
                         String nd = sr != null ? sr.newDesc : cr != null ? cr.newDesc : null;
                         String mr = chain.methodRenames.get(key);
+                        if (mr == null && cr != null) mr = cr.newName;
                         if (nd != null && !nd.equals(desc)) { desc = nd; reshaped++; }
                         if (mr != null) { name = mr; reshaped++; }
                     }
@@ -3417,6 +3427,10 @@ public final class JarProcessor {
         }
         for (String d : out.disabled()) {
             rpt.disabledInjectors.add(tag + d + " (past the wall)");
+        }
+        for (String d : MixinBridge.shareOrphans(entries, before)) {
+            rpt.disabledInjectors.add(tag + d + " (past the wall)");
+            changed = true;
         }
         if (!out.fatal().isEmpty()) {
             for (String cls : out.fatal()) {

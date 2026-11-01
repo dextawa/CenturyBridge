@@ -1,0 +1,10 @@
+{
+ "callReshapes": {
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V": {
+   "name": "submitQuadParticleGroup",
+   "desc": "(Lnet/minecraft/client/renderer/state/level/QuadParticleRenderState;)V",
+   "ops": ["conv top/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit#quadParticleGroup(Ljava/lang/Object;)Lnet/minecraft/client/renderer/state/level/QuadParticleRenderState;"]
+  }
+ },
+ "_smixin14_particles_basis": "26.1.2 OrderedSubmitNodeCollector.submitParticleGroup(ParticleGroupRenderer) is 26.2's submitQuadParticleGroup(QuadParticleRenderState) (javap: 26.1.2 QuadParticleRenderState implements ParticleGroupRenderer; 26.2 has no ParticleGroupRenderer; SubmitNodeCollection's 26.2 body submits QuadParticleFeatureRenderer$Submit(state, translucent) for both phases, what 26.1.2 did through the renderer). Calls through SubmitNodeStorage / SubmitNodeCollection resolve to this key through the interface. Overrides (1.21.9 CbSubmit$Immediate row 17) are not covered by a call reshape."
+}
