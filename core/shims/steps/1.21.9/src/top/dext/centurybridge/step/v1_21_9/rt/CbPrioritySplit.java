@@ -17,6 +17,11 @@ public final class CbPrioritySplit {
         void cb$v1_21_9$onDeflection(class_1297 deflector, boolean fromAttack);
     }
 
+    /** CbItemRestoredMixin: 1.21.8's Item.verifyComponentsAfterLoad(stack), called virtually (CbItemVerifyHooksMixin) */
+    public interface ItemVerify {
+        void cb$v1_21_9$verifyComponentsAfterLoad(net.minecraft.class_1799 stack);
+    }
+
     /** CbServerRestoredMixin: the flight flag a 1.21.8 setFlightAllowed set on a non-dedicated server (null: never set) */
     public interface ServerFlight {
         Boolean cb$v1_21_9$flightAllowed();
