@@ -1,0 +1,15 @@
+{
+ "_s215h_jukebox_basis": "1.21.4 JukeboxPlayable(song, showInTooltip) (class_9792, javap 1.21.4: record (class_9791, Z), comp_2834, method_60749 withTooltip, method_57409 printed only when comp_2834) is JukeboxPlayable(song) in 1.21.5; hiding its tooltip line is the stack's TooltipDisplay (class_9334.field_56400; ItemStack.method_57369 skips a component TooltipDisplay.shows (class_10712.method_67214) answers false for). A value built with false is remembered as hidden (rt/CbJukeboxPlayables); the component setters a 1.21.4 mod calls (vanilla's own setters run first, so native mixins on them still see the call) put TooltipDisplay hiding / showing JUKEBOX_PLAYABLE beside it. Loss: showInTooltip() of a value read back from a stack answers true (release_notes_known.md).",
+ "ctorRedirects": {
+  "net/minecraft/class_9792.<init>(Lnet/minecraft/class_9791;Z)V": "top/dext/centurybridge/step/v1_21_5/rt/CbJukeboxPlayables#newJukeboxPlayable"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_9792.comp_2834()Z": "top/dext/centurybridge/step/v1_21_5/rt/CbJukeboxPlayables#showInTooltip",
+  "net/minecraft/class_9792.method_60749(Z)Lnet/minecraft/class_9792;": "top/dext/centurybridge/step/v1_21_5/rt/CbJukeboxPlayables#withTooltip",
+  "net/minecraft/class_9792.method_57409(Lnet/minecraft/class_1792$class_9635;Ljava/util/function/Consumer;Lnet/minecraft/class_1836;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbJukeboxPlayables#addToTooltip",
+  "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v1_21_5/rt/CbJukeboxPlayables#component",
+  "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_5/rt/CbJukeboxPlayables#set",
+  "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_5/rt/CbJukeboxPlayables#update",
+  "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_5/rt/CbJukeboxPlayables#update"
+ }
+}

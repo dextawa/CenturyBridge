@@ -20,6 +20,17 @@ public final class CbGlRenderSystem {
     private CbGlRenderSystem() {
     }
 
+    /**
+     * 1.21.4 RenderSystem.recordRenderCall(call): added the call to a queue the render thread replayed in flipFrame
+     * (each frame, before the buffer swap) and in finishInitialization, from any thread, the render thread included
+     * (javap -c -p 1.21.4 RenderSystem). 1.21.5 has no such queue; the call is scheduled on Minecraft's task queue
+     * (BlockableEventLoop.schedule: always queued, never run inline, as 1.21.4), which 1.21.5 drains on the render
+     * thread every frame (at another point of the frame).
+     */
+    public static void recordRenderCall(top.dext.centurybridge.step.v1_21_5.facade.RenderCall call) {
+        net.minecraft.class_310.method_1551().method_63588(call::execute);
+    }
+
     public static void blendFunc(GlStateManager$class_4535 src, GlStateManager$class_4534 dst) {
         com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread();
         CbGlStateManager._blendFunc(src.value, dst.value);
@@ -118,5 +129,58 @@ public final class CbGlRenderSystem {
     /** see isOnRenderThreadOrInit */
     public static void assertOnRenderThreadOrInit() {
         com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread();
+    }
+
+    // ---- 1.21.4 RenderSystem's current shader (javap -c -p 1.21.4 RenderSystem: private static CompiledShaderProgram
+    // shader; setShader(program) / clearShader / getShader each check the render thread, then write / null / read it).
+    // 1.21.5 has no current shader: a draw takes its program from its RenderPipeline. CompiledShaderProgram (class_5944)
+    // stays through 26.2 (GlProgram), so the state is kept here with 1.21.4's bodies. In 1.21.4 the field was read by
+    // BufferUploader.drawWithShader / VertexBuffer.drawWithShader; those are rows of their own (gone at 1.21.5), so a
+    // shader set here affects only the converted code that reads it back. setShader(ShaderProgram) (1.21.4: compiled
+    // the program, then wrote the same field) belongs with the ShaderProgram facade and must write this field. ----
+
+    private static net.minecraft.class_5944 shader;
+
+    public static void setShader(net.minecraft.class_5944 program) {
+        com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread();
+        shader = program;
+    }
+
+    public static void clearShader() {
+        com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread();
+        shader = null;
+    }
+
+    public static net.minecraft.class_5944 getShader() {
+        com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread();
+        return shader;
+    }
+
+    // ---- 1.21.4 RenderSystem shader textures (javap -c -p 1.21.4: int[12] shaderTextures of GL ids). 1.21.5 keeps the
+    // twelve slots as GpuTextures (setShaderTexture(int, GpuTexture) / getShaderTexture(int), same render-thread check
+    // and range test) and its draws bind them as Sampler0..11 (CompositeRenderType.draw, CompiledShaderProgram). ----
+
+    /**
+     * 1.21.4 setShaderTexture(unit, location): Minecraft.getTextureManager().getTexture(location).getId() into the slot.
+     * 1.21.5: the same texture's GpuTexture into the same slot, as 1.21.5's own TextureStateShard does
+     * (getTexture(location).getTexture(), javap class_4668$class_4683).
+     */
+    public static void setShaderTexture(int unit, net.minecraft.class_2960 location) {
+        com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread();
+        if (unit >= 0 && unit < 12) {
+            net.minecraft.class_1044 texture = net.minecraft.class_310.method_1551().method_1531().method_4619(location);
+            com.mojang.blaze3d.systems.RenderSystem.setShaderTexture(unit, texture.method_68004());
+        }
+    }
+
+    /**
+     * 1.21.4 getShaderTexture(unit): the slot's GL id, 0 out of range (and for a slot never set). 1.21.5: the GL id of the
+     * slot's GpuTexture (GlTexture.glId, class_10868.method_68427, kept through 26.2), 0 for an empty slot or a texture
+     * of another backend.
+     */
+    public static int getShaderTexture(int unit) {
+        com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread();
+        com.mojang.blaze3d.textures.GpuTexture texture = com.mojang.blaze3d.systems.RenderSystem.getShaderTexture(unit);
+        return texture instanceof net.minecraft.class_10868 gl ? gl.method_68427() : 0;
     }
 }

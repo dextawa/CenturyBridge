@@ -13,6 +13,19 @@ public final class CbData {
     private CbData() {
     }
 
+    // ------------------------------------------------------------------------------------------------ TagsProvider
+
+    private static final org.slf4j.Logger TAGS_PROVIDER_LOGGER = com.mojang.logging.LogUtils.getLogger();
+
+    /**
+     * 1.20.6 TagsProvider.LOGGER (class_2474.field_11479, private static final, LogUtils.getLogger() in &lt;clinit&gt;;
+     * javap 1.20.6): 1.21 dropped the field (javap 1.21 class_2474: no static field). A mod reaching it through its own
+     * access widener (8 corpus mods, damage-aw aw-get-static) gets a logger made the same way.
+     */
+    public static org.slf4j.Logger field_11479() {
+        return TAGS_PROVIDER_LOGGER;
+    }
+
     // ------------------------------------------------------------------------------------------------ biomes
 
     /**
