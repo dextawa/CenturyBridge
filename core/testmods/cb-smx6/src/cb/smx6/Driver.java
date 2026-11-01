@@ -335,6 +335,13 @@ public final class Driver {
                     + (rootEnch.isPresent() && rootEnch.get() == net.minecraft.class_7923.field_41176) + ", containsKey "
                     + net.minecraft.class_7923.field_41167.method_10250(enchId) + ", in keySet "
                     + net.minecraft.class_7923.field_41167.method_10235().contains(enchId));
+            net.minecraft.class_2960 paintId = net.minecraft.class_2960.method_43902("minecraft", "painting_variant");
+            java.util.Optional<?> rootPaint = net.minecraft.class_7923.field_41167.method_17966(paintId);
+            check("root-painting", rootPaint.isPresent() && rootPaint.get() == net.minecraft.class_7923.field_41182
+                    && net.minecraft.class_7923.field_41167.method_10250(paintId)
+                    && net.minecraft.class_7923.field_41167.method_10235().contains(paintId),
+                "REGISTRY by name minecraft:painting_variant: present " + rootPaint.isPresent() + ", same as PAINTING_VARIANT "
+                    + (rootPaint.isPresent() && rootPaint.get() == net.minecraft.class_7923.field_41182));
             check("root-other-key", net.minecraft.class_7923.field_41167.method_17966(itemId).orElse(null) == net.minecraft.class_7923.field_41178
                     && !net.minecraft.class_7923.field_41167.method_10250(net.minecraft.class_2960.method_43902("minecraft", "cb_no_such_registry")),
                 "REGISTRY minecraft:item is ITEM " + (net.minecraft.class_7923.field_41167.method_17966(itemId).orElse(null) == net.minecraft.class_7923.field_41178)
