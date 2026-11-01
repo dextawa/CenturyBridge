@@ -529,7 +529,7 @@ aw-get	net/minecraft/class_4527$class_4528	field_20582	Lnet/minecraft/class_4524
 aw-call-static	net/minecraft/class_4527	method_22277	(Lnet/minecraft/class_2168;Z)I	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-call-static	net/minecraft/class_4527	method_55454	(Lnet/minecraft/class_2168;)I	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-call-static	net/minecraft/class_4527	method_22281	(Lnet/minecraft/class_2168;Z)I	METHOD	method not declared on the owner	aw:0 mixin:0
-aw-call-static	net/minecraft/class_4527	method_22272	(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_4524;Z)V	METHOD	method not declared on the owner	aw:0 mixin:3
+aw-call-static	net/minecraft/class_4527	method_22272	(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_4524;Z)V	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-call-static	net/minecraft/class_4527	method_54904	(Lnet/minecraft/class_3218;Lnet/minecraft/class_4517;)Z	METHOD	method method_54904(Lnet/minecraft/class_3218;Ljava/lang/String;)Z private static	aw:0 mixin:0
 aw-call-static	net/minecraft/class_4527	method_22280	(Lnet/minecraft/class_3218;Lnet/minecraft/class_4524;)V	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-call-static	net/minecraft/class_4527	method_22265	(Lnet/minecraft/class_2168;I)I	METHOD	method not declared on the owner	aw:0 mixin:0
@@ -596,7 +596,7 @@ aw-get	net/minecraft/class_2556$class_7603	comp_922	I	CLASS	class gone	aw:0 mixi
 aw-get	net/minecraft/class_2556$class_7603	comp_923	Lnet/minecraft/class_2561;	CLASS	class gone	aw:0 mixin:0
 aw-get	net/minecraft/class_2556$class_7603	comp_924	Lnet/minecraft/class_2561;	CLASS	class gone	aw:0 mixin:0
 aw-call-static	net/minecraft/class_2561$class_2562	method_10871	(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_5250;	METHOD	method method_10871(Lcom/google/gson/JsonElement;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5250; package static	aw:0 mixin:0
-aw-call-static	net/minecraft/class_2561$class_2562	method_10874	(Lnet/minecraft/class_2561;)Lcom/google/gson/JsonElement;	METHOD	method method_10874(Lnet/minecraft/class_2561;Lnet/minecraft/class_7225$class_7874;)Lcom/google/gson/JsonElement; package static	aw:0 mixin:1
+aw-call-static	net/minecraft/class_2561$class_2562	method_10874	(Lnet/minecraft/class_2561;)Lcom/google/gson/JsonElement;	METHOD	method method_10874(Lnet/minecraft/class_2561;Lnet/minecraft/class_7225$class_7874;)Lcom/google/gson/JsonElement; package static	aw:0 mixin:0
 aw-call	net/minecraft/class_7649$class_7650	method_46602	()Lcom/mojang/serialization/Codec;	METHOD	method method_46602()Lcom/mojang/serialization/MapCodec; private	aw:0 mixin:0
 aw-get-static	net/minecraft/class_7649	field_40838	Lcom/mojang/serialization/Codec;	FIELD	field Lcom/mojang/serialization/MapCodec; package static final	aw:0 mixin:0
 aw-get-static	net/minecraft/class_7649	field_40839	Lcom/mojang/serialization/Codec;	FIELD	field Lcom/mojang/serialization/MapCodec; package static final	aw:0 mixin:0
@@ -1105,7 +1105,7 @@ aw-get	net/minecraft/class_1792	field_21979	Z	FIELD	field not declared on the ow
 aw-get	net/minecraft/class_1792	field_18672	Lnet/minecraft/class_4174;	FIELD	field not declared on the owner	aw:0 mixin:0
 aw-new	net/minecraft/class_1799$class_5422	<init>	(Ljava/lang/String;I)V	CLASS	class gone	aw:0 mixin:0
 aw-get	net/minecraft/class_1799$class_5422	field_25775	I	CLASS	class gone	aw:0 mixin:0
-aw-new	net/minecraft/class_1799	<init>	(Lnet/minecraft/class_2487;)V	METHOD	constructors (Lnet/minecraft/class_1935;)V (Lnet/minecraft/class_6880;)V (Lnet/minecraft/class_6880;ILnet/minecraft/class_9326;)V (Lnet/minecraft/class_6880;I)V (Lnet/minecraft/class_1935;I)V	aw:1 mixin:2
+aw-new	net/minecraft/class_1799	<init>	(Lnet/minecraft/class_2487;)V	METHOD	constructors (Lnet/minecraft/class_1935;)V (Lnet/minecraft/class_6880;)V (Lnet/minecraft/class_6880;ILnet/minecraft/class_9326;)V (Lnet/minecraft/class_6880;I)V (Lnet/minecraft/class_1935;I)V	aw:1 mixin:1
 aw-call-static	net/minecraft/class_1799	method_30267	(ILnet/minecraft/class_1799$class_5422;)Z	METHOD	method not declared on the owner	aw:1 mixin:3
 aw-call	net/minecraft/class_1799	method_30266	()I	METHOD	method not declared on the owner	aw:1 mixin:5
 aw-call-static	net/minecraft/class_1799	method_7937	(Ljava/lang/String;)Ljava/util/Collection;	METHOD	method not declared on the owner	aw:1 mixin:0

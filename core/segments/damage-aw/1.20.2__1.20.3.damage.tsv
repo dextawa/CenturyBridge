@@ -482,7 +482,7 @@ aw-get-static	net/minecraft/class_1690	field_7705	Lnet/minecraft/class_2940;	FIE
 aw-call	net/minecraft/class_1749	method_42296	(Lnet/minecraft/class_1937;Lnet/minecraft/class_239;)Lnet/minecraft/class_1690;	METHOD	method method_42296(Lnet/minecraft/class_1937;Lnet/minecraft/class_239;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1690; private	aw:0 mixin:0
 aw-call	net/minecraft/class_8162	method_49999	(Lnet/minecraft/class_1309;)Lnet/minecraft/class_239;	METHOD	method method_49999(Lnet/minecraft/class_1657;)Lnet/minecraft/class_239; private	aw:0 mixin:0
 aw-get-static	net/minecraft/class_8162	field_44603	D	FIELD	field not declared on the owner	aw:0 mixin:0
-aw-new	net/minecraft/class_1799	<init>	(Lnet/minecraft/class_1935;ILjava/util/Optional;)V	METHOD	constructors (Lnet/minecraft/class_1935;)V (Lnet/minecraft/class_6880;)V (Lnet/minecraft/class_6880;ILjava/util/Optional;)V (Lnet/minecraft/class_6880;I)V (Lnet/minecraft/class_1935;I)V	aw:3 mixin:2
+aw-new	net/minecraft/class_1799	<init>	(Lnet/minecraft/class_1935;ILjava/util/Optional;)V	METHOD	constructors (Lnet/minecraft/class_1935;)V (Lnet/minecraft/class_6880;)V (Lnet/minecraft/class_6880;ILjava/util/Optional;)V (Lnet/minecraft/class_6880;I)V (Lnet/minecraft/class_1935;I)V	aw:3 mixin:0
 aw-get-static	net/minecraft/class_8785	field_46094	Lcom/mojang/serialization/Codec;	CLASS	class gone	aw:0 mixin:0
 aw-get-static	net/minecraft/class_8785	field_46093	Lcom/mojang/serialization/Codec;	CLASS	class gone	aw:0 mixin:0
 aw-new	net/minecraft/class_1869$class_1870$class_8787	<init>	(Ljava/lang/String;Lnet/minecraft/class_7710;Ljava/util/Map;Ljava/util/List;Lnet/minecraft/class_1799;Z)V	CLASS	class gone	aw:0 mixin:0
