@@ -15,6 +15,9 @@ WD="$1"; V="$2"; W="$3"; AREA="${4:-}"
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
 SEG="${V}__${W}"
+# every engine step (probe, convert, link-check) runs <workDir>'s compiled engine: refuse to measure without it
+[ -f "$WD/core/build/classes/top/dext/centurybridge/data/LinkCheck.class" ] \
+    || { echo "engine not compiled in $WD/core/build/classes (step_check judges with the tree under test's engine)"; exit 1; }
 PROBES=probe/seg; DAMAGE=probe/damage; OUT="$WD/step/$SEG"
 [ "${CB_PROBE:-}" = fapi ] && { PROBES=probe/fapi; DAMAGE=probe/fapi-damage; OUT="$WD/step-fapi/$SEG"; }
 # CB_PROBE=aw measures the access-widener surface (api-probe -Dcb.apiprobe.nonpublic: non-public members a mod reaches
@@ -36,8 +39,13 @@ WIRING="$WD/core/segments/steps/$SEG.json"
     "$PROBES/$SEG/probe-$V.jar" > "$OUT/convert.log" 2>&1 || { echo "convert failed"; tail -5 "$OUT/convert.log"; exit 1; }
 # the separately released mods the layer depends on (build.sh built them into build/deps/): on the runtime like the layer
 DEPS=$(ls "$WD"/build/deps/*.jar 2>/dev/null)
-"$JAVA" -Xmx32g -Dcb.linkcheck.perSite=true -cp "core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/lc" "$OUT/conv/full-audit.tsv" "$OUT/conv" -- \
+# judged by the tree under test's own link-check (never ~/cbwork/core/build/classes, whatever engine that holds)
+"$JAVA" -Xmx32g -Dcb.linkcheck.perSite=true -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/lc" "$OUT/conv/full-audit.tsv" "$OUT/conv" -- \
     "$WD/build/centurybridge-0.3.0+$W.jar" $DEPS "$GAME" $FAPI "data/runtime/client-$W/libraries" > "$OUT/linkcheck.log" 2>&1
+# a probe judged without its own access widener measures nothing about the aw surface: refuse the result
+if [ "${CB_PROBE:-}" = aw ] && grep -q $'\tAWFILE\t.*\tcb_apiprobe_aw\t' "$OUT/lc/link-findings.tsv"; then
+    echo "aw probe's access widener not applied by link-check:"; grep $'\tAWFILE\t' "$OUT/lc/link-findings.tsv" | cut -f4-6; exit 1
+fi
 python3 probe/probe_report.py "$PROBES/$SEG/probe-$V.jar.index.tsv" "$(ls "$OUT"/conv/*.jar | head -1)" "$OUT/lc/link-findings.tsv" \
     "$OUT/report.tsv" > "$OUT/report.txt" 2>&1
 python3 - "$OUT/report.tsv" "$DAMAGE/$SEG.damage.tsv" "$AREA" <<'EOF'

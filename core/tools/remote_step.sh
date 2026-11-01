@@ -7,7 +7,8 @@
 # natives are checked against), build.sh; not data, not build output) to ~/cbwork/agents/<name>/, compiles the engine,
 # builds the step's layer (step 1.20.1 -> 1.20.2 is the 1.20.2 tree with shims-1.20.2.json; every
 # later step is core/shims/steps/<W> with core/segments/steps/<V>__<W>.json) with build.sh's gates,
-# then runs ~/cbwork/step_check.sh on it. Prints the build gates' verdicts and the step's open count;
+# then runs the uploaded tree's own core/tools/step_check.sh on it (judged with that tree's engine, never the shared
+# ~/cbwork/step_check.sh or ~/cbwork/core/build/classes). Prints the build gates' verdicts and the step's open count;
 # the open entries land in ~/cbwork/agents/<name>/step/<V>__<W>/open.tsv (fetch with scp).
 # CB_PROBE=fapi measures the Fabric API side (open list under step-fapi/ instead); CB_PROBE=aw the access-widener
 # surface (core/segments/damage-aw, open list under step-aw/).
@@ -59,4 +60,4 @@ $SSH "set -e; $WTX; cd ~/cbwork/agents/$NAME && rm -rf core build.sh build && ta
     done
     [ -n \"\$SLOT\" ] || { echo 'waiting for a measurement slot'; sleep 30; }
   done
-  CB_PROBE='${CB_PROBE:-}' ./step_check.sh agents/$NAME $V $W '$AREA'"
+  CB_PROBE='${CB_PROBE:-}' bash agents/$NAME/core/tools/step_check.sh agents/$NAME $V $W '$AREA'"
