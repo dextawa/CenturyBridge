@@ -734,7 +734,7 @@ aw-call	net/minecraft/client/renderer/LevelRenderer	extractEntity	(Lnet/minecraf
 aw-call	net/minecraft/client/renderer/LevelRenderer	removeBlockBreakingProgress	()V	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-call	net/minecraft/client/renderer/LevelRenderer	removeProgress	(Lnet/minecraft/server/level/BlockDestructionProgress;)V	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-call	net/minecraft/client/renderer/LevelRenderer	compileSections	(Lnet/minecraft/client/Camera;)V	METHOD	method compileSections(Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V private	aw:0 mixin:0
-aw-call	net/minecraft/client/renderer/LevelRenderer	renderHitOutline	(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDLnet/minecraft/client/renderer/state/level/BlockOutlineRenderState;IF)V	METHOD	method not declared on the owner	aw:0 mixin:6
+aw-call	net/minecraft/client/renderer/LevelRenderer	renderHitOutline	(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDLnet/minecraft/client/renderer/state/level/BlockOutlineRenderState;IF)V	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-call	net/minecraft/client/renderer/LevelRenderer	setBlockDirty	(Lnet/minecraft/core/BlockPos;Z)V	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-call	net/minecraft/client/renderer/LevelRenderer	setSectionDirty	(IIIZ)V	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-get	net/minecraft/client/renderer/LevelRenderer	minecraft	Lnet/minecraft/client/Minecraft;	FIELD	field not declared on the owner	aw:0 mixin:0
@@ -766,7 +766,7 @@ aw-put	net/minecraft/client/renderer/LevelRenderer	lastSmartCull	Z	FIELD	field n
 aw-get	net/minecraft/client/renderer/LevelRenderer	lastViewDistance	I	FIELD	field not declared on the owner	aw:0 mixin:0
 aw-put	net/minecraft/client/renderer/LevelRenderer	lastViewDistance	I	FIELD	field not declared on the owner	aw:0 mixin:0
 aw-get	net/minecraft/client/renderer/LevelRenderer	collectedGizmos	Lnet/minecraft/gizmos/SimpleGizmoCollector;	FIELD	field not declared on the owner	aw:0 mixin:0
-aw-call	net/minecraft/client/renderer/MultiBufferSource$BufferSource	endBatch	(Lnet/minecraft/client/renderer/rendertype/RenderType;Lcom/mojang/blaze3d/vertex/BufferBuilder;)V	CLASS	class gone	aw:0 mixin:1
+aw-call	net/minecraft/client/renderer/MultiBufferSource$BufferSource	endBatch	(Lnet/minecraft/client/renderer/rendertype/RenderType;Lcom/mojang/blaze3d/vertex/BufferBuilder;)V	CLASS	class gone	aw:0 mixin:0
 aw-new	net/minecraft/client/renderer/OutlineBufferSource$EntityOutlineGenerator	<init>	(Lcom/mojang/blaze3d/vertex/VertexConsumer;I)V	CLASS	class gone	aw:0 mixin:0
 aw-call	net/minecraft/client/renderer/OutlineBufferSource$EntityOutlineGenerator	addVertex	(FFF)Lcom/mojang/blaze3d/vertex/VertexConsumer;	CLASS	class gone	aw:0 mixin:0
 aw-call	net/minecraft/client/renderer/OutlineBufferSource$EntityOutlineGenerator	setColor	(IIII)Lcom/mojang/blaze3d/vertex/VertexConsumer;	CLASS	class gone	aw:0 mixin:0
@@ -789,7 +789,7 @@ aw-put	net/minecraft/client/renderer/OutlineBufferSource	outlineColor	I	CLASS	cl
 aw-put	net/minecraft/client/renderer/ProjectionMatrixBuffer	buffer	Lcom/mojang/blaze3d/buffers/GpuBuffer;	ACCESS	field Lcom/mojang/blaze3d/buffers/GpuBuffer; private final	aw:0 mixin:0
 aw-put	net/minecraft/client/renderer/ProjectionMatrixBuffer	bufferSlice	Lcom/mojang/blaze3d/buffers/GpuBufferSlice;	ACCESS	field Lcom/mojang/blaze3d/buffers/GpuBufferSlice; private final	aw:0 mixin:0
 aw-call-static	net/minecraft/client/renderer/RenderBuffers	put	(Lit/unimi/dsi/fastutil/objects/Object2ObjectLinkedOpenHashMap;Lnet/minecraft/client/renderer/rendertype/RenderType;)V	METHOD	method not declared on the owner	aw:0 mixin:0
-aw-get	net/minecraft/client/renderer/RenderBuffers	bufferSource	Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;	FIELD	field not declared on the owner	aw:0 mixin:1
+aw-get	net/minecraft/client/renderer/RenderBuffers	bufferSource	Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;	FIELD	field not declared on the owner	aw:0 mixin:0
 aw-get	net/minecraft/client/renderer/RenderBuffers	crumblingBufferSource	Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;	FIELD	field not declared on the owner	aw:0 mixin:0
 aw-get	net/minecraft/client/renderer/RenderBuffers	outlineBufferSource	Lnet/minecraft/client/renderer/OutlineBufferSource;	FIELD	field not declared on the owner	aw:0 mixin:0
 aw-get-static	net/minecraft/client/renderer/RenderPipelines	MATRICES_PROJECTION_SNIPPET	Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;	FIELD	field not declared on the owner	aw:0 mixin:0
