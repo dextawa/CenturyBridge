@@ -124,11 +124,32 @@
   "net/minecraft/class_1921$class_4688$class_4689.method_23616(Lnet/minecraft/class_4668$class_4686;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921$class_4688$class_4689.method_51788(Lnet/minecraft/class_4668$class_8559;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921$class_4688$class_4689.method_23617(Z)Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921$class_4688$class_4689.method_24297(Lnet/minecraft/class_1921$class_4750;)Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
+  "net/minecraft/class_1921$class_4688$class_4689.method_24297(Lnet/minecraft/class_1921$class_4750;)Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4687.method_35784()Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
  },
  "_s205n_rendertype_basis": "Direct subclasses of 1.21.4's RenderType (damage rows extend / super-ctor (String,VertexFormat,Mode,I,Z,Z,Runnable,Runnable) / override+super method_23031 / method_23033): 1.21.5's RenderType takes (String,I,Z,Z,Runnable,Runnable) and made format/mode/draw/pipeline/outputTarget abstract (javap both). facade/RenderType gives 1.21.4's constructor and getters back and answers the 1.21.5 abstracts (javadoc there).",
  "superRenames": {
   "net/minecraft/class_1921": "top/dext/centurybridge/step/v1_21_5/facade/RenderType"
  },
- "_s205n_dropped_getters_basis": "1.21.4 RenderType sky()/endSky()/stars() (method_65218/65219/65221), the three clouds getters (method_62291/56849/56850 = method_56848(false,false)/(false,true)/(true,true)) and worldBorder(flag) (method_65227 -> method_65229), gone in 1.21.5 (damage call-static rows): rebuilt once in rt/CbRenderTypes with 1.21.4's <clinit> recipes (javap -c -p 1.21.4 class_1921) through the given-back create."
+ "_s205n_dropped_getters_basis": "1.21.4 RenderType sky()/endSky()/stars() (method_65218/65219/65221), the three clouds getters (method_62291/56849/56850 = method_56848(false,false)/(false,true)/(true,true)) and worldBorder(flag) (method_65227 -> method_65229), gone in 1.21.5 (damage call-static rows): rebuilt once in rt/CbRenderTypes with 1.21.4's <clinit> recipes (javap -c -p 1.21.4 class_1921) through the given-back create.",
+ "_s205n_aw_basis": "damage-aw rows (D:/tmp/s215h/aw-s205j.tsv): 1.21.4 CompositeState 14-shard constructor and its 12 shard fields, CompositeRenderType's 7-arg constructor and state(), OutputStateShard(name, setup, clear) -> rt/CbRenderTypes (javap -c -p of both CompositeState constructors: 1.21.5 keeps texture/lightmap/overlay/layering/output/texturing/lineWidth + outline, output in field_57931, the rest in field_21422).",
+ "ctorRedirects": {
+  "net/minecraft/class_1921$class_4688.<init>(Lnet/minecraft/class_4668$class_5939;Lnet/minecraft/class_4668$class_5942;Lnet/minecraft/class_4668$class_4685;Lnet/minecraft/class_4668$class_4672;Lnet/minecraft/class_4668$class_4671;Lnet/minecraft/class_4668$class_4676;Lnet/minecraft/class_4668$class_4679;Lnet/minecraft/class_4668$class_4675;Lnet/minecraft/class_4668$class_4678;Lnet/minecraft/class_4668$class_4684;Lnet/minecraft/class_4668$class_4686;Lnet/minecraft/class_4668$class_4677;Lnet/minecraft/class_4668$class_8559;Lnet/minecraft/class_1921$class_4750;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes#newCompositeState",
+  "net/minecraft/class_1921$class_4687.<init>(Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;IZZLnet/minecraft/class_1921$class_4688;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes#newCompositeRenderType",
+  "net/minecraft/class_4668$class_4678.<init>(Ljava/lang/String;Ljava/lang/Runnable;Ljava/lang/Runnable;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes#newOutputStateShard"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_1921$class_4688.field_29461:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_21407:Lnet/minecraft/class_4668$class_4685;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_21411:Lnet/minecraft/class_4668$class_4672;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_21412:Lnet/minecraft/class_4668$class_4671;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_21413:Lnet/minecraft/class_4668$class_4676;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_21414:Lnet/minecraft/class_4668$class_4679;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_21416:Lnet/minecraft/class_4668$class_4675;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_21417:Lnet/minecraft/class_4668$class_4678;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_21418:Lnet/minecraft/class_4668$class_4684;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_21419:Lnet/minecraft/class_4668$class_4686;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_21420:Lnet/minecraft/class_4668$class_4677;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688.field_44825:Lnet/minecraft/class_4668$class_8559;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
+ }
 }

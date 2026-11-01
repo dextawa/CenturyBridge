@@ -283,6 +283,111 @@ public final class CbRenderTypes {
         return LogicOp.NONE;
     }
 
+    // ---- members mods reached through their access wideners (damage-aw rows, javap -c -p 1.21.4 / 1.21.5) ----
+
+    /**
+     * 1.21.4 CompositeState(texture, shader, transparency, depthTest, cull, lightmap, overlay, layering, output, texturing,
+     * writeMask, lineWidth, colorLogic, outline): 1.21.5's constructor takes the seven shards it kept (texture, lightmap,
+     * overlay, layering, output, texturing, lineWidth) and the outline property; the six it dropped are kept for the state
+     * as a builder's are.
+     */
+    public static class_1921.class_4688 newCompositeState(class_4668.class_5939 texture, RenderStateShard$class_5942 shader,
+            RenderStateShard$class_4685 transparency, RenderStateShard$class_4672 depthTest, RenderStateShard$class_4671 cull,
+            class_4668.class_4676 lightmap, class_4668.class_4679 overlay, class_4668.class_4675 layering, class_4668.class_4678 output,
+            class_4668.class_4684 texturing, RenderStateShard$class_4686 writeMask, class_4668.class_4677 lineWidth,
+            RenderStateShard$class_8559 colorLogic, class_1921.class_4750 outline) {
+        class_1921.class_4688 state = new class_1921.class_4688(texture, lightmap, overlay, layering, output, texturing, lineWidth, outline);
+        Shards s = new Shards();
+        s.shader = shader;
+        s.transparency = transparency;
+        s.depthTest = depthTest;
+        s.cull = cull;
+        s.writeMask = writeMask;
+        s.colorLogic = colorLogic;
+        STATES.put(state, s);
+        return state;
+    }
+
+    /** 1.21.4 CompositeRenderType(name, format, mode, size, crumbling, sort, state): as create builds it */
+    public static class_1921.class_4687 newCompositeRenderType(String name, VertexFormat format, VertexFormat.class_5596 mode, int size,
+            boolean affectsCrumbling, boolean sortOnUpload, class_1921.class_4688 state) {
+        return method_24049(name, format, mode, size, affectsCrumbling, sortOnUpload, state);
+    }
+
+    /** 1.21.4 CompositeRenderType.state() */
+    public static class_1921.class_4688 method_35784(class_1921.class_4687 type) {
+        return type.field_21403;
+    }
+
+    // CompositeState's shard fields: the six 1.21.5 dropped from the kept shards, the others from 1.21.5's states list
+
+    public static RenderStateShard$class_5942 field_29461(class_1921.class_4688 state) {
+        return shards(state).shader;
+    }
+
+    public static RenderStateShard$class_4685 field_21407(class_1921.class_4688 state) {
+        return shards(state).transparency;
+    }
+
+    public static RenderStateShard$class_4672 field_21411(class_1921.class_4688 state) {
+        return shards(state).depthTest;
+    }
+
+    public static RenderStateShard$class_4671 field_21412(class_1921.class_4688 state) {
+        return shards(state).cull;
+    }
+
+    public static RenderStateShard$class_4686 field_21419(class_1921.class_4688 state) {
+        return shards(state).writeMask;
+    }
+
+    public static RenderStateShard$class_8559 field_44825(class_1921.class_4688 state) {
+        return shards(state).colorLogic;
+    }
+
+    public static class_4668.class_4676 field_21413(class_1921.class_4688 state) {
+        return kept(state, class_4668.class_4676.class);
+    }
+
+    public static class_4668.class_4679 field_21414(class_1921.class_4688 state) {
+        return kept(state, class_4668.class_4679.class);
+    }
+
+    public static class_4668.class_4675 field_21416(class_1921.class_4688 state) {
+        return kept(state, class_4668.class_4675.class);
+    }
+
+    public static class_4668.class_4678 field_21417(class_1921.class_4688 state) {
+        return state.field_57931;
+    }
+
+    public static class_4668.class_4684 field_21418(class_1921.class_4688 state) {
+        return kept(state, class_4668.class_4684.class);
+    }
+
+    public static class_4668.class_4677 field_21420(class_1921.class_4688 state) {
+        return kept(state, class_4668.class_4677.class);
+    }
+
+    /** the shard of that kind in 1.21.5's states list (CompositeState.<init> puts each kept shard there once) */
+    private static <T extends class_4668> T kept(class_1921.class_4688 state, Class<T> kind) {
+        for (class_4668 s : state.field_21422) {
+            if (kind.isInstance(s)) {
+                return kind.cast(s);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 1.21.4 OutputStateShard(name, setup, clear): setup bound a render target itself. 1.21.5's takes the target as a
+     * Supplier and its render pass draws into it, so the mod's runnables still run at setup / clear (rt/CbOutputStateShard)
+     * and the pass draws into the main target -- known loss when the runnables bound another (release_notes_known.md).
+     */
+    public static class_4668.class_4678 newOutputStateShard(String name, Runnable setup, Runnable clear) {
+        return new CbOutputStateShard(name, setup, clear);
+    }
+
     // ---- RenderType getters 1.21.5 dropped (damage call-static rows), built once with 1.21.4's <clinit> recipes ----
     // (javap -c -p 1.21.4 class_1921: sky / end_sky / stars inline in <clinit>, clouds = method_56848(colorOnly, cull),
     // world_border = method_65229(flag); each goes through this class's create, as a mod's would)
