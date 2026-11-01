@@ -323,7 +323,8 @@ public final class Driver {
             report(tag + " root-native", net.minecraft.class_7923.field_41167.method_17966(enchId).isEmpty()
                     && !net.minecraft.class_7923.field_41167.method_10250(enchId)
                     && !net.minecraft.class_7923.field_41167.method_10235().contains(enchId)
-                    && net.minecraft.class_7923.field_41167.method_17966(net.minecraft.class_2960.method_60656("item")).orElse(null) == net.minecraft.class_7923.field_41178,
+                    && net.minecraft.class_7923.field_41167.method_17966(net.minecraft.class_2960.method_60656("painting_variant")).isEmpty()
+                && net.minecraft.class_7923.field_41167.method_17966(net.minecraft.class_2960.method_60656("item")).orElse(null) == net.minecraft.class_7923.field_41178,
                 "native REGISTRY minecraft:enchantment present " + net.minecraft.class_7923.field_41167.method_17966(enchId).isPresent()
                     + ", containsKey " + net.minecraft.class_7923.field_41167.method_10250(enchId));
             // a player's cross-level moves: native @Inject + @Local in changeDimension(transition) before sendAllPlayerInfo
