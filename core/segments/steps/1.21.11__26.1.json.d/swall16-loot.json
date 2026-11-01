@@ -1,0 +1,13 @@
+{
+ "_swall16_basis": "1.21.11 LootDataType(registryKey, codec, Validator) on 26.1's LootDataType(registryKey, codec, ContextGetter) (javap -c of both: 1.21.11 runValidation = validator.run(ctx, key, value); its two vanilla validators = value.validate(ctx.enterElement(root(key), key)) for PREDICATE/MODIFIER (one non-capturing lambda) and table.validate(ctx.setContextKeySet(table.getParamSet()).enterElement(..)) for TABLE; 26.1 runValidation = value.validate(source.context(contextGetter.context(value)).enterElement(root(key), key)). Validator is the layer's facade; the constructor goes to rt/CbWallLoot (vanilla's two validators by identity -> vanilla's 26.1 getter, nothing recorded; any other -> ContextGetter.constant(ALL_PARAMS), the validator recorded by type instance and run by 1.21.11 runValidation calls and by 26.1's runValidation for that type, mixin/CbWallLootDataTypeHooks at default priority). Vanilla's reload validates only its three types on both releases.",
+ "classRenames": {
+  "net/minecraft/class_8490$class_8491": "top/dext/centurybridge/step/v26_1/facade/LootDataType$Validator"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_8490.<init>(Lnet/minecraft/class_5321;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_8490$class_8491;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLoot#lootDataType"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_8490.method_51209(Lnet/minecraft/class_58;Lnet/minecraft/class_5321;Ljava/lang/Object;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLoot#runValidation",
+  "net/minecraft/class_8490.comp_2522()Lnet/minecraft/class_8490$class_8491;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoot#validator"
+ }
+}

@@ -4,7 +4,8 @@
  "package": "cb.s9n.mixin",
  "compatibilityLevel": "JAVA_21",
  "mixins": [
-  "CommandBlockSourceMixin"
+  "CommandBlockSourceMixin",
+  "ItemStackApplyMixin"
  ],
  "injectors": {
   "defaultRequire": 1
