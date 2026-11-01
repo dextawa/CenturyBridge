@@ -21,5 +21,15 @@
   "_s26n_emissive_basis": {
     "BlockStateBase.emissiveRendering(BlockGetter,BlockPos)Z": "26.1.2 asked the state's StatePredicate with (state, level, pos); 26.2 emissiveRendering() asks its Predicate with the state. rt/CbS26Emissive holds the caller's level/pos while 26.2's test runs, so a 26.1.2 predicate (adapted by toPredicate) still sees them; 26.2 predicates ignore them",
     "emissiveRendering fields": "26.2 stores Predicate<BlockState> where 26.1.2 stored StatePredicate; reads/writes convert through the same adapters (instanceof-tested, undoing each other)"
+  },
+  "mixinTargets": {
+    "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.emissiveRendering(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z": {
+      "to": "emissiveRendering()Z",
+      "args": [
+        -1,
+        -1
+      ],
+      "basis": "26.2's emissiveRendering() is 26.1.2's emissiveRendering(level, pos) body (getfield emissiveRendering, asState, test) asking a Predicate<BlockState> with the state only; level and pos reach no W argument (a 26.1.2 predicate still gets them through rt/CbS26Emissive, but a handler on this method cannot)"
+    }
   }
 }
