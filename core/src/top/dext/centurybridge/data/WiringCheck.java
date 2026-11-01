@@ -749,7 +749,10 @@ public final class WiringCheck {
                 String toName = to.substring(0, p);
                 // past the wall "to" is in the analysis namespace like every key: the name through the wall table
                 String nm = wall == null || toName.startsWith("<") ? toName : wall.mapMethodName(s.owner, toName, to.substring(p));
-                String nd = methodDesc(to.substring(p));
+                // "to" names W's own method in W's own types: a classRename onto a layer facade of a class W still
+                // declares is for converted code, never for W's descriptors (1.21 EnchantmentHelper.method_8220 takes
+                // W's EnchantmentVisitor, not the layer's facade/EnchantmentVisitor)
+                String nd = wTypedDesc(to.substring(p));
                 if (cn == null || cn.methods.stream().noneMatch(m -> m.name.equals(nm) && m.desc.equals(nd))) {
                     problems.add(where + ": " + owner + " does not itself declare " + nm + nd);
                     continue;
@@ -761,7 +764,10 @@ public final class WiringCheck {
                     continue;
                 }
                 var a = o.getAsJsonArray("args");
-                org.objectweb.asm.Type[] va = org.objectweb.asm.Type.getArgumentTypes(methodDesc(s.desc));
+                // V's arguments as W names the same classes (the comparison is of what W's method takes against what
+                // V's took; a facade-split class -- see wTypedDesc -- is one class on both sides here, and the engine
+                // hands a converted handler reading it V's value only through a "wrap")
+                org.objectweb.asm.Type[] va = org.objectweb.asm.Type.getArgumentTypes(wTypedDesc(s.desc));
                 org.objectweb.asm.Type[] wa = org.objectweb.asm.Type.getArgumentTypes(nd);
                 if (a.size() != va.length) {
                     problems.add(where + ": args has " + a.size() + " entries, the V method " + va.length + " arguments");
@@ -1600,6 +1606,24 @@ public final class WiringCheck {
 
     private String methodDesc(String desc) {
         String d = facade.mapMethodDesc(desc);
+        return wall == null ? d : wall.mapMethodDesc(d);
+    }
+
+    /**
+     * A descriptor as W's own code spells it: the step's classRenames except a rename onto a layer class of a class the
+     * target stub still declares (that rename is for converted code), then the wall
+     */
+    private String wTypedDesc(String desc) {
+        String d = new org.objectweb.asm.commons.Remapper() {
+            @Override
+            public String map(String internalName) {
+                String r = facade.map(internalName);
+                if (r == null || r.equals(internalName)) {
+                    return internalName;
+                }
+                return r.startsWith("top/dext/") && stub.containsKey(targetName(internalName)) ? internalName : r;
+            }
+        }.mapMethodDesc(desc);
         return wall == null ? d : wall.mapMethodDesc(d);
     }
 

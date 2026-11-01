@@ -673,6 +673,56 @@ final class MixinBridge {
         return chain.targetInterfaces.contains(owner);
     }
 
+    /** a V type as the converted mod's code declares it (the step's classRenames, facades included) */
+    private Type handlerType(Type v) {
+        return v.getSort() == Type.OBJECT ? Type.getType(chain.renamedDesc(v.getDescriptor())) : v;
+    }
+
+    /**
+     * a V class the step renames onto a layer facade for converted code while W still declares it under the same name
+     * (1.20.6 -> 1.21 EnchantmentHelper$EnchantmentVisitor -> facade/EnchantmentVisitor): converted code takes the
+     * facade, W's code the class itself -- the two are different types, whatever the shared spelling
+     */
+    private boolean facadeSplit(Type v) {
+        if (v.getSort() != Type.OBJECT) {
+            return false;
+        }
+        String r = chain.classRenames.get(v.getInternalName());
+        MixinRepair w = wcode(chain);
+        return MixinClassRenames.toLayer(r) && w != null && w.declares(v.getInternalName());
+    }
+
+    /** does W's value of type {@code w} reach a converted handler declared with V's type {@code v} as that type */
+    private boolean fitsV(Type w, Type v) {
+        Type r = handlerType(v);
+        if (facadeSplit(v)) {
+            return w.equals(r) || wAssignable(w, r);
+        }
+        return w.equals(v) || wAssignable(w, v) || w.equals(r) || wAssignable(w, r);
+    }
+
+    /** a descriptor with only the step's renames onto layer classes applied (the class rewrite then applies the rest) */
+    private String facadeDesc(String desc) {
+        Map<String, String> f = new HashMap<>();
+        chain.classRenames.forEach((k, v) -> {
+            if (MixinClassRenames.toLayer(v)) {
+                f.put(k, v);
+            }
+        });
+        org.objectweb.asm.commons.SimpleRemapper r = new org.objectweb.asm.commons.SimpleRemapper(f);
+        return desc.startsWith("(") ? r.mapMethodDesc(desc) : r.mapDesc(desc);
+    }
+
+    /** a W descriptor naming a facade-split class ({@link #facadeSplit}): the front must keep W's spelling */
+    private boolean facadeSplitDesc(String desc) {
+        for (Type t : Type.getArgumentTypes(desc)) {
+            if (facadeSplit(t)) {
+                return true;
+            }
+        }
+        return facadeSplit(Type.getReturnType(desc));
+    }
+
     /**
      * Whether a W value of type {@code sub} is a {@code sup} on W (its superclasses and interfaces):
      * a parameter W narrowed (1.20.3 Block.getCloneItemStack takes a LevelReader, which is a
@@ -2592,6 +2642,18 @@ final class MixinBridge {
                 | Opcodes.ACC_VARARGS), oldName, d.toString(), null, exceptions(h));
             syn.visibleAnnotations = h.visibleAnnotations;
             syn.invisibleAnnotations = h.invisibleAnnotations;
+            // W's target names a class the step renames onto a facade for converted code only: the front is spelled in
+            // W's types (the class rewrite leaves them), and what it hands the mod's handler in the handler's own
+            // (renamed) types -- the handler itself is converted code
+            boolean wTyped = p.wArgs() && facadeSplitDesc(fate.desc());
+            if (wTyped) {
+                syn.invisibleAnnotations = syn.invisibleAnnotations == null ? new ArrayList<>() : new ArrayList<>(syn.invisibleAnnotations);
+                syn.invisibleAnnotations.add(new AnnotationNode(MixinClassRenames.W_TYPED));
+                for (int i = 0; i < hp.length; i++) {
+                    hp[i] = Type.getType(facadeDesc(hp[i].getDescriptor()));
+                }
+            }
+            String fwdDesc = wTyped ? facadeDesc(oldDesc) : oldDesc;
             h.visibleAnnotations = null;
             h.invisibleAnnotations = null;
             Refs r = refs(oldName, oldDesc, false);
@@ -2662,7 +2724,7 @@ final class MixinBridge {
                 }
             }
             in.add(new VarInsnNode(Opcodes.ALOAD, p.rc() != null ? vcbSlot : cbSlot));
-            in.add(new MethodInsnNode(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, del, oldDesc, false));
+            in.add(new MethodInsnNode(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, del, fwdDesc, false));
             if (back != null) {
                 in.add(new VarInsnNode(Opcodes.ALOAD, cbSlot));
                 in.add(new VarInsnNode(Opcodes.ALOAD, vcbSlot));
@@ -4369,17 +4431,20 @@ final class MixinBridge {
             for (int i = 0; known && i < va.length; i++) {
                 // V's type as the converted handler declares it: the step's classRenames rename it (1.21.11 class_1920
                 // BlockAndTintGetter -> 26.1 BlockAndLightGetter, a supertype of the client BlockAndTintGetter W passes)
-                Type vr = va[i].getSort() == Type.OBJECT ? Type.getType(chain.renamedDesc(va[i].getDescriptor())) : va[i];
-                if (wrap[i] != null || from[i] >= mwa.length || mwa[from[i]].equals(va[i]) || wAssignable(mwa[from[i]], va[i])
-                        || mwa[from[i]].equals(vr) || wAssignable(mwa[from[i]], vr)) {
+                // A facade rename of a class W still declares (1.21 EnchantmentVisitor) splits the two: W's value is
+                // never the facade the converted handler takes, whatever the V spelling says
+                if (wrap[i] != null || from[i] >= mwa.length || fitsV(mwa[from[i]], va[i])) {
                     continue; // a derived argument (converted by its own static) or one W hands as V's type
                 }
                 // CASE 18: the W argument of another type reaches the handler through the entry's "wrap" (the override
                 // hooks' rule: the static taking W's type to V's); else narrowed; else no W argument carries V's
                 String[] w = mt.wrapFor(mwa[from[i]], va[i]);
+                if (w == null && facadeSplit(va[i])) {
+                    w = mt.wrapFor(mwa[from[i]], handlerType(va[i]));
+                }
                 if (w != null) {
                     wrap[i] = w;
-                } else if (mt.narrow() && va[i].getSort() >= Type.ARRAY) {
+                } else if (mt.narrow() && va[i].getSort() >= Type.ARRAY && !facadeSplit(va[i])) {
                     narrow[i] = true;
                 } else {
                     why.add("mixinTargets argument " + i + ": W's " + mwa[from[i]] + " is no " + va[i] + " and no wrap takes it there");
@@ -4423,7 +4488,7 @@ final class MixinBridge {
                     known = false;
                 } else if (j >= na.length) {
                     bad = true;
-                } else if (!na[j].equals(va[i]) && !wAssignable(na[j], va[i])) {
+                } else if (!fitsV(na[j], va[i])) {
                     // the hook's wrap for this argument: of a list ("wrap": [...], one new argument feeding
                     // several old ones -- 1.21.6 saveAdditional's ValueOutput gives the tag and the lookup), the
                     // static taking W's type to V's
@@ -4543,7 +4608,7 @@ final class MixinBridge {
         for (int i = 0; i < va.length; i++) {
             from[i] = -1;
             for (int j = 0; j < wa.length; j++) {
-                if (wa[j].equals(va[i]) || wAssignable(wa[j], va[i])) {
+                if (fitsV(wa[j], va[i])) {
                     from[i] = from[i] == -1 ? j : -2;
                 }
             }
