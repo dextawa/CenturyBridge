@@ -1,0 +1,6 @@
+{
+ "_s9k_spawnegg_basis": "SpawnEggItem.defaultType (class_1826 field_8917) is gone at 1.21.9; javap -c: the entity type lives in the item's default ENTITY_DATA component (Item.Properties.spawnEgg(type)), read by 1.21.9's constructor into BY_ID where 1.21.8 put defaultType. rt/CbSpawnEggs answers that type (architectury / cynosure read it through their AW).",
+ "instanceFieldGetters": {
+  "net/minecraft/class_1826.field_8917:Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_9/rt/CbSpawnEggs"
+ }
+}

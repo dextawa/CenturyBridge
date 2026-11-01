@@ -36,6 +36,18 @@
     "keep:5"
    ]
   },
+  "net/minecraft/class_1007.method_23205(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;Lnet/minecraft/class_630;Z)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_2960;Lnet/minecraft/class_630;Z)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ]
+  },
   "net/minecraft/class_1007.method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;Z)V": {
    "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
    "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_2960;Z)V",
@@ -88,6 +100,17 @@
     "conv:3 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
     "keep:4",
     "keep:5",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#noOutline()I"
+   ]
+  },
+  "net/minecraft/class_10444$class_10446.method_65614(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;III)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3",
     "push top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#noOutline()I"
    ]
   },
@@ -396,6 +419,19 @@
     "keep:5"
    ]
   },
+  "net/minecraft/class_4507.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IFFF)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IFFFI)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#noOutline()I"
+   ]
+  },
   "net/minecraft/class_4507.method_22132(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;FF)V": {
    "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
    "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_10055;FF)V",
@@ -480,6 +516,79 @@
     "keep:5"
    ]
   },
+  "net/minecraft/class_759.method_3216(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1306;)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_1306;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_759.method_3219(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IFFLnet/minecraft/class_1306;)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IFFLnet/minecraft/class_1306;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ]
+  },
+  "net/minecraft/class_759.method_3222(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IFLnet/minecraft/class_1306;FLnet/minecraft/class_1799;)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IFLnet/minecraft/class_1306;FLnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ]
+  },
+  "net/minecraft/class_759.method_3223(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_759.method_3228(Lnet/minecraft/class_742;FFLnet/minecraft/class_1268;FLnet/minecraft/class_1799;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_742;FFLnet/minecraft/class_1268;FLnet/minecraft/class_1799;FLnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:8 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:9"
+   ]
+  },
+  "net/minecraft/class_759.method_3231(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IFFF)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IFFF)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ]
+  },
   "net/minecraft/class_759.method_3233(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
    "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
    "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V",
@@ -544,6 +653,18 @@
     "conv:2 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
     "keep:3",
     "keep:4"
+   ]
+  },
+  "net/minecraft/class_8188.method_65561(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_8526;)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IILnet/minecraft/class_8526;I)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#noOutline()I"
    ]
   },
   "net/minecraft/class_823.method_65556(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1767;Lnet/minecraft/class_9307;)V": {
@@ -1111,6 +1232,20 @@
     "keep:5"
    ]
   },
+  "net/minecraft/class_983.method_62593(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10055;Lnet/minecraft/class_1453$class_7989;FFZ)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_10055;Lnet/minecraft/class_1453$class_7989;FFZ)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ]
+  },
   "net/minecraft/class_986.method_4188(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10037;FF)V": {
    "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
    "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_10037;FF)V",
@@ -1126,6 +1261,18 @@
   "net/minecraft/class_988.method_4191(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10043;FF)V": {
    "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
    "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_10043;FF)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ]
+  },
+  "net/minecraft/class_988.method_64083(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_10043;Lnet/minecraft/class_1799;Lnet/minecraft/class_5321;I)V": {
+   "basis": "s9 submit: 1.21.9 submits to a SubmitNodeCollector where 1.21.8 drew into a MultiBufferSource (CbSubmit: a capture's collector, else an immediate one over the caller's buffers)",
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_10043;Lnet/minecraft/class_1799;Lnet/minecraft/class_5321;I)V",
    "ops": [
     "keep:0",
     "conv:1 top/dext/centurybridge/step/v1_21_9/rt/CbSubmit#collector(Lnet/minecraft/class_4597;)Lnet/minecraft/class_11659;",
@@ -1962,6 +2109,15 @@
    "new": "method_65604(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;III)V",
    "old": "method_65604(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V",
    "onlyUnder": "net/minecraft/class_10444"
+  },
+  {
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSubmitBridges$Legacy_class_10444_class_10446_method_65614",
+   "basis": "s9 submit: 1.21.9 calls the submitting shape; the old override draws into a CbSubmit.Capture over the collector, submitted when it returns (its super call is reshaped back to the submitting shape with the capture's collector)",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbSubmitBridges.cb_Legacy_class_10444_class_10446_method_65614(Ltop/dext/centurybridge/step/v1_21_9/rt/CbSubmitBridges$Legacy_class_10444_class_10446_method_65614;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;III)V",
+   "guard": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "new": "method_65614(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;III)V",
+   "old": "method_65614(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V",
+   "onlyUnder": "net/minecraft/class_10444$class_10446"
   },
   {
    "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbSubmitBridges$Legacy_class_10498_method_65693",

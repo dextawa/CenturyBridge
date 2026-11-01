@@ -52,6 +52,88 @@ public class Driver implements ClientModInitializer {
     public static final Map<String, Integer> NATIVE_CLICKS = new ConcurrentHashMap<>();
     static final Map<String, Boolean> OK = new LinkedHashMap<>();
 
+    public static final AtomicInteger FRUSTUM_RETURNS = new AtomicInteger();
+    public static volatile Object lastFrustum;
+
+    /** CullFrustumReturnMixin: the frustum 1.21.9's prepareCullFrustum returned this frame */
+    public static volatile Object awaitedFrustum;
+    public static final AtomicInteger AWAITED_SEEN = new AtomicInteger();
+
+    public static void frustumReturned(Object f) {
+        FRUSTUM_RETURNS.incrementAndGet();
+        lastFrustum = f;
+        if (f != null && f == awaitedFrustum) {
+            AWAITED_SEEN.incrementAndGet();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    static void report(Object map) {
+        ((Map<String, Object[]>) map).forEach((k, v) -> check(k, (Boolean) v[0], String.valueOf(v[1])));
+    }
+
+    static Object onRender(class_310 mc, String method, Object... args) throws Exception {
+        Class<?> c = Class.forName("cb.s9r.AwCheck");
+        Class<?>[] types = new Class<?>[args.length];
+        java.util.Arrays.fill(types, Object.class);
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return c.getMethod(method, types).invoke(null, args);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e.getCause() != null ? e.getCause() : e);
+            }
+        }, mc).get(20, TimeUnit.SECONDS);
+    }
+
+    /** the climbed mod's 1.21.8 access-widener reads (cb.s9r.AwCheck): armor, vectors, input; particles and frustum in a world */
+    static void checkAw(class_310 mc) throws Exception {
+        report(onRender(mc, "armor"));
+        report(onRender(mc, "vectors"));
+        class_437 input = (class_437) Class.forName("cb.s9r.AwCheck").getMethod("newInputScreen").invoke(null);
+        CompletableFuture.runAsync(() -> mc.method_1507(input), mc).get(20, TimeUnit.SECONDS);
+        Thread.sleep(1500);
+        report(onRender(mc, "input", input));
+        CompletableFuture.runAsync(() -> mc.method_1507(null), mc).get(20, TimeUnit.SECONDS);
+        if (mc.field_1687 == null) {
+            check("I.particles", false, "N/T: no world (run with CB_WORLD)");
+            check("M.frustum", false, "N/T: no world (run with CB_WORLD)");
+            return;
+        }
+        report(onRender(mc, "particles"));
+        Thread.sleep(2000);
+        int n0 = FRUSTUM_RETURNS.get();
+        // read the field and the native observer's last frustum in one render-thread task (between two frames)
+        Object[] pair = CompletableFuture.supplyAsync(() -> {
+            try {
+                return new Object[]{Class.forName("cb.s9r.AwCheck").getMethod("readFrustum").invoke(null), lastFrustum};
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        }, mc).get(20, TimeUnit.SECONDS);
+        Object read = pair[0], returned = pair[1];
+        check("M.native", n0 > 0, "native RETURN inject on prepareCullFrustum ran " + n0 + "x beside the layer's mixin");
+        check("M.read", read != null && read == returned, "1.21.8 cullingFrustum read is the frustum prepareCullFrustum returned last frame (" + (read == returned) + ")");
+        // the write and the arming of the native observer happen in one render-thread task, before the next frame
+        Object written = CompletableFuture.supplyAsync(() -> {
+            try {
+                Object f = Class.forName("cb.s9r.AwCheck").getMethod("writeFrustum").invoke(null);
+                awaitedFrustum = f;
+                return f;
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        }, mc).get(20, TimeUnit.SECONDS);
+        int r0 = FRUSTUM_RETURNS.get();
+        long until = System.currentTimeMillis() + 10000;
+        while (FRUSTUM_RETURNS.get() < r0 + 3 && System.currentTimeMillis() < until) {
+            Thread.sleep(50);
+        }
+        int seen = AWAITED_SEEN.get();
+        check("M.write", seen == 1, "after a 1.21.8 cullingFrustum write, exactly the next frame culled with it (native RETURN saw it " + seen + "x over "
+            + (FRUSTUM_RETURNS.get() - r0) + " frames)");
+        check("M.cleared", lastFrustum != written, "later frames build their own again (" + (lastFrustum != written) + ")");
+    }
+
     public static boolean isTestList(Object list) {
         return list.getClass().getName().equals("cb.s9r.TestList");
     }
@@ -224,7 +306,7 @@ public class Driver implements ClientModInitializer {
         try {
             long until = System.currentTimeMillis() + 240_000;
             // a screen and no loading overlay: the first resource reload (models, atlases) has finished
-            while ((mc.field_1755 == null || mc.method_18506() != null) && System.currentTimeMillis() < until) {
+            while (((mc.field_1755 == null && mc.field_1687 == null) || mc.method_18506() != null) && System.currentTimeMillis() < until) {
                 Thread.sleep(500);
             }
             Thread.sleep(3000);
@@ -287,6 +369,9 @@ public class Driver implements ClientModInitializer {
 
             // DebugRenderer toggles / clear, through 1.21.8's Minecraft.debugRenderer
             checkDebugRenderer(mc);
+
+            // the 1.21.8 mod's own access widener over members 1.21.9 moved / retyped / dropped
+            checkAw(mc);
 
             // WardenModel emissive part lists
             String warden = CompletableFuture.supplyAsync(() -> {

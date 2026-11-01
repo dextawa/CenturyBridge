@@ -4,6 +4,12 @@
   "version": "1.0.0",
   "name": "CB s9 1.21.8 route checks",
   "environment": "client",
-  "mixins": ["cb_s9r.mixins.json"],
-  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.8" }
+  "mixins": [
+    "cb_s9r.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "1.21.8"
+  },
+  "accessWidener": "cb_s9r.accesswidener"
 }
