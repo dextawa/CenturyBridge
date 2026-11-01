@@ -48,4 +48,26 @@ public final class CbRenderSystem {
         RenderSystem.assertOnRenderThread();
         return shaderLineWidth;
     }
+
+    /**
+     * 1.21.10's twelve shader texture slots (RenderSystem.shaderTextures, javap: new GpuTextureView[12] in its clinit).
+     * 1.21.11 removed them: a render type binds its textures from its RenderSetup, so no 1.21.11 draw reads a slot. They
+     * are kept with 1.21.10's bodies for 1.21.10 code that sets and reads them back itself.
+     */
+    private static final com.mojang.blaze3d.textures.GpuTextureView[] shaderTextures =
+        new com.mojang.blaze3d.textures.GpuTextureView[12];
+
+    /** RenderSystem.setShaderTexture(int, GpuTextureView): out-of-range slots are ignored, as in 1.21.10 */
+    public static void setShaderTexture(int slot, com.mojang.blaze3d.textures.GpuTextureView view) {
+        RenderSystem.assertOnRenderThread();
+        if (slot >= 0 && slot < shaderTextures.length) {
+            shaderTextures[slot] = view;
+        }
+    }
+
+    /** RenderSystem.getShaderTexture(int): null out of range, as in 1.21.10 */
+    public static com.mojang.blaze3d.textures.GpuTextureView getShaderTexture(int slot) {
+        RenderSystem.assertOnRenderThread();
+        return slot >= 0 && slot < shaderTextures.length ? shaderTextures[slot] : null;
+    }
 }
