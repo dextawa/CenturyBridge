@@ -30,7 +30,9 @@
   "net/minecraft/class_1921.method_62291()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.method_56849()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.method_56850()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921.method_65227(Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
+  "net/minecraft/class_1921.method_65227(Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_56848(ZZ)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_65229(Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
  },
  "_s205k_states_basis": "The 80 RenderStateShard constants 1.21.5 dropped from class_4668 (damage get-static-protected rows, all 80 keyed here) -> rt/CbRenderStates getters, built as 1.21.4's <clinit> built them (basis in its javadoc); the six dropped shard classes -> facade/RenderStateShard$class_* (1.21.4 members and runnable bodies).",
  "fieldGetters": {
@@ -113,7 +115,15 @@
   "net/minecraft/class_4668.field_44818:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderStates",
   "net/minecraft/class_4668.field_44819:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderStates",
   "net/minecraft/class_4668.field_44820:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderStates",
-  "net/minecraft/class_4668.field_47463:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderStates"
+  "net/minecraft/class_4668.field_47463:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderStates",
+  "net/minecraft/class_1921.field_55145:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.field_55146:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.field_55148:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.field_53129:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.field_48950:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.field_48951:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.field_55139:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.field_55140:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
  },
  "_s205k_builder_basis": "1.21.4 CompositeState.Builder setters for the six shards 1.21.5's CompositeState dropped (shader/transparency/depthTest/cull/writeMask/colorLogic, javap 1.21.4 class_4688$class_4689) record them per builder in rt/CbRenderTypes; createCompositeState (method_23617/method_24297, public in 1.21.4, protected in 1.21.5) runs 1.21.5's own build (layer AW) and keeps the recorded shards per state. RenderType.create (method_24048 package-private / method_24049 private in 1.21.4, reached by mods through their own AW) builds a RenderPipeline from the shards and calls 1.21.5's method_24049(name,size,crumbling,sort,pipeline,state).",
  "instanceRedirects": {
@@ -150,6 +160,23 @@
   "net/minecraft/class_1921$class_4688.field_21418:Lnet/minecraft/class_4668$class_4684;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921$class_4688.field_21419:Lnet/minecraft/class_4668$class_4686;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921$class_4688.field_21420:Lnet/minecraft/class_4668$class_4677;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921$class_4688.field_44825:Lnet/minecraft/class_4668$class_8559;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
+  "net/minecraft/class_1921$class_4688.field_44825:Lnet/minecraft/class_4668$class_8559;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_29463:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_21424:Lnet/minecraft/class_4668$class_4685;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_21428:Lnet/minecraft/class_4668$class_4672;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_21429:Lnet/minecraft/class_4668$class_4671;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_21436:Lnet/minecraft/class_4668$class_4686;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_44826:Lnet/minecraft/class_4668$class_8559;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.field_20972:Lnet/minecraft/class_293;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.field_20973:Lnet/minecraft/class_293$class_5596;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
+ },
+ "_s205n_aw2_basis": "more damage-aw rows: CompositeState.Builder private shard fields field_29463/21424/21428/21429/21436/44826 (get/put -> the builder's recorded shards), RenderType.format/mode fields (field_20972/20973 -> 1.21.5's getters), the private static fields behind the dropped getters (field_55145/55146/55148/53129/48950/48951/55139/55140) and their builders method_56848(ZZ) / method_65229(Z) (javap -p 1.21.4 class_1921 / class_4688$class_4689).",
+ "instanceFieldSetters": {
+  "net/minecraft/class_1921$class_4688$class_4689.field_29463:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_21424:Lnet/minecraft/class_4668$class_4685;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_21428:Lnet/minecraft/class_4668$class_4672;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_21429:Lnet/minecraft/class_4668$class_4671;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_21436:Lnet/minecraft/class_4668$class_4686;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.field_44826:Lnet/minecraft/class_4668$class_8559;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
  }
 }

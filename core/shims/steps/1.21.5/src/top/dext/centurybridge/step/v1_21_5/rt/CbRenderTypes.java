@@ -388,6 +388,100 @@ public final class CbRenderTypes {
         return new CbOutputStateShard(name, setup, clear);
     }
 
+    // ---- more access-widened 1.21.4 members (damage-aw rows) ----
+
+    // CompositeState.Builder's private fields for the six dropped shards (get / put): the builder's recorded shards
+    public static RenderStateShard$class_5942 field_29463(class_1921.class_4688.class_4689 b) {
+        return of(b).shader;
+    }
+
+    public static void field_29463(class_1921.class_4688.class_4689 b, RenderStateShard$class_5942 v) {
+        of(b).shader = v;
+    }
+
+    public static RenderStateShard$class_4685 field_21424(class_1921.class_4688.class_4689 b) {
+        return of(b).transparency;
+    }
+
+    public static void field_21424(class_1921.class_4688.class_4689 b, RenderStateShard$class_4685 v) {
+        of(b).transparency = v;
+    }
+
+    public static RenderStateShard$class_4672 field_21428(class_1921.class_4688.class_4689 b) {
+        return of(b).depthTest;
+    }
+
+    public static void field_21428(class_1921.class_4688.class_4689 b, RenderStateShard$class_4672 v) {
+        of(b).depthTest = v;
+    }
+
+    public static RenderStateShard$class_4671 field_21429(class_1921.class_4688.class_4689 b) {
+        return of(b).cull;
+    }
+
+    public static void field_21429(class_1921.class_4688.class_4689 b, RenderStateShard$class_4671 v) {
+        of(b).cull = v;
+    }
+
+    public static RenderStateShard$class_4686 field_21436(class_1921.class_4688.class_4689 b) {
+        return of(b).writeMask;
+    }
+
+    public static void field_21436(class_1921.class_4688.class_4689 b, RenderStateShard$class_4686 v) {
+        of(b).writeMask = v;
+    }
+
+    public static RenderStateShard$class_8559 field_44826(class_1921.class_4688.class_4689 b) {
+        return of(b).colorLogic;
+    }
+
+    public static void field_44826(class_1921.class_4688.class_4689 b, RenderStateShard$class_8559 v) {
+        of(b).colorLogic = v;
+    }
+
+    /** 1.21.4 RenderType.format (private field; 1.21.4's format() returned it) */
+    public static VertexFormat field_20972(class_1921 type) {
+        return type.method_23031();
+    }
+
+    /** 1.21.4 RenderType.mode */
+    public static VertexFormat.class_5596 field_20973(class_1921 type) {
+        return type.method_23033();
+    }
+
+    // 1.21.4 RenderType's private static fields behind the dropped getters (same values the getters answer)
+    public static class_1921 field_55145() {
+        return Dropped.SKY;
+    }
+
+    public static class_1921 field_55146() {
+        return Dropped.END_SKY;
+    }
+
+    public static class_1921 field_55148() {
+        return Dropped.STARS;
+    }
+
+    public static class_1921 field_53129() {
+        return Dropped.CLOUDS_00;
+    }
+
+    public static class_1921 field_48950() {
+        return Dropped.CLOUDS_01;
+    }
+
+    public static class_1921 field_48951() {
+        return Dropped.CLOUDS_11;
+    }
+
+    public static class_1921 field_55139() {
+        return Dropped.WORLD_BORDER_F;
+    }
+
+    public static class_1921 field_55140() {
+        return Dropped.WORLD_BORDER_T;
+    }
+
     // ---- RenderType getters 1.21.5 dropped (damage call-static rows), built once with 1.21.4's <clinit> recipes ----
     // (javap -c -p 1.21.4 class_1921: sky / end_sky / stars inline in <clinit>, clouds = method_56848(colorOnly, cull),
     // world_border = method_65229(flag); each goes through this class's create, as a mod's would)
@@ -399,11 +493,11 @@ public final class CbRenderTypes {
             1536, false, false, endSky());
         static final class_1921 STARS = method_24049("stars", net.minecraft.class_290.field_1592, VertexFormat.class_5596.field_27382, 1536,
             false, false, stars());
-        static final class_1921 CLOUDS_00 = clouds(false, false);
-        static final class_1921 CLOUDS_01 = clouds(false, true);
-        static final class_1921 CLOUDS_11 = clouds(true, true);
-        static final class_1921 WORLD_BORDER_F = worldBorder(false);
-        static final class_1921 WORLD_BORDER_T = worldBorder(true);
+        static final class_1921 CLOUDS_00 = method_56848(false, false);
+        static final class_1921 CLOUDS_01 = method_56848(false, true);
+        static final class_1921 CLOUDS_11 = method_56848(true, true);
+        static final class_1921 WORLD_BORDER_F = method_65229(false);
+        static final class_1921 WORLD_BORDER_T = method_65229(true);
     }
 
     private static class_1921.class_4688 sky() {
@@ -431,7 +525,7 @@ public final class CbRenderTypes {
     }
 
     /** 1.21.4 method_56848(colorOnly, cull) */
-    private static class_1921 clouds(boolean colorOnly, boolean cull) {
+    public static class_1921.class_4687 method_56848(boolean colorOnly, boolean cull) {
         class_1921.class_4688.class_4689 b = class_1921.class_4688.method_23598();
         method_34578(b, CbRenderStates.field_48949());
         method_23615(b, CbRenderStates.field_21370());
@@ -443,7 +537,7 @@ public final class CbRenderTypes {
     }
 
     /** 1.21.4 method_65229(flag) */
-    private static class_1921 worldBorder(boolean flag) {
+    public static class_1921 method_65229(boolean flag) {
         class_1921.class_4688.class_4689 b = class_1921.class_4688.method_23598();
         method_34578(b, CbRenderStates.field_29440());
         b.method_34577(new class_4668.class_4683(net.minecraft.class_9978.field_53157, net.minecraft.class_9851.field_52395, false));
@@ -472,17 +566,17 @@ public final class CbRenderTypes {
         return Dropped.STARS;
     }
 
-    /** 1.21.4 field_53129 = clouds(false, false) */
+    /** 1.21.4 field_53129 = method_56848(false, false) */
     public static class_1921 method_62291() {
         return Dropped.CLOUDS_00;
     }
 
-    /** 1.21.4 field_48950 = clouds(false, true) */
+    /** 1.21.4 field_48950 = method_56848(false, true) */
     public static class_1921 method_56849() {
         return Dropped.CLOUDS_01;
     }
 
-    /** 1.21.4 field_48951 = clouds(true, true) */
+    /** 1.21.4 field_48951 = method_56848(true, true) */
     public static class_1921 method_56850() {
         return Dropped.CLOUDS_11;
     }
