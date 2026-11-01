@@ -15,5 +15,6 @@
  },
  "mixins": [
   "cb_s9.mixins.json"
- ]
+ ],
+ "accessWidener": "cb_s9.accesswidener"
 }

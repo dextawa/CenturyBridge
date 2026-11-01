@@ -16,10 +16,11 @@ this writes
   - the layer source rt/CbSubmitBridges.java (the adapter interfaces and bridges, deterministic templates).
 Everything else is reported (design).
 
-  python3 core/tools/gen_s9submit.py <damage.tsv> <V stub> <W stub> <out fragment.json> <out CbSubmitBridges.java>
+  python3 core/tools/gen_s9submit.py <damage.tsv> <V stub> <W stub> <out fragment.json> <out CbSubmitBridges.java> [<damage-aw.tsv>]
   (core/segments/damage/1.21.8__1.21.9.damage.tsv data/jars/client-1.21.8-intermediary.jar data/jars/client-1.21.9-intermediary.jar
    core/segments/steps/1.21.8__1.21.9.json.d/s9-submit-gen.json
-   core/shims/steps/1.21.9/src/top/dext/centurybridge/step/v1_21_9/rt/CbSubmitBridges.java)
+   core/shims/steps/1.21.9/src/top/dext/centurybridge/step/v1_21_9/rt/CbSubmitBridges.java
+   core/segments/damage-aw/1.21.8__1.21.9.damage.tsv)
 """
 import json
 import os
@@ -142,11 +143,14 @@ def main():
     dmg, vjar, wjar, out, java = sys.argv[1:6]
     V, W = load(vjar), load(wjar)
     members = {}
-    for line in open(dmg, encoding="utf-8"):
-        p = line.rstrip("\n").split("\t")
-        if p[0] == "usage" or "(" not in p[3] or MBS not in p[3] or p[2] == "<init>":
-            continue
-        members.setdefault((p[2], p[3]), set()).add(p[1])
+    # optional further tables (the access-widener one, core/segments/damage-aw): non-public members a mod reaches
+    # through its own access widener get the same call reshape; private / static ones get no override hook (below)
+    for table in [dmg] + sys.argv[6:]:
+        for line in open(table, encoding="utf-8"):
+            p = line.rstrip("\n").split("\t")
+            if p[0] == "usage" or "(" not in p[3] or MBS not in p[3] or p[2] == "<init>":
+                continue
+            members.setdefault((p[2], p[3]), set()).add(p[1])
     frag = {"callReshapes": {}, "overrideHooks": []}
     src = []
     report = []

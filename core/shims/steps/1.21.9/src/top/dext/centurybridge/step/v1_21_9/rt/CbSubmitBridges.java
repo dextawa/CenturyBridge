@@ -1134,6 +1134,20 @@ public final class CbSubmitBridges {
         }
     }
 
+    /** net/minecraft/class_10444$class_10446.method_65614(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V */
+    public interface Legacy_class_10444_class_10446_method_65614 {
+        void method_65614(net.minecraft.class_4587 p0, net.minecraft.class_4597 p1, int p2, int p3);
+    }
+
+    public static void cb_Legacy_class_10444_class_10446_method_65614(Legacy_class_10444_class_10446_method_65614 self, net.minecraft.class_4587 a0, net.minecraft.class_11659 a1, int a2, int a3, int a4) {
+        CbSubmit.Capture cap = CbSubmit.capture(a1, null);
+        try {
+            self.method_65614(a0, cap, a2, a3);
+        } finally {
+            cap.flush();
+        }
+    }
+
     /** net/minecraft/class_10498.method_65693(Lnet/minecraft/class_9307;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IIZ)V */
     public interface Legacy_class_10498_method_65693 {
         void method_65693(net.minecraft.class_9307 p0, net.minecraft.class_811 p1, net.minecraft.class_4587 p2, net.minecraft.class_4597 p3, int p4, int p5, boolean p6);

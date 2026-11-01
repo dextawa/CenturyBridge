@@ -30,7 +30,8 @@
     "CbS26TagsProviderRestoredMixin",
     "CbS26FapiTagsProviderRestoredMixin",
     "CbS26TagsProviderKeyedMixin",
-    "CbS26RecipeProviderRestoredMixin"
+    "CbS26RecipeProviderRestoredMixin",
+    "CbS26EmissiveContextMixin"
   ],
   "client": [
     "CbS26LevelRendererRestoredMixin",

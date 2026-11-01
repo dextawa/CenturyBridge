@@ -34,6 +34,24 @@ public final class CbCullFrustum {
         return slot;
     }
 
+    /** the frustum the current (or last) frame culls with, kept at prepareCullFrustum's return (CbCullFrustumMixin) */
+    private static class_4604 frame;
+
+    public static void cbFrame(class_4604 f) {
+        frame = f;
+    }
+
+    /** LevelRenderer.cullingFrustum (field_27740) read: 1.21.8 held the frame's culling frustum there */
+    public static class_4604 field_27740(class_761 renderer) {
+        return slot != null ? slot : frame;
+    }
+
+    /** LevelRenderer.cullingFrustum write: the frame culls with it, as 1.21.8's renderLevel read the field */
+    public static void field_27740(class_761 renderer, class_4604 f) {
+        slot = f;
+        frame = f;
+    }
+
     /** renderLevel's end: the next frame starts unset */
     public static void cbEndFrame() {
         slot = null;
