@@ -1,0 +1,10 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_skspawnn",
+ "version": "1.0.0",
+ "name": "CB skspawn native 1.20.5 counterpart",
+ "environment": "*",
+ "accessWidener": "cb_skspawnn.accesswidener",
+ "mixins": ["cb_skspawnn.mixins.json"],
+ "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.20.5" }
+}
