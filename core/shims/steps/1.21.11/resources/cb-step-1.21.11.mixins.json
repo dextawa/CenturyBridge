@@ -21,6 +21,8 @@
     "CbSavedDataServerMixin"
   ],
   "client": [
+    "CbAbstractButtonTextRestoredMixin",
+    "CbAbstractWidgetTextRestoredMixin",
     "CbClientLevelColorsRestoredMixin",
     "CbClientLevelEffectsMixin",
     "CbClientLevelEffectsMixinHooks",
@@ -31,10 +33,16 @@
     "CbDimEffectsLightingMixin",
     "CbDimEffectsSkyMixin",
     "CbFileUploadRestoredMixin",
+    "CbGuiCollectorAccess",
     "CbLineWidthBufferSourceMixin",
     "CbLineWidthBuilderMixin",
+    "CbMultiLineLabelFontAccess",
     "CbOptionInstanceGraphicsMixin",
-    "CbOptionsGraphicsModeRestoredMixin"
+    "CbOptionsGraphicsModeRestoredMixin",
+    "CbSpriteIconButtonAccess",
+    "CbSpriteIconTextRestoredMixin",
+    "CbSpriteTextAndIconRestoredMixin",
+    "CbStringSplitterRestoredMixin"
   ],
   "server": [],
   "injectors": {
