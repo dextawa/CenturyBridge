@@ -27,7 +27,9 @@ public class Smx1dNative implements ClientModInitializer {
         "cycle.displayOnlyValue", "cycle.nativeBuild", "graphics.getFabulous", "graphics.getNotFabulous",
         "graphics.renderDistanceKept", "graphics.noPresetApplied", "graphics.nativeSetGet", "graphics.statusIds",
         "level.skyColor", "level.cloudColor", "debug.filledBox", "debug.floatingText", "debug.voxelShape", "debug.path",
-        "upload.cancelledFirst", "upload.unreachableEmpty", "upload.finished", "upload.secondCallEmpty"};
+        "upload.cancelledFirst", "upload.unreachableEmpty", "upload.finished", "upload.secondCallEmpty", "text.frames", "text.labelRender", "text.labelNative",
+        "text.labelStyle", "text.scrollingStatic", "text.oldRenderString", "text.oldDefaultLabelNative",
+        "text.vanillaDefaultLabelNative"};
 
     static void log(String s) {
         System.out.println("CB-SMX1D " + s);
@@ -87,7 +89,8 @@ public class Smx1dNative implements ClientModInitializer {
         log((p2 ? "ok " : "FAIL ") + "graphics.improvedTransparencyOff " + fancy);
         log("counters addVertex=" + Probe.get("addVertex") + " optionGet=" + Probe.get("optionGet") + " optionSet="
             + Probe.get("optionSet") + " optionSetGraphics=" + Probe.get("optionSetGraphics") + " applyPreset="
-            + Probe.get("applyPreset") + " cycleBuild=" + Probe.get("cycleBuild"));
+            + Probe.get("applyPreset") + " cycleBuild=" + Probe.get("cycleBuild") + " labelVisit=" + Probe.get("labelVisit") + " defaultLabel.old="
+            + Probe.get("defaultLabel.old") + " defaultLabel.vanilla=" + Probe.get("defaultLabel.vanilla"));
         log(ok.stream().filter(b -> b).count() + "/" + ok.size());
         sleep(1000);
         m.execute(m::method_1592);
