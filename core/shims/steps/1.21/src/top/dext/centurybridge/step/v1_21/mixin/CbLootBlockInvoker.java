@@ -21,6 +21,18 @@ public interface CbLootBlockInvoker {
     @Invoker("method_60391")
     net.minecraft.class_5341.class_210 cb$doesNotHaveSilkTouch();
 
+    /** 1.21's private hasShearsOrSilkTouch() (1.20.6's static HAS_SHEARS_OR_SILK_TOUCH) */
+    @Invoker("method_60392")
+    net.minecraft.class_5341.class_210 cb$hasShearsOrSilkTouch();
+
+    /** 1.21's private doesNotHaveShearsOrSilkTouch() (1.20.6's static HAS_NO_SHEARS_OR_SILK_TOUCH) */
+    @Invoker("method_60393")
+    net.minecraft.class_5341.class_210 cb$doesNotHaveShearsOrSilkTouch();
+
+    /** 1.21's private createSilkTouchOnlyTable(item) (1.20.6's private static) */
+    @Invoker("method_46003")
+    net.minecraft.class_52.class_53 cb$createSilkTouchOnlyTable(net.minecraft.class_1935 item);
+
     @Invoker("method_45989")
     net.minecraft.class_52.class_53 cb$createSilkTouchDispatchTable(net.minecraft.class_2248 block, net.minecraft.class_79.class_80<?> entry);
 

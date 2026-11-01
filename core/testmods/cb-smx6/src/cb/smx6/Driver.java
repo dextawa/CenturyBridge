@@ -322,6 +322,39 @@ public final class Driver {
             blockDim = false;
             check("dim-blocked", dim.equals("stayed") && dimAsked == 1 && dimDest == end,
                 "move refused by the mod: " + dim + ", asked " + dimAsked + " time(s)");
+            // ---- TagsProvider.LOGGER through the mod's access widener (damage-aw: 1.21 dropped the field; CbData.field_11479)
+            org.slf4j.Logger tagsLog = net.minecraft.class_2474.field_11479;
+            check("aw-tags-logger", tagsLog != null && tagsLog == net.minecraft.class_2474.field_11479,
+                "TagsProvider.LOGGER via access widener: " + (tagsLog == null ? "null" : tagsLog.getName()));
+            // ---- BlockLootSubProvider privates through the access widener (damage-aw; CbLoot on the provider's 1.21 members)
+            try {
+                java.util.concurrent.atomic.AtomicInteger builds = null;
+                try {
+                    builds = (java.util.concurrent.atomic.AtomicInteger) Class.forName("top.dext.centurybridge.step.v1_21.rt.CbLoot")
+                        .getField("DEFERRED_BUILDS").get(null);
+                } catch (ReflectiveOperationException e) {
+                    // 1.20.6 itself, or no layer: nothing to count
+                }
+                int b0 = builds == null ? -1 : builds.get();
+                net.minecraft.class_5341.class_210 lazySos = net.minecraft.class_7788.field_40606;
+                net.minecraft.class_5341.class_210 lazyNos = net.minecraft.class_7788.field_40607;
+                int b1 = builds == null ? -1 : builds.get();
+                lazySos.build();
+                lazyNos.method_16780().build();
+                int b2 = builds == null ? -1 : builds.get();
+                check("aw-loot-deferred", builds != null && b1 == b0 && b2 == b0 + 2,
+                    "silk-touch holder resolved on field read " + (b1 - b0) + " time(s), on build() " + (b2 - b1) + " time(s)");
+                net.minecraft.class_5341.class_210 sos = net.minecraft.class_7788.field_40606;
+                net.minecraft.class_5341.class_210 nos = net.minecraft.class_7788.field_40607;
+                net.minecraft.class_52.class_53 only = net.minecraft.class_7788.method_46003(net.minecraft.class_1802.field_8070);
+                check("aw-loot-conditions", sos != null && nos != null && sos.build() != null && nos.build() != null
+                        && only != null && only.method_338() != null,
+                    "HAS_SHEARS_OR_SILK_TOUCH " + (sos == null ? "null" : sos.build().getClass().getSimpleName())
+                        + ", HAS_NO_SHEARS_OR_SILK_TOUCH " + (nos == null ? "null" : nos.build().getClass().getSimpleName())
+                        + ", createSilkTouchOnlyTable(glass) " + (only == null ? "null" : "built"));
+            } catch (RuntimeException e) {
+                check("aw-loot-conditions", false, "threw " + e);
+            }
             // ---- BuiltInRegistries.REGISTRY by name (Kilt E9): 1.20.6's root held minecraft:enchantment, the same registry
             // BuiltInRegistries.ENCHANTMENT reads; other names unchanged (1.21: CbRootRegistry)
             net.minecraft.class_2960 enchId = net.minecraft.class_2960.method_43902("minecraft", "enchantment");
