@@ -2,6 +2,8 @@ package top.dext.centurybridge.step.v1_21_5.facade;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.class_10149;
 import net.minecraft.class_2960;
 import net.minecraft.class_290;
@@ -14,6 +16,7 @@ import net.minecraft.class_290;
  * ShaderDefines.EMPTY (class_10149.field_53930), added to the list method_62901 answers. Converted references name this
  * class (classRenames). Members public (access wideners never reach a CenturyBridge class).
  */
+@Environment(EnvType.CLIENT)
 public class CoreShaders {
     /** PROGRAMS */
     public static final List<ShaderProgram> field_53872 = new ArrayList<>();

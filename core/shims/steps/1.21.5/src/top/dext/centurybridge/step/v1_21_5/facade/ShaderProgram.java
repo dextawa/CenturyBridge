@@ -2,6 +2,8 @@ package top.dext.centurybridge.step.v1_21_5.facade;
 
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.class_10149;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.class_2960;
 
 /**
@@ -13,6 +15,7 @@ import net.minecraft.class_2960;
  * the three accessors, ObjectMethods equals / hashCode, and toString = "configId (vertexFormat)", followed by
  * " with defines" when the defines are not empty (class_10149.method_62930).
  */
+@Environment(EnvType.CLIENT)
 public record ShaderProgram(class_2960 comp_3113, VertexFormat comp_3114, class_10149 comp_3115) {
     @Override
     public String toString() {
