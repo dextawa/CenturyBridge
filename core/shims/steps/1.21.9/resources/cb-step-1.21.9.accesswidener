@@ -3,6 +3,9 @@ accessible field net/minecraft/class_312 field_61506 J
 accessible field net/minecraft/class_312 field_61507 I
 accessible field net/minecraft/class_312 field_1780 Lnet/minecraft/class_11910;
 accessible method net/minecraft/class_309 method_1466 (JILnet/minecraft/class_11908;)V
+accessible method net/minecraft/class_309 method_1457 (JLnet/minecraft/class_11905;)V
+accessible method net/minecraft/class_309 method_1468 (Lnet/minecraft/class_11908;)Z
+accessible method net/minecraft/class_312 method_1601 (JLnet/minecraft/class_11910;I)V
 # Minecraft.ON_OSX (1.21.8) is InputQuirks.ON_OSX: the same Util.getPlatform() == OSX (s9.json fieldRedirects)
 accessible field net/minecraft/class_11906 field_62592 Z
 # PlayerSkin.Model.id() (1.21.8) is PlayerModelType's legacy services id (CbSkins)
@@ -27,6 +30,10 @@ accessible field net/minecraft/class_11939 field_62627 Ljava/util/Map;
 accessible field net/minecraft/class_702 field_3834 Lnet/minecraft/class_638;
 accessible field net/minecraft/class_702 field_3830 Ljava/util/Map;
 accessible field net/minecraft/class_702 field_62618 Lnet/minecraft/class_11939;
+# ParticleEngine's 1.21.8 register(..) calls (rt/CbParticleResources): ParticleResources' own private register methods
+accessible class net/minecraft/class_11939$class_4091
+accessible method net/minecraft/class_11939 method_74300 (Lnet/minecraft/class_2396;Lnet/minecraft/class_707;)V
+accessible method net/minecraft/class_11939 method_74301 (Lnet/minecraft/class_2396;Lnet/minecraft/class_11939$class_4091;)V
 accessible field net/minecraft/class_647$class_10417 field_55268 Lnet/minecraft/class_10444;
 accessible field net/minecraft/class_11890 field_63007 F
 accessible field net/minecraft/class_11890 field_63008 F
@@ -120,3 +127,17 @@ accessible method net/minecraft/class_2841 <init> (Lnet/minecraft/class_6563;Lne
 accessible method net/minecraft/class_9279 <init> (Lnet/minecraft/class_2487;)V
 accessible field net/minecraft/class_634 field_62944 Lnet/minecraft/class_12036;
 accessible method com/mojang/blaze3d/systems/RenderSystem pollEvents ()V
+# CubeDefinition origin / dimensions for 1.21.8 readers (rt/CbModelVectors)
+accessible field net/minecraft/class_5604 field_27709 Lorg/joml/Vector3fc;
+accessible field net/minecraft/class_5604 field_27710 Lorg/joml/Vector3fc;
+# HumanoidArmorLayer's 1.21.8 inner/outer model fields over 1.21.9's ArmorModelSets (rt/CbArmorLayerFields)
+accessible field net/minecraft/class_970 field_61804 Lnet/minecraft/class_11677;
+mutable field net/minecraft/class_970 field_61804 Lnet/minecraft/class_11677;
+accessible field net/minecraft/class_970 field_61805 Lnet/minecraft/class_11677;
+mutable field net/minecraft/class_970 field_61805 Lnet/minecraft/class_11677;
+# private bodies 1.21.8 mods reach through their AW, at 1.21.9's shape (s9k-server.json)
+accessible method net/minecraft/class_3244 method_44337 (Ljava/lang/String;ZLjava/lang/Runnable;)V
+accessible class net/minecraft/class_3898$class_3208
+# new ItemEntity(other), 1.21.8's copy constructor (rt/CbItemEntityCopy)
+accessible field net/minecraft/class_1542 field_7204 I
+mutable field net/minecraft/class_1542 field_7203 F

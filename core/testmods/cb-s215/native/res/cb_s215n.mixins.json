@@ -9,9 +9,13 @@
     "DispenseSeenMixin",
     "EquipSeenMixin",
     "SaddledSeenMixin",
-    "SaddleSoundSeenMixin"
+    "SaddleSoundSeenMixin",
+    "JukeboxSetSeenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "client": [
+    "ClientDriverMixin"
+  ]
 }

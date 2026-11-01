@@ -1,0 +1,16 @@
+{
+  "_s215i_root_basis": "s121g Kilt E9 at 1.21.4 -> 1.21.5: the root-registry names 1.21.4's BuiltInRegistries held and 1.21.5 no longer builds in, each answered with the object the step's fieldGetter of that field returns (generated list: core/tools/gen_root_givebacks.py 1.21.4 1.21.5 -> rt/CbRootRegistryGen: cat_variant field_41163, frog_variant field_41164 -> CbVariants; item_sub_predicate_type field_49912 -> CbRootRegistry). Redirect keys carry 1.21.4's Registry descriptors (javap 1.21.4 class_2378: getOptional(Identifier)Optional, getValue(Identifier)Object, containsKey, keySet); every other receiver and name goes to vanilla unchanged. Native code is not rewritten.",
+  "_s215i_itemsubpredicate_basis": "1.21.4 BuiltInRegistries.ITEM_SUB_PREDICATE_TYPE (class_7923.field_49912) / Registries key class_7924.field_49914 (\"item_sub_predicate_type\") are 1.21.5's DATA_COMPONENT_PREDICATE_TYPE (field_56404) / field_56406 (\"data_component_predicate_type\"): same element type class_9360$class_8745, and class_9361's <clinit> registers the same 14 entries (damage ... jukebox_playable) into it (javap -c both). Presume moved: the field reads the moved registry; the key is renamed to 1.21.5's key.",
+  "fieldGetters": {
+    "net/minecraft/class_7923.field_49912:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21_5/rt/CbRootRegistry"
+  },
+  "fieldRenames": {
+    "net/minecraft/class_7924.field_49914:Lnet/minecraft/class_5321;": "field_56406"
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_2378.method_17966(Lnet/minecraft/class_2960;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_5/rt/CbRootRegistry",
+    "net/minecraft/class_2378.method_63535(Lnet/minecraft/class_2960;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_5/rt/CbRootRegistry",
+    "net/minecraft/class_2378.method_10250(Lnet/minecraft/class_2960;)Z": "top/dext/centurybridge/step/v1_21_5/rt/CbRootRegistry",
+    "net/minecraft/class_2378.method_10235()Ljava/util/Set;": "top/dext/centurybridge/step/v1_21_5/rt/CbRootRegistry"
+  }
+}

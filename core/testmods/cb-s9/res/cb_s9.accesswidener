@@ -1,0 +1,9 @@
+accessWidener	v2	intermediary
+# 1.21.8 members this test mod reaches through its own access widener (1.21.8 -> 1.21.9 damage-aw rows)
+accessible	method	net/minecraft/class_1542	<init>	(Lnet/minecraft/class_1542;)V
+accessible	field	net/minecraft/class_1542	field_7204	I
+accessible	field	net/minecraft/class_1826	field_8917	Lnet/minecraft/class_1299;
+accessible	method	net/minecraft/class_3244	method_44337	(Ljava/lang/String;Ljava/lang/Runnable;)V
+accessible	class	net/minecraft/class_3898$class_3208
+accessible	field	net/minecraft/class_3898$class_3208	field_18250	Ljava/util/Set;
+accessible	field	net/minecraft/class_3222	field_13993	Lnet/minecraft/class_1659;
