@@ -1747,6 +1747,35 @@ public final class JarRemapper {
         table.libSupers.forEach(table.targetSupers::putIfAbsent);
     }
 
+    /**
+     * An earlier climbing layer's CenturyBridge classes' supertypes, renamed past the wall, into {@link Table#jarSupers}
+     * (the input jar's own classes, loaded per jar by {@link #loadJarSupers}, take precedence): a layer calling an
+     * intermediary member through another layer's facade that inherits it from a game class (the 1.20.5 layer's
+     * RealmsObjectSelectionList.method_25342 on the 1.21.2 layer's facade, AbstractSelectionList.getRowLeft) found
+     * no game supertype for that facade, and the call kept the token ({@code cbOverride}). Only supertypes: the
+     * layer's fields and native methods stay out of the input jar's own checks.
+     */
+    public static void loadLayerSupers(Table table, Path layerJar) throws IOException {
+        Remapper r = table.remapper();
+        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(layerJar))) {
+            ZipEntry e;
+            while ((e = zin.getNextEntry()) != null) {
+                if (!e.getName().endsWith(".class") || !e.getName().startsWith("top/dext/centurybridge/")) {
+                    continue;
+                }
+                ClassReader cr = new ClassReader(zin.readAllBytes());
+                java.util.List<String> sup = new java.util.ArrayList<>();
+                if (cr.getSuperName() != null) {
+                    sup.add(r.map(cr.getSuperName()));
+                }
+                for (String i : cr.getInterfaces()) {
+                    sup.add(r.map(i));
+                }
+                table.jarSupers.putIfAbsent(r.map(cr.getClassName()), sup.toArray(new String[0]));
+            }
+        }
+    }
+
     /** the input jar's classes' supertypes, renamed as the jar will be ({@link Table#jarSupers}) */
     private static void loadJarSupers(Table table, Path jar) throws IOException {
         Remapper r = table.remapper();
