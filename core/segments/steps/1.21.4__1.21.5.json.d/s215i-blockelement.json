@@ -1,0 +1,15 @@
+{
+  "_s215i_blockelement_basis": "1.21.4 BlockElement (class_785): public final fields field_4228 from / field_4231 to (Vector3f), field_4230 faces, field_4232 rotation, field_4229 shade, field_53159 lightEmission; constructors (Vector3f, Vector3f, Map) and (Vector3f, Vector3f, Map, class_789, Z, I) that stored their arguments and filled missing face UVs (method_3402). 1.21.5: a final record with components comp_3727 / comp_3728 (Vector3fc), comp_3729..comp_3732, constructors (Vector3fc, Vector3fc, Map[, class_789, Z, I]) storing their arguments; missing UVs are computed at bake time (class_796.method_3468) (javap -c -p both). Field reads -> accessors (from / to copied into a Vector3f: writes through them no longer reach the record, release_notes_known.md); constructors -> 1.21.5's with the same vectors. extend / super-ctor of class_785 stay open: the record is final.",
+  "ctorRedirects": {
+    "net/minecraft/class_785.<init>(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Ljava/util/Map;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbBlockElements#newBlockElement",
+    "net/minecraft/class_785.<init>(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Ljava/util/Map;Lnet/minecraft/class_789;ZI)V": "top/dext/centurybridge/step/v1_21_5/rt/CbBlockElements#newBlockElement"
+  },
+  "instanceFieldGetters": {
+    "net/minecraft/class_785.field_4228:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_5/rt/CbBlockElements",
+    "net/minecraft/class_785.field_4231:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_5/rt/CbBlockElements",
+    "net/minecraft/class_785.field_4230:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_5/rt/CbBlockElements",
+    "net/minecraft/class_785.field_4232:Lnet/minecraft/class_789;": "top/dext/centurybridge/step/v1_21_5/rt/CbBlockElements",
+    "net/minecraft/class_785.field_4229:Z": "top/dext/centurybridge/step/v1_21_5/rt/CbBlockElements",
+    "net/minecraft/class_785.field_53159:I": "top/dext/centurybridge/step/v1_21_5/rt/CbBlockElements"
+  }
+}
