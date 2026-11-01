@@ -1,0 +1,388 @@
+{
+ "superCtorReshapes": {
+  "net/minecraft/class_10335.<init>(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_243;I)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_243;ILnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_10748.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_3937.<init>(Lnet/minecraft/class_638;DDDDDDZ)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDZLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_4974.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_5737.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_5716;I)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_5716;ILnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_653.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_655.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_657.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_663$class_4082.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;Lnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_663$class_4083.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;Lnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_663$class_4084.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;Lnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_663$class_4085.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_663$class_4497.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_663$class_4497.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;I)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;ILnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_663$class_4498.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;Lnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_663$class_5692.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_2394;Lnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_663.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_3611;Lnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_668.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_668.<init>(Lnet/minecraft/class_638;DDDDDDZLnet/minecraft/class_703$class_9213;)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDZLnet/minecraft/class_703$class_9213;Lnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_677$class_678.<init>(Lnet/minecraft/class_638;DDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_684.<init>(Lnet/minecraft/class_638;DDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_687.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_694.<init>(Lnet/minecraft/class_638;DDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_698.<init>(Lnet/minecraft/class_638;DDDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_719.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_7281.<init>(Lnet/minecraft/class_638;DDDI)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDILnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_729.<init>(Lnet/minecraft/class_638;DDDDDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_736.<init>(Lnet/minecraft/class_638;DDD)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  },
+  "net/minecraft/class_9479.<init>(Lnet/minecraft/class_638;DDDDDDII)V": {
+   "basis": "s9k particles: 1.21.9's constructor takes the sprite (handed on to SingleQuadParticle); 1.21.8's started without one until pickSprite / setSprite",
+   "desc": "(Lnet/minecraft/class_638;DDDDDDIILnet/minecraft/class_1058;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbParticles#noSprite()Lnet/minecraft/class_1058;"
+   ]
+  }
+ }
+}

@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_21_9.rt.CbCullFrustum;
 
 /**
@@ -32,6 +33,11 @@ public abstract class CbCullFrustumMixin {
             return frustum;
         }
         return set;
+    }
+
+    @Inject(method = "method_32133(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lnet/minecraft/class_243;)Lnet/minecraft/class_4604;", at = @At("RETURN"))
+    private void cb$frameFrustum(CallbackInfoReturnable<class_4604> cir) {
+        CbCullFrustum.cbFrame(cir.getReturnValue());
     }
 
     @Inject(method = "method_22710", at = @At("RETURN"))
