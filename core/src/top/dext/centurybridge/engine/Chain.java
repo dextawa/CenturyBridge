@@ -254,6 +254,18 @@ public final class Chain {
     public final java.util.Set<String> mixinAnchorGuarded = new java.util.HashSet<>();
 
     /**
+     * A MIXINEXTRAS:EXPRESSION whose definitions W's method no longer evaluates, where the expression's value is that
+     * method's return value ("mixinExpressionReturns", judged by an area agent from both bodies; smixin12, Kilt E8c
+     * 1.21.2 Bee.isHiveValid: V {@code be.getType() == BEEHIVE}, W {@code getBeehiveBlockEntity() != null}): key the V
+     * method "owner.name(desc)", value {"locals": "OWNER#name((Lowner;)LLocal;)" -- the expression's @Local recomputed on
+     * W, null exactly where V never reached the expression --, "basis": why W's return equals V's expression value
+     * wherever the static answers non-null}. MixinBridge turns a @ModifyExpressionValue taking that one @Local into a
+     * @ModifyReturnValue on W's method that calls the mod's handler only where the static answers, after checking in
+     * V's body that the expression's value is returned unchanged on every path that evaluates it (expressionIsReturn).
+     */
+    public final java.util.Map<String, String[]> mixinExpressionReturns = new java.util.HashMap<>();
+
+    /**
      * a mixinMoves entry's "self": field hops ["owner.name:desc", ...] from an instance of the W class to the instance
      * of V's class whose method V ran (s26 C17: 26.2 LevelExtractor.levelRenderer). With it an INSTANCE method's
      * injector whose handler reads {@code this} moves too: in the moved handler a @Shadow member the W class declares
@@ -2123,10 +2135,14 @@ public final class Chain {
      * new descriptor; the return value is adapted after the call: dropped when the old shape
      * returned nothing, converted when it returned another type, supplied when the new shape
      * returns nothing but the old one did, passed on ("ret": "keep") when the new shape returns a
-     * subtype of the old return type. Validated when the wiring loads.
+     * subtype of the old return type. Validated when the wiring loads. An optional "name" (smixin14, 26.1.2
+     * submitParticleGroup(ParticleGroupRenderer) -> 26.2 submitQuadParticleGroup(QuadParticleRenderState)) gives the
+     * member W calls in the new shape when W renamed it too; the call takes that name with the new descriptor.
      */
     public static final class CallReshape {
         public final CtorReshape args;
+        /** the member's name on W when the step renamed it as well, else null (the call keeps its name) */
+        public String newName;
         public final String oldDesc;
         public final String newDesc;
         /** after the call: null (same return), "pop", or a static {owner, name, desc} */
@@ -3385,11 +3401,21 @@ public final class Chain {
                     }
                     String ret = o.has("ret") ? o.get("ret").getAsString() : null;
                     CallReshape parsed = parseCallReshape(k, o.get("desc").getAsString(), ops, ret);
+                    String nm = k.substring(k.lastIndexOf('.', k.indexOf('(')) + 1, k.indexOf('('));
+                    if (o.has("name")) {
+                        String nn = o.get("name").getAsString();
+                        if (nn.isEmpty() || nn.startsWith("<") || nm.startsWith("<") || nn.equals(nm)) {
+                            throw new IllegalArgumentException("callReshapes " + k + ": name '" + nn + "' must be another method name");
+                        }
+                        if (parsed.newDesc.equals(parsed.oldDesc)) {
+                            throw new IllegalArgumentException("callReshapes " + k + ": a rename keeping the descriptor is a methodRenames entry");
+                        }
+                        parsed.newName = nn;
+                    }
                     c.callReshapes.put(k, parsed);
                     c.callReshapeIndex.put(k, k);
-                    String nm = k.substring(k.lastIndexOf('.', k.indexOf('(')) + 1, k.indexOf('('));
                     c.callReshapeNames.add(nm);
-                    c.callReshapeTargets.add(nm + o.get("desc").getAsString());
+                    c.callReshapeTargets.add((parsed.newName != null ? parsed.newName : nm) + o.get("desc").getAsString());
                     if (parsed.converts() && parsed.newDesc.equals(parsed.oldDesc)) {
                         c.sameShapeCalls.add(nm + parsed.newDesc);
                     }
@@ -3538,6 +3564,13 @@ public final class Chain {
                     if (amo.has("guarded") && amo.get("guarded").getAsBoolean()) {
                         c.mixinAnchorGuarded.add(k);
                     }
+                }
+            }
+            if (root.has("mixinExpressionReturns")) {
+                var mer = root.getAsJsonObject("mixinExpressionReturns");
+                for (String k : mer.keySet()) {
+                    c.mixinExpressionReturns.put(k, parseStaticRef("mixinExpressionReturns " + k,
+                        mer.getAsJsonObject(k).get("locals").getAsString()));
                 }
             }
             if (root.has("mixinSplits")) {
