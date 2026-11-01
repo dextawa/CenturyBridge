@@ -869,6 +869,15 @@ public final class MixinRepair {
                             // the handler's captured target arguments must be what the target takes now (smx1 CASE 14)
                             List<MethodNode> hit = anchors == null || anchors.isEmpty() ? cands
                                 : cands.stream().filter(m -> anchorsIn(m, tc, anchors)).toList();
+                            // smixin14 (FaceBakery.bakeQuad, 1.21.3 -> 1.21.4): V's instance method turned static in place.
+                            // Mixin takes only a static handler there; an instance handler that never reads this becomes
+                            // one, any other is refused (its this is no object on W)
+                            String staticWhy = staticInPlaceWhy(owner, s, hit, handler);
+                            boolean toStatic = "".equals(staticWhy);
+                            if (staticWhy != null && !toStatic) {
+                                if (deadWhy == null) deadWhy = "static in place: @" + kind + " " + where + " (" + staticWhy + ")";
+                                continue;
+                            }
                             CapturedFit fit = capturedFit(an, handler, anchors, hit, owner);
                             if (fit.why() != null) {
                                 if (deadWhy == null) deadWhy = "captured args: @" + kind + " " + where + " (" + fit.why() + ")";
@@ -876,9 +885,19 @@ public final class MixinRepair {
                             }
                             if (fit.changes()) {
                                 fixNotes.add("captured-args " + where + " " + fit.note()
-                                    + " (the target's arguments changed; a wrapper handler takes W's and calls the mod's handler with V's)");
+                                    + " (the target's arguments changed; a wrapper handler takes W's and calls the mod's handler with V's)"
+                                    + (toStatic ? " (handler made static: the target turned static in place)" : ""));
                                 fixes.add(() -> {
+                                    if (toStatic) makeStatic(handler);
                                     reshapeCaptured(mx, handler, fit);
+                                    dirty[0] = true;
+                                });
+                                continue;
+                            }
+                            if (toStatic) {
+                                fixNotes.add("static-in-place " + where + " (V's instance method is static on W; the handler never reads this: made static)");
+                                fixes.add(() -> {
+                                    makeStatic(handler);
                                     dirty[0] = true;
                                 });
                                 continue;
@@ -4231,6 +4250,20 @@ public final class MixinRepair {
             else if (k >= r0 + n) out[k - n + m] = pa[k];
         }
         return out;
+    }
+
+    /**
+     * whether the injector's target turned static in place (V's one method the selector names on owner is an instance
+     * method, every W method it selects is static): null when not (or the handler is static already), "" when an
+     * instance handler that never reads this can be made static, else why it cannot
+     */
+    String staticInPlaceWhy(String owner, Sel s, List<MethodNode> hit, MethodNode handler) {
+        if ((handler.access & Opcodes.ACC_STATIC) != 0 || hit.isEmpty() || source == null) return null;
+        if (!hit.stream().allMatch(m -> (m.access & Opcodes.ACC_STATIC) != 0)) return null;
+        ClassNode vc = source.target(owner);
+        List<MethodNode> vms = vc == null ? List.of() : s.match(vc);
+        if (vms.size() != 1 || (vms.get(0).access & Opcodes.ACC_STATIC) != 0) return null;
+        return touchesThisFree(handler) ? "" : "the handler reads this, which a static target has none of";
     }
 
     static boolean touchesThisFree(MethodNode h) {
