@@ -1176,6 +1176,9 @@ public final class JarProcessor {
                             Chain.CallReshape r) {
         reshapeArgs(m, mi, r.args);
         mi.desc = r.newDesc;
+        if (r.newName != null) {
+            mi.name = r.newName;
+        }
         if (r.retKind != null) {
             org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
             org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
@@ -3150,6 +3153,7 @@ public final class JarProcessor {
                         Chain.CallReshape cr = chain.callReshapes.get(key);
                         String nd = sr != null ? sr.newDesc : cr != null ? cr.newDesc : null;
                         String mr = chain.methodRenames.get(key);
+                        if (mr == null && cr != null) mr = cr.newName;
                         if (nd != null && !nd.equals(desc)) { desc = nd; reshaped++; }
                         if (mr != null) { name = mr; reshaped++; }
                     }

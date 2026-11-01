@@ -724,12 +724,13 @@ final class MixinBridge {
         String rh = chain.instanceRedirectHome(chain.callReshapeIndex, owner, nd);
         if (rh != null) {
             Chain.CallReshape r = chain.callReshapes.get(rh + "." + nd);
-            Found at = wResolveMethod(owner, name, r.newDesc);
+            String wn = r.newName != null ? r.newName : name;
+            Found at = wResolveMethod(owner, wn, r.newDesc);
             if (at == null) {
-                why.add("the call reshape's " + name + r.newDesc + " does not resolve on " + shortName(owner) + " in " + chain.to);
+                why.add("the call reshape's " + wn + r.newDesc + " does not resolve on " + shortName(owner) + " in " + chain.to);
                 return null;
             }
-            return new CallFate("call reshape", name, r.newDesc, r, null, null, at);
+            return new CallFate("call reshape", wn, r.newDesc, r, null, null, at);
         }
         if (chain.coveredAnywhere(vk(owner), nd)) {
             return new CallFate("restored by the step layer", name, desc, null, null, null, null);
@@ -4448,7 +4449,7 @@ final class MixinBridge {
         String ch = chain.instanceRedirectHome(chain.callReshapeIndex, owner, nd);
         if (ch != null) {
             Chain.CallReshape r = chain.callReshapes.get(ch + "." + nd);
-            return inverse(name, r.args, va, r.newDesc, "call reshape");
+            return inverse(r.newName != null ? r.newName : name, r.args, va, r.newDesc, "call reshape");
         }
         if (name.equals("<init>")) {
             Chain.CtorReshape cr = chain.superCtorReshapes.get(owner + ".<init>" + vdesc);
@@ -4642,7 +4643,8 @@ final class MixinBridge {
         }
         String ch = chain.instanceRedirectHome(chain.callReshapeIndex, a.owner(), nd);
         if (ch != null) {
-            return new AtFate(a.owner(), a.name(), chain.callReshapes.get(ch + "." + nd).newDesc, "call reshape");
+            Chain.CallReshape r = chain.callReshapes.get(ch + "." + nd);
+            return new AtFate(a.owner(), r.newName != null ? r.newName : a.name(), r.newDesc, "call reshape");
         }
         for (Chain.OverrideHook h : chain.overrideHooksForOld(a.name(), a.desc())) {
             if (h.onlyUnder != null && !chain.sourceSubtype(List.of(a.owner()), h.onlyUnder)

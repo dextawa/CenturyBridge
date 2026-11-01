@@ -866,7 +866,8 @@ public final class WiringCheck {
                     Sym s = Sym.method(e.getKey());
                     String owner = targetName(facade.mapType(s.owner));
                     String nd = methodDesc(o.get("desc").getAsString());
-                    String name = wall == null ? s.name : wall.mapMethodName(s.owner, s.name, s.desc);
+                    String name = o.has("name") ? o.get("name").getAsString()
+                        : wall == null ? s.name : wall.mapMethodName(s.owner, s.name, s.desc);
                     if (!resolves(owner, name, nd)) {
                         problems.add(where + ": " + owner + "." + name + nd + " does not resolve on the target");
                     }
