@@ -18,12 +18,16 @@ build() { # <ver> <src> <res> <jar>
     local cls cp j
     cls=$(mktemp -d)
     cp="$DATA/jars/client-$1-intermediary.jar"
+    if [ -f "$3/cb_smx6c.accesswidener" ]; then   # the fixture's access widener: compiled against the stub it widens
+        CB_DATA="$DATA" bash core/tools/make_aw_stub.sh "$1" "$cp" "$cls.stub.jar" "$3/cb_smx6c.accesswidener" > /dev/null
+        cp="$cls.stub.jar"
+    fi
     for j in $(find "$DATA/runtime/client-$1/libraries" -name '*.jar'); do cp="$cp:$j"; done
     for j in "$NEST"/*.jar; do cp="$cp:$j"; done
     javac --release 21 -nowarn -proc:none -cp "$cp" -d "$cls" $(find "$2" -name '*.java')
     cp -r "$3"/. "$cls/"
     (cd "$cls" && jar cf "$OUTD/$4" .)
-    rm -rf "$cls"
+    rm -rf "$cls" "$cls.stub.jar"
     echo "-> $OUTD/$4"
 }
 # MixinExtras (the native BakeFaceWrapCounter): the copy Fabric Loader nests and initializes for every mod

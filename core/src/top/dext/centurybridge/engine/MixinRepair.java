@@ -869,6 +869,15 @@ public final class MixinRepair {
                             // the handler's captured target arguments must be what the target takes now (smx1 CASE 14)
                             List<MethodNode> hit = anchors == null || anchors.isEmpty() ? cands
                                 : cands.stream().filter(m -> anchorsIn(m, tc, anchors)).toList();
+                            // smixin14 (FaceBakery.bakeQuad, 1.21.3 -> 1.21.4): V's instance method turned static in place.
+                            // Mixin takes only a static handler there; an instance handler that never reads this becomes
+                            // one, any other is refused (its this is no object on W)
+                            String staticWhy = staticInPlaceWhy(owner, s, hit, handler);
+                            boolean toStatic = "".equals(staticWhy);
+                            if (staticWhy != null && !toStatic) {
+                                if (deadWhy == null) deadWhy = "static in place: @" + kind + " " + where + " (" + staticWhy + ")";
+                                continue;
+                            }
                             CapturedFit fit = capturedFit(an, handler, anchors, hit, owner);
                             if (fit.why() != null) {
                                 if (deadWhy == null) deadWhy = "captured args: @" + kind + " " + where + " (" + fit.why() + ")";
@@ -876,9 +885,19 @@ public final class MixinRepair {
                             }
                             if (fit.changes()) {
                                 fixNotes.add("captured-args " + where + " " + fit.note()
-                                    + " (the target's arguments changed; a wrapper handler takes W's and calls the mod's handler with V's)");
+                                    + " (the target's arguments changed; a wrapper handler takes W's and calls the mod's handler with V's)"
+                                    + (toStatic ? " (handler made static: the target turned static in place)" : ""));
                                 fixes.add(() -> {
+                                    if (toStatic) makeStatic(handler);
                                     reshapeCaptured(mx, handler, fit);
+                                    dirty[0] = true;
+                                });
+                                continue;
+                            }
+                            if (toStatic) {
+                                fixNotes.add("static-in-place " + where + " (V's instance method is static on W; the handler never reads this: made static)");
+                                fixes.add(() -> {
+                                    makeStatic(handler);
                                     dirty[0] = true;
                                 });
                                 continue;
@@ -3163,6 +3182,7 @@ public final class MixinRepair {
     private boolean remapOrdinals(AnnotationNode an, JsonObject refmap, List<String> methods, List<String> targets,
                                   String where, List<String> notes) {
         MethodNode wm = null, vm = null;
+        String wOwner = null;
         for (String sel : methods) {
             if (sel.startsWith("/")) return false;
             Sel s = Sel.parse(refmapLookup(refmap, sel));
@@ -3177,6 +3197,7 @@ public final class MixinRepair {
                 if (wm != null) return false; // several live alternatives: not one body to match
                 wm = w.get(0);
                 vm = v.get(0);
+                wOwner = owner;
             }
         }
         if (wm == null) return false;
@@ -3192,7 +3213,7 @@ public final class MixinRepair {
             if (a == null || a == POSITIONAL || a.ordinal < 0) continue;
             changed |= remapOne(at, a, vm, wm, where, notes);
         }
-        changed |= splitSites(an, refmap, vm, wm, where, notes);
+        changed |= splitSites(an, refmap, wOwner, vm, wm, where, notes);
         for (Object c : list(raw(an, "constant"))) {
             if (!(c instanceof AnnotationNode cn)) continue;
             Map<String, Object> cv = values(cn);
@@ -3216,9 +3237,12 @@ public final class MixinRepair {
      *                                               sites left out are reported as lost ("sites-partial")
      *   no V site matched, while W's occurrences    the injector is disabled and reported: firing on all
      *   are not exactly V's                         would hook W-only code, firing on none is the truth
-     * Never "fire on all" where W's occurrences are not V's.
+     * Never "fire on all" where W's occurrences are not V's. One site on each side is V's site when the call takes
+     * its receiver and arguments in the same roles (MixinLocals.operandRolesDiffer), whatever stands around it
+     * (smixin14, cb-smx6n SectionBuildCounter: 1.21.6 changed the instruction after build() only); the unpinned
+     * @At stays as it is.
      */
-    private boolean splitSites(AnnotationNode an, JsonObject refmap, MethodNode vm, MethodNode wm, String where, List<String> notes) {
+    private boolean splitSites(AnnotationNode an, JsonObject refmap, String owner, MethodNode vm, MethodNode wm, String where, List<String> notes) {
         if (!an.desc.equals(INJECT) || raw(an, "slice") != null) return false;
         List<Object> ats = list(raw(an, "at"));
         if (ats.size() != 1 || !(ats.get(0) instanceof AnnotationNode at)) return false;
@@ -3235,9 +3259,19 @@ public final class MixinRepair {
             else lost.add(i);
         }
         if (lost.isEmpty() && wo.size() == vo.size()) return false; // W's occurrences are V's, one for one
+        String roles = null;
+        if (kept.isEmpty() && vo.size() == 1 && wo.size() == 1) {
+            roles = MixinLocals.operandRolesDiffer(this, owner, vm, vo.get(0), owner, wm, wo.get(0));
+            if (roles == null) {
+                notes.add("sites-one " + where + " " + a + ": V and W each call it once, receiver and arguments in the same roles;"
+                    + " kept unpinned (the surrounding instructions differ)");
+                return false;
+            }
+        }
         if (kept.isEmpty()) {
             pendingDisable = "sites-unmatched: @Inject " + where + " " + a + ": none of V's " + vo.size()
-                + " sites has a unique counterpart among W's " + wo.size() + "; not fired on W's sites";
+                + " sites has a unique counterpart among W's " + wo.size() + (roles == null ? "" : " (" + roles + ")")
+                + "; not fired on W's sites";
             return false;
         }
         List<Object> split = new ArrayList<>();
@@ -4218,6 +4252,20 @@ public final class MixinRepair {
         return out;
     }
 
+    /**
+     * whether the injector's target turned static in place (V's one method the selector names on owner is an instance
+     * method, every W method it selects is static): null when not (or the handler is static already), "" when an
+     * instance handler that never reads this can be made static, else why it cannot
+     */
+    String staticInPlaceWhy(String owner, Sel s, List<MethodNode> hit, MethodNode handler) {
+        if ((handler.access & Opcodes.ACC_STATIC) != 0 || hit.isEmpty() || source == null) return null;
+        if (!hit.stream().allMatch(m -> (m.access & Opcodes.ACC_STATIC) != 0)) return null;
+        ClassNode vc = source.target(owner);
+        List<MethodNode> vms = vc == null ? List.of() : s.match(vc);
+        if (vms.size() != 1 || (vms.get(0).access & Opcodes.ACC_STATIC) != 0) return null;
+        return touchesThisFree(handler) ? "" : "the handler reads this, which a static target has none of";
+    }
+
     static boolean touchesThisFree(MethodNode h) {
         if (h.instructions == null) return true;
         for (AbstractInsnNode in : h.instructions) {
@@ -4237,6 +4285,14 @@ public final class MixinRepair {
             for (AbstractInsnNode in : h.instructions) {
                 if (in instanceof VarInsnNode vi) vi.var--;
                 if (in instanceof IincInsnNode ii) ii.var--;
+                // smixin16 (fluidlogged FlowingFluidMixin, 1.21.1 -> 1.21.2): the class is read with its frames kept, and a
+                // full frame lists this as local 0; left there it names one local more than the static method has and
+                // the next reader of the class fails (ArrayIndexOutOfBounds in readVerificationTypeInfo). The relative
+                // frames (same/append/chop) follow the implicit first frame, which loses this with the static flag
+                if (in instanceof FrameNode f && (f.type == Opcodes.F_FULL || f.type == Opcodes.F_NEW)
+                        && f.local != null && !f.local.isEmpty()) {
+                    f.local = new ArrayList<>(f.local.subList(1, f.local.size()));
+                }
             }
         }
         if (h.localVariables != null) {
