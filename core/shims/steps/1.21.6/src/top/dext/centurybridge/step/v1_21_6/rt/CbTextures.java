@@ -103,4 +103,19 @@ public final class CbTextures {
     public static void presentTexture(net.minecraft.class_10860 encoder, GpuTexture texture) {
         presentTexture((com.mojang.blaze3d.systems.CommandEncoder) (Object) encoder, texture);
     }
+
+    /**
+     * RenderSystem.setShaderTexture(int, GpuTexture): 1.21.5 stored the texture in slot i (render-thread check, range
+     * test); 1.21.6 stores a view in the same twelve slots (same body, javap) and CompositeRenderType.draw binds each
+     * non-null slot as Sampler&lt;i&gt; (bindSampler(name, view)), as 1.21.5 bound the texture. The texture's full view.
+     */
+    public static void setShaderTexture(int unit, GpuTexture texture) {
+        com.mojang.blaze3d.systems.RenderSystem.setShaderTexture(unit, view(texture));
+    }
+
+    /** RenderSystem.getShaderTexture(int): 1.21.5 answered the slot's texture (null when empty or out of range) */
+    public static GpuTexture getShaderTexture(int unit) {
+        com.mojang.blaze3d.textures.GpuTextureView view = com.mojang.blaze3d.systems.RenderSystem.getShaderTexture(unit);
+        return view == null ? null : view.texture();
+    }
 }

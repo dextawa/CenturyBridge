@@ -1,0 +1,11 @@
+{
+  "_s215i_shader_basis": "1.21.4 RenderSystem's current shader (private static CompiledShaderProgram shader; setShader(CompiledShaderProgram) / clearShader / getShader: assertOnRenderThread, then write / null / read; javap -c -p 1.21.4 RenderSystem). 1.21.5 removed it (a draw takes its program from its RenderPipeline); CompiledShaderProgram (class_5944) survives through 26.2 as GlProgram. Kept in rt/CbGlRenderSystem with 1.21.4's bodies. Its 1.21.4 reader (BufferUploader / VertexBuffer.drawWithShader) has rows of its own. setShader(ShaderProgram) waits for the ShaderProgram facade (s205j) and has to write the same field.",
+  "staticRedirects": {
+    "com/mojang/blaze3d/systems/RenderSystem.setShader(Lnet/minecraft/class_5944;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.clearShader()V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.getShader()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.setShaderTexture(ILnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.getShaderTexture(I)I": "top/dext/centurybridge/step/v1_21_5/rt/CbGlRenderSystem"
+  },
+  "_s215i_shadertex_basis": "1.21.4 RenderSystem.shaderTextures was int[12] of GL ids: setShaderTexture(i, location) stored getTexture(location).getId(), getShaderTexture(i) answered the id or 0 (javap -c -p 1.21.4). 1.21.5 keeps the twelve slots as GpuTextures (setShaderTexture(int, GpuTexture) / getShaderTexture(int), javap -c -p 1.21.5 RenderSystem) and binds them as Sampler0..11 in CompositeRenderType.draw and CompiledShaderProgram.method_60897. setShaderTexture(int, int) (a raw GL id) is not given back (release_notes_known.md): 1.21.5 cannot wrap a GL name it does not own (javap: GlTexture's only constructor has no borrowed flag, close() always deletes the name, flushModeChanges rewrites its parameters at first bind; GpuDevice.createTexture always generates a new name)."
+}
