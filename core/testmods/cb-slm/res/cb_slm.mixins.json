@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.slm.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["SlimeTickFieldMixin", "SlimeTickHeadMixin", "SlimeTickInvokeMixin"],
+  "injectors": { "defaultRequire": 1 }
+}
