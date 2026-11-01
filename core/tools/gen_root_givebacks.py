@@ -55,6 +55,31 @@ def registrations(k):
     return out
 
 
+def key_names(k):
+    """class_7924 key field -> its registry name: the ldc string read last before method_47517 and the putstatic in <clinit>"""
+    out = {}
+    for m in k.methods:
+        if m.name != "<clinit>" or not m.insns:
+            continue
+        s = None
+        for op, arg in m.insns:
+            if isinstance(arg, tuple) and len(arg) == 2 and arg[0] == "str":
+                s = arg[1]
+            elif op == PUTSTATIC and isinstance(arg, tuple) and len(arg) == 5 and arg[2] == KEYS and s is not None:
+                out[arg[3]] = s
+                s = None
+    return out
+
+
+def key_expr(key, w_keys, v_names):
+    """the key's name as an Identifier: through W's key field when W still declares it, else by V's name (W renamed or
+    dropped the key field; the name the root held in V is what a converted mod looks up)"""
+    if key in w_keys:
+        return f"net.minecraft.class_7924.{key}.method_29177()"
+    # Identifier.withDefaultNamespace (method_60656) exists from 1.21 on; a W of 1.20.x would need new class_2960(name)
+    return f'net.minecraft.class_2960.method_60656("{v_names[key]}")'
+
+
 def field_getters(wdir):
     out = {}
     for fn in sorted(os.listdir(wdir)):
@@ -71,6 +96,10 @@ def main():
     gone = sorted(static_fields(vk) - static_fields(wk))
     reg = registrations(vk)
     getters = field_getters(wdir)
+    if w.startswith("1.20."):
+        sys.exit(f"{w}: the generated key spelling uses Identifier.withDefaultNamespace (method_60656), which {w} lacks")
+    w_keys = {n for n, _ in static_fields(klass(w, KEYS))}
+    v_names = key_names(klass(v, KEYS))
     rows = []
     for name, desc in gone:
         if name not in reg:
@@ -101,12 +130,12 @@ def main():
         "    static Object lookup(net.minecraft.class_2960 id) {",
     ]
     for key, owner, name, desc in rows:
-        lines.append(f"        if (net.minecraft.class_7924.{key}.method_29177().equals(id)) {{")
+        lines.append(f"        if ({key_expr(key, w_keys, v_names)}.equals(id)) {{")
         lines.append(f"            return {owner.replace('/', '.')}.{name}(); // class_7923.{name}{desc}")
         lines.append("        }")
     lines += ["        return null;", "    }", "", "    /** the given-back root names */",
               "    static java.util.List<net.minecraft.class_2960> names() {",
-              "        return java.util.List.of(" + ", ".join(f"net.minecraft.class_7924.{k}.method_29177()" for k, _, _, _ in rows) + ");",
+              "        return java.util.List.of(" + ", ".join(key_expr(k, w_keys, v_names) for k, _, _, _ in rows) + ");",
               "    }", "}", ""]
     os.makedirs(os.path.dirname(path), exist_ok=True)
     open(path, "w", encoding="utf-8", newline="\n").write("\n".join(lines))
