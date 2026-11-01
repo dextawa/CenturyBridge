@@ -15,15 +15,19 @@ import net.minecraft.class_290;
  * DefaultVertexFormat field 1.21.4 passed (class_290 keeps every one of those fields in 1.21.5, javap), defines
  * ShaderDefines.EMPTY (class_10149.field_53930), added to the list method_62901 answers. Converted references name this
  * class (classRenames). Members public (access wideners never reach a CenturyBridge class).
+ * BLIT_SCREEN and LIGHTMAP passed DefaultVertexFormat.BLIT_SCREEN (field_29336), gone at 1.21.9 (javap 1.21.8 / 1.21.9
+ * class_290); 1.21.5 builds it as builder().add("Position", VertexFormatElement.POSITION).build(), exactly as POSITION
+ * (field_1592, kept to 26.2), and VertexFormat.equals compares elements mask, vertex size, names and offsets (javap -c 1.21.5), so
+ * POSITION is the equal value and the layer never names the dying field.
  */
 @Environment(EnvType.CLIENT)
 public class CoreShaders {
     /** PROGRAMS */
     public static final List<ShaderProgram> field_53872 = new ArrayList<>();
     /** BLIT_SCREEN */
-    public static final ShaderProgram field_53868 = method_62902("blit_screen", class_290.field_29336);
+    public static final ShaderProgram field_53868 = method_62902("blit_screen", class_290.field_1592);
     /** LIGHTMAP */
-    public static final ShaderProgram field_53873 = method_62902("lightmap", class_290.field_29336);
+    public static final ShaderProgram field_53873 = method_62902("lightmap", class_290.field_1592);
     /** PARTICLE */
     public static final ShaderProgram field_53874 = method_62902("particle", class_290.field_1584);
     /** POSITION */

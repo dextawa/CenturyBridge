@@ -87,4 +87,3 @@ accessible	field	net/minecraft/class_4668	field_25282	Lnet/minecraft/class_4668$
 # 1.21.4 CompositeState / CompositeRenderType members mods reached by their AWs (damage-aw rows; rt/CbRenderTypes)
 accessible	method	net/minecraft/class_1921$class_4688	<init>	(Lnet/minecraft/class_4668$class_5939;Lnet/minecraft/class_4668$class_4676;Lnet/minecraft/class_4668$class_4679;Lnet/minecraft/class_4668$class_4675;Lnet/minecraft/class_4668$class_4678;Lnet/minecraft/class_4668$class_4684;Lnet/minecraft/class_4668$class_4677;Lnet/minecraft/class_1921$class_4750;)V
 accessible	field	net/minecraft/class_1921$class_4688	field_57931	Lnet/minecraft/class_4668$class_4678;
-accessible	field	net/minecraft/class_1921$class_4687	field_21403	Lnet/minecraft/class_1921$class_4688;

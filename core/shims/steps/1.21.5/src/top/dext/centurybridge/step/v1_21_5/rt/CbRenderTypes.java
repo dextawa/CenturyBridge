@@ -314,11 +314,6 @@ public final class CbRenderTypes {
         return method_24049(name, format, mode, size, affectsCrumbling, sortOnUpload, state);
     }
 
-    /** 1.21.4 CompositeRenderType.state() */
-    public static class_1921.class_4688 method_35784(class_1921.class_4687 type) {
-        return type.field_21403;
-    }
-
     // CompositeState's shard fields: the six 1.21.5 dropped from the kept shards, the others from 1.21.5's states list
 
     public static RenderStateShard$class_5942 field_29461(class_1921.class_4688 state) {
@@ -454,10 +449,6 @@ public final class CbRenderTypes {
         return Dropped.SKY;
     }
 
-    public static class_1921 field_55146() {
-        return Dropped.END_SKY;
-    }
-
     public static class_1921 field_55148() {
         return Dropped.STARS;
     }
@@ -474,44 +465,24 @@ public final class CbRenderTypes {
         return Dropped.CLOUDS_11;
     }
 
-    public static class_1921 field_55139() {
-        return Dropped.WORLD_BORDER_F;
-    }
-
-    public static class_1921 field_55140() {
-        return Dropped.WORLD_BORDER_T;
-    }
-
     // ---- RenderType getters 1.21.5 dropped (damage call-static rows), built once with 1.21.4's <clinit> recipes ----
     // (javap -c -p 1.21.4 class_1921: sky / end_sky / stars inline in <clinit>, clouds = method_56848(colorOnly, cull),
-    // world_border = method_65229(flag); each goes through this class's create, as a mod's would)
+    // each goes through this class's create, as a mod's would; end_sky and world_border wait for the 1.21.6 TextureStateShard
+    // (Identifier, TriState, boolean) give-back and are not given here)
 
     private static final class Dropped {
         static final class_1921 SKY = method_24049("sky", net.minecraft.class_290.field_1592, VertexFormat.class_5596.field_27382, 1536,
             false, false, sky());
-        static final class_1921 END_SKY = method_24049("end_sky", net.minecraft.class_290.field_1575, VertexFormat.class_5596.field_27382,
-            1536, false, false, endSky());
         static final class_1921 STARS = method_24049("stars", net.minecraft.class_290.field_1592, VertexFormat.class_5596.field_27382, 1536,
             false, false, stars());
         static final class_1921 CLOUDS_00 = method_56848(false, false);
         static final class_1921 CLOUDS_01 = method_56848(false, true);
         static final class_1921 CLOUDS_11 = method_56848(true, true);
-        static final class_1921 WORLD_BORDER_F = method_65229(false);
-        static final class_1921 WORLD_BORDER_T = method_65229(true);
     }
 
     private static class_1921.class_4688 sky() {
         class_1921.class_4688.class_4689 b = class_1921.class_4688.method_23598();
         method_34578(b, CbRenderStates.field_29438());
-        method_23616(b, CbRenderStates.field_21350());
-        return method_23617(b, false);
-    }
-
-    private static class_1921.class_4688 endSky() {
-        class_1921.class_4688.class_4689 b = class_1921.class_4688.method_23598();
-        method_34578(b, CbRenderStates.field_53128());
-        b.method_34577(new class_4668.class_4683(net.minecraft.class_9975.field_53143, net.minecraft.class_9851.field_52395, false));
-        method_23615(b, CbRenderStates.field_21370());
         method_23616(b, CbRenderStates.field_21350());
         return method_23617(b, false);
     }
@@ -536,29 +507,9 @@ public final class CbRenderTypes {
             method_23617(b, true));
     }
 
-    /** 1.21.4 method_65229(flag) */
-    public static class_1921 method_65229(boolean flag) {
-        class_1921.class_4688.class_4689 b = class_1921.class_4688.method_23598();
-        method_34578(b, CbRenderStates.field_29440());
-        b.method_34577(new class_4668.class_4683(net.minecraft.class_9978.field_53157, net.minecraft.class_9851.field_52395, false));
-        method_23615(b, CbRenderStates.field_55137());
-        b.method_23608(class_4668.field_21383);
-        b.method_23610(class_4668.field_25282);
-        method_23616(b, flag ? CbRenderStates.field_21349() : CbRenderStates.field_21350());
-        b.method_23607(CbRenderStates.field_55136());
-        method_23603(b, CbRenderStates.field_21345());
-        return method_24049("world_border", net.minecraft.class_290.field_1585, VertexFormat.class_5596.field_27382, 1536, false, false,
-            method_23617(b, false));
-    }
-
     /** 1.21.4 RenderType.sky() */
     public static class_1921 method_65218() {
         return Dropped.SKY;
-    }
-
-    /** 1.21.4 RenderType.endSky() */
-    public static class_1921 method_65219() {
-        return Dropped.END_SKY;
     }
 
     /** 1.21.4 RenderType.stars() */
@@ -579,11 +530,6 @@ public final class CbRenderTypes {
     /** 1.21.4 field_48951 = method_56848(true, true) */
     public static class_1921 method_56850() {
         return Dropped.CLOUDS_11;
-    }
-
-    /** 1.21.4 RenderType.worldBorder(flag): flag ? field_55140 (method_65229(true)) : field_55139 (method_65229(false)) */
-    public static class_1921 method_65227(boolean flag) {
-        return flag ? Dropped.WORLD_BORDER_T : Dropped.WORLD_BORDER_F;
     }
 
     // ---- the program's description, from the running game ----

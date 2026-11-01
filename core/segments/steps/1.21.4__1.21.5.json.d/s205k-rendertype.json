@@ -25,14 +25,11 @@
   "net/minecraft/class_1921.method_24048(Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;ILnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.method_24049(Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;IZZLnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.method_65218()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921.method_65219()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.method_65221()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.method_62291()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.method_56849()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.method_56850()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921.method_65227(Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921.method_56848(ZZ)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921.method_65229(Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
+  "net/minecraft/class_1921.method_56848(ZZ)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
  },
  "_s205k_states_basis": "The 80 RenderStateShard constants 1.21.5 dropped from class_4668 (damage get-static-protected rows, all 80 keyed here) -> rt/CbRenderStates getters, built as 1.21.4's <clinit> built them (basis in its javadoc); the six dropped shard classes -> facade/RenderStateShard$class_* (1.21.4 members and runnable bodies).",
  "fieldGetters": {
@@ -117,13 +114,10 @@
   "net/minecraft/class_4668.field_44820:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderStates",
   "net/minecraft/class_4668.field_47463:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderStates",
   "net/minecraft/class_1921.field_55145:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921.field_55146:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.field_55148:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.field_53129:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921.field_48950:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921.field_48951:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921.field_55139:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921.field_55140:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
+  "net/minecraft/class_1921.field_48951:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
  },
  "_s205k_builder_basis": "1.21.4 CompositeState.Builder setters for the six shards 1.21.5's CompositeState dropped (shader/transparency/depthTest/cull/writeMask/colorLogic, javap 1.21.4 class_4688$class_4689) record them per builder in rt/CbRenderTypes; createCompositeState (method_23617/method_24297, public in 1.21.4, protected in 1.21.5) runs 1.21.5's own build (layer AW) and keeps the recorded shards per state. RenderType.create (method_24048 package-private / method_24049 private in 1.21.4, reached by mods through their own AW) builds a RenderPipeline from the shards and calls 1.21.5's method_24049(name,size,crumbling,sort,pipeline,state).",
  "instanceRedirects": {
@@ -134,12 +128,7 @@
   "net/minecraft/class_1921$class_4688$class_4689.method_23616(Lnet/minecraft/class_4668$class_4686;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921$class_4688$class_4689.method_51788(Lnet/minecraft/class_4668$class_8559;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921$class_4688$class_4689.method_23617(Z)Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921$class_4688$class_4689.method_24297(Lnet/minecraft/class_1921$class_4750;)Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921$class_4687.method_35784()Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
- },
- "_s205n_rendertype_basis": "Direct subclasses of 1.21.4's RenderType (damage rows extend / super-ctor (String,VertexFormat,Mode,I,Z,Z,Runnable,Runnable) / override+super method_23031 / method_23033): 1.21.5's RenderType takes (String,I,Z,Z,Runnable,Runnable) and made format/mode/draw/pipeline/outputTarget abstract (javap both). facade/RenderType gives 1.21.4's constructor and getters back and answers the 1.21.5 abstracts (javadoc there).",
- "superRenames": {
-  "net/minecraft/class_1921": "top/dext/centurybridge/step/v1_21_5/facade/RenderType"
+  "net/minecraft/class_1921$class_4688$class_4689.method_24297(Lnet/minecraft/class_1921$class_4750;)Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
  },
  "_s205n_dropped_getters_basis": "1.21.4 RenderType sky()/endSky()/stars() (method_65218/65219/65221), the three clouds getters (method_62291/56849/56850 = method_56848(false,false)/(false,true)/(true,true)) and worldBorder(flag) (method_65227 -> method_65229), gone in 1.21.5 (damage call-static rows): rebuilt once in rt/CbRenderTypes with 1.21.4's <clinit> recipes (javap -c -p 1.21.4 class_1921) through the given-back create.",
  "_s205n_aw_basis": "damage-aw rows (D:/tmp/s215h/aw-s205j.tsv): 1.21.4 CompositeState 14-shard constructor and its 12 shard fields, CompositeRenderType's 7-arg constructor and state(), OutputStateShard(name, setup, clear) -> rt/CbRenderTypes (javap -c -p of both CompositeState constructors: 1.21.5 keeps texture/lightmap/overlay/layering/output/texturing/lineWidth + outline, output in field_57931, the rest in field_21422).",
