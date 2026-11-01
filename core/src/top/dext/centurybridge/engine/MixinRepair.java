@@ -3163,6 +3163,7 @@ public final class MixinRepair {
     private boolean remapOrdinals(AnnotationNode an, JsonObject refmap, List<String> methods, List<String> targets,
                                   String where, List<String> notes) {
         MethodNode wm = null, vm = null;
+        String wOwner = null;
         for (String sel : methods) {
             if (sel.startsWith("/")) return false;
             Sel s = Sel.parse(refmapLookup(refmap, sel));
@@ -3177,6 +3178,7 @@ public final class MixinRepair {
                 if (wm != null) return false; // several live alternatives: not one body to match
                 wm = w.get(0);
                 vm = v.get(0);
+                wOwner = owner;
             }
         }
         if (wm == null) return false;
@@ -3192,7 +3194,7 @@ public final class MixinRepair {
             if (a == null || a == POSITIONAL || a.ordinal < 0) continue;
             changed |= remapOne(at, a, vm, wm, where, notes);
         }
-        changed |= splitSites(an, refmap, vm, wm, where, notes);
+        changed |= splitSites(an, refmap, wOwner, vm, wm, where, notes);
         for (Object c : list(raw(an, "constant"))) {
             if (!(c instanceof AnnotationNode cn)) continue;
             Map<String, Object> cv = values(cn);
@@ -3216,9 +3218,12 @@ public final class MixinRepair {
      *                                               sites left out are reported as lost ("sites-partial")
      *   no V site matched, while W's occurrences    the injector is disabled and reported: firing on all
      *   are not exactly V's                         would hook W-only code, firing on none is the truth
-     * Never "fire on all" where W's occurrences are not V's.
+     * Never "fire on all" where W's occurrences are not V's. One site on each side is V's site when the call takes
+     * its receiver and arguments in the same roles (MixinLocals.operandRolesDiffer), whatever stands around it
+     * (smixin14, cb-smx6n SectionBuildCounter: 1.21.6 changed the instruction after build() only); the unpinned
+     * @At stays as it is.
      */
-    private boolean splitSites(AnnotationNode an, JsonObject refmap, MethodNode vm, MethodNode wm, String where, List<String> notes) {
+    private boolean splitSites(AnnotationNode an, JsonObject refmap, String owner, MethodNode vm, MethodNode wm, String where, List<String> notes) {
         if (!an.desc.equals(INJECT) || raw(an, "slice") != null) return false;
         List<Object> ats = list(raw(an, "at"));
         if (ats.size() != 1 || !(ats.get(0) instanceof AnnotationNode at)) return false;
@@ -3235,9 +3240,19 @@ public final class MixinRepair {
             else lost.add(i);
         }
         if (lost.isEmpty() && wo.size() == vo.size()) return false; // W's occurrences are V's, one for one
+        String roles = null;
+        if (kept.isEmpty() && vo.size() == 1 && wo.size() == 1) {
+            roles = MixinLocals.operandRolesDiffer(this, owner, vm, vo.get(0), owner, wm, wo.get(0));
+            if (roles == null) {
+                notes.add("sites-one " + where + " " + a + ": V and W each call it once, receiver and arguments in the same roles;"
+                    + " kept unpinned (the surrounding instructions differ)");
+                return false;
+            }
+        }
         if (kept.isEmpty()) {
             pendingDisable = "sites-unmatched: @Inject " + where + " " + a + ": none of V's " + vo.size()
-                + " sites has a unique counterpart among W's " + wo.size() + "; not fired on W's sites";
+                + " sites has a unique counterpart among W's " + wo.size() + (roles == null ? "" : " (" + roles + ")")
+                + "; not fired on W's sites";
             return false;
         }
         List<Object> split = new ArrayList<>();

@@ -454,6 +454,100 @@ final class MixinLocals {
         return out;
     }
 
+    /**
+     * smixin14 (cb-smx6n SectionBuildCounter, 1.21.5 -> 1.21.6): why V's call site vSite and W's wSite (the same
+     * member; MixinRepair matched both by one anchor) do not take their receiver and arguments in the same roles, or
+     * null when they do. Each operand's role is the instruction producing it (SourceInterpreter): a call or field read
+     * (opcode, owner, name, descriptor; V's in W's spelling through the step's classRenames), a checkcast (its type and
+     * the role of what it casts), a constant, a NEW, this, an argument by index, or a local by the role of its one
+     * store. A merged operand, a local with several stores, or anything else is not judged (a reason).
+     */
+    static String operandRolesDiffer(MixinRepair w, String vOwner, MethodNode vm, AbstractInsnNode vSite,
+            String wOwner, MethodNode wm, AbstractInsnNode wSite) {
+        if (!(vSite instanceof org.objectweb.asm.tree.MethodInsnNode vi) || !(wSite instanceof org.objectweb.asm.tree.MethodInsnNode wi)) {
+            return "operand roles: the site is not a call";
+        }
+        int n = Type.getArgumentTypes(vi.desc).length + (vi.getOpcode() == Opcodes.INVOKESTATIC ? 0 : 1);
+        int nw = Type.getArgumentTypes(wi.desc).length + (wi.getOpcode() == Opcodes.INVOKESTATIC ? 0 : 1);
+        if (n != nw) {
+            return "operand roles: V's call takes " + n + " operands, W's " + nw;
+        }
+        Frame<SourceValue>[] vs = sources(vOwner, vm);
+        Frame<SourceValue>[] ws = sources(wOwner, wm);
+        Frame<SourceValue> vf = vs == null ? null : vs[vm.instructions.indexOf(vSite)];
+        Frame<SourceValue> wf = ws == null ? null : ws[wm.instructions.indexOf(wSite)];
+        if (vf == null || wf == null) {
+            return "operand roles: V's or W's frames at the site cannot be computed";
+        }
+        for (int k = 0; k < n; k++) {
+            String vr = role(vm, vs, vf.getStack(vf.getStackSize() - n + k), 3);
+            String wr = role(wm, ws, wf.getStack(wf.getStackSize() - n + k), 3);
+            if (vr == null || wr == null) {
+                return "operand roles: operand " + k + " has no single producer on " + (vr == null ? "V" : "W") + "'s side";
+            }
+            if (!w.classRenames.isEmpty()) {
+                vr = MixinClassRenames.rename(vr, w.classRenames);
+            }
+            if (!vr.equals(wr)) {
+                return "operand roles: operand " + k + " is " + vr + " on V, " + wr + " on W";
+            }
+        }
+        return null;
+    }
+
+    /** the role of a stack value (see operandRolesDiffer), or null when it has no single producer */
+    private static String role(MethodNode m, Frame<SourceValue>[] fs, SourceValue v, int depth) {
+        if (v == null || v.insns.size() != 1 || depth < 0) {
+            return null;
+        }
+        AbstractInsnNode p = v.insns.iterator().next();
+        int op = p.getOpcode();
+        if (p instanceof org.objectweb.asm.tree.MethodInsnNode mi) {
+            return op + " " + mi.owner + "." + mi.name + " " + mi.desc;
+        }
+        if (p instanceof org.objectweb.asm.tree.FieldInsnNode fi) {
+            return op + " " + fi.owner + "." + fi.name + " " + fi.desc;
+        }
+        if (p instanceof org.objectweb.asm.tree.TypeInsnNode ti) {
+            if (op == Opcodes.NEW) {
+                return "NEW " + ti.desc;
+            }
+            if (op != Opcodes.CHECKCAST) {
+                return null;
+            }
+            Frame<SourceValue> f = fs[m.instructions.indexOf(p)];
+            String in = f == null ? null : role(m, fs, f.getStack(f.getStackSize() - 1), depth - 1);
+            return in == null ? null : "CHECKCAST " + ti.desc + " <- " + in;
+        }
+        Object c = SiteMatch.constantOf(p);
+        if (c != null) {
+            return "const " + c;
+        }
+        if (p instanceof org.objectweb.asm.tree.VarInsnNode vi && op >= Opcodes.ILOAD && op <= Opcodes.ALOAD) {
+            Frame<SourceValue> f = fs[m.instructions.indexOf(p)];
+            if (f == null) {
+                return null;
+            }
+            SourceValue l = f.getLocal(vi.var);
+            boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
+            int argSize = (Type.getArgumentsAndReturnSizes(m.desc) >> 2) - (isStatic ? 1 : 0);
+            if (l.insns.isEmpty() && vi.var < argSize) {
+                return !isStatic && vi.var == 0 ? "this" : "arg slot " + vi.var;
+            }
+            if (l.insns.size() != 1) {
+                return null;
+            }
+            AbstractInsnNode store = l.insns.iterator().next();
+            Frame<SourceValue> sf = fs[m.instructions.indexOf(store)];
+            if (store.getOpcode() < Opcodes.ISTORE || store.getOpcode() > Opcodes.ASTORE || sf == null || sf.getStackSize() == 0) {
+                return null;
+            }
+            String in = role(m, fs, sf.getStack(sf.getStackSize() - 1), depth - 1);
+            return in == null ? null : "local <- " + in;
+        }
+        return null;
+    }
+
     /** the class declaring owner's member name+desc (a method, or a field when desc has no parenthesis): owner, its superclasses, then interfaces */
     static String declaring(MixinRepair code, String owner, String name, String desc) {
         boolean field = !desc.startsWith("(");
