@@ -1,0 +1,8 @@
+{
+ "mixinExpressionReturns": {
+  "net/minecraft/class_4466.method_21794()Z": {
+   "locals": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#hiveCheckBlockEntity(Lnet/minecraft/class_4466;)Lnet/minecraft/class_2586;",
+   "basis": "Bee.isHiveValid, javap -c -p client-1.21.1 / client-1.21.2 class_4466. 1.21.1: hasHive (field_20363 != null) && !method_23990(pos) && (be = level.method_8321(pos)) != null && be.method_11017() == BEEHIVE, returning that comparison's outcome; false on every earlier exit. 1.21.2: method_65073() != null, method_65073 = pos == null || method_23990(pos) ? null : level.method_35230(pos, BEEHIVE).orElse(null), and BlockGetter.method_35230 = (be = method_8321(pos)) != null && be.method_11017() == type ? Optional.of(be) : empty. So wherever hiveCheckBlockEntity answers (pos set, not too far, block entity present) 1.21.2's return is exactly 1.21.1's be.getType() == BEEHIVE for that block entity, and where it answers null 1.21.1 never evaluated the expression. (method_23990's distance went from 32 to 48 at 1.21.2; both use the bee's own method, so the handler runs where 1.21.2 runs the type test.) The extra method_8321 is read-only and is the call method_35230 makes first. Native mixins of method_65073 / method_35230 still run: their answer is the return value the front receives."
+  }
+ }
+}

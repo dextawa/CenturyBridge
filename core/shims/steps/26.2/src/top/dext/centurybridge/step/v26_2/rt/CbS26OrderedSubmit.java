@@ -124,6 +124,24 @@ public final class CbS26OrderedSubmit {
         }
     }
 
+    /**
+     * callReshapes (26.1.2 submitParticleGroup(ParticleGroupRenderer) -> 26.2 submitQuadParticleGroup(state)): a 26.1.2
+     * caller's argument as 26.2 takes it. 26.1.2's QuadParticleRenderState was itself a ParticleGroupRenderer and is
+     * 26.2's state, passed on; any other renderer (a mod's own, whose prepare/render types 26.2 no longer has) has no
+     * 26.2 form: an empty state is submitted in its place (draws nothing; known loss, logged once per class).
+     */
+    public static QuadParticleRenderState quadParticleGroup(Object renderer) {
+        if (renderer instanceof QuadParticleRenderState state) {
+            return state;
+        }
+        String cls = renderer == null ? "null" : renderer.getClass().getName();
+        if (LOGGED.add(cls + ".submitParticleGroup")) {
+            LogUtils.getLogger().warn("[CenturyBridge] {} is a 26.1.2 ParticleGroupRenderer that is not a QuadParticleRenderState;"
+                + " 26.2 has no ParticleGroupRenderer, so its particle group is dropped (known loss)", cls);
+        }
+        return new QuadParticleRenderState();
+    }
+
     private static final Set<String> LOGGED = ConcurrentHashMap.newKeySet();
 
     private static void knownLoss(OrderedSubmitNodeCollector self, String what) {

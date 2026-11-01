@@ -866,7 +866,8 @@ public final class WiringCheck {
                     Sym s = Sym.method(e.getKey());
                     String owner = targetName(facade.mapType(s.owner));
                     String nd = methodDesc(o.get("desc").getAsString());
-                    String name = wall == null ? s.name : wall.mapMethodName(s.owner, s.name, s.desc);
+                    String name = o.has("name") ? o.get("name").getAsString()
+                        : wall == null ? s.name : wall.mapMethodName(s.owner, s.name, s.desc);
                     if (!resolves(owner, name, nd)) {
                         problems.add(where + ": " + owner + "." + name + nd + " does not resolve on the target");
                     }
@@ -984,6 +985,26 @@ public final class WiringCheck {
                 if (!tv.substring(pv).equals("(L" + k[1] + ";)L" + k[0] + ";") || !tw.substring(pw).equals("(L" + k[0] + ";)L" + k[1] + ";")) {
                     problems.add(where + ": toV must be (L" + k[1] + ";)L" + k[0] + "; and toW (L" + k[0] + ";)L" + k[1] + ";");
                 }
+            }
+        }
+        // mixinExpressionReturns: "owner.name(desc)" with "locals" OWNER#name((Lowner;)LT;) existing exactly, and a basis
+        if (root.has("mixinExpressionReturns")) {
+            for (var e : root.getAsJsonObject("mixinExpressionReturns").entrySet()) {
+                checked++;
+                var o = e.getValue().getAsJsonObject();
+                String where = "mixinExpressionReturns " + e.getKey();
+                int dot = e.getKey().indexOf('.');
+                if (dot <= 0 || e.getKey().indexOf('(') <= dot || !o.has("locals") || !o.has("basis")) {
+                    problems.add(where + ": key \"owner.name(desc)\" with \"locals\" and \"basis\"");
+                    continue;
+                }
+                String lo = o.get("locals").getAsString().trim();
+                int pl = lo.indexOf('(');
+                if (pl <= 0 || !lo.substring(pl).startsWith("(L" + e.getKey().substring(0, dot) + ";)L")) {
+                    problems.add(where + ": locals is not OWNER#name(L" + e.getKey().substring(0, dot) + ";)LT;");
+                    continue;
+                }
+                wantMethod(where + " locals", lo.substring(0, pl), null, methodDesc(lo.substring(pl)));
             }
         }
         // convertHooks (the override side of a same-shape reshape): the member is one the target's

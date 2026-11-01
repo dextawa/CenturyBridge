@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Set;
 import net.minecraft.class_1297;
+import net.minecraft.class_2338;
+import net.minecraft.class_2586;
+import net.minecraft.class_4466;
 import net.minecraft.class_1304;
 import net.minecraft.class_1309;
 import net.minecraft.class_1581;
@@ -182,6 +185,21 @@ public final class CbEntityMisc {
     /** 1.21.1 LivingEntity's body: conditions.test(this, target), 1.21.1's test on any level (CbEntityTargeting) */
     public static boolean superCanAttack(class_1309 entity, class_1309 target, net.minecraft.class_4051 conditions) {
         return CbEntityTargeting.test(conditions, entity, target);
+    }
+
+    /**
+     * smixin12, Kilt E8c (wiring mixinExpressionReturns, Bee.isHiveValid): the block entity 1.21.1's isHiveValid held
+     * when it evaluated {@code blockEntity.getType() == BEEHIVE} -- hivePos set, not too far (the bee's own
+     * isTooFarAway, as both releases' bodies call it), the level's block entity there non-null -- else null, where
+     * 1.21.1 returned false before reaching the expression. Read-only: getBlockEntity is what 1.21.2's
+     * getBlockEntity(pos, BEEHIVE) calls first.
+     */
+    public static class_2586 hiveCheckBlockEntity(class_4466 bee) {
+        class_2338 pos = bee.method_23884();
+        if (pos == null || bee.method_23990(pos)) {
+            return null;
+        }
+        return bee.method_37908().method_8321(pos);
     }
 
     // ------------------------------------------------------------------------------------------ fields

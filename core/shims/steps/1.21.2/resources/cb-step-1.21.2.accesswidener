@@ -196,3 +196,5 @@ accessible method net/minecraft/class_1092 method_62654 (Lnet/minecraft/class_32
 accessible class net/minecraft/class_315$class_5823
 # skilteng: AbstractFurnaceBlockEntity.recipesUsed retyped at 1.21.2 (private); CbFurnaceRecipesUsed reads it for 1.21.1 getters
 accessible	field	net/minecraft/class_2609	field_11986	Lit/unimi/dsi/fastutil/objects/Reference2IntOpenHashMap;
+# smixin12 E8c: Bee.isTooFarAway (package-private) read by rt/CbEntityMisc.hiveCheckBlockEntity
+accessible	method	net/minecraft/class_4466	method_23990	(Lnet/minecraft/class_2338;)Z
