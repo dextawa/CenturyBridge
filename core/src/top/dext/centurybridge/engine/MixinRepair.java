@@ -4285,6 +4285,14 @@ public final class MixinRepair {
             for (AbstractInsnNode in : h.instructions) {
                 if (in instanceof VarInsnNode vi) vi.var--;
                 if (in instanceof IincInsnNode ii) ii.var--;
+                // smixin16 (fluidlogged FlowingFluidMixin, 1.21.1 -> 1.21.2): the class is read with its frames kept, and a
+                // full frame lists this as local 0; left there it names one local more than the static method has and
+                // the next reader of the class fails (ArrayIndexOutOfBounds in readVerificationTypeInfo). The relative
+                // frames (same/append/chop) follow the implicit first frame, which loses this with the static flag
+                if (in instanceof FrameNode f && (f.type == Opcodes.F_FULL || f.type == Opcodes.F_NEW)
+                        && f.local != null && !f.local.isEmpty()) {
+                    f.local = new ArrayList<>(f.local.subList(1, f.local.size()));
+                }
             }
         }
         if (h.localVariables != null) {
