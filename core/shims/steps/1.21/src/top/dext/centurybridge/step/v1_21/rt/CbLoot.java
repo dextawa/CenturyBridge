@@ -266,6 +266,42 @@ public final class CbLoot {
         return block().cb$doesNotHaveSilkTouch();
     }
 
+    /**
+     * How many times a deferred silk-touch Builder (field_40606 / field_40607) resolved the holder: it rises only in
+     * build(), never on a field read. Read by the cb-smx6 fixture by reflection.
+     */
+    public static final java.util.concurrent.atomic.AtomicInteger DEFERRED_BUILDS = new java.util.concurrent.atomic.AtomicInteger();
+
+    /**
+     * 1.20.6's private static HAS_SHEARS_OR_SILK_TOUCH (class_7788.field_40606 = HAS_SHEARS.or(HAS_SILK_TOUCH); javap 1.20.6
+     * &lt;clinit&gt;), reached through a mod's access widener (damage-aw, 3 corpus mods). 1.21's private hasShearsOrSilkTouch()
+     * of the provider (method_60392: field_40604.or(hasSilkTouch()); javap 1.21), on the same terms as field_40602.
+     */
+    public static net.minecraft.class_5341.class_210 field_40606() {
+        // deferred to build(): reading the field (often at class-init) binds no Silk Touch holder; build() runs in table
+        // generation, where registries() is the data-gen or server lookup (invert / or chain lazily on 1.21: javap)
+        return () -> {
+            DEFERRED_BUILDS.incrementAndGet();
+            return block().cb$hasShearsOrSilkTouch().build();
+        };
+    }
+
+    /** 1.20.6's private static HAS_NO_SHEARS_OR_SILK_TOUCH (field_40607 = field_40606.invert(); 1.21's method_60393), 4 mods */
+    public static net.minecraft.class_5341.class_210 field_40607() {
+        return () -> {
+            DEFERRED_BUILDS.incrementAndGet();
+            return block().cb$doesNotHaveShearsOrSilkTouch().build();
+        };
+    }
+
+    /**
+     * 1.20.6's private static createSilkTouchOnlyTable(item) (method_46003; a pool of one item, when silk touch), 4 mods.
+     * 1.21 made it a private instance method with the same body on hasSilkTouch() (javap both).
+     */
+    public static net.minecraft.class_52.class_53 method_46003(net.minecraft.class_1935 item) {
+        return block().cb$createSilkTouchOnlyTable(item);
+    }
+
     /** createSilkTouchDispatchTable(block, entry) */
     public static net.minecraft.class_52.class_53 method_45989(net.minecraft.class_2248 block, net.minecraft.class_79.class_80<?> entry) {
         return block().cb$createSilkTouchDispatchTable(block, entry);

@@ -1,0 +1,7 @@
+accessWidener	v2	intermediary
+# 1.20.6 TagsProvider.LOGGER (private static), read through the mod's own access widener (damage-aw 1.20.6__1.21, aw-get-static)
+accessible field net/minecraft/class_2474 field_11479 Lorg/slf4j/Logger;
+# 1.20.6 BlockLootSubProvider privates (damage-aw aw-get-static / aw-call-static)
+accessible field net/minecraft/class_7788 field_40606 Lnet/minecraft/class_5341$class_210;
+accessible field net/minecraft/class_7788 field_40607 Lnet/minecraft/class_5341$class_210;
+accessible method net/minecraft/class_7788 method_46003 (Lnet/minecraft/class_1935;)Lnet/minecraft/class_52$class_53;
