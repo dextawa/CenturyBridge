@@ -77,3 +77,10 @@ accessible	class	net/minecraft/class_1921$class_4687
 # CompositeState.Builder.createCompositeState (protected): the redirected 1.21.4 calls run 1.21.5's own build
 accessible	method	net/minecraft/class_1921$class_4688$class_4689	method_23617	(Z)Lnet/minecraft/class_1921$class_4688;
 accessible	method	net/minecraft/class_1921$class_4688$class_4689	method_24297	(Lnet/minecraft/class_1921$class_4750;)Lnet/minecraft/class_1921$class_4688;
+# 1.21.4 RenderType getters 1.21.5 dropped (sky / end_sky / stars / clouds / world_border), rebuilt with 1.21.4's recipes in rt/CbRenderTypes: protected builder setters and shards
+accessible	method	net/minecraft/class_1921$class_4688$class_4689	method_34577	(Lnet/minecraft/class_4668$class_5939;)Lnet/minecraft/class_1921$class_4688$class_4689;
+accessible	method	net/minecraft/class_1921$class_4688$class_4689	method_23608	(Lnet/minecraft/class_4668$class_4676;)Lnet/minecraft/class_1921$class_4688$class_4689;
+accessible	method	net/minecraft/class_1921$class_4688$class_4689	method_23607	(Lnet/minecraft/class_4668$class_4675;)Lnet/minecraft/class_1921$class_4688$class_4689;
+accessible	method	net/minecraft/class_1921$class_4688$class_4689	method_23610	(Lnet/minecraft/class_4668$class_4678;)Lnet/minecraft/class_1921$class_4688$class_4689;
+accessible	field	net/minecraft/class_4668	field_21383	Lnet/minecraft/class_4668$class_4676;
+accessible	field	net/minecraft/class_4668	field_25282	Lnet/minecraft/class_4668$class_4678;

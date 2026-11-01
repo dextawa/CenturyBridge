@@ -23,7 +23,14 @@
   "com/mojang/blaze3d/systems/RenderSystem.blendFunc(II)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
   "com/mojang/blaze3d/systems/RenderSystem.blendFuncSeparate(IIII)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
   "net/minecraft/class_1921.method_24048(Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;ILnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
-  "net/minecraft/class_1921.method_24049(Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;IZZLnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
+  "net/minecraft/class_1921.method_24049(Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;IZZLnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_65218()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_65219()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_65221()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_62291()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_56849()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_56850()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_65227(Z)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
  },
  "_s205k_states_basis": "The 80 RenderStateShard constants 1.21.5 dropped from class_4668 (damage get-static-protected rows, all 80 keyed here) -> rt/CbRenderStates getters, built as 1.21.4's <clinit> built them (basis in its javadoc); the six dropped shard classes -> facade/RenderStateShard$class_* (1.21.4 members and runnable bodies).",
  "fieldGetters": {
@@ -122,5 +129,6 @@
  "_s205n_rendertype_basis": "Direct subclasses of 1.21.4's RenderType (damage rows extend / super-ctor (String,VertexFormat,Mode,I,Z,Z,Runnable,Runnable) / override+super method_23031 / method_23033): 1.21.5's RenderType takes (String,I,Z,Z,Runnable,Runnable) and made format/mode/draw/pipeline/outputTarget abstract (javap both). facade/RenderType gives 1.21.4's constructor and getters back and answers the 1.21.5 abstracts (javadoc there).",
  "superRenames": {
   "net/minecraft/class_1921": "top/dext/centurybridge/step/v1_21_5/facade/RenderType"
- }
+ },
+ "_s205n_dropped_getters_basis": "1.21.4 RenderType sky()/endSky()/stars() (method_65218/65219/65221), the three clouds getters (method_62291/56849/56850 = method_56848(false,false)/(false,true)/(true,true)) and worldBorder(flag) (method_65227 -> method_65229), gone in 1.21.5 (damage call-static rows): rebuilt once in rt/CbRenderTypes with 1.21.4's <clinit> recipes (javap -c -p 1.21.4 class_1921) through the given-back create."
 }
