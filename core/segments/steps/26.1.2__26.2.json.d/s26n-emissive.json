@@ -1,0 +1,35 @@
+{
+  "instanceRedirects": {
+    "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.emissiveRendering(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z": "top/dext/centurybridge/step/v26_2/rt/CbS26Emissive"
+  },
+  "callReshapes": {
+    "net/minecraft/world/level/block/state/BlockBehaviour$Properties.emissiveRendering(Lnet/minecraft/world/level/block/state/BlockBehaviour$StatePredicate;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;": {
+      "desc": "(Ljava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;",
+      "ops": [
+        "conv top/dext/centurybridge/step/v26_2/rt/CbS26Emissive#toPredicate(Lnet/minecraft/world/level/block/state/BlockBehaviour$StatePredicate;)Ljava/util/function/Predicate;"
+      ],
+      "basis": "26.2 takes the emissive test as a Predicate<BlockState> where 26.1.2 took a StatePredicate (state, level, pos); rt/CbS26Emissive adapts it (and unwraps its own adapter). Asked by LightCoordsUtil.getLightCoords (26.1.2's LevelRenderer.getLightCoords moved), it gets that call's level and pos (mixin/CbS26EmissiveContextMixin); asked by 26.2's BlockModelResolver.update (no level there; 26.1.2's update never asked it), EmptyBlockGetter.INSTANCE at BlockPos.ZERO -- recorded loss"
+    }
+  },
+  "instanceFieldGetters": {
+    "net/minecraft/world/level/block/state/BlockBehaviour$Properties.emissiveRendering:Lnet/minecraft/world/level/block/state/BlockBehaviour$StatePredicate;": "top/dext/centurybridge/step/v26_2/rt/CbS26Emissive#getPropertiesEmissive",
+    "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.emissiveRendering:Lnet/minecraft/world/level/block/state/BlockBehaviour$StatePredicate;": "top/dext/centurybridge/step/v26_2/rt/CbS26Emissive#getStateEmissive"
+  },
+  "instanceFieldSetters": {
+    "net/minecraft/world/level/block/state/BlockBehaviour$Properties.emissiveRendering:Lnet/minecraft/world/level/block/state/BlockBehaviour$StatePredicate;": "top/dext/centurybridge/step/v26_2/rt/CbS26Emissive#setPropertiesEmissive"
+  },
+  "_s26n_emissive_basis": {
+    "BlockStateBase.emissiveRendering(BlockGetter,BlockPos)Z": "26.1.2 asked the state's StatePredicate with (state, level, pos); 26.2 emissiveRendering() asks its Predicate with the state. rt/CbS26Emissive holds the caller's level/pos while 26.2's test runs, so a 26.1.2 predicate (adapted by toPredicate) still sees them; 26.2 predicates ignore them",
+    "emissiveRendering fields": "26.2 stores Predicate<BlockState> where 26.1.2 stored StatePredicate; reads/writes convert through the same adapters (instanceof-tested, undoing each other)"
+  },
+  "mixinTargets": {
+    "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.emissiveRendering(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z": {
+      "to": "emissiveRendering()Z",
+      "args": [
+        -1,
+        -1
+      ],
+      "basis": "26.2's emissiveRendering() is 26.1.2's emissiveRendering(level, pos) body (getfield emissiveRendering, asState, test) asking a Predicate<BlockState> with the state only; level and pos reach no W argument (a 26.1.2 predicate still gets them through rt/CbS26Emissive, but a handler on this method cannot)"
+    }
+  }
+}
