@@ -37,6 +37,8 @@ import net.minecraft.world.entity.player.Player;
  */
 public class Driver implements ModInitializer {
     public static int targetingTests;
+    /** calls of 26.1's runValidation(source, key, value) on vanilla's three types (mixin/LootRunValidationMixin) */
+    public static final java.util.concurrent.atomic.AtomicInteger VANILLA_VALIDATIONS = new java.util.concurrent.atomic.AtomicInteger();
     public static final AttackRange NATIVE_RANGE = new AttackRange(5.0F, 6.0F, 7.0F, 8.0F, 0.5F, 1.0F);
     public static final AttackRange MIXED_RANGE = new AttackRange(1.0F, 2.0F, 3.0F, 4.0F, 0.25F, 1.0F);
 
@@ -200,6 +202,7 @@ public class Driver implements ModInitializer {
         check("native.attackRangeReturn", zombieN.getMainHandItem() == zombieN.getActiveItem() && NATIVE_RANGE.equals(nRange), nRange);
 
         piglins(level);
+        loot(server);
 
         if (!FabricLoader.getInstance().isModLoaded("cb_swall")) {
             return;
@@ -216,5 +219,63 @@ public class Driver implements ModInitializer {
         zombieV.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
         AttackRange vRange = zombieV.getAttackRangeWith(zombieV.getMainHandItem());
         check("mixed.attackRange", MIXED_RANGE.equals(vRange), vRange);
+    }
+
+    /**
+     * 26.1 loot validation with the layer's CbWallLootDataTypeHooks on runValidation: vanilla's three types still validate
+     * through it and the native HEAD injector counts them; the problems vanilla's types report over the loaded loot are
+     * printed ("CBNATIVE lootProblems=") to compare layer on / off. With cb-swall, its 1.21.11 type's own validator runs
+     * from 26.1's runValidation(source, lookup) and reports through the source.
+     */
+    private static void loot(MinecraftServer server) {
+        try {
+            net.minecraft.core.HolderLookup.Provider lookup = server.reloadableRegistries().lookup();
+            net.minecraft.util.ProblemReporter.Collector collector = new net.minecraft.util.ProblemReporter.Collector();
+            net.minecraft.world.level.storage.loot.ValidationContextSource source =
+                new net.minecraft.world.level.storage.loot.ValidationContextSource(collector, lookup);
+            int before = VANILLA_VALIDATIONS.get();
+            net.minecraft.world.level.storage.loot.LootDataType.values().forEach(t -> validateAll(t, source, lookup));
+            int[] problems = {0};
+            collector.forEach((path, problem) -> problems[0]++);
+            System.out.println("CBNATIVE lootProblems=" + problems[0] + " validations=" + (VANILLA_VALIDATIONS.get() - before));
+            check("native.lootRunValidationHead", VANILLA_VALIDATIONS.get() - before > 100, VANILLA_VALIDATIONS.get() - before);
+        } catch (Throwable t) {
+            check("native.lootRunValidationHead", false, t);
+        }
+        if (!FabricLoader.getInstance().isModLoaded("cb_swall")) {
+            return;
+        }
+        try {
+            Class<?> mod = Class.forName("cb.swall.SwallTestMod");
+            @SuppressWarnings("unchecked")
+            net.minecraft.world.level.storage.loot.LootDataType<net.minecraft.world.level.storage.loot.predicates.LootItemCondition> type =
+                (net.minecraft.world.level.storage.loot.LootDataType<net.minecraft.world.level.storage.loot.predicates.LootItemCondition>) mod.getField("CUSTOM_LOOT_TYPE").get(null);
+            java.util.concurrent.atomic.AtomicInteger calls = (java.util.concurrent.atomic.AtomicInteger) mod.getField("LOOT_VALIDATOR_CALLS").get(null);
+            net.minecraft.core.MappedRegistry<net.minecraft.world.level.storage.loot.predicates.LootItemCondition> reg =
+                new net.minecraft.core.MappedRegistry<>(type.registryKey(), com.mojang.serialization.Lifecycle.stable());
+            // two distinct values (killedByPlayer() is a singleton; a registry refuses one value under two keys)
+            reg.register(net.minecraft.resources.ResourceKey.create(type.registryKey(), net.minecraft.resources.Identifier.fromNamespaceAndPath("cb_swalln", "n1")),
+                net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition.randomChance(0.25F).build(), net.minecraft.core.RegistrationInfo.BUILT_IN);
+            reg.register(net.minecraft.resources.ResourceKey.create(type.registryKey(), net.minecraft.resources.Identifier.fromNamespaceAndPath("cb_swalln", "n2")),
+                net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition.randomChance(0.5F).build(), net.minecraft.core.RegistrationInfo.BUILT_IN);
+            reg.freeze();
+            net.minecraft.util.ProblemReporter.Collector collector = new net.minecraft.util.ProblemReporter.Collector();
+            net.minecraft.world.level.storage.loot.ValidationContextSource source =
+                new net.minecraft.world.level.storage.loot.ValidationContextSource(collector, server.reloadableRegistries().lookup());
+            int before = calls.get();
+            int vanillaBefore = VANILLA_VALIDATIONS.get();
+            type.runValidation(source, reg);
+            java.util.List<String> seen = new java.util.ArrayList<>();
+            collector.forEach((path, problem) -> seen.add(problem.description()));
+            check("mixed.lootCustomValidator", calls.get() - before == 2 && seen.contains("cb_swall checked n1") && seen.contains("cb_swall checked n2")
+                && VANILLA_VALIDATIONS.get() == vanillaBefore, (calls.get() - before) + " " + seen);
+        } catch (Throwable t) {
+            check("mixed.lootCustomValidator", false, t);
+        }
+    }
+
+    private static <T extends net.minecraft.world.level.storage.loot.Validatable> void validateAll(net.minecraft.world.level.storage.loot.LootDataType<T> type,
+            net.minecraft.world.level.storage.loot.ValidationContextSource source, net.minecraft.core.HolderLookup.Provider lookup) {
+        type.runValidation(source, lookup.lookupOrThrow(type.registryKey()));
     }
 }

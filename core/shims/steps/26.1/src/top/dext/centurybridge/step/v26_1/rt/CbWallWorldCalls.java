@@ -191,6 +191,15 @@ public final class CbWallWorldCalls {
     // ---- DamageResistant ----
 
     /**
+     * 1.21.11 new DamageResistant(TagKey): 26.1 holds the tag's holder set -- the registries' named set when they are
+     * loaded, else a set that looks the tag up when used (CbWallTagSet), as 1.21.11 did; it names the tag either way
+     * (types() below, the codec)
+     */
+    public static DamageResistant damageResistant(TagKey<DamageType> types) {
+        return new DamageResistant(CbWallTagSet.of(types));
+    }
+
+    /**
      * 1.21.11 DamageResistant.types(): the tag. 26.1 also reads a list of damage types, which 1.21.11 had no
      * value for
      */

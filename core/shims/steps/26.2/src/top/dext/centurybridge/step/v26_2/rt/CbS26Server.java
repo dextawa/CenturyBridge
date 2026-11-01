@@ -10,6 +10,17 @@ public final class CbS26Server {
     private CbS26Server() {}
 
     /**
+     * 26.1.2 MinecraftGameRuleServiceImpl.gameRules (instanceFieldGetters): its constructor stored server.getGameRules()
+     * of the DedicatedServer it was given. 26.2 keeps a NotificationManager instead and asks
+     * notificationManager.server().getGameRules() each time (javap -c of both); MinecraftServer.gameRules is final, so
+     * that is the object 26.1.2's field held. notificationManager is opened by the layer's access widener.
+     */
+    public static net.minecraft.world.level.gamerules.GameRules gameRules(
+            net.minecraft.server.jsonrpc.internalapi.MinecraftGameRuleServiceImpl self) {
+        return self.notificationManager.server().getGameRules();
+    }
+
+    /**
      * MinecraftServer.publishServer's scope: 26.1.2's publishServer(gameType, cheats, port) opened the game to LAN, the
      * only scope it had; 26.2's PublishCommand passes MultiplayerScope.LAN where 26.1.2's called the old method
      */
