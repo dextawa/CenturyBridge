@@ -313,7 +313,15 @@ final class MixinBridge {
         } catch (RuntimeException ex) {
             return false;
         }
+        // E8i: an anonymous target class javac renumbered between V and W, found by its body (anonymousRetarget)
+        boolean[] tableChanged = {false};
+        String anon = anonymousRetarget(mx, table, tableChanged);
         Mixin m = new Mixin(mx, table == null ? null : table.deepCopy());
+        if (anon != null) {
+            m.changed = true;
+            m.refmapDirty |= tableChanged[0];
+            m.member(anon);
+        }
         byte[] out;
         Map<String, byte[]> others = new LinkedHashMap<>();
         // the restoring and guard mixins as they stood: a mixin not committed takes back what it added there
@@ -716,12 +724,13 @@ final class MixinBridge {
         String rh = chain.instanceRedirectHome(chain.callReshapeIndex, owner, nd);
         if (rh != null) {
             Chain.CallReshape r = chain.callReshapes.get(rh + "." + nd);
-            Found at = wResolveMethod(owner, name, r.newDesc);
+            String wn = r.newName != null ? r.newName : name;
+            Found at = wResolveMethod(owner, wn, r.newDesc);
             if (at == null) {
-                why.add("the call reshape's " + name + r.newDesc + " does not resolve on " + shortName(owner) + " in " + chain.to);
+                why.add("the call reshape's " + wn + r.newDesc + " does not resolve on " + shortName(owner) + " in " + chain.to);
                 return null;
             }
-            return new CallFate("call reshape", name, r.newDesc, r, null, null, at);
+            return new CallFate("call reshape", wn, r.newDesc, r, null, null, at);
         }
         if (chain.coveredAnywhere(vk(owner), nd)) {
             return new CallFate("restored by the step layer", name, desc, null, null, null, null);
@@ -894,6 +903,10 @@ final class MixinBridge {
         final List<String> left = new ArrayList<>();
         boolean changed;
         boolean refmapDirty;
+        /** set by counterpartAnchor's inherited-owner path: per handler parameter its @Local's W ordinal (-1 none, -2 implicit) */
+        int[] lastRoles;
+        /** with lastRoles: {V owner as W spells it, W owner} of the call the stand-in reaches through a subclass */
+        String[] lastInherited;
 
         /** a carried shadow, invoker, accessor or overwrite */
         void member(String text) {
@@ -2794,8 +2807,13 @@ final class MixinBridge {
                 MixinRepair.Anchor na = new MixinRepair.Anchor(a.kind(), af.owner(), af.name(), af.desc(), null, a.ordinal());
                 int wc = count(sel.w(), na);
                 if (wc != vc) {
+                    String ew = chain.bridgeCode != null && af.how().equals("call reshape") && !fld
+                        ? erasedWallSite(sel, kind, at, t, a, af, vc, where) : "";
+                    if (ew == null) {
+                        continue;
+                    }
                     String wired = af.how() + " gives " + af.name() + af.desc() + ", standing " + wc + " time(s) in "
-                        + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from;
+                        + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from + (ew.isEmpty() ? "" : "; " + ew);
                     if (value.equals("INVOKE_ASSIGN") || !counterpartAt(sel, kind, at, value, t, a, wired)) {
                         leftInjector(sel.handler(), where + ": " + wired);
                     }
@@ -2842,13 +2860,149 @@ final class MixinBridge {
         }
 
         /**
+         * smixin13 (immersive_weathering GrassBlockMixin, 1.21.11 -> 26.1): a call the wall step reshapes only by erasing
+         * parameters to Object (BlockState.is(Block) -> TypedInstance.is(T), erased is(Object)) stands in W's body under the
+         * wall table's name for V's member, which the analysis view cannot map back (several overloads share the name).
+         * A W call is V's site when it is on V's owner (or a supertype), named as the reshape or the wall table names V's
+         * member, with the reshaped descriptor, and every erased argument's producer typed exactly as V's parameter
+         * (checkcast / field / call result): an is(Object) on another TypedInstance kind, or with an argument of unknown
+         * type, is not. Taken only when such sites stand as often as V's did. The @At follows to W's call; a handler
+         * taking the call's arguments (@Redirect / @WrapOperation / @WrapWithCondition) gets a front taking Object there,
+         * cast to V's type (sound: every site's argument is typed so). Returns null when carried, a reason when not, ""
+         * when this is no such reshape.
+         */
+        private String erasedWallSite(Selection sel, String kind, AnnotationNode at, String t, MixinRepair.Anchor a, AtFate af,
+                int vc, String where) {
+            Type[] vp = Type.getArgumentTypes(a.desc());
+            Type[] wp = Type.getArgumentTypes(af.desc());
+            if (vp.length != wp.length || !Type.getReturnType(a.desc()).equals(Type.getReturnType(af.desc()))) {
+                return "";
+            }
+            List<Integer> erased = new ArrayList<>();
+            for (int i = 0; i < vp.length; i++) {
+                if (!vp[i].equals(wp[i])) {
+                    if (vp[i].getSort() != Type.OBJECT || !wp[i].getDescriptor().equals("Ljava/lang/Object;")) {
+                        return "";
+                    }
+                    erased.add(i);
+                }
+            }
+            if (erased.isEmpty()) {
+                return "";
+            }
+            Set<String> owners = new HashSet<>(chain.selfAndSupers(a.owner()));
+            Set<String> names = new java.util.LinkedHashSet<>(List.of(af.name()));
+            for (String o : chain.selfAndSupers(a.owner())) {
+                String wn = chain.wallMethodFwd.get(o + "." + a.name());
+                if (wn != null) {
+                    names.add(wn);
+                }
+            }
+            List<MethodInsnNode> sites = erasedSites(sel.w(), owners, names, af.desc(), vp, erased);
+            Set<String> spelled = new HashSet<>();
+            for (MethodInsnNode mi : sites) {
+                spelled.add(mi.owner + "." + mi.name);
+            }
+            String seen = "erased-argument sites (" + String.join("/", names) + af.desc() + " with the argument typed "
+                + shortName(vp[erased.get(0)].getInternalName()) + "): " + sites.size();
+            if (sites.size() != vc || spelled.size() != 1) {
+                return seen + (spelled.size() > 1 ? " under " + spelled.size() + " spellings" : "");
+            }
+            if (kind.equals("ModifyArg") || kind.equals("ModifyArgs")) {
+                return seen + ", but @" + kind + " hands back the erased argument itself";
+            }
+            if (kind.equals("Inject") && capturesLocals(sel.handler()) || hasSugar(sel.handler(), "Local;")) {
+                return seen + ", but the handler captures the target's locals at the anchor";
+            }
+            MethodInsnNode w0 = sites.get(0);
+            if (RECEIVER_KINDS.contains(kind)) {
+                Type[] hp = Type.getArgumentTypes(sel.handler().desc);
+                int base = w0.getOpcode() == Opcodes.INVOKESTATIC ? 0 : 1;
+                int[] idx = new int[erased.size()];
+                for (int j = 0; j < idx.length; j++) {
+                    idx[j] = base + erased.get(j);
+                    if (idx[j] >= hp.length || !hp[idx[j]].equals(vp[erased.get(j)])) {
+                        return seen + ", but the handler does not take the call's argument " + erased.get(j) + " as "
+                            + shortName(vp[erased.get(j)].getInternalName());
+                    }
+                }
+                erasedFront(sel.handler(), idx);
+            }
+            String nt = "L" + w0.owner + ";" + w0.name + w0.desc;
+            if (ownKey(t)) {
+                MixinRepair.refmapPut(table, t, nt);
+                refmapDirty = true;
+            } else {
+                setValue(at, "target", nt);
+            }
+            changed = true;
+            injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + w0.name + w0.desc + " (" + af.how()
+                + ", " + seen + " as in " + chain.from + (RECEIVER_KINDS.contains(kind) ? "; a front takes Object there, cast to "
+                + shortName(vp[erased.get(0)].getInternalName()) : "") + ")");
+            return null;
+        }
+
+        /** the handler under a front of its own name whose parameters {@code idx} are Object, cast back to the handler's types */
+        private void erasedFront(MethodNode h, int[] idx) {
+            boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
+            Type[] hp = Type.getArgumentTypes(h.desc);
+            Type[] fp = hp.clone();
+            for (int k : idx) {
+                fp[k] = Type.getObjectType("java/lang/Object");
+            }
+            String oldName = h.name;
+            String oldDesc = h.desc;
+            String del = unique(oldName + "$cb" + step);
+            MethodNode syn = new MethodNode(h.access & ~(Opcodes.ACC_ABSTRACT | Opcodes.ACC_NATIVE | Opcodes.ACC_BRIDGE | Opcodes.ACC_VARARGS),
+                oldName, Type.getMethodDescriptor(Type.getReturnType(h.desc), fp), null, exceptions(h));
+            syn.visibleAnnotations = h.visibleAnnotations;
+            syn.invisibleAnnotations = h.invisibleAnnotations;
+            syn.visibleParameterAnnotations = h.visibleParameterAnnotations;
+            syn.invisibleParameterAnnotations = h.invisibleParameterAnnotations;
+            syn.visibleAnnotableParameterCount = h.visibleAnnotableParameterCount;
+            syn.invisibleAnnotableParameterCount = h.invisibleAnnotableParameterCount;
+            h.visibleAnnotations = null;
+            h.invisibleAnnotations = null;
+            h.visibleParameterAnnotations = null;
+            h.invisibleParameterAnnotations = null;
+            Refs r = refs(oldName, oldDesc, false);
+            for (MethodInsnNode mi : r.calls) {
+                mi.name = del;
+            }
+            retargetHandles(r, mx.name, del, itf);
+            h.name = del;
+            h.access = (h.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE;
+            InsnList in = syn.instructions;
+            int slot = st ? 0 : 1;
+            if (!st) {
+                in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            }
+            for (int i = 0; i < fp.length; i++) {
+                in.add(new VarInsnNode(fp[i].getOpcode(Opcodes.ILOAD), slot));
+                if (!fp[i].equals(hp[i])) {
+                    in.add(new TypeInsnNode(Opcodes.CHECKCAST, hp[i].getInternalName()));
+                }
+                slot += fp[i].getSize();
+            }
+            in.add(new MethodInsnNode(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, del, oldDesc, false));
+            in.add(new InsnNode(Type.getReturnType(oldDesc).getOpcode(Opcodes.IRETURN)));
+            syn.maxLocals = slot;
+            syn.maxStack = slot + 2;
+            syn.name = freeShape(syn.name, syn.desc);
+            mx.methods.add(syn);
+            changed = true;
+        }
+
+        /**
          * A MIXINEXTRAS:EXPRESSION point: its @Definition members (method= / field=) are the anchors, matched by
          * MixinExtras in the target body. Each one V's body holds and W's does not follows the step's vanilla
          * methodRenames / fieldRenames only (a definition names what vanilla calls, never a facade or layer member);
          * one standing nowhere in W's body after that leaves the injector "not bridged" (repair disables it).
          */
-        private void expressionDefinitions(Selection sel, String kind) {
+        private void expressionDefinitions(Selection sel0, String kind) {
             Map<String, String> vanilla = MixinClassRenames.vanillaOnly(chain.classRenames);
+            Selection descended = expressionDescend(sel0, kind, vanilla);
+            Selection sel = descended != null ? descended : sel0;
             for (AnnotationNode def : definitions(sel.handler())) {
                 Map<String, Object> dv = MixinRepair.values(def);
                 String id = String.valueOf(dv.get("id"));
@@ -2866,6 +3020,26 @@ final class MixinBridge {
                         String rn = definitionRename(a);
                         MixinRepair.Anchor na = rn == null ? null
                             : new MixinRepair.Anchor(a.kind(), a.owner(), rn, a.desc(), null, -1);
+                        if (na == null && !fld) {
+                            // the same method under another descriptor (1.21.2 ItemCooldowns.isOnCooldown(Item) -> (ItemStack))
+                            List<String> rwhy = new ArrayList<>();
+                            MixinRepair.Anchor re = respelledDefinition(sel, a, vanilla, rwhy);
+                            if (re != null) {
+                                String nt = "L" + re.owner() + ";" + re.name() + re.desc();
+                                setDefinition(def, key, i, nt);
+                                changed = true;
+                                injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + re.name() + re.desc()
+                                    + " (the same method, descriptor changed; " + rwhy.get(0) + ")");
+                                continue;
+                            }
+                            if (!rwhy.isEmpty()) {
+                                leftInjector(sel.handler(), where + ": " + rwhy.get(0));
+                                return;
+                            }
+                        }
+                        if (na == null && expressionReturn(sel, kind, where, vanilla)) {
+                            return; // E8c: the expression's value is the method's return value (mixinExpressionReturns)
+                        }
                         if (na == null || count(sel.w(), renamedAnchor(na, vanilla)) == 0) {
                             leftInjector(sel.handler(), where + ": expression definition " + id + " not in " + shortName(target) + "."
                                 + sel.w().get(0).name + sel.w().get(0).desc + " in " + chain.to
@@ -2879,6 +3053,243 @@ final class MixinBridge {
                     }
                 }
             }
+        }
+
+        /**
+         * An expression whose definitions W's selected method no longer references, because W moved that code into
+         * one of the class's own methods (1.20.5 Cat / Wolf mobInteract -> the private tame method_58168 / method_58169):
+         * the selector descends there when exactly one callee of the selected method references every definition (as
+         * the step renames it), that callee is called nowhere else in the class (the injector fires for the same
+         * calls), its static-ness is the selected method's, and every captured @Local is argsOnly by a type standing
+         * exactly once among both methods' arguments. Returns the descended selection, or null (nothing moved).
+         */
+        private Selection expressionDescend(Selection sel, String kind, Map<String, String> vanilla) {
+            if (sel.w().size() != 1 || sel.v().size() != 1) {
+                return null;
+            }
+            MethodNode wm = sel.w().get(0);
+            List<MixinRepair.Anchor> want = new ArrayList<>();
+            boolean missing = false;
+            for (AnnotationNode def : definitions(sel.handler())) {
+                Map<String, Object> dv = MixinRepair.values(def);
+                for (String key : List.of("method", "field")) {
+                    for (String spec : MixinRepair.strings(dv.get(key))) {
+                        MixinRepair.Anchor a = definitionAnchor(spec, key.equals("field"));
+                        if (a == null) {
+                            continue;
+                        }
+                        if (count(sel.v(), a) == 0) {
+                            return null; // not where the mod wrote it in V either
+                        }
+                        String rn = definitionRename(a);
+                        MixinRepair.Anchor na = renamedAnchor(rn == null ? a : new MixinRepair.Anchor(a.kind(), a.owner(), rn, a.desc(), null, -1), vanilla);
+                        want.add(na);
+                        missing |= count(sel.w(), na) == 0;
+                    }
+                }
+            }
+            ClassNode wc = w(target);
+            if (!missing || want.isEmpty() || wc == null) {
+                return null;
+            }
+            List<MethodNode> holders = new ArrayList<>();
+            for (AbstractInsnNode in : wm.instructions) {
+                if (in instanceof MethodInsnNode mi && mi.owner.equals(target)) {
+                    MethodNode c = method(wc, mi.name, mi.desc);
+                    if (c != null && c != wm && !holders.contains(c) && want.stream().allMatch(na -> count(List.of(c), na) > 0)) {
+                        holders.add(c);
+                    }
+                }
+            }
+            if (holders.size() != 1) {
+                return null;
+            }
+            MethodNode callee = holders.get(0);
+            int calls = 0;
+            for (MethodNode m : wc.methods) {
+                for (AbstractInsnNode in : m.instructions == null ? new InsnList() : m.instructions) {
+                    if (in instanceof MethodInsnNode mi && mi.owner.equals(target) && mi.name.equals(callee.name) && mi.desc.equals(callee.desc)) {
+                        calls++;
+                    }
+                }
+            }
+            if (calls != 1 || ((callee.access ^ wm.access) & Opcodes.ACC_STATIC) != 0
+                    || !argsOnlyLocalsFit(sel.handler(), sel.v().get(0), callee)) {
+                return null;
+            }
+            List<String> sels = MixinRepair.strings(MixinRepair.values(sel.an()).get("method"));
+            if (sels.size() != 1) {
+                return null;
+            }
+            String s0 = sels.get(0);
+            String nm = respell(MixinRepair.refmapLookup(table, s0), callee.name, callee.desc);
+            if (ownKey(s0)) {
+                MixinRepair.refmapPut(table, s0, nm);
+                refmapDirty = true;
+            } else {
+                MixinRepair.setMethodSelector(sel.an(), 0, nm);
+            }
+            changed = true;
+            injected("@" + kind + " " + sn + "." + sel.handler().name, "@" + kind + " " + sn + "." + sel.handler().name + " -> "
+                + shortName(target) + "." + wm.name + wm.desc + " expression => " + callee.name + callee.desc
+                + " (the one callee referencing every definition, called only there in " + chain.to + ")");
+            return new Selection(sel.handler(), sel.an(), sel.v(), List.of(callee));
+        }
+
+        /** every @Local the handler takes is argsOnly (no index / ordinal / name) by a type once among both methods' arguments */
+        private boolean argsOnlyLocalsFit(MethodNode h, MethodNode vm, MethodNode wm) {
+            Type[] ha = Type.getArgumentTypes(h.desc);
+            for (int k = 0; k < ha.length; k++) {
+                for (List<AnnotationNode>[] pa : Arrays.asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+                    if (pa == null || k >= pa.length || pa[k] == null) {
+                        continue;
+                    }
+                    for (AnnotationNode a : pa[k]) {
+                        if (!a.desc.equals(MixinLocals.LOCAL)) {
+                            continue;
+                        }
+                        Map<String, Object> lv = MixinRepair.values(a);
+                        if (!Boolean.TRUE.equals(lv.get("argsOnly")) || lv.containsKey("index") || lv.containsKey("ordinal") || lv.containsKey("name")) {
+                            return false;
+                        }
+                        Type t = ha[k];
+                        if (Arrays.stream(Type.getArgumentTypes(vm.desc)).filter(t::equals).count() != 1
+                                || Arrays.stream(Type.getArgumentTypes(wm.desc)).filter(t::equals).count() != 1) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        /**
+         * A method definition W's body references under another descriptor only: the one method of the definition's
+         * owner (W's class) with the same name and return type and another descriptor that W's selected body calls as
+         * often as V's called the old one. Taken only when the handler reads none of the changed types (its parameters
+         * other than MixinExtras sugar hold no argument type V and W do not share): what it reads is then unchanged.
+         * Null with why empty: no such method; null with why: refused (why), the answer with why its basis.
+         */
+        private MixinRepair.Anchor respelledDefinition(Selection sel, MixinRepair.Anchor a, Map<String, String> vanilla, List<String> why) {
+            String owner = vanilla.getOrDefault(a.owner(), a.owner());
+            ClassNode oc = w(owner);
+            if (oc == null) {
+                return null;
+            }
+            String vdesc = MixinClassRenames.rename(a.desc(), vanilla);
+            List<MethodNode> cands = new ArrayList<>();
+            for (MethodNode m : oc.methods) {
+                if (m.name.equals(a.name()) && !m.desc.equals(vdesc)
+                        && Type.getReturnType(m.desc).equals(Type.getReturnType(vdesc))) {
+                    cands.add(m);
+                }
+            }
+            if (cands.size() != 1) {
+                return null;
+            }
+            MethodNode wm = cands.get(0);
+            MixinRepair.Anchor na = new MixinRepair.Anchor("INVOKE", owner, wm.name, wm.desc, null, -1);
+            int vc = count(sel.v(), a);
+            int wc = count(sel.w(), na);
+            if (wc != vc) {
+                return null;
+            }
+            Set<Type> changedTypes = new HashSet<>(Arrays.asList(Type.getArgumentTypes(vdesc)));
+            changedTypes.addAll(Arrays.asList(Type.getArgumentTypes(wm.desc)));
+            changedTypes.removeIf(t -> Arrays.asList(Type.getArgumentTypes(vdesc)).contains(t)
+                && Arrays.asList(Type.getArgumentTypes(wm.desc)).contains(t));
+            Type[] ha = Type.getArgumentTypes(sel.handler().desc);
+            for (int k = 0; k < ha.length; k++) {
+                if (sugarAt(sel.handler(), k, "")) {
+                    continue;
+                }
+                if (changedTypes.contains(ha[k]) || ha[k].getDescriptor().equals(OPERATION)) {
+                    why.add("the descriptor changed (" + a.desc() + " -> " + wm.desc + ") and the handler takes "
+                        + ha[k].getClassName() + " at " + k + ", which reads the changed call");
+                    return null;
+                }
+            }
+            why.add("the handler reads none of the changed types; " + wc + " call(s) on both sides");
+            return na;
+        }
+
+        /**
+         * smixin12, Kilt E8c: a @ModifyExpressionValue whose definitions W's method no longer evaluates, where the wiring
+         * says the expression's value is the method's return value (mixinExpressionReturns: its "locals" static
+         * recomputes the expression's one @Local on W, null exactly where V never reached the expression). Checked from
+         * both bodies (expressionReturnWhy): in V's the definitions are evaluated once and feed the @Expression's one
+         * == / != test, whose two outcomes return 1 and 0 directly -- the method's return is the expression's value on
+         * every path that evaluates it (returned negated or combined: refused); W's method returns the outcome of one
+         * test; the handler is (R original, @Local(type) T)R with T the static's answer. Then the handler becomes a plain
+         * method and a @ModifyReturnValue on W's method calls it only where the static answers, else returns W's value
+         * unchanged (native mixins of W's method and its callees still run: their answer is the value it sees).
+         * False when no entry names the method; true when it answered (bridged, or left with the reason).
+         */
+        private boolean expressionReturn(Selection sel, String kind, String where, Map<String, String> vanilla) {
+            if (sel.v().size() != 1 || sel.w().size() != 1) {
+                return false;
+            }
+            MethodNode vm = sel.v().get(0);
+            MethodNode wm = sel.w().get(0);
+            String[] lo = chain.mixinExpressionReturns.get(target + "." + vm.name + vm.desc);
+            if (lo == null) {
+                return false;
+            }
+            String why = expressionReturnWhy(sel.handler(), kind, vm, wm, lo, vanilla);
+            if (why != null) {
+                leftInjector(sel.handler(), where + ": mixinExpressionReturns refused: " + why);
+                return true;
+            }
+            MethodNode h = sel.handler();
+            Type r = Type.getArgumentTypes(h.desc)[0];
+            Type lt = Type.getReturnType(lo[2]);
+            MethodNode syn = new MethodNode(Opcodes.ACC_PRIVATE, unique("cb$exprret$" + h.name), Type.getMethodDescriptor(r, r), null, null);
+            AnnotationNode mrv = new AnnotationNode(MODIFY_RETURN_VALUE);
+            AnnotationNode at = new AnnotationNode("Lorg/spongepowered/asm/mixin/injection/At;");
+            at.values = new ArrayList<>(List.of("value", "RETURN"));
+            mrv.values = new ArrayList<>(List.of("method", new ArrayList<>(List.of(wm.name + wm.desc)), "at", new ArrayList<>(List.of(at))));
+            Object req = MixinRepair.values(sel.an()).get("require");
+            if (req != null) {
+                mrv.values.addAll(List.of("require", req));
+            }
+            syn.visibleAnnotations = new ArrayList<>(List.of(mrv));
+            int ls = 1 + r.getSize();
+            InsnList in = syn.instructions;
+            LabelNode skip = new LabelNode();
+            in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            in.add(new TypeInsnNode(Opcodes.CHECKCAST, target));
+            in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, lo[0], lo[1], lo[2], false));
+            in.add(new VarInsnNode(Opcodes.ASTORE, ls));
+            in.add(new VarInsnNode(Opcodes.ALOAD, ls));
+            in.add(new JumpInsnNode(Opcodes.IFNULL, skip));
+            in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            in.add(new VarInsnNode(r.getOpcode(Opcodes.ILOAD), 1));
+            in.add(new VarInsnNode(Opcodes.ALOAD, ls));
+            in.add(new MethodInsnNode(Opcodes.INVOKESPECIAL, mx.name, h.name, h.desc, false));
+            in.add(new InsnNode(r.getOpcode(Opcodes.IRETURN)));
+            in.add(skip);
+            in.add(new FrameNode(Opcodes.F_NEW, 3, new Object[] {mx.name, JarProcessor.frameType(r), lt.getInternalName()}, 0, new Object[0]));
+            in.add(new VarInsnNode(r.getOpcode(Opcodes.ILOAD), 1));
+            in.add(new InsnNode(r.getOpcode(Opcodes.IRETURN)));
+            syn.maxLocals = ls + 1;
+            syn.maxStack = 3 + r.getSize();
+            // the mod's handler: a plain private method now (its injector, definitions, expression and sugar go)
+            for (List<AnnotationNode> l : Arrays.asList(h.visibleAnnotations, h.invisibleAnnotations)) {
+                if (l != null) {
+                    l.removeIf(a -> a == sel.an() || a.desc.equals(DEFINITION) || a.desc.equals(DEFINITIONS) || a.desc.equals(EXPRESSION));
+                }
+            }
+            h.visibleParameterAnnotations = null;
+            h.invisibleParameterAnnotations = null;
+            h.visibleAnnotableParameterCount = 0;
+            h.invisibleAnnotableParameterCount = 0;
+            h.access = (h.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE;
+            mx.methods.add(syn);
+            changed = true;
+            injected("@" + kind + " " + sn + "." + h.name, where + " => @ModifyReturnValue " + syn.name + " on " + wm.name + wm.desc
+                + " (mixinExpressionReturns: the expression's value is the method's return on both sides; the @Local from "
+                + shortName(lo[0]) + "." + lo[1] + ", the handler called only where it answers)");
+            return true;
         }
 
         /** the step's vanilla rename of a definition's member, or null */
@@ -2935,6 +3346,15 @@ final class MixinBridge {
                 }
                 return false;
             }
+            String inheritedNote = "";
+            if (lastRoles != null) {
+                String rwhy = applyInherited(sel.handler(), kind, sel.v(), a);
+                if (rwhy != null) {
+                    leftInjector(sel.handler(), where + ": in its place " + rwhy);
+                    return false;
+                }
+                inheritedNote = "; the same call through " + shortName(lastInherited[1]) + ", @Local matched by role";
+            }
             switch (value) {
                 case "INVOKE", "FIELD" -> {
                     if (!na.kind().equals(value)) {
@@ -2983,20 +3403,195 @@ final class MixinBridge {
             }
             changed = true;
             injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + na + " (the instruction standing in its place in "
-                + chain.to + ", by context" + (wired != null ? "; the wiring's own count differs" : "") + ")");
+                + chain.to + ", by context" + (wired != null ? "; the wiring's own count differs" : "") + inheritedNote + ")");
             return true;
         }
 
-        /** the anchor standing where V's sites of {@code a} stood (see counterpartAt), or null with why */
+        /**
+         * The inherited-owner stand-in (lastRoles / lastInherited) applied to the handler: each @Local whose W ordinal
+         * differs from implicit gets that ordinal; a handler taking the call's receiver as V's owner takes W's owner
+         * (a subclass, so its body reads it unchanged). Null when done, else why not (nothing changed then).
+         */
+        private String applyInherited(MethodNode h, String kind, List<MethodNode> vms, MixinRepair.Anchor a) {
+            Type[] hp = Type.getArgumentTypes(h.desc);
+            String newDesc = h.desc;
+            if (RECEIVER_KINDS.contains(kind) && takesReceiver(vms, a) && hp.length > 0) {
+                Type vo = Type.getObjectType(lastInherited[0]);
+                if (!hp[0].equals(vo) && !hp[0].equals(Type.getObjectType(a.owner()))) {
+                    return "the handler's receiver " + hp[0].getClassName() + " is not " + shortName(lastInherited[0]);
+                }
+                hp[0] = Type.getObjectType(lastInherited[1]);
+                newDesc = Type.getMethodDescriptor(Type.getReturnType(h.desc), hp);
+            }
+            if (!newDesc.equals(h.desc)) {
+                Refs r = refs(h.name, h.desc, false);
+                if (!r.handles.isEmpty()) {
+                    return "the handler is referenced by a method handle; its receiver type cannot change";
+                }
+                for (MethodInsnNode mi : r.calls) {
+                    mi.desc = newDesc;
+                }
+                int slot = (h.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
+                if (h.localVariables != null) {
+                    for (var lv : h.localVariables) {
+                        if (lv.index == slot) {
+                            lv.desc = hp[0].getDescriptor();
+                            lv.signature = null;
+                        }
+                    }
+                }
+                h.desc = newDesc;
+                h.signature = null;
+            }
+            for (int k = 0; k < lastRoles.length; k++) {
+                if (lastRoles[k] < 0) {
+                    continue;
+                }
+                for (List<AnnotationNode>[] pa : Arrays.<List<AnnotationNode>[]>asList(h.visibleParameterAnnotations, h.invisibleParameterAnnotations)) {
+                    if (pa != null && k < pa.length && pa[k] != null) {
+                        for (AnnotationNode x : pa[k]) {
+                            if (x.desc.equals(MixinLocals.LOCAL)) {
+                                setValue(x, "ordinal", lastRoles[k]);
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        /**
+         * The anchor standing where V's sites of {@code a} stood (see counterpartAt), or null with why. A handler reading
+         * the target's locals (@Local) is carried only when the stand-in is V's very call reached through a subclass
+         * owner (inheritedLocals), its @Local parameters matched by role; lastRoles / lastInherited say how.
+         */
         private MixinRepair.Anchor counterpartAnchor(String kind, MethodNode h, MixinRepair.Anchor a, List<MethodNode> vms,
                                                      List<MethodNode> wms, List<String> why) {
+            lastRoles = null;
+            lastInherited = null;
+            String lw = "the handler reads the target's locals, in a body that changed around the anchor";
+            if (capturesLocals(h)) {
+                why.add(lw);
+                return null;
+            }
+            if (!hasSugar(h, "Local;")) {
+                return counterpartAnchor0(kind, h, a, vms, wms, why, false);
+            }
+            if (vms.size() != 1 || wms.size() != 1) {
+                why.add(lw);
+                return null;
+            }
+            List<String> w0 = new ArrayList<>();
+            MixinRepair.Anchor na = counterpartAnchor0(kind, h, a, vms, wms, w0, true);
+            if (na == null) {
+                why.add(lw + (w0.isEmpty() ? "" : " (" + w0.get(0) + ")"));
+                return null;
+            }
+            String iw = inheritedLocals(kind, h, a, na, vms.get(0), wms.get(0));
+            if (iw != null) {
+                lastRoles = null;
+                lastInherited = null;
+                why.add(lw + " (" + iw + ")");
+                return null;
+            }
+            return na;
+        }
+
+        /**
+         * smixin12, Kilt E8i checkIsTNTBlock: why a @Local-reading handler may not follow V's site a to its stand-in na,
+         * or null (lastRoles / lastInherited set). Taken only when na is V's very call: the same name, descriptor and
+         * invocation, its W owner a subclass of V's owner (as W spells it) that inherits the member from the same
+         * declaring class on both sides (1.21 javac names ServerLevel where 1.20.6 named Level for removeBlock, which
+         * ServerLevel does not declare), one site on each side, and every @Local parameter matched by role
+         * (MixinLocals.roleOrdinals, producers compared by declaring class), never by position.
+         */
+        private String inheritedLocals(String kind, MethodNode h, MixinRepair.Anchor a, MixinRepair.Anchor na, MethodNode vm, MethodNode wm) {
+            MixinRepair wc = wcode(chain);
+            if (chain.sourceCode == null || wc == null) {
+                return "no " + chain.from + " or " + chain.to + " bodies";
+            }
+            List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> MixinRepair.matchesAnchor(in, a));
+            List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, na));
+            AbstractInsnNode site = a.ordinal() >= 0 ? (a.ordinal() < vo.size() ? vo.get(a.ordinal()) : null) : vo.size() == 1 ? vo.get(0) : null;
+            AbstractInsnNode c = na.ordinal() >= 0 ? (na.ordinal() < wo.size() ? wo.get(na.ordinal()) : null) : wo.size() == 1 ? wo.get(0) : null;
+            if (site == null || c == null) {
+                return "not one site on each side";
+            }
+            String iw = inheritedWhy(site, c);
+            if (iw != null) {
+                return iw;
+            }
+            MethodInsnNode m = (MethodInsnNode) c;
+            String vOwner = MixinClassRenames.vanillaOnly(chain.classRenames).getOrDefault(((MethodInsnNode) site).owner, ((MethodInsnNode) site).owner);
+            ClassNode vcn = v(target);
+            ClassNode wcn = w(target);
+            AnnotationNode an = null;
+            for (AnnotationNode x : MixinRepair.annotations(h)) {
+                if (MixinRepair.values(x).containsKey("at")) {
+                    an = x;
+                }
+            }
+            if (vcn == null || wcn == null || an == null) {
+                return "the target class or the injector cannot be read";
+            }
+            int ci = Type.getArgumentTypes(h.desc).length - sugarCount(h) - 1;
+            List<String> rw = new ArrayList<>();
+            int[] roles = MixinLocals.roleOrdinals(chain.sourceCode, vcn, vm, site, wc, wcn, wm, c, h, ci, an, rw, true);
+            if (roles == null) {
+                return rw.isEmpty() ? "@Local role not judged" : rw.get(0);
+            }
+            lastRoles = roles;
+            lastInherited = new String[] {vOwner, m.owner};
+            return null;
+        }
+
+        /**
+         * Why W's c is not V's site as the same instance call reached through a subclass owner (same name, descriptor
+         * and invocation; W's owner a subclass of V's owner as W spells it; the member declared by the same class on
+         * both sides), or null.
+         */
+        private String inheritedWhy(AbstractInsnNode site, AbstractInsnNode c) {
+            if (!(site instanceof MethodInsnNode s) || !(c instanceof MethodInsnNode m) || !s.name.equals(m.name) || !s.desc.equals(m.desc)
+                    || s.getOpcode() != m.getOpcode() || s.getOpcode() == Opcodes.INVOKESTATIC) {
+                return "the stand-in " + anchorOf(c) + " is not the same instance call";
+            }
+            MixinRepair wc = wcode(chain);
+            if (chain.sourceCode == null || wc == null) {
+                return "no " + chain.from + " or " + chain.to + " bodies";
+            }
+            Map<String, String> vanilla = MixinClassRenames.vanillaOnly(chain.classRenames);
+            String vOwner = vanilla.getOrDefault(s.owner, s.owner);
+            if (vOwner.equals(m.owner)) {
+                return "the stand-in names the same owner";
+            }
+            boolean sub = false;
+            for (String x = m.owner; x != null && !sub; ) {
+                ClassNode cn = w(x);
+                x = cn == null ? null : cn.superName;
+                sub = vOwner.equals(x);
+            }
+            if (!sub) {
+                return shortName(m.owner) + " is not a subclass of " + shortName(vOwner) + " in " + chain.to;
+            }
+            String vd = MixinLocals.declaring(chain.sourceCode, s.owner, s.name, s.desc);
+            String wd = MixinLocals.declaring(wc, m.owner, m.name, m.desc);
+            if (vd == null || wd == null || !vanilla.getOrDefault(vd, vd).equals(wd)) {
+                return shortName(m.owner) + "." + m.name + m.desc + " resolves to " + (wd == null ? "nothing" : shortName(wd))
+                    + ", not to " + (vd == null ? "nothing" : shortName(vd)) + " as in " + chain.from;
+            }
+            return null;
+        }
+
+        /**
+         * counterpartAnchor without locals: the anchor standing where V's sites of {@code a} stood, or null with why.
+         * {@code inherited}: a stand-in that is V's very call through a subclass owner (inheritedWhy) passes the operand
+         * and same-member tests (inheritedLocals then retypes the receiver and matches the @Locals by role).
+         */
+        private MixinRepair.Anchor counterpartAnchor0(String kind, MethodNode h, MixinRepair.Anchor a, List<MethodNode> vms,
+                                                      List<MethodNode> wms, List<String> why, boolean inherited) {
             boolean operands = OPERAND_KINDS.contains(kind);
             if (!kind.equals("Inject") && !operands) {
                 why.add("@" + kind + " is not carried to a stand-in");
-                return null;
-            }
-            if (capturesLocals(h) || hasSugar(h, "Local;")) {
-                why.add("the handler reads the target's locals, in a body that changed around the anchor");
                 return null;
             }
             if (vms.size() != 1 || wms.size() != 1) {
@@ -3022,12 +3617,13 @@ final class MixinBridge {
                         + (sites.size() == 1 ? "the site" : found.size() + " of " + sites.size() + " sites found") + ")");
                     return null;
                 }
-                if (operands && !sameOperands(kind, site, c)) {
+                boolean inh = inherited && inheritedWhy(site, c) == null;
+                if (operands && !inh && !sameOperands(kind, site, c)) {
                     // the handler takes the call's / value's operands: they must be exactly V's
                     why.add("what stands there (" + anchorOf(c) + ") does not take the operands @" + kind + "'s handler is written for");
                     return null;
                 }
-                if (operands && !sameMember(site, c) && wLinks(site)) {
+                if (operands && !inh && !sameMember(site, c) && wLinks(site)) {
                     // W still has V's member and calls another in its place (IntStream.range -> rangeClosed):
                     // another operation, whose operands mean something else to a handler written for V's
                     why.add("what stands there (" + anchorOf(c) + ") is another member, and " + chain.to + " still has "
@@ -3853,7 +4449,7 @@ final class MixinBridge {
         String ch = chain.instanceRedirectHome(chain.callReshapeIndex, owner, nd);
         if (ch != null) {
             Chain.CallReshape r = chain.callReshapes.get(ch + "." + nd);
-            return inverse(name, r.args, va, r.newDesc, "call reshape");
+            return inverse(r.newName != null ? r.newName : name, r.args, va, r.newDesc, "call reshape");
         }
         if (name.equals("<init>")) {
             Chain.CtorReshape cr = chain.superCtorReshapes.get(owner + ".<init>" + vdesc);
@@ -4047,7 +4643,8 @@ final class MixinBridge {
         }
         String ch = chain.instanceRedirectHome(chain.callReshapeIndex, a.owner(), nd);
         if (ch != null) {
-            return new AtFate(a.owner(), a.name(), chain.callReshapes.get(ch + "." + nd).newDesc, "call reshape");
+            Chain.CallReshape r = chain.callReshapes.get(ch + "." + nd);
+            return new AtFate(a.owner(), r.newName != null ? r.newName : a.name(), r.newDesc, "call reshape");
         }
         for (Chain.OverrideHook h : chain.overrideHooksForOld(a.name(), a.desc())) {
             if (h.onlyUnder != null && !chain.sourceSubtype(List.of(a.owner()), h.onlyUnder)
@@ -4748,6 +5345,378 @@ final class MixinBridge {
     static final String DEFINITION = "Lcom/llamalad7/mixinextras/expression/Definition;";
     static final String DEFINITIONS = "Lcom/llamalad7/mixinextras/expression/Definitions;";
 
+    /** why Mixin.expressionReturn may not carry the injector (V's body vm, W's wm, the handler h), or null */
+    @SuppressWarnings("unchecked")
+    static String expressionReturnWhy(MethodNode h, String kind, MethodNode vm, MethodNode wm, String[] lo, Map<String, String> vanilla) {
+        if (!kind.equals("ModifyExpressionValue")) {
+            return "@" + kind + " is not @ModifyExpressionValue";
+        }
+        if ((h.access & Opcodes.ACC_STATIC) != 0) {
+            return "the handler is static";
+        }
+        if (!vm.name.equals(wm.name) || !MixinClassRenames.rename(vm.desc, vanilla).equals(wm.desc)) {
+            return "W's method is not V's (" + wm.name + wm.desc + ")";
+        }
+        Type vr = Type.getReturnType(vm.desc);
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        if (hp.length != 2 || !hp[0].equals(vr) || !Type.getReturnType(h.desc).equals(vr)) {
+            return "the handler is not (" + vr.getClassName() + ", @Local)" + vr.getClassName();
+        }
+        if (!Type.getReturnType(lo[2]).equals(hp[1])) {
+            return "the handler's @Local is " + hp[1].getClassName() + ", the static answers " + Type.getReturnType(lo[2]).getClassName();
+        }
+        AnnotationNode loc = null;
+        for (List<AnnotationNode>[] pa : new List[][] {h.visibleParameterAnnotations, h.invisibleParameterAnnotations}) {
+            if (pa == null) {
+                continue;
+            }
+            if (pa.length > 0 && pa[0] != null && !pa[0].isEmpty()) {
+                return "the expression value parameter carries " + pa[0].get(0).desc;
+            }
+            if (pa.length > 1 && pa[1] != null) {
+                for (AnnotationNode a : pa[1]) {
+                    if (a.desc.equals(MixinLocals.LOCAL)) {
+                        loc = a;
+                    }
+                }
+            }
+        }
+        if (loc == null) {
+            return "parameter 1 is not a @Local";
+        }
+        for (String k : MixinRepair.values(loc).keySet()) {
+            if (!k.equals("type")) {
+                return "the @Local picks by " + k + ", not by type alone";
+            }
+        }
+        List<String> ex = new ArrayList<>();
+        for (AnnotationNode a : MixinRepair.annotations(h)) {
+            if (a.desc.equals(EXPRESSION)) {
+                ex.addAll(MixinRepair.strings(MixinRepair.values(a).get("value")));
+            }
+        }
+        if (ex.size() != 1) {
+            return "not one @Expression";
+        }
+        String e = ex.get(0);
+        int eqs = e.split("==", -1).length - 1;
+        int nes = e.split("!=", -1).length - 1;
+        if (eqs + nes != 1 || e.contains("&&") || e.contains("||") || e.contains("!(")) {
+            return "the expression \"" + e + "\" is not one == / != comparison";
+        }
+        boolean eq = eqs == 1;
+        // V: every member definition evaluated once; the last feeds the comparison, whose outcomes are returned as they are
+        int last = -1;
+        for (AnnotationNode def : definitions(h)) {
+            Map<String, Object> dv = MixinRepair.values(def);
+            for (String key : List.of("method", "field")) {
+                for (String spec : MixinRepair.strings(dv.get(key))) {
+                    MixinRepair.Anchor a = definitionAnchor(spec, key.equals("field"));
+                    if (a == null) {
+                        return "definition " + spec + " is not owner-qualified";
+                    }
+                    int hits = 0;
+                    for (AbstractInsnNode in : vm.instructions) {
+                        if (MixinRepair.matchesAnchor(in, a)) {
+                            hits++;
+                            last = Math.max(last, vm.instructions.indexOf(in));
+                        }
+                    }
+                    if (hits != 1) {
+                        return "V's " + vm.name + vm.desc + " evaluates " + spec + " " + hits + " times";
+                    }
+                }
+            }
+        }
+        if (last < 0) {
+            return "no member definition";
+        }
+        AbstractInsnNode p = vm.instructions.get(last).getNext();
+        while (p != null && (p.getOpcode() < 0 || OPERAND_PUSH.contains(p.getOpcode()))) {
+            p = p.getNext();
+        }
+        if (!(p instanceof JumpInsnNode j) || !COMPARE_EQ.containsKey(j.getOpcode())) {
+            return "in V's body the expression feeds no == / != test";
+        }
+        boolean truthOnJump = COMPARE_EQ.get(j.getOpcode()) == eq;
+        int cj = constReturn(j.label);
+        int cf = constReturn(j.getNext());
+        if (cj != (truthOnJump ? 1 : 0) || cf != (truthOnJump ? 0 : 1)) {
+            return "in V's body the method does not return the expression's value (returns " + cj + " / " + cf
+                + " where the expression is " + truthOnJump + " / " + !truthOnJump + ")";
+        }
+        // W: the method returns the outcome of one test
+        int tests = 0;
+        for (AbstractInsnNode in : wm.instructions) {
+            if (in instanceof JumpInsnNode wj && wj.getOpcode() != Opcodes.GOTO) {
+                tests++;
+                int a = constReturn(wj.label);
+                int b = constReturn(wj.getNext());
+                if (a < 0 || b < 0 || a == b) {
+                    return "W's " + wm.name + wm.desc + " does not return the outcome of its test";
+                }
+            }
+        }
+        return tests == 1 ? null : "W's " + wm.name + wm.desc + " holds " + tests + " tests, not one";
+    }
+
+    // ------------------------------------------------------------------ @Share orphans (smixin12)
+
+    static final String SHARE = "Lcom/llamalad7/mixinextras/sugar/Share;";
+    private static final String REF_PREFIX = "com/llamalad7/mixinextras/sugar/ref/";
+
+    /**
+     * smixin12 (Kilt AbstractArrowInject): a live injector that reads a @Share which, in its mixin, only injectors no longer
+     * live write (their injector annotation dropped by the repair or peel) would read the share's default on every call --
+     * usActualImpulseValue's {@code original && currentImpulse.get()} forces hasImpulse false once handleOnHit is gone. Such
+     * a reader is disabled with them (annotation dropped as the repair does, handler kept as a plain method), to a fixpoint;
+     * one that some live injector also writes stays. A share written by nobody (read for its default) is not this rule's.
+     * Scoped as MixinExtras scopes it (ShareInfo.getOrCreate: one local per injection Target, keyed ShareId(namespace, id),
+     * namespace defaulting to the mixin's class name): a writer feeds a reader only on a target method both select. A reader
+     * is disabled only when on every method it targets the share has a disabled writer and no live one. Handlers are judged
+     * one by one whatever their names (two overloads of one handler name are two injectors sharing one variable). A share
+     * with an explicit other namespace can be written by other mixins (other mods): never judged. A disabled writer's
+     * targets are read from {@code before} (the class before the pass that disabled it); one not found there is not counted.
+     * Returns one "share orphaned: ..." reason per injector disabled; entries are rewritten in place.
+     */
+    static List<String> shareOrphans(Map<String, byte[]> entries, Map<String, byte[]> before) {
+        List<String> out = new ArrayList<>();
+        byte[] needle = "mixinextras/sugar/Share".getBytes(StandardCharsets.UTF_8);
+        for (Map.Entry<String, byte[]> e : new ArrayList<>(entries.entrySet())) {
+            if (!e.getKey().endsWith(".class") || !contains(e.getValue(), needle)) {
+                continue;
+            }
+            ClassNode cn = new ClassNode();
+            try {
+                new ClassReader(e.getValue()).accept(cn, 0);
+            } catch (RuntimeException ex) {
+                continue;
+            }
+            Map<String, MethodNode> pre = new HashMap<>();
+            byte[] b = before.get(e.getKey());
+            if (b != null) {
+                ClassNode pc = new ClassNode();
+                try {
+                    new ClassReader(b).accept(pc, ClassReader.SKIP_CODE);
+                    for (MethodNode pm : pc.methods) {
+                        pre.put(pm.name + pm.desc, pm);
+                    }
+                } catch (RuntimeException ex) {
+                    pre.clear();
+                }
+            }
+            String self = cn.name.replace('/', '.');
+            boolean changed = false;
+            while (true) {
+                // per share id: writers as {handler, target names (null = any), live}
+                Map<String, List<Object[]>> writersOf = new HashMap<>();
+                List<Object[]> readers = new ArrayList<>();
+                for (MethodNode m : cn.methods) {
+                    AnnotationNode inj = injectorAnnotation(m);
+                    boolean live = inj != null;
+                    if (!live) {
+                        MethodNode pm = pre.get(m.name + m.desc);
+                        inj = pm == null ? null : injectorAnnotation(pm);
+                        if (inj == null) {
+                            continue; // not an injector before this pass either: its targets are unknown
+                        }
+                    }
+                    Set<String> targets = shareTargets(inj);
+                    Type[] hp = Type.getArgumentTypes(m.desc);
+                    int slot = (m.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
+                    for (int k = 0; k < hp.length; slot += hp[k].getSize(), k++) {
+                        String key = shareKey(m, k, self);
+                        if (key == null) {
+                            continue;
+                        }
+                        if (refUse(cn.name, m, slot, "set")) {
+                            if (targets != null || live) { // a disabled writer selecting any method: doubt, not counted
+                                writersOf.computeIfAbsent(key, x -> new ArrayList<>()).add(new Object[] {m, targets, live});
+                            }
+                        } else if (live && targets != null && refUse(cn.name, m, slot, "get")) {
+                            readers.add(new Object[] {m, key, targets});
+                        }
+                    }
+                }
+                Object[] hit = null;
+                List<String> writers = new ArrayList<>();
+                for (Object[] r : readers) {
+                    @SuppressWarnings("unchecked")
+                    Set<String> rt = (Set<String>) r[2];
+                    List<Object[]> ws = writersOf.getOrDefault((String) r[1], List.of());
+                    Set<String> deadOn = new java.util.TreeSet<>();
+                    boolean orphanedEverywhere = !rt.isEmpty();
+                    for (String t : rt) {
+                        boolean liveOn = false, dead = false;
+                        for (Object[] w : ws) {
+                            @SuppressWarnings("unchecked")
+                            Set<String> wt = (Set<String>) w[1];
+                            if (wt == null || wt.contains(t)) {
+                                if ((Boolean) w[2]) {
+                                    liveOn = true;
+                                } else {
+                                    dead = true;
+                                    deadOn.add(shortName(cn.name) + "." + ((MethodNode) w[0]).name + ((MethodNode) w[0]).desc.substring(0, ((MethodNode) w[0]).desc.indexOf(')') + 1));
+                                }
+                            }
+                        }
+                        orphanedEverywhere &= dead && !liveOn;
+                    }
+                    if (orphanedEverywhere) {
+                        hit = r;
+                        writers.addAll(deadOn);
+                        break;
+                    }
+                }
+                if (hit == null) {
+                    break;
+                }
+                MethodNode m = (MethodNode) hit[0];
+                AnnotationNode an = injectorAnnotation(m);
+                String kind = an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
+                for (List<AnnotationNode> l : Arrays.asList(m.visibleAnnotations, m.invisibleAnnotations)) {
+                    if (l != null) {
+                        l.remove(an);
+                    }
+                }
+                if (injectorAnnotation(m) == null) {
+                    for (List<AnnotationNode> l : Arrays.asList(m.visibleAnnotations, m.invisibleAnnotations)) {
+                        if (l != null) {
+                            l.removeIf(a -> a.desc.startsWith("Lcom/llamalad7/mixinextras/expression/"));
+                        }
+                    }
+                }
+                changed = true;
+                out.add("share orphaned: @" + kind + " " + shortName(cn.name) + "." + m.name + m.desc.substring(0, m.desc.indexOf(')') + 1)
+                    + " reads @Share \"" + ((String) hit[1]).substring(((String) hit[1]).indexOf('|') + 1) + "\" on " + hit[2]
+                    + ", written there only by disabled " + String.join(", ", writers) + " (it would read the share's default on every call)");
+            }
+            if (changed) {
+                ClassWriter cw = new ClassWriter(0);
+                cn.accept(cw);
+                e.setValue(cw.toByteArray());
+                entries.put(e.getKey(), e.getValue());
+            }
+        }
+        return out;
+    }
+
+    /** the method's top-level injector annotation (Mixin's or MixinExtras'), or null */
+    static AnnotationNode injectorAnnotation(MethodNode m) {
+        for (List<AnnotationNode> l : Arrays.asList(m.visibleAnnotations, m.invisibleAnnotations)) {
+            if (l != null) {
+                for (AnnotationNode a : l) {
+                    if (a.desc.contains("/mixin/injection/") || a.desc.contains("/mixinextras/injector/")) {
+                        return a;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * "namespace|value" of parameter k's @Share (namespace defaulting to the mixin's dotted class name {@code self}, as
+     * ShareInfo.getId), or null: no @Share, or one in another namespace (other mixins may write it; never judged here)
+     */
+    private static String shareKey(MethodNode m, int k, String self) {
+        for (List<AnnotationNode>[] pa : Arrays.<List<AnnotationNode>[]>asList(m.visibleParameterAnnotations, m.invisibleParameterAnnotations)) {
+            if (pa != null && k < pa.length && pa[k] != null) {
+                for (AnnotationNode a : pa[k]) {
+                    if (a.desc.equals(SHARE)) {
+                        Map<String, Object> v = MixinRepair.values(a);
+                        String ns = v.get("namespace") instanceof String s ? s : self;
+                        return ns.equals(self) ? ns + "|" + v.get("value") : null;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * the target method names an injector selects (its method= selectors, owner and descriptor dropped), or null when one
+     * selects by pattern (wildcard / regex) or it names none (target= @Desc): which methods it shares a Target with is unknown
+     */
+    static Set<String> shareTargets(AnnotationNode inj) {
+        Set<String> out = new java.util.TreeSet<>();
+        for (String s : MixinRepair.strings(MixinRepair.values(inj).get("method"))) {
+            if (s.isEmpty() || s.startsWith("/") || s.indexOf('*') >= 0) {
+                return null;
+            }
+            int semi = s.indexOf(';'), par = s.indexOf('(');
+            if (s.startsWith("L") && semi > 0 && (par < 0 || semi < par)) {
+                s = s.substring(semi + 1);
+            }
+            int end = s.length();
+            for (char c : new char[] {'(', ':'}) {
+                int i = s.indexOf(c);
+                if (i >= 0 && i < end) {
+                    end = i;
+                }
+            }
+            out.add(s.substring(0, end));
+        }
+        return out.isEmpty() ? null : out;
+    }
+
+    /** does m call {@code name} (get / set) on a LocalRef whose receiver is parameter slot {@code slot} */
+    private static boolean refUse(String owner, MethodNode m, int slot, String name) {
+        if (m.instructions == null || m.instructions.size() == 0) {
+            return false;
+        }
+        org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue>[] fs;
+        try {
+            fs = new org.objectweb.asm.tree.analysis.Analyzer<>(new org.objectweb.asm.tree.analysis.SourceInterpreter()).analyze(owner, m);
+        } catch (org.objectweb.asm.tree.analysis.AnalyzerException | RuntimeException ex) {
+            return true; // not analysable: counted as a use (never disables on doubt)
+        }
+        for (int i = 0; i < m.instructions.size(); i++) {
+            if (m.instructions.get(i) instanceof MethodInsnNode mi && mi.owner.startsWith(REF_PREFIX) && mi.name.equals(name)
+                    && fs[i] != null) {
+                int recv = fs[i].getStackSize() - 1 - Type.getArgumentTypes(mi.desc).length;
+                if (recv < 0) {
+                    continue;
+                }
+                for (AbstractInsnNode src : fs[i].getStack(recv).insns) {
+                    if (src instanceof VarInsnNode v && v.getOpcode() == Opcodes.ALOAD && v.var == slot) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    static final String EXPRESSION = "Lcom/llamalad7/mixinextras/expression/Expression;";
+    static final String MODIFY_RETURN_VALUE = "Lcom/llamalad7/mixinextras/injector/ModifyReturnValue;";
+    /** instructions that push one comparison operand (between an expression's member and its test) */
+    private static final Set<Integer> OPERAND_PUSH = Set.of(Opcodes.GETSTATIC, Opcodes.ACONST_NULL, Opcodes.LDC, Opcodes.ICONST_M1,
+        Opcodes.ICONST_0, Opcodes.ICONST_1, Opcodes.ICONST_2, Opcodes.ICONST_3, Opcodes.ICONST_4, Opcodes.ICONST_5, Opcodes.BIPUSH,
+        Opcodes.SIPUSH, Opcodes.ILOAD, Opcodes.ALOAD);
+    /** == / != tests: whether the jump is taken when the operands are equal */
+    private static final Map<Integer, Boolean> COMPARE_EQ = Map.of(Opcodes.IF_ACMPEQ, true, Opcodes.IF_ACMPNE, false,
+        Opcodes.IF_ICMPEQ, true, Opcodes.IF_ICMPNE, false, Opcodes.IFNULL, true, Opcodes.IFNONNULL, false);
+
+    /** the 0 / 1 constant the code from p returns directly (through labels and gotos), or -1 */
+    static int constReturn(AbstractInsnNode p) {
+        int c = -1;
+        for (int guard = 0; p != null && guard < 64; guard++) {
+            int op = p.getOpcode();
+            if (op < 0) {
+                p = p.getNext();
+            } else if (op == Opcodes.GOTO) {
+                p = ((JumpInsnNode) p).label;
+            } else if (c < 0 && (op == Opcodes.ICONST_0 || op == Opcodes.ICONST_1)) {
+                c = op - Opcodes.ICONST_0;
+                p = p.getNext();
+            } else {
+                return c >= 0 && op == Opcodes.IRETURN ? c : -1;
+            }
+        }
+        return -1;
+    }
+
     /** a handler's @Definition annotations, single or inside @Definitions */
     static List<AnnotationNode> definitions(MethodNode h) {
         List<AnnotationNode> out = new ArrayList<>();
@@ -4813,5 +5782,229 @@ final class MixinBridge {
                 return;
             }
         }
+    }
+
+    // ------------------------------------------------------------------ anonymous classes by body (E8i)
+
+    /** the least body similarity (SiteMatch.similarity of sigSelf) of a renumbered anonymous class's method */
+    static final double ANON_MIN = 0.75;
+    /** how far the best sibling must stand above the next: two similar bodies are never told apart by a guess */
+    static final double ANON_MARGIN = 0.2;
+
+    /**
+     * A mixin aimed at one anonymous class (Outer$N) of a game class: the W sibling (Outer$K) whose methods the mixin
+     * selects hold V's bodies, when javac numbered it differently (1.20.4 DispenseItemBehavior$10, the TNT behaviour,
+     * is 1.20.5's $17, and 1.20.5's $10 is another behaviour). Every W sibling declaring each selected V method (its
+     * descriptor as classRenames spell it) is scored by body (anonymousByBody); the one clearly best is taken, never
+     * W's class of the same number unless it is that one. The @Mixin target (and its refmap entry) is rewritten
+     * before the mixin is judged. Returns the report text, or null when nothing moved.
+     */
+    private String anonymousRetarget(ClassNode mx, JsonObject table, boolean[] tableChanged) {
+        List<String> targets = MixinRepair.mixinTargets(mx, table);
+        if (targets.size() != 1 || chain.sourceCode == null) {
+            return null;
+        }
+        String t = targets.get(0);
+        int d = t.lastIndexOf('$');
+        if (d < 0 || !t.substring(d + 1).matches("\\d+") || !Chain.minecraftOwned(t)) {
+            return null;
+        }
+        ClassNode vc = v(t);
+        if (vc == null) {
+            return null;
+        }
+        List<MethodNode> vms = new ArrayList<>();
+        for (MethodNode h : mx.methods) {
+            for (AnnotationNode an : MixinRepair.annotations(h)) {
+                for (String sel : MixinRepair.strings(MixinRepair.values(an).get("method"))) {
+                    if (sel.startsWith("/") || sel.contains("*")) {
+                        return null;
+                    }
+                    MixinRepair.Sel s = MixinRepair.Sel.parse(MixinRepair.refmapLookup(table, sel));
+                    if (s.owner() != null && !s.owner().equals(t)) {
+                        continue;
+                    }
+                    for (MethodNode m : s.match(vc)) {
+                        if (!vms.contains(m)) {
+                            vms.add(m);
+                        }
+                    }
+                }
+            }
+        }
+        if (vms.isEmpty()) {
+            return null;
+        }
+        String outer = t.substring(0, d + 1);
+        Map<String, ClassNode> siblings = new LinkedHashMap<>();
+        for (int k = 1, miss = 0; k < 1000 && miss < 10; k++) {
+            ClassNode wc = w(outer + k);
+            if (wc == null) {
+                miss++;
+            } else {
+                miss = 0;
+                siblings.put(outer + k, wc);
+            }
+        }
+        List<String> why = new ArrayList<>();
+        String to = anonymousByBody(t, vms, siblings, chain::renamedDesc, why);
+        if (to == null || to.equals(t)) {
+            return null;
+        }
+        if (!retargetAnonymous(mx, table, t, to, tableChanged)) {
+            return null;
+        }
+        return "anonymous class by body " + shortName(t) + " -> " + shortName(to) + " (" + why.get(0) + ")";
+    }
+
+    /**
+     * The sibling of {@code siblings} holding V class {@code vName}'s methods {@code vms}: each candidate declaring every
+     * one of them (name, descriptor through descMap) scores the mean SiteMatch.similarity of their sigSelf bodies; the
+     * best must reach ANON_MIN and stand ANON_MARGIN above the next. Null (why: the reason) otherwise; why.get(0) holds
+     * the scores of an answer.
+     */
+    static String anonymousByBody(String vName, List<MethodNode> vms, Map<String, ClassNode> siblings,
+                                  java.util.function.UnaryOperator<String> descMap, List<String> why) {
+        String best = null;
+        double b1 = -1;
+        double b2 = -1;
+        for (Map.Entry<String, ClassNode> e : siblings.entrySet()) {
+            double sum = 0;
+            boolean all = true;
+            for (MethodNode vm : vms) {
+                MethodNode wm = null;
+                for (MethodNode m : e.getValue().methods) {
+                    if (m.name.equals(vm.name) && m.desc.equals(descMap.apply(vm.desc))) {
+                        wm = m;
+                    }
+                }
+                List<String> vs = SiteMatch.sigSelf(vm, vName);
+                if (wm == null || vs.size() < 5) {
+                    all = false;
+                    break;
+                }
+                sum += SiteMatch.similarity(vs, SiteMatch.sigSelf(wm, e.getKey()));
+            }
+            if (!all) {
+                continue;
+            }
+            double sc = sum / vms.size();
+            if (sc > b1) {
+                b2 = b1;
+                b1 = sc;
+                best = e.getKey();
+            } else if (sc > b2) {
+                b2 = sc;
+            }
+        }
+        String scores = String.format(Locale.ROOT, "body similarity %.2f, next sibling %.2f", b1, Math.max(b2, 0));
+        if (best == null) {
+            why.add("no sibling declares the selected methods");
+            return null;
+        }
+        if (b1 < ANON_MIN) {
+            why.add("no sibling's body is close enough (" + scores + ")");
+            return null;
+        }
+        if (b2 > b1 - ANON_MARGIN) {
+            why.add("two siblings' bodies are alike (" + scores + ")");
+            return null;
+        }
+        why.add(scores);
+        return best;
+    }
+
+    /** the @Mixin target from -> to, in value= types, targets= strings, or the refmap entry a string names */
+    @SuppressWarnings("unchecked")
+    private static boolean retargetAnonymous(ClassNode mx, JsonObject table, String from, String to, boolean[] tableChanged) {
+        boolean done = false;
+        for (List<AnnotationNode> l : Arrays.asList(mx.visibleAnnotations, mx.invisibleAnnotations)) {
+            for (AnnotationNode a : l == null ? List.<AnnotationNode>of() : l) {
+                if (!a.desc.equals(MIXIN) || a.values == null) {
+                    continue;
+                }
+                for (int i = 0; i + 1 < a.values.size(); i += 2) {
+                    Object v = a.values.get(i + 1);
+                    List<Object> list = v instanceof List<?> vl ? (List<Object>) vl : null;
+                    for (int j = 0; list != null && j < list.size(); j++) {
+                        Object o = list.get(j);
+                        if (o instanceof Type ty && ty.getInternalName().equals(from)) {
+                            list.set(j, Type.getObjectType(to));
+                            done = true;
+                        } else if (o instanceof String str && MixinRepair.refmapLookup(table, str).replace('.', '/').equals(from)) {
+                            if (table != null && table.has(str)) {
+                                table.addProperty(str, to);
+                                tableChanged[0] = true;
+                            } else {
+                                list.set(j, str.indexOf('.') >= 0 ? to.replace('/', '.') : to);
+                            }
+                            done = true;
+                        }
+                    }
+                }
+            }
+        }
+        return done;
+    }
+
+    /**
+     * smixin13: the calls in {@code ms} on one of {@code owners}, named one of {@code names}, with descriptor {@code wdesc},
+     * whose arguments at {@code erased} are each produced only by an instruction typed exactly as {@code vp} there (a
+     * checkcast to it, a field of it, a call answering it). An argument of any other or unknown origin (a local, a merge
+     * of such) does not count; a body the analyzer cannot read yields none.
+     */
+    static List<MethodInsnNode> erasedSites(List<MethodNode> ms, Set<String> owners, Set<String> names, String wdesc, Type[] vp,
+            List<Integer> erased) {
+        List<MethodInsnNode> out = new ArrayList<>();
+        int n = Type.getArgumentTypes(wdesc).length;
+        for (MethodNode m : ms) {
+            if (m.instructions == null || m.instructions.size() == 0) {
+                continue;
+            }
+            org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue>[] fs = null;
+            for (int i = 0; i < m.instructions.size(); i++) {
+                if (!(m.instructions.get(i) instanceof MethodInsnNode mi) || !owners.contains(mi.owner) || !names.contains(mi.name)
+                        || !mi.desc.equals(wdesc)) {
+                    continue;
+                }
+                if (fs == null) {
+                    try {
+                        fs = new org.objectweb.asm.tree.analysis.Analyzer<>(new org.objectweb.asm.tree.analysis.SourceInterpreter())
+                            .analyze("java/lang/Object", m);
+                    } catch (org.objectweb.asm.tree.analysis.AnalyzerException | RuntimeException ex) {
+                        break;
+                    }
+                }
+                org.objectweb.asm.tree.analysis.Frame<org.objectweb.asm.tree.analysis.SourceValue> f = fs[i];
+                if (f == null || f.getStackSize() < n) {
+                    continue;
+                }
+                boolean typed = true;
+                for (int k : erased) {
+                    org.objectweb.asm.tree.analysis.SourceValue sv = f.getStack(f.getStackSize() - n + k);
+                    typed &= !sv.insns.isEmpty();
+                    for (AbstractInsnNode p : sv.insns) {
+                        typed &= producesType(p, vp[k]);
+                    }
+                }
+                if (typed) {
+                    out.add(mi);
+                }
+            }
+        }
+        return out;
+    }
+
+    private static boolean producesType(AbstractInsnNode p, Type t) {
+        if (p instanceof TypeInsnNode ti && ti.getOpcode() == Opcodes.CHECKCAST) {
+            return ti.desc.equals(t.getInternalName());
+        }
+        if (p instanceof FieldInsnNode fi && (fi.getOpcode() == Opcodes.GETSTATIC || fi.getOpcode() == Opcodes.GETFIELD)) {
+            return fi.desc.equals(t.getDescriptor());
+        }
+        if (p instanceof MethodInsnNode mi) {
+            return Type.getReturnType(mi.desc).equals(t);
+        }
+        return false;
     }
 }
