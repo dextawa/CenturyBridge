@@ -1,0 +1,7 @@
+{
+ "_s205k_rendertype_basis": "1.21.4's ShaderProgram (class_10156) and CoreShaders (class_10142) are gone in 1.21.5 (a program is a RenderPipeline there): facades with 1.21.4's members (facade/ShaderProgram, facade/CoreShaders; javap -c -p bases in their headers). Damage rows: class_10156 new/toString/hashCode/equals/comp_3113..3115, class_10142 56 get-static + method_62901.",
+ "classRenames": {
+  "net/minecraft/class_10156": "top/dext/centurybridge/step/v1_21_5/facade/ShaderProgram",
+  "net/minecraft/class_10142": "top/dext/centurybridge/step/v1_21_5/facade/CoreShaders"
+ }
+}
