@@ -1,0 +1,30 @@
+{
+ "_s215j_bakedmodel_basis": "1.21.4 BakedModel (class_1087, javap 1.21.4: getQuads method_4707(state, side, random), useAmbientOcclusion method_4708, isGui3d method_4712, usesBlockLight method_24304, getParticleIcon method_4711, getTransforms method_4709) is 1.21.5 BlockStateModel under the same name (javap 1.21.5: collectParts method_68513(RandomSource, List<BlockModelPart>), default method_68512, particleIcon method_68511); quads moved to BlockModelPart class_10889 (method_68509(side), comp_3751 ao, comp_3752 particle). A 1.21.4 implementation (mods, and the climbed 1.21.4 layer facades BuiltInModel / ForwardingBakedModel / ItemModel$BakedModelWithOverrides) gets collectParts / particleIcon through the adapter hook: one part, its quads per side from the model's own getQuads with state null (1.21.5 collectParts has no state; 1.21.4 passed null itself for item rendering) and every side drawn with a random created from one long of the given random (1.21.4 renderers reseeded the same seed before each side). 1.21.4 calls on any model: getQuads -> the model itself if 1.21.4-shaped, else the concatenated side of the parts it collects with the given random; useAmbientOcclusion -> 1.21.5 tesselateBlock's rule (first part of the parts collected, seed 42 where no position is known); getParticleIcon -> particleIcon. isGui3d / usesBlockLight / getTransforms moved to item model render properties (class_10809) and have no BlockStateModel answer: left open. Loss: state-dependent quads of a 1.21.4 model render stateless (release_notes_known.md).",
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1087",
+   "adapter": "top/dext/centurybridge/step/v1_21_5/rt/CbBakedModels$LegacyBakedModel",
+   "requires": [
+    "method_4707(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_5819;)Ljava/util/List;",
+    "method_4708()Z",
+    "method_4711()Lnet/minecraft/class_1058;"
+   ],
+   "synth": [
+    {
+     "new": "method_68513(Lnet/minecraft/class_5819;Ljava/util/List;)V",
+     "call": "top/dext/centurybridge/step/v1_21_5/rt/CbBakedModels.collectParts(Ltop/dext/centurybridge/step/v1_21_5/rt/CbBakedModels$LegacyBakedModel;Lnet/minecraft/class_5819;Ljava/util/List;)V"
+    },
+    {
+     "new": "method_68511()Lnet/minecraft/class_1058;",
+     "call": "top/dext/centurybridge/step/v1_21_5/rt/CbBakedModels.particleIcon(Ltop/dext/centurybridge/step/v1_21_5/rt/CbBakedModels$LegacyBakedModel;)Lnet/minecraft/class_1058;"
+    }
+   ],
+   "basis": "see _s215j_bakedmodel_basis"
+  }
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_1087.method_4707(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_5819;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_5/rt/CbBakedModels#getQuads",
+  "net/minecraft/class_1087.method_4708()Z": "top/dext/centurybridge/step/v1_21_5/rt/CbBakedModels#useAmbientOcclusion",
+  "net/minecraft/class_1087.method_4711()Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v1_21_5/rt/CbBakedModels#getParticleIcon"
+ }
+}
