@@ -3,6 +3,6 @@
   "minVersion": "0.8",
   "package": "cb.s9rn.mixin",
   "compatibilityLevel": "JAVA_21",
-  "client": ["ListRenderItemMixin", "WidgetMouseClickedMixin"],
+  "client": ["CullFrustumReturnMixin", "ListRenderItemMixin", "WidgetMouseClickedMixin"],
   "injectors": { "defaultRequire": 1 }
 }

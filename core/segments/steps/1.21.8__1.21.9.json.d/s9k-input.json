@@ -1,0 +1,20 @@
+{
+ "_s9k_input_basis": "javap -c both code jars: KeyboardHandler.charTyped(window, codepoint, modifiers) method_1457(JII)V is method_1457(J, CharacterEvent) where 1.21.9's callback builds CharacterEvent(codepoint, modifiers) from the same two ints and the body hands it to Screen.charTyped; handleDebugKeys(key) method_1468(I)Z is method_1468(KeyEvent), called by keyPress with the event it is handling (1.21.8 passed that event's key); MouseHandler.onPress(window, button, action, modifiers) method_1601(JIII)V is method_1601(J, MouseButtonInfo(button, modifiers), action), the callback building the info from the same ints. All private; 1.21.8 mods reach them through their AW (contingameime) or inject into them (architectury, porting_lib, Veil, darkkore, rayon, tiefix ...): the reshapes move the call and the injector target onto 1.21.9's method, whose vanilla body is unchanged.",
+ "callReshapes": {
+  "net/minecraft/class_309.method_1457(JII)V": {
+   "basis": "s9k input: charTyped(window, codepoint, modifiers) -> charTyped(window, CharacterEvent(codepoint, modifiers))",
+   "desc": "(JLnet/minecraft/class_11905;)V",
+   "ops": ["keep:0", "conv:1,2 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbCharEvent(II)Lnet/minecraft/class_11905;"]
+  },
+  "net/minecraft/class_309.method_1468(I)Z": {
+   "basis": "s9k input: handleDebugKeys(key) -> handleDebugKeys(KeyEvent): the key event being handled when its key matches (keyPress passes it), else the key with the live modifiers",
+   "desc": "(Lnet/minecraft/class_11908;)Z",
+   "ops": ["conv:0 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbKeyFor(I)Lnet/minecraft/class_11908;"]
+  },
+  "net/minecraft/class_312.method_1601(JIII)V": {
+   "basis": "s9k input: onPress(window, button, action, modifiers) -> onPress(window, MouseButtonInfo(button, modifiers), action)",
+   "desc": "(JLnet/minecraft/class_11910;I)V",
+   "ops": ["keep:0", "conv:1,3 top/dext/centurybridge/step/v1_21_9/rt/CbInput#cbButtonInfo(II)Lnet/minecraft/class_11910;", "keep:2"]
+  }
+ }
+}
