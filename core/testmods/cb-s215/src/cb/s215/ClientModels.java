@@ -160,6 +160,22 @@ public final class ClientModels {
             check("model-calls-vanilla", up.size() == 1 && ao && particle != null,
                 "stone getQuads(UP)=" + up.size() + " ao=" + ao + " particle=" + particle);
         });
+        run("model-item-props-vanilla", () -> {
+            // 1.21.4: stone's BlockModel (block/stone -> cube_all -> cube -> block) baked isGui3d true, usesBlockLight
+            // true (gui_light side), transforms from block/block.json (gui rotation 30, 225, 0)
+            net.minecraft.class_1087 m = mc.method_1541().method_3349(stone);
+            boolean gui3d = m.method_4712();
+            boolean blockLight = m.method_24304();
+            net.minecraft.class_809 t = m.method_4709();
+            net.minecraft.class_804 gui = t.method_3503(net.minecraft.class_811.field_4317);
+            // (ItemTransform's rotation field reads are their own open rows: compared by identity to the constants only)
+            check("model-item-props-vanilla", gui3d && blockLight && t != net.minecraft.class_809.field_4301 && gui != net.minecraft.class_804.field_4284,
+                "stone isGui3d=" + gui3d + " usesBlockLight=" + blockLight + " gui transform=" + gui);
+        });
+        run("model-item-props-own", () -> {
+            check("model-item-props-own", !own.method_4712() && own.method_24304() && own.method_4709() == net.minecraft.class_809.field_4301,
+                "own model answers itself");
+        });
         System.out.println("CB-S215C done " + ok + "/" + n);
     }
 }
