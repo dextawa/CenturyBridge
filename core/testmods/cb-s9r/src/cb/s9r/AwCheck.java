@@ -75,8 +75,10 @@ public final class AwCheck {
         class_638 level = mc.field_1687;
         class_719 rain = new class_719(level, 1.5, 80.0, -2.5, 0.0, 0.0, 0.0);
         class_687 bubble = new class_687(level, -4.0, 70.0, 6.0, 0.0, 0.0, 0.0);
-        put(out, "I.ctors", rain.field_3874 == 1.5 && bubble.field_3874 == -4.0,
-            "package-private new DripParticle-family (class_719) / class_687 (level, x, y, z, ..) construct at x = " + rain.field_3874 + ", " + bubble.field_3874);
+        // class_687's 1.21.8 super constructor (class_4955) jitters x by (rand - rand) * 0.05
+        put(out, "I.ctors", rain.field_3874 == 1.5 && Math.abs(bubble.field_3874 + 4.0) <= 0.05,
+            "package-private new class_719 / class_687 (level, x, y, z, ..) construct at x = " + rain.field_3874 + " (want 1.5), "
+                + bubble.field_3874 + " (want -4 +- 0.05, 1.21.8's jitter)");
 
         CountingProvider p = new CountingProvider();
         pe.method_3043(class_2398.field_11251, p);
