@@ -1,0 +1,7 @@
+{
+  "_s215i_shadertex_basis": "1.21.5 RenderSystem.setShaderTexture(int, GpuTexture) / getShaderTexture(int) kept twelve GpuTexture slots (assertOnRenderThread, 0 <= i < length; getter null out of range; javap -c -p 1.21.5). 1.21.6 keeps the same bodies over GpuTextureView slots (javap -c -p 1.21.6 RenderSystem) and reads them the same way: CompositeRenderType.draw binds each non-null slot i as Sampler<i> (1.21.5 bindSampler(String, GpuTexture), 1.21.6 bindSampler(String, GpuTextureView); javap class_1921$class_4687 both). Setter: the texture's full view (rt/CbTextures.view, closed with the texture by CbTextureViewsMixin); getter: the view's texture. Owner s215i (1.21.6 step has no active owner; assigned by main).",
+  "staticRedirects": {
+    "com/mojang/blaze3d/systems/RenderSystem.setShaderTexture(ILcom/mojang/blaze3d/textures/GpuTexture;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbTextures",
+    "com/mojang/blaze3d/systems/RenderSystem.getShaderTexture(I)Lcom/mojang/blaze3d/textures/GpuTexture;": "top/dext/centurybridge/step/v1_21_6/rt/CbTextures"
+  }
+}

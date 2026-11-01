@@ -7,6 +7,7 @@ public final class Seen {
     public static volatile int dispense;
     public static volatile int canUse;
     public static volatile int sound;
+    public static volatile int jukeboxSet;
 
     private Seen() {
     }
