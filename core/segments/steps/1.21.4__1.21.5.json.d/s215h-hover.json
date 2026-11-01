@@ -1,0 +1,6 @@
+{
+ "_s215h_hover_basis": "1.21.4 HoverEvent.ItemStackInfo (class_2568$class_5249: item holder, count, component patch, cached stack, FULL_CODEC / CODEC) is gone in 1.21.5 (javap 1.21.5: no class_2568$class_5249; a show_item event is HoverEvent.ShowItem(ItemStack), class_2568$class_10612). Converted references, the climbing 1.20.5 layer's field_24355 getter (CbFieldReshapesGen) included, name facade/HoverEvent$class_5249 (1.21.4 bodies). HoverEvent itself became an interface with per-action records; new HoverEvent(action, value) / getValue(action) of 1.21.4 stay open (separate rows).",
+ "classRenames": {
+  "net/minecraft/class_2568$class_5249": "top/dext/centurybridge/step/v1_21_5/facade/HoverEvent$class_5249"
+ }
+}
