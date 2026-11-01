@@ -167,12 +167,16 @@
   "net/minecraft/class_2434.method_48515()Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
   "net/minecraft/class_5478.method_30708(Lnet/minecraft/class_7871;Lnet/minecraft/class_7871;Ljava/util/function/Consumer;)Lnet/minecraft/class_1959;": "top/dext/centurybridge/step/v1_21/rt/CbData",
   "net/minecraft/class_5478.method_43232(Lnet/minecraft/class_7871;Lnet/minecraft/class_7871;Ljava/util/function/Consumer;)Lnet/minecraft/class_1959;": "top/dext/centurybridge/step/v1_21/rt/CbData",
-  "net/minecraft/class_5470.method_42759(Lnet/minecraft/class_6885;Ljava/util/Map;Lnet/minecraft/class_2893$class_2895;Lnet/minecraft/class_5847;)Lnet/minecraft/class_3195$class_7302;": "top/dext/centurybridge/step/v1_21/rt/CbData"
+  "net/minecraft/class_5470.method_42759(Lnet/minecraft/class_6885;Ljava/util/Map;Lnet/minecraft/class_2893$class_2895;Lnet/minecraft/class_5847;)Lnet/minecraft/class_3195$class_7302;": "top/dext/centurybridge/step/v1_21/rt/CbData",
+  "net/minecraft/class_7788.method_46003(Lnet/minecraft/class_1935;)Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21/rt/CbLoot"
  },
  "fieldGetters": {
   "net/minecraft/class_7788.field_40602:Lnet/minecraft/class_5341$class_210;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
   "net/minecraft/class_7788.field_40603:Lnet/minecraft/class_5341$class_210;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
-  "net/minecraft/class_7789.field_40612:Lnet/minecraft/class_2048$class_2049;": "top/dext/centurybridge/step/v1_21/rt/CbLoot"
+  "net/minecraft/class_7789.field_40612:Lnet/minecraft/class_2048$class_2049;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_2474.field_11479:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v1_21/rt/CbData",
+  "net/minecraft/class_7788.field_40606:Lnet/minecraft/class_5341$class_210;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_7788.field_40607:Lnet/minecraft/class_5341$class_210;": "top/dext/centurybridge/step/v1_21/rt/CbLoot"
  },
  "fieldRenames": {
   "net/minecraft/class_101$class_102.field_1019:Lnet/minecraft/class_101$class_102;": "field_51790",
