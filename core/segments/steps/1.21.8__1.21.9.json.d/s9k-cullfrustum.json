@@ -1,0 +1,9 @@
+{
+ "_s9k_cullfrustum_basis": "LevelRenderer.cullingFrustum (class_761 field_27740) is gone at 1.21.9 (javap -c: 1.21.8's prepareCullFrustum wrote it and renderLevel culled with it; 1.21.9's prepareCullFrustum returns the frustum into a local). rt/CbCullFrustum answers the frustum the frame culls with (kept at prepareCullFrustum's return by CbCullFrustumMixin, or one a 1.21.8 call set); a write makes the frame cull with it, through the slot CbCullFrustumMixin already honours (Veil / porting_lib read it through their AW or @Shadow).",
+ "instanceFieldGetters": {
+  "net/minecraft/class_761.field_27740:Lnet/minecraft/class_4604;": "top/dext/centurybridge/step/v1_21_9/rt/CbCullFrustum"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_761.field_27740:Lnet/minecraft/class_4604;": "top/dext/centurybridge/step/v1_21_9/rt/CbCullFrustum"
+ }
+}

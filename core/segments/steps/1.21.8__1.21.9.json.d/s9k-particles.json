@@ -1,0 +1,16 @@
+{
+ "_s9k_particles_basis": "1.21.9 moved ParticleEngine's sprite sets, providers and their reload into ParticleResources (class_11939; the engine keeps the game's one in field_62618). javap -c of both code jars: MutableSpriteSet class_702$class_4090 -> class_11939$class_4090 (same fields, same bodies, plus the new getFirst method_74304), SpriteParticleRegistration class_702$class_4091 -> class_11939$class_4091 (same single method create), ParticleDefinition record class_702$class_7759 -> class_11939$class_7759 (identical); register(type, provider) method_3043 -> method_74300 and register(type, registration) method_18834 -> method_74301 are the same instructions over the moved maps; spriteSets field_18300 -> field_62627. The particle atlas field_18301 is the AtlasManager's particle atlas. 1.21.8 mods reach these through their own access widener (architectury, LodestoneLib, palladiumcore, dripstone-fluid-lib in the corpus); the AW climbs through the class renames.",
+ "classRenames": {
+  "net/minecraft/class_702$class_4090": "net/minecraft/class_11939$class_4090",
+  "net/minecraft/class_702$class_4091": "net/minecraft/class_11939$class_4091",
+  "net/minecraft/class_702$class_7759": "net/minecraft/class_11939$class_7759"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_702.method_3043(Lnet/minecraft/class_2396;Lnet/minecraft/class_707;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleResources",
+  "net/minecraft/class_702.method_18834(Lnet/minecraft/class_2396;Lnet/minecraft/class_702$class_4091;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleResources"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_702.field_18300:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleResources",
+  "net/minecraft/class_702.field_18301:Lnet/minecraft/class_1059;": "top/dext/centurybridge/step/v1_21_9/rt/CbParticleResources"
+ }
+}
