@@ -5,6 +5,12 @@
   "name": "CB smx6 Mixin Test",
   "description": "1.20.6-era mixin cancelling ThrownTrident's channeling branch (isChanneling), routed by step 1.20.6 -> 1.21",
   "environment": "*",
-  "mixins": ["cb_smx6.mixins.json"],
-  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.20.6" }
+  "mixins": [
+    "cb_smx6.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "1.20.6"
+  },
+  "accessWidener": "cb_smx6.accesswidener"
 }

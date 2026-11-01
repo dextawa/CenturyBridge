@@ -20,5 +20,17 @@ public interface CbS26BlockOutlineHook {
      * Runs the restored renderBlockOutline(consumers, poseStack, translucent, state); true when it reached the point
      * where 26.1.2 drew the outline (no mixin on it cancelled before), false when a mixin cancelled it.
      */
+    /** the key of the restored renderHitOutline in the conversion-time signal (CbMixedMembers) */
+    String HIT_MEMBER = "net/minecraft/client/renderer/LevelRenderer.renderHitOutline(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDLnet/minecraft/client/renderer/state/level/BlockOutlineRenderState;IF)V";
+
+    /** no route ran for this outline: 26.2's submitHitOutline calls go through untouched */
+    void cbS26$noOutlineRoute();
+
+    /**
+     * For 26.2's next submitHitOutline of the routed outline: whether the restored renderHitOutline call it stands for
+     * (the same position in the same order) reached 26.1.2's drawing; true when no route ran.
+     */
+    boolean cbS26$nextHitDrawn();
+
     boolean cbS26$restoredBlockOutline(MultiBufferSource.BufferSource consumers, PoseStack poseStack, boolean translucent, LevelRenderState state);
 }
