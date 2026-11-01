@@ -1,0 +1,7 @@
+{
+ "_smx1_mth_basis": "smx1i (javap -c -p of both code jars): Mth.sin / cos (method_15374 / method_15362) take a double in 1.21.11 and index the same SIN table through a double multiply and a long mask; 1.21.10's float forms used a float multiply and an int mask, so a widened argument can land on a neighbouring entry. rt/CbMth computes 1.21.10's index and reads that entry through 1.21.11's sin at the entry's centre.",
+ "staticRedirects": {
+  "net/minecraft/class_3532.method_15374(F)F": "top/dext/centurybridge/step/v1_21_11/rt/CbMth",
+  "net/minecraft/class_3532.method_15362(F)F": "top/dext/centurybridge/step/v1_21_11/rt/CbMth"
+ }
+}

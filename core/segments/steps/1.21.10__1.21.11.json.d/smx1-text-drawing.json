@@ -1,0 +1,62 @@
+{
+ "_smx1_text_drawing_basis": "smx1i (javap -c -p of both code jars): 1.21.11 draws widget and label text through an ActiveTextCollector (class_12225). MultiLineLabel.Align (class_5489$class_11735) is top-level class_11735: same constants, constructors and method_73214 bodies ($1..$3 too); 1.21.11 only widens method_73214 to public and adds method_75792. MultiLineLabel.render / getStyle (method_73212 / method_72103) are 1.21.10's bodies over the lines visitLines (method_75816) hands a collector, with the label's own font (rt/CbTextDrawing; the never-read shadow argument is dropped as 1.21.10 dropped it). AbstractWidget.renderScrollingString and its statics, AbstractButton.renderString and the SpriteIconButton renderString overrides come back with 1.21.10's bodies over GuiGraphics' scissor / drawString, which 1.21.11 keeps. A 1.21.10 button overriding renderString is reached from 1.21.11's renderDefaultLabel (method_75793) with 1.21.10's arguments (the collector's GuiGraphics, the client font, ARGB.color(alpha, active ? white : 0xFFA0A0A0)); a 1.21.10 SpriteIconButton subclass from renderContents (its text was never a default label). renderContents (method_75752) is abstract in 1.21.11; a 1.21.10 button class gets AbstractButton's 1.21.10 drawing: the sprite, then the label through the GuiGraphics' collector, as 1.21.11's Button.Plain. StringSplitter.componentStyleAtWidth (method_30876, which 1.21.10's getStyle used) comes back on StringSplitter with 1.21.10's body (mixin/CbStringSplitterRestoredMixin).",
+ "classRenames": {
+  "net/minecraft/class_5489$class_11735": "net/minecraft/class_11735",
+  "net/minecraft/class_5489$class_11735$1": "net/minecraft/class_11735$1",
+  "net/minecraft/class_5489$class_11735$2": "net/minecraft/class_11735$2",
+  "net/minecraft/class_5489$class_11735$3": "net/minecraft/class_11735$3"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_5489.method_73212(Lnet/minecraft/class_332;Lnet/minecraft/class_5489$class_11735;IIIZI)I": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing",
+  "net/minecraft/class_5489.method_72103(Lnet/minecraft/class_5489$class_11735;IIIDD)Lnet/minecraft/class_2583;": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_339.method_52718(Lnet/minecraft/class_332;Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIII)V": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing",
+  "net/minecraft/class_339.method_49605(Lnet/minecraft/class_332;Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIIII)V": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing"
+ },
+ "covers": [
+  "net/minecraft/class_339.method_49604(Lnet/minecraft/class_332;Lnet/minecraft/class_327;II)V",
+  "net/minecraft/class_4264.method_48589(Lnet/minecraft/class_332;Lnet/minecraft/class_327;I)V",
+  "net/minecraft/class_8662$class_8664.method_48589(Lnet/minecraft/class_332;Lnet/minecraft/class_327;I)V",
+  "net/minecraft/class_8662$class_8665.method_48589(Lnet/minecraft/class_332;Lnet/minecraft/class_327;I)V",
+  "net/minecraft/class_5225.method_30876(Lnet/minecraft/class_5481;I)Lnet/minecraft/class_2583;"
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_48589(Lnet/minecraft/class_332;Lnet/minecraft/class_327;I)V",
+   "new": "method_75793(Lnet/minecraft/class_12225;)V",
+   "onlyUnder": "net/minecraft/class_4264",
+   "notUnder": "net/minecraft/class_8662",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing$LegacyRenderString",
+   "bridge": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing.renderStringBridge(Ltop/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing$LegacyRenderString;Lnet/minecraft/class_12225;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "basis": "1.21.10's AbstractButton.renderWidget called this.renderString(graphics, client font, ARGB.color(alpha, active ? -1 : 0xFFA0A0A0)); 1.21.11's renderContents draws the text through renderDefaultLabel(collector), whose GuiGraphics collector carries the graphics"
+  },
+  {
+   "old": "method_49604(Lnet/minecraft/class_332;Lnet/minecraft/class_327;II)V",
+   "new": "method_75799(Lnet/minecraft/class_12225;Lnet/minecraft/class_2561;I)V",
+   "onlyUnder": "net/minecraft/class_4264",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing$LegacyScrollingString",
+   "bridge": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing.scrollingBridge(Ltop/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing$LegacyScrollingString;Lnet/minecraft/class_12225;Lnet/minecraft/class_2561;I)V",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "basis": "1.21.10's AbstractButton.renderString called this.renderScrollingString(graphics, font, 2, color); 1.21.11's renderDefaultLabel calls renderScrollingLabel(collector, getMessage(), 2)"
+  },
+  {
+   "old": "method_48589(Lnet/minecraft/class_332;Lnet/minecraft/class_327;I)V",
+   "new": "method_75752(Lnet/minecraft/class_332;IIF)V",
+   "onlyUnder": "net/minecraft/class_8662",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing$LegacyRenderString",
+   "bridge": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing.spriteIconBridge(Ltop/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing$LegacyRenderString;Lnet/minecraft/class_332;IIF)V",
+   "guard": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "basis": "1.21.10's SpriteIconButton subclasses drew AbstractButton's sprite, this.renderString and then the icon (centred, or right less 2 for TextAndIcon); 1.21.11's CenteredIcon / TextAndIcon renderContents draw their own text and never reach renderDefaultLabel"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_4264",
+   "method": "method_75752(Lnet/minecraft/class_332;IIF)V",
+   "call": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing.renderContents(Lnet/minecraft/class_4264;Lnet/minecraft/class_332;IIF)V",
+   "basis": "renderContents is new and abstract in 1.21.11 (absent from 1.21.10's class_4264, javap both); a 1.21.10 button class drew what AbstractButton.renderWidget drew: the default sprite, then the text"
+  }
+ ]
+}
