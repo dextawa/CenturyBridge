@@ -1,0 +1,18 @@
+{
+  "_s26k_processors_basis": "26.1.2 BlockAgeProcessor / BlockIgnoreProcessor / RuleProcessor.CODEC are 26.2's MAP_CODEC (javap -c of both <clinit> and 26.2's lambda$static$0): the same single field each -- \"mossiness\" Codec.FLOAT, \"blocks\" BlockState.CODEC xmapped to the state list, \"rules\" ProcessorRule.CODEC.listOf() -- built with xmap(new, getter) in 26.1.2 and RecordCodecBuilder.mapCodec(group(fieldOf.forGetter)) in 26.2, which encode and decode the same map. wall_table.py --identity left them out because the <clinit> bodies are not the same code (its other seven processor CODEC -> MAP_CODEC renames are in pkgmoves-gen.json). Read by the climbed 1.20.5 layer's CbRestFields.",
+  "fieldRenames": {
+    "net/minecraft/world/level/levelgen/structure/templatesystem/BlockAgeProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "MAP_CODEC",
+    "net/minecraft/world/level/levelgen/structure/templatesystem/BlockIgnoreProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "MAP_CODEC",
+    "net/minecraft/world/level/levelgen/structure/templatesystem/RuleProcessor.CODEC:Lcom/mojang/serialization/MapCodec;": "MAP_CODEC"
+  },
+  "instanceFieldGetters": {
+    "net/minecraft/server/jsonrpc/internalapi/MinecraftGameRuleServiceImpl.gameRules:Lnet/minecraft/world/level/gamerules/GameRules;": "top/dext/centurybridge/step/v26_2/rt/CbS26Server#gameRules",
+    "net/minecraft/world/level/levelgen/feature/configurations/MultifaceGrowthConfiguration.placeBlock:Lnet/minecraft/world/level/block/MultifaceSpreadeableBlock;": "top/dext/centurybridge/step/v26_2/rt/CbS26Multiface#placeBlock"
+  },
+  "_s26k_rpc_gamerules_basis": "26.1.2 MinecraftGameRuleServiceImpl(server, logger) stored server.getGameRules() in gameRules; 26.2's (notificationManager, logger) asks notificationManager.server().getGameRules() where 26.1.2 read the field (javap -c of both); MinecraftServer.gameRules is final in both, so the getter answers the same object. Read by the climbed 1.21.11 layer's CbGameRulesRpc.",
+  "fieldGetters": {
+    "net/minecraft/world/level/levelgen/feature/configurations/TreeConfiguration.PLACE_BELOW_OVERWORLD_TRUNKS:Lnet/minecraft/world/level/levelgen/feature/stateproviders/RuleBasedStateProvider;": "top/dext/centurybridge/step/v26_2/rt/CbS26Trees#placeBelowOverworldTrunks"
+  },
+  "_s26k_trees_basis": "26.1.2 TreeConfiguration.PLACE_BELOW_OVERWORLD_TRUNKS = ifTrueThenProvide(CAN_PLACE_BELOW_OVERWORLD_TRUNKS, DIRT) built once in <clinit>; 26.2's defaultPlaceBelowTreeTrunkProvider(biomes) builds ifTrueThenProvide(CAN_PLACE_BELOW_TREE_TRUNKS (the renamed predicate, pkgmoves-gen), DIRT) per call, argument unused (javap -c of both). The getter keeps one such instance (rt/CbS26Trees). Read by the climbed 26.1 layer's CbWallTrees.",
+  "_s26k_multiface_basis": "26.1.2 MultifaceGrowthConfiguration.placeBlock:MultifaceSpreadeableBlock is 26.2's placeBlock:Block (javap of both); 26.2's codec validates it as MultifaceSpreadeableBlock and MultifaceGrowthFeature casts it so at each use; the getter makes the same cast (rt/CbS26Multiface). Read by the climbed 1.21.4 layer's CbRestMisc."
+}
