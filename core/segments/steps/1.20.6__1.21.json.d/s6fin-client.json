@@ -9,7 +9,8 @@
   "net/minecraft/class_793.method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_3446"
  },
  "staticRedirects": {
-  "net/minecraft/class_796.method_3454(Lnet/minecraft/class_787;Lnet/minecraft/class_2350;Lnet/minecraft/class_4590;Lnet/minecraft/class_2960;)Lnet/minecraft/class_787;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_3454"
+  "net/minecraft/class_796.method_3454(Lnet/minecraft/class_787;Lnet/minecraft/class_2350;Lnet/minecraft/class_4590;Lnet/minecraft/class_2960;)Lnet/minecraft/class_787;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_3454",
+  "net/minecraft/class_793.method_3447(Lnet/minecraft/class_785;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_3447"
  },
  "covers": [
   "net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZLnet/minecraft/class_2960;)Lnet/minecraft/class_777;"

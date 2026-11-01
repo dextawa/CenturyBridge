@@ -36,4 +36,25 @@ public final class Counters {
 
     private Counters() {
     }
+
+    /** the location bakeFaceProbe hands BlockModel.bakeFace; FaceBakeryMixin.cb$count records it in LOCATIONS */
+    public static final String PROBE_LOCATION = "cb_smx6c:block/aw_probe";
+
+    /**
+     * 1.20.6 BlockModel.bakeFace(element, face, sprite, direction, state, location), reached through this mod's access
+     * widener as a mod would (damage-aw aw-call-static). Called on the client thread by the native driver (reflection);
+     * answers whether a quad came back. 1.21: the layer's CbRenderModelBake.method_3447 bakes it on the restored
+     * bakeQuad(.., location), so the location reaches FaceBakeryMixin as on 1.20.6.
+     */
+    public static boolean bakeFaceProbe() {
+        net.minecraft.class_1058 sprite = net.minecraft.class_310.method_1551().method_1549(net.minecraft.class_1059.field_5275)
+            .apply(net.minecraft.class_1047.method_4539());
+        net.minecraft.class_783 face = new net.minecraft.class_783(net.minecraft.class_2350.field_11036, -1, "#all",
+            new net.minecraft.class_787(new float[] {0, 0, 16, 16}, 0));
+        net.minecraft.class_785 element = new net.minecraft.class_785(new org.joml.Vector3f(0, 0, 0), new org.joml.Vector3f(16, 16, 16),
+            java.util.Map.of(net.minecraft.class_2350.field_11036, face), null, true);
+        net.minecraft.class_777 quad = net.minecraft.class_793.method_3447(element, face, sprite, net.minecraft.class_2350.field_11036,
+            net.minecraft.class_1086.field_5350, new net.minecraft.class_2960(PROBE_LOCATION));
+        return quad != null;
+    }
 }
