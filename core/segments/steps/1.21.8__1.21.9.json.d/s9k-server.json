@@ -1,0 +1,27 @@
+{
+ "_s9k_server_basis": "MinecraftServer.prepareLevels's private body (method_3774) lost its ChunkProgressListener at 1.21.9 (class_3949 is gone; javap -c: 1.21.9's method_3774() reports spawn-chunk progress to the server's own LevelLoadListener, field_61872, called from method_3786() as 1.21.8's method_3786(listener) called method_3774(listener)). Same judgment as s9c-server.json's method_3786: the listener argument is dropped. The 1.21.8 injectors into it (porting_lib chunk_loading, fastload, aquamirae) move onto 1.21.9's method; their listener local has no 1.21.9 counterpart. ChunkMap.TrackedEntity.broadcastIgnorePlayers(packet, uuids) method_66006 -> broadcastIgnoring(packet, predicate) method_74531 (same loop; rt/CbTrackedEntity passes 'UUID not in the list'). ItemEntity's private copy constructor (class_1542 <init>(ItemEntity), used only by copy() for ItemPickupParticle) is gone at 1.21.9; rt/CbItemEntityCopy is 1.21.8's body over the (type, level) constructor. A 1.21.8 injector into that constructor (only-one-item) has no 1.21.9 counterpart: vanilla 1.21.9 never copies an item entity.",
+ "callReshapes": {
+  "net/minecraft/server/MinecraftServer.method_3774(Lnet/minecraft/class_3949;)V": {
+   "basis": "s9k server: prepareLevels body (listener) -> () (javap: 1.21.9 reports to its own LevelLoadListener)",
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ]
+  },
+  "net/minecraft/class_3244.method_44337(Ljava/lang/String;Ljava/lang/Runnable;)V": {
+   "basis": "s9k server: ServerGamePacketListenerImpl.tryHandleChat(message, action) -> tryHandleChat(message, isCommand, action) (javap -c: the new flag skips the chat-visibility HIDDEN refusal for commands; 1.21.8 refused both, so a 1.21.8 call passes false, the chat-message path's value)",
+   "desc": "(Ljava/lang/String;ZLjava/lang/Runnable;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21_9/rt/CbClimb#no()Z",
+    "keep:1"
+   ]
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_3898$class_3208.method_66006(Lnet/minecraft/class_2596;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbTrackedEntity"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1542.<init>(Lnet/minecraft/class_1542;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbItemEntityCopy#create"
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "_s9k_armorlayer_basis": "HumanoidArmorLayer (class_970) inner/outer models field_4830/4831 and baby field_53218/53219 became ArmorModelSets field_61804/61805 at 1.21.9 (javap -c both code jars); 1.21.8 getArmorModel: inner for LEGS, outer for HEAD/CHEST/FEET (the set CbClimbClient.armorSet builds). rt/CbArmorLayerFields reads the set's legs/head and rebuilds it on a write (advanced-skills-remastered: AW accessible+mutable, swaps the models per player).",
+ "instanceFieldGetters": {
+  "net/minecraft/class_970.field_4830:Lnet/minecraft/class_572;": "top/dext/centurybridge/step/v1_21_9/rt/CbArmorLayerFields",
+  "net/minecraft/class_970.field_4831:Lnet/minecraft/class_572;": "top/dext/centurybridge/step/v1_21_9/rt/CbArmorLayerFields",
+  "net/minecraft/class_970.field_53218:Lnet/minecraft/class_572;": "top/dext/centurybridge/step/v1_21_9/rt/CbArmorLayerFields",
+  "net/minecraft/class_970.field_53219:Lnet/minecraft/class_572;": "top/dext/centurybridge/step/v1_21_9/rt/CbArmorLayerFields"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_970.field_4830:Lnet/minecraft/class_572;": "top/dext/centurybridge/step/v1_21_9/rt/CbArmorLayerFields",
+  "net/minecraft/class_970.field_4831:Lnet/minecraft/class_572;": "top/dext/centurybridge/step/v1_21_9/rt/CbArmorLayerFields",
+  "net/minecraft/class_970.field_53218:Lnet/minecraft/class_572;": "top/dext/centurybridge/step/v1_21_9/rt/CbArmorLayerFields",
+  "net/minecraft/class_970.field_53219:Lnet/minecraft/class_572;": "top/dext/centurybridge/step/v1_21_9/rt/CbArmorLayerFields"
+ }
+}
