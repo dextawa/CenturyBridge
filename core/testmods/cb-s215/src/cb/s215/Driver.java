@@ -671,6 +671,34 @@ public final class Driver {
                 "own=" + sound.comp_349() + " asks=" + horse.soundAsks + " plain=" + plainSound.comp_349() + " native " + seen0 + "->" + nativeSeen("sound"));
         });
 
+        run("jukebox-tooltip", () -> {
+            // 1.21.4's JukeboxPlayable(song, false) handed to a stack: 1.21.5 hides the line through the stack's TooltipDisplay
+            // (read by reflection: no such class in 1.21.4); cb-s215n's own mixin on ItemStack.set still sees the call
+            int seen0 = nativeSeen("jukeboxSet");
+            net.minecraft.class_9791<net.minecraft.class_9793> song = new net.minecraft.class_9791<>(net.minecraft.class_9796.field_52037);
+            net.minecraft.class_9792 hidden = new net.minecraft.class_9792(song, false);
+            net.minecraft.class_9792 shown = hidden.method_60749(true);
+            net.minecraft.class_1799 stack = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600);
+            stack.method_57379(net.minecraft.class_9334.field_52175, hidden);
+            Object type = Class.forName("net.minecraft.class_9334").getField("field_56400").get(null);
+            Class<?> tdCls = Class.forName("net.minecraft.class_10712");
+            java.lang.reflect.Method shows = tdCls.getMethod("method_67214", net.minecraft.class_9331.class);
+            Object td = stack.method_57824((net.minecraft.class_9331<?>) type);
+            boolean hiddenOnStack = td != null && !(boolean) shows.invoke(td, net.minecraft.class_9334.field_52175);
+            List<net.minecraft.class_2561> lines = new ArrayList<>();
+            net.minecraft.class_1792.class_9635 ctx = net.minecraft.class_1792.class_9635.method_59530(server.method_30611());
+            hidden.method_57409(ctx, lines::add, net.minecraft.class_1836.field_41070);
+            int hiddenLines = lines.size();
+            shown.method_57409(ctx, lines::add, net.minecraft.class_1836.field_41070);
+            stack.method_57379(net.minecraft.class_9334.field_52175, shown);
+            Object td2 = stack.method_57824((net.minecraft.class_9331<?>) type);
+            boolean shownAgain = td2 == null || (boolean) shows.invoke(td2, net.minecraft.class_9334.field_52175);
+            check("jukebox-tooltip", !hidden.comp_2834() &&shown.comp_2834() && hiddenOnStack && shownAgain && hiddenLines == 0
+                && lines.size() == 1 && nativeSeen("jukeboxSet") >= seen0 + 2,
+                "hidden=" + hidden.comp_2834() + " shown=" + shown.comp_2834() + " onStack=" + hiddenOnStack + " again=" + shownAgain
+                + " lines=" + hiddenLines + "/" + lines.size() + " native " + seen0 + "->" + nativeSeen("jukeboxSet"));
+        });
+
         run("ticket-load", () -> {
             // a mod's own ticket types through 1.21.4's TicketType.create (both shapes), region tickets on chunks far from
             // spawn; chunk loading is asynchronous, so a daemon thread asks the server thread (the server is an Executor)

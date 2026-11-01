@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "cb.skspawn.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": ["ServerDriverMixin", "DataAccessor"],
+  "injectors": { "defaultRequire": 1 }
+}

@@ -1,0 +1,17 @@
+{
+ "_skilteng_spawn_basis": "javap 1.20.4 / 1.20.5: SpawnPlacements.Data (class_1317$class_1318) became a package-private final record (comp_2253 heightmap, comp_2254 SpawnPlacementType class_9168, comp_2255 predicate); 1.20.4's field_6315 held the SpawnPlacements.Type enum (facade class_1317$class_1319, classRenames in s4rest.json), and its public constructor took that enum. 1.20.5's vanilla reads comp_2254 where 1.20.4 read field_6315 (SpawnPlacements.getPlacementType). Kilt 20.1.22: SpawnPlacementsDataAccessor.getPlacement (@Accessor field_6315) and SpawnPlacementsInjection's new Data(heightmap, Type, predicate)",
+ "instanceFieldGetters": {
+  "net/minecraft/class_1317$class_1318.field_6315:Lnet/minecraft/class_1317$class_1319;": "top/dext/centurybridge/step/v1_20_5/rt/CbSpawnData"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_1317$class_1318.<init>(Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_1317$class_4306;)V": {
+   "desc": "(Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_9168;Lnet/minecraft/class_1317$class_4306;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/facade/class_1317$class_1319#placementType(Lnet/minecraft/class_1317$class_1319;)Lnet/minecraft/class_9168;",
+    "keep"
+   ],
+   "basis": "SpawnPlacements.Data(heightmap, type, predicate): 1.20.5's record takes the SpawnPlacementTypes constant of the 1.20.4 Type's name (facade placementType); heightmap and predicate unchanged"
+  }
+ }
+}

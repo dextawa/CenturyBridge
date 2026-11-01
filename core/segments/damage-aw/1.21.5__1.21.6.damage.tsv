@@ -272,7 +272,7 @@ aw-get-static	net/minecraft/class_758	field_4041	I	FIELD	field not declared on t
 aw-put-static	net/minecraft/class_758	field_4041	I	FIELD	field not declared on the owner	aw:0 mixin:0
 aw-get-static	net/minecraft/class_758	field_4042	J	FIELD	field not declared on the owner	aw:0 mixin:1
 aw-put-static	net/minecraft/class_758	field_4042	J	FIELD	field not declared on the owner	aw:0 mixin:1
-aw-call	net/minecraft/class_757	method_3172	(Lnet/minecraft/class_4184;FLorg/joml/Matrix4f;)V	METHOD	method method_3172(FZLorg/joml/Matrix4f;)V private	aw:0 mixin:2
+aw-call	net/minecraft/class_757	method_3172	(Lnet/minecraft/class_4184;FLorg/joml/Matrix4f;)V	METHOD	method method_3172(FZLorg/joml/Matrix4f;)V private	aw:0 mixin:0
 aw-call	net/minecraft/class_757	method_3171	(Lnet/minecraft/class_332;F)V	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-get-static	net/minecraft/class_757	field_44940	F	FIELD	field not declared on the owner	aw:0 mixin:0
 aw-get	net/minecraft/class_757	field_4018	Lnet/minecraft/class_3300;	FIELD	field not declared on the owner	aw:0 mixin:0
@@ -299,7 +299,7 @@ aw-call	net/minecraft/class_761	method_62201	(Lnet/minecraft/class_9909;Lnet/min
 aw-call	net/minecraft/class_761	method_62203	(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;FLnet/minecraft/class_9958;)V	METHOD	method method_62203(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;FLcom/mojang/blaze3d/buffers/GpuBufferSlice;)V private	aw:0 mixin:0
 aw-call	net/minecraft/class_761	method_62199	(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;Lnet/minecraft/class_9958;)V	METHOD	method method_62199(Lnet/minecraft/class_9909;Lnet/minecraft/class_243;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V private	aw:0 mixin:0
 aw-call	net/minecraft/class_761	method_64060	(Lnet/minecraft/class_846$class_851;Lnet/minecraft/class_846$class_10196;Lnet/minecraft/class_243;ZZ)V	METHOD	method method_64060(Lnet/minecraft/class_846$class_851;Lnet/minecraft/class_10196;Lnet/minecraft/class_243;ZZ)V private	aw:0 mixin:0
-aw-call	net/minecraft/class_761	method_3251	(Lnet/minecraft/class_1921;DDDLorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V	METHOD	method not declared on the owner	aw:0 mixin:6
+aw-call	net/minecraft/class_761	method_3251	(Lnet/minecraft/class_1921;DDDLorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V	METHOD	method not declared on the owner	aw:0 mixin:0
 aw-call	net/minecraft/class_761	method_62200	(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;FLnet/minecraft/class_9958;)V	METHOD	method method_62200(Lnet/minecraft/class_9909;Lnet/minecraft/class_4184;FLcom/mojang/blaze3d/buffers/GpuBufferSlice;)V private	aw:0 mixin:0
 aw-get	net/minecraft/class_761	field_4055	Ljava/util/Set;	FIELD	field not declared on the owner	aw:0 mixin:0
 aw-call	net/minecraft/class_4668$class_5940$class_5941	method_34563	(Lnet/minecraft/class_2960;ZZ)Lnet/minecraft/class_4668$class_5940$class_5941;	METHOD	method method_34563(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_4668$class_5940$class_5941; public	aw:0 mixin:0
@@ -631,11 +631,11 @@ aw-call	net/minecraft/class_2474$class_5124	method_26792	(Lnet/minecraft/class_6
 aw-call	net/minecraft/class_2474$class_5124	method_35923	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2474$class_5124;	CLASS	class gone	aw:0 mixin:0
 aw-get	net/minecraft/class_2474$class_5124	field_23960	Lnet/minecraft/class_3495;	CLASS	class gone	aw:3 mixin:0
 aw-call-static	net/minecraft/class_4525	method_59785	(Lnet/minecraft/class_2338;ILnet/minecraft/class_3218;)Lnet/minecraft/class_3341;	METHOD	method not declared on the owner	aw:0 mixin:0
-aw-call	net/minecraft/class_2535	method_10764	(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V	METHOD	method method_10764(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;Z)V private	aw:0 mixin:2
-aw-call	net/minecraft/class_2535	method_36942	(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V	METHOD	method method_36942(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;Z)V private	aw:0 mixin:1
+aw-call	net/minecraft/class_2535	method_10764	(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V	METHOD	method method_10764(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;Z)V private	aw:0 mixin:0
+aw-call	net/minecraft/class_2535	method_36942	(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;Z)V	METHOD	method method_36942(Lnet/minecraft/class_2596;Lio/netty/channel/ChannelFutureListener;Z)V private	aw:0 mixin:0
 aw-new	net/minecraft/class_2561$class_2562	<init>	()V	CLASS	class gone	aw:0 mixin:0
 aw-call-static	net/minecraft/class_2561$class_2562	method_10871	(Lcom/google/gson/JsonElement;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5250;	CLASS	class gone	aw:0 mixin:0
-aw-call-static	net/minecraft/class_2561$class_2562	method_10874	(Lnet/minecraft/class_2561;Lnet/minecraft/class_7225$class_7874;)Lcom/google/gson/JsonElement;	CLASS	class gone	aw:0 mixin:1
+aw-call-static	net/minecraft/class_2561$class_2562	method_10874	(Lnet/minecraft/class_2561;Lnet/minecraft/class_7225$class_7874;)Lcom/google/gson/JsonElement;	CLASS	class gone	aw:0 mixin:0
 aw-get-static	net/minecraft/class_2561$class_2562	field_11754	Lcom/google/gson/Gson;	CLASS	class gone	aw:0 mixin:0
 aw-get	net/minecraft/class_2561$class_8822	field_49665	Lnet/minecraft/class_7225$class_7874;	CLASS	class gone	aw:0 mixin:0
 aw-new	net/minecraft/class_2632	<init>	(Lnet/minecraft/class_2540;)V	METHOD	constructors (Lnet/minecraft/class_1267;Z)V	aw:0 mixin:0

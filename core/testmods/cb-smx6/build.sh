@@ -24,9 +24,14 @@ with zipfile.ZipFile(sys.argv[1]) as z:
             open(os.path.join(sys.argv[2], os.path.basename(n)), "wb").write(z.read(n))
 PYNEST
 LIBS="$LIBS$(ls "$NEST"/*.jar | tr '\n' "${CB_CPSEP:-:}")"
-javac --release 21 -nowarn -proc:none -cp "$DATA/jars/client-1.20.6-intermediary.jar${CB_CPSEP:-:}$MIXIN${CB_CPSEP:-:}$LIBS" -d "$CLS" \
+# the mod's access widener (TagsProvider.LOGGER): compiled against the stub it widens, as loom would
+# (make_aw_stub.sh; the engine must be compiled in core/build/classes)
+STUB="$CLS.stub.jar"
+CB_DATA="$DATA" bash core/tools/make_aw_stub.sh 1.20.6 "$DATA/jars/client-1.20.6-intermediary.jar" "$STUB" \
+    core/testmods/cb-smx6/res/cb_smx6.accesswidener > /dev/null
+javac --release 21 -nowarn -proc:none -cp "$STUB${CB_CPSEP:-:}$MIXIN${CB_CPSEP:-:}$LIBS" -d "$CLS" \
     $(find core/testmods/cb-smx6/src -name '*.java')
 cp core/testmods/cb-smx6/res/* "$CLS/"
 (cd "$CLS" && jar cf "$JAR" .)
-rm -rf "$CLS" "$NEST"
+rm -rf "$CLS" "$NEST" "$STUB"
 echo "-> $OUT"
