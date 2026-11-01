@@ -1,0 +1,7 @@
+{
+ "_smx1_shadertex_basis": "smx1i (javap of both jars; facts passed by s215i): 1.21.10 RenderSystem kept twelve GpuTextureView slots (setShaderTexture / getShaderTexture: render-thread assert, range test, null out of range) that CompositeRenderType.draw bound as Sampler0..11; 1.21.11 removed them and binds each render type's textures from its RenderSetup. Kept with 1.21.10's bodies in rt/CbRenderSystem; a 1.21.11 draw does not read them (release note).",
+ "staticRedirects": {
+  "com/mojang/blaze3d/systems/RenderSystem.setShaderTexture(ILcom/mojang/blaze3d/textures/GpuTextureView;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.getShaderTexture(I)Lcom/mojang/blaze3d/textures/GpuTextureView;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderSystem"
+ }
+}
