@@ -3,5 +3,18 @@
  "classRenames": {
   "net/minecraft/class_10156": "top/dext/centurybridge/step/v1_21_5/facade/ShaderProgram",
   "net/minecraft/class_10142": "top/dext/centurybridge/step/v1_21_5/facade/CoreShaders"
+ },
+ "_s205k_shardrs_basis": "1.21.4 RenderSystem state calls 1.21.5 removed (damage call-static rows): enableCull/disableCull/polygonOffset/enablePolygonOffset/disablePolygonOffset/colorMask/enableColorLogicOp/disableColorLogicOp/blendFunc(II)/blendFuncSeparate(IIII) -> rt/CbShardRenderSystem, 1.21.4 bodies over 1.21.5's cached opengl.GlStateManager.",
+ "staticRedirects": {
+  "com/mojang/blaze3d/systems/RenderSystem.enableCull()V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.disableCull()V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.polygonOffset(FF)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.enablePolygonOffset()V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.disablePolygonOffset()V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.colorMask(ZZZZ)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.enableColorLogicOp()V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.disableColorLogicOp()V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.blendFunc(II)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.blendFuncSeparate(IIII)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem"
  }
 }
