@@ -351,6 +351,8 @@ public class S9TestMod implements ModInitializer {
         CustomDataTest.run(server);
         DebugPacketsTest.run(server);
         DebugPayloadsTest.run(server);
+        RegistryRandomTest.run();
+        ItemVerifyTest.run();
         TicketTypeTest.run(server);
         ServerEntityTest.run(server);
 

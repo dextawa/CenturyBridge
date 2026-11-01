@@ -10,6 +10,9 @@
 set -uo pipefail
 cd ~/cbwork
 WD="$1"; T="$2"
+# every engine step runs <workDir>'s compiled engine (never ~/cbwork/core/build/classes): refuse without it
+[ -f "$WD/core/build/classes/top/dext/centurybridge/data/LinkCheck.class" ] \
+    || { echo "engine not compiled in $WD/core/build/classes (judged with the tree under test's engine)"; exit 1; }
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
 RELEASES=(1.20.1 1.20.2 1.20.3 1.20.4 1.20.5 1.20.6 1.21 1.21.1 1.21.2 1.21.3 1.21.4 1.21.5 1.21.6 1.21.7 1.21.8 1.21.9 1.21.10 1.21.11 26.1 26.1.1 26.1.2 26.2)

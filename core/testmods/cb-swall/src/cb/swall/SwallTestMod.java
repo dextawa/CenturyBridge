@@ -33,6 +33,11 @@ public class SwallTestMod implements ModInitializer {
     public static final java.util.concurrent.atomic.AtomicInteger FROG_ATTACK_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     public static final java.util.concurrent.atomic.AtomicInteger FANCY_LIMB_CALLS = new java.util.concurrent.atomic.AtomicInteger();
     public static final java.util.concurrent.atomic.AtomicInteger LOOT_MINE_CALLS = new java.util.concurrent.atomic.AtomicInteger();
+    /** runs of CUSTOM_LOOT_TYPE's own 1.21.11 validator (lootDataTypes; cb-swalln runs it through 26.1's runValidation) */
+    public static final java.util.concurrent.atomic.AtomicInteger LOOT_VALIDATOR_CALLS = new java.util.concurrent.atomic.AtomicInteger();
+    /** a 1.21.11 LootDataType of conditions with its own validator, built at mod init; read by cb-swalln */
+    public static net.minecraft.class_8490<net.minecraft.class_5341> CUSTOM_LOOT_TYPE;
+    private static Throwable customLootTypeFailure;
     private static int passed;
     private static int villagerMemoriesBefore = -1;
     private static Throwable villagerWriteFailure;
@@ -81,6 +86,16 @@ public class SwallTestMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        try {
+            net.minecraft.class_5321<net.minecraft.class_2378<net.minecraft.class_5341>> reg =
+                net.minecraft.class_5321.method_29180(net.minecraft.class_2960.method_60655("cb_swall", "checked_conditions"));
+            CUSTOM_LOOT_TYPE = new net.minecraft.class_8490<>(reg, net.minecraft.class_5341.field_51809, (ctx, key, value) -> {
+                LOOT_VALIDATOR_CALLS.incrementAndGet();
+                ctx.method_360(() -> "cb_swall checked " + key.method_29177().method_12832());
+            });
+        } catch (Throwable t) {
+            customLootTypeFailure = t;
+        }
         // 1.21.11 Villager's private MEMORY_TYPES replaced with one more memory before any brain is built
         // (VillagerMemoryAccessor; rt/brainlists): read back on a live villager's brain once the server runs
         try {
@@ -143,6 +158,7 @@ public class SwallTestMod implements ModInitializer {
         STEP_TYPE = net.minecraft.class_6018.method_35014("cbswall_step", StepInt.CODEC);
         HALF_TYPE = net.minecraft.class_2378.method_10230(net.minecraft.class_7923.field_41139,
             net.minecraft.class_2960.method_60655("cbswall", "half"), () -> HalfFloat.CODEC);
+        EARLY_RESISTANT = new net.minecraft.class_10215(net.minecraft.class_8103.field_42246);
         EARLY_ATTACKS = new net.minecraft.class_10707(0.25F, 1.0F, List.of(), net.minecraft.class_10707.class_10709.field_56308,
             Optional.of(net.minecraft.class_8103.field_56242), Optional.empty(), Optional.empty());
         // before any registries are up: the clock is looked up on first use (rt/CbWallClocks.Lazy)
@@ -270,6 +286,8 @@ public class SwallTestMod implements ModInitializer {
     }
 
     static net.minecraft.class_10707 EARLY_ATTACKS;
+    /** 1.21.11 new DamageResistant(TagKey) while the item registry fills, before any registries are loaded */
+    static net.minecraft.class_10215 EARLY_RESISTANT;
     static net.minecraft.class_6018<StepInt> STEP_TYPE;
     static net.minecraft.class_5864<HalfFloat> HALF_TYPE;
 
@@ -399,6 +417,43 @@ public class SwallTestMod implements ModInitializer {
             server.method_30611().method_57093(com.mojang.serialization.JsonOps.INSTANCE), early).getOrThrow();
         check("componentValue.blocksAttacksEarlyTag", earlyBack.comp_3637().get().equals(net.minecraft.class_8103.field_56242)
             && earlyJson.toString().contains("#minecraft:bypasses_shield"), earlyJson);
+
+        // DamageResistant(TagKey): built before and after the registries load, both resist fire and not generic
+        // damage, both read back the tag, both encode as the tag
+        net.minecraft.class_8109 sources = server.method_30002().method_48963();
+        net.minecraft.class_10215 late = new net.minecraft.class_10215(net.minecraft.class_8103.field_42246);
+        for (Object[] c : new Object[][] {{"early", EARLY_RESISTANT}, {"late", late}}) {
+            net.minecraft.class_10215 r = (net.minecraft.class_10215) c[1];
+            boolean fire = r.method_64198(sources.method_48794());
+            boolean notFire = r.method_64198(sources.method_48830());
+            String json = String.valueOf(net.minecraft.class_10215.field_54229.encodeStart(
+                server.method_30611().method_57093(com.mojang.serialization.JsonOps.INSTANCE), r).result().orElse(null));
+            check("componentValue.damageResistantCtor." + c[0], fire && !notFire
+                && net.minecraft.class_8103.field_42246.equals(r.comp_3210()) && json.contains("#minecraft:is_fire"),
+                fire + " " + notFire + " " + r.comp_3210() + " " + json);
+        }
+        net.minecraft.class_1799 resist = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600);
+        resist.method_57379(net.minecraft.class_9334.field_54273, EARLY_RESISTANT);
+        net.minecraft.class_10215 resistBack = resist.method_58694(net.minecraft.class_9334.field_54273);
+        check("componentValue.damageResistantOnStack", resistBack != null
+            && resistBack.method_64198(sources.method_48794()) && !resistBack.method_64198(sources.method_48830()), resistBack);
+
+        // JukeboxPlayable(EitherHolder): by key (resolved in the registries in use) and by holder; reads back the song
+        net.minecraft.class_6880<net.minecraft.class_9793> cat = server.method_30611().method_30530(net.minecraft.class_7924.field_52176)
+            .method_46747(net.minecraft.class_9796.field_52038);
+        net.minecraft.class_9792 byKey = new net.minecraft.class_9792(new net.minecraft.class_9791<>(net.minecraft.class_9796.field_52038));
+        net.minecraft.class_9792 byHolder = new net.minecraft.class_9792(new net.minecraft.class_9791<>(cat));
+        for (Object[] c : new Object[][] {{"key", byKey}, {"holder", byHolder}}) {
+            net.minecraft.class_9791<net.minecraft.class_9793> e = ((net.minecraft.class_9792) c[1]).comp_2833();
+            boolean ok = e != null && e.comp_3636().left().isPresent()
+                && e.comp_3636().left().get().method_40230().get().equals(net.minecraft.class_9796.field_52038);
+            check("componentValue.jukeboxPlayableCtor." + c[0], ok, e);
+        }
+        net.minecraft.class_1799 disc = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600);
+        disc.method_57379(net.minecraft.class_9334.field_52175, byKey);
+        net.minecraft.class_9792 discBack = disc.method_58694(net.minecraft.class_9334.field_52175);
+        check("componentValue.jukeboxPlayableOnStack", discBack != null && discBack.comp_2833().comp_3636().left()
+            .map(h -> h.method_40230().get().equals(net.minecraft.class_9796.field_52038)).orElse(false), discBack);
     }
 
     /** 1.21.11's SelectorPattern, 26.1's CompilableString of an entity selector */
@@ -1106,6 +1161,7 @@ public class SwallTestMod implements ModInitializer {
             frogAttack(server);
             fancyLimb(server);
             lootMine(server);
+            lootDataTypes();
             clocks(server);
             fluidHeights(server);
             check("server.throwIfFatalException", MinecraftServer.method_60584(), "");
@@ -2214,5 +2270,50 @@ public class SwallTestMod implements ModInitializer {
         } catch (Throwable t) {
             check("swall12b.lootMineMixin", false, t);
         }
+    }
+
+    /**
+     * 1.21.11 LootDataType (rt/CbWallLoot): a type built with its own validator runs it from runValidation and reports
+     * through the context; vanilla's TABLE validates a table under the table's own parameter set (a killed_by_player
+     * condition is a problem in a BLOCK table, not in an ENTITY one); PREDICATE and MODIFIER share one validator.
+     */
+    private static void lootDataTypes() {
+        try {
+            net.minecraft.class_8490<net.minecraft.class_5341> type = CUSTOM_LOOT_TYPE;
+            net.minecraft.class_8942.class_8943 collector = new net.minecraft.class_8942.class_8943();
+            net.minecraft.class_58 ctx = new net.minecraft.class_58(collector, net.minecraft.class_173.field_1177);
+            net.minecraft.class_5341 cond = net.minecraft.class_221.method_939().build();
+            int before = LOOT_VALIDATOR_CALLS.get();
+            type.method_51209(ctx, net.minecraft.class_5321.method_29179(type.comp_2519(), net.minecraft.class_2960.method_60655("cb_swall", "c1")), cond);
+            boolean[] named = {false};
+            collector.method_71350((path, problem) -> named[0] |= problem.method_71358().contains("cb_swall checked c1"));
+            check("lootDataType.customValidator", type.comp_2522() != null && LOOT_VALIDATOR_CALLS.get() == before + 1 && named[0],
+                customLootTypeFailure + " " + (LOOT_VALIDATOR_CALLS.get() - before) + " " + named[0]);
+        } catch (Throwable t) {
+            check("lootDataType.customValidator", false, customLootTypeFailure != null ? customLootTypeFailure : t);
+        }
+        try {
+            boolean blockBad = tableProblems(net.minecraft.class_173.field_1172);
+            boolean entityBad = tableProblems(net.minecraft.class_173.field_1173);
+            check("lootDataType.vanillaTable", blockBad && !entityBad, blockBad + " " + entityBad);
+            Object predicate = net.minecraft.class_8490.field_44496.comp_2522();
+            Object modifier = net.minecraft.class_8490.field_44497.comp_2522();
+            Object lootTable = net.minecraft.class_8490.field_44498.comp_2522();
+            check("lootDataType.vanillaSimpleShared", predicate != null && predicate == modifier && predicate != lootTable, predicate + " " + modifier + " " + lootTable);
+        } catch (Throwable t) {
+            check("lootDataType.vanillaTable", false, t);
+        }
+    }
+
+    /** whether vanilla's TABLE reports a problem for a table of the given parameter set dropping dirt when killed by a player */
+    private static boolean tableProblems(net.minecraft.class_176 params) {
+        net.minecraft.class_52 table = net.minecraft.class_52.method_324().method_334(params)
+            .method_336(net.minecraft.class_55.method_347().method_351(net.minecraft.class_77.method_411(net.minecraft.class_1802.field_8831))
+                .method_356(net.minecraft.class_221.method_939())).method_338();
+        net.minecraft.class_8942.class_8943 collector = new net.minecraft.class_8942.class_8943();
+        net.minecraft.class_58 ctx = new net.minecraft.class_58(collector, net.minecraft.class_173.field_1177);
+        net.minecraft.class_8490.field_44498.method_51209(ctx,
+            net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_50079, net.minecraft.class_2960.method_60655("cb_swall", "t")), table);
+        return !collector.method_71349();
     }
 }
