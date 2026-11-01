@@ -149,3 +149,6 @@ accessible field com/mojang/blaze3d/vertex/VertexFormat$Builder offset I
 accessible field net/minecraft/client/particle/ParticleEngine resourceManager Lnet/minecraft/client/particle/ParticleResources;
 # 26.1.2 MinecraftGameRuleServiceImpl.gameRules is notificationManager.server().getGameRules() on 26.2 (rt/CbS26Server)
 accessible field net/minecraft/server/jsonrpc/internalapi/MinecraftGameRuleServiceImpl notificationManager Lnet/minecraft/server/notifications/NotificationManager;
+# 26.1.2 emissiveRendering fields (StatePredicate) over 26.2's Predicate<BlockState> fields (rt/CbS26Emissive)
+accessible field net/minecraft/world/level/block/state/BlockBehaviour$Properties emissiveRendering Ljava/util/function/Predicate;
+accessible field net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase emissiveRendering Ljava/util/function/Predicate;
