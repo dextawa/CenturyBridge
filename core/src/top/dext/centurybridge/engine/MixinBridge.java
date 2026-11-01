@@ -1919,6 +1919,10 @@ final class MixinBridge {
                     List<String> guardWhy = new ArrayList<>(why.subList(guardMark, why.size()));
                     MethodNode restored = restoreOverride(vmeth, wt, why);
                     if (restored != null) {
+                        // the mixin now depends on its restoring mixin: committed as changed, or bridgeOne rolls the
+                        // restored override back (a HEAD / RETURN / TAIL injector rewrites no anchor, so nothing else
+                        // marks it) and the injector was live only where another mixin's restorer happened to stay
+                        changed = true;
                         for (String g : guardWhy) {
                             refused.add(where + ": guarded injector in the superclass refused (" + g
                                 + "); the restored override carries it");
