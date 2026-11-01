@@ -118,5 +118,9 @@
   "net/minecraft/class_1921$class_4688$class_4689.method_51788(Lnet/minecraft/class_4668$class_8559;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921$class_4688$class_4689.method_23617(Z)Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
   "net/minecraft/class_1921$class_4688$class_4689.method_24297(Lnet/minecraft/class_1921$class_4750;)Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
+ },
+ "_s205n_rendertype_basis": "Direct subclasses of 1.21.4's RenderType (damage rows extend / super-ctor (String,VertexFormat,Mode,I,Z,Z,Runnable,Runnable) / override+super method_23031 / method_23033): 1.21.5's RenderType takes (String,I,Z,Z,Runnable,Runnable) and made format/mode/draw/pipeline/outputTarget abstract (javap both). facade/RenderType gives 1.21.4's constructor and getters back and answers the 1.21.5 abstracts (javadoc there).",
+ "superRenames": {
+  "net/minecraft/class_1921": "top/dext/centurybridge/step/v1_21_5/facade/RenderType"
  }
 }

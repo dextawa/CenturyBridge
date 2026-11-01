@@ -443,4 +443,22 @@ public final class CbRenderTypes {
     }
 
     private static volatile Optional<ShaderProgram> lastShader = Optional.empty();
+
+    /**
+     * The pipeline a converted direct RenderType subclass (facade/RenderType) draws with: 1.21.4 drew it with whatever
+     * program its setup runnable left in RenderSystem's shader slot (BufferUploader.drawWithShader ->
+     * RenderSystem.getShader()). Here: the program a ShaderStateShard setup last recorded ({@link #setupShader}); null when
+     * none (1.21.4's null shader drew nothing). GL state the runnables set (blend, depth, cull, writes, logic) is not
+     * known: 1.21.4's CompositeState.Builder defaults are used (no blend, LEQUAL, cull, colour and depth write, no logic
+     * op) -- known loss, release_notes_known.md.
+     */
+    public static RenderPipeline pipelineForShaderSlot(String name, VertexFormat format, VertexFormat.class_5596 mode) {
+        Optional<ShaderProgram> program = lastShader;
+        if (program.isEmpty()) {
+            return null;
+        }
+        Key key = new Key(program, Optional.empty(), DepthTestFunction.LEQUAL_DEPTH_TEST, true, true, true, LogicOp.NONE, format,
+            mode, 0.0F, 0.0F);
+        return PIPELINES.computeIfAbsent(key, k -> build(name, k));
+    }
 }
