@@ -33,14 +33,6 @@
       "ret": "conv top/dext/centurybridge/step/v26_2/rt/CbS26Entity#asMob(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/entity/Mob;",
       "basis": "26.1.2 Vex.getOwner()Mob = EntityReference.get(owner, level, Mob.class); 26.2 Vex.getOwner()LivingEntity = OwnableEntity's EntityReference.get(owner reference, level, LivingEntity.class); 26.2's setOwner still takes a Mob, so the owner is the same Mob"
     },
-    "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.emissiveRendering(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z": {
-      "desc": "()Z",
-      "ops": [
-        "drop",
-        "drop"
-      ],
-      "basis": "26.2's emissiveRendering() asks the block's emissive predicate with the state only (Properties.emissiveRendering takes a Predicate<BlockState> in 26.2, a StatePredicate in 26.1.2); every 26.2 predicate is asked as 26.2 asks it, so level and position have nowhere to go"
-    },
     "net/minecraft/client/gui/GuiGraphicsExtractor.entity(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;FLorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;IIII)V": {
       "desc": "(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;FLorg/joml/Vector3fc;Lorg/joml/Quaternionfc;Lorg/joml/Quaternionfc;IIII)V",
       "ops": [
