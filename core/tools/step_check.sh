@@ -7,6 +7,7 @@
 # are still open -- optionally only those whose owner's mojang name matches areaRegex.
 # CB_PROBE=fapi measures the Fabric API side instead: V's Fabric API probe (probe/fapi, from
 # fapi_probe_segments.sh) against the step's Fabric API damage table (probe/fapi-damage).
+# CB_PROBE=aw: the access-widener surface (core/segments/damage-aw), open entries under step-aw/.
 # Run on beta2 from ~/cbwork; <workDir> is relative to it (an agent's own directory, or "." for main).
 set -uo pipefail
 cd ~/cbwork
@@ -14,8 +15,20 @@ WD="$1"; V="$2"; W="$3"; AREA="${4:-}"
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
 SEG="${V}__${W}"
+# every engine step (probe, convert, link-check) runs <workDir>'s compiled engine: refuse to measure without it
+[ -f "$WD/core/build/classes/top/dext/centurybridge/data/LinkCheck.class" ] \
+    || { echo "engine not compiled in $WD/core/build/classes (step_check judges with the tree under test's engine)"; exit 1; }
 PROBES=probe/seg; DAMAGE=probe/damage; OUT="$WD/step/$SEG"
 [ "${CB_PROBE:-}" = fapi ] && { PROBES=probe/fapi; DAMAGE=probe/fapi-damage; OUT="$WD/step-fapi/$SEG"; }
+# CB_PROBE=aw measures the access-widener surface (api-probe -Dcb.apiprobe.nonpublic: non-public members a mod reaches
+# through its own access widener, usages aw-*) against the step's table in <workDir>/core/segments/damage-aw; the
+# probe of V depends only on V's stub and is built once into probe/aw/<V>__<W>/
+if [ "${CB_PROBE:-}" = aw ]; then
+    PROBES=probe/aw; DAMAGE="$WD/core/segments/damage-aw"; OUT="$WD/step-aw/$SEG"
+    case "$V" in 26.*) VSTUB="data/jars/client-$V.jar" ;; *) VSTUB="data/jars/client-$V-intermediary.jar" ;; esac
+    mkdir -p "$PROBES/$SEG"
+    [ -f "$PROBES/$SEG/probe-$V.jar.index.tsv" ] || "$JAVA" -Xmx8g -Dcb.apiprobe.nonpublic=true -cp "$WD/core/build/classes:$LIBS"         top.dext.centurybridge.Main api-probe "$VSTUB" "$PROBES/$SEG/probe-$V.jar" "data/runtime/client-$V/libraries" > /dev/null 2>&1         || { echo "aw probe failed"; exit 1; }
+fi
 rm -rf "$OUT" && mkdir -p "$OUT"
 case "$W" in 26.*) GAME="data/jars/client-$W.jar" ;; *) GAME="data/jars/client-$W-intermediary.jar" ;; esac
 FAPI=$(ls data/runtime/client-$W/mods/fabric-api-*.jar 2>/dev/null | head -1)
@@ -26,8 +39,13 @@ WIRING="$WD/core/segments/steps/$SEG.json"
     "$PROBES/$SEG/probe-$V.jar" > "$OUT/convert.log" 2>&1 || { echo "convert failed"; tail -5 "$OUT/convert.log"; exit 1; }
 # the separately released mods the layer depends on (build.sh built them into build/deps/): on the runtime like the layer
 DEPS=$(ls "$WD"/build/deps/*.jar 2>/dev/null)
-"$JAVA" -Xmx32g -Dcb.linkcheck.perSite=true -cp "core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/lc" "$OUT/conv/full-audit.tsv" "$OUT/conv" -- \
+# judged by the tree under test's own link-check (never ~/cbwork/core/build/classes, whatever engine that holds)
+"$JAVA" -Xmx32g -Dcb.linkcheck.perSite=true -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/lc" "$OUT/conv/full-audit.tsv" "$OUT/conv" -- \
     "$WD/build/centurybridge-0.3.0+$W.jar" $DEPS "$GAME" $FAPI "data/runtime/client-$W/libraries" > "$OUT/linkcheck.log" 2>&1
+# a probe judged without its own access widener measures nothing about the aw surface: refuse the result
+if [ "${CB_PROBE:-}" = aw ] && grep -q $'\tAWFILE\t.*\tcb_apiprobe_aw\t' "$OUT/lc/link-findings.tsv"; then
+    echo "aw probe's access widener not applied by link-check:"; grep $'\tAWFILE\t' "$OUT/lc/link-findings.tsv" | cut -f4-6; exit 1
+fi
 python3 probe/probe_report.py "$PROBES/$SEG/probe-$V.jar.index.tsv" "$(ls "$OUT"/conv/*.jar | head -1)" "$OUT/lc/link-findings.tsv" \
     "$OUT/report.tsv" > "$OUT/report.txt" 2>&1
 python3 - "$OUT/report.tsv" "$DAMAGE/$SEG.damage.tsv" "$AREA" <<'EOF'
@@ -73,7 +91,7 @@ EOF
 # Generic drift (generic_drift.py): members whose erased descriptor V and W share while their type
 # arguments changed -- linked fine, so the probe above cannot see them; the first element a mod takes
 # out is a ClassCastException. Counted against the same wiring (and area) as the probe's rows.
-if [ "${CB_PROBE:-}" != fapi ]; then
+if [ "${CB_PROBE:-}" != fapi ] && [ "${CB_PROBE:-}" != aw ]; then
     case "$V" in 26.*) VJAR="data/jars/client-$V.jar" ;; *) VJAR="data/jars/client-$V-intermediary.jar" ;; esac
     WALL=""
     [ "$SEG" = "1.21.11__26.1" ] && WALL="--wall $(python3 "$WD/core/tools/wall_tables.py" "$W")"
@@ -110,13 +128,13 @@ fi
 # Frames hooks (frames_review.py): an argument the old shape has no place for, read back from the frame
 # when vanilla called the new shape, is its type's zero when the mod enters its old method itself --
 # a NullPointerException where V had a real value. Each needs a frameDefaults judgment.
-if [ "${CB_PROBE:-}" != fapi ]; then
+if [ "${CB_PROBE:-}" != fapi ] && [ "${CB_PROBE:-}" != aw ]; then
     python3 "$WD/core/tools/frames_review.py" "$WIRING" "$OUT/frames-open.tsv" || echo "frames review failed"
 fi
 # Mixins (mixin_step.sh): the step's mixin damage table (core/segments/damage-mixin, from the mixin probe:
 # every injector / shadow / accessor / invoker point of V's code that W's real bodies no longer take) as
 # separate probe mixins, converted with this step's wiring and judged on W with the layer: "mixin probe:
 # N of M still open" for the same area, open entries in $OUT/open-mixin.tsv.
-if [ "${CB_PROBE:-}" != fapi ] && [ -f "$WD/core/tools/mixin_step.sh" ]; then
+if [ "${CB_PROBE:-}" != fapi ] && [ "${CB_PROBE:-}" != aw ] && [ -f "$WD/core/tools/mixin_step.sh" ]; then
     bash "$WD/core/tools/mixin_step.sh" "$WD" "$V" "$W" "$AREA" || echo "mixin probe failed"
 fi
