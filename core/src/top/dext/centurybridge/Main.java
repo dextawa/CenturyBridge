@@ -253,6 +253,11 @@ public final class Main {
                         ? wallLayerView(ej, Path.of(args[1]), args[2]) : ej;
                     chain.layerMembers.inherit(top.dext.centurybridge.engine.LayerMembers.read(view));
                     earlierLayers.add(view);
+                    // its facades' supertypes past the wall: a call through one of them of a member it inherits
+                    // from a game class takes the game member's new name (JarRemapper.loadLayerSupers)
+                    if (wallTable != null) {
+                        top.dext.centurybridge.data.JarRemapper.loadLayerSupers(wallTable, view);
+                    }
                     if (ej == climbed) {
                         System.out.println("earlier layer as climbed to " + args[3] + ": " + climbed);
                     }

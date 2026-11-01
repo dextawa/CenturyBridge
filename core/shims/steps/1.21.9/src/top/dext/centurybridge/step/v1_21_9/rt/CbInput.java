@@ -142,6 +142,16 @@ public final class CbInput {
         return c;
     }
 
+    /** KeyboardHandler.charTyped(window, codepoint, modifiers): 1.21.9 passes the same two ints as a CharacterEvent */
+    public static class_11905 cbCharEvent(int codepoint, int mods) {
+        return new class_11905(codepoint, mods);
+    }
+
+    /** MouseHandler.onPress(window, button, action, modifiers): 1.21.9 passes button and modifiers as a MouseButtonInfo */
+    public static class_11910 cbButtonInfo(int button, int mods) {
+        return new class_11910(button, mods);
+    }
+
     /** mouseClicked / mouseReleased / mouseDragged(x, y, button) */
     public static class_11909 cbClick(double x, double y, int button) {
         return new class_11909(x, y, new class_11910(button, buttonModifiers(button)));

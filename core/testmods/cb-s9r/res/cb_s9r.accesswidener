@@ -1,0 +1,26 @@
+accessWidener	v2	intermediary
+# 1.21.8 members this test mod reaches through its own access widener (1.21.8 -> 1.21.9 damage-aw rows)
+accessible	field	net/minecraft/class_702	field_18300	Ljava/util/Map;
+accessible	field	net/minecraft/class_702	field_18301	Lnet/minecraft/class_1059;
+accessible	method	net/minecraft/class_702	method_3043	(Lnet/minecraft/class_2396;Lnet/minecraft/class_707;)V
+accessible	method	net/minecraft/class_702	method_18834	(Lnet/minecraft/class_2396;Lnet/minecraft/class_702$class_4091;)V
+accessible	class	net/minecraft/class_702$class_4090
+accessible	class	net/minecraft/class_702$class_4091
+accessible	field	net/minecraft/class_702$class_4090	field_18303	Ljava/util/List;
+accessible	method	net/minecraft/class_719	<init>	(Lnet/minecraft/class_638;DDDDDD)V
+accessible	method	net/minecraft/class_687	<init>	(Lnet/minecraft/class_638;DDDDDD)V
+accessible	field	net/minecraft/class_970	field_4830	Lnet/minecraft/class_572;
+accessible	field	net/minecraft/class_970	field_4831	Lnet/minecraft/class_572;
+mutable	field	net/minecraft/class_970	field_4830	Lnet/minecraft/class_572;
+accessible	field	net/minecraft/class_898	field_4696	Ljava/util/Map;
+accessible	field	net/minecraft/class_5604	field_27709	Lorg/joml/Vector3f;
+accessible	field	net/minecraft/class_5604	field_27710	Lorg/joml/Vector3f;
+accessible	field	net/minecraft/class_630$class_593	comp_3185	Lorg/joml/Vector3f;
+accessible	field	net/minecraft/class_630$class_618	comp_3186	Lorg/joml/Vector3f;
+accessible	field	net/minecraft/class_761	field_27740	Lnet/minecraft/class_4604;
+mutable	field	net/minecraft/class_761	field_27740	Lnet/minecraft/class_4604;
+accessible	method	net/minecraft/class_309	method_1457	(JII)V
+accessible	method	net/minecraft/class_309	method_1468	(I)Z
+accessible	method	net/minecraft/class_312	method_1601	(JIII)V
+accessible	field	net/minecraft/class_922	field_4738	Ljava/util/List;
+accessible	field	net/minecraft/class_703	field_3874	D

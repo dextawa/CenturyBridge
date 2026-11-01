@@ -5,7 +5,8 @@ For every jar of a corpus (nested jars included) it reads the access widener its
 mixin refmaps (the targets @Accessor / @Invoker / @Shadow and injectors name, "Lowner;name(desc)" or
 "Lowner;name:desc"), and appends to each damage row:
   used   aw:<mods whose AW names the member or, for a class line, the owner> mixin:<mods whose refmaps name it>
-Owners and names are matched as the table spells them (V's intermediary names; the corpus is 1.20.1-era, so a member
+A member is matched by owner, name and descriptor (a refmap target names its descriptor; one naming another overload
+of the same name is no evidence for this row, nor is a descriptor-less one). Owners and names are matched as the table spells them (V's intermediary names; the corpus is 1.20.1-era, so a member
 V added after 1.20.1 has no evidence by construction -- read 0 there as "no 1.20.1 mod", not "no mod").
 
   python aw_evidence.py <corpus dir> <damage.tsv> [<damage.tsv>...]     (rewrites each table with the column)
@@ -46,9 +47,9 @@ def scan(data, mod, aw_members, aw_classes, mx_members):
             scan(z.read(n), mod, aw_members, aw_classes, mx_members)
         elif n.endswith(".json") and "refmap" in n:
             for m in REF.finditer(z.read(n).decode("utf-8", "replace")):
-                d = m.group(3) or ""
-                mx_members.setdefault((m.group(1), m.group(2), d.lstrip(":")), set()).add(mod)
-                mx_members.setdefault((m.group(1), m.group(2), ""), set()).add(mod)
+                d = (m.group(3) or "").lstrip(":")
+                if d:
+                    mx_members.setdefault((m.group(1), m.group(2), d), set()).add(mod)
 
 
 def main():
@@ -69,7 +70,7 @@ def main():
             c = r.split("\t")
             owner, name, desc = c[1], c[2], c[3]
             aw = aw_members.get((owner, name, desc), set()) | aw_classes.get(owner, set())
-            mx = mx_members.get((owner, name, desc), set()) | mx_members.get((owner, name, ""), set())
+            mx = mx_members.get((owner, name, desc), set())
             hit += bool(aw or mx)
             out.append(r + f"\taw:{len(aw)} mixin:{len(mx)}")
         with open(t, "w", encoding="utf-8", newline="\n") as o:
