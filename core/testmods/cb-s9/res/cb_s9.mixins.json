@@ -6,7 +6,8 @@
  "mixins": [
   "CommandBlockOutputMixin",
   "DebugPacketsInvoker",
-  "DebugPacketsMixin"
+  "DebugPacketsMixin",
+  "ItemVerifyMixin"
  ],
  "injectors": {
   "defaultRequire": 1

@@ -1,5 +1,5 @@
 {
- "_s9f_tombstones_basis": "members 1.21.9 dropped that climbed layers call (layer link-check tombstones at 1.21.8 -> 1.21.9), each given back with 1.21.8's body over 1.21.9's calls (javap -c both): restored members on vanilla classes (covers; mixin/Cb*RestoredMixin), statics for a vanilla interface default and two statics (rt/CbRegistryRandom, CbSkullProfiles, CbFrameFlip); 1.21.8's ClientAsset record (class_10726) is 1.21.9's ClientAsset$ResourceTexture (same fields, constructors, accessors, codecs; javap member by member, bodies equal but for the codec builder overload; 1.21.9 adds the Texture interface).",
+ "_s9f_tombstones_basis": "members 1.21.9 dropped that climbed layers call (layer link-check tombstones at 1.21.8 -> 1.21.9), each given back with 1.21.8's body over 1.21.9's calls (javap -c both): restored members on vanilla classes (covers; mixin/Cb*RestoredMixin), Registry.getRandomElementOf as a default method of Registry (interface mixin CbRegistryRandomRestoredMixin, so a 1.21.8 override and its super call link too), two statics (rt/CbSkullProfiles, CbFrameFlip); 1.21.8's ClientAsset record (class_10726) is 1.21.9's ClientAsset$ResourceTexture (same fields, constructors, accessors, codecs; javap member by member, bodies equal but for the codec builder overload; 1.21.9 adds the Texture interface).",
  "covers": [
   "net/minecraft/class_1297.method_5870(Lnet/minecraft/class_3218;Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1542;",
   "net/minecraft/class_1297.method_5682()Lnet/minecraft/server/MinecraftServer;",
@@ -7,11 +7,9 @@
   "net/minecraft/class_630.method_17138(Lnet/minecraft/class_630;)V",
   "net/minecraft/class_4730.method_24148()Lnet/minecraft/class_1058;",
   "net/minecraft/class_9976.method_62316(Lnet/minecraft/class_1937;Lnet/minecraft/class_4597;IFLnet/minecraft/class_243;)V",
-  "net/minecraft/class_898.method_62424(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"
+  "net/minecraft/class_898.method_62424(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+  "net/minecraft/class_2378.method_56159(Lnet/minecraft/class_6862;Lnet/minecraft/class_5819;)Ljava/util/Optional;"
  ],
- "interfaceCallRedirects": {
-  "net/minecraft/class_2378.method_56159(Lnet/minecraft/class_6862;Lnet/minecraft/class_5819;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_9/rt/CbRegistryRandom"
- },
  "staticRedirects": {
   "net/minecraft/class_2631.method_52580(Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_9/rt/CbSkullProfiles",
   "com/mojang/blaze3d/systems/RenderSystem.flipFrame(JLnet/minecraft/class_10219;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbFrameFlip"

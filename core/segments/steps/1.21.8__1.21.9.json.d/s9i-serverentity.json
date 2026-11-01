@@ -1,0 +1,15 @@
+{
+ "_s9i_serverentity_basis": "ServerEntity (class_3231) took (level, entity, updateInterval, trackDelta, Consumer broadcast, BiConsumer broadcastIgnoring) through 1.21.8 and takes (level, entity, updateInterval, trackDelta, ServerEntity.Synchronizer class_3231$class_12004) from 1.21.9 (javap -c of both, and of ChunkMap.TrackedEntity which implements the synchronizer). The two callbacks become one synchronizer with 1.21.8's semantics (rt/CbServerEntity). Reported by s205g / smx1h: the climbed 1.21.5 layer's CbServerEntities and cb-s215 orb-packet (NoSuchMethodError on 26.2).",
+ "superCtorReshapes": {
+  "net/minecraft/class_3231.<init>(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;IZLjava/util/function/Consumer;Ljava/util/function/BiConsumer;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;IZLnet/minecraft/class_3231$class_12004;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:0,1,4,5 top/dext/centurybridge/step/v1_21_9/rt/CbServerEntity#synchronizer(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_3231$class_12004;"
+   ]
+  }
+ }
+}
