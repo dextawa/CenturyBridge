@@ -48,6 +48,7 @@
     "CbS26LevelFlushMixin",
     "CbS26BlockOutlineRestoreMixin",
     "CbS26BlockOutlineRouteMixin",
+    "CbS26HitOutlineRouteMixin",
     "CbS26GameFlushMixin",
     "CbS26GuiFlushMixin",
     "CbS26TesselatorMixin",
