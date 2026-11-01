@@ -21,7 +21,9 @@
   "com/mojang/blaze3d/systems/RenderSystem.enableColorLogicOp()V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
   "com/mojang/blaze3d/systems/RenderSystem.disableColorLogicOp()V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
   "com/mojang/blaze3d/systems/RenderSystem.blendFunc(II)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
-  "com/mojang/blaze3d/systems/RenderSystem.blendFuncSeparate(IIII)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem"
+  "com/mojang/blaze3d/systems/RenderSystem.blendFuncSeparate(IIII)V": "top/dext/centurybridge/step/v1_21_5/rt/CbShardRenderSystem",
+  "net/minecraft/class_1921.method_24048(Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;ILnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921.method_24049(Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;IZZLnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
  },
  "_s205k_states_basis": "The 80 RenderStateShard constants 1.21.5 dropped from class_4668 (damage get-static-protected rows, all 80 keyed here) -> rt/CbRenderStates getters, built as 1.21.4's <clinit> built them (basis in its javadoc); the six dropped shard classes -> facade/RenderStateShard$class_* (1.21.4 members and runnable bodies).",
  "fieldGetters": {
@@ -105,5 +107,16 @@
   "net/minecraft/class_4668.field_44819:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderStates",
   "net/minecraft/class_4668.field_44820:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderStates",
   "net/minecraft/class_4668.field_47463:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderStates"
+ },
+ "_s205k_builder_basis": "1.21.4 CompositeState.Builder setters for the six shards 1.21.5's CompositeState dropped (shader/transparency/depthTest/cull/writeMask/colorLogic, javap 1.21.4 class_4688$class_4689) record them per builder in rt/CbRenderTypes; createCompositeState (method_23617/method_24297, public in 1.21.4, protected in 1.21.5) runs 1.21.5's own build (layer AW) and keeps the recorded shards per state. RenderType.create (method_24048 package-private / method_24049 private in 1.21.4, reached by mods through their own AW) builds a RenderPipeline from the shards and calls 1.21.5's method_24049(name,size,crumbling,sort,pipeline,state).",
+ "instanceRedirects": {
+  "net/minecraft/class_1921$class_4688$class_4689.method_34578(Lnet/minecraft/class_4668$class_5942;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.method_23615(Lnet/minecraft/class_4668$class_4685;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.method_23604(Lnet/minecraft/class_4668$class_4672;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.method_23603(Lnet/minecraft/class_4668$class_4671;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.method_23616(Lnet/minecraft/class_4668$class_4686;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.method_51788(Lnet/minecraft/class_4668$class_8559;)Lnet/minecraft/class_1921$class_4688$class_4689;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.method_23617(Z)Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes",
+  "net/minecraft/class_1921$class_4688$class_4689.method_24297(Lnet/minecraft/class_1921$class_4750;)Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_5/rt/CbRenderTypes"
  }
 }
