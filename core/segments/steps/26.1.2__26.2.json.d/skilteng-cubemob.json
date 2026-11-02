@@ -1,0 +1,6 @@
+{
+ "_skilteng_cubemob_basis": "javap 26.1.2 / 26.2 client jars: 26.2 adds monster/cubemob/AbstractCubeMob (tick, getSize, wasOnGround moved up from Slime) with Slime, MagmaCube (both moved from monster/, pkgmoves-gen.json) and SulfurCube under it. 26.1.2 has no class whose name holds 'sulfur' (unzip -l: 0 entries); SulfurCube is a new mob (Bucketable, Shearable) whose instances no 26.1.2 class's instances are",
+ "noVCounterpart": {
+  "net/minecraft/world/entity/monster/cubemob/SulfurCube": "new 26.2 mob under AbstractCubeMob; 26.1.2 has no sulfur class at all (whole-jar listing), so it stands for no 26.1.2 Slime or MagmaCube"
+ }
+}
