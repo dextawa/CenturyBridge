@@ -200,6 +200,7 @@
   "net/minecraft/class_2792.method_12062(Lnet/minecraft/class_2824;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#handleInteract",
   "net/minecraft/class_236.method_982()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#store",
   "net/minecraft/class_10741.comp_3641()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallSavedData#id",
+  "net/minecraft/class_26.method_17922(Ljava/lang/String;)Ljava/nio/file/Path;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegionStorage#getDataFile",
   "net/minecraft/class_2568$class_10612.comp_3509()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#showItemStack",
   "net/minecraft/class_11434.comp_4324()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#itemBodyStack",
   "net/minecraft/class_10131.comp_3093()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#useRemainderStack",
@@ -886,6 +887,7 @@
  },
  "ctorRedirects": {
   "net/minecraft/class_10215.<init>(Lnet/minecraft/class_6862;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#damageResistant",
+  "net/minecraft/class_4553.<init>(Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_9789;Ljava/util/List;Lit/unimi/dsi/fastutil/objects/Object2BooleanMap;Ljava/util/Map;Ljava/util/Optional;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldCalls#playerPredicate",
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newModelBlockRenderer",
   "net/minecraft/class_775.<init>(Lnet/minecraft/class_11701;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newLiquidBlockRenderer",

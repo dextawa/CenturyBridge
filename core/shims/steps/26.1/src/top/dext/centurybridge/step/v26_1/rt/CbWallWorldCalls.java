@@ -209,6 +209,27 @@ public final class CbWallWorldCalls {
             resistant + ": damage resistance to a list of damage types, which a 1.21.11 tag cannot name"));
     }
 
+    // ---- PlayerPredicate ----
+
+    /**
+     * 1.21.11 new PlayerPredicate(level, gameType, stats, recipes, advancements, lookingAt, input): 26.1 adds the
+     * player's food condition after the level; 1.21.11 had none, which is 26.1's FoodPredicate.ANY (any level, any
+     * saturation: matches every player, and the codec leaves the field out). The stat matcher and advancement
+     * predicate types are package-private on 26.1: the list and map are passed through as they come
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static net.minecraft.advancements.criterion.PlayerPredicate playerPredicate(
+            net.minecraft.advancements.criterion.MinMaxBounds.Ints level,
+            net.minecraft.advancements.criterion.GameTypePredicate gameType,
+            List stats,
+            it.unimi.dsi.fastutil.objects.Object2BooleanMap<ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>> recipes,
+            Map advancements,
+            java.util.Optional<net.minecraft.advancements.criterion.EntityPredicate> lookingAt,
+            java.util.Optional<net.minecraft.advancements.criterion.InputPredicate> input) {
+        return new net.minecraft.advancements.criterion.PlayerPredicate(level, net.minecraft.advancements.criterion.FoodPredicate.ANY,
+            gameType, stats, recipes, advancements, lookingAt, input);
+    }
+
     // ---- level storage ----
 
     /** 1.21.11 LevelStorageAccess.saveDataTag(RegistryAccess, WorldData) (with its generation settings and rules: CbWallWorldLoad) */

@@ -128,6 +128,8 @@ class Spelling:
     def __init__(self, data):
         self._load_tables(data)
         self.pre_cls, self.post_cls, self.post_mem = {}, {}, {}
+        # the step (release index of its W) each pre-wall class rename comes from
+        self.pre_step = {}
         wall = RELEASES.index("26.1")
         files = sorted(glob.glob(os.path.join(ROOT, "core/segments/steps/*.json"))
                        + glob.glob(os.path.join(ROOT, "core/segments/steps/*.json.d/*.json")))
@@ -145,7 +147,11 @@ class Spelling:
                 if isinstance(v, str):
                     # the wall step keys its renames in intermediary (class_918 -> facade ItemRenderer): those apply
                     # where intermediary is spelled, like any pre-wall step's
-                    (self.post_cls if post and not self.INTER.match(k) else self.pre_cls)[k] = v
+                    if post and not self.INTER.match(k):
+                        self.post_cls[k] = v
+                    else:
+                        self.pre_cls[k] = v
+                        self.pre_step[k] = RELEASES.index(step.split("__")[1])
             if post:
                 for sec in ("methodRenames", "fieldRenames"):
                     for k, v in (d.get(sec) or {}).items():
@@ -203,8 +209,16 @@ class Spelling:
             return "L" + self.cls[t[1:]]
         return t
 
-    def __call__(self, s, release=None):
-        s = self.TOKEN.sub(lambda m: self.pre_cls.get(m.group(0), m.group(0)), s)
+    def _pre(self, t, since):
+        # a reference written at step `since` (a tombstone stub that step generated) already names the classes of its
+        # own time: a class rename from an earlier step does not apply to it (1.21.2 renamed class_485, then
+        # EffectRenderingInventoryScreen, to its facade; the 1.21.6 stub's class_485 is 1.21.6's EffectsInInventory)
+        if since is not None and self.pre_step.get(t, -1) < since:
+            return t
+        return self.pre_cls.get(t, t)
+
+    def __call__(self, s, release=None, since=None):
+        s = self.TOKEN.sub(lambda m: self._pre(m.group(0), since), s)
         s = self.TOKEN.sub(lambda m: self._wall(m.group(0)), s)
         s = self.NAMED_INNER.sub(self._named_inner, s)
         s = self.MEM.sub(lambda m: m.group(1) + "." + self.post_mem.get(m.group(1) + "." + m.group(2), m.group(2)), s)
@@ -225,6 +239,16 @@ class Spelling:
 
 
 REPLACES = re.compile(r"replaces (\S+)\.([^.\s;]+)")
+STUB = re.compile(r"Tombstones_centurybridge_0_3_0_[0-9_]+?_((?:1_2[01](?:_\d+)?)|(?:26_\d+(?:_\d+)?))\.")
+
+
+def stub_since(row):
+    """the release index of the step whose converter wrote a TOMBSTONE row's stub (its class names the step's W), or None"""
+    if row[1] != "TOMBSTONE":
+        return None
+    m = STUB.search(row[4])
+    w = m.group(1).replace("_", ".") if m else None
+    return RELEASES.index(w) if w in RELEASES else None
 
 
 def replaced_calls(sp, layer, row):
@@ -277,7 +301,7 @@ def steps(d, t, baseline, out, write):
     for r in measured:
         keys = set()
         for layer, row in rows(os.path.join(d, r, "link-findings.tsv")):
-            keys.add((layer, row[1], sp(row[3], r), sp(row[4], r)))
+            keys.add((layer, row[1], sp(row[3], r), sp(row[4], r, stub_since(row))))
         present[r] = keys
     ti = measured.index(t)
     per_step = {}
@@ -287,7 +311,7 @@ def steps(d, t, baseline, out, write):
                 "# stands, names compared through the wall table). Owner: that step's owner.\n".replace("{t}", t))
         o.write("step\tbucket\tkind\tlayer jar\twhere\tref\tnote\n")
         for layer, row in sorted(rows(os.path.join(d, t, "link-findings.tsv")), key=lambda x: (RELEASES.index(x[0]), x[1][1], x[1][3])):
-            key = (layer, row[1], sp(row[3], t), sp(row[4], t))
+            key = (layer, row[1], sp(row[3], t), sp(row[4], t, stub_since(row)))
             joins = replaced_calls(sp, layer, row)
             i = ti
             while i > 0 and RELEASES.index(measured[i - 1]) == RELEASES.index(measured[i]) - 1:
