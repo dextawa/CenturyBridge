@@ -115,4 +115,114 @@ public final class CbBakedModels {
     public static net.minecraft.class_1058 getParticleIcon(net.minecraft.class_1087 model) {
         return model.method_68511();
     }
+
+    // ---- isGui3d / usesBlockLight / getTransforms ----
+    // 1.21.4 baked every resolved model into a SimpleBakedModel carrying them (SimpleBakedModel.bake(.., ao, usesBlockLight,
+    // isGui3d, transforms), javap 1.21.4): usesBlockLight = the top gui light is SIDE, transforms = the top transforms,
+    // isGui3d = true for a BlockModel with elements (or with neither elements nor parent), false for ItemModelGenerator
+    // (BlockModel.bake passes iconst_1, ItemModelGenerator.bake iconst_0; a BlockModel with no elements and a parent
+    // bakes its parent). Weighted / multipart models (DelegateBakedModel) answered them from their first model.
+    // 1.21.5 keeps the first two (and the transforms) only for item models (ModelRenderProperties.fromResolvedModel:
+    // getTopGuiLight().lightLikeBlock(), getTopTransforms()); block model parts carry none. SimpleModelWrapper.bake is
+    // where 1.21.5 bakes a resolved model into a part: CbModelItemPropsMixin records the three values for the part from
+    // the same resolved model, computed by 1.21.4's rules.
+
+    /** a 1.21.4 BakedModel implementation's own item properties (adapter hook, nothing synthesized) */
+    public interface LegacyItemProps extends net.minecraft.class_1087 {
+        boolean method_4712();
+
+        boolean method_24304();
+
+        net.minecraft.class_809 method_4709();
+    }
+
+    /** 1.21.4's three values for one baked part */
+    record ItemProps(boolean gui3d, boolean blockLight, net.minecraft.class_809 transforms) {
+    }
+
+    private static final java.util.Map<Object, ItemProps> PART_PROPS = new com.google.common.collect.MapMaker().weakKeys().makeMap();
+    private static final ThreadLocal<ItemProps> BAKING = new ThreadLocal<>();
+
+    /** SimpleModelWrapper.bake looked up its resolved model (CbModelItemPropsMixin) */
+    public static void beginBake(net.minecraft.class_10819 resolved) {
+        BAKING.set(resolved == null ? null : new ItemProps(gui3d(resolved), resolved.method_68042().method_24299(), resolved.method_68043()));
+    }
+
+    /** SimpleModelWrapper.bake returns its part (CbModelItemPropsMixin) */
+    public static void endBake(Object part) {
+        ItemProps p = BAKING.get();
+        BAKING.remove();
+        if (part != null && p != null) {
+            PART_PROPS.put(part, p);
+        }
+    }
+
+    /**
+     * 1.21.4's isGui3d of the model baked from this resolved model: walk to the model that bakes the geometry (1.21.4:
+     * a BlockModel with elements, or one with neither elements nor parent; 1.21.5 keeps the parent chain as
+     * ResolvedModel.parent and the elements as BlockModel geometry, an empty element list = no elements); false when
+     * that is ItemModelGenerator (builtin/generated).
+     */
+    static boolean gui3d(net.minecraft.class_10819 resolved) {
+        for (net.minecraft.class_10819 r = resolved; r != null; r = r.method_68038()) {
+            net.minecraft.class_1100 m = r.method_68031();
+            net.minecraft.class_10820 g = m.comp_3739();
+            if (g instanceof net.minecraft.class_10802 simple && simple.comp_3753().isEmpty()) {
+                g = null;
+            }
+            if (g != null) {
+                return !(m instanceof net.minecraft.class_801);
+            }
+        }
+        return true;
+    }
+
+    /** the recorded values of a 1.21.5 model: a single variant's part, a weighted or multipart model's first model */
+    static ItemProps props(net.minecraft.class_1087 model) {
+        for (int depth = 0; model != null && depth < 16; depth++) {
+            if (model instanceof net.minecraft.class_10893 single) {
+                return PART_PROPS.get(single.field_57945);
+            } else if (model instanceof net.minecraft.class_1097 weighted) {
+                List<net.minecraft.class_6010<net.minecraft.class_1087>> l = weighted.field_5434.method_34994();
+                model = l.isEmpty() ? null : l.get(0).comp_2542();
+            } else if (model instanceof net.minecraft.class_10895 multi) {
+                List<net.minecraft.class_10895.class_10204<net.minecraft.class_1087>> l = multi.field_57948.field_5427;
+                model = l.isEmpty() ? null : l.get(0).comp_3204();
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * isGui3d(): a 1.21.4 model answers itself; a 1.21.5 one the value recorded for the part it bakes. A model 1.21.5 code
+     * built from no resolved model (a mod's own 1.21.5 BlockStateModel) has none: 1.21.4 BlockModel's default (true;
+     * known loss, release_notes_known.md).
+     */
+    public static boolean isGui3d(net.minecraft.class_1087 model) {
+        if (model instanceof LegacyItemProps legacy) {
+            return legacy.method_4712();
+        }
+        ItemProps p = props(model);
+        return p == null || p.gui3d();
+    }
+
+    /** usesBlockLight(): as isGui3d; no record: the default gui light SIDE (true) */
+    public static boolean usesBlockLight(net.minecraft.class_1087 model) {
+        if (model instanceof LegacyItemProps legacy) {
+            return legacy.method_24304();
+        }
+        ItemProps p = props(model);
+        return p == null || p.blockLight();
+    }
+
+    /** getTransforms(): as isGui3d; no record: ItemTransforms.NO_TRANSFORMS */
+    public static net.minecraft.class_809 getTransforms(net.minecraft.class_1087 model) {
+        if (model instanceof LegacyItemProps legacy) {
+            return legacy.method_4709();
+        }
+        ItemProps p = props(model);
+        return p == null ? net.minecraft.class_809.field_4301 : p.transforms();
+    }
 }
