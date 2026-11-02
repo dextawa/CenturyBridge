@@ -75,9 +75,13 @@ public final class CbBiomeEffects {
         if (s == null) {
             return out;
         }
-        add(out, class_12206.field_63742, s.fogColor);
-        add(out, class_12206.field_63744, s.waterFogColor);
-        add(out, class_12206.field_63746, s.skyColor);
+        // 1.21.10's builders took RGB (OverworldBiomes: fogColor 0xC0D8FF); 1.21.11's colour attributes hold ARGB and its
+        // sky renderer hands all four channels to the shader's colour modulator (SkyRenderer: ARGB.toVector4f(skyColor),
+        // alpha included; 1.21.11's own OverworldBiomes.calculateSkyColor ORs 0xFF000000 where 1.21.10's did not; javap):
+        // the colour is made opaque, as 1.21.10 drew it (ARGB.opaque, class_9848.method_61334)
+        add(out, class_12206.field_63742, opaque(s.fogColor));
+        add(out, class_12206.field_63744, opaque(s.waterFogColor));
+        add(out, class_12206.field_63746, opaque(s.skyColor));
         if (s.particle != null) {
             add(out, class_12206.field_63750, List.of(s.particle));
         }
@@ -90,6 +94,10 @@ public final class CbBiomeEffects {
             add(out, class_12206.field_63752, s.musicVolume);
         }
         return out;
+    }
+
+    private static Integer opaque(Integer rgb) {
+        return rgb == null ? null : net.minecraft.class_9848.method_61334(rgb);
     }
 
     private static void add(List<Object[]> out, class_12197<?> attribute, Object value) {
