@@ -1,0 +1,10 @@
+{
+ "_goal2110_mixin_basis": "Judged from client-1.21.9-intermediary-code.jar and client-1.21.10-intermediary-code.jar (javap -c -p). ItemFrame.method_59943 is now a wrapper around the new private method_74964, whose body is 1.21.9's bounding-box body with the isGlowing test passed as the new boolean. The no-argument method_74963 shares that helper with false, so the move is guarded: a converted handler runs only while method_59943's one call of the helper runs, never on 1.21.10's new method_74963 path. Every damaged constant stands the same number of times in both bodies: -0.46875 once, 0.75 twice and 1.0 twice, so ordinal-pinned sites keep their identities.",
+ "mixinAnchorMoves": {
+  "net/minecraft/class_1533.method_59943(Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)Lnet/minecraft/class_238;": {
+   "to": "net/minecraft/class_1533.method_74964(Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Z)Lnet/minecraft/class_238;",
+   "guarded": true,
+   "basis": "1.21.9's entire method_59943 body is 1.21.10's method_74964 body; 1.21.10's method_59943(pos, direction) calls it once on this with method_43273() as the flag, exactly the test 1.21.9 read in its own body. The guarded move preserves that call path and excludes method_74963, the helper's other caller. Constants and their ordinals are unchanged."
+  }
+ }
+}
