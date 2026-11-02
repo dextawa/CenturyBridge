@@ -4,6 +4,8 @@ accessible	field	net/minecraft/class_1928	field_9196	Lnet/minecraft/class_12280;
 accessible	method	net/minecraft/class_1921	method_75940	(Ljava/lang/String;Lnet/minecraft/class_12247;)Lnet/minecraft/class_1921;
 accessible	field	net/minecraft/class_10799	field_60125	Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;
 accessible	field	net/minecraft/class_10799	field_56860	Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;
+# smx1j biome: Biome(climate, attributes, effects, generation, spawns) is package-private; rt/CbBiomeEffectsLegacy.biome builds 1.21.10 biomes with it
+accessible	method	net/minecraft/class_1959	<init>	(Lnet/minecraft/class_1959$class_5482;Lnet/minecraft/class_12199;Lnet/minecraft/class_4763;Lnet/minecraft/class_5485;Lnet/minecraft/class_5483;)V
 
 # ---- BEGIN GENERATED (smx1-renderwidget): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
