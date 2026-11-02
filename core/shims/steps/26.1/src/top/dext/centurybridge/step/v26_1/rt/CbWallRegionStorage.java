@@ -77,6 +77,15 @@ public final class CbWallRegionStorage {
         fixerOf(storage).markChunkDone(pos);
     }
 
+    /**
+     * 1.21.11 DimensionDataStorage.getDataFile(name) (private; reached by mixin shadows, e.g. the 1.20.2 layer's
+     * CbSavedDataReadCover): 1.21.11's body, dataFolder.resolve(name + ".dat"). 26.1's getDataFile takes an
+     * Identifier and resolves {@code <namespace>/<path>.dat}, which a plain 1.21.11 name has no spelling for
+     */
+    public static Path getDataFile(SavedDataStorage storage, String name) {
+        return CbWallSavedData.legacyFile(storage.dataFolder, name);
+    }
+
     /** 1.21.11 DimensionDataStorage.readTagFromDisk(name, type, version): the file named so in its data folder */
     public static CompoundTag readTagFromDisk(SavedDataStorage storage, String name, DataFixTypes type, int version) throws IOException {
         return storage.readTagFromDisk(storage.dataFolder.resolve(name + ".dat"), type, version);

@@ -149,6 +149,17 @@ public class RecipeBookComponent extends net.minecraft.class_507<net.minecraft.c
         this.field_3088.method_1962(FILTER_BUTTON_SPRITES);
     }
 
+    /**
+     * The filter button's sprites, as 1.21.11 asks for them: 1.21.11 replaced initFilterButtonTextures (method_2585)
+     * with the abstract getFilterButtonTextures (class_507.method_76629, read only by its filter CycleButton's sprite
+     * lookup method_76634; vanilla's furnace component answers its furnace_filter_* sprites, class_517.field_45540;
+     * javap of 1.21.10 / 1.21.11). Unused before 1.21.11; once this layer climbs there it implements that abstract
+     * with what method_2585 hands the button, so the button no longer meets an AbstractMethodError.
+     */
+    public net.minecraft.class_8666 method_76629() {
+        return FILTER_BUTTON_SPRITES;
+    }
+
     /** updateScreenPosition(width, imageWidth) */
     public int method_2595(int width, int imageWidth) {
         if (this.method_2605() && !this.widthTooNarrow) {
