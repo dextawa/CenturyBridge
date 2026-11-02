@@ -61,7 +61,8 @@ import org.objectweb.asm.tree.analysis.SimpleVerifier;
  *   LAMBDA     lambda's SAM no longer the interface's   AbstractMethodError
  *              abstract method
  *   ABSTRACT   concrete class misses an abstract member AbstractMethodError
- *   INSTANTIATION NEW targets an abstract class/interface InstantiationError
+ *   INSTANTIATION NEW / constructor handle targets an   InstantiationError
+ *              abstract class or interface
  *   ORPHAN     mod override (intermediary method_N)     silently never called
  *              no longer overrides anything
  *   TYPE       value reaches a class-typed slot it      VerifyError (the whole
@@ -1178,21 +1179,32 @@ public final class LinkCheck {
         } else if (in instanceof TypeInsnNode ti) {
             needType(ti.desc, where);
             if (ti.getOpcode() == Opcodes.NEW) {
-                Cls c = cls(ti.desc);
-                if (c != null && (classAcc(c) & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_INTERFACE)) != 0) {
-                    report("INSTANTIATION", where, ti.desc, "NEW on "
-                        + ((classAcc(c) & Opcodes.ACC_INTERFACE) != 0 ? "interface" : "abstract class")
-                        + " (InstantiationError)");
-                }
+                checkInstantiable(ti.desc, where);
             }
         } else if (in instanceof MultiANewArrayInsnNode ma) {
             needType(ma.desc, where);
-        } else if (in instanceof LdcInsnNode ldc && ldc.cst instanceof Type t && t.getSort() == Type.OBJECT) {
-            needClass(t.getInternalName(), where, "ldc");
+        } else if (in instanceof LdcInsnNode ldc) {
+            if (ldc.cst instanceof Type t && t.getSort() == Type.OBJECT) {
+                needClass(t.getInternalName(), where, "ldc");
+            } else if (ldc.cst instanceof Handle h) {
+                checkHandle(h, where);
+            }
         } else if (in instanceof InvokeDynamicInsnNode indy) {
             checkHandle(indy.bsm, where);
             for (Object a : indy.bsmArgs) if (a instanceof Handle h) checkHandle(h, where);
             if (indy.bsm.getOwner().equals("java/lang/invoke/LambdaMetafactory")) checkLambda(indy, where);
+        }
+    }
+
+    /** NEW and constructor method handles fail here, while the abstract type's constructor still resolves. */
+    private void checkInstantiable(String owner, String where) {
+        Cls c = cls(owner);
+        if (c == null) return;
+        int access = classAcc(c);
+        if ((access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_INTERFACE)) != 0) {
+            report("INSTANTIATION", where, owner, "NEW on "
+                + ((access & Opcodes.ACC_INTERFACE) != 0 ? "interface" : "abstract class")
+                + " (InstantiationError)");
         }
     }
 
@@ -1316,6 +1328,9 @@ public final class LinkCheck {
                 default -> Opcodes.INVOKEVIRTUAL;
             };
             checkMethodRef(h.getOwner(), h.getName(), h.getDesc(), op, h.isInterface(), where);
+            if (tag == Opcodes.H_NEWINVOKESPECIAL) {
+                checkInstantiable(h.getOwner(), where);
+            }
         }
     }
 
