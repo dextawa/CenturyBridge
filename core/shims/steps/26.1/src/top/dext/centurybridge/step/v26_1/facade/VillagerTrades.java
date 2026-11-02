@@ -9,9 +9,27 @@ import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.apache.commons.lang3.tuple.Pair;
 import top.dext.centurybridge.step.v26_1.rt.CbFapiTrades;
+import top.dext.centurybridge.step.v26_1.rt.CbWallEnchantBookPicks;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.SuspiciousStewEffects;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.trading.ItemCost;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 1.21.11's VillagerTrades (net/minecraft/class_3853) on 26.1, whose trades are data (VillagerTrade / TradeSet
@@ -39,5 +57,125 @@ public class VillagerTrades {
     public interface ItemListing {
         /** getOffer: the offer, or null for none */
         MerchantOffer method_7246(ServerLevel level, Entity trader, RandomSource random);
+    }
+
+    /**
+     * 1.21.11's VillagerTrades.SuspiciousStewForEmerald (net/minecraft/class_3853$class_4166): fields, constructors and
+     * getOffer are 1.21.11's (javap of client-1.21.11-intermediary-code.jar) over 26.1's same item, component and offer
+     * classes.
+     */
+    public static class SuspiciousStewForEmerald implements ItemListing {
+        /** effects */
+        public final SuspiciousStewEffects field_45756;
+        /** xp */
+        public final int field_18579;
+        /** priceMultiplier */
+        public final float field_18580;
+
+        public SuspiciousStewForEmerald(Holder<MobEffect> effect, int duration, int xp) {
+            this(new SuspiciousStewEffects(List.of(new SuspiciousStewEffects.Entry(effect, duration))), xp, 0.05f);
+        }
+
+        public SuspiciousStewForEmerald(SuspiciousStewEffects effects, int xp, float priceMultiplier) {
+            this.field_45756 = effects;
+            this.field_18579 = xp;
+            this.field_18580 = priceMultiplier;
+        }
+
+        @Override
+        public MerchantOffer method_7246(ServerLevel level, Entity trader, RandomSource random) {
+            ItemStack stew = new ItemStack(Items.SUSPICIOUS_STEW, 1);
+            stew.set(DataComponents.SUSPICIOUS_STEW_EFFECTS, this.field_45756);
+            return new MerchantOffer(new ItemCost(Items.EMERALD), stew, 12, this.field_18579, this.field_18580);
+        }
+    }
+
+    /**
+     * 1.21.11's VillagerTrades.EnchantBookForEmeralds (net/minecraft/class_3853$class_1648): fields, constructors and
+     * getOffer are 1.21.11's (javap of client-1.21.11-intermediary-code.jar). The pick is 1.21.11's
+     * registry.getRandomElementOf(tag, random) (on HolderGetter in 26.1); when a climbing 1.21 layer gives back
+     * 1.20.6's getRandomEnchantment and explicit lists it installs that pick (rt/CbWallEnchantBookPicks) and the book's
+     * enchantment comes from method_59891, so a mod's call and the villager's pick are the same.
+     */
+    public static class EnchantBookForEmeralds implements ItemListing, CbWallEnchantBookPicks.Explicit {
+        /** villagerXp */
+        public final int field_18557;
+        /** tradeableEnchantments */
+        public final TagKey<Enchantment> field_45131;
+        /** minLevel */
+        public final int field_45132;
+        /** maxLevel */
+        public final int field_45133;
+        /** a 1.20.6 constructor's enchantment list (the 1.21 layer's objects), null for a trade on the tag */
+        private List<?> cb$explicit;
+
+        public EnchantBookForEmeralds(int villagerXp, TagKey<Enchantment> tradeableEnchantments) {
+            this(villagerXp, 0, Integer.MAX_VALUE, tradeableEnchantments);
+        }
+
+        public EnchantBookForEmeralds(int villagerXp, int minLevel, int maxLevel, TagKey<Enchantment> tradeableEnchantments) {
+            this.field_18557 = villagerXp;
+            this.field_45131 = tradeableEnchantments;
+            this.field_45132 = minLevel;
+            this.field_45133 = maxLevel;
+        }
+
+        @Override
+        public void cb$setEnchantments(List enchantments) {
+            this.cb$explicit = List.copyOf(enchantments);
+        }
+
+        /**
+         * 1.20.6's getRandomEnchantment as the 1.21 layer gives it back (answering the 1.21 layer's enchantment object,
+         * which a converted call casts back to: callReshapes "ret ... as"); null without a 1.21 layer, which never
+         * calls it
+         */
+        public Object cb$pick(RandomSource random, FeatureFlagSet features, Registry<Enchantment> registry) {
+            CbWallEnchantBookPicks.Hook hook = CbWallEnchantBookPicks.hook();
+            return hook == null ? null : hook.cb$pick(this.cb$explicit, this.field_45131, registry, random, features);
+        }
+
+        /**
+         * the 1.21 layer's restored EnchantBookForTrades.getRandomEnchantment(random, features): a converted mod's call
+         * reaches it through callReshapes (answer cast back to the 1.21 layer's enchantment class, "ret as"); the same
+         * pick the villager's getOffer makes. Null without a 1.21 layer (no converted call exists then)
+         */
+        public Object method_59891(RandomSource random, FeatureFlagSet features) {
+            return this.cb$pick(random, features, null);
+        }
+
+        @Override
+        public MerchantOffer method_7246(ServerLevel level, Entity trader, RandomSource random) {
+            Registry<Enchantment> registry = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+            Optional<Holder<Enchantment>> picked;
+            CbWallEnchantBookPicks.Hook hook = CbWallEnchantBookPicks.hook();
+            if (hook != null) {
+                Object e = this.cb$pick(random, level.enabledFeatures(), registry);
+                picked = e == null ? Optional.empty() : Optional.ofNullable(hook.cb$holder(e));
+            } else {
+                picked = registry.getRandomElementOf(this.field_45131, random);
+            }
+            int cost;
+            ItemStack book;
+            if (picked.isEmpty()) {
+                cost = 1;
+                book = new ItemStack(Items.BOOK);
+            } else {
+                Holder<Enchantment> h = picked.get();
+                Enchantment enchantment = h.value();
+                int lvl = Mth.nextInt(random, Math.max(enchantment.getMinLevel(), this.field_45132),
+                    Math.min(enchantment.getMaxLevel(), this.field_45133));
+                book = EnchantmentHelper.createBook(new EnchantmentInstance(h, lvl));
+                cost = 2 + random.nextInt(5 + lvl * 10) + 3 * lvl;
+                if (h.is(EnchantmentTags.DOUBLE_TRADE_PRICE)) {
+                    cost *= 2;
+                }
+                if (cost > 64) {
+                    cost = 64;
+                }
+            }
+            return new MerchantOffer(new ItemCost(Items.EMERALD, cost), Optional.of(new ItemCost(Items.BOOK)), book, 12,
+                this.field_18557, 0.2f);
+        }
     }
 }

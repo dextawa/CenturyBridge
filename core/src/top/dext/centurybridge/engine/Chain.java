@@ -2148,6 +2148,13 @@ public final class Chain {
         /** after the call: null (same return), "pop", or a static {owner, name, desc} */
         public final String retKind;
         public final String retOwner, retName, retDesc;
+        /**
+         * "ret ... as &lt;type&gt;": a checkcast to the old return type after the call (and after the converter, if
+         * any), where the new shape answers a supertype of it, else null. The type is the old descriptor's own
+         * return type: every call site the reshape rewrites already names it, so the calling jar references it
+         * (a climbing layer's class the target-release layer cannot compile against)
+         */
+        public org.objectweb.asm.Type retCast;
 
         /** whether the call's values change at all (a converter on an argument or the return), not just its shape */
         public boolean converts() {
@@ -2317,6 +2324,47 @@ public final class Chain {
         CtorReshape args = parseReshape(key, newDesc, ops);
         org.objectweb.asm.Type oldRet = org.objectweb.asm.Type.getReturnType(oldDesc);
         org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(newDesc);
+        org.objectweb.asm.Type retCast = null;
+        if (ret != null) {
+            String rt = ret.trim();
+            int as = rt.startsWith("as ") ? 0 : rt.indexOf(" as ");
+            if (as >= 0) {
+                retCast = org.objectweb.asm.Type.getType(rt.substring(as == 0 ? 3 : as + 4).trim());
+                if (!retCast.equals(oldRet) || oldRet.getSort() != org.objectweb.asm.Type.OBJECT || oldRet.equals(newRet)) {
+                    throw new IllegalArgumentException(where + ": ret '" + ret + "' casts to " + retCast.getDescriptor()
+                        + "; 'as' names the old return type (" + oldRet.getDescriptor() + "), an object type the new shape ("
+                        + newRet.getDescriptor() + ") no longer answers");
+                }
+                if (as == 0) {
+                    // "as <type>": the new shape answers a supertype of the old return; the value passes, cast back
+                    if (newRet.getSort() != org.objectweb.asm.Type.OBJECT) {
+                        throw new IllegalArgumentException(where + ": ret '" + ret + "' casts a non-object " + newRet);
+                    }
+                    CallReshape c = new CallReshape(args, oldDesc, newDesc, null, null, null, null);
+                    c.retCast = retCast;
+                    return c;
+                }
+                // "conv OWNER#name(desc)R as <type>": the converter answers a supertype of the old return
+                String conv = rt.substring(0, as).trim();
+                int paren = conv.indexOf('(');
+                org.objectweb.asm.Type cr = paren < 0 ? null : org.objectweb.asm.Type.getReturnType(conv.substring(paren));
+                if (!conv.startsWith("conv ") || cr == null || cr.getSort() != org.objectweb.asm.Type.OBJECT) {
+                    throw new IllegalArgumentException(where + ": ret '" + ret + "': only a conv answering an object is cast");
+                }
+                String[] kv = conv.split(" ", 2);
+                String rest = kv[1].trim();
+                int hash = rest.indexOf('#');
+                int p2 = rest.indexOf('(');
+                org.objectweb.asm.Type[] rp = hash <= 0 || p2 <= hash ? null : org.objectweb.asm.Type.getArgumentTypes(rest.substring(p2));
+                if (rp == null || rp.length != 1 || !rp[0].equals(newRet)) {
+                    throw new IllegalArgumentException(where + ": ret " + conv + " does not take " + newRet);
+                }
+                CallReshape c = new CallReshape(args, oldDesc, newDesc, "conv", rest.substring(0, hash), rest.substring(hash + 1, p2),
+                    rest.substring(p2));
+                c.retCast = retCast;
+                return c;
+            }
+        }
         if (oldRet.equals(newRet)) {
             if (ret == null) {
                 return new CallReshape(args, oldDesc, newDesc, null, null, null, null);

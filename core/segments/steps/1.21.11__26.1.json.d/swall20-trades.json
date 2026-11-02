@@ -1,0 +1,27 @@
+{
+  "_swall20_trades": "swall20 (design approved by main, swall19 handoff): 1.21.11's VillagerTrades.SuspiciousStewForEmerald (class_3853$class_4166) and EnchantBookForEmeralds (class_3853$class_1648) are gone from 26.1 (trades are data there). Mods' references go to the 26.1 layer's facade/VillagerTrades$SuspiciousStewForEmerald / $EnchantBookForEmeralds, which carry 1.21.11's fields, constructors and getOffer bodies (javap of client-1.21.11-intermediary-code.jar) and implement facade ItemListing. The climbing 1.21 layer's two mixins on class_3853$class_1648 cannot apply to a layer class and retire; its 1.20.6 pick (rt/CbEnchantBookPick, the restored getRandomEnchantment's body) reaches the facade through its own hook holder, renamed onto the 26.1 layer's rt/CbWallEnchantBookPicks (install from CbEnchRegistriesMixin, no reflection); without a 1.21 layer the facade picks with 1.21.11's getRandomElementOf",
+  "classRenames": {
+    "net/minecraft/class_3853$class_4166": "top/dext/centurybridge/step/v26_1/facade/VillagerTrades$SuspiciousStewForEmerald",
+    "net/minecraft/class_3853$class_1648": "top/dext/centurybridge/step/v26_1/facade/VillagerTrades$EnchantBookForEmeralds",
+    "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades$Explicit": "top/dext/centurybridge/step/v26_1/rt/CbWallEnchantBookPicks$Explicit",
+    "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookPicks": "top/dext/centurybridge/step/v26_1/rt/CbWallEnchantBookPicks",
+    "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookPicks$Hook": "top/dext/centurybridge/step/v26_1/rt/CbWallEnchantBookPicks$Hook"
+  },
+  "_swall20_classRenames_basis": "the three 1.21-layer rt renames have the same members with the descriptors the 1.21 layer's copies have once converted to 26.1 names: CbEnchantBookTrades$Explicit.cb$setEnchantments(List)V (raw List: the elements stay the 1.21 layer's facade class_1887 past the wall); CbEnchantBookPicks.install(Hook)V / hook()Hook; Hook.cb$pick(List, TagKey, Registry, RandomSource, FeatureFlagSet)Object and cb$holder(Object)Holder. The facade implements CbWallEnchantBookPicks$Explicit, so CbEnchantBookTrades.cbNewListed / cbNewRanged (1.20.6's constructors, ctorRedirects at 1.20.6__1.21) build the facade and hand it their list",
+  "retiredClasses": {
+    "top/dext/centurybridge/step/v1_21/mixin/CbVillagerEnchantBookMixin": "target gone: class_3853$class_1648 is the 26.1 layer's facade/VillagerTrades$EnchantBookForEmeralds past the wall (classRenames), a layer class no mixin applies to; its restored getRandomEnchantment is rt/CbEnchantBookPick, which the facade calls (method_59891, getOffer)",
+    "top/dext/centurybridge/step/v1_21/mixin/CbVillagerEnchantBookMixinHooks": "target gone: the route into 1.21's getOffer pick; the facade's getOffer takes its pick from the installed hook (rt/CbWallEnchantBookPicks)",
+    "top/dext/centurybridge/step/v1_21/rt/CbPrioritySplit$EnchantBookPick": "only the two retired mixins implemented and read it",
+    "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades$Explicit": "moved home: the 26.1 layer's rt/CbWallEnchantBookPicks$Explicit, implemented by the facade (classRenames)",
+    "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookPicks": "moved home: the 26.1 layer's rt/CbWallEnchantBookPicks, which the facade reads (classRenames); left in place the 1.21 layer would install into a holder nothing reads",
+    "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookPicks$Hook": "moved home: rt/CbWallEnchantBookPicks$Hook (classRenames)"
+  },
+  "callReshapes": {
+    "net/minecraft/class_3853$class_1648.method_59891(Lnet/minecraft/class_5819;Lnet/minecraft/class_7699;)Ltop/dext/centurybridge/step/v1_21/facade/class_1887;": {
+      "desc": "(Lnet/minecraft/class_5819;Lnet/minecraft/class_7699;)Ljava/lang/Object;",
+      "ops": ["keep", "keep"],
+      "ret": "as Ltop/dext/centurybridge/step/v1_21/facade/class_1887;",
+      "basis": "a 1.20.6 mod's call of getRandomEnchantment (method_59891, public on 1.21 to 1.21.11 through CbVillagerEnchantBookMixin) after the 1.20.6__1.21 rename of class_1887 to the 1.21 layer's facade: the 26.1 facade's method_59891 runs the same pick (rt/CbEnchantBookPick through the installed hook) and answers it as Object, because the 26.1 layer is compiled without the 1.21 layer; the call site casts back to the 1.21 layer's class_1887, which the converted mod's own bytecode already references (the old descriptor's return type)"
+    }
+  }
+}
