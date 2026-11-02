@@ -108,6 +108,8 @@ final class MixinBridge {
 
         final List<Line> bridged = new ArrayList<>();
         final List<String> left = new ArrayList<>();
+        /** why a path was refused where a later one carried the injector (no verdict: not counted, not triaged) */
+        final List<String> refused = new ArrayList<>();
 
         /**
          * The report lines once repair and triage have judged the jar. A member carried here counts as
@@ -136,6 +138,9 @@ final class MixinBridge {
             }
             for (String l : left) {
                 out.add("mixin not bridged: " + l);
+            }
+            for (String l : refused) {
+                out.add("mixin path refused: " + l);
             }
             return out;
         }
@@ -331,6 +336,7 @@ final class MixinBridge {
         try {
             if (!m.bridge()) {
                 res.left.addAll(m.left);
+                res.refused.addAll(m.refused);
                 rollbackRestorers(before);
                 return false;
             }
@@ -352,6 +358,7 @@ final class MixinBridge {
         }
         res.bridged.addAll(m.bridged);
         res.left.addAll(m.left);
+        res.refused.addAll(m.refused);
         if (m.refmapDirty && mappings != null) {
             mappings.add(cls, m.table);
             return true;
@@ -951,6 +958,7 @@ final class MixinBridge {
         final List<MethodNode> helperMethods = new ArrayList<>();
         final List<Result.Line> bridged = new ArrayList<>();
         final List<String> left = new ArrayList<>();
+        final List<String> refused = new ArrayList<>();
         boolean changed;
         boolean refmapDirty;
         /** set by counterpartAnchor's inherited-owner path: per handler parameter its @Local's W ordinal (-1 none, -2 implicit) */
@@ -1964,12 +1972,24 @@ final class MixinBridge {
                 }
                 if (fate == null) {
                     // an anchor in the body W moved up into a superclass: a guarded injector there
+                    int guardMark = why.size();
                     Selection guarded = baseGuard(h, an, kind, vmeth, wt, where, why);
                     if (guarded != null) {
                         return guarded;
                     }
+                    // baseGuard's refusal stays in the report (a line of its own, no verdict) when the restored
+                    // override carries the injector instead
+                    List<String> guardWhy = new ArrayList<>(why.subList(guardMark, why.size()));
                     MethodNode restored = restoreOverride(vmeth, wt, why);
                     if (restored != null) {
+                        // the mixin now depends on its restoring mixin: committed as changed, or bridgeOne rolls the
+                        // restored override back (a HEAD / RETURN / TAIL injector rewrites no anchor, so nothing else
+                        // marks it) and the injector was live only where another mixin's restorer happened to stay
+                        changed = true;
+                        for (String g : guardWhy) {
+                            refused.add(where + ": guarded injector in the superclass refused (" + g
+                                + "); the restored override carries it");
+                        }
                         injected("@" + kind + " " + sn + "." + h.name, where + " => the override " + chain.to
                             + " dropped, restored in the mixin as a call of the inherited one");
                         return new Selection(h, an, List.of(vmeth), List.of(restored));
@@ -3720,9 +3740,12 @@ final class MixinBridge {
          * plain public method (merged into the target), which the guarded handler calls; outside the
          * target the guarded handler does nothing ({@code @Inject}) or hands the value back unchanged
          * ({@code @ModifyExpressionValue}, {@code @ModifyArg}, {@code @ModifyConstant} with the one
-         * value). Refused when the target's instances are not V's: a V subclass of the target that W
-         * moved out from under it, or a class new in W under the superclass but outside the target
-         * (which V class it stands for is not read off the hierarchy). Handlers capturing locals or
+         * value). A V subclass of the target that W moved out from under it keeps the guard on the target:
+         * the handler no longer runs for that class's instances, reported as a loss naming it. Refused when
+         * a class new in W under the superclass but outside the target may stand for a V target instance
+         * (which V class it stands for is not read off the hierarchy) unless the step judged it to stand for
+         * none ({@link Chain#noVCounterpart}). V's subclasses are compared by their W names (the step's
+         * renames). Handlers capturing locals or
          * carrying sugar, static handlers, and injectors handling a call itself are not moved.
          */
         private Selection baseGuard(MethodNode h, AnnotationNode an, String kind, MethodNode vmeth, ClassNode wt,
@@ -3766,22 +3789,36 @@ final class MixinBridge {
             // whose instances the guard admits: the target's in W, which must be the target's in V
             Set<String> wSub = new HashSet<>(code.subclasses(target));
             wSub.add(target);
+            // V's subclasses by their W names (a class the step renames or moves -- 26.2 monster/MagmaCube ->
+            // cubemob/MagmaCube -- is W's class of the new name; looked up by V's name it would read as gone)
             List<String> movedOut = new ArrayList<>();
             for (String c : chain.sourceCode.subclasses(target)) {
-                if (!wSub.contains(c) && w(c) != null) {
-                    movedOut.add(c);
+                String wc = chain.mixinFollow().getOrDefault(c, c);
+                if (wc.equals(c) && chain.classRenames.containsKey(c) && Chain.minecraftOwned(chain.classRenames.get(c))) {
+                    wc = chain.classRenames.get(c);
+                }
+                if (!wSub.contains(wc) && w(wc) != null) {
+                    movedOut.add(wc);
                 }
             }
+            // a V subclass W moved out from under the target (26.2 MagmaCube, no longer a Slime): the guard stays
+            // this instanceof the target, so the handler no longer runs for that class's instances -- a loss,
+            // reported per mixin with the class named, not a reason to drop the injector for the target's own
+            String loss = "";
             if (!movedOut.isEmpty()) {
-                why.add(shortName(decl.name) + "." + vmeth.name + vmeth.desc + " holds the code W moved up, but "
-                    + shortName(movedOut.get(0)) + (movedOut.size() > 1 ? " (and " + (movedOut.size() - 1) + " more)" : "")
-                    + ", a " + shortName(target) + " in " + chain.from + ", is not one in " + chain.to + ": this instanceof "
-                    + shortName(target) + " would miss it");
-                return null;
+                List<String> names = new ArrayList<>();
+                for (String c : movedOut) {
+                    names.add(shortName(c));
+                }
+                loss = "; loss: " + String.join(", ", names) + (movedOut.size() > 1 ? ", each" : "") + " a "
+                    + shortName(target) + " in " + chain.from + ", is not one in " + chain.to
+                    + ": the handler no longer runs for " + (movedOut.size() > 1 ? "their" : "its") + " instances";
             }
             List<String> newOut = new ArrayList<>();
             for (String c : code.subclasses(decl.name)) {
-                if (!wSub.contains(c) && chain.sourceCode.target(c) == null) {
+                // a moved-out V subclass under its W name is no new class: it stands for itself (the loss above)
+                if (!wSub.contains(c) && !movedOut.contains(c) && chain.sourceCode.target(c) == null
+                        && !chain.noVCounterpart.containsKey(c)) {
                     newOut.add(c);
                 }
             }
@@ -3863,7 +3900,7 @@ final class MixinBridge {
             changed = true;
             injected("@" + kind + " " + sn + "." + oldName, where + " => " + shortName(decl.name) + "." + sel
                 + " (the override " + chain.to + " dropped held the anchor; W keeps it in the superclass: injected there, guarded by"
-                + " this instanceof " + shortName(target) + ", calling the mod's handler)");
+                + " this instanceof " + shortName(target) + ", calling the mod's handler" + loss + ")");
             return new Selection(g, moved, List.of(vmeth), List.of(inherited));
         }
 

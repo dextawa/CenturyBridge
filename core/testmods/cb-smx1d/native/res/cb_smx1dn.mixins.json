@@ -9,7 +9,9 @@
     "NativePresetMixin",
     "NativeCycleBuildMixin",
     "NativeDefaultLabelMixin",
-    "NativeLabelVisitMixin"
+    "NativeLabelVisitMixin",
+    "NativeImageContentsMixin",
+    "NativeDefaultSpriteMixin"
   ],
   "injectors": {
     "defaultRequire": 1

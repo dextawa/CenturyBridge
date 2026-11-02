@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_slm",
+  "version": "1.0.0",
+  "name": "CB Slime tick test (26.1.2)",
+  "environment": "*",
+  "mixins": ["cb_slm.mixins.json"],
+  "depends": { "fabricloader": ">=0.14.0", "minecraft": "26.1.2" }
+}

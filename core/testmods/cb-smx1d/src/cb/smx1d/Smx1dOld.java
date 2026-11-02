@@ -351,11 +351,95 @@ public class Smx1dOld implements ClientModInitializer {
         }
     }
 
+    /** a 1.21.10 MultiLineLabel implementation: render / getStyle / getLineCount / getWidth, nothing else */
+    static final class OldLabel implements net.minecraft.class_5489 {
+        int renders, lastColor;
+        boolean lastShadow;
+
+        @Override
+        public int method_73212(net.minecraft.class_332 g, net.minecraft.class_5489.class_11735 align, int x, int y,
+                                int lineHeight, boolean shadow, int color) {
+            renders++;
+            lastColor = color;
+            lastShadow = shadow;
+            g.method_51439(class_310.method_1551().field_1772, class_2561.method_43470("cb old label"), x, y, color, shadow);
+            return y + lineHeight;
+        }
+
+        @Override
+        public net.minecraft.class_2583 method_72103(net.minecraft.class_5489.class_11735 align, int x, int y, int lineHeight,
+                                                    double mouseX, double mouseY) {
+            return mouseY >= y && mouseY < y + lineHeight && mouseX >= x
+                ? net.minecraft.class_2583.field_24360.method_10975("cbold") : null;
+        }
+
+        @Override
+        public int method_30887() {
+            return 1;
+        }
+
+        @Override
+        public int method_44048() {
+            return 60;
+        }
+    }
+
+    /** a 1.21.10 ImageButton subclass overriding renderWidget (public there; final on AbstractButton in 1.21.11) */
+    static final class OldImage extends net.minecraft.class_344 {
+        int renders;
+
+        OldImage(int x, int y) {
+            super(x, y, 20, 20, new net.minecraft.class_8666(net.minecraft.class_2960.method_60656("widget/button")), b -> { });
+        }
+
+        @Override
+        public void method_48579(net.minecraft.class_332 g, int mouseX, int mouseY, float delta) {
+            renders++;
+            super.method_48579(g, mouseX, mouseY, delta);
+        }
+    }
+
+    /** a 1.21.10 SpriteIconButton.CenteredIcon subclass overriding renderString */
+    static final class OldIcon extends net.minecraft.class_8662.class_8664 {
+        int strings;
+
+        OldIcon() {
+            super(20, 20, class_2561.method_43470("cb icon"), 16, 16,
+                new net.minecraft.class_8666(net.minecraft.class_2960.method_60656("icon/accessibility")), b -> { },
+                class_2561.method_43470("cb icon tip"), net.minecraft.class_4185.field_40754);
+        }
+
+        @Override
+        public void method_48589(net.minecraft.class_332 g, net.minecraft.class_327 font, int color) {
+            strings++;
+            super.method_48589(g, font, color);
+        }
+    }
+
+    /** a 1.21.10 button overriding renderScrollingString(graphics, font, inset, color) only */
+    static final class OldScroll extends net.minecraft.class_4185 {
+        int scrolls, lastInset = -1;
+
+        OldScroll(int x, int y) {
+            super(x, y, 120, 20, class_2561.method_43470("cb scroll button"), b -> { }, net.minecraft.class_4185.field_40754);
+        }
+
+        @Override
+        protected void method_49604(net.minecraft.class_332 g, net.minecraft.class_327 font, int inset, int color) {
+            scrolls++;
+            lastInset = inset;
+            super.method_49604(g, font, inset, color);
+        }
+    }
+
     /** a 1.21.10 screen drawing a label through render(graphics, align, ..) and asking getStyle */
     static final class OldScreen extends net.minecraft.class_437 {
         net.minecraft.class_5489 label;
         OldButton old;
-        int frames, lastEnd = -1, lines;
+        OldImage img;
+        OldIcon icon;
+        OldScroll scroll;
+        int frames, lastEnd = -1, lines, directRenders;
         String style = "none";
         String scrolled = "not run";
         Throwable failed;
@@ -372,6 +456,11 @@ public class Smx1dOld implements ClientModInitializer {
             old = this.method_37063(new OldButton(10, 60));
             this.method_37063(net.minecraft.class_4185.method_46430(class_2561.method_43470("cb vanilla button"), b -> { })
                 .method_46434(10, 90, 120, 20).method_46431());
+            img = this.method_37063(new OldImage(140, 60));
+            icon = this.method_37063(new OldIcon());
+            icon.method_46421(170);
+            icon.method_46419(60);
+            scroll = this.method_37063(new OldScroll(10, 120));
         }
 
         @Override
@@ -383,6 +472,10 @@ public class Smx1dOld implements ClientModInitializer {
                 style = s == null ? "null" : String.valueOf(s.method_10955());
                 OldButton.scrolling(g, this.field_22793);
                 scrolled = "ran";
+                net.minecraft.class_344 asImage = img; // a call naming ImageButton from outside its hierarchy
+                int before = img.renders;
+                asImage.method_48579(g, mouseX, mouseY, delta);
+                directRenders += img.renders - before;
             } catch (Throwable t) {
                 failed = t;
             }
@@ -392,6 +485,7 @@ public class Smx1dOld implements ClientModInitializer {
 
     static void text(class_310 mc) throws Exception {
         long labels0 = n("labelVisit"), oldLabel0 = n("defaultLabel.old"), vanLabel0 = n("defaultLabel.vanilla");
+        long image0 = n("imageContents.old"), sprite0 = n("defaultSprite.old");
         OldScreen[] s = {null};
         mc.execute(() -> {
             s[0] = new OldScreen();
@@ -414,6 +508,42 @@ public class Smx1dOld implements ClientModInitializer {
         r("text.oldDefaultLabelNative", n("defaultLabel.old") - oldLabel0 > 0, "renderDefaultLabel=" + (n("defaultLabel.old") - oldLabel0));
         r("text.vanillaDefaultLabelNative", n("defaultLabel.vanilla") - vanLabel0 > 0,
             "renderDefaultLabel=" + (n("defaultLabel.vanilla") - vanLabel0));
+        r("text.oldRenderWidget", sc.img.renders >= sc.frames && sc.frames > 0, "renderWidget=" + sc.img.renders + " frames=" + sc.frames);
+        r("text.oldRenderWidgetSuperNative", n("imageContents.old") - image0 > 0, "renderContents=" + (n("imageContents.old") - image0));
+        r("text.renderWidgetCall", sc.directRenders > 0, "direct=" + sc.directRenders);
+        r("text.oldIconString", sc.icon.strings > 0, "renderString=" + sc.icon.strings);
+        r("text.oldIconSpriteNative", n("defaultSprite.old") - sprite0 > 0, "renderDefaultSprite=" + (n("defaultSprite.old") - sprite0));
+        r("text.oldScrollingHook", sc.scroll.scrolls > 0 && sc.scroll.lastInset == 2, "renderScrollingString=" + sc.scroll.scrolls
+            + " inset=" + sc.scroll.lastInset);
+        oldLabelInVanillaScreen(mc);
+    }
+
+    /** a 1.21.10 MultiLineLabel implementation in a vanilla 1.21.11 screen (ConfirmScreen draws its label through visitLines) */
+    static void oldLabelInVanillaScreen(class_310 mc) throws Exception {
+        OldLabel label = new OldLabel();
+        net.minecraft.class_405[] s = {null};
+        mc.execute(() -> {
+            s[0] = new net.minecraft.class_405(() -> { }, (a, b) -> { }, class_2561.method_43470("cb confirm"),
+                class_2561.method_43470("cb confirm body"), false);
+            mc.method_1507(s[0]);
+        });
+        sleep(1000);
+        Throwable[] failed = {null};
+        mc.execute(() -> {
+            try {
+                java.lang.reflect.Field f = net.minecraft.class_405.class.getDeclaredField("field_2365");
+                f.setAccessible(true);
+                f.set(s[0], label);
+            } catch (Throwable t) {
+                failed[0] = t;
+            }
+        });
+        sleep(2000);
+        mc.execute(() -> mc.method_1507(null));
+        sleep(500);
+        r("text.oldLabelVanillaScreen", failed[0] == null && label.renders > 0 && label.lastColor == -1 && label.lastShadow,
+            "render=" + label.renders + String.format(" color=%08x", label.lastColor) + " shadow=" + label.lastShadow
+            + " failed=" + failed[0]);
     }
 
     // 5. Realms FileUpload.upload() / cancel() / isFinished()

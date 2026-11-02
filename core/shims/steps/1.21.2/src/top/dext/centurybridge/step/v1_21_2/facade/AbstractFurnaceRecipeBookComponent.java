@@ -32,6 +32,12 @@ public abstract class AbstractFurnaceRecipeBookComponent extends RecipeBookCompo
         this.field_3088.method_1962(FILTER_SPRITES);
     }
 
+    /** 1.21.11's getFilterButtonTextures (see RecipeBookComponent.method_76629): the furnace sprites method_2585 sets */
+    @Override
+    public net.minecraft.class_8666 method_76629() {
+        return FILTER_SPRITES;
+    }
+
     @Override
     public void method_2600(net.minecraft.class_1735 slot) {
         super.method_2600(slot);

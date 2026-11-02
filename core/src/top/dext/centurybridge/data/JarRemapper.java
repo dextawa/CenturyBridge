@@ -852,7 +852,53 @@ public final class JarRemapper {
                         return name;
                     }
                     org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(desc);
-                    return ret.getSort() == org.objectweb.asm.Type.OBJECT ? member(ret.getInternalName(), name) : name;
+                    if (ret.getSort() != org.objectweb.asm.Type.OBJECT) {
+                        return name;
+                    }
+                    String m = member(ret.getInternalName(), name);
+                    if (m.equals(name)) {
+                        String inh = cbInheritedSam(ret.getInternalName(), name);
+                        if (inh != null) {
+                            return inh;
+                        }
+                    }
+                    return m;
+                }
+
+                /**
+                 * A lambda whose functional interface is one of the jar's CenturyBridge interfaces that inherits its
+                 * abstract method from a game interface (the 1.21 layer's RefreshableSearchTree extends SearchTree,
+                 * class_1129, whose method_4810 is search past the wall): the SAM is the game interface's, under its
+                 * new name. Walked over the jar's source-named hierarchy (jarSupersSource) to the first game types;
+                 * the table's name for the token there (or on their supertypes), null when none names it.
+                 */
+                private String cbInheritedSam(String owner, String name) {
+                    if (!(owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/"))) {
+                        return null;
+                    }
+                    java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(java.util.List.of(owner));
+                    java.util.Set<String> seen = new java.util.HashSet<>();
+                    while (!todo.isEmpty()) {
+                        String o = todo.poll();
+                        if (!seen.add(o)) {
+                            continue;
+                        }
+                        if (o.startsWith("top/dext/centurybridge/") || o.startsWith("centurybridge/")) {
+                            String[] sup = jarSupersSource.get(o);
+                            if (sup != null) {
+                                todo.addAll(java.util.List.of(sup));
+                            }
+                            continue;
+                        }
+                        String hit = byOwner.get(o + "." + name);
+                        if (hit == null) {
+                            hit = superMember(Table.this, o, name);
+                        }
+                        if (hit != null) {
+                            return hit;
+                        }
+                    }
+                    return null;
                 }
             };
         }

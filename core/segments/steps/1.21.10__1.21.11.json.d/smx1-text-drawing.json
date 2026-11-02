@@ -1,20 +1,18 @@
 {
- "_smx1_text_drawing_basis": "smx1i (javap -c -p of both code jars): 1.21.11 draws widget and label text through an ActiveTextCollector (class_12225). MultiLineLabel.Align (class_5489$class_11735) is top-level class_11735: same constants, constructors and method_73214 bodies ($1..$3 too); 1.21.11 only widens method_73214 to public and adds method_75792. MultiLineLabel.render / getStyle (method_73212 / method_72103) are 1.21.10's bodies over the lines visitLines (method_75816) hands a collector, with the label's own font (rt/CbTextDrawing; the never-read shadow argument is dropped as 1.21.10 dropped it). AbstractWidget.renderScrollingString and its statics, AbstractButton.renderString and the SpriteIconButton renderString overrides come back with 1.21.10's bodies over GuiGraphics' scissor / drawString, which 1.21.11 keeps. A 1.21.10 button overriding renderString is reached from 1.21.11's renderDefaultLabel (method_75793) with 1.21.10's arguments (the collector's GuiGraphics, the client font, ARGB.color(alpha, active ? white : 0xFFA0A0A0)); a 1.21.10 SpriteIconButton subclass from renderContents (its text was never a default label). renderContents (method_75752) is abstract in 1.21.11; a 1.21.10 button class gets AbstractButton's 1.21.10 drawing: the sprite, then the label through the GuiGraphics' collector, as 1.21.11's Button.Plain. StringSplitter.componentStyleAtWidth (method_30876, which 1.21.10's getStyle used) comes back on StringSplitter with 1.21.10's body (mixin/CbStringSplitterRestoredMixin).",
+ "_smx1_text_drawing_basis": "smx1i (javap -c -p of both code jars): 1.21.11 draws widget and label text through an ActiveTextCollector (class_12225). MultiLineLabel.Align (class_5489$class_11735) is top-level class_11735: same constants, constructors and method_73214 bodies ($1..$3 too); 1.21.11 only widens method_73214 to public and adds method_75792. MultiLineLabel.render / getStyle (method_73212 / method_72103) are 1.21.10's bodies over the lines visitLines (method_75816) hands a collector, with the label's own font (rt/CbTextDrawing; the never-read shadow argument is dropped as 1.21.10 dropped it). AbstractWidget.renderScrollingString and its statics, AbstractButton.renderString and the SpriteIconButton renderString overrides come back with 1.21.10's bodies over GuiGraphics' scissor / drawString, which 1.21.11 keeps. A 1.21.10 button overriding renderString is reached from 1.21.11's renderDefaultLabel (method_75793) with 1.21.10's arguments (the collector's GuiGraphics, the client font, ARGB.color(alpha, active ? white : 0xFFA0A0A0)); a 1.21.10 SpriteIconButton subclass from renderContents (its text was never a default label). renderContents (method_75752) is abstract in 1.21.11; a 1.21.10 button class gets AbstractButton's 1.21.10 drawing: the sprite, then the label through the GuiGraphics' collector, as 1.21.11's Button.Plain. StringSplitter.componentStyleAtWidth (method_30876, which 1.21.10's getStyle used) comes back on StringSplitter with 1.21.10's body (mixin/CbStringSplitterRestoredMixin). smx1j: MultiLineLabel.render / getStyle are restored as defaults of MultiLineLabel (mixin/CbMultiLineLabelRestoredMixin, bodies over visitLines), so calls stay calls (covers) and a 1.21.10 label implementation's own render / getStyle override them; such an implementation gets visitLines (abstract in 1.21.11) from an abstract fill (CbTextDrawing.visitLines: a GuiGraphics collector -> its render with that collector's colour and the style at the GuiGraphics' mouse; a ClickableStyleFinder -> getStyle at the finder's position through its own filter). AbstractButton.renderWidget is final in 1.21.11: a 1.21.10 override is renamed cb$renderWidget (overrideRenames, adapter LegacyRenderWidget) and the final method's head hands the call to it (mixin/CbAbstractButtonRenderWidgetMixinHooks, default priority); its super.renderWidget re-enters and runs 1.21.11's body.",
  "classRenames": {
   "net/minecraft/class_5489$class_11735": "net/minecraft/class_11735",
   "net/minecraft/class_5489$class_11735$1": "net/minecraft/class_11735$1",
   "net/minecraft/class_5489$class_11735$2": "net/minecraft/class_11735$2",
   "net/minecraft/class_5489$class_11735$3": "net/minecraft/class_11735$3"
  },
- "instanceRedirects": {
-  "net/minecraft/class_5489.method_73212(Lnet/minecraft/class_332;Lnet/minecraft/class_5489$class_11735;IIIZI)I": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing",
-  "net/minecraft/class_5489.method_72103(Lnet/minecraft/class_5489$class_11735;IIIDD)Lnet/minecraft/class_2583;": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing"
- },
  "staticRedirects": {
   "net/minecraft/class_339.method_52718(Lnet/minecraft/class_332;Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIII)V": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing",
   "net/minecraft/class_339.method_49605(Lnet/minecraft/class_332;Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIIII)V": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing"
  },
  "covers": [
+  "net/minecraft/class_5489.method_73212(Lnet/minecraft/class_332;Lnet/minecraft/class_5489$class_11735;IIIZI)I",
+  "net/minecraft/class_5489.method_72103(Lnet/minecraft/class_5489$class_11735;IIIDD)Lnet/minecraft/class_2583;",
   "net/minecraft/class_339.method_49604(Lnet/minecraft/class_332;Lnet/minecraft/class_327;II)V",
   "net/minecraft/class_4264.method_48589(Lnet/minecraft/class_332;Lnet/minecraft/class_327;I)V",
   "net/minecraft/class_8662$class_8664.method_48589(Lnet/minecraft/class_332;Lnet/minecraft/class_327;I)V",
@@ -57,6 +55,21 @@
    "method": "method_75752(Lnet/minecraft/class_332;IIF)V",
    "call": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing.renderContents(Lnet/minecraft/class_4264;Lnet/minecraft/class_332;IIF)V",
    "basis": "renderContents is new and abstract in 1.21.11 (absent from 1.21.10's class_4264, javap both); a 1.21.10 button class drew what AbstractButton.renderWidget drew: the default sprite, then the text"
+  },
+  {
+   "under": "net/minecraft/class_5489",
+   "method": "method_75816(Lnet/minecraft/class_11735;IIILnet/minecraft/class_12225;)I",
+   "call": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing.visitLines(Lnet/minecraft/class_5489;Lnet/minecraft/class_11735;IIILnet/minecraft/class_12225;)I",
+   "basis": "visitLines is new and abstract in 1.21.11 (absent from 1.21.10's class_5489, javap both) and every 1.21.11 screen draws labels through it; a 1.21.10 implementation has render(graphics, ..) / getStyle(..) only"
+  }
+ ],
+ "overrideRenames": [
+  {
+   "old": "method_48579(Lnet/minecraft/class_332;IIF)V",
+   "new": "cb$renderWidget",
+   "onlyUnder": "net/minecraft/class_4264",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbTextDrawing$LegacyRenderWidget",
+   "basis": "AbstractButton.renderWidget is protected final in 1.21.11 (protected in 1.21.10; public overrides in SpriteIconButton.CenteredIcon / TextAndIcon, ImageButton, Checkbox, PlainTextButton ...; javap both): a 1.21.10 button's override is renamed and the final renderWidget hands the call to it (CbAbstractButtonRenderWidgetMixinHooks); its super.renderWidget runs 1.21.11's body (renderContents, focus outline)"
   }
  ]
 }

@@ -13,6 +13,13 @@ accessible	field	net/minecraft/class_1496	field_55705	Lnet/minecraft/class_10583
 # TamableAnimal.DATA_OWNERUUID_ID: 1.21.4 TamableAnimal.getOwnerUUID / setOwnerUUID read and wrote it (rt/CbOwners)
 accessible	field	net/minecraft/class_1321	field_6320	Lnet/minecraft/class_2940;
 
+# BlockStateModel parts: 1.21.4's isGui3d / usesBlockLight / getTransforms of a 1.21.5 block model are read off its
+# single variant's part, its weighted list's first model or its first multipart selector (rt/CbBakedModels)
+accessible field net/minecraft/class_10893 field_57945 Lnet/minecraft/class_10889;
+accessible field net/minecraft/class_1097 field_5434 Lnet/minecraft/class_6012;
+accessible field net/minecraft/class_10895 field_57948 Lnet/minecraft/class_10895$class_1095;
+accessible class net/minecraft/class_10895$class_1095
+accessible field net/minecraft/class_10895$class_1095 field_5427 Ljava/util/List;
 # ---- BEGIN GENERATED (s215b): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
 # members, given back so a converted mod's call, read or write links again

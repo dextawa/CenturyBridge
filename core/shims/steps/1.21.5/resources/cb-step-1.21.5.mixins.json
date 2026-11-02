@@ -27,7 +27,8 @@
     "CbWeightedWrapperMixin"
   ],
   "client": [
-    "CbGlViewportMixin"
+    "CbGlViewportMixin",
+    "CbModelItemPropsMixin"
   ],
   "server": [],
   "injectors": {
