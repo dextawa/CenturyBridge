@@ -38,6 +38,8 @@ import net.minecraft.world.entity.player.Player;
 public class Driver implements ModInitializer {
     public static int targetingTests;
     /** calls of 26.1's runValidation(source, key, value) on vanilla's three types (mixin/LootRunValidationMixin) */
+    /** trade sets 26.1's AbstractVillager.addOffersFromTradeSet was called with (mixin/TradeSetOffersMixin) */
+    public static final List<String> TRADE_SETS = java.util.Collections.synchronizedList(new ArrayList<>());
     public static final java.util.concurrent.atomic.AtomicInteger VANILLA_VALIDATIONS = new java.util.concurrent.atomic.AtomicInteger();
     public static final AttackRange NATIVE_RANGE = new AttackRange(5.0F, 6.0F, 7.0F, 8.0F, 0.5F, 1.0F);
     public static final AttackRange MIXED_RANGE = new AttackRange(1.0F, 2.0F, 3.0F, 4.0F, 0.25F, 1.0F);
@@ -203,6 +205,7 @@ public class Driver implements ModInitializer {
 
         piglins(level);
         loot(server);
+        trades(level);
 
         if (!FabricLoader.getInstance().isModLoaded("cb_swall")) {
             return;
@@ -272,6 +275,25 @@ public class Driver implements ModInitializer {
         } catch (Throwable t) {
             check("mixed.lootCustomValidator", false, t);
         }
+    }
+
+    /**
+     * 26.1's own updateTrades for a profession no 1.21.11 mod edits (toolsmith: cb-swall edits only the farmer): a
+     * native injector on addOffersFromTradeSet fires, with the layer on and off. The wandering trader's pools: printed
+     * (cb-swall adds a pool, after which the layer draws 1.21.11's way and this injector does not run)
+     */
+    private static void trades(ServerLevel level) {
+        net.minecraft.world.entity.npc.villager.Villager v = make(level, EntityType.VILLAGER, null);
+        int before = TRADE_SETS.size();
+        v.setVillagerData(v.getVillagerData().withProfession(level.registryAccess(),
+            net.minecraft.world.entity.npc.villager.VillagerProfession.TOOLSMITH).withLevel(1));
+        int offers = v.getOffers().size();
+        List<String> seen = new ArrayList<>(TRADE_SETS.subList(before, TRADE_SETS.size()));
+        check("native.tradeSetOffersFires", seen.size() == 1 && seen.get(0).contains("toolsmith") && offers > 0, seen + " offers=" + offers);
+        int w = TRADE_SETS.size();
+        net.minecraft.world.entity.npc.wanderingtrader.WanderingTrader t = make(level, EntityType.WANDERING_TRADER, null);
+        int wares = t.getOffers().size();
+        System.out.println("CBNATIVE wanderingTradeSets=" + TRADE_SETS.subList(w, TRADE_SETS.size()) + " wares=" + wares);
     }
 
     private static <T extends net.minecraft.world.level.storage.loot.Validatable> void validateAll(net.minecraft.world.level.storage.loot.LootDataType<T> type,

@@ -50,7 +50,9 @@ import java.util.Optional;
  * <li>A listing of a 26.1 trade answers that trade's offer for the trader, as 26.1 makes it (its loot context, the
  *     trader's random); null when the trade's merchant predicate rejects the trader.</li>
  * <li>Villagers and wandering traders pick from the tables with 1.21.11's bodies (mixin/CbFapiVillagerTradesMixin,
- *     CbFapiWanderingTraderTradesMixin): two distinct listings of the villager's level (EXPERIMENTAL_TRADES first when
+ *     CbFapiWanderingTraderTradesMixin) only where a mod edited them (villagerVanilla / wanderingVanilla compare the
+ *     listings' structure with vanilla's placeholders); everywhere else 26.1's own updateTrades runs, native mixins
+ *     included. The 1.21.11 picks: two distinct listings of the villager's level (EXPERIMENTAL_TRADES first when
  *     trade rebalance is enabled), each pool's count of distinct listings. 26.1's per-set amount, duplicates flag and
  *     random sequence do not apply: 1.21.11's picks did not have them.</li>
  * </ul>
@@ -266,6 +268,60 @@ public final class CbFapiTrades {
                 .create(LootContextParamSets.VILLAGER_TRADE);
         LootContext context = new LootContext.Builder(params).withOptionalRandomSource(random).create(Optional.empty());
         return trade.getOffer(context);
+    }
+
+    // ---- whether the tables still say what 26.1 says (then 26.1's own updateTrades runs, native mixins included) ----
+
+    /**
+     * whether the listings the villager's profession and level draw from (villagerLevels: EXPERIMENTAL_TRADES first
+     * under trade rebalance) are still vanilla's: the placeholder for the 26.1 trade set the profession names for that
+     * level, or that set's complete expansion, or nothing where the profession names no set. Compared by structure
+     * (the kind of each listing and the set it stands for), never by array or map identity: reading the tables changes
+     * nothing, and any listing a mod put there -- even one offering the same thing -- is an edit
+     */
+    public static boolean villagerVanilla(ServerLevel level, Holder<VillagerProfession> profession, int villagerLevel) {
+        Int2ObjectMap<ItemListing[]> levels = villagerLevels(level, profession);
+        ItemListing[] listings = levels == null ? null : levels.get(villagerLevel);
+        return standsFor(listings, profession.value().getTrades(villagerLevel));
+    }
+
+    /** whether the wandering trader's pools are still vanilla's three (buying, uncommon, common, as initialWanderingTrades made them) */
+    public static boolean wanderingVanilla() {
+        List<Pair<ItemListing[], Integer>> pools = VillagerTrades.field_17724;
+        List<ResourceKey<TradeSet>> sets = List.of(TradeSets.WANDERING_TRADER_BUYING, TradeSets.WANDERING_TRADER_UNCOMMON, TradeSets.WANDERING_TRADER_COMMON);
+        List<Integer> counts = List.of(2, 2, 5);
+        if (pools.size() != sets.size()) {
+            return false;
+        }
+        for (int i = 0; i < sets.size(); i++) {
+            Pair<ItemListing[], Integer> pool = pools.get(i);
+            if (pool == null || !counts.get(i).equals(pool.getRight()) || !standsFor(pool.getLeft(), sets.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /** listings that are exactly the placeholder of the set, or its complete expansion (each trade once), or none for no set */
+    private static boolean standsFor(ItemListing[] listings, ResourceKey<TradeSet> set) {
+        if (set == null) {
+            return listings == null || listings.length == 0;
+        }
+        if (listings == null || listings.length == 0) {
+            return false;
+        }
+        if (listings.length == 1 && listings[0] instanceof SetListing s) {
+            return s.set.equals(set);
+        }
+        Expansion e = null;
+        java.util.Set<Holder<VillagerTrade>> trades = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
+        for (ItemListing listing : listings) {
+            if (!(listing instanceof TradeListing t) || (e != null && t.expansion != e) || !trades.add(t.trade)) {
+                return false;
+            }
+            e = t.expansion;
+        }
+        return e.set.equals(set) && listings.length == e.size;
     }
 
     // ---- picking (1.21.11 bodies) ----
