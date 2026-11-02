@@ -61,6 +61,7 @@ import org.objectweb.asm.tree.analysis.SimpleVerifier;
  *   LAMBDA     lambda's SAM no longer the interface's   AbstractMethodError
  *              abstract method
  *   ABSTRACT   concrete class misses an abstract member AbstractMethodError
+ *   INSTANTIATION NEW targets an abstract class/interface InstantiationError
  *   ORPHAN     mod override (intermediary method_N)     silently never called
  *              no longer overrides anything
  *   TYPE       value reaches a class-typed slot it      VerifyError (the whole
@@ -1176,6 +1177,14 @@ public final class LinkCheck {
             checkFieldRef(fi.owner, fi.name, fi.desc, fi.getOpcode(), where);
         } else if (in instanceof TypeInsnNode ti) {
             needType(ti.desc, where);
+            if (ti.getOpcode() == Opcodes.NEW) {
+                Cls c = cls(ti.desc);
+                if (c != null && (classAcc(c) & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_INTERFACE)) != 0) {
+                    report("INSTANTIATION", where, ti.desc, "NEW on "
+                        + ((classAcc(c) & Opcodes.ACC_INTERFACE) != 0 ? "interface" : "abstract class")
+                        + " (InstantiationError)");
+                }
+            }
         } else if (in instanceof MultiANewArrayInsnNode ma) {
             needType(ma.desc, where);
         } else if (in instanceof LdcInsnNode ldc && ldc.cst instanceof Type t && t.getSort() == Type.OBJECT) {
