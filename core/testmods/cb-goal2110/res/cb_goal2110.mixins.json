@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "cb.goal2110.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": ["ItemFrameBoxMixin"],
+  "injectors": { "defaultRequire": 1 }
+}
