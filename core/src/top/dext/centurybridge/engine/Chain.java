@@ -202,6 +202,14 @@ public final class Chain {
     public final java.util.Map<String, MixinSplit> mixinSplits = new java.util.HashMap<>();
 
     /**
+     * W classes new at this step that stand for no V class ("noVCounterpart": W class -> basis): a step agent's
+     * judgment from both jars that no V class's instances are the new class's (26.2 SulfurCube, a new mob under
+     * AbstractCubeMob). MixinBridge.baseGuard otherwise refuses a guard on a superclass with a new subclass outside
+     * the target, since it cannot tell which V class the new one stands for. Keys must be W classes V lacks.
+     */
+    public final java.util.Map<String, String> noVCounterpart = new java.util.HashMap<>();
+
+    /**
      * A call W makes on an object V's receiver holds ("mixinReceivers", key "V owner>W owner"): V
      * {@code minecraft.setScreen(s)}, W {@code minecraft.gui.setScreen(s)}. A @Redirect / @WrapOperation /
      * @WrapWithCondition on V's call follows to W's when the wiring gives both ways between the receivers:
@@ -3583,6 +3591,12 @@ public final class Chain {
                     };
                     c.mixinSplits.put(k, new MixinSplit(o.get("to").getAsString(), hops.apply("self"), hops.apply("back"),
                         o.has("basis") ? o.get("basis").getAsString() : ""));
+                }
+            }
+            if (root.has("noVCounterpart")) {
+                var nv = root.getAsJsonObject("noVCounterpart");
+                for (String k : nv.keySet()) {
+                    c.noVCounterpart.put(k, nv.get(k).getAsString());
                 }
             }
             if (root.has("methodRenames")) {
