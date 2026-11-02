@@ -178,6 +178,24 @@ public final class CbRenderModelBake {
         return net.minecraft.class_796.method_3454(uv, direction, transform);
     }
 
+    // ------------------------------------------------------------------------------------------------ BlockModel
+
+    /** a FaceBakery of the layer's own: 1.21's has no instance state (javap 1.21 class_796: static fields only) */
+    private static final net.minecraft.class_796 FACE_BAKERY = new net.minecraft.class_796();
+
+    /**
+     * 1.20.6 BlockModel.bakeFace(element, face, sprite, direction, state, id) (class_793.method_3447, private static,
+     * reached through a mod's own access widener: 7 corpus mods, damage-aw aw-call-static). 1.20.6's body (javap):
+     * FACE_BAKERY.bakeQuad(element.from, element.to, face, sprite, direction, state, element.rotation, element.shade, id).
+     * 1.21 dropped the id from both; this is 1.20.6's body on the restored bakeQuad(.., id) (CbRenderFaceBakeryMixin),
+     * so the id reaches a converted mod's bakeQuad mixin as it did.
+     */
+    public static net.minecraft.class_777 method_3447(net.minecraft.class_785 element, class_783 face, class_1058 sprite,
+                                                     class_2350 direction, class_3665 state, class_2960 id) {
+        return ((LegacyFaceBakery) (Object) FACE_BAKERY).method_3468(element.field_4228, element.field_4231, face, sprite, direction,
+            state, element.field_4232, element.field_4229, id);
+    }
+
     // ------------------------------------------------------------------------------------------------ ModelBakery
 
     /** 1.20.6 ModelBakery.MISSING_MODEL_LOCATION (builtin/missing#missing): 1.21's MISSING_MODEL_VARIANT, the same location */
