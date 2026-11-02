@@ -768,6 +768,15 @@ public final class WiringCheck {
                 // V's took; a facade-split class -- see wTypedDesc -- is one class on both sides here, and the engine
                 // hands a converted handler reading it V's value only through a "wrap")
                 org.objectweb.asm.Type[] va = org.objectweb.asm.Type.getArgumentTypes(wTypedDesc(s.desc));
+                // ... except a facade-split argument: the converted handler takes the facade (its classRename), which W's
+                // same-named class never is -- it reaches the handler only through a "wrap" W type -> facade
+                org.objectweb.asm.Type[] vh = org.objectweb.asm.Type.getArgumentTypes(methodDesc(s.desc));
+                for (int i = 0; i < va.length && i < vh.length; i++) {
+                    if (!va[i].equals(vh[i]) && vh[i].getSort() == org.objectweb.asm.Type.OBJECT
+                            && vh[i].getInternalName().startsWith("top/dext/")) {
+                        va[i] = vh[i];
+                    }
+                }
                 org.objectweb.asm.Type[] wa = org.objectweb.asm.Type.getArgumentTypes(nd);
                 if (a.size() != va.length) {
                     problems.add(where + ": args has " + a.size() + " entries, the V method " + va.length + " arguments");
@@ -794,7 +803,8 @@ public final class WiringCheck {
                             problems.add(where + ": wrap '" + w + "' is not owner.name(desc)R");
                             continue;
                         }
-                        String wd = methodDesc(w.substring(wp));
+                        // the parameter is W's type (W's own spelling, wTypedDesc); the return is the handler's
+                        String wd = wTypedDesc(w.substring(wp));
                         if (org.objectweb.asm.Type.getArgumentTypes(wd).length != 1) {
                             problems.add(where + ": wrap " + w + " must take exactly one argument (W's)");
                         }
@@ -823,7 +833,7 @@ public final class WiringCheck {
                         }
                         String ref = sv.substring(sp + 1).trim();
                         int rp = ref.indexOf('(');
-                        String rd = methodDesc(ref.substring(rp));
+                        String rd = wTypedDesc(ref.substring(rp));
                         org.objectweb.asm.Type[] rpa = org.objectweb.asm.Type.getArgumentTypes(rd);
                         if (rpa.length != 1 || !rpa[0].equals(wa[jj]) || !org.objectweb.asm.Type.getReturnType(rd).equals(va[i])) {
                             problems.add(where + ": args[" + i + "] " + ref + " must take W argument " + jj + " (" + wa[jj]
