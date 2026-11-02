@@ -4,3 +4,9 @@ accessible	field	net/minecraft/class_1928	field_9196	Lnet/minecraft/class_12280;
 accessible	method	net/minecraft/class_1921	method_75940	(Ljava/lang/String;Lnet/minecraft/class_12247;)Lnet/minecraft/class_1921;
 accessible	field	net/minecraft/class_10799	field_60125	Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;
 accessible	field	net/minecraft/class_10799	field_56860	Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;
+
+# ---- BEGIN GENERATED (smx1-renderwidget): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible method net/minecraft/class_4264 method_48579 (Lnet/minecraft/class_332;IIF)V
+# ---- END GENERATED (smx1-renderwidget) ----
