@@ -51,6 +51,8 @@ public class Driver implements ClientModInitializer {
     public static final AtomicInteger SECTION_BUILDS = new AtomicInteger();
     /** DragonRayCounter: 1.21 death-ray vertices (addVertex in EnderDragonRenderer.method_61158) */
     public static final AtomicInteger RAY_VERTS = new AtomicInteger();
+    /** what section (h)'s bakeFace probe added to QUADS and to cb-smx6c's CALLS / CALLS_NO_ID (baked outside 1.21's bakeFace) */
+    static int PROBE_QUADS, PROBE_CALLS, PROBE_NO_ID;
     static final Map<String, Boolean> OK = new LinkedHashMap<>();
 
     static void check(String name, boolean pass, String detail) {
@@ -136,6 +138,7 @@ public class Driver implements ClientModInitializer {
                 @SuppressWarnings("unchecked")
                 Map<String, Integer> locs = (Map<String, Integer>) field(cc, "LOCATIONS");
                 int before = locs.getOrDefault(loc, 0);
+                int q0 = QUADS.get(), c0 = ((AtomicInteger) field(cc, "CALLS")).get(), n0 = ((AtomicInteger) field(cc, "CALLS_NO_ID")).get();
                 boolean quad = on(mc, () -> {
                     try {
                         return (Boolean) cc.getMethod("bakeFaceProbe").invoke(null);
@@ -144,6 +147,10 @@ public class Driver implements ClientModInitializer {
                     }
                 });
                 int seen = locs.getOrDefault(loc, 0) - before;
+                // the probe bakes its quad outside 1.21's bakeFace: kept out of the once-per-bakeFace checks (b) / (e)
+                PROBE_QUADS = QUADS.get() - q0;
+                PROBE_CALLS = ((AtomicInteger) field(cc, "CALLS")).get() - c0;
+                PROBE_NO_ID = ((AtomicInteger) field(cc, "CALLS_NO_ID")).get() - n0;
                 check("h.awBakeFace", quad && seen == 1, "1.20.6 BlockModel.bakeFace via access widener: quad " + quad
                     + ", its location seen by the 1.20.6 bakeQuad mixin " + seen + " time(s)");
             } catch (ClassNotFoundException e) {
@@ -224,8 +231,8 @@ public class Driver implements ClientModInitializer {
             }
 
             // (e) native 1.21 injectors in the bake path, with or without the layer's bakeQuad route: once per face
-            check("e.nativeQuadOnce", FACES.get() > 0 && QUADS.get() == FACES.get(),
-                "native bakeQuad HEAD " + QUADS.get() + ", bakeFace calls " + FACES.get());
+            check("e.nativeQuadOnce", FACES.get() > 0 && QUADS.get() - PROBE_QUADS == FACES.get(),
+                "native bakeQuad HEAD " + QUADS.get() + " (" + PROBE_QUADS + " from the h probe), bakeFace calls " + FACES.get());
             check("e.nativeWrap", FACE_WRAPS.get() == FACES.get(),
                 "native @WrapOperation of bakeFace's bakeQuad call " + FACE_WRAPS.get() + ", bakeFace calls " + FACES.get());
 
@@ -242,7 +249,7 @@ public class Driver implements ClientModInitializer {
             // recorded, and (f) still runs
             try {
                 if (counters != null) {
-                    int calls = ((AtomicInteger) field(counters, "CALLS")).get();
+                    int calls = ((AtomicInteger) field(counters, "CALLS")).get() - PROBE_CALLS;
                     int nulls = ((AtomicInteger) field(counters, "NULLS")).get();
                     int replaced = ((AtomicInteger) field(counters, "REPLACED")).get();
                     @SuppressWarnings("unchecked")
@@ -254,7 +261,7 @@ public class Driver implements ClientModInitializer {
                             + sample.subList(0, Math.min(8, sample.size())));
                     check("b.noNull", nulls == 0, "calls with a null location " + nulls);
                     check("b.countEqualsFaces", calls == FACES.get(), "bakeQuad calls " + calls + ", 1.21 bakeFace calls " + FACES.get());
-                    int noId = ((AtomicInteger) field(counters, "CALLS_NO_ID")).get();
+                    int noId = ((AtomicInteger) field(counters, "CALLS_NO_ID")).get() - PROBE_NO_ID;
                     check("b.noIdOnce", noId == FACES.get(), "bakeQuad HEAD calls of a handler not reading the id " + noId
                         + " (on 1.21's bakeQuad through mixinTargets), 1.21 bakeFace calls " + FACES.get());
                     boolean stoneZero = on(mc, () -> allZero(mc.method_1554().method_4743().method_3335(class_2246.field_10340.method_9564()),
