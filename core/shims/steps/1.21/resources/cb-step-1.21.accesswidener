@@ -63,11 +63,10 @@ accessible method net/minecraft/class_1321 method_60716 ()Z
 accessible method net/minecraft/class_9817$class_9818 <init> (Lnet/minecraft/class_1297;)V
 accessible method net/minecraft/class_9817$class_9818 <init> (Lcom/mojang/datafixers/util/Either;)V
 
-# SectionRenderDispatcher.sectionCompiler, RenderSection's dispatcher and SectionCompiler.handleBlockEntity (package-private /
-# private): the restored 1.20.6 RebuildTask.compile / handleBlockEntity call 1.21's SectionCompiler through them
-# (CbRenderRebuildTaskRestoredMixin, s121 C20)
+# SectionRenderDispatcher.sectionCompiler and SectionCompiler.handleBlockEntity (package-private / private): the restored
+# 1.20.6 RebuildTask.compile / handleBlockEntity call 1.21's SectionCompiler through them (CbRenderRebuildTaskRestoredMixin,
+# s121 C20; RenderSection's synthetic dispatcher field through CbRenderSectionAccess)
 accessible field net/minecraft/class_846 field_52171 Lnet/minecraft/class_9810;
-accessible field net/minecraft/class_846$class_851 field_20833 Lnet/minecraft/class_846;
 accessible method net/minecraft/class_9810 method_60902 (Lnet/minecraft/class_9810$class_9811;Lnet/minecraft/class_2586;)V
 
 # BlockStateModelLoader's static helpers and tables (private / package-private): 1.20.6 ModelBakery's predicate,

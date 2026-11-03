@@ -44,13 +44,13 @@ public abstract class CbRenderRebuildTaskRestoredMixin {
         net.minecraft.class_2338 origin = this.field_20839.method_3670().method_10062();
         net.minecraft.class_8251 sorting = net.minecraft.class_8251.method_49906(x - origin.method_10263(), y - origin.method_10264(),
             z - origin.method_10260());
-        net.minecraft.class_9810.class_9811 results = this.field_20839.field_20833.field_52171.method_60904(
+        net.minecraft.class_9810.class_9811 results = ((CbRenderSectionAccess) (Object) this.field_20839).cb$dispatcher().field_52171.method_60904(
             net.minecraft.class_4076.method_18682(origin), region, sorting, pack);
         return RebuildTaskCompileResults.cbOf(results, sorting);
     }
 
     /** handleBlockEntity(results, blockEntity): 1.21's SectionCompiler.handleBlockEntity on the view's Results (its own lists) */
     public void method_23087(RebuildTaskCompileResults results, net.minecraft.class_2586 blockEntity) {
-        this.field_20839.field_20833.field_52171.method_60902(results.cbResults(), blockEntity);
+        ((CbRenderSectionAccess) (Object) this.field_20839).cb$dispatcher().field_52171.method_60902(results.cbResults(), blockEntity);
     }
 }
