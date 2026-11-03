@@ -11,7 +11,8 @@ import top.dext.centurybridge.step.v1_21_5.rt.CbBakedModels;
  * isGui3d, usesBlockLight, particle, transforms; getQuads(state, side, random) = side == null ? unculled :
  * culled.get(side). Members public (access wideners never reach a CenturyBridge class). 1.21.5's collectParts /
  * particleIcon come from the 1.21.4 methods (CbBakedModels.collectParts). bake (method_65762) and its sprite lookup
- * (method_65761) take 1.21.4's SpriteGetter (class_10527), gone in 1.21.5 with no class of that shape: facadeGaps.
+ * (method_65761) take 1.21.4's SpriteGetter (class_10527), gone in 1.21.5 with no class of that shape; its private face
+ * baker (method_65760), which only bake called, is left out too: facadeGaps.
  */
 @Environment(EnvType.CLIENT)
 public class SimpleBakedModel implements CbBakedModels.LegacyBakedModel, CbBakedModels.LegacyItemProps {
@@ -39,13 +40,6 @@ public class SimpleBakedModel implements CbBakedModels.LegacyBakedModel, CbBaked
         this.field_21864 = usesBlockLight;
         this.field_5416 = particle;
         this.field_5417 = transforms;
-    }
-
-    /** bakeFace: 1.21.4's FaceBakery.bakeQuad call with the element's from / to / rotation / shade / light emission */
-    public static net.minecraft.class_777 method_65760(net.minecraft.class_785 element, net.minecraft.class_783 face,
-            net.minecraft.class_1058 sprite, net.minecraft.class_2350 side, net.minecraft.class_3665 state) {
-        return net.minecraft.class_796.method_3468(element.comp_3727(), element.comp_3728(), face, sprite, side, state,
-            element.comp_3730(), element.comp_3731(), element.comp_3732());
     }
 
     @Override
