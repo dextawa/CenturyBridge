@@ -81,3 +81,6 @@ accessible field net/minecraft/class_9824 field_52263 Lcom/google/common/base/Sp
 accessible field net/minecraft/class_9824 field_52264 Lcom/google/common/base/Splitter;
 accessible field net/minecraft/class_9824 field_52265 Lnet/minecraft/class_2689;
 accessible field net/minecraft/class_9824 field_52266 Ljava/util/Map;
+
+# VillagerTrades.ItemsAndEmeraldsToItems (package-private class): CbEnchantBookTrades builds it for 1.20.6's 6-argument constructor (s121h)
+accessible class net/minecraft/class_3853$class_4164

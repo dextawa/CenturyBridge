@@ -151,7 +151,8 @@
  "ctorRedirects": {
   "net/minecraft/class_3853$class_1648.<init>(I)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNew",
   "net/minecraft/class_3853$class_1648.<init>(I[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNewListed",
-  "net/minecraft/class_3853$class_1648.<init>(III[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNewRanged"
+  "net/minecraft/class_3853$class_1648.<init>(III[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNewRanged",
+  "net/minecraft/class_3853$class_4164.<init>(Lnet/minecraft/class_9306;ILnet/minecraft/class_1799;IIF)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbNewItemsAndEmeralds"
  },
  "_smx6_ctorRedirects_basis": "VillagerTrades.EnchantBookForEmeralds: 1.20.6's three constructors (a list of offerable enchantments) as factories over 1.21's (an enchantment tag): (xp) is 1.21's (xp, #tradeable), the tag 1.21's own default librarian trade uses for what 1.20.6 filtered by isTradeable; the explicit-list forms build on #tradeable and keep the list on the trade for the restored 1.20.6 pick (CbVillagerEnchantBookMixin). The class is package-private, so the factories serve a 1.20.6 mod's constructor @Invoker (MixinBridge's constructor-invoker bridging)",
  "fieldRenames": {
