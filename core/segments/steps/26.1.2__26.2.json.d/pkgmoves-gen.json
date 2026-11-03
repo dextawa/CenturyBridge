@@ -212,7 +212,6 @@
   "net/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/SpeleothemClusterConfiguration"
  },
  "methodRenames": {
-  "com/mojang/blaze3d/pipeline/RenderPipeline$UniformDescription.textureFormat()Lcom/mojang/blaze3d/textures/TextureFormat;": "gpuFormat",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getVertexFormatMode()Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;": "getPrimitiveTopology",
   "com/mojang/blaze3d/platform/Monitor.getCurrentMode()Lcom/mojang/blaze3d/platform/VideoMode;": "currentMode",
   "com/mojang/blaze3d/platform/Monitor.getMode(I)Lcom/mojang/blaze3d/platform/VideoMode;": "mode",
@@ -247,8 +246,6 @@
   "net/minecraft/client/renderer/LevelRenderer.getTranslucentTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;": "translucentTarget",
   "net/minecraft/client/renderer/LevelRenderer.getVisibleSections()Lit/unimi/dsi/fastutil/objects/ObjectArrayList;": "visibleSections",
   "net/minecraft/client/renderer/LevelRenderer.getWeatherTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;": "weatherTarget",
-  "net/minecraft/client/renderer/SectionOcclusionGraph$GraphState.events()Lnet/minecraft/client/renderer/SectionOcclusionGraph$GraphEvents;": "sectionsToPropagateFrom",
-  "net/minecraft/client/renderer/SubmitNodeStorage.submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V": "submitQuadParticleGroup",
   "net/minecraft/client/renderer/rendertype/RenderType.mode()Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;": "primitiveTopology",
   "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensity(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderType;": "textGrayscale",
   "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensityPolygonOffset(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderType;": "textGrayscalePolygonOffset",
@@ -451,13 +448,6 @@
    "onlyUnder": "net/minecraft/client/renderer/LevelRenderer",
    "superCalls": "rename",
    "basis": "wall_table.py --identity: net/minecraft/client/renderer/LevelRenderer.getWeatherTarget is net/minecraft/client/renderer/LevelRenderer.weatherTarget on W (same code (1 site(s), strength 6, in net/minecraft/client/renderer/LevelRenderer))"
-  },
-  {
-   "old": "submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V",
-   "new": "submitQuadParticleGroup",
-   "onlyUnder": "net/minecraft/client/renderer/SubmitNodeStorage",
-   "superCalls": "rename",
-   "basis": "wall_table.py --identity: net/minecraft/client/renderer/SubmitNodeStorage.submitParticleGroup is net/minecraft/client/renderer/SubmitNodeStorage.submitQuadParticleGroup on W (same code (1 site(s), strength 1, in net/minecraft/client/renderer/SubmitNodeStorage))"
   },
   {
    "old": "mode()Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;",
@@ -1405,7 +1395,7 @@
   "net/minecraft/advancements/criterion/StatePropertiesPredicate$PropertyMatcher": {
    "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$PropertyMatcher",
    "kept": 8,
-   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.40), body votes 0/0"
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.60), body votes 0/0"
   },
   "net/minecraft/advancements/criterion/StatePropertiesPredicate$RangedMatcher": {
    "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$RangedMatcher",
@@ -1557,12 +1547,12 @@
    "missing": [
     "<init>(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/renderer/SubmitNodeCollector$CustomGeometryRenderer;)V"
    ],
-   "basis": "members 4.0/4 vs 8 (dice 0.67, 2nd 0.36), body votes 0/0"
+   "basis": "members 4.0/4 vs 8 (dice 0.67, 2nd 0.27), body votes 0/0"
   },
   "net/minecraft/client/renderer/SubmitNodeStorage$FlameSubmit": {
    "to": "net/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit",
    "kept": 7,
-   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.18), body votes 0/0"
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.24), body votes 0/0"
   },
   "net/minecraft/client/renderer/SubmitNodeStorage$ItemSubmit": {
    "to": "net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit",
@@ -1595,7 +1585,7 @@
   "net/minecraft/client/renderer/SubmitNodeStorage$ShadowSubmit": {
    "to": "net/minecraft/client/renderer/feature/ShadowFeatureRenderer$Submit",
    "kept": 7,
-   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.17), body votes 0/0"
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.24), body votes 0/0"
   },
   "net/minecraft/client/renderer/chunk/CompileTaskDynamicQueue": {
    "to": "net/minecraft/client/renderer/chunk/SectionTaskDynamicQueue",
@@ -1634,7 +1624,7 @@
   "net/minecraft/util/CubicSpline$1Point": {
    "to": "net/minecraft/util/CubicSpline$Multipoint$Point",
    "kept": 7,
-   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.17), body votes 0/0"
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.25), body votes 0/0"
   },
   "net/minecraft/world/effect/InstantenousMobEffect": {
    "to": "net/minecraft/world/effect/InstantaneousMobEffect",
@@ -1689,7 +1679,7 @@
    "missing": [
     "<init>(Lnet/minecraft/world/entity/monster/Slime;)V"
    ],
-   "basis": "members 6.0/7 vs 6 (dice 0.92, 2nd 0.50), body votes 0/0"
+   "basis": "members 6.0/7 vs 6 (dice 0.92, 2nd 0.20), body votes 0/0"
   },
   "net/minecraft/world/entity/monster/Slime$SlimeRandomDirectionGoal": {
    "to": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobRandomDirectionGoal",
@@ -1702,7 +1692,7 @@
   "net/minecraft/world/level/block/state/properties/DripstoneThickness": {
    "to": "net/minecraft/world/level/block/state/properties/SpeleothemThickness",
    "kept": 9,
-   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.36), body votes 0/0"
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.31), body votes 0/0"
   },
   "net/minecraft/world/level/levelgen/DensityFunctions$BlendDensity": {
    "to": "net/minecraft/world/level/levelgen/NoiseChunk$BlendDensity",
@@ -1851,10 +1841,18 @@
   "net/minecraft/world/level/lighting/LightEngine.getLightBlockInto": "getLightDampeningInto"
  },
  "_pkgmoves_renamed_not_same_code": [
-  "net/minecraft/client/renderer/SubmitNodeCollection.submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V -> submitQuadParticleGroup",
   "net/minecraft/server/PlayerAdvancements.stopListening()V -> clearTriggers",
   "net/minecraft/world/level/block/PointedDripstoneBlock.canDrip(Lnet/minecraft/world/level/block/state/BlockState;)Z -> isFreeHangingStalactite",
   "net/minecraft/world/level/chunk/ChunkAccess.markPosForPostprocessing(Lnet/minecraft/core/BlockPos;)V -> markPosForPostProcessing",
   "net/minecraft/world/level/levelgen/SurfaceRules.noiseCondition(Lnet/minecraft/resources/ResourceKey;DD)Lnet/minecraft/world/level/levelgen/SurfaceRules$ConditionSource; -> noiseCondition2d"
+ ],
+ "_pkgmoves_renamed_type_gone": [
+  "com/mojang/blaze3d/pipeline/RenderPipeline$UniformDescription.textureFormat()Lcom/mojang/blaze3d/textures/TextureFormat; -> gpuFormat",
+  "com/mojang/blaze3d/textures/TextureFormat.DEPTH32:Lcom/mojang/blaze3d/textures/TextureFormat; -> D32_FLOAT",
+  "com/mojang/blaze3d/textures/TextureFormat.RED8:Lcom/mojang/blaze3d/textures/TextureFormat; -> R8_UNORM",
+  "com/mojang/blaze3d/textures/TextureFormat.RGBA8:Lcom/mojang/blaze3d/textures/TextureFormat; -> RGBA8_UNORM",
+  "net/minecraft/client/renderer/SectionOcclusionGraph$GraphState.events()Lnet/minecraft/client/renderer/SectionOcclusionGraph$GraphEvents; -> sectionsToPropagateFrom",
+  "net/minecraft/client/renderer/SubmitNodeCollection.submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V -> submitQuadParticleGroup",
+  "net/minecraft/client/renderer/SubmitNodeStorage.submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V -> submitQuadParticleGroup"
  ]
 }
