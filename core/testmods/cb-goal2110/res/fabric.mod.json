@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_goal2110",
+  "version": "1.0.0",
+  "name": "CB 1.21.9 to 1.21.10 guarded ItemFrame test",
+  "environment": "*",
+  "entrypoints": { "main": ["cb.goal2110.Driver"] },
+  "mixins": ["cb_goal2110.mixins.json"],
+  "depends": { "fabricloader": ">=0.17.0", "minecraft": "1.21.9", "fabric-lifecycle-events-v1": "*" }
+}
