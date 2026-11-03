@@ -5,8 +5,8 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 
 /**
- * 26.1's point where a world registry has its contents (elements and tags) and is not yet frozen
- * (mixin/CbWallRegistryLoadMixin: RegistryLoadTask.freezeRegistry HEAD), handed to the climbing 1.21 layer. Up to 1.21.11
+ * 26.1's point where a world registry has its contents (elements), its tags not yet bound
+ * (mixin/CbWallRegistryLoadMixin: RegistryLoadTask.registerTags HEAD), handed to the climbing 1.21 layer. Up to 1.21.11
  * the 1.21 layer learnt its world registries from RegistryDataLoader.Loader (class_7655$class_9158, gone in 26.1); its
  * rt/CbRegistryLoads and Hook become these at the wall (classRenames), so its install call reaches this holder directly.
  * Without a 1.21 layer nothing is installed and nothing runs.

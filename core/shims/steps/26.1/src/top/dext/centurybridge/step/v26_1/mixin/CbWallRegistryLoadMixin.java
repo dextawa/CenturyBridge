@@ -13,14 +13,17 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v26_1.rt.CbWallRegistryLoads;
 
 /**
- * RegistryLoadTask.freezeRegistry HEAD: the registry has its elements and tags (ResourceManagerRegistryLoadTask /
- * NetworkRegistryLoadTask register both in load's last stage, javap of 26.1) and is not frozen -- 26.1's equivalent of
- * 1.21.11's RegistryDataLoader.Loader.loadFromResources / loadFromNetwork TAIL. Hands it to the climbing 1.21 layer
- * (rt/CbWallRegistryLoads); does nothing without one. Default priority, reads only; vanilla's freeze runs unchanged.
+ * RegistryLoadTask.registerTags HEAD: the registry has its elements and its tags are not yet bound (javap of 26.1:
+ * ResourceManagerRegistryLoadTask / NetworkRegistryLoadTask call registerElements, then registerTags, which binds them,
+ * in load's last stage; freezeRegistry comes later) -- 26.1's equivalent of 1.21.11's RegistryDataLoader.Loader
+ * loadFromResources / loadFromNetwork TAIL, which also ran before the tags were bound. So the 1.21 layer's entries for
+ * 1.20.6 mods' objects are in the registry when its bindTags mixin (CbLegacyRegistryTagsMixin) adds them to their tags.
+ * Hands the registry to the climbing 1.21 layer (rt/CbWallRegistryLoads); does nothing without one. Default priority,
+ * reads only; vanilla's registerTags runs unchanged.
  */
 @Mixin(RegistryLoadTask.class)
 public abstract class CbWallRegistryLoadMixin implements CbWallRegistryLoads.LookupHolder {
@@ -40,8 +43,8 @@ public abstract class CbWallRegistryLoadMixin implements CbWallRegistryLoads.Loo
         this.cb$lookup = lookup;
     }
 
-    @Inject(method = "freezeRegistry", at = @At("HEAD"))
-    private void cb$loaded(Map<ResourceKey<?>, Exception> errors, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "registerTags", at = @At("HEAD"))
+    private void cb$loaded(Map<?, ?> tags, CallbackInfo ci) {
         CbWallRegistryLoads.Hook hook = CbWallRegistryLoads.hook();
         if (hook == null) {
             return;
