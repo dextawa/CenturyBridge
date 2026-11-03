@@ -24,7 +24,7 @@ public class SlmNative implements ModInitializer {
                         e.tick();
                     }
                     String c = e.getClass().getSimpleName();
-                    System.out.println("CB-SLM " + c + " native=" + get("native", c) + " convField=" + get("convField", c) + " convHead=" + get("convHead", c) + " convInvoke=" + get("convInvoke", c));
+                    System.out.println("CB-SLM " + c + " native=" + get("native", c) + " convField=" + get("convField", c) + " convHead=" + get("convHead", c) + " convInvoke=" + get("convInvoke", c) + " convSuper=" + get("convSuper", c));
                     e.discard();
                 }
             } catch (RuntimeException ex) {
