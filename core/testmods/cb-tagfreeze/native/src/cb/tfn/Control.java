@@ -13,8 +13,9 @@ import net.minecraft.class_9248;
 /**
  * The native 1.21.2 control, not converted: the same registry built the 1.21.2 way. (1) A tag created for
  * registration and left unbound: freeze() refuses ("Unbound tags"), vanilla's check, with or without the layer.
- * (2) The same after bindAllTagsToEmpty() (vanilla's BuiltInRegistries.freeze order): freeze() passes, the tag is
- * empty, a tag bound through bindTag keeps its holder. Prints "CB-TFN ok|FAIL ..." and "CB-TFN summary ok=N fail=M".
+ * (2) The same after bindAllTagsToEmpty() (vanilla's BuiltInRegistries.freeze order): freeze() passes and the tag is
+ * empty; a tag bound earlier through bindTag is emptied too (bindAllTagsToEmpty binds every set). Prints
+ * "CB-TFN ok|FAIL ..." and "CB-TFN summary ok=N fail=M".
  */
 public final class Control {
     static int ok;
@@ -55,9 +56,11 @@ public final class Control {
             r2.method_40276();
             check("bind-then-freeze", true, "no exception");
             check("fresh-empty", fresh[0].method_40247() == 0, "size=" + fresh[0].method_40247());
+            // vanilla's bindAllTagsToEmpty binds every named set, a bound one included, to nothing: why the converted
+            // freeze binds only the sets still unbound (cb-tf's bound-kept)
             class_5321 key2 = class_5321.method_29180(class_2960.method_60655("cbtfn", "bound"));
             class_6885 b = (class_6885) r2.method_46733(class_6862.method_40092(key2, class_2960.method_60655("cbtfn", "bound"))).orElse(null);
-            check("bound-kept", b != null && b.method_40247() == 1, "size=" + (b == null ? "absent" : b.method_40247()));
+            check("bindall-clears-bound", b != null && b.method_40247() == 0, "size=" + (b == null ? "absent" : b.method_40247()));
         } catch (Throwable t) {
             check("control", false, t);
             t.printStackTrace(System.out);

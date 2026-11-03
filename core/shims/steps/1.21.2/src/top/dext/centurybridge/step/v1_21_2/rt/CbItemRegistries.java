@@ -180,18 +180,19 @@ public final class CbItemRegistries {
     }
 
     /**
-     * 1.21.1's getOrCreateTag: the bound set when the tag is bound; before the registry froze, the set the
-     * registry creates for registration (1.21.2's getOrCreateTagForRegistration, as 1.21.1 created one);
-     * once frozen, an empty named set of the registry, what 1.21.1 answered for a tag no data defined
+     * 1.21.1's getOrCreateTag: before the registry froze, the registry's own named set for the tag, created if absent
+     * (1.21.2's getOrCreateTagForRegistration, as 1.21.1 created one) -- asked first, because 1.21.2's bound-tag lookup
+     * (getTag) throws "Tags not bound" on a registry whose tags are still pending; once frozen, the bound set when the
+     * tag is bound, else an empty named set of the registry, what 1.21.1 answered for a tag no data defined
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static class_6885.class_6888 super_method_40260(class_2378 self, class_6862 tag) {
+        if (self instanceof class_2370 mapped && !((Frozen) mapped).cb$frozen()) {
+            return ((Frozen) mapped).cb$tagForRegistration(tag);
+        }
         Optional<class_6885.class_6888> bound = self.method_46733(tag);
         if (bound.isPresent()) {
             return bound.get();
-        }
-        if (self instanceof class_2370 mapped && !((Frozen) mapped).cb$frozen()) {
-            return ((Frozen) mapped).cb$tagForRegistration(tag);
         }
         return class_6885.method_45924((class_7876) self, tag);
     }
