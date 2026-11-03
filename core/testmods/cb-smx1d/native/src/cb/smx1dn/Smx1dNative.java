@@ -30,7 +30,10 @@ public class Smx1dNative implements ClientModInitializer {
         "upload.cancelledFirst", "upload.unreachableEmpty", "upload.finished", "upload.secondCallEmpty", "text.frames", "text.labelRender", "text.labelNative",
         "text.labelStyle", "text.scrollingStatic", "text.oldRenderString", "text.oldDefaultLabelNative",
         "text.vanillaDefaultLabelNative", "text.oldRenderWidget", "text.oldRenderWidgetSuperNative", "text.renderWidgetCall",
-        "text.oldIconString", "text.oldIconSpriteNative", "text.oldScrollingHook", "text.oldLabelVanillaScreen"};
+        "text.oldIconString", "text.oldIconSpriteNative", "text.oldScrollingHook", "text.oldLabelVanillaScreen",
+        "rt.ctorValues", "rt.setupClearRunnables", "rt.getName", "rt.ownOverrideAndSuper", "rt.vanillaSetupClear",
+        "sampler.textureState", "sampler.ownerTexture", "sampler.nullUnbinds", "sampler.nativeBindTexture", "bake.quad",
+        "bake.nativeHook"};
 
     static void log(String s) {
         System.out.println("CB-SMX1D " + s);
@@ -69,6 +72,7 @@ public class Smx1dNative implements ClientModInitializer {
         System.getProperties().put("cbsmx1d.expectColors", (Function<Object, int[]>) pos -> new int[] {
             m.field_1687.method_75728().method_75695(class_12206.field_63746, (class_243) pos),
             m.field_1687.method_75728().method_75694(class_12206.field_64126)});
+        System.getProperties().put("cbsmx1d.atlasSampler", (Function<Object, Object>) t -> ((net.minecraft.class_1044) t).method_75484());
         System.setProperty("cbsmx1d.go", "1");
         long until = System.currentTimeMillis() + 120000;
         while (System.getProperty("cbsmx1d.old.done") == null && System.currentTimeMillis() < until) {

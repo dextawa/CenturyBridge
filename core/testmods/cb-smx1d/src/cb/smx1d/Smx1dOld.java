@@ -187,6 +187,9 @@ public class Smx1dOld implements ClientModInitializer {
         guarded("graphicsMode", () -> graphicsMode(mc));
         guarded("levelColors", () -> levelColors(mc));
         guarded("debugRender", Smx1dOld::debugRender);
+        guarded("renderTypes", Smx1dOld::renderTypes);
+        guarded("samplers", () -> samplers(mc));
+        guarded("bakeQuad", () -> bakeQuad(mc));
     }
 
     // 1. VertexConsumer.addVertex(Matrix4f, ..): 1.21.11's takes a Matrix4fc
@@ -566,5 +569,118 @@ public class Smx1dOld implements ClientModInitializer {
         r("upload.finished", up.method_20978(), "isFinished=" + up.method_20978());
         class_4429 again = up.method_20973();
         r("upload.secondCallEmpty", again.field_20205 == -1, "status=" + again.field_20205);
+    }
+
+    // ---- smx1k: 1.21.10 RenderType subclass, RenderPass.bindSampler / GpuTexture sampler state, FaceBakery.bakeQuad
+
+    /** a 1.21.10 RenderType subclass: the public constructor with runnables and the four abstracts */
+    static class LegacyType extends class_1921 {
+        static int setups, clears;
+        final class_1921 base = class_1921.method_23577();
+
+        LegacyType(String name) {
+            super(name, 4096, true, false, () -> setups++, () -> clears++);
+        }
+
+        @Override
+        public void method_60895(net.minecraft.class_9801 mesh) {
+            base.method_60895(mesh);
+        }
+
+        @Override
+        public com.mojang.blaze3d.vertex.VertexFormat method_23031() {
+            return base.method_23031();
+        }
+
+        @Override
+        public com.mojang.blaze3d.vertex.VertexFormat.class_5596 method_23033() {
+            return base.method_23033();
+        }
+
+        @Override
+        public com.mojang.blaze3d.pipeline.RenderPipeline method_73243() {
+            return base.method_73243();
+        }
+    }
+
+    /** its own setupRenderState override with a super call */
+    static final class OwnSetupType extends LegacyType {
+        static int own;
+
+        OwnSetupType() {
+            super("cb_smx1d_own");
+        }
+
+        @Override
+        public void method_23516() {
+            own++;
+            super.method_23516();
+        }
+    }
+
+    static void renderTypes() {
+        LegacyType t = new LegacyType("cb_smx1d_legacy");
+        class_1921 asType = t;
+        r("rt.ctorValues", asType.method_22722() == 4096 && asType.method_23037() && !asType.method_60894(),
+            "bufferSize=" + asType.method_22722() + " crumbling=" + asType.method_23037() + " sort=" + asType.method_60894());
+        int s0 = LegacyType.setups, c0 = LegacyType.clears;
+        asType.method_23516();
+        asType.method_23518();
+        r("rt.setupClearRunnables", LegacyType.setups == s0 + 1 && LegacyType.clears == c0 + 1,
+            "setups=" + (LegacyType.setups - s0) + " clears=" + (LegacyType.clears - c0));
+        r("rt.getName", "cb_smx1d_legacy".equals(asType.method_68484()), "name=" + asType.method_68484());
+        class_1921 own = new OwnSetupType();
+        s0 = LegacyType.setups;
+        own.method_23516();
+        r("rt.ownOverrideAndSuper", OwnSetupType.own == 1 && LegacyType.setups == s0 + 1,
+            "own=" + OwnSetupType.own + " base=" + (LegacyType.setups - s0));
+        class_1921 solid = class_1921.method_23577();
+        solid.method_23516();
+        solid.method_23518();
+        r("rt.vanillaSetupClear", true, "no throw on " + solid.method_68484());
+    }
+
+    static void samplers(class_310 mc) {
+        com.mojang.blaze3d.systems.GpuDevice dev = com.mojang.blaze3d.systems.RenderSystem.getDevice();
+        com.mojang.blaze3d.textures.GpuTexture tex = dev.createTexture("cb_smx1d", com.mojang.blaze3d.textures.GpuTexture.USAGE_TEXTURE_BINDING
+            | com.mojang.blaze3d.textures.GpuTexture.USAGE_COPY_DST, com.mojang.blaze3d.textures.TextureFormat.RGBA8, 4, 4, 1, 1);
+        tex.setAddressMode(com.mojang.blaze3d.textures.AddressMode.CLAMP_TO_EDGE);
+        tex.setTextureFilter(com.mojang.blaze3d.textures.FilterMode.LINEAR, false);
+        com.mojang.blaze3d.textures.GpuTextureView view = dev.createTextureView(tex);
+        net.minecraft.class_1044 atlas = mc.method_1531().method_4619(net.minecraft.class_1059.field_5275);
+        long n0 = n("bindTexture");
+        com.mojang.blaze3d.systems.RenderPass pass = dev.createCommandEncoder().createRenderPass(() -> "cb_smx1d",
+            mc.method_1522().method_71639(), java.util.OptionalInt.empty());
+        try {
+            pass.bindSampler("Sampler0", view);
+            Object s0 = System.getProperties().get("cbsmx1d.lastSampler");
+            r("sampler.textureState", "CLAMP_TO_EDGE/CLAMP_TO_EDGE/LINEAR/LINEAR/0".equals(System.getProperty("cbsmx1d.lastSamplerState")),
+                "state=" + System.getProperty("cbsmx1d.lastSamplerState") + " sampler=" + s0);
+            pass.bindSampler("Sampler1", atlas.method_71659());
+            Object expect = ((Function<Object, Object>) System.getProperties().get("cbsmx1d.atlasSampler")).apply(atlas);
+            Object s1 = System.getProperties().get("cbsmx1d.lastSampler");
+            r("sampler.ownerTexture", s1 != null && s1 == expect, "bound=" + s1 + " atlas's=" + expect);
+            pass.bindSampler("Sampler1", null);
+            r("sampler.nullUnbinds", "null".equals(System.getProperty("cbsmx1d.lastSamplerState")),
+                "state=" + System.getProperty("cbsmx1d.lastSamplerState"));
+        } finally {
+            pass.close();
+            view.close();
+            tex.close();
+        }
+        r("sampler.nativeBindTexture", n("bindTexture") - n0 == 3, "native bindTexture HEAD x" + (n("bindTexture") - n0));
+    }
+
+    static void bakeQuad(class_310 mc) {
+        net.minecraft.class_1059 atlas = (net.minecraft.class_1059) mc.method_1531().method_4619(net.minecraft.class_1059.field_5275);
+        net.minecraft.class_1058 sprite = atlas.method_4608(net.minecraft.class_2960.method_60656("block/stone"));
+        net.minecraft.class_783 face = new net.minecraft.class_783(class_2350.field_11036, -1, "#all",
+            new net.minecraft.class_783.class_10800(0, 0, 16, 16), net.minecraft.class_10821.field_57029);
+        long n0 = n("bakeQuad");
+        net.minecraft.class_777 q = net.minecraft.class_796.method_3468(new Vector3f(0, 0, 0), new Vector3f(16, 16, 16), face, sprite,
+            class_2350.field_11036, net.minecraft.class_1086.field_5350, null, true, 0);
+        r("bake.quad", q != null && q.comp_3723() == class_2350.field_11036 && q.comp_3724() == sprite,
+            "direction=" + (q == null ? null : q.comp_3723()) + " sprite=" + (q == null ? null : q.comp_3724()));
+        r("bake.nativeHook", n("bakeQuad") - n0 == 1, "native bakeQuad HEAD x" + (n("bakeQuad") - n0));
     }
 }
