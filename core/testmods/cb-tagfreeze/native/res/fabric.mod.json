@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_tfn",
+  "version": "1.0.0",
+  "name": "CB tag freeze control (native 1.21.2)",
+  "description": "Vanilla 1.21.2 freeze order: an unbound tag set is refused, bindAllTagsToEmpty then freeze passes",
+  "environment": "*",
+  "mixins": ["cb_tfn.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.2" }
+}
