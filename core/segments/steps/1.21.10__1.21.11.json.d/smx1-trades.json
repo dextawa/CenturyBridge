@@ -1,0 +1,14 @@
+{
+ "_smx1_trades_basis": "smx1j (javap -c -p both code jars): 1.21.11's VillagerTrades.ItemListing.getOffer takes the ServerLevel first (method_7246(ServerLevel, Entity, RandomSource)); 1.21.10's took (Entity, RandomSource), and its bodies that read a level read entity.level() (class_3853$class_4165: entity.level() into the enchanting lambda; the others read none). A 1.21.10 call (a mod drawing offers from a vanilla listing) passes the trader's own level, as 1.21.10's bodies took it: the entity's level when it is a ServerLevel (every trader that makes offers is server-side), else null -- 1.21.11 has no offer outside a ServerLevel. A 1.21.10 listing's own override is mechanical.json's override hook.",
+ "callReshapes": {
+  "net/minecraft/class_3853$class_1652.method_7246(Lnet/minecraft/class_1297;Lnet/minecraft/class_5819;)Lnet/minecraft/class_1914;": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_5819;)Lnet/minecraft/class_1914;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_11/rt/CbTrades#level(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;",
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "the level 1.21.10's listings read was entity.level(); the new first argument is that level"
+  }
+ }
+}

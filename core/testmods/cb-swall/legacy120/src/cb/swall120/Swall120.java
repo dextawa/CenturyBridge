@@ -114,6 +114,29 @@ public class Swall120 implements ModInitializer {
         } catch (Throwable t) {
             check("adv120.subPredicateTypes", false, t);
         }
+        // 1.20.1 PlayerPredicate.fromJson: the 1.20.2 layer builds the record (CbAdvRecords.playerPredicate), whose
+        // constructor 26.1 widened with a food condition (wall ctorRedirect, FoodPredicate.ANY)
+        try {
+            net.minecraft.class_4553 player = net.minecraft.class_4553.method_22499(
+                json("{\"level\":{\"min\":3},\"gamemode\":\"survival\"}").getAsJsonObject());
+            String back = String.valueOf(player.method_22494());
+            check("adv120.playerPredicate", player != null && back.contains("level") && back.contains("survival"), back);
+        } catch (Throwable t) {
+            check("adv120.playerPredicate", false, t);
+        }
+        // 1.20.1 DimensionDataStorage.readTagFromDisk(id, version) (the 1.20.2 layer's CbSavedDataReadCover): reads
+        // <dataFolder>/<id>.dat, the file 1.20.1 named (its private getDataFile; wall instanceRedirect)
+        try {
+            java.io.File dir = java.nio.file.Files.createTempDirectory("cbswall120-data").toFile();
+            net.minecraft.class_2487 tag = new net.minecraft.class_2487();
+            tag.method_10569("cbValue", 42);
+            net.minecraft.class_2507.method_30614(tag, new java.io.File(dir, "cbswall120.dat"));
+            net.minecraft.class_26 storage = new net.minecraft.class_26(dir, net.minecraft.class_3551.method_15450());
+            net.minecraft.class_2487 read = storage.method_17923("cbswall120", 3465);
+            check("savedData120.readTagFromDisk", read != null && read.method_10550("cbValue") == 42, read);
+        } catch (Throwable t) {
+            check("savedData120.readTagFromDisk", false, t);
+        }
         System.out.println("CBTEST120 SUMMARY " + passed + "/" + (passed + FAILS.size()) + " passed" + (FAILS.isEmpty() ? "" : " fails=" + FAILS));
     }
 }

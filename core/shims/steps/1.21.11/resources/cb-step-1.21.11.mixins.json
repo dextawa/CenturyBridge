@@ -7,6 +7,7 @@
     "CbBiomeBuilderMixin",
     "CbBiomeEffectsBuilderMixin",
     "CbBiomeEffectsBuilderMixinHooks",
+    "CbBiomeEffectsOwnerMixinHooks",
     "CbCommandBlockEntitySourceRestoredMixin",
     "CbCommandBlockRestoredMixin",
     "CbDimensionTypeCodecMixin",
@@ -21,6 +22,7 @@
     "CbSavedDataServerMixin"
   ],
   "client": [
+    "CbAbstractButtonRenderWidgetMixinHooks",
     "CbAbstractButtonTextRestoredMixin",
     "CbAbstractWidgetTextRestoredMixin",
     "CbClientLevelColorsRestoredMixin",
@@ -34,15 +36,18 @@
     "CbDimEffectsSkyMixin",
     "CbFileUploadRestoredMixin",
     "CbGuiCollectorAccess",
+    "CbGuiGraphicsMouseAccess",
     "CbLineWidthBufferSourceMixin",
     "CbLineWidthBuilderMixin",
     "CbMultiLineLabelFontAccess",
+    "CbMultiLineLabelRestoredMixin",
     "CbOptionInstanceGraphicsMixin",
     "CbOptionsGraphicsModeRestoredMixin",
     "CbSpriteIconButtonAccess",
     "CbSpriteIconTextRestoredMixin",
     "CbSpriteTextAndIconRestoredMixin",
-    "CbStringSplitterRestoredMixin"
+    "CbStringSplitterRestoredMixin",
+    "CbStyleFinderAccess"
   ],
   "server": [],
   "injectors": {
