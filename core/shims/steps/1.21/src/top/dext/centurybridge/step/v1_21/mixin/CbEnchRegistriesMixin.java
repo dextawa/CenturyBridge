@@ -19,5 +19,7 @@ public abstract class CbEnchRegistriesMixin {
         CbEnchantments.registerComponents(net.minecraft.class_7923.field_51832);
         // the enchanted-book pick a later layer's EnchantBookForEmeralds facade calls (26.1: rt/CbWallEnchantBookPicks)
         top.dext.centurybridge.step.v1_21.rt.CbEnchantBookPicks.install(top.dext.centurybridge.step.v1_21.rt.CbEnchantBookPick.INSTANCE);
+        // the world-registry recording a later layer's registry-load mixin calls (26.1: rt/CbWallRegistryLoads)
+        top.dext.centurybridge.step.v1_21.rt.CbRegistryLoads.install(new top.dext.centurybridge.step.v1_21.rt.CbRegistryLoadRecording());
     }
 }
