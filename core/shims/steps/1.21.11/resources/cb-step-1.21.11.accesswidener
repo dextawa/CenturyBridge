@@ -6,6 +6,18 @@ accessible	field	net/minecraft/class_10799	field_60125	Lcom/mojang/blaze3d/pipel
 accessible	field	net/minecraft/class_10799	field_56860	Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;
 # smx1j biome: Biome(climate, attributes, effects, generation, spawns) is package-private; rt/CbBiomeEffectsLegacy.biome builds 1.21.10 biomes with it
 accessible	method	net/minecraft/class_1959	<init>	(Lnet/minecraft/class_1959$class_5482;Lnet/minecraft/class_12199;Lnet/minecraft/class_4763;Lnet/minecraft/class_5485;Lnet/minecraft/class_5483;)V
+# smx1k render types: 1.21.10 RenderType subclasses' super(...) becomes RenderType(name, RenderSetup) (private in 1.21.11);
+# rt/CbLegacyRenderTypes reads the name and setup of a render type and the RenderSetup pieces 1.21.10's getters / shards answered
+accessible	method	net/minecraft/class_1921	<init>	(Ljava/lang/String;Lnet/minecraft/class_12247;)V
+accessible	field	net/minecraft/class_1921	field_64011	Ljava/lang/String;
+accessible	field	net/minecraft/class_1921	field_64013	Lnet/minecraft/class_12247;
+accessible	field	net/minecraft/class_12247	field_63988	Lnet/minecraft/class_12250;
+accessible	field	net/minecraft/class_12247	field_63993	Z
+accessible	field	net/minecraft/class_12247	field_63994	Z
+accessible	field	net/minecraft/class_12247	field_63995	I
+accessible	field	net/minecraft/class_12247	field_63996	Lnet/minecraft/class_12245;
+# smx1k samplers: rt/CbSamplers finds the AbstractTexture holding a bound texture among the TextureManager's
+accessible	field	net/minecraft/class_1060	field_5286	Ljava/util/Map;
 
 # ---- BEGIN GENERATED (smx1-renderwidget): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
