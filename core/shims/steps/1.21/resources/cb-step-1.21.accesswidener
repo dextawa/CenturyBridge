@@ -63,9 +63,10 @@ accessible method net/minecraft/class_1321 method_60716 ()Z
 accessible method net/minecraft/class_9817$class_9818 <init> (Lnet/minecraft/class_1297;)V
 accessible method net/minecraft/class_9817$class_9818 <init> (Lcom/mojang/datafixers/util/Either;)V
 
-# SectionRenderDispatcher.sectionCompiler and SectionCompiler.handleBlockEntity (package-private / private): the restored
-# 1.20.6 RebuildTask.compile / handleBlockEntity call 1.21's SectionCompiler through them (CbRenderRebuildTaskRestoredMixin,
-# s121 C20; RenderSection's synthetic dispatcher field through CbRenderSectionAccess)
+# SectionRenderDispatcher.sectionCompiler, SectionCompiler.handleBlockEntity and RebuildTask (package-private / private):
+# rt/CbSectionCompile serves a converted mod's calls of 1.20.6's RebuildTask.compile / handleBlockEntity on 1.21's
+# SectionCompiler (s121 C20; RebuildTask / RenderSection fields through CbRenderRebuildTaskAccess / CbRenderSectionAccess)
+accessible class net/minecraft/class_846$class_851$class_4578
 accessible field net/minecraft/class_846 field_52171 Lnet/minecraft/class_9810;
 accessible method net/minecraft/class_9810 method_60902 (Lnet/minecraft/class_9810$class_9811;Lnet/minecraft/class_2586;)V
 

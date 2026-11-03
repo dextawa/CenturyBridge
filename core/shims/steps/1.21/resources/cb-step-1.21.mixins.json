@@ -144,7 +144,7 @@
     "CbRenderMultipleAccess",
     "CbRenderOutlineAccess",
     "CbRenderParticleEngineMixin",
-    "CbRenderRebuildTaskRestoredMixin",
+    "CbRenderRebuildTaskAccess",
     "CbRenderRegionCacheMixin",
     "CbRenderSectionAccess",
     "CbRenderSectionCompileRouteMixin",

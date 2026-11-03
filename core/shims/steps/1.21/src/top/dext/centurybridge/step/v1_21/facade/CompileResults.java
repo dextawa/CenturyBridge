@@ -9,7 +9,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbRenderBuffers;
 /**
  * 1.20.6's SectionRenderDispatcher.RenderSection.RebuildTask.CompileResults (class_846$class_851$class_4578$class_7435,
  * gone in 1.21): what RebuildTask.compile answered. A view over 1.21's SectionCompiler.Results (class_9810$class_9811,
- * the same five fields in the same order), made by the restored compile (CbRenderRebuildTaskRestoredMixin):
+ * the same five fields in the same order), made by rt/CbSectionCompile.compile:
  * <ul><li>globalBlockEntities / blockEntities: the Results' own lists (1.20.6 field_39079 / field_39080 are 1.21's
  * field_52166 / field_52167: handleBlockEntity adds to them in the same order, javap of both);
  * <li>renderedLayers: each layer's MeshData as the layer's RenderedBuffer facade, the same conversion as the
@@ -20,12 +20,12 @@ import top.dext.centurybridge.step.v1_21.rt.CbRenderBuffers;
  * points, and the sorting compile was given.</ul>
  * The view never releases a buffer: the caller owns them, as 1.20.6's caller owned the RenderedBuffers (release()
  * closes the mesh, once). {@link #cbResults()} writes the view's writable state back into the Results before 1.21 code
- * reads them (the restored handleBlockEntity); a SortState written back carries only its points (1.21's keeps no mode,
+ * reads them (CbSectionCompile.handleBlockEntity); a SortState written back carries only its points (1.21's keeps no mode,
  * vertex count or sorting: a known difference, release_notes_known.md). Members 1.20.6 kept package-private are
  * public here: a mod's access widener may name them, and wideners never reach a CenturyBridge class.
  */
 @Environment(EnvType.CLIENT)
-public final class RebuildTaskCompileResults {
+public final class CompileResults {
 
     /** globalBlockEntities */
     public final List<net.minecraft.class_2586> field_39079;
@@ -49,11 +49,11 @@ public final class RebuildTaskCompileResults {
     private BufferBuilderSortState cbBuiltSort;
 
     /** 1.20.6's (package-private) constructor: empty results, over a fresh 1.21 Results */
-    public RebuildTaskCompileResults() {
+    public CompileResults() {
         this(new net.minecraft.class_9810.class_9811(), null);
     }
 
-    private RebuildTaskCompileResults(net.minecraft.class_9810.class_9811 results, net.minecraft.class_8251 sorting) {
+    private CompileResults(net.minecraft.class_9810.class_9811 results, net.minecraft.class_8251 sorting) {
         this.cbResults = results;
         this.field_39079 = results.field_52166;
         this.field_39080 = results.field_52167;
@@ -71,8 +71,8 @@ public final class RebuildTaskCompileResults {
     }
 
     /** a view of the Results 1.21's SectionCompiler.compile answered with the sorting it was given */
-    public static RebuildTaskCompileResults cbOf(net.minecraft.class_9810.class_9811 results, net.minecraft.class_8251 sorting) {
-        return new RebuildTaskCompileResults(results, sorting);
+    public static CompileResults cbOf(net.minecraft.class_9810.class_9811 results, net.minecraft.class_8251 sorting) {
+        return new CompileResults(results, sorting);
     }
 
     /** the Results under the view, the view's writable state written back first (layers, visibility, sort points) */
