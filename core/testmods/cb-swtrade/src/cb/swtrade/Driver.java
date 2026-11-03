@@ -52,6 +52,24 @@ public final class Driver {
     public static void run(net.minecraft.server.MinecraftServer server) {
         class_3218 level = server.method_30002();
         try {
+                // the mod's own enchantment in #minecraft:tradeable, as the world's tags bind it (1.21.11 and 26.1 alike)
+                net.minecraft.class_6862<net.minecraft.class_1887> tradeable = net.minecraft.class_6862.method_40092(net.minecraft.class_7924.field_41265,
+                    new net.minecraft.class_2960("minecraft", "tradeable"));
+                java.util.Optional<net.minecraft.class_6885.class_6888<net.minecraft.class_1887>> set = net.minecraft.class_7923.field_41176.method_40266(tradeable);
+                boolean modIn = false;
+                int size = set.map(net.minecraft.class_6885.class_6888::method_40247).orElse(-1);
+                for (int i = 0; i < Math.max(size, 0); i++) {
+                    modIn |= set.get().method_40240(i).comp_349() == Init.STEADY;
+                }
+                System.out.println("CBTRADE TAG tradeable size=" + size + " mod=" + modIn);
+                check("tag.modTradeable", modIn, "cb_swtrade:steady in #minecraft:tradeable (" + size + " members)");
+                // a datapack-defined enchantment through the 1.20.6 registry: the world's entry as the 1.20.6 object
+                net.minecraft.class_1887 mending = net.minecraft.class_7923.field_41176.method_10223(new net.minecraft.class_2960("minecraft", "mending"));
+                check("registry.dataEntry", mending != null && mending.method_8183() == 1, "minecraft:mending -> " + mending);
+        } catch (Throwable t) {
+            check("tag.exception", false, String.valueOf(t));
+        }
+        try {
             net.minecraft.class_3853.class_1652 listed = cb.swtrade.mixin.EnchantBookInvoker.cbswtrade$newListed(1,
                 class_1893.field_9119, class_1893.field_9099, class_1893.field_9101);
             net.minecraft.class_3853.class_1652 any = cb.swtrade.mixin.EnchantBookInvoker.cbswtrade$new(1);
@@ -63,31 +81,23 @@ public final class Driver {
                 System.out.println("CBTRADE SEQ tradeable " + seed + " " + a[0]);
                 listedOk += l[1] != null && (l[1] == class_1893.field_9119 || l[1] == class_1893.field_9099 || l[1] == class_1893.field_9101) ? 1 : 0;
                 anyOk += a[1] != null ? 1 : 0;
-                net.minecraft.class_1887 direct = ((cb.swtrade.mixin.EnchantBookPickInvoker) listed).cbswtrade$pick(
-                    net.minecraft.class_5819.method_43049(seed), level.method_45162());
-                net.minecraft.class_1887 directAny = ((cb.swtrade.mixin.EnchantBookPickInvoker) any).cbswtrade$pick(
-                    net.minecraft.class_5819.method_43049(seed), level.method_45162());
-                System.out.println("CBTRADE PICK " + seed + " " + net.minecraft.class_7923.field_41176.method_10221(direct)
-                    + " " + net.minecraft.class_7923.field_41176.method_10221(directAny));
-                same += direct == l[1] && directAny == a[1] ? 1 : 0;
+                try {
+                    net.minecraft.class_1887 direct = ((cb.swtrade.mixin.EnchantBookPickInvoker) listed).cbswtrade$pick(
+                        net.minecraft.class_5819.method_43049(seed), level.method_45162());
+                    net.minecraft.class_1887 directAny = ((cb.swtrade.mixin.EnchantBookPickInvoker) any).cbswtrade$pick(
+                        net.minecraft.class_5819.method_43049(seed), level.method_45162());
+                    System.out.println("CBTRADE PICK " + seed + " " + net.minecraft.class_7923.field_41176.method_10221(direct)
+                        + " " + net.minecraft.class_7923.field_41176.method_10221(directAny));
+                    same += direct == l[1] && directAny == a[1] ? 1 : 0;
+                } catch (Throwable t) {
+                    if (seed == 1) {
+                        check("trade.directPickInvoker", false, String.valueOf(t));
+                    }
+                }
             }
             check("trade.listed", listedOk == 8, listedOk + "/8 books from the explicit list");
             check("trade.tradeable", anyOk == 8, anyOk + "/8 books from #tradeable");
             check("trade.directPickSame", same == 8, same + "/8 seeds: the direct getRandomEnchantment is the villager's pick (same object)");
-            // the mod's own enchantment in #minecraft:tradeable, as the world's tags bind it (1.21.11 and 26.1 alike)
-            net.minecraft.class_6862<net.minecraft.class_1887> tradeable = net.minecraft.class_6862.method_40092(net.minecraft.class_7924.field_41265,
-                new net.minecraft.class_2960("minecraft", "tradeable"));
-            java.util.Optional<net.minecraft.class_6885.class_6888<net.minecraft.class_1887>> set = net.minecraft.class_7923.field_41176.method_40266(tradeable);
-            boolean modIn = false;
-            int size = set.map(net.minecraft.class_6885.class_6888::method_40247).orElse(-1);
-            for (int i = 0; i < Math.max(size, 0); i++) {
-                modIn |= set.get().method_40240(i).comp_349() == Init.STEADY;
-            }
-            System.out.println("CBTRADE TAG tradeable size=" + size + " mod=" + modIn);
-            check("tag.modTradeable", modIn, "cb_swtrade:steady in #minecraft:tradeable (" + size + " members)");
-            // a datapack-defined enchantment through the 1.20.6 registry: the world's entry as the 1.20.6 object
-            net.minecraft.class_1887 mending = net.minecraft.class_7923.field_41176.method_10223(new net.minecraft.class_2960("minecraft", "mending"));
-            check("registry.dataEntry", mending != null && mending.method_8183() == 1, "minecraft:mending -> " + mending);
             net.minecraft.class_3853.class_1652 stew = cb.swtrade.mixin.StewInvoker.cbswtrade$new(net.minecraft.class_1294.field_5904, 100, 7);
             net.minecraft.class_1646 villager = new net.minecraft.class_1646(class_1299.field_6077, level);
             net.minecraft.class_1914 so = stew.method_7246(villager, net.minecraft.class_5819.method_43049(1L));
