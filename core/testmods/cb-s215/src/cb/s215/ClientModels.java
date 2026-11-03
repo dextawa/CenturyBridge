@@ -176,6 +176,20 @@ public final class ClientModels {
             check("model-item-props-own", !own.method_4712() && own.method_24304() && own.method_4709() == net.minecraft.class_809.field_4301,
                 "own model answers itself");
         });
+        run("model-location-lookup", () -> {
+            // 1.21.4: ModelManager.getModel(BlockModelShaper.stateToModelLocation(state)) is the state's block model;
+            // an unknown location answers the missing model
+            net.minecraft.class_1092 manager = mc.method_1554();
+            net.minecraft.class_1091 loc = net.minecraft.class_773.method_3340(stone);
+            net.minecraft.class_1087 byLoc = manager.method_4742(loc);
+            net.minecraft.class_1087 byState = mc.method_1541().method_3349(stone);
+            net.minecraft.class_1087 unknown = manager.method_4742(new net.minecraft.class_1091(net.minecraft.class_2960.method_60656("stone"), "nonsense=1"));
+            net.minecraft.class_1087 frame = manager.method_4742(net.minecraft.class_9824.field_53652);
+            check("model-location-lookup", byLoc == byState && unknown == manager.method_4744() && frame != manager.method_4744()
+                && loc.toString().equals("minecraft:stone#"),
+                "location=" + loc + " same model=" + (byLoc == byState) + " unknown->missing=" + (unknown == manager.method_4744())
+                + " item frame model=" + frame);
+        });
         System.out.println("CB-S215C done " + ok + "/" + n);
     }
 }
