@@ -1543,7 +1543,7 @@ def write_fragment(t, V, W, path, step):
     class that is neither final nor a record) an overrideRenames entry under the V class with super calls
     renamed, so a mod's override is what W's callers of the new name reach."""
     renames, check = {}, {}
-    mren, fren, oren, diverged = {}, {}, [], []
+    mren, fren, oren, diverged, type_gone = {}, {}, [], [], []
     for key in sorted(t.ren):
         c, name = key.rsplit(".", 1)
         if c not in V:
@@ -1555,7 +1555,15 @@ def write_fragment(t, V, W, path, step):
             if m.name != name or m.access & (bytecode.ACC_SYNTHETIC | bytecode.ACC_PRIVATE):
                 continue
             kind = "M" if isinstance(m, bytecode.Meth) else "F"
-            if not t.w_has(w, kind, n, t.tdesc(m.desc), []):
+            toks = t.tdesc(m.desc)
+            if any(not isinstance(x, str) and isinstance(x[1], Wild) for x in toks):
+                # the descriptor names a V class W has no decided counterpart for (gone or undecided): the
+                # renamed member would keep a type W lacks (26.2 SubmitNodeStorage.submitParticleGroup(
+                # ParticleGroupRenderer) -> submitQuadParticleGroup(QuadParticleRenderState)), so the rename
+                # is not one this table can state; left for the step's own wiring
+                type_gone.append(f"{c}.{name}{m.desc if kind == 'M' else ':' + m.desc} -> {n}")
+                continue
+            if not t.w_has(w, kind, n, toks, []):
                 continue
             if kind == "F":
                 fren[f"{c}.{name}:{m.desc}"] = n
@@ -1609,13 +1617,14 @@ def write_fragment(t, V, W, path, step):
         "_pkgmoves_check": check,
         "_pkgmoves_member_renames": {k: t.ren[k] for k in sorted(t.ren)},
         "_pkgmoves_renamed_not_same_code": diverged,
+        "_pkgmoves_renamed_type_gone": type_gone,
     }
     with open(path, "w", encoding="utf-8", newline="\n") as o:
         json.dump(out, o, indent=1, ensure_ascii=False)
         o.write("\n")
     n_miss = sum(1 for v in check.values() if "missing" in v)
     n_ren = sum(1 for v in check.values() if "renamed" in v)
-    print(f"fragment -> {path}: {len(renames)} classRenames, {len(mren)} methodRenames, {len(fren)} fieldRenames, {len(oren)} overrideRenames, {len(diverged)} renamed members not the same code ({n_miss} with members the target lacks, "
+    print(f"fragment -> {path}: {len(renames)} classRenames, {len(mren)} methodRenames, {len(fren)} fieldRenames, {len(oren)} overrideRenames, {len(diverged)} renamed members not the same code, {len(type_gone)} with a type W lacks ({n_miss} with members the target lacks, "
           f"{n_ren} with renamed members)")
 
 
