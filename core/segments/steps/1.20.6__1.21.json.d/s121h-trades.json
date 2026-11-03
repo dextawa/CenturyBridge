@@ -1,5 +1,5 @@
 {
- "_basis": "s121h 2026-11-04, damage-aw 1.20.6__1.21 VillagerTrades rows (javap 1.20.6 / 1.21): EnchantBookForEmeralds.field_45131 was a List<Enchantment> in 1.20.6 and is a TagKey<Enchantment> under the same id in 1.21 (instanceFieldGetters: the list the restored pick draws from); VillagerTrades.method_53832(Item, Enchantment, int) (private static, 1.20.6: new ItemStack(item).enchant(enchantment, level)) is gone in 1.21 (staticRedirects: that body in the layer). ItemsAndEmeraldsToItems' 6-argument constructor is a ctorRedirect in smx6.json.",
+ "_s121h_trades_basis": "s121h 2026-11-04, damage-aw 1.20.6__1.21 VillagerTrades rows (javap 1.20.6 / 1.21): EnchantBookForEmeralds.field_45131 was a List<Enchantment> in 1.20.6 and is a TagKey<Enchantment> under the same id in 1.21 (instanceFieldGetters: the list the restored pick draws from); VillagerTrades.method_53832(Item, Enchantment, int) (private static, 1.20.6: new ItemStack(item).enchant(enchantment, level)) is gone in 1.21 (staticRedirects: that body in the layer). ItemsAndEmeraldsToItems' 6-argument constructor is a ctorRedirect in smx6.json.",
  "instanceFieldGetters": {
   "net/minecraft/class_3853$class_1648.field_45131:Ljava/util/List;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades#cbTradeableEnchantments"
  },
