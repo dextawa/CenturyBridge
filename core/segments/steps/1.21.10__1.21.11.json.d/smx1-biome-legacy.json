@@ -1,0 +1,50 @@
+{
+ "_smx1_biome_legacy_basis": "smx1j (javap -c -p both code jars): 1.21.11's BiomeSpecialEffects is a record of water / foliage / dry foliage / grass colours and the grass modifier; 1.21.10's fog / water fog / sky colour, ambient particle, ambient sounds, background music and its volume are the biome's environment attributes (FOG_COLOR .. MUSIC_VOLUME). The nine getters 1.21.11 dropped, and reads of 1.21.10's private record fields (a mod's access widener), answer from the attributes of the biome the effects belong to (Biome's constructor records it, CbBiomeEffectsOwnerMixinHooks), in 1.21.10's form (RGB colours, one particle, the three sounds, the music as a weighted list); effects only a 1.21.10 builder built answer that builder's settings. Reads and writes of the Builder's dropped private fields go to what the restored setters keep (CbBiomeEffects.Settings), which build() hands on (rt/CbBiomeEffectsLegacy).",
+ "instanceRedirects": {
+  "net/minecraft/class_4763.method_24387()I": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.method_24389()I": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.method_30810()I": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.method_24390()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.method_24939()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.method_24940()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.method_24941()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.method_27345()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.method_65135()F": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_4763.field_22067:I": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_22068:I": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_22069:I": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_26418:I": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_26419:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_26420:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_26421:Lnet/minecraft/class_4763$class_5486;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_22070:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_22491:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_22492:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_22493:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_24113:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22071:Ljava/util/OptionalInt;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22073:Ljava/util/OptionalInt;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_26422:Ljava/util/OptionalInt;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22074:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22494:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22495:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22496:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_24114:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_57099:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763.field_55050:F": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_55051:F": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_4763$class_4764.field_22071:Ljava/util/OptionalInt;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22073:Ljava/util/OptionalInt;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_26422:Ljava/util/OptionalInt;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22074:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22494:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22495:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_22496:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_24114:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy",
+  "net/minecraft/class_4763$class_4764.field_55051:F": "top/dext/centurybridge/step/v1_21_11/rt/CbBiomeEffectsLegacy"
+ }
+}
