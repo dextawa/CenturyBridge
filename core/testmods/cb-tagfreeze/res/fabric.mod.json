@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_tf",
+  "version": "1.0.0",
+  "name": "CB tag freeze test (1.21.1)",
+  "description": "A 1.21.1 mod freezing its own registry with a never-bound tag (Kilt GameData.freezeData's case at 1.21.2)",
+  "environment": "*",
+  "mixins": ["cb_tf.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.21.1" }
+}
