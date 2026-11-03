@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v26_2.rt;
 import com.mojang.blaze3d.PrimitiveTopology;
 import com.mojang.blaze3d.pipeline.BindGroupLayout;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.shaders.UniformType;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -34,5 +35,14 @@ public final class CbS205hPipelines {
      */
     public static RenderPipeline.Builder withSampler(RenderPipeline.Builder builder, String name) {
         return builder.withBindGroupLayout(BindGroupLayout.builder().withSampler(name).build());
+    }
+
+    /**
+     * 26.1.2 RenderPipeline.Builder.withUniform(name, type), gone at 26.2: 26.2 declares uniforms only through bind group
+     * layouts (BindGroupLayout.Builder.withUniform), and the pipeline's uniforms are BindGroupLayout.flattenUniforms of its
+     * layouts in the order added; each old call adds one one-uniform layout, as withSampler does for samplers.
+     */
+    public static RenderPipeline.Builder withUniform(RenderPipeline.Builder builder, String name, UniformType type) {
+        return builder.withBindGroupLayout(BindGroupLayout.builder().withUniform(name, type).build());
     }
 }

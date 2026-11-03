@@ -62,6 +62,11 @@ public final class CbBiomeEffects {
         Settings cb$v1_21_11$settings();
     }
 
+    /** what the 1.21.10 builder that built the effects set, or null (effects 1.21.11 code built) */
+    public static Settings settings(class_4763 effects) {
+        return BUILT.get(effects);
+    }
+
     public static void attach(class_4763 effects, Settings s) {
         if (s != null && s.any()) {
             BUILT.put(effects, s);
