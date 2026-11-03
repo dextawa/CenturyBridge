@@ -5,5 +5,13 @@
   "methodRenames": {
     "net/fabricmc/fabric/impl/tag/TagFileHooks.fabric_setRemove(Ljava/util/List;)V": "cb$setRemove"
   },
+  "overrideRenames": [
+    {
+     "old": "fabric_setRemove(Ljava/util/List;)V",
+     "new": "cb$setRemove",
+     "onlyUnder": "net/fabricmc/fabric/impl/tag/TagFileHooks",
+     "basis": "methodRenames renames calls, not a class's own declaration: a 1.21.1 class implementing TagFileHooks (a mixin into TagFile) keeps fabric_setRemove while the renamed interface asks for cb$setRemove -- ABSTRACT (impl-tier probe, implement-interface row). Its declaration takes the interface's new name, same descriptor."
+    }
+  ],
   "_skilteng_tagFileHooks_basis": "1.21.2's Fabric API (fabric-api-0.106.1+1.21.2, 47 nested modules) ships no fabric-tag-api-v1 and no net/fabricmc/fabric/impl/tag/TagFileHooks anywhere in the jar (whole-jar search, 0 hits); 1.21.1's fabric-tag-api-v1 0.116.15 declares it as an interface with one abstract method fabric_setRemove(List<TagEntry>)V. The 1.21.2 layer's port of the module (s7rest: depRenames fabric-tag-api-v1 -> centurybridge_step_1_21_2) gives it back as CbRestFapiTags$TagFileHooks, an interface with one abstract method cb$setRemove(List<class_3497>)V that CbRestFapiTagFileMixin makes TagFile implement: the same shape member for member. A 1.21.1 mod naming the impl class (Kilt's TagFileInject, a mixin into TagFile) otherwise keeps a name no 1.21.2 jar declares: NoClassDefFoundError while vanilla loads tags. Mirrors steps/1.21.11__26.1.json.d/sclimb.json; 1.21.10__1.21.11 renames it back to the native class when it returns."
 }
