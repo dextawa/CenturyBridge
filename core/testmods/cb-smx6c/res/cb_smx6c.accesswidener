@@ -1,3 +1,13 @@
 accessWidener	v2	intermediary
 # 1.20.6 BlockModel.bakeFace (private static), called through the mod's own access widener (damage-aw 1.20.6__1.21, aw-call-static)
 accessible method net/minecraft/class_793 method_3447 (Lnet/minecraft/class_785;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_777;
+# 1.20.6 RebuildTask.compile / handleBlockEntity and CompileResults (package-private classes, private members), called
+# through the mod's own access widener (damage-aw 1.20.6__1.21: aw-call / aw-new / aw-get / aw-put; s121 C20)
+accessible class net/minecraft/class_846$class_851$class_4578
+accessible class net/minecraft/class_846$class_851$class_4578$class_7435
+accessible method net/minecraft/class_846$class_851$class_4578$class_7435 <init> ()V
+accessible method net/minecraft/class_846$class_851$class_4578 method_22785 (FFFLnet/minecraft/class_750;)Lnet/minecraft/class_846$class_851$class_4578$class_7435;
+accessible method net/minecraft/class_846$class_851$class_4578 method_23087 (Lnet/minecraft/class_846$class_851$class_4578$class_7435;Lnet/minecraft/class_2586;)V
+accessible field net/minecraft/class_287$class_5594 field_27358 Lnet/minecraft/class_293$class_5596;
+accessible field net/minecraft/class_287$class_5594 field_27359 I
+accessible field net/minecraft/class_287$class_5594 field_27360 [Lorg/joml/Vector3f;
