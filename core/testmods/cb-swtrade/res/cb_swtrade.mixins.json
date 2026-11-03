@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "cb.swtrade.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": ["ServerDriverMixin", "EnchantBookInvoker", "EnchantBookPickInvoker", "StewInvoker"],
+  "injectors": {"defaultRequire": 1}
+}
