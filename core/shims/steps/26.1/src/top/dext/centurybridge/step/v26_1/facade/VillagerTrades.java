@@ -126,6 +126,16 @@ public class VillagerTrades {
         }
 
         /**
+         * 1.20.6's offerable list (the explicit list, else the tag's members in order) as the 1.21 layer gives it back;
+         * empty without a 1.21 layer, which is the only caller (its field_45131 getter, CbEnchantBookTrades)
+         */
+        @Override
+        public List cb$tradeable() {
+            CbWallEnchantBookPicks.Hook hook = CbWallEnchantBookPicks.hook();
+            return hook == null ? List.of() : hook.cb$tradeable(this.cb$explicit, this.field_45131, null);
+        }
+
+        /**
          * 1.20.6's getRandomEnchantment as the 1.21 layer gives it back (answering the 1.21 layer's enchantment object,
          * which a converted call casts back to: callReshapes "ret ... as"); null without a 1.21 layer, which never
          * calls it

@@ -41,6 +41,12 @@ public final class CbWallEnchantBookPicks {
          */
         Object cb$pick(List explicit, TagKey<Enchantment> tag, Registry<Enchantment> registry, RandomSource random, FeatureFlagSet features);
 
+        /**
+         * 1.20.6's offerable list: {@code explicit} when given, else the tag's members in the registry's order (the
+         * thread's world's registry when {@code registry} is null), as the 1.21 layer's enchantment objects
+         */
+        List cb$tradeable(List explicit, TagKey<Enchantment> tag, Registry<Enchantment> registry);
+
         /** the registry holder of a {@link #cb$pick} answer */
         Holder<Enchantment> cb$holder(Object picked);
     }
@@ -49,5 +55,8 @@ public final class CbWallEnchantBookPicks {
     public interface Explicit {
         /** the list's elements are the 1.21 layer's enchantment objects */
         void cb$setEnchantments(List enchantments);
+
+        /** 1.20.6's offerable list (the 1.21 layer's CbEnchantBookTrades$Explicit.cb$tradeable, s121h): elements are the 1.21 layer's objects */
+        List cb$tradeable();
     }
 }

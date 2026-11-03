@@ -64,6 +64,12 @@ public final class CbEnchantBookPick implements CbEnchantBookPicks.Hook {
     }
 
     @Override
+    public List cb$tradeable(List explicit, net.minecraft.class_6862<net.minecraft.class_1887> tag,
+                             net.minecraft.class_2378<net.minecraft.class_1887> registry) {
+        return explicit != null ? List.copyOf(explicit) : tradeable(tag, registry);
+    }
+
+    @Override
     public net.minecraft.class_6880<net.minecraft.class_1887> cb$holder(Object picked) {
         return CbEnchantments.cbHolder((class_1887) picked);
     }

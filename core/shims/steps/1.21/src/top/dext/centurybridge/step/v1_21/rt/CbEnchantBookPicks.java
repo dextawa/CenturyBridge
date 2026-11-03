@@ -30,6 +30,9 @@ public final class CbEnchantBookPicks {
                        net.minecraft.class_2378<net.minecraft.class_1887> registry, net.minecraft.class_5819 random,
                        net.minecraft.class_7699 features);
 
+        List cb$tradeable(List explicit, net.minecraft.class_6862<net.minecraft.class_1887> tag,
+                          net.minecraft.class_2378<net.minecraft.class_1887> registry);
+
         net.minecraft.class_6880<net.minecraft.class_1887> cb$holder(Object picked);
     }
 }
