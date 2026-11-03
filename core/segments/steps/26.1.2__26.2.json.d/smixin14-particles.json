@@ -6,5 +6,22 @@
    "ops": ["conv top/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit#quadParticleGroup(Ljava/lang/Object;)Lnet/minecraft/client/renderer/state/level/QuadParticleRenderState;"]
   }
  },
- "_smixin14_particles_basis": "26.1.2 OrderedSubmitNodeCollector.submitParticleGroup(ParticleGroupRenderer) is 26.2's submitQuadParticleGroup(QuadParticleRenderState) (javap: 26.1.2 QuadParticleRenderState implements ParticleGroupRenderer; 26.2 has no ParticleGroupRenderer; SubmitNodeCollection's 26.2 body submits QuadParticleFeatureRenderer$Submit(state, translucent) for both phases, what 26.1.2 did through the renderer). Calls through SubmitNodeStorage / SubmitNodeCollection resolve to this key through the interface. Overrides (1.21.9 CbSubmit$Immediate row 17) are not covered by a call reshape."
+ "_smixin14_particles_basis": "26.1.2 OrderedSubmitNodeCollector.submitParticleGroup(ParticleGroupRenderer) is 26.2's submitQuadParticleGroup(QuadParticleRenderState) (javap: 26.1.2 QuadParticleRenderState implements ParticleGroupRenderer; 26.2 has no ParticleGroupRenderer; SubmitNodeCollection's 26.2 body submits QuadParticleFeatureRenderer$Submit(state, translucent) for both phases, what 26.1.2 did through the renderer). Calls through SubmitNodeStorage / SubmitNodeCollection resolve to this key through the interface.",
+ "classRenames": {
+  "net/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer": "top/dext/centurybridge/step/v26_2/facade/ParticleGroupRenderer"
+ },
+ "facadeGaps": {
+  "net/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer.prepare(Lnet/minecraft/client/renderer/feature/ParticleFeatureRenderer$ParticleBufferCache;Z)Lnet/minecraft/client/renderer/state/level/QuadParticleRenderState$PreparedBuffers;": "26.2 deleted ParticleBufferCache and PreparedBuffers (javap, whole client jar): QuadParticleFeatureRenderer builds layers from the state itself (buildLayer/layers); no 26.2 counterpart to take or answer",
+  "net/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer.render(Lnet/minecraft/client/renderer/state/level/QuadParticleRenderState$PreparedBuffers;Lnet/minecraft/client/renderer/feature/ParticleFeatureRenderer$ParticleBufferCache;Lcom/mojang/blaze3d/systems/RenderPass;Lnet/minecraft/client/renderer/texture/TextureManager;)V": "26.2 deleted PreparedBuffers and ParticleBufferCache (javap, whole client jar); rendering is QuadParticleFeatureRenderer's from the state"
+ },
+ "overrideHooks": [
+  {
+   "old": "submitParticleGroup(Lnet/minecraft/client/renderer/SubmitNodeCollector$ParticleGroupRenderer;)V",
+   "new": "submitQuadParticleGroup(Lnet/minecraft/client/renderer/state/level/QuadParticleRenderState;)V",
+   "onlyUnder": "net/minecraft/client/renderer/OrderedSubmitNodeCollector",
+   "wrap": "top/dext/centurybridge/step/v26_2/rt/CbS26OrderedSubmit.legacyGroup(Lnet/minecraft/client/renderer/state/level/QuadParticleRenderState;)Ltop/dext/centurybridge/step/v26_2/facade/ParticleGroupRenderer;",
+   "guard": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "basis": "smixin15 row 17: a 26.1.2 override of submitParticleGroup(ParticleGroupRenderer) (the 1.21.9 layer's CbSubmit$Immediate, the 26.1 layer's CbFapiSubmitBlocks$OrderedView, any 26.1.2 mod collector) is never called by 26.2, which calls submitQuadParticleGroup(state). The synthesized new shape hands the old override 26.2's group as the 26.1.2 type (CbS26OrderedSubmit.legacyGroup); the override's own super/delegate submitParticleGroup(..) calls are call-reshaped above, whose converter unwraps it, so 26.2's state reaches SubmitNodeStorage unchanged. pkgmoves-gen no longer renames the member (wall_table.py: a rename whose descriptor names a class W lacks is not stated there)."
+  }
+ ]
 }
