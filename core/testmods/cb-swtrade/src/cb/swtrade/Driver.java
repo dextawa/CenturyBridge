@@ -74,6 +74,20 @@ public final class Driver {
             check("trade.listed", listedOk == 8, listedOk + "/8 books from the explicit list");
             check("trade.tradeable", anyOk == 8, anyOk + "/8 books from #tradeable");
             check("trade.directPickSame", same == 8, same + "/8 seeds: the direct getRandomEnchantment is the villager's pick (same object)");
+            // the mod's own enchantment in #minecraft:tradeable, as the world's tags bind it (1.21.11 and 26.1 alike)
+            net.minecraft.class_6862<net.minecraft.class_1887> tradeable = net.minecraft.class_6862.method_40092(net.minecraft.class_7924.field_41265,
+                new net.minecraft.class_2960("minecraft", "tradeable"));
+            java.util.Optional<net.minecraft.class_6885.class_6888<net.minecraft.class_1887>> set = net.minecraft.class_7923.field_41176.method_40266(tradeable);
+            boolean modIn = false;
+            int size = set.map(net.minecraft.class_6885.class_6888::method_40247).orElse(-1);
+            for (int i = 0; i < Math.max(size, 0); i++) {
+                modIn |= set.get().method_40240(i).comp_349() == Init.STEADY;
+            }
+            System.out.println("CBTRADE TAG tradeable size=" + size + " mod=" + modIn);
+            check("tag.modTradeable", modIn, "cb_swtrade:steady in #minecraft:tradeable (" + size + " members)");
+            // a datapack-defined enchantment through the 1.20.6 registry: the world's entry as the 1.20.6 object
+            net.minecraft.class_1887 mending = net.minecraft.class_7923.field_41176.method_10223(new net.minecraft.class_2960("minecraft", "mending"));
+            check("registry.dataEntry", mending != null && mending.method_8183() == 1, "minecraft:mending -> " + mending);
             net.minecraft.class_3853.class_1652 stew = cb.swtrade.mixin.StewInvoker.cbswtrade$new(net.minecraft.class_1294.field_5904, 100, 7);
             net.minecraft.class_1646 villager = new net.minecraft.class_1646(class_1299.field_6077, level);
             net.minecraft.class_1914 so = stew.method_7246(villager, net.minecraft.class_5819.method_43049(1L));

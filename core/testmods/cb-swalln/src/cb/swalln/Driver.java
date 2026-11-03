@@ -170,6 +170,27 @@ public class Driver implements ModInitializer {
         } catch (Throwable t) {
             check("modResourcePack", false, t);
         }
+        try {
+            // vanilla registry loading with the layers on: 26.1's own enchantment data and tags, as 26.1 loads them
+            net.minecraft.core.Registry<net.minecraft.world.item.enchantment.Enchantment> reg =
+                server.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+            int vanilla = 0;
+            for (net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> k : reg.registryKeySet()) {
+                vanilla += k.identifier().getNamespace().equals("minecraft") ? 1 : 0;
+            }
+            int tradeable = 0;
+            boolean mending = false;
+            for (net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> h
+                    : reg.getTagOrEmpty(net.minecraft.tags.EnchantmentTags.TRADEABLE)) {
+                tradeable += h.unwrapKey().map(k -> k.identifier().getNamespace().equals("minecraft") ? 1 : 0).orElse(0);
+                mending |= h.is(net.minecraft.world.item.enchantment.Enchantments.MENDING);
+            }
+            System.out.println("CBNATIVE enchantments minecraft=" + vanilla + " total=" + reg.size() + " tradeableVanilla=" + tradeable);
+            check("vanilla.enchantmentRegistry", vanilla == 43 && mending && tradeable > 0,
+                "minecraft enchantments " + vanilla + " (26.1 data: 43), #tradeable vanilla members " + tradeable + ", mending " + mending);
+        } catch (Throwable t) {
+            check("vanilla.enchantmentRegistry", false, t);
+        }
         System.out.println("CBNATIVE DONE fails=" + FAILS);
     }
 
