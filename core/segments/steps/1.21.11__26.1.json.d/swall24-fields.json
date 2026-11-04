@@ -9,7 +9,14 @@
   "net/minecraft/class_4722.field_21727:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#shieldSheetType",
   "net/minecraft/class_4722.field_21728:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#signSheetType",
   "net/minecraft/class_4722.field_21729:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#chestSheetType",
-  "net/minecraft/class_4722.field_21700:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#solidBlockSheet"
+  "net/minecraft/class_4722.field_21700:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#solidBlockSheet",
+  "net/minecraft/class_1851.field_9007:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#rocketPaper",
+  "net/minecraft/class_1851.field_9006:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#rocketGunpowder",
+  "net/minecraft/class_1851.field_9008:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#rocketStar",
+  "net/minecraft/class_1853.field_9013:Ljava/util/Map;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#starShapeByItem",
+  "net/minecraft/class_1853.field_9010:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#starTrail",
+  "net/minecraft/class_1853.field_9014:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#starTwinkle",
+  "net/minecraft/class_1853.field_9012:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#starGunpowder"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_11228.field_59919:Lcom/mojang/blaze3d/textures/GpuTexture;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlas",
@@ -40,5 +47,6 @@
  "_swall24_sheets_basis": "1.21.11 Sheets (class_4722) *_SHEET_TYPE / SOLID_BLOCK_SHEET: the same RenderTypes factory call on the same sheet id as 1.21.11's clinit (rt/CbWallSheetTypes). Sheets.chooseMaterial (TOMBSTONE row) stays open.",
  "_swall24_rabbit_basis": "1.21.11 RabbitModel (class_596) haunch / front-leg fields: 26.1 adult and baby rabbit meshes both carry parts with the same names, nested under body/frontlegs and backlegs/*_hind_leg (rt/CbWallRabbitParts). ADULT_TRANSFORMER / BABY_TRANSFORMER stay open (26.1 babies are separate meshes).",
  "_swall24_itemlayer_basis": "1.21.11 LayerRenderState (class_10444$class_10446) particleIcon read answered from 26.1's particleMaterial.sprite() (rt/CbWallItemLayerFields). Left open: particleIcon write (no forceTranslucent in 1.21.11), renderType (26.1 layers carry no render type), tintLayers int[] vs IntList (1.21.11 handed out its backing array; a copy would lose in-place writes).",
- "_swall24_recipes_basis": "1.21.11 Shaped/Shapeless/TransmuteRecipe group/category/showNotification fields answered through 26.1's NormalCraftingRecipe group()/category()/showNotification() (rt/CbWallRecipeFields). result (ItemStack vs ItemStackTemplate) stays open."
+ "_swall24_recipes_basis": "1.21.11 Shaped/Shapeless/TransmuteRecipe group/category/showNotification fields answered through 26.1's NormalCraftingRecipe group()/category()/showNotification() (rt/CbWallRecipeFields). result (ItemStack vs ItemStackTemplate) stays open.",
+ "_swall24_firework_basis": "1.21.11 FireworkRocketRecipe (class_1851) / FireworkStarRecipe (class_1853) static ingredient constants: 26.1 made them per-recipe instance data; answered with 1.21.11's clinit values (rt/CbWallFireworkIngredients)."
 }
