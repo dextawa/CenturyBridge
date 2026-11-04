@@ -50,27 +50,29 @@ public final class CbRestCreakingHeart {
     }
 
     /**
-     * Reconcile a newly selected creaking-heart state after a StateHolder state-selection call. Recursive with calls
-     * terminate because the second property already has the required value; all other blocks return unchanged.
+     * Reconcile a newly selected creaking-heart state after a StateHolder state-selection call. A write of the
+     * restored property pushes it into the native ACTIVE bit; any other write (native ACTIVE, AXIS, NATURAL) pulls the
+     * native bit into the restored property, which leaves an already coherent state unchanged. The write is told
+     * apart only by the restored property's identity (the layer's own constant), never by the native property's: past
+     * 1.21.4 the native ACTIVE bit is given back over another property, so its identity is not the written one.
+     * Recursive with calls terminate because the second property already has the required value; all other blocks
+     * return unchanged.
      */
     public static class_2680 convertState(class_2680 state, class_2769<?> written) {
         if (!(state.method_26204() instanceof class_10319)) {
             return state;
         }
+        boolean nativeActive = state.method_11654(class_10319.field_55064).booleanValue();
+        CreakingHeartState oldState = state.method_11654(CREAKING);
         if (written == CREAKING) {
-            boolean nativeActive = state.method_11654(CREAKING) != CreakingHeartState.DISABLED;
-            if (state.method_11654(class_10319.field_55064).booleanValue() != nativeActive) {
-                return state.method_11657(class_10319.field_55064, Boolean.valueOf(nativeActive));
+            boolean wanted = oldState != CreakingHeartState.DISABLED;
+            if (nativeActive != wanted) {
+                return state.method_11657(class_10319.field_55064, Boolean.valueOf(wanted));
             }
-        } else if (written == class_10319.field_55064) {
-            boolean nativeActive = state.method_11654(class_10319.field_55064).booleanValue();
-            CreakingHeartState oldState = state.method_11654(CREAKING);
-            if (!nativeActive && oldState != CreakingHeartState.DISABLED) {
-                return state.method_11657(CREAKING, CreakingHeartState.DISABLED);
-            }
-            if (nativeActive && oldState == CreakingHeartState.DISABLED) {
-                return state.method_11657(CREAKING, CreakingHeartState.DORMANT);
-            }
+        } else if (!nativeActive && oldState != CreakingHeartState.DISABLED) {
+            return state.method_11657(CREAKING, CreakingHeartState.DISABLED);
+        } else if (nativeActive && oldState == CreakingHeartState.DISABLED) {
+            return state.method_11657(CREAKING, CreakingHeartState.DORMANT);
         }
         return state;
     }
@@ -84,11 +86,19 @@ public final class CbRestCreakingHeart {
                 || !state.method_11654(class_10319.field_55064).booleanValue()) {
             return;
         }
-        CreakingHeartState wanted = class_10319.method_65147(level)
+        CreakingHeartState wanted = isNaturalNight(level)
             ? CreakingHeartState.ACTIVE : CreakingHeartState.DORMANT;
         if (state.method_11654(CREAKING) != wanted) {
             level.method_8652(pos, state.method_11657(CREAKING, wanted), 3);
         }
+    }
+
+    /**
+     * CreakingHeartBlock.isNaturalNight(level), 1.21.4's body (javap -c): a natural dimension at night. Asked through
+     * the dimension type and Level.isNight, which later releases keep; the static itself is gone at 1.21.11.
+     */
+    static boolean isNaturalNight(class_1937 level) {
+        return level.method_8597().comp_645() && level.method_23886();
     }
 
     /** V's comparator gate: DORMANT ticks but emits no comparator signal; only ACTIVE does. */
