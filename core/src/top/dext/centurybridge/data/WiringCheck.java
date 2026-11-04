@@ -540,7 +540,40 @@ public final class WiringCheck {
         return null;
     }
 
+    /** For a vanilla owner not renamed to a facade, a cover wins before ordinary redirect resolution. */
+    private void checkCoverRedirectConflicts(com.google.gson.JsonObject root) {
+        if (!root.has("covers")) {
+            return;
+        }
+        Map<String, List<String>> redirects = new HashMap<>();
+        // superRedirects are deliberately composable with a cover: they serve invokespecial while the cover
+        // still serves ordinary virtual calls. The maps below compete with the cover for the same call sites.
+        for (String section : new String[] {"staticRedirects", "instanceRedirects", "interfaceCallRedirects"}) {
+            if (!root.has(section)) {
+                continue;
+            }
+            for (String key : root.getAsJsonObject(section).keySet()) {
+                redirects.computeIfAbsent(key, k -> new ArrayList<>()).add(section);
+            }
+        }
+        for (var e : root.getAsJsonArray("covers")) {
+            String key = e.getAsString();
+            String owner = key.substring(0, key.lastIndexOf('.'));
+            // classRenames and library-owner redirects are resolved on their own paths, before vanilla covers.
+            if (!owner.startsWith("net/minecraft/")
+                    || root.has("classRenames") && root.getAsJsonObject("classRenames").has(owner)) {
+                continue;
+            }
+            List<String> sections = redirects.get(key);
+            if (sections != null) {
+                problems.add("cover " + key + " is also wired by " + String.join(", ", sections)
+                    + ": the cover wins conversion and hides the redirect; keep only one mechanism");
+            }
+        }
+    }
+
     private void check(com.google.gson.JsonObject root) {
+        checkCoverRedirectConflicts(root);
         // retiredClasses (Chain.retiredClasses) take classes out of every jar the step converts: only a
         // CenturyBridge layer's own may go, with a reason
         if (root.has("retiredClasses")) {

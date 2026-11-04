@@ -44,6 +44,8 @@
     "CbTextureReloadBlurMixin",
     "CbScreenTooltipMixin",
     "CbTextureViewsMixin",
+    "CbS6GlUniformDrawMixin",
+    "CbS6GlUniformCloseMixin",
     "CbSectionDistanceRestoredMixin",
     "CbSectionDistanceRestoredMixinHooks",
     "CbSectionDispatcherRestoredMixin",

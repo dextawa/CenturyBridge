@@ -1,0 +1,30 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_4095.method_18904(Lnet/minecraft/class_4140;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6MemoryFields",
+  "net/minecraft/class_4095.method_46873(Lnet/minecraft/class_4140;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6MemoryFields",
+  "net/minecraft/class_4095.method_18878(Lnet/minecraft/class_4140;Ljava/lang/Object;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbS6MemoryFields",
+  "net/minecraft/class_4095.method_24525(Lnet/minecraft/class_4140;Ljava/lang/Object;J)V": "top/dext/centurybridge/step/v1_21_6/rt/CbS6MemoryFields",
+  "net/minecraft/class_4095.method_18879(Lnet/minecraft/class_4140;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v1_21_6/rt/CbS6MemoryFields",
+  "net/minecraft/class_4095.method_29519(Lnet/minecraft/class_4140;Ljava/lang/Object;)Z": "top/dext/centurybridge/step/v1_21_6/rt/CbS6MemoryFields",
+  "net/minecraft/class_4095.method_35058()Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6MemoryFields"
+ },
+ "_instanceRedirects_basis_s6fields_memory": "MemoryModuleType.NEAREST_VISIBLE_ADULT is the same registered key on 1.21.6 (both <clinit>s register nearest_visible_adult), but its value widened from AgeableMob to LivingEntity: 1.21.6 AdultSensor and AdultSensorAnyType put LivingEntity (javap of both code jars). Brain's typed value entry points redirect with the key: old AgeableMob inputs pass unchanged; getOptionalMemory / getRegisteredMemory project a non-AgeableMob value to Optional.empty, the only value 1.21.5 could represent, instead of letting the mod's CHECKCAST fail. Brain.getMemories returns a stable live map view whose get, entry values, values view and write-back returns apply that same keyed projection; valid Optionals and ExpirableValues keep their identities, and entry.setValue / put validate raw inputs. ExpirableValue.getValue needs no key-blind global conversion because the public Brain map no longer exposes an unrepresentable nearest-adult value to it. Other keys and all Optional/entity identities pass unchanged (CbS6MemoryFields). Redirects, not a key-blind ret conv, keep unrelated memory types untouched",
+ "instanceFieldGetters": {
+  "net/minecraft/class_9810$class_9811.field_52168:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6SectionField"
+ },
+ "_instanceFieldGetters_basis_s6fields_section": "1.21.5 SectionCompiler.Results.renderedLayers is Map<RenderType, MeshData> backed by Reference2ObjectArrayMap; 1.21.6 is Map<ChunkSectionLayer, MeshData> backed by EnumMap (javap of both Results constructors). CbS6SectionField presents a live V-keyed view: only the canonical SOLID/CUTOUT_MIPPED/CUTOUT/TRANSLUCENT/TRIPWIRE singletons map to solid()/cutoutMipped()/cutout()/the restored translucent()/tripwire(); a mod-created RenderType with the same pipeline remains a different key, reads absent and cannot alias a canonical entry. MeshData values pass by identity, writes and iterator removal go through, entry.setValue writes through, and the inverse unwraps the view while retaining every native entry. A non-chunk RenderType cannot be written under null",
+ "genericWitnesses": {
+  "net/minecraft/class_4140.field_25359:Lnet/minecraft/class_4140;": {
+   "by": [
+    "net/minecraft/class_4095.method_18904(Lnet/minecraft/class_4140;)Ljava/util/Optional;",
+    "net/minecraft/class_4095.method_46873(Lnet/minecraft/class_4140;)Ljava/util/Optional;",
+    "net/minecraft/class_4095.method_18878(Lnet/minecraft/class_4140;Ljava/lang/Object;)V",
+    "net/minecraft/class_4095.method_24525(Lnet/minecraft/class_4140;Ljava/lang/Object;J)V",
+    "net/minecraft/class_4095.method_18879(Lnet/minecraft/class_4140;Ljava/util/Optional;)V",
+    "net/minecraft/class_4095.method_29519(Lnet/minecraft/class_4140;Ljava/lang/Object;)Z",
+    "net/minecraft/class_4095.method_35058()Ljava/util/Map;"
+   ],
+   "basis": "phantom memory key: the MemoryModuleType object and its registry identity pass unchanged. The value it types is converted at Brain's typed value hand-in / hand-out sites and at the raw getMemories map's live keyed view (CbS6MemoryFields): V AgeableMob -> W LivingEntity is identity; W's Optional value -> V is an instanceof-tested projection, with values outside V's domain read as empty. The map covers get, entries / values and write-back returns, so ExpirableValue.getValue cannot expose a widened value through that public route. Expiry, presence and erase operations expose no typed value and need no conversion"
+  }
+ }
+}

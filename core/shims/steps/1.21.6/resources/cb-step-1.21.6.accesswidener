@@ -74,3 +74,11 @@ accessible field net/minecraft/class_11246 field_60314 I
 # through 1.21.6's text builder (javap: Font.prepareText shapes first, then builds this)
 accessible class net/minecraft/class_327$class_5232
 accessible method net/minecraft/class_327$class_5232 <init> (Lnet/minecraft/class_327;FFIIZ)V
+# CbS6GlViews: the native sampler map behind the 1.21.5 texture-valued live view
+accessible field net/minecraft/class_10866 field_57874 Ljava/util/HashMap;
+# CbS6GlUniforms: the native uniform-slice map behind the 1.21.5 array-valued live view
+accessible field net/minecraft/class_10866 field_57873 Ljava/util/HashMap;
+# In-pass legacy array synchronization uses the same storage/map operations GlCommandEncoder delegates to (its public
+# command methods reject an open pass). The GL buffer id is needed by writeToBuffer's underlying storage call.
+accessible field net/minecraft/class_10859 field_57842 I
+accessible method net/minecraft/class_10874 method_71027 (IILjava/nio/ByteBuffer;)V
