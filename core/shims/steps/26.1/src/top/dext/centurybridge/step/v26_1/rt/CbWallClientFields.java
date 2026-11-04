@@ -98,6 +98,27 @@ public final class CbWallClientFields {
         return 300;
     }
 
+    /**
+     * Minecraft.cameraEntity (class_310.field_1719): 26.1's getCameraEntity() / setCameraEntity() keep it as the main
+     * camera's entity (Camera.entity); a raw field write in 1.21.11 skipped setCameraEntity's post-effect check, as
+     * Camera.setEntity does.
+     */
+    public static net.minecraft.world.entity.Entity cameraEntity(Minecraft mc) {
+        return camera().entity();
+    }
+
+    public static void setCameraEntity(Minecraft mc, net.minecraft.world.entity.Entity e) {
+        camera().setEntity(e);
+    }
+
+    /**
+     * Minecraft.windowActive (class_310.field_1695): 1.21.11 set it from the window focus callback; 26.1's
+     * isWindowActive() asks the window's focus directly. Read only (a write would not reach the window).
+     */
+    public static boolean windowActive(Minecraft mc) {
+        return mc.isWindowActive();
+    }
+
     @SuppressWarnings("unchecked")
     public static Predicate filter(EditBox box) {
         Predicate<String> f = ((CbWallEditBoxFilter) box).cb$filter();
