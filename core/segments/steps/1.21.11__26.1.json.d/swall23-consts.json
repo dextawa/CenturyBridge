@@ -59,6 +59,14 @@
   "net/minecraft/class_9939.field_52863:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallConstants#field_52863",
   "net/minecraft/class_9939.field_52864:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallConstants#field_52864",
   "net/minecraft/class_9939.field_52865:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallConstants#field_52865",
-  "net/minecraft/class_9939.field_52866:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallConstants#field_52866"
- }
+  "net/minecraft/class_9939.field_52866:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallConstants#field_52866",
+  "net/minecraft/class_7237.field_39979:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#worldLoader",
+  "net/minecraft/class_3004.field_56604:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#customBossEvents",
+  "net/minecraft/class_3255.field_14182:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#abstractPackResources",
+  "net/minecraft/class_4095.field_24656:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#brain",
+  "net/minecraft/class_1940.field_64165:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#levelSettings",
+  "net/minecraft/class_22.field_25019:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#mapItemSavedData",
+  "net/minecraft/class_236.field_1315:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#timerQueue"
+ },
+ "_swall23_loggers_basis": "1.21.11 private static LOGGER (LogUtils.getLogger() in each owner's clinit) 26.1 no longer declares there: rt/CbWallLoggers answers the slf4j logger named after the owner's 26.1 class"
 }
