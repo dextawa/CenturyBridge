@@ -14,4 +14,10 @@ public abstract class CubeTickMixin {
     private void cbslmn$squish(CallbackInfo ci) {
         System.getProperties().merge("cb.slm.native." + this.getClass().getSimpleName(), 1, (a, b) -> (Integer) a + (Integer) b);
     }
+
+    /** native control for convInvoke: the getDimensions call in tick (only on the landing tick: the squish particles) */
+    @Inject(method = "tick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/cubemob/AbstractCubeMob;getDimensions(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;"))
+    private void cbslmn$dims(CallbackInfo ci) {
+        System.getProperties().merge("cb.slm.nativeInvoke." + this.getClass().getSimpleName(), 1, (a, b) -> (Integer) a + (Integer) b);
+    }
 }
