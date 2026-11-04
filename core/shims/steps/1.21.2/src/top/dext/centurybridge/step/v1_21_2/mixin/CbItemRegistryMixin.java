@@ -4,6 +4,7 @@ import java.util.Map;
 import net.minecraft.class_2370;
 import net.minecraft.class_6862;
 import net.minecraft.class_6885;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import top.dext.centurybridge.step.v1_21_2.rt.CbItemRegistries;
@@ -30,9 +31,29 @@ public abstract class CbItemRegistryMixin<T> implements CbItemRegistries.Frozen,
     @Shadow
     abstract class_6885.class_6888<T> method_62690(class_6862<T> tag);
 
+    @Shadow
+    @Final
+    private Map<class_6862<T>, class_6885.class_6888<T>> field_53686;
+
+    /** bindAllTagsToEmpty's per-set step: the set bound to List.of() */
+    @Shadow
+    private static void method_62688(class_6885.class_6888<?> set) {
+        throw new AssertionError();
+    }
+
     @Override
     public boolean cb$frozen() {
         return this.field_36463;
+    }
+
+    /** CbItemRegistries.method_40276: before a 1.21.1 caller's freeze, the still-unbound sets bound as 1.21.1 created them */
+    @Override
+    public void cb$bindUnboundTagsToEmpty() {
+        for (class_6885.class_6888<T> set : this.field_53686.values()) {
+            if (!set.method_62680()) {
+                method_62688(set);
+            }
+        }
     }
 
     @Override

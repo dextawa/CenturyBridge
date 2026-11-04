@@ -134,12 +134,33 @@ public final class CbS26OrderedSubmit {
         if (renderer instanceof QuadParticleRenderState state) {
             return state;
         }
+        if (renderer instanceof LegacyGroup group) {
+            return group.state(); // 26.2's own group, handed to an old override by the hook and passed on by it
+        }
         String cls = renderer == null ? "null" : renderer.getClass().getName();
         if (LOGGED.add(cls + ".submitParticleGroup")) {
             LogUtils.getLogger().warn("[CenturyBridge] {} is a 26.1.2 ParticleGroupRenderer that is not a QuadParticleRenderState;"
                 + " 26.2 has no ParticleGroupRenderer, so its particle group is dropped (known loss)", cls);
         }
         return new QuadParticleRenderState();
+    }
+
+    /**
+     * overrideHooks (26.1.2 submitParticleGroup(ParticleGroupRenderer) override -> 26.2 submitQuadParticleGroup(state)):
+     * the group 26.2 submits, as the 26.1.2 type the old override takes (facade/ParticleGroupRenderer). The old
+     * override's own submissions of it -- super.submitParticleGroup(..), a wrapped collector's submitParticleGroup(..) --
+     * are call-reshaped through {@link #quadParticleGroup}, which unwraps it: 26.2's state goes on unchanged.
+     */
+    public static top.dext.centurybridge.step.v26_2.facade.ParticleGroupRenderer legacyGroup(QuadParticleRenderState state) {
+        return new LegacyGroup(state);
+    }
+
+    /** 26.2's quad particle group as a 26.1.2 ParticleGroupRenderer (isEmpty as 26.1.2's QuadParticleRenderState answered) */
+    public record LegacyGroup(QuadParticleRenderState state) implements top.dext.centurybridge.step.v26_2.facade.ParticleGroupRenderer {
+        @Override
+        public boolean isEmpty() {
+            return this.state.isEmpty();
+        }
     }
 
     private static final Set<String> LOGGED = ConcurrentHashMap.newKeySet();

@@ -1,0 +1,8 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_2378.method_40276()Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries"
+ },
+ "superRedirects": {
+  "net/minecraft/class_2370.method_40276()Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#super_method_40276"
+ }
+}

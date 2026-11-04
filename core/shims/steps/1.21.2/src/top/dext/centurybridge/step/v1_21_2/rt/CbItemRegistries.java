@@ -180,18 +180,19 @@ public final class CbItemRegistries {
     }
 
     /**
-     * 1.21.1's getOrCreateTag: the bound set when the tag is bound; before the registry froze, the set the
-     * registry creates for registration (1.21.2's getOrCreateTagForRegistration, as 1.21.1 created one);
-     * once frozen, an empty named set of the registry, what 1.21.1 answered for a tag no data defined
+     * 1.21.1's getOrCreateTag: before the registry froze, the registry's own named set for the tag, created if absent
+     * (1.21.2's getOrCreateTagForRegistration, as 1.21.1 created one) -- asked first, because 1.21.2's bound-tag lookup
+     * (getTag) throws "Tags not bound" on a registry whose tags are still pending; once frozen, the bound set when the
+     * tag is bound, else an empty named set of the registry, what 1.21.1 answered for a tag no data defined
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static class_6885.class_6888 super_method_40260(class_2378 self, class_6862 tag) {
+        if (self instanceof class_2370 mapped && !((Frozen) mapped).cb$frozen()) {
+            return ((Frozen) mapped).cb$tagForRegistration(tag);
+        }
         Optional<class_6885.class_6888> bound = self.method_46733(tag);
         if (bound.isPresent()) {
             return bound.get();
-        }
-        if (self instanceof class_2370 mapped && !((Frozen) mapped).cb$frozen()) {
-            return ((Frozen) mapped).cb$tagForRegistration(tag);
         }
         return class_6885.method_45924((class_7876) self, tag);
     }
@@ -508,6 +509,64 @@ public final class CbItemRegistries {
 
         @SuppressWarnings("rawtypes")
         class_6885.class_6888 cb$tagForRegistration(class_6862 tag);
+
+        /** the registry's named sets still unbound, bound to no holders (only these: a bound set keeps its contents) */
+        void cb$bindUnboundTagsToEmpty();
+    }
+
+    // ---- freeze() as 1.21.1 callers relied on it ----
+
+    /**
+     * 1.21.1's MappedRegistry.freeze() on 1.21.2. A 1.21.1 named set had its contents from creation (HolderSet.Named
+     * started bound to List.of()); 1.21.2's starts unbound, and its freeze() refuses a registry holding one ("Unbound
+     * tags in registry"). Vanilla binds them first: BuiltInRegistries.freeze() calls bindAllTagsToEmpty() on each
+     * registry, then freeze(). A 1.21.1 caller freezing a registry itself (Forge's GameData.freezeData on a registry
+     * it unfroze and added tags to) had no such step. So before the freeze of a registry not yet frozen, the sets
+     * still unbound are bound to empty, as 1.21.1 created them; bound sets are left alone, a frozen registry is not
+     * touched, and freeze()'s checks run unchanged.
+     */
+    @SuppressWarnings("rawtypes")
+    public static class_2378 method_40276(class_2378 self) { // keyed on Registry: a call through MappedRegistry resolves here too
+        bindUnboundBeforeFreeze(self);
+        return self.method_40276();
+    }
+
+    /** a 1.21.1 subclass's super.freeze(): the same binding, then MappedRegistry's own freeze() (not the override) */
+    @SuppressWarnings("rawtypes")
+    public static class_2378 super_method_40276(class_2370 self) {
+        bindUnboundBeforeFreeze(self);
+        try {
+            return (class_2378) MappedFreeze.HANDLE.invoke(self);
+        } catch (RuntimeException | Error e) {
+            throw e;
+        } catch (Throwable t) {
+            throw new IllegalStateException(t);
+        }
+    }
+
+    private static void bindUnboundBeforeFreeze(class_2378<?> self) {
+        if (self instanceof class_2370<?> mapped && !((Frozen) mapped).cb$frozen()) {
+            ((Frozen) mapped).cb$bindUnboundTagsToEmpty();
+        }
+    }
+
+    /**
+     * MappedRegistry.freeze() invoked non-virtually, as a subclass's invokespecial reached it. A holder of its own,
+     * resolved on first super call only: a failure here must not take CbItemRegistries' other members with it.
+     */
+    private static final class MappedFreeze {
+        static final java.lang.invoke.MethodHandle HANDLE;
+
+        static {
+            try {
+                java.lang.invoke.MethodHandles.Lookup l = java.lang.invoke.MethodHandles.privateLookupIn(class_2370.class,
+                    java.lang.invoke.MethodHandles.lookup());
+                HANDLE = l.findSpecial(class_2370.class, "method_40276",
+                    java.lang.invoke.MethodType.methodType(class_2378.class), class_2370.class);
+            } catch (ReflectiveOperationException e) {
+                throw new ExceptionInInitializerError(e);
+            }
+        }
     }
 
     private CbItemRegistries() {
