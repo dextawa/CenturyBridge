@@ -21,7 +21,7 @@ import org.slf4j.Logger;
  * (classRenames, s6fin-realms.json). 1.20.6's body.
  */
 @Environment(EnvType.CLIENT)
-public class class_4881 extends net.minecraft.class_4352 {
+public class class_4881 extends net.minecraft.class_4881 {
     public static final Logger field_22628 = com.mojang.logging.LogUtils.getLogger();
     /** serverId */
     public long field_22626;

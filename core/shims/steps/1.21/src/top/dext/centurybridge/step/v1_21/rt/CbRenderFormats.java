@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import top.dext.centurybridge.step.v1_21.mixin.CbVertexFormatAccess;
 
 /**
  * 1.20.6's vertex formats and elements on 1.21's.
@@ -25,6 +26,11 @@ import net.fabricmc.api.Environment;
  */
 @Environment(EnvType.CLIENT)
 public final class CbRenderFormats {
+
+    /** the restored virtual clearBufferState, implemented on the native record by CbVertexFormatElementMixin */
+    public interface LegacyClearState {
+        void method_22653(int elementIndex);
+    }
 
     private CbRenderFormats() {
     }
@@ -79,7 +85,36 @@ public final class CbRenderFormats {
             throw new IllegalStateException("1.21 registers at most 32 vertex format elements, and all are taken: a 1.20.6 element (index "
                 + index + ", " + type + ", " + usage + ", " + count + ") has no id");
         }
-        return net.minecraft.class_296.method_60845(free, index, type, usage, count);
+        // The native constructor rejects a repeated non-UV usage. Construct with UV, then restore the
+        // actual usage through the record field and register exactly as method_60845 does.
+        net.minecraft.class_296 element = new net.minecraft.class_296(free, index, type,
+            net.minecraft.class_296.class_298.field_1636, count);
+        try {
+            USAGE_FIELD.set(element, usage);
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException("cannot retain duplicate vertex usage " + usage, e);
+        }
+        net.minecraft.class_296.field_52114[free] = element;
+        net.minecraft.class_296.field_52115.add(element);
+        return element;
+    }
+
+    private static final java.lang.reflect.Field USAGE_FIELD = usageField();
+
+    private static java.lang.reflect.Field usageField() {
+        try {
+            java.lang.reflect.Field field = net.minecraft.class_296.class.getDeclaredField("comp_2845");
+            field.setAccessible(true);
+            return field;
+        } catch (NoSuchFieldException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    /** the native record id of that same shape, used by a converted subclass's super constructor */
+    public static int cbElementId(int index, net.minecraft.class_296.class_297 type,
+                                  net.minecraft.class_296.class_298 usage, int count) {
+        return cbElement(index, type, usage, count).comp_2842();
     }
 
     /** getUsage() */
@@ -120,6 +155,14 @@ public final class CbRenderFormats {
         com.mojang.blaze3d.platform.GlStateManager._disableVertexAttribArray(elementIndex);
     }
 
+    /** VertexFormat.clearBufferState: virtually dispatch each element's restored method, as 1.20.6 did */
+    public static void cbClearFormat(net.minecraft.class_293 format) {
+        java.util.List<net.minecraft.class_296> elements = ((CbVertexFormatAccess) (Object) format).cb$elements();
+        for (int i = 0; i < elements.size(); i++) {
+            ((LegacyClearState) (Object) elements.get(i)).method_22653(i);
+        }
+    }
+
     /** Usage.clearBufferState(index, elementIndex) */
     public static void cbUsageClearBufferState(net.minecraft.class_296.class_298 usage, int index, int elementIndex) {
         com.mojang.blaze3d.platform.GlStateManager._disableVertexAttribArray(elementIndex);
@@ -137,17 +180,11 @@ public final class CbRenderFormats {
 
     // ------------------------------------------------------------------ VertexFormat
 
-    /** new VertexFormat(elements) of 1.20.6: 1.21's builder over the named elements in order, padding where 1.20.6 padded */
+    /** new VertexFormat(elements) of 1.20.6: the native constructor over the old lists, including duplicate usages */
     public static net.minecraft.class_293 cbNewFormat(ImmutableMap<String, net.minecraft.class_296> elements) {
-        net.minecraft.class_293.class_9803 builder = net.minecraft.class_293.method_60833();
-        for (Map.Entry<String, net.minecraft.class_296> e : elements.entrySet()) {
-            if (e.getValue() == field_1578) {
-                builder.method_60841(field_1578.method_60847());
-            } else {
-                builder.method_60842(e.getKey(), e.getValue());
-            }
-        }
-        return builder.method_60840();
+        // The builder rejects a repeated usage, while V accepted it and the underlying record preserves it.
+        return new net.minecraft.class_293(cbFormatElements(elements), cbFormatNames(elements),
+            cbFormatOffsets(elements), cbFormatSize(elements));
     }
 
     /** the super(elements) of a 1.20.6 VertexFormat subclass: the elements 1.21's constructor takes (padding is none) */

@@ -126,7 +126,6 @@
  ],
  "ledger": {
   "net/minecraft/class_1088.method_4734()Ljava/util/Map;": "ModelBakery.getBakedTopLevelModels(): 1.20.6's map was keyed by ModelResourceLocation, then a ResourceLocation, typed Map<ResourceLocation, BakedModel>; 1.21 keys it by its ModelResourceLocation record, which is no ResourceLocation (that class is final) and no ResourceLocation can stand for (the variant has no place in one). Looking a model up by a 1.20.6-made location works (those are 1.21's records, CbRenderModelBake); iterating the keys as ResourceLocations cannot be served by any view of the map",
-  "net/minecraft/class_1091": "not bridgeable for a 1.20.6 subclass: 1.21's ModelResourceLocation is a final record (id, variant) and no longer a ResourceLocation (itself final), so no class can extend it and no stand-in can be both; constructing one is bridged",
-  "net/minecraft/class_783": "not bridgeable for a 1.20.6 subclass: 1.21's BlockElementFace is a final record; constructing one (same constructor) and reading its fields (CbRenderModelBake) are bridged"
+  "net/minecraft/class_1091": "not bridgeable for a 1.20.6 subclass: 1.21's ModelResourceLocation is a final record (id, variant) and no longer a ResourceLocation (itself final), so no class can extend it and no stand-in can be both; constructing one is bridged"
  }
 }

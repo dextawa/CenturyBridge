@@ -20,7 +20,9 @@ import net.minecraft.class_4095;
 import net.minecraft.class_4140;
 import net.minecraft.class_4141;
 import net.minecraft.class_4168;
+import net.minecraft.class_5819;
 import net.minecraft.class_6028;
+import net.minecraft.class_6574;
 import net.minecraft.class_6862;
 import net.minecraft.class_7924;
 import net.minecraft.class_8103;
@@ -104,6 +106,13 @@ public final class CbEntityRest {
      */
     public static float[] method_6634(class_1767 dye) {
         return SHEEP_COLORS.get(dye);
+    }
+
+    // ------------------------------------------------------------------------------------------------ PositionalRandomFactory
+
+    /** 1.21's new fromSeed(long), implemented through the seed-string entry a 1.20.6 factory already supplies */
+    public static class_5819 fromSeed(class_6574 factory, long seed) {
+        return factory.method_38995(Long.toString(seed));
     }
 
     // ------------------------------------------------------------------------------------------------ AnimalPanic

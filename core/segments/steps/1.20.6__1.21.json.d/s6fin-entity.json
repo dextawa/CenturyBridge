@@ -86,7 +86,12 @@
    "basis": "validateUser(context, user) reports to the context's problem reporter since 1.21, where 1.20.6's context.reportProblem(message) reported to that same reporter"
   }
  },
- "ledger": {
-  "net/minecraft/class_6574": "PositionalRandomFactory gained the abstract fromSeed(long) in 1.21, which 1.20.6 had no counterpart of (1.21's two factories answer it unlike either of their other methods: Legacy ignores its own seed, Xoroshiro xors both halves), so a 1.20.6 implementation cannot answer it faithfully; 1.21 itself never calls it on a factory (no call site in the 1.21 jar), so the implementation loads and serves every 1.20.6 method"
- }
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_6574",
+   "method": "method_60628(J)Lnet/minecraft/class_5819;",
+   "call": "top/dext/centurybridge/step/v1_21/rt/CbEntityRest.fromSeed(Lnet/minecraft/class_6574;J)Lnet/minecraft/class_5819;",
+   "basis": "1.21 added abstract fromSeed(long). A 1.20.6 implementation already supplies fromString(String), so the synthesized method delegates with Long.toString(seed): deterministic and implemented by the mod's own factory; native 1.21 implementations keep their own bodies"
+  }
+ ]
 }

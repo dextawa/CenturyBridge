@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "cb.smx1n.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": ["ShapedCodecMixin", "EffectAttributesMixin", "DebugEffectMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

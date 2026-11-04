@@ -8,6 +8,10 @@ package top.dext.centurybridge.step.v1_20_5.rt;
 public final class CbRestHolders {
 
     /** the 1.20.4 Attribute a 1.20.5 holder holds; null for null */
+    public static net.minecraft.class_1320 cbAttribute(Object value) {
+        return value == null ? null : (net.minecraft.class_1320) ((net.minecraft.class_6880) value).comp_349();
+    }
+
     public static net.minecraft.class_1320 cbAttribute(net.minecraft.class_6880 holder) {
         return holder == null ? null : (net.minecraft.class_1320) holder.comp_349();
     }

@@ -165,18 +165,18 @@ public final class LegacyItems {
 
     /** the vanilla NBT keys 1.20.5 turned into components that the rules below do not carry */
     private static final Set<String> VANILLA_UNCARRIED = Set.of(
-        "HideFlags", "AttributeModifiers", "Trim", "Fireworks", "Explosion", "BlockStateTag", "CanDestroy",
+        "AttributeModifiers", "Trim", "Fireworks", "Explosion", "BlockStateTag", "CanDestroy",
         "CanPlaceOn", "pages", "title", "author", "generation", "resolved", "filtered_pages", "filtered_title",
         "Items", "ChargedProjectiles", "Charged", "Decorations", "map", "map_scale_direction", "map_to_lock",
         "DebugProperty", "Recipes", "instrument", "effects", "LodestonePos", "LodestoneDimension",
         "LodestoneTracked", "CustomPotionEffects", "custom_potion_effects", "BucketVariantTag", "Patterns",
-        "Base", "Bees", "Lock", "LootTable", "LootTableSeed", "Variant", "BlockEntityTag", "EntityTag");
+        "Base", "Bees", "Lock", "LootTable", "LootTableSeed", "Variant", "EntityTag");
 
     /**
      * Item NBT as 1.20.5 components (the subset of the game's componentization fix
      * data files use: damage, custom model data, name, lore, colour, enchantments,
-     * repair cost, potion, unbreakable, skull owner). Keys the game never owned go
-     * to minecraft:custom_data, as the fix put them; vanilla keys this does not
+     * repair cost, potion, unbreakable, skull owner, tooltip visibility and block
+     * entity data). Keys the game never owned go to minecraft:custom_data, as the fix put them; vanilla keys this does not
      * carry are reported and left out rather than misfiled there.
      */
     @SuppressWarnings("unchecked")
@@ -186,6 +186,8 @@ public final class LegacyItems {
         }
         JsonObject c = new JsonObject();
         Map<String, Object> custom = new LinkedHashMap<>();
+        int hideFlags = nbt.get("HideFlags") instanceof Snbt.Num n ? n.value().intValue()
+            : nbt.containsKey("HideFlags") ? num(nbt.get("HideFlags")) : 0;
         for (var e : nbt.entrySet()) {
             String k = e.getKey();
             Object v = e.getValue();
@@ -261,6 +263,15 @@ public final class LegacyItems {
                         }
                     }
                 }
+                case "BlockEntityTag" -> {
+                    if (v instanceof Map<?, ?> tag) {
+                        blockEntityComponents((Map<String, Object>) tag, c);
+                    } else {
+                        losses.lost("BlockEntityTag is not a compound");
+                    }
+                }
+                case "HideFlags" -> { // applied below, after all the components it qualifies exist
+                }
                 default -> {
                     if (VANILLA_UNCARRIED.contains(k)) {
                         losses.lost("item NBT " + k + " (a component this translation does not carry)");
@@ -270,10 +281,224 @@ public final class LegacyItems {
                 }
             }
         }
+        applyHideFlags(c, hideFlags);
         if (!custom.isEmpty()) {
             c.addProperty("minecraft:custom_data", Snbt.write(custom));
         }
         return c;
+    }
+
+    /** HideFlags became per-component visibility plus one flag for the block-entity-style extra tooltip. */
+    private static void applyHideFlags(JsonObject c, int flags) {
+        if ((flags & 1) != 0) {
+            JsonObject ench = componentObject(c, "minecraft:enchantments");
+            if (!ench.has("levels")) {
+                ench.add("levels", new JsonObject());
+            }
+            ench.addProperty("show_in_tooltip", false);
+        }
+        if ((flags & 2) != 0) {
+            JsonObject modifiers = componentObject(c, "minecraft:attribute_modifiers");
+            if (!modifiers.has("modifiers")) {
+                modifiers.add("modifiers", new JsonArray());
+            }
+            modifiers.addProperty("show_in_tooltip", false);
+        }
+        if ((flags & 4) != 0 && c.has("minecraft:unbreakable")) {
+            componentObject(c, "minecraft:unbreakable").addProperty("show_in_tooltip", false);
+        }
+        if ((flags & 8) != 0 && c.has("minecraft:can_break")) {
+            componentObject(c, "minecraft:can_break").addProperty("show_in_tooltip", false);
+        }
+        if ((flags & 16) != 0 && c.has("minecraft:can_place_on")) {
+            componentObject(c, "minecraft:can_place_on").addProperty("show_in_tooltip", false);
+        }
+        if ((flags & 32) != 0) {
+            if (c.has("minecraft:stored_enchantments")) {
+                componentObject(c, "minecraft:stored_enchantments").addProperty("show_in_tooltip", false);
+            }
+            c.add("minecraft:hide_additional_tooltip", new JsonObject());
+        }
+        if ((flags & 64) != 0) {
+            JsonObject dyed = componentObject(c, "minecraft:dyed_color");
+            if (!dyed.has("rgb")) {
+                dyed.addProperty("rgb", 10511680); // the componentization fix's undyed default
+            }
+            dyed.addProperty("show_in_tooltip", false);
+        }
+        if ((flags & 128) != 0 && c.has("minecraft:trim")) {
+            componentObject(c, "minecraft:trim").addProperty("show_in_tooltip", false);
+        }
+    }
+
+    private static JsonObject componentObject(JsonObject c, String name) {
+        if (c.has(name)) {
+            return c.getAsJsonObject(name);
+        }
+        JsonObject out = new JsonObject();
+        c.add(name, out);
+        return out;
+    }
+
+    /**
+     * BlockEntityTag was split into the block entity's own components. Whatever is not
+     * a vanilla component stays as custom block-entity SNBT; as in the game fix, the id
+     * is omitted only when there is no residual compound for it to describe.
+     */
+    private static void blockEntityComponents(Map<String, Object> tag, JsonObject c) {
+        Map<String, Object> rest = new LinkedHashMap<>(tag);
+        if (rest.containsKey("Lock")) {
+            c.add("minecraft:lock", json(rest.remove("Lock")));
+        }
+        if (rest.containsKey("LootTable")) {
+            JsonObject loot = new JsonObject();
+            loot.add("loot_table", json(rest.remove("LootTable")));
+            long seed = rest.containsKey("LootTableSeed") ? longNum(rest.get("LootTableSeed")) : 0;
+            rest.remove("LootTableSeed");
+            if (seed != 0) {
+                loot.addProperty("seed", seed);
+            }
+            c.add("minecraft:container_loot", loot);
+        }
+        String id = rest.get("id") instanceof String s ? s : "";
+        switch (id) {
+            case "minecraft:skull" -> {
+                if (rest.containsKey("note_block_sound")) {
+                    c.add("minecraft:note_block_sound", json(rest.remove("note_block_sound")));
+                }
+            }
+            case "minecraft:decorated_pot" -> {
+                if (rest.containsKey("sherds")) {
+                    c.add("minecraft:pot_decorations", json(rest.remove("sherds")));
+                }
+            }
+            case "minecraft:banner" -> {
+                if (rest.containsKey("Patterns")) {
+                    c.add("minecraft:banner_patterns", bannerPatterns(rest.remove("Patterns")));
+                }
+                if (rest.containsKey("Base")) {
+                    c.addProperty("minecraft:base_color", dyeColor(num(rest.remove("Base"))));
+                }
+            }
+            case "minecraft:beehive" -> {
+                if (rest.containsKey("Bees")) {
+                    c.add("minecraft:bees", bees(rest.remove("Bees")));
+                }
+            }
+            default -> { }
+        }
+        if (rest.size() == 1 && rest.containsKey("id")) {
+            rest.remove("id");
+        }
+        if (!rest.isEmpty()) {
+            c.addProperty("minecraft:block_entity_data", Snbt.write(rest));
+        }
+    }
+
+    private static final String[] DYE_COLORS = {
+        "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
+        "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black"
+    };
+
+    private static String dyeColor(int id) {
+        return id >= 0 && id < DYE_COLORS.length ? DYE_COLORS[id] : "white";
+    }
+
+    /** BannerPattern's 1.20.4 NBT hashes, in registry order, to the 1.20.5 registry ids. */
+    private static final Map<String, String> BANNER_PATTERNS = Map.ofEntries(
+        Map.entry("b", "base"), Map.entry("bl", "square_bottom_left"), Map.entry("br", "square_bottom_right"),
+        Map.entry("tl", "square_top_left"), Map.entry("tr", "square_top_right"), Map.entry("bs", "stripe_bottom"),
+        Map.entry("ts", "stripe_top"), Map.entry("ls", "stripe_left"), Map.entry("rs", "stripe_right"),
+        Map.entry("cs", "stripe_center"), Map.entry("ms", "stripe_middle"), Map.entry("drs", "stripe_downright"),
+        Map.entry("dls", "stripe_downleft"), Map.entry("ss", "small_stripes"), Map.entry("cr", "cross"),
+        Map.entry("sc", "straight_cross"), Map.entry("bt", "triangle_bottom"), Map.entry("tt", "triangle_top"),
+        Map.entry("bts", "triangles_bottom"), Map.entry("tts", "triangles_top"), Map.entry("ld", "diagonal_left"),
+        Map.entry("rd", "diagonal_up_right"), Map.entry("lud", "diagonal_up_left"), Map.entry("rud", "diagonal_right"),
+        Map.entry("mc", "circle"), Map.entry("mr", "rhombus"), Map.entry("vh", "half_vertical"),
+        Map.entry("hh", "half_horizontal"), Map.entry("vhr", "half_vertical_right"),
+        Map.entry("hhb", "half_horizontal_bottom"), Map.entry("bo", "border"), Map.entry("cbo", "curly_border"),
+        Map.entry("gra", "gradient"), Map.entry("gru", "gradient_up"), Map.entry("bri", "bricks"),
+        Map.entry("glb", "globe"), Map.entry("cre", "creeper"), Map.entry("sku", "skull"),
+        Map.entry("flo", "flower"), Map.entry("moj", "mojang"), Map.entry("pig", "piglin"));
+
+    @SuppressWarnings("unchecked")
+    private static JsonArray bannerPatterns(Object value) {
+        JsonArray out = new JsonArray();
+        for (Object entry : (List<Object>) value) {
+            Map<String, Object> old = (Map<String, Object>) entry;
+            JsonObject pattern = new JsonObject();
+            pattern.addProperty("color", dyeColor(num(old.get("Color"))));
+            String hash = String.valueOf(old.get("Pattern"));
+            String id = BANNER_PATTERNS.get(hash);
+            if (id != null) {
+                pattern.addProperty("pattern", "minecraft:" + id);
+            } else if (hash.contains(":")) {
+                pattern.addProperty("pattern", hash);
+            } else {
+                throw new IllegalArgumentException("unknown legacy banner pattern " + hash);
+            }
+            out.add(pattern);
+        }
+        return out;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static JsonArray bees(Object value) {
+        JsonArray out = new JsonArray();
+        for (Object entry : (List<Object>) value) {
+            Map<String, Object> old = (Map<String, Object>) entry;
+            JsonObject bee = new JsonObject();
+            if (old.containsKey("EntityData")) {
+                bee.addProperty("entity_data", Snbt.write(old.get("EntityData")));
+            }
+            bee.addProperty("ticks_in_hive", num(old.get("TicksInHive")));
+            bee.addProperty("min_ticks_in_hive", num(old.get("MinTicksInHive")));
+            out.add(bee);
+        }
+        return out;
+    }
+
+    /** JSON is the component codec's surface; residual custom data stays SNBT instead. */
+    @SuppressWarnings("unchecked")
+    private static JsonElement json(Object value) {
+        if (value instanceof Map<?, ?> m) {
+            JsonObject out = new JsonObject();
+            for (var e : ((Map<String, Object>) m).entrySet()) {
+                out.add(e.getKey(), json(e.getValue()));
+            }
+            return out;
+        }
+        if (value instanceof List<?> list) {
+            JsonArray out = new JsonArray();
+            for (Object v : list) {
+                out.add(json(v));
+            }
+            return out;
+        }
+        if (value instanceof Snbt.Num n) {
+            return new JsonPrimitive(n.value());
+        }
+        if (value instanceof Snbt.Arr a) {
+            JsonArray out = new JsonArray();
+            for (long v : a.values()) {
+                out.add(v);
+            }
+            return out;
+        }
+        if (value instanceof Number n) {
+            return new JsonPrimitive(n);
+        }
+        if (value instanceof Boolean b) {
+            return new JsonPrimitive(b);
+        }
+        return new JsonPrimitive(String.valueOf(value));
+    }
+
+    private static long longNum(Object v) {
+        if (v instanceof Snbt.Num n) {
+            return n.value().longValue();
+        }
+        return Long.parseLong(String.valueOf(v));
     }
 
     /**
