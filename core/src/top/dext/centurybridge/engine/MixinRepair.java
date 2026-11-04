@@ -924,7 +924,7 @@ public final class MixinRepair {
                             ClassNode vtc = source != null ? source.target(owner) : null;
                             List<MethodNode> vms = vtc != null ? s.match(vtc) : List.of();
                             MixinLocals.Verdict lv = vms.size() == 1
-                                ? MixinLocals.judge(this, source, an, handler, hit, tc, vtc, vms.get(0), refmap) : null;
+                                ? MixinLocals.judge(this, source, an, handler, hit, tc, vtc, vms.get(0), refmap, mx) : null;
                             if (lv != null && lv.why() != null) {
                                 if (deadWhy == null) deadWhy = "captured locals: @" + kind + " " + where + " (" + lv.why() + ")";
                                 continue;

@@ -58,7 +58,7 @@ final class MixinLocals {
     }
 
     static Verdict judge(MixinRepair w, MixinRepair v, AnnotationNode an, MethodNode h, List<MethodNode> wTargets,
-            ClassNode wOwner, ClassNode vOwner, MethodNode vTarget, JsonObject refmap) {
+            ClassNode wOwner, ClassNode vOwner, MethodNode vTarget, JsonObject refmap, ClassNode mx) {
         if (v == null || vTarget == null || vOwner == null || an.desc.endsWith("/ModifyVariable;")) {
             return null;
         }
@@ -106,12 +106,10 @@ final class MixinLocals {
             if (vc == null) {
                 // smixin20: a point the model does not find (MIXINEXTRAS:EXPRESSION, a slice): an implicit @Local is
                 // judged over the whole method -- V holds its one t local; W holding no local of t anywhere cannot bind
-                if (ordinal >= 0 || index >= 0) {
-                    continue;
-                }
+                boolean explicit = ordinal >= 0 || index >= 0;
                 Set<Integer> vs = slotsAnywhere(v, vOwner, vTarget, t, argsOnly);
-                if (vs == null || vs.size() != 1) {
-                    continue; // not modelled, or not one local on V: not trusted
+                if (vs == null || vs.isEmpty() || !explicit && vs.size() != 1) {
+                    continue; // not modelled, or V holds no (implicit: not one) local of t: not trusted
                 }
                 boolean wNone = false;
                 boolean unknown = false;
@@ -126,11 +124,13 @@ final class MixinLocals {
                 if (unknown || !wNone) {
                     continue;
                 }
-                String sub = subtypeFix(v, vOwner, vTarget, w, wOwner, wTargets, h, k, t, tw, argsOnly, notes, fixes);
+                String sub = explicit ? "picks by ordinal or index"
+                    : subtypeFix(v, vOwner, vTarget, w, wOwner, wTargets, mx, h, k, t, tw, argsOnly, notes, fixes);
                 if (sub == null) {
                     continue;
                 }
-                return new Verdict("@Local " + t.getDescriptor() + " (implicit) is one local of V's " + vTarget.name + vTarget.desc
+                return new Verdict("@Local " + t.getDescriptor() + (explicit ? (index >= 0 ? " index " + index : " ordinal " + ordinal)
+                    : " (implicit)") + " finds a local in V's " + vTarget.name + vTarget.desc
                     + "; W's holds no local declared " + tw.getDescriptor() + " (" + sub + ")", null, null);
             }
             if (vc[0] != 1) {
@@ -162,7 +162,7 @@ final class MixinLocals {
                 continue;
             }
             String sub = ordinal < 0 && index < 0
-                ? subtypeFix(v, vOwner, vTarget, w, wOwner, wTargets, h, k, t, tw, argsOnly, notes, fixes) : "picks by ordinal or index";
+                ? subtypeFix(v, vOwner, vTarget, w, wOwner, wTargets, mx, h, k, t, tw, argsOnly, notes, fixes) : "picks by ordinal or index";
             if (sub == null) {
                 continue;
             }
@@ -181,9 +181,30 @@ final class MixinLocals {
      * null with the fix queued (and a note), else the reason it is refused
      */
     private static String subtypeFix(MixinRepair v, ClassNode vOwner, MethodNode vTarget, MixinRepair w, ClassNode wOwner,
-            List<MethodNode> wTargets, MethodNode h, int k, Type t, Type tw, boolean argsOnly, List<String> notes, List<Runnable> fixes) {
+            List<MethodNode> wTargets, ClassNode mx, MethodNode h, int k, Type t, Type tw, boolean argsOnly, List<String> notes,
+            List<Runnable> fixes) {
         if (wTargets.size() != 1) {
             return "the selector matches " + wTargets.size() + " W methods";
+        }
+        int slot = (h.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        for (int i = 0; i < k; i++) {
+            slot += hp[i].getSize();
+        }
+        for (AbstractInsnNode n : h.instructions) {
+            if (n instanceof org.objectweb.asm.tree.VarInsnNode vi && vi.var == slot && vi.getOpcode() == Opcodes.ASTORE) {
+                return "the handler stores into the parameter";
+            }
+        }
+        if (mx != null) {
+            for (MethodNode m : mx.methods) {
+                for (AbstractInsnNode n : m.instructions) {
+                    if (n instanceof org.objectweb.asm.tree.MethodInsnNode mi && mi.name.equals(h.name) && mi.desc.equals(h.desc)
+                            && mi.owner.equals(mx.name)) {
+                        return "another method of the mixin calls the handler";
+                    }
+                }
+            }
         }
         List<String> why = new ArrayList<>();
         Type u = subtypeByRole(v, vOwner, vTarget, w, wOwner, wTargets.get(0), t, tw, why);
@@ -775,10 +796,10 @@ final class MixinLocals {
      */
     private static Set<Integer> slotsAnywhere(MixinRepair code, ClassNode owner, MethodNode m, Type t, boolean argsOnly) {
         Frame<BasicValue>[] fs = frames(code, owner, m);
-        if (fs == null) {
-            return null;
+        Decl d = fs == null ? null : decl(code, owner, m);
+        if (d == null || !d.tabled()) {
+            return null; // the verifier's types are no model of what Mixin reads over a whole method
         }
-        Decl d = decl(code, owner, m);
         int base = (m.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
         int argEnd = base;
         for (Type a : Type.getArgumentTypes(m.desc)) {
