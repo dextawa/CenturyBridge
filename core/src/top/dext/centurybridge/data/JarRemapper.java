@@ -1004,10 +1004,18 @@ public final class JarRemapper {
                     }
                 }
             }
+            // smixin20 (swall21): a member of a class the table does not map (a CenturyBridge facade or layer class,
+            // top/dext/...) keeps the name that class declares -- the explicit owner, or, for a bare id, every @Mixin
+            // target of the class -- instead of taking a game member's real name by id alone
+            boolean foreign = moj == null && (owner != null ? !gameClass(table, owner)
+                : context != null && !context.isEmpty() && context.stream().noneMatch(t -> gameClass(table, t)));
+            if (foreign) {
+                moj = id;
+            }
             if (moj == null) {
                 moj = table.members.getOrDefault(id, id);
             }
-            String descOwner = owner != null ? owner : ctxOwner;
+            String descOwner = foreign ? null : owner != null ? owner : ctxOwner;
             if (descOwner != null && desc != null && table.targetMethods != null && !id.startsWith("field_")) {
                 // a reused id resolves by the descriptor written after it, as the class files' pass does
                 moj = remapper.mapMethodName(descOwner, id, desc);
@@ -1026,6 +1034,12 @@ public final class JarRemapper {
             remapper.map(mr.group().replace('.', '/')).replace('/', '.')));
         return CLASS_TOKEN.matcher(text).replaceAll(
             mr -> java.util.regex.Matcher.quoteReplacement(remapper.map(mr.group())));
+    }
+
+    /** whether c (internal or dotted form) is a game class the wall table speaks for */
+    private static boolean gameClass(Table table, String c) {
+        String n = c.replace('.', '/');
+        return table.classes.containsKey(n) || n.startsWith("net/minecraft/") || n.startsWith("com/mojang/");
     }
 
     /** an intermediary class name in Mixin's dotted form (@Mixin targets strings) */
