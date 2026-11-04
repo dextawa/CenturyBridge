@@ -1,12 +1,21 @@
 {
  "_swall24_guiatlas_basis": "1.21.11 GuiRenderer (class_11228) item-atlas fields moved into 26.1's GuiItemAtlas (GuiRenderer.itemAtlas): reads answered there (rt/CbWallGuiAtlasFields has the javap basis). Left open: the four texture writes (26.1 fields final, atlas built only by its constructor), itemAtlasX/itemAtlasY (26.1 allocates slots through DynamicAtlasAllocator, no cursor), atlasPositions (Map<Object, AtlasPosition>, AtlasPosition class gone), frameNumber (no counter in 26.1).",
  "fieldGetters": {
-  "net/minecraft/class_11228.field_59910:I": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#maximumItemAtlasSize"
+  "net/minecraft/class_11228.field_59910:I": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#maximumItemAtlasSize",
+  "net/minecraft/class_3485.field_52244:Lnet/minecraft/class_7654;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#resourceLister"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_11228.field_59919:Lcom/mojang/blaze3d/textures/GpuTexture;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlas",
   "net/minecraft/class_11228.field_60571:Lcom/mojang/blaze3d/textures/GpuTextureView;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlasView",
   "net/minecraft/class_11228.field_59920:Lcom/mojang/blaze3d/textures/GpuTexture;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlasDepth",
-  "net/minecraft/class_11228.field_60570:Lcom/mojang/blaze3d/textures/GpuTextureView;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlasDepthView"
+  "net/minecraft/class_11228.field_60570:Lcom/mojang/blaze3d/textures/GpuTextureView;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlasDepthView",
+  "net/minecraft/class_3485.field_15515:Lcom/mojang/datafixers/DataFixer;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#fixerUpper",
+  "net/minecraft/class_3485.field_40369:Lnet/minecraft/class_7871;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#blockLookup",
+  "net/minecraft/class_3485.field_25189:Lnet/minecraft/class_3300;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#resourceManager",
+  "net/minecraft/class_3485.field_15512:Ljava/nio/file/Path;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#generatedDir"
+ },
+ "_swall24_templates_basis": "1.21.11 StructureTemplateManager (class_3485) fixerUpper/blockLookup/resourceManager/generatedDir/RESOURCE_LISTER answered from 26.1's ResourceManagerTemplateSource, worldTemplates and RESOURCE_STRUCTURE_LISTER (javap basis in rt/CbWallTemplateManagerFields). The private load/list helpers (TOMBSTONE rows) stay open.",
+ "instanceFieldSetters": {
+  "net/minecraft/class_3485.field_25189:Lnet/minecraft/class_3300;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#setResourceManager"
  }
 }

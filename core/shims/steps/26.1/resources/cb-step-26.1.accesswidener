@@ -309,3 +309,10 @@ accessible	field	net/minecraft/client/gui/render/GuiItemAtlas	texture	Lcom/mojan
 accessible	field	net/minecraft/client/gui/render/GuiItemAtlas	textureView	Lcom/mojang/blaze3d/textures/GpuTextureView;
 accessible	field	net/minecraft/client/gui/render/GuiItemAtlas	depthTexture	Lcom/mojang/blaze3d/textures/GpuTexture;
 accessible	field	net/minecraft/client/gui/render/GuiItemAtlas	depthTextureView	Lcom/mojang/blaze3d/textures/GpuTextureView;
+# swall24: 1.21.11 StructureTemplateManager fields live in 26.1's template sources (CbWallTemplateManagerFields)
+accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager	resourceManagerSource	Lnet/minecraft/world/level/levelgen/structure/templatesystem/loader/ResourceManagerTemplateSource;
+accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager	RESOURCE_STRUCTURE_LISTER	Lnet/minecraft/resources/FileToIdConverter;
+accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/TemplateSource	fixerUpper	Lcom/mojang/datafixers/DataFixer;
+accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/TemplateSource	blockLookup	Lnet/minecraft/core/HolderGetter;
+accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/ResourceManagerTemplateSource	resourceManager	Lnet/minecraft/server/packs/resources/ResourceManager;
+accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/TemplatePathFactory	sourceDir	Ljava/nio/file/Path;
