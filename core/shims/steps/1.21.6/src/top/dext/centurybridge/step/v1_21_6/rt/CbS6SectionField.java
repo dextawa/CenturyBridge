@@ -92,6 +92,15 @@ public final class CbS6SectionField {
         return new LayerMapView(map, false);
     }
 
+    /**
+     * instanceFieldGetters entry for SectionCompiler.Results.field_52166 (1.21.5's globalBlockEntities): the live list
+     * CbSectionResultsRestoredMixin keeps. 1.21.6 renders those block entities from ClientLevel's own set, so an entry a
+     * mod adds to or removes from the list changes no rendering (release_notes_known.md).
+     */
+    public static java.util.List<net.minecraft.class_2586> field_52166(net.minecraft.class_9810.class_9811 self) {
+        return ((CbPrioritySplit.SectionGlobalBlockEntities) (Object) self).cb$v1_21_6$globalBlockEntities();
+    }
+
     /** instanceFieldGetters entry for SectionCompiler.Results.field_52168. */
     @SuppressWarnings("rawtypes")
     public static java.util.Map field_52168(net.minecraft.class_9810.class_9811 self) {
