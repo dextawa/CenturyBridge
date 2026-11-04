@@ -54,9 +54,32 @@ public final class GameLvt {
             return null;
         }
         String v = n.substring("client-".length(), n.length() - "-intermediary-code.jar".length());
+        Path data = codeJar.getParent().getParent();
+        // the obfuscated jar: data/jars, or the release's runtime (bootstrap_client.py keeps it there);
+        // -Dcb.gameObf.<V> / -Dcb.gameTiny.<V> name them explicitly
+        List<Path> obfs = new ArrayList<>();
+        List<Path> tinies = new ArrayList<>();
+        if (System.getProperty("cb.gameObf." + v) != null) {
+            obfs.add(Path.of(System.getProperty("cb.gameObf." + v)));
+        }
+        if (System.getProperty("cb.gameTiny." + v) != null) {
+            tinies.add(Path.of(System.getProperty("cb.gameTiny." + v)));
+        }
+        obfs.add(codeJar.getParent().resolve("client-" + v + "-obf.jar"));
+        obfs.add(data.resolve("runtime/client-" + v + "/client-" + v + "-obf.jar"));
+        String dir = System.getProperty("cb.gameTinyDir", System.getenv("CB_GAME_TINY_DIR"));
+        if (dir != null) {
+            tinies.add(Path.of(dir).resolve("intermediary-" + v + ".tiny"));
+        }
+        tinies.add(data.resolve("mappings/intermediary-" + v + ".tiny"));
+        Path obf = obfs.stream().filter(Files::exists).findFirst().orElse(null);
+        Path tiny = tinies.stream().filter(Files::exists).findFirst().orElse(null);
+        if (obf == null || tiny == null) {
+            System.out.println("game LVT " + v + ": none (obf " + obf + ", tiny " + tiny + "): @Local judged on verifier types");
+            return null;
+        }
         try {
-            return open(codeJar.getParent().resolve("client-" + v + "-obf.jar"),
-                codeJar.getParent().getParent().resolve("mappings/intermediary-" + v + ".tiny"));
+            return open(obf, tiny);
         } catch (IOException ex) {
             return null;
         }
