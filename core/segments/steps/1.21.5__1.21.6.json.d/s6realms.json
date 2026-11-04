@@ -1,0 +1,29 @@
+{
+ "instanceFieldGetters": {
+  "net/minecraft/class_4877.field_22607:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6RealmsSlots"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_4877.field_22607:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6RealmsSlots"
+ },
+ "callReshapes": {
+  "net/minecraft/class_4877.method_25061(Ljava/util/Map;)Ljava/util/Map;": {
+   "desc": "(Ljava/util/Map;)Ljava/util/Map;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_6/rt/CbS6RealmsSlots#cbNativeSlots(Ljava/util/Map;)Ljava/util/Map;"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_6/rt/CbS6RealmsSlots#cbLegacySlots(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "s6realms generic drift: 1.21.6 wraps each RealmsServerPing in RealmsServerPlayerList. method_25061 is still the slot-map copy helper (javap of both code jars): the old map becomes a live native view for the call, and its native result becomes a live ping view; inverse views unwrap to the original map"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_4877",
+   "member": "method_25061(Ljava/util/Map;)Ljava/util/Map;",
+   "args": [
+    "top/dext/centurybridge/step/v1_21_6/rt/CbS6RealmsSlots#cbLegacySlots(Ljava/util/Map;)Ljava/util/Map;"
+   ],
+   "ret": "top/dext/centurybridge/step/v1_21_6/rt/CbS6RealmsSlots#cbNativeSlots(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "s6realms generic drift: vanilla hands a 1.21.5 method_25061 override its native wrapper-valued map; the old body reads and mutates the same slots through ping values, and its old map answer becomes the native view (CbS6RealmsSlots, adaptive and inverse-unwrapping)"
+  }
+ ]
+}

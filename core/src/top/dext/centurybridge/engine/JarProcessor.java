@@ -1979,12 +1979,42 @@ public final class JarProcessor {
         final Map<String, String> superOf = new HashMap<>();
         final Map<String, List<String>> interfacesOf = new HashMap<>();
         final Map<String, Set<String>> decls = new HashMap<>();
+        /** declared abstract shapes, used to distinguish a real inherited implementation from a declaration only */
+        final Map<String, Set<String>> abstractMethods = new HashMap<>();
         /**
          * the class mixins the jar's configs still list once this step's triage stripped its dead ones (null before
          * the strip): a member one of the jar's own mixins restores is declared at runtime only while that mixin is
          * listed (a climbing layer reading its own built jar as an earlier layer saw its stripped restorers live)
          */
         Set<String> liveMixins;
+    }
+
+    /** whether any jar ancestor supplies a concrete implementation, including an interface default method */
+    private static boolean concreteJarImplementation(String superName, String[] ifaces, String shape, LayerIndex layer) {
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        if (superName != null) {
+            todo.add(superName);
+        }
+        if (ifaces != null) {
+            todo.addAll(List.of(ifaces));
+        }
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String cur = todo.poll();
+            if (!seen.add(cur) || !layer.superOf.containsKey(cur)) {
+                continue;
+            }
+            if (layer.decls.getOrDefault(cur, Set.of()).contains(shape)
+                    && !layer.abstractMethods.getOrDefault(cur, Set.of()).contains(shape)) {
+                return true;
+            }
+            String sup = layer.superOf.get(cur);
+            if (sup != null) {
+                todo.add(sup);
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(cur, List.of()));
+        }
+        return false;
     }
 
     /**
@@ -2085,10 +2115,14 @@ public final class JarProcessor {
             try {
                 ClassReader cr = new ClassReader(e.getValue());
                 Set<String> members = new HashSet<>();
+                Set<String> abstractMethods = new HashSet<>();
                 cr.accept(new ClassVisitor(Opcodes.ASM9) {
                     @Override
                     public MethodVisitor visitMethod(int acc, String n, String d, String s, String[] x) {
                         members.add(n + d);
+                        if ((acc & Opcodes.ACC_ABSTRACT) != 0) {
+                            abstractMethods.add(n + d);
+                        }
                         return null;
                     }
 
@@ -2101,6 +2135,7 @@ public final class JarProcessor {
                 idx.superOf.put(cr.getClassName(), cr.getSuperName());
                 idx.interfacesOf.put(cr.getClassName(), List.of(cr.getInterfaces()));
                 idx.decls.put(cr.getClassName(), members);
+                idx.abstractMethods.put(cr.getClassName(), abstractMethods);
             } catch (RuntimeException ignored) {
                 // not a class file after all
             }
@@ -4688,8 +4723,8 @@ public final class JarProcessor {
             for (Chain.AbstractFill f : chain.abstractFills) {
                 String shape = f.name + f.desc;
                 if (declaredShapes.contains(shape) || !isUnder(superOf[0], ifacesOf[0], f.under, layer, chain)
-                        || inheritedVanillaOwner(superOf[0], shape, layer) == null && layer.superOf.containsKey(superOf[0])) {
-                    continue; // declared here, not under the type, or a jar superclass declares it
+                        || concreteJarImplementation(superOf[0], ifacesOf[0], shape, layer)) {
+                    continue; // declared here, not under the type, or a jar ancestor supplies a concrete implementation
                 }
                 if (fillApply.stream().anyMatch(x -> (x.name + x.desc).equals(shape))) {
                     continue; // two entries give the class the same method (it is under both types): the first fills it
