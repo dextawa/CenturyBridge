@@ -13,9 +13,13 @@ CLS=$(mktemp -d)
 DATA="${CB_DATA:-data}"
 MIXIN="${CB_MIXIN:-$DATA/runtime/client-1.20.6/libraries/net/fabricmc/sponge-mixin/0.17.3+mixin.0.8.7/sponge-mixin-0.17.3+mixin.0.8.7.jar}"
 LIBS=$(find "$DATA"/runtime/client-1.20.6/libraries -name '*.jar' ! -name 'sponge-mixin-*' | tr '\n' "${CB_CPSEP:-:}")
-javac --release 21 -nowarn -proc:none -cp "$DATA/jars/client-1.20.6-intermediary.jar${CB_CPSEP:-:}$MIXIN${CB_CPSEP:-:}$LIBS" -d "$CLS" \
+# the mod's access widener (SuspiciousStewForEmerald): compiled against the stub it widens, as loom would
+# (make_aw_stub.sh; the engine must be compiled in core/build/classes)
+STUB="$CLS.stub.jar"
+CB_DATA="$DATA" bash core/tools/make_aw_stub.sh 1.20.6 "$DATA/jars/client-1.20.6-intermediary.jar" "$STUB"     core/testmods/cb-swtrade/res/cb_swtrade.accesswidener > /dev/null
+javac --release 21 -nowarn -proc:none -cp "$STUB${CB_CPSEP:-:}$MIXIN${CB_CPSEP:-:}$LIBS" -d "$CLS" \
     $(find core/testmods/cb-swtrade/src -name '*.java')
 cp core/testmods/cb-swtrade/res/* "$CLS/"
 (cd "$CLS" && jar cf "$JAR" .)
-rm -rf "$CLS"
+rm -rf "$CLS" "$STUB"
 echo "-> $OUT"

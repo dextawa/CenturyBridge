@@ -16,5 +16,6 @@
     "main": [
       "cb.swtrade.Init"
     ]
-  }
+  },
+  "accessWidener": "cb_swtrade.accesswidener"
 }

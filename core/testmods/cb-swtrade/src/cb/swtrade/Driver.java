@@ -52,17 +52,18 @@ public final class Driver {
     public static void run(net.minecraft.server.MinecraftServer server) {
         class_3218 level = server.method_30002();
         try {
-                // the mod's own enchantment in #minecraft:tradeable, as the world's tags bind it (1.21.11 and 26.1 alike)
+                // the mod's own enchantment in the world's #minecraft:tradeable (the registry trades pick from), by key
                 net.minecraft.class_6862<net.minecraft.class_1887> tradeable = net.minecraft.class_6862.method_40092(net.minecraft.class_7924.field_41265,
                     new net.minecraft.class_2960("minecraft", "tradeable"));
-                java.util.Optional<net.minecraft.class_6885.class_6888<net.minecraft.class_1887>> set = net.minecraft.class_7923.field_41176.method_40266(tradeable);
+                net.minecraft.class_2378<net.minecraft.class_1887> world = server.method_30611().method_30530(net.minecraft.class_7924.field_41265);
+                java.util.Optional<net.minecraft.class_6885.class_6888<net.minecraft.class_1887>> set = world.method_40266(tradeable);
                 boolean modIn = false;
                 int size = set.map(net.minecraft.class_6885.class_6888::method_40247).orElse(-1);
                 for (int i = 0; i < Math.max(size, 0); i++) {
-                    modIn |= set.get().method_40240(i).comp_349() == Init.STEADY;
+                    modIn |= set.get().method_40240(i).method_40230().map(k -> k.method_29177().toString().equals("cb_swtrade:steady")).orElse(false);
                 }
                 System.out.println("CBTRADE TAG tradeable size=" + size + " mod=" + modIn);
-                check("tag.modTradeable", modIn, "cb_swtrade:steady in #minecraft:tradeable (" + size + " members)");
+                check("tag.modTradeable", modIn, "cb_swtrade:steady in the world's #minecraft:tradeable (" + size + " members)");
                 // a datapack-defined enchantment through the 1.20.6 registry: the world's entry as the 1.20.6 object
                 net.minecraft.class_1887 mending = net.minecraft.class_7923.field_41176.method_10223(new net.minecraft.class_2960("minecraft", "mending"));
                 check("registry.dataEntry", mending != null && mending.method_8183() == 1, "minecraft:mending -> " + mending);
