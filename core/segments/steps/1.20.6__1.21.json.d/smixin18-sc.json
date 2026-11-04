@@ -1,0 +1,12 @@
+{
+ "mixinMoves": {
+  "net/minecraft/class_846$class_851$class_4578.method_22785(FFFLnet/minecraft/class_750;)Lnet/minecraft/class_846$class_851$class_4578$class_7435;": {
+   "to": "net/minecraft/class_9810.method_60904(Lnet/minecraft/class_4076;Lnet/minecraft/class_853;Lnet/minecraft/class_8251;Lnet/minecraft/class_750;)Lnet/minecraft/class_9810$class_9811;",
+   "basis": "smixin18: 1.20.6 RebuildTask.compile (private) is 1.21's SectionCompiler.compile (javap -c -p of both: the same BlockPos.betweenClosed loop over the section, ModelBlockRenderer enable/clearCache, VisGraph setOpaque / resolve, renderShape MODEL -> renderBatched, fluid state -> renderLiquid, the block entity hand-off -- V method_23087, W method_60902 --, translucent sort; 1.21 takes SectionPos, the region and VertexSorting where 1.20.6 read its own fields and the camera floats, and answers SectionCompiler.Results where 1.20.6 answered CompileResults). The only 1.21 caller is RebuildTask.doTask (method_22783), at the place 1.20.6 called compile. SectionCompiler has no field back to the RebuildTask, so no self hops: MixinRepair moves only handlers that never read this or their own mixin, take none of V's arguments, read no locals, leave the answer alone, and whose every anchor stands as many times in method_60904 as in V's method_22785 (MixinRepair.movedShapeWhy); the rest stay reported losses."
+  },
+  "net/minecraft/class_846$class_851$class_4578.method_23087(Lnet/minecraft/class_846$class_851$class_4578$class_7435;Lnet/minecraft/class_2586;)V": {
+   "to": "net/minecraft/class_9810.method_60902(Lnet/minecraft/class_9810$class_9811;Lnet/minecraft/class_2586;)V",
+   "basis": "smixin18: 1.20.6 RebuildTask.handleBlockEntity (private) is 1.21's SectionCompiler.handleBlockEntity (javap -c -p: getBlockEntityRenderDispatcher().getRenderer(be) -- 1.21 reads its own field_52165 --, then the same two List.add into the results' block entities / global block entities when shouldRenderOffScreen; CompileResults -> SectionCompiler.Results). Called once from compile in both. Moved handlers obey the same rules as compile's (no this, no V arguments: the results object is another class)."
+  }
+ }
+}

@@ -3,6 +3,6 @@
   "minVersion": "0.8",
   "package": "cb.smx6n.mixin",
   "compatibilityLevel": "JAVA_21",
-  "client": ["BakeFaceCounter", "BakeQuadCounter", "BakeFaceWrapCounter", "ModelManagerAccess", "MovedHomeCounter", "LeashVertexCounter", "BufferBuildCounter", "SectionBuildCounter", "DragonRayCounter"],
+  "client": ["BakeFaceCounter", "BakeQuadCounter", "BakeFaceWrapCounter", "ModelManagerAccess", "MovedHomeCounter", "LeashVertexCounter", "BufferBuildCounter", "SectionBuildCounter", "SectionCompileCounter", "DragonRayCounter"],
   "injectors": { "defaultRequire": 1 }
 }

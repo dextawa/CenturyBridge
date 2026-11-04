@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -3830,6 +3831,7 @@ final class MixinBridge {
             }
             String sel = vmeth.name + vmeth.desc;
             AnnotationNode moved = literalCopy(an, sel);
+            List<String> upNotes = movedUpOwners(moved, inherited, decl);
             String gone = anchorGone(moved, h, kind, vmeth, inherited, decl);
             if (gone != null) {
                 why.add(shortName(decl.name) + "." + sel + ", which " + shortName(target) + " now inherits, does not hold its anchor "
@@ -3900,8 +3902,68 @@ final class MixinBridge {
             changed = true;
             injected("@" + kind + " " + sn + "." + oldName, where + " => " + shortName(decl.name) + "." + sel
                 + " (the override " + chain.to + " dropped held the anchor; W keeps it in the superclass: injected there, guarded by"
-                + " this instanceof " + shortName(target) + ", calling the mod's handler" + loss + ")");
+                + " this instanceof " + shortName(target) + ", calling the mod's handler" + loss
+                + (upNotes.isEmpty() ? "" : "; anchor owner follows the member up: " + String.join(", ", upNotes)) + ")");
             return new Selection(g, moved, List.of(vmeth), List.of(inherited));
+        }
+
+        /**
+         * smixin18 (task 3, 26.2 Slime.tick -> AbstractCubeMob.tick): an @At INVOKE / FIELD naming V's owner of a member
+         * that W reaches from the superclass whose body now holds the code ({@code decl}). In that body javac names the
+         * member through decl (getfield AbstractCubeMob.squish), and Mixin compares the owner: the anchor is respelled to
+         * decl when V's owner, as W names it, is a subclass of decl, the member resolves from decl to the same declaration
+         * as from V's owner (a field) or to a declaration at all (a method: the call dispatches on the same object), the
+         * body holds the site through decl, and holds none through V's owner. An owner that is not a subclass of decl
+         * (another class's member) stays as written. Returns the respellings made.
+         */
+        /** @At nodes movedUpOwners respelled -> V's owner as the mod wrote it */
+        private final Map<AnnotationNode, String> upV = new IdentityHashMap<>();
+
+        private List<String> movedUpOwners(AnnotationNode moved, MethodNode inherited, ClassNode decl) {
+            List<String> out = new ArrayList<>();
+            MixinRepair code = wcode(chain);
+            Map<String, String> vanilla = MixinClassRenames.vanillaOnly(chain.classRenames);
+            for (AnnotationNode at : atNodes(moved)) {
+                Map<String, Object> av = MixinRepair.values(at);
+                String value = String.valueOf(av.get("value"));
+                if (!(value.equals("INVOKE") || value.equals("INVOKE_ASSIGN") || value.equals("FIELD"))
+                        || !(av.get("target") instanceof String t)) {
+                    continue;
+                }
+                MixinRepair.Anchor a = MixinRepair.parseAt(av, table);
+                if (a == null || a == MixinRepair.POSITIONAL || a.owner() == null || a.desc() == null) {
+                    continue;
+                }
+                String wo = chain.mixinFollow().getOrDefault(a.owner(), vanilla.getOrDefault(a.owner(), a.owner()));
+                if (wo.equals(decl.name)) {
+                    continue;
+                }
+                boolean sub = false;
+                for (String c = wo; c != null && !sub; ) {
+                    ClassNode cn = w(c);
+                    c = cn == null ? null : cn.superName;
+                    sub = decl.name.equals(c);
+                }
+                if (!sub) {
+                    continue; // not V's class moved under decl: another owner's member, left as written
+                }
+                String fromDecl = MixinLocals.declaring(code, decl.name, a.name(), a.desc());
+                String fromOwner = MixinLocals.declaring(code, wo, a.name(), a.desc());
+                boolean field = a.kind().equals("FIELD");
+                if (fromDecl == null || field && !fromDecl.equals(fromOwner)) {
+                    continue;
+                }
+                MixinRepair.Anchor up = new MixinRepair.Anchor(a.kind(), decl.name, a.name(), a.desc(), null, a.ordinal(), a.role());
+                MixinRepair.Anchor asIs = new MixinRepair.Anchor(a.kind(), wo, a.name(), a.desc(), null, a.ordinal(), a.role());
+                if (count(List.of(inherited), asIs) > 0 || count(List.of(inherited), up) == 0) {
+                    continue;
+                }
+                String nt = "L" + decl.name + ";" + a.name() + (field ? ":" : "") + a.desc();
+                setValue(at, "target", nt);
+                upV.put(at, a.owner()); // guardSites counts V's sites under V's owner
+                out.add(a + " -> " + shortName(decl.name));
+            }
+            return out;
         }
 
         /**
@@ -3927,7 +3989,10 @@ final class MixinBridge {
                 if (a == null || a == MixinRepair.POSITIONAL || a.kind().equals("LOCAL")) {
                     continue;
                 }
-                List<AbstractInsnNode> vo = SiteMatch.occurrences(vmeth, in -> MixinRepair.matchesAnchor(in, a));
+                // an owner respelled to the superclass (movedUpOwners): V's override named the member through V's owner
+                MixinRepair.Anchor va = upV.containsKey(at) ? new MixinRepair.Anchor(a.kind(), upV.get(at), a.name(), a.desc(),
+                    a.constant(), a.ordinal(), a.role()) : a;
+                List<AbstractInsnNode> vo = SiteMatch.occurrences(vmeth, in -> MixinRepair.matchesAnchor(in, va));
                 List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, a));
                 if (vOwn != null && (wo.isEmpty() || vo.isEmpty())) {
                     return "the superclass had the method in " + chain.from + " too, and " + a + " has no site of V's override there";
