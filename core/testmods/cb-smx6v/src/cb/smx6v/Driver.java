@@ -327,6 +327,16 @@ public final class Driver {
                 && net.minecraft.class_7923.field_41167.method_17966(net.minecraft.class_2960.method_60656("item")).orElse(null) == net.minecraft.class_7923.field_41178,
                 "native REGISTRY minecraft:enchantment present " + net.minecraft.class_7923.field_41167.method_17966(enchId).isPresent()
                     + ", containsKey " + net.minecraft.class_7923.field_41167.method_10250(enchId));
+            // native 1.21 EnchantmentHelper.method_8220(stack, visitor): vanilla's own walk still hands a 1.21 visitor holders
+            // (the layer's 1.20.6 walk is reached only by converted mods' rewritten calls)
+            net.minecraft.class_1799 nSword = new net.minecraft.class_1799(net.minecraft.class_1802.field_22022);
+            net.minecraft.class_6880<net.minecraft.class_1887> sharp = server.method_30611().method_30530(net.minecraft.class_7924.field_41265)
+                .method_40290(net.minecraft.class_1893.field_9118);
+            nSword.method_7978(sharp, 3);
+            java.util.List<String> nSeen = new java.util.ArrayList<>();
+            net.minecraft.class_1890.method_8220(nSword, (h, lvl) -> nSeen.add(h.method_40225(net.minecraft.class_1893.field_9118) + ":" + lvl));
+            report(tag + " ench-visitor-native", nSeen.equals(java.util.List.of("true:3")),
+                "native method_8220 over sword: " + nSeen);
             // a player's cross-level moves: native @Inject + @Local in changeDimension(transition) before sendAllPlayerInfo
             // fires once per move, teleportTo-driven or a direct (portal-type) changeDimension
             class_3218 end = server.method_3847(net.minecraft.class_1937.field_25181);

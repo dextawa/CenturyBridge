@@ -5,3 +5,7 @@ accessible field net/minecraft/class_2474 field_11479 Lorg/slf4j/Logger;
 accessible field net/minecraft/class_7788 field_40606 Lnet/minecraft/class_5341$class_210;
 accessible field net/minecraft/class_7788 field_40607 Lnet/minecraft/class_5341$class_210;
 accessible method net/minecraft/class_7788 method_46003 (Lnet/minecraft/class_1935;)Lnet/minecraft/class_52$class_53;
+# 1.20.6 EnchantmentHelper visitor + private walks (damage-aw aw-call / aw-call-static)
+accessible class net/minecraft/class_1890$class_1891
+accessible method net/minecraft/class_1890 method_8220 (Lnet/minecraft/class_1890$class_1891;Lnet/minecraft/class_1799;)V
+accessible method net/minecraft/class_1890 method_8209 (Lnet/minecraft/class_1890$class_1891;Ljava/lang/Iterable;)V
