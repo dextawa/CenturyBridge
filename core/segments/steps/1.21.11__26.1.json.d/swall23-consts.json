@@ -66,7 +66,20 @@
   "net/minecraft/class_4095.field_24656:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#brain",
   "net/minecraft/class_1940.field_64165:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#levelSettings",
   "net/minecraft/class_22.field_25019:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#mapItemSavedData",
-  "net/minecraft/class_236.field_1315:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#timerQueue"
+  "net/minecraft/class_236.field_1315:Lorg/slf4j/Logger;": "top/dext/centurybridge/step/v26_1/rt/CbWallLoggers#timerQueue",
+  "net/minecraft/class_939.field_4770:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#rabbitBrown",
+  "net/minecraft/class_939.field_4773:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#rabbitWhite",
+  "net/minecraft/class_939.field_4775:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#rabbitBlack",
+  "net/minecraft/class_939.field_4768:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#rabbitGold",
+  "net/minecraft/class_939.field_4774:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#rabbitSalt",
+  "net/minecraft/class_939.field_4772:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#rabbitWhiteSplotched",
+  "net/minecraft/class_939.field_4771:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#rabbitToast",
+  "net/minecraft/class_939.field_4769:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#rabbitEvil",
+  "net/minecraft/class_921.field_41631:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#llamaCreamy",
+  "net/minecraft/class_921.field_41632:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#llamaWhite",
+  "net/minecraft/class_921.field_41633:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#llamaBrown",
+  "net/minecraft/class_921.field_41634:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallEntityTextures#llamaGray"
  },
- "_swall23_loggers_basis": "1.21.11 private static LOGGER (LogUtils.getLogger() in each owner's clinit) 26.1 no longer declares there: rt/CbWallLoggers answers the slf4j logger named after the owner's 26.1 class"
+ "_swall23_loggers_basis": "1.21.11 private static LOGGER (LogUtils.getLogger() in each owner's clinit) 26.1 no longer declares there: rt/CbWallLoggers answers the slf4j logger named after the owner's 26.1 class",
+ "_swall23_textures_basis": "1.21.11 rabbit/llama texture constants: 26.1 renamed the files (rabbit_brown.png, llama_creamy.png...) and keeps them in RabbitRenderer.RABBIT_LOCATIONS/TOAST and LlamaRenderer.TEXTURES; rt/CbWallEntityTextures answers 26.1's adult texture per variant"
 }

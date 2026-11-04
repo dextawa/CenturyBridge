@@ -298,3 +298,7 @@ accessible	field	net/minecraft/client/model/monster/strider/AdultStriderModel	ri
 accessible	field	net/minecraft/client/model/monster/strider/AdultStriderModel	leftTopBristle	Lnet/minecraft/client/model/geom/ModelPart;
 accessible	field	net/minecraft/client/model/monster/strider/AdultStriderModel	leftMiddleBristle	Lnet/minecraft/client/model/geom/ModelPart;
 accessible	field	net/minecraft/client/model/monster/strider/AdultStriderModel	leftBottomBristle	Lnet/minecraft/client/model/geom/ModelPart;
+# swall23: 1.21.11 rabbit / llama texture constants are 26.1's per-variant maps (CbWallEntityTextures)
+accessible	field	net/minecraft/client/renderer/entity/RabbitRenderer	RABBIT_LOCATIONS	Ljava/util/Map;
+accessible	field	net/minecraft/client/renderer/entity/RabbitRenderer	TOAST	Lnet/minecraft/resources/Identifier;
+accessible	field	net/minecraft/client/renderer/entity/LlamaRenderer	TEXTURES	Ljava/util/Map;
