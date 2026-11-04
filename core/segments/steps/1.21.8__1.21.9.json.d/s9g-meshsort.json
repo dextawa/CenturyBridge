@@ -2,5 +2,12 @@
  "_s9g_meshsort_basis": "MeshData.SortState's canonical constructor took the centroids as Vector3f[] through 1.21.8 and takes a CompactVectorArray (class_11899) from 1.21.9 (javap of both jars; same record, same IndexType, same buildSortedIndexBuffer reading every entry). The old constructor packs the array entry by entry into new CompactVectorArray(n) with set(i, v), then makes 1.21.9's record (rt/CbMeshSort). Asked for by s26i: the climbed 1.21 layer's CbRenderBufferBuilderMixin calls it (BLIND METHOD on 26.2).",
  "ctorRedirects": {
   "net/minecraft/class_9801$class_9802.<init>([Lorg/joml/Vector3f;Lcom/mojang/blaze3d/vertex/VertexFormat$class_5595;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbMeshSort#sortState"
+ },
+ "_s121i_centroids_basis": "MeshData.SortState.centroids() (comp_2840) returned Vector3f[] through 1.21.8 and returns the CompactVectorArray (class_11899) from 1.21.9 (javap of both; damage row call comp_2840()[Lorg/joml/Vector3f;, damage-aw aw-get of the record field). The old call and field read unpack it entry by entry (size(), get(i, new Vector3f())) into a fresh array (rt/CbMeshSort#comp_2840), the reverse of the constructor redirect above. Asked for by main: the climbed 1.21 layer's CompileResults reads it (KNOWN TOMBSTONE from 1.21.9 on).",
+ "instanceRedirects": {
+  "net/minecraft/class_9801$class_9802.comp_2840()[Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_9/rt/CbMeshSort#comp_2840"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_9801$class_9802.comp_2840:[Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_9/rt/CbMeshSort#comp_2840"
  }
 }

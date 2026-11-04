@@ -100,12 +100,75 @@ final class MixinClassRenames {
     static final String W_TYPED = "Ltop/dext/centurybridge/WTyped;";
 
     /**
+     * does a descriptor name a facade-split class: one the step renames onto a layer class while W still declares a
+     * class of that name (W's code, and what calls into it, means W's class)
+     */
+    static boolean facadeSplitDesc(String desc, Map<String, String> renames, Predicate<String> wDeclares) {
+        if (desc == null) {
+            return false;
+        }
+        Matcher m = CLASS_REF.matcher(desc);
+        while (m.find()) {
+            if (toLayer(renames.get(m.group(1))) && wDeclares.test(m.group(1))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * a descriptor (method or field) or internal name with only the renames onto layer classes applied: the spelling a
+     * position naming converted code's types takes inside a {@link #W_TYPED} method, whose remapper then applies
+     * {@link #forVanilla} (which never maps a layer name again)
+     */
+    static String layerSpelled(String s, Map<String, String> renames) {
+        if (s == null) {
+            return null;
+        }
+        Map<String, String> f = new HashMap<>();
+        renames.forEach((k, v) -> {
+            if (toLayer(v)) {
+                f.put(k, v);
+            }
+        });
+        org.objectweb.asm.commons.SimpleRemapper r = new org.objectweb.asm.commons.SimpleRemapper(f);
+        if (s.startsWith("(")) {
+            return r.mapMethodDesc(s);
+        }
+        return s.endsWith(";") || s.length() == 1 || s.startsWith("[") ? r.mapDesc(s) : r.map(s) == null ? s : r.map(s);
+    }
+
+    /**
+     * a method descriptor with the layer renames ({@link #layerSpelled}) applied to its return type only (a hook's wrap
+     * static: W's value in, converted code's out) or to its arguments only (an unwrap: converted code's value in, W's out)
+     */
+    static String layerSpelledPart(String desc, Map<String, String> renames, boolean ret) {
+        Type[] a = Type.getArgumentTypes(desc);
+        Type r = Type.getReturnType(desc);
+        StringBuilder sb = new StringBuilder("(");
+        for (Type t : a) {
+            sb.append(ret ? t.getDescriptor() : layerSpelled(t.getDescriptor(), renames));
+        }
+        return sb.append(')').append(ret ? layerSpelled(r.getDescriptor(), renames) : r.getDescriptor()).toString();
+    }
+
+    /**
      * The class rewrite's remapper: every method by {@code renames}, except a {@link #W_TYPED} one, which takes
      * {@link #forVanilla} -- classRenames are meant for converted code, never for what names W's code (Mixin matches a
      * handler's descriptor against the target's)
      */
     static ClassVisitor remapper(ClassVisitor next, Map<String, String> renames, Predicate<String> wDeclares, byte[] bytes) {
-        java.util.Set<String> wTyped = wTypedMethods(bytes);
+        return remapper(next, renames, wDeclares, bytes, java.util.Set.of());
+    }
+
+    /**
+     * {@link #remapper} for a class the converter also writes methods into: {@code synthesized} (name+desc as written,
+     * before the remapper) are {@link #W_TYPED} too -- the input bytes, read for the annotation, do not have them
+     */
+    static ClassVisitor remapper(ClassVisitor next, Map<String, String> renames, Predicate<String> wDeclares, byte[] bytes,
+                                 java.util.Set<String> synthesized) {
+        java.util.Set<String> wTyped = new java.util.HashSet<>(wTypedMethods(bytes));
+        wTyped.addAll(synthesized);
         org.objectweb.asm.commons.Remapper full = new org.objectweb.asm.commons.SimpleRemapper(renames);
         if (wTyped.isEmpty()) {
             return new org.objectweb.asm.commons.ClassRemapper(next, full);

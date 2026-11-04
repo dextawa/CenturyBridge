@@ -49,6 +49,12 @@ public abstract class CbVillagerEnchantBookMixin implements CbEnchantBookTrades.
         this.cb$explicit = List.copyOf(enchantments);
     }
 
+    /** the tag's members as the 1.20.6 objects, in the tag's order (CbEnchantBookPick.tradeable); a 1.20.6 list, as given */
+    @Override
+    public List<class_1887> cb$tradeable() {
+        return this.cb$explicit != null ? this.cb$explicit : CbEnchantBookPick.tradeable(this.field_45131, this.cb$registry);
+    }
+
     /** 1.20.6 EnchantBookForTrades.getRandomEnchantment(random, features) (class_3853$class_1648.method_59891) */
     @CbVanillaReads(value = "CbVillagerEnchantBookMixinHooks: getOffer (method_7246) takes its book's enchantment from this method "
         + "(cb$pick replaces Registry.getRandomElementOf(tag, random)); the body is 1.20.6's over the tag's members (rt/CbEnchantBookPick.tradeable; the same draw is CbEnchantBookPick.pick, which the 26.1 facade calls past the wall, where this mixin retires): "

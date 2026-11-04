@@ -18,10 +18,11 @@ import org.slf4j.Logger;
  * 1.20.6's RealmsServerPlayerList (net/minecraft/class_4881): one Realms server's id and the UUIDs of the players
  * on it, as the live player list reports them. 1.21 gave the intermediary name to its RealmsServerPlayerLists (a
  * map of server id to resolved profiles); a 1.20.6 mod's references to its own class are renamed here
- * (classRenames, s6fin-realms.json). 1.20.6's body.
+ * (classRenames, s6fin-realms.json). 1.20.6's body and superclass (ValueObject): it stands beside 1.21's class, never
+ * extends it (1.21.11 made that class a final record); rt/CbRealms converts between the two.
  */
 @Environment(EnvType.CLIENT)
-public class class_4881 extends net.minecraft.class_4881 {
+public class class_4881 extends net.minecraft.class_4352 {
     public static final Logger field_22628 = com.mojang.logging.LogUtils.getLogger();
     /** serverId */
     public long field_22626;

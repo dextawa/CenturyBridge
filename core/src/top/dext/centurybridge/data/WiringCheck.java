@@ -1249,6 +1249,19 @@ public final class WiringCheck {
             for (var el : root.getAsJsonArray("overrideHooks")) {
                 var o = el.getAsJsonObject();
                 String where = "overrideHooks " + o.get("old").getAsString();
+                // a hook whose new or bridge descriptor names a class W declares under a facade's name: the converter
+                // writes its new shape in W's spelling (JarProcessor.wTypedHook) -- the bridge static as W declares it,
+                // a wrap's W argument and an unwrap's W return too; what names converted code keeps the facade
+                String nwDesc = o.get("new").getAsString().substring(o.get("new").getAsString().indexOf('('));
+                String brDesc = o.has("bridge") ? o.get("bridge").getAsString().substring(o.get("bridge").getAsString().indexOf('(')) : null;
+                boolean wTyped = !methodDesc(nwDesc).equals(wTypedDesc(nwDesc))
+                    || brDesc != null && !methodDesc(brDesc).equals(wTypedDesc(brDesc));
+                if (wTyped && o.has("superCalls")) {
+                    // a rewritten super call sits in the mod's own method, which the class rewrite renames whole: its
+                    // new-shape descriptor would name the facade, a method W does not declare
+                    problems.add(where + " superCalls on a W-typed hook (its new shape names a class W declares under a"
+                        + " facade's name): the rewritten super call cannot be spelled in W's types");
+                }
                 for (String key : new String[] {"wrap", "unwrap"}) {
                     if (!o.has(key)) {
                         continue;
@@ -1264,7 +1277,7 @@ public final class WiringCheck {
                         int paren = w.indexOf('(');
                         int dot = w.lastIndexOf('.', paren);
                         wantMethod(where + " " + key, w.substring(0, dot) + "#" + w.substring(dot + 1, paren),
-                            null, methodDesc(w.substring(paren)));
+                            null, wTyped ? mixedDesc(w.substring(paren), key.equals("wrap")) : methodDesc(w.substring(paren)));
                     }
                 }
                 if (o.has("guard")) {
@@ -1338,7 +1351,7 @@ public final class WiringCheck {
                     int paren = b.indexOf('(');
                     int dot = b.lastIndexOf('.', paren);
                     wantMethod(where + " bridge", b.substring(0, dot) + "#" + b.substring(dot + 1, paren),
-                        null, methodDesc(b.substring(paren)));
+                        null, wTypedDesc(b.substring(paren)));
                     String adapter = o.has("adapter") ? o.get("adapter").getAsString() : null;
                     ClassNode an = adapter == null ? null : classes.get(adapter);
                     String old = o.get("old").getAsString();
@@ -1685,6 +1698,21 @@ public final class WiringCheck {
             }
         }.mapMethodDesc(desc);
         return wall == null ? d : wall.mapMethodDesc(d);
+    }
+
+    /**
+     * a W-typed hook's wrap ({@code wArgs}: W's value in, converted code's out) or unwrap (converted code's value in,
+     * W's out): the W side in {@link #wTypedDesc}, the converted side in {@link #methodDesc}
+     */
+    private String mixedDesc(String desc, boolean wArgs) {
+        org.objectweb.asm.Type[] w = org.objectweb.asm.Type.getArgumentTypes(wTypedDesc(desc));
+        org.objectweb.asm.Type[] c = org.objectweb.asm.Type.getArgumentTypes(methodDesc(desc));
+        StringBuilder sb = new StringBuilder("(");
+        for (int i = 0; i < w.length; i++) {
+            sb.append((wArgs ? w[i] : c[i]).getDescriptor());
+        }
+        return sb.append(')').append((wArgs ? org.objectweb.asm.Type.getReturnType(methodDesc(desc))
+            : org.objectweb.asm.Type.getReturnType(wTypedDesc(desc))).getDescriptor()).toString();
     }
 
     private String typeDesc(String desc) {

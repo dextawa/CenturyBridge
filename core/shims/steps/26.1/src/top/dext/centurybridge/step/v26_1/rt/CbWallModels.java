@@ -102,6 +102,17 @@ public final class CbWallModels {
         return q.materialInfo().isTinted();
     }
 
+    /**
+     * 26.1 ModelBaker.Interner.materialInfo(info), abstract on 26.1, on a 1.21.11 Interner implementation: 1.21.11's
+     * Interner interned only vectors (vector(Vector3fc), javap of class_7775$class_12356) and 1.21.11 quads carried no
+     * MaterialInfo, so a 1.21.11 interner shares none: the info as given (what 26.1's InternerImpl answers for an info
+     * not seen before).
+     */
+    public static BakedQuad.MaterialInfo materialInfo(net.minecraft.client.resources.model.ModelBaker.Interner interner,
+                                                      BakedQuad.MaterialInfo info) {
+        return info;
+    }
+
     // ---- BlockStateModel / BlockModelPart ----
 
     /** 1.21.11 BlockStateModel.particleIcon() */
