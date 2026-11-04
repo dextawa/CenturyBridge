@@ -1,0 +1,10 @@
+{
+ "_smx1n_dsa_basis": "DirectStateAccess.bufferSubData (method_71027) gained an int at 1.21.9: GlCommandEncoder.writeToBuffer passes GlBuffer.usage(); the ARB body ignores it, the emulated body binds to the target its usage bits name and otherwise 36663, the target 1.21.8 always bound (javap -c -p 1.21.8/1.21.9 class_10874$class_10929/class_10930, class_10860). Usage 0 keeps 1.21.8's behaviour on both (rt/CbDirectStateAccess).",
+ "callReshapes": {
+  "net/minecraft/class_10874.method_71027(IILjava/nio/ByteBuffer;)V": {
+   "desc": "(IILjava/nio/ByteBuffer;I)V",
+   "ops": ["keep", "keep", "keep", "push top/dext/centurybridge/step/v1_21_9/rt/CbDirectStateAccess#legacyUsage()I"],
+   "basis": "1.21.8 bound GL_COPY_WRITE_BUFFER (36663) unconditionally; 1.21.9's usage 0 selects the same target"
+  }
+ }
+}

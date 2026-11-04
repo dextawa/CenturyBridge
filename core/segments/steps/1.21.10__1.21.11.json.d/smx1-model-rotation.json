@@ -1,0 +1,31 @@
+{
+ "_smx1_model_rotation_basis": "smx1l (javap -c -p both code jars): 1.21.10 ModelRotation was an enum of 16 Quadrant pairs; 1.21.11 keeps one ModelRotation per OctahedralGroup (method_75489). Each 1.21.10 constant is 1.21.11's instance for the group 1.21.10's class_4990.method_67987 computed (compose body identical in both releases). rt/CbModelRotations.",
+ "fieldGetters": {
+  "net/minecraft/class_1086.field_5350:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5366:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5355:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5347:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5351:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5360:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5367:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5354:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5358:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5348:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5356:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5359:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5353:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5349:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5361:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_5352:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1086.values()[Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.valueOf(Ljava/lang/String;)Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.method_68008(Lnet/minecraft/class_10821;Lnet/minecraft/class_10821;)Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1086.method_35808()Lnet/minecraft/class_4990;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.ordinal()I": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.name()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations"
+ }
+}

@@ -58,6 +58,7 @@ public final class CbRenderTypeCreate {
         b.method_75932(state.field_21852);
         class_1921 type = class_1921.method_75940(name, b.method_75938());
         CbLineWidth.register(type, state.cb$line);
+        CbLegacyRenderTypes.composite(type, state, bufferSize);
         return type;
     }
 

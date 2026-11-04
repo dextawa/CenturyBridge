@@ -221,6 +221,53 @@ public final class CbBiomeEffectsLegacy {
         s.musicVolumeSet = true;
     }
 
+    // ---- constructors a mod reaches through its access widener (both package-private in 1.21.10 and 1.21.11)
+
+    /**
+     * 1.21.10 BiomeSpecialEffects(fogColor, waterColor, waterFogColor, skyColor, foliageColorOverride,
+     * dryFoliageColorOverride, grassColorOverride, grassColorModifier, ambientParticle, ambientLoopSound,
+     * ambientMoodSound, ambientAdditionsSound, backgroundMusic, backgroundMusicVolume) (javap: fields in that order).
+     * 1.21.11's record keeps water colour, the three overrides and the modifier; the rest is kept as the settings a
+     * 1.21.10 builder would have set (CbBiomeEffects.Settings), which become the biome's attributes when the effects
+     * reach Biome.Builder (CbBiomeBuilderMixin) or the 1.21.10 Biome constructor ({@link #biome}). 1.21.10's record
+     * always carried a music volume, so it is always set.
+     */
+    public static class_4763 effects(int fogColor, int waterColor, int waterFogColor, int skyColor, Optional<Integer> foliage,
+                                     Optional<Integer> dryFoliage, Optional<Integer> grass, class_4763.class_5486 modifier,
+                                     Optional<class_4761> particle, Optional<class_6880<class_3414>> loop,
+                                     Optional<class_4968> mood, Optional<class_4967> additions,
+                                     Optional<class_6012<class_5195>> music, float musicVolume) {
+        class_4763 e = new class_4763(waterColor, foliage, dryFoliage, grass, modifier);
+        CbBiomeEffects.Settings s = new CbBiomeEffects.Settings();
+        s.fogColor = fogColor;
+        s.waterFogColor = waterFogColor;
+        s.skyColor = skyColor;
+        s.particle = particle.orElse(null);
+        s.loopSound = loop.orElse(null);
+        s.moodSound = mood.orElse(null);
+        s.additionsSound = additions.orElse(null);
+        s.music = music;
+        s.musicVolume = musicVolume;
+        s.musicVolumeSet = true;
+        CbBiomeEffects.attach(e, s);
+        return e;
+    }
+
+    /**
+     * 1.21.10 Biome(climate, specialEffects, generationSettings, mobSettings): 1.21.11's takes the environment
+     * attributes second; a 1.21.10 biome has the attributes its effects stand for (CbBiomeEffects.attributes: what
+     * 1.21.11's Biome.Builder sets for such effects), none for effects 1.21.11 code built.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static class_1959 biome(class_1959.class_5482 climate, class_4763 effects, net.minecraft.class_5485 generation,
+                                   net.minecraft.class_5483 spawns) {
+        net.minecraft.class_12199.class_12200 b = net.minecraft.class_12199.method_75661();
+        for (Object[] a : CbBiomeEffects.attributes(effects)) {
+            b.method_75674((class_12197) a[0], a[1]);
+        }
+        return new class_1959(climate, b.method_75672(), effects, generation, spawns);
+    }
+
     // ---- BiomeSpecialEffects.Builder private fields 1.21.11 dropped: what the restored setters keep
 
     private static CbBiomeEffects.Settings of(class_4763.class_4764 b) {

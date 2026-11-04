@@ -212,7 +212,21 @@ public final class JarProcessor {
     }
 
     private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName) {
-        synthesizeOverride(cv, h, cls, superName, null);
+        synthesizeOverride(cv, h, cls, superName, null, null);
+    }
+
+    /**
+     * Whether a hook's synthesized new shape is spelled in W's own types: its new or bridge descriptor names a class
+     * the step renames onto a layer facade while W still declares it (1.21's RealmsServerPlayerLists, whose 1.20.6
+     * shape lives on as a facade for converted code). Vanilla calls the new shape with W's class and the bridge was
+     * compiled against W, so the method is written {@link MixinClassRenames#W_TYPED} (the class rewrite then applies
+     * only {@link MixinClassRenames#forVanilla} to it), and the positions naming converted code's types -- the old
+     * override, its argument casts, wrap / unwrap statics -- are written with the facade renames already applied.
+     * A class W does not declare keeps its facade rename either way.
+     */
+    static boolean wTypedHook(Chain.OverrideHook h, Map<String, String> renames, java.util.function.Predicate<String> wDeclares) {
+        return MixinClassRenames.facadeSplitDesc(h.newDesc, renames, wDeclares)
+            || h.bridgeDesc != null && MixinClassRenames.facadeSplitDesc(h.bridgeDesc, renames, wDeclares);
     }
 
     /**
@@ -221,9 +235,11 @@ public final class JarProcessor {
      * when the superclass chain does not have the new shape (see {@link #defaultHome}); null for super's.
      */
     private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName,
-                                           String superIface) {
+                                           String superIface, Map<String, String> layerRen) {
+        // layerRen: the class renames of a W-typed hook (wTypedHook), applied here to what names converted code
+        java.util.function.UnaryOperator<String> conv = layerRen == null ? x -> x : x -> MixinClassRenames.layerSpelled(x, layerRen);
         if (h.frames != null) {
-            synthesizeFramedOverride(cv, h, cls, superName, superIface);
+            synthesizeFramedOverride(cv, h, cls, superName, superIface, conv);
             return;
         }
         org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
@@ -272,7 +288,7 @@ public final class JarProcessor {
                 int src = map[i];
                 if (!na[src].equals(oa[i]) && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
                     mv.visitVarInsn(Opcodes.ALOAD, slotOf[src]);
-                    mv.visitTypeInsn(Opcodes.INSTANCEOF, oa[i].getInternalName());
+                    mv.visitTypeInsn(Opcodes.INSTANCEOF, conv.apply(oa[i].getInternalName()));
                     mv.visitJumpInsn(Opcodes.IFEQ, fallthrough);
                     narrowed = true;
                 }
@@ -299,9 +315,9 @@ public final class JarProcessor {
                     w = h.wraps.get(0); // a single wrap is applied as written (its parameter may be a supertype)
                 }
                 if (w != null) {
-                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, w[0], w[1], w[2], false);
+                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, w[0], w[1], layerRen == null ? w[2] : MixinClassRenames.layerSpelledPart(w[2], layerRen, true), false);
                 } else if (!na[src].equals(oa[i]) && h.narrow && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
-                    mv.visitTypeInsn(Opcodes.CHECKCAST, oa[i].getInternalName());
+                    mv.visitTypeInsn(Opcodes.CHECKCAST, conv.apply(oa[i].getInternalName()));
                 }
             }
         }
@@ -312,12 +328,13 @@ public final class JarProcessor {
         if (h.bridgeName != null) {
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.bridgeOwner, h.bridgeName, h.bridgeDesc, false);
         } else {
-            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
+            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, conv.apply(h.oldDesc), false);
         }
         if (h.unwrapName != null) {
             // the old override answers in the old return type; convert it to
             // what vanilla expects from the new shape (facade -> real type)
-            mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.unwrapOwner, h.unwrapName, h.unwrapDesc, false);
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.unwrapOwner, h.unwrapName,
+                layerRen == null ? h.unwrapDesc : MixinClassRenames.layerSpelledPart(h.unwrapDesc, layerRen, false), false);
         }
         // a new shape that returns nothing where the forwarded call answers a value (1.20.2
         // RealmsServerList.updateServersList: the 1.20.1 override returned the list) drops it
@@ -404,7 +421,8 @@ public final class JarProcessor {
      * any other goes to super's new shape as if the mod had not overridden anything ({@link #emitFallthrough}).
      */
     private static void synthesizeFramedOverride(ClassVisitor cv, Chain.OverrideHook h, String cls,
-                                                 String superName, String superIface) {
+                                                 String superName, String superIface,
+                                                 java.util.function.UnaryOperator<String> conv) {
         org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
         org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
         org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(h.newDesc);
@@ -439,7 +457,7 @@ public final class JarProcessor {
             for (int i = 0; i < oa.length; i++) {
                 if (!na[map[i]].equals(oa[i]) && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
                     mv.visitVarInsn(Opcodes.ALOAD, slotOf[map[i]]);
-                    mv.visitTypeInsn(Opcodes.INSTANCEOF, oa[i].getInternalName());
+                    mv.visitTypeInsn(Opcodes.INSTANCEOF, conv.apply(oa[i].getInternalName()));
                     mv.visitJumpInsn(Opcodes.IFEQ, fallthrough);
                     narrowed = true;
                 }
@@ -461,10 +479,10 @@ public final class JarProcessor {
         for (int i = 0; i < oa.length; i++) {
             mv.visitVarInsn(na[map[i]].getOpcode(Opcodes.ILOAD), slotOf[map[i]]);
             if (h.narrow && !na[map[i]].equals(oa[i]) && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
-                mv.visitTypeInsn(Opcodes.CHECKCAST, oa[i].getInternalName());
+                mv.visitTypeInsn(Opcodes.CHECKCAST, conv.apply(oa[i].getInternalName()));
             }
         }
-        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
+        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, conv.apply(h.oldDesc), false);
         if (nr.getSort() == org.objectweb.asm.Type.VOID && or.getSort() != org.objectweb.asm.Type.VOID) {
             mv.visitInsn(or.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP);
         } else if (or.getSort() == org.objectweb.asm.Type.VOID && nr.getSort() != org.objectweb.asm.Type.VOID) {
@@ -4999,11 +5017,20 @@ public final class JarProcessor {
             }
         }
         final Map<String, String> classRen = renames;
+        // hooks whose synthesized new shape is spelled in W's types (wTypedHook): W_TYPED to the class rewrite
+        final Set<String> wTypedHooks = new HashSet<>();
+        for (Chain.OverrideHook h : reconnectOverrides) {
+            if (wTypedHook(h, classRen, c -> wDeclares(chain, c))) {
+                wTypedHooks.add(h.newName + h.newDesc);
+                rpt.notes.add(tag + "override-hook W-typed (its new shape names a class W declares under the facade's name): "
+                    + h.newName + h.newDesc);
+            }
+        }
         // tombstone stubs are declared with the descriptors this class's sites carry after the remapper below
         final org.objectweb.asm.commons.Remapper tombRemap = needClassRename
             ? new org.objectweb.asm.commons.SimpleRemapper(classRen) : null;
         ClassVisitor sink = needClassRename
-            ? MixinClassRenames.annotations(MixinClassRenames.remapper(kinds, classRen, c -> wDeclares(chain, c), bytes),
+            ? MixinClassRenames.annotations(MixinClassRenames.remapper(kinds, classRen, c -> wDeclares(chain, c), bytes, wTypedHooks),
                 classRen, c -> wDeclares(chain, c))
             : kinds;
         // super/implements-only rename layer: rewrites the hierarchy declaration
@@ -5146,7 +5173,8 @@ public final class JarProcessor {
                 }
                 for (Chain.OverrideHook h : reconnectOverrides) {
                     synthesizeOverride(this, h, clsName[0], superOf[0],
-                        defaultHome(chain, superOf[0], ifacesOf[0], h.newName, h.newDesc));
+                        defaultHome(chain, superOf[0], ifacesOf[0], h.newName, h.newDesc),
+                        wTypedHooks.contains(h.newName + h.newDesc) ? classRen : null);
                 }
                 for (Chain.AbstractFill f : fillApply) {
                     // public R m(args) { return call(this, args...); }

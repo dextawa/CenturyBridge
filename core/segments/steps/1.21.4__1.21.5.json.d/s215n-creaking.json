@@ -1,0 +1,7 @@
+{
+ "_s215n_creaking_basis": "1.21.4 CreakingHeartBlock.ACTIVE (class_10319.field_55064, BooleanProperty) and BlockStateProperties.ACTIVE (class_2741.field_55087, the same constant: 1.21.4 class_10319.<clinit> stores field_55087 into field_55064) -> rt/CbCreakingHeartActive.ACTIVE, answered over 1.21.5's CreakingHeartBlock.STATE (field_55064 now EnumProperty<CreakingHeartState>) by mixin/CbCreakingHeartActiveRoute: ACTIVE = STATE != UPROOTED (javap -c both releases: constructor default, getTicker, animateTick, getAnalogOutputSignal, updateState compare the same way); false -> UPROOTED, true -> DORMANT when UPROOTED, else unchanged.",
+ "fieldGetters": {
+  "net/minecraft/class_10319.field_55064:Lnet/minecraft/class_2746;": "top/dext/centurybridge/step/v1_21_5/rt/CbCreakingHeartActive",
+  "net/minecraft/class_2741.field_55087:Lnet/minecraft/class_2746;": "top/dext/centurybridge/step/v1_21_5/rt/CbCreakingHeartActive"
+ }
+}

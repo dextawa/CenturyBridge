@@ -10,7 +10,9 @@
  },
  "staticRedirects": {
   "net/minecraft/class_796.method_3454(Lnet/minecraft/class_787;Lnet/minecraft/class_2350;Lnet/minecraft/class_4590;Lnet/minecraft/class_2960;)Lnet/minecraft/class_787;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_3454",
-  "net/minecraft/class_793.method_3447(Lnet/minecraft/class_785;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_3447"
+  "net/minecraft/class_793.method_3447(Lnet/minecraft/class_785;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_3447",
+  "net/minecraft/class_1088.method_4725(Lnet/minecraft/class_2689;Ljava/lang/String;)Ljava/util/function/Predicate;": "net/minecraft/class_9824#method_61057",
+  "net/minecraft/class_1088.method_4724(Lnet/minecraft/class_2769;Ljava/lang/String;)Ljava/lang/Comparable;": "net/minecraft/class_9824#method_61058"
  },
  "covers": [
   "net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZLnet/minecraft/class_2960;)Lnet/minecraft/class_777;"
@@ -127,5 +129,13 @@
  "ledger": {
   "net/minecraft/class_1088.method_4734()Ljava/util/Map;": "ModelBakery.getBakedTopLevelModels(): 1.20.6's map was keyed by ModelResourceLocation, then a ResourceLocation, typed Map<ResourceLocation, BakedModel>; 1.21 keys it by its ModelResourceLocation record, which is no ResourceLocation (that class is final) and no ResourceLocation can stand for (the variant has no place in one). Looking a model up by a 1.20.6-made location works (those are 1.21's records, CbRenderModelBake); iterating the keys as ResourceLocations cannot be served by any view of the map",
   "net/minecraft/class_1091": "not bridgeable for a 1.20.6 subclass: 1.21's ModelResourceLocation is a final record (id, variant) and no longer a ResourceLocation (itself final), so no class can extend it and no stand-in can be both; constructing one is bridged"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_1088.field_32984:I": "net/minecraft/class_9824#field_52259",
+  "net/minecraft/class_1088.field_32985:I": "net/minecraft/class_9824#field_52262",
+  "net/minecraft/class_1088.field_5373:Lcom/google/common/base/Splitter;": "net/minecraft/class_9824#field_52263",
+  "net/minecraft/class_1088.field_5372:Lcom/google/common/base/Splitter;": "net/minecraft/class_9824#field_52264",
+  "net/minecraft/class_1088.field_5395:Lnet/minecraft/class_2689;": "net/minecraft/class_9824#field_52265",
+  "net/minecraft/class_1088.field_5383:Ljava/util/Map;": "net/minecraft/class_9824#field_52266"
  }
 }

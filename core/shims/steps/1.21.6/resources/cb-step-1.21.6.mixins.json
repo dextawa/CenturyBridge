@@ -57,7 +57,9 @@
     "CbCubeMapFacesMixinHooks",
     "CbRealmsConfigureWorldRestoredMixin",
     "CbRealmsConfigureWorldRestoredMixinHooks",
-    "CbFontInternalRestoredMixin"
+    "CbFontInternalRestoredMixin",
+    "CbSectionResultsRestoredMixin",
+    "CbSectionResultsRestoredMixinHooks"
   ],
   "server": [],
   "injectors": {

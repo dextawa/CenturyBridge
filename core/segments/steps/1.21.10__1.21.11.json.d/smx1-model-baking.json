@@ -1,0 +1,24 @@
+{
+ "_smx1_model_baking_basis": "smx1k for s215l (javap -c -p both code jars): 1.21.11 FaceBakery.bakeQuad takes a ModelBaker.Interner first; SimpleUnbakedGeometry.bake's third argument is the ModelBaker (was the SpriteGetter). Both static. rt/CbModelBaking.",
+ "callReshapes": {
+  "net/minecraft/class_796.method_3468(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZI)Lnet/minecraft/class_777;": {
+   "desc": "(Lnet/minecraft/class_7775$class_12356;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZI)Lnet/minecraft/class_777;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_11/rt/CbModelBaking#identityInterner()Lnet/minecraft/class_7775$class_12356;",
+    "keep", "keep", "keep", "keep", "keep", "keep", "keep", "keep", "keep"
+   ],
+   "basis": "1.21.10's bakeQuad interned nothing; vanilla's interner only shares equal vectors: identity is 1.21.10's result"
+  },
+  "net/minecraft/class_10802.method_67934(Ljava/util/List;Lnet/minecraft/class_10419;Lnet/minecraft/class_9826;Lnet/minecraft/class_3665;Lnet/minecraft/class_10813;)Lnet/minecraft/class_10817;": {
+   "desc": "(Ljava/util/List;Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;Lnet/minecraft/class_3665;Lnet/minecraft/class_10813;)Lnet/minecraft/class_10817;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_11/rt/CbModelBaking#baker(Lnet/minecraft/class_9826;)Lnet/minecraft/class_7775;",
+    "keep",
+    "keep"
+   ],
+   "basis": "1.21.11's body reads only sprites() and interner() from the baker: the 1.21.10 call's getter and identity"
+  }
+ }
+}

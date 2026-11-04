@@ -152,3 +152,6 @@ accessible field net/minecraft/server/jsonrpc/internalapi/MinecraftGameRuleServi
 # 26.1.2 emissiveRendering fields (StatePredicate) over 26.2's Predicate<BlockState> fields (rt/CbS26Emissive)
 accessible field net/minecraft/world/level/block/state/BlockBehaviour$Properties emissiveRendering Ljava/util/function/Predicate;
 accessible field net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase emissiveRendering Ljava/util/function/Predicate;
+# RenderType.bufferSize() given back (rt/CbS26RenderSetup): the type's setup and name
+accessible field net/minecraft/client/renderer/rendertype/RenderType state Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+accessible field net/minecraft/client/renderer/rendertype/RenderType name Ljava/lang/String;

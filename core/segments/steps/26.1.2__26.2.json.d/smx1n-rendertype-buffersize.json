@@ -1,0 +1,6 @@
+{
+ "_smx1n_rendertype_buffersize_basis": "26.1.2 RenderType.bufferSize() answered setup.bufferSize (builder default 1536; RenderTypes sized text / text_intensity / translucent_moving_block 786432), read only by RenderBuffers as a fixed ByteBufferBuilder's initial capacity (javap -c -p 26.1.2). 26.2 removed it from RenderType and RenderSetup; a whole-jar byte search of client-26.2.jar (10952 classes) finds bufferSize only in ChunkSectionLayer.bufferSize()I (read by SectionBufferBuilderPack, a per-chunk-layer size) and unrelated window/staging/stream members: no 26.2 class reads a per-RenderType buffer size, so the value is informational on 26.2. rt/CbS26RenderSetup answers the size a 26.1.2-era RenderSetupBuilder.bufferSize call set (kept through CbS26RenderSetupSizeMixin), else 26.1.2's default for the type (786432 for 26.2's still-built vanilla text / translucent_moving_block, otherwise 1536). Serves the 1.21.11 layer's CbLegacyRenderTypes.field_20806 fallback and every converted mod's bufferSize() call.",
+ "instanceRedirects": {
+  "net/minecraft/client/renderer/rendertype/RenderType.bufferSize()I": "top/dext/centurybridge/step/v26_2/rt/CbS26RenderSetup"
+ }
+}
