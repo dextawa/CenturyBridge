@@ -285,7 +285,7 @@ accessible	field	net/minecraft/client/Camera	oldFovModifier	F
 accessible	field	net/minecraft/client/Camera	captureFrustum	Z
 accessible	field	net/minecraft/client/Camera	capturedFrustum	Lnet/minecraft/client/renderer/culling/Frustum;
 accessible	field	net/minecraft/client/Minecraft	lastActiveTime	J
-# swall23: 1.21.11 model part fields live on in 26.1's Adult* models (CbWallModelParts)
+# swall23: 1.21.11 model part fields live on in 26.1's Adult* models (CbWallModelPartFields)
 accessible	field	net/minecraft/client/model/animal/bee/AdultBeeModel	leftAntenna	Lnet/minecraft/client/model/geom/ModelPart;
 accessible	field	net/minecraft/client/model/animal/bee/AdultBeeModel	rightAntenna	Lnet/minecraft/client/model/geom/ModelPart;
 accessible	field	net/minecraft/client/model/animal/wolf/AdultWolfModel	realHead	Lnet/minecraft/client/model/geom/ModelPart;
