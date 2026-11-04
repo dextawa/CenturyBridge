@@ -34,6 +34,7 @@
     "CbS26EmissiveContextMixin"
   ],
   "client": [
+    "CbS26RenderSetupSizeMixin",
     "CbS26LevelRendererRestoredMixin",
     "CbS26BedLayersMixin",
     "CbS26BedRendererMixin",
