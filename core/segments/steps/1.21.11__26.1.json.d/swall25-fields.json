@@ -1,0 +1,11 @@
+{
+ "_swall25_wolfsound_basis": "1.21.11 WolfSoundVariant (class_10823) was a record of six sound holders; 26.1's holds adultSounds/babySounds WolfSoundSet records (javap). Reads of the private component fields (mods' AW) answer through the same rt/CbWallWolves accessors the component methods use (adult set). No writes: record fields are final.",
+ "instanceFieldGetters": {
+  "net/minecraft/class_10823.comp_3779:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#ambientSound",
+  "net/minecraft/class_10823.comp_3780:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#deathSound",
+  "net/minecraft/class_10823.comp_3781:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#growlSound",
+  "net/minecraft/class_10823.comp_3782:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#hurtSound",
+  "net/minecraft/class_10823.comp_3783:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#pantSound",
+  "net/minecraft/class_10823.comp_3784:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallWolves#whineSound"
+ }
+}
