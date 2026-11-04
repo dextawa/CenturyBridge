@@ -1,0 +1,237 @@
+usage	owner	name	desc	kinds	w
+call	net/fabricmc/fabric/impl/attachment/AttachmentRegistryImpl$BuilderImpl	syncWith	(Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/attachment/AttachmentRegistryImpl$BuilderImpl	syncWith	(Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/attachment/AttachmentRegistryImpl$BuilderImpl	syncWith	(Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/attachment/AttachmentRegistryImpl	getSyncableAttachments	()Ljava/util/Set;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_getSyncTargetInfo	()Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_computeInitialSyncChanges	(Lnet/minecraft/class_3222;Ljava/util/function/Consumer;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_syncChange	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Lnet/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_markChanged	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_shouldTryToSync	()Z	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_getDynamicRegistryManager	()Lnet/minecraft/class_5455;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_getSyncTargetInfo	()Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_computeInitialSyncChanges	(Lnet/minecraft/class_3222;Ljava/util/function/Consumer;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_syncChange	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Lnet/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_markChanged	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_shouldTryToSync	()Z	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_getSyncTargetInfo	()Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_computeInitialSyncChanges	(Lnet/minecraft/class_3222;Ljava/util/function/Consumer;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_syncChange	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Lnet/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_markChanged	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_shouldTryToSync	()Z	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl	fabric_getDynamicRegistryManager	()Lnet/minecraft/class_5455;	METHOD	method not declared on the owner
+new	net/fabricmc/fabric/impl/attachment/AttachmentTypeImpl	<init>	(Lnet/minecraft/class_2960;Ljava/util/function/Supplier;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;Z)V	METHOD	constructors (Lnet/minecraft/class_2960;Ljava/util/function/Supplier;Lcom/mojang/serialization/Codec;Z)V
+call	net/fabricmc/fabric/impl/attachment/AttachmentTypeImpl	isSynced	()Z	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/attachment/AttachmentTypeImpl	packetCodec	()Lnet/minecraft/class_9139;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/attachment/AttachmentTypeImpl	syncPredicate	()Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;	METHOD	method not declared on the owner
+new	net/fabricmc/fabric/impl/attachment/client/AttachmentSyncClient	<init>	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/client/AttachmentSyncClient	onInitializeClient	()V	CLASS	class gone
+extend	net/fabricmc/fabric/impl/attachment/client/AttachmentSyncClient			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/attachment/client/AttachmentSyncClient	<init>	()V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/attachment/client/AttachmentSyncClient	onInitializeClient	()V	CLASS	class gone
+new	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	<init>	(Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;[B)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	create	(Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;Lnet/minecraft/class_5455;)Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentChange;	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	partitionAndSendPackets	(Ljava/util/List;Lnet/minecraft/class_3222;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	decodeValue	(Lnet/minecraft/class_5455;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	tryApply	(Lnet/minecraft/class_1937;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	hashCode	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	equals	(Ljava/lang/Object;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	targetInfo	()Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	type	()Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	data	()[B	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	PACKET_CODEC	Lnet/minecraft/class_9139;	CLASS	class gone
+new	net/fabricmc/fabric/impl/attachment/sync/AttachmentSync	<init>	()V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/attachment/sync/AttachmentSync	createResponsePayload	()Lnet/fabricmc/fabric/impl/attachment/sync/c2s/AcceptedAttachmentsPayloadC2S;	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/attachment/sync/AttachmentSync	trySync	(Lnet/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C;Lnet/minecraft/class_3222;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentSync	onInitialize	()V	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/AttachmentSync	MAX_IDENTIFIER_SIZE	I	CLASS	class gone
+extend	net/fabricmc/fabric/impl/attachment/sync/AttachmentSync			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/attachment/sync/AttachmentSync	<init>	()V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/attachment/sync/AttachmentSync	onInitialize	()V	CLASS	class gone
+new	net/fabricmc/fabric/impl/attachment/sync/AttachmentSyncException	<init>	(Lnet/minecraft/class_2561;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentSyncException	getText	()Lnet/minecraft/class_2561;	CLASS	class gone
+extend	net/fabricmc/fabric/impl/attachment/sync/AttachmentSyncException			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/attachment/sync/AttachmentSyncException	<init>	(Lnet/minecraft/class_2561;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/attachment/sync/AttachmentSyncException	getText	()Lnet/minecraft/class_2561;	CLASS	class gone
+new	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$BlockEntityTarget	<init>	(Lnet/minecraft/class_2338;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$BlockEntityTarget	getType	()Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$BlockEntityTarget	getTarget	(Lnet/minecraft/class_1937;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentTarget;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$BlockEntityTarget	appendDebugInformation	(Lnet/minecraft/class_5250;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$BlockEntityTarget	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$BlockEntityTarget	hashCode	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$BlockEntityTarget	equals	(Ljava/lang/Object;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$BlockEntityTarget	pos	()Lnet/minecraft/class_2338;	CLASS	class gone
+new	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$ChunkTarget	<init>	(Lnet/minecraft/class_1923;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$ChunkTarget	getType	()Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$ChunkTarget	getTarget	(Lnet/minecraft/class_1937;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentTarget;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$ChunkTarget	appendDebugInformation	(Lnet/minecraft/class_5250;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$ChunkTarget	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$ChunkTarget	hashCode	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$ChunkTarget	equals	(Ljava/lang/Object;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$ChunkTarget	pos	()Lnet/minecraft/class_1923;	CLASS	class gone
+new	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$EntityTarget	<init>	(I)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$EntityTarget	getType	()Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$EntityTarget	getTarget	(Lnet/minecraft/class_1937;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentTarget;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$EntityTarget	appendDebugInformation	(Lnet/minecraft/class_5250;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$EntityTarget	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$EntityTarget	hashCode	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$EntityTarget	equals	(Ljava/lang/Object;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$EntityTarget	networkId	()I	CLASS	class gone
+new	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type	<init>	(BLnet/minecraft/class_9139;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type	hashCode	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type	equals	(Ljava/lang/Object;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type	id	()B	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type	packetCodec	()Lnet/minecraft/class_9139;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$WorldTarget	getType	()Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$WorldTarget	getTarget	(Lnet/minecraft/class_1937;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentTarget;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$WorldTarget	appendDebugInformation	(Lnet/minecraft/class_5250;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$WorldTarget	INSTANCE	Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$WorldTarget;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo	getType	()Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo$Type;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo	getId	()B	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo	getTarget	(Lnet/minecraft/class_1937;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentTarget;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo	appendDebugInformation	(Lnet/minecraft/class_5250;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo	MAX_SIZE_IN_BYTES	I	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo	PACKET_CODEC	Lnet/minecraft/class_9139;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/SupportedAttachmentsClientConnection	fabric_setSupportedAttachments	(Ljava/util/Set;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/SupportedAttachmentsClientConnection	fabric_getSupportedAttachments	()Ljava/util/Set;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/attachment/sync/SupportedAttachmentsClientConnection			CLASS	class gone
+new	net/fabricmc/fabric/impl/attachment/sync/c2s/AcceptedAttachmentsPayloadC2S	<init>	(Ljava/util/Set;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/c2s/AcceptedAttachmentsPayloadC2S	method_56479	()Lnet/minecraft/class_8710$class_9154;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/c2s/AcceptedAttachmentsPayloadC2S	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/c2s/AcceptedAttachmentsPayloadC2S	hashCode	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/c2s/AcceptedAttachmentsPayloadC2S	equals	(Ljava/lang/Object;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/c2s/AcceptedAttachmentsPayloadC2S	acceptedAttachments	()Ljava/util/Set;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/c2s/AcceptedAttachmentsPayloadC2S	CODEC	Lnet/minecraft/class_9139;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/c2s/AcceptedAttachmentsPayloadC2S	PACKET_ID	Lnet/minecraft/class_2960;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/c2s/AcceptedAttachmentsPayloadC2S	ID	Lnet/minecraft/class_8710$class_9154;	CLASS	class gone
+new	net/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C	<init>	(Ljava/util/List;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C	method_56479	()Lnet/minecraft/class_8710$class_9154;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C	hashCode	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C	equals	(Ljava/lang/Object;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C	attachments	()Ljava/util/List;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C	CODEC	Lnet/minecraft/class_9139;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C	PACKET_ID	Lnet/minecraft/class_2960;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/s2c/AttachmentSyncPayloadS2C	ID	Lnet/minecraft/class_8710$class_9154;	CLASS	class gone
+call	net/fabricmc/fabric/impl/attachment/sync/s2c/RequestAcceptedAttachmentsPayloadS2C	method_56479	()Lnet/minecraft/class_8710$class_9154;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/s2c/RequestAcceptedAttachmentsPayloadS2C	INSTANCE	Lnet/fabricmc/fabric/impl/attachment/sync/s2c/RequestAcceptedAttachmentsPayloadS2C;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/s2c/RequestAcceptedAttachmentsPayloadS2C	PACKET_ID	Lnet/minecraft/class_2960;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/s2c/RequestAcceptedAttachmentsPayloadS2C	ID	Lnet/minecraft/class_8710$class_9154;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/attachment/sync/s2c/RequestAcceptedAttachmentsPayloadS2C	CODEC	Lnet/minecraft/class_9139;	CLASS	class gone
+call	net/fabricmc/fabric/impl/blockrenderlayer/BlockRenderLayerMapImpl	putItem	(Lnet/minecraft/class_1792;Lnet/minecraft/class_1921;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/blockrenderlayer/BlockRenderLayerMapImpl	putItems	(Lnet/minecraft/class_1921;[Lnet/minecraft/class_1792;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/blockrenderlayer/BlockRenderLayerMapImpl	putItem	(Lnet/minecraft/class_1792;Lnet/minecraft/class_1921;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/blockrenderlayer/BlockRenderLayerMapImpl	putItems	(Lnet/minecraft/class_1921;[Lnet/minecraft/class_1792;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/blockrenderlayer/BlockRenderLayerMapImpl	putItem	(Lnet/minecraft/class_1792;Lnet/minecraft/class_1921;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/blockrenderlayer/BlockRenderLayerMapImpl	putItems	(Lnet/minecraft/class_1921;[Lnet/minecraft/class_1792;)V	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/client/indigo/renderer/aocalc/VanillaAoHelper	initialize	(Lnet/minecraft/class_778;)V	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/client/indigo/renderer/aocalc/VanillaAoHelper	updateShape	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;[ILnet/minecraft/class_2350;[FLjava/util/BitSet;)V	METHOD	method not declared on the owner
+extend	net/fabricmc/fabric/impl/client/indigo/renderer/aocalc/VanillaAoHelper			FINAL	class public final extends java/lang/Object
+call-static-inherited	net/fabricmc/fabric/impl/client/indigo/renderer/aocalc/VanillaAoHelper	initialize	(Lnet/minecraft/class_778;)V	METHOD	method not declared on the owner
+call-static-inherited	net/fabricmc/fabric/impl/client/indigo/renderer/aocalc/VanillaAoHelper	updateShape	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;[ILnet/minecraft/class_2350;[FLjava/util/BitSet;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/client/indigo/renderer/render/AbstractBlockRenderContext	bakedModelConsumer	()Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext$BakedModelConsumer;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/client/indigo/renderer/render/AbstractBlockRenderContext	bakedModelConsumer	()Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext$BakedModelConsumer;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/client/indigo/renderer/render/AbstractBlockRenderContext	bakedModelConsumer	()Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext$BakedModelConsumer;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/client/indigo/renderer/render/ItemRenderContext	bakedModelConsumer	()Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext$BakedModelConsumer;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/client/indigo/renderer/render/ItemRenderContext	renderModel	(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V	METHOD	method renderModel(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V public
+override+super	net/fabricmc/fabric/impl/client/indigo/renderer/render/ItemRenderContext	bakedModelConsumer	()Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext$BakedModelConsumer;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/client/indigo/renderer/render/ItemRenderContext	renderModel	(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V	METHOD	method renderModel(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V public
+call-inherited	net/fabricmc/fabric/impl/client/indigo/renderer/render/ItemRenderContext	bakedModelConsumer	()Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext$BakedModelConsumer;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/client/indigo/renderer/render/ItemRenderContext	renderModel	(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V	METHOD	method renderModel(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V public
+call	net/fabricmc/fabric/impl/client/model/loading/ModelLoaderHooks	fabric_getMissingModel	()Lnet/minecraft/class_1100;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/client/model/loading/ModelLoaderHooks	fabric_getOrLoadModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/client/model/loading/ModelLoaderHooks	fabric_add	(Lnet/minecraft/class_1091;Lnet/minecraft/class_1100;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/client/model/loading/ModelLoaderHooks	fabric_getMissingModel	()Lnet/minecraft/class_1100;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/client/model/loading/ModelLoaderHooks	fabric_getOrLoadModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/client/model/loading/ModelLoaderHooks	fabric_add	(Lnet/minecraft/class_1091;Lnet/minecraft/class_1100;)V	METHOD	method not declared on the owner
+new	net/fabricmc/fabric/impl/client/model/loading/ModelLoadingEventDispatcher	<init>	(Lnet/minecraft/class_1088;Ljava/util/List;)V	METHOD	constructors (Ljava/util/List;)V
+call	net/fabricmc/fabric/impl/client/model/loading/ModelLoadingEventDispatcher	loadBlockStateModels	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2689;)Z	METHOD	method loadBlockStateModels()Lnet/minecraft/class_9824$class_10095; public
+super-ctor	net/fabricmc/fabric/impl/client/model/loading/ModelLoadingEventDispatcher	<init>	(Lnet/minecraft/class_1088;Ljava/util/List;)V	METHOD	constructors (Ljava/util/List;)V
+override+super	net/fabricmc/fabric/impl/client/model/loading/ModelLoadingEventDispatcher	loadBlockStateModels	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2689;)Z	METHOD	method loadBlockStateModels()Lnet/minecraft/class_9824$class_10095; public
+call-inherited	net/fabricmc/fabric/impl/client/model/loading/ModelLoadingEventDispatcher	loadBlockStateModels	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2689;)Z	METHOD	method loadBlockStateModels()Lnet/minecraft/class_9824$class_10095; public
+new	net/fabricmc/fabric/impl/client/rendering/FabricShaderProgram	<init>	(Lnet/minecraft/class_5912;Lnet/minecraft/class_2960;Lnet/minecraft/class_293;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/client/rendering/FabricShaderProgram	rewriteAsId	(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/class_2960;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	prepare	(Lnet/minecraft/class_761;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_3695;ZLnet/minecraft/class_638;)V	METHOD	method prepare(Lnet/minecraft/class_761;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lnet/minecraft/class_4597;ZLnet/minecraft/class_638;)V public
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	profiler	()Lnet/minecraft/class_3695;	METHOD	method not declared on the owner
+new	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	<init>	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	getFuelTimes	()Ljava/util/Map;	CLASS	class gone
+call	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	get	(Lnet/minecraft/class_1935;)Ljava/lang/Integer;	CLASS	class gone
+call	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	add	(Lnet/minecraft/class_1935;Ljava/lang/Integer;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	add	(Lnet/minecraft/class_6862;Ljava/lang/Integer;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	remove	(Lnet/minecraft/class_1935;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	remove	(Lnet/minecraft/class_6862;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	clear	(Lnet/minecraft/class_1935;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	clear	(Lnet/minecraft/class_6862;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	apply	(Ljava/util/Map;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/content/registry/FuelRegistryImpl	resetCache	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/datagen/TagBuilderHooks	fabric_setReplace	(Z)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/datagen/TagBuilderHooks	fabric_isReplaced	()Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/datagen/TagBuilderHooks	fabric_forceAddTag	(Lnet/minecraft/class_2960;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/datagen/TagBuilderHooks	fabric_getRemove	()Ljava/util/List;	CLASS	class gone
+call	net/fabricmc/fabric/impl/datagen/TagBuilderHooks	fabric_removeElement	(Lnet/minecraft/class_2960;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/datagen/TagBuilderHooks	fabric_removeTag	(Lnet/minecraft/class_2960;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/datagen/TagBuilderHooks			CLASS	class gone
+call	net/fabricmc/fabric/impl/event/lifecycle/ChunkLevelTypeEventTracker	fabric_setCurrentEventLevelType	(Lnet/minecraft/class_3194;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/event/lifecycle/ChunkLevelTypeEventTracker	fabric_getCurrentEventLevelType	()Lnet/minecraft/class_3194;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/event/lifecycle/ChunkLevelTypeEventTracker			CLASS	class gone
+call	net/fabricmc/fabric/impl/recipe/ingredient/CustomIngredientImpl	method_8105	()[Lnet/minecraft/class_1799;	METHOD	method method_8105()Ljava/util/List; public
+call	net/fabricmc/fabric/impl/recipe/ingredient/CustomIngredientImpl	method_8103	()Z	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/recipe/ingredient/CustomIngredientImpl	method_8105	()[Lnet/minecraft/class_1799;	METHOD,ORPHAN	method method_8105()Ljava/util/List; public
+override+super	net/fabricmc/fabric/impl/recipe/ingredient/CustomIngredientImpl	method_8103	()Z	METHOD,ORPHAN	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/recipe/ingredient/CustomIngredientImpl	method_8105	()[Lnet/minecraft/class_1799;	METHOD	method method_8105()Ljava/util/List; public
+call-inherited	net/fabricmc/fabric/impl/recipe/ingredient/CustomIngredientImpl	method_8103	()Z	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/recipe/ingredient/SupportedIngredientsClientConnection	fabric_setSupportedCustomIngredients	(Ljava/util/Set;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/recipe/ingredient/SupportedIngredientsClientConnection	fabric_getSupportedCustomIngredients	()Ljava/util/Set;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/recipe/ingredient/SupportedIngredientsClientConnection			CLASS	class gone
+call	net/fabricmc/fabric/impl/recipe/ingredient/builtin/AllIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/recipe/ingredient/builtin/AllIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/recipe/ingredient/builtin/AllIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/recipe/ingredient/builtin/AnyIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/recipe/ingredient/builtin/AnyIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/recipe/ingredient/builtin/AnyIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/recipe/ingredient/builtin/ComponentsIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/recipe/ingredient/builtin/ComponentsIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/recipe/ingredient/builtin/ComponentsIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/recipe/ingredient/builtin/CustomDataIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/recipe/ingredient/builtin/CustomDataIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/recipe/ingredient/builtin/CustomDataIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/recipe/ingredient/builtin/DifferenceIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/recipe/ingredient/builtin/DifferenceIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/recipe/ingredient/builtin/DifferenceIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/registry/sync/trackers/vanilla/BlockInitTracker	register	(Lnet/minecraft/class_2378;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/registry/sync/trackers/vanilla/BlockInitTracker	onEntryAdded	(ILnet/minecraft/class_2960;Lnet/minecraft/class_2248;)V	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/resource/conditions/ResourceConditionsImpl	applyResourceConditions	(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_2960;Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method applyResourceConditions(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_2960;Lnet/minecraft/class_6903$class_7863;)Z public static
+call-static	net/fabricmc/fabric/impl/resource/conditions/ResourceConditionsImpl	conditionsMet	(Ljava/util/List;Lnet/minecraft/class_7225$class_7874;Z)Z	METHOD	method conditionsMet(Ljava/util/List;Lnet/minecraft/class_6903$class_7863;Z)Z public static
+call-static	net/fabricmc/fabric/impl/resource/conditions/ResourceConditionsImpl	registryContains	(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_2960;Ljava/util/List;)Z	METHOD	method registryContains(Lnet/minecraft/class_6903$class_7863;Lnet/minecraft/class_2960;Ljava/util/List;)Z public static
+get-static	net/fabricmc/fabric/impl/resource/conditions/ResourceConditionsImpl	LOADED_TAGS	Ljava/lang/ThreadLocal;	FIELD	field Ljava/util/concurrent/atomic/AtomicReference; public static final
+call	net/fabricmc/fabric/impl/resource/conditions/conditions/AllModsLoadedResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+call	net/fabricmc/fabric/impl/resource/conditions/conditions/AndResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+call	net/fabricmc/fabric/impl/resource/conditions/conditions/AnyModsLoadedResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+call	net/fabricmc/fabric/impl/resource/conditions/conditions/FeaturesEnabledResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+call	net/fabricmc/fabric/impl/resource/conditions/conditions/NotResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+call	net/fabricmc/fabric/impl/resource/conditions/conditions/OrResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+call	net/fabricmc/fabric/impl/resource/conditions/conditions/RegistryContainsResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+call	net/fabricmc/fabric/impl/resource/conditions/conditions/TagsPopulatedResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+call	net/fabricmc/fabric/impl/resource/conditions/conditions/TrueResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+override+super	net/fabricmc/fabric/impl/resource/conditions/conditions/TrueResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+call-inherited	net/fabricmc/fabric/impl/resource/conditions/conditions/TrueResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public
+call	net/fabricmc/fabric/impl/tag/TagFileHooks	fabric_setRemove	(Ljava/util/List;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/tag/TagFileHooks			CLASS	class gone
+new	net/fabricmc/fabric/impl/tag/TagRemovalInternals	<init>	()V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/tag/TagRemovalInternals	setTagId	(Lnet/minecraft/class_2960;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/tag/TagRemovalInternals	clearTagId	()V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/tag/TagRemovalInternals	modifyTagFileCodec	(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/tag/TagRemovalInternals	normalizeTagResourceId	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2960;	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/tag/TagRemovalInternals	addTagSource	(Lnet/minecraft/class_2960;Ljava/lang/String;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/tag/TagRemovalInternals	addRemoveEntry	(Lnet/minecraft/class_2960;Lnet/minecraft/class_3503$class_5145;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/tag/TagRemovalInternals	isEntryRemove	(Lnet/minecraft/class_3503$class_5145;)Z	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/tag/TagRemovalInternals	mergeAddedAndRemovedEntries	(Lnet/minecraft/class_2960;Ljava/util/List;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/tag/TagRemovalInternals	removeTagRemovalReferences	()V	CLASS	class gone
+extend	net/fabricmc/fabric/impl/tag/TagRemovalInternals			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/tag/TagRemovalInternals	<init>	()V	CLASS	class gone
+new	net/fabricmc/fabric/impl/tag/client/ClientTagsLoader$LoadedTag	<init>	(Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;)V	METHOD	constructors (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;)V
+call	net/fabricmc/fabric/impl/tag/client/ClientTagsLoader$LoadedTag	removeIds	()Ljava/util/Set;	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/transfer/item/ItemVariantImpl	getMaxStackSize	(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;)I	METHOD	method not declared on the owner
+call-static-inherited	net/fabricmc/fabric/impl/transfer/item/ItemVariantImpl	getMaxStackSize	(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;)I	METHOD	method not declared on the owner

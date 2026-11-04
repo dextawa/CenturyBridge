@@ -190,6 +190,61 @@ public final class ClientModels {
                 "location=" + loc + " same model=" + (byLoc == byState) + " unknown->missing=" + (unknown == manager.method_4744())
                 + " item frame model=" + frame);
         });
+        run("model-simple-builder", () -> {
+            // 1.21.4 SimpleBakedModel.Builder: one culled UP quad, one unculled quad; build() -> SimpleBakedModel
+            net.minecraft.class_1093.class_1094 b = new net.minecraft.class_1093.class_1094(true, true, false, net.minecraft.class_809.field_4301);
+            b.method_4745(net.minecraft.class_2350.field_11036, new net.minecraft.class_777(new int[32], -1, net.minecraft.class_2350.field_11036, own.sprite, true, 0));
+            b.method_4748(new net.minecraft.class_777(new int[32], -1, net.minecraft.class_2350.field_11036, own.sprite, true, 0));
+            net.minecraft.class_1087 m = b.method_4747(own.sprite).method_35809().method_4746();
+            boolean simple = m instanceof net.minecraft.class_1093;
+            int up = m.method_4707(null, net.minecraft.class_2350.field_11036, net.minecraft.class_5819.method_43049(1L)).size();
+            int down = m.method_4707(null, net.minecraft.class_2350.field_11033, net.minecraft.class_5819.method_43049(1L)).size();
+            int none = m.method_4707(null, null, net.minecraft.class_5819.method_43049(1L)).size();
+            Counter c = new Counter();
+            Method render = null;
+            for (Method r : net.minecraft.class_778.class.getMethods()) {
+                if (r.getName().equals("method_3367") && java.lang.reflect.Modifier.isStatic(r.getModifiers())) {
+                    render = r;
+                }
+            }
+            render.invoke(null, new net.minecraft.class_4587().method_23760(), c, m, 1.0F, 1.0F, 1.0F, 0xF000F0, 0);
+            boolean missing = false;
+            try {
+                new net.minecraft.class_1093.class_1094(true, true, true, net.minecraft.class_809.field_4301).method_4746();
+            } catch (RuntimeException e) {
+                missing = "Missing particle!".equals(e.getMessage());
+            }
+            check("model-simple-builder", simple && up == 1 && down == 0 && none == 1 && !m.method_4712() && m.method_24304()
+                && m.method_4711() == own.sprite && c.vertices == 8 && missing,
+                "simple=" + simple + " up=" + up + " down=" + down + " unculled=" + none + " rendered=" + c.vertices + " missing-particle=" + missing);
+        });
+        run("model-delegate", () -> {
+            // 1.21.4 DelegateBakedModel subclass (anonymous) over stone's model: forwards, and 1.21.5 renders it
+            net.minecraft.class_1087 stoneModel = mc.method_1541().method_3349(stone);
+            // a local subclass: field_54188 is protected in 1.21.4, read from inside the subclass
+            final class Delegate extends net.minecraft.class_10200 {
+                Delegate(net.minecraft.class_1087 parent) {
+                    super(parent);
+                }
+
+                net.minecraft.class_1087 parent() {
+                    return this.field_54188;
+                }
+            }
+            Delegate delegate = new Delegate(stoneModel);
+            int dUp = delegate.method_4707(stone, net.minecraft.class_2350.field_11036, net.minecraft.class_5819.method_43049(42L)).size();
+            Counter c = new Counter();
+            Method render = null;
+            for (Method r : net.minecraft.class_778.class.getMethods()) {
+                if (r.getName().equals("method_3367") && java.lang.reflect.Modifier.isStatic(r.getModifiers())) {
+                    render = r;
+                }
+            }
+            render.invoke(null, new net.minecraft.class_4587().method_23760(), c, delegate, 1.0F, 1.0F, 1.0F, 0xF000F0, 0);
+            check("model-delegate", dUp == 1 && delegate.method_4711() == stoneModel.method_4711() && delegate.method_4712()
+                && delegate.parent() == stoneModel && c.vertices == 24,
+                "delegate up=" + dUp + " gui3d=" + delegate.method_4712() + " rendered=" + c.vertices + " (stone: 6 quads x 4)");
+        });
         System.out.println("CB-S215C done " + ok + "/" + n);
     }
 }
