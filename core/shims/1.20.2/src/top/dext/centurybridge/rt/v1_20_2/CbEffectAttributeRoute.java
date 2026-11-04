@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import net.minecraft.class_1291;
 import net.minecraft.class_1309;
@@ -209,7 +208,7 @@ public final class CbEffectAttributeRoute {
             }
         }
 
-        /** base value and every modifier (id, name, amount, operation), in a fixed order */
+        /** base value and every modifier, compared only within one runtime (never persisted or sent elsewhere) */
         private static List<Object> state(class_1324 instance) {
             List<Object> out = new ArrayList<>();
             if (instance == null) {
@@ -217,9 +216,11 @@ public final class CbEffectAttributeRoute {
             }
             out.add(instance.method_6201());
             List<class_1322> modifiers = new ArrayList<>(instance.method_6195());
-            modifiers.sort(Comparator.comparing(m -> m.method_6189().toString()));
+            // The old class's toString contains UUID, name, amount and operation; the modern record's contains
+            // id, amount and operation. Both therefore fingerprint the complete state without the removed getters.
+            modifiers.sort(Comparator.comparing(class_1322::toString));
             for (class_1322 m : modifiers) {
-                out.add(List.of(m.method_6189(), Objects.toString(m.method_6185()), m.method_6186(), m.method_6182()));
+                out.add(m.toString());
             }
             return out;
         }

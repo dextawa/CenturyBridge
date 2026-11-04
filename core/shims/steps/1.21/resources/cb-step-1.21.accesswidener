@@ -1,6 +1,20 @@
 accessWidener	v2	intermediary
 extendable	class	net/minecraft/class_2960
 extendable	class	net/minecraft/class_5454
+extendable	class	net/minecraft/class_1535
+extendable	class	net/minecraft/class_783
+extendable	class	net/minecraft/class_296
+extendable	method	net/minecraft/class_296 equals (Ljava/lang/Object;)Z
+extendable	method	net/minecraft/class_296 hashCode ()I
+extendable	method	net/minecraft/class_1535 equals (Ljava/lang/Object;)Z
+extendable	method	net/minecraft/class_1535 hashCode ()I
+extendable	method	net/minecraft/class_1535 toString ()Ljava/lang/String;
+extendable	method	net/minecraft/class_783 equals (Ljava/lang/Object;)Z
+extendable	method	net/minecraft/class_783 hashCode ()I
+extendable	method	net/minecraft/class_783 toString ()Ljava/lang/String;
+accessible	method	net/minecraft/class_293 <init> (Ljava/util/List;Ljava/util/List;Lit/unimi/dsi/fastutil/ints/IntList;I)V
+accessible	field	net/minecraft/class_296 field_52114 [Lnet/minecraft/class_296;
+accessible	field	net/minecraft/class_296 field_52115 Ljava/util/List;
 
 # ---- BEGIN GENERATED (s6world): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same

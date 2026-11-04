@@ -1,0 +1,8 @@
+{
+  "instanceRedirects": {
+    "net/minecraft/class_1322.method_6189()Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#uuidOfModifier",
+    "net/minecraft/class_1322.method_6185()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#name",
+    "net/minecraft/class_1322.method_6186()D": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#amount",
+    "net/minecraft/class_1322.method_6182()Lnet/minecraft/class_1322$class_1323;": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#operation"
+  }
+}

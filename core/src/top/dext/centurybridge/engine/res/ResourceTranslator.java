@@ -630,7 +630,7 @@ public final class ResourceTranslator {
         }
     }
 
-    static String movedPath(String name) {
+    public static String movedPath(String name) {
         if (!name.startsWith("data/")) {
             return null;
         }

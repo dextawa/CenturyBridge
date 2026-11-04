@@ -7,6 +7,9 @@ import java.util.Set;
 import java.util.function.Function;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.class_2540;
+import net.minecraft.class_2935;
+import net.minecraft.class_9139;
 
 /**
  * 1.20.6 network API (packet listeners, Connection, the packets whose shape changed, ProtocolInfoBuilder)
@@ -401,5 +404,29 @@ public final class CbNet {
                                         net.minecraft.class_9127.class_9128.class_9828 visitor) {
         throw new UnsupportedOperationException("a 1.20.6 ProtocolInfo.Unbound (" + unbound.getClass().getName()
             + ") has no packet list: 1.20.6's Unbound only binds");
+    }
+
+    /**
+     * ServerboundPingRequestPacket.STREAM_CODEC with V's receiver: the native codec already accepts any ByteBuf,
+     * so this view only restores the generic surface (including apply/mapStream) and delegates the same wire calls.
+     * One cached view preserves the old static constant's identity; native codec state is never copied or replaced.
+     */
+    private record PingCodecView(class_9139<? super class_2540, class_2935> nativeCodec)
+            implements class_9139<class_2540, class_2935> {
+        @Override
+        public class_2935 decode(class_2540 buf) {
+            return this.nativeCodec.decode(buf);
+        }
+
+        @Override
+        public void encode(class_2540 buf, class_2935 value) {
+            this.nativeCodec.encode(buf, value);
+        }
+    }
+
+    private static final class_9139<class_2540, class_2935> PING_CODEC = new PingCodecView(net.minecraft.class_2935.field_48257);
+
+    public static class_9139<class_2540, class_2935> pingRequestCodec() {
+        return PING_CODEC;
     }
 }
