@@ -1,0 +1,24 @@
+{
+ "_s6cmd_basis": "javap V/W code jars: SuggestionProviders.AVAILABLE_SOUNDS / SUMMONABLE_ENTITIES are registered wrappers whose delegates read only SharedSuggestionProvider in both releases (1.21.6 widened the field declarations to that already-used type); CommandSourceStack implements it, so CbS6CommandGenerics returns the same registered provider and getName still recognises it. ClientPacketListener.getCommands returns its one live dispatcher in both; ClientSuggestionProvider implements SharedSuggestionProvider in both. Raw-V and converted-W cb-s6cmd controls both reject an explicitly ClientSuggestionProvider-typed command with CommandSourceStack (CCE), so that counterexample is not a boundary regression; commands registered through V's actual SharedSuggestionProvider view accept that broad source on both. Identity preserves the root, consumer and registrations (17/17 checks on each runtime).",
+ "fieldGetters": {
+  "net/minecraft/class_2321.field_10934:Lcom/mojang/brigadier/suggestion/SuggestionProvider;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6CommandGenerics#field_10934",
+  "net/minecraft/class_2321.field_10935:Lcom/mojang/brigadier/suggestion/SuggestionProvider;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6CommandGenerics#field_10935"
+ },
+ "callReshapes": {
+  "net/minecraft/class_634.method_2886()Lcom/mojang/brigadier/CommandDispatcher;": {
+   "desc": "()Lcom/mojang/brigadier/CommandDispatcher;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_6/rt/CbS6CommandGenerics#dispatcherToV(Lcom/mojang/brigadier/CommandDispatcher;)Lcom/mojang/brigadier/CommandDispatcher;",
+   "basis": "s6cmd: 1.21.6 narrows the client dispatcher's source to ClientSuggestionProvider, which already implements 1.21.5's SharedSuggestionProvider; return the same live dispatcher (CbS6CommandGenerics.dispatcherToV)"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_634",
+   "member": "method_2886()Lcom/mojang/brigadier/CommandDispatcher;",
+   "args": [],
+   "ret": "top/dext/centurybridge/step/v1_21_6/rt/CbS6CommandGenerics#dispatcherToW(Lcom/mojang/brigadier/CommandDispatcher;)Lcom/mojang/brigadier/CommandDispatcher;",
+   "basis": "s6cmd: a converted 1.21.5 getCommands override answers a dispatcher whose commands accept SharedSuggestionProvider, hence also 1.21.6's ClientSuggestionProvider; hand vanilla the same dispatcher, undoing dispatcherToV without losing mutations"
+  }
+ ]
+}

@@ -960,6 +960,15 @@
   }
  },
  "superCtorReshapes": {
+  "net/minecraft/class_1535.<init>(II)V": {
+   "desc": "(IILnet/minecraft/class_2960;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#blocks(I)I",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#blocks(I)I",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#unregisteredAsset()Lnet/minecraft/class_2960;"
+   ],
+   "basis": "a 1.20.6 subclass's super(width, height): pixels become blocks exactly as newVariant does, with the same pre-registration asset; registration replaces it with the registry id (CbEntityPaintings.recordFor), and the layer AW makes the native record extendable"
+  },
   "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": {
    "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
    "ops": [
@@ -1397,8 +1406,6 @@
   "net/minecraft/class_1532.method_6892(Lnet/minecraft/class_2350;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#setDirection",
   "net/minecraft/class_1532.method_6894()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#playPlacementSound",
   "net/minecraft/class_1533.method_43272()Lnet/minecraft/class_9209;": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#getFramedMapId",
-  "net/minecraft/class_1535.method_6945()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#getWidth",
-  "net/minecraft/class_1535.method_6943()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#getHeight",
   "net/minecraft/class_2269.method_21845(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#press",
   "net/minecraft/class_2401.method_21846(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#pull",
   "net/minecraft/class_3924.method_17503(Lnet/minecraft/class_1297;Lnet/minecraft/class_1799;I)Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#placeFood",
@@ -1584,7 +1591,9 @@
  },
  "covers": [
   "net/minecraft/class_1324.method_27304(Ljava/util/UUID;)Z",
-  "net/minecraft/class_1297.method_59657(Lnet/minecraft/class_243;)Ljava/util/Optional;"
+  "net/minecraft/class_1297.method_59657(Lnet/minecraft/class_243;)Ljava/util/Optional;",
+  "net/minecraft/class_1535.method_6945()I",
+  "net/minecraft/class_1535.method_6943()I"
  ],
  "overrideHooks": [
   {
@@ -2234,8 +2243,5 @@
    ],
    "basis": "phantom key: the key passes unchanged; 1.20.6 code takes the pattern out only through DecoratedPotPatterns.location(key), which CbWorldBlocks answers for 1.21's keys by their pattern's asset, and Sheets.getDecoratedPotMaterial(key) (s6client)"
   }
- },
- "ledger": {
-  "net/minecraft/class_1535": "not bridgeable: a 1.20.6 subclass of PaintingVariant. 1.21's PaintingVariant is a final record (width, height, assetId) that no class can extend, and a stand-in superclass would split the type: the mod's own code hands its instance on where a PaintingVariant is expected, which the verifier rejects, and 1.21's registry and painting take only the record. 1.20.6's variant objects themselves, new PaintingVariant(width, height), are bridged as records (CbEntityPaintings)"
  }
 }

@@ -156,26 +156,7 @@ public final class LegacyLoot {
                     return out;
                 }
                 case "minecraft:copy_nbt" -> {
-                    JsonObject c = new JsonObject();
-                    c.addProperty("function", "minecraft:copy_custom_data");
-                    if (f.has("source")) {
-                        c.add("source", f.get("source"));
-                    }
-                    JsonArray ops = new JsonArray();
-                    if (f.has("ops")) {
-                        for (JsonElement op : f.getAsJsonArray("ops")) {
-                            JsonObject o = op.getAsJsonObject();
-                            String target = o.has("target") ? o.get("target").getAsString() : "";
-                            if (target.startsWith("BlockEntityTag") || target.startsWith("display")) {
-                                losses.lost("copy_nbt into " + target + " (a component since 1.20.5, not custom data)");
-                                continue;
-                            }
-                            ops.add(o);
-                        }
-                    }
-                    c.add("ops", ops);
-                    copyConditions(f, c);
-                    return ops.isEmpty() ? java.util.List.of() : java.util.List.of(c);
+                    return copyNbt(f, losses);
                 }
                 case "minecraft:set_contents" -> {
                     if (f.has("type") && !f.has("component")) {
@@ -211,6 +192,106 @@ public final class LegacyLoot {
             }
         }
         return java.util.List.of(f);
+    }
+
+    /**
+     * copy_nbt split into native component copies and custom_data copies. A native copy
+     * is exact only for a block_entity source, a whole-value replace and the old root
+     * paths vanilla componentized. LootTable and LootTableSeed travel together because
+     * 1.20.5's container_loot is one component with seed defaulting to zero.
+     */
+    private static java.util.List<JsonObject> copyNbt(JsonObject f, LegacyItems.Losses losses) {
+        boolean blockEntity = !f.has("source") || f.get("source").isJsonPrimitive()
+            && f.get("source").getAsString().equals("block_entity");
+        java.util.List<JsonObject> candidates = new java.util.ArrayList<>();
+        java.util.List<String> candidateTypes = new java.util.ArrayList<>();
+        JsonArray customOps = new JsonArray();
+        if (f.has("ops")) {
+            for (JsonElement el : f.getAsJsonArray("ops")) {
+                JsonObject op = el.getAsJsonObject();
+                String source = op.has("source") ? op.get("source").getAsString() : "";
+                String target = op.has("target") ? op.get("target").getAsString() : "";
+                String component = copiedComponent(source, target);
+                if (component != null) {
+                    if (blockEntity && op.has("op") && op.get("op").getAsString().equals("replace")) {
+                        candidates.add(op);
+                        candidateTypes.add(component);
+                    } else {
+                        losses.lost("copy_nbt into " + target + " (native copy_components needs block_entity and replace)");
+                    }
+                } else if (target.startsWith("BlockEntityTag") || target.startsWith("display") || target.equals("SkullOwner")) {
+                    losses.lost("copy_nbt into " + target + " from " + source
+                        + " (no exact native component copy; not moved to custom data)");
+                } else {
+                    customOps.add(op); // custom paths, nesting and append/merge semantics are unchanged
+                }
+            }
+        }
+        boolean table = false;
+        boolean seed = false;
+        for (int i = 0; i < candidates.size(); i++) {
+            if (candidateTypes.get(i).equals("minecraft:container_loot")) {
+                String source = candidates.get(i).get("source").getAsString();
+                table |= source.equals("LootTable");
+                seed |= source.equals("LootTableSeed");
+            }
+        }
+
+        JsonArray include = new JsonArray();
+        for (int i = 0; i < candidates.size(); i++) {
+            String component = candidateTypes.get(i);
+            if (component.equals("minecraft:container_loot") && !(table && seed)) {
+                losses.lost("copy_nbt into " + candidates.get(i).get("target").getAsString()
+                    + " (container_loot requires both LootTable and LootTableSeed)");
+                continue;
+            }
+            boolean present = false;
+            for (JsonElement existing : include) {
+                present |= existing.getAsString().equals(component);
+            }
+            if (!present) {
+                include.add(component);
+            }
+        }
+
+        java.util.List<JsonObject> out = new java.util.ArrayList<>();
+        if (!include.isEmpty()) {
+            JsonObject copy = new JsonObject();
+            copy.addProperty("function", "minecraft:copy_components");
+            copy.add("include", include);
+            if (f.has("source")) {
+                copy.add("source", f.get("source"));
+            }
+            copyConditions(f, copy);
+            out.add(copy);
+        }
+        if (!customOps.isEmpty()) {
+            JsonObject copy = new JsonObject();
+            copy.addProperty("function", "minecraft:copy_custom_data");
+            if (f.has("source")) {
+                copy.add("source", f.get("source"));
+            }
+            copy.add("ops", customOps);
+            copyConditions(f, copy);
+            out.add(copy);
+        }
+        return out;
+    }
+
+    /** old source and target root paths -> the native component carrying that whole value */
+    private static String copiedComponent(String source, String target) {
+        return switch (target) {
+            case "BlockEntityTag.Bees" -> source.equals("Bees") ? "minecraft:bees" : null;
+            case "BlockEntityTag.Lock" -> source.equals("Lock") ? "minecraft:lock" : null;
+            case "BlockEntityTag.LootTable" -> source.equals("LootTable") ? "minecraft:container_loot" : null;
+            case "BlockEntityTag.LootTableSeed" -> source.equals("LootTableSeed") ? "minecraft:container_loot" : null;
+            case "BlockEntityTag.Patterns" -> source.equals("Patterns") ? "minecraft:banner_patterns" : null;
+            case "BlockEntityTag.note_block_sound" -> source.equals("note_block_sound") ? "minecraft:note_block_sound" : null;
+            case "BlockEntityTag.sherds" -> source.equals("sherds") ? "minecraft:pot_decorations" : null;
+            case "SkullOwner" -> source.equals("SkullOwner") ? "minecraft:profile" : null;
+            case "display.Name" -> source.equals("CustomName") ? "minecraft:custom_name" : null;
+            default -> null;
+        };
     }
 
     private static void copyConditions(JsonObject from, JsonObject to) {

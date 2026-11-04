@@ -42,17 +42,11 @@
   "net/minecraft/class_3861.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_3920.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_2302.method_9651(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Z": "top/dext/centurybridge/rt/v1_20_2/Statics",
-  "net/minecraft/class_640.method_2968()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
-  "net/minecraft/class_640.method_2957()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
-  "net/minecraft/class_640.method_2979()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
-  "net/minecraft/class_640.method_2977()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
-  "net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
   "net/minecraft/class_632.method_2864(Lnet/minecraft/class_161;Z)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
   "net/minecraft/class_163.method_712()Ljava/util/Collection;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_161$class_162.method_695(Lnet/minecraft/class_2960;)Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_161$class_162.method_710()Ljava/util/Map;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_455.method_2320()I": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
-  "net/minecraft/class_2724.method_11779()Lnet/minecraft/class_5321;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_505.method_2565(Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics"
  },
  "fieldRedirects": {

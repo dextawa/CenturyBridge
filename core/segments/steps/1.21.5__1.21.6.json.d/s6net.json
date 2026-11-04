@@ -1,0 +1,12 @@
+{
+ "_s6net_basis": "V/W javap (code jars): the four packet STREAM_CODEC fields widened FriendlyByteBuf to ByteBuf at 1.21.6. Cached typed views restore V's receiver for the codecs and every default composition while delegating encode/decode to the native codec without generic casts. ByteBufCodecs.method_68864's registry-friendly length-delimited operation moved to method_72187 at 1.21.6; both call method_68861 with equivalent buffer-wrapping lambdas (V method_68863, W method_72186), so V calls use that native operation.",
+ "fieldGetters": {
+  "net/minecraft/class_2632.field_47907:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6NetStreamCodecs",
+  "net/minecraft/class_2909.field_48237:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6NetStreamCodecs",
+  "net/minecraft/class_2924.field_48258:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6NetStreamCodecs",
+  "net/minecraft/class_4210.field_48176:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6NetStreamCodecs"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_9135.method_68864(I)Lnet/minecraft/class_9139$class_9140;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6NetStreamCodecs#registryLengthDelimited"
+ }
+}

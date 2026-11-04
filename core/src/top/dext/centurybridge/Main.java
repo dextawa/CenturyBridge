@@ -31,7 +31,8 @@ public final class Main {
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]), Path.of(args[5]));
             case "res-parity" -> top.dext.centurybridge.data.ResParity.run(
                 clientJar(args[1]), args[1], clientJar(args[2]), args[2],
-                args.length > 3 ? Integer.parseInt(args[3]) : 3);
+                args.length > 3 ? Integer.parseInt(args[3]) : 3,
+                Path.of(System.getProperty("cb.segmentsDir", "core/segments")));
             case "apply-aw" -> {
                 // apply-aw <in.jar> <out.jar> <aw...>
                 java.util.List<Path> aws = new ArrayList<>();
@@ -750,8 +751,20 @@ public final class Main {
 
     /** a release's client jar under data/jars: obfuscated before 26.1, plain after */
     private static Path clientJar(String version) {
+        String explicit = System.getProperty("cb.clientJar." + version);
+        if (explicit != null && !explicit.isBlank()) {
+            return Path.of(explicit);
+        }
         Path obf = Path.of("data/jars/client-" + version + "-obf.jar");
-        return Files.exists(obf) ? obf : Path.of("data/jars/client-" + version + ".jar");
+        Path runtime = Path.of("data/runtime/client-" + version + "/client-" + version + "-obf.jar");
+        Path plain = Path.of("data/jars/client-" + version + ".jar");
+        for (Path candidate : new Path[] {obf, runtime, plain}) {
+            if (Files.exists(candidate)) {
+                return candidate;
+            }
+        }
+        throw new IllegalStateException("no full client jar for " + version + " (resource parity needs data/assets); tried "
+            + obf + ", " + runtime + ", " + plain + "; set -Dcb.clientJar." + version + "=<jar>");
     }
 
     // stub-dump <stubJar> <out.txt>: "M owner.name(desc)" per method, the

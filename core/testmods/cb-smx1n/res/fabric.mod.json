@@ -6,5 +6,5 @@
   "description": "1.20.2-era (native, never converted) mixins on the 1.20.2 methods vanilla calls where the 1.20.2 layer consults restored 1.20.1 members",
   "environment": "*",
   "mixins": ["cb_smx1n.mixins.json"],
-  "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.2" }
+  "depends": { "fabricloader": ">=0.14.0", "minecraft": ">=1.20.2" }
 }

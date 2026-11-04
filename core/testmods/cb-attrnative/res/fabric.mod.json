@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx1n",
+  "version": "1.0.0",
+  "name": "CB native 1.21 attribute and codec mixins",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["cb.smx1n.CbAttrDebugMod"]
+  },
+  "mixins": ["cb_smx1n.mixins.json"],
+  "depends": { "fabricloader": ">=0.14.0", "minecraft": ">=1.21" }
+}

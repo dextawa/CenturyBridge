@@ -10,6 +10,7 @@ import net.minecraft.class_437;
 import net.minecraft.class_4388;
 import net.minecraft.class_4877;
 import top.dext.centurybridge.step.v1_21.facade.class_4880;
+import top.dext.centurybridge.step.v1_21.facade.class_4881;
 import top.dext.centurybridge.step.v1_21.facade.class_4882;
 import top.dext.centurybridge.step.v1_21.mixin.CbRealmsClientInvoker;
 
@@ -88,6 +89,63 @@ public final class CbRealms {
         String url = invoker.cb$url("activities/liveplayerlist");
         String json = invoker.cb$execute(class_4346.method_21040(url));
         return class_4882.method_25075(json);
+    }
+
+    /** a 1.20.6 override called through 1.21's new return shape */
+    public interface LegacyLiveStats {
+        class_4882 method_21018() throws class_4355;
+    }
+
+    public static class_4881 getLiveStats(LegacyLiveStats self) throws class_4355 {
+        return toNative(self.method_21018());
+    }
+
+    /** the native response as V's server-id/UUID lists, dropping only the profile data V did not have */
+    public static class_4882 toLegacy(net.minecraft.class_4881 nativeLists) {
+        if (nativeLists == null) {
+            return null;
+        }
+        class_4882 out = new class_4882();
+        out.field_22630 = new java.util.ArrayList<>();
+        for (var entry : nativeLists.field_52121.entrySet()) {
+            class_4881 list = new class_4881();
+            list.field_22626 = entry.getKey();
+            list.field_22627 = new java.util.ArrayList<>();
+            for (com.mojang.authlib.yggdrasil.ProfileResult profile : entry.getValue()) {
+                list.field_22627.add(profile.profile().getId());
+            }
+            out.field_22630.add(list);
+        }
+        return out;
+    }
+
+    /** V's response as W's, using W's own parser so profile resolution and filtering stay identical to vanilla */
+    public static class_4881 toNative(class_4882 legacy) {
+        if (legacy == null) {
+            return null;
+        }
+        com.google.gson.JsonArray lists = new com.google.gson.JsonArray();
+        if (legacy.field_22630 != null) {
+            for (class_4881 list : legacy.field_22630) {
+                com.google.gson.JsonArray players = new com.google.gson.JsonArray();
+                if (list.field_22627 != null) {
+                    for (java.util.UUID id : list.field_22627) {
+                        com.google.gson.JsonObject player = new com.google.gson.JsonObject();
+                        player.addProperty("playerId", id.toString());
+                        players.add(player);
+                    }
+                }
+                com.google.gson.JsonObject object = new com.google.gson.JsonObject();
+                object.addProperty("serverId", list.field_22626);
+                object.addProperty("playerList", players.toString());
+                lists.add(object);
+            }
+        }
+        com.google.gson.JsonObject json = new com.google.gson.JsonObject();
+        json.add("lists", lists);
+        class_4881 out = new class_4881();
+        out.field_52121 = net.minecraft.class_4881.method_25074(json.toString()).field_52121;
+        return out;
     }
 
     // ------------------------------------------------------------------------------------------------ RealmsConfigureWorldScreen
