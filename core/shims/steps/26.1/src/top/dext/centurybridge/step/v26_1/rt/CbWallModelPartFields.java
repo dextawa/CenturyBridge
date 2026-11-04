@@ -13,6 +13,7 @@ import net.minecraft.client.model.animal.turtle.TurtleModel;
 import net.minecraft.client.model.animal.wolf.AdultWolfModel;
 import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.monster.hoglin.HoglinModel;
 import net.minecraft.client.model.monster.strider.AdultStriderModel;
 import net.minecraft.client.model.monster.strider.StriderModel;
 
@@ -84,5 +85,19 @@ public final class CbWallModelPartFields {
 
     public static ModelPart striderLeftBottomBristle(StriderModel m) {
         return m instanceof AdultStriderModel a ? a.leftBottomBristle : detached(m, "leftBottomBristle");
+    }
+
+    /**
+     * HoglinModel.body / mane (class_4791.field_22230 / field_25484): 1.21.11 took root.getChild("body") and
+     * body.getChild("mane"). 26.1's HoglinModel and BabyHoglinModel (javap createBodyLayer) both have root > body; only
+     * the adult body has a mane child, so a baby answers a detached empty part for mane (recorded loss, as above).
+     */
+    public static ModelPart hoglinBody(HoglinModel m) {
+        return m.root().getChild("body");
+    }
+
+    public static ModelPart hoglinMane(HoglinModel m) {
+        ModelPart body = m.root().getChild("body");
+        return body.hasChild("mane") ? body.getChild("mane") : detached(m, "mane");
     }
 }
