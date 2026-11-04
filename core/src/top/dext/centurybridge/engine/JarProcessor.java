@@ -5009,8 +5009,8 @@ public final class JarProcessor {
         final org.objectweb.asm.commons.Remapper tombRemap = needClassRename
             ? new org.objectweb.asm.commons.SimpleRemapper(classRen) : null;
         ClassVisitor sink = needClassRename
-            ? MixinClassRenames.annotations(new org.objectweb.asm.commons.ClassRemapper(kinds,
-                new org.objectweb.asm.commons.SimpleRemapper(classRen)), classRen, c -> wDeclares(chain, c))
+            ? MixinClassRenames.annotations(MixinClassRenames.remapper(kinds, classRen, c -> wDeclares(chain, c), bytes),
+                classRen, c -> wDeclares(chain, c))
             : kinds;
         // super/implements-only rename layer: rewrites the hierarchy declaration
         // and super-invocations to the facade, leaving every other reference to

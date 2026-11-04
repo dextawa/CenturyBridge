@@ -1,0 +1,5 @@
+usage	owner	name	desc	kinds	w
+get	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	buffer	Lcom/mojang/blaze3d/vertex/VertexConsumer;	FIELD	field not declared on the owner
+put	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	buffer	Lcom/mojang/blaze3d/vertex/VertexConsumer;	FIELD	field not declared on the owner
+get	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	outlineBuffer	Lcom/mojang/blaze3d/vertex/VertexConsumer;	FIELD	field not declared on the owner
+put	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	outlineBuffer	Lcom/mojang/blaze3d/vertex/VertexConsumer;	FIELD	field not declared on the owner
