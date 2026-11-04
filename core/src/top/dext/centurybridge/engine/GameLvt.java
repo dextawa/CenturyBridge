@@ -67,10 +67,6 @@ public final class GameLvt {
         }
         obfs.add(codeJar.getParent().resolve("client-" + v + "-obf.jar"));
         obfs.add(data.resolve("runtime/client-" + v + "/client-" + v + "-obf.jar"));
-        String dir = System.getProperty("cb.gameTinyDir", System.getenv("CB_GAME_TINY_DIR"));
-        if (dir != null) {
-            tinies.add(Path.of(dir).resolve("intermediary-" + v + ".tiny"));
-        }
         tinies.add(data.resolve("mappings/intermediary-" + v + ".tiny"));
         Path obf = obfs.stream().filter(Files::exists).findFirst().orElse(null);
         Path tiny = tinies.stream().filter(Files::exists).findFirst().orElse(null);
