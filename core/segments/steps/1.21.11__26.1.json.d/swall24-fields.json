@@ -59,7 +59,9 @@
   "net/minecraft/class_8901.field_46905:Ljava/util/Queue;": "top/dext/centurybridge/step/v26_1/rt/CbWallSectionPoolFields#freeBuffers",
   "net/minecraft/class_8901.field_46906:I": "top/dext/centurybridge/step/v26_1/rt/CbWallSectionPoolFields#freeBufferCount",
   "net/minecraft/class_4791.field_22230:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelPartFields#hoglinBody",
-  "net/minecraft/class_4791.field_25484:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelPartFields#hoglinMane"
+  "net/minecraft/class_4791.field_25484:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelPartFields#hoglinMane",
+  "net/minecraft/class_766.field_4139:Lnet/minecraft/class_310;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanoramaFields#minecraft",
+  "net/minecraft/class_766.field_4141:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanoramaFields#cubeMap"
  },
  "_swall24_templates_basis": "1.21.11 StructureTemplateManager (class_3485) fixerUpper/blockLookup/resourceManager/generatedDir/RESOURCE_LISTER answered from 26.1's ResourceManagerTemplateSource, worldTemplates and RESOURCE_STRUCTURE_LISTER (javap basis in rt/CbWallTemplateManagerFields). The private load/list helpers (TOMBSTONE rows) stay open.",
  "instanceFieldSetters": {
@@ -81,5 +83,6 @@
  "_swall24_fluid_basis": "1.21.11 LiquidBlockRenderer (class_775) five sprite fields -> 26.1 FluidRenderer.fluidModels baked water/lava sprites, same five ids (rt/CbWallFluidSprites).",
  "_swall24_sectionpool_basis": "1.21.11 SectionBufferBuilderPool (class_8901) freeBuffers (Queue; 26.1 ArrayBlockingQueue) and freeBufferCount (mirror of size(); 26.1 getFreeBufferCount) reads (rt/CbWallSectionPoolFields); freeBufferCount write left open.",
  "_swall24_hoglin_basis": "1.21.11 HoglinModel (class_4791) body/mane -> 26.1 root body / body mane (baby has no mane: detached empty part, loss in release_notes_known.md).",
- "_swall24_dragon_basis": "1.21.11 EnderDragonRenderer.RENDER_TYPE = entityCutout(dragon texture), same call in 26.1 (rt/CbWallSheetTypes#dragonRenderType). DECAL (entityDecal) stays open: 26.1 has no entity_decal render type anywhere in the jar."
+ "_swall24_dragon_basis": "1.21.11 EnderDragonRenderer.RENDER_TYPE = entityCutout(dragon texture), same call in 26.1 (rt/CbWallSheetTypes#dragonRenderType). DECAL (entityDecal) stays open: 26.1 has no entity_decal render type anywhere in the jar.",
+ "_swall24_panorama_basis": "1.21.11 PanoramaRenderer (class_766) minecraft/cubeMap -> Minecraft.getInstance() / GameRenderer.guiRenderer.cubeMap (rt/CbWallPanoramaFields)."
 }
