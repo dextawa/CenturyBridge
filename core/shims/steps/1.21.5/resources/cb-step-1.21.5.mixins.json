@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CbCamelSaddleSoundRestoredMixin",
+    "CbCreakingHeartActiveRoute",
     "CbEntitySlotsRestoredMixin",
     "CbHorseSaddleableRestoredMixin",
     "CbItemBreakSoundMixin",
