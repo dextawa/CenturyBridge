@@ -326,3 +326,5 @@ accessible	field	net/minecraft/client/renderer/blockentity/ChestRenderer	models	
 accessible	field	net/minecraft/client/renderer/block/FluidRenderer	fluidModels	Lnet/minecraft/client/renderer/block/FluidStateModelSet;
 # swall24: 1.21.11 SectionBufferBuilderPool free queue/count (CbWallSectionPoolFields)
 accessible	field	net/minecraft/client/renderer/SectionBufferBuilderPool	freeBuffers	Ljava/util/concurrent/ArrayBlockingQueue;
+# swall24: 1.21.11 EnderDragonRenderer.RENDER_TYPE over 26.1's dragon texture id (CbWallSheetTypes)
+accessible	field	net/minecraft/client/renderer/entity/EnderDragonRenderer	DRAGON_TEXTURE_LOCATION	Lnet/minecraft/resources/Identifier;

@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v26_1.rt;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -47,5 +48,13 @@ public final class CbWallSheetTypes {
 
     public static RenderType solidBlockSheet() {
         return RenderTypes.entitySolid(TextureAtlas.LOCATION_BLOCKS);
+    }
+
+    /**
+     * EnderDragonRenderer.RENDER_TYPE (class_895.field_21737): 1.21.11's clinit = entityCutout(DRAGON_TEXTURE_LOCATION
+     * "textures/entity/enderdragon/dragon.png"); 26.1 keeps that id and the same memoizing factory.
+     */
+    public static RenderType dragonRenderType() {
+        return RenderTypes.entityCutout(EnderDragonRenderer.DRAGON_TEXTURE_LOCATION);
     }
 }

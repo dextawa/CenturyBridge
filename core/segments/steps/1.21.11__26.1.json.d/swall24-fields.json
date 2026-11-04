@@ -16,7 +16,8 @@
   "net/minecraft/class_1853.field_9013:Ljava/util/Map;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#starShapeByItem",
   "net/minecraft/class_1853.field_9010:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#starTrail",
   "net/minecraft/class_1853.field_9014:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#starTwinkle",
-  "net/minecraft/class_1853.field_9012:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#starGunpowder"
+  "net/minecraft/class_1853.field_9012:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v26_1/rt/CbWallFireworkIngredients#starGunpowder",
+  "net/minecraft/class_895.field_21737:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#dragonRenderType"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_11228.field_59919:Lcom/mojang/blaze3d/textures/GpuTexture;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlas",
@@ -79,5 +80,6 @@
  "_swall24_chest_basis": "1.21.11 ChestRenderer (class_826) single/doubleLeft/doubleRight models -> 26.1 models.single()/left()/right(), same layers baked (rt/CbWallChestModels).",
  "_swall24_fluid_basis": "1.21.11 LiquidBlockRenderer (class_775) five sprite fields -> 26.1 FluidRenderer.fluidModels baked water/lava sprites, same five ids (rt/CbWallFluidSprites).",
  "_swall24_sectionpool_basis": "1.21.11 SectionBufferBuilderPool (class_8901) freeBuffers (Queue; 26.1 ArrayBlockingQueue) and freeBufferCount (mirror of size(); 26.1 getFreeBufferCount) reads (rt/CbWallSectionPoolFields); freeBufferCount write left open.",
- "_swall24_hoglin_basis": "1.21.11 HoglinModel (class_4791) body/mane -> 26.1 root body / body mane (baby has no mane: detached empty part, loss in release_notes_known.md)."
+ "_swall24_hoglin_basis": "1.21.11 HoglinModel (class_4791) body/mane -> 26.1 root body / body mane (baby has no mane: detached empty part, loss in release_notes_known.md).",
+ "_swall24_dragon_basis": "1.21.11 EnderDragonRenderer.RENDER_TYPE = entityCutout(dragon texture), same call in 26.1 (rt/CbWallSheetTypes#dragonRenderType). DECAL (entityDecal) stays open: 26.1 has no entity_decal render type anywhere in the jar."
 }
