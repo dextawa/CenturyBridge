@@ -23,12 +23,14 @@
   "net/minecraft/class_596.field_27482:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallRabbitParts#leftHaunch",
   "net/minecraft/class_596.field_27483:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallRabbitParts#rightHaunch",
   "net/minecraft/class_596.field_27484:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallRabbitParts#leftFrontLeg",
-  "net/minecraft/class_596.field_27485:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallRabbitParts#rightFrontLeg"
+  "net/minecraft/class_596.field_27485:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallRabbitParts#rightFrontLeg",
+  "net/minecraft/class_10444$class_10446.field_56966:Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemLayerFields#particleIcon"
  },
  "_swall24_templates_basis": "1.21.11 StructureTemplateManager (class_3485) fixerUpper/blockLookup/resourceManager/generatedDir/RESOURCE_LISTER answered from 26.1's ResourceManagerTemplateSource, worldTemplates and RESOURCE_STRUCTURE_LISTER (javap basis in rt/CbWallTemplateManagerFields). The private load/list helpers (TOMBSTONE rows) stay open.",
  "instanceFieldSetters": {
   "net/minecraft/class_3485.field_25189:Lnet/minecraft/class_3300;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#setResourceManager"
  },
  "_swall24_sheets_basis": "1.21.11 Sheets (class_4722) *_SHEET_TYPE / SOLID_BLOCK_SHEET: the same RenderTypes factory call on the same sheet id as 1.21.11's clinit (rt/CbWallSheetTypes). Sheets.chooseMaterial (TOMBSTONE row) stays open.",
- "_swall24_rabbit_basis": "1.21.11 RabbitModel (class_596) haunch / front-leg fields: 26.1 adult and baby rabbit meshes both carry parts with the same names, nested under body/frontlegs and backlegs/*_hind_leg (rt/CbWallRabbitParts). ADULT_TRANSFORMER / BABY_TRANSFORMER stay open (26.1 babies are separate meshes)."
+ "_swall24_rabbit_basis": "1.21.11 RabbitModel (class_596) haunch / front-leg fields: 26.1 adult and baby rabbit meshes both carry parts with the same names, nested under body/frontlegs and backlegs/*_hind_leg (rt/CbWallRabbitParts). ADULT_TRANSFORMER / BABY_TRANSFORMER stay open (26.1 babies are separate meshes).",
+ "_swall24_itemlayer_basis": "1.21.11 LayerRenderState (class_10444$class_10446) particleIcon read answered from 26.1's particleMaterial.sprite() (rt/CbWallItemLayerFields). Left open: particleIcon write (no forceTranslucent in 1.21.11), renderType (26.1 layers carry no render type), tintLayers int[] vs IntList (1.21.11 handed out its backing array; a copy would lose in-place writes)."
 }
