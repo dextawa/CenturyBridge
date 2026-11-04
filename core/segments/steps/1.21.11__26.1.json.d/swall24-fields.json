@@ -49,7 +49,12 @@
   "net/minecraft/class_3990.field_17730:I": "top/dext/centurybridge/step/v26_1/rt/CbWallTraderSpawnerFields#spawnChance",
   "net/minecraft/class_826.field_53165:Lnet/minecraft/class_9944;": "top/dext/centurybridge/step/v26_1/rt/CbWallChestModels#singleModel",
   "net/minecraft/class_826.field_53166:Lnet/minecraft/class_9944;": "top/dext/centurybridge/step/v26_1/rt/CbWallChestModels#doubleLeftModel",
-  "net/minecraft/class_826.field_53167:Lnet/minecraft/class_9944;": "top/dext/centurybridge/step/v26_1/rt/CbWallChestModels#doubleRightModel"
+  "net/minecraft/class_826.field_53167:Lnet/minecraft/class_9944;": "top/dext/centurybridge/step/v26_1/rt/CbWallChestModels#doubleRightModel",
+  "net/minecraft/class_775.field_64568:Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallFluidSprites#lavaStill",
+  "net/minecraft/class_775.field_64569:Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallFluidSprites#lavaFlowing",
+  "net/minecraft/class_775.field_64570:Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallFluidSprites#waterStill",
+  "net/minecraft/class_775.field_64571:Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallFluidSprites#waterFlowing",
+  "net/minecraft/class_775.field_4164:Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallFluidSprites#waterOverlay"
  },
  "_swall24_templates_basis": "1.21.11 StructureTemplateManager (class_3485) fixerUpper/blockLookup/resourceManager/generatedDir/RESOURCE_LISTER answered from 26.1's ResourceManagerTemplateSource, worldTemplates and RESOURCE_STRUCTURE_LISTER (javap basis in rt/CbWallTemplateManagerFields). The private load/list helpers (TOMBSTONE rows) stay open.",
  "instanceFieldSetters": {
@@ -67,5 +72,6 @@
  "_swall24_levelsettings_basis": "1.21.11 LevelSettings (class_1940) hardcore/difficulty/gameRules final fields: each was exactly what its getter (method_8583/method_27340/method_27341) returned; answered by the same CbWallLevelSettings methods those getters are wired to (swall7.json).",
  "_swall24_minecraft_basis": "1.21.11 Minecraft.cameraEntity (class_310.field_1719) read/write -> 26.1 main camera entity (Camera.entity / setEntity); windowActive (field_1695) read -> isWindowActive() (window focus), write left open.",
  "_swall24_trader_basis": "1.21.11 WanderingTraderSpawner (class_3990) spawnDelay/spawnChance -> 26.1 WanderingTraderData via getTraderData() (rt/CbWallTraderSpawnerFields). serverLevelData (field_24387) stays open: 26.1's spawner holds SavedDataStorage, not the level data.",
- "_swall24_chest_basis": "1.21.11 ChestRenderer (class_826) single/doubleLeft/doubleRight models -> 26.1 models.single()/left()/right(), same layers baked (rt/CbWallChestModels)."
+ "_swall24_chest_basis": "1.21.11 ChestRenderer (class_826) single/doubleLeft/doubleRight models -> 26.1 models.single()/left()/right(), same layers baked (rt/CbWallChestModels).",
+ "_swall24_fluid_basis": "1.21.11 LiquidBlockRenderer (class_775) five sprite fields -> 26.1 FluidRenderer.fluidModels baked water/lava sprites, same five ids (rt/CbWallFluidSprites)."
 }

@@ -322,3 +322,5 @@ accessible	field	net/minecraft/client/renderer/item/ItemStackRenderState$LayerRe
 accessible	method	net/minecraft/world/entity/npc/wanderingtrader/WanderingTraderSpawner	getTraderData	()Lnet/minecraft/world/level/saveddata/WanderingTraderData;
 # swall24: 1.21.11 ChestRenderer single/double models are 26.1's models resources (CbWallChestModels)
 accessible	field	net/minecraft/client/renderer/blockentity/ChestRenderer	models	Lnet/minecraft/client/renderer/MultiblockChestResources;
+# swall24: 1.21.11 LiquidBlockRenderer sprites are 26.1's baked fluid models (CbWallFluidSprites)
+accessible	field	net/minecraft/client/renderer/block/FluidRenderer	fluidModels	Lnet/minecraft/client/renderer/block/FluidStateModelSet;
