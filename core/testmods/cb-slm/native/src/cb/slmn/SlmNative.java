@@ -16,6 +16,9 @@ public class SlmNative implements ModInitializer {
             ServerLevel level = server.overworld();
             try {
                 level.getChunk(0, 0);
+                // a block under the spawn point: the first tick lands (onGround && !wasOnGround), the branch of tick that
+                // calls getDimensions (squish particles) -- once per entity; the native nativeInvoke counts the same calls
+                level.setBlock(new net.minecraft.core.BlockPos(8, 199, 8), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), 3);
                 for (EntityType<? extends Mob> t : java.util.List.<EntityType<? extends Mob>>of(EntityTypes.SLIME, EntityTypes.MAGMA_CUBE)) {
                     Mob e = t.create(level, EntitySpawnReason.COMMAND);
                     e.setPos(8.5, 200, 8.5);
@@ -24,7 +27,7 @@ public class SlmNative implements ModInitializer {
                         e.tick();
                     }
                     String c = e.getClass().getSimpleName();
-                    System.out.println("CB-SLM " + c + " native=" + get("native", c) + " convField=" + get("convField", c) + " convHead=" + get("convHead", c) + " convInvoke=" + get("convInvoke", c));
+                    System.out.println("CB-SLM " + c + " native=" + get("native", c) + " convField=" + get("convField", c) + " convHead=" + get("convHead", c) + " nativeInvoke=" + get("nativeInvoke", c) + " convInvoke=" + get("convInvoke", c) + " convSuper=" + get("convSuper", c));
                     e.discard();
                 }
             } catch (RuntimeException ex) {

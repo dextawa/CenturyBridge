@@ -34,6 +34,13 @@ public final class Counters {
     public static final AtomicInteger END = new AtomicInteger();
     public static final AtomicInteger END_OR_DISCARD = new AtomicInteger();
 
+    /** RebuildTaskMoveMixin (smixin18): 1.20.6 RebuildTask compile / handleBlockEntity HEAD, doTask's compile call, and a
+     *  compile HEAD handler reading this (negative: stays 0 on 1.21) */
+    public static final AtomicInteger COMPILE = new AtomicInteger();
+    public static final AtomicInteger COMPILE_THIS = new AtomicInteger();
+    public static final AtomicInteger BLOCK_ENTITY = new AtomicInteger();
+    public static final AtomicInteger COMPILE_CALL = new AtomicInteger();
+
     private Counters() {
     }
 
