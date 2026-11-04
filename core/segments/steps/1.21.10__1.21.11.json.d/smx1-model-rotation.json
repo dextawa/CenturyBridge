@@ -27,5 +27,12 @@
   "net/minecraft/class_1086.method_35808()Lnet/minecraft/class_4990;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
   "net/minecraft/class_1086.ordinal()I": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
   "net/minecraft/class_1086.name()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations"
+ },
+ "mixinTargets": {
+  "net/minecraft/class_1086.<init>(Ljava/lang/String;ILnet/minecraft/class_10821;Lnet/minecraft/class_10821;)V": {
+   "to": "<init>(Lnet/minecraft/class_4990;)V",
+   "args": [-1, -1, "0 top/dext/centurybridge/step/v1_21_11/rt/CbModelRotationQuadrants#xOf(Lnet/minecraft/class_4990;)Lnet/minecraft/class_10821;", "0 top/dext/centurybridge/step/v1_21_11/rt/CbModelRotationQuadrants#yOf(Lnet/minecraft/class_4990;)Lnet/minecraft/class_10821;"],
+   "basis": "javap -c -p both code jars: 1.21.10's enum ctor (name, ordinal, x, y) stored x/y, computed field_23374 = class_4990.method_67986(x, y) and built the matrices/face maps from it; 1.21.11's ctor (group) runs the same instructions with the group argument in place of field_23374 (EnumMap fields, field_56980, identity test, class_4590 from method_35814, the face loop). x/y derive from the group (CbModelRotationQuadrants, the 16 groups 1.21.10 had; null for the 32 others, which 1.21.10 never built). Name/ordinal have no W argument (-1): handlers reading them are left open. FIELD field_23374 anchors have no W counterpart and stay open."
+  }
  }
 }

@@ -42,6 +42,8 @@
     "CbLightTextureSamplerMixinHooks",
     "CbLineWidthBuilderMixin",
     "CbMainTargetSamplerMixinHooks",
+    "CbModelRotationMixinHooks",
+    "CbModelRotationRestoredMixin",
     "CbMultiLineLabelFontAccess",
     "CbMultiLineLabelRestoredMixin",
     "CbOptionInstanceGraphicsMixin",

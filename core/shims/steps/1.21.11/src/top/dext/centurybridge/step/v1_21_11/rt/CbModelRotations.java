@@ -36,21 +36,9 @@ public final class CbModelRotations {
         }
     }
 
-    /** 1.21.10 class_4990.method_67987's table entry for (x, y) */
-    private static class_4990 group(class_10821 x, class_10821 y) {
-        class_4990 g = class_4990.field_23292;
-        for (int i = 0; i < y.field_57034; i++) {
-            g = g.method_26385(class_4990.field_23318);
-        }
-        for (int i = 0; i < x.field_57034; i++) {
-            g = g.method_26385(class_4990.field_23316);
-        }
-        return g;
-    }
-
     /** ModelRotation.by(Quadrant x, Quadrant y) */
     public static class_1086 method_68008(class_10821 x, class_10821 y) {
-        return class_1086.method_75489(group(x, y));
+        return class_1086.method_75489(CbModelRotationQuadrants.group(x, y));
     }
 
     /** ModelRotation.rotation() (the OctahedralGroup) */
