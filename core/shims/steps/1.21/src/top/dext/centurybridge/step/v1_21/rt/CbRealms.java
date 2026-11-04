@@ -96,31 +96,17 @@ public final class CbRealms {
         class_4882 method_21018() throws class_4355;
     }
 
-    public static class_4881 getLiveStats(LegacyLiveStats self) throws class_4355 {
+    /** 1.21's getLiveStats() of a 1.20.6 override: its server-id/UUID lists as 1.21's lists ({@link #toNative}) */
+    public static net.minecraft.class_4881 getLiveStats(LegacyLiveStats self) throws class_4355 {
         return toNative(self.method_21018());
     }
 
-    /** the native response as V's server-id/UUID lists, dropping only the profile data V did not have */
-    public static class_4882 toLegacy(net.minecraft.class_4881 nativeLists) {
-        if (nativeLists == null) {
-            return null;
-        }
-        class_4882 out = new class_4882();
-        out.field_22630 = new java.util.ArrayList<>();
-        for (var entry : nativeLists.field_52121.entrySet()) {
-            class_4881 list = new class_4881();
-            list.field_22626 = entry.getKey();
-            list.field_22627 = new java.util.ArrayList<>();
-            for (com.mojang.authlib.yggdrasil.ProfileResult profile : entry.getValue()) {
-                list.field_22627.add(profile.profile().getId());
-            }
-            out.field_22630.add(list);
-        }
-        return out;
-    }
-
-    /** V's response as W's, using W's own parser so profile resolution and filtering stay identical to vanilla */
-    public static class_4881 toNative(class_4882 legacy) {
+    /**
+     * V's response as W's: the lists written back as the JSON the endpoint answers (serverId, playerList of playerId
+     * entries) and parsed by W's own parser (RealmsServerPlayerLists.parse), so profile resolution and filtering stay
+     * vanilla's. The answer is W's own object; nothing extends W's class (final from 1.21.11) or touches its fields.
+     */
+    public static net.minecraft.class_4881 toNative(class_4882 legacy) {
         if (legacy == null) {
             return null;
         }
@@ -143,9 +129,7 @@ public final class CbRealms {
         }
         com.google.gson.JsonObject json = new com.google.gson.JsonObject();
         json.add("lists", lists);
-        class_4881 out = new class_4881();
-        out.field_52121 = net.minecraft.class_4881.method_25074(json.toString()).field_52121;
-        return out;
+        return net.minecraft.class_4881.method_25074(json.toString());
     }
 
     // ------------------------------------------------------------------------------------------------ RealmsConfigureWorldScreen
