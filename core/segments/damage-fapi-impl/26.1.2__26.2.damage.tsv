@@ -1,0 +1,70 @@
+usage	owner	name	desc	kinds	w
+get-static	net/fabricmc/fabric/impl/client/indigo/Indigo	LEVEL_RENDERER_BUFFER_SOURCE	Ljava/lang/ScopedValue;	FIELD	field not declared on the owner
+new	net/fabricmc/fabric/impl/client/indigo/renderer/render/AltItemRenderer	<init>	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/indigo/renderer/render/AltItemRenderer	prepare	(Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Lnet/minecraft/client/renderer/OutlineBufferSource;Z)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/indigo/renderer/render/AltItemRenderer	clear	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/indigo/renderer/render/AltItemRenderer	renderItem	(Lnet/fabricmc/fabric/api/client/renderer/v1/render/FabricSubmitNodeCollection$ExtendedItemSubmit;)V	CLASS	class gone
+extend	net/fabricmc/fabric/impl/client/indigo/renderer/render/AltItemRenderer			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/client/indigo/renderer/render/AltItemRenderer	<init>	()V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/indigo/renderer/render/AltItemRenderer	prepare	(Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Lnet/minecraft/client/renderer/OutlineBufferSource;Z)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/indigo/renderer/render/AltItemRenderer	clear	()V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/indigo/renderer/render/AltItemRenderer	renderItem	(Lnet/fabricmc/fabric/api/client/renderer/v1/render/FabricSubmitNodeCollection$ExtendedItemSubmit;)V	CLASS	class gone
+new	net/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache	<init>	(Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Lnet/minecraft/client/renderer/OutlineBufferSource;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache	outlineColor	(I)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache	getBuffer	(Lnet/minecraft/client/renderer/rendertype/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache	getOutlineBuffer	(Lnet/minecraft/client/renderer/rendertype/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;	CLASS	class gone
+extend	net/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache	<init>	(Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Lnet/minecraft/client/renderer/OutlineBufferSource;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache	outlineColor	(I)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache	getBuffer	(Lnet/minecraft/client/renderer/rendertype/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache	getOutlineBuffer	(Lnet/minecraft/client/renderer/rendertype/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;	CLASS	class gone
+new	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	<init>	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	accept	(Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/MutableQuadView;)V	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	tintLayers	[I	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	tintLayers	[I	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	lightCoords	I	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	lightCoords	I	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	overlayCoords	I	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	overlayCoords	I	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	pose	Lcom/mojang/blaze3d/vertex/PoseStack$Pose;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	pose	Lcom/mojang/blaze3d/vertex/PoseStack$Pose;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	renderTypeFunction	Ljava/util/function/Function;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	renderTypeFunction	Ljava/util/function/Function;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	bufferCache	Lnet/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	bufferCache	Lnet/fabricmc/fabric/impl/client/renderer/BlockModelBufferCache;	CLASS	class gone
+extend	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	<init>	()V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BlockModel	accept	(Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/MutableQuadView;)V	CLASS	class gone
+new	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BreakingBlockModel	<init>	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BreakingBlockModel	accept	(Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/MutableQuadView;)V	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BreakingBlockModel	pose	Lcom/mojang/blaze3d/vertex/PoseStack$Pose;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BreakingBlockModel	pose	Lcom/mojang/blaze3d/vertex/PoseStack$Pose;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BreakingBlockModel	buffer	Lcom/mojang/blaze3d/vertex/VertexConsumer;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BreakingBlockModel	buffer	Lcom/mojang/blaze3d/vertex/VertexConsumer;	CLASS	class gone
+extend	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BreakingBlockModel			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BreakingBlockModel	<init>	()V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/renderer/QuadConsumers$BreakingBlockModel	accept	(Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/MutableQuadView;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/GuiRendererExtensions	fabric_onReady	(Lnet/minecraft/client/renderer/SubmitNodeStorage;)V	METHOD	method fabric_onReady()V public abstract
+lambda	net/fabricmc/fabric/impl/client/rendering/GuiRendererExtensions	fabric_onReady	(Lnet/minecraft/client/renderer/SubmitNodeStorage;)V	LAMBDA	method fabric_onReady()V public abstract
+implement-interface	net/fabricmc/fabric/impl/client/rendering/GuiRendererExtensions			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/impl/client/rendering/GuiRendererExtensions	fabric_onReady	(Lnet/minecraft/client/renderer/SubmitNodeStorage;)V	METHOD	method fabric_onReady()V public abstract
+call	net/fabricmc/fabric/impl/client/rendering/LevelRenderContextBackwardsCompatHack	bufferSource	()Lnet/minecraft/client/renderer/MultiBufferSource;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/client/rendering/LevelRenderContextBackwardsCompatHack			CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/PictureInPictureRendererPool	substitute	(Lnet/minecraft/client/gui/render/pip/PictureInPictureRenderer;Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Lnet/minecraft/client/renderer/SubmitNodeCollector;)Lnet/minecraft/client/gui/render/pip/PictureInPictureRenderer;	METHOD	method substitute(Lnet/minecraft/client/gui/render/pip/PictureInPictureRenderer;Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/gui/render/pip/PictureInPictureRenderer; public
+call-static	net/fabricmc/fabric/impl/client/rendering/PictureInPictureRendererRegistryImpl	onReady	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Lnet/minecraft/client/renderer/SubmitNodeCollector;Ljava/util/Map;)V	METHOD	method onReady(Lnet/minecraft/client/Minecraft;Ljava/util/Map;)V public static
+call-static	net/fabricmc/fabric/impl/client/rendering/PictureInPictureRendererRegistryImpl	createNewRenderer	(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Lnet/minecraft/client/renderer/SubmitNodeCollector;)Lnet/minecraft/client/gui/render/pip/PictureInPictureRenderer;	METHOD	method createNewRenderer(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lnet/minecraft/client/Minecraft;)Lnet/minecraft/client/gui/render/pip/PictureInPictureRenderer; public static
+call	net/fabricmc/fabric/impl/client/rendering/level/LevelRenderContextImpl	prepare	(Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LevelRenderer;Lnet/minecraft/client/renderer/state/level/LevelRenderState;Lnet/minecraft/client/renderer/chunk/ChunkSectionsToRender;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;)V	METHOD	method prepare(Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LevelRenderer;Lnet/minecraft/client/renderer/state/level/LevelRenderState;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V public
+call	net/fabricmc/fabric/impl/client/rendering/level/LevelRenderContextImpl	bufferSource	()Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/client/screen/ScreenEventFactory	createBeforeRenderEvent	()Lnet/fabricmc/fabric/api/event/Event;	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/client/screen/ScreenEventFactory	createAfterRenderEvent	()Lnet/fabricmc/fabric/api/event/Event;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/client/screen/ScreenExtensions	fabric_getBeforeRenderEvent	()Lnet/fabricmc/fabric/api/event/Event;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/client/screen/ScreenExtensions	fabric_getAfterRenderEvent	()Lnet/fabricmc/fabric/api/event/Event;	METHOD	method not declared on the owner
+implement-interface	net/fabricmc/fabric/impl/client/screen/ScreenExtensions			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/impl/client/screen/ScreenExtensions	fabric_getBeforeRenderEvent	()Lnet/fabricmc/fabric/api/event/Event;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/client/screen/ScreenExtensions	fabric_getAfterRenderEvent	()Lnet/fabricmc/fabric/api/event/Event;	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/command/client/ClientCommandInternals	executeCommand	(Ljava/lang/String;)Z	METHOD	method executeCommand(Ljava/lang/String;Lnet/fabricmc/fabric/api/client/command/v2/FabricClientCommandSource;Lnet/fabricmc/fabric/api/client/command/v2/FabricClientCommandSource;)Z public static
+call-static	net/fabricmc/fabric/impl/content/registry/DecoratedPotPatternRegistryImpl	registerPattern	(Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceKey;)V	METHOD	method registerPattern(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceKey;)V public static
+call-static	net/fabricmc/fabric/impl/content/registry/OxidizableBlocksRegistryImpl	registerWeatheringCopperBlocks	(Lnet/minecraft/world/level/block/WeatheringCopperBlocks;)V	METHOD	method registerWeatheringCopperBlocks(Lnet/minecraft/world/level/block/WeatheringCopperCollection;)V public static
+new	net/fabricmc/fabric/impl/object/builder/client/SignTypeTextureHelper	<init>	()V	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/object/builder/client/SignTypeTextureHelper	shouldAddTextures	Z	CLASS	class gone
+put-static	net/fabricmc/fabric/impl/object/builder/client/SignTypeTextureHelper	shouldAddTextures	Z	CLASS	class gone

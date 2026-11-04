@@ -1,0 +1,68 @@
+usage	owner	name	desc	kinds	w
+call	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRenderHandlerRegistryImpl	renderFluid	(Lnet/minecraft/class_2338;Lnet/minecraft/class_1920;Lnet/minecraft/class_4588;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRenderHandlerRegistryImpl	renderFluid	(Lnet/minecraft/class_2338;Lnet/minecraft/class_1920;Lnet/minecraft/class_4588;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRenderHandlerRegistryImpl	renderFluid	(Lnet/minecraft/class_2338;Lnet/minecraft/class_1920;Lnet/minecraft/class_4588;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)V	METHOD	method not declared on the owner
+new	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	<init>	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	getSprites	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	clear	()V	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	view	Lnet/minecraft/class_1920;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	view	Lnet/minecraft/class_1920;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	pos	Lnet/minecraft/class_2338;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	pos	Lnet/minecraft/class_2338;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	blockState	Lnet/minecraft/class_2680;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	blockState	Lnet/minecraft/class_2680;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	fluidState	Lnet/minecraft/class_3610;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	fluidState	Lnet/minecraft/class_3610;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	handler	Lnet/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandler;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	handler	Lnet/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandler;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	sprites	[Lnet/minecraft/class_1058;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	overlay	Lnet/minecraft/class_1058;	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	overlay	Lnet/minecraft/class_1058;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	hasOverlay	Z	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	hasOverlay	Z	CLASS	class gone
+extend	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	<init>	()V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	getSprites	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/rendering/fluid/FluidRendererHookContainer	clear	()V	CLASS	class gone
+new	net/fabricmc/fabric/impl/client/resource/loader/FabricWrappedVanillaResourcePack	<init>	(Lnet/minecraft/class_3255;Ljava/util/List;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/resource/loader/FabricWrappedVanillaResourcePack	method_14410	([Ljava/lang/String;)Lnet/minecraft/class_7367;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/resource/loader/FabricWrappedVanillaResourcePack	method_14407	(Lnet/minecraft/class_3270;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/resource/loader/FabricWrappedVanillaResourcePack	method_14409	()Ljava/lang/String;	CLASS	class gone
+extend	net/fabricmc/fabric/impl/client/resource/loader/FabricWrappedVanillaResourcePack			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/client/resource/loader/FabricWrappedVanillaResourcePack	<init>	(Lnet/minecraft/class_3255;Ljava/util/List;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/resource/loader/FabricWrappedVanillaResourcePack	method_14410	([Ljava/lang/String;)Lnet/minecraft/class_7367;	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/resource/loader/FabricWrappedVanillaResourcePack	method_14407	(Lnet/minecraft/class_3270;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/client/resource/loader/FabricWrappedVanillaResourcePack	method_14409	()Ljava/lang/String;	CLASS	class gone
+new	net/fabricmc/fabric/impl/object/builder/FabricEntityType	<init>	(Lnet/minecraft/class_1299$class_4049;Lnet/minecraft/class_1311;ZZZZLcom/google/common/collect/ImmutableSet;Lnet/minecraft/class_4048;IILjava/lang/Boolean;Lnet/minecraft/class_7699;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/object/builder/FabricEntityType	method_18389	()Z	CLASS	class gone
+extend	net/fabricmc/fabric/impl/object/builder/FabricEntityType			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/object/builder/FabricEntityType	<init>	(Lnet/minecraft/class_1299$class_4049;Lnet/minecraft/class_1311;ZZZZLcom/google/common/collect/ImmutableSet;Lnet/minecraft/class_4048;IILjava/lang/Boolean;Lnet/minecraft/class_7699;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/object/builder/FabricEntityType	method_18389	()Z	CLASS	class gone
+new	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack	<init>	(Lnet/minecraft/class_3264;Ljava/util/List;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack	method_14410	([Ljava/lang/String;)Lnet/minecraft/class_7367;	CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack	method_14407	(Lnet/minecraft/class_3270;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack	method_14409	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack	method_45178	()Z	CLASS	class gone
+extend	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack	<init>	(Lnet/minecraft/class_3264;Ljava/util/List;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack	method_14410	([Ljava/lang/String;)Lnet/minecraft/class_7367;	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack	method_14407	(Lnet/minecraft/class_3270;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack	method_14409	()Ljava/lang/String;	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/resource/loader/FabricModResourcePack	method_45178	()Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	method_14405	(Lnet/minecraft/class_3264;Lnet/minecraft/class_2960;)Lnet/minecraft/class_7367;	CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	method_14408	(Lnet/minecraft/class_3264;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_3262$class_7664;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	method_14406	(Lnet/minecraft/class_3264;)Ljava/util/Set;	CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	appendResources	(Lnet/minecraft/class_3264;Lnet/minecraft/class_2960;Ljava/util/List;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	getFullName	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	close	()V	CLASS	class gone
+extend	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	<init>	(Lnet/minecraft/class_3264;Ljava/util/List;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	method_14405	(Lnet/minecraft/class_3264;Lnet/minecraft/class_2960;)Lnet/minecraft/class_7367;	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	method_14408	(Lnet/minecraft/class_3264;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_3262$class_7664;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	method_14406	(Lnet/minecraft/class_3264;)Ljava/util/Set;	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	appendResources	(Lnet/minecraft/class_3264;Lnet/minecraft/class_2960;Ljava/util/List;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	getFullName	()Ljava/lang/String;	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/resource/loader/GroupResourcePack	close	()V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/resource/loader/ModNioResourcePack	create	(Ljava/lang/String;Lnet/fabricmc/loader/api/ModContainer;Ljava/lang/String;Lnet/minecraft/class_3264;Lnet/fabricmc/fabric/api/resource/ResourcePackActivationType;)Lnet/fabricmc/fabric/impl/resource/loader/ModNioResourcePack;	METHOD	method create(Ljava/lang/String;Lnet/fabricmc/loader/api/ModContainer;Ljava/lang/String;Lnet/minecraft/class_3264;Lnet/fabricmc/fabric/api/resource/ResourcePackActivationType;Z)Lnet/fabricmc/fabric/impl/resource/loader/ModNioResourcePack; public static
+call-static	net/fabricmc/fabric/impl/resource/loader/ModResourcePackUtil	containsDefault	(Lnet/fabricmc/loader/api/metadata/ModMetadata;Ljava/lang/String;)Z	METHOD	method containsDefault(Ljava/lang/String;Z)Z public static
+call-static	net/fabricmc/fabric/impl/resource/loader/ModResourcePackUtil	openDefault	(Lnet/fabricmc/loader/api/metadata/ModMetadata;Lnet/minecraft/class_3264;Ljava/lang/String;)Ljava/io/InputStream;	METHOD	method openDefault(Lnet/fabricmc/loader/api/ModContainer;Lnet/minecraft/class_3264;Ljava/lang/String;)Ljava/io/InputStream; public static
