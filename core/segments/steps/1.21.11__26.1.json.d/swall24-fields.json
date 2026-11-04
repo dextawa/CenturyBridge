@@ -44,12 +44,16 @@
   "net/minecraft/class_1940.field_24106:Lnet/minecraft/class_1267;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelSettings#difficulty",
   "net/minecraft/class_1940.field_24107:Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelSettings#gameRules",
   "net/minecraft/class_310.field_1719:Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#cameraEntity",
-  "net/minecraft/class_310.field_1695:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#windowActive"
+  "net/minecraft/class_310.field_1695:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#windowActive",
+  "net/minecraft/class_3990.field_17729:I": "top/dext/centurybridge/step/v26_1/rt/CbWallTraderSpawnerFields#spawnDelay",
+  "net/minecraft/class_3990.field_17730:I": "top/dext/centurybridge/step/v26_1/rt/CbWallTraderSpawnerFields#spawnChance"
  },
  "_swall24_templates_basis": "1.21.11 StructureTemplateManager (class_3485) fixerUpper/blockLookup/resourceManager/generatedDir/RESOURCE_LISTER answered from 26.1's ResourceManagerTemplateSource, worldTemplates and RESOURCE_STRUCTURE_LISTER (javap basis in rt/CbWallTemplateManagerFields). The private load/list helpers (TOMBSTONE rows) stay open.",
  "instanceFieldSetters": {
   "net/minecraft/class_3485.field_25189:Lnet/minecraft/class_3300;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#setResourceManager",
-  "net/minecraft/class_310.field_1719:Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#setCameraEntity"
+  "net/minecraft/class_310.field_1719:Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#setCameraEntity",
+  "net/minecraft/class_3990.field_17729:I": "top/dext/centurybridge/step/v26_1/rt/CbWallTraderSpawnerFields#setSpawnDelay",
+  "net/minecraft/class_3990.field_17730:I": "top/dext/centurybridge/step/v26_1/rt/CbWallTraderSpawnerFields#setSpawnChance"
  },
  "_swall24_sheets_basis": "1.21.11 Sheets (class_4722) *_SHEET_TYPE / SOLID_BLOCK_SHEET: the same RenderTypes factory call on the same sheet id as 1.21.11's clinit (rt/CbWallSheetTypes). Sheets.chooseMaterial (TOMBSTONE row) stays open.",
  "_swall24_rabbit_basis": "1.21.11 RabbitModel (class_596) haunch / front-leg fields: 26.1 adult and baby rabbit meshes both carry parts with the same names, nested under body/frontlegs and backlegs/*_hind_leg (rt/CbWallRabbitParts). ADULT_TRANSFORMER / BABY_TRANSFORMER stay open (26.1 babies are separate meshes).",
@@ -58,5 +62,6 @@
  "_swall24_firework_basis": "1.21.11 FireworkRocketRecipe (class_1851) / FireworkStarRecipe (class_1853) static ingredient constants: 26.1 made them per-recipe instance data; answered with 1.21.11's clinit values (rt/CbWallFireworkIngredients).",
  "_swall24_dye_basis": "1.21.11 DyeItem.dyeColor (class_1769.field_7969) read answered as getDyeColor() is (default DYE component, rt/CbWallDyes#dyeColorField). ITEM_BY_COLOR (static Map filled by constructors) stays open: a snapshot would lose 1.21.11's live map semantics.",
  "_swall24_levelsettings_basis": "1.21.11 LevelSettings (class_1940) hardcore/difficulty/gameRules final fields: each was exactly what its getter (method_8583/method_27340/method_27341) returned; answered by the same CbWallLevelSettings methods those getters are wired to (swall7.json).",
- "_swall24_minecraft_basis": "1.21.11 Minecraft.cameraEntity (class_310.field_1719) read/write -> 26.1 main camera entity (Camera.entity / setEntity); windowActive (field_1695) read -> isWindowActive() (window focus), write left open."
+ "_swall24_minecraft_basis": "1.21.11 Minecraft.cameraEntity (class_310.field_1719) read/write -> 26.1 main camera entity (Camera.entity / setEntity); windowActive (field_1695) read -> isWindowActive() (window focus), write left open.",
+ "_swall24_trader_basis": "1.21.11 WanderingTraderSpawner (class_3990) spawnDelay/spawnChance -> 26.1 WanderingTraderData via getTraderData() (rt/CbWallTraderSpawnerFields). serverLevelData (field_24387) stays open: 26.1's spawner holds SavedDataStorage, not the level data."
 }
