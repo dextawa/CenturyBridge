@@ -2,6 +2,9 @@ package top.dext.centurybridge.step.v26_1.rt;
 
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.NormalCraftingRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.item.crafting.TransmuteRecipe;
 
 /**
  * 1.21.11 ShapedRecipe / ShapelessRecipe / TransmuteRecipe group, category and (shaped) showNotification fields
@@ -24,5 +27,33 @@ public final class CbWallRecipeFields {
 
     public static boolean showNotification(NormalCraftingRecipe r) {
         return r.showNotification();
+    }
+
+    public static String group(ShapedRecipe r) {
+        return group((NormalCraftingRecipe) r);
+    }
+
+    public static CraftingBookCategory category(ShapedRecipe r) {
+        return category((NormalCraftingRecipe) r);
+    }
+
+    public static boolean showNotification(ShapedRecipe r) {
+        return showNotification((NormalCraftingRecipe) r);
+    }
+
+    public static String group(ShapelessRecipe r) {
+        return group((NormalCraftingRecipe) r);
+    }
+
+    public static CraftingBookCategory category(ShapelessRecipe r) {
+        return category((NormalCraftingRecipe) r);
+    }
+
+    public static String group(TransmuteRecipe r) {
+        return group((NormalCraftingRecipe) r);
+    }
+
+    public static CraftingBookCategory category(TransmuteRecipe r) {
+        return category((NormalCraftingRecipe) r);
     }
 }
