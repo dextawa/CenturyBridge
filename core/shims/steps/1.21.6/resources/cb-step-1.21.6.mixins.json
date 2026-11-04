@@ -58,6 +58,7 @@
     "CbRealmsConfigureWorldRestoredMixin",
     "CbRealmsConfigureWorldRestoredMixinHooks",
     "CbFontInternalRestoredMixin",
+    "CbModelPartLookupRestoredMixin",
     "CbSectionResultsRestoredMixin",
     "CbSectionResultsRestoredMixinHooks"
   ],
