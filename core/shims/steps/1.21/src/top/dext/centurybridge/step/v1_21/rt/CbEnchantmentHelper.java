@@ -54,6 +54,38 @@ public final class CbEnchantmentHelper {
         return net.minecraft.class_1890.method_8225(CbEnchantments.cbHolder(enchantment), stack);
     }
 
+    /**
+     * 1.20.6 private static runIterationOnItem(visitor, stack) (method_8220; reached through a mod's access widener):
+     * each enchantment on the stack's ENCHANTMENTS component, with its level, as 1.20.6's body walked it (javap). 1.21's
+     * method_8220 swapped the arguments and visits holders; this walks the same component and hands the visitor the
+     * layer's 1.20.6 enchantment for each holder.
+     */
+    public static void method_8220(top.dext.centurybridge.step.v1_21.facade.EnchantmentVisitor visitor, net.minecraft.class_1799 stack) {
+        net.minecraft.class_9304 ench = stack.method_57825(net.minecraft.class_9334.field_49633, net.minecraft.class_9304.field_49385);
+        for (it.unimi.dsi.fastutil.objects.Object2IntMap.Entry<net.minecraft.class_6880<net.minecraft.class_1887>> e : ench.method_57539()) {
+            visitor.accept(CbEnchantments.cbEnchantment(e.getKey()), e.getIntValue());
+        }
+    }
+
+    /**
+     * The wrap of the method_8220 mixinTargets entry: a converted mod's injector into vanilla's runIterationOnItem takes
+     * the 1.20.6-shaped visitor (facade EnchantmentVisitor); vanilla 1.21 hands it its own visitor. This adapts one to the
+     * other: accept(enchantment, level) reaches W's visitor with the enchantment's holder (CbEnchantments.cbHolder).
+     */
+    public static top.dext.centurybridge.step.v1_21.facade.EnchantmentVisitor visitor(net.minecraft.class_1890.class_1891 w) {
+        return w == null ? null : (e, lvl) -> w.accept(CbEnchantments.cbHolder(e), lvl);
+    }
+
+    /**
+     * 1.20.6 private static runIterationOnInventory(visitor, stacks) (method_8209): method_8220 on each stack. 1.21's
+     * method_8209 takes a LivingEntity and a different (slot-aware) visitor, so this is its own walk over the stacks.
+     */
+    public static void method_8209(top.dext.centurybridge.step.v1_21.facade.EnchantmentVisitor visitor, Iterable<net.minecraft.class_1799> stacks) {
+        for (net.minecraft.class_1799 stack : stacks) {
+            method_8220(visitor, stack);
+        }
+    }
+
     /** getSweepingDamageRatio(int) */
     public static float method_58448(int level) {
         return 1.0F - 1.0F / (float) (level + 1);

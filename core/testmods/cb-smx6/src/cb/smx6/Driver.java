@@ -355,6 +355,24 @@ public final class Driver {
             } catch (RuntimeException e) {
                 check("aw-loot-conditions", false, "threw " + e);
             }
+            // ---- EnchantmentHelper visitor walks through the access widener (damage-aw; CbEnchantmentHelper): a lambda and a
+            // named class, over one stack (method_8220) and a list of stacks (method_8209)
+            try {
+                net.minecraft.class_1799 sword = new net.minecraft.class_1799(net.minecraft.class_1802.field_22022);
+                sword.method_7978(net.minecraft.class_1893.field_9118, 3);
+                net.minecraft.class_1799 bow = new net.minecraft.class_1799(net.minecraft.class_1802.field_8102);
+                bow.method_7978(net.minecraft.class_1893.field_9103, 2);
+                java.util.List<String> seen = new java.util.ArrayList<>();
+                net.minecraft.class_1890.method_8220((e, lvl) -> seen.add((e == net.minecraft.class_1893.field_9118) + ":" + lvl), sword);
+                VisitCount named = new VisitCount();
+                net.minecraft.class_1890.method_8209(named, java.util.List.of(sword, bow));
+                check("aw-ench-visitor", seen.equals(java.util.List.of("true:3")) && named.count == 2 && named.levels == 5
+                        && named.sharpness == 1,
+                    "lambda over sword: " + seen + "; named class over [sword, bow]: " + named.count + " visit(s), levels "
+                        + named.levels + ", sharpness seen " + named.sharpness);
+            } catch (RuntimeException e) {
+                check("aw-ench-visitor", false, "threw " + e);
+            }
             // ---- BuiltInRegistries.REGISTRY by name (Kilt E9): 1.20.6's root held minecraft:enchantment, the same registry
             // BuiltInRegistries.ENCHANTMENT reads; other names unchanged (1.21: CbRootRegistry)
             net.minecraft.class_2960 enchId = net.minecraft.class_2960.method_43902("minecraft", "enchantment");
@@ -708,5 +726,19 @@ public final class Driver {
         wolf.method_31472();
         level.method_18456().remove(followOwner);
         return d;
+    }
+
+    /** a named EnchantmentVisitor (1.20.6 class_1890$class_1891) */
+    static final class VisitCount implements net.minecraft.class_1890.class_1891 {
+        int count;
+        int levels;
+        int sharpness;
+
+        @Override
+        public void accept(net.minecraft.class_1887 enchantment, int level) {
+            count++;
+            levels += level;
+            if (enchantment == net.minecraft.class_1893.field_9118) sharpness++;
+        }
     }
 }

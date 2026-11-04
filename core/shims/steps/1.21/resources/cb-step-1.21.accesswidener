@@ -98,3 +98,6 @@ accessible field net/minecraft/class_9824 field_52266 Ljava/util/Map;
 
 # VillagerTrades.ItemsAndEmeraldsToItems (package-private class): CbEnchantBookTrades builds it for 1.20.6's 6-argument constructor (s121h)
 accessible class net/minecraft/class_3853$class_4164
+
+# s121g: EnchantmentHelper.EnchantmentVisitor (package-private on 1.21), named by CbEnchantmentHelper.visitor (the method_8220 mixinTargets wrap)
+accessible class net/minecraft/class_1890$class_1891
