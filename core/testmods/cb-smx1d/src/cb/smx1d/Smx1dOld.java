@@ -677,10 +677,36 @@ public class Smx1dOld implements ClientModInitializer {
         net.minecraft.class_783 face = new net.minecraft.class_783(class_2350.field_11036, -1, "#all",
             new net.minecraft.class_783.class_10800(0, 0, 16, 16), net.minecraft.class_10821.field_57029);
         long n0 = n("bakeQuad");
+        // the identity ModelState as the mod's own (ModelState is unchanged at 1.21.11, all defaults); ModelRotation's
+        // enum constants (class_1086.field_5350 ...) are a separate open area at 1.21.11 (class_1086 is no longer an enum)
+        net.minecraft.class_3665 identity = new net.minecraft.class_3665() {
+        };
         net.minecraft.class_777 q = net.minecraft.class_796.method_3468(new Vector3f(0, 0, 0), new Vector3f(16, 16, 16), face, sprite,
-            class_2350.field_11036, net.minecraft.class_1086.field_5350, null, true, 0);
+            class_2350.field_11036, identity, null, true, 0);
         r("bake.quad", q != null && q.comp_3723() == class_2350.field_11036 && q.comp_3724() == sprite,
             "direction=" + (q == null ? null : q.comp_3723()) + " sprite=" + (q == null ? null : q.comp_3724()));
         r("bake.nativeHook", n("bakeQuad") - n0 == 1, "native bakeQuad HEAD x" + (n("bakeQuad") - n0));
+        modelRotation();
+    }
+
+    // ModelRotation: 1.21.10's enum constants on 1.21.11's per-group instances
+    static void modelRotation() {
+        net.minecraft.class_1086 x0y0 = net.minecraft.class_1086.field_5350;
+        net.minecraft.class_1086 x90y180 = net.minecraft.class_1086.field_5367;
+        r("rot.identity", x0y0.method_35808() == net.minecraft.class_4990.field_23292 && x0y0.method_3509().method_22936().equals(new org.joml.Matrix4f()),
+            "group=" + x0y0.method_35808());
+        r("rot.byQuadrants", net.minecraft.class_1086.method_68008(net.minecraft.class_10821.field_57030, net.minecraft.class_10821.field_57031) == x90y180,
+            "by(R90,R180)=" + net.minecraft.class_1086.method_68008(net.minecraft.class_10821.field_57030, net.minecraft.class_10821.field_57031));
+        net.minecraft.class_1086[] all = net.minecraft.class_1086.values();
+        java.util.Set<net.minecraft.class_1086> distinct = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+        distinct.addAll(java.util.Arrays.asList(all));
+        r("rot.values", all.length == 16 && all[0] == x0y0 && all[6] == x90y180 && distinct.size() == 16,
+            "n=" + all.length + " distinct=" + distinct.size());
+        r("rot.valueOf", net.minecraft.class_1086.valueOf("X90_Y180") == x90y180 && x90y180.name().equals("X90_Y180") && x90y180.ordinal() == 6,
+            "name=" + x90y180.name() + " ordinal=" + x90y180.ordinal());
+        // what 1.21.11's own blockstate variants use for x=90, y=180 is the same object
+        Object nativeRot = ((Function<Object[], Object>) System.getProperties().get("cbsmx1d.nativeRotation"))
+            .apply(new Object[] {net.minecraft.class_10821.field_57030, net.minecraft.class_10821.field_57031});
+        r("rot.sameAsNative", nativeRot == x90y180, "native=" + nativeRot + " old=" + x90y180);
     }
 }
