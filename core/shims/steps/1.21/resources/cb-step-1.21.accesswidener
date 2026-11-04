@@ -76,3 +76,6 @@ accessible method net/minecraft/class_1321 method_60716 ()Z
 # write of the restored 1.20.6 Mob.leashHolder / delayedLeashInfo mirror stands for when the mob has none (s121d)
 accessible method net/minecraft/class_9817$class_9818 <init> (Lnet/minecraft/class_1297;)V
 accessible method net/minecraft/class_9817$class_9818 <init> (Lcom/mojang/datafixers/util/Either;)V
+
+# s121g: EnchantmentHelper.EnchantmentVisitor (package-private on 1.21), named by CbEnchantmentHelper.visitor (the method_8220 mixinTargets wrap)
+accessible class net/minecraft/class_1890$class_1891

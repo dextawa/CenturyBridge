@@ -23,9 +23,13 @@ with zipfile.ZipFile(sys.argv[1]) as z:
             open(os.path.join(sys.argv[2], os.path.basename(n)), "wb").write(z.read(n))
 PYNEST
 LIBS="$LIBS$(ls "$NEST"/*.jar | tr '\n' "${CB_CPSEP:-:}")"
-javac --release 21 -nowarn -proc:none -cp "$DATA/jars/client-1.21-intermediary.jar${CB_CPSEP:-:}$MIXIN${CB_CPSEP:-:}$LIBS" -d "$CLS" \
+# the control's access widener (EnchantmentHelper.method_8220): compiled against the stub it widens, as loom would
+STUB="$CLS.stub.jar"
+CB_DATA="$DATA" bash core/tools/make_aw_stub.sh 1.21 "$DATA/jars/client-1.21-intermediary.jar" "$STUB" \
+    core/testmods/cb-smx6v/res/cb_smx6v.accesswidener > /dev/null
+javac --release 21 -nowarn -proc:none -cp "$STUB${CB_CPSEP:-:}$MIXIN${CB_CPSEP:-:}$LIBS" -d "$CLS" \
     $(find core/testmods/cb-smx6v/src -name '*.java')
 cp core/testmods/cb-smx6v/res/* "$CLS/"
 (cd "$CLS" && jar cf "$JAR" .)
-rm -rf "$CLS" "$NEST"
+rm -rf "$CLS" "$NEST" "$STUB"
 echo "-> $OUT"

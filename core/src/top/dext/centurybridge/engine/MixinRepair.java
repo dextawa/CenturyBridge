@@ -810,7 +810,7 @@ public final class MixinRepair {
                             List<String[]> self = mixinMoveSelf.get(moveKey);
                             String to = mixinMoves.get(moveKey);
                             String whereK = s.desc != null ? where : where + " (bare: V's " + moveKey.substring(moveKey.lastIndexOf('.', moveKey.indexOf('(')) + 1) + ")";
-                            String why0 = movable(mx, handler, an, anchors, to, owner, self);
+                            String why0 = movable(mx, handler, an, anchors, to, owner, self, moveKey);
                             if (why0 == null) {
                                 fixNotes.add("move " + whereK + " => " + to + " (mixinMoves: the same code in another class)");
                                 fixes.add(() -> {
@@ -845,7 +845,7 @@ public final class MixinRepair {
                                     // (@CbVanillaReads) consults it only when mixed. Taken only where nothing W runs itself
                                     // holds the code (no restored member, no mixinMoves, no same-name method to drop onto)
                                     String why0 = (handler.access & Opcodes.ACC_STATIC) == 0 ? "an instance handler on a static"
-                                        : movable(mx, handler, an, anchors, toLayer, owner, null);
+                                        : movable(mx, handler, an, anchors, toLayer, owner, null, null);
                                     if (why0 == null) {
                                         fixNotes.add("move " + where + " => " + toLayer + " (staticRedirects: V's static held by a layer class)");
                                         fixes.add(() -> {
@@ -966,7 +966,7 @@ public final class MixinRepair {
                         // a guarded entry is not an ordinary anchor move: refused, the paths below judge it as without it
                         String anchorTo = guardedKey != null ? null : anchorTo0;
                         if (anchorTo != null) {
-                            String why0 = movable(mx, handler, an, anchors, anchorTo, owner, null);
+                            String why0 = movable(mx, handler, an, anchors, anchorTo, owner, null, null);
                             if (why0 == null) why0 = ordinalsKept(anchors, owner, cands, anchorTo);
                             if (why0 == null) {
                                 fixNotes.add("move " + where + " => " + anchorTo + " (mixinAnchorMoves: the code at " + anchors
@@ -1028,6 +1028,26 @@ public final class MixinRepair {
                                     });
                                     continue;
                                 }
+                            }
+                        }
+                        // smixin18: the anchor's call is of a V method W moved to another class (mixinMoves): the
+                        // W method's call stands in its place
+                        if (an.desc.equals(INJECT) && anchors.size() == 1 && anchors.get(0).kind.equals("INVOKE") && cands.size() == 1) {
+                            List<Anchor> tr = movedAnchors(anchors);
+                            if (tr != null && anchorsIn(cands.get(0), tc, tr)) {
+                                List<String> mwhy = new ArrayList<>();
+                                String value = movedCallAt(handler, owner, cands.get(0), anchors.get(0), tr.get(0), mwhy);
+                                if (value != null) {
+                                    fixNotes.add("anchor-moved-call " + where + " " + anchors.get(0) + " => " + value
+                                        + " (mixinMoves: the W method's call stands where V's stood, as many sites)");
+                                    fixes.add(() -> {
+                                        if (setAtTarget(an, refmap, value)) { dirty[0] = true; if (refmap != null) dirty[1] = true; }
+                                    });
+                                    continue;
+                                }
+                                if (deadWhy == null) deadWhy = "anchor gone: @" + kind + " " + where + " " + anchors
+                                    + " (mixinMoves call " + tr.get(0) + " refused: " + mwhy.get(0) + ")";
+                                continue;
                             }
                         }
                         // @Inject marks a POSITION in the unchanged target: its anchor may
@@ -1590,7 +1610,7 @@ public final class MixinRepair {
 
     /** why an injector cannot move onto a mixin of the class a mixinMoves entry names, or null */
     private String movable(ClassNode mx, MethodNode h, AnnotationNode an, List<Anchor> anchors, String to, String vOwner,
-                           List<String[]> self) {
+                           List<String[]> self, String vKey) {
         if (!crossAllowed) return "not in a config being repaired";
         int dot = to.indexOf('.');
         int paren = to.indexOf('(');
@@ -1619,7 +1639,82 @@ public final class MixinRepair {
             List<Anchor> tr = movedAnchors(anchors);
             if (tr == null || !anchorsIn(wm, wc, tr)) return "its anchor is not in the moved method " + anchors;
         }
+        return vKey == null ? null : movedShapeWhy(an, h, anchors, vKey, wm);
+    }
+
+    /**
+     * smixin18 (1.21 RebuildTask.compile -> SectionCompiler.compile, handleBlockEntity -> SectionCompiler's): a mixinMoves
+     * entry onto a W method of another shape (one of V's shape is "the same code", judged in the wiring). The moved handler runs on W's method with W's arguments and answer, so it
+     * moves only when it takes none of V's arguments, reads none of V's locals, and (the answer's type changed) neither
+     * reads nor sets the answer; and every anchor stands as many times in W's method as in
+     * V's -- else the injection fires at other sites than the mod's. Null when it may move.
+     */
+    private String movedShapeWhy(AnnotationNode an, MethodNode h, List<Anchor> anchors, String vKey, MethodNode wm) {
+        int p = vKey.indexOf('(');
+        int d = vKey.lastIndexOf('.', p);
+        String vDesc = vKey.substring(p);
+        // an entry onto a method of V's very shape was judged "the same code" in the wiring: its anchors were judged there
+        if (vDesc.equals(wm.desc)) return null;
+        {
+            Type vr = Type.getReturnType(vDesc), wr = Type.getReturnType(wm.desc);
+            if ((vr.getSort() == Type.VOID) != (wr.getSort() == Type.VOID)) return "V's method and W's differ in returning a value";
+            if (capturesTargetArgs(an, h, anchors)) return "the handler takes V's arguments, which W's method " + wm.desc + " does not have";
+            if (readsTargetLocals(h)) return "the handler reads V's locals";
+            if (!vr.equals(wr) && (an.desc.endsWith("/ModifyReturnValue;") || touchesAnswer(h)
+                    || h.desc.contains(vr.getDescriptor()))) {
+                return "the handler handles V's answer " + vr.getClassName() + ", W's is " + wr.getClassName();
+            }
+        }
+        ClassNode vc = source == null ? null : source.target(vKey.substring(0, d));
+        MethodNode vm = null;
+        if (vc != null) for (MethodNode m : vc.methods) if (m.name.equals(vKey.substring(d + 1, p)) && m.desc.equals(vDesc)) vm = m;
+        if (vm == null) return "no V body to count its anchors in";
+        List<Anchor> tr = movedAnchors(anchors);
+        for (int i = 0; i < anchors.size(); i++) {
+            Anchor a = anchors.get(i);
+            if (a.kind.equals("LOCAL")) return "an anchor on V's local slot";
+            // a call of another moved V method stands there as the W method's call: its receiver and arguments are W's,
+            // so only a positional @Inject is carried to it (an operand injector's handler is written for V's call)
+            if (tr != null && !tr.get(i).equals(a) && !an.desc.equals(INJECT)) {
+                return "anchor " + a + " is now " + tr.get(i) + ", whose operands are not those @" + an.desc.substring(
+                    an.desc.lastIndexOf('/') + 1, an.desc.length() - 1) + "'s handler is written for";
+            }
+            int nv = countSites(vm, a), nw = countSites(wm, tr != null ? tr.get(i) : a);
+            if (nv != nw) return "anchor " + a + ": " + nv + " sites in V's method, " + nw + " in W's";
+        }
         return null;
+    }
+
+    /** does the handler read or set its callback's answer */
+    private static boolean touchesAnswer(MethodNode h) {
+        if (h.instructions == null) return false;
+        String cir = CIR.substring(1, CIR.length() - 1);
+        for (AbstractInsnNode in : h.instructions) {
+            if (in instanceof MethodInsnNode mi && mi.owner.equals(cir)
+                    && (mi.name.startsWith("getReturnValue") || mi.name.equals("setReturnValue"))) return true;
+        }
+        return false;
+    }
+
+    /**
+     * smixin18: a positional @Inject whose INVOKE anchor names a V method W moved to another class (a mixinMoves key):
+     * in the target W kept, the call in its place is the call of the W method (1.21 doTask calls SectionCompiler.compile
+     * where 1.20.6 called RebuildTask.compile). Respelled only when the handler reads none of the target's locals and V's
+     * target calls the V method as many times as W's calls the W method. Null with why, or the new @At target.
+     */
+    private String movedCallAt(MethodNode h, String owner, MethodNode wTarget, Anchor a, Anchor to, List<String> why) {
+        if (readsTargetLocals(h)) { why.add("the handler reads the target's locals"); return null; }
+        ClassNode vc = source == null ? null : source.target(owner);
+        MethodNode vm = null;
+        if (vc != null) for (MethodNode m : vc.methods) if (m.name.equals(wTarget.name) && m.desc.equals(wTarget.desc)) vm = m;
+        if (vm == null) { why.add("no V body of the target"); return null; }
+        int nv = countSites(vm, new Anchor(a.kind, a.owner, a.name, a.desc, null));
+        int nw = countSites(wTarget, new Anchor(to.kind, to.owner, to.name, to.desc, null));
+        if (nv != nw || nw == 0) {
+            why.add(nv + " calls of " + a.name + " in V's target, " + nw + " of " + to.owner + "." + to.name + " in W's");
+            return null;
+        }
+        return "L" + to.owner + ";" + to.name + to.desc;
     }
 
     /** the mixinAnchorMoves key the selector names on owner when that entry is "guarded", or null */

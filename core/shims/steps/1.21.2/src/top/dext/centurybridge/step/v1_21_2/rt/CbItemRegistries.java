@@ -512,6 +512,12 @@ public final class CbItemRegistries {
 
         /** the registry's named sets still unbound, bound to no holders (only these: a bound set keeps its contents) */
         void cb$bindUnboundTagsToEmpty();
+
+        /**
+         * 1.21.1's refreeze: an unfrozen registry whose tag state is bound (it was frozen before and a mod unfroze it)
+         * has its tag state set back to unbound, as 1.21.2's constructor leaves it; no other state is touched
+         */
+        void cb$unbindTagStateForRefreeze();
     }
 
     // ---- freeze() as 1.21.1 callers relied on it ----
@@ -524,6 +530,15 @@ public final class CbItemRegistries {
      * it unfroze and added tags to) had no such step. So before the freeze of a registry not yet frozen, the sets
      * still unbound are bound to empty, as 1.21.1 created them; bound sets are left alone, a frozen registry is not
      * touched, and freeze()'s checks run unchanged.
+     *
+     * <p>Refreeze. 1.21.1's freeze() kept no tag state, so a registry a 1.21.1 mod unfroze (Kilt's
+     * MappedRegistryInject.unfreeze clears field_36463) froze again. 1.21.2's freeze() throws "Tags already present
+     * before freezing" when its tag state (field_53687) is bound, and freeze is the only writer that binds it on an
+     * unfrozen registry: PendingTags.apply (MappedRegistry$3) needs a frozen one (prepareTagReload refuses otherwise),
+     * and only the constructor writes the unbound state (javap, whole 1.21.2 jar). So an unfrozen registry with bound
+     * tag state was frozen before and unfrozen by a mod. For a 1.21.1 caller only, that state goes back to unbound;
+     * vanilla's freeze() then runs unchanged and binds it again from the registry's named sets. A vanilla or 1.21.2
+     * caller never reaches this redirect: its refreeze still throws.
      */
     @SuppressWarnings("rawtypes")
     public static class_2378 method_40276(class_2378 self) { // keyed on Registry: a call through MappedRegistry resolves here too
@@ -546,6 +561,7 @@ public final class CbItemRegistries {
 
     private static void bindUnboundBeforeFreeze(class_2378<?> self) {
         if (self instanceof class_2370<?> mapped && !((Frozen) mapped).cb$frozen()) {
+            ((Frozen) mapped).cb$unbindTagStateForRefreeze();
             ((Frozen) mapped).cb$bindUnboundTagsToEmpty();
         }
     }

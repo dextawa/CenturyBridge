@@ -1,0 +1,15 @@
+usage	owner	name	desc	kinds	w
+new	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	<init>	(Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;[B)V	METHOD	constructors (Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)V
+call-static	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	create	(Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentTargetInfo;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;Lnet/minecraft/core/RegistryAccess;)Lnet/fabricmc/fabric/impl/attachment/sync/AttachmentChange;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	decodeValue	(Lnet/minecraft/core/RegistryAccess;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/attachment/sync/AttachmentChange	data	()[B	METHOD	method not declared on the owner
+implement-interface	net/fabricmc/fabric/impl/client/screen/ScreenExtensions			ABSTRACT	class public abstract interface extends java/lang/Object
+call-static	net/fabricmc/fabric/impl/datagen/FabricDataGenHelper	deleteDirectory	(Ljava/nio/file/Path;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/datagen/FabricTagBuilder	fabric_setReplace	(Z)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/datagen/FabricTagBuilder	fabric_isReplaced	()Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/datagen/FabricTagBuilder	fabric_forceAddTag	(Lnet/minecraft/resources/Identifier;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/datagen/FabricTagBuilder			CLASS	class gone
+call-static	net/fabricmc/fabric/impl/item/EnchantmentUtil	modify	(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/fabricmc/fabric/api/item/v1/EnchantmentSource;)Lnet/minecraft/world/item/enchantment/Enchantment;	METHOD	method modify(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/fabricmc/fabric/api/item/v1/EnchantmentSource;Lnet/minecraft/resources/RegistryOps$RegistryInfoLookup;)Lnet/minecraft/world/item/enchantment/Enchantment; public static
+call-static	net/fabricmc/fabric/impl/registry/sync/DynamicRegistriesImpl	getDynamicRegistries	()Ljava/util/List;	METHOD	method not declared on the owner
+get-static	net/fabricmc/fabric/impl/registry/sync/DynamicRegistriesImpl	DYNAMIC_REGISTRY_KEYS	Ljava/util/Set;	FIELD	field not declared on the owner
+new	net/fabricmc/fabric/impl/tag/client/ClientTagsLoader$LoadedTag	<init>	(Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;)V	METHOD	constructors (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;)V

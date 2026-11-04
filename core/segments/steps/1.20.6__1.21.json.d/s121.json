@@ -95,6 +95,15 @@
     "0 top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#newLevel(Lnet/minecraft/class_5454;)Lnet/minecraft/class_3218;"
    ],
    "basis": "changeDimension(dest) is 1.21's changeDimension(transition) on the same class (javap -c -p both: Entity's body leaves for a non-server level or a removed entity, unRides and moves passengers, makes the entity in the destination level and removes this one with CHANGED_DIMENSION; ServerPlayer's end-to-overworld credits branch and transfer, ItemEntity's / AbstractVillager's own steps before super). 1.20.6's dest is 1.21's transition.newLevel() (comp_2820, read at the start of 1.21's body where 1.20.6 read dest): CbEntityPortals.newLevel. 1.20.6's findDimensionEntryPoint(dest) inside the body is the transition 1.21's callers computed. 1.21 also moves within one level through it (ThrownEnderpearl.onHit, end gateways), which 1.20.6 did through teleportTo: a 1.20.6 handler sees those calls with dest = the entity's own level, as the step's override hook (CbEntityPortals.changeDimension(LegacyChangeDimension, transition)) already hands 1.20.6 overrides"
+  },
+  "net/minecraft/class_1890.method_8220(Lnet/minecraft/class_1890$class_1891;Lnet/minecraft/class_1799;)V": {
+   "to": "method_8220(Lnet/minecraft/class_1799;Lnet/minecraft/class_1890$class_1891;)V",
+   "args": [
+    1,
+    0
+   ],
+   "basis": "s121g: EnchantmentHelper.runIterationOnItem. javap 1.20.6 method_8220(visitor, stack) / 1.21 method_8220(stack, visitor): same private static walk over the stack's ENCHANTMENTS, arguments swapped, visitor now handed holders. Converted callers go to CbEnchantmentHelper (staticRedirects); a 1.20.6 mod's injector into vanilla's walk keeps following vanilla's 1.21 method, V arg 0 = W arg 1, V arg 1 = W arg 0",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper.visitor(Lnet/minecraft/class_1890$class_1891;)Ltop/dext/centurybridge/step/v1_21/facade/EnchantmentVisitor;"
   }
  },
  "mixinAnchorMoves": {

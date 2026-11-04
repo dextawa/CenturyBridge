@@ -49,6 +49,9 @@ public class Driver implements ClientModInitializer {
     public static final AtomicInteger BUILD_HEAD = new AtomicInteger();
     public static final AtomicInteger BUILD_RETURN = new AtomicInteger();
     public static final AtomicInteger SECTION_BUILDS = new AtomicInteger();
+    /** SectionCompileCounter: 1.21 SectionCompiler.compile / handleBlockEntity HEAD (native control, smixin18) */
+    public static final AtomicInteger SC_COMPILE = new AtomicInteger();
+    public static final AtomicInteger SC_BLOCK_ENTITY = new AtomicInteger();
     /** DragonRayCounter: 1.21 death-ray vertices (addVertex in EnderDragonRenderer.method_61158) */
     public static final AtomicInteger RAY_VERTS = new AtomicInteger();
     static final Map<String, Boolean> OK = new LinkedHashMap<>();
@@ -285,6 +288,27 @@ public class Driver implements ClientModInitializer {
                 check("f.end", snap[5] > 0 && Math.abs(snap[5] + snap[3] - snap[2]) <= 32,
                     "1.20.6 end " + snap[5] + " + section builds " + snap[3] + " vs 1.21 build() RETURN " + snap[2]);
             }
+            // (i) smixin18: 1.20.6 RebuildTask compile code, which 1.21 runs in SectionCompiler (mixinMoves). Section compiles
+            // run on worker threads: the snapshot reads them as they stand (up to 32 in flight)
+            int[] sc = on(mc, () -> new int[] {SC_COMPILE.get(), SC_BLOCK_ENTITY.get()});
+            check("i.nativeCompile", sc[0] > 0, "native SectionCompiler.compile HEAD " + sc[0] + ", handleBlockEntity HEAD " + sc[1]);
+            if (counters != null) {
+                int[] rv = on(mc, () -> {
+                    try {
+                        return new int[] {SC_COMPILE.get(), SC_BLOCK_ENTITY.get(), ((AtomicInteger) field(counters0(), "COMPILE")).get(),
+                            ((AtomicInteger) field(counters0(), "COMPILE_CALL")).get(), ((AtomicInteger) field(counters0(), "BLOCK_ENTITY")).get(),
+                            ((AtomicInteger) field(counters0(), "COMPILE_THIS")).get()};
+                    } catch (ReflectiveOperationException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                log("rebuild: 1.21 compile " + rv[0] + ", handleBlockEntity " + rv[1] + "; 1.20.6 compile HEAD " + rv[2]
+                    + ", doTask compile call " + rv[3] + ", handleBlockEntity HEAD " + rv[4] + ", compile HEAD reading this " + rv[5]);
+                check("i.compileHead", rv[2] > 0 && Math.abs(rv[2] - rv[0]) <= 32, "1.20.6 compile HEAD " + rv[2] + ", 1.21 compile " + rv[0]);
+                check("i.compileCall", rv[3] > 0 && Math.abs(rv[3] - rv[0]) <= 32, "1.20.6 doTask compile call " + rv[3] + ", 1.21 compile " + rv[0]);
+                check("i.blockEntity", Math.abs(rv[4] - rv[1]) <= 32, "1.20.6 handleBlockEntity HEAD " + rv[4] + ", 1.21 " + rv[1]);
+                check("i.readsThisOff", rv[5] == 0, "compile HEAD handler reading this (disabled: a reported loss) " + rv[5]);
+            }
             // (g) EnderDragonRenderer death rays: a dragon (no AI) above and south of the player, the player turned to it,
             // its client copy held dying (dragonDeathTime 60) for three seconds; rays are drawn while dragonDeathTime > 0
             int[] dragonId = new int[1];
@@ -336,6 +360,10 @@ public class Driver implements ClientModInitializer {
             t.printStackTrace();
         }
         finish(mc);
+    }
+
+    static Class<?> counters0() throws ReflectiveOperationException {
+        return Class.forName("cb.smx6c.Counters");
     }
 
     static Object field(Class<?> c, String name) throws ReflectiveOperationException {

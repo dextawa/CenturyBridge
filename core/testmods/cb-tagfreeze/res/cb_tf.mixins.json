@@ -3,6 +3,6 @@
   "package": "cb.tf.mixin",
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
-  "mixins": ["ServerDriverMixin"],
+  "mixins": ["ServerDriverMixin", "RegistryFrozenAccess"],
   "injectors": { "defaultRequire": 1 }
 }
