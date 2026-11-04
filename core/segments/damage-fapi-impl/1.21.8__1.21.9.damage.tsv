@@ -1,0 +1,103 @@
+usage	owner	name	desc	kinds	w
+call-static	net/fabricmc/fabric/impl/client/keybinding/KeyBindingRegistryImpl	addCategory	(Ljava/lang/String;)Z	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/client/model/loading/ModelLoadingPluginManager	preparePlugins	(Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD	method preparePlugins(Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public static
+call	net/fabricmc/fabric/impl/client/particle/ParticleFactoryRegistryImpl	initialize	(Lnet/minecraft/class_702;)V	METHOD	method initialize(Lnet/minecraft/class_11939;)V public
+new	net/fabricmc/fabric/impl/client/rendering/DimensionRenderingRegistryImpl	<init>	()V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/client/rendering/DimensionRenderingRegistryImpl	registerSkyRenderer	(Lnet/minecraft/class_5321;Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$SkyRenderer;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/client/rendering/DimensionRenderingRegistryImpl	registerWeatherRenderer	(Lnet/minecraft/class_5321;Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$WeatherRenderer;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/client/rendering/DimensionRenderingRegistryImpl	registerDimensionEffects	(Lnet/minecraft/class_2960;Lnet/minecraft/class_5294;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/client/rendering/DimensionRenderingRegistryImpl	registerCloudRenderer	(Lnet/minecraft/class_5321;Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$CloudRenderer;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/client/rendering/DimensionRenderingRegistryImpl	getSkyRenderer	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$SkyRenderer;	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/client/rendering/DimensionRenderingRegistryImpl	getCloudRenderer	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$CloudRenderer;	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/client/rendering/DimensionRenderingRegistryImpl	getWeatherRenderer	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$WeatherRenderer;	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/client/rendering/DimensionRenderingRegistryImpl	getDimensionEffects	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5294;	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/client/rendering/SpecialGuiElementRegistryImpl	onReady	(Lnet/minecraft/class_310;Lnet/minecraft/class_4597$class_4598;Ljava/util/Map;)V	METHOD	method onReady(Lnet/minecraft/class_310;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_11659;Ljava/util/Map;)V public static
+call-static	net/fabricmc/fabric/impl/client/rendering/SpecialGuiElementRegistryImpl	createNewRenderer	(Lnet/minecraft/class_11256;Lnet/minecraft/class_310;Lnet/minecraft/class_4597$class_4598;)Lnet/minecraft/class_11239;	METHOD	method createNewRenderer(Lnet/minecraft/class_11256;Lnet/minecraft/class_310;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_11659;)Lnet/minecraft/class_11239; public static
+call	net/fabricmc/fabric/impl/client/rendering/SpecialGuiElementRendererPool	substitute	(Lnet/minecraft/class_11239;Lnet/minecraft/class_11256;Lnet/minecraft/class_310;Lnet/minecraft/class_4597$class_4598;)Lnet/minecraft/class_11239;	METHOD	method substitute(Lnet/minecraft/class_11239;Lnet/minecraft/class_11256;Lnet/minecraft/class_310;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_11659;)Lnet/minecraft/class_11239; public
+new	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	<init>	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	prepare	(Lnet/minecraft/class_761;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lnet/minecraft/class_4597;ZLnet/minecraft/class_638;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	setFrustum	(Lnet/minecraft/class_4604;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	setMatrixStack	(Lnet/minecraft/class_4587;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	setTranslucentBlockOutline	(Z)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	prepareBlockOutline	(Lnet/minecraft/class_1297;DDDLnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	worldRenderer	()Lnet/minecraft/class_761;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	tickCounter	()Lnet/minecraft/class_9779;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	blockOutlines	()Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	camera	()Lnet/minecraft/class_4184;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	gameRenderer	()Lnet/minecraft/class_757;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	positionMatrix	()Lorg/joml/Matrix4f;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	projectionMatrix	()Lorg/joml/Matrix4f;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	world	()Lnet/minecraft/class_638;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	advancedTranslucency	()Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	consumers	()Lnet/minecraft/class_4597;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	frustum	()Lnet/minecraft/class_4604;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	matrixStack	()Lnet/minecraft/class_4587;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	translucentBlockOutline	()Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	entity	()Lnet/minecraft/class_1297;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	cameraX	()D	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	cameraY	()D	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	cameraZ	()D	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	blockPos	()Lnet/minecraft/class_2338;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	blockState	()Lnet/minecraft/class_2680;	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	vertexConsumer	()Lnet/minecraft/class_4588;	CLASS	class gone
+get	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	renderBlockOutline	Z	CLASS	class gone
+put	net/fabricmc/fabric/impl/client/rendering/WorldRenderContextImpl	renderBlockOutline	Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/rendering/WorldRendererHooks	fabric$getWorldRenderContext	()Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/client/rendering/WorldRendererHooks			CLASS	class gone
+call	net/fabricmc/fabric/impl/gamerule/widget/DoubleRuleWidget	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public
+call	net/fabricmc/fabric/impl/gamerule/widget/EnumRuleWidget	method_25343	(Lnet/minecraft/class_332;IIIIIIIZF)V	METHOD	method method_25343(Lnet/minecraft/class_332;IIZF)V public
+extend	net/fabricmc/fabric/impl/networking/AbstractChanneledNetworkAddon			ABSTRACT	class public abstract extends net/fabricmc/fabric/impl/networking/AbstractNetworkAddon
+call	net/fabricmc/fabric/impl/networking/GenericPayloadAccessor	fabric_payload	()Lnet/minecraft/class_8710;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/networking/GenericPayloadAccessor			CLASS	class gone
+call-static	net/fabricmc/fabric/impl/networking/PayloadTypeRegistryImpl	get	(Lnet/minecraft/class_9127;)Lnet/fabricmc/fabric/impl/networking/PayloadTypeRegistryImpl;	METHOD	method get(Lnet/minecraft/class_2960;)Lnet/minecraft/class_8710$class_9155; public ; get(Lnet/minecraft/class_8710$class_9154;)Lnet/minecraft/class_8710$class_9155; public
+call	net/fabricmc/fabric/impl/networking/PayloadTypeRegistryImpl	registerLarge	(Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;I)Lnet/minecraft/class_8710$class_9155;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/networking/PayloadTypeRegistryImpl	getMaxPacketSize	(Lnet/minecraft/class_2960;)I	METHOD	method not declared on the owner
+new	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	<init>	([Lnet/minecraft/class_9145;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	get	(I)Lnet/minecraft/class_9145;	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	get	(Lnet/minecraft/class_9127;)Lnet/fabricmc/fabric/impl/networking/VanillaPacketTypes;	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	hashCode	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	equals	(Ljava/lang/Object;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	ids	()[Lnet/minecraft/class_9145;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	PLAY_S2C	Lnet/fabricmc/fabric/impl/networking/VanillaPacketTypes;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	PLAY_C2S	Lnet/fabricmc/fabric/impl/networking/VanillaPacketTypes;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	CONFIGURATION_S2C	Lnet/fabricmc/fabric/impl/networking/VanillaPacketTypes;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/networking/VanillaPacketTypes	CONFIGURATION_C2S	Lnet/fabricmc/fabric/impl/networking/VanillaPacketTypes;	CLASS	class gone
+new	net/fabricmc/fabric/impl/networking/splitter/FabricPacketMerger	<init>	(Lnet/minecraft/class_2543;Lnet/fabricmc/fabric/impl/networking/PayloadTypeRegistryImpl;Lnet/fabricmc/fabric/impl/networking/VanillaPacketTypes;)V	CLASS	class gone
+extend	net/fabricmc/fabric/impl/networking/splitter/FabricPacketMerger			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/networking/splitter/FabricPacketMerger	<init>	(Lnet/minecraft/class_2543;Lnet/fabricmc/fabric/impl/networking/PayloadTypeRegistryImpl;Lnet/fabricmc/fabric/impl/networking/VanillaPacketTypes;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/networking/splitter/FabricPacketMerger	decode	(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/class_2596;Ljava/util/List;)V	CLASS	class gone
+new	net/fabricmc/fabric/impl/networking/splitter/FabricPacketSplitter	<init>	(Lnet/minecraft/class_2545;Lnet/fabricmc/fabric/impl/networking/PayloadTypeRegistryImpl;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/impl/networking/splitter/FabricPacketSplitter	genericPacketSplitter	(Lnet/minecraft/class_2960;Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/class_2545;Lnet/minecraft/class_2596;Ljava/util/function/Function;Ljava/util/function/Consumer;II)V	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/networking/splitter/FabricPacketSplitter	SAFE_S2C_SPLIT_SIZE	I	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/networking/splitter/FabricPacketSplitter	SAFE_C2S_SPLIT_SIZE	I	CLASS	class gone
+extend	net/fabricmc/fabric/impl/networking/splitter/FabricPacketSplitter			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/networking/splitter/FabricPacketSplitter	<init>	(Lnet/minecraft/class_2545;Lnet/fabricmc/fabric/impl/networking/PayloadTypeRegistryImpl;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/networking/splitter/FabricPacketSplitter	encode	(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/class_2596;Ljava/util/List;)V	CLASS	class gone
+new	net/fabricmc/fabric/impl/networking/splitter/FabricSplitPacketPayload	<init>	(Lio/netty/buffer/ByteBuf;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/FabricSplitPacketPayload	method_56479	()Lnet/minecraft/class_8710$class_9154;	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/FabricSplitPacketPayload	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/FabricSplitPacketPayload	hashCode	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/FabricSplitPacketPayload	equals	(Ljava/lang/Object;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/FabricSplitPacketPayload	byteBuf	()Lio/netty/buffer/ByteBuf;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/networking/splitter/FabricSplitPacketPayload	ID	Lnet/minecraft/class_8710$class_9154;	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/networking/splitter/FabricSplitPacketPayload	CODEC	Lnet/minecraft/class_9139;	CLASS	class gone
+new	net/fabricmc/fabric/impl/networking/splitter/PassthroughPacket	<init>	(Lio/netty/buffer/ByteBuf;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/PassthroughPacket	method_65080	()Lnet/minecraft/class_9145;	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/PassthroughPacket	method_65081	(Lnet/minecraft/class_2547;)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/PassthroughPacket	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/PassthroughPacket	hashCode	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/PassthroughPacket	equals	(Ljava/lang/Object;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/PassthroughPacket	buf	()Lio/netty/buffer/ByteBuf;	CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/splitter/SplittablePacket	fabric_split	(Lnet/fabricmc/fabric/impl/networking/PayloadTypeRegistryImpl;Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/class_2545;Lnet/minecraft/class_2596;Ljava/util/function/Consumer;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/networking/splitter/SplittablePacket			CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/FabricLifecycledResourceManager	fabric_getResourceType	()Lnet/minecraft/class_3264;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/resource/loader/FabricLifecycledResourceManager			CLASS	class gone
+call	net/fabricmc/fabric/impl/resource/loader/FabricRecipeManager	fabric_getRegistries	()Lnet/minecraft/class_7225$class_7874;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/resource/loader/FabricRecipeManager			CLASS	class gone
+call-static	net/fabricmc/fabric/impl/resource/loader/ModResourcePackUtil	getMetadataPack	(ILnet/minecraft/class_2561;)Lnet/minecraft/class_3272;	METHOD	method getMetadataPack(Lnet/minecraft/class_11555;Lnet/minecraft/class_2561;)Lnet/minecraft/class_3272; public static
+call-static	net/fabricmc/fabric/impl/resource/loader/ModResourcePackUtil	getMetadataPackJson	(ILnet/minecraft/class_2561;)Lcom/google/gson/JsonObject;	METHOD	method getMetadataPackJson(Lnet/minecraft/class_11555;Lnet/minecraft/class_2561;Lnet/minecraft/class_3264;)Lcom/google/gson/JsonObject; public static
+call-static	net/fabricmc/fabric/impl/resource/loader/ModResourcePackUtil	serializeMetadata	(ILjava/lang/String;)Ljava/lang/String;	METHOD	method serializeMetadata(Lnet/minecraft/class_11555;Ljava/lang/String;Lnet/minecraft/class_3264;)Ljava/lang/String; public static
+call-static	net/fabricmc/fabric/impl/resource/loader/ResourceManagerHelperImpl	sort	(Lnet/minecraft/class_3264;Ljava/util/List;)Ljava/util/List;	METHOD	method not declared on the owner
+new	net/fabricmc/fabric/impl/tag/TagAliasLoader	<init>	(Lnet/minecraft/class_7225$class_7874;)V	METHOD	constructors ()V
+call	net/fabricmc/fabric/impl/tag/TagAliasLoader	getFabricId	()Lnet/minecraft/class_2960;	METHOD	method not declared on the owner

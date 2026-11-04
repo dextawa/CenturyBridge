@@ -1,0 +1,5 @@
+usage	owner	name	desc	kinds	w
+implement-interface	net/fabricmc/fabric/impl/client/screen/ScreenExtensions			ABSTRACT	class public abstract interface extends java/lang/Object
+call-static	net/fabricmc/fabric/impl/resource/conditions/ResourceConditionsImpl	setTags	(Ljava/util/List;)V	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/impl/resource/conditions/ResourceConditionsImpl	tagsPopulated	(Lnet/minecraft/class_2960;Ljava/util/List;)Z	METHOD	method tagsPopulated(Lnet/minecraft/class_6903$class_7863;Lnet/minecraft/class_2960;Ljava/util/List;)Z public static
+get-static	net/fabricmc/fabric/impl/resource/conditions/ResourceConditionsImpl	LOADED_TAGS	Ljava/util/concurrent/atomic/AtomicReference;	FIELD	field not declared on the owner

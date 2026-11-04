@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # boot.sh <workDir> <mode>: step 1.21.1 -> 1.21.2 real-server check of the freeze fix (CbItemRegistries.method_40276,
 # Kilt's "Unbound tags" stop). <workDir> holds the compiled engine and the built 1.21.2 step layer (remote_step.sh).
-#   native-nolayer  cb-tfn (native 1.21.2) alone: vanilla refuses an unbound set, bindAllTagsToEmpty-then-freeze passes
+#   native-nolayer  cb-tfn (native 1.21.2) alone: vanilla refuses an unbound set, bindAllTagsToEmpty-then-freeze passes,
+#                   vanilla code refreezing a registry a mixin unfroze is refused ("Tags already present before freezing")
 #   native-layer    the same with the work dir's layer: must print the same lines
 #   conv            + cb-tf (built against 1.21.1) converted 1.21.1 -> 1.21.2 with the work dir's engine and wiring:
-#                   freeze passes, the never-bound tag empty, the bound tag keeps its holder
+#                   freeze passes, the never-bound tag empty, the bound tag keeps its holder; then freeze -> unfreeze ->
+#                   add -> freeze passes (1.21.1's refreeze, CbItemRegistries' redirect)
 # Run on beta2 from ~/cbwork. Server: <workDir>/srv-1.21.2, copied once from agents/skilteng/srv/srv-1.21.2
 # (CB_SRV_SRC to override).
 set -uo pipefail
