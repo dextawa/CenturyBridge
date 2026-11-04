@@ -24,3 +24,4 @@ accessible	field	net/minecraft/class_1060	field_5286	Ljava/util/Map;
 # members, given back so a converted mod's call, read or write links again
 accessible method net/minecraft/class_4264 method_48579 (Lnet/minecraft/class_332;IIF)V
 # ---- END GENERATED (smx1-renderwidget) ----
+accessible	field	net/minecraft/class_1086	field_64679	Lnet/minecraft/class_4990;
