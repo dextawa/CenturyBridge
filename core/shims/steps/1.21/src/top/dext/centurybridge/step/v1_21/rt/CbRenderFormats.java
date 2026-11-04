@@ -85,29 +85,31 @@ public final class CbRenderFormats {
             throw new IllegalStateException("1.21 registers at most 32 vertex format elements, and all are taken: a 1.20.6 element (index "
                 + index + ", " + type + ", " + usage + ", " + count + ") has no id");
         }
-        // The native constructor rejects a repeated non-UV usage. Construct with UV, then restore the
-        // actual usage through the record field and register exactly as method_60845 does.
-        net.minecraft.class_296 element = new net.minecraft.class_296(free, index, type,
+        if (index == 0 || usage == net.minecraft.class_296.class_298.field_1636) {
+            // what 1.21's constructor accepts: registered through 1.21's own register (method_60845), which every
+            // later release's step keeps (26.2: CbS205fElements#register) -- never its private BY_ID / ELEMENTS
+            return net.minecraft.class_296.method_60845(free, index, type, usage, count);
+        }
+        // The native constructor rejects a repeated non-UV usage at index > 0. Register with UV, then restore the
+        // actual usage through the record field (the registered object is the one byId answers).
+        net.minecraft.class_296 element = net.minecraft.class_296.method_60845(free, index, type,
             net.minecraft.class_296.class_298.field_1636, count);
         try {
-            USAGE_FIELD.set(element, usage);
+            usageField().set(element, usage);
         } catch (IllegalAccessException e) {
             throw new IllegalStateException("cannot retain duplicate vertex usage " + usage, e);
         }
-        net.minecraft.class_296.field_52114[free] = element;
-        net.minecraft.class_296.field_52115.add(element);
         return element;
     }
 
-    private static final java.lang.reflect.Field USAGE_FIELD = usageField();
-
+    /** looked up on use only: a failure must not take the whole class (every other format bridge) with it */
     private static java.lang.reflect.Field usageField() {
         try {
             java.lang.reflect.Field field = net.minecraft.class_296.class.getDeclaredField("comp_2845");
             field.setAccessible(true);
             return field;
         } catch (NoSuchFieldException e) {
-            throw new ExceptionInInitializerError(e);
+            throw new IllegalStateException("1.21 VertexFormatElement has no usage field comp_2845", e);
         }
     }
 
@@ -182,9 +184,19 @@ public final class CbRenderFormats {
 
     /** new VertexFormat(elements) of 1.20.6: the native constructor over the old lists, including duplicate usages */
     public static net.minecraft.class_293 cbNewFormat(ImmutableMap<String, net.minecraft.class_296> elements) {
-        // The builder rejects a repeated usage, while V accepted it and the underlying record preserves it.
-        return new net.minecraft.class_293(cbFormatElements(elements), cbFormatNames(elements),
-            cbFormatOffsets(elements), cbFormatSize(elements));
+        // 1.21's builder (method_60833) places exactly what 1.20.6's constructor did: each element at the running
+        // offset (method_60842 add), a padding element only advancing it (method_60841 padding); it checks no usage,
+        // so V's duplicate usages pass. The builder is what later releases keep (26.2: CbS205fBlaze3d builder / add /
+        // padding), not the private constructor
+        net.minecraft.class_293.class_9803 b = net.minecraft.class_293.method_60833();
+        for (Map.Entry<String, net.minecraft.class_296> e : elements.entrySet()) {
+            if (e.getValue() == field_1578) {
+                b.method_60841(e.getValue().method_60847());
+            } else {
+                b.method_60842(e.getKey(), e.getValue());
+            }
+        }
+        return b.method_60840();
     }
 
     /** the super(elements) of a 1.20.6 VertexFormat subclass: the elements 1.21's constructor takes (padding is none) */

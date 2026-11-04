@@ -1,0 +1,6 @@
+{
+ "_s121i_globalbe_basis": "SectionCompiler.Results.globalBlockEntities (field_52166) is gone in 1.21.6 (javap of both Results; damage row get field_52166). 1.21.5's handleBlockEntity added a block entity whose renderer shouldRenderOffScreen() there; 1.21.6's skips it (ClientLevel.onBlockEntityAdded keeps it in its globallyRenderedBlockEntities set, the same test). The layer restores the list on Results (CbSectionResultsRestoredMixin) and fills it at handleBlockEntity's head with 1.21.5's test (CbSectionResultsRestoredMixinHooks); a converted read gets that list. Asked for by main: the climbed 1.21 layer's CompileResults reads it (BLIND FIELD from 1.21.6 on).",
+ "instanceFieldGetters": {
+  "net/minecraft/class_9810$class_9811.field_52166:Ljava/util/List;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6SectionField#field_52166"
+ }
+}

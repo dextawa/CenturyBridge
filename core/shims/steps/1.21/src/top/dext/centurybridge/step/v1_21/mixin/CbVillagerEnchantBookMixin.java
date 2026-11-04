@@ -53,8 +53,8 @@ public abstract class CbVillagerEnchantBookMixin implements CbEnchantBookTrades.
     }
 
     /** the tag's members as the 1.20.6 objects (CbEnchantments.cbEnchantment), in the tag's order; a 1.20.6 list, as given */
-    @Unique
-    private List<class_1887> cb$tradeable() {
+    @Override
+    public List<class_1887> cb$tradeable() {
         if (this.cb$explicit != null) {
             return this.cb$explicit;
         }
