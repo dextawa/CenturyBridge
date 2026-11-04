@@ -1,0 +1,2 @@
+usage	owner	name	desc	kinds	w
+implement-interface	net/fabricmc/fabric/impl/client/screen/ScreenExtensions			ABSTRACT	class public abstract interface extends java/lang/Object

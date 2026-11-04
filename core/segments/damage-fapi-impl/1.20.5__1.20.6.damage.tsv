@@ -1,0 +1,14 @@
+usage	owner	name	desc	kinds	w
+call	net/fabricmc/fabric/impl/client/itemgroup/CreativeGuiExtensions	fabric_nextPage	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/itemgroup/CreativeGuiExtensions	fabric_previousPage	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/itemgroup/CreativeGuiExtensions	fabric_currentPage	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/itemgroup/CreativeGuiExtensions	fabric_isButtonVisible	(Lnet/fabricmc/fabric/impl/client/itemgroup/FabricCreativeGuiComponents$Type;)Z	CLASS	class gone
+call	net/fabricmc/fabric/impl/client/itemgroup/CreativeGuiExtensions	fabric_isButtonEnabled	(Lnet/fabricmc/fabric/impl/client/itemgroup/FabricCreativeGuiComponents$Type;)Z	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/client/itemgroup/CreativeGuiExtensions			CLASS	class gone
+new	net/fabricmc/fabric/impl/client/itemgroup/FabricCreativeGuiComponents$ItemGroupButtonWidget	<init>	(IILnet/fabricmc/fabric/impl/client/itemgroup/FabricCreativeGuiComponents$Type;Lnet/fabricmc/fabric/impl/client/itemgroup/CreativeGuiExtensions;)V	METHOD	constructors (IILnet/fabricmc/fabric/impl/client/itemgroup/FabricCreativeGuiComponents$Type;Lnet/minecraft/class_481;)V
+super-ctor	net/fabricmc/fabric/impl/client/itemgroup/FabricCreativeGuiComponents$ItemGroupButtonWidget	<init>	(IILnet/fabricmc/fabric/impl/client/itemgroup/FabricCreativeGuiComponents$Type;Lnet/fabricmc/fabric/impl/client/itemgroup/CreativeGuiExtensions;)V	METHOD	constructors (IILnet/fabricmc/fabric/impl/client/itemgroup/FabricCreativeGuiComponents$Type;Lnet/minecraft/class_481;)V
+call	net/fabricmc/fabric/impl/itemgroup/FabricItemGroup	getPage	()I	CLASS	class gone
+call	net/fabricmc/fabric/impl/itemgroup/FabricItemGroup	setPage	(I)V	CLASS	class gone
+get-static	net/fabricmc/fabric/impl/itemgroup/FabricItemGroup	TABS_PER_PAGE	I	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/itemgroup/FabricItemGroup			CLASS	class gone
+call	net/fabricmc/fabric/impl/networking/client/ClientConfigurationNetworkAddon	handleReady	()V	METHOD	method not declared on the owner
