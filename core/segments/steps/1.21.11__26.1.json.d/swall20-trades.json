@@ -3,6 +3,7 @@
   "classRenames": {
     "net/minecraft/class_3853$class_4166": "top/dext/centurybridge/step/v26_1/facade/VillagerTrades$SuspiciousStewForEmerald",
     "net/minecraft/class_3853$class_1648": "top/dext/centurybridge/step/v26_1/facade/VillagerTrades$EnchantBookForEmeralds",
+    "net/minecraft/class_3853$class_4164": "top/dext/centurybridge/step/v26_1/facade/VillagerTrades$ItemsAndEmeraldsToItems",
     "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookTrades$Explicit": "top/dext/centurybridge/step/v26_1/rt/CbWallEnchantBookPicks$Explicit",
     "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookPicks": "top/dext/centurybridge/step/v26_1/rt/CbWallEnchantBookPicks",
     "top/dext/centurybridge/step/v1_21/rt/CbEnchantBookPicks$Hook": "top/dext/centurybridge/step/v26_1/rt/CbWallEnchantBookPicks$Hook"
@@ -19,9 +20,13 @@
   "callReshapes": {
     "net/minecraft/class_3853$class_1648.method_59891(Lnet/minecraft/class_5819;Lnet/minecraft/class_7699;)Ltop/dext/centurybridge/step/v1_21/facade/class_1887;": {
       "desc": "(Lnet/minecraft/class_5819;Lnet/minecraft/class_7699;)Ljava/lang/Object;",
-      "ops": ["keep", "keep"],
+      "ops": [
+        "keep",
+        "keep"
+      ],
       "ret": "as Ltop/dext/centurybridge/step/v1_21/facade/class_1887;",
       "basis": "a 1.20.6 mod's call of getRandomEnchantment (method_59891, public on 1.21 to 1.21.11 through CbVillagerEnchantBookMixin) after the 1.20.6__1.21 rename of class_1887 to the 1.21 layer's facade: the 26.1 facade's method_59891 runs the same pick (rt/CbEnchantBookPick through the installed hook) and answers it as Object, because the 26.1 layer is compiled without the 1.21 layer; the call site casts back to the 1.21 layer's class_1887, which the converted mod's own bytecode already references (the old descriptor's return type)"
     }
-  }
+  },
+  "_swall21_itemsAndEmeralds": "swall21 (s121i's 26.x finding, main's go-ahead): 1.21.11's VillagerTrades.ItemsAndEmeraldsToItems (class_3853$class_4164) is gone from 26.1 (whole-jar: client-26.1 and 26.1.2 have no VillagerTrades$ItemsAndEmeraldsToItems; VillagerTrades moved to world/item/trading and keeps only $VillagerExplorerMapEntry). Mods' references, and the 1.21 layer's rt/CbEnchantBookTrades.cbNewItemsAndEmeralds (the ctorRedirect target of 1.20.6's 6-argument constructor, calling 1.21's 7-argument one), go to the 26.1 layer's facade/VillagerTrades$ItemsAndEmeraldsToItems: 1.21.11's seven fields, four constructors (all public) and getOffer body over 26.1's ItemCost / MerchantOffer / EnchantmentHelper.enchantItemFromProvider"
 }

@@ -19,8 +19,11 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.providers.EnchantmentProvider;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.component.SuspiciousStewEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -87,6 +90,66 @@ public class VillagerTrades {
             ItemStack stew = new ItemStack(Items.SUSPICIOUS_STEW, 1);
             stew.set(DataComponents.SUSPICIOUS_STEW_EFFECTS, this.field_45756);
             return new MerchantOffer(new ItemCost(Items.EMERALD), stew, 12, this.field_18579, this.field_18580);
+        }
+    }
+
+    /**
+     * 1.21.11's VillagerTrades.ItemsAndEmeraldsToItems (net/minecraft/class_3853$class_4164): fields, constructors and
+     * getOffer are 1.21.11's (javap of client-1.21.11-intermediary-code.jar) over 26.1's same item, cost, offer and
+     * enchantment-provider classes. Every constructor is public (a facade's surface is; 1.21.11's ItemStack one was
+     * private and its provider one package-private).
+     */
+    public static class ItemsAndEmeraldsToItems implements ItemListing {
+        /** fromItem */
+        public final ItemCost field_18563;
+        /** emeraldCost */
+        public final int field_18565;
+        /** toItem */
+        public final ItemStack field_18566;
+        /** maxUses */
+        public final int field_18568;
+        /** villagerXp */
+        public final int field_18569;
+        /** priceMultiplier */
+        public final float field_18570;
+        /** enchantmentProvider */
+        public final Optional<ResourceKey<EnchantmentProvider>> field_51618;
+
+        public ItemsAndEmeraldsToItems(ItemLike fromItem, int fromCount, int emeraldCost, Item toItem, int toCount,
+                int maxUses, int villagerXp, float priceMultiplier) {
+            this(fromItem, fromCount, emeraldCost, new ItemStack(toItem), toCount, maxUses, villagerXp, priceMultiplier);
+        }
+
+        public ItemsAndEmeraldsToItems(ItemLike fromItem, int fromCount, int emeraldCost, ItemStack toItem, int toCount,
+                int maxUses, int villagerXp, float priceMultiplier) {
+            this(new ItemCost(fromItem, fromCount), emeraldCost, toItem.copyWithCount(toCount), maxUses, villagerXp,
+                priceMultiplier, Optional.empty());
+        }
+
+        public ItemsAndEmeraldsToItems(ItemLike fromItem, int fromCount, int emeraldCost, ItemLike toItem, int toCount,
+                int maxUses, int villagerXp, float priceMultiplier, ResourceKey<EnchantmentProvider> enchantmentProvider) {
+            this(new ItemCost(fromItem, fromCount), emeraldCost, new ItemStack(toItem, toCount), maxUses, villagerXp,
+                priceMultiplier, Optional.of(enchantmentProvider));
+        }
+
+        public ItemsAndEmeraldsToItems(ItemCost fromItem, int emeraldCost, ItemStack toItem, int maxUses, int villagerXp,
+                float priceMultiplier, Optional<ResourceKey<EnchantmentProvider>> enchantmentProvider) {
+            this.field_18563 = fromItem;
+            this.field_18565 = emeraldCost;
+            this.field_18566 = toItem;
+            this.field_18568 = maxUses;
+            this.field_18569 = villagerXp;
+            this.field_18570 = priceMultiplier;
+            this.field_51618 = enchantmentProvider;
+        }
+
+        @Override
+        public MerchantOffer method_7246(ServerLevel level, Entity trader, RandomSource random) {
+            ItemStack result = this.field_18566.copy();
+            this.field_51618.ifPresent(provider -> EnchantmentHelper.enchantItemFromProvider(result, level.registryAccess(),
+                provider, level.getCurrentDifficultyAt(trader.blockPosition()), random));
+            return new MerchantOffer(new ItemCost(Items.EMERALD, this.field_18565), Optional.of(this.field_18563), result, 0,
+                this.field_18568, this.field_18569, this.field_18570);
         }
     }
 
