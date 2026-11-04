@@ -35,7 +35,15 @@ FAPI=$(ls data/runtime/client-$W/mods/fabric-api-*.jar 2>/dev/null | head -1)
 # the step's own bridge wiring (step 1 is the 1.20.2 tree's shims-1.20.2.json)
 WIRING="$WD/core/segments/steps/$SEG.json"
 [ "$SEG" = "1.20.1__1.20.2" ] && WIRING="$WD/core/segments/shims-1.20.2.json"
-"$JAVA" -Xmx16g -Dcb.wiring="$WIRING" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/conv" \
+# the step's own layer, as a climb reads it (climb_mods.sh -Dcb.layersDir, mixin_step.sh -Dcb.layerJar): the members its
+# mixins restore on W's classes are declared there at runtime, so a site naming one stays a call (JarProcessor
+# layerRestorer) instead of being judged missing on W's stub and tombstoned. CB_STEP_NO_LAYER=1 measures without it.
+LAYER="$WD/build/centurybridge-0.3.0+$W.jar"
+[ -f "$LAYER" ] || { echo "no layer jar $LAYER (build.sh builds it before step_check)"; exit 1; }
+LAYERPROP="-Dcb.layerJar=$LAYER"
+# (cb.noLayer is read by nothing: it only keeps the java argument non-empty)
+[ "${CB_STEP_NO_LAYER:-}" = 1 ] && LAYERPROP="-Dcb.noLayer=1"
+"$JAVA" -Xmx16g -Dcb.wiring="$WIRING" "$LAYERPROP" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/conv" \
     "$PROBES/$SEG/probe-$V.jar" > "$OUT/convert.log" 2>&1 || { echo "convert failed"; tail -5 "$OUT/convert.log"; exit 1; }
 # the separately released mods the layer depends on (build.sh built them into build/deps/): on the runtime like the layer
 DEPS=$(ls "$WD"/build/deps/*.jar 2>/dev/null)
