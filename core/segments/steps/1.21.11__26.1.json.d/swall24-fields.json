@@ -2,7 +2,14 @@
  "_swall24_guiatlas_basis": "1.21.11 GuiRenderer (class_11228) item-atlas fields moved into 26.1's GuiItemAtlas (GuiRenderer.itemAtlas): reads answered there (rt/CbWallGuiAtlasFields has the javap basis). Left open: the four texture writes (26.1 fields final, atlas built only by its constructor), itemAtlasX/itemAtlasY (26.1 allocates slots through DynamicAtlasAllocator, no cursor), atlasPositions (Map<Object, AtlasPosition>, AtlasPosition class gone), frameNumber (no counter in 26.1).",
  "fieldGetters": {
   "net/minecraft/class_11228.field_59910:I": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#maximumItemAtlasSize",
-  "net/minecraft/class_3485.field_52244:Lnet/minecraft/class_7654;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#resourceLister"
+  "net/minecraft/class_3485.field_52244:Lnet/minecraft/class_7654;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#resourceLister",
+  "net/minecraft/class_4722.field_21724:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#shulkerBoxSheetType",
+  "net/minecraft/class_4722.field_21725:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#bedSheetType",
+  "net/minecraft/class_4722.field_21726:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#bannerSheetType",
+  "net/minecraft/class_4722.field_21727:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#shieldSheetType",
+  "net/minecraft/class_4722.field_21728:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#signSheetType",
+  "net/minecraft/class_4722.field_21729:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#chestSheetType",
+  "net/minecraft/class_4722.field_21700:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheetTypes#solidBlockSheet"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_11228.field_59919:Lcom/mojang/blaze3d/textures/GpuTexture;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlas",
@@ -17,5 +24,6 @@
  "_swall24_templates_basis": "1.21.11 StructureTemplateManager (class_3485) fixerUpper/blockLookup/resourceManager/generatedDir/RESOURCE_LISTER answered from 26.1's ResourceManagerTemplateSource, worldTemplates and RESOURCE_STRUCTURE_LISTER (javap basis in rt/CbWallTemplateManagerFields). The private load/list helpers (TOMBSTONE rows) stay open.",
  "instanceFieldSetters": {
   "net/minecraft/class_3485.field_25189:Lnet/minecraft/class_3300;": "top/dext/centurybridge/step/v26_1/rt/CbWallTemplateManagerFields#setResourceManager"
- }
+ },
+ "_swall24_sheets_basis": "1.21.11 Sheets (class_4722) *_SHEET_TYPE / SOLID_BLOCK_SHEET: the same RenderTypes factory call on the same sheet id as 1.21.11's clinit (rt/CbWallSheetTypes). Sheets.chooseMaterial (TOMBSTONE row) stays open."
 }
