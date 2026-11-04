@@ -28,7 +28,7 @@
    "old": "method_21018()Lnet/minecraft/class_4882;",
    "new": "method_21018()Lnet/minecraft/class_4881;",
    "onlyUnder": "net/minecraft/class_4341",
-   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbRealms.getLiveStats(Ltop/dext/centurybridge/step/v1_21/rt/CbRealms$LegacyLiveStats;)Ltop/dext/centurybridge/step/v1_21/facade/class_4881;",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbRealms.getLiveStats(Ltop/dext/centurybridge/step/v1_21/rt/CbRealms$LegacyLiveStats;)Lnet/minecraft/class_4881;",
    "adapter": "top/dext/centurybridge/step/v1_21/rt/CbRealms$LegacyLiveStats",
    "basis": "1.20.6 getLiveStats returned server-id/UUID lists; 1.21 returns the same lists with profiles resolved. The old override keeps its V shape, super calls keep V's request/parse, and the bridge converts its answer through W's own profile-resolving parser"
   },

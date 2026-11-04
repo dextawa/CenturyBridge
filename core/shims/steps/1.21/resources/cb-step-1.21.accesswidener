@@ -12,9 +12,6 @@ extendable	method	net/minecraft/class_1535 toString ()Ljava/lang/String;
 extendable	method	net/minecraft/class_783 equals (Ljava/lang/Object;)Z
 extendable	method	net/minecraft/class_783 hashCode ()I
 extendable	method	net/minecraft/class_783 toString ()Ljava/lang/String;
-accessible	method	net/minecraft/class_293 <init> (Ljava/util/List;Ljava/util/List;Lit/unimi/dsi/fastutil/ints/IntList;I)V
-accessible	field	net/minecraft/class_296 field_52114 [Lnet/minecraft/class_296;
-accessible	field	net/minecraft/class_296 field_52115 Ljava/util/List;
 
 # ---- BEGIN GENERATED (s6world): access narrowed at this step (core/tools/step_access_aw.py) ----
 # members a mod of the previous release could reach that this release narrowed: the same
@@ -76,6 +73,28 @@ accessible method net/minecraft/class_1321 method_60716 ()Z
 # write of the restored 1.20.6 Mob.leashHolder / delayedLeashInfo mirror stands for when the mob has none (s121d)
 accessible method net/minecraft/class_9817$class_9818 <init> (Lnet/minecraft/class_1297;)V
 accessible method net/minecraft/class_9817$class_9818 <init> (Lcom/mojang/datafixers/util/Either;)V
+
+# SectionRenderDispatcher.sectionCompiler, SectionCompiler.handleBlockEntity and RebuildTask (package-private / private):
+# rt/CbSectionCompile serves a converted mod's calls of 1.20.6's RebuildTask.compile / handleBlockEntity on 1.21's
+# SectionCompiler (s121 C20; RebuildTask / RenderSection fields through CbRenderRebuildTaskAccess / CbRenderSectionAccess)
+accessible class net/minecraft/class_846$class_851$class_4578
+accessible field net/minecraft/class_846 field_52171 Lnet/minecraft/class_9810;
+accessible method net/minecraft/class_9810 method_60902 (Lnet/minecraft/class_9810$class_9811;Lnet/minecraft/class_2586;)V
+
+# BlockStateModelLoader's static helpers and tables (private / package-private): 1.20.6 ModelBakery's predicate,
+# getValueHelper, splitters, item-frame state definitions and group ids moved there unchanged (javap: same bodies and
+# initializers); a converted mod's access-widened calls / reads of the ModelBakery members are redirected to them (s121h)
+accessible method net/minecraft/class_9824 method_61057 (Lnet/minecraft/class_2689;Ljava/lang/String;)Ljava/util/function/Predicate;
+accessible method net/minecraft/class_9824 method_61058 (Lnet/minecraft/class_2769;Ljava/lang/String;)Ljava/lang/Comparable;
+accessible field net/minecraft/class_9824 field_52259 I
+accessible field net/minecraft/class_9824 field_52262 I
+accessible field net/minecraft/class_9824 field_52263 Lcom/google/common/base/Splitter;
+accessible field net/minecraft/class_9824 field_52264 Lcom/google/common/base/Splitter;
+accessible field net/minecraft/class_9824 field_52265 Lnet/minecraft/class_2689;
+accessible field net/minecraft/class_9824 field_52266 Ljava/util/Map;
+
+# VillagerTrades.ItemsAndEmeraldsToItems (package-private class): CbEnchantBookTrades builds it for 1.20.6's 6-argument constructor (s121h)
+accessible class net/minecraft/class_3853$class_4164
 
 # s121g: EnchantmentHelper.EnchantmentVisitor (package-private on 1.21), named by CbEnchantmentHelper.visitor (the method_8220 mixinTargets wrap)
 accessible class net/minecraft/class_1890$class_1891

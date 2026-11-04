@@ -44,6 +44,58 @@ public final class Counters {
     private Counters() {
     }
 
+    /**
+     * 1.20.6 RebuildTask.compile(x, y, z, pack) and handleBlockEntity(results, blockEntity), private, reached through this
+     * mod's access widener (damage-aw 1.20.6__1.21, aw-call): a task over a fresh RenderSection at the section holding
+     * the chest at (cx, cy, cz), its region made as 1.20.6's createCompileTask made it, compiled from the camera position.
+     * Render thread. Answers {layers, chest block entities in blockEntities, visibilitySet set, sort state (-1 none, 1 a
+     * QUADS state whose vertex count is four per point, 0 another), handleBlockEntity added the chest (1/0), the
+     * translucent layer present (1/0)}. Every rendered buffer is released and the pack closed: the caller owns them.
+     */
+    public static int[] compileProbe(int cx, int cy, int cz) {
+        net.minecraft.class_310 mc = net.minecraft.class_310.method_1551();
+        net.minecraft.class_846 dispatcher = mc.field_1769.method_34810();
+        int ox = net.minecraft.class_4076.method_18675(cx) * 16, oy = net.minecraft.class_4076.method_18675(cy) * 16,
+            oz = net.minecraft.class_4076.method_18675(cz) * 16;
+        net.minecraft.class_846.class_851 section = dispatcher.new class_851(0, ox, oy, oz);
+        net.minecraft.class_2338 origin = new net.minecraft.class_2338(ox, oy, oz);
+        net.minecraft.class_853 region = new net.minecraft.class_6850().method_39969(mc.field_1687, origin.method_10069(-1, -1, -1),
+            origin.method_10069(16, 16, 16), 1);
+        net.minecraft.class_846.class_851.class_4578 task = section.new class_4578(0.0, region, false);
+        net.minecraft.class_243 eye = mc.field_1724.method_33571();
+        net.minecraft.class_750 pack = new net.minecraft.class_750();
+        try {
+            net.minecraft.class_846.class_851.class_4578.class_7435 res = task.method_22785((float) eye.field_1352, (float) eye.field_1351,
+                (float) eye.field_1350, pack);
+            int chests = 0;
+            for (net.minecraft.class_2586 be : res.field_39080) {
+                chests += be instanceof net.minecraft.class_2595 ? 1 : 0;
+            }
+            int sort = -1;
+            net.minecraft.class_287.class_5594 st = res.field_39083;
+            if (st != null) {
+                sort = st.field_27358 == net.minecraft.class_293.class_5596.field_27382 && st.field_27360.length > 0
+                    && st.field_27359 == st.field_27360.length * 4 ? 1 : 0;
+            }
+            int translucent = res.field_39081.containsKey(net.minecraft.class_1921.method_23583()) ? 1 : 0;
+            int layers = res.field_39081.size();
+            for (net.minecraft.class_287.class_7433 b : res.field_39081.values()) {
+                b.method_43585();
+            }
+            net.minecraft.class_846.class_851.class_4578.class_7435 fresh = new net.minecraft.class_846.class_851.class_4578.class_7435();
+            net.minecraft.class_2586 chest = mc.field_1687.method_8321(new net.minecraft.class_2338(cx, cy, cz));
+            int handled = 0;
+            if (chest != null) {
+                task.method_23087(fresh, chest);
+                handled = fresh.field_39080.contains(chest) ? 1 : 0;
+            }
+            return new int[] {layers, chests, res.field_39082 != null ? 1 : 0, sort, handled, translucent};
+        } finally {
+            pack.close();
+            section.method_3659();
+        }
+    }
+
     /** the location bakeFaceProbe hands BlockModel.bakeFace; FaceBakeryMixin.cb$count records it in LOCATIONS */
     public static final String PROBE_LOCATION = "cb_smx6c:block/aw_probe";
 

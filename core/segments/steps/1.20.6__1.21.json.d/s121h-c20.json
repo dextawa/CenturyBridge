@@ -1,0 +1,7 @@
+{
+ "_s121h_c20_basis": "s121 C20 (shape agreed with smixin18, queue_smx6.md 'C20 (a) 形状改定'): 1.20.6 RebuildTask.compile (method_22785) and handleBlockEntity (method_23087), private, reached by a converted mod through its access widener, are served by rt/CbSectionCompile statics on 1.21's SectionCompiler (method_60904 / method_60902). Nothing is restored on RebuildTask, so a 1.20.6 mod's injectors there follow smixin18's mixinMoves into SectionCompiler. CompileResults (class_7435) is a classRename to facade/CompileResults in s6client.json.",
+ "instanceRedirects": {
+  "net/minecraft/class_846$class_851$class_4578.method_22785(FFFLnet/minecraft/class_750;)Lnet/minecraft/class_846$class_851$class_4578$class_7435;": "top/dext/centurybridge/step/v1_21/rt/CbSectionCompile#compile",
+  "net/minecraft/class_846$class_851$class_4578.method_23087(Lnet/minecraft/class_846$class_851$class_4578$class_7435;Lnet/minecraft/class_2586;)V": "top/dext/centurybridge/step/v1_21/rt/CbSectionCompile#handleBlockEntity"
+ }
+}

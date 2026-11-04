@@ -44,4 +44,9 @@ public final class CbPrioritySplit {
     public interface RealmsConfigureWorldLayout {
         void cb$v1_21_6$layout(int width);
     }
+
+    /** CbSectionResultsRestoredMixin: 1.21.5's Results.globalBlockEntities, filled by CbSectionResultsRestoredMixinHooks */
+    public interface SectionGlobalBlockEntities {
+        java.util.List<net.minecraft.class_2586> cb$v1_21_6$globalBlockEntities();
+    }
 }
