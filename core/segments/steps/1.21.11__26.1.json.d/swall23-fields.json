@@ -68,7 +68,19 @@
   "net/minecraft/class_757.field_3998:J": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#lastActiveTime",
   "net/minecraft/class_757.field_4025:F": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#renderDistance",
   "net/minecraft/class_761.field_62945:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#captureFrustum",
-  "net/minecraft/class_761.field_4056:Lnet/minecraft/class_4604;": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#capturedFrustum"
+  "net/minecraft/class_761.field_4056:Lnet/minecraft/class_4604;": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#capturedFrustum",
+  "net/minecraft/class_4495.field_20512:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#beeLeftAntenna",
+  "net/minecraft/class_4495.field_20513:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#beeRightAntenna",
+  "net/minecraft/class_624.field_20788:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#wolfRealHead",
+  "net/minecraft/class_624.field_20789:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#wolfRealTail",
+  "net/minecraft/class_624.field_3619:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#wolfUpperBody",
+  "net/minecraft/class_614.field_3594:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#turtleEggBelly",
+  "net/minecraft/class_4997.field_27515:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#striderRightBottomBristle",
+  "net/minecraft/class_4997.field_27516:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#striderRightMiddleBristle",
+  "net/minecraft/class_4997.field_27517:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#striderRightTopBristle",
+  "net/minecraft/class_4997.field_27518:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#striderLeftTopBristle",
+  "net/minecraft/class_4997.field_27519:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#striderLeftMiddleBristle",
+  "net/minecraft/class_4997.field_27520:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelParts#striderLeftBottomBristle"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_1257.field_5760:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallWorldUpgrader#setRunning",
@@ -97,5 +109,6 @@
   "net/minecraft/class_761.field_4056:Lnet/minecraft/class_4604;": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#setCapturedFrustum"
  },
  "_swall23_status_open": "WorldUpgrader.status (class_1257.field_5765) is wired for reads only: 26.1 computes the shown status from UpgradeProgress (UpgradeStatusTranslator), so a written component would reach nothing 26.1 shows; the aw-put row stays open (needs a getStatus hook, not done)",
- "_swall23_client_basis": "GameRenderer fovModifier/oldFovModifier -> Camera (tickFov same body), lastActiveTime -> Minecraft.lastActiveTime (same stamp/500ms test), renderDistance read-only (1.21.11 reset it each frame to effective render distance*16; its aw-put row stays open), LevelRenderer captureFrustum/capturedFrustum -> Camera, EditBox/MultiLineEditBox cursor constants -> TextCursorUtils values, EditBox.filter -> the layer's restored filter (CbWallEditBoxFilter). javap evidence in rt/CbWallClientFields."
+ "_swall23_client_basis": "GameRenderer fovModifier/oldFovModifier -> Camera (tickFov same body), lastActiveTime -> Minecraft.lastActiveTime (same stamp/500ms test), renderDistance read-only (1.21.11 reset it each frame to effective render distance*16; its aw-put row stays open), LevelRenderer captureFrustum/capturedFrustum -> Camera, EditBox/MultiLineEditBox cursor constants -> TextCursorUtils values, EditBox.filter -> the layer's restored filter (CbWallEditBoxFilter). javap evidence in rt/CbWallClientFields.",
+ "_swall23_modelparts_basis": "Bee/Wolf/Turtle/Strider part fields 26.1 moved into AdultBeeModel / AdultWolfModel / AdultTurtleModel / AdultStriderModel (same names); a 26.1 Baby* model (new geometry without these parts) answers a detached empty part (loss, release_notes_known.md). rt/CbWallModelParts."
 }

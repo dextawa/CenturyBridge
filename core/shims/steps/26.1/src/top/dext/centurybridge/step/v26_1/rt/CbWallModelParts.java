@@ -1,121 +1,88 @@
 package top.dext.centurybridge.step.v26_1.rt;
 
-import java.util.stream.IntStream;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.Camera;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import net.minecraft.client.renderer.texture.SpriteContents;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.ModelBaker;
-import net.minecraft.client.resources.model.ModelDebugName;
-import net.minecraft.client.resources.model.ResolvedModel;
-import net.minecraft.client.resources.model.sprite.Material;
-import net.minecraft.client.resources.model.sprite.SpriteId;
-import net.minecraft.client.resources.model.sprite.TextureSlots;
+import net.minecraft.client.model.animal.bee.AdultBeeModel;
+import net.minecraft.client.model.animal.bee.BeeModel;
+import net.minecraft.client.model.animal.turtle.AdultTurtleModel;
+import net.minecraft.client.model.animal.turtle.TurtleModel;
+import net.minecraft.client.model.animal.wolf.AdultWolfModel;
+import net.minecraft.client.model.animal.wolf.WolfModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.monster.strider.AdultStriderModel;
+import net.minecraft.client.model.monster.strider.StriderModel;
 
 /**
- * 1.21.11 model/texture/block-entity members 26.1 reshaped (javap of both):
- * <ul>
- * <li>ResolvedModel.resolveParticleSprite(slots, baker[, name]) answered the particle slot's sprite; 26.1's
- * resolveParticleMaterial answers the slot's baked material, whose sprite() it is;</li>
- * <li>TextureSlots.Data.Builder.addTexture(name, material) took 1.21.11's Material (an atlas and a texture,
- * 26.1's SpriteId); 26.1's takes the model Material, which names the sprite by its texture alone (its atlas is
- * the one the model's sprites are baked from) -- the texture of the SpriteId, not forced translucent;</li>
- * <li>SpriteContents.getUniqueFrames() answered an IntStream; 26.1's answers the same frames as an IntList;</li>
- * <li>BlockEntityRenderDispatcher.prepare(camera) kept the camera's position; 26.1's prepare takes the position.</li>
- * </ul>
- * Each: a mod's call reaches a 1.21.11 override when its class declares one (adapterHooks), else 1.21.11's
- * body on 26.1's member; a 1.21.11 override's super call is 1.21.11's body.
+ * 1.21.11 model part fields (opened by access wideners) 26.1 moved from the model class into its Adult* subclass
+ * (javap 26.1: BeeModel / WolfModel / TurtleModel / StriderModel are abstract, AdultBeeModel.leftAntenna / rightAntenna,
+ * AdultWolfModel.realHead / realTail / upperBody, AdultTurtleModel.eggBelly, AdultStriderModel's six bristles hold the
+ * same parts under the same names). An adult model answers its own part.
+ * <p>
+ * 1.21.11's baby was the adult mesh scaled (MeshTransformer), so a baby model had these parts too; 26.1's Baby* models
+ * are new geometry without them (BabyStriderModel has bristle0..2, the others none). A baby model answers a detached
+ * part with no cubes, one per model and field, so reads and pose writes work but draw nothing (a recorded loss).
  */
 @Environment(EnvType.CLIENT)
 public final class CbWallModelParts {
     private CbWallModelParts() {
     }
 
-    // ---- ResolvedModel.resolveParticleSprite ----
+    private static final Map<Object, Map<String, ModelPart>> DETACHED = Collections.synchronizedMap(new WeakHashMap<>());
 
-    /** 1.21.11's ResolvedModel.resolveParticleSprite(slots, baker), declared by a mod's model (adapterHooks) */
-    public interface LegacyParticleSprite {
-        TextureAtlasSprite resolveParticleSprite(TextureSlots slots, ModelBaker baker);
+    private static ModelPart detached(Object model, String field) {
+        return DETACHED.computeIfAbsent(model, m -> Collections.synchronizedMap(new java.util.HashMap<>()))
+            .computeIfAbsent(field, f -> new ModelPart(List.of(), Map.of()));
     }
 
-    /** 1.21.11 static ResolvedModel.resolveParticleSprite(slots, baker, name) */
-    public static TextureAtlasSprite resolveParticleSprite(TextureSlots slots, ModelBaker baker, ModelDebugName name) {
-        return ResolvedModel.resolveParticleMaterial(slots, baker, name).sprite();
+    public static ModelPart beeLeftAntenna(BeeModel m) {
+        return m instanceof AdultBeeModel a ? a.leftAntenna : detached(m, "leftAntenna");
     }
 
-    /** a mod's call of model.resolveParticleSprite(slots, baker) */
-    public static TextureAtlasSprite resolveParticleSprite(ResolvedModel model, TextureSlots slots, ModelBaker baker) {
-        if (model instanceof LegacyParticleSprite legacy) {
-            return legacy.resolveParticleSprite(slots, baker);
-        }
-        return superResolveParticleSprite(model, slots, baker);
+    public static ModelPart beeRightAntenna(BeeModel m) {
+        return m instanceof AdultBeeModel a ? a.rightAntenna : detached(m, "rightAntenna");
     }
 
-    /** 1.21.11's default body: the static one, the model as its name */
-    public static TextureAtlasSprite superResolveParticleSprite(ResolvedModel model, TextureSlots slots, ModelBaker baker) {
-        return resolveParticleSprite(slots, baker, model);
+    public static ModelPart wolfRealHead(WolfModel m) {
+        return m instanceof AdultWolfModel a ? a.realHead : detached(m, "realHead");
     }
 
-    // ---- TextureSlots.Data.Builder.addTexture ----
-
-    /** 1.21.11's Builder.addTexture(name, material), declared by a mod's builder subclass (adapterHooks) */
-    public interface LegacyAddTexture {
-        TextureSlots.Data.Builder addTexture(String name, SpriteId material);
+    public static ModelPart wolfRealTail(WolfModel m) {
+        return m instanceof AdultWolfModel a ? a.realTail : detached(m, "realTail");
     }
 
-    /** a mod's call of builder.addTexture(name, material) */
-    public static TextureSlots.Data.Builder addTexture(TextureSlots.Data.Builder builder, String name, SpriteId material) {
-        if (builder instanceof LegacyAddTexture legacy) {
-            return legacy.addTexture(name, material);
-        }
-        return superAddTexture(builder, name, material);
+    public static ModelPart wolfUpperBody(WolfModel m) {
+        return m instanceof AdultWolfModel a ? a.upperBody : detached(m, "upperBody");
     }
 
-    /** 1.21.11's body: the slot holds the material (26.1's, naming the SpriteId's texture) */
-    public static TextureSlots.Data.Builder superAddTexture(TextureSlots.Data.Builder builder, String name, SpriteId material) {
-        return builder.addTexture(name, new Material(material.texture()));
+    public static ModelPart turtleEggBelly(TurtleModel m) {
+        return m instanceof AdultTurtleModel a ? a.eggBelly : detached(m, "eggBelly");
     }
 
-    // ---- SpriteContents.getUniqueFrames ----
-
-    /** 1.21.11's getUniqueFrames(), declared by a mod's sprite contents subclass (adapterHooks) */
-    public interface LegacyUniqueFrames {
-        IntStream getUniqueFrames();
+    public static ModelPart striderRightBottomBristle(StriderModel m) {
+        return m instanceof AdultStriderModel a ? a.rightBottomBristle : detached(m, "rightBottomBristle");
     }
 
-    /** a mod's call of contents.getUniqueFrames() */
-    public static IntStream getUniqueFrames(SpriteContents contents) {
-        if (contents instanceof LegacyUniqueFrames legacy) {
-            return legacy.getUniqueFrames();
-        }
-        return superGetUniqueFrames(contents);
+    public static ModelPart striderRightMiddleBristle(StriderModel m) {
+        return m instanceof AdultStriderModel a ? a.rightMiddleBristle : detached(m, "rightMiddleBristle");
     }
 
-    /** 1.21.11's body: the animation's unique frames, else frame 0 alone -- 26.1's list as a stream */
-    public static IntStream superGetUniqueFrames(SpriteContents contents) {
-        return contents.getUniqueFrames().intStream();
+    public static ModelPart striderRightTopBristle(StriderModel m) {
+        return m instanceof AdultStriderModel a ? a.rightTopBristle : detached(m, "rightTopBristle");
     }
 
-    // ---- BlockEntityRenderDispatcher.prepare ----
-
-    /** 1.21.11's prepare(camera), declared by a mod's dispatcher subclass (adapterHooks) */
-    public interface LegacyPrepare {
-        void prepare(Camera camera);
+    public static ModelPart striderLeftTopBristle(StriderModel m) {
+        return m instanceof AdultStriderModel a ? a.leftTopBristle : detached(m, "leftTopBristle");
     }
 
-    /** a mod's call of dispatcher.prepare(camera) */
-    public static void prepare(BlockEntityRenderDispatcher dispatcher, Camera camera) {
-        if (dispatcher instanceof LegacyPrepare legacy) {
-            legacy.prepare(camera);
-            return;
-        }
-        superPrepare(dispatcher, camera);
+    public static ModelPart striderLeftMiddleBristle(StriderModel m) {
+        return m instanceof AdultStriderModel a ? a.leftMiddleBristle : detached(m, "leftMiddleBristle");
     }
 
-    /** 1.21.11's body: the camera's position kept for rendering */
-    public static void superPrepare(BlockEntityRenderDispatcher dispatcher, Camera camera) {
-        dispatcher.prepare(camera.position());
+    public static ModelPart striderLeftBottomBristle(StriderModel m) {
+        return m instanceof AdultStriderModel a ? a.leftBottomBristle : detached(m, "leftBottomBristle");
     }
 }
