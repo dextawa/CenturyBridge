@@ -91,6 +91,55 @@ final class MixinClassRenames {
         return out;
     }
 
+    /**
+     * marks a method MixinBridge wrote spelled in W's own types (a W-shaped @Inject front of a target whose descriptor
+     * names a class the step renames onto a layer facade while W still declares it under that name): its descriptor,
+     * frames and calls into W code take {@link #forVanilla} only; the positions naming the mod's handler types were
+     * written already renamed (Chain.renamedDesc)
+     */
+    static final String W_TYPED = "Ltop/dext/centurybridge/WTyped;";
+
+    /**
+     * The class rewrite's remapper: every method by {@code renames}, except a {@link #W_TYPED} one, which takes
+     * {@link #forVanilla} -- classRenames are meant for converted code, never for what names W's code (Mixin matches a
+     * handler's descriptor against the target's)
+     */
+    static ClassVisitor remapper(ClassVisitor next, Map<String, String> renames, Predicate<String> wDeclares, byte[] bytes) {
+        java.util.Set<String> wTyped = wTypedMethods(bytes);
+        org.objectweb.asm.commons.Remapper full = new org.objectweb.asm.commons.SimpleRemapper(renames);
+        if (wTyped.isEmpty()) {
+            return new org.objectweb.asm.commons.ClassRemapper(next, full);
+        }
+        org.objectweb.asm.commons.Remapper w = new org.objectweb.asm.commons.SimpleRemapper(forVanilla(renames, wDeclares));
+        return new org.objectweb.asm.commons.ClassRemapper(Opcodes.ASM9, next, full) {
+            @Override
+            public MethodVisitor visitMethod(int access, String name, String desc, String sig, String[] ex) {
+                if (!wTyped.contains(name + desc)) {
+                    return super.visitMethod(access, name, desc, sig, ex);
+                }
+                MethodVisitor mv = cv.visitMethod(access, name, w.mapMethodDesc(desc), w.mapSignature(sig, false),
+                    ex == null ? null : w.mapTypes(ex));
+                return mv == null ? null : new org.objectweb.asm.commons.MethodRemapper(Opcodes.ASM9, mv, w) { };
+            }
+        };
+    }
+
+    /** name+desc of the class's {@link #W_TYPED} methods */
+    static java.util.Set<String> wTypedMethods(byte[] bytes) {
+        java.util.Set<String> out = new java.util.HashSet<>();
+        if (!new String(bytes, StandardCharsets.ISO_8859_1).contains(W_TYPED)) {
+            return out;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        new org.objectweb.asm.ClassReader(bytes).accept(cn, org.objectweb.asm.ClassReader.SKIP_CODE);
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if (m.invisibleAnnotations != null && m.invisibleAnnotations.stream().anyMatch(a -> a.desc.equals(W_TYPED))) {
+                out.add(m.name + m.desc);
+            }
+        }
+        return out;
+    }
+
     /** does a mixin aimed at these classes (as written, or already renamed) aim at a facade */
     static boolean facadeMixin(Iterable<String> targets, Map<String, String> renames) {
         for (String t : targets) {
