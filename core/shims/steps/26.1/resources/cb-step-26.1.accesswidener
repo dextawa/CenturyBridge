@@ -320,3 +320,5 @@ accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loa
 accessible	field	net/minecraft/client/renderer/item/ItemStackRenderState$LayerRenderState	particleMaterial	Lnet/minecraft/client/resources/model/sprite/Material$Baked;
 # swall24: 1.21.11 WanderingTraderSpawner spawn delay/chance live in 26.1's WanderingTraderData (CbWallTraderSpawnerFields)
 accessible	method	net/minecraft/world/entity/npc/wanderingtrader/WanderingTraderSpawner	getTraderData	()Lnet/minecraft/world/level/saveddata/WanderingTraderData;
+# swall24: 1.21.11 ChestRenderer single/double models are 26.1's models resources (CbWallChestModels)
+accessible	field	net/minecraft/client/renderer/blockentity/ChestRenderer	models	Lnet/minecraft/client/renderer/MultiblockChestResources;
