@@ -1,0 +1,10 @@
+{
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_7775$class_12356",
+   "method": "materialInfo(Lnet/minecraft/client/resources/model/geometry/BakedQuad$MaterialInfo;)Lnet/minecraft/client/resources/model/geometry/BakedQuad$MaterialInfo;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbWallModels.materialInfo(Lnet/minecraft/class_7775$class_12356;Lnet/minecraft/client/resources/model/geometry/BakedQuad$MaterialInfo;)Lnet/minecraft/client/resources/model/geometry/BakedQuad$MaterialInfo;",
+   "basis": "26.1 added abstract ModelBaker.Interner.materialInfo(MaterialInfo) (javap of client-26.1.jar; InternerImpl interns through a Guava Interner). 1.21.11's Interner (class_7775$class_12356) interned only vectors and 1.21.11 quads had no MaterialInfo, so a 1.21.11 implementation (e.g. the 1.21.11 layer's CbModelBaking identity interner) shares none: the info as given"
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+{
+ "_smx1_render_legacy_basis": "smx1k (javap -c -p both code jars). 1.21.10 RenderType extended RenderStateShard and was abstract, built by RenderType(name, bufferSize, affectsCrumbling, sortOnUpload, setupState, clearState); 1.21.11 RenderType is a concrete class built from (name, RenderSetup) by a private constructor (opened by the layer AW) and no shard. 1.21.10 RenderPass.bindSampler(name, view) sampled with the state the texture carried; 1.21.11 bindTexture(name, view, sampler). rt/CbLegacyRenderTypes, rt/CbSamplers, mixin/CbGpuTextureSamplerRestoredMixin.",
+ "superCtorReshapes": {
+  "net/minecraft/class_1921.<init>(Ljava/lang/String;IZZLjava/lang/Runnable;Ljava/lang/Runnable;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_12247;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes#setup(IZZ)Lnet/minecraft/class_12247;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes#built(Lnet/minecraft/class_1921;Ljava/lang/String;IZZLjava/lang/Runnable;Ljava/lang/Runnable;)V",
+   "postArgs": [0, 1, 2, 3, 4, 5],
+   "basis": "a 1.21.10 subclass's super(...): the RenderSetup of its buffer size / crumbling / sorting (outline NONE, as 1.21.10's base isOutline / outline answered), its runnables recorded for setup / clearRenderState"
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1921",
+   "adapter": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes$Shard",
+   "requires": [],
+   "synth": [],
+   "basis": "1.21.10 RenderType's RenderStateShard surface (setupRenderState / clearRenderState / getName): a 1.21.10 subclass's own overrides implement it, the rest are 1.21.10's base bodies; calls through RenderType reach it (instanceRedirects)"
+  }
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_1921.method_23516()V": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes",
+  "net/minecraft/class_1921.method_23518()V": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes",
+  "net/minecraft/class_1921.method_68484()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1921.method_23516()V": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes#superSetup",
+  "net/minecraft/class_1921.method_23518()V": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes#superClear",
+  "net/minecraft/class_1921.method_68484()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes#superName"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_1921.field_20806:I": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes",
+  "net/minecraft/class_1921.field_20975:Z": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes",
+  "net/minecraft/class_1921.field_21402:Z": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes"
+ },
+ "callReshapes": {
+  "com/mojang/blaze3d/systems/RenderPass.bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)V": {
+   "name": "bindTexture",
+   "desc": "(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;Lnet/minecraft/class_12137;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_21_11/rt/CbSamplers#sampler(Lcom/mojang/blaze3d/textures/GpuTextureView;)Lnet/minecraft/class_12137;"
+   ],
+   "basis": "1.21.10 bound the view with its texture's own sampling state; the sampler is that state's (rt/CbSamplers)"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)V",
+   "new": "bindTexture(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;Lnet/minecraft/class_12137;)V",
+   "args": [0, 1],
+   "onlyUnder": "com/mojang/blaze3d/systems/RenderPass",
+   "frames": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.10 RenderPass implementation's bindSampler(name, view) is what 1.21.11's bindTexture reaches; its super call (GlRenderPass) passes the sampler vanilla passed"
+  }
+ ],
+ "frameDefaults": {
+  "bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)V": {
+   "2": "top/dext/centurybridge/step/v1_21_11/rt/CbSamplers#frameSampler(Lcom/mojang/blaze3d/systems/RenderPass;Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)Lnet/minecraft/class_12137;"
+  }
+ }
+}

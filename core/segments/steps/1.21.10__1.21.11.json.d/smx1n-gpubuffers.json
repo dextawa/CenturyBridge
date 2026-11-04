@@ -1,0 +1,43 @@
+{
+ "_smx1n_gpubuffers_basis": "GPU buffer offsets/lengths int -> long at 1.21.11 (javap 1.21.10/1.21.11: GpuBufferSlice record components and (GpuBuffer,JJ) ctor, slice(JJ), GpuBuffer.slice(JJ), BufferStorage.mapBuffer (method_71016) (..,JJI), DirectStateAccess.bufferSubData (method_71027) (IJLjava/nio/ByteBuffer;I)); same values, ints widen, longs narrow only when they fit (rt/CbGpuSlices). ChunkSectionLayer.CUTOUT_MIPPED -> CUTOUT: rt/CbChunkSectionLayers.",
+ "callReshapes": {
+  "com/mojang/blaze3d/buffers/GpuBufferSlice.offset()I": {
+   "desc": "()J", "ops": [], "ret": "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#narrow(J)I",
+   "basis": "same component, widened to long"
+  },
+  "com/mojang/blaze3d/buffers/GpuBufferSlice.length()I": {
+   "desc": "()J", "ops": [], "ret": "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#narrow(J)I",
+   "basis": "same component, widened to long"
+  },
+  "com/mojang/blaze3d/buffers/GpuBufferSlice.slice(II)Lcom/mojang/blaze3d/buffers/GpuBufferSlice;": {
+   "desc": "(JJ)Lcom/mojang/blaze3d/buffers/GpuBufferSlice;",
+   "ops": ["conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J"],
+   "basis": "same arguments, widened to long"
+  },
+  "com/mojang/blaze3d/buffers/GpuBuffer.slice(II)Lcom/mojang/blaze3d/buffers/GpuBufferSlice;": {
+   "desc": "(JJ)Lcom/mojang/blaze3d/buffers/GpuBufferSlice;",
+   "ops": ["conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J"],
+   "basis": "same arguments, widened to long"
+  },
+  "net/minecraft/class_11266.method_71016(Lnet/minecraft/class_10874;Lnet/minecraft/class_10859;III)Lnet/minecraft/class_10859$class_11269;": {
+   "desc": "(Lnet/minecraft/class_10874;Lnet/minecraft/class_10859;JJI)Lnet/minecraft/class_10859$class_11269;",
+   "ops": ["keep", "keep", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J", "keep"],
+   "basis": "offset and length widened to long; access flags unchanged"
+  },
+  "net/minecraft/class_10874.method_71027(IILjava/nio/ByteBuffer;I)V": {
+   "desc": "(IJLjava/nio/ByteBuffer;I)V",
+   "ops": ["keep", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J", "keep", "keep"],
+   "basis": "offset widened to long"
+  }
+ },
+ "superCtorReshapes": {
+  "com/mojang/blaze3d/buffers/GpuBufferSlice.<init>(Lcom/mojang/blaze3d/buffers/GpuBuffer;II)V": {
+   "desc": "(Lcom/mojang/blaze3d/buffers/GpuBuffer;JJ)V",
+   "ops": ["keep", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J"],
+   "basis": "same components, widened to long"
+  }
+ },
+ "fieldGetters": {
+  "net/minecraft/class_11515.field_60924:Lnet/minecraft/class_11515;": "top/dext/centurybridge/step/v1_21_11/rt/CbChunkSectionLayers"
+ }
+}

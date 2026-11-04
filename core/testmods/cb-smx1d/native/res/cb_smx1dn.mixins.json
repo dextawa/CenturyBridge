@@ -11,7 +11,9 @@
     "NativeDefaultLabelMixin",
     "NativeLabelVisitMixin",
     "NativeImageContentsMixin",
-    "NativeDefaultSpriteMixin"
+    "NativeDefaultSpriteMixin",
+    "NativeBindTextureMixin",
+    "NativeBakeQuadMixin"
   ],
   "injectors": {
     "defaultRequire": 1

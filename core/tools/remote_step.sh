@@ -12,6 +12,7 @@
 # the open entries land in ~/cbwork/agents/<name>/step/<V>__<W>/open.tsv (fetch with scp).
 # CB_PROBE=fapi measures the Fabric API side (open list under step-fapi/ instead); CB_PROBE=aw the access-widener
 # surface (core/segments/damage-aw, open list under step-aw/).
+# CB_STEP_NO_LAYER=1 runs step_check without the step's built layer jar (layer-restored members then read as missing on W).
 #
 # Run from the root of a checkout (the main one or a worktree). beta2's working set (~/cbwork/data)
 # must hold W's stub, client runtime (libraries, mods/fabric-api, .fabric/processedMods) and
@@ -60,4 +61,4 @@ $SSH "set -e; $WTX; cd ~/cbwork/agents/$NAME && rm -rf core build.sh build && ta
     done
     [ -n \"\$SLOT\" ] || { echo 'waiting for a measurement slot'; sleep 30; }
   done
-  CB_PROBE='${CB_PROBE:-}' bash agents/$NAME/core/tools/step_check.sh agents/$NAME $V $W '$AREA'"
+  CB_PROBE='${CB_PROBE:-}' CB_STEP_NO_LAYER='${CB_STEP_NO_LAYER:-}' bash agents/$NAME/core/tools/step_check.sh agents/$NAME $V $W '$AREA'"

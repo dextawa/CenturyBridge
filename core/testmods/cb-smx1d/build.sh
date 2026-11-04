@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # cb-smx1d: smx1h's client check of the 1.21.10 -> 1.21.11 step's seven landings (queue_smx1.md, "smx1g handoff").
+# smx1k adds: 1.21.10 RenderType subclass (ctor, setup/clear/getName, own override + super), RenderPass.bindSampler with
+# GpuTexture sampler state / an atlas view / null (native GlRenderPass.bindTexture HEAD records the sampler), FaceBakery.bakeQuad.
 # Two jars:
 #   cb-smx1d.jar   a 1.21.10-era client mod (intermediary names): VertexConsumer addVertex(Matrix4f) call / override /
 #                  super and the setColor fill, ShapeRenderer writers, CycleButton builder, Options.graphicsMode(),
