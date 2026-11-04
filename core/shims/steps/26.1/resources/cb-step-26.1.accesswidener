@@ -273,3 +273,9 @@ accessible	field	net/minecraft/data/recipes/TransmuteRecipeBuilder	result	Lnet/m
 # skilteng: 1.21.11 WorldUpgrader.progressMap lives on as UpgradeProgress.progressMap (CbWallWorldUpgrader)
 accessible	field	net/minecraft/util/worldupdate/WorldUpgrader	upgradeProgress	Lnet/minecraft/util/worldupdate/UpgradeProgress;
 accessible	field	net/minecraft/util/worldupdate/UpgradeProgress	progressMap	Lit/unimi/dsi/fastutil/objects/Reference2FloatMap;
+# swall23: 1.21.11 WorldUpgrader running / counts / REGEX live on in UpgradeProgress and RegionStorageUpgrader (CbWallWorldUpgrader)
+accessible	field	net/minecraft/util/worldupdate/UpgradeProgress	canceled	Z
+accessible	field	net/minecraft/util/worldupdate/UpgradeProgress	totalChunks	Ljava/util/concurrent/atomic/AtomicInteger;
+accessible	field	net/minecraft/util/worldupdate/UpgradeProgress	converted	Ljava/util/concurrent/atomic/AtomicInteger;
+accessible	field	net/minecraft/util/worldupdate/UpgradeProgress	skipped	Ljava/util/concurrent/atomic/AtomicInteger;
+accessible	field	net/minecraft/util/worldupdate/RegionStorageUpgrader	REGEX	Ljava/util/regex/Pattern;
