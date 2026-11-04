@@ -1,0 +1,4 @@
+accessWidener	v2	intermediary
+# native 1.21 control: vanilla EnchantmentHelper.runIterationOnItem(stack, visitor) still visits holders (CbEnchantmentHelper redirects only converted mods)
+accessible class net/minecraft/class_1890$class_1891
+accessible method net/minecraft/class_1890 method_8220 (Lnet/minecraft/class_1799;Lnet/minecraft/class_1890$class_1891;)V

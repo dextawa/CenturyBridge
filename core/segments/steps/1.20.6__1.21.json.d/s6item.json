@@ -24,7 +24,8 @@
   "net/minecraft/class_1913": "top/dext/centurybridge/step/v1_21/facade/class_1913",
   "net/minecraft/class_9469": "top/dext/centurybridge/step/v1_21/facade/class_9469",
   "net/minecraft/class_1813": "top/dext/centurybridge/step/v1_21/facade/class_1813",
-  "net/minecraft/class_1756": "top/dext/centurybridge/step/v1_21/facade/class_1756"
+  "net/minecraft/class_1756": "top/dext/centurybridge/step/v1_21/facade/class_1756",
+  "net/minecraft/class_1890$class_1891": "top/dext/centurybridge/step/v1_21/facade/EnchantmentVisitor"
  },
  "fieldGetters": {
   "net/minecraft/class_7923.field_41176:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments",
@@ -79,7 +80,9 @@
   "net/minecraft/class_1863.method_42302(Lnet/minecraft/class_3956;)Lnet/minecraft/class_1863$class_7266;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
   "net/minecraft/class_1811.method_57392(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Z)Z": "top/dext/centurybridge/step/v1_21/rt/CbItemUse",
   "net/minecraft/class_3505.method_40099(Lnet/minecraft/class_5321;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc",
-  "net/minecraft/class_4609.method_23221(Lnet/minecraft/class_4590;Lnet/minecraft/class_2350;Ljava/util/function/Supplier;)Lnet/minecraft/class_4590;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc"
+  "net/minecraft/class_4609.method_23221(Lnet/minecraft/class_4590;Lnet/minecraft/class_2350;Ljava/util/function/Supplier;)Lnet/minecraft/class_4590;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc",
+  "net/minecraft/class_1890.method_8220(Lnet/minecraft/class_1890$class_1891;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper",
+  "net/minecraft/class_1890.method_8209(Lnet/minecraft/class_1890$class_1891;Ljava/lang/Iterable;)V": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper"
  },
  "facadeGaps": {},
  "callReshapes": {
