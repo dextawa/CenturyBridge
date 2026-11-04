@@ -237,13 +237,18 @@ public abstract class RenderStateShard {
             this.cb$layering = null;
         }
 
-        /** a vanilla layering: 1.21.10's runnables pushed the model view stack, applied it, popped */
+        /**
+         * a vanilla layering: 1.21.10's runnables pushed the model view stack, applied it, popped. A layering without a
+         * transform (1.21.11 no_layering carries a null consumer; RenderType.draw then pushes nothing) was 1.21.10's
+         * NO_LAYERING, whose runnables did nothing.
+         */
         public LayeringStateShard(class_12245 layering) {
-            super(layering.toString(), () -> {
+            super(layering.toString(), layering.method_75918() == null ? RenderStateShard::none : () -> {
                 org.joml.Matrix4fStack s = com.mojang.blaze3d.systems.RenderSystem.getModelViewStack();
                 s.pushMatrix();
                 layering.method_75918().accept(s);
-            }, () -> com.mojang.blaze3d.systems.RenderSystem.getModelViewStack().popMatrix());
+            }, layering.method_75918() == null ? RenderStateShard::none
+                : () -> com.mojang.blaze3d.systems.RenderSystem.getModelViewStack().popMatrix());
             this.cb$layering = layering;
         }
     }
