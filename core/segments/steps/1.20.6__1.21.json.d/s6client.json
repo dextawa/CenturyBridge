@@ -599,7 +599,6 @@
     "net/minecraft/class_296.method_1385()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbIndex",
     "net/minecraft/class_296.method_1387()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbByteSize",
     "net/minecraft/class_296.method_35667()Z": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbIsPosition",
-    "net/minecraft/class_296.method_22653(I)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbClearBufferState",
     "net/minecraft/class_296$class_298.method_22654(II)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbUsageClearBufferState",
     "net/minecraft/class_296$class_298.method_1392()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbUsageName",
     "net/minecraft/class_296$class_297.method_1389()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbTypeName",
@@ -737,6 +736,17 @@
     }
   },
   "superCtorReshapes": {
+    "net/minecraft/class_296.<init>(ILnet/minecraft/class_296$class_297;Lnet/minecraft/class_296$class_298;I)V": {
+      "desc": "(IILnet/minecraft/class_296$class_297;Lnet/minecraft/class_296$class_298;I)V",
+      "ops": [
+        "conv:0,1,2,3 top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbElementId(ILnet/minecraft/class_296$class_297;Lnet/minecraft/class_296$class_298;I)I",
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3"
+      ],
+      "basis": "a 1.20.6 subclass's super(index, type, usage, count): the native record needs a registration id before those same four values; cbElementId registers/reuses the identical shape, so the subclass is a real record with the id VertexFormat uses"
+    },
     "net/minecraft/class_2604.<init>(Lnet/minecraft/class_1297;)V": {
       "desc": "(ILjava/util/UUID;DDDFFLnet/minecraft/class_1299;ILnet/minecraft/class_243;D)V",
       "ops": [
@@ -1097,6 +1107,7 @@
     }
   ],
   "covers": [
+    "net/minecraft/class_296.method_22653(I)V",
     "net/minecraft/class_359$class_360.method_1959()Lnet/minecraft/class_243;",
     "net/minecraft/class_359$class_360.method_1961()J",
     "net/minecraft/class_287.method_1328(Lnet/minecraft/class_293$class_5596;Lnet/minecraft/class_293;)V",
@@ -1153,10 +1164,6 @@
     "net/minecraft/class_4597$class_4598.field_20954:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbSetLastState"
   },
   "ledger": {
-    "net/minecraft/class_296": "VertexFormatElement is a final record since 1.21, registered by id (at most 32) with VertexFormat masking and offsetting by that id: a 1.20.6 subclass can neither be made nor stand in a 1.21 format (its setup / clear / equals overrides have nothing to override); a 1.20.6-made element is the registered record of the same shape (CbRenderFormats.cbElement)",
-    "net/minecraft/class_296.<init>(ILnet/minecraft/class_296$class_297;Lnet/minecraft/class_296$class_298;I)V": "super(index, type, usage, count) of a 1.20.6 VertexFormatElement subclass: VertexFormatElement is a final record since 1.21, registered by id (at most 32) with VertexFormat masking and offsetting by that id: a 1.20.6 subclass can neither be made nor stand in a 1.21 format (its setup / clear / equals overrides have nothing to override); a 1.20.6-made element is the registered record of the same shape (CbRenderFormats.cbElement)",
-    "net/minecraft/class_296.equals(Ljava/lang/Object;)Z": "a 1.20.6 VertexFormatElement subclass's equals: VertexFormatElement is a final record since 1.21, registered by id (at most 32) with VertexFormat masking and offsetting by that id: a 1.20.6 subclass can neither be made nor stand in a 1.21 format (its setup / clear / equals overrides have nothing to override); a 1.20.6-made element is the registered record of the same shape (CbRenderFormats.cbElement)",
-    "net/minecraft/class_296.hashCode()I": "a 1.20.6 VertexFormatElement subclass's hashCode: VertexFormatElement is a final record since 1.21, registered by id (at most 32) with VertexFormat masking and offsetting by that id: a 1.20.6 subclass can neither be made nor stand in a 1.21 format (its setup / clear / equals overrides have nothing to override); a 1.20.6-made element is the registered record of the same shape (CbRenderFormats.cbElement)",
     "net/minecraft/class_296$class_298.field_1629:Lnet/minecraft/class_296$class_298;": "VertexFormatElement.Usage.PADDING: 1.21 pads with VertexFormat.Builder.padding(bytes) and its Usage has no PADDING. An enum constant cannot be added; an instance outside values() would break the switch tables javac compiles into 1.20.6 classes (its ordinal outside the table throws in their static init, where a missing constant is skipped). DefaultVertexFormat.ELEMENT_PADDING still builds 1.20.6 formats (CbRenderFormats.field_1578)"
   }
 }

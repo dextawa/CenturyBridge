@@ -4,10 +4,9 @@ import net.minecraft.class_3542;
 
 /**
  * 1.21.3's CreakingHeartBlock.CreakingHeartState (net/minecraft/class_10319$class_10320, classRenames):
- * DISABLED / DORMANT / ACTIVE with 1.21.3's serialized names. The enum links as 1.21.3's did; the block state
- * property that held it (CreakingHeartBlock.CREAKING / BlockStateProperties.CREAKING) is ledgered: 1.21.4's
- * creaking heart states are ACTIVE and NATURAL booleans and no longer store the time of day that told
- * DORMANT from ACTIVE.
+ * DISABLED / DORMANT / ACTIVE with 1.21.3's serialized names. CbRestCreakingHeart restores the shared
+ * CreakingHeartBlock.CREAKING / BlockStateProperties.CREAKING EnumProperty in 1.21.4's real state definition,
+ * synchronizes it with the native ACTIVE boolean and restores the old block entity's day/night transitions.
  */
 public enum CreakingHeartState implements class_3542 {
     DISABLED("disabled"),

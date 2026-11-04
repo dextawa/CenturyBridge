@@ -26,8 +26,19 @@ import net.minecraft.class_7924;
  */
 public final class CbEntityPaintings {
 
+    /** the restored virtual dimensions, implemented on the native record by CbPaintingVariantMixin */
+    public interface LegacyDimensions {
+        int method_6945();
+
+        int method_6943();
+    }
+
     /** the asset of a variant before it is registered (1.20.6's had none: its texture came from its registry id) */
     private static final class_2960 UNREGISTERED = class_2960.method_60655("centurybridge", "unregistered_painting");
+
+    public static class_2960 unregisteredAsset() {
+        return UNREGISTERED;
+    }
 
     /** 1.21's block sizes as 1.20.6's pixels */
     public static int pixels(int blocks) {
@@ -44,13 +55,23 @@ public final class CbEntityPaintings {
         return new class_1535(blocks(width), blocks(height), UNREGISTERED);
     }
 
-    /** 1.20.6 variant.getWidth(): pixels */
+    /** 1.20.6 variant.getWidth(): the virtual legacy getter, including a converted subclass's override */
     public static int getWidth(class_1535 variant) {
+        return variant instanceof LegacyDimensions legacy ? legacy.method_6945() : getWidthBody(variant);
+    }
+
+    /** the native record's width in pixels, used by the restored default getter itself */
+    public static int getWidthBody(class_1535 variant) {
         return pixels(variant.comp_2670());
     }
 
-    /** 1.20.6 variant.getHeight(): pixels */
+    /** 1.20.6 variant.getHeight(): the virtual legacy getter, including a converted subclass's override */
     public static int getHeight(class_1535 variant) {
+        return variant instanceof LegacyDimensions legacy ? legacy.method_6943() : getHeightBody(variant);
+    }
+
+    /** the native record's height in pixels, used by the restored default getter itself */
+    public static int getHeightBody(class_1535 variant) {
         return pixels(variant.comp_2671());
     }
 
@@ -135,7 +156,7 @@ public final class CbEntityPaintings {
         /** a mod's variant becomes a world entry of its size, its asset its registry id; vanilla's are the world's own data */
         @Override
         protected class_1535 recordFor(class_1535 value, class_5321<class_1535> key, class_6903.class_7863 lookup) {
-            return vanilla.contains(key) ? null : new class_1535(value.comp_2670(), value.comp_2671(), key.method_29177());
+            return vanilla.contains(key) ? null : new class_1535(blocks(getWidth(value)), blocks(getHeight(value)), key.method_29177());
         }
 
         /** a world entry no object was registered for (a datapack's): the record itself is its 1.20.6 object */

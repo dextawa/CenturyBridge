@@ -11,6 +11,8 @@ JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 # CB_SERVER_DIR: an agent's own copy (cp -r ~/cbtest/server-T ~/cbwork/agents/<name>/), so two boots
 # never share a mods directory. CB_JVM_ARGS: extra server JVM options (a -D switch a test needs)
 SRV="${CB_SERVER_DIR:-$HOME/cbtest/server-$T}"
+# CB_SERVER_DIR may be relative to ~/cbwork; resolve it before cd'ing into it.
+SRV="$(realpath "$SRV")"
 [ -f "$SRV/fabric-server.jar" ] || { echo "no Fabric server at $SRV"; exit 1; }
 # the climb and the mods directory are climb_mods.sh's, shared with the client boot (boot_client_remote.sh)
 [ -f "$WD/core/tools/climb_mods.sh" ] || { echo "no $WD/core/tools/climb_mods.sh (upload a current tree)"; exit 1; }

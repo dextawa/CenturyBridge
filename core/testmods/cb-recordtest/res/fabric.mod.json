@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_recordtest",
+  "version": "1.0.0",
+  "name": "CenturyBridge record subclass test",
+  "entrypoints": {
+    "client": ["cb.recordtest.RecordTestMod"]
+  },
+  "depends": {
+    "fabric-api": "*"
+  }
+}

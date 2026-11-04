@@ -234,7 +234,7 @@ if cfgs:
             if not f.endswith(".java"):
                 continue
             txt = open(os.path.join(srcdir, f), encoding="utf-8").read()
-            m = re.search(r"@Mixin\(net\.minecraft\.(\S+?)\.class\)", txt)
+            m = re.search(r"@Mixin\s*\(\s*(?:value\s*=\s*)?net\.minecraft\.(\S+?)\.class\)", txt)
             if m and not re.search(r"public\s+interface", txt):
                 owner = "net/minecraft/" + m.group(1).replace(".", "$")
                 if owner in ifaces:

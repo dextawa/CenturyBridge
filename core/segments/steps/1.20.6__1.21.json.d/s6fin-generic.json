@@ -1,6 +1,7 @@
 {
  "fieldGetters": {
-  "net/minecraft/class_7923.field_42940:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks"
+  "net/minecraft/class_7923.field_42940:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks",
+  "net/minecraft/class_2935.field_48257:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21/rt/CbNet#pingRequestCodec"
  },
  "genericWitnesses": {
   "net/minecraft/class_7924.field_42941:Lnet/minecraft/class_5321;": {

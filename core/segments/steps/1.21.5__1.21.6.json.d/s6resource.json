@@ -1,0 +1,13 @@
+{
+ "superCtorReshapes": {
+  "net/minecraft/class_9433.<init>(Lnet/minecraft/class_7157;Lnet/minecraft/class_5321;Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Lnet/minecraft/class_7157;Lnet/minecraft/class_5321;Lcom/mojang/serialization/Codec;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_6/rt/CbS6ResourceCodec#valueCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;"
+   ],
+   "basis": "ResourceOrIdArgument 1.21.5 parsed its whole argument through Codec<Holder<T>>; 1.21.6 splits registry ids from inline values and calls Codec<T> only for the latter (javap class_9433 and class_9433$class_11380/11381). The adapter decodes through the old codec and unwraps a successful Holder, and encodes the inline value as a direct Holder, preserving DataResult errors and partial results in both directions"
+  }
+ }
+}

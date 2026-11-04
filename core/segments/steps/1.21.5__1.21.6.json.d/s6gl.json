@@ -1,0 +1,7 @@
+{
+ "instanceFieldGetters": {
+  "net/minecraft/class_10866.field_57873:Ljava/util/HashMap;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6GlUniforms",
+  "net/minecraft/class_10866.field_57874:Ljava/util/HashMap;": "top/dext/centurybridge/step/v1_21_6/rt/CbS6GlViews"
+ },
+ "_instanceFieldGetters_basis_s6gl": "GlRenderPass.uniforms: V's bytecode puts the caller's actual int[] / float[] into the map and its draw setup reads the current elements; W keeps only GpuBufferSlice(buffer, offset, length). CbS6GlUniforms retains each original array beside its native slice, packs raw 32-bit values without NaN canonicalization, uploads changed arrays at trySetup HEAD, and reads native replacements back under a known legacy key. Every HashMap mutation writes through. A native-only slice has no int/float kind and the legacy view throws explicitly rather than guessing or returning the slice. CbS6GlUniformCloseMixin releases only layer-owned buffers. Samplers: 1.21.5 bindSampler put a GpuTexture in this map, while 1.21.6 puts a GpuTextureView (javap of both). CbS6GlViews is a live HashMap view: reads unwrap texture(), writes keep the current native view when it already represents that texture (including a subview round trip) and otherwise use CbTextures.view; entry/values iterators and every mutating HashMap operation write through without putting a legacy texture into the native map."
+}

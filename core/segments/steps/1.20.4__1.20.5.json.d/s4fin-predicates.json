@@ -28,7 +28,6 @@
   "net/minecraft/class_2073$class_2074.method_20399(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2073$class_2074;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#hasNbt",
   "net/minecraft/class_2073$class_2074.method_8978(Lnet/minecraft/class_2035;)Lnet/minecraft/class_2073$class_2074;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#hasEnchantment",
   "net/minecraft/class_2073$class_2074.method_35234(Lnet/minecraft/class_2035;)Lnet/minecraft/class_2073$class_2074;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#hasStoredEnchantment",
-  "net/minecraft/class_185.method_813(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
   "net/minecraft/class_161.method_53627(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
   "net/minecraft/class_8779.method_53635(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates"
  },
