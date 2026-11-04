@@ -35,6 +35,10 @@ public abstract class CbItemRegistryMixin<T> implements CbItemRegistries.Frozen,
     @Final
     private Map<class_6862<T>, class_6885.class_6888<T>> field_53686;
 
+    /** the registry's tag state: unbound from the constructor, bound by freeze() and by PendingTags.apply() */
+    @Shadow
+    class_2370.class_10105<T> field_53687;
+
     /** bindAllTagsToEmpty's per-set step: the set bound to List.of() */
     @Shadow
     private static void method_62688(class_6885.class_6888<?> set) {
@@ -53,6 +57,14 @@ public abstract class CbItemRegistryMixin<T> implements CbItemRegistries.Frozen,
             if (!set.method_62680()) {
                 method_62688(set);
             }
+        }
+    }
+
+    /** CbItemRegistries.method_40276: a 1.21.1 caller's refreeze of a registry a mod unfroze (only then: unfrozen, bound) */
+    @Override
+    public void cb$unbindTagStateForRefreeze() {
+        if (!this.field_36463 && this.field_53687.method_62701()) {
+            this.field_53687 = class_2370.class_10105.method_62697();
         }
     }
 
