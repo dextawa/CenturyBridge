@@ -57,6 +57,8 @@ public final class CbLegacyRenderTypes {
     private static final Map<class_1921, Runnables> LEGACY = new MapMaker().weakKeys().makeMap();
     private static final Map<class_1921, CompositeState> COMPOSITE = new MapMaker().weakKeys().makeMap();
     private static final Map<class_12247, List<RenderStateShard>> VANILLA = new MapMaker().weakKeys().makeMap();
+    /** the bufferSize a 1.21.10 constructor / create call gave the types built here (1.21.10 kept it in a field) */
+    private static final Map<class_1921, Integer> SIZE = new MapMaker().weakKeys().makeMap();
 
     /** the RenderSetup 1.21.10's RenderType(name, bufferSize, affectsCrumbling, sortOnUpload, ..) stands for */
     public static class_12247 setup(int bufferSize, boolean affectsCrumbling, boolean sortOnUpload) {
@@ -75,11 +77,13 @@ public final class CbLegacyRenderTypes {
     public static void built(class_1921 type, String name, int bufferSize, boolean affectsCrumbling, boolean sortOnUpload,
                              Runnable setupState, Runnable clearState) {
         LEGACY.put(type, new Runnables(setupState, clearState));
+        SIZE.put(type, bufferSize);
     }
 
     /** a render type rt/CbRenderTypeCreate built from 1.21.10's composite state */
-    static void composite(class_1921 type, CompositeState state) {
+    static void composite(class_1921 type, CompositeState state, int bufferSize) {
         COMPOSITE.put(type, state);
+        SIZE.put(type, bufferSize);
     }
 
     /** RenderType.setupRenderState(), called through RenderType */
@@ -153,9 +157,14 @@ public final class CbLegacyRenderTypes {
             new RenderStateShard.TexturingStateShard(s.field_63988)));
     }
 
-    /** RenderType.bufferSize (field read, a mod's AW) */
+    /**
+     * RenderType.bufferSize (field read, a mod's AW): the size a 1.21.10 call built the type with, kept here; for any
+     * other type 1.21.11's public RenderType.bufferSize() (javap: setup.bufferSize), which 26.1 .. 26.1.2 keep
+     * (26.2 dropped the size from RenderSetup and RenderType)
+     */
     public static int field_20806(class_1921 type) {
-        return type.field_64013.field_63995;
+        Integer own = SIZE.get(type);
+        return own != null ? own : type.method_22722();
     }
 
     /** RenderType.affectsCrumbling (field read, a mod's AW) */
