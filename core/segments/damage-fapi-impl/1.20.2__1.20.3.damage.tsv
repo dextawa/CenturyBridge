@@ -1,0 +1,16 @@
+usage	owner	name	desc	kinds	w
+override+super	net/fabricmc/fabric/impl/client/itemgroup/FabricCreativeGuiComponents$ItemGroupButtonWidget	method_25394	(Lnet/minecraft/class_332;IIF)V	FINAL	method not declared on the owner
+new	net/fabricmc/fabric/impl/event/interaction/InteractionEventsRouterClient	<init>	()V	CLASS	class gone
+call	net/fabricmc/fabric/impl/event/interaction/InteractionEventsRouterClient	onInitializeClient	()V	CLASS	class gone
+extend	net/fabricmc/fabric/impl/event/interaction/InteractionEventsRouterClient			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/event/interaction/InteractionEventsRouterClient	<init>	()V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/event/interaction/InteractionEventsRouterClient	onInitializeClient	()V	CLASS	class gone
+new	net/fabricmc/fabric/impl/transfer/context/InitialContentsContainerItemContext	<init>	(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;J)V	CLASS	class gone
+call	net/fabricmc/fabric/impl/transfer/context/InitialContentsContainerItemContext	getMainSlot	()Lnet/fabricmc/fabric/api/transfer/v1/storage/base/SingleSlotStorage;	CLASS	class gone
+call	net/fabricmc/fabric/impl/transfer/context/InitialContentsContainerItemContext	insertOverflow	(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;JLnet/fabricmc/fabric/api/transfer/v1/transaction/TransactionContext;)J	CLASS	class gone
+call	net/fabricmc/fabric/impl/transfer/context/InitialContentsContainerItemContext	getAdditionalSlots	()Ljava/util/List;	CLASS	class gone
+extend	net/fabricmc/fabric/impl/transfer/context/InitialContentsContainerItemContext			CLASS	class gone
+super-ctor	net/fabricmc/fabric/impl/transfer/context/InitialContentsContainerItemContext	<init>	(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;J)V	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/transfer/context/InitialContentsContainerItemContext	getMainSlot	()Lnet/fabricmc/fabric/api/transfer/v1/storage/base/SingleSlotStorage;	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/transfer/context/InitialContentsContainerItemContext	insertOverflow	(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;JLnet/fabricmc/fabric/api/transfer/v1/transaction/TransactionContext;)J	CLASS	class gone
+override+super	net/fabricmc/fabric/impl/transfer/context/InitialContentsContainerItemContext	getAdditionalSlots	()Ljava/util/List;	CLASS	class gone

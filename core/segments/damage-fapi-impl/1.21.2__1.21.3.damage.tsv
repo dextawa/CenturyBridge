@@ -1,0 +1,6 @@
+usage	owner	name	desc	kinds	w
+implement-interface	net/fabricmc/fabric/impl/attachment/AttachmentTargetImpl			ABSTRACT	class public abstract interface extends java/lang/Object
+new	net/fabricmc/fabric/impl/attachment/AttachmentTypeImpl	<init>	(Lnet/minecraft/class_2960;Ljava/util/function/Supplier;Lcom/mojang/serialization/Codec;Z)V	METHOD	constructors (Lnet/minecraft/class_2960;Ljava/util/function/Supplier;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;Z)V
+call	net/fabricmc/fabric/impl/networking/server/ServerConfigurationNetworkAddon	getClientBrand	()Ljava/lang/String;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/impl/recipe/ingredient/SupportedIngredientsPacketEncoder	fabric_setSupportedCustomIngredients	(Ljava/util/Set;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/impl/recipe/ingredient/SupportedIngredientsPacketEncoder			CLASS	class gone
