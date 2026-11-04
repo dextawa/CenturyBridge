@@ -245,6 +245,25 @@ public final class ClientModels {
                 && delegate.parent() == stoneModel && c.vertices == 24,
                 "delegate up=" + dUp + " gui3d=" + delegate.method_4712() + " rendered=" + c.vertices + " (stone: 6 quads x 4)");
         });
+        run("creaking-active", () -> {
+            // 1.21.4 CreakingHeartBlock.ACTIVE / BlockStateProperties.ACTIVE over 1.21.5's CreakingHeartState
+            net.minecraft.class_2680 base = net.minecraft.class_2246.field_54717.method_9564();
+            boolean d = base.method_11654(net.minecraft.class_10319.field_55064);
+            net.minecraft.class_2680 on = base.method_11657(net.minecraft.class_10319.field_55064, true);
+            net.minecraft.class_2680 onAgain = on.method_11657(net.minecraft.class_2741.field_55087, true);
+            net.minecraft.class_2680 off = on.method_11657(net.minecraft.class_2741.field_55087, false);
+            boolean has = base.method_28498(net.minecraft.class_10319.field_55064);
+            // the native 1.21.5 property, read reflectively (this mod's own field ref is the 1.21.4 boolean)
+            @SuppressWarnings({"rawtypes"})
+            net.minecraft.class_2769 st = (net.minecraft.class_2769) net.minecraft.class_10319.class.getField("field_55064").get(null);
+            @SuppressWarnings("unchecked")
+            String sb = String.valueOf(base.method_11654(st)), so = String.valueOf(on.method_11654(st)), sf = String.valueOf(off.method_11654(st));
+            boolean ok = !d && has && on.method_11654(net.minecraft.class_10319.field_55064)
+                && !off.method_11654(net.minecraft.class_2741.field_55087) && onAgain == on
+                && sb.equals("uprooted") && so.equals("dormant") && sf.equals("uprooted");
+            check("creaking-active", ok, "default active=" + d + " state=" + sb + "; set true -> " + so + " (again same=" + (onAgain == on)
+                + "); set false -> " + sf + "; hasProperty=" + has);
+        });
         System.out.println("CB-S215C done " + ok + "/" + n);
     }
 }
