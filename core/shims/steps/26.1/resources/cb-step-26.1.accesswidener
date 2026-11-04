@@ -302,3 +302,10 @@ accessible	field	net/minecraft/client/model/monster/strider/AdultStriderModel	le
 accessible	field	net/minecraft/client/renderer/entity/RabbitRenderer	RABBIT_LOCATIONS	Ljava/util/Map;
 accessible	field	net/minecraft/client/renderer/entity/RabbitRenderer	TOAST	Lnet/minecraft/resources/Identifier;
 accessible	field	net/minecraft/client/renderer/entity/LlamaRenderer	TEXTURES	Ljava/util/Map;
+# swall24: 1.21.11 GuiRenderer item-atlas textures live in 26.1's GuiItemAtlas (CbWallGuiAtlasFields)
+accessible	field	net/minecraft/client/gui/render/GuiRenderer	itemAtlas	Lnet/minecraft/client/gui/render/GuiItemAtlas;
+accessible	field	net/minecraft/client/gui/render/GuiItemAtlas	MAXIMUM_TEXTURE_SIZE	I
+accessible	field	net/minecraft/client/gui/render/GuiItemAtlas	texture	Lcom/mojang/blaze3d/textures/GpuTexture;
+accessible	field	net/minecraft/client/gui/render/GuiItemAtlas	textureView	Lcom/mojang/blaze3d/textures/GpuTextureView;
+accessible	field	net/minecraft/client/gui/render/GuiItemAtlas	depthTexture	Lcom/mojang/blaze3d/textures/GpuTexture;
+accessible	field	net/minecraft/client/gui/render/GuiItemAtlas	depthTextureView	Lcom/mojang/blaze3d/textures/GpuTextureView;

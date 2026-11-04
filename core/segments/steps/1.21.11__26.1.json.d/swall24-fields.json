@@ -1,0 +1,12 @@
+{
+ "_swall24_guiatlas_basis": "1.21.11 GuiRenderer (class_11228) item-atlas fields moved into 26.1's GuiItemAtlas (GuiRenderer.itemAtlas): reads answered there (rt/CbWallGuiAtlasFields has the javap basis). Left open: the four texture writes (26.1 fields final, atlas built only by its constructor), itemAtlasX/itemAtlasY (26.1 allocates slots through DynamicAtlasAllocator, no cursor), atlasPositions (Map<Object, AtlasPosition>, AtlasPosition class gone), frameNumber (no counter in 26.1).",
+ "fieldGetters": {
+  "net/minecraft/class_11228.field_59910:I": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#maximumItemAtlasSize"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_11228.field_59919:Lcom/mojang/blaze3d/textures/GpuTexture;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlas",
+  "net/minecraft/class_11228.field_60571:Lcom/mojang/blaze3d/textures/GpuTextureView;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlasView",
+  "net/minecraft/class_11228.field_59920:Lcom/mojang/blaze3d/textures/GpuTexture;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlasDepth",
+  "net/minecraft/class_11228.field_60570:Lcom/mojang/blaze3d/textures/GpuTextureView;": "top/dext/centurybridge/step/v26_1/rt/CbWallGuiAtlasFields#itemsAtlasDepthView"
+ }
+}
