@@ -38,7 +38,8 @@
   "net/minecraft/class_1867.field_9049:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeFields#group",
   "net/minecraft/class_1867.field_40257:Lnet/minecraft/class_7710;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeFields#category",
   "net/minecraft/class_10223.field_54319:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeFields#group",
-  "net/minecraft/class_10223.field_54320:Lnet/minecraft/class_7710;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeFields#category"
+  "net/minecraft/class_10223.field_54320:Lnet/minecraft/class_7710;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeFields#category",
+  "net/minecraft/class_1769.field_7969:Lnet/minecraft/class_1767;": "top/dext/centurybridge/step/v26_1/rt/CbWallDyes#dyeColorField"
  },
  "_swall24_templates_basis": "1.21.11 StructureTemplateManager (class_3485) fixerUpper/blockLookup/resourceManager/generatedDir/RESOURCE_LISTER answered from 26.1's ResourceManagerTemplateSource, worldTemplates and RESOURCE_STRUCTURE_LISTER (javap basis in rt/CbWallTemplateManagerFields). The private load/list helpers (TOMBSTONE rows) stay open.",
  "instanceFieldSetters": {
@@ -48,5 +49,6 @@
  "_swall24_rabbit_basis": "1.21.11 RabbitModel (class_596) haunch / front-leg fields: 26.1 adult and baby rabbit meshes both carry parts with the same names, nested under body/frontlegs and backlegs/*_hind_leg (rt/CbWallRabbitParts). ADULT_TRANSFORMER / BABY_TRANSFORMER stay open (26.1 babies are separate meshes).",
  "_swall24_itemlayer_basis": "1.21.11 LayerRenderState (class_10444$class_10446) particleIcon read answered from 26.1's particleMaterial.sprite() (rt/CbWallItemLayerFields). Left open: particleIcon write (no forceTranslucent in 1.21.11), renderType (26.1 layers carry no render type), tintLayers int[] vs IntList (1.21.11 handed out its backing array; a copy would lose in-place writes).",
  "_swall24_recipes_basis": "1.21.11 Shaped/Shapeless/TransmuteRecipe group/category/showNotification fields answered through 26.1's NormalCraftingRecipe group()/category()/showNotification() (rt/CbWallRecipeFields). result (ItemStack vs ItemStackTemplate) stays open.",
- "_swall24_firework_basis": "1.21.11 FireworkRocketRecipe (class_1851) / FireworkStarRecipe (class_1853) static ingredient constants: 26.1 made them per-recipe instance data; answered with 1.21.11's clinit values (rt/CbWallFireworkIngredients)."
+ "_swall24_firework_basis": "1.21.11 FireworkRocketRecipe (class_1851) / FireworkStarRecipe (class_1853) static ingredient constants: 26.1 made them per-recipe instance data; answered with 1.21.11's clinit values (rt/CbWallFireworkIngredients).",
+ "_swall24_dye_basis": "1.21.11 DyeItem.dyeColor (class_1769.field_7969) read answered as getDyeColor() is (default DYE component, rt/CbWallDyes#dyeColorField). ITEM_BY_COLOR (static Map filled by constructors) stays open: a snapshot would lose 1.21.11's live map semantics."
 }

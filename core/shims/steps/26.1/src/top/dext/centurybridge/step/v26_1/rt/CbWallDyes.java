@@ -65,6 +65,11 @@ public final class CbWallDyes {
         return item.components().get(DataComponents.DYE);
     }
 
+    /** 1.21.11 DyeItem.dyeColor field (class_1769.field_7969, opened by access wideners): the same color getDyeColor() answers */
+    public static DyeColor dyeColorField(DyeItem item) {
+        return item.components().get(DataComponents.DYE);
+    }
+
     /** 1.21.11 SignApplicator.tryApplyToSign(level, sign, front, player) */
     public static boolean tryApplyToSign(SignApplicator applicator, Level level, SignBlockEntity sign, boolean front, Player player) {
         return applicator.tryApplyToSign(level, sign, front, CbWallFrames.applicatorStack(applicator, level, sign, front, player), player);
