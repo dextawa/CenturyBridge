@@ -324,3 +324,5 @@ accessible	method	net/minecraft/world/entity/npc/wanderingtrader/WanderingTrader
 accessible	field	net/minecraft/client/renderer/blockentity/ChestRenderer	models	Lnet/minecraft/client/renderer/MultiblockChestResources;
 # swall24: 1.21.11 LiquidBlockRenderer sprites are 26.1's baked fluid models (CbWallFluidSprites)
 accessible	field	net/minecraft/client/renderer/block/FluidRenderer	fluidModels	Lnet/minecraft/client/renderer/block/FluidStateModelSet;
+# swall24: 1.21.11 SectionBufferBuilderPool free queue/count (CbWallSectionPoolFields)
+accessible	field	net/minecraft/client/renderer/SectionBufferBuilderPool	freeBuffers	Ljava/util/concurrent/ArrayBlockingQueue;
