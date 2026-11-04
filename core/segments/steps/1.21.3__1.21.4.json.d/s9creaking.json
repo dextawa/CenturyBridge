@@ -1,0 +1,8 @@
+{
+ "_s9creaking_basis": "V/W code-jar javap: V CreakingHeartBlock.CREAKING and BlockStateProperties.CREAKING are one EnumProperty named creaking; W uses ACTIVE and NATURAL. The layer appends the real old property to W's state definition, synchronizes old writes with ACTIVE (DISABLED=false, DORMANT/ACTIVE=true), preserves NATURAL, restores V's day/night transitions at the surviving block-entity tick's second night check and V's ACTIVE-only comparator gate. ClientboundSetHeldSlotPacket's codec widened FriendlyByteBuf to ByteBuf; one cached typed view delegates to the native codec so default compositions retain V's receiver and field reads retain identity.",
+ "fieldGetters": {
+  "net/minecraft/class_10319.field_54740:Lnet/minecraft/class_2754;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestCreakingHeart",
+  "net/minecraft/class_2741.field_54793:Lnet/minecraft/class_2754;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestCreakingHeart",
+  "net/minecraft/class_2735.field_47974:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21_4/rt/CbS9NetStreamCodecs"
+ }
+}

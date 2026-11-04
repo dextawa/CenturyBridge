@@ -88,6 +88,18 @@ public final class CbEffects {
             ((CbLegacyMobEffect) effect).method_5563(amplifier, base), base.method_6182());
     }
 
+    /** an effect-map key as 1.20.1 expects it: a raw Attribute, or the value inside 1.20.5's Holder */
+    public static class_1320 attributeKey(Object key) {
+        if (key instanceof class_1320) {
+            return (class_1320) key;
+        }
+        try {
+            return (class_1320) key.getClass().getMethod("comp_349").invoke(key);
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalArgumentException("not an attribute or holder: " + key, e);
+        }
+    }
+
     /**
      * 1.20.1 MobEffect.addAttributeModifiers(entity, attributes, amplifier). Like 1.20.1 it reads
      * the effect's own modifier map, not the overridable getAttributeModifiers() (a 1.20.1
@@ -95,7 +107,7 @@ public final class CbEffects {
      */
     public static void addAttributeModifiers(class_1291 effect, class_1309 entity, class_5131 attributes, int amplifier) {
         for (Map.Entry<class_1320, class_8630> e : ((CbEffectModifierMap) effect).cb$modifierMap().entrySet()) {
-            class_1324 instance = attributes.method_26842(e.getKey());
+            class_1324 instance = attributes.method_26842(attributeKey(e.getKey()));
             if (instance != null) {
                 class_1322 base = baseModifier(effect, e.getValue());
                 instance.method_6200(base.method_6189());
@@ -107,7 +119,7 @@ public final class CbEffects {
     /** 1.20.1 MobEffect.removeAttributeModifiers(entity, attributes, amplifier), from the effect's own map too */
     public static void removeAttributeModifiers(class_1291 effect, class_1309 entity, class_5131 attributes, int amplifier) {
         for (Map.Entry<class_1320, class_8630> e : ((CbEffectModifierMap) effect).cb$modifierMap().entrySet()) {
-            class_1324 instance = attributes.method_26842(e.getKey());
+            class_1324 instance = attributes.method_26842(attributeKey(e.getKey()));
             if (instance != null) {
                 instance.method_6200(e.getValue().method_52521());
             }
@@ -134,7 +146,7 @@ public final class CbEffects {
      */
     public static void goldenAddAttributeModifiers(class_1291 effect, class_5131 attributes, int amplifier) {
         for (Map.Entry<class_1320, class_8630> e : ((CbEffectModifierMap) effect).cb$modifierMap().entrySet()) {
-            class_1324 instance = attributes.method_26842(e.getKey());
+            class_1324 instance = attributes.method_26842(attributeKey(e.getKey()));
             if (instance != null) {
                 class_1322 modifier = baseModifier(effect, e.getValue());
                 instance.method_6200(modifier.method_6189());
@@ -147,7 +159,7 @@ public final class CbEffects {
     /** the unmixed copy of the restored 1.20.1 removeAttributeModifiers (StatusEffectBridge.method_5562) */
     public static void goldenRemoveAttributeModifiers(class_1291 effect, class_5131 attributes) {
         for (Map.Entry<class_1320, class_8630> e : ((CbEffectModifierMap) effect).cb$modifierMap().entrySet()) {
-            class_1324 instance = attributes.method_26842(e.getKey());
+            class_1324 instance = attributes.method_26842(attributeKey(e.getKey()));
             if (instance != null) {
                 instance.method_6200(baseModifier(effect, e.getValue()).method_6189());
             }
