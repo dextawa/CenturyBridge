@@ -1,0 +1,16 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s6net",
+ "version": "1.0.0",
+ "name": "CB s6net Codec Test",
+ "environment": "*",
+ "entrypoints": {
+  "main": [
+   "cb.s6net.S6NetTestMod"
+  ]
+ },
+ "depends": {
+  "fabricloader": ">=0.14.0",
+  "minecraft": "1.21.5"
+ }
+}

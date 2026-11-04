@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "cbsmx1-native",
+  "category": "misc",
+  "pattern": [
+    "# #",
+    " X "
+  ],
+  "key": {
+    "#": {"item": "minecraft:cobblestone"},
+    "X": {"item": "minecraft:stick"}
+  },
+  "result": {"item": "minecraft:stone"}
+}

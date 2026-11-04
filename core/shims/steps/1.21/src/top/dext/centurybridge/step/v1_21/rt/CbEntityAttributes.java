@@ -165,6 +165,19 @@ public final class CbEntityAttributes {
         return modifier.comp_2447();
     }
 
+    /** the pre-record id getter, mapped through the same data-fixer table as comp_2447 */
+    public static UUID uuidOfModifier(class_1322 modifier) {
+        return uuidOf(modifier.comp_2447());
+    }
+
+    public static double amount(class_1322 modifier) {
+        return modifier.comp_2449();
+    }
+
+    public static class_1322.class_1323 operation(class_1322 modifier) {
+        return modifier.comp_2450();
+    }
+
     /**
      * The 1.20.6 hasModifier(AttributeModifier) a subclass overrides, as the override hook calls it: 1.21
      * asks hasModifier(id). The subclass's method is handed the instance's own modifier of that id -- what a
