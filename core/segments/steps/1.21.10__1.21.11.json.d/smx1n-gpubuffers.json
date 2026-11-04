@@ -28,6 +28,25 @@
    "desc": "(IJLjava/nio/ByteBuffer;I)V",
    "ops": ["keep", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J", "keep", "keep"],
    "basis": "offset widened to long"
+  },
+  "com/mojang/blaze3d/systems/GpuDevice.createBuffer(Ljava/util/function/Supplier;II)Lcom/mojang/blaze3d/buffers/GpuBuffer;": {
+   "desc": "(Ljava/util/function/Supplier;IJ)Lcom/mojang/blaze3d/buffers/GpuBuffer;",
+   "ops": ["keep", "keep", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J"],
+   "basis": "size widened to long (javap 1.21.10 (Supplier,II) / 1.21.11 (Supplier,IJ)); label and usage unchanged"
+  },
+  "net/minecraft/class_10865.createBuffer(Ljava/util/function/Supplier;II)Lcom/mojang/blaze3d/buffers/GpuBuffer;": {
+   "desc": "(Ljava/util/function/Supplier;IJ)Lcom/mojang/blaze3d/buffers/GpuBuffer;",
+   "ops": ["keep", "keep", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J"],
+   "basis": "GlDevice's own declaration of GpuDevice.createBuffer: size widened to long"
+  },
+  "net/minecraft/class_11266.method_71017(Lnet/minecraft/class_10874;Ljava/util/function/Supplier;II)Lnet/minecraft/class_10859;": {
+   "desc": "(Lnet/minecraft/class_10874;Ljava/util/function/Supplier;IJ)Lnet/minecraft/class_10859;",
+   "ops": ["keep", "keep", "keep", "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#widen(I)J"],
+   "basis": "BufferStorage.createBuffer: size widened to long"
+  },
+  "com/mojang/blaze3d/buffers/GpuBuffer.size()I": {
+   "desc": "()J", "ops": [], "ret": "conv top/dext/centurybridge/step/v1_21_11/rt/CbGpuSlices#narrow(J)I",
+   "basis": "same field (GpuBuffer.size int -> long at 1.21.11); answered to a 1.21.10 caller only when it fits"
   }
  },
  "superCtorReshapes": {
