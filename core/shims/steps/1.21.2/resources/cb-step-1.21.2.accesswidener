@@ -198,3 +198,5 @@ accessible class net/minecraft/class_315$class_5823
 accessible	field	net/minecraft/class_2609	field_11986	Lit/unimi/dsi/fastutil/objects/Reference2IntOpenHashMap;
 # smixin12 E8c: Bee.isTooFarAway (package-private) read by rt/CbEntityMisc.hiveCheckBlockEntity
 accessible	method	net/minecraft/class_4466	method_23990	(Lnet/minecraft/class_2338;)Z
+# skilteng: MappedRegistry.TagSet (package-private), the tag state CbItemRegistryMixin sets back to unbound for a 1.21.1 refreeze
+accessible	class	net/minecraft/class_2370$class_10105
