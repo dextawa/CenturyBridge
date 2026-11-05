@@ -1,0 +1,12 @@
+{
+ "_swall22_datagen_basis": "26.1 made DataGenerator abstract (Cached / Uncached); DataGenerator$Cached(Path, WorldVersion, Z) has 1.21.11 class_2403's fields, constructor and run() body (javap of both). data.Main.method_4968(generator, inputs, server, dev, reports) is split into addServerConverters(generator, inputs, server, dev) + addServerDefinitionProviders(generator, server, reports), every provider under the flag 1.21.11 gated it with (javap of both bodies and lambdas; 26.1 main() passes the same flags). rt/CbWallDataGenerators",
+ "ctorRedirects": {
+  "net/minecraft/class_2403.<init>(Ljava/nio/file/Path;Lnet/minecraft/class_6489;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallDataGenerators#dataGenerator"
+ },
+ "superRenames": {
+  "net/minecraft/class_2403": "net/minecraft/class_2403$Cached"
+ },
+ "staticRedirects": {
+  "net/minecraft/data/Main.method_4968(Lnet/minecraft/class_2403;Ljava/util/Collection;ZZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallDataGenerators#method_4968"
+ }
+}

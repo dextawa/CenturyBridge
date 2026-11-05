@@ -3,6 +3,6 @@
   "package": "cb.swalln.mixin",
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
-  "mixins": ["MobCanAttackMixin", "TargetingTestMixin", "AttackRangeMixin", "BrainProviderNativeMixin", "LootRunValidationMixin"],
+  "mixins": ["MobCanAttackMixin", "TargetingTestMixin", "AttackRangeMixin", "BrainProviderNativeMixin", "LootRunValidationMixin", "TradeSetOffersMixin"],
   "injectors": { "defaultRequire": 1 }
 }

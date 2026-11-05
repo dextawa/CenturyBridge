@@ -14,7 +14,7 @@ import top.dext.centurybridge.step.v26_1.facade.VillagerTrades;
 import top.dext.centurybridge.step.v26_1.rt.CbFapiTrades;
 import top.dext.centurybridge.step.v26_1.rt.CbWallTradeOffers;
 
-/** 1.21.11's Villager.updateTrades: two distinct listings of the villager's level from 1.21.11's tables (rt/CbFapiTrades), drawn through this.addOffersFromItemListings as 1.21.11 did (a subclass overriding it runs: rt/CbWallTradeOffers) */
+/** 1.21.11's Villager.updateTrades, where a 1.21.11 mod edited the profession's level (CbFapiTrades.villagerVanilla; otherwise 26.1's body runs): two distinct listings of the villager's level from 1.21.11's tables (rt/CbFapiTrades), drawn through this.addOffersFromItemListings as 1.21.11 did (a subclass overriding it runs: rt/CbWallTradeOffers) */
 @Mixin(Villager.class)
 public abstract class CbFapiVillagerTradesMixin {
     @Shadow
@@ -26,9 +26,12 @@ public abstract class CbFapiVillagerTradesMixin {
 
     @Inject(method = "updateTrades", at = @At("HEAD"), cancellable = true)
     private void cb$legacyTrades(ServerLevel level, CallbackInfo ci) {
+        VillagerData data = getVillagerData();
+        if (CbFapiTrades.villagerVanilla(level, data.profession(), data.level())) {
+            return; // no 1.21.11 mod edited this profession's level: 26.1's own body (and every native mixin in it) runs
+        }
         ci.cancel();
         Villager self = (Villager) (Object) this;
-        VillagerData data = getVillagerData();
         Int2ObjectMap<VillagerTrades.ItemListing[]> levels = CbFapiTrades.villagerLevels(level, data.profession());
         if (levels == null || levels.isEmpty()) {
             return;

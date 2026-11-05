@@ -109,7 +109,9 @@
     "CbWallFeatureRegisterMixin",
     "CbWallRecipeKindsMixin",
     "CbWallBannerDuplicateMixin",
-    "CbWallAbstractVillagerOffersMixin"
+    "CbWallAbstractVillagerOffersMixin",
+    "CbWallRegistryLoadMixin",
+    "CbWallRegistryLoadResourceManagerMixin"
   ],
   "client": [
     "CbFapiBlockColorsMixin",

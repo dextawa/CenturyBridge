@@ -924,8 +924,25 @@ public final class WiringCheck {
                 checkReshapeOps(where, e.getKey(), o.getAsJsonArray("ops"));
                 if (o.has("ret")) {
                     String r = o.get("ret").getAsString().trim();
+                    // "ret ... as <type>": the cast type must be the old shape's own return type -- the type every
+                    // rewritten call site already names, so the calling jar references it; anything else is refused
+                    int asAt = r.startsWith("as ") ? 0 : r.indexOf(" as ");
+                    if (asAt >= 0) {
+                        String castTo = r.substring(asAt == 0 ? 3 : asAt + 4).trim();
+                        String oldRet = org.objectweb.asm.Type.getReturnType(e.getKey().substring(e.getKey().indexOf('('))).getDescriptor();
+                        if (!castTo.equals(oldRet)) {
+                            problems.add(where + ": ret casts to " + castTo + ", a type the converted call sites do not reference"
+                                + " (only the old return type " + oldRet + " is named by every call site the reshape rewrites)");
+                        }
+                        if (!o.has("basis")) {
+                            problems.add(where + ": ret '... as' needs a basis");
+                        }
+                        r = asAt == 0 ? "keep-cast" : r.substring(0, asAt).trim();
+                    }
                     int sp = r.indexOf(' ');
-                    if (r.equals("keep")) {
+                    if (r.equals("keep-cast")) {
+                        // the value passes and is cast back; no converter to resolve
+                    } else if (r.equals("keep")) {
                         org.objectweb.asm.Type or = org.objectweb.asm.Type.getReturnType(e.getKey().substring(e.getKey().indexOf('(')));
                         org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(o.get("desc").getAsString());
                         if (!stub.isEmpty() && or.getSort() == org.objectweb.asm.Type.OBJECT && nr.getSort() == org.objectweb.asm.Type.OBJECT) {
