@@ -316,6 +316,8 @@ accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loa
 accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/TemplateSource	blockLookup	Lnet/minecraft/core/HolderGetter;
 accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/ResourceManagerTemplateSource	resourceManager	Lnet/minecraft/server/packs/resources/ResourceManager;
 accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/TemplatePathFactory	sourceDir	Ljava/nio/file/Path;
+# swall26: 1.21.11 StructureTemplateManager loaders find 26.1's directory sources by directory (CbWallStructureTemplateManagerMixin)
+accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/DirectoryTemplateSource	sourceDir	Ljava/nio/file/Path;
 # swall24: 1.21.11 LayerRenderState.particleIcon is 26.1's particleMaterial sprite (CbWallItemLayerFields)
 accessible	field	net/minecraft/client/renderer/item/ItemStackRenderState$LayerRenderState	particleMaterial	Lnet/minecraft/client/resources/model/sprite/Material$Baked;
 # swall24: 1.21.11 WanderingTraderSpawner spawn delay/chance live in 26.1's WanderingTraderData (CbWallTraderSpawnerFields)

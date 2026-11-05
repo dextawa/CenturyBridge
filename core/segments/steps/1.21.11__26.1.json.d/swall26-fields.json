@@ -27,5 +27,14 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.blendFunction:Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#setBuilderBlendFunction",
   "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.depthBiasScaleFactor:F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#setBuilderDepthBiasScaleFactor",
   "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.depthBiasConstant:F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#setBuilderDepthBiasConstant"
- }
+ },
+ "covers": [
+  "net/minecraft/class_3485.method_15088(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+  "net/minecraft/class_3485.method_44239()Ljava/util/stream/Stream;",
+  "net/minecraft/class_3485.method_44246(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+  "net/minecraft/class_3485.method_44241()Ljava/util/stream/Stream;",
+  "net/minecraft/class_3485.method_15092(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+  "net/minecraft/class_3485.method_44243()Ljava/util/stream/Stream;",
+  "net/minecraft/class_3485.method_15090(Ljava/io/InputStream;)Lnet/minecraft/class_3499;"
+ ]
 }
