@@ -2,7 +2,10 @@ package top.dext.centurybridge.step.v1_21_11.rt;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.class_12246;
+import net.minecraft.class_12247;
 import net.minecraft.class_12249;
+import net.minecraft.class_156;
 import net.minecraft.class_1921;
 import net.minecraft.class_2960;
 
@@ -11,6 +14,10 @@ import net.minecraft.class_2960;
  * which 1.21.11 keeps in rendertype/RenderTypes: each field is the one the paired factory reads in both releases (javap
  * -c -p of both code jars: the 1.21.10 factory's only GETSTATIC and its CbRenderTypes pair's only GETSTATIC, same type).
  * CUTOUT_MIPPED (field_9175) is CUTOUT, as the factory pair (1.21.11 folded the layer).
+ * Where the paired 1.21.11 factory only reads the field (javap -c -p 1.21.11: GETSTATIC [+ apply]), the value is taken
+ * through that public factory instead: 26.1 dropped or renamed those fields (ENTITY_SMOOTH_CUTOUT, ENTITY_DECAL,
+ * DRAGON_EXPLOSION_ALPHA, DRAGON_RAYS_DEPTH, TRIPWIRE_MOVING_BLOCk, WEATHER_*; TEXT_INTENSITY* became TEXT_GRAYSCALE* at
+ * 26.2) while the wall and later steps route the factories.
  */
 @Environment(EnvType.CLIENT)
 public final class CbRenderTypeStatics {
@@ -87,9 +94,9 @@ public final class CbRenderTypeStatics {
         return class_12249.field_64056;
     }
 
-    /** 1.21.10 RenderType.field_29630: 1.21.11 RenderTypes.field_64057  */
+    /** 1.21.10 RenderType.field_29630: 1.21.11 RenderTypes.field_64057, read through method_76004  */
     public static java.util.function.Function<class_2960, class_1921> field_29630() {
-        return class_12249.field_64057;
+        return texture -> class_12249.method_76004(texture);
     }
 
     /** 1.21.10 RenderType.field_29631: 1.21.11 RenderTypes.field_64058  */
@@ -97,9 +104,9 @@ public final class CbRenderTypeStatics {
         return class_12249.field_64058;
     }
 
-    /** 1.21.10 RenderType.field_29632: 1.21.11 RenderTypes.field_64059  */
+    /** 1.21.10 RenderType.field_29632: 1.21.11 RenderTypes.field_64059, read through method_76006  */
     public static java.util.function.Function<class_2960, class_1921> field_29632() {
-        return class_12249.field_64059;
+        return texture -> class_12249.method_76006(texture);
     }
 
     /** 1.21.10 RenderType.field_29633: 1.21.11 RenderTypes.field_64060  */
@@ -112,9 +119,9 @@ public final class CbRenderTypeStatics {
         return class_12249.field_64061;
     }
 
-    /** 1.21.10 RenderType.field_29635: 1.21.11 RenderTypes.field_64062  */
+    /** 1.21.10 RenderType.field_29635: 1.21.11 RenderTypes.field_64062, read through method_76012  */
     public static java.util.function.Function<class_2960, class_1921> field_29635() {
-        return class_12249.field_64062;
+        return texture -> class_12249.method_76012(texture);
     }
 
     /** 1.21.10 RenderType.field_29636: 1.21.11 RenderTypes.field_64063  */
@@ -167,9 +174,9 @@ public final class CbRenderTypeStatics {
         return class_12249.field_64020;
     }
 
-    /** 1.21.10 RenderType.field_33630: 1.21.11 RenderTypes.field_64021  */
+    /** 1.21.10 RenderType.field_33630: 1.21.11 RenderTypes.field_64021, read through method_76024  */
     public static java.util.function.Function<class_2960, class_1921> field_33630() {
-        return class_12249.field_64021;
+        return texture -> class_12249.method_76024(texture);
     }
 
     /** 1.21.10 RenderType.field_34002: 1.21.11 RenderTypes.field_64022  */
@@ -177,9 +184,9 @@ public final class CbRenderTypeStatics {
         return class_12249.field_64022;
     }
 
-    /** 1.21.10 RenderType.field_34003: 1.21.11 RenderTypes.field_64023  */
+    /** 1.21.10 RenderType.field_34003: 1.21.11 RenderTypes.field_64023, read through method_76027  */
     public static java.util.function.Function<class_2960, class_1921> field_34003() {
-        return class_12249.field_64023;
+        return texture -> class_12249.method_76027(texture);
     }
 
     /** 1.21.10 RenderType.field_29639: 1.21.11 RenderTypes.field_64024  */
@@ -192,9 +199,9 @@ public final class CbRenderTypeStatics {
         return class_12249.field_64025;
     }
 
-    /** 1.21.10 RenderType.field_33631: 1.21.11 RenderTypes.field_64026  */
+    /** 1.21.10 RenderType.field_33631: 1.21.11 RenderTypes.field_64026, read through method_76029  */
     public static java.util.function.Function<class_2960, class_1921> field_33631() {
-        return class_12249.field_64026;
+        return texture -> class_12249.method_76029(texture);
     }
 
     /** 1.21.10 RenderType.field_20970: 1.21.11 RenderTypes.field_64027  */
@@ -207,14 +214,14 @@ public final class CbRenderTypeStatics {
         return class_12249.field_64028;
     }
 
-    /** 1.21.10 RenderType.field_52307: 1.21.11 RenderTypes.field_64029  */
+    /** 1.21.10 RenderType.field_52307: 1.21.11 RenderTypes.field_64029, read through method_76007 (via CbRenderTypes.method_61157)  */
     public static class_1921 field_52307() {
-        return class_12249.field_64029;
+        return CbRenderTypes.method_61157();
     }
 
-    /** 1.21.10 RenderType.field_25644: 1.21.11 RenderTypes.field_64030  */
+    /** 1.21.10 RenderType.field_25644: 1.21.11 RenderTypes.field_64030, read through method_76009  */
     public static class_1921 field_25644() {
-        return class_12249.field_64030;
+        return class_12249.method_76009();
     }
 
     /** 1.21.10 RenderType.field_29457: 1.21.11 RenderTypes.field_64031  */
@@ -242,14 +249,14 @@ public final class CbRenderTypeStatics {
         return class_12249.field_64036;
     }
 
-    /** 1.21.10 RenderType.field_55143: 1.21.11 RenderTypes.field_64037  */
+    /** 1.21.10 RenderType.field_55143: 1.21.11 RenderTypes.field_64037, read through method_75992(texture, true)  */
     public static java.util.function.Function<class_2960, class_1921> field_55143() {
-        return class_12249.field_64037;
+        return texture -> class_12249.method_75992(texture, true);
     }
 
-    /** 1.21.10 RenderType.field_55144: 1.21.11 RenderTypes.field_64038  */
+    /** 1.21.10 RenderType.field_55144: 1.21.11 RenderTypes.field_64038, read through method_75992(texture, false)  */
     public static java.util.function.Function<class_2960, class_1921> field_55144() {
-        return class_12249.field_64038;
+        return texture -> class_12249.method_75992(texture, false);
     }
 
     /** 1.21.10 RenderType.field_55150: 1.21.11 RenderTypes.field_64039  */
@@ -263,10 +270,15 @@ public final class CbRenderTypeStatics {
     }
 
     /**
-     * 1.21.10 RenderType.createWeather(pipeline) helper (method_65230): 1.21.11 RenderTypes.method_75970, the same body
-     * (a memoized "weather" type per texture on the pipeline; javap of both, lambda method_65228 / method_75971)
+     * 1.21.10 RenderType.createWeather(pipeline) helper (method_65230): a memoized "weather" type per texture on the
+     * pipeline (javap -c -p 1.21.10: lambda method_65228 -- texture as Sampler0, weather target, lightmap). Built on the
+     * public RenderSetup builder and RenderType.create: 1.21.11's private copy (RenderTypes.method_75970) is gone at 26.1.
      */
     public static java.util.function.Function<class_2960, class_1921> method_65230(com.mojang.blaze3d.pipeline.RenderPipeline pipeline) {
-        return class_12249.method_75970(pipeline);
+        return class_156.method_34866(texture -> class_1921.method_75940("weather", class_12247.method_75927(pipeline)
+                .method_75934("Sampler0", texture)
+                .method_75931(class_12246.field_63982)
+                .method_75928()
+                .method_75938()));
     }
 }

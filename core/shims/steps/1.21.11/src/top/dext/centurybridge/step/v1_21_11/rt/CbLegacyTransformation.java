@@ -1,6 +1,7 @@
 package top.dext.centurybridge.step.v1_21_11.rt;
 
 import net.minecraft.class_4590;
+import top.dext.centurybridge.step.v1_21_11.mixin.CbTransformationAccess;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Quaternionfc;
@@ -15,6 +16,8 @@ import org.joml.Vector3fc;
  * declared and is handed back as the same object. A read-only view another caller passed in is copied (a mod's write
  * into the copy does not reach the Transformation). Like 1.21.10's raw field read, nothing forces decomposition: a
  * matrix-built instance answers null until decomposed. Writes store the mod's object as is (Vector3f is a Vector3fc).
+ * The fields are reached through the CbTransformationAccess accessor, not the layer's access widener: past the 1.21.11
+ * -> 26.1 wall the class is com/mojang/math/Transformation, which the loader's class tweaker leaves alone.
  */
 public final class CbLegacyTransformation {
 
@@ -34,43 +37,47 @@ public final class CbLegacyTransformation {
 
     /** translation */
     public static Vector3f field_20902(class_4590 t) {
-        return vec(t.field_20902);
+        return vec(((CbTransformationAccess) (Object) t).cb$v1_21_11$translation());
     }
 
     public static void field_20902(class_4590 t, Vector3f v) {
-        t.field_20902 = v;
+        ((CbTransformationAccess) (Object) t).cb$v1_21_11$translation(v);
     }
 
     /** leftRotation */
     public static Quaternionf field_20903(class_4590 t) {
-        return quat(t.field_20903);
+        return quat(((CbTransformationAccess) (Object) t).cb$v1_21_11$leftRotation());
     }
 
     public static void field_20903(class_4590 t, Quaternionf q) {
-        t.field_20903 = q;
+        ((CbTransformationAccess) (Object) t).cb$v1_21_11$leftRotation(q);
     }
 
     /** scale */
     public static Vector3f field_20904(class_4590 t) {
-        return vec(t.field_20904);
+        return vec(((CbTransformationAccess) (Object) t).cb$v1_21_11$scale());
     }
 
     public static void field_20904(class_4590 t, Vector3f v) {
-        t.field_20904 = v;
+        ((CbTransformationAccess) (Object) t).cb$v1_21_11$scale(v);
     }
 
     /** rightRotation */
     public static Quaternionf field_20905(class_4590 t) {
-        return quat(t.field_20905);
+        return quat(((CbTransformationAccess) (Object) t).cb$v1_21_11$rightRotation());
     }
 
     public static void field_20905(class_4590 t, Quaternionf q) {
-        t.field_20905 = q;
+        ((CbTransformationAccess) (Object) t).cb$v1_21_11$rightRotation(q);
     }
 
-    /** compose(translation, leftRotation, scale, rightRotation): 1.21.11's same body over the widened parameter types */
+    /**
+     * compose(translation, leftRotation, scale, rightRotation), private in 1.21.11 and 26.x: the public constructor
+     * stores compose(t, l, s, r) as its matrix (javap -c -p 1.21.11: ctor offset 10..13) and getMatrixCopy
+     * (method_68076) answers a fresh Matrix4f of it -- the same new matrix compose answers.
+     */
     public static Matrix4f method_22934(Vector3f translation, Quaternionf left, Vector3f scale, Quaternionf right) {
-        return class_4590.method_22934(translation, left, scale, right);
+        return new class_4590(translation, left, scale, right).method_68076();
     }
 
     private CbLegacyTransformation() {

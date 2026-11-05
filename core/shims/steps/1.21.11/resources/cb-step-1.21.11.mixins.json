@@ -19,7 +19,8 @@
     "CbGameRulesServerMixin",
     "CbGameRulesServerMixinHooks",
     "CbMinecartCommandSourceRestoredMixin",
-    "CbSavedDataServerMixin"
+    "CbSavedDataServerMixin",
+    "CbTransformationAccess"
   ],
   "client": [
     "CbAbstractButtonRenderWidgetMixinHooks",
