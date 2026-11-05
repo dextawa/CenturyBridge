@@ -15,7 +15,7 @@ import org.joml.Matrix4f;
  * rebuild their matrix when changed) and a ProjectionMatrixBuffer (the uniform buffer, rewritten when the projection's
  * matrix changed); this is the pair, set up the way 1.21.11's built its matrix.
  * <p>
- * 1.21.11's private fields (mods' access wideners) are this class's: buffer / bufferSlice are the ProjectionMatrixBuffer's
+ * 1.21.11's private fields (mods' access wideners) are this class's, under their intermediary names (field_60059..field_60065, method_71094): buffer / bufferSlice are the ProjectionMatrixBuffer's
  * (it creates and slices its uniform buffer once, as 1.21.11's constructor did), zNear / zFar / invertY the constructor's,
  * width / height the last size asked for. createProjectionMatrix(width, height) is the matrix the projection uploads for
  * that size (26.1's Projection.getMatrix, which follows 26.1's depth convention as every 26.1 projection does).
@@ -25,33 +25,33 @@ public class CachedOrthoProjectionMatrixBuffer implements AutoCloseable {
 
     private final ProjectionMatrixBuffer cb$buffer;
     private final Projection cb$projection = new Projection();
-    public GpuBuffer buffer;
-    public GpuBufferSlice bufferSlice;
-    public float zNear;
-    public float zFar;
-    public boolean invertY;
-    public float width;
-    public float height;
+    public GpuBuffer field_60059;
+    public GpuBufferSlice field_60060;
+    public float field_60061;
+    public float field_60062;
+    public boolean field_60063;
+    public float field_60064;
+    public float field_60065;
 
     public CachedOrthoProjectionMatrixBuffer(String name, float zNear, float zFar, boolean invertY) {
         this.cb$buffer = new ProjectionMatrixBuffer(name);
-        this.buffer = this.cb$buffer.buffer;
-        this.bufferSlice = this.cb$buffer.bufferSlice;
-        this.zNear = zNear;
-        this.zFar = zFar;
-        this.invertY = invertY;
+        this.field_60059 = this.cb$buffer.buffer;
+        this.field_60060 = this.cb$buffer.bufferSlice;
+        this.field_60061 = zNear;
+        this.field_60062 = zFar;
+        this.field_60063 = invertY;
     }
 
     public GpuBufferSlice getBuffer(float width, float height) {
-        this.width = width;
-        this.height = height;
-        cb$projection.setupOrtho(zNear, zFar, width, height, invertY);
+        this.field_60064 = width;
+        this.field_60065 = height;
+        cb$projection.setupOrtho(field_60061, field_60062, width, height, field_60063);
         return cb$buffer.getBuffer(cb$projection);
     }
 
-    public Matrix4f createProjectionMatrix(float width, float height) {
+    public Matrix4f method_71094(float width, float height) {
         Projection p = new Projection();
-        p.setupOrtho(zNear, zFar, width, height, invertY);
+        p.setupOrtho(field_60061, field_60062, width, height, field_60063);
         return p.getMatrix(new Matrix4f());
     }
 
