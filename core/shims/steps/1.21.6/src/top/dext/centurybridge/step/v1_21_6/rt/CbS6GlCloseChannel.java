@@ -9,6 +9,7 @@ import java.util.function.Consumer;
  * backend here (layers are separate mods; neither links the other's classes). Published when the first legacy uniform
  * view is made (CbS6GlUniforms.field_57873): only passes with a view own buffers to free.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbS6GlCloseChannel {
     public static final String KEY = "centurybridge:gl_uniforms_closed";
     private static volatile boolean published;
