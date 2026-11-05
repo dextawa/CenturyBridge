@@ -1007,8 +1007,10 @@ public final class JarRemapper {
             // smixin20 (swall21): a member of a class the table does not map (a CenturyBridge facade or layer class,
             // top/dext/...) keeps the name that class declares -- the explicit owner, or, for a bare id, every @Mixin
             // target of the class -- instead of taking a game member's real name by id alone
-            boolean foreign = moj == null && (owner != null ? !gameClass(table, owner)
-                : context != null && !context.isEmpty() && context.stream().noneMatch(t -> gameClass(table, t)));
+            // Only CB classes: a JDK/library owner (an anchor rewritten to java/util/Iterator.method_N by context) still
+            // takes the table's name by id, as before
+            boolean foreign = moj == null && (owner != null ? cbClass(owner)
+                : context != null && !context.isEmpty() && context.stream().allMatch(JarRemapper::cbClass));
             if (foreign) {
                 moj = id;
             }
@@ -1036,10 +1038,10 @@ public final class JarRemapper {
             mr -> java.util.regex.Matcher.quoteReplacement(remapper.map(mr.group())));
     }
 
-    /** whether c (internal or dotted form) is a game class the wall table speaks for */
-    private static boolean gameClass(Table table, String c) {
+    /** whether c (internal or dotted form) is a CenturyBridge class (a facade or layer class) */
+    private static boolean cbClass(String c) {
         String n = c.replace('.', '/');
-        return table.classes.containsKey(n) || n.startsWith("net/minecraft/") || n.startsWith("com/mojang/");
+        return n.startsWith("top/dext/centurybridge/") || n.startsWith("centurybridge/");
     }
 
     /** an intermediary class name in Mixin's dotted form (@Mixin targets strings) */
