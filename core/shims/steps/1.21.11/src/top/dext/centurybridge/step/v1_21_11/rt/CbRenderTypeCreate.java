@@ -164,4 +164,34 @@ public final class CbRenderTypeCreate {
     public static class_1921 field_54857() {
         return class_12249.method_76017();
     }
+
+    /** new CompositeRenderType(name, bufferSize, affectsCrumbling, sortOnUpload, pipeline, state) (a mod's AW): 1.21.10's create body */
+    public static class_1921 cbNewComposite(String name, int bufferSize, boolean affectsCrumbling, boolean sortOnUpload,
+                                            RenderPipeline pipeline, CompositeState state) {
+        return method_24049(name, bufferSize, affectsCrumbling, sortOnUpload, pipeline, state);
+    }
+
+    /** RenderType.DEBUG_LINE_STRIP (memoized per width), what method_49043 applies */
+    public static java.util.function.Function<Double, class_1921> field_42521() {
+        return DEBUG_LINE_STRIP_TYPES;
+    }
+
+    /** RenderType.DEBUG_STRUCTURE_QUADS */
+    public static class_1921 field_52256() {
+        return method_61045();
+    }
+
+    /** RenderType.DEBUG_SECTION_QUADS */
+    public static class_1921 field_44673() {
+        return method_51456();
+    }
+
+    /**
+     * CompositeRenderType.OUTLINE: 1.21.11 RenderTypes.field_64041, the same memoized "outline" BiFunction (texture,
+     * cull): javap of both lambdas (method_34844 / method_75991: cull ? OUTLINE_CULL : OUTLINE_NO_CULL pipeline,
+     * the texture as Sampler0 / TextureStateShard, the outline target, IS_OUTLINE)
+     */
+    public static java.util.function.BiFunction<class_2960, Boolean, class_1921> field_29640() {
+        return class_12249.field_64041;
+    }
 }

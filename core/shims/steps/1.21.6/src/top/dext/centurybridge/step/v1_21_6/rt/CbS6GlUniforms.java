@@ -47,6 +47,7 @@ public final class CbS6GlUniforms {
 
     /** GlRenderPass.uniforms (field_57873), as the live int[] / float[] map 1.21.5 exposed. */
     public static HashMap<String, Object> field_57873(net.minecraft.class_10866 pass) {
+        CbS6GlCloseChannel.publish();
         synchronized (VIEWS) {
             return VIEWS.computeIfAbsent(pass,
                 p -> new UniformMapView(p.field_57873, com.mojang.blaze3d.systems.RenderSystem.getDevice()));
@@ -76,7 +77,10 @@ public final class CbS6GlUniforms {
         }
     }
 
-    /** Releases buffers owned by a closed pass without discarding its legacy array objects or map metadata. */
+    /**
+     * Releases buffers owned by a closed pass without discarding its legacy array objects or map metadata. Idempotent:
+     * each owned buffer is closed only while it is open (UniformValue.close), so a second call frees nothing.
+     */
     public static void closed(net.minecraft.class_10866 pass) {
         HashMap<String, Object> view;
         synchronized (VIEWS) {

@@ -1,0 +1,7 @@
+{
+ "_smx1q_facebakery_basis": "smx1q (javap -c -p -constants both code jars): 1.21.10 FaceBakery private statics field_32799 (= 3) and field_60149 (Vector3f(1,1,1) from clinit) are gone in 1.21.11; getters answer 1.21.10's values. The int[]-vertex helpers stay open (1.21.11 BakedQuad carries Vector3fc positions, no int[]).",
+ "fieldGetters": {
+  "net/minecraft/class_796.field_32799:I": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyFaceBakery",
+  "net/minecraft/class_796.field_60149:Lorg/joml/Vector3fc;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyFaceBakery"
+ }
+}

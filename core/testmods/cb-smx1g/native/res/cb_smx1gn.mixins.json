@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cb.smx1gn.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["NativeCreateBufferMixin", "NativeBufferCloseMixin", "NativePassCloseMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

@@ -13,7 +13,8 @@
     "NativeImageContentsMixin",
     "NativeDefaultSpriteMixin",
     "NativeBindTextureMixin",
-    "NativeBakeQuadMixin"
+    "NativeBakeQuadMixin",
+    "NativeCreateBufferMixin"
   ],
   "injectors": {
     "defaultRequire": 1
