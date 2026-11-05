@@ -10,4 +10,7 @@ import java.util.function.Predicate;
 public interface CbWallEditBoxFilter {
 
     Predicate<String> cb$filter();
+
+    /** a write of 1.21.11's EditBox.filter field: the same as setFilter */
+    void cb$setFilter(Predicate<String> filter);
 }

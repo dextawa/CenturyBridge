@@ -8,7 +8,8 @@ import top.dext.centurybridge.step.v1_21.rt.CbEnchantments;
 
 /**
  * BuiltInRegistries.createContents: once vanilla's registries have their entries and before they
- * freeze, CenturyBridge's enchantment effect component (CbEnchantments.LEGACY) joins 1.21's.
+ * freeze, CenturyBridge's enchantment effect component (CbEnchantments.LEGACY) joins 1.21's, and the layer's
+ * enchanted-book pick is installed (rt/CbEnchantBookPicks).
  */
 @Mixin(net.minecraft.class_7923.class)
 public abstract class CbEnchRegistriesMixin {
@@ -16,5 +17,9 @@ public abstract class CbEnchRegistriesMixin {
     @Inject(method = "method_47487", at = @At("TAIL"))
     private static void cbEnch$components(CallbackInfo ci) {
         CbEnchantments.registerComponents(net.minecraft.class_7923.field_51832);
+        // the enchanted-book pick a later layer's EnchantBookForEmeralds facade calls (26.1: rt/CbWallEnchantBookPicks)
+        top.dext.centurybridge.step.v1_21.rt.CbEnchantBookPicks.install(top.dext.centurybridge.step.v1_21.rt.CbEnchantBookPick.INSTANCE);
+        // the world-registry recording a later layer's registry-load mixin calls (26.1: rt/CbWallRegistryLoads)
+        top.dext.centurybridge.step.v1_21.rt.CbRegistryLoads.install(new top.dext.centurybridge.step.v1_21.rt.CbRegistryLoadRecording());
     }
 }

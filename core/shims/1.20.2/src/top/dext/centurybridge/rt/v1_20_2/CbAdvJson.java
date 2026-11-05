@@ -444,9 +444,13 @@ public final class CbAdvJson {
         return o;
     }
 
-    /** PlayerPredicate.fromJson(object) */
+    /**
+     * PlayerPredicate.fromJson(object): 1.20.1's JSON shape (gamemode a single name, stats a list of type/stat/value), read
+     * by the layer's 1.20.1 reader, not by the running release's PlayerPredicate codec -- whose schema moves on (26.1's
+     * gamemode is a GameTypePredicate list: "Not a json array: survival")
+     */
     public static net.minecraft.class_4553 method_22499(JsonObject json) {
-        return decode(net.minecraft.class_4553.field_45770.codec(), json, "player predicate");
+        return CbAdvPredicateJson.playerFromJson(json);
     }
 
     /** FishingHookPredicate.fromJson(object) */

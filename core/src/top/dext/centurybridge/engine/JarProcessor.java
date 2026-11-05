@@ -1204,6 +1204,12 @@ public final class JarProcessor {
                 : new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, r.retOwner, r.retName, r.retDesc, false);
             m.instructions.insert(mi, after);
         }
+        if (r.retCast != null) {
+            // "ret ... as <type>": the new shape (or its converter) answers a supertype of the old return type,
+            // which the call site's own code goes on using: cast back after the call / converter
+            org.objectweb.asm.tree.AbstractInsnNode last = r.retKind != null ? mi.getNext() : mi;
+            m.instructions.insert(last, new org.objectweb.asm.tree.TypeInsnNode(Opcodes.CHECKCAST, r.retCast.getInternalName()));
+        }
     }
 
     /**
