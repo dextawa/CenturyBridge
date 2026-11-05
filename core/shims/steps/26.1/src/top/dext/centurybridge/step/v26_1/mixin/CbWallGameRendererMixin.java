@@ -23,13 +23,14 @@ import top.dext.centurybridge.step.v26_1.facade.PanoramicScreenshotParameters;
 import top.dext.centurybridge.step.v26_1.rt.CbVanillaReads;
 import top.dext.centurybridge.step.v26_1.rt.CbWallPick;
 import top.dext.centurybridge.step.v26_1.rt.CbWallDepthFar;
+import top.dext.centurybridge.step.v26_1.rt.CbWallRenderDistance;
 
 /**
  * 1.21.11 GameRenderer members 26.1 moved elsewhere, given back on GameRenderer itself (covers), so a
  * subclass's override and its super call stay what they were:
  * <ul>
  * <li>getRenderDistance() / getDepthFar() / getProjectionMatrix(fov): 1.21.11's formulas (render distance
- *     in blocks; the far plane the larger of four render distances and the cloud range; a perspective of
+ *     in blocks, or the value a mod wrote to renderDistance this frame (CbWallGameRendererRenderDistanceHooks); the far plane the larger of four render distances and the cloud range; a perspective of
  *     the window's aspect from 0.05 to it). 26.1's Camera computes the same far plane; the projection
  *     takes the GPU device's depth range as 26.1's does. Camera.update takes its far plane from getDepthFar()
  *     (mixin/CbWallCameraDepthFarMixin), as 1.21.11's renderer did.</li>
@@ -72,8 +73,10 @@ public abstract class CbWallGameRendererMixin implements CbWallDepthFar, CbWallP
     private PanoramicScreenshotParameters cb$panoramic;
 
     @CbVanillaReads("CbWallCameraDepthFarMixin: Camera.update takes the far plane from getDepthFar(), which reads this")
+    @Override
     public float getRenderDistance() {
-        return (float) (this.minecraft.options.getEffectiveRenderDistance() * 16);
+        float written = ((CbWallRenderDistance) (Object) this).cb$writtenRenderDistance();
+        return written == written ? written : (float) (this.minecraft.options.getEffectiveRenderDistance() * 16);
     }
 
     @CbVanillaReads("CbWallCameraDepthFarMixin: Camera.update takes its far plane (depthFar: the projection's and the "

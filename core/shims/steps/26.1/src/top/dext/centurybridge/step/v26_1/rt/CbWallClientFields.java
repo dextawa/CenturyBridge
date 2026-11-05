@@ -20,8 +20,8 @@ import net.minecraft.client.renderer.culling.Frustum;
  * <li>GameRenderer.lastActiveTime (field_3998): the same idle-time stamp is Minecraft.lastActiveTime (set from
  *     Util.getMillis when the window has focus or a mouse button is down, compared with 500 ms the same way).</li>
  * <li>GameRenderer.renderDistance (field_4025): 1.21.11 set it every frame to options.getEffectiveRenderDistance() * 16;
- *     read only here (26.1 keeps no such field: a write lasted until the next frame's reset in 1.21.11 and reaches
- *     nothing 26.1 reads).</li>
+ *     reads go through the restored getRenderDistance(), writes are kept until the next frame's reset
+ *     (mixin/CbWallGameRendererRenderDistanceHooks).</li>
  * <li>LevelRenderer.captureFrustum / capturedFrustum (class_761.field_62945 / field_4056): 26.1 keeps both on Camera
  *     (captureFrustum() sets the flag, the frustum is taken in prepareCullFrustum as 1.21.11's renderer did); the
  *     client's main camera.</li>
@@ -63,7 +63,11 @@ public final class CbWallClientFields {
     }
 
     public static float renderDistance(GameRenderer r) {
-        return (float) (Minecraft.getInstance().options.getEffectiveRenderDistance() * 16);
+        return ((CbWallDepthFar) (Object) r).getRenderDistance();
+    }
+
+    public static void setRenderDistance(GameRenderer r, float v) {
+        ((CbWallRenderDistance) (Object) r).cb$writeRenderDistance(v);
     }
 
     private static Camera camera() {
