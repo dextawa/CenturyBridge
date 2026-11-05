@@ -9,9 +9,10 @@ import net.minecraft.class_801;
  * facing one way (facing, min, max, anchor). 1.21.11 dropped the class (its generator collects class_801$class_12295
  * pixel faces instead); the facade is 1.21.10's data holder: the constructor sets min = max = start, expand(pos)
  * widens [min, max] to pos (javap -c -p of 1.21.10's class). SpanFacing (class_801$class_803) survives in 1.21.11.
+ * Not final: 1.21.10's class was not, so a mod may subclass it.
  */
 @Environment(EnvType.CLIENT)
-public final class ItemModelGeneratorSpan {
+public class ItemModelGeneratorSpan {
     public final class_801.class_803 field_4271;
     public int field_4274;
     public int field_4273;
