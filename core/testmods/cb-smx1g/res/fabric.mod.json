@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx1g",
+  "version": "1.0.0",
+  "name": "CB smx1g 1.21.5 legacy GL uniforms",
+  "description": "1.21.5-era mixin on GlRenderPass putting a legacy float[] into the pass's uniforms map (smx1s GlUniformClose check)",
+  "environment": "client",
+  "mixins": ["cb_smx1g.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.5" }
+}

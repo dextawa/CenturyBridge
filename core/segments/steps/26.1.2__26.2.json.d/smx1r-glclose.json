@@ -1,0 +1,5 @@
+{
+  "retiredClasses": {
+    "top/dext/centurybridge/step/v1_21_6/mixin/CbS6GlUniformCloseMixin": "smx1r: 26.2 GlRenderPass has no close() (javap -p client-26.2.jar; 26.1.2's had close()/isClosed()): the pass closes in RenderPass.close(), whose backend the 26.2 layer's CbS26RenderPassCloseMixin (RETURN, default priority) hands to the 1.21.6 layer's close hook (ObjectShare centurybridge:gl_uniforms_closed, rt/CbS6GlCloseChannel -> CbS6GlUniforms.closed, idempotent)"
+  }
+}

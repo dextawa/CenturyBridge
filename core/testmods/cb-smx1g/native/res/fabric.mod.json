@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_smx1gn",
+  "version": "1.0.0",
+  "name": "CB smx1g native 26.2 buffer-close probe and driver",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.smx1gn.Smx1gNative"] },
+  "mixins": ["cb_smx1gn.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "26.2" }
+}

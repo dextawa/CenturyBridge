@@ -1,0 +1,18 @@
+{
+ "_smx1q_transformation_basis": "smx1q (javap -c -p of both code jars): 1.21.10 Transformation's private fields translation/leftRotation/scale/rightRotation (field_20902..20905, reached through a mod's AW) keep their names in 1.21.11 typed Vector3fc/Quaternionfc; 1.21.11's constructor and method_22938 store the caller's object or a fresh Vector3f/Quaternionf, so reads hand back the same mutable object (a read-only view is copied) and writes store the mod's object. method_22934 (compose) has the same body over widened parameter types.",
+ "instanceFieldGetters": {
+  "net/minecraft/class_4590.field_20902:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyTransformation",
+  "net/minecraft/class_4590.field_20903:Lorg/joml/Quaternionf;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyTransformation",
+  "net/minecraft/class_4590.field_20904:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyTransformation",
+  "net/minecraft/class_4590.field_20905:Lorg/joml/Quaternionf;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyTransformation"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_4590.field_20902:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyTransformation",
+  "net/minecraft/class_4590.field_20903:Lorg/joml/Quaternionf;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyTransformation",
+  "net/minecraft/class_4590.field_20904:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyTransformation",
+  "net/minecraft/class_4590.field_20905:Lorg/joml/Quaternionf;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyTransformation"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_4590.method_22934(Lorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Vector3f;Lorg/joml/Quaternionf;)Lorg/joml/Matrix4f;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyTransformation"
+ }
+}

@@ -190,6 +190,8 @@ public class Smx1dOld implements ClientModInitializer {
         guarded("renderTypes", Smx1dOld::renderTypes);
         guarded("samplers", () -> samplers(mc));
         guarded("bakeQuad", () -> bakeQuad(mc));
+        guarded("gpu", Smx1dOld::gpuSlices);
+        guarded("layer", Smx1dOld::cutoutMipped);
     }
 
     // 1. VertexConsumer.addVertex(Matrix4f, ..): 1.21.11's takes a Matrix4fc
@@ -708,5 +710,38 @@ public class Smx1dOld implements ClientModInitializer {
         Object nativeRot = ((Function<Object[], Object>) System.getProperties().get("cbsmx1d.nativeRotation"))
             .apply(new Object[] {net.minecraft.class_10821.field_57030, net.minecraft.class_10821.field_57031});
         r("rot.sameAsNative", nativeRot == x90y180, "native=" + nativeRot + " old=" + x90y180);
+    }
+
+    // GPU buffer sizes/offsets: int at 1.21.10, long at 1.21.11 (GpuDevice.createBuffer, GpuBuffer.size/slice, GpuBufferSlice)
+    static void gpuSlices() {
+        com.mojang.blaze3d.systems.GpuDevice dev = com.mojang.blaze3d.systems.RenderSystem.getDevice();
+        long n0 = n("createBuffer");
+        com.mojang.blaze3d.buffers.GpuBuffer buf = dev.createBuffer(() -> "cb_smx1d_buf",
+            com.mojang.blaze3d.buffers.GpuBuffer.USAGE_COPY_DST | com.mojang.blaze3d.buffers.GpuBuffer.USAGE_VERTEX, 64);
+        try {
+            r("gpu.createBuffer", buf != null && !buf.isClosed(), "buffer=" + buf);
+            r("gpu.nativeCreateBuffer", n("createBuffer") - n0 == 1 && "64".equals(System.getProperty("cbsmx1d.lastBufferSize")),
+                "native createBuffer(Supplier,int,long) HEAD x" + (n("createBuffer") - n0) + " size=" + System.getProperty("cbsmx1d.lastBufferSize"));
+            int size = buf.size();
+            r("gpu.size", size == 64, "size=" + size);
+            com.mojang.blaze3d.buffers.GpuBufferSlice a = buf.slice(8, 16);
+            int ao = a.offset(), al = a.length();
+            r("gpu.bufferSlice", a.buffer() == buf && ao == 8 && al == 16, "offset=" + ao + " length=" + al);
+            com.mojang.blaze3d.buffers.GpuBufferSlice b = new com.mojang.blaze3d.buffers.GpuBufferSlice(buf, 0, 32);
+            int bo = b.offset(), bl = b.length();
+            r("gpu.sliceCtor", b.buffer() == buf && bo == 0 && bl == 32, "offset=" + bo + " length=" + bl);
+            com.mojang.blaze3d.buffers.GpuBufferSlice c = b.slice(4, 8);
+            int co = c.offset(), cl = c.length();
+            r("gpu.sliceSlice", c.buffer() == buf && co == 4 && cl == 8, "offset=" + co + " length=" + cl);
+        } finally {
+            buf.close();
+        }
+    }
+
+    // ChunkSectionLayer.CUTOUT_MIPPED is gone at 1.21.11; 1.21.11 renders that geometry in CUTOUT
+    static void cutoutMipped() {
+        net.minecraft.class_11515 l = net.minecraft.class_11515.field_60924;
+        r("layer.cutoutMipped", l == net.minecraft.class_11515.field_60925 && "CUTOUT".equals(l.name()),
+            "layer=" + (l == null ? null : l.name() + "/" + l.ordinal()));
     }
 }
