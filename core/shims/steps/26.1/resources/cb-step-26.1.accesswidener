@@ -418,3 +418,10 @@ accessible	field	net/minecraft/data/DataGenerator$Cached	version	Lnet/minecraft/
 accessible	field	net/minecraft/data/DataGenerator$Cached	alwaysGenerate	Z
 accessible	field	net/minecraft/data/DataGenerator	vanillaPackOutput	Lnet/minecraft/data/PackOutput;
 accessible	field	net/minecraft/client/gui/screens/options/OptionsScreen	difficultyButtons	Lnet/minecraft/client/gui/screens/options/DifficultyButtons;
+# swall26: 1.21.11 LightTexture fixed fields are the 26.1 Lightmap's / extractor's (facade/LightTexture)
+accessible	field	net/minecraft/client/renderer/Lightmap	texture	Lcom/mojang/blaze3d/textures/GpuTexture;
+accessible	field	net/minecraft/client/renderer/Lightmap	textureView	Lcom/mojang/blaze3d/textures/GpuTextureView;
+accessible	field	net/minecraft/client/renderer/Lightmap	ubo	Lnet/minecraft/client/renderer/MappableRingBuffer;
+accessible	field	net/minecraft/client/renderer/LightmapRenderStateExtractor	renderer	Lnet/minecraft/client/renderer/GameRenderer;
+accessible	field	net/minecraft/client/renderer/LightmapRenderStateExtractor	minecraft	Lnet/minecraft/client/Minecraft;
+accessible	field	net/minecraft/client/renderer/LightmapRenderStateExtractor	randomSource	Lnet/minecraft/util/RandomSource;
