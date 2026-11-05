@@ -14,8 +14,8 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallBrainExtras;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public final class CbWallBrainListBreezeAi {
 
-    private static ImmutableList field_47287;
-    private static ImmutableList field_47288;
+    private static List field_47287;
+    private static List field_47288;
 
     static {
         build();
@@ -33,22 +33,22 @@ public final class CbWallBrainListBreezeAi {
     }
 
     /** BreezeAi.SENSOR_TYPES (net/minecraft/class_8950.field_47287), as a mod's writes left it */
-    public static ImmutableList field_47287() {
+    public static List field_47287() {
         return field_47287;
     }
 
     /** a write of BreezeAi.SENSOR_TYPES (net/minecraft/class_8950.field_47287): the brains 26.1 builds for the mob take what it adds */
-    public static void field_47287(ImmutableList value) {
+    public static void field_47287(List value) {
         field_47287 = value;
     }
 
     /** BreezeAi.MEMORY_TYPES (net/minecraft/class_8950.field_47288), as a mod's writes left it */
-    public static ImmutableList field_47288() {
+    public static List field_47288() {
         return field_47288;
     }
 
     /** a write of BreezeAi.MEMORY_TYPES (net/minecraft/class_8950.field_47288): the brains 26.1 builds for the mob take what it adds */
-    public static void field_47288(ImmutableList value) {
+    public static void field_47288(List value) {
         field_47288 = value;
     }
 

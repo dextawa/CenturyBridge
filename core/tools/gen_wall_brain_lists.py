@@ -167,7 +167,7 @@ def main():
         out.append("@SuppressWarnings({\"rawtypes\", \"unchecked\"})")
         out.append("public final class %s {\n" % name)
         for fid, factory, els in lists:
-            out.append("    private static %s %s;" % ("ImmutableList" if factory.endswith("ImmutableList") else "List", fid))
+            out.append("    private static %s %s;" % ("ImmutableList" if fields[fid][1].endswith("ImmutableList") else "List", fid))
         out.append("")
         out.append("    static {")
         out.append("        build();")
@@ -191,7 +191,7 @@ def main():
             out.append("        %s = %s(%s);" % (fid, fac, elems))
         out.append("    }\n")
         for fid, factory, els in lists:
-            t = "ImmutableList" if factory.endswith("ImmutableList") else "List"
+            t = "ImmutableList" if fields[fid][1].endswith("ImmutableList") else "List"  # the declared type, not the factory's
             kind = "MEMORY_TYPES" if fields[fid][2] else "SENSOR_TYPES"
             out.append("    /** %s.%s (%s.%s), as a mod's writes left it */" % (mojang.rsplit("/", 1)[1], kind, owner, fid))
             out.append("    public static %s %s() {\n        return %s;\n    }\n" % (t, fid, fid))
@@ -205,7 +205,7 @@ def main():
         os.makedirs(os.path.dirname(path), exist_ok=True)
         open(path, "w", encoding="utf-8").write("\n".join(out) + "\n")
         for fid, factory, _ in lists:
-            key = "%s.%s:L%s;" % (owner, fid, factory)
+            key = "%s.%s:L%s;" % (owner, fid, fields[fid][1])  # the field's declared type (a List may be built by ImmutableList.of)
             getters[key] = jcls
             setters[key] = jcls
         moves[owner + ".<clinit>()V"] = {

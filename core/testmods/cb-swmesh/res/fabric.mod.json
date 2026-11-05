@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_swmesh",
+  "version": "1.0.0",
+  "name": "CB swall model meshes (1.21.11)",
+  "description": "1.21.11-era client mod: dumps the part trees of RabbitModel/ArmadilloModel/DonkeyModel/PolarBearModel layer definitions built through 1.21.11's statics (adult and baby); native 1.21.11 is the reference for the climbed 26.1 run; tally CB-SWMESH n/m, then the client stops",
+  "environment": "client",
+  "entrypoints": { "client": ["cb.swmesh.SwMeshClient"] },
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.11", "fabric-lifecycle-events-v1": "*" }
+}

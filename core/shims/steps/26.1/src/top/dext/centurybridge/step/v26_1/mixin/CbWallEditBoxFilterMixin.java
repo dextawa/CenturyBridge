@@ -33,4 +33,9 @@ public abstract class CbWallEditBoxFilterMixin implements CbWallEditBoxFilter {
     public Predicate<String> cb$filter() {
         return this.cb$filter;
     }
+
+    @Override
+    public void cb$setFilter(Predicate<String> filter) {
+        this.cb$filter = filter;
+    }
 }

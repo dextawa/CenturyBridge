@@ -14,8 +14,8 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallBrainExtras;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public final class CbWallBrainListSnifferAi {
 
-    private static ImmutableList field_42673;
-    private static ImmutableList field_42674;
+    private static List field_42673;
+    private static List field_42674;
 
     static {
         build();
@@ -33,22 +33,22 @@ public final class CbWallBrainListSnifferAi {
     }
 
     /** SnifferAi.SENSOR_TYPES (net/minecraft/class_8155.field_42673), as a mod's writes left it */
-    public static ImmutableList field_42673() {
+    public static List field_42673() {
         return field_42673;
     }
 
     /** a write of SnifferAi.SENSOR_TYPES (net/minecraft/class_8155.field_42673): the brains 26.1 builds for the mob take what it adds */
-    public static void field_42673(ImmutableList value) {
+    public static void field_42673(List value) {
         field_42673 = value;
     }
 
     /** SnifferAi.MEMORY_TYPES (net/minecraft/class_8155.field_42674), as a mod's writes left it */
-    public static ImmutableList field_42674() {
+    public static List field_42674() {
         return field_42674;
     }
 
     /** a write of SnifferAi.MEMORY_TYPES (net/minecraft/class_8155.field_42674): the brains 26.1 builds for the mob take what it adds */
-    public static void field_42674(ImmutableList value) {
+    public static void field_42674(List value) {
         field_42674 = value;
     }
 

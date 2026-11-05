@@ -1,0 +1,6 @@
+{
+ "_swall25_basis": "1.21.5 Model.getAnyDescendantWithName (class_3879.method_62104), gone from 1.21.6 (javap of both): restored on Model by the layer's CbModelPartLookupRestoredMixin over 1.21.6's ModelPart.createPartLookup (method_72015), same answer for every name (see the mixin's javadoc)",
+ "covers": [
+  "net/minecraft/class_3879.method_62104(Ljava/lang/String;)Ljava/util/Optional;"
+ ]
+}
