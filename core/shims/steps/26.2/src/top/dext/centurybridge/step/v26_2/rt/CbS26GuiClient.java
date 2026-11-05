@@ -73,4 +73,16 @@ public final class CbS26GuiClient {
     public static void setVignetteBrightness(net.minecraft.client.gui.Gui gui, float value) {
         gui.hud.vignetteBrightness = value;
     }
+
+    /**
+     * fieldGetters: 26.1.2 GuiItemAtlas.MAXIMUM_TEXTURE_SIZE (private static; its clinit stored
+     * RenderSystem.getDevice().getMaxTextureSize(), and computeTextureSizeFor clamped the atlas size to it). 26.2 drops
+     * the field and GpuDevice.getMaxTextureSize; its computeTextureSizeFor clamps to
+     * getDeviceInfo().limits().maxTextureSizeForFormat(RGBA8_UNORM), the format its atlas texture is made in (javap of
+     * both). The getter answers that cap.
+     */
+    public static int guiItemAtlasMaximumTextureSize() {
+        return com.mojang.blaze3d.systems.RenderSystem.getDevice().getDeviceInfo().limits()
+            .maxTextureSizeForFormat(com.mojang.blaze3d.GpuFormat.RGBA8_UNORM);
+    }
 }

@@ -1,6 +1,8 @@
 {
+  "_swall26_atlas_basis": "GuiItemAtlas.MAXIMUM_TEXTURE_SIZE (26.1.2 private static, read by the 26.1 layer's CbWallGuiAtlasFields through its AW): 26.2 removed it and GpuDevice.getMaxTextureSize; the cap its computeTextureSizeFor applies is DeviceLimits.maxTextureSizeForFormat(RGBA8_UNORM), the atlas texture's format (javap 26.1.2 / 26.2). rt/CbS26GuiClient.",
   "_s26c_constants": "s26c, item 3 (API families): 26.1.2 public static fields 26.2 dropped or retyped (LevelChunkSection SECTION_*, Waypoint.MAX_RANGE, ChunkPos.MAX_COORDINATE_VALUE, Timelines.NIGHT_FOG_COLOR_MULTIPLIER, Goat.LONG_JUMPING_DIMENSIONS, Mth axes, ObjectiveCriteria TEAM_KILL / KILLED_BY_TEAM), Mth.rotationAroundAxis(Vector3f..), Team.getColor() on a Team receiver. Values read off 26.1.2's clinits, javap of both (CbS26Constants javadoc)",
   "fieldGetters": {
+    "net/minecraft/client/gui/render/GuiItemAtlas.MAXIMUM_TEXTURE_SIZE:I": "top/dext/centurybridge/step/v26_2/rt/CbS26GuiClient#guiItemAtlasMaximumTextureSize",
     "net/minecraft/world/level/chunk/LevelChunkSection.SECTION_WIDTH:I": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#LevelChunkSection_SECTION_WIDTH",
     "net/minecraft/world/level/chunk/LevelChunkSection.SECTION_HEIGHT:I": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#LevelChunkSection_SECTION_HEIGHT",
     "net/minecraft/world/level/chunk/LevelChunkSection.SECTION_SIZE:I": "top/dext/centurybridge/step/v26_2/rt/CbS26Constants#LevelChunkSection_SECTION_SIZE",
