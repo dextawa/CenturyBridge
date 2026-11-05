@@ -1,0 +1,19 @@
+{
+ "_smx1p_gui_basis": "smx1p (javap -c -p of both code jars): 1.21.10 GuiGraphics.OutlineBox (class_332$class_11731, private record, reached through a mod's AW) is gone in 1.21.11; facade/GuiGraphicsOutlineBox keeps the record's components and its draw(graphics) is 1.21.11's GuiGraphics.submitOutline (method_73198), which issues the same four fill calls with the same arguments. 1.21.10 ItemModelGenerator.Span (class_801$class_802) is gone in 1.21.11 (pixel faces class_801$class_12295 replace it): facade/ItemModelGeneratorSpan is 1.21.10's data holder (facing, min, max, anchor; expand), over 1.21.11's surviving SpanFacing. 1.21.10 RealmsSlotUpdateDto's private fields read the 1.21.11 record's components at the same constructor position (rt/CbLegacyRealms).",
+ "classRenames": {
+  "net/minecraft/class_332$class_11731": "top/dext/centurybridge/step/v1_21_11/facade/GuiGraphicsOutlineBox",
+  "net/minecraft/class_801$class_802": "top/dext/centurybridge/step/v1_21_11/facade/ItemModelGeneratorSpan"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_11308.field_60211:I": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_11308.field_60213:Z": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_11308.field_60214:I": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_11308.field_60215:I": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_11308.field_60216:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_11308.field_60217:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_11308.field_60218:Lnet/minecraft/class_4877$class_8842;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_11308.field_60219:J": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_11308.field_60220:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms",
+  "net/minecraft/class_11308.field_60221:Z": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRealms"
+ }
+}

@@ -33,7 +33,8 @@ public class Smx1dNative implements ClientModInitializer {
         "text.oldIconString", "text.oldIconSpriteNative", "text.oldScrollingHook", "text.oldLabelVanillaScreen",
         "rt.ctorValues", "rt.setupClearRunnables", "rt.getName", "rt.ownOverrideAndSuper", "rt.vanillaSetupClear",
         "sampler.textureState", "sampler.ownerTexture", "sampler.nullUnbinds", "sampler.nativeBindTexture", "bake.quad",
-        "bake.nativeHook", "rot.identity", "rot.byQuadrants", "rot.values", "rot.valueOf", "rot.sameAsNative"};
+        "bake.nativeHook", "rot.identity", "rot.byQuadrants", "rot.values", "rot.valueOf", "rot.sameAsNative",
+        "gpu.createBuffer", "gpu.nativeCreateBuffer", "gpu.size", "gpu.bufferSlice", "gpu.sliceCtor", "gpu.sliceSlice", "layer.cutoutMipped"};
 
     static void log(String s) {
         System.out.println("CB-SMX1D " + s);

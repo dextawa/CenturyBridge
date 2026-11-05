@@ -639,7 +639,69 @@ public final class JarRemapper {
                         return name;
                     }
                     String res = targetMethods == null ? m : byDescriptor(owner, name, desc, m);
+                    if (overridesNothing(owner, name, desc, res)) {
+                        return name;
+                    }
                     return nativeClash(owner, name, res, mapMethodDesc(desc)) ? name : res;
+                }
+
+                /**
+                 * smixin21 (s215o): the table keys members by owner and name only, so a mod class's own method whose
+                 * token is also a vanilla id but whose descriptor is another (cb-s215mb's OwnBaker.method_65732()
+                 * returning the 1.21.5 layer's SpriteGetter facade, implementing that layer's adapter, beside
+                 * ModelBaker.method_65732()Lclass_9826;) took the vanilla rename (materials) and left the adapter's
+                 * method unimplemented (AbstractMethodError). A method of a mod class (not CB, not a mixin, not a game
+                 * class) takes the rename only when it can override that member: true when some game or library class
+                 * up its hierarchy declares the renamed name with the renamed descriptor, or a wall adapter up it
+                 * requires the token. It keeps its token only when the whole hierarchy is known and none does; an
+                 * unknown supertype (another mod's class) leaves the table's name, as before. Calls through the mod
+                 * class take the same decision, so its callers stay matched.
+                 */
+                private boolean overridesNothing(String owner, String name, String desc, String res) {
+                    if (targetMethods == null || res.equals(name) || owner.startsWith("top/dext/centurybridge/")
+                        || owner.startsWith("centurybridge/") || mixinTargets.containsKey(owner)) {
+                        return false;
+                    }
+                    String mo = map(owner);
+                    if (targetMethods.containsKey(mo) || !jarSupers.containsKey(mo)) {
+                        return false;
+                    }
+                    return provenAbsent(mo, res + mapMethodDesc(desc), name + desc, new java.util.HashSet<>());
+                }
+
+                /** whether owner's whole hierarchy is known, no game/library class in it declares nameDesc, and no wall adapter in it requires vToken */
+                private boolean provenAbsent(String owner, String nameDesc, String vToken, java.util.Set<String> seen) {
+                    if (owner == null || !seen.add(owner) || owner.startsWith("java/") || owner.startsWith("javax/")) {
+                        return true;
+                    }
+                    java.util.Set<String> ms = targetMethods.get(owner);
+                    if (ms != null && ms.contains(nameDesc)) {
+                        return false;
+                    }
+                    for (Object[] hook : wallAdapters.getOrDefault(owner, java.util.List.of())) {
+                        if (((java.util.Set<?>) hook[1]).contains(vToken)) {
+                            return false;
+                        }
+                    }
+                    // a CB interface of the jar whose token method its mixin implementers rename (interfaceMember):
+                    // the mod's implementation follows that name
+                    java.util.Set<String> cbi = cbInterfaceMethods.get(owner);
+                    if (cbi != null && cbi.contains(vToken)) {
+                        int p = vToken.indexOf('(');
+                        if (interfaceMember(owner, vToken.substring(0, p), vToken.substring(p), this) != null) {
+                            return false;
+                        }
+                    }
+                    String[] sup = targetSupers.containsKey(owner) ? targetSupers.get(owner) : jarSupers.get(owner);
+                    if (sup == null) {
+                        return false; // not known: not proven
+                    }
+                    for (String x : sup) {
+                        if (!provenAbsent(x, nameDesc, vToken, seen)) {
+                            return false;
+                        }
+                    }
+                    return true;
                 }
 
                 /** a CB class's token method a wall-step adapter among its supertypes requires: see {@link Table#wallAdapters} */
@@ -1004,10 +1066,20 @@ public final class JarRemapper {
                     }
                 }
             }
+            // smixin20 (swall21): a member of a class the table does not map (a CenturyBridge facade or layer class,
+            // top/dext/...) keeps the name that class declares -- the explicit owner, or, for a bare id, every @Mixin
+            // target of the class -- instead of taking a game member's real name by id alone
+            // Only CB classes: a JDK/library owner (an anchor rewritten to java/util/Iterator.method_N by context) still
+            // takes the table's name by id, as before
+            boolean foreign = moj == null && (owner != null ? cbClass(owner)
+                : context != null && !context.isEmpty() && context.stream().allMatch(JarRemapper::cbClass));
+            if (foreign) {
+                moj = id;
+            }
             if (moj == null) {
                 moj = table.members.getOrDefault(id, id);
             }
-            String descOwner = owner != null ? owner : ctxOwner;
+            String descOwner = foreign ? null : owner != null ? owner : ctxOwner;
             if (descOwner != null && desc != null && table.targetMethods != null && !id.startsWith("field_")) {
                 // a reused id resolves by the descriptor written after it, as the class files' pass does
                 moj = remapper.mapMethodName(descOwner, id, desc);
@@ -1026,6 +1098,12 @@ public final class JarRemapper {
             remapper.map(mr.group().replace('.', '/')).replace('/', '.')));
         return CLASS_TOKEN.matcher(text).replaceAll(
             mr -> java.util.regex.Matcher.quoteReplacement(remapper.map(mr.group())));
+    }
+
+    /** whether c (internal or dotted form) is a CenturyBridge class (a facade or layer class) */
+    private static boolean cbClass(String c) {
+        String n = c.replace('.', '/');
+        return n.startsWith("top/dext/centurybridge/") || n.startsWith("centurybridge/");
     }
 
     /** an intermediary class name in Mixin's dotted form (@Mixin targets strings) */

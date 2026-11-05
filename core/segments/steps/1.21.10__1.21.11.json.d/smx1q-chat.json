@@ -1,0 +1,10 @@
+{
+ "_smx1q_chat_basis": "smx1q (javap -c -p -constants both code jars): 1.21.10 ChatComponent private statics reached through a mod's AW. field_39771 = -1 and field_39773 = 4 (compile-time constants) are gone in 1.21.11; getTimeFactor(age) (method_19348) is gone, its expression lives on in AlphaCalculator.timeBased (class_338$class_12232.method_75805) with no age entry point, so the getter computes 1.21.10's formula (a V helper, not a W body).",
+ "fieldGetters": {
+  "net/minecraft/class_338.field_39771:I": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyChat",
+  "net/minecraft/class_338.field_39773:I": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyChat"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_338.method_19348(I)D": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyChat"
+ }
+}
