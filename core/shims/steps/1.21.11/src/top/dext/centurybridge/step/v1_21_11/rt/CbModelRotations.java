@@ -36,6 +36,25 @@ public final class CbModelRotations {
         }
     }
 
+    /**
+     * 1.21.10 ModelRotation.BY_QUADRANTS (field_56975, private static final ModelRotation[4][4], [x.ordinal][y.ordinal],
+     * filled by method_68009 from values()): one shared array, as 1.21.10 kept one, holding the same 16 objects
+     */
+    private static final class_1086[][] GRID = new class_1086[4][4];
+
+    static {
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
+                GRID[x][y] = VALUES[x * 4 + y];
+            }
+        }
+    }
+
+    /** read of ModelRotation.field_56975 (fieldGetters; a mod mixin's @Shadow / @Accessor of it through MixinBridge) */
+    public static class_1086[][] field_56975() {
+        return GRID;
+    }
+
     /** ModelRotation.by(Quadrant x, Quadrant y) */
     public static class_1086 method_68008(class_10821 x, class_10821 y) {
         return class_1086.method_75489(CbModelRotationQuadrants.group(x, y));

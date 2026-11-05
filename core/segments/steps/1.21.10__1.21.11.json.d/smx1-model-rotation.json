@@ -16,7 +16,8 @@
   "net/minecraft/class_1086.field_5353:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
   "net/minecraft/class_1086.field_5349:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
   "net/minecraft/class_1086.field_5361:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
-  "net/minecraft/class_1086.field_5352:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations"
+  "net/minecraft/class_1086.field_5352:Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
+  "net/minecraft/class_1086.field_56975:[[Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations"
  },
  "staticRedirects": {
   "net/minecraft/class_1086.values()[Lnet/minecraft/class_1086;": "top/dext/centurybridge/step/v1_21_11/rt/CbModelRotations",
