@@ -44,4 +44,16 @@ public final class CbS26OptionsClient {
     private static Hud hud(Options options) {
         return options.minecraft.gui.hud;
     }
+
+    /**
+     * 26.1.2 OptionsScreen.difficultyButtons (instanceFieldGetters; private, read through an AW, e.g. by the climbed 26.1
+     * layer's CbWallClientFields). 26.1.2's init, in a world, built either the difficulty buttons (kept here) or, when
+     * canShowWorldOptions(), a World Options button and left the field null (null too outside a world). 26.2's init
+     * always builds the World Options button in a world and keeps the difficulty buttons only on WorldOptionsScreen
+     * (javap -c of both), so a 26.2 OptionsScreen is always in 26.1.2's null state.
+     */
+    public static net.minecraft.client.gui.screens.options.DifficultyButtons difficultyButtons(
+            net.minecraft.client.gui.screens.options.OptionsScreen screen) {
+        return null;
+    }
 }
