@@ -27,7 +27,12 @@
   "net/minecraft/class_10243.field_54397:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#transmuteResult",
   "net/minecraft/class_1869.field_9053:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#shapedRecipeResult",
   "net/minecraft/class_1867.field_9050:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#shapelessRecipeResult",
-  "net/minecraft/class_3972.field_17643:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#singleItemRecipeResult"
+  "net/minecraft/class_3972.field_17643:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#singleItemRecipeResult",
+  "net/minecraft/class_2403.field_40595:Ljava/nio/file/Path;": "top/dext/centurybridge/step/v26_1/rt/CbWallDataGenerators#rootOutputFolder",
+  "net/minecraft/class_2403.field_38910:Lnet/minecraft/class_6489;": "top/dext/centurybridge/step/v26_1/rt/CbWallDataGenerators#version",
+  "net/minecraft/class_2403.field_38911:Z": "top/dext/centurybridge/step/v26_1/rt/CbWallDataGenerators#alwaysGenerate",
+  "net/minecraft/class_429.field_2500:Lnet/minecraft/class_5676;": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#optionsDifficultyButton",
+  "net/minecraft/class_429.field_2503:Lnet/minecraft/class_347;": "top/dext/centurybridge/step/v26_1/rt/CbWallClientFields#optionsLockButton"
  },
  "instanceFieldSetters": {
   "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.depthTestFunction:Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#setBuilderDepthTestFunction",
@@ -48,5 +53,6 @@
   "net/minecraft/class_3485.method_44243()Ljava/util/stream/Stream;",
   "net/minecraft/class_3485.method_15090(Ljava/io/InputStream;)Lnet/minecraft/class_3499;"
  ],
- "_swall26_recipes_basis": "1.21.11 recipe builders' result item/count/stack/holder and ShapedRecipe/ShapelessRecipe/SingleItemRecipe.result stacks read off 26.1's ItemStackTemplate result (javap both); a stack read is a new stack per read (loss: in-place changes, release_notes_known.md)."
+ "_swall26_recipes_basis": "1.21.11 recipe builders' result item/count/stack/holder and ShapedRecipe/ShapelessRecipe/SingleItemRecipe.result stacks read off 26.1's ItemStackTemplate result (javap both); a stack read is a new stack per read (loss: in-place changes, release_notes_known.md).",
+ "_swall26_misc_basis": "DataGenerator rootOutputFolder/version/alwaysGenerate = 26.1 DataGenerator.Cached's fields (Uncached: vanilla pack output folder, current version, true); OptionsScreen difficultyButton/lockButton = its DifficultyButtons record's (reads only; the aw-put rows stay open: the record is immutable)."
 }

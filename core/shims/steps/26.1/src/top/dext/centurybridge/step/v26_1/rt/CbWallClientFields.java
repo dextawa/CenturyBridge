@@ -6,7 +6,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.LockIconButton;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -29,6 +32,9 @@ import net.minecraft.client.renderer.culling.Frustum;
  *     26.1's TextCursorUtils constants (same values).</li>
  * <li>EditBox.filter (class_342.field_2104): the filter the layer restores (CbWallEditBoxFilter); a box no mod gave one
  *     answers 1.21.11's default, Objects::nonNull.</li>
+ * <li>OptionsScreen.difficultyButton / lockButton (class_429.field_2500 / field_2503): 26.1 keeps both in the screen's
+ *     DifficultyButtons record (difficultyButtons, made in init as 1.21.11 made the two fields; null outside a world as
+ *     1.21.11's were). Read only: the record is immutable and its refresh reads its own buttons.</li>
  * </ul>
  */
 @Environment(EnvType.CLIENT)
@@ -132,5 +138,14 @@ public final class CbWallClientFields {
     @SuppressWarnings("unchecked")
     public static void setFilter(EditBox box, Predicate v) {
         ((CbWallEditBoxFilter) box).cb$setFilter(v);
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static CycleButton optionsDifficultyButton(OptionsScreen s) {
+        return s.difficultyButtons == null ? null : s.difficultyButtons.difficultyButton();
+    }
+
+    public static LockIconButton optionsLockButton(OptionsScreen s) {
+        return s.difficultyButtons == null ? null : s.difficultyButtons.lockButton();
     }
 }

@@ -412,3 +412,9 @@ accessible	field	net/minecraft/data/recipes/SmithingTransformRecipeBuilder	resul
 accessible	field	net/minecraft/world/item/crafting/ShapedRecipe	result	Lnet/minecraft/world/item/ItemStackTemplate;
 accessible	field	net/minecraft/world/item/crafting/ShapelessRecipe	result	Lnet/minecraft/world/item/ItemStackTemplate;
 accessible	field	net/minecraft/world/item/crafting/SingleItemRecipe	result	Lnet/minecraft/world/item/ItemStackTemplate;
+# swall26: 1.21.11 DataGenerator fields (DataGenerator.Cached; CbWallDataGenerators) and OptionsScreen difficulty buttons (CbWallClientFields)
+accessible	field	net/minecraft/data/DataGenerator$Cached	rootOutputFolder	Ljava/nio/file/Path;
+accessible	field	net/minecraft/data/DataGenerator$Cached	version	Lnet/minecraft/WorldVersion;
+accessible	field	net/minecraft/data/DataGenerator$Cached	alwaysGenerate	Z
+accessible	field	net/minecraft/data/DataGenerator	vanillaPackOutput	Lnet/minecraft/data/PackOutput;
+accessible	field	net/minecraft/client/gui/screens/options/OptionsScreen	difficultyButtons	Lnet/minecraft/client/gui/screens/options/DifficultyButtons;
