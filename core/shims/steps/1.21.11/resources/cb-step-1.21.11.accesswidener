@@ -86,3 +86,8 @@ accessible	class	net/minecraft/class_12247$class_12338
 accessible	method	net/minecraft/class_12247$class_12338	comp_5228	()Lnet/minecraft/class_2960;
 # smx1p: ItemModelGenerator.SpanFacing is package-private; facade/ItemModelGeneratorSpan holds one
 accessible	class	net/minecraft/class_801$class_803
+accessible	field	net/minecraft/class_4590	field_20902	Lorg/joml/Vector3fc;
+accessible	field	net/minecraft/class_4590	field_20903	Lorg/joml/Quaternionfc;
+accessible	field	net/minecraft/class_4590	field_20904	Lorg/joml/Vector3fc;
+accessible	field	net/minecraft/class_4590	field_20905	Lorg/joml/Quaternionfc;
+accessible	method	net/minecraft/class_4590	method_22934	(Lorg/joml/Vector3fc;Lorg/joml/Quaternionfc;Lorg/joml/Vector3fc;Lorg/joml/Quaternionfc;)Lorg/joml/Matrix4f;
