@@ -404,3 +404,6 @@ accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	initIdleAct
 accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	initInvestigateActivity	()Lnet/minecraft/world/entity/ai/ActivityData;
 accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	initRoarActivity	()Lnet/minecraft/world/entity/ai/ActivityData;
 accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	initSniffingActivity	()Lnet/minecraft/world/entity/ai/ActivityData;
+# swall26: 1.21.11 Cached*ProjectionMatrixBuffer.buffer / bufferSlice are the 26.1 ProjectionMatrixBuffer's (facades)
+accessible	field	net/minecraft/client/renderer/ProjectionMatrixBuffer	buffer	Lcom/mojang/blaze3d/buffers/GpuBuffer;
+accessible	field	net/minecraft/client/renderer/ProjectionMatrixBuffer	bufferSlice	Lcom/mojang/blaze3d/buffers/GpuBufferSlice;
