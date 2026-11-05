@@ -1,0 +1,12 @@
+{
+ "_smx1q_sky_basis": "smx1q (javap -c -p both code jars; both client jars): 1.21.10 SkyRenderer SUN_LOCATION/END_FLASH_LOCATION (textures/environment/sun.png, end_flash.png) moved byte-identical (md5) to textures/environment/celestial/; sunTexture/endFlashTexture held TextureManager.getTexture(location) and read the same for the moved file; field_57935 was RenderSystem.getSequentialBuffer(QUADS), the shared quad index buffer 1.21.11 keeps in field_62961. moon_phases.png (4x2 sheet) has no 1.21.11 file (its tiles are pixel-identical to the eight celestial/moon sprites, tile i = MoonPhase ordinal i) and stays open with the moon texture field, the texture writes and the buffer builders.",
+ "fieldGetters": {
+  "net/minecraft/class_9975.field_53141:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacySky",
+  "net/minecraft/class_9975.field_62044:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacySky"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_9975.field_62962:Lnet/minecraft/class_1044;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacySky",
+  "net/minecraft/class_9975.field_62949:Lnet/minecraft/class_1044;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacySky",
+  "net/minecraft/class_9975.field_57935:Lcom/mojang/blaze3d/systems/RenderSystem$class_5590;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacySky"
+ }
+}
