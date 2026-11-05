@@ -25,3 +25,64 @@ accessible	field	net/minecraft/class_1060	field_5286	Ljava/util/Map;
 accessible method net/minecraft/class_4264 method_48579 (Lnet/minecraft/class_332;IIF)V
 # ---- END GENERATED (smx1-renderwidget) ----
 accessible	field	net/minecraft/class_1086	field_64679	Lnet/minecraft/class_4990;
+# smx1p: RenderTypes' private static render types / functions, read by rt/CbRenderTypeStatics for 1.21.10 RenderType's (a mod's AW)
+accessible	field	net/minecraft/class_12249	field_64015	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64016	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64017	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64018	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64019	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64020	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64021	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64022	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64023	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64024	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64025	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64026	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64027	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64028	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64029	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64030	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64031	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64032	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64033	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64035	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64036	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64037	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64038	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64039	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64040	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64044	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64045	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64046	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64047	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64048	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64049	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64050	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64051	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64052	Ljava/util/function/BiFunction;
+accessible	field	net/minecraft/class_12249	field_64053	Ljava/util/function/BiFunction;
+accessible	field	net/minecraft/class_12249	field_64054	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64055	Ljava/util/function/BiFunction;
+accessible	field	net/minecraft/class_12249	field_64056	Ljava/util/function/BiFunction;
+accessible	field	net/minecraft/class_12249	field_64057	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64058	Ljava/util/function/BiFunction;
+accessible	field	net/minecraft/class_12249	field_64059	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64060	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64061	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64062	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64063	Ljava/util/function/Function;
+accessible	field	net/minecraft/class_12249	field_64064	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64065	Lnet/minecraft/class_1921;
+accessible	field	net/minecraft/class_12249	field_64066	Lnet/minecraft/class_1921;
+accessible	method	net/minecraft/class_12249	method_75970	(Lcom/mojang/blaze3d/pipeline/RenderPipeline;)Ljava/util/function/Function;
+accessible	field	net/minecraft/class_1921	field_64012	I
+accessible	field	net/minecraft/class_12249	field_64041	Ljava/util/function/BiFunction;
+accessible	field	net/minecraft/class_12247	field_63987	Ljava/util/Map;
+accessible	field	net/minecraft/class_12247	field_63989	Lnet/minecraft/class_12246;
+accessible	field	net/minecraft/class_12247	field_63990	Lnet/minecraft/class_12247$class_4750;
+accessible	field	net/minecraft/class_12247	field_63991	Z
+accessible	field	net/minecraft/class_12247	field_63992	Z
+accessible	class	net/minecraft/class_12247$class_12338
+accessible	method	net/minecraft/class_12247$class_12338	comp_5228	()Lnet/minecraft/class_2960;
+# smx1p: ItemModelGenerator.SpanFacing is package-private; facade/ItemModelGeneratorSpan holds one
+accessible	class	net/minecraft/class_801$class_803

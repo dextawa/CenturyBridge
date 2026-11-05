@@ -176,4 +176,43 @@ public final class CbLegacyRenderTypes {
     public static boolean field_21402(class_1921 type) {
         return type.field_64013.field_63994;
     }
+
+    /** CompositeRenderType.renderPipeline (a mod's AW): 1.21.11's RenderType.pipeline() (setup.pipeline) */
+    public static com.mojang.blaze3d.pipeline.RenderPipeline field_56922(class_1921 type) {
+        return type.method_73243();
+    }
+
+    /** CompositeRenderType.outline (a mod's AW): 1.21.11's RenderType.outline(), the field 1.21.10's getter read */
+    public static java.util.Optional<class_1921> field_21697(class_1921 type) {
+        return type.method_23289();
+    }
+
+    /** CompositeRenderType.isOutline (a mod's AW): 1.21.11's RenderType.isOutline() */
+    public static boolean field_21851(class_1921 type) {
+        return type.method_24295();
+    }
+
+    /**
+     * CompositeRenderType.state (a mod's AW): the composite state a 1.21.10 create call built the type from; for a
+     * 1.21.11 type, its RenderSetup's pieces as 1.21.10's shards (textures in sampler order, lightmap, overlay,
+     * layering, output, texturing, outline property). 1.21.11 keeps no per-type line width (each vertex carries it)
+     * and no texture mipmap flag (the sampler decides): those read 1.21.10's defaults (width 1.0, mipmap false).
+     */
+    public static CompositeState field_21403(class_1921 type) {
+        CompositeState own = COMPOSITE.get(type);
+        if (own != null) {
+            return own;
+        }
+        class_12247 s = type.field_64013;
+        RenderStateShard.MultiTextureStateShard.Builder tb = RenderStateShard.MultiTextureStateShard.method_34560();
+        java.util.List<java.util.Map.Entry<String, class_12247.class_12338>> samplers = new java.util.ArrayList<>(s.field_63987.entrySet());
+        samplers.sort(java.util.Comparator.comparingInt((java.util.Map.Entry<String, class_12247.class_12338> e) -> e.getKey().length()).thenComparing(java.util.Map.Entry::getKey));
+        for (var e : samplers) {
+            tb.method_34563(e.getValue().comp_5228(), false);
+        }
+        return new CompositeState(samplers.isEmpty() ? RenderStateShard.field_21378 : tb.method_34562(),
+            new RenderStateShard.LightmapStateShard(s.field_63991), new RenderStateShard.OverlayStateShard(s.field_63992),
+            new RenderStateShard.LayeringStateShard(s.field_63996), new RenderStateShard.OutputStateShard(s.field_63989),
+            new RenderStateShard.TexturingStateShard(s.field_63988), RenderStateShard.field_21360, s.field_63990);
+    }
 }

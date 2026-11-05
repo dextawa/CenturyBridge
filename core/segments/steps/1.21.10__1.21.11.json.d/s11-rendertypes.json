@@ -1,5 +1,5 @@
 {
- "_s11_rendertypes_basis": "1.21.11 removed RenderStateShard and RenderType.CompositeState / CompositeRenderType: a render type is built from a RenderSetup (rendertype/RenderSetup). RenderStateShard and CompositeState become facades holding 1.21.10's shards and the 1.21.11 pieces they stand for; RenderType.create(.., pipeline, state) builds 1.21.11's RenderSetup from them (rt/CbRenderTypeCreate). CompositeRenderType -> RenderType: 1.21.11 merged it into RenderType, which declares its members under the same ids (method_23289 outline, method_24295 isOutline, method_23031 format, method_23033 mode; javap of both). LINES / SECONDARY_BLOCK_OUTLINE are what 1.21.10's lines() / secondaryBlockOutline() returned (javap), now RenderTypes.lines() / secondaryBlockOutline(). RenderType.OutlineProperty -> RenderSetup.OutlineProperty: the same enum moved, constants under the same ids (field_21853 NONE, field_21854 IS_OUTLINE, field_21855 AFFECTS_OUTLINE; javap of both). RenderSystem's texture matrix and shader line width (set / reset / get, lineWidth / getShaderLineWidth), which 1.21.11 removed, are kept with 1.21.10's bodies (rt/CbRenderSystem): the texturing and line shards set them, and the render types 1.21.10's CompositeState builds read them where 1.21.11's draw asks for the texture matrix (TextureTransform) and the line width (each vertex: rt/CbLineWidth). debugLineStrip / debugStructureQuads / debugSectionQuads, whose pipelines 1.21.11 deleted, are rebuilt from 1.21.10's pipeline and composite state definitions (javap of RenderPipelines' and RenderType's <clinit>) on 1.21.11's snippets, shaders and vertex modes, which 1.21.11 keeps. lineStrip / LINE_STRIP: 1.21.11's VertexFormat.Mode has no LINE_STRIP; the type is 1.21.10's state on 1.21.11's LINES pipeline (the same LINES_SNIPPET) and its consumer writes each strip segment as a LINES pair (rt/CbLineStrip).",
+ "_s11_rendertypes_basis": "1.21.11 removed RenderStateShard and RenderType.CompositeState / CompositeRenderType: a render type is built from a RenderSetup (rendertype/RenderSetup). RenderStateShard and CompositeState become facades holding 1.21.10's shards and the 1.21.11 pieces they stand for; RenderType.create(.., pipeline, state) builds 1.21.11's RenderSetup from them (rt/CbRenderTypeCreate). CompositeRenderType -> RenderType: 1.21.11 merged it into RenderType, which declares its members under the same ids (method_23289 outline, method_24295 isOutline, method_23031 format, method_23033 mode; javap of both). LINES / SECONDARY_BLOCK_OUTLINE are what 1.21.10's lines() / secondaryBlockOutline() returned (javap), now RenderTypes.lines() / secondaryBlockOutline(). RenderType.OutlineProperty -> RenderSetup.OutlineProperty: the same enum moved, constants under the same ids (field_21853 NONE, field_21854 IS_OUTLINE, field_21855 AFFECTS_OUTLINE; javap of both). RenderSystem's texture matrix and shader line width (set / reset / get, lineWidth / getShaderLineWidth), which 1.21.11 removed, are kept with 1.21.10's bodies (rt/CbRenderSystem): the texturing and line shards set them, and the render types 1.21.10's CompositeState builds read them where 1.21.11's draw asks for the texture matrix (TextureTransform) and the line width (each vertex: rt/CbLineWidth). debugLineStrip / debugStructureQuads / debugSectionQuads, whose pipelines 1.21.11 deleted, are rebuilt from 1.21.10's pipeline and composite state definitions (javap of RenderPipelines' and RenderType's <clinit>) on 1.21.11's snippets, shaders and vertex modes, which 1.21.11 keeps. lineStrip / LINE_STRIP: 1.21.11's VertexFormat.Mode has no LINE_STRIP; the type is 1.21.10's state on 1.21.11's LINES pipeline (the same LINES_SNIPPET) and its consumer writes each strip segment as a LINES pair (rt/CbLineStrip). RenderType's private static render types / factory functions (a mod's AW) read 1.21.11 RenderTypes' field the paired factory reads (rt/CbRenderTypeStatics). RenderType's private MEDIUM_BUFFER_SIZE (field_32777) is 1.21.11's field_64012 (both ConstantValue 1048576). CompositeRenderType reached through a mod's AW: its constructor is 1.21.10's create body (cbNewComposite), OUTLINE is RenderTypes.field_64041 (same lambda), its fields answer from 1.21.11's RenderType getters / the composite state (CbLegacyRenderTypes.field_21403); DEBUG_LINE_STRIP / DEBUG_STRUCTURE_QUADS / DEBUG_SECTION_QUADS are the rebuilt types.",
  "classRenames": {
   "net/minecraft/class_1921$class_4687": "net/minecraft/class_1921",
   "net/minecraft/class_1921$class_4688": "top/dext/centurybridge/step/v1_21_11/facade/CompositeState",
@@ -31,14 +31,80 @@
   "net/minecraft/class_1921.method_49043(D)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
   "net/minecraft/class_1921.method_61045()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
   "net/minecraft/class_1921.method_51456()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
-  "net/minecraft/class_1921.method_34572()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate"
+  "net/minecraft/class_1921.method_34572()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
+  "net/minecraft/class_1921.method_65230(Lcom/mojang/blaze3d/pipeline/RenderPipeline;)Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics"
  },
  "fieldGetters": {
   "net/minecraft/class_1921.field_21695:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
   "net/minecraft/class_1921.field_54857:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
-  "net/minecraft/class_1921.field_29456:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate"
+  "net/minecraft/class_1921.field_29456:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
+  "net/minecraft/class_1921.field_9178:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_9175:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_9174:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_25285:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29622:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_54962:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29623:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_53130:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29624:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29625:Ljava/util/function/BiFunction;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29626:Ljava/util/function/BiFunction;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29627:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29629:Ljava/util/function/BiFunction;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_38345:Ljava/util/function/BiFunction;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29630:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29631:Ljava/util/function/BiFunction;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29632:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29633:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29634:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29635:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29636:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_20964:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_20965:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_24473:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_26373:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_20967:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_20968:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29637:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29638:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_42519:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_33630:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_34002:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_34003:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29639:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_42520:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_33631:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_20970:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_52255:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_52307:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_25644:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29457:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_29458:Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_42522:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_42523:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_53131:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_55143:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_55144:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_55150:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_55151:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeStatics",
+  "net/minecraft/class_1921.field_42521:Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
+  "net/minecraft/class_1921.field_52256:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
+  "net/minecraft/class_1921.field_44673:Lnet/minecraft/class_1921$class_4687;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate",
+  "net/minecraft/class_1921$class_4687.field_29640:Ljava/util/function/BiFunction;": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate"
  },
  "facadeGaps": {
   "net/minecraft/class_4668.method_23517(F)V": "RenderStateShard's private setupGlintTexturing(scale), which set RenderSystem's texture matrix for the glint shards; 1.21.11 has no global texture matrix (RenderSystem.setTextureMatrix is gone): the glint matrix is TextureTransform's (GLINT_TEXTURING / ENTITY_GLINT_TEXTURING / ARMOR_ENTITY_GLINT_TEXTURING), which the facade's glint shards carry into RenderSetup"
+ },
+ "fieldRenames": {
+  "net/minecraft/class_1921.field_32777:I": "field_64012"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1921$class_4687.<init>(Ljava/lang/String;IZZLcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/class_1921$class_4688;)V": "top/dext/centurybridge/step/v1_21_11/rt/CbRenderTypeCreate#cbNewComposite"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_1921$class_4687.field_21403:Lnet/minecraft/class_1921$class_4688;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes",
+  "net/minecraft/class_1921$class_4687.field_56922:Lcom/mojang/blaze3d/pipeline/RenderPipeline;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes",
+  "net/minecraft/class_1921$class_4687.field_21697:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes",
+  "net/minecraft/class_1921$class_4687.field_21851:Z": "top/dext/centurybridge/step/v1_21_11/rt/CbLegacyRenderTypes"
  }
 }
