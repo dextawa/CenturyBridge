@@ -58,7 +58,7 @@ final class MixinLocals {
     }
 
     static Verdict judge(MixinRepair w, MixinRepair v, AnnotationNode an, MethodNode h, List<MethodNode> wTargets,
-            ClassNode wOwner, ClassNode vOwner, MethodNode vTarget, JsonObject refmap) {
+            ClassNode wOwner, ClassNode vOwner, MethodNode vTarget, JsonObject refmap, ClassNode mx) {
         if (v == null || vTarget == null || vOwner == null || an.desc.endsWith("/ModifyVariable;")) {
             return null;
         }
@@ -101,13 +101,43 @@ final class MixinLocals {
             if (lv.get("name") != null && !MixinRepair.list(lv.get("name")).isEmpty()) {
                 continue; // by name: no table in the game jar to judge it against
             }
+            Type tw = renamed(w, t);
             int[] vc = pick(v, vOwner, vTarget, av, refmap, t, ordinal, index, argsOnly);
-            if (vc == null || vc[0] != 1) {
-                continue; // not modelled, or does not fit V by the model: not trusted
+            if (vc == null) {
+                // smixin20: a point the model does not find (MIXINEXTRAS:EXPRESSION, a slice): an implicit @Local is
+                // judged over the whole method -- V holds its one t local; W holding no local of t anywhere cannot bind
+                boolean explicit = ordinal >= 0 || index >= 0;
+                Set<Integer> vs = slotsAnywhere(v, vOwner, vTarget, t, argsOnly);
+                if (vs == null || vs.isEmpty() || !explicit && vs.size() != 1) {
+                    continue; // not modelled, or V holds no (implicit: not one) local of t: not trusted
+                }
+                boolean wNone = false;
+                boolean unknown = false;
+                for (MethodNode m : wTargets) {
+                    Set<Integer> ws = slotsAnywhere(w, wOwner, m, tw, argsOnly);
+                    if (ws == null) {
+                        unknown = true;
+                    } else if (ws.isEmpty()) {
+                        wNone = true;
+                    }
+                }
+                if (unknown || !wNone) {
+                    continue;
+                }
+                String sub = explicit ? "picks by ordinal or index"
+                    : subtypeFix(v, vOwner, vTarget, w, wOwner, wTargets, mx, h, k, t, tw, argsOnly, notes, fixes);
+                if (sub == null) {
+                    continue;
+                }
+                return new Verdict("@Local " + t.getDescriptor() + (explicit ? (index >= 0 ? " index " + index : " ordinal " + ordinal)
+                    : " (implicit)") + " finds a local in V's " + vTarget.name + vTarget.desc
+                    + "; W's holds no local declared " + tw.getDescriptor() + " (" + sub + ")", null, null);
+            }
+            if (vc[0] != 1) {
+                continue; // does not fit V by the model: not trusted
             }
             boolean wFits = true;
             boolean wUnique = true;
-            Type tw = renamed(w, t);
             for (MethodNode m : wTargets) {
                 int[] wc = pick(w, wOwner, m, av, refmap, tw, ordinal, index, argsOnly);
                 if (wc == null) {
@@ -131,13 +161,67 @@ final class MixinLocals {
                 });
                 continue;
             }
+            String sub = ordinal < 0 && index < 0
+                ? subtypeFix(v, vOwner, vTarget, w, wOwner, wTargets, mx, h, k, t, tw, argsOnly, notes, fixes) : "picks by ordinal or index";
+            if (sub == null) {
+                continue;
+            }
             return new Verdict("@Local " + t.getDescriptor() + (index >= 0 ? " index " + index : ordinal >= 0 ? " ordinal " + ordinal : " (implicit)")
-                + " fits V's " + vTarget.name + vTarget.desc + " but not W's (the step moved or retyped the local)", null, null);
+                + " fits V's " + vTarget.name + vTarget.desc + " but not W's (the step moved or retyped the local; " + sub + ")", null, null);
         }
         if (fixes.isEmpty()) {
             return null;
         }
         return new Verdict(null, () -> fixes.forEach(Runnable::run), String.join("; ", notes));
+    }
+
+    /**
+     * smixin20: an implicit @Local of t that binds on V and finds no t local on W is retyped to the one subtype local W
+     * holds in the same role (subtypeByRole) when that subtype is then the one local of its type in every W target;
+     * null with the fix queued (and a note), else the reason it is refused
+     */
+    private static String subtypeFix(MixinRepair v, ClassNode vOwner, MethodNode vTarget, MixinRepair w, ClassNode wOwner,
+            List<MethodNode> wTargets, ClassNode mx, MethodNode h, int k, Type t, Type tw, boolean argsOnly, List<String> notes,
+            List<Runnable> fixes) {
+        if (wTargets.size() != 1) {
+            return "the selector matches " + wTargets.size() + " W methods";
+        }
+        int slot = (h.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        for (int i = 0; i < k; i++) {
+            slot += hp[i].getSize();
+        }
+        for (AbstractInsnNode n : h.instructions) {
+            if (n instanceof org.objectweb.asm.tree.VarInsnNode vi && vi.var == slot && vi.getOpcode() == Opcodes.ASTORE) {
+                return "the handler stores into the parameter";
+            }
+        }
+        if (mx != null) {
+            for (MethodNode m : mx.methods) {
+                for (AbstractInsnNode n : m.instructions) {
+                    if (n instanceof org.objectweb.asm.tree.MethodInsnNode mi && mi.name.equals(h.name) && mi.desc.equals(h.desc)
+                            && mi.owner.equals(mx.name)) {
+                        return "another method of the mixin calls the handler";
+                    }
+                }
+            }
+        }
+        List<String> why = new ArrayList<>();
+        Type u = subtypeByRole(v, vOwner, vTarget, w, wOwner, wTargets.get(0), t, tw, why);
+        if (u == null) {
+            return "no W local in its role: " + String.join("; ", why);
+        }
+        if (w.classRenames.containsKey(u.getInternalName())) {
+            return u.getDescriptor() + " is a name the step's class rewrite renames";
+        }
+        Set<Integer> us = slotsAnywhere(w, wOwner, wTargets.get(0), u, argsOnly);
+        if (us == null || us.size() != 1) {
+            return u.getDescriptor() + " is not one local of W's method";
+        }
+        notes.add("@Local " + t.getDescriptor() + " -> " + u.getDescriptor() + " (W declares the local of the same role as the subtype; "
+            + "the handler takes it)");
+        fixes.add(() -> retypeParam(h, k, u));
+        return null;
     }
 
     /**
@@ -226,6 +310,7 @@ final class MixinLocals {
         for (Type t : Type.getArgumentTypes(m.desc)) {
             first += t.getSize();
         }
+        Decl d = decl(code, owner, m);
         for (int p : pts) {
             Frame<BasicValue> f = p < fs.length ? fs[p] : null;
             if (f == null) {
@@ -233,7 +318,7 @@ final class MixinLocals {
             }
             List<Type> have = new ArrayList<>();
             for (int s = first; s < f.getLocals(); s++) {
-                Type t = type(f.getLocal(s));
+                Type t = d.at(p, s, f);
                 if (t != null) {
                     have.add(t);
                 }
@@ -269,6 +354,7 @@ final class MixinLocals {
         }
         boolean found = true;
         boolean unique = true;
+        Decl d = decl(code, owner, m);
         for (int p : pts) {
             Frame<BasicValue> f = p < fs.length ? fs[p] : null;
             if (f == null) {
@@ -279,7 +365,7 @@ final class MixinLocals {
             boolean hit = false;
             int end = argsOnly ? Math.min(argEnd, f.getLocals()) : f.getLocals();
             for (int s = 0; s < end; s++) {
-                Type lt = type(f.getLocal(s));
+                Type lt = s < base ? type(f.getLocal(s)) : d.at(p, s, f);
                 if (lt == null || !compatible(t, lt)) {
                     continue;
                 }
@@ -654,6 +740,219 @@ final class MixinLocals {
 
     private static Type type(BasicValue v) {
         return v == null || v == BasicValue.UNINITIALIZED_VALUE || v.getType() == null ? null : v.getType();
+    }
+
+    /**
+     * smixin20 (Kilt loss 6): the local types as Mixin reads them. Where the method carries a local variable table (a
+     * 26.x jar keeps its own) or the game jar carries one for it (GameLvt: the obfuscated jar beside an intermediary code
+     * jar), Mixin's LocalVariableDiscriminator types each slot by the table's declared type and matches by Type.equals:
+     * that type, or none when no entry covers the point. Only without a table is the verifier's type the model.
+     */
+    private record Decl(MethodNode m, GameLvt.Table game, int[] ords) {
+        boolean tabled() {
+            return game != null || m.localVariables != null && !m.localVariables.isEmpty();
+        }
+
+        Type at(int p, int slot, Frame<BasicValue> f) {
+            if (m.localVariables != null && !m.localVariables.isEmpty()) {
+                for (org.objectweb.asm.tree.LocalVariableNode lv : m.localVariables) {
+                    if (lv.index == slot && m.instructions.indexOf(lv.start) <= p && p < m.instructions.indexOf(lv.end)) {
+                        return Type.getType(lv.desc);
+                    }
+                }
+                return null;
+            }
+            if (game != null) {
+                return game.at(slot, ords[p]);
+            }
+            return f == null ? null : type(f.getLocal(slot));
+        }
+    }
+
+    private static Decl decl(MixinRepair code, ClassNode owner, MethodNode m) {
+        GameLvt.Table g = null;
+        if ((m.localVariables == null || m.localVariables.isEmpty()) && code.lvt() != null) {
+            g = code.lvt().of(owner.name, m);
+        }
+        int[] ords = null;
+        if (g != null) {
+            AbstractInsnNode[] a = m.instructions.toArray();
+            ords = new int[a.length + 1];
+            int n = 0;
+            for (int i = 0; i < a.length; i++) {
+                ords[i] = n;
+                if (a[i].getOpcode() >= 0) {
+                    n++;
+                }
+            }
+            ords[a.length] = n;
+        }
+        return new Decl(m, g, ords);
+    }
+
+    /**
+     * the slots past the receiver (and past the arguments unless argsOnly) whose declared type is t at some instruction
+     * of m: null when not modelled (no frames), else the distinct slots
+     */
+    private static Set<Integer> slotsAnywhere(MixinRepair code, ClassNode owner, MethodNode m, Type t, boolean argsOnly) {
+        Frame<BasicValue>[] fs = frames(code, owner, m);
+        Decl d = fs == null ? null : decl(code, owner, m);
+        if (d == null || !d.tabled()) {
+            return null; // the verifier's types are no model of what Mixin reads over a whole method
+        }
+        int base = (m.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
+        int argEnd = base;
+        for (Type a : Type.getArgumentTypes(m.desc)) {
+            argEnd += a.getSize();
+        }
+        Set<Integer> out = new java.util.TreeSet<>();
+        for (int p = 0; p < fs.length; p++) {
+            Frame<BasicValue> f = fs[p];
+            if (f == null) {
+                continue;
+            }
+            int end = argsOnly ? Math.min(argEnd, f.getLocals()) : f.getLocals();
+            for (int s = base; s < end; s++) {
+                Type lt = d.at(p, s, f);
+                if (lt != null && compatible(t, lt)) {
+                    out.add(s);
+                }
+            }
+        }
+        return out;
+    }
+
+    /**
+     * smixin20: a @Local of type t that W's method holds as no local of t can take the one W local whose declared type
+     * extends t when it plays the same role as V's one t local: each side has exactly one store into a local of that
+     * type in the method, fed by the same call or field read (owners compared by the declaring class, V's spelled
+     * through the step's renames). The handler then takes the subtype: everything it does with a t it can do with it.
+     * Returns that type, or null (why says why).
+     */
+    private static Type subtypeByRole(MixinRepair v, ClassNode vOwner, MethodNode vm, MixinRepair w, ClassNode wOwner,
+            MethodNode wm, Type t, Type tw, List<String> why) {
+        if (t.getSort() != Type.OBJECT) {
+            why.add("not a reference type");
+            return null;
+        }
+        String vRole = oneStoreRole(v, vOwner, vm, x -> x.equals(t), w, why);
+        if (vRole == null) {
+            return null;
+        }
+        Type[] hit = new Type[1];
+        String wRole = oneStoreRole(w, wOwner, wm, x -> {
+            if (x.getSort() == Type.OBJECT && !x.equals(tw) && extendsClass(w, x.getInternalName(), tw.getInternalName())) {
+                if (hit[0] == null || hit[0].equals(x)) {
+                    hit[0] = x;
+                    return true;
+                }
+            }
+            return false;
+        }, null, why);
+        if (wRole == null) {
+            return null;
+        }
+        if (!vRole.equals(wRole)) {
+            why.add("V's " + t.getDescriptor() + " local is fed by " + vRole + ", W's " + hit[0].getDescriptor() + " by " + wRole);
+            return null;
+        }
+        return hit[0];
+    }
+
+    /** the role of the one store into a local whose declared type passes want, or null (why) */
+    private static String oneStoreRole(MixinRepair code, ClassNode owner, MethodNode m, java.util.function.Predicate<Type> want,
+            MixinRepair spellIn, List<String> why) {
+        Frame<BasicValue>[] fs = frames(code, owner, m);
+        Frame<SourceValue>[] ss = sources(owner.name, m);
+        if (fs == null || ss == null) {
+            why.add("frames of " + m.name + m.desc + " cannot be computed");
+            return null;
+        }
+        Decl d = decl(code, owner, m);
+        if (!d.tabled()) {
+            why.add(m.name + m.desc + " has no local variable table to read declared types from");
+            return null;
+        }
+        AbstractInsnNode[] a = m.instructions.toArray();
+        String role = null;
+        for (int i = 0; i + 1 < a.length; i++) {
+            if (!(a[i] instanceof org.objectweb.asm.tree.VarInsnNode vi) || vi.getOpcode() != Opcodes.ASTORE) {
+                continue;
+            }
+            Type lt = d.at(i + 1, vi.var, fs[i + 1]);
+            if (lt == null || !want.test(lt)) {
+                continue;
+            }
+            if (role != null) {
+                why.add("two stores into such a local in " + m.name + m.desc);
+                return null;
+            }
+            Frame<SourceValue> f = ss[i];
+            String r = f == null || f.getStackSize() == 0 ? null : producerOf(f.getStack(f.getStackSize() - 1), code, spellIn);
+            if (r == null) {
+                why.add("the local's store in " + m.name + m.desc + " is not fed by one call or field read");
+                return null;
+            }
+            role = r;
+        }
+        if (role == null) {
+            why.add("no such local in " + m.name + m.desc);
+        }
+        return role;
+    }
+
+    private static String producerOf(SourceValue top, MixinRepair resolveIn, MixinRepair spellIn) {
+        if (top.insns.size() != 1) {
+            return null;
+        }
+        AbstractInsnNode p = top.insns.iterator().next();
+        String key;
+        if (p instanceof org.objectweb.asm.tree.MethodInsnNode mi) {
+            String o = declaring(resolveIn, mi.owner, mi.name, mi.desc);
+            key = mi.getOpcode() + " " + (o == null ? mi.owner : o) + "." + mi.name + " " + mi.desc;
+        } else if (p instanceof org.objectweb.asm.tree.FieldInsnNode fi) {
+            String o = declaring(resolveIn, fi.owner, fi.name, fi.desc);
+            key = fi.getOpcode() + " " + (o == null ? fi.owner : o) + "." + fi.name + " " + fi.desc;
+        } else {
+            return null;
+        }
+        return spellIn == null || spellIn.classRenames.isEmpty() ? key : MixinClassRenames.rename(key, spellIn.classRenames);
+    }
+
+    /** whether class sub extends class sup (superclasses only, as W's code jar has them) */
+    private static boolean extendsClass(MixinRepair code, String sub, String sup) {
+        Set<String> seen = new HashSet<>();
+        for (String c = sub; c != null && seen.add(c); ) {
+            if (c.equals(sup)) {
+                return true;
+            }
+            ClassNode n = code.target(c);
+            c = n == null ? null : n.superName;
+        }
+        return false;
+    }
+
+    /** the handler's parameter k retyped to u (descriptor and its own local table) */
+    private static void retypeParam(MethodNode h, int k, Type u) {
+        Type[] ps = Type.getArgumentTypes(h.desc);
+        String old = ps[k].getDescriptor();
+        ps[k] = u;
+        h.desc = Type.getMethodDescriptor(Type.getReturnType(h.desc), ps);
+        if (h.signature != null) {
+            h.signature = null; // the generic signature names the old type; erasure is all Mixin reads
+        }
+        if (h.localVariables != null) {
+            int slot = (h.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
+            for (int i = 0; i < k; i++) {
+                slot += Type.getArgumentTypes(h.desc)[i].getSize();
+            }
+            for (org.objectweb.asm.tree.LocalVariableNode lv : h.localVariables) {
+                if (lv.index == slot && lv.desc.equals(old)) {
+                    lv.desc = u.getDescriptor();
+                    lv.signature = null;
+                }
+            }
+        }
     }
 
     /** the handler's declared type against the verifier's: equal, or the verifier's merged reference type taken as fitting */

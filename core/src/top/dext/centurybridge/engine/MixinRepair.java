@@ -105,6 +105,23 @@ public final class MixinRepair {
 
     public MixinRepair(Path codeJar) throws IOException {
         this.code = new ZipFile(codeJar.toFile());
+        this.codeJar = codeJar;
+    }
+
+    private final Path codeJar;
+    private GameLvt lvt;
+    private boolean lvtTried;
+
+    /**
+     * smixin20: the local variable table the game jar carries for this code jar's methods (Mixin types locals by it),
+     * opened on first use; null when the code jar is not an intermediary code jar with an obfuscated jar beside it
+     */
+    synchronized GameLvt lvt() {
+        if (!lvtTried) {
+            lvtTried = true;
+            lvt = GameLvt.forCodeJar(codeJar);
+        }
+        return lvt;
     }
 
     /** every class of the code jar under its superclass (headers only), built on first use */
@@ -907,7 +924,7 @@ public final class MixinRepair {
                             ClassNode vtc = source != null ? source.target(owner) : null;
                             List<MethodNode> vms = vtc != null ? s.match(vtc) : List.of();
                             MixinLocals.Verdict lv = vms.size() == 1
-                                ? MixinLocals.judge(this, source, an, handler, hit, tc, vtc, vms.get(0), refmap) : null;
+                                ? MixinLocals.judge(this, source, an, handler, hit, tc, vtc, vms.get(0), refmap, mx) : null;
                             if (lv != null && lv.why() != null) {
                                 if (deadWhy == null) deadWhy = "captured locals: @" + kind + " " + where + " (" + lv.why() + ")";
                                 continue;
