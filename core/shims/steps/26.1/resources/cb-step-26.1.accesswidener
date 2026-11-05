@@ -407,3 +407,8 @@ accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	initSniffin
 # swall26: 1.21.11 Cached*ProjectionMatrixBuffer.buffer / bufferSlice are the 26.1 ProjectionMatrixBuffer's (facades)
 accessible	field	net/minecraft/client/renderer/ProjectionMatrixBuffer	buffer	Lcom/mojang/blaze3d/buffers/GpuBuffer;
 accessible	field	net/minecraft/client/renderer/ProjectionMatrixBuffer	bufferSlice	Lcom/mojang/blaze3d/buffers/GpuBufferSlice;
+# swall26: 1.21.11 recipe / builder result fields read off 26.1's result templates (CbWallRecipeBuilders)
+accessible	field	net/minecraft/data/recipes/SmithingTransformRecipeBuilder	result	Lnet/minecraft/world/item/ItemStackTemplate;
+accessible	field	net/minecraft/world/item/crafting/ShapedRecipe	result	Lnet/minecraft/world/item/ItemStackTemplate;
+accessible	field	net/minecraft/world/item/crafting/ShapelessRecipe	result	Lnet/minecraft/world/item/ItemStackTemplate;
+accessible	field	net/minecraft/world/item/crafting/SingleItemRecipe	result	Lnet/minecraft/world/item/ItemStackTemplate;

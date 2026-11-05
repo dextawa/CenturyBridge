@@ -16,7 +16,18 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.colorLogic:Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#builderColorLogic",
   "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.blendFunction:Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#builderBlendFunction",
   "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.depthBiasScaleFactor:F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#builderDepthBiasScaleFactor",
-  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.depthBiasConstant:F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#builderDepthBiasConstant"
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.depthBiasConstant:F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#builderDepthBiasConstant",
+  "net/minecraft/class_2447.field_11380:Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#shapedResult",
+  "net/minecraft/class_2447.field_11378:I": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#shapedCount",
+  "net/minecraft/class_2450.field_11396:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#shapelessResult",
+  "net/minecraft/class_2454.field_11417:Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#cookingResult",
+  "net/minecraft/class_3981.field_17690:Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#singleItemResult",
+  "net/minecraft/class_3981.field_17692:I": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#singleItemCount",
+  "net/minecraft/class_8074.field_42094:Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#smithingResult",
+  "net/minecraft/class_10243.field_54397:Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#transmuteResult",
+  "net/minecraft/class_1869.field_9053:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#shapedRecipeResult",
+  "net/minecraft/class_1867.field_9050:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#shapelessRecipeResult",
+  "net/minecraft/class_3972.field_17643:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipeBuilders#singleItemRecipeResult"
  },
  "instanceFieldSetters": {
   "com/mojang/blaze3d/pipeline/RenderPipeline$Builder.depthTestFunction:Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#setBuilderDepthTestFunction",
@@ -36,5 +47,6 @@
   "net/minecraft/class_3485.method_15092(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
   "net/minecraft/class_3485.method_44243()Ljava/util/stream/Stream;",
   "net/minecraft/class_3485.method_15090(Ljava/io/InputStream;)Lnet/minecraft/class_3499;"
- ]
+ ],
+ "_swall26_recipes_basis": "1.21.11 recipe builders' result item/count/stack/holder and ShapedRecipe/ShapelessRecipe/SingleItemRecipe.result stacks read off 26.1's ItemStackTemplate result (javap both); a stack read is a new stack per read (loss: in-place changes, release_notes_known.md)."
 }
