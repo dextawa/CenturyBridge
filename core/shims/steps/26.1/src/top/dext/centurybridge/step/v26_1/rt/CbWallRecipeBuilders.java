@@ -2,6 +2,7 @@ package top.dext.centurybridge.step.v26_1.rt;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
@@ -10,6 +11,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
+import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
 import net.minecraft.data.recipes.TransmuteRecipeBuilder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
@@ -21,6 +23,9 @@ import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.item.crafting.SingleItemRecipe;
 import net.minecraft.world.level.ItemLike;
 import top.dext.centurybridge.step.v26_1.facade.CookingRecipeSerializer;
 import top.dext.centurybridge.step.v26_1.facade.RecipeSerializer;
@@ -246,5 +251,55 @@ public final class CbWallRecipeBuilders {
     /** 26.1's shapeless(category, template) call on a 1.21.11 provider overriding the old shape (overrideHooks bridge) */
     public static ShapelessRecipeBuilder shapeless(LegacyShapeless provider, RecipeCategory category, ItemStackTemplate result) {
         return provider.shapeless(category, result.create());
+    }
+
+    // 1.21.11 private result fields (mods' access wideners; javap 1.21.11 / 26.1). 1.21.11's builders kept the result
+    // item and count (shaped / stonecutting), the shapeless builder and the recipes an ItemStack, the transmute builder an
+    // item holder; 26.1 keeps one ItemStackTemplate in result. Items and counts read off the template; a stack field
+    // answers the stack the template makes, a new one per read (26.1 holds no stack; 1.21.11 handed out the recipe's own,
+    // so a mod's in-place change to it no longer reaches the recipe -- recorded in release_notes_known.md).
+
+    public static Item shapedResult(ShapedRecipeBuilder b) {
+        return b.result.item().value();
+    }
+
+    public static int shapedCount(ShapedRecipeBuilder b) {
+        return b.result.count();
+    }
+
+    public static ItemStack shapelessResult(ShapelessRecipeBuilder b) {
+        return b.result.create();
+    }
+
+    public static Item cookingResult(SimpleCookingRecipeBuilder b) {
+        return b.result.item().value();
+    }
+
+    public static Item singleItemResult(SingleItemRecipeBuilder b) {
+        return b.result.item().value();
+    }
+
+    public static int singleItemCount(SingleItemRecipeBuilder b) {
+        return b.result.count();
+    }
+
+    public static Item smithingResult(SmithingTransformRecipeBuilder b) {
+        return b.result.item().value();
+    }
+
+    public static Holder<Item> transmuteResult(TransmuteRecipeBuilder b) {
+        return b.result.item();
+    }
+
+    public static ItemStack shapedRecipeResult(ShapedRecipe r) {
+        return r.result.create();
+    }
+
+    public static ItemStack shapelessRecipeResult(ShapelessRecipe r) {
+        return r.result.create();
+    }
+
+    public static ItemStack singleItemRecipeResult(SingleItemRecipe r) {
+        return r.result.create();
     }
 }

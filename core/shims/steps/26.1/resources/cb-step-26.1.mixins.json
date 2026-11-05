@@ -111,7 +111,8 @@
     "CbWallBannerDuplicateMixin",
     "CbWallAbstractVillagerOffersMixin",
     "CbWallRegistryLoadMixin",
-    "CbWallRegistryLoadResourceManagerMixin"
+    "CbWallRegistryLoadResourceManagerMixin",
+    "CbWallWorldUpgraderStatusMixin"
   ],
   "client": [
     "CbFapiBlockColorsMixin",
@@ -152,6 +153,7 @@
     "CbWallEditBoxFilterReadsMixin",
     "CbWallGameRendererGuiAccess",
     "CbWallGameRendererMixin",
+    "CbWallGameRendererRenderDistanceHooks",
     "CbWallGlPipelineStateMixin",
     "CbWallGuiAccess",
     "CbWallGuiChatDisabledMixin",

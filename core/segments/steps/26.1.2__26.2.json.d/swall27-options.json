@@ -1,0 +1,6 @@
+{
+  "_swall27_options_basis": "OptionsScreen.difficultyButtons (26.1.2 private, read through an AW, e.g. by the climbed 26.1 layer's CbWallClientFields.optionsDifficultyButton): 26.2 dropped the field. 26.1.2's init, in a world, built DifficultyButtons into it or, when canShowWorldOptions(), a World Options button and left it null (null outside a world too); 26.2's init always builds the World Options button in a world and keeps the difficulty buttons on WorldOptionsScreen only (javap -c of both). Reads answer 26.1.2's null state (rt/CbS26OptionsClient); the aw-put row stays open (nothing on 26.2's OptionsScreen reads it).",
+  "instanceFieldGetters": {
+    "net/minecraft/client/gui/screens/options/OptionsScreen.difficultyButtons:Lnet/minecraft/client/gui/screens/options/DifficultyButtons;": "top/dext/centurybridge/step/v26_2/rt/CbS26OptionsClient#difficultyButtons"
+  }
+}

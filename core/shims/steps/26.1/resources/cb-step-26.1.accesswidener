@@ -316,6 +316,8 @@ accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loa
 accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/TemplateSource	blockLookup	Lnet/minecraft/core/HolderGetter;
 accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/ResourceManagerTemplateSource	resourceManager	Lnet/minecraft/server/packs/resources/ResourceManager;
 accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/TemplatePathFactory	sourceDir	Ljava/nio/file/Path;
+# swall26: 1.21.11 StructureTemplateManager loaders find 26.1's directory sources by directory (CbWallStructureTemplateManagerMixin)
+accessible	field	net/minecraft/world/level/levelgen/structure/templatesystem/loader/DirectoryTemplateSource	sourceDir	Ljava/nio/file/Path;
 # swall24: 1.21.11 LayerRenderState.particleIcon is 26.1's particleMaterial sprite (CbWallItemLayerFields)
 accessible	field	net/minecraft/client/renderer/item/ItemStackRenderState$LayerRenderState	particleMaterial	Lnet/minecraft/client/resources/model/sprite/Material$Baked;
 # swall24: 1.21.11 WanderingTraderSpawner spawn delay/chance live in 26.1's WanderingTraderData (CbWallTraderSpawnerFields)
@@ -402,3 +404,24 @@ accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	initIdleAct
 accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	initInvestigateActivity	()Lnet/minecraft/world/entity/ai/ActivityData;
 accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	initRoarActivity	()Lnet/minecraft/world/entity/ai/ActivityData;
 accessible	method	net/minecraft/world/entity/monster/warden/WardenAi	initSniffingActivity	()Lnet/minecraft/world/entity/ai/ActivityData;
+# swall26: 1.21.11 Cached*ProjectionMatrixBuffer.buffer / bufferSlice are the 26.1 ProjectionMatrixBuffer's (facades)
+accessible	field	net/minecraft/client/renderer/ProjectionMatrixBuffer	buffer	Lcom/mojang/blaze3d/buffers/GpuBuffer;
+accessible	field	net/minecraft/client/renderer/ProjectionMatrixBuffer	bufferSlice	Lcom/mojang/blaze3d/buffers/GpuBufferSlice;
+# swall26: 1.21.11 recipe / builder result fields read off 26.1's result templates (CbWallRecipeBuilders)
+accessible	field	net/minecraft/data/recipes/SmithingTransformRecipeBuilder	result	Lnet/minecraft/world/item/ItemStackTemplate;
+accessible	field	net/minecraft/world/item/crafting/ShapedRecipe	result	Lnet/minecraft/world/item/ItemStackTemplate;
+accessible	field	net/minecraft/world/item/crafting/ShapelessRecipe	result	Lnet/minecraft/world/item/ItemStackTemplate;
+accessible	field	net/minecraft/world/item/crafting/SingleItemRecipe	result	Lnet/minecraft/world/item/ItemStackTemplate;
+# swall26: 1.21.11 DataGenerator fields (DataGenerator.Cached; CbWallDataGenerators) and OptionsScreen difficulty buttons (CbWallClientFields)
+accessible	field	net/minecraft/data/DataGenerator$Cached	rootOutputFolder	Ljava/nio/file/Path;
+accessible	field	net/minecraft/data/DataGenerator$Cached	version	Lnet/minecraft/WorldVersion;
+accessible	field	net/minecraft/data/DataGenerator$Cached	alwaysGenerate	Z
+accessible	field	net/minecraft/data/DataGenerator	vanillaPackOutput	Lnet/minecraft/data/PackOutput;
+accessible	field	net/minecraft/client/gui/screens/options/OptionsScreen	difficultyButtons	Lnet/minecraft/client/gui/screens/options/DifficultyButtons;
+# swall26: 1.21.11 LightTexture fixed fields are the 26.1 Lightmap's / extractor's (facade/LightTexture)
+accessible	field	net/minecraft/client/renderer/Lightmap	texture	Lcom/mojang/blaze3d/textures/GpuTexture;
+accessible	field	net/minecraft/client/renderer/Lightmap	textureView	Lcom/mojang/blaze3d/textures/GpuTextureView;
+accessible	field	net/minecraft/client/renderer/Lightmap	ubo	Lnet/minecraft/client/renderer/MappableRingBuffer;
+accessible	field	net/minecraft/client/renderer/LightmapRenderStateExtractor	renderer	Lnet/minecraft/client/renderer/GameRenderer;
+accessible	field	net/minecraft/client/renderer/LightmapRenderStateExtractor	minecraft	Lnet/minecraft/client/Minecraft;
+accessible	field	net/minecraft/client/renderer/LightmapRenderStateExtractor	randomSource	Lnet/minecraft/util/RandomSource;

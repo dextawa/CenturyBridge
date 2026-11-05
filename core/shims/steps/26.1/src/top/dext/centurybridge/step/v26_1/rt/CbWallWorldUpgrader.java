@@ -16,7 +16,8 @@ import net.minecraft.util.worldupdate.WorldUpgrader;
  *     cancel() sets UpgradeProgress.canceled, which its upgrade loop checks: running is !canceled;</li>
  * <li>finished, progress (the total), totalChunks, converted, skipped are UpgradeProgress's own (the counts are
  *     AtomicIntegers there, written in place);</li>
- * <li>status is read only here: 1.21.11 kept the shown component, 26.1 computes it from the progress (getStatus);</li>
+ * <li>status reads getStatus(); a write is kept by mixin/CbWallWorldUpgraderStatusMixin and answered by getStatus until
+ *     26.1's progress changes stage;</li>
  * <li>REGEX (region file names, "^r\.(-?[0-9]+)\.(-?[0-9]+)\.mca$") is RegionStorageUpgrader.REGEX; NEW_DIRECTORY_PREFIX
  *     "new_" is RegionStorageUpgrader's constant; the status components carry the translation keys 1.21.11's clinit used,
  *     which 26.1's UpgradeStatusTranslator.Messages.create builds ("optimizeWorld.stage.upgrading." / "finished." + poi,
@@ -120,5 +121,9 @@ public final class CbWallWorldUpgrader {
 
     public static Component status(WorldUpgrader o) {
         return o.getStatus();
+    }
+
+    public static void setStatus(WorldUpgrader o, Component v) {
+        ((CbWallWorldUpgraderStatus) (Object) o).cb$setLegacyStatus(v);
     }
 }

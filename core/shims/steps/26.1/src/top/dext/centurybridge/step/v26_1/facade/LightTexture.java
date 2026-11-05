@@ -1,5 +1,8 @@
 package top.dext.centurybridge.step.v26_1.facade;
 
+import com.mojang.blaze3d.textures.GpuTexture;
+import net.minecraft.client.renderer.MappableRingBuffer;
+import net.minecraft.util.RandomSource;
 import com.mojang.blaze3d.textures.GpuTextureView;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -20,6 +23,11 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallLight;
  * or updating it ticks or updates the renderer's lightmap, as calling 1.21.11's renderer-owned
  * LightTexture did. The static helpers are rt/CbWallLight's (staticRedirects). Member names are
  * 1.21.11's intermediary names.
+ * <p>
+ * 1.21.11's private fields that are fixed objects are this class's, taken from the parts (javap 26.1): texture /
+ * textureView / ubo (field_57927 / field_60581 / field_60112) the Lightmap's, renderer / minecraft / randomSource
+ * (field_4134 / field_4137 / field_64675) the extractor's. updateLightTexture and blockLightRedFlicker are the
+ * extractor's live state and LIGHTMAP_UBO_SIZE describes 1.21.11's uniform layout, which 26.1 changed: facadeGaps.
  */
 @Environment(EnvType.CLIENT)
 public class LightTexture implements AutoCloseable {
@@ -34,6 +42,12 @@ public class LightTexture implements AutoCloseable {
     private final LightmapRenderState cb$state;
     /** whether this owns its lightmap (closing closes it) */
     private final boolean cb$own;
+    public final GpuTexture field_57927;
+    public final GpuTextureView field_60581;
+    public final MappableRingBuffer field_60112;
+    public final GameRenderer field_4134;
+    public final Minecraft field_4137;
+    public final RandomSource field_64675;
 
     /** 1.21.11 LightTexture(GameRenderer, Minecraft) */
     public LightTexture(GameRenderer renderer, Minecraft minecraft) {
@@ -45,6 +59,12 @@ public class LightTexture implements AutoCloseable {
         this.cb$extractor = extractor;
         this.cb$state = state;
         this.cb$own = own;
+        this.field_57927 = lightmap.texture;
+        this.field_60581 = lightmap.textureView;
+        this.field_60112 = lightmap.ubo;
+        this.field_4134 = extractor.renderer;
+        this.field_4137 = extractor.minecraft;
+        this.field_64675 = extractor.randomSource;
     }
 
     /** the game renderer's own lightmap as 1.21.11's LightTexture of it */

@@ -568,6 +568,121 @@ public final class CbWallPipeline {
         return pipelineView(p).biasConstant();
     }
 
+    // ---------------------------------------------------------------- 1.21.11 private fields (mods' access wideners)
+
+    // RenderPipeline's final fields held what its getters answered (1.21.11 javap: getX() returned the field), so a
+    // read answers the pipeline's own value as the super getters do. A Builder's Optional fields held only what was
+    // set (build() applied the defaults) and its depth bias floats started at 0: reads answer the builder's 1.21.11
+    // settings (VState), writes change them and the 26.1 state they amount to, as the setters do.
+
+    public static DepthTestFunction fieldDepthTestFunction(RenderPipeline p) {
+        return superGetDepthTestFunction(p);
+    }
+
+    public static LogicOp fieldColorLogic(RenderPipeline p) {
+        return superGetColorLogic(p);
+    }
+
+    public static Optional<BlendFunction> fieldBlendFunction(RenderPipeline p) {
+        return superGetBlendFunction(p);
+    }
+
+    public static boolean fieldWriteColor(RenderPipeline p) {
+        return superIsWriteColor(p);
+    }
+
+    public static boolean fieldWriteAlpha(RenderPipeline p) {
+        return superIsWriteAlpha(p);
+    }
+
+    public static boolean fieldWriteDepth(RenderPipeline p) {
+        return superIsWriteDepth(p);
+    }
+
+    public static float fieldDepthBiasScaleFactor(RenderPipeline p) {
+        return superGetDepthBiasScaleFactor(p);
+    }
+
+    public static float fieldDepthBiasConstant(RenderPipeline p) {
+        return superGetDepthBiasConstant(p);
+    }
+
+    public static Optional<DepthTestFunction> builderDepthTestFunction(RenderPipeline.Builder b) {
+        return state(b).depthTest;
+    }
+
+    public static void setBuilderDepthTestFunction(RenderPipeline.Builder b, Optional<DepthTestFunction> v) {
+        VState s = state(b);
+        s.depthTest = v;
+        apply(b, s);
+    }
+
+    public static Optional<Boolean> builderWriteColor(RenderPipeline.Builder b) {
+        return state(b).writeColor;
+    }
+
+    public static void setBuilderWriteColor(RenderPipeline.Builder b, Optional<Boolean> v) {
+        VState s = state(b);
+        s.writeColor = v;
+        apply(b, s);
+    }
+
+    public static Optional<Boolean> builderWriteAlpha(RenderPipeline.Builder b) {
+        return state(b).writeAlpha;
+    }
+
+    public static void setBuilderWriteAlpha(RenderPipeline.Builder b, Optional<Boolean> v) {
+        VState s = state(b);
+        s.writeAlpha = v;
+        apply(b, s);
+    }
+
+    public static Optional<Boolean> builderWriteDepth(RenderPipeline.Builder b) {
+        return state(b).writeDepth;
+    }
+
+    public static void setBuilderWriteDepth(RenderPipeline.Builder b, Optional<Boolean> v) {
+        VState s = state(b);
+        s.writeDepth = v;
+        apply(b, s);
+    }
+
+    public static Optional<LogicOp> builderColorLogic(RenderPipeline.Builder b) {
+        return state(b).colorLogic;
+    }
+
+    public static void setBuilderColorLogic(RenderPipeline.Builder b, Optional<LogicOp> v) {
+        VState s = state(b);
+        s.colorLogic = v;
+        apply(b, s);
+    }
+
+    public static Optional<BlendFunction> builderBlendFunction(RenderPipeline.Builder b) {
+        return state(b).blend;
+    }
+
+    public static void setBuilderBlendFunction(RenderPipeline.Builder b, Optional<BlendFunction> v) {
+        VState s = state(b);
+        s.blend = v;
+        apply(b, s);
+    }
+
+    public static float builderDepthBiasScaleFactor(RenderPipeline.Builder b) {
+        return state(b).biasScale();
+    }
+
+    public static void setBuilderDepthBiasScaleFactor(RenderPipeline.Builder b, float v) {
+        withDepthBias(b, v, state(b).biasConstant());
+    }
+
+    public static float builderDepthBiasConstant(RenderPipeline.Builder b) {
+        return state(b).biasConstant();
+    }
+
+    public static void setBuilderDepthBiasConstant(RenderPipeline.Builder b, float v) {
+        withDepthBias(b, state(b).biasScale(), v);
+    }
+
     // ---------------------------------------------------------------- 1.21.11 RenderPipeline constructor
 
     /** super(...) of a 1.21.11 RenderPipeline subclass: its blend and colour / alpha writes */

@@ -2,6 +2,7 @@ package top.dext.centurybridge.step.v26_1.rt;
 
 import java.nio.file.Path;
 import java.util.Collection;
+import net.minecraft.SharedConstants;
 import net.minecraft.WorldVersion;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.Main;
@@ -40,5 +41,23 @@ public final class CbWallDataGenerators {
             boolean reports) {
         Main.addServerConverters(generator, inputs, server, dev);
         Main.addServerDefinitionProviders(generator, server, reports);
+    }
+
+    // 1.21.11 DataGenerator's private fields (class_2403 field_40595 rootOutputFolder, field_38910 version,
+    // field_38911 alwaysGenerate): 26.1's DataGenerator.Cached holds the same three, set by the same constructor (javap).
+    // A converted `new DataGenerator(..)` is a Cached. An Uncached generator (26.1's own, no cache) writes to its vanilla
+    // pack output's folder, the root 1.21.11's constructor gave PackOutput too, for the running version, and runs every
+    // provider (alwaysGenerate).
+
+    public static Path rootOutputFolder(DataGenerator g) {
+        return g instanceof DataGenerator.Cached c ? c.rootOutputFolder : g.vanillaPackOutput.getOutputFolder();
+    }
+
+    public static WorldVersion version(DataGenerator g) {
+        return g instanceof DataGenerator.Cached c ? c.version : SharedConstants.getCurrentVersion();
+    }
+
+    public static boolean alwaysGenerate(DataGenerator g) {
+        return g instanceof DataGenerator.Cached c ? c.alwaysGenerate : true;
     }
 }

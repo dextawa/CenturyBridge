@@ -11,4 +11,7 @@ import net.fabricmc.api.Environment;
 public interface CbWallDepthFar {
 
     float getDepthFar();
+
+    /** the restored GameRenderer.getRenderDistance() */
+    float getRenderDistance();
 }
